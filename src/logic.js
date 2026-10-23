@@ -330,3 +330,26 @@ export const CONSEJOS_LECTURA = [
   'Si «la sabes de golpe», frena: ahí es donde se cuelan los matices.',
   'No cambies de respuesta sin un motivo concreto en el enunciado.',
 ];
+
+// Análisis de ritmo y puntos de un simulacro. correct[k] = índice correcto; ans[k] = respuesta (undefined/-1 = blanco);
+// times[k] = segundos empleados (si se contestó); limitSecs = tiempo total del simulacro.
+export function analisisSimulacro({ correct, ans, times = [], limitSecs, secs }) {
+  const n = correct.length; let a = 0, f = 0, b = 0; const tm = [];
+  correct.forEach((c, k) => {
+    const x = ans[k];
+    if (x === undefined || x === -1) b++; else if (x === c) a++; else f++;
+    if (times[k] > 0 && x !== undefined && x !== -1) tm.push({ k, t: times[k], ok: x === c });
+  });
+  const presupuesto = n && limitSecs ? limitSecs / n : 0;
+  const media = tm.length ? Math.round(tm.reduce((s, r) => s + r.t, 0) / tm.length) : 0;
+  const lentas = tm.slice().sort((x, y) => y.t - x.t).slice(0, 3).filter(r => !presupuesto || r.t > presupuesto * 1.5);
+  const rapidasFalladas = tm.filter(r => !r.ok && presupuesto && r.t < presupuesto * 0.4).length;
+  return {
+    n, a, f, b, presupuesto: Math.round(presupuesto), media, lentas, rapidasFalladas,
+    sinPenal: n ? Math.round(1000 * a / n) / 10 : 0,
+    perdidoFallos: n ? Math.round(1000 * (f / 3) / n) / 10 : 0,
+    uso: limitSecs ? Math.round(100 * Math.min(secs, limitSecs) / limitSecs) : 0,
+  };
+}
+// Diferencia entre preguntas contestadas y las que tocarían al ritmo del simulacro (positivo = vas por delante).
+export const ritmoSimulacro = (hechas, n, limitSecs, secs) => limitSecs && n ? Math.round(hechas - secs / (limitSecs / n)) : 0;

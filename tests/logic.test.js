@@ -323,3 +323,15 @@ describe('lectura atenta', () => {
     expect(v).toMatchObject({ n: 1, tot: 2, p: 50, ids: ['a'] });
   });
 });
+
+describe('analisisSimulacro', () => {
+  it('calcula notas, ritmo y preguntas lentas', async () => {
+    const { analisisSimulacro, ritmoSimulacro } = await import('../src/logic.js');
+    const r = analisisSimulacro({ correct: [0, 1, 2, 3], ans: [0, 2, -1, 3], times: [10, 5, 0, 200], limitSecs: 400, secs: 300 });
+    expect(r).toMatchObject({ n: 4, a: 2, f: 1, b: 1, presupuesto: 100, sinPenal: 50, perdidoFallos: 8.3, uso: 75 });
+    expect(r.lentas.map(x => x.k)).toEqual([3]);
+    expect(r.rapidasFalladas).toBe(1);
+    expect(ritmoSimulacro(10, 80, 5400, 540)).toBe(2);
+    expect(ritmoSimulacro(0, 0, 0, 5)).toBe(0);
+  });
+});

@@ -1,6 +1,6 @@
 import * as store from './store.js';
 import * as sync from './sync.js';
-import { esc, shuffle, fmtT, pct, nota, allowed, composeSim, dominioCalc, aggregateWeeks, slowList, quickN, pickQuick, simHistory, compareSessions, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, cargaRepasos, motivosFallo, suertes, normUi, ZOOMS, swipeDir, keyAction, pickCards, cardStats, cardFromQuestion, hiliteHtml, claveHtml, claveSpans, pideNegativa, minLectura, velocidad, CONSEJOS_LECTURA } from './logic.js';
+import { esc, shuffle, fmtT, pct, nota, allowed, composeSim, dominioCalc, aggregateWeeks, slowList, quickN, pickQuick, simHistory, compareSessions, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, cargaRepasos, motivosFallo, suertes, normUi, ZOOMS, swipeDir, keyAction, pickCards, cardStats, cardFromQuestion, hiliteHtml, claveHtml, claveSpans, pideNegativa, minLectura, velocidad, CONSEJOS_LECTURA, analisisSimulacro, ritmoSimulacro } from './logic.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const app = $('#app');
@@ -120,6 +120,7 @@ routes.quiz = async function () {
       R.secs += 1;
       const left = R.limit * 60 - R.secs;
       const el = $('#clock'); if (el) el.textContent = fmtT(left);
+      const pc = $('#pace'); if (pc) { const d = ritmoSimulacro(R.idx, R.items.length, R.limit * 60, R.secs), bud = Math.round(R.limit * 60 / R.items.length); pc.className = 'pace ' + (d >= 0 ? 'up' : d > -3 ? 'mid' : 'low'); pc.textContent = `Ritmo: ${d > 0 ? d + ' por delante' : d < 0 ? -d + ' por detrás' : 'al día'} · ${bud} s por pregunta`; }
       if (left <= 0) { clearInterval(tick); finish(); }
     }, 1000);
   } else {
@@ -167,6 +168,7 @@ routes.quiz = async function () {
       ${R.limit ? `<div class="clock" id="clock">${fmtT(R.limit * 60 - R.secs)}</div><button class="ghost" id="pause">⏸</button>` : ''}
     </div>
     ${R.titulo ? `<div class="sub">${esc(R.titulo)}</div>` : ''}
+    ${R.limit && R.kind === 'sim' ? '<div class="pace" id="pace"></div>' : ''}
     <div class="card q">
       <div class="meta">
         <span class="tag">${esc(q.t)} · ${esc(temaName(q.t))}</span>
@@ -267,7 +269,7 @@ routes.quiz = async function () {
     const n = items.length;
     const ses = { id: 's' + now().toString(36), ts: now(), kind: R.kind, n, a: res.a, f: res.f, b: res.b, secs: R.secs, nota: nota(res.a, res.f, n), temas: porTema, tipos: porTipo, fails, titulo: R.titulo || '' };
     store.addSession(ses);
-    RUN = null; LAST = { ses, items, ans: R.ans };
+    RUN = null; LAST = { ses, items, ans: R.ans, times: R.times || [], limit: R.limit || 0 };
     go('#/result');
   }
 };
@@ -327,7 +329,7 @@ routes.trampas = async function () {
     const dis = shuffle(ALL.filter(k => !good.has(k))).slice(0, Math.max(3, 8 - good.size));
     const chips = shuffle([...good, ...dis]), sel = new Set();
     app.innerHTML = `<div class="qhead"><button class="ghost" id="exit">✕</button><div class="prog"><div style="width:${100 * R.k / R.items.length}%"></div></div><div class="cnt">${R.k + 1}/${R.items.length}</div></div>
-    <div class="sub">🕵️ Detective de trampas</div>
+    <h1 class="sub">🕵️ Detective de trampas</h1>
     <div class="seg" id="md">${[[0, 'Solo enunciado'], [1, 'Con opciones']].map(([v, t]) => `<button class="${mode === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
     <div class="card q"><div class="meta"><span class="tag">${esc(q.t)} · ${esc(temaName(q.t))}</span></div>
       ${q.cp ? `<div class="ctx pre">${esc(q.cp)}</div>` : ''}
@@ -366,7 +368,7 @@ routes.trampas = async function () {
     const td = store.getCfg().tdet || {};
     const rows = Object.entries(td).filter(([, v]) => v[0] >= 3).sort((a, b) => a[1][1] / a[1][0] - b[1][1] / b[1][0]).slice(0, 6);
     app.innerHTML = `<h1>Detective de trampas</h1><div class="grid"><div class="stat"><b>${hit}/${tot}</b><span>trampas detectadas</span></div><div class="stat"><b>${fa}</b><span>falsas alarmas</span></div></div>
-    <div class="card"><h3>Las que más se te escapan</h3>${rows.length ? rows.map(([k, v]) => `<div class="line"><span>${esc(TRAMPAS[k] || k)}</span><span>${pct(v[1], v[0])}% <small>(${v[1]}/${v[0]})</small></span></div>`).join('') : '<p class="sub">Aparecerá cuando hayas visto cada trampa ≥3 veces.</p>'}</div>
+    <div class="card"><h2 class="h3">Las que más se te escapan</h2>${rows.length ? rows.map(([k, v]) => `<div class="line"><span>${esc(TRAMPAS[k] || k)}</span><span>${pct(v[1], v[0])}% <small>(${v[1]}/${v[0]})</small></span></div>`).join('') : '<p class="sub">Aparecerá cuando hayas visto cada trampa ≥3 veces.</p>'}</div>
     <div class="bar2"><button class="btn" id="again">Otra tanda</button><button class="btn sec" id="home">Inicio</button></div>`;
     TRUN = null; $('#again').onclick = () => route(); $('#home').onclick = () => go('#/home');
   }
@@ -398,7 +400,7 @@ routes.lectura = async function () {
     clearInterval(gt);
     if (R.k >= R.items.length) return end();
     const q = R.items[R.k], neg = pideNegativa(q.q);
-    const head = `<div class="qhead"><button class="ghost" id="exit">✕</button><div class="prog"><div style="width:${100 * R.k / R.items.length}%"></div></div><div class="cnt">${R.k + 1}/${R.items.length}</div></div><div class="sub">Lectura atenta · paso ${R.step + 1} de 3</div>`;
+    const head = `<div class="qhead"><button class="ghost" id="exit">✕</button><div class="prog"><div style="width:${100 * R.k / R.items.length}%"></div></div><div class="cnt">${R.k + 1}/${R.items.length}</div></div><h1 class="sub">Lectura atenta · paso ${R.step + 1} de 3</h1>`;
     if (R.step === 0) {
       app.innerHTML = `${head}<div class="card q"><div class="enun pre">${esc(q.q)}</div><p><b>1. ¿Qué te piden?</b> Antes de ver las opciones.</p>
         <div class="opts"><button class="opt" data-v="0"><b>✔</b><span>La opción CORRECTA / VERDADERA</span></button><button class="opt" data-v="1"><b>✖</b><span>La INCORRECTA / FALSA / la excepción</span></button></div><div id="fb0"></div></div>`;
@@ -449,7 +451,7 @@ routes.lectura = async function () {
     const n = R.res.length, ok = R.res.filter(r => r.ok).length, pide = R.res.filter(r => r.pide).length;
     const ms = R.res.reduce((a, r) => [a[0] + (r.marc?.[0] || 0), a[1] + (r.marc?.[1] || 0)], [0, 0]);
     app.innerHTML = `<h1>Lectura atenta</h1><div class="grid"><div class="stat"><b>${ok}/${n}</b><span>aciertos</span></div><div class="stat"><b>${pide}/${n}</b><span>«qué piden» bien</span></div><div class="stat"><b>${ms[1] ? pct(ms[0], ms[1]) + '%' : '—'}</b><span>palabras clave</span></div></div>
-    <div class="card"><h3>Método de 3 pasos</h3><ul class="tips">${CONSEJOS_LECTURA.map(c => `<li>${esc(c)}</li>`).join('')}</ul></div>
+    <div class="card"><h2 class="h3">Método de 3 pasos</h2><ul class="tips">${CONSEJOS_LECTURA.map(c => `<li>${esc(c)}</li>`).join('')}</ul></div>
     <div class="bar2"><button class="btn" id="again">Otra tanda</button><button class="btn sec" id="home">Inicio</button></div>`;
     LRUN = null; $('#again').onclick = () => route(); $('#home').onclick = () => go('#/home');
   }
@@ -494,8 +496,8 @@ routes.cards = async function () {
       <div class="stat"><b>${cs.enRepaso}</b><span>en repaso</span></div>
       <div class="stat"><b>${cs.dominadas}</b><span>dominadas</span></div>
     </div>
-    ${cards.length ? `<div class="card"><h3>Tarjetas por sesión</h3><div class="seg" id="cn">${[10, 20, 30].map(v => `<button class="${cfg.n === v ? 'on' : ''}" data-v="${v}">${v}</button>`).join('')}</div>
-      <h3>Tarjetas nuevas de</h3><div class="seg" id="cs">${[['vistos', 'Mis temas vistos'], ['todos', 'Todos los temas']].map(([v, t]) => `<button class="${cfg.scope === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
+    ${cards.length ? `<div class="card"><h2 class="h3">Tarjetas por sesión</h2><div class="seg" id="cn">${[10, 20, 30].map(v => `<button class="${cfg.n === v ? 'on' : ''}" data-v="${v}">${v}</button>`).join('')}</div>
+      <h2 class="h3">Tarjetas nuevas de</h2><div class="seg" id="cs">${[['vistos', 'Mis temas vistos'], ['todos', 'Todos los temas']].map(([v, t]) => `<button class="${cfg.scope === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
       <p class="sm"><small>Las vencidas salen primero, mezcladas por tema. Como máximo 10 nuevas por sesión.</small></p></div>
       <div class="bar2"><button class="btn" id="go">Empezar</button></div>` :
       `<div class="note">Aún no tienes tarjetas. Al fallar una pregunta en un test pulsa <b>«📇 Hacer tarjeta»</b> (si el motivo no es un despiste) y aparecerá aquí.</div>`}`;
@@ -570,6 +572,20 @@ function cardSession() {
 }
 
 let LAST = null;
+function simAnalisis({ ses, items, ans, times, limit }) {
+  const r = analisisSimulacro({ correct: items.map(q => q.c), ans, times, limitSecs: limit * 60, secs: ses.secs });
+  const pts = [];
+  pts.push(`<div class="line"><span>Nota sin penalización</span><span>${r.sinPenal}</span></div>`);
+  pts.push(`<div class="line"><span>Puntos que te restaron los fallos</span><span class="${r.perdidoFallos ? 'r' : ''}">−${r.perdidoFallos}</span></div>`);
+  pts.push(`<div class="line"><span>Tiempo usado</span><span>${fmtT(ses.secs)} de ${fmtT(limit * 60)} (${r.uso} %)</span></div>`);
+  pts.push(`<div class="line"><span>Tiempo medio por pregunta</span><span>${r.media} s <small>(presupuesto ${r.presupuesto} s)</small></span></div>`);
+  const tips = [];
+  if (r.lentas.length) tips.push(`Te atascaste en ${r.lentas.map(x => `la ${x.k + 1} (${x.t} s${x.ok ? '' : ', fallada'})`).join(', ')}. Si pasan de ${Math.round(r.presupuesto * 1.5)} s, déjalas para el final.`);
+  if (r.rapidasFalladas >= 2) tips.push(`Fallaste ${r.rapidasFalladas} preguntas respondiendo muy deprisa: probable lectura rápida. Aplica el método de 3 pasos.`);
+  if (r.f > 0) tips.push('Cada fallo resta 1/3: si puedes descartar al menos una opción, merece la pena responder; si no, déjala en blanco.');
+  if (r.b > r.n * 0.15) tips.push(`Dejaste ${r.b} en blanco. Con una opción descartada, responder suma de media.`);
+  return `<h2>Ritmo y puntos</h2><div class="card">${pts.join('')}${tips.length ? `<ul class="tips">${tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}</div>`;
+}
 routes.result = async function () {
   if (!LAST) return go('#/home');
   const { ses, items, ans } = LAST;
@@ -587,6 +603,7 @@ routes.result = async function () {
     ${ng ? '<button class="btn" id="again">Repetir las falladas</button>' : ''}
     <button class="btn sec" id="home">Inicio</button>
   </div>
+  ${LAST.limit ? simAnalisis(LAST) : ''}
   <h2>Por tema</h2>
   <div class="card">${Object.entries(ses.temas).sort((a, b) => a[0].localeCompare(b[0])).map(([t, [a, n]]) => `<div class="line"><span>${esc(t)} ${esc(temaName(t))}</span><span>${a}/${n}</span></div>`).join('')}</div>
   <h2>Revisión</h2>
@@ -692,7 +709,7 @@ routes.temario = async function () {
     <h1>Temas vistos</h1>
     <p class="sub">Marca los temas que ya has estudiado. El simulacro (y el botón «mis temas vistos» del test) usarán solo estos. Se sincroniza entre tus dispositivos.</p>
     <div class="row"><button class="btn sec" id="all">Marcar todos</button><button class="btn sec" id="none">Quitar todos</button></div>
-    <div class="card"><h3>${sel.size} de ${idx.temas.length} temas marcados</h3>
+    <div class="card"><h2 class="h3">${sel.size} de ${idx.temas.length} temas marcados</h2>
     ${BLOQUES.map(([b, nom]) => `<div class="bl"><div class="blh"><span>${nom}</span><button class="ghost sm" data-b="${b}">bloque</button></div>
       ${idx.temas.filter(t => t.id.startsWith(b)).map(t => `<label class="tm ${sel.has(t.id) ? 'on' : ''}"><input type="checkbox" data-t="${t.id}" ${sel.has(t.id) ? 'checked' : ''}><span><b>${t.id}</b> ${esc(t.nombre)}</span><small>${tstat(t.id, t.n)}</small></label>`).join('')}</div>`).join('')}
     </div>
@@ -732,15 +749,15 @@ routes.test = async function () {
     app.innerHTML = `
     <h1>Test por tema</h1>
     <div class="card">
-      <h3>Preguntas</h3>
+      <h2 class="h3">Preguntas</h2>
       <div class="seg" id="n">${[10, 15, 25, 40].map(v => `<button class="${cfg.n === v ? 'on' : ''}" data-v="${v}">${v}</button>`).join('')}</div>
-      <h3>Qué preguntas</h3>
+      <h2 class="h3">Qué preguntas</h2>
       <div class="seg" id="mode">${[['nuevas', 'Nuevas primero'], ['aleatorio', 'Aleatorio'], ['falladas', 'Falladas'], ['dudosas', 'Dudosas'], ['trampas', 'Mis trampas']].map(([v, t]) => `<button class="${cfg.mode === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
       ${cfg.mode === 'trampas' ? '<p class="sub sm">Saca preguntas de tus 3 trampas con más fallos (mínimo 5 respuestas por trampa): primero las que fallaste, luego las que no has visto.</p>' : ''}
-      <h3>Origen</h3>
+      <h2 class="h3">Origen</h2>
       <div class="seg multi" id="org">${[['G', 'Generadas'], ['O', 'Oficiales'], ['A', 'Academia']].map(([v, t]) => `<button class="${org.has(v) ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
     </div>
-    <div class="card"><h3>Temas <small>(${sel.size ? sel.size + ' elegidos' : 'ninguno = todos'})</small></h3>
+    <div class="card"><h2 class="h3">Temas <small>(${sel.size ? sel.size + ' elegidos' : 'ninguno = todos'})</small></h2>
     <div class="row"><button class="btn sec" id="useSeen">Usar mis temas vistos (${store.getSeen().length})</button></div>
     ${bloques.map(([b, nom]) => `<div class="bl"><div class="blh"><span>${nom}</span><button class="ghost sm" data-b="${b}">todos</button></div>
       ${idx.temas.filter(t => t.id.startsWith(b)).map(t => `<label class="tm ${sel.has(t.id) ? 'on' : ''}"><input type="checkbox" data-t="${t.id}" ${sel.has(t.id) ? 'checked' : ''}><span><b>${t.id}</b> ${esc(t.nombre)}</span><small>${tstat(t.id, t.n)}</small></label>`).join('')}</div>`).join('')}
@@ -783,15 +800,15 @@ routes.sim = async function () {
     app.innerHTML = `
     <h1>Simulacro</h1>
     <div class="card">
-      <h3>Parte 1 · conocimientos</h3>
+      <h2 class="h3">Parte 1 · conocimientos</h2>
       <div class="seg" id="n">${[40, 80].map(v => `<button class="${cfg.n === v ? 'on' : ''}" data-v="${v}">${v} preguntas</button>`).join('')}</div>
-      <h3>Tiempo (minutos)</h3>
+      <h2 class="h3">Tiempo (minutos)</h2>
       <div class="seg" id="min">${[45, 60, 90, 120].map(v => `<button class="${cfg.min === v ? 'on' : ''}" data-v="${v}">${v}</button>`).join('')}</div>
-      <h3>Temas</h3>
+      <h2 class="h3">Temas</h2>
       <div class="seg" id="scope"><button class="${cfg.scope !== 'todos' ? 'on' : ''}" data-v="vistos">Mis temas vistos (${seenN})</button><button class="${cfg.scope === 'todos' ? 'on' : ''}" data-v="todos">Todo el temario</button></div>
       ${cfg.scope !== 'todos' && !seenN ? '<p class="sub sm">No has marcado ningún tema: se usará todo el temario.</p>' : ''}
       <p class="sub sm"><a href="#/temario">Editar temas vistos</a></p>
-      <h3>Origen de las preguntas</h3>
+      <h2 class="h3">Origen de las preguntas</h2>
       <div class="seg multi" id="org">${[['G', 'Generadas'], ['O', 'Oficiales'], ['A', 'Academia']].map(([v, t]) => `<button class="${org.has(v) ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
       <label class="chk"><input type="checkbox" id="p2" ${cfg.parte2 ? 'checked' : ''}> Después, parte 2: elegir 1 de 2 supuestos prácticos (20 preguntas)</label>
     </div>
@@ -826,7 +843,7 @@ routes.sim2 = async function () {
   const ok = Object.entries(sup).filter(([k, v]) => v.q.filter(x => !x.r).length >= 18 && /libre/i.test(v.conv || '') && !/2018/.test(v.conv || ''));
   const two = shuffle(ok).slice(0, 2);
   app.innerHTML = `<h1>Parte 2 · Supuesto práctico</h1><div class="note">Elige uno de los dos supuestos. Son ejercicios reales de convocatorias anteriores.</div>
-  ${two.map(([k, v], i) => `<div class="card"><h3>Supuesto ${i + 1}</h3><div class="pre sm">${esc(v.texto.slice(0, 700))}${v.texto.length > 700 ? '…' : ''}</div><button class="btn" data-k="${k}">Elegir este supuesto</button></div>`).join('')}
+  ${two.map(([k, v], i) => `<div class="card"><h2 class="h3">Supuesto ${i + 1}</h2><div class="pre sm">${esc(v.texto.slice(0, 700))}${v.texto.length > 700 ? '…' : ''}</div><button class="btn" data-k="${k}">Elegir este supuesto</button></div>`).join('')}
   <button class="btn sec" id="skip">Saltar la parte 2</button>`;
   app.querySelectorAll('[data-k]').forEach(b => b.onclick = () => {
     const v = sup[b.dataset.k];
@@ -941,7 +958,7 @@ function paintSims() {
       <table class="tb"><tr><th>Tema</th><th>A</th><th>B</th><th>Δ</th></tr>${C.rows.map(r => `<tr><td>${r.t}</td><td>${r.pa ?? '—'}</td><td>${r.pb ?? '—'}</td><td>${r.d === null ? '' : dlt(r.d)}</td></tr>`).join('')}</table>
       <p class="legend">A es el intento de la izquierda y B el de la derecha; Δ en puntos de acierto por tema.</p>`;
   }
-  el.innerHTML = `<div class="card">${chart}<p class="legend">Nota de la parte 1 por intento (sobre 100).</p><h3>Últimos intentos</h3>${rows}<h3>Comparar dos intentos</h3>${cmp}</div>`;
+  el.innerHTML = `<div class="card">${chart}<p class="legend">Nota de la parte 1 por intento (sobre 100).</p><h2 class="h3">Últimos intentos</h2>${rows}<h2 class="h3">Comparar dos intentos</h2>${cmp}</div>`;
   const sa = $('#sca'), sb = $('#scb');
   if (sa) sa.onchange = sb.onchange = () => { store.setCfg('simc', { a: +sa.value, b: +sb.value }); paintSims(); };
 }
@@ -1030,7 +1047,7 @@ routes.stats = async function () {
   const diaL = k => { const d = new Date(now() + k * 86400000); return k === 0 ? 'hoy' : ['D', 'L', 'M', 'X', 'J', 'V', 'S'][d.getDay()] + d.getDate(); };
   const cargaHTML = `<div class="card"><div class="cg">${carga.map((v, k) => `<div class="cgc" title="${v} repasos"><small>${v || ''}</small><i class="${k === 0 && v ? 'hoy' : ''}" style="height:${Math.round(60 * v / mx)}px"></i><small>${diaL(k)}</small></div>`).join('')}</div>
     <p class="legend">Preguntas que vencen cada día (hoy incluye las atrasadas). Total en 14 días: ${carga.reduce((a, b) => a + b, 0)}.</p>
-    ${mft ? `<h3>Por qué fallas (último fallo)</h3>${[5, 7, 1, 2, 3, 4].map(m => `<div class="line"><span>${MOTIVOS_FALLO[m]}</span><span>${mf[m]} <small>(${pct(mf[m], mft)}%)</small></span></div>`).join('')}` : ''}
+    ${mft ? `<h2 class="h3">Por qué fallas (último fallo)</h2>${[5, 7, 1, 2, 3, 4].map(m => `<div class="line"><span>${MOTIVOS_FALLO[m]}</span><span>${mf[m]} <small>(${pct(mf[m], mft)}%)</small></span></div>`).join('')}` : ''}
     ${suertes(st) ? `<div class="line"><span>🍀 Aciertos por suerte (pendientes de repasar)</span><span>${suertes(st)}</span></div>` : ''}</div>`;
   const paintMapa = () => { const dm = dominioTemas(idx); const el = $('#mapa'); el.innerHTML = mapaHTML(dm, store.getCfg().dmord); bindMapa(el, dm, paintMapa); };
   app.innerHTML = `
@@ -1069,7 +1086,7 @@ routes.settings = async function () {
     const s = sync.status; const ui = normUi(store.getCfg().ui);
     app.innerHTML = `
     <h1>Ajustes</h1>
-    <div class="card"><h3>Cuenta y sincronización</h3>
+    <div class="card"><h2 class="h3">Cuenta y sincronización</h2>
       ${!sync.configured ? '<p>Firebase no está configurado todavía (ver README).</p>' :
         s.user ? `<p>Conectado como <b>${esc(s.user.name)}</b><br><small>${esc(s.state)}${s.lastSync ? ' · ' + new Date(s.lastSync).toLocaleTimeString('es-ES') : ''}</small></p><button class="btn sec" id="out">Cerrar sesión</button>` :
           '<p>Inicia sesión para tener el mismo historial en iPhone y iPad.</p><button class="btn" id="in">Entrar con Google</button>'}
@@ -1077,7 +1094,7 @@ routes.settings = async function () {
       <p><small>En este dispositivo: ${Object.keys(store.getStats()).length} preguntas vistas · ${store.getSeen().length} temas vistos · ${store.getSessions().length} sesiones</small></p>
       ${sync.configured ? `<p><small>Dominio: ${esc(sync.diag().host)} · auth: ${esc(sync.diag().authDomain)}</small></p>` : ''}
     </div>
-    <div class="card"><h3>Comodidad</h3>
+    <div class="card"><h2 class="h3">Comodidad</h2>
       <p class="sm">Tema</p>
       <div class="seg" id="th">${[['auto', 'Automático'], ['light', 'Claro'], ['dark', 'Oscuro']].map(([v, t]) => `<button class="${ui.theme === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
       <p class="sm">Tamaño de letra</p>
@@ -1088,11 +1105,11 @@ routes.settings = async function () {
       <p><small>Teclado (iPad): 1–4 o A–D responden · Intro, → o espacio: siguiente · ←: anterior · B: en blanco · F: dudosa · P: pausa. Gestos: desliza a la izquierda para pasar y a la derecha para volver.</small></p>
       <p><small>Se guarda solo en este dispositivo.</small></p>
     </div>
-    <div class="card"><h3>Errores del banco</h3><p>${Object.values(store.getReports()).filter(r => r.st === 'abierto').length} por revisar. Anótalos con «Avisar de error» al contestar y exporta la lista para corregirlos.</p><button class="btn sec" id="errs">Ver errores del banco</button></div>
-    <div class="card"><h3>Uso sin conexión</h3><p id="off">Pulsa para descargar todo el banco en el dispositivo (≈9 MB).</p><button class="btn sec" id="dl">Descargar para uso sin conexión</button></div>
-    <div class="card"><h3>Tarjetas</h3><p>Exporta las tarjetas curadas (y tus fallos convertidos en tarjeta) a Anki: texto separado por tabuladores, importable con «Archivo → Importar».</p><button class="btn sec" id="anki">Exportar tarjetas a Anki (.txt)</button></div>
-    <div class="card"><h3>Copia de seguridad</h3><button class="btn sec" id="ex">Exportar progreso</button> <label class="btn sec file">Importar<input type="file" id="im" accept=".json"></label></div>
-    <div class="card"><h3>Zona delicada</h3><button class="btn danger" id="rs">Borrar progreso de este dispositivo</button></div>
+    <div class="card"><h2 class="h3">Errores del banco</h2><p>${Object.values(store.getReports()).filter(r => r.st === 'abierto').length} por revisar. Anótalos con «Avisar de error» al contestar y exporta la lista para corregirlos.</p><button class="btn sec" id="errs">Ver errores del banco</button></div>
+    <div class="card"><h2 class="h3">Uso sin conexión</h2><p id="off">Pulsa para descargar todo el banco en el dispositivo (≈9 MB).</p><button class="btn sec" id="dl">Descargar para uso sin conexión</button></div>
+    <div class="card"><h2 class="h3">Tarjetas</h2><p>Exporta las tarjetas curadas (y tus fallos convertidos en tarjeta) a Anki: texto separado por tabuladores, importable con «Archivo → Importar».</p><button class="btn sec" id="anki">Exportar tarjetas a Anki (.txt)</button></div>
+    <div class="card"><h2 class="h3">Copia de seguridad</h2><button class="btn sec" id="ex">Exportar progreso</button> <label class="btn sec file">Importar<input type="file" id="im" accept=".json"></label></div>
+    <div class="card"><h2 class="h3">Zona delicada</h2><button class="btn danger" id="rs">Borrar progreso de este dispositivo</button></div>
     <p class="sub">Banco: ${idx.n} preguntas + ${idx.nsup} de supuestos. Versión 1.0</p>`;
     $('#in') && ($('#in').onclick = () => sync.login());
     $('#out') && ($('#out').onclick = () => sync.logout());

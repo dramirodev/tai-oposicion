@@ -292,3 +292,12 @@ h1{font-size:26px}
 .fb.wrong{color:#7a1a1a}.fb.good{color:#0f4d2c}
 @media(prefers-color-scheme:dark){:where(:root:not([data-theme=light])) .fb.wrong{color:#ffc9c9}:where(:root:not([data-theme=light])) .fb.good{color:#b8f0cf}}
 :where(:root[data-theme=dark]) .fb.wrong{color:#ffc9c9}:where(:root[data-theme=dark]) .fb.good{color:#b8f0cf}
+.pace{font-size:14px;font-weight:600;border-radius:99px;padding:6px 12px;margin:0 0 10px;display:inline-block;background:var(--sel);color:var(--ink)}
+.pace.up{background:var(--okbg);color:#0f4d2c}.pace.mid{background:#fff2d6;color:#7a4b00}.pace.low{background:var(--badbg);color:#7a1a1a}
+@media(prefers-color-scheme:dark){:where(:root:not([data-theme=light])) .pace.up{color:#b8f0cf}:where(:root:not([data-theme=light])) .pace.mid{background:#4a3510;color:#ffd88a}:where(:root:not([data-theme=light])) .pace.low{color:#ffc9c9}}
+:where(:root[data-theme=dark]) .pace.up{color:#b8f0cf}:where(:root[data-theme=dark]) .pace.mid{background:#4a3510;color:#ffd88a}:where(:root[data-theme=dark]) .pace.low{color:#ffc9c9}
+h2.h3{font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);margin:16px 0 8px}
+h2.h3:first-child{margin-top:0}
+h1.sub{margin:6px 0 10px}
+label:has(input[type=checkbox]),.chk{min-height:44px;display:flex;align-items:center;gap:10px}
+.sub.sm a{display:inline-block;padding:10px 0}
