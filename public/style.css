@@ -354,3 +354,8 @@ h1{font-weight:600}
 /* código */
 code.cd{font-family:var(--mono);font-size:.88em;background:var(--code-bg);color:var(--code-ink);padding:1px 5px;border-radius:6px;overflow-wrap:anywhere;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 code.cd .sk{color:var(--sk);font-weight:700}
+
+/* indicador de conexión */
+#net{pointer-events:none;position:fixed;top:0;left:0;right:0;z-index:50;text-align:center;font-size:var(--fs-s);font-weight:600;padding:calc(4px + env(safe-area-inset-top)) 12px 4px;display:none}
+#net.off{display:block;background:var(--pill-bg);color:var(--pill-ink);border-bottom:1px solid var(--amber-strong)}
+#net.on{display:block;background:var(--okbg);color:var(--good-ink);border-bottom:1px solid var(--line)}

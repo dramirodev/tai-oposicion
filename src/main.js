@@ -23,8 +23,16 @@ const guard = fn => async function (...a) {
   try { return await fn.apply(this, a); } finally { this.disabled = false; this.innerHTML = h; }
 };
 addEventListener('tai-persist-error', () => toast('No se pudo guardar el progreso en este dispositivo (¿poco espacio?). Exporta una copia en Ajustes.'));
-addEventListener('offline', () => toast('Sin conexión: solo funciona lo ya descargado.'));
-addEventListener('online', () => toast('Conexión recuperada.'));
+// Indicador de conexión: franja fija arriba. Offline = ámbar y permanente; al volver, verde 3 s.
+const netEl = document.createElement('div'); netEl.id = 'net'; netEl.setAttribute('role', 'status'); netEl.setAttribute('aria-live', 'polite');
+document.body.appendChild(netEl);
+let netT;
+function netShow() {
+  clearTimeout(netT);
+  if (navigator.onLine === false) { netEl.className = 'off'; netEl.textContent = 'Sin conexión · solo lo descargado'; }
+  else if (netEl.className === 'off') { netEl.className = 'on'; netEl.textContent = 'De nuevo en línea'; netT = setTimeout(() => { netEl.className = ''; netEl.textContent = ''; }, 3000); }
+}
+addEventListener('offline', netShow); addEventListener('online', netShow); netShow();
 function toast(msg) {
   const t = toastEl();
   t.textContent = msg; t.classList.add('show');
@@ -799,7 +807,6 @@ routes.home = async function () {
     ${row('mapa', svg('map'), 'Mapa de dominio', (() => { const dm = dominioTemas(idx), c = k => dm.filter(x => x.est === k).length; return c('r') + c('y') + c('g') ? `${c('r')} por reforzar · ${c('g')} dominados` : 'Aparecerá cuando empieces a contestar'; })())}
     ${row('temario', svg('list'), 'Temas vistos', store.getSeen().length ? store.getSeen().length + ' de ' + idx.temas.length : 'Marca lo que ya has estudiado')}
   </div>
-  ${navigator.onLine === false ? `<div class="note">Sin conexión: solo funcionan las preguntas ya descargadas (Ajustes → Uso sin conexión).</div>` : ''}
 <div id="syncnote"></div>`;
   // el aviso de cuenta se decide cuando Firebase ya ha arrancado (antes mostraba «no configurado» un instante al abrir)
   const paintNote = () => {
