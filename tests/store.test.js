@@ -235,3 +235,83 @@ describe('motivo «Velocidad» (7)', () => {
     expect(motivosFallo({ a: [1, 0, 0, 0, 0, 0, 0, 0, 0, 7] })[7]).toBe(1);
   });
 });
+
+describe('auditoría: persistencia y datos externos', () => {
+  it('conserva ajustes estructurados al recargar y recuperar la copia local', async () => {
+    st.setCfg('ui', { theme: 'dark', size: 2, lectura: 1 });
+    st.setCfg('test', { sel: ['T1.01'], n: 25, mode: 'falladas', o: ['O', 'G'] });
+    st.setCfg('tdet', { 1: [8, 5] });
+    await st.flushNow();
+    vi.resetModules(); const next = await import('../src/store.js');
+    expect(next.getCfg().ui).toEqual({ theme: 'dark', size: 2, lectura: 1 });
+    expect(next.getCfg().test.sel).toEqual(['T1.01']);
+    expect(next.getCfg().tdet).toEqual({ 1: [8, 5] });
+    localStorage.clear(); vi.resetModules(); const recovered = await import('../src/store.js');
+    await recovered.recover();
+    expect(recovered.getCfg().ui).toEqual({ theme: 'dark', size: 2, lectura: 1 });
+  });
+  it('rechaza claves reservadas e ignora registros heredados al importar', () => {
+    const data = JSON.parse('{"stats":{"__proto__":[1,1,1,-1,0,1,0],"constructor":[1,1,1,-1,0,1,0]},"reports":{"__proto__":{"ts":123,"tema":"T1.01","nota":"test","st":"abierto"}}}');
+    st.importAll(JSON.stringify(data));
+    expect(Object.keys(st.getStats())).toEqual([]);
+    expect(Object.keys(st.getReports())).toEqual([]);
+    const inherited = Object.create({ injected: [1, 1, 1, -1, 0, 1, 0] });
+    inherited.real = [1, 1, 1, -1, 0, 1, 0];
+    st.mergeRemote(inherited);
+    expect(Object.keys(st.getStats())).toEqual(['real']);
+    expect(st.rec('toString')).toBeUndefined();
+  });
+  it('no duplica sesiones repetidas dentro de una misma importación', () => {
+    st.mergeSessions([{ id: 's1', ts: 1 }, { id: 's1', ts: 1 }]);
+    expect(st.getSessions()).toHaveLength(1);
+  });
+  it('exportar e importar conserva los ajustes válidos y descarta claves peligrosas anidadas', async () => {
+    st.setCfg('ui', { theme: 'dark', size: 2 });
+    const text = st.exportAll(); st.resetAll(); st.importAll(text);
+    expect(st.getCfg().ui).toEqual({ theme: 'dark', size: 2 });
+    localStorage.setItem('tai.v1', '{"stats":{},"cfg":{"ui":{"theme":"dark","__proto__":{"x":1}},"constructor":"x"}}');
+    vi.resetModules(); const next = await import('../src/store.js');
+    expect(next.getCfg().ui).toEqual({ theme: 'dark' });
+    expect(Object.keys(next.getCfg())).toEqual(['ui']);
+    expect(Object.getPrototypeOf(next.getCfg().ui)).toBe(Object.prototype);
+  });
+});
+
+describe('auditoría: eliminación sincronizada de tarjetas', () => {
+  it('una tarjeta eliminada no reaparece al fusionar una copia antigua y permite volver a crearla', async () => {
+    st.addFallo('q9', 1000);
+    const old = JSON.parse(JSON.stringify(st.getCards()));
+    st.removeCard('FC-Q-q9');
+    st.mergeCards(old);
+    expect(st.cardRec('FC-Q-q9')).toBeUndefined();
+    expect(Object.keys(st.getCards())).toEqual([]);
+    const copy = st.exportAll(); st.resetAll(); st.importAll(copy); st.mergeCards(old);
+    expect(st.cardRec('FC-Q-q9')).toBeUndefined();
+    expect(st.addFallo('q9')).toBe(true);
+    expect(st.cardRec('FC-Q-q9')[0]).toBe(0);
+  });
+  it('notifica a la nube la marca de borrado y la respeta al recibirla', () => {
+    let remote;
+    st.setSyncer({ pushCards: m => { remote = JSON.parse(JSON.stringify(m)); } });
+    st.addFallo('q9', 1000); st.removeCard('FC-Q-q9');
+    st.setSyncer(null);
+    st.resetAll(); st.addFallo('q9', 1000); st.mergeCards(remote);
+    expect(st.cardRec('FC-Q-q9')).toBeUndefined();
+  });
+});
+
+describe('auditoría: formas de los ajustes importados', () => {
+  it('sustituye campos de tipos incorrectos y conserva las preferencias válidas tras recargar', async () => {
+    st.importAll('{"stats":{},"cfg":{"test":{"sel":42,"o":42,"n":25},"sim":{"o":42},"evo":{"f":42,"w":999999},"ui":{"theme":"dark"},"tdet":{"1":42}}}');
+    vi.resetModules(); const next = await import('../src/store.js');
+    expect(next.getCfg().test).toMatchObject({ sel: [], o: ['O', 'A', 'G'], n: 25 });
+    expect(next.getCfg().sim.o).toEqual(['O', 'G']);
+    expect(next.getCfg().evo).toMatchObject({ f: 'g', w: 12 });
+    expect(next.getCfg().ui.theme).toBe('dark');
+    expect(next.getCfg().tdet).toEqual({});
+  });
+  it('descarta primitivos donde las pantallas esperan objetos modificables', () => {
+    st.importAll('{"stats":{},"cfg":{"test":"mal","sim":true,"ui":42,"cardsc":false,"evo":5}}');
+    for (const key of ['test', 'sim', 'ui', 'cardsc', 'evo']) expect(st.getCfg()[key]).toBeUndefined();
+  });
+});

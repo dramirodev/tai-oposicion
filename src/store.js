@@ -1,3 +1,4 @@
+import { cleanCfg, cleanCfgSetting } from './config.js';
 // Almacén local (local-first) + sincronización con Firestore.
 // Registro por pregunta: [n, ok, last, box, due, lastRes, flag]
 //   n=intentos, ok=aciertos, last=timestamp ms, box=-1 fuera del repaso (0..3 en repaso),
@@ -11,7 +12,8 @@ export const LUCKY_DAYS = 1; // las acertadas «por suerte» vuelven cada día h
 
 // ── Validación de datos externos (localStorage, Firestore, archivos importados) ──
 const num = (v, lo = 0, hi = 1e13) => (typeof v === 'number' && isFinite(v)) ? Math.min(hi, Math.max(lo, v)) : null;
-const ID_RE = /^[A-Za-z0-9._\-~]{1,48}$/;
+const ID_RE = /^(?!__proto__$|constructor$|prototype$)[A-Za-z0-9._\-~]{1,48}$/;
+const dict = () => Object.create(null);
 const TEMA_RE = /^T\d\.\d\d$/;
 export function cleanRec(r) {
   if (!Array.isArray(r) || r.length < 3) return null;
@@ -22,9 +24,9 @@ export function cleanRec(r) {
   return [n, Math.min(ok, n), last, box === null ? -1 : Math.floor(box), due || 0, lr === null ? 0 : Math.floor(lr), fl ? 1 : 0, tn ? ts : 0, tn, Math.floor(mo)];
 }
 export function cleanStats(map) {
-  const out = {};
+  const out = dict();
   if (!map || typeof map !== 'object') return out;
-  for (const id in map) { if (!ID_RE.test(id)) continue; const r = cleanRec(map[id]); if (r) out[id] = r; }
+  for (const id of Object.keys(map)) { if (!ID_RE.test(id)) continue; const r = cleanRec(map[id]); if (r) out[id] = r; }
   return out;
 }
 // ── Tarjetas (flashcards): { idTarjeta: [n, ok, last, box, due, lastGrade] } ──
@@ -35,13 +37,14 @@ export function cleanCard(r) {
   if (!Array.isArray(r) || r.length < 5) return null;
   const n = num(r[0], 0, 1e6), ok = num(r[1], 0, 1e6), last = num(r[2]);
   if (n === null || ok === null || last === null) return null;
+  if (r[5] === -1) return [0, 0, last, -1, 0, -1]; // marca de borrado sincronizada
   const box = num(r[3], -1, 4), due = num(r[4]), lg = num(r[5], 0, 2);
   return [n, Math.min(ok, n), last, box === null ? -1 : Math.floor(box), due || 0, lg === null ? 0 : Math.floor(lg)];
 }
 export function cleanCards(map) {
-  const out = {}; let k = 0;
+  const out = dict(); let k = 0;
   if (!map || typeof map !== 'object') return out;
-  for (const id in map) { if (!CARD_RE.test(id)) continue; const r = cleanCard(map[id]); if (r) { out[id] = r; if (++k >= MAX_CARDS) break; } }
+  for (const id of Object.keys(map)) { if (!CARD_RE.test(id)) continue; const r = cleanCard(map[id]); if (r) { out[id] = r; if (++k >= MAX_CARDS) break; } }
   return out;
 }
 export function cleanSession(s) {
@@ -71,9 +74,9 @@ export function cleanSessions(l) { return (Array.isArray(l) ? l : []).map(cleanS
 // ── Informes de errores del banco: { idPregunta: {ts, tema, motivo, nota, st} } ──
 const REP_ST = ['abierto', 'resuelto', 'quitado'];
 export function cleanReports(m) {
-  const out = {};
+  const out = dict();
   if (!m || typeof m !== 'object') return out;
-  for (const id in m) {
+  for (const id of Object.keys(m)) {
     const r = m[id]; if (!ID_RE.test(id) || !r || typeof r !== 'object') continue;
     const ts = num(r.ts); if (ts === null) continue;
     out[id] = { ts, tema: typeof r.tema === 'string' && TEMA_RE.test(r.tema) ? r.tema : '', motivo: typeof r.motivo === 'string' ? r.motivo.slice(0, 60) : '', nota: typeof r.nota === 'string' ? r.nota.slice(0, 300) : '', st: REP_ST.includes(r.st) ? r.st : 'abierto' };
@@ -82,7 +85,7 @@ export function cleanReports(m) {
 }
 export const getReports = () => S.reports || {};
 export function addReport(id, tema, motivo, nota = '') {
-  S.reports = S.reports || {};
+  S.reports = S.reports || dict();
   S.reports[id] = cleanReports({ [id]: { ts: Date.now(), tema, motivo, nota, st: 'abierto' } })[id];
   persist(); emit(); if (syncer && syncer.pushReports) syncer.pushReports(S.reports);
 }
@@ -92,23 +95,12 @@ export function setReportState(id, st) {
   persist(); emit(); if (syncer && syncer.pushReports) syncer.pushReports(S.reports);
 }
 export function mergeReports(m0) {
-  const m = cleanReports(m0); S.reports = S.reports || {}; let ch = false;
-  for (const id in m) if (!S.reports[id] || m[id].ts > S.reports[id].ts) { S.reports[id] = m[id]; ch = true; }
+  const m = cleanReports(m0); S.reports = S.reports || dict(); let ch = false;
+  for (const id of Object.keys(m)) if (!S.reports[id] || m[id].ts > S.reports[id].ts) { S.reports[id] = m[id]; ch = true; }
   if (ch) { persist(); emit(); }
   return ch;
 }
 
-// Ajustes: solo claves simples y valores primitivos (evita basura o claves como __proto__ venidas de copias externas)
-function cleanCfg(c) {
-  const out = {};
-  if (!c || typeof c !== 'object' || Array.isArray(c)) return out;
-  for (const k of Object.keys(c)) {
-    if (!/^[A-Za-z0-9_.-]{1,40}$/.test(k) || k === '__proto__') continue;
-    const v = c[k];
-    if (v === null || ['string', 'number', 'boolean'].includes(typeof v)) out[k] = typeof v === 'string' ? v.slice(0, 200) : v;
-  }
-  return out;
-}
 
 let S = load();
 const listeners = new Set();
@@ -120,7 +112,7 @@ function load() {
     const s = JSON.parse(localStorage.getItem(KEY) || 'null');
     if (s && s.stats) return { stats: cleanStats(s.stats), sessions: cleanSessions(s.sessions).slice(0, MAX_SESIONES), cfg: cleanCfg(s.cfg), seen: cleanSeen(s.seen), reports: cleanReports(s.reports), cards: cleanCards(s.cards) };
   } catch (e) {}
-  return { stats: {}, sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: {}, cards: {} };
+  return { stats: dict(), sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: dict(), cards: dict() };
 }
 let persistWarned = false;
 function persist() {
@@ -190,7 +182,11 @@ export function mergeSeen(r0) {
   if (!S.seen || (r.ts || 0) > (S.seen.ts || 0)) { S.seen = { t: r.t, ts: r.ts || 0 }; persist(); emit(); return true; }
   return false;
 }
-export function setCfg(k, v) { S.cfg[k] = v; persist(); emit(); }
+export function setCfg(k, v) {
+  const value = cleanCfgSetting(k, v);
+  if (value === undefined) return;
+  S.cfg[k] = value; persist(); emit();
+}
 export const rec = id => S.stats[id];
 export const temaDe = id => {
   // los ids no codifican el tema; se guarda el tema junto al registro en meta (ver main.js)
@@ -265,7 +261,7 @@ export function addSession(s) {
 export function mergeRemote(map0) {
   const map = cleanStats(map0);
   let changed = false;
-  for (const id in map) {
+  for (const id of Object.keys(map)) {
     const a = S.stats[id], b = map[id];
     if (!a || b[2] > a[2]) { S.stats[id] = b; changed = true; }
   }
@@ -276,35 +272,42 @@ export function mergeSessions(list0) {
   const list = cleanSessions(list0);
   const have = new Set(S.sessions.map(s => s.id));
   let ch = false;
-  for (const s of list) if (!have.has(s.id)) { S.sessions.push(s); ch = true; }
+  for (const s of list) if (!have.has(s.id)) { S.sessions.push(s); have.add(s.id); ch = true; }
   if (ch) { S.sessions.sort((a, b) => b.ts - a.ts); S.sessions = S.sessions.slice(0, MAX_SESIONES); persist(); emit(); }
   return ch;
 }
 // ── API de tarjetas ──
-export const getCards = () => S.cards || (S.cards = {});
-export const cardRec = id => (S.cards || {})[id];
+const deletedCard = r => r?.[5] === -1;
+// El documento completo incluye borrados para evitar que otra copia resucite una tarjeta.
+export const getCardsDoc = () => S.cards || (S.cards = dict());
+export const getCards = () => Object.fromEntries(Object.entries(getCardsDoc()).filter(([, r]) => !deletedCard(r)));
+export const cardRec = id => { const r = getCardsDoc()[id]; return deletedCard(r) ? undefined : r; };
 export function mergeCards(m0) {
-  const m = cleanCards(m0); S.cards = S.cards || {}; let ch = false;
-  for (const id in m) { const a = S.cards[id], b = m[id]; if (!a || b[2] > a[2]) { S.cards[id] = b; ch = true; } }
+  const m = cleanCards(m0); S.cards = S.cards || dict(); let ch = false;
+  for (const id of Object.keys(m)) { const a = S.cards[id], b = m[id]; if (!a || b[2] > a[2]) { S.cards[id] = b; ch = true; } }
   if (ch) { persist(); emit(); }
   return ch;
 }
 // Crea la tarjeta de un fallo (vence hoy). Si ya existe, no la toca. Devuelve true si la creó.
 export function addFallo(qid, now = Date.now()) {
   const id = 'FC-Q-' + qid; if (!CARD_RE.test(id)) return false;
-  S.cards = S.cards || {}; if (S.cards[id]) return false;
+  S.cards = S.cards || dict(); if (cardRec(id)) return false;
   if (Object.keys(S.cards).length >= MAX_CARDS) return false;
-  S.cards[id] = [0, 0, now, 0, now, 0];
+  S.cards[id] = [0, 0, Math.max(now, (S.cards[id]?.[2] || 0) + 1), 0, now, 0];
   persist(); emit(); if (syncer && syncer.pushCards) syncer.pushCards(S.cards); return true;
 }
-export function removeCard(id) { if (S.cards && S.cards[id]) { delete S.cards[id]; persist(); emit(); } }
+export function removeCard(id) {
+  const r = cardRec(id); if (!r) return;
+  S.cards[id] = [0, 0, Math.max(Date.now(), r[2] + 1), -1, 0, -1];
+  persist(); emit(); if (syncer && syncer.pushCards) syncer.pushCards(S.cards);
+}
 // Valora una tarjeta: 0 fallé · 1 dudaba (cuentan como fallo: vuelve a +2 días) · 2 lo sabía (sube de caja)
 export function gradeCard(id, grade, now = Date.now()) {
   if (!CARD_RE.test(id) || ![0, 1, 2].includes(grade)) return null;
-  S.cards = S.cards || {};
-  const r = S.cards[id] || [0, 0, now, -1, 0, 0];
+  S.cards = S.cards || dict();
+  const r = cardRec(id) || [0, 0, now, -1, 0, 0];
   const nueva = r[0] === 0;
-  r[0] += 1; r[2] = now; r[5] = grade;
+  r[0] += 1; r[2] = Math.max(now, (S.cards[id]?.[2] || 0) + 1); r[5] = grade;
   if (grade < 2) { r[3] = 0; r[4] = now + INTERVALS[0] * DAY; }
   else {
     r[1] += 1;
@@ -325,5 +328,6 @@ export function importAll(txt) {
   if (o.seen) mergeSeen(o.seen);
   if (o.reports) mergeReports(o.reports);
   if (o.cards) mergeCards(o.cards);
+  if (o.cfg) { S.cfg = { ...S.cfg, ...cleanCfg(o.cfg) }; persist(); emit(); }
 }
-export function resetAll() { S = { stats: {}, sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: {}, cards: {} }; persist(); emit(); }
+export function resetAll() { S = { stats: dict(), sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: dict(), cards: dict() }; persist(); emit(); }

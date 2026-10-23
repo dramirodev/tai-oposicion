@@ -1,6 +1,11 @@
 # Prompt para Gemini — tarjetas de un tema (repetir por cada tema)
 
-Adjunta a Gemini DOS ficheros y sustituye los valores entre llaves:
+El banco ya existe: 1.410 tarjetas en 36 temas a 23 de octubre de 2026. Usa este prompt para revisar
+un tema o proponer ampliaciones; conserva los ids existentes y no sobrescribas el banco sin comparar los cambios.
+Para revisar un tema existente, adjunta también su archivo `public/cards/{ID}.json` y pide conservar los ids
+asociados a cada dato. Las tarjetas nuevas deben usar ids libres, con un máximo de 40 por tema.
+
+Adjunta a Gemini DOS ficheros fuente y sustituye los valores entre llaves:
 1. El temario del tema: `TEMARIO_OPOSICION/BANCO_PREGUNTAS/temario_txt/{ID} {NOMBRE} - Temario.txt`
 2. El banco de preguntas del tema: `PWA_TAI/public/data/{ID}.json`
 
@@ -60,6 +65,12 @@ Responde SOLO con el array JSON.
 ---------------------------------------------------------------- COPIAR HASTA AQUÍ
 
 ## Después de recibir la respuesta
-1. Guarda el JSON como `PWA_TAI/public/cards/{ID}.json` (por ejemplo `T1.01.json`).
-2. Avisa a Claude: valida los ficheros (`node scripts/validate_cards.mjs`), genera `public/cards/index.json` y prepara el despliegue.
-3. Revisa una muestra de 10 tarjetas por tema; las dudosas se marcan con `"revisar": true` y la app no las muestra hasta que las confirmes.
+
+1. Compara el resultado con `public/cards/{ID}.json`; conserva ids estables y revisa las referencias antes de sustituir contenido.
+2. Actualiza `public/cards/index.json` con el número total de tarjetas del archivo, incluidas las marcadas para revisión.
+3. Revisa una muestra de 10 tarjetas por tema y actualiza `public/cards/_muestra.md` cuando corresponda.
+   Marca las dudosas con `"revisar": true`: no se mostrarán ni se exportarán a Anki hasta confirmarlas.
+4. Ejecuta `node scripts/validate_cards.mjs`, `npm test` y `npm run build`. El validador comprueba estructura, no exactitud factual.
+5. Comprueba el repaso y la exportación en la app antes de publicar siguiendo [la guía de despliegue](../DESPLIEGUE_AUTOMATICO.md).
+
+Detalles del estado actual y de las comprobaciones manuales en [PLAN_FLASHCARDS.md](PLAN_FLASHCARDS.md).

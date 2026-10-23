@@ -11,7 +11,7 @@ const dec = id => id.replace(/~/g, '.');
 
 import { status, emit } from './syncstate.js';
 
-let auth, db, uid = null, timer = null, unsubs = [];
+let auth, db, uid = null, timer = null, cardsT = null, retryT = null, retryN = 0, syncEpoch = 0, unsubs = [];
 let temaOf = () => null; // id -> tema
 let idsOfTema = () => [];
 
@@ -71,7 +71,6 @@ export function retry() { status.error = ''; retryN = 0; if (uid) { status.state
 
 // Errores transitorios (red, servidor ocupado): no son un fallo real; se reintenta la suscripción con espera creciente.
 // Un listener de Firestore que falla queda cancelado para siempre, así que sin reintento la sincronización moría hasta volver a entrar.
-let retryT = null, retryN = 0;
 function listenErr(e) {
   if (e.code !== 'permission-denied' && e.code !== 'unauthenticated') {
     status.state = 'reconectando…'; status.detail = (e.code || '') + ' ' + (e.message || ''); console.warn('Firestore:', e.code, e.message); emit();
@@ -85,46 +84,62 @@ if (typeof document !== 'undefined') document.addEventListener('visibilitychange
 
 function start() {
   stop();
+  const sessionUid = uid, epoch = syncEpoch;
+  const active = () => uid === sessionUid && epoch === syncEpoch;
+  const error = e => { if (active()) listenErr(e); };
   // estadísticas: un documento por tema
   unsubs.push(onSnapshot(collection(db, 'users', uid, 'stats'), snap => {
-    const map = {};
+    if (!active()) return;
+    const map = Object.create(null);
     snap.forEach(d => {
       const m = (d.data() || {}).m || {};
-      for (const k in m) map[dec(k)] = m[k];
+      for (const k of Object.keys(m)) map[dec(k)] = m[k];
     });
     store.mergeRemote(map);
     ok();
     // sube lo local que el servidor no tenga o tenga más antiguo
     pushAll(map);
-  }, listenErr));
+  }, error));
   unsubs.push(onSnapshot(query(collection(db, 'users', uid, 'sessions'), orderBy('ts', 'desc'), limit(300)), snap => {
+    if (!active()) return;
     const l = []; snap.forEach(d => l.push(d.data()));
     store.mergeSessions(l);
-  }, listenErr));
+  }, error));
   unsubs.push(onSnapshot(doc(db, 'users', uid, 'cfg', 'seen'), d => {
+    if (!active()) return;
     if (d.exists()) store.mergeSeen(d.data());
     const loc = store.getSeenDoc(), rem = d.exists() ? d.data() : null;
     if (loc.ts && (!rem || loc.ts > (rem.ts || 0))) pushSeen(loc);
-  }, listenErr));
+  }, error));
   unsubs.push(onSnapshot(doc(db, 'users', uid, 'cfg', 'reports'), d => {
+    if (!active()) return;
     if (d.exists()) store.mergeReports((d.data() || {}).m);
     const loc = store.getReports(), rem = d.exists() ? ((d.data() || {}).m || {}) : {};
     if (Object.keys(loc).some(k => !rem[k] || loc[k].ts > rem[k].ts)) pushReports(loc);
-  }, listenErr));
+  }, error));
   unsubs.push(onSnapshot(doc(db, 'users', uid, 'cfg', 'cards'), d => {
+    if (!active()) return;
     const rem = d.exists() ? ((d.data() || {}).m || {}) : {};
     if (d.exists()) store.mergeCards(rem);
-    const loc = store.getCards();
+    const loc = store.getCardsDoc();
     if (Object.keys(loc).some(k => !rem[k] || loc[k][2] > rem[k][2])) pushCards(loc);
-  }, listenErr));
+  }, error));
 }
-let cardsT = null;
 export function pushCards(m) {
   if (!uid) return;
   clearTimeout(cardsT);
-  cardsT = setTimeout(() => setDoc(doc(db, 'users', uid, 'cfg', 'cards'), { m, u: Date.now() }, { merge: true }).catch(writeErr), 3000);
+  const targetUid = uid, payload = store.cleanCards(m);
+  cardsT = setTimeout(() => {
+    if (uid !== targetUid) return;
+    setDoc(doc(db, 'users', targetUid, 'cfg', 'cards'), { m: payload, u: Date.now() }, { merge: true }).catch(writeErr);
+  }, 3000);
 }
-function stop() { unsubs.forEach(u => u()); unsubs = []; }
+function stop() {
+  syncEpoch++;
+  clearTimeout(timer); clearTimeout(cardsT); clearTimeout(retryT);
+  timer = cardsT = retryT = null;
+  unsubs.forEach(u => u()); unsubs = [];
+}
 
 function pushAll(remote) {
   const local = store.getStats();

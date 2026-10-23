@@ -1,49 +1,72 @@
 # Despliegue automático (GitHub → Firebase)
 
-Cada vez que se sube un cambio a la rama `main`, GitHub ejecuta los tests, compila la app y la publica en
-https://tai-oposicion.web.app. Si un test falla, no se publica nada.
+Actualizado el 23 de octubre de 2026. El repositorio ya tiene un flujo en
+[.github/workflows/deploy.yml](.github/workflows/deploy.yml); no hace falta inicializar Git ni crear otro flujo.
 
-## Configuración (una sola vez, en la Terminal del Mac)
+## Comportamiento actual
 
-1. Entra en la carpeta, coloca el flujo de trabajo (el sistema no me deja escribir en `.github`, así que lo muevo tú) e inicia el repositorio:
+Cada push a `main`, o ejecución manual del flujo desde Actions:
 
-   cd "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/PWA_TAI"
-   mkdir -p .github/workflows && mv DEPLOY_WORKFLOW.yml .github/workflows/deploy.yml
-   git init -b main
-   git add .
-   git commit -m "Preparación TAI"
+1. Prepara Node.js 24 e instala con `npm ci`.
+2. Ejecuta `npm test` (incluye validación de las tarjetas).
+3. Compila con `npm run build` y valida de nuevo las tarjetas.
+4. Publica Firebase Hosting en el proyecto `tai-oposicion`.
+5. Intenta publicar las reglas de Firestore.
 
-2. Crea el repositorio PRIVADO en GitHub y sube el código (necesitas la herramienta `gh`: `brew install gh`, y `gh auth login`):
+Si fallan las pruebas, la compilación o la validación, no se publica el hosting. **El fallo de publicación
+de reglas se convierte en un aviso y no hace fallar el flujo**: comprobar ese paso por separado.
+La configuración del flujo no acredita que la última ejecución haya terminado correctamente.
 
-   gh repo create tai-oposicion --private --source=. --push
+Sitio: [tai-oposicion.web.app](https://tai-oposicion.web.app).
+Para instalar y usar el acceso con Google, el README indica utilizar
+[tai-oposicion.firebaseapp.com](https://tai-oposicion.firebaseapp.com).
 
-3. Crea la cuenta de servicio y el secreto. Lo hace Firebase por ti:
+## Configuración necesaria en GitHub y Firebase
 
-   firebase login
-   firebase init hosting:github
+- Secreto del repositorio: `FIREBASE_SERVICE_ACCOUNT_TAI_OPOSICION`, con el JSON de la cuenta de servicio.
+- Permisos de la cuenta para desplegar Hosting; para publicar reglas, rol **Firebase Rules Admin**.
+- Authentication con Google habilitado, Firestore creado y configuración web en `public/firebase-config.json`.
+- Las reglas actuales restringen el acceso a la cuenta autorizada en `firestore.rules`; adaptarlas si cambia el usuario.
 
-   Responde: repositorio `TU_USUARIO/tai-oposicion` · ¿ejecutar un script de compilación? **No** ·
-   ¿desplegar al fusionar? **No** (ya lo hace nuestro flujo) · si te pregunta por sobrescribir ficheros, **no**.
-   Al terminar crea el secreto `FIREBASE_SERVICE_ACCOUNT_TAI_OPOSICION` en tu repositorio.
-   Si te deja ficheros `.github/workflows/firebase-hosting-*.yml`, bórralos (ya tenemos `deploy.yml`).
-
-4. (Opcional pero recomendable) Para que también se desplieguen las reglas de Firestore, en
-   Google Cloud → IAM, busca la cuenta de servicio `github-action-…@tai-oposicion.iam.gserviceaccount.com`
-   y añádele el rol **Firebase Rules Admin**. Sin ese rol, solo se despliega el hosting.
-
-5. Sube los cambios y comprueba la pestaña **Actions** del repositorio:
-
-   git add -A && git commit -m "Despliegue automático" && git push
+Si hay que reconstruir la integración, se puede usar `firebase init hosting:github` para configurar la cuenta
+y el secreto. Revisar los archivos generados y conservar el flujo existente sin añadir despliegues duplicados.
 
 ## Uso diario
 
-Claude copia los cambios a la carpeta. Cuando quieras publicarlos:
+Desde la carpeta del proyecto:
 
-   git add -A && git commit -m "Descripción" && git push
+```sh
+cd /Volumes/SSD/develop/PWA_TAI
+npm ci
+npm test
+npm run build
+```
 
-(o en GitHub Desktop: «Commit» y «Push»). En ~2 minutos está en la web.
-Para volver a una versión anterior: `git revert HEAD && git push`.
+Revisar los cambios, crear el commit y hacer push a `main` cuando se quiera publicar (también puede hacerse
+con GitHub Desktop). Después comprobar Actions, incluido el paso de reglas, y probar la app publicada.
+El tiempo del despliegue depende de la ejecución del flujo.
 
-## Notas
-- El repositorio debe ser privado. `public/firebase-config.json` es configuración web pública de Firebase, pero no hace falta exponerla.
-- El progreso de estudio vive en tu navegador y en Firestore, no en el repositorio.
+## Despliegue manual
+
+Con la CLI de Firebase instalada y una sesión con permisos:
+
+```sh
+npm ci
+npm test
+npm run build
+firebase deploy --only firestore:rules,hosting --project tai-oposicion
+```
+
+La compilación es necesaria: `public/app.js`, `public/chunks/` y `public/version.json` no se versionan.
+La versión procede de `package.json`; la compilación añade el commit. Si se modifica el service worker,
+incrementar también `tai-vN` en `public/sw.js`. Los cambios solo de documentación no lo requieren.
+
+## Verificación tras publicar
+
+- Confirmar versión en Ajustes y comportamiento de «Actualizar ahora».
+- Probar login con la cuenta autorizada y sincronización, incluidas tarjetas.
+- Descargar el banco en Ajustes y comprobar preguntas y tarjetas sin conexión.
+- Si se cambiaron reglas, comprobar que se publicaron; un hosting actualizado no garantiza reglas actualizadas.
+
+El progreso vive en el navegador y en Firestore, no en Git. `public/firebase-config.json` contiene
+configuración del cliente web; la autorización depende de Authentication y de las reglas de Firestore.
