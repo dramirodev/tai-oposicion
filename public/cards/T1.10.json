@@ -1,0 +1,354 @@
+[
+ {
+  "id": "FC-T1.10-001",
+  "t": "T1.10",
+  "tipo": "cifra",
+  "q": "¿Qué norma regula el Esquema Nacional de Seguridad vigente?",
+  "a": "Real Decreto 311/2022, de 3 de mayo",
+  "ref": "ENS",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-002",
+  "t": "T1.10",
+  "tipo": "cifra",
+  "q": "¿Qué norma regula el Esquema Nacional de Interoperabilidad?",
+  "a": "Real Decreto 4/2010, de 8 de enero",
+  "ref": "ENI",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-003",
+  "t": "T1.10",
+  "tipo": "definicion",
+  "q": "¿Cuáles son las dimensiones de seguridad del ENS?",
+  "a": "Disponibilidad, autenticidad, integridad, confidencialidad y trazabilidad",
+  "ref": "ENS Anexo I",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-004",
+  "t": "T1.10",
+  "tipo": "definicion",
+  "q": "¿A qué niveles se adscriben las dimensiones de seguridad del ENS?",
+  "a": "Bajo, medio o alto",
+  "ref": "ENS art. 40",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-005",
+  "t": "T1.10",
+  "tipo": "definicion",
+  "q": "¿Cuándo un sistema es de categoría MEDIA?",
+  "a": "Si alguna dimensión alcanza nivel medio y ninguna supera ese nivel",
+  "ref": "ENS art. 40",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-006",
+  "t": "T1.10",
+  "tipo": "definicion",
+  "q": "¿En qué tres grupos se dividen las medidas de seguridad del ENS?",
+  "a": "Marco organizativo, marco operacional y medidas de protección",
+  "ref": "ENS Anexo II",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-007",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "¿Qué documento formaliza las medidas de seguridad seleccionadas en el ENS?",
+  "a": "La Declaración de Aplicabilidad, firmada por el responsable de seguridad",
+  "ref": "ENS Anexo II",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-008",
+  "t": "T1.10",
+  "tipo": "cifra",
+  "q": "¿Cada cuánto debe realizarse la auditoría ordinaria de seguridad del ENS?",
+  "a": "Al menos cada 2 años",
+  "ref": "ENS art. 31",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-009",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "¿Cuándo se hace una auditoría extraordinaria del ENS?",
+  "a": "Cuando se producen modificaciones sustanciales en el sistema",
+  "ref": "ENS art. 31",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-010",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "¿Quién decide la suspensión de un servicio por deficiencias graves de seguridad?",
+  "a": "El responsable del sistema",
+  "ref": "ENS art. 13",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-011",
+  "t": "T1.10",
+  "tipo": "definicion",
+  "q": "¿Qué medida del ENS afecta a la dimensión de trazabilidad?",
+  "a": "Sellos de tiempo y registro de actividad",
+  "ref": "ENS Anexo II",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-012",
+  "t": "T1.10",
+  "tipo": "definicion",
+  "q": "¿Qué es la Estrategia Nacional de Ciberseguridad y de qué año es la última citada?",
+  "a": "Marco para el uso seguro del ciberespacio; 2019",
+  "ref": "ENCS",
+  "src": "curada",
+  "caduca": true
+ },
+ {
+  "id": "FC-T1.10-013",
+  "t": "T1.10",
+  "tipo": "definicion",
+  "q": "¿Cuáles son las dimensiones de la interoperabilidad del ENI?",
+  "a": "Organizativa, semántica y técnica",
+  "ref": "ENI art. 6",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-014",
+  "t": "T1.10",
+  "tipo": "definicion",
+  "q": "¿Qué mínimos de resolución fija la NTI de Digitalización?",
+  "a": "200 ppp para blanco y negro, color y escala de grises",
+  "ref": "NTI Digitalización",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-015",
+  "t": "T1.10",
+  "tipo": "definicion",
+  "q": "¿Cuáles son los marcos de la guía de auditoría del ENI?",
+  "a": "Marco organizativo, marco operacional y medidas técnicas",
+  "ref": "ENI",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-016",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "¿Qué centro pone a disposición aplicaciones de fuentes abiertas entre Administraciones?",
+  "a": "El Centro de Transferencia de Tecnología",
+  "ref": "Ley 40/2015 art. 157",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-017",
+  "t": "T1.10",
+  "tipo": "definicion",
+  "q": "¿Qué trámites exigen firma obligatoria del interesado?",
+  "a": "Solicitudes, declaraciones responsables, recursos, desistir y renunciar; no consultar estado ni aportar documentos",
+  "ref": "Ley 39/2015 art. 11",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-018",
+  "t": "T1.10",
+  "tipo": "cifra",
+  "q": "¿Cómo se computan los plazos señalados por días?",
+  "a": "En días hábiles, desde el día siguiente a la notificación o publicación",
+  "ref": "Ley 39/2015 art. 30",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-019",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "¿Desde cuándo se entiende practicada una notificación electrónica?",
+  "a": "Desde que se accede a su contenido",
+  "ref": "Ley 39/2015 art. 43",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-020",
+  "t": "T1.10",
+  "tipo": "cifra",
+  "q": "¿Cuándo se entiende rechazada una notificación electrónica no abierta?",
+  "a": "Tras 10 días naturales desde su puesta a disposición",
+  "ref": "Ley 39/2015 art. 43.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-021",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "¿Cómo se practica la notificación electrónica?",
+  "a": "Por comparecencia en sede electrónica, dirección electrónica habilitada única o ambos",
+  "ref": "Ley 39/2015 art. 43",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-022",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "Interesados desconocidos o notificación infructuosa: ¿qué procede?",
+  "a": "Publicación mediante anuncio en el BOE",
+  "ref": "Ley 39/2015 art. 44",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-023",
+  "t": "T1.10",
+  "tipo": "cifra",
+  "q": "¿Qué vigencia tienen los apoderamientos inscritos en el registro?",
+  "a": "Cinco años desde la inscripción, prorrogables",
+  "ref": "Ley 39/2015 art. 6",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-024",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "¿Cuándo se presume la representación?",
+  "a": "Para los actos y gestiones de mero trámite",
+  "ref": "Ley 39/2015 art. 5.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-025",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "¿Cuándo se entiende presentado un escrito en día inhábil?",
+  "a": "En la primera hora del primer día hábil siguiente",
+  "ref": "Ley 39/2015 art. 31.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-026",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "¿Qué horario tiene el registro electrónico?",
+  "a": "Las 24 horas de todos los días del año",
+  "ref": "Ley 39/2015 art. 16.4",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-027",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "¿Qué especifica la disposición de creación del registro electrónico?",
+  "a": "El órgano o unidad responsable de su gestión y las fechas oficiales aplicables",
+  "ref": "Ley 39/2015 art. 16",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-028",
+  "t": "T1.10",
+  "tipo": "definicion",
+  "q": "¿Quiénes son interesados en el procedimiento?",
+  "a": "Quienes lo promuevan como titulares de derechos o intereses legítimos, individuales o colectivos, entre otros",
+  "ref": "Ley 39/2015 art. 4",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-029",
+  "t": "T1.10",
+  "tipo": "definicion",
+  "q": "¿Qué son los documentos públicos administrativos?",
+  "a": "Los válidamente emitidos por los órganos de las Administraciones Públicas",
+  "ref": "Ley 39/2015 art. 26",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-030",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "¿Qué garantiza el índice electrónico del expediente?",
+  "a": "La integridad e inmutabilidad del expediente electrónico",
+  "ref": "Ley 39/2015 art. 70.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-031",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "¿Qué sistema de firma se emplea en la actuación administrativa automatizada?",
+  "a": "Sello electrónico de Administración u órgano, basado en certificado electrónico",
+  "ref": "Ley 40/2015 art. 42",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-032",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "¿Qué derecho añade el art. 53 respecto a documentos?",
+  "a": "No presentar documentos ya en poder de la Administración",
+  "ref": "Ley 39/2015 art. 53.1.d",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-033",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "¿Quién puede cambiar el medio elegido para comunicarse con la Administración?",
+  "a": "La persona, en cualquier momento",
+  "ref": "Ley 39/2015 art. 14.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-034",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "¿Quién NO está obligado a relacionarse electrónicamente con la Administración?",
+  "a": "Las personas físicas que no sean sujetos obligados del art. 14.2",
+  "ref": "Ley 39/2015 art. 14",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-035",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "¿Cuándo entraron plenamente en vigor registro electrónico y registro de apoderamientos?",
+  "a": "El 2 de abril de 2021",
+  "ref": "Ley 39/2015 DF 7.ª",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-036",
+  "t": "T1.10",
+  "tipo": "alcance",
+  "q": "Ley 40/2015: ¿cómo se almacenan los documentos de actuaciones administrativas?",
+  "a": "Por medios electrónicos, salvo imposibilidad",
+  "ref": "Ley 40/2015 art. 46",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-037",
+  "t": "T1.10",
+  "tipo": "contraste",
+  "q": "ENS frente a ENI: ¿cuál habla de dimensiones D-A-I-C-T y cuál de organizativa, semántica y técnica?",
+  "a": "ENS: disponibilidad, autenticidad, integridad, confidencialidad, trazabilidad. ENI: organizativa, semántica, técnica",
+  "ref": "RD 311/2022 y RD 4/2010",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-038",
+  "t": "T1.10",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es dimensión de seguridad del ENS: disponibilidad, integridad, conservación, trazabilidad?",
+  "a": "Conservación",
+  "ref": "ENS",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.10-039",
+  "t": "T1.10",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es grupo de medidas del ENS: marco organizativo, marco operacional, marco de gestión, medidas de protección?",
+  "a": "Marco de gestión",
+  "ref": "ENS Anexo II",
+  "src": "curada"
+ }
+]

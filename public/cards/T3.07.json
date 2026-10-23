@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T3.07-001",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "REST: ¿mantiene el servidor estado del cliente entre peticiones?",
+  "a": "No: es sin estado (stateless)",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-002",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es REST?»: ¿cuál es la respuesta correcta?",
+  "a": "Estilo arquitectónico basado en recursos direccionables por URL, URIs, HTTP y JSON/XML",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-003",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "REST frente a SOAP: ¿cuál es un estilo arquitectónico y cuál un protocolo?",
+  "a": "REST: estilo. SOAP: protocolo",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-004",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Puede REST usar XML?",
+  "a": "Sí: admite JSON, XML y otros formatos",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-005",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Se usa UDDI en REST?",
+  "a": "No: UDDI es de servicios SOAP",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-006",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Qué métodos HTTP son idempotentes pero no seguros?",
+  "a": "PUT y DELETE",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-007",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Es idempotente PUT?",
+  "a": "Sí, PUT es idempotente",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-008",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Qué significa HTTP 404?",
+  "a": "Not Found",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-009",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Qué significa HTTP 503?",
+  "a": "Servicio no disponible",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-010",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Qué significa SOAP?",
+  "a": "Simple Object Access Protocol",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-011",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Cuál es la última versión de SOAP?",
+  "a": "SOAP 1.2",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-012",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Cómo es un mensaje SOAP?",
+  "a": "Envelope obligatorio con Header opcional y Body obligatorio",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-013",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Admite SOAP https?",
+  "a": "Sí, SOAP funciona sobre http y https",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-014",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es MTOM?»: ¿cuál es la respuesta correcta?",
+  "a": "Message Transmission Optimization Mechanism: envío eficiente de datos binarios",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-015",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Qué define WSDL?",
+  "a": "Gramática XML que describe la interfaz de un servicio web",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-016",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "WSDL 2.0: ¿qué dos secciones define?",
+  "a": "Sección abstracta y sección concreta",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-017",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "WSDL: ¿qué etiqueta describe cómo se accede al servicio?",
+  "a": "binding",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-018",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "WSDL: ¿qué operación recibe un mensaje y no responde?",
+  "a": "One-way",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-019",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "WSDL: ¿qué operación envía y luego recibe respuesta?",
+  "a": "Solicit-response",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-020",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Para qué sirve UDDI?",
+  "a": "Registro para publicar y descubrir servicios web; no lo gestiona el W3C",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-021",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es WSIL?»: ¿cuál es la respuesta correcta?",
+  "a": "Método alternativo de descubrimiento de servicios web",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-022",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es SAML?»: ¿cuál es la respuesta correcta?",
+  "a": "Estándar abierto XML para intercambio de autenticación y autorización",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-023",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Qué es WS-Policy?",
+  "a": "Estándar OASIS que delimita políticas aplicables a servicios web",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-024",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Qué es WS-SecureConversation?",
+  "a": "Estándar OASIS para establecer contextos de seguridad",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-025",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Qué es OpenAPI?",
+  "a": "Especificación para desarrollar y documentar APIs REST",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-026",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Es OAuth 2.0 un protocolo de autenticación?",
+  "a": "No: es de autorización basado en tokens",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-027",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "JWT: ¿es un mecanismo con estado?",
+  "a": "No: es sin estado; el token lleva la información",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-028",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es Axis2?»: ¿cuál es la respuesta correcta?",
+  "a": "Motor nuclear de servicios web",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-029",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "Cliente/servidor en 3 capas: ¿cuáles son?",
+  "a": "Presentación, lógica de negocio y datos",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-030",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "3 capas: ¿dónde residen las reglas de negocio?",
+  "a": "En el servidor de aplicaciones",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-031",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "Cliente fino (thin client): ¿qué hace el servidor?",
+  "a": "Todo excepto la presentación",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-032",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Qué formas de colaboración hay entre servicios?",
+  "a": "Orquestación y coreografía",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-033",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Qué NO es principio de diseño SOA?",
+  "a": "El alto acoplamiento (se busca bajo acoplamiento)",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-034",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Cómo se despliegan los microservicios?",
+  "a": "De forma independiente",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-035",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Qué NO es beneficio de los microservicios?",
+  "a": "Un diseño único sin elegir tecnología",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-036",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Qué es SwiftUI?",
+  "a": "Framework para crear apps en todos los dispositivos Apple",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-037",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Qué es Android NDK?",
+  "a": "Kit para código nativo (C/C++) que permite reutilizar bibliotecas",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-038",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Qué característica tienen los sistemas distribuidos?",
+  "a": "Escalabilidad horizontal y de capacidad computacional",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-039",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Qué objetivo principal tienen las arquitecturas de servicios web?",
+  "a": "Interoperabilidad entre aplicaciones de entornos distintos",
+  "ref": "Servicios web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.07-040",
+  "t": "T3.07",
+  "tipo": "definicion",
+  "q": "¿Los servicios web dependen de la plataforma o del lenguaje?",
+  "a": "No: son independientes de plataforma y lenguaje",
+  "ref": "Servicios web",
+  "src": "curada"
+ }
+]

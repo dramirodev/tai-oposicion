@@ -1,0 +1,326 @@
+[
+ {
+  "id": "FC-T3.02-001",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Quién introdujo el modelo relacional?",
+  "a": "Codd",
+  "ref": "Modelo relacional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-002",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué es el grado de una relación?",
+  "a": "El número de atributos que posee",
+  "ref": "Modelo relacional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-003",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué es la cardinalidad de una relación (tabla)?",
+  "a": "El número de filas o tuplas",
+  "ref": "Modelo relacional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-004",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "Tabla de 4 columnas y 7 filas: ¿grado y cardinalidad?",
+  "a": "Grado 4 y cardinalidad 7",
+  "ref": "Modelo relacional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-005",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué es la extensión de una relación?",
+  "a": "El conjunto de sus filas o tuplas",
+  "ref": "Modelo relacional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-006",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué es una clave foránea?",
+  "a": "Atributo o grupo de atributos que referencia la clave primaria de otra tabla",
+  "ref": "Modelo relacional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-007",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué dice la integridad de entidad?",
+  "a": "La clave primaria no puede ser nula en ninguno de sus atributos",
+  "ref": "Modelo relacional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-008",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué dice la integridad referencial?",
+  "a": "Todo valor no nulo de la clave ajena debe existir en la clave referenciada",
+  "ref": "Modelo relacional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-009",
+  "t": "T3.02",
+  "tipo": "alcance",
+  "q": "¿Puede una clave ajena ser nula?",
+  "a": "Sí: una tupla con clave ajena nula no se relaciona con ninguna otra",
+  "ref": "Modelo relacional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-010",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué es un valor nulo?",
+  "a": "Un valor desconocido; no es cero ni cadena vacía",
+  "ref": "Modelo relacional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-011",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué es una clave alternativa?",
+  "a": "Clave candidata que no fue elegida como primaria",
+  "ref": "Modelo relacional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-012",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué niveles tiene la arquitectura ANSI/X3/SPARC?",
+  "a": "Externo, conceptual (lógico) e interno",
+  "ref": "ANSI/SPARC",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-013",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué nivel ANSI/SPARC contiene las vistas externas?",
+  "a": "El nivel externo",
+  "ref": "ANSI/SPARC",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-014",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué son las operaciones fundamentales del álgebra relacional?",
+  "a": "Selección, proyección, unión, diferencia y producto cartesiano",
+  "ref": "Álgebra relacional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-015",
+  "t": "T3.02",
+  "tipo": "contraste",
+  "q": "Álgebra relacional: ¿la intersección es operación fundamental?",
+  "a": "No: es derivada; el producto cartesiano sí es fundamental",
+  "ref": "Álgebra relacional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-016",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué hace la proyección?",
+  "a": "Obtiene un subconjunto de atributos (columnas) de la relación",
+  "ref": "Álgebra relacional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-017",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿De qué operadores se compone el JOIN?",
+  "a": "Selección, producto cartesiano y proyección",
+  "ref": "Álgebra relacional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-018",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Cuándo está una relación en 1FN?",
+  "a": "Cuando no hay grupos repetitivos y todos los atributos son atómicos",
+  "ref": "Normalización",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-019",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué exige la 2FN?",
+  "a": "1FN y que los atributos no clave dependan funcionalmente de toda la clave",
+  "ref": "Normalización",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-020",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "Para pasar de 1FN a 2FN, ¿qué se elimina?",
+  "a": "Las dependencias parciales de las claves candidatas",
+  "ref": "Normalización",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-021",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué exige la 3FN?",
+  "a": "2FN y ausencia de dependencias transitivas de atributos no principales",
+  "ref": "Normalización",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-022",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Cuándo una tabla está en forma normal de Boyce-Codd?",
+  "a": "Cuando cada determinante es clave candidata",
+  "ref": "Normalización",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-023",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué es la dependencia funcional?",
+  "a": "Y depende de X si a cada valor de X le corresponde un único valor de Y",
+  "ref": "Normalización",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-024",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué es la dependencia de reunión?",
+  "a": "Una relación se reconstruye sin pérdida a partir de proyecciones; asociada a 5FN",
+  "ref": "Normalización",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-025",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Para qué se desnormaliza controladamente?",
+  "a": "Para mejorar el rendimiento y reducir accesos a la base de datos",
+  "ref": "Diseño físico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-026",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿En qué fase del diseño se aplica la normalización?",
+  "a": "En el diseño lógico",
+  "ref": "Diseño lógico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-027",
+  "t": "T3.02",
+  "tipo": "alcance",
+  "q": "Transformación E/R a relacional: ¿cómo se transforma una relación 1:N con atributos?",
+  "a": "La clave del lado 1 y el atributo pasan a la tabla del lado N",
+  "ref": "Diseño lógico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-028",
+  "t": "T3.02",
+  "tipo": "alcance",
+  "q": "Transformación E/R: ¿cómo se transforma una relación N:M?",
+  "a": "En una nueva tabla con clave concatenada de las claves de ambas entidades",
+  "ref": "Diseño lógico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-029",
+  "t": "T3.02",
+  "tipo": "cifra",
+  "q": "Una relación ternaria N:M:P ¿en cuántas tablas se transforma?",
+  "a": "4 tablas: tres entidades y una de la relación",
+  "ref": "Diseño lógico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-030",
+  "t": "T3.02",
+  "tipo": "alcance",
+  "q": "Jerarquía de E/R: ¿cuándo se crea una tabla para el supertipo?",
+  "a": "Si los subtipos tienen muchos atributos distintos y se quieren conservar los comunes",
+  "ref": "Diseño lógico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-031",
+  "t": "T3.02",
+  "tipo": "alcance",
+  "q": "¿Cómo se transforma la agregación al modelo relacional?",
+  "a": "Igual que las relaciones 1:N",
+  "ref": "Diseño lógico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-032",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué es la redundancia?",
+  "a": "Información repetida",
+  "ref": "Diseño",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-033",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Consecuencias de no normalizar?",
+  "a": "Inconsistencias, anomalías de actualización y redundancia",
+  "ref": "Normalización",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-034",
+  "t": "T3.02",
+  "tipo": "definicion",
+  "q": "¿Qué ocurre cuanto más alta es la forma normal?",
+  "a": "Menos vulnerable a inconsistencias y anomalías",
+  "ref": "Normalización",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-035",
+  "t": "T3.02",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es nivel de abstracción de bases de datos: externo, conceptual, interno, sintáctico?",
+  "a": "Sintáctico",
+  "ref": "ANSI/SPARC",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.02-036",
+  "t": "T3.02",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es objetivo de la normalización?",
+  "a": "Optimizar la base de datos (eso es diseño físico)",
+  "ref": "Normalización",
+  "src": "curada"
+ }
+]

@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T4.03-001",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué significa SMTP y para qué se usa?",
+  "a": "Simple Mail Transfer Protocol: envío entre servidores y desde el cliente",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-002",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué significa IMAP?",
+  "a": "Internet Message Access Protocol",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-003",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "IMAP frente a POP3: ¿qué ventaja tiene IMAP?",
+  "a": "Permite ver los correos en el servidor sin descargarlos",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-004",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué comando IMAP elimina mensajes de un buzón?",
+  "a": "EXPUNGE",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-005",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué comando IMAP lista los buzones?",
+  "a": "LIST",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-006",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué comando IMAP abre un buzón en lectura?",
+  "a": "EXAMINE",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-007",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué puerto usa IMAP sin TLS y cuál con TLS?",
+  "a": "143 sin TLS; 993 con TLS",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-008",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué puerto usa POP3 cifrado?",
+  "a": "995",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-009",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué puerto abre un servidor SMTP por defecto?",
+  "a": "25",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-010",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "POP3: ¿qué comando da estadísticas del buzón?",
+  "a": "STAT",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-011",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "POP3: ¿qué comando muestra cabecera y líneas de un mensaje?",
+  "a": "TOP",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-012",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "POP3: ¿qué comandos descargan y borran el mensaje 1?",
+  "a": "RETR 1; DELE 1",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-013",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "SMTP: ¿qué significa 220?",
+  "a": "Servicio disponible",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-014",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "SMTP: ¿qué significa 354?",
+  "a": "Comenzar a enviar el cuerpo del mensaje",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-015",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "SMTP: ¿qué significa 450?",
+  "a": "Solicitud no ejecutada; buzón no disponible",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-016",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "SMTP: ¿qué significa 502?",
+  "a": "Comando no implementado",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-017",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "SMTP: ¿qué comando inicia el cuerpo del mensaje?",
+  "a": "DATA",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-018",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "SMTP: ¿qué comando comprueba la existencia del destinatario?",
+  "a": "VRFY",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-019",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "SMTP: ¿qué comando comprueba si el servidor acepta ESMTP?",
+  "a": "EHLO",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-020",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "SMTP: ¿cuál es el primer mensaje de la sesión?",
+  "a": "HELO",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-021",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Cuál es el RFC original de SMTP y cuál el formato de mensaje?",
+  "a": "RFC 821 (SMTP) y RFC 822 (formato)",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-022",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "RFC 822: ¿de qué consta un mensaje?",
+  "a": "Encabezado, línea en blanco y cuerpo",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-023",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué cabecera añade cada servidor por el que pasa?",
+  "a": "Received",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-024",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué campo guarda destinatarios ocultos?",
+  "a": "Bcc",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-025",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué campo indica a quién responder?",
+  "a": "Reply-To",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-026",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué persigue MIME?",
+  "a": "Incluir otros tipos de contenido además de ASCII de 7 bits",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-027",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "MIME: ¿a quién afecta?",
+  "a": "A los agentes de usuario; es transparente para SMTP",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-028",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué es un MUA, un MTA y un MDA?",
+  "a": "MUA: cliente. MTA: transfiere. MDA: entrega al buzón",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-029",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué registro DNS indica el servidor de correo de un dominio?",
+  "a": "MX",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-030",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es SPF?»: ¿cuál es la respuesta correcta?",
+  "a": "Protocolo contra la falsificación del remitente",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-031",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es DKIM?»: ¿cuál es la respuesta correcta?",
+  "a": "Firma digital del mensaje añadida como cabecera",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-032",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué diferencia hay entre S/MIME y PGP?",
+  "a": "S/MIME requiere certificados digitales",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-033",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "S/MIME (RFC 8581): ¿qué permite?",
+  "a": "Firmar y cifrar correos",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-034",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué hace un sistema antispam heurístico?",
+  "a": "Puntúa parámetros como palabras y direcciones",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-035",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "¿Qué es Dovecot?",
+  "a": "Servidor de correo open source (IMAP/POP3)",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-036",
+  "t": "T4.03",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es Exim?»: ¿cuál es la respuesta correcta?",
+  "a": "Un MTA (servidor de correo), no un cliente",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-037",
+  "t": "T4.03",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es protocolo de correo: SMTP, IMAP, POP3, FTP?",
+  "a": "FTP",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-038",
+  "t": "T4.03",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es protocolo de acceso al correo: IMAP, POP3, SNTP?",
+  "a": "SNTP",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-039",
+  "t": "T4.03",
+  "tipo": "intrusa",
+  "q": "¿Qué NO permite la firma digital de correos: DKIM, S/MIME, STARTTLS?",
+  "a": "STARTTLS (cifra el transporte)",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.03-040",
+  "t": "T4.03",
+  "tipo": "contraste",
+  "q": "POP3 y IMAP: ¿qué puerto es 110 y cuál 143?",
+  "a": "POP3: 110. IMAP: 143",
+  "ref": "Correo electrónico",
+  "src": "curada"
+ }
+]

@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T2.02-001",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "RAID 0, 1 y 2: ¿qué técnica usa cada uno?",
+  "a": "0: striping. 1: espejo. 2: códigos Hamming",
+  "ref": "RAID",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-002",
+  "t": "T2.02",
+  "tipo": "contraste",
+  "q": "RAID 4 frente a RAID 5: ¿dónde va la paridad?",
+  "a": "RAID 4: un disco de paridad dedicado. RAID 5: paridad distribuida",
+  "ref": "RAID",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-003",
+  "t": "T2.02",
+  "tipo": "cifra",
+  "q": "¿Cuántos fallos tolera RAID 5 y cuántos RAID 6?",
+  "a": "RAID 5: un disco. RAID 6: dos discos (doble paridad distribuida)",
+  "ref": "RAID",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-004",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué es la latencia rotacional de un HDD?",
+  "a": "Tiempo medio hasta que la cabeza se sitúa en el sector deseado",
+  "ref": "Discos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-005",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "En un disco, ¿qué es un sector?",
+  "a": "Cada una de las divisiones de una pista",
+  "ref": "Discos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-006",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué es un SSD?",
+  "a": "Unidad de estado sólido: memoria no volátil sin partes móviles",
+  "ref": "Almacenamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-007",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué formato de interfaz es válido para SSD y cuál no?",
+  "a": "M.2 sí; DVI no (es de vídeo)",
+  "ref": "Almacenamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-008",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué tecnología de acceso usa NVMe?",
+  "a": "Bus PCIe para SSD; no se usa para discos duros",
+  "ref": "NVMe",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-009",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué almacenamiento es más rápido en lectura: HDD, SSD SATA o SSD NVMe?",
+  "a": "SSD NVMe",
+  "ref": "Almacenamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-010",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué significa SAS?",
+  "a": "Serial Attached SCSI",
+  "ref": "Interfaces",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-011",
+  "t": "T2.02",
+  "tipo": "cifra",
+  "q": "¿A qué velocidad trabaja SATA 3.0?",
+  "a": "6 Gbps",
+  "ref": "SATA",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-012",
+  "t": "T2.02",
+  "tipo": "cifra",
+  "q": "¿Qué ancho de banda da SATA 3.2 (SATA Express)?",
+  "a": "16 Gbps",
+  "ref": "SATA",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-013",
+  "t": "T2.02",
+  "tipo": "cifra",
+  "q": "¿Cuántos pines tiene el cable de datos SATA?",
+  "a": "7 pines",
+  "ref": "SATA",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-014",
+  "t": "T2.02",
+  "tipo": "cifra",
+  "q": "¿A cuánto llega SAS-3 y a cuánto SAS-4?",
+  "a": "SAS-3: 12 Gbps. SAS-4: 24 Gbps",
+  "ref": "SAS",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-015",
+  "t": "T2.02",
+  "tipo": "cifra",
+  "q": "¿Qué velocidad máxima tiene USB 3.0?",
+  "a": "5 Gbps, unas 10 veces la de USB 2.0",
+  "ref": "USB",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-016",
+  "t": "T2.02",
+  "tipo": "cifra",
+  "q": "¿Qué velocidad tiene USB 3.2 y USB 4?",
+  "a": "USB 3.2: 20 Gbps. USB 4: 40 Gbps",
+  "ref": "USB",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-017",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "USB 3.2 Gen 2x1: ¿a qué versión equivale?",
+  "a": "USB 3.1 Gen 2 (10 Gbps)",
+  "ref": "USB",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-018",
+  "t": "T2.02",
+  "tipo": "cifra",
+  "q": "¿Cuántos pines tiene USB Tipo C y qué característica tiene el conector?",
+  "a": "24 pines; conector simétrico reversible",
+  "ref": "USB-C",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-019",
+  "t": "T2.02",
+  "tipo": "contraste",
+  "q": "USB Type-C frente a USB 3.1: ¿es lo mismo?",
+  "a": "No: Type-C es el conector; 3.1 es la especificación",
+  "ref": "USB",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-020",
+  "t": "T2.02",
+  "tipo": "cifra",
+  "q": "¿Qué velocidad máxima tiene Thunderbolt 3 y qué Thunderbolt 5?",
+  "a": "TB3: 40 Gbps. TB5: 80 Gbps",
+  "ref": "Thunderbolt",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-021",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué es Lightning?",
+  "a": "Conector de carga y datos de Apple",
+  "ref": "Conectores",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-022",
+  "t": "T2.02",
+  "tipo": "cifra",
+  "q": "¿Qué ancho de banda máximo tiene HDMI 2.1?",
+  "a": "48 Gbps",
+  "ref": "HDMI",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-023",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Es DisplayPort analógico o digital?",
+  "a": "Digital: transmite vídeo y audio",
+  "ref": "DisplayPort",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-024",
+  "t": "T2.02",
+  "tipo": "cifra",
+  "q": "¿Cuántos carriles máximos tiene PCIe?",
+  "a": "16 carriles",
+  "ref": "PCIe",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-025",
+  "t": "T2.02",
+  "tipo": "cifra",
+  "q": "¿Qué velocidad tiene PCIe 4.0 con 4 carriles?",
+  "a": "64 Gbps",
+  "ref": "PCIe",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-026",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué bus conecta normalmente una tarjeta gráfica con la placa base?",
+  "a": "PCI Express",
+  "ref": "PCIe",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-027",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué resolución es WQHD?",
+  "a": "2560 x 1440 píxeles",
+  "ref": "Pantallas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-028",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué indica 1080p?",
+  "a": "1080 líneas verticales con exploración progresiva",
+  "ref": "Pantallas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-029",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué mide la profundidad de color?",
+  "a": "Número de bits por píxel",
+  "ref": "Imagen",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-030",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué es la resolución interpolada de un escáner?",
+  "a": "Resolución calculada que genera puntos nuevos a partir de los reales próximos",
+  "ref": "Escáner",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-031",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué tipo de escáner se usa para libros antiguos o valiosos?",
+  "a": "Escáner cenital",
+  "ref": "Escáner",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-032",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué periférico usa sensores CIS?",
+  "a": "El escáner",
+  "ref": "Escáner",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-033",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Cómo funciona la impresión por sublimación de tinta?",
+  "a": "Usa calor para transferir la tinta al soporte",
+  "ref": "Impresión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-034",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué es la impresión 3D FDM?",
+  "a": "Depositar polímero fundido sobre una base, capa a capa",
+  "ref": "Impresión 3D",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-035",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué es SLS en impresión 3D?",
+  "a": "Sinterización selectiva por láser",
+  "ref": "Impresión 3D",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-036",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Cuál es la impresión más económica por página?",
+  "a": "La láser",
+  "ref": "Impresión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-037",
+  "t": "T2.02",
+  "tipo": "definicion",
+  "q": "¿Qué EEPROM permite?",
+  "a": "Borrarse y grabarse repetidas veces eléctricamente",
+  "ref": "Memoria ROM",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-038",
+  "t": "T2.02",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es tecnología de impresión 3D: FDM, SLS, inyección de aglutinante, FDA?",
+  "a": "FDA",
+  "ref": "Impresión 3D",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-039",
+  "t": "T2.02",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es impresora de impacto: matriz de puntos, margarita, línea, inyección?",
+  "a": "La de inyección",
+  "ref": "Impresión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.02-040",
+  "t": "T2.02",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es espacio de color: RGB, CMYK, HSV, HSM?",
+  "a": "HSM",
+  "ref": "Imagen",
+  "src": "curada"
+ }
+]

@@ -1,0 +1,344 @@
+[
+ {
+  "id": "FC-T3.01-001",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué es una entidad en el modelo E/R de Métrica v3?",
+  "a": "Objeto, real o abstracto, del que se desea almacenar información",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-002",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué es un atributo?",
+  "a": "Propiedad asociada a un tipo de entidad o relación",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-003",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Cómo se llama el conjunto de valores que puede tomar un atributo?",
+  "a": "Dominio",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-004",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué clases de atributo hay?",
+  "a": "Obligatorio, derivado o compuesto",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-005",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Cómo se dibuja un atributo derivado?",
+  "a": "Elipse discontinua",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-006",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué es un atributo derivado?",
+  "a": "Aquel cuyo valor se obtiene a partir de otros atributos",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-007",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Cómo se representa una relación en E/R?",
+  "a": "Con un rombo",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-008",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué caracteriza a una relación?",
+  "a": "Nombre, grado, tipo de correspondencia y cardinalidad",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-009",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué es el grado de una relación?",
+  "a": "Número de tipos de entidad que intervienen en ella",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-010",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué es el tipo de correspondencia?",
+  "a": "Número máximo de ocurrencias de cada entidad que intervienen en la relación",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-011",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué es la cardinalidad en Métrica v3?",
+  "a": "Número mínimo y máximo de ocurrencias que pueden intervenir en la relación",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-012",
+  "t": "T3.01",
+  "tipo": "contraste",
+  "q": "Tipo de correspondencia frente a cardinalidad: ¿cuál es solo el máximo?",
+  "a": "Correspondencia: máximo (1:1, 1:N, N:M). Cardinalidad: mínimo y máximo",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-013",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Cuándo es N:M una relación?",
+  "a": "Cada ocurrencia puede relacionarse con varias de la otra entidad, y viceversa",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-014",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "Opositor y oposición: ¿qué relación forman si cada uno puede apuntarse a varias?",
+  "a": "N:M",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-015",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué es una relación reflexiva?",
+  "a": "Aquella en que una entidad se relaciona consigo misma",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-016",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Dónde se especifica el rol de una entidad?",
+  "a": "En las relaciones reflexivas",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-017",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Cuándo es exclusiva una relación?",
+  "a": "Cuando la existencia de una implica la no existencia de otras entre los tipos",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-018",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué es una entidad débil?",
+  "a": "Entidad cuya existencia depende de otra o que no tiene atributos suficientes para su clave",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-019",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué tipos de dependencia tienen las relaciones débiles?",
+  "a": "Dependencia en existencia y dependencia en identificación",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-020",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué es la generalización?",
+  "a": "Abstracción de un supertipo a partir de varios subtipos",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-021",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué es la especialización?",
+  "a": "Descomposición de un supertipo en subtipos que heredan atributos y relaciones",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-022",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué es la agregación?",
+  "a": "Construir un nuevo tipo de entidad como composición de otros y su relación",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-023",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "Jerarquía total frente a parcial: ¿qué dice cada una?",
+  "a": "Total: todo supertipo pertenece a algún subtipo. Parcial: puede no pertenecer a ninguno",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-024",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "Jerarquía disjunta frente a solapada: ¿qué dice cada una?",
+  "a": "Disjunta: un solo subtipo. Solapada: varios subtipos a la vez",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-025",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Con qué letras se representan las jerarquías disjunta y solapada?",
+  "a": "Disjunta: d. Solapada: o",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-026",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Con qué letra se representa la unión por categorías?",
+  "a": "U",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-027",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Cómo se dibuja una jerarquía total?",
+  "a": "Con doble línea entre supertipo y triángulo",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-028",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué es el discriminante?",
+  "a": "Atributo que determina a qué subtipo pertenece una ocurrencia",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-029",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "Empleado público con funcionario y laboral: ¿qué jerarquía es?",
+  "a": "Total y disjunta",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-030",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué son intensión y extensión?",
+  "a": "Intensión: estructura común del tipo de entidad. Extensión: ocurrencias concretas",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-031",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué elementos forman el modelo E/R?",
+  "a": "Entidades, atributos y relaciones",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-032",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué tipo de modelo es el E/R?",
+  "a": "Modelo conceptual, independiente del entorno físico",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-033",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué esquema describe todos los datos e interrelaciones con sus restricciones?",
+  "a": "El esquema conceptual",
+  "ref": "Bases de datos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-034",
+  "t": "T3.01",
+  "tipo": "alcance",
+  "q": "¿Qué NO es objetivo del modelo conceptual de datos?",
+  "a": "Identificar y definir los métodos de las entidades",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-035",
+  "t": "T3.01",
+  "tipo": "definicion",
+  "q": "¿Qué pueden tener atributos en E/R?",
+  "a": "Tanto las entidades como las relaciones",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-036",
+  "t": "T3.01",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es elemento del E/R extendido: entidad, relación, atributo, método?",
+  "a": "El método",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-037",
+  "t": "T3.01",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es restricción sobre un atributo: obligatorio, derivado, compuesto, exclusivo?",
+  "a": "Exclusivo",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.01-038",
+  "t": "T3.01",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es técnica de modelado conceptual: E/R, diagramas de estructura?",
+  "a": "Diagramas de estructura",
+  "ref": "Métrica v3 E/R",
+  "src": "curada"
+ }
+]

@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T4.10-001",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Jumboframe: carga útil",
+  "a": "9.000 bytes",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-002",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Sobre «IEEE 802.11»: ¿cuál es la respuesta correcta?",
+  "a": "Redes inalámbricas (WLAN)",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-003",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Sobre «IEEE 802.3»: ¿cuál es la respuesta correcta?",
+  "a": "Métodos de acceso y transmisión de Ethernet",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-004",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Sobre «Wi-Fi 6»: ¿cuál es la respuesta correcta?",
+  "a": "802.11ax",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-005",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "PoE (802.3af): potencia",
+  "a": "15,4 W por puerto",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-006",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Sobre «PoE+»: ¿cuál es la respuesta correcta?",
+  "a": "IEEE 802.3at",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-007",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "WPS: tipos de configuración",
+  "a": "PIN, PBC, NFC, USB",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-008",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Sobre «Scatternet»: ¿cuál es la respuesta correcta?",
+  "a": "Grupo de piconets",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-009",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Terminadores en topología de bus",
+  "a": "Absorben la señal al final y evitan interferencias",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-010",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Topología en estrella: fallo del nodo central",
+  "a": "Se interrumpen las transmisiones",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-011",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Topología en anillo: rotura de un enlace",
+  "a": "La red no funcionaría al estar roto el anillo",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-012",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Sobre «CSMA/CD»: ¿cuál es la respuesta correcta?",
+  "a": "Acceso múltiple con detección de portadora y de colisiones (Ethernet)",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-013",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "CSMA/CA y RTS/CTS",
+  "a": "Redes Wi-Fi; RTS/CTS resuelve el nodo oculto",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-014",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "CSMA no persistente: canal ocupado",
+  "a": "Espera un tiempo aleatorio y vuelve a escuchar",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-015",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Sobre «Token passing»: ¿cuál es la respuesta correcta?",
+  "a": "Protocolo MAC libre de colisiones y distribuido",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-016",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Ethernet: tamaño mínimo de trama",
+  "a": "64 bytes",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-017",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Ethernet: payload",
+  "a": "46 a 1500 bytes",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-018",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Sobre «Ethernet: CRC»: ¿cuál es la respuesta correcta?",
+  "a": "4 bytes",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-019",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Preámbulo 802.3",
+  "a": "7 bytes",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-020",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Sobre «Dirección MAC»: ¿cuál es la respuesta correcta?",
+  "a": "48 bits (6 bytes) en hexadecimal",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-021",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "MAC de broadcast",
+  "a": "FF:FF:FF:FF:FF:FF",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-022",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Sobre «MACsec»: ¿cuál es la respuesta correcta?",
+  "a": "IEEE 802.1AE: seguridad en la capa de enlace",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-023",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Sobre «IEEE 802.1Q»: ¿cuál es la respuesta correcta?",
+  "a": "Etiquetado de VLAN; TPID 0x8100",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-024",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "VLAN 802.1Q: identificadores útiles",
+  "a": "4094",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-025",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Sobre «VLAN»: ¿cuál es la respuesta correcta?",
+  "a": "LAN virtual con un único dominio de broadcast",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-026",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "STP, RSTP, MSTP y SPB",
+  "a": "802.1D, 802.1w, 802.1s y 802.1aq",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-027",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "STP: secuencia de estados",
+  "a": "Bloqueo, escucha, aprendizaje y envío",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-028",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "STP: estado de aprendizaje",
+  "a": "Descarta datos pero actualiza la tabla MAC",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-029",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Sobre «IEEE 802.1p»: ¿cuál es la respuesta correcta?",
+  "a": "Priorización de tráfico (QoS a nivel MAC)",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-030",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Sobre «Hub»: ¿cuál es la respuesta correcta?",
+  "a": "Dispositivo de capa 1",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-031",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Switch: dominios",
+  "a": "Cada puerto es un dominio de colisión",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-032",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Store and forward",
+  "a": "Espera la trama completa y calcula el CRC: más latencia",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-033",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Router: nivel y dominios",
+  "a": "Nivel 3; separa dominios de difusión",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-034",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Vector distancia frente a estado de enlace",
+  "a": "VD: tabla a vecinos. EE: información de vecinos a todos",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-035",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "OSPF: encapsulado",
+  "a": "Directamente sobre IP, protocolo 89",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-036",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "BGP: transporte y tipo",
+  "a": "TCP/179; vector de caminos (path-vector)",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-037",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "RIP: máximo de saltos",
+  "a": "15",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-038",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "RIPv2: dirección multicast",
+  "a": "224.0.0.9",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-039",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Sobre «IGRP y EIGRP»: ¿cuál es la respuesta correcta?",
+  "a": "Vector distancia, de Cisco",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.10-040",
+  "t": "T4.10",
+  "tipo": "definicion",
+  "q": "Sistema autónomo",
+  "a": "Redes y routers gestionados por una misma autoridad",
+  "ref": "Redes locales, conmutación y encaminamiento",
+  "src": "curada"
+ }
+]

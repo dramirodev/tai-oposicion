@@ -1,0 +1,353 @@
+[
+ {
+  "id": "FC-T3.10-001",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué pruebas verifican el ensamblaje entre componentes (Métrica v3)?",
+  "a": "Pruebas de integración",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-002",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué pruebas verifican tiempos de respuesta dentro de intervalos?",
+  "a": "Pruebas de rendimiento",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-003",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué comprueban las pruebas de regresión?",
+  "a": "Que los cambios no introducen errores nuevos (efecto onda)",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-004",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Se pueden automatizar las pruebas de regresión?",
+  "a": "Sí: no es cierto que no se puedan automatizar",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-005",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué son las pruebas alfa y las beta?",
+  "a": "Alfa: aceptación interna. Beta (de campo): con usuarios reales",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-006",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "Particiones de equivalencia y condiciones límite: ¿qué pruebas son?",
+  "a": "Técnicas de pruebas unitarias de caja negra",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-007",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué es fuzzing o fuzzy testing?",
+  "a": "Caja negra con datos aleatorios para descubrir errores",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-008",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué pruebas verifican operación y copias de seguridad?",
+  "a": "Pruebas de implantación, de operación y de recuperación",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-009",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué herramienta hace pruebas de carga y estrés?",
+  "a": "JMeter",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-010",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué herramienta de pruebas es para aplicaciones web?",
+  "a": "Cypress",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-011",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es QUnit?»: ¿cuál es la respuesta correcta?",
+  "a": "Herramienta de pruebas unitarias de JavaScript",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-012",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué es TestLink?",
+  "a": "Herramienta de gestión de pruebas",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-013",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué es SonarQube?",
+  "a": "Análisis estático de calidad del código, no dinámico",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-014",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué es Jenkins?",
+  "a": "Herramienta de integración continua",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-015",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es Jira?»: ¿cuál es la respuesta correcta?",
+  "a": "Seguimiento de errores y tareas",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-016",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué es Kibana?",
+  "a": "Revisión de logs",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-017",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué es Crucible?",
+  "a": "Herramienta de revisión de código",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-018",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué es Nexus 3?",
+  "a": "Repositorio de artefactos",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-019",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué es Git commit?",
+  "a": "Almacenar una instantánea del proyecto en el historial",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-020",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "Git: ¿qué significa estado staged?",
+  "a": "Cambios marcados para incluirse en el próximo commit",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-021",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "Git: ¿qué hace git add?",
+  "a": "Añade cambios a la zona de preparación (staging)",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-022",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "Git: ¿qué hace git init?",
+  "a": "Crea el directorio .git con la base de datos de cambios",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-023",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "Git: ¿qué hace git clone?",
+  "a": "Copia un repositorio remoto",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-024",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "Git: ¿cómo se crea la rama pruebas?",
+  "a": "git branch pruebas",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-025",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "Git: ¿qué es un repositorio bare?",
+  "a": "Repositorio sin directorio de trabajo, usado como central remoto",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-026",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué es una pull request?",
+  "a": "Propuesta de fusionar cambios de una rama en otra",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-027",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "Control de versiones: ¿qué herramienta es centralizada y de pago?",
+  "a": "Perforce",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-028",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué plataforma de control de versiones es de Microsoft?",
+  "a": "Azure DevOps Server (antes Team Foundation Server)",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-029",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué significa RACI?",
+  "a": "Responsible, Accountable, Consulted, Informed",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-030",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "Scrum: ¿qué roles forman el equipo?",
+  "a": "Product Owner, Scrum Master y Desarrolladores",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-031",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es Scrum?»: ¿cuál es la respuesta correcta?",
+  "a": "Metodología ágil de desarrollo de software",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-032",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "Manifiesto Ágil: ¿cómo se tratan los requisitos cambiantes?",
+  "a": "Son bienvenidos, incluso tarde en el desarrollo",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-033",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué es refactorización?",
+  "a": "Mejorar la estructura interna sin cambiar el comportamiento externo",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-034",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué es un code smell?",
+  "a": "Código mal diseñado candidato a refactorizar",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-035",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué es el código ravioli?",
+  "a": "Clases simples que interactúan de forma muy compleja",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-036",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué es la reingeniería?",
+  "a": "Examinar y modificar un sistema para reconstruirlo de forma nueva",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-037",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "Migración: ¿qué es replacement y qué es rehosting?",
+  "a": "Replacement: sustituir la aplicación. Rehosting: moverla a un entorno hardware más moderno",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-038",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "Migración interoperation: ¿en qué consiste?",
+  "a": "Encapsular la aplicación o componentes para que otras los usen",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.10-039",
+  "t": "T3.10",
+  "tipo": "definicion",
+  "q": "¿Qué es MetaCASE?",
+  "a": "Herramienta CASE que permite definir otras herramientas CASE",
+  "ref": "Pruebas y gestión",
+  "src": "curada"
+ }
+]

@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T3.05-001",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué significa UML y qué norma ISO/IEC lo recoge?",
+  "a": "Unified Modeling Language; ISO/IEC 19505",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-002",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿UML es una metodología?",
+  "a": "No: es un lenguaje de modelado, no una metodología",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-003",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Cuál es la versión actual de UML citada?",
+  "a": "2.5.1",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-004",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Cuáles son los diagramas de estructura de UML?",
+  "a": "Clases, objetos, componentes, despliegue, paquetes, estructura compuesta y perfiles",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-005",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Cuáles son diagramas de comportamiento de UML?",
+  "a": "Casos de uso, actividad, máquina de estados y los de interacción",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-006",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué diagramas son de interacción?",
+  "a": "Secuencia, comunicación, tiempo y visión global de interacción",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-007",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué diagrama muestra una instantánea del sistema en un momento?",
+  "a": "El diagrama de objetos",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-008",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué diagrama muestra la disposición física del sistema?",
+  "a": "El diagrama de despliegue",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-009",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué diagrama captura requisitos funcionales desde el usuario?",
+  "a": "El diagrama de casos de uso",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-010",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿En qué diagrama se usan fragmentos combinados?",
+  "a": "En el diagrama de secuencia",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-011",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué relación refleja comportamiento común entre casos de uso?",
+  "a": "La relación include",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-012",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué nodo sincroniza flujos entrantes en un diagrama de actividad?",
+  "a": "El join (unión)",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-013",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué significa el signo - en un atributo o método UML?",
+  "a": "Visibilidad private",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-014",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué elemento conecta partes en un diagrama de estructura compuesta?",
+  "a": "El conector",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-015",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Cuántos estados iniciales tiene una máquina de estados?",
+  "a": "Uno; no puede haber varios",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-016",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué es una instancia?",
+  "a": "Ejemplar concreto de una clase con su propio estado",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-017",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué es una clase abstracta?",
+  "a": "Clase que no puede tener instancias",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-018",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué es la generalización entre clases?",
+  "a": "La subclase hereda propiedades, comportamiento y relaciones de la superclase",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-019",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué es la composición?",
+  "a": "Crear clases complejas agregando objetos de clases existentes",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-020",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "Sobrescritura frente a sobrecarga: ¿cuál exige herencia?",
+  "a": "Sobrescritura (overriding); la sobrecarga no implica herencia",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-021",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué es un setter?",
+  "a": "Método cuyo único objetivo es modificar un atributo",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-022",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué NO es característica del modelo OO?",
+  "a": "La durabilidad (es de ACID)",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-023",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué significa GRASP?",
+  "a": "Patrones generales para asignar responsabilidades en el diseño OO",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-024",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué cinco principios forman SOLID?",
+  "a": "S responsabilidad única, O abierto/cerrado, L Liskov, I segregación de interfaces, D inversión de dependencias",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-025",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué establece la inversión de dependencia (DIP)?",
+  "a": "Las clases de alto nivel no dependen de las de bajo nivel; ambas dependen de abstracciones",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-026",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué establece el principio de sustitución de Liskov?",
+  "a": "Los subtipos pueden sustituir a su tipo sin alterar el correcto funcionamiento",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-027",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué significa YAGNI?",
+  "a": "You Aren't Gonna Need It: no implementar lo que no se necesita",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-028",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué principio rompen varios métodos duplicados para lo mismo?",
+  "a": "DRY (Don't Repeat Yourself)",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-029",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué patrón garantiza una única instancia con acceso global?",
+  "a": "Singleton (creacional)",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-030",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué patrón añade responsabilidades dinámicamente a un objeto?",
+  "a": "Decorator (estructural)",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-031",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué patrón permite elegir un algoritmo en tiempo de ejecución?",
+  "a": "Strategy (comportamiento)",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-032",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué patrón notifica cambios de estado a varios objetos?",
+  "a": "Observer (comportamiento)",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-033",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué patrón guarda el estado interno para restaurarlo luego?",
+  "a": "Memento (comportamiento)",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-034",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué permite el patrón Visitor?",
+  "a": "Nuevas operaciones sobre una jerarquía sin modificar sus clases",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-035",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué patrón construye árboles de objetos tratados uniformemente?",
+  "a": "Composite (estructural)",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-036",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "Factory Method frente a Abstract Factory: ¿qué crea cada uno?",
+  "a": "Factory Method: objetos de un tipo. Abstract Factory: familias de objetos",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-037",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué patrones GoF son de comportamiento? Ejemplos",
+  "a": "Iterator, Observer, State, Strategy, Visitor, Memento",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-038",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "¿Qué patrón estructural es Flyweight?",
+  "a": "Estructural: comparte objetos para ahorrar memoria",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-039",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "Métrica v3 DFD: ¿qué representa un proceso de control?",
+  "a": "Procesos que coordinan y sincronizan otros procesos del DFD",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.05-040",
+  "t": "T3.05",
+  "tipo": "definicion",
+  "q": "Acoplamiento común: ¿cuándo ocurre?",
+  "a": "Cuando varios módulos comparten una estructura global de datos",
+  "ref": "UML / diseño OO",
+  "src": "curada"
+ }
+]

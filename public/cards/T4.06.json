@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T4.06-001",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Topología con todos los nodos conectados a un nodo central",
+  "a": "Estrella",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-002",
+  "t": "T4.06",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es LPWAN: Mioty, LoRa, Bluetooth LE?",
+  "a": "Bluetooth LE",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-003",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "LPWAN: tecnología resistente a interferencias, adecuada para entornos urbanos",
+  "a": "Mioty",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-004",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Equipo de interconexión de nivel 3 OSI",
+  "a": "Router",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-005",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Red SOHO: siglas",
+  "a": "Small Office, Home Office",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-006",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Protocolo de enrutamiento de vector distancia",
+  "a": "RIP (también IGRP)",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-007",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Conmutación de circuitos: característica definitoria",
+  "a": "Camino físico o lógico dedicado",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-008",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Sobre «VPLS»: ¿cuál es la respuesta correcta?",
+  "a": "Une redes Ethernet dispersas en un mismo dominio de difusión",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-009",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Sobre «H.245 (ITU)»: ¿cuál es la respuesta correcta?",
+  "a": "Protocolo de control para comunicación multimedia",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-010",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Sobre «POLAN»: ¿cuál es la respuesta correcta?",
+  "a": "Red con fibra óptica pasiva, sin electrónica activa intermedia",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-011",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Sobre «Atenuación»: ¿cuál es la respuesta correcta?",
+  "a": "Pérdida de energía de la señal al propagarse por el medio",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-012",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Switch: dominios de colisión y de difusión",
+  "a": "Segmenta los de colisión; mantiene un único dominio de difusión",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-013",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Segundo dividendo digital: banda a liberar",
+  "a": "700 MHz",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-014",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Wi-Fi 7: estándar",
+  "a": "802.11be",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-015",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Sobre «802.11a: banda»: ¿cuál es la respuesta correcta?",
+  "a": "5 GHz",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-016",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Sobre «802.11e»: ¿cuál es la respuesta correcta?",
+  "a": "Calidad de servicio (QoS)",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-017",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "802.11ad: banda de máxima velocidad",
+  "a": "60 GHz",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-018",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Sobre «802.11i»: ¿cuál es la respuesta correcta?",
+  "a": "Cifrado y autenticación (seguridad) en redes inalámbricas",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-019",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Sobre «802.11p»: ¿cuál es la respuesta correcta?",
+  "a": "Comunicación entre vehículos",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-020",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "802.11ac: ¿qué es incorrecto?",
+  "a": "Que opere en 2,4 GHz (opera en 5 GHz)",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-021",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Sobre «WiMAX 2»: ¿cuál es la respuesta correcta?",
+  "a": "802.16m",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-022",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "WiMAX: estándar",
+  "a": "IEEE 802.16",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-023",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Sobre «WRAN»: ¿cuál es la respuesta correcta?",
+  "a": "IEEE 802.22",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-024",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "WPAN (Bluetooth)",
+  "a": "IEEE 802.15",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-025",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Control de acceso a la red con RADIUS",
+  "a": "802.1X",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-026",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Categoría 6a: frecuencia máxima",
+  "a": "500 MHz",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-027",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Sobre «Categoría 8»: ¿cuál es la respuesta correcta?",
+  "a": "Hasta 40 Gbps en 100 metros",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-028",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "ISO/IEC 11801 clase F",
+  "a": "Hasta 600 MHz",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-029",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Cable UTP frente a STP",
+  "a": "Más barato y fácil de manipular",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-030",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "FTP (par trenzado)",
+  "a": "Lámina de aluminio como apantallamiento global",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-031",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Sobre «Diafonía»: ¿cuál es la respuesta correcta?",
+  "a": "Interferencia entre señales de pares paralelos",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-032",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Teorema de Shannon",
+  "a": "Capacidad máxima = H·log2(1+S/N)",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-033",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Dispersión modal",
+  "a": "Solo se produce en fibras multimodo",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-034",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Fibra de 40 Gb/s a menos de 150 m en CPD",
+  "a": "OM4",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-035",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Ventana de una fibra óptica",
+  "a": "Longitud de onda de transmisión",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-036",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Ventaja principal de la POF",
+  "a": "Mayor flexibilidad y facilidad de instalación",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-037",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Bluetooth 4.0: dos especificaciones",
+  "a": "Clásico y de bajo consumo",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-038",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Topología no permitida en ZigBee",
+  "a": "Bus",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-039",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Sobre «Li-Fi»: ¿cuál es la respuesta correcta?",
+  "a": "Datos mediante luz visible",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.06-040",
+  "t": "T4.06",
+  "tipo": "definicion",
+  "q": "Sobre «Handover»: ¿cuál es la respuesta correcta?",
+  "a": "Traspaso de la comunicación entre celdas sin interrupción",
+  "ref": "Redes de comunicaciones: medios y redes inalámbricas",
+  "src": "curada"
+ }
+]

@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T1.07-001",
+  "t": "T1.07",
+  "tipo": "cifra",
+  "q": "¿A partir de cuántos trabajadores están obligadas las empresas a elaborar un Plan de Igualdad?",
+  "a": "A partir de 50 trabajadores, o si lo establece el convenio colectivo",
+  "ref": "LO 3/2007 art. 45",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-002",
+  "t": "T1.07",
+  "tipo": "alcance",
+  "q": "¿Qué medidas de fomento prevé la LO 3/2007 para impulsar planes de igualdad voluntarios?",
+  "a": "Medidas de fomento dirigidas especialmente a pymes, con apoyo técnico",
+  "ref": "LO 3/2007 art. 49",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-003",
+  "t": "T1.07",
+  "tipo": "definicion",
+  "q": "¿Qué se entiende por composición equilibrada de mujeres y hombres?",
+  "a": "Que cada sexo no supere el 60 % ni sea menos del 40 %",
+  "ref": "LO 3/2007 DA 1.ª",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-004",
+  "t": "T1.07",
+  "tipo": "cifra",
+  "q": "¿Qué proporción mínima de cada sexo exigen las candidaturas electorales?",
+  "a": "Cada sexo, al menos el 40 %",
+  "ref": "LO 3/2007 DA 2.ª",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-005",
+  "t": "T1.07",
+  "tipo": "definicion",
+  "q": "¿Qué tipo de discriminación es todo trato desfavorable por embarazo o maternidad?",
+  "a": "Discriminación directa por razón de sexo",
+  "ref": "LO 3/2007 art. 8",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-006",
+  "t": "T1.07",
+  "tipo": "definicion",
+  "q": "¿Qué es la discriminación directa por razón de sexo?",
+  "a": "Ser, haber sido o poder ser tratada menos favorablemente que otra persona en situación comparable por razón de sexo",
+  "ref": "LO 3/2007 art. 6.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-007",
+  "t": "T1.07",
+  "tipo": "definicion",
+  "q": "Represalia por reclamar la igualdad: ¿qué tipo de discriminación constituye?",
+  "a": "Discriminación por razón de sexo (indemnidad frente a represalias)",
+  "ref": "LO 3/2007 art. 9",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-008",
+  "t": "T1.07",
+  "tipo": "definicion",
+  "q": "¿Qué supone el principio de igualdad de trato entre mujeres y hombres?",
+  "a": "Ausencia de toda discriminación, directa o indirecta, por razón de sexo, especialmente por maternidad o estado civil",
+  "ref": "LO 3/2007 art. 3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-009",
+  "t": "T1.07",
+  "tipo": "alcance",
+  "q": "¿Qué efecto tiene un acto administrativo con discriminación por sexo?",
+  "a": "Es nulo",
+  "ref": "LO 3/2007 art. 10",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-010",
+  "t": "T1.07",
+  "tipo": "alcance",
+  "q": "¿Con quién se negocia el Plan de Igualdad de la AGE?",
+  "a": "Con la representación legal de los empleados públicos",
+  "ref": "LO 3/2007 art. 64",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-011",
+  "t": "T1.07",
+  "tipo": "alcance",
+  "q": "¿Qué debe considerar la variable sexo según el art. 20 LO 3/2007?",
+  "a": "Estadísticas, encuestas y recogida de datos de los poderes públicos",
+  "ref": "LO 3/2007 art. 20",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-012",
+  "t": "T1.07",
+  "tipo": "definicion",
+  "q": "¿Qué es el informe de impacto por razón de género?",
+  "a": "Informe necesario en proyectos de disposiciones generales y planes de relevancia económica o social",
+  "ref": "LO 3/2007 art. 19",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-013",
+  "t": "T1.07",
+  "tipo": "cifra",
+  "q": "¿Cuánto tiempo tienen preferencia en cursos de formación quienes vuelven de un permiso de maternidad?",
+  "a": "Un año",
+  "ref": "LO 3/2007 art. 60",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-014",
+  "t": "T1.07",
+  "tipo": "definicion",
+  "q": "¿Qué instrumento utiliza el Gobierno para promover la igualdad?",
+  "a": "El Plan Estratégico de Igualdad de Oportunidades",
+  "ref": "LO 3/2007 art. 17",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-015",
+  "t": "T1.07",
+  "tipo": "definicion",
+  "q": "¿Qué es el mainstreaming de género?",
+  "a": "Integrar la igualdad de forma transversal y permanente en toda la intervención pública",
+  "ref": "LO 3/2007",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-016",
+  "t": "T1.07",
+  "tipo": "alcance",
+  "q": "¿Qué deben adoptar las empresas de comunicación pública, como la Agencia EFE?",
+  "a": "Códigos de conducta que transmitan el principio de igualdad",
+  "ref": "LO 3/2007 art. 38",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-017",
+  "t": "T1.07",
+  "tipo": "alcance",
+  "q": "¿Qué órgano propone las políticas públicas contra la violencia de género?",
+  "a": "La Delegación Especial del Gobierno contra la Violencia sobre la Mujer",
+  "ref": "LO 1/2004 art. 29",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-018",
+  "t": "T1.07",
+  "tipo": "alcance",
+  "q": "¿Qué órgano asesora y colabora en políticas contra la violencia de género?",
+  "a": "El Observatorio Estatal de Violencia sobre la Mujer",
+  "ref": "LO 1/2004 art. 30",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-019",
+  "t": "T1.07",
+  "tipo": "alcance",
+  "q": "¿Cuáles son los derechos laborales de las funcionarias víctimas de violencia de género?",
+  "a": "Reducción o reordenación del tiempo de trabajo, movilidad geográfica y excedencia",
+  "ref": "LO 1/2004 art. 24",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-020",
+  "t": "T1.07",
+  "tipo": "cifra",
+  "q": "Contrato de interinidad para sustituir a víctima de violencia de género: ¿qué bonificación tiene?",
+  "a": "Bonificación del 100 % de cuotas empresariales por contingencias comunes",
+  "ref": "LO 1/2004 art. 21.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-021",
+  "t": "T1.07",
+  "tipo": "alcance",
+  "q": "¿Cómo se acredita la situación de violencia de género de las trabajadoras?",
+  "a": "Con la orden de protección a favor de la víctima",
+  "ref": "LO 1/2004 art. 23",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-022",
+  "t": "T1.07",
+  "tipo": "alcance",
+  "q": "¿Qué protege el art. 63 LO 1/2004 en las actuaciones judiciales?",
+  "a": "La intimidad de las víctimas",
+  "ref": "LO 1/2004 art. 63",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-023",
+  "t": "T1.07",
+  "tipo": "cifra",
+  "q": "¿Cuántos Juzgados de Violencia sobre la Mujer habrá como mínimo?",
+  "a": "Al menos uno por partido judicial",
+  "ref": "LO 1/2004 art. 43",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-024",
+  "t": "T1.07",
+  "tipo": "definicion",
+  "q": "¿Cuáles son los tres grados de dependencia?",
+  "a": "Grado I moderada, Grado II severa y Grado III gran dependencia",
+  "ref": "Ley 39/2006 art. 26",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-025",
+  "t": "T1.07",
+  "tipo": "definicion",
+  "q": "¿Cuándo hay dependencia moderada (Grado I)?",
+  "a": "Cuando se necesita ayuda en varias actividades básicas al menos una vez al día",
+  "ref": "Ley 39/2006 art. 26",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-026",
+  "t": "T1.07",
+  "tipo": "definicion",
+  "q": "¿Cuándo hay dependencia severa (Grado II)?",
+  "a": "Cuando se necesita ayuda 2 o 3 veces al día, sin apoyo permanente de un cuidador",
+  "ref": "Ley 39/2006 art. 26",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-027",
+  "t": "T1.07",
+  "tipo": "alcance",
+  "q": "¿Quién aprueba el baremo de valoración de la dependencia?",
+  "a": "El Gobierno, mediante Real Decreto",
+  "ref": "Ley 39/2006 art. 27",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-028",
+  "t": "T1.07",
+  "tipo": "cifra",
+  "q": "¿Cuántos años de residencia en España se exigen para los derechos de la Ley de Dependencia?",
+  "a": "Cinco años, de ellos dos inmediatamente anteriores a la solicitud",
+  "ref": "Ley 39/2006 art. 5",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-029",
+  "t": "T1.07",
+  "tipo": "alcance",
+  "q": "Prestaciones de dependencia: ¿cuáles son y cuáles priman?",
+  "a": "Servicios y prestaciones económicas; los servicios tienen carácter prioritario",
+  "ref": "Ley 39/2006 art. 14",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-030",
+  "t": "T1.07",
+  "tipo": "alcance",
+  "q": "¿Con qué servicio es compatible la teleasistencia?",
+  "a": "Con la ayuda a domicilio; no con la atención residencial",
+  "ref": "Ley 39/2006 art. 25 bis",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-031",
+  "t": "T1.07",
+  "tipo": "definicion",
+  "q": "¿Cómo se configura el SAAD?",
+  "a": "Red de utilización pública que integra de forma coordinada centros y servicios públicos y privados",
+  "ref": "Ley 39/2006 art. 6",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-032",
+  "t": "T1.07",
+  "tipo": "cifra",
+  "q": "¿Qué grado de discapacidad se considera persona con discapacidad a efectos del RDL 1/2013?",
+  "a": "33 por ciento",
+  "ref": "RDL 1/2013 art. 4.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-033",
+  "t": "T1.07",
+  "tipo": "cifra",
+  "q": "¿Qué reserva de plantilla deben tener las empresas de 50 o más trabajadores?",
+  "a": "Al menos el 2 % de trabajadores con discapacidad",
+  "ref": "RDL 1/2013 art. 42",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-034",
+  "t": "T1.07",
+  "tipo": "alcance",
+  "q": "¿Qué órgano consultivo interministerial institucionaliza la colaboración en discapacidad?",
+  "a": "El Consejo Nacional de la Discapacidad",
+  "ref": "RDL 1/2013 art. 54",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-035",
+  "t": "T1.07",
+  "tipo": "definicion",
+  "q": "¿Qué es la discriminación directa por discapacidad?",
+  "a": "Ser tratada de manera menos favorable que otra en situación análoga por motivo de discapacidad",
+  "ref": "RDL 1/2013 art. 63",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-036",
+  "t": "T1.07",
+  "tipo": "alcance",
+  "q": "Ley 4/2023: ¿quién resuelve la rectificación registral de sexo?",
+  "a": "La persona encargada de la Oficina del Registro Civil donde se presentó la solicitud",
+  "ref": "Ley 4/2023 art. 45",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-037",
+  "t": "T1.07",
+  "tipo": "contraste",
+  "q": "Dependencia: ¿grado I, II y III cómo se denominan y cuál es la «severa»?",
+  "a": "Moderada, severa y gran dependencia; la severa es el Grado II",
+  "ref": "Ley 39/2006 art. 26",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-038",
+  "t": "T1.07",
+  "tipo": "contraste",
+  "q": "Discriminación directa frente a indirecta: ¿cuál es el trato desfavorable por embarazo?",
+  "a": "Directa por razón de sexo, no indirecta",
+  "ref": "LO 3/2007 arts. 6 y 8",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-039",
+  "t": "T1.07",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es grado de dependencia: moderada, severa, gran dependencia, leve?",
+  "a": "Dependencia leve",
+  "ref": "Ley 39/2006 art. 26",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.07-040",
+  "t": "T1.07",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es derecho laboral de la funcionaria víctima de violencia: reducción de jornada, movilidad, excedencia, jubilación anticipada?",
+  "a": "La jubilación anticipada",
+  "ref": "LO 1/2004 art. 24",
+  "src": "curada"
+ }
+]

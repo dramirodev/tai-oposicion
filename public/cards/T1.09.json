@@ -1,0 +1,335 @@
+[
+ {
+  "id": "FC-T1.09-001",
+  "t": "T1.09",
+  "tipo": "definicion",
+  "q": "¿Qué son datos personales según el RGPD?",
+  "a": "Toda información sobre una persona física identificada o identificable",
+  "ref": "RGPD art. 4.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-002",
+  "t": "T1.09",
+  "tipo": "alcance",
+  "q": "¿A qué tratamientos se aplica el RGPD materialmente?",
+  "a": "Tratamiento total o parcialmente automatizado y no automatizado si los datos van a un fichero",
+  "ref": "RGPD art. 2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-003",
+  "t": "T1.09",
+  "tipo": "definicion",
+  "q": "¿Qué principio exige recoger datos con fines determinados, explícitos y legítimos?",
+  "a": "Limitación de la finalidad",
+  "ref": "RGPD art. 5.1.b",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-004",
+  "t": "T1.09",
+  "tipo": "definicion",
+  "q": "¿Qué principio exige datos adecuados, pertinentes y limitados a lo necesario?",
+  "a": "Minimización de datos",
+  "ref": "RGPD art. 5.1.c",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-005",
+  "t": "T1.09",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es principio del tratamiento: minimización, exactitud, limitación de finalidad, maximización de datos?",
+  "a": "Maximización de datos",
+  "ref": "RGPD art. 5",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-006",
+  "t": "T1.09",
+  "tipo": "definicion",
+  "q": "¿Qué principio exige que el responsable pueda demostrar el cumplimiento?",
+  "a": "Responsabilidad proactiva",
+  "ref": "RGPD art. 5.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-007",
+  "t": "T1.09",
+  "tipo": "cifra",
+  "q": "¿Desde qué edad basta el consentimiento del menor según el RGPD?",
+  "a": "16 años, rebajable por los Estados hasta 13",
+  "ref": "RGPD art. 8",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-008",
+  "t": "T1.09",
+  "tipo": "cifra",
+  "q": "¿Desde qué edad basta el consentimiento del menor en España?",
+  "a": "Desde los 14 años",
+  "ref": "LO 3/2018 art. 7",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-009",
+  "t": "T1.09",
+  "tipo": "alcance",
+  "q": "Menores de 14 años: ¿quién consiente el tratamiento?",
+  "a": "El titular de la patria potestad o tutela",
+  "ref": "LO 3/2018 art. 7",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-010",
+  "t": "T1.09",
+  "tipo": "alcance",
+  "q": "Consentimiento para varias finalidades: ¿para cuáles debe darse?",
+  "a": "Para todas ellas, de forma específica e inequívoca",
+  "ref": "LO 3/2018 art. 6.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-011",
+  "t": "T1.09",
+  "tipo": "alcance",
+  "q": "¿Quién debe poder demostrar que el interesado consintió?",
+  "a": "El responsable del tratamiento",
+  "ref": "RGPD art. 7.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-012",
+  "t": "T1.09",
+  "tipo": "definicion",
+  "q": "¿Qué categorías especiales de datos no pueden tratarse solo con consentimiento?",
+  "a": "Ideología, afiliación sindical, religión, creencias, origen racial o étnico",
+  "ref": "LO 3/2018 art. 9.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-013",
+  "t": "T1.09",
+  "tipo": "definicion",
+  "q": "¿Qué derechos reconoce el RGPD a los interesados?",
+  "a": "Acceso, rectificación, supresión, limitación, portabilidad y oposición",
+  "ref": "RGPD arts. 15-21",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-014",
+  "t": "T1.09",
+  "tipo": "definicion",
+  "q": "¿Qué derecho permite recibir los datos en formato estructurado y trasladarlos a otro responsable?",
+  "a": "Derecho a la portabilidad",
+  "ref": "RGPD art. 20",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-015",
+  "t": "T1.09",
+  "tipo": "cifra",
+  "q": "¿En qué plazo responde el responsable a una solicitud de derechos?",
+  "a": "Un mes, prorrogable dos meses más",
+  "ref": "RGPD art. 12.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-016",
+  "t": "T1.09",
+  "tipo": "cifra",
+  "q": "¿En qué plazo se notifica una violación de seguridad a la autoridad de control?",
+  "a": "72 horas desde que se tiene constancia",
+  "ref": "RGPD art. 33",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-017",
+  "t": "T1.09",
+  "tipo": "alcance",
+  "q": "¿Sigue siendo obligatoria la inscripción de ficheros en la AEPD?",
+  "a": "No: se sustituye por el registro de actividades de tratamiento",
+  "ref": "RGPD art. 30",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-018",
+  "t": "T1.09",
+  "tipo": "alcance",
+  "q": "¿Qué requiere el encargado para recurrir a otro encargado?",
+  "a": "Autorización previa por escrito, específica o general, del responsable",
+  "ref": "RGPD art. 28.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-019",
+  "t": "T1.09",
+  "tipo": "definicion",
+  "q": "¿Qué es el establecimiento principal en varios Estados miembros?",
+  "a": "El lugar de su administración central en la Unión",
+  "ref": "RGPD art. 4.16",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-020",
+  "t": "T1.09",
+  "tipo": "alcance",
+  "q": "La certificación en materia de protección de datos: ¿es obligatoria?",
+  "a": "No: es voluntaria y mediante proceso transparente",
+  "ref": "RGPD art. 42",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-021",
+  "t": "T1.09",
+  "tipo": "definicion",
+  "q": "¿Qué es la AEPD?",
+  "a": "Una autoridad administrativa independiente",
+  "ref": "LO 3/2018 art. 44",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-022",
+  "t": "T1.09",
+  "tipo": "cifra",
+  "q": "¿Cuántos años dura el mandato de la Presidencia de la AEPD?",
+  "a": "5 años, renovable",
+  "ref": "LO 3/2018 art. 48",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-023",
+  "t": "T1.09",
+  "tipo": "alcance",
+  "q": "¿Qué órgano asesora a la Presidencia de la AEPD?",
+  "a": "El Consejo Consultivo",
+  "ref": "LO 3/2018 art. 49",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-024",
+  "t": "T1.09",
+  "tipo": "alcance",
+  "q": "¿Qué son las Circulares de la AEPD?",
+  "a": "Disposiciones de la Presidencia que fijan los criterios de la Agencia",
+  "ref": "LO 3/2018 art. 55",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-025",
+  "t": "T1.09",
+  "tipo": "definicion",
+  "q": "¿Qué es FACILITA?",
+  "a": "Herramienta de la AEPD para tratamientos de escaso riesgo",
+  "ref": "AEPD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-026",
+  "t": "T1.09",
+  "tipo": "cifra",
+  "q": "¿En cuántos días se comunica la designación del Delegado de Protección de Datos?",
+  "a": "10 días a la AEPD",
+  "ref": "LO 3/2018 art. 34",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-027",
+  "t": "T1.09",
+  "tipo": "cifra",
+  "q": "¿Qué plazos de prescripción tienen las infracciones muy graves, graves y leves?",
+  "a": "3 años, 2 años y 1 año",
+  "ref": "LO 3/2018 arts. 72-74",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-028",
+  "t": "T1.09",
+  "tipo": "cifra",
+  "q": "¿Cuándo prescriben las sanciones de hasta 40.000 euros?",
+  "a": "En un año",
+  "ref": "LO 3/2018 art. 78",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-029",
+  "t": "T1.09",
+  "tipo": "alcance",
+  "q": "¿A qué NO se aplica el régimen sancionador de la LO 3/2018?",
+  "a": "A los delegados de protección de datos",
+  "ref": "LO 3/2018 art. 70",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-030",
+  "t": "T1.09",
+  "tipo": "definicion",
+  "q": "¿Qué mandato constitucional desarrolla la LO 3/2018?",
+  "a": "El art. 18.4 CE, sobre limitación del uso de la informática",
+  "ref": "LO 3/2018 art. 1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-031",
+  "t": "T1.09",
+  "tipo": "definicion",
+  "q": "¿Qué añade la LO 3/2018 respecto al RGPD?",
+  "a": "Garantía de los derechos digitales de la ciudadanía",
+  "ref": "LO 3/2018 art. 1.b",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-032",
+  "t": "T1.09",
+  "tipo": "alcance",
+  "q": "Datos de personas fallecidas: ¿quién puede acceder a ellos?",
+  "a": "Familiares, de hecho y herederos, salvo prohibición expresa del fallecido",
+  "ref": "LO 3/2018 art. 3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-033",
+  "t": "T1.09",
+  "tipo": "alcance",
+  "q": "Fallecimiento de un menor: ¿quién puede ejercer estos derechos?",
+  "a": "Sus representantes legales o el Ministerio Fiscal",
+  "ref": "LO 3/2018 art. 3.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-034",
+  "t": "T1.09",
+  "tipo": "definicion",
+  "q": "¿Qué garantiza el derecho a la desconexión digital en el trabajo?",
+  "a": "El respeto al tiempo de descanso, permisos y vacaciones fuera del tiempo de trabajo legal",
+  "ref": "LO 3/2018 art. 88",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-035",
+  "t": "T1.09",
+  "tipo": "alcance",
+  "q": "¿Cuál es el título de la LO 3/2018 dedicado a derechos digitales?",
+  "a": "Título X: garantía de los derechos digitales",
+  "ref": "LO 3/2018",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-036",
+  "t": "T1.09",
+  "tipo": "contraste",
+  "q": "Edad de consentimiento: ¿RGPD y LOPDGDD?",
+  "a": "RGPD: 16 años. LOPDGDD (España): 14 años",
+  "ref": "RGPD art. 8; LO 3/2018 art. 7",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.09-037",
+  "t": "T1.09",
+  "tipo": "contraste",
+  "q": "Plazo de respuesta de derechos frente a plazo de notificación de brecha",
+  "a": "Respuesta: un mes. Brecha: 72 horas",
+  "ref": "RGPD arts. 12 y 33",
+  "src": "curada"
+ }
+]

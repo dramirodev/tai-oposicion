@@ -1,0 +1,335 @@
+[
+ {
+  "id": "FC-T1.11-001",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es Cl@ve?»: ¿cuál es la respuesta correcta?",
+  "a": "Plataforma común para identificación, autenticación y firma electrónica",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-002",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es Cl@ve firma?",
+  "a": "Plataforma de firma criptográfica con certificados centralizados",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-003",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es @firma?",
+  "a": "Plataforma de validación de firma electrónica accesible desde la Red SARA",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-004",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es VALIDe?",
+  "a": "Servicio de validación de firmas y certificados; no genera sellos de tiempo",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-005",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es Autentica?",
+  "a": "Aplicación de autenticación y autorización de usuarios en la AGE; sus apps se llaman sindicadas",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-006",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Cada cuánto caduca la contraseña de Autentica?",
+  "a": "A los 6 meses",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-007",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es el cliente @firma móvil?",
+  "a": "El necesario para firmar electrónicamente desde un dispositivo móvil iOS",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-008",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es FACe?»: ¿cuál es la respuesta correcta?",
+  "a": "Punto General de Entrada de Facturas Electrónicas de la AGE",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-009",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es DIR3?»: ¿cuál es la respuesta correcta?",
+  "a": "Inventario unificado y común de unidades orgánicas y oficinas",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-010",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es NEDAES?",
+  "a": "Solución para la gestión de la nómina de empleados públicos",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-011",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es TRAMA?»: ¿cuál es la respuesta correcta?",
+  "a": "Solución para tramitar permisos e incidencias de personal",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-012",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es SIR?»: ¿cuál es la respuesta correcta?",
+  "a": "Plataforma de intercambio de asientos de registro entre Administraciones",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-013",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es ORVE?»: ¿cuál es la respuesta correcta?",
+  "a": "Servicio en la nube para intercambiar asientos registrales y documentos adjuntos",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-014",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es GEISER?",
+  "a": "Servicio integral de registro de entrada y salida en oficinas de asistencia",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-015",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué especificación permite a una CCAA intercambiar asientos con su propio registro?",
+  "a": "SICRES 4.0",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-016",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es Represent@?",
+  "a": "Punto común de validación de la habilitación y representación de personas",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-017",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es DEHú?»: ¿cuál es la respuesta correcta?",
+  "a": "Punto único de notificaciones para todas las Administraciones",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-018",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué debe tener una Administración para integrarse en DEHú?",
+  "a": "Un punto de concentración de notificaciones",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-019",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es la Red SARA?",
+  "a": "Red que conecta las Administraciones con medidas de seguridad para intercambiar datos y expedientes",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-020",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es la Plataforma de Intermediación de Datos?",
+  "a": "Servicio para consultar datos de ciudadanos, como residencia, sin pedirlos al interesado",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-021",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es el cliente SCSPv3 Cloud?",
+  "a": "Producto de acceso a la Plataforma de Intermediación pensado para un municipio",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-022",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es CORINTO?",
+  "a": "Sistema de comunicaciones electrónicas seguras",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-023",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es SIM?»: ¿cuál es la respuesta correcta?",
+  "a": "Plataforma de mensajería para el envío de mensajes por SMS y otros canales",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-024",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es PLATA?»: ¿cuál es la respuesta correcta?",
+  "a": "Sistema de traducción automática integrable en portales web de las AAPP",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-025",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es EGEO?»: ¿cuál es la respuesta correcta?",
+  "a": "Servicio para crear mapas interactivos en portales web sin conocimientos de GIS",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-026",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es REUNETE?",
+  "a": "Sistema de videoconferencia de la Red SARA",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-027",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es ALMACEN?",
+  "a": "Aplicación para enviar y recibir ficheros de gran tamaño",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-028",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es nubeSARA?",
+  "a": "Servicio de nube híbrida de la SGAD",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-029",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es INSIDE?",
+  "a": "Gestión documental de expedientes electrónicos vivos conforme al ENI",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-030",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es ARCHIVE?",
+  "a": "Archivo definitivo de expedientes y documentos electrónicos",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-031",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es ACCEDA?",
+  "a": "Sede electrónica con aplicación de tramitación completa",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-032",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es ePago?»: ¿cuál es la respuesta correcta?",
+  "a": "Servicio web de pago centralizado sin implantación en el organismo",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-033",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es la Carpeta Ciudadana?",
+  "a": "Acceso del ciudadano a su información y trámites en la sede del Punto de Acceso General",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-034",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es una sede electrónica según la Ley 40/2015?",
+  "a": "Dirección electrónica cuya titularidad corresponde a una Administración, con competencias del titular",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-035",
+  "t": "T1.11",
+  "tipo": "alcance",
+  "q": "¿Qué principios deben respetar las sedes electrónicas?",
+  "a": "Transparencia, publicidad, responsabilidad, calidad, seguridad, disponibilidad, accesibilidad, neutralidad e interoperabilidad",
+  "ref": "Ley 40/2015 art. 38",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-036",
+  "t": "T1.11",
+  "tipo": "definicion",
+  "q": "¿Qué es el nodo eIDAS español y qué estándar usa?",
+  "a": "Nodo de identificación transfronteriza con intercambio SAML 2.0",
+  "ref": "eIDAS",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.11-037",
+  "t": "T1.11",
+  "tipo": "contraste",
+  "q": "Cl@ve frente a Autentica: ¿cuál es para ciudadanos y cuál interna de la AGE?",
+  "a": "Cl@ve: ciudadanos. Autentica: aplicaciones internas de la AGE",
+  "ref": "Servicios comunes SGAD",
+  "src": "curada"
+ }
+]

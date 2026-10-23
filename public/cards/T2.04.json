@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T2.04-001",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué hace el kernel de un sistema operativo?",
+  "a": "Controla procesos, memoria y administración de dispositivos",
+  "ref": "SO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-002",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué permite que un proceso ejecute varias tareas concurrentes?",
+  "a": "Los hilos",
+  "ref": "Procesos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-003",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué es el bloque de control de proceso (PCB)?",
+  "a": "Estructura con la información del proceso gestionada por el SO",
+  "ref": "Procesos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-004",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué es un proceso zombie en Linux?",
+  "a": "Proceso terminado que aún tiene una entrada en la tabla de procesos",
+  "ref": "Linux",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-005",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué es un daemon en UNIX?",
+  "a": "Proceso del sistema que siempre se ejecuta en segundo plano",
+  "ref": "UNIX",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-006",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué planificador decide qué proceso entra en el procesador?",
+  "a": "El planificador a corto plazo (short term scheduler)",
+  "ref": "Planificación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-007",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué hace el planificador a medio plazo?",
+  "a": "Decide qué procesos se suspenden o reanudan para lograr objetivos de rendimiento",
+  "ref": "Planificación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-008",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué algoritmo de planificación usa quantum?",
+  "a": "Round Robin",
+  "ref": "Planificación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-009",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué planificación es no apropiativa?",
+  "a": "FCFS (primero en llegar, primero en ser servido)",
+  "ref": "Planificación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-010",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué provoca la paginación en la gestión de memoria?",
+  "a": "Fragmentación interna",
+  "ref": "Memoria",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-011",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué algoritmo de reemplazo elige la página no usada en el ciclo anterior?",
+  "a": "NRU",
+  "ref": "Memoria",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-012",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué asigna el algoritmo de peor ajuste?",
+  "a": "El hueco que más excede el tamaño deseado",
+  "ref": "Memoria",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-013",
+  "t": "T2.04",
+  "tipo": "alcance",
+  "q": "¿Qué directorio Linux contiene la configuración del sistema?",
+  "a": "/etc",
+  "ref": "Linux",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-014",
+  "t": "T2.04",
+  "tipo": "alcance",
+  "q": "¿Qué directorio Linux guarda los ficheros de arranque?",
+  "a": "/boot",
+  "ref": "Linux",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-015",
+  "t": "T2.04",
+  "tipo": "alcance",
+  "q": "¿Dónde están los ejecutables de administración del sistema en Linux?",
+  "a": "/sbin",
+  "ref": "Linux",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-016",
+  "t": "T2.04",
+  "tipo": "alcance",
+  "q": "¿Dónde se guardan los logs en Linux?",
+  "a": "En /var",
+  "ref": "Linux",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-017",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué hace chmod 640?",
+  "a": "Propietario: lectura y escritura; grupo: lectura; resto: nada",
+  "ref": "Linux",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-018",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué hace chmod 754?",
+  "a": "Propietario: todo; grupo: lectura y ejecución; resto: lectura",
+  "ref": "Linux",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-019",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué comando da total al dueño, lectura y escritura al grupo y lectura al resto?",
+  "a": "chmod 764",
+  "ref": "Linux",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-020",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué comando renombra PAGOS a RECIBOS?",
+  "a": "mv PAGOS RECIBOS",
+  "ref": "Linux",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-021",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué hace pwd y qué hace tail?",
+  "a": "pwd: muestra el directorio actual. tail: muestra las últimas líneas de un fichero",
+  "ref": "Linux",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-022",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué significan 2>&1 y 1>&2?",
+  "a": "2>&1: stderr va donde stdout. 1>&2: stdout va donde stderr",
+  "ref": "Linux",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-023",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué operador redirige stderr a un archivo añadiendo al final?",
+  "a": "2>>",
+  "ref": "Linux",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-024",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué es un i-nodo?",
+  "a": "Estructura en disco con la información de control de un fichero en UNIX",
+  "ref": "UNIX",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-025",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué caracteriza a ext4?",
+  "a": "El uso de extents",
+  "ref": "Sistemas de ficheros",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-026",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué sistema de ficheros está optimizado para SSD en Apple?",
+  "a": "APFS",
+  "ref": "Sistemas de ficheros",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-027",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué formato de disco funciona de forma nativa en Windows y macOS para volúmenes grandes?",
+  "a": "exFAT",
+  "ref": "Sistemas de ficheros",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-028",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué sistema de ficheros puede gestionar un fichero de 6 EB?",
+  "a": "XFS",
+  "ref": "Sistemas de ficheros",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-029",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es Samba?»: ¿cuál es la respuesta correcta?",
+  "a": "Implementación libre del protocolo de archivos compartidos de Windows (CIFS) para UNIX",
+  "ref": "Interoperabilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-030",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué niveles tiene la estructura lógica del Directorio Activo?",
+  "a": "Bosques, dominios y unidades organizativas",
+  "ref": "Windows",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-031",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué es BitLocker?",
+  "a": "Protección de datos de Windows mediante cifrado contra el acceso no autorizado",
+  "ref": "Windows",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-032",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Cómo se llama la interfaz de Windows 8 y la de Windows 10?",
+  "a": "Windows 8: Modern UI. Windows 10: Continuum",
+  "ref": "Windows",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-033",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué es Windows Insider?",
+  "a": "Programa para probar las últimas compilaciones de Windows",
+  "ref": "Windows",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-034",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué extensión tienen los ejecutables Dalvik en Android?",
+  "a": ".dex",
+  "ref": "Android",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-035",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué runtime usa Android 10 y qué kernel?",
+  "a": "ART; kernel de Linux",
+  "ref": "Android",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-036",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "Versiones Android: ¿cómo se llaman la 2.0, 5.1, 8.1 y 9?",
+  "a": "2.0 Eclair, 5.1 Lollipop, 8.1 Oreo, 9 Pie",
+  "ref": "Android",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-037",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Cómo se llama la técnica de iOS que aísla las apps?",
+  "a": "Sandboxing",
+  "ref": "iOS",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-038",
+  "t": "T2.04",
+  "tipo": "definicion",
+  "q": "¿Qué gestor de paquetes usa Manjaro?",
+  "a": "Pacman",
+  "ref": "Linux",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-039",
+  "t": "T2.04",
+  "tipo": "contraste",
+  "q": "¿Cuál NO está basada en Debian: CentOS o Ubuntu?",
+  "a": "CentOS (basada en Red Hat)",
+  "ref": "Linux",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.04-040",
+  "t": "T2.04",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es distribución Linux: Ubuntu, Manjaro, Lollipop, Debian?",
+  "a": "Lollipop (versión de Android)",
+  "ref": "Linux",
+  "src": "curada"
+ }
+]

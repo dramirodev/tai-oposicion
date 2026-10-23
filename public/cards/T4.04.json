@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T4.04-001",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "¿Qué significa SNMP?",
+  "a": "Simple Network Management Protocol",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-002",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "SNMP: ¿en qué capa y sobre qué transporte funciona?",
+  "a": "Capa de aplicación, sobre UDP",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-003",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "SNMP: ¿qué puerto usa la comunicación síncrona y cuál los traps?",
+  "a": "161 la síncrona (consultas); 162 los traps",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-004",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "SNMP: ¿qué es un trap?",
+  "a": "Mensaje asíncrono no solicitado que el agente envía al gestor ante un evento",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-005",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "SNMP: ¿qué comando recupera mucha información de una tabla MIB?",
+  "a": "GetBulk",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-006",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "SNMPv2: ¿qué operación incorpora?",
+  "a": "InformRequest (y GetBulk)",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-007",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "SNMPv3: ¿cuál es su mejora principal?",
+  "a": "La seguridad (autenticación y privacidad)",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-008",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "SNMPv3: ¿qué mecanismo de seguridad añade?",
+  "a": "USM (User-based Security Model)",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-009",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "SNMPv2u: ¿qué incorpora?",
+  "a": "El concepto de usuario para mejorar la seguridad",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-010",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "¿Qué protocolo de gestión de ISO/OSI existe además de SNMP?",
+  "a": "CMIP",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-011",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "¿Para qué sirve RMON?",
+  "a": "Gestionar y monitorizar segmentos de red",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-012",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Modelo OSI de gestión: ¿qué cinco áreas funcionales define (FCAPS)?",
+  "a": "Fallos, configuración, contabilidad, rendimiento y seguridad",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-013",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "MDM y MAM: ¿qué gestiona cada uno?",
+  "a": "MDM: dispositivos móviles. MAM: aplicaciones específicas en ellos",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-014",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es MCM?»: ¿cuál es la respuesta correcta?",
+  "a": "Gestión de contenido móvil: contenedores cifrados y aislados",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-015",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "¿Qué puerto usa SSH?",
+  "a": "22",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-016",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "SSH: ¿cómo ejecutar ls -l en server como user en el puerto 26?",
+  "a": "ssh -p 26 user@servidor 'ls -l'",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-017",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "¿Qué comando muestra conexiones y estadísticas de red?",
+  "a": "netstat",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-018",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando saca el nombre de dominio de una IP?",
+  "a": "dig -x",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-019",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando envía 7 paquetes de ping?",
+  "a": "ping -c 7 DESTINO",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-020",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando muestra el último reinicio?",
+  "a": "who -b",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-021",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando muestra usuarios conectados y sus procesos?",
+  "a": "w",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-022",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Windows: ¿qué hace ipconfig /renew y /release?",
+  "a": "/renew renueva la IP; /release la libera",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-023",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Windows: ¿qué hace ipconfig /flushdns?",
+  "a": "Vacía la caché DNS",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-024",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Windows: ¿qué comando termina un proceso remoto?",
+  "a": "tskill",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-025",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Windows: ¿qué comando muestra MAC de un equipo remoto?",
+  "a": "getmac /S",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-026",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Windows: ¿qué comando muestra directivas de grupo aplicadas?",
+  "a": "gpresult",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-027",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué fichero guarda contraseñas cifradas?",
+  "a": "/etc/shadow",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-028",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando bloquea una cuenta?",
+  "a": "usermod -L USER",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-029",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando modifica la caducidad de contraseña?",
+  "a": "chage",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-030",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando verifica /etc/shadow y /etc/gshadow?",
+  "a": "pwck y grpck",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-031",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando renombra un grupo y cambia su gid?",
+  "a": "groupmod -g 2048 -n personalTIC TIC",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-032",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Linux: ¿cómo se saben los grupos de un usuario?",
+  "a": "groups usuario",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-033",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando cambia el grupo de un fichero?",
+  "a": "chgrp tic oposiciones",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-034",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué crea useradd -m -G DESAR,SISTEMAS -g TIC S?",
+  "a": "Usuario S con home, grupo primario TIC y secundarios DESAR y SISTEMAS",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-035",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Windows: ¿cómo se cambia la contraseña de GENERICO?",
+  "a": "net user GENERICO *",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-036",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "Windows: ¿qué comando lista grupos locales?",
+  "a": "net localgroup",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-037",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "PowerShell: ¿cómo listar miembros del grupo SISTEMAS?",
+  "a": "Get-LocalGroupMember SISTEMAS",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-038",
+  "t": "T4.04",
+  "tipo": "definicion",
+  "q": "PowerShell: ¿cómo añadir Java al grupo PRE?",
+  "a": "Add-LocalGroupMember -group PRE -member Java",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-039",
+  "t": "T4.04",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es herramienta de monitorización: Nagios, Zabbix, Cacti, GnuPG?",
+  "a": "GnuPG",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.04-040",
+  "t": "T4.04",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es solución MDM: Intune, Jamf, Cacti?",
+  "a": "Cacti",
+  "ref": "Gestión de redes y usuarios",
+  "src": "curada"
+ }
+]

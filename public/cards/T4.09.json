@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T4.09-001",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Sobre «Honeypot»: ¿cuál es la respuesta correcta?",
+  "a": "Señuelo atractivo para atacantes con el fin de aprender sus ataques",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-002",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Sobre «Honeynet»: ¿cuál es la respuesta correcta?",
+  "a": "Sistema físico o virtual cuyo valor reside en ser atacado o comprometido",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-003",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Sobre «Vishing»: ¿cuál es la respuesta correcta?",
+  "a": "Suplantar a una entidad legítima mediante llamadas telefónicas",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-004",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Sobre «Pharming»: ¿cuál es la respuesta correcta?",
+  "a": "Alterar el proceso de resolución de nombres para obtener credenciales",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-005",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Sobre «Clickjacking»: ¿cuál es la respuesta correcta?",
+  "a": "El atacante secuestra los clics del usuario sobre un sitio",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-006",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Sobre «Defacement»: ¿cuál es la respuesta correcta?",
+  "a": "Modificar la apariencia visual de una página web",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-007",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Sobre «Ryuk»: ¿cuál es la respuesta correcta?",
+  "a": "Ransomware",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-008",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Barrido de puertos",
+  "a": "Ataque para obtener información básica sobre los servicios de un sistema",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-009",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "CCN: herramienta de visibilidad y control sobre la red",
+  "a": "EMMA",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-010",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "CCN-CERT: análisis automatizado de ficheros maliciosos",
+  "a": "MARTA",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-011",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "CCN-CERT: análisis estático de código dañino con varios antivirus",
+  "a": "MARIA",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-012",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "CCN-STIC sobre redes privadas virtuales",
+  "a": "836",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-013",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "CCN-STIC sobre dispositivos móviles",
+  "a": "827",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-014",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Sobre «NVD»: ¿cuál es la respuesta correcta?",
+  "a": "Base de datos de vulnerabilidades",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-015",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Sobre «OSSEC»: ¿cuál es la respuesta correcta?",
+  "a": "Herramienta HIDS",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-016",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Sobre «Snort y Bro»: ¿cuál es la respuesta correcta?",
+  "a": "Herramientas IDS (Bro es IDS e IPS)",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-017",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Sobre «WIDS»: ¿cuál es la respuesta correcta?",
+  "a": "IDS para redes 802.11",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-018",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "AAA: tres procesos",
+  "a": "Autenticación, autorización y contabilización",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-019",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Última versión estable de TLS",
+  "a": "TLS 1.3",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-020",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "TLS 1.3: ventaja técnica del handshake",
+  "a": "Se completa en un solo viaje de ida y vuelta (1-RTT)",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-021",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "TLS 1.3: ¿quién inicia el handshake?",
+  "a": "El cliente",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-022",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "VPN de nivel de transporte: protocolo más empleado",
+  "a": "TLS",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-023",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Sobre «L2TP»: ¿cuál es la respuesta correcta?",
+  "a": "Layer 2 Tunneling Protocol: túneles de nivel 2",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-024",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "IPsec: dos modos",
+  "a": "Transporte y túnel",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-025",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Sobre «IKE en IPsec»: ¿cuál es la respuesta correcta?",
+  "a": "Establece las asociaciones de seguridad y genera las claves iniciales",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-026",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "AH frente a ESP en IPsec",
+  "a": "AH no ofrece confidencialidad; ESP sí",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-027",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "IPsec: modo túnel y NAT",
+  "a": "El modo túnel añade nueva cabecera IP y es compatible con NAT",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-028",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Split tunneling",
+  "a": "Parte del tráfico va por la VPN y el resto directo a Internet",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-029",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Cortafuegos de filtrado de paquetes: nivel OSI",
+  "a": "Nivel de red (3)",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-030",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Cortafuegos con estado: ¿qué mantiene?",
+  "a": "Tabla de conexiones establecidas",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-031",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Cortafuegos de aplicación",
+  "a": "Actúan como proxy de las aplicaciones controladas",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-032",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Política restrictiva de cortafuegos",
+  "a": "Solo permite lo autorizado; acción por defecto DENY ALL",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-033",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Sobre «DMZ»: ¿cuál es la respuesta correcta?",
+  "a": "Subred entre la red interna y la externa",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-034",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "DMZ: ¿qué conexión pone en riesgo la red interna?",
+  "a": "Las conexiones desde la DMZ a la red interna",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-035",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Sobre «Proxy inverso»: ¿cuál es la respuesta correcta?",
+  "a": "Intermediario de las conexiones entrantes del exterior",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-036",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "IDS frente a IPS",
+  "a": "El IPS además actúa para neutralizar el ataque",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-037",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Mínimo privilegio",
+  "a": "Dar solo los permisos necesarios para realizar la función",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-038",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Defensa contra SQLi y XSS",
+  "a": "Validación y saneamiento de las entradas",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-039",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Atributo HttpOnly en cookies",
+  "a": "Impide que los scripts del lado del cliente accedan a la cookie",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.09-040",
+  "t": "T4.09",
+  "tipo": "definicion",
+  "q": "Defensa contra CSRF",
+  "a": "Tokens de formulario o CAPTCHA",
+  "ref": "Seguridad perimetral, VPN y ataques web",
+  "src": "curada"
+ }
+]

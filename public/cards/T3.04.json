@@ -1,0 +1,344 @@
+[
+ {
+  "id": "FC-T3.04-001",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué comandos son DDL?",
+  "a": "CREATE, ALTER, DROP y TRUNCATE",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-002",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué comandos son DML?",
+  "a": "SELECT, INSERT, UPDATE y DELETE",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-003",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué comandos son DCL?",
+  "a": "GRANT, REVOKE y DENY (en Transact-SQL)",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-004",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué comandos controlan transacciones (TCL)?",
+  "a": "COMMIT, ROLLBACK y SAVEPOINT",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-005",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué hace DROP TABLE?",
+  "a": "Elimina la estructura de la tabla con todos sus datos",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-006",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Cómo se borran los datos de una tabla sin borrar su definición?",
+  "a": "Con DELETE (sin WHERE borra todas las filas)",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-007",
+  "t": "T3.04",
+  "tipo": "contraste",
+  "q": "DELETE frente a TRUNCATE: ¿cuál es DML y cuál DDL?",
+  "a": "DELETE: DML. TRUNCATE: DDL",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-008",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué sentencia añade una columna a una tabla existente?",
+  "a": "ALTER TABLE",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-009",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué sentencia crea una vista y cuál la borra?",
+  "a": "CREATE VIEW y DROP VIEW",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-010",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Cuándo es actualizable una vista?",
+  "a": "Si se basa en una sola tabla, sin GROUP BY ni HAVING",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-011",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué cláusula ordena el resultado?",
+  "a": "ORDER BY",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-012",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "ORDER BY Provincia DESC, Municipio: ¿cómo ordena?",
+  "a": "Provincia descendente y, dentro, municipio ascendente",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-013",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "Orden de cláusulas en un SELECT completo",
+  "a": "SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-014",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué hace HAVING?",
+  "a": "Impone condiciones sobre los grupos definidos con GROUP BY",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-015",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué diferencia hay entre WHERE y HAVING?",
+  "a": "WHERE filtra filas antes de agrupar; HAVING filtra grupos",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-016",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué consulta cuenta personas por lugar con más de 10?",
+  "a": "SELECT lugar, COUNT(*) FROM Personal GROUP BY lugar HAVING COUNT(*)>10",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-017",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué operador busca por patrón junto a WHERE?",
+  "a": "LIKE",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-018",
+  "t": "T3.04",
+  "tipo": "intrusa",
+  "q": "¿Cuál NO es función de agregación: COUNT, SUM, AVG, LIKE?",
+  "a": "LIKE",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-019",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué tipos de JOIN define ANSI SQL?",
+  "a": "INNER, LEFT/RIGHT/FULL [OUTER] y CROSS",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-020",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué devuelve LEFT JOIN?",
+  "a": "Todas las filas de la izquierda y las coincidentes de la derecha, con NULL si no hay",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-021",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿A qué equivale JOIN a secas?",
+  "a": "A INNER JOIN",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-022",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué tipo de dato guarda texto variable de hasta 100 caracteres?",
+  "a": "VARCHAR(100)",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-023",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué hace INSERT INTO EMPLEADOS (NOMBRE, SUELDO) VALUES (...)?",
+  "a": "Inserta una fila con solo esas columnas; el resto por defecto",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-024",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Cómo se actualiza City de Customers a PARIS?",
+  "a": "UPDATE Customers SET City='PARIS'",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-025",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué sentencia deshace una transacción?",
+  "a": "ROLLBACK",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-026",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué sentencia otorga permisos y cuál permite reotorgarlos?",
+  "a": "GRANT; con WITH GRANT OPTION se pueden reconceder",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-027",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Cómo se concede solo actualizar la columna SALARIO?",
+  "a": "GRANT SELECT, UPDATE(SALARIO) ON EMPLEADOS TO USUARIO1",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-028",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Cómo se crea el esquema museoDB con propietario museo?",
+  "a": "CREATE SCHEMA museoDB AUTHORIZATION museo",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-029",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "DROP SCHEMA con RESTRICT: ¿cuándo se elimina?",
+  "a": "Solo si el esquema no contiene elementos",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-030",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué opción de clave foránea borra en cascada las filas hijas?",
+  "a": "ON DELETE CASCADE",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-031",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Pueden las claves ajenas ser nulas?",
+  "a": "Sí, pueden ser nulas",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-032",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Cómo se definen restricciones de integridad?",
+  "a": "Con CONSTRAINT (no existe CREATE RESTRICTION)",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-033",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué ejecuta un trigger y cuándo?",
+  "a": "BEFORE, AFTER o INSTEAD OF una operación",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-034",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué tipos de triggers contempla SQL Server?",
+  "a": "DML, DDL y LOGON",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-035",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué tipos de procedimientos almacena SQL Server?",
+  "a": "De usuario, temporales, de sistema y extendidos",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-036",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Cómo se define un parámetro de salida en SQL Server?",
+  "a": "@parametro INT OUT (OUTPUT)",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-037",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué es un driver JDBC tipo 4?",
+  "a": "Java puro: traduce directamente al protocolo del SGBD; el más eficiente",
+  "ref": "SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.04-038",
+  "t": "T3.04",
+  "tipo": "definicion",
+  "q": "¿Qué consulta elimina proveedores sin envíos?",
+  "a": "DELETE FROM S WHERE S# NOT IN (SELECT S# FROM SPJ)",
+  "ref": "SQL",
+  "src": "curada"
+ }
+]

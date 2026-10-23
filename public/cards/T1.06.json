@@ -1,0 +1,344 @@
+[
+ {
+  "id": "FC-T1.06-001",
+  "t": "T1.06",
+  "tipo": "definicion",
+  "q": "¿Cuáles son las fuentes del ordenamiento jurídico según el art. 1 del Código Civil?",
+  "a": "La ley, la costumbre y los principios generales del Derecho",
+  "ref": "CC art. 1.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-002",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "¿Cuándo rige la costumbre?",
+  "a": "En defecto de ley aplicable, si no es contraria a la moral o al orden público y resulta probada",
+  "ref": "CC art. 1.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-003",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "¿Cuándo se aplican los principios generales del Derecho?",
+  "a": "En defecto de ley o costumbre, sin perjuicio de su carácter informador del ordenamiento",
+  "ref": "CC art. 1.4",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-004",
+  "t": "T1.06",
+  "tipo": "definicion",
+  "q": "¿Qué es la jurisprudencia según el Código Civil?",
+  "a": "Doctrina reiterada del Tribunal Supremo al interpretar y aplicar la ley, la costumbre y los principios generales",
+  "ref": "CC art. 1.6",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-005",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "¿Cuándo son aplicables directamente los tratados internacionales en España?",
+  "a": "Una vez publicados íntegramente en el BOE",
+  "ref": "CC art. 1.5; CE art. 96.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-006",
+  "t": "T1.06",
+  "tipo": "cifra",
+  "q": "¿Cuándo entra en vigor una ley si no dispone otra cosa?",
+  "a": "A los veinte días de su completa publicación en el BOE",
+  "ref": "CC art. 2.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-007",
+  "t": "T1.06",
+  "tipo": "cifra",
+  "q": "¿En qué plazo sanciona el Rey las leyes aprobadas por las Cortes?",
+  "a": "15 días desde su aprobación",
+  "ref": "CE art. 91",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-008",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "Tratado con estipulaciones contrarias a la Constitución: ¿qué exige su celebración?",
+  "a": "La previa revisión constitucional",
+  "ref": "CE art. 95.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-009",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "¿A quién corresponde garantizar el cumplimiento de los tratados que atribuyen competencias a una organización internacional?",
+  "a": "A las Cortes Generales o al Gobierno, según los casos",
+  "ref": "CE art. 93",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-010",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "¿A quién corresponde manifestar el consentimiento del Estado en tratados?",
+  "a": "Al Rey",
+  "ref": "CE art. 63.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-011",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "¿Quién ejerce la potestad reglamentaria originaria?",
+  "a": "El Gobierno",
+  "ref": "CE art. 97",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-012",
+  "t": "T1.06",
+  "tipo": "definicion",
+  "q": "¿Qué mayoría exige aprobar, modificar o derogar una ley orgánica?",
+  "a": "Mayoría absoluta del Congreso en una votación final sobre el conjunto del proyecto",
+  "ref": "CE art. 81.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-013",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "¿Qué normas aprueba el Estatuto de Autonomía y qué tipo de ley es?",
+  "a": "Ley orgánica",
+  "ref": "CE arts. 81 y 147.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-014",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "¿Cómo se regula el desarrollo de los derechos fundamentales y libertades públicas?",
+  "a": "Mediante ley orgánica",
+  "ref": "CE art. 81.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-015",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "¿Cómo se regula el ejercicio de los derechos del Capítulo II del Título I?",
+  "a": "Solo por ley, respetando su contenido esencial",
+  "ref": "CE art. 53.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-016",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "¿Cómo se regula la sindicación de los funcionarios públicos?",
+  "a": "Mediante ley",
+  "ref": "CE art. 28.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-017",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "¿Puede una ley de delegación ser tácita o por tiempo indeterminado?",
+  "a": "No: debe ser expresa, para materia concreta y con plazo fijado para su ejercicio",
+  "ref": "CE art. 82.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-018",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "¿Puede el Gobierno subdelegar la potestad legislativa delegada?",
+  "a": "No, salvo que la ley de delegación lo autorice expresamente a otras autoridades",
+  "ref": "CE art. 82.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-019",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "¿Puede una ley de bases facultar para dictar normas con carácter retroactivo?",
+  "a": "No: no puede autorizar la modificación de la propia ley de bases ni normas retroactivas",
+  "ref": "CE art. 83",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-020",
+  "t": "T1.06",
+  "tipo": "cifra",
+  "q": "¿Qué nombre reciben las disposiciones legislativas provisionales del Gobierno en caso de extraordinaria y urgente necesidad?",
+  "a": "Decretos-leyes",
+  "ref": "CE art. 86",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-021",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "¿Sobre qué materias no cabe iniciativa legislativa popular?",
+  "a": "Leyes orgánicas, tributarias, cuestiones internacionales y prerrogativa de gracia",
+  "ref": "CE art. 87.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-022",
+  "t": "T1.06",
+  "tipo": "definicion",
+  "q": "¿Qué son las leyes marco del art. 150.1 CE?",
+  "a": "Leyes estatales que fijan principios para que las CCAA dicten normas legislativas",
+  "ref": "CE art. 150.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-023",
+  "t": "T1.06",
+  "tipo": "definicion",
+  "q": "¿Qué rango tienen las leyes de transferencia o delegación del art. 150.2?",
+  "a": "Leyes orgánicas",
+  "ref": "CE art. 150.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-024",
+  "t": "T1.06",
+  "tipo": "definicion",
+  "q": "¿Qué son las leyes de armonización?",
+  "a": "Leyes estatales que establecen principios para armonizar disposiciones de las CCAA por interés general",
+  "ref": "CE art. 150.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-025",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "¿Qué efecto tienen los dictámenes y recomendaciones de la Unión Europea?",
+  "a": "No son vinculantes",
+  "ref": "TFUE art. 288",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-026",
+  "t": "T1.06",
+  "tipo": "definicion",
+  "q": "Directiva europea: ¿qué obliga y qué deja libre a los Estados?",
+  "a": "Obliga en cuanto al resultado; deja libre la forma y los medios",
+  "ref": "TFUE art. 288",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-027",
+  "t": "T1.06",
+  "tipo": "definicion",
+  "q": "¿Qué caracteriza al Reglamento europeo?",
+  "a": "Es obligatorio en todos sus elementos y directamente aplicable en cada Estado miembro",
+  "ref": "TFUE art. 288",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-028",
+  "t": "T1.06",
+  "tipo": "alcance",
+  "q": "Principio de jerarquía normativa: ¿qué rango tienen las normas con fuerza de ley frente a los reglamentos?",
+  "a": "Superior: los reglamentos se subordinan a la ley",
+  "ref": "CE art. 9.3; Ley 40/2015 art. 37",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-029",
+  "t": "T1.06",
+  "tipo": "definicion",
+  "q": "¿Cuándo es válido un reglamento?",
+  "a": "Cuando desarrolla una ley y respeta normas de rango superior",
+  "ref": "Ley 40/2015 art. 128",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-030",
+  "t": "T1.06",
+  "tipo": "definicion",
+  "q": "¿Qué forma adoptan las disposiciones del Presidente del Gobierno o del Consejo de Ministros?",
+  "a": "Real Decreto",
+  "ref": "Ley 50/1997 art. 24",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-031",
+  "t": "T1.06",
+  "tipo": "contraste",
+  "q": "Delegación legislativa: ¿cuál exige ley de bases y cuál ley ordinaria?",
+  "a": "Textos articulados: ley de bases. Refundición de textos: ley ordinaria",
+  "ref": "CE art. 82.2 y 82.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-032",
+  "t": "T1.06",
+  "tipo": "contraste",
+  "q": "Decreto legislativo frente a Decreto-ley: ¿cuál procede de delegación de las Cortes?",
+  "a": "El Decreto legislativo; el Decreto-ley es por urgente necesidad",
+  "ref": "CE arts. 82 y 86",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-033",
+  "t": "T1.06",
+  "tipo": "contraste",
+  "q": "Leyes marco frente a leyes de transferencia: ¿cuál es ley orgánica?",
+  "a": "Transferencia o delegación (art. 150.2); las marco son leyes estatales",
+  "ref": "CE art. 150",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-034",
+  "t": "T1.06",
+  "tipo": "contraste",
+  "q": "Fuentes directas frente a indirectas del Derecho: ¿dónde se encuadra la jurisprudencia?",
+  "a": "Es fuente complementaria o indirecta; las directas son ley, costumbre y principios",
+  "ref": "CC art. 1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-035",
+  "t": "T1.06",
+  "tipo": "intrusa",
+  "q": "¿Cuál NO es fuente del ordenamiento (CC art. 1): ley, costumbre, principios generales, jurisprudencia?",
+  "a": "La jurisprudencia (solo complementa)",
+  "ref": "CC arts. 1.1 y 1.6",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-036",
+  "t": "T1.06",
+  "tipo": "intrusa",
+  "q": "¿Quién NO ejerce la potestad reglamentaria: Gobierno, Ministros, Cortes Generales, Consejo de Ministros?",
+  "a": "Las Cortes Generales",
+  "ref": "CE art. 97",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-037",
+  "t": "T1.06",
+  "tipo": "intrusa",
+  "q": "¿Cuál tiene menor rango: Real Decreto, ley orgánica, Orden Ministerial, Decreto legislativo?",
+  "a": "La Orden Ministerial",
+  "ref": "Ley 40/2015 art. 37",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.06-038",
+  "t": "T1.06",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es fuente vinculante de la UE: reglamento, directiva, decisión, dictamen?",
+  "a": "El dictamen",
+  "ref": "TFUE art. 288",
+  "src": "curada"
+ }
+]

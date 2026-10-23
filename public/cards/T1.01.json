@@ -1,0 +1,353 @@
+[
+ {
+  "id": "FC-T1.01-001",
+  "t": "T1.01",
+  "tipo": "cifra",
+  "q": "¿Cuándo se celebró el referéndum en el que el pueblo español ratificó la Constitución? (CE 1978)",
+  "a": "6 de diciembre de 1978",
+  "ref": "Cierre de la CE / temario T1.01",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-002",
+  "t": "T1.01",
+  "tipo": "contraste",
+  "q": "Fechas de la Constitución: aprobación por las Cortes, referéndum y sanción por el Rey",
+  "a": "Cortes: 31 oct 1978 · referéndum: 6 dic 1978 · sanción: 27 dic 1978",
+  "ref": "Temario T1.01",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-003",
+  "t": "T1.01",
+  "tipo": "definicion",
+  "q": "¿Quién ratifica la Constitución Española según su Preámbulo?",
+  "a": "El pueblo español",
+  "ref": "Preámbulo CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-004",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "¿Tiene el Preámbulo de la Constitución valor normativo o fuerza jurídica?",
+  "a": "No tiene valor normativo",
+  "ref": "Preámbulo CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-005",
+  "t": "T1.01",
+  "tipo": "definicion",
+  "q": "¿Cuáles son los valores superiores del ordenamiento jurídico? (art. 1.1 CE)",
+  "a": "Libertad, justicia, igualdad y pluralismo político",
+  "ref": "Art. 1.1 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-006",
+  "t": "T1.01",
+  "tipo": "intrusa",
+  "q": "Entre los valores superiores del art. 1.1 CE, ¿cuál NO figura: libertad, justicia, igualdad, pluralismo político, democracia?",
+  "a": "La democracia",
+  "ref": "Art. 1.1 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-007",
+  "t": "T1.01",
+  "tipo": "definicion",
+  "q": "¿En quién reside la soberanía nacional? (art. 1.2 CE)",
+  "a": "En el pueblo español",
+  "ref": "Art. 1.2 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-008",
+  "t": "T1.01",
+  "tipo": "definicion",
+  "q": "¿Cuál es la forma política del Estado español? (art. 1.3 CE)",
+  "a": "La Monarquía parlamentaria",
+  "ref": "Art. 1.3 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-009",
+  "t": "T1.01",
+  "tipo": "definicion",
+  "q": "¿En qué se fundamenta la Constitución según el art. 2 CE?",
+  "a": "En la indisoluble unidad de la Nación española",
+  "ref": "Art. 2 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-010",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "¿A qué normas alcanza la garantía de irretroactividad del art. 9.3 CE?",
+  "a": "A las disposiciones sancionadoras no favorables o restrictivas de derechos individuales",
+  "ref": "Art. 9.3 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-011",
+  "t": "T1.01",
+  "tipo": "definicion",
+  "q": "¿Qué principio del art. 9.3 CE garantiza la Constitución frente a los poderes públicos en su actuación?",
+  "a": "La interdicción de la arbitrariedad de los poderes públicos",
+  "ref": "Art. 9.3 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-012",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "¿Qué libertades públicas gozan los extranjeros en España? (art. 13.1 CE)",
+  "a": "Las garantizadas por el Título I, en los términos que establezcan los tratados y la ley",
+  "ref": "Art. 13.1 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-013",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "¿A quién se garantiza que no será privado de su nacionalidad? (art. 11.2 CE)",
+  "a": "A los españoles de origen",
+  "ref": "Art. 11.2 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-014",
+  "t": "T1.01",
+  "tipo": "cifra",
+  "q": "¿Qué artículos componen los derechos fundamentales y libertades públicas (Sección 1.ª, Cap. II, Título I)?",
+  "a": "Artículos 15 a 29",
+  "ref": "Cap. II Título I CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-015",
+  "t": "T1.01",
+  "tipo": "intrusa",
+  "q": "¿Cuál NO es derecho fundamental de los arts. 15-29 CE: reunión, asociación, petición, propiedad privada?",
+  "a": "La propiedad privada (art. 33, Sección 2.ª)",
+  "ref": "Art. 33 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-016",
+  "t": "T1.01",
+  "tipo": "cifra",
+  "q": "¿Plazo máximo de la detención preventiva? (art. 17.2 CE)",
+  "a": "72 horas",
+  "ref": "Art. 17.2 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-017",
+  "t": "T1.01",
+  "tipo": "definicion",
+  "q": "Procedimiento de habeas corpus: el detenido ilegalmente será puesto inmediatamente...",
+  "a": "A disposición judicial",
+  "ref": "Art. 17.4 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-018",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "¿Cuándo se puede entrar en un domicilio sin consentimiento del titular? (art. 18.2 CE)",
+  "a": "Con resolución judicial o en caso de flagrante delito",
+  "ref": "Art. 18.2 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-019",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "¿Cómo pueden disolverse o suspenderse las asociaciones? (art. 22.4 CE)",
+  "a": "Solo por resolución judicial motivada",
+  "ref": "Art. 22.4 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-020",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "¿Qué asociaciones prohíbe la Constitución? (art. 22 CE)",
+  "a": "Las secretas y las de carácter paramilitar",
+  "ref": "Art. 22.5 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-021",
+  "t": "T1.01",
+  "tipo": "definicion",
+  "q": "¿Para qué efectos se inscriben las asociaciones? (art. 22.3 CE)",
+  "a": "A los solos efectos de publicidad",
+  "ref": "Art. 22.3 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-022",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "¿Qué tribunales prohíbe el art. 26 CE?",
+  "a": "Los Tribunales de Honor en el ámbito de la Administración civil y de las organizaciones profesionales",
+  "ref": "Art. 26 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-023",
+  "t": "T1.01",
+  "tipo": "definicion",
+  "q": "¿Qué ley debe desarrollar el derecho de huelga? (art. 28.2 CE)",
+  "a": "Una ley orgánica",
+  "ref": "Art. 28.2 y 81 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-024",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "¿A quiénes se reconoce el derecho de petición? (art. 29 CE)",
+  "a": "A todos los españoles",
+  "ref": "Art. 29 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-025",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "¿Qué principios inspiran el sistema tributario? (art. 31.1 CE)",
+  "a": "Igualdad y progresividad, sin alcance confiscatorio",
+  "ref": "Art. 31.1 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-026",
+  "t": "T1.01",
+  "tipo": "contraste",
+  "q": "Derechos fundamentales frente a principios rectores: ¿qué naturaleza tienen la vivienda digna y el medio ambiente adecuado?",
+  "a": "Principios rectores (Cap. III, arts. 45 y 47), no derechos fundamentales",
+  "ref": "Cap. III Título I CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-027",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "¿Ante quién se pueden alegar los principios rectores del Cap. III? (art. 53.3 CE)",
+  "a": "Solo ante la jurisdicción ordinaria, según las leyes que los desarrollen",
+  "ref": "Art. 53.3 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-028",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "¿Qué derechos se pueden tutelar por recurso de amparo? (art. 53.2 CE)",
+  "a": "El art. 14, la Sección 1.ª del Cap. II y la objeción de conciencia (art. 30.2)",
+  "ref": "Art. 53.2 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-029",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "¿Qué derechos pueden suspenderse individualmente con bandas armadas o terrorismo? (art. 55.2 CE)",
+  "a": "Plazo de detención, inviolabilidad del domicilio y secreto de las comunicaciones",
+  "ref": "Art. 55.2 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-030",
+  "t": "T1.01",
+  "tipo": "contraste",
+  "q": "Con estado de excepción o de sitio (art. 55.1 CE), ¿se puede suspender el derecho de asociación (art. 22)?",
+  "a": "No: el art. 55.1 no lo incluye entre los derechos suspendibles",
+  "ref": "Art. 55.1 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-031",
+  "t": "T1.01",
+  "tipo": "definicion",
+  "q": "¿Cómo es la persona del Rey? (art. 56.3 CE)",
+  "a": "Inviolable y no sujeta a responsabilidad",
+  "ref": "Art. 56.3 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-032",
+  "t": "T1.01",
+  "tipo": "definicion",
+  "q": "¿Quién es responsable de los actos del Rey? (art. 64.2 CE)",
+  "a": "Las personas que los refrenden",
+  "ref": "Art. 64 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-033",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "¿Quién refrenda la propuesta y el nombramiento del Presidente del Gobierno y la disolución del art. 99?",
+  "a": "El Presidente del Congreso",
+  "ref": "Art. 64.1 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-034",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "¿Qué actos del Rey no necesitan refrendo? (art. 65.2 CE)",
+  "a": "El nombramiento y relevo de los miembros civiles y militares de su Casa",
+  "ref": "Art. 65.2 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-035",
+  "t": "T1.01",
+  "tipo": "definicion",
+  "q": "¿Qué ley resuelve cualquier duda de hecho o de derecho en el orden de sucesión a la Corona? (art. 57.5 CE)",
+  "a": "Una ley orgánica",
+  "ref": "Art. 57.5 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-036",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "Orden de sucesión al trono (art. 57.1 CE): ¿qué se prefiere en la línea, el grado y el sexo?",
+  "a": "Línea anterior a las posteriores; grado más próximo; el varón a la mujer; la persona de más edad",
+  "ref": "Art. 57.1 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-037",
+  "t": "T1.01",
+  "tipo": "definicion",
+  "q": "Si se extinguen todas las líneas llamadas en Derecho a la sucesión, ¿quién provee a ella? (art. 57.3 CE)",
+  "a": "Las Cortes Generales, en la forma que más convenga a los intereses de España",
+  "ref": "Art. 57.3 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-038",
+  "t": "T1.01",
+  "tipo": "alcance",
+  "q": "Inhabilitación del Rey: ¿quién ejerce la Regencia? (art. 59.2 CE)",
+  "a": "El Príncipe heredero, si fuere mayor de edad",
+  "ref": "Art. 59.2 CE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.01-039",
+  "t": "T1.01",
+  "tipo": "intrusa",
+  "q": "¿Cuál NO es función del Rey: sancionar leyes, convocar elecciones, dirigir la Administración militar, expedir decretos acordados en Consejo de Ministros?",
+  "a": "Dirigir la Administración militar (la dirige el Gobierno)",
+  "ref": "Arts. 62 y 97 CE",
+  "src": "curada"
+ }
+]

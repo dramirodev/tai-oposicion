@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T4.01-001",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Windows: ¿qué hace sfc /scannow?",
+  "a": "Examina archivos de sistema protegidos y reemplaza los dañados desde una copia en caché",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-002",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Windows cmd: ¿qué comando lista procesos?",
+  "a": "tasklist",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-003",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Windows cmd: ¿qué comando muestra la zona horaria?",
+  "a": "tzutil",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-004",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Windows cmd: ¿qué comando crea un enlace simbólico?",
+  "a": "mklink",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-005",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Windows cmd: ¿qué comando ejecuta como otro usuario?",
+  "a": "runas",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-006",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Windows cmd: ¿cómo se cambia la contraseña del usuario pepe?",
+  "a": "net user pepe *",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-007",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "PowerShell: ¿qué cmdlet lista un directorio?",
+  "a": "Get-ChildItem",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-008",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "PowerShell: ¿qué cmdlet crea un directorio?",
+  "a": "New-Item",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-009",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "PowerShell: ¿qué cmdlet muestra propiedades y métodos de objetos?",
+  "a": "Get-Member",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-010",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "PowerShell Core: ¿es multiplataforma?",
+  "a": "Sí: open source, para Windows, Linux y macOS",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-011",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "¿Qué es Active Directory Domain Services?",
+  "a": "Servicio que almacena información de objetos de red y facilita su búsqueda",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-012",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Jerarquía de Active Directory: ¿cuál es el orden?",
+  "a": "Bosque, árbol, dominio, unidad organizativa",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-013",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "AD: ¿qué objeto aplica políticas de contraseña granulares?",
+  "a": "Password Settings Object (PSO)",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-014",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "¿Qué significa BYOD y qué es Jamf Now?",
+  "a": "Bring Your Own Device; Jamf Now gestiona solo dispositivos Apple",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-015",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Linux: ¿cómo ver en tiempo real un log?",
+  "a": "tail -f",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-016",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando muestra las últimas 5 líneas?",
+  "a": "tail -5 informe.txt",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-017",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando versiona el kernel?",
+  "a": "uname -r",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-018",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Linux Debian: ¿qué comando muestra la versión de distribución?",
+  "a": "lsb_release -a (-r solo versión)",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-019",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando ve puertos abiertos de un servidor?",
+  "a": "nmap",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-020",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando muestra datos de eth0?",
+  "a": "ifconfig eth0",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-021",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando muestra permisos ACL con propietario y grupo?",
+  "a": "getfacl",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-022",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando muestra binario, fuente y manuales de otro comando?",
+  "a": "whereis",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-023",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué fichero define los sistemas de ficheros que se montan al arrancar?",
+  "a": "/etc/fstab",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-024",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando crea ext2 y cuál repara ext3?",
+  "a": "mke2fs y fsck.ext3",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-025",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué daemon gestiona las ejecuciones periódicas?",
+  "a": "cron",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-026",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Crontab 0 5 8 11 *: ¿cuándo se ejecuta?",
+  "a": "A las 05:00 del 8 de noviembre",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-027",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Linux: ¿cuál es el PID de init?",
+  "a": "1",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-028",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué runlevel apaga el sistema y cuál es multiusuario gráfico?",
+  "a": "0 apaga; 5 multiusuario con red e interfaz gráfica",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-029",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué comando muestra el runlevel actual?",
+  "a": "who -r",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-030",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "systemd: ¿cómo se activa httpd al arranque?",
+  "a": "systemctl enable httpd",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-031",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Linux: ¿qué fichero lista las particiones swap?",
+  "a": "/proc/swaps",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-032",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "GRUB 2: ¿dónde está su configuración?",
+  "a": "/boot/grub/grub.cfg",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-033",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "APT: ¿qué comando actualiza la información de paquetes?",
+  "a": "apt update",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-034",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "APT: ¿qué significa APT?",
+  "a": "Advanced Packaging Tool",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-035",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "APT: ¿qué limpia la caché de paquetes?",
+  "a": "apt-get clean",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-036",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "dpkg: ¿qué comando purga un paquete?",
+  "a": "dpkg -P paquete",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-037",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "RPM: ¿qué lista los ficheros de un paquete?",
+  "a": "rpm -ql paquete",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-038",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Pacman: ¿qué instala un paquete?",
+  "a": "pacman -S paquete",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-039",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Ansible: ¿cuáles son sus componentes?",
+  "a": "Nodo controlador y nodos administrados",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.01-040",
+  "t": "T4.01",
+  "tipo": "definicion",
+  "q": "Vagrant: ¿qué crea el Vagrantfile?",
+  "a": "vagrant init",
+  "ref": "Administración de sistemas",
+  "src": "curada"
+ }
+]

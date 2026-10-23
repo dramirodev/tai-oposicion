@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Solo el dueño de los datos y solo con la cuenta de Google autorizada.
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid
+        && request.auth.token.email == 'dramiro@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+    // Cada usuario solo accede a lo suyo; el resto está denegado por defecto.
+    match /users/{uid}/stats/{tema} {
+      allow read: if isOwner(uid);
+      allow create, update: if isOwner(uid)
+        && request.resource.data.keys().hasAll(['m', 'u'])
+        && request.resource.data.u is number
+        && request.resource.data.m is map;
+    }
+    match /users/{uid}/sessions/{sessionId} {
+      allow read: if isOwner(uid);
+      allow create, update: if isOwner(uid)
+        && request.resource.data.keys().hasAll(['id', 'ts', 'nota', 'titulo'])
+        && request.resource.data.nota is number
+        && request.resource.data.titulo is string;
+    }
+    // Temas vistos
+    match /users/{uid}/cfg/seen {
+      allow read: if isOwner(uid);
+      allow create, update: if isOwner(uid)
+        && request.resource.data.keys().hasAll(['t', 'ts'])
+        && request.resource.data.t is list
+        && request.resource.data.ts is number;
+    }
+    // Informes de errores del banco
+    match /users/{uid}/cfg/cards {
+      allow read: if isOwner(uid);
+      allow create, update: if isOwner(uid)
+        && request.resource.data.keys().hasAll(['m', 'u'])
+        && request.resource.data.m is map
+        && request.resource.data.u is number;
+    }
+    match /users/{uid}/cfg/reports {
+      allow read: if isOwner(uid);
+      allow create, update: if isOwner(uid)
+        && request.resource.data.keys().hasAll(['m', 'u'])
+        && request.resource.data.m is map
+        && request.resource.data.u is number;
+    }
+  }
+}

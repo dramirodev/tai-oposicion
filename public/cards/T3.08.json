@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T3.08-001",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué evento HTML se dispara al situar el ratón sobre un elemento?",
+  "a": "onmouseover",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-002",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "XHTML: ¿cómo deben cerrarse los elementos vacíos?",
+  "a": "Con etiqueta de cierre (p. ej. <br/>)",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-003",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Dónde va el DOCTYPE en HTML?",
+  "a": "En la primera línea, antes del elemento raíz <html>",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-004",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Cuántos elementos raíz tiene un XML bien formado?",
+  "a": "Solo uno",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-005",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Cómo se escribe un comentario en XML?",
+  "a": "<!-- comentario -->",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-006",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué etiqueta introdujo HTML5 para la zona principal?",
+  "a": "<main>",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-007",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué etiquetas se eliminaron en HTML5?",
+  "a": "Entre otras, <big>, <center>, <font>",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-008",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué elemento marca el texto que introduce el usuario?",
+  "a": "<kbd>",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-009",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué elemento marca variables de programas?",
+  "a": "<var>",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-010",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué elemento marca una oportunidad de salto de línea?",
+  "a": "<wbr>",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-011",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué elemento en línea no empieza en nueva línea?",
+  "a": "<span>",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-012",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué elemento representa una lista descriptiva?",
+  "a": "<dl>",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-013",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué atributo de <video> muestra una imagen mientras se descarga?",
+  "a": "poster",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-014",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué elemento da subtítulos a un vídeo?",
+  "a": "<track>",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-015",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué atributo de input muestra un texto de ayuda?",
+  "a": "placeholder",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-016",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué elemento agrupa opciones en una lista desplegable?",
+  "a": "<optgroup>",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-017",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué atributo oculta un elemento hasta que se muestre?",
+  "a": "hidden",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-018",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué elemento crea un widget desplegable?",
+  "a": "<details>",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-019",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué elemento HTML5 se usa para contenido externo no HTML?",
+  "a": "<embed>",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-020",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "Un <datalist> en HTML5: ¿obliga a elegir?",
+  "a": "No: actúa como lista de sugerencias",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-021",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "En CSS3, ¿qué es un selector .selector?",
+  "a": "Selector de clase",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-022",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "En CSS, ¿qué es selector1 selector2 (espacio)?",
+  "a": "Selector descendente",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-023",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "En CSS, ¿qué es selector1 > selector2?",
+  "a": "Selector de hijos directos",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-024",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "En CSS, ¿qué selecciona div + h1?",
+  "a": "El h1 justo después de un div",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-025",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "En CSS, ¿qué selecciona p[class$=especial]?",
+  "a": "p con class que acaba en «especial»",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-026",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "En CSS, ¿qué es :required y qué es ::selection?",
+  "a": ":required es pseudoclase; ::selection es pseudoelemento",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-027",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué posicionamiento CSS es por defecto?",
+  "a": "static",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-028",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué valor muestra i, ii, iii y cuál a, b, c?",
+  "a": "lower-roman y lower-latin",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-029",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué son las media queries?",
+  "a": "Reglas CSS según tamaño, orientación o densidad de pantalla",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-030",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué son Sass, Less y Stylus?",
+  "a": "Preprocesadores de CSS",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-031",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué motor web desarrolla Mozilla?",
+  "a": "Gecko",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-032",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "JavaScript: ¿qué devuelve 10 === '10'?",
+  "a": "false (distinto tipo)",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-033",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "JavaScript: ¿qué devuelve 123 == '123'?",
+  "a": "true (compara con conversión)",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-034",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "PHP: ¿cuándo devuelve true ===?",
+  "a": "Si los valores son iguales y del mismo tipo",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-035",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "PHP: ¿cómo se añade un elemento al principio de un array?",
+  "a": "array_unshift",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-036",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "Python: ¿cómo se identifica el bloque de un if?",
+  "a": "Por la sangría (mismo número de espacios)",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-037",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "Python: ¿qué da print(\"Java\"*4+\"Linux\")?",
+  "a": "JavaJavaJavaJavaLinux",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-038",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué es Ruby on Rails?",
+  "a": "Framework web basado en el patrón MVC",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-039",
+  "t": "T3.08",
+  "tipo": "definicion",
+  "q": "¿Qué significan UI y UX?",
+  "a": "Interfaz de usuario y experiencia de usuario",
+  "ref": "Web",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.08-040",
+  "t": "T3.08",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es framework de JavaScript: React, Angular, Vue, JDBC?",
+  "a": "JDBC",
+  "ref": "Web",
+  "src": "curada"
+ }
+]

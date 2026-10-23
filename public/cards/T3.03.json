@@ -1,0 +1,353 @@
+[
+ {
+  "id": "FC-T3.03-001",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "Bucle do…while: ¿cuándo se evalúa la condición?",
+  "a": "Después de ejecutar el cuerpo, que se ejecuta al menos una vez",
+  "ref": "Estructuras de control",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-002",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "En un for, ¿cuántas veces se ejecuta la inicialización?",
+  "a": "Una sola vez al comienzo del bucle",
+  "ref": "Estructuras de control",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-003",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Permite switch repetir instrucciones?",
+  "a": "No: es selección múltiple, no un bucle",
+  "ref": "Estructuras de control",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-004",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué es la recursividad?",
+  "a": "Capacidad de un programa o función de llamarse a sí mismo",
+  "ref": "Programación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-005",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué ámbito tienen los parámetros de una función?",
+  "a": "El cuerpo de la propia función",
+  "ref": "Funciones",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-006",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Para qué sirven los parámetros por referencia?",
+  "a": "Pueden usarse como parámetros de entrada/salida",
+  "ref": "Funciones",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-007",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué son las funciones sobrecargadas en C++?",
+  "a": "Funciones con el mismo nombre en el mismo ámbito y distintos parámetros",
+  "ref": "C++",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-008",
+  "t": "T3.03",
+  "tipo": "cifra",
+  "q": "En Java, ¿qué valor da 6 ^ 3?",
+  "a": "5 (XOR a nivel de bits)",
+  "ref": "Java",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-009",
+  "t": "T3.03",
+  "tipo": "cifra",
+  "q": "¿Cuántos bytes ocupa un long en Java?",
+  "a": "8 bytes",
+  "ref": "Java",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-010",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué es un array o vector?",
+  "a": "Tipo estructurado homogéneo con elementos en posiciones contiguas accesibles por índice",
+  "ref": "Estructuras de datos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-011",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "C: tras y=++x con x=5, ¿qué valen x e y?",
+  "a": "Las dos valen 6",
+  "ref": "C",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-012",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Cuál es operador a nivel de bits: &, |, ^ o %=?",
+  "a": "%= no lo es; los de bits son &, |, ^, ~, <<, >>",
+  "ref": "Operadores",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-013",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué es el polimorfismo?",
+  "a": "Enviar mensajes sintácticamente iguales a objetos de tipos distintos con conductas distintas",
+  "ref": "POO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-014",
+  "t": "T3.03",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es característica de la POO: herencia, encapsulación, polimorfismo, cuantificación?",
+  "a": "La cuantificación",
+  "ref": "POO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-015",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué lenguajes son orientados a objetos puros?",
+  "a": "Smalltalk es puramente orientado a objetos",
+  "ref": "Paradigmas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-016",
+  "t": "T3.03",
+  "tipo": "intrusa",
+  "q": "¿Qué lenguaje NO es orientado a objetos: Pascal, C, Prolog o Java?",
+  "a": "Pascal, C y Prolog no lo son",
+  "ref": "Paradigmas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-017",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué lenguajes son funcionales?",
+  "a": "Miranda (puro), Haskell, ML, Hope",
+  "ref": "Paradigmas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-018",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué paradigma usa un calendario de exámenes con cientos de restricciones?",
+  "a": "Programación declarativa",
+  "ref": "Paradigmas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-019",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué paradigma permite adaptarse dinámicamente a nuevas situaciones?",
+  "a": "El paradigma reflexivo",
+  "ref": "Paradigmas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-020",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué paradigmas admite JavaScript?",
+  "a": "Imperativo, orientado a objetos (prototipos) y funcional",
+  "ref": "Paradigmas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-021",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Es Prolog declarativo o imperativo?",
+  "a": "Declarativo (lógico)",
+  "ref": "Paradigmas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-022",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué es el lenguaje ensamblador?",
+  "a": "Lenguaje de bajo nivel con correlación directa con el código máquina",
+  "ref": "Lenguajes",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-023",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué entradas tiene un intérprete?",
+  "a": "Un programa en lenguaje fuente y los datos de entrada",
+  "ref": "Traductores",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-024",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Necesita un programa compilado traducirse en cada ejecución?",
+  "a": "No: se traduce una vez y se ejecuta sin repetir la traducción",
+  "ref": "Traductores",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-025",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué detecta el análisis sintáctico?",
+  "a": "Tokens faltantes y expresiones mal construidas",
+  "ref": "Traductores",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-026",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué es un transpilador?",
+  "a": "Traductor de código fuente a otro lenguaje de nivel similar",
+  "ref": "Traductores",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-027",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué es Kotlin?",
+  "a": "Lenguaje compatible con el ecosistema Java",
+  "ref": "Lenguajes",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-028",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Para qué se concibió R?",
+  "a": "Para análisis estadístico, con herramientas estadísticas y gráficas",
+  "ref": "Lenguajes",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-029",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué lenguaje multiparadigma de .NET se cita?",
+  "a": "C#",
+  "ref": "Lenguajes",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-030",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Es Lua compilado o interpretado?",
+  "a": "Lua es un lenguaje interpretado (script)",
+  "ref": "Lenguajes",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-031",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Se usa Swift solo para iOS?",
+  "a": "No: no se utiliza exclusivamente para aplicaciones iOS",
+  "ref": "Lenguajes",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-032",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "F#: ¿para qué sirve la palabra clave let?",
+  "a": "Enlaza un nombre a un valor o función",
+  "ref": "Lenguajes",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-033",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Qué lenguaje no incluye genericidad: Java, C++, Pascal?",
+  "a": "Pascal",
+  "ref": "Lenguajes",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-034",
+  "t": "T3.03",
+  "tipo": "cifra",
+  "q": "Bucle for(int i=0;i>0;i*=3): ¿cuántas veces se ejecuta el cuerpo?",
+  "a": "0 veces",
+  "ref": "Estructuras de control",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-035",
+  "t": "T3.03",
+  "tipo": "cifra",
+  "q": "¿Qué imprime for(i=10,j=1;i>0;i=i-j){print i; j++;}?",
+  "a": "10, 8, 5, 1",
+  "ref": "Estructuras de control",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-036",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Cuál es la salida de a=10; while(a>0){b=a-1; print b; a=a-1;}?",
+  "a": "9876543210",
+  "ref": "Estructuras de control",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-037",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Termina siempre una función tras return?",
+  "a": "Sí: la ejecución de la función acaba al ejecutarse return",
+  "ref": "Funciones",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-038",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Deben los procedimientos ejecutar return?",
+  "a": "No: es incorrecto que todo procedimiento deba ejecutar return",
+  "ref": "Funciones",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.03-039",
+  "t": "T3.03",
+  "tipo": "definicion",
+  "q": "¿Se pueden usar en el principal las variables locales de un procedimiento?",
+  "a": "No: son locales a su ámbito",
+  "ref": "Funciones",
+  "src": "curada"
+ }
+]

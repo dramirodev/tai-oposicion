@@ -1,0 +1,345 @@
+[
+ {
+  "id": "FC-T1.04-001",
+  "t": "T1.04",
+  "tipo": "definicion",
+  "q": "¿En qué artículo de la CE se basa el derecho de acceso a la información pública?",
+  "a": "Artículo 105.b) CE",
+  "ref": "Ley 19/2013 art. 12",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-002",
+  "t": "T1.04",
+  "tipo": "definicion",
+  "q": "¿Qué es información pública según la Ley 19/2013?",
+  "a": "Contenidos o documentos, en cualquier formato, en poder de los sujetos de la Ley y elaborados en sus funciones",
+  "ref": "Ley 19/2013 art. 13",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-003",
+  "t": "T1.04",
+  "tipo": "cifra",
+  "q": "¿Cuál es la fecha de la Ley de Transparencia, Acceso a la Información Pública y Buen Gobierno?",
+  "a": "Ley 19/2013, de 9 de diciembre",
+  "ref": "Ley 19/2013",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-004",
+  "t": "T1.04",
+  "tipo": "cifra",
+  "q": "¿A sociedades mercantiles con qué participación pública se aplica la Ley 19/2013?",
+  "a": "Participación pública superior al 50 por 100 del capital",
+  "ref": "Ley 19/2013 art. 2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-005",
+  "t": "T1.04",
+  "tipo": "alcance",
+  "q": "¿De qué Ministerio depende el Portal de la Transparencia?",
+  "a": "Ministerio de la Presidencia",
+  "ref": "Ley 19/2013 art. 10",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-006",
+  "t": "T1.04",
+  "tipo": "definicion",
+  "q": "¿A qué principios técnicos debe adecuarse la información del Portal de Transparencia?",
+  "a": "Accesibilidad, interoperabilidad y reutilización",
+  "ref": "Ley 19/2013 art. 11",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-007",
+  "t": "T1.04",
+  "tipo": "alcance",
+  "q": "¿Cómo se publicará la información sujeta a obligaciones de transparencia?",
+  "a": "En sedes electrónicas o páginas web, de forma clara, estructurada y entendible, preferiblemente en formatos reutilizables",
+  "ref": "Ley 19/2013 art. 5",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-008",
+  "t": "T1.04",
+  "tipo": "alcance",
+  "q": "¿Qué circulares deben publicar las Administraciones por publicidad activa?",
+  "a": "Las que tengan efectos jurídicos",
+  "ref": "Ley 19/2013 art. 7",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-009",
+  "t": "T1.04",
+  "tipo": "alcance",
+  "q": "¿Debe motivarse la solicitud de acceso a la información pública?",
+  "a": "No: no es necesario motivarla",
+  "ref": "Ley 19/2013 art. 17.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-010",
+  "t": "T1.04",
+  "tipo": "alcance",
+  "q": "¿Se tiene en cuenta la condición del solicitante para acceder a la información?",
+  "a": "No: todas las personas tienen derecho de acceso",
+  "ref": "Ley 19/2013 art. 12",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-011",
+  "t": "T1.04",
+  "tipo": "alcance",
+  "q": "¿Qué contiene la solicitud de acceso a la información?",
+  "a": "Identidad del solicitante, información solicitada, dirección de contacto y modalidad preferida de acceso",
+  "ref": "Ley 19/2013 art. 17.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-012",
+  "t": "T1.04",
+  "tipo": "cifra",
+  "q": "¿Qué plazo máximo hay para resolver y notificar la solicitud de acceso?",
+  "a": "Un mes desde su recepción por el órgano competente",
+  "ref": "Ley 19/2013 art. 20.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-013",
+  "t": "T1.04",
+  "tipo": "cifra",
+  "q": "Si la información afecta a terceros identificados, ¿qué plazo se les concede?",
+  "a": "15 días para formular alegaciones",
+  "ref": "Ley 19/2013 art. 19.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-014",
+  "t": "T1.04",
+  "tipo": "alcance",
+  "q": "¿Cómo se realiza preferentemente el acceso a la información?",
+  "a": "Por vía electrónica, salvo que no sea posible o el solicitante indique otro medio",
+  "ref": "Ley 19/2013 art. 22",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-015",
+  "t": "T1.04",
+  "tipo": "alcance",
+  "q": "Solicitud de información de publicación general: ¿qué resolución procede?",
+  "a": "Inadmisión a trámite, indicando dónde puede encontrarse la información",
+  "ref": "Ley 19/2013 art. 18",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-016",
+  "t": "T1.04",
+  "tipo": "alcance",
+  "q": "Información con datos especialmente protegidos: ¿cuándo puede autorizarse el acceso?",
+  "a": "Con consentimiento expreso y por escrito del afectado, salvo excepciones legales",
+  "ref": "Ley 19/2013 art. 15",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-017",
+  "t": "T1.04",
+  "tipo": "alcance",
+  "q": "¿Cuál es la naturaleza de la reclamación ante el Consejo de Transparencia?",
+  "a": "Potestativa, previa a la vía contencioso-administrativa y sustitutiva de los recursos administrativos",
+  "ref": "Ley 19/2013 art. 24",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-018",
+  "t": "T1.04",
+  "tipo": "cifra",
+  "q": "¿Qué plazo hay para presentar la reclamación ante el CTBG?",
+  "a": "Un mes desde el día siguiente a la notificación del acto o a los efectos del silencio",
+  "ref": "Ley 19/2013 art. 24.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-019",
+  "t": "T1.04",
+  "tipo": "cifra",
+  "q": "¿Qué plazo tiene el CTBG para resolver y notificar la reclamación?",
+  "a": "Tres meses",
+  "ref": "Ley 19/2013 art. 24.4",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-020",
+  "t": "T1.04",
+  "tipo": "definicion",
+  "q": "¿Quién controla el cumplimiento de la publicidad activa en la AGE?",
+  "a": "El Consejo de Transparencia y Buen Gobierno",
+  "ref": "Ley 19/2013 art. 9",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-021",
+  "t": "T1.04",
+  "tipo": "cifra",
+  "q": "¿Por cuántos años se nombra al Presidente del Consejo de Transparencia?",
+  "a": "Cinco años, no renovable",
+  "ref": "Ley 19/2013 art. 37",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-022",
+  "t": "T1.04",
+  "tipo": "alcance",
+  "q": "¿Cómo se aprueba el Estatuto del Consejo de Transparencia y Buen Gobierno?",
+  "a": "Mediante Real Decreto del Consejo de Ministros",
+  "ref": "Ley 19/2013 disp. adicional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-023",
+  "t": "T1.04",
+  "tipo": "definicion",
+  "q": "¿Cómo se compone el Consejo de Transparencia y Buen Gobierno?",
+  "a": "Comisión de Transparencia y Buen Gobierno y su Presidente, que preside también la Comisión",
+  "ref": "Ley 19/2013 art. 33",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-024",
+  "t": "T1.04",
+  "tipo": "definicion",
+  "q": "¿Quiénes forman la Comisión de Transparencia y Buen Gobierno?",
+  "a": "Presidente, un Diputado, un Senador, y representantes del Tribunal de Cuentas, Defensor del Pueblo, AEPD, SEAP y AIReF",
+  "ref": "Ley 19/2013 art. 36",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-025",
+  "t": "T1.04",
+  "tipo": "cifra",
+  "q": "¿Qué plazos de prescripción tienen las infracciones: muy graves, graves y leves?",
+  "a": "Cinco años, tres años y un año",
+  "ref": "Ley 19/2013 art. 32",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-026",
+  "t": "T1.04",
+  "tipo": "alcance",
+  "q": "Intervenir en un procedimiento administrativo con causa de abstención: ¿qué infracción es?",
+  "a": "Infracción grave de los altos cargos",
+  "ref": "Ley 19/2013 art. 29",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-027",
+  "t": "T1.04",
+  "tipo": "alcance",
+  "q": "¿Qué debe hacerse si una infracción de buen gobierno puede ser constitutiva de delito?",
+  "a": "Poner los hechos en conocimiento del Ministerio Fiscal",
+  "ref": "Ley 19/2013 art. 27",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-028",
+  "t": "T1.04",
+  "tipo": "definicion",
+  "q": "¿Cuáles son los tres pilares del Gobierno Abierto?",
+  "a": "Transparencia, participación y colaboración",
+  "ref": "Gobierno Abierto",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-029",
+  "t": "T1.04",
+  "tipo": "cifra",
+  "q": "¿En qué año se adhirió España a la Alianza para el Gobierno Abierto (OGP)?",
+  "a": "2011",
+  "ref": "Gobierno Abierto",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-030",
+  "t": "T1.04",
+  "tipo": "definicion",
+  "q": "¿Cómo se denomina el mecanismo de evaluación del avance de cada gobierno en la OGP?",
+  "a": "Mecanismo Independiente de Evaluación (IRM)",
+  "ref": "Gobierno Abierto",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-031",
+  "t": "T1.04",
+  "tipo": "cifra",
+  "q": "¿En qué año se aprobó la Agenda 2030 y cuántos ODS y metas tiene?",
+  "a": "2015; 17 Objetivos de Desarrollo Sostenible con 169 metas",
+  "ref": "Agenda 2030",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-032",
+  "t": "T1.04",
+  "tipo": "definicion",
+  "q": "ODS 1 y ODS 9: ¿qué objetivo es cada uno?",
+  "a": "ODS 1: Fin de la pobreza. ODS 9: Industria, innovación e infraestructura",
+  "ref": "Agenda 2030",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-033",
+  "t": "T1.04",
+  "tipo": "definicion",
+  "q": "Plan de Gobierno Abierto vigente en España: ¿cuál es y cuántos compromisos tiene?",
+  "a": "V Plan, con 10 compromisos",
+  "ref": "Gobierno Abierto",
+  "src": "curada",
+  "caduca": true
+ },
+ {
+  "id": "FC-T1.04-034",
+  "t": "T1.04",
+  "tipo": "contraste",
+  "q": "Publicidad activa frente a derecho de acceso: ¿cuál es de oficio y cuál a solicitud?",
+  "a": "Publicidad activa: de oficio. Derecho de acceso: a solicitud del ciudadano",
+  "ref": "Ley 19/2013 caps. II y III",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-035",
+  "t": "T1.04",
+  "tipo": "contraste",
+  "q": "Comisión de Transparencia frente a Consejo de Transparencia: ¿cuál incluye a la otra?",
+  "a": "El Consejo se compone de la Comisión y su Presidente",
+  "ref": "Ley 19/2013 art. 33",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-036",
+  "t": "T1.04",
+  "tipo": "contraste",
+  "q": "Prescripción de infracciones frente a plazo de reclamación: ¿qué plazos son 1 mes y cuáles 5, 3, 1 años?",
+  "a": "Reclamación CTBG: 1 mes. Prescripción: 5, 3 y 1 años",
+  "ref": "Ley 19/2013 arts. 24 y 32",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-037",
+  "t": "T1.04",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es un principio técnico del Portal: accesibilidad, interoperabilidad, reutilización, transversalidad?",
+  "a": "Transversalidad",
+  "ref": "Ley 19/2013 art. 11",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.04-038",
+  "t": "T1.04",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es pilar del Gobierno Abierto: transparencia, participación, colaboración, sanción?",
+  "a": "La sanción",
+  "ref": "Gobierno Abierto",
+  "src": "curada"
+ }
+]

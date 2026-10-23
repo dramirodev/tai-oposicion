@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T2.05-001",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué significa ACID?",
+  "a": "Atomicidad, Consistencia, Aislamiento (Isolation) y Durabilidad",
+  "ref": "Transacciones",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-002",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué significa BASE en NoSQL?",
+  "a": "Basically Available, Soft state, Eventual consistency",
+  "ref": "NoSQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-003",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué implica la propiedad de aislamiento?",
+  "a": "Las transacciones concurrentes no deben interferir entre sí de modo que se comprometa la consistencia",
+  "ref": "Transacciones",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-004",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "Nivel de aislamiento lectura repetible: ¿de qué protege y de qué no?",
+  "a": "Protege de lectura sucia y no repetible; no de lectura fantasma",
+  "ref": "ANSI SQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-005",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué significa CRUD?",
+  "a": "Create, Read, Update and Delete",
+  "ref": "Bases de datos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-006",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "Regla 2 de Codd: ¿cuál es?",
+  "a": "Regla del acceso garantizado",
+  "ref": "Codd",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-007",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "Regla 3 de Codd: ¿qué trata?",
+  "a": "Tratamiento sistemático de los valores nulos",
+  "ref": "Codd",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-008",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "Regla 8 y 9 de Codd: ¿qué independencias son?",
+  "a": "8: independencia física. 9: independencia lógica",
+  "ref": "Codd",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-009",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "Regla 10 y 11 de Codd: ¿qué independencias son?",
+  "a": "10: independencia de integridad. 11: independencia de distribución",
+  "ref": "Codd",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-010",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "Regla 12 de Codd: ¿cuál es?",
+  "a": "Regla de la no subversión",
+  "ref": "Codd",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-011",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué establece la regla de independencia de integridad?",
+  "a": "Las restricciones de integridad se definen en el sublenguaje relacional y se almacenan en el catálogo",
+  "ref": "Codd",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-012",
+  "t": "T2.05",
+  "tipo": "intrusa",
+  "q": "¿Cuál NO es regla de Codd: acceso garantizado, no subversión, cardinalidad de entidades, independencia física?",
+  "a": "Regla de la cardinalidad de las entidades",
+  "ref": "Codd",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-013",
+  "t": "T2.05",
+  "tipo": "intrusa",
+  "q": "¿Cuál NO es regla de Codd: inserción, actualización y supresión de alto nivel o de bajo nivel?",
+  "a": "La de bajo nivel (la regla habla de alto nivel)",
+  "ref": "Codd",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-014",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Para qué sirve la normalización?",
+  "a": "Eliminar redundancias y prevenir inconsistencias",
+  "ref": "Diseño",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-015",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué son las restricciones de integridad?",
+  "a": "Condiciones que deben cumplir los datos almacenados",
+  "ref": "Diseño",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-016",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué componentes tiene el procesador de un SGBD?",
+  "a": "Compilador DML, precompilador DML, intérprete DDL y motor de ejecución",
+  "ref": "SGBD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-017",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué lenguaje se usa en bases de datos orientadas a objetos?",
+  "a": "OQL",
+  "ref": "BDOO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-018",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué SGBD son orientados a objetos?",
+  "a": "Matisse, Versant y Zope Object DB",
+  "ref": "BDOO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-019",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Cómo es el OID en una BDOO?",
+  "a": "Un identificador único generado por el sistema",
+  "ref": "BDOO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-020",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué tipos de datos admite una BDOO?",
+  "a": "Un conjunto de tipos extensible, no fijo",
+  "ref": "BDOO",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-021",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué tipos de NoSQL existen?",
+  "a": "Clave-valor, documentales, columnares y de grafos",
+  "ref": "NoSQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-022",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué ventaja principal tiene NoSQL?",
+  "a": "Escalabilidad horizontal y rendimiento; sistemas distribuidos",
+  "ref": "NoSQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-023",
+  "t": "T2.05",
+  "tipo": "alcance",
+  "q": "¿Garantizan las bases de datos NoSQL ACID completo?",
+  "a": "No: las NoSQL no garantizan completamente ACID",
+  "ref": "NoSQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-024",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué es MongoDB?",
+  "a": "Base de datos NoSQL de documentos que almacena BSON",
+  "ref": "NoSQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-025",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué es Redis y de qué tipo es?",
+  "a": "Remote Dictionary Server; clave-valor",
+  "ref": "NoSQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-026",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Quién creó Cassandra y Bigtable?",
+  "a": "Cassandra: Facebook. Bigtable: Google",
+  "ref": "NoSQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-027",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué base de datos NoSQL es de Apache y de documentos?",
+  "a": "CouchDB",
+  "ref": "NoSQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-028",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué bases son NoSQL orientadas a grafos?",
+  "a": "Neo4j, OrientDB, AllegroGraph y JanusGraph",
+  "ref": "NoSQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-029",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué lenguaje de consulta usa Neo4j?",
+  "a": "Cypher",
+  "ref": "NoSQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-030",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué bases de datos NoSQL son HBase y DynamoDB?",
+  "a": "Ejemplos de bases de datos NoSQL: HBase y DynamoDB",
+  "ref": "NoSQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-031",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "En Oracle, ¿qué es un tablespace?",
+  "a": "Unidad lógica de almacenamiento",
+  "ref": "Oracle",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-032",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "En Oracle, ¿qué es un segmento?",
+  "a": "Conjunto de extents con todos los datos de una estructura",
+  "ref": "Oracle",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-033",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué tipos de ficheros forman la estructura física de Oracle?",
+  "a": "Redo log, de control y de datos",
+  "ref": "Oracle",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-034",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué es una instancia de Oracle?",
+  "a": "Estructuras de memoria y procesos que acceden a los ficheros",
+  "ref": "Oracle",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-035",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué es una vista materializada en Oracle?",
+  "a": "Objeto que almacena el resultado de una consulta",
+  "ref": "Oracle",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-036",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué alternativa a la vista materializada existe en SQL Server?",
+  "a": "Vistas indexadas",
+  "ref": "SQL Server",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-037",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Para qué sirve SAVEPOINT en Oracle?",
+  "a": "Definir un punto de salvaguarda dentro de una transacción",
+  "ref": "Oracle",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-038",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué motor de almacenamiento usa MySQL por defecto?",
+  "a": "InnoDB",
+  "ref": "MySQL",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-039",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué es una dimensión outrigger en Kimball?",
+  "a": "Tabla de dimensión enlazada a otra tabla de dimensión",
+  "ref": "Modelado dimensional",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.05-040",
+  "t": "T2.05",
+  "tipo": "definicion",
+  "q": "¿Qué hace Machine Learning Services de SQL Server?",
+  "a": "Ejecutar scripts de Python y R con datos relacionales",
+  "ref": "SQL Server",
+  "src": "curada"
+ }
+]

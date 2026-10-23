@@ -1,0 +1,353 @@
+[
+ {
+  "id": "FC-T4.07-001",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Sobre «ARP»: ¿cuál es la respuesta correcta?",
+  "a": "Obtiene la dirección física a partir de la lógica",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-002",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Sobre «RARP»: ¿cuál es la respuesta correcta?",
+  "a": "Obtiene la IP a partir de la MAC",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-003",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "ICMP: ¿en qué capa TCP/IP?",
+  "a": "Internet",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-004",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Prefijo multicast IPv6",
+  "a": "FF00::/8",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-005",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Servicio confirmado OSI: primitivas",
+  "a": "Request, Indication, Response, Confirm",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-006",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Capa OSI: sintaxis, cifrado y compresión",
+  "a": "Presentación",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-007",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Capa OSI de sesión",
+  "a": "Establece, sincroniza y gestiona el diálogo entre aplicaciones",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-008",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Sobre «RPC: capa OSI»: ¿cuál es la respuesta correcta?",
+  "a": "Sesión",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-009",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Número de capas OSI",
+  "a": "7",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-010",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Sobre «Estándar OSI»: ¿cuál es la respuesta correcta?",
+  "a": "ISO/IEC 7498",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-011",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Capa de enlace OSI: unidad de datos",
+  "a": "Tramas",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-012",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Sobre «IPv6 Hop Limit»: ¿cuál es la respuesta correcta?",
+  "a": "Máximo de saltos antes de descartar el paquete",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-013",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Clase de tráfico IPv6: tamaño",
+  "a": "8 bits",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-014",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Etiqueta de flujo IPv6: tamaño",
+  "a": "20 bits",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-015",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Cabecera fija IPv6: longitud",
+  "a": "40 bytes",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-016",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Tipos de direcciones IPv6",
+  "a": "Unicast, multicast y anycast",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-017",
+  "t": "T4.07",
+  "tipo": "intrusa",
+  "q": "IPv6 NO tiene direcciones de tipo",
+  "a": "Broadcast",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-018",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Dirección IPv6 mapeada desde IPv4",
+  "a": "::FFFF:<dirección IPv4>",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-019",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Siguiente cabecera IPv6 de autenticación",
+  "a": "Enviar paquetes a cualquier miembro de un grupo de nodos",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-020",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Sobre «Anycast IPv6»: ¿cuál es la respuesta correcta?",
+  "a": "Enviar paquetes a cualquier miembro de un grupo de nodos",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-021",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Sobre «RFC de IPv4»: ¿cuál es la respuesta correcta?",
+  "a": "RFC 791",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-022",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "RFC de IPv6 (en el banco)",
+  "a": "RFC 2460",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-023",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Sobre «CG-NAT»: ¿cuál es la respuesta correcta?",
+  "a": "Muchos clientes comparten una misma dirección IPv4",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-024",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Dirección 192.168.14.2: red",
+  "a": "192.168.14.0/23",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-025",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Campo Posición del Fragmento IPv4",
+  "a": "13 bits",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-026",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Cabecera mínima de segmento TCP",
+  "a": "20 bytes",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-027",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Segundo paso del three-way handshake",
+  "a": "SYN y ACK",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-028",
+  "t": "T4.07",
+  "tipo": "intrusa",
+  "q": "Flag que NO existe en TCP",
+  "a": "END",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-029",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "UDP: Suma de verificación",
+  "a": "Opcional; 0 si no se calcula",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-030",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Sobre «Puerto 23»: ¿cuál es la respuesta correcta?",
+  "a": "Telnet",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-031",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Protocolo que opera sobre UDP",
+  "a": "DNS",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-032",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Sobre «APIPA»: ¿cuál es la respuesta correcta?",
+  "a": "169.254.0.0/16 (ej. 169.254.0.1)",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-033",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "IP privada de clase B",
+  "a": "172.16.0.0 – 172.31.255.255",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-034",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Rango clase A asignable",
+  "a": "1.0.0.0 – 126.255.255.255",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-035",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Sobre «Clase D»: ¿cuál es la respuesta correcta?",
+  "a": "Multicast",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-036",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Dirección reservada inicial de un host",
+  "a": "0.0.0.0",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-037",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Sobre «MTU»: ¿cuál es la respuesta correcta?",
+  "a": "Mayor unidad de datos que puede enviarse por un medio físico",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-038",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "Hosts en red clase B",
+  "a": "2^16 − 2",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.07-039",
+  "t": "T4.07",
+  "tipo": "definicion",
+  "q": "IP: garantía de entrega",
+  "a": "Ninguna: no garantiza entrega, orden ni unicidad",
+  "ref": "Modelos OSI, TCP/IP, IP y transporte",
+  "src": "curada"
+ }
+]

@@ -1,0 +1,353 @@
+[
+ {
+  "id": "FC-T3.09-001",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Cuáles son los cuatro principios de WCAG?",
+  "a": "Perceptible, operable, comprensible y robusto",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-002",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es WCAG?»: ¿cuál es la respuesta correcta?",
+  "a": "Pautas de accesibilidad de contenidos web del W3C (WAI)",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-003",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿De qué se compone WCAG 2.2?",
+  "a": "4 principios, 13 pautas y 86 criterios de conformidad",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-004",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Cuántos niveles de conformidad hay en WCAG y cuáles?",
+  "a": "Tres: A, AA y AAA",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-005",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "WCAG 2.2: ¿qué nivel tienen Titulado de páginas e Idioma de la página?",
+  "a": "Nivel A",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-006",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "WCAG 2.2: ¿qué nivel tienen Tres destellos y Abreviaturas?",
+  "a": "Nivel AAA",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-007",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "WCAG: contraste de contenido no textual 3:1, ¿qué nivel?",
+  "a": "Nivel AA",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-008",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿A qué principio pertenece Ataques epilépticos?",
+  "a": "Operable",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-009",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿A qué principio pertenece Tiempo suficiente?",
+  "a": "Operable",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-010",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿A qué principio pertenecen Legible, Predecible y Asistencia a la entrada de datos?",
+  "a": "Comprensible",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-011",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Qué principio WCAG exige que los componentes de la interfaz y la navegación sean utilizables?",
+  "a": "Operabilidad",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-012",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Qué principio exige que los contenidos sean suficientemente sólidos para varias tecnologías?",
+  "a": "Robustez",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-013",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Qué pauta de WCAG busca ver y oír el contenido, separando primer plano y fondo?",
+  "a": "Distinguible (principio perceptible)",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-014",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es ATAG?»: ¿cuál es la respuesta correcta?",
+  "a": "Normas para que las herramientas de autor sean accesibles y generen contenido accesible",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-015",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Qué es WAI-ARIA?",
+  "a": "Accessible Rich Internet Applications: especificación del W3C/WAI de accesibilidad web",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-016",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Qué es WCAG2ICT?",
+  "a": "Guía para aplicar WCAG a las TIC no web",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-017",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Qué atributo describe la función de un elemento visual?",
+  "a": "alt",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-018",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Cómo debe ser el texto de un enlace?",
+  "a": "Que identifique su propósito y tenga sentido fuera de contexto",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-019",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es TAW?»: ¿cuál es la respuesta correcta?",
+  "a": "Herramienta de revisión automática de accesibilidad web",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-020",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Qué comprueban automáticamente las herramientas de evaluación?",
+  "a": "Solo una parte de los criterios de conformidad",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-021",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Qué norma regula la accesibilidad de webs y apps del sector público en España?",
+  "a": "Real Decreto 1112/2018, de 7 de septiembre",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-022",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Qué directiva europea transpone el RD 1112/2018?",
+  "a": "Directiva (UE) 2016/2102",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-023",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Qué norma UNE-EN fija accesibilidad TIC para las AAPP?",
+  "a": "UNE-EN 301549:2019",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-024",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "RD 1112/2018: ¿cada cuánto se actualiza la declaración de accesibilidad?",
+  "a": "Como mínimo una vez al año",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-025",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "RD 1112/2018: ¿en cuántos días hábiles responde la entidad a solicitudes y quejas?",
+  "a": "20 días hábiles",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-026",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "RD 1112/2018: ¿cuándo debían ser accesibles las apps móviles?",
+  "a": "Antes del 23 de junio de 2021",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-027",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Cuántos principios de usabilidad definió Nielsen?",
+  "a": "10",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-028",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "Nielsen: ¿qué principio prefiere reconocer a recordar?",
+  "a": "Reconocimiento antes que recuerdo",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-029",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Qué norma ISO define usabilidad como comprender, aprender, usar y atraer?",
+  "a": "ISO/IEC 9126",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-030",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Qué ISO se relaciona con la usabilidad (ergonomía)?",
+  "a": "ISO 9241",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-031",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "Diseño universal: ¿qué principio minimiza riesgos?",
+  "a": "Tolerancia al error",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-032",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Qué mide FAR en biometría?",
+  "a": "La tasa de falsos positivos (falsa aceptación)",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-033",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "Autenticación: el reconocimiento facial, ¿es algo que se sabe, se tiene o se es?",
+  "a": "Algo que es el usuario",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-034",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Qué significa SAST?",
+  "a": "Análisis estático del código fuente para hallar vulnerabilidades",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-035",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "Condición de carrera: ¿qué es?",
+  "a": "Acceso concurrente a un recurso compartido con resultado inesperado",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-036",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "Desarrollo seguro: ¿qué principio es válido?",
+  "a": "Mínimo privilegio, no «máximo privilegio»",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-037",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "Desarrollo seguro: ¿qué se recomienda en web?",
+  "a": "Cifrar las comunicaciones entre las partes",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-038",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Qué norma AENOR trata accesibilidad hardware?",
+  "a": "UNE 139801:2003",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.09-039",
+  "t": "T3.09",
+  "tipo": "definicion",
+  "q": "¿Qué norma regula accesibilidad de contenidos web?",
+  "a": "UNE 139803:2012",
+  "ref": "Accesibilidad",
+  "src": "curada"
+ }
+]

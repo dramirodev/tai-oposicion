@@ -1,0 +1,47 @@
+# Despliegue automático: cada push a main ejecuta los tests, compila y publica en Firebase Hosting.
+name: Desplegar en Firebase
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Tests (si fallan, no se despliega)
+        run: npm test
+
+      - name: Compilar app.js
+        run: npm run build
+
+      - name: Validar tarjetas
+        run: node scripts/validate_cards.mjs
+
+      - name: Credenciales de Firebase
+        run: |
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TAI_OPOSICION }}' > "$RUNNER_TEMP/sa.json"
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/sa.json" >> "$GITHUB_ENV"
+
+      - name: Desplegar hosting
+        run: npx --yes firebase-tools@13 deploy --only hosting --project tai-oposicion --non-interactive
+
+      # Las reglas de Firestore necesitan el rol «Firebase Rules Admin» en la cuenta de servicio.
+      # Si aún no se lo has dado, este paso falla sin romper el despliegue del hosting.
+      - name: Desplegar reglas de Firestore
+        continue-on-error: true
+        run: npx --yes firebase-tools@13 deploy --only firestore:rules --project tai-oposicion --non-interactive

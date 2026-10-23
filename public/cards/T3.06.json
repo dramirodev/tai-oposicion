@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T3.06-001",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué hace el CLR de .NET?",
+  "a": "Ejecuta el código, gestiona excepciones y recolección de basura (Common Language Runtime)",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-002",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Cómo se llama el código intermedio de .NET?",
+  "a": "CIL",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-003",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué permite que todos los lenguajes .NET compartan tipos de datos?",
+  "a": "El CTS (Common Type System)",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-004",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Cuál es la unidad mínima de ejecución del CLR?",
+  "a": "El ensamblado (assembly)",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-005",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Cuándo se cargan los ensamblados en memoria?",
+  "a": "Solo si son necesarios",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-006",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿En qué lenguajes se escriben aplicaciones .NET?",
+  "a": "C#, F# y Visual Basic",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-007",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es NuGet?»: ¿cuál es la respuesta correcta?",
+  "a": "Un administrador de paquetes de .NET",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-008",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué es ADO.NET?",
+  "a": "Componente de .NET para comunicarse con bases de datos",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-009",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué es Entity Framework?",
+  "a": "Conjunto de APIs de acceso a datos y ORM para .NET",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-010",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué es Razor en ASP.NET Core?",
+  "a": "Sintaxis de plantillas para crear vistas dinámicas",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-011",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué es Blazor?",
+  "a": "Plataforma para interfaces web interactivas del lado cliente con C#",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-012",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué es .NET MAUI?",
+  "a": "Marco multiplataforma para apps móviles y de escritorio con C# y XAML",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-013",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué es Xamarin?",
+  "a": "Plataforma Microsoft multiplataforma para móviles, incluido iOS",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-014",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué tecnología .NET trabaja con workflows?",
+  "a": "WF (Workflow Foundation)",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-015",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es WCF?»: ¿cuál es la respuesta correcta?",
+  "a": "Tecnología de la capa de servicios para comunicación con servicios",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-016",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué es un POCO?",
+  "a": "Objeto simple de .NET sin dependencias especiales de framework",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-017",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué librería se usa para logs en .NET?",
+  "a": "Log4Net",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-018",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Cuál es la última versión LTS de .NET citada?",
+  "a": ".NET 8.0",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-019",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué es un JIT?",
+  "a": "Compilador en tiempo de ejecución que traduce código intermedio a código máquina",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-020",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Diferencia entre JRE y JDK?",
+  "a": "JRE ejecuta programas Java; JDK además permite desarrollarlos",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-021",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué cláusula declara las interfaces de una clase Java?",
+  "a": "implements",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-022",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Quién puede acceder a un miembro protected de Java?",
+  "a": "Su clase, sus subclases y las clases del mismo paquete",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-023",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "Java: ¿qué significa private static int i?",
+  "a": "Valor compartido por todas las instancias de la clase",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-024",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "Java: ¿qué pasa si un método es abstract?",
+  "a": "La clase debe ser abstract",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-025",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "Java: ¿qué permite final en public static final double PI?",
+  "a": "Que no se pueda cambiar el valor de PI",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-026",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Cómo se llama asignar un tipo superior a uno inferior?",
+  "a": "Downcasting",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-027",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué palabra declara que un método lanza excepciones?",
+  "a": "throws",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-028",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Cuándo se ejecuta el bloque finally?",
+  "a": "Siempre, haya o no excepción",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-029",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Cuál NO es tipo primitivo de Java: int, double, boolean, simple?",
+  "a": "simple",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-030",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué carácter pueden contener los nombres de variable Java?",
+  "a": "El signo $",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-031",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué es PreparedStatement en JDBC?",
+  "a": "Permite ejecutar muchas veces una sentencia SQL precompilada",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-032",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "Drivers JDBC: ¿qué usa el tipo 3 y qué el tipo 4?",
+  "a": "Tipo 3: protocolo de red y middleware. Tipo 4: Java puro directo al SGBD",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-033",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué API Java es para procesar XML en streaming?",
+  "a": "StAX (SAX también lo lee por eventos)",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-034",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué API Java implementa servicios RESTful?",
+  "a": "JAX-RS",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-035",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué especificación Jakarta equivale a Entity Framework?",
+  "a": "Jakarta Persistence (JPA)",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-036",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿En qué paquete están los EJB?",
+  "a": "javax.ejb (Jakarta EE: jakarta.ejb)",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-037",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué es Spring Boot?",
+  "a": "Plataforma para apps autocontenidas con contenedor de servlets embebido",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-038",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué es JASPIC?",
+  "a": "Servicio Java de mecanismos de autenticación",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-039",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué hace inline en C++?",
+  "a": "Indica al compilador generar la función en línea",
+  "ref": "Java/.NET",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T3.06-040",
+  "t": "T3.06",
+  "tipo": "definicion",
+  "q": "¿Qué framework NO implementa MVC?",
+  "a": "Lucene (es de búsqueda)",
+  "ref": "Java/.NET",
+  "src": "curada"
+ }
+]

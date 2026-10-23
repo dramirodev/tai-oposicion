@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T1.03-001",
+  "t": "T1.03",
+  "tipo": "cifra",
+  "q": "¿Qué parte de los Diputados debe proponer la moción de censura y qué debe incluir?",
+  "a": "Al menos la décima parte; un candidato a la Presidencia del Gobierno",
+  "ref": "CE art. 113.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-002",
+  "t": "T1.03",
+  "tipo": "cifra",
+  "q": "¿Cuántos días deben pasar desde su presentación para votar una moción de censura?",
+  "a": "Cinco días",
+  "ref": "CE art. 113.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-003",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "Si la moción de censura no es aprobada, ¿qué consecuencia tiene para sus signatarios?",
+  "a": "No podrán presentar otra durante el mismo periodo de sesiones",
+  "ref": "CE art. 113.4",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-004",
+  "t": "T1.03",
+  "tipo": "cifra",
+  "q": "Investidura, primera votación: ¿qué mayoría del Congreso se exige?",
+  "a": "Mayoría absoluta",
+  "ref": "CE art. 99.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-005",
+  "t": "T1.03",
+  "tipo": "cifra",
+  "q": "Investidura, segunda votación: ¿cuándo se hace y qué mayoría basta?",
+  "a": "48 horas después; mayoría simple",
+  "ref": "CE art. 99.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-006",
+  "t": "T1.03",
+  "tipo": "cifra",
+  "q": "¿Cuánto tiempo sin investidura desde la primera votación provoca la disolución de las Cortes?",
+  "a": "Dos meses; el Rey disuelve con refrendo del Presidente del Congreso",
+  "ref": "CE art. 99.5",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-007",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Quién propone candidato a Presidente del Gobierno y con quién consulta antes?",
+  "a": "El Rey, previa consulta con representantes designados por los grupos con representación parlamentaria",
+  "ref": "CE art. 99.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-008",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Quién refrenda la propuesta de candidato del Rey?",
+  "a": "El Presidente del Congreso",
+  "ref": "CE art. 99.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-009",
+  "t": "T1.03",
+  "tipo": "cifra",
+  "q": "¿Qué mayoría exige otorgar la cuestión de confianza?",
+  "a": "Mayoría simple de los Diputados",
+  "ref": "CE art. 112",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-010",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Quién plantea la cuestión de confianza, ante quién y con qué trámite previo?",
+  "a": "Presidente del Gobierno, ante el Congreso, previa deliberación del Consejo de Ministros",
+  "ref": "CE art. 112",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-011",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Qué Cámara exige la responsabilidad política del Gobierno?",
+  "a": "El Congreso de los Diputados; el Senado solo interpela y pregunta",
+  "ref": "CE arts. 108 y 111",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-012",
+  "t": "T1.03",
+  "tipo": "definicion",
+  "q": "¿Cómo responde el Gobierno de su gestión política?",
+  "a": "Solidariamente, ante el Congreso de los Diputados",
+  "ref": "CE art. 108",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-013",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Ante quién se exige la responsabilidad criminal del Presidente y los miembros del Gobierno?",
+  "a": "Ante la Sala de lo Penal del Tribunal Supremo",
+  "ref": "CE art. 102.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-014",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "Acusación por traición o contra la seguridad del Estado: ¿quién la inicia y con qué mayoría?",
+  "a": "Una cuarta parte del Congreso; aprobación por mayoría absoluta",
+  "ref": "CE art. 102.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-015",
+  "t": "T1.03",
+  "tipo": "definicion",
+  "q": "¿Qué funciones atribuye el art. 97 CE al Gobierno?",
+  "a": "Dirige política interior y exterior, Administración civil y militar y defensa; ejerce función ejecutiva y potestad reglamentaria",
+  "ref": "CE art. 97",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-016",
+  "t": "T1.03",
+  "tipo": "definicion",
+  "q": "¿Cómo se compone el Gobierno según el art. 98 CE?",
+  "a": "Presidente, Vicepresidentes en su caso, Ministros y demás miembros que establezca la ley",
+  "ref": "CE art. 98.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-017",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Quién nombra y separa a los Ministros?",
+  "a": "El Rey, a propuesta del Presidente del Gobierno",
+  "ref": "CE art. 100",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-018",
+  "t": "T1.03",
+  "tipo": "cifra",
+  "q": "¿Cuáles son las causas de cese del Gobierno?",
+  "a": "Elecciones generales, pérdida de confianza parlamentaria, dimisión o fallecimiento del Presidente",
+  "ref": "CE art. 101.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-019",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Qué efecto tiene la dimisión del Presidente del Gobierno?",
+  "a": "El Gobierno cesa y continúa en funciones hasta la toma de posesión del nuevo",
+  "ref": "CE art. 101",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-020",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Qué puede hacer el Gobierno en funciones?",
+  "a": "Limitar su gestión al despacho ordinario de asuntos públicos",
+  "ref": "CE art. 101.2; Ley 50/1997 art. 21",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-021",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Qué no puede hacer el Gobierno en funciones respecto a leyes?",
+  "a": "No puede presentar proyectos de ley al Congreso",
+  "ref": "Ley 50/1997 art. 21",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-022",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Quién preside el Consejo de Ministros y quién puede presidirlo excepcionalmente?",
+  "a": "Presidente del Gobierno; el Rey, a petición del Presidente",
+  "ref": "CE art. 62.g; Ley 50/1997",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-023",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Quién actúa como Secretario del Consejo de Ministros?",
+  "a": "El Ministro de la Presidencia",
+  "ref": "Ley 50/1997 art. 18",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-024",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Qué órgano prepara las sesiones del Consejo de Ministros?",
+  "a": "La Comisión General de Secretarios de Estado y Subsecretarios",
+  "ref": "Ley 50/1997 art. 8",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-025",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Quién ejerce la Secretaría de la Comisión General de Secretarios de Estado y Subsecretarios?",
+  "a": "El Subsecretario de la Presidencia",
+  "ref": "Ley 50/1997 art. 8.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-026",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Cómo se nombra a los Secretarios de Estado?",
+  "a": "Real Decreto del Consejo de Ministros, a propuesta del Presidente o del Ministro competente",
+  "ref": "Ley 40/2015",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-027",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Quién propone la disolución anticipada de Cortes y bajo qué responsabilidad?",
+  "a": "El Presidente, previa deliberación del Consejo; bajo su exclusiva responsabilidad",
+  "ref": "CE art. 115.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-028",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Cuándo no puede proponerse la disolución?",
+  "a": "Si está en trámite una moción de censura",
+  "ref": "CE art. 115.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-029",
+  "t": "T1.03",
+  "tipo": "cifra",
+  "q": "Estado de alarma: ¿quién lo declara, qué plazo máximo y qué exige prorrogarlo?",
+  "a": "Gobierno, decreto en Consejo de Ministros, 15 días; prórroga con autorización del Congreso",
+  "ref": "CE art. 116.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-030",
+  "t": "T1.03",
+  "tipo": "cifra",
+  "q": "Estado de excepción: ¿quién lo declara, qué plazo máximo y qué prórroga?",
+  "a": "Gobierno con autorización previa del Congreso; 30 días, prorrogable otros 30",
+  "ref": "CE art. 116.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-031",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "Estado de sitio: ¿quién lo declara y con qué mayoría?",
+  "a": "Mayoría absoluta del Congreso, a propuesta exclusiva del Gobierno",
+  "ref": "CE art. 116.4",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-032",
+  "t": "T1.03",
+  "tipo": "alcance",
+  "q": "¿Quién convoca el referéndum consultivo del art. 92 CE?",
+  "a": "El Rey, a propuesta del Presidente del Gobierno, previa autorización del Congreso",
+  "ref": "CE art. 92.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-033",
+  "t": "T1.03",
+  "tipo": "contraste",
+  "q": "Decreto legislativo frente a Decreto-ley: ¿cuál necesita convalidación del Congreso?",
+  "a": "Decreto-ley sí; el Decreto legislativo no",
+  "ref": "CE arts. 82 y 86",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-034",
+  "t": "T1.03",
+  "tipo": "contraste",
+  "q": "Estado de excepción y estado de alarma: ¿cuál exige autorización previa del Congreso?",
+  "a": "Excepción: autorización previa. Alarma: solo dar cuenta al Congreso",
+  "ref": "CE art. 116",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-035",
+  "t": "T1.03",
+  "tipo": "contraste",
+  "q": "Moción de censura y cuestión de confianza: ¿cuál requiere candidato alternativo y mayoría absoluta?",
+  "a": "Moción de censura; la confianza se otorga por mayoría simple",
+  "ref": "CE arts. 112 y 113",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-036",
+  "t": "T1.03",
+  "tipo": "contraste",
+  "q": "Mayoría en la investidura: ¿primera y segunda votación?",
+  "a": "Primera: absoluta. Segunda (48 horas después): simple",
+  "ref": "CE art. 99.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-037",
+  "t": "T1.03",
+  "tipo": "contraste",
+  "q": "Responsabilidad política y criminal del Gobierno: ¿ante quién se exige cada una?",
+  "a": "Política: Congreso. Criminal: Sala de lo Penal del Tribunal Supremo",
+  "ref": "CE arts. 108 y 102",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-038",
+  "t": "T1.03",
+  "tipo": "intrusa",
+  "q": "¿Cuál NO es causa de cese del Gobierno: elecciones generales, pérdida de confianza, dimisión del Presidente, dimisión de un Ministro?",
+  "a": "La dimisión de un Ministro",
+  "ref": "CE art. 101.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-039",
+  "t": "T1.03",
+  "tipo": "intrusa",
+  "q": "¿Cuál NO es alto cargo según la Ley 40/2015: Secretario de Estado, Ministro, Subdirector general, Subsecretario?",
+  "a": "El Subdirector general",
+  "ref": "Ley 40/2015",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.03-040",
+  "t": "T1.03",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es órgano de colaboración y apoyo del Gobierno: Comisión General de Secretarios de Estado, Secretariado del Gobierno, los Ministros?",
+  "a": "Los Ministros",
+  "ref": "Ley 50/1997",
+  "src": "curada"
+ }
+]

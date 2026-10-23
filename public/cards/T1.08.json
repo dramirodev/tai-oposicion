@@ -1,0 +1,358 @@
+[
+ {
+  "id": "FC-T1.08-001",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "¿Qué reglamento europeo regula la identificación electrónica y los servicios de confianza (eIDAS)?",
+  "a": "Reglamento (UE) 910/2014",
+  "ref": "eIDAS",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-002",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "¿Qué reglamento es eIDAS 2 y qué modifica?",
+  "a": "Reglamento (UE) 2024/1183, que modifica el 910/2014",
+  "ref": "eIDAS 2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-003",
+  "t": "T1.08",
+  "tipo": "cifra",
+  "q": "¿Cuándo entró en vigor eIDAS 2?",
+  "a": "El 20 de mayo de 2024",
+  "ref": "Reglamento (UE) 2024/1183",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-004",
+  "t": "T1.08",
+  "tipo": "cifra",
+  "q": "¿Qué niveles de seguridad tienen los sistemas de identificación electrónica de eIDAS?",
+  "a": "Bajo, sustancial y alto",
+  "ref": "eIDAS art. 8",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-005",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "¿Qué es una firma electrónica cualificada?",
+  "a": "Firma avanzada creada con dispositivo cualificado y basada en un certificado cualificado",
+  "ref": "eIDAS",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-006",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "¿Qué nuevo tipo de certificado incorpora el Reglamento 910/2014?",
+  "a": "Certificado cualificado de autenticación de sitio web",
+  "ref": "eIDAS",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-007",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "¿Qué es la cartera europea de identidad digital?",
+  "a": "Medio de identificación electrónica que respeta la seguridad desde el diseño, regulado por eIDAS 2",
+  "ref": "eIDAS 2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-008",
+  "t": "T1.08",
+  "tipo": "cifra",
+  "q": "¿Cuánto es la validez máxima de la certificación de las carteras europeas de identidad?",
+  "a": "5 años, con evaluación de vulnerabilidades cada 2 años",
+  "ref": "eIDAS 2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-009",
+  "t": "T1.08",
+  "tipo": "cifra",
+  "q": "¿En qué plazo deben ofrecer los Estados miembros las carteras de identidad digital?",
+  "a": "En los 24 meses siguientes a la entrada en vigor de los actos de ejecución",
+  "ref": "eIDAS 2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-010",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "¿Qué protección tienen los sellos cualificados de tiempo electrónicos?",
+  "a": "Presunción de exactitud de fecha y hora y de integridad de los datos vinculados",
+  "ref": "eIDAS",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-011",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "¿Qué técnica valida la vigencia de un certificado electrónico?",
+  "a": "CRL (lista de certificados revocados)",
+  "ref": "PKI",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-012",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "¿Qué formato de firma longeva incluye certificados e información de revocación?",
+  "a": "AdES-XL",
+  "ref": "Firma electrónica",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-013",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "¿Qué algoritmos criptográficos soporta el DNIe 3.0?",
+  "a": "RSA, hash SHA-256 y cifrado simétrico Triple DES y AES",
+  "ref": "DNIe 3.0",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-014",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "¿Qué middleware gestiona la conexión NFC entre Android y el DNIe?",
+  "a": "DNIeDroid",
+  "ref": "DNIe",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-015",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "¿Qué módulo criptográfico permite usar el DNIe en Windows?",
+  "a": "CardModule",
+  "ref": "DNIe",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-016",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "En la PKI del DNIe, ¿quién es la autoridad de certificación y quién la de validación?",
+  "a": "Certificación: Dirección General de la Policía. Validación: FNMT",
+  "ref": "DNIe",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-017",
+  "t": "T1.08",
+  "tipo": "alcance",
+  "q": "¿Qué certificados electrónicos incorpora el DNI?",
+  "a": "Certificados cualificados de Autenticación y de Firma",
+  "ref": "RD 255/2025 art. 11",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-018",
+  "t": "T1.08",
+  "tipo": "cifra",
+  "q": "¿Qué vigencia máxima tienen los certificados del DNI?",
+  "a": "No será superior a 2 años",
+  "ref": "RD 255/2025",
+  "src": "curada",
+  "caduca": true
+ },
+ {
+  "id": "FC-T1.08-019",
+  "t": "T1.08",
+  "tipo": "cifra",
+  "q": "Con la regla anterior, ¿cuántos años duraba el certificado del DNI?",
+  "a": "Hasta 5 años (RD 1553/2005 y Ley 6/2020)",
+  "ref": "Ley 6/2020 art. 4",
+  "src": "curada",
+  "caduca": true
+ },
+ {
+  "id": "FC-T1.08-020",
+  "t": "T1.08",
+  "tipo": "alcance",
+  "q": "¿Qué eficacia tiene la versión digital del DNI?",
+  "a": "La misma eficacia jurídica que la física a efectos de identificación",
+  "ref": "RD 255/2025 art. 14",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-021",
+  "t": "T1.08",
+  "tipo": "alcance",
+  "q": "¿Qué ocurre con los DNI emitidos antes del RD 255/2025?",
+  "a": "Siguen siendo válidos y eficaces",
+  "ref": "RD 255/2025 DT 1.ª",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-022",
+  "t": "T1.08",
+  "tipo": "cifra",
+  "q": "¿Cuál es la validez del DNI de un titular de 25 años?",
+  "a": "Cinco años",
+  "ref": "RD 255/2025 art. 8",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-023",
+  "t": "T1.08",
+  "tipo": "cifra",
+  "q": "¿Qué validez tiene el DNI para menores de cinco años?",
+  "a": "Dos años",
+  "ref": "RD 255/2025 art. 8",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-024",
+  "t": "T1.08",
+  "tipo": "alcance",
+  "q": "¿Qué implica renovar el DNI respecto a los certificados?",
+  "a": "Expedición de nuevos certificados electrónicos",
+  "ref": "DNIe",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-025",
+  "t": "T1.08",
+  "tipo": "alcance",
+  "q": "¿Qué debe hacer el prestador con un pseudónimo en un certificado cualificado?",
+  "a": "Revelar la identidad real si lo piden órganos judiciales u otras autoridades",
+  "ref": "Ley 6/2020",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-026",
+  "t": "T1.08",
+  "tipo": "cifra",
+  "q": "¿Cuántos años deben conservar los prestadores cualificados la información de certificados?",
+  "a": "Quince años desde la extinción del certificado",
+  "ref": "Ley 6/2020 art. 8",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-027",
+  "t": "T1.08",
+  "tipo": "cifra",
+  "q": "¿Qué vigencia máxima tienen los certificados cualificados según la Ley 6/2020?",
+  "a": "Cinco años",
+  "ref": "Ley 6/2020 art. 4",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-028",
+  "t": "T1.08",
+  "tipo": "alcance",
+  "q": "¿Qué Ministerio es el órgano supervisor de los prestadores de servicios de confianza?",
+  "a": "Ministerio de Asuntos Económicos y Transformación Digital",
+  "ref": "Ley 6/2020 art. 14",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-029",
+  "t": "T1.08",
+  "tipo": "alcance",
+  "q": "¿Qué garantías ofrece la firma no criptográfica?",
+  "a": "Integridad y no repudio",
+  "ref": "Resolución SGAD 2017",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-030",
+  "t": "T1.08",
+  "tipo": "alcance",
+  "q": "¿En qué trámites exige la LPACAP firma obligatoria del interesado?",
+  "a": "Formular solicitudes, presentar declaraciones o recursos, desistir o renunciar; no para aportar documentos",
+  "ref": "LPACAP art. 11",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-031",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "¿En cuántos ejes se articula la Agenda España Digital 2025?",
+  "a": "10 ejes",
+  "ref": "España Digital 2025",
+  "src": "curada",
+  "caduca": true
+ },
+ {
+  "id": "FC-T1.08-032",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "¿Cómo se llama la estrategia europea de transformación digital?",
+  "a": "Brújula Digital 2030",
+  "ref": "UE",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-033",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "¿En qué eje encuadra España Digital 2026 el Kit Digital?",
+  "a": "Transformación digital de la empresa y emprendimiento digital",
+  "ref": "España Digital 2026",
+  "src": "curada",
+  "caduca": true
+ },
+ {
+  "id": "FC-T1.08-034",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "Meta de España Digital 2026: ¿qué proporción de servicios públicos estará en app móvil?",
+  "a": "El 50 %",
+  "ref": "España Digital 2026",
+  "src": "curada",
+  "caduca": true
+ },
+ {
+  "id": "FC-T1.08-035",
+  "t": "T1.08",
+  "tipo": "definicion",
+  "q": "¿Qué ley regula los servicios de la sociedad de la información y comercio electrónico?",
+  "a": "Ley 34/2002 (LSSI)",
+  "ref": "LSSI",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-036",
+  "t": "T1.08",
+  "tipo": "cifra",
+  "q": "LSSI: ¿cuándo prescriben las infracciones leves y las sanciones muy graves?",
+  "a": "Infracciones leves: 6 meses. Sanciones muy graves: 3 años",
+  "ref": "Ley 34/2002 art. 45",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-037",
+  "t": "T1.08",
+  "tipo": "alcance",
+  "q": "LSSI: ¿dónde se entiende celebrado un contrato si una parte es consumidor?",
+  "a": "En el lugar de su residencia habitual",
+  "ref": "Ley 34/2002 art. 29",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-038",
+  "t": "T1.08",
+  "tipo": "contraste",
+  "q": "Firma electrónica: ¿cuál NO es característica (autenticidad, integridad, no repudio, confidencialidad)?",
+  "a": "La confidencialidad",
+  "ref": "Firma electrónica",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.08-039",
+  "t": "T1.08",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es formato de firma: XAdES, PAdES, CAdES, MADES?",
+  "a": "MADES",
+  "ref": "Firma electrónica",
+  "src": "curada"
+ }
+]

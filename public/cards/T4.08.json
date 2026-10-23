@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T4.08-001",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "HTTP 403: ¿cuándo se devuelve?",
+  "a": "Cuando el usuario no tiene autorización para la información",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-002",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "HTTP 401 Unauthorized",
+  "a": "El cliente debe autenticarse previamente",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-003",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Sobre «HTTP 503»: ¿cuál es la respuesta correcta?",
+  "a": "Servicio no disponible",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-004",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "HTTP: códigos 4xx",
+  "a": "Error por parte del cliente",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-005",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "HTTP 202 y 409 y 207",
+  "a": "202 Accepted; 409 Conflict; 207 Multi-Status",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-006",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Sobre «HTTP 1.0: RFC»: ¿cuál es la respuesta correcta?",
+  "a": "1945",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-007",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Método HTTP que borra el recurso",
+  "a": "DELETE",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-008",
+  "t": "T4.08",
+  "tipo": "intrusa",
+  "q": "Método HTTP que NO es integrado: DEBUG, PUT, HEAD",
+  "a": "DEBUG",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-009",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "HTTP: ¿mantiene estado entre peticiones?",
+  "a": "No: es un protocolo sin estado",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-010",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Keepalive en HTTP",
+  "a": "Mantener la conexión una vez recibida la respuesta",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-011",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "HTTP/2: formato y novedad",
+  "a": "Protocolo binario; admite server push",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-012",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "HTTP/3: transporte",
+  "a": "QUIC, que funciona sobre UDP",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-013",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Puertos HTTP y HTTPS",
+  "a": "TCP/80 y TCP/443",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-014",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Atributo Secure de una cookie",
+  "a": "Se envía al servidor solo por HTTPS",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-015",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Sobre «TLS 1.3: RFC»: ¿cuál es la respuesta correcta?",
+  "a": "8446",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-016",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "TLS 1.3: ¿qué NO se admite?",
+  "a": "La compresión",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-017",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "TLS Record: content_type 22",
+  "a": "Handshake",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-018",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "TLS: organismo que lo elaboró",
+  "a": "IETF",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-019",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Sobre «HSTS»: ¿cuál es la respuesta correcta?",
+  "a": "Obliga a los navegadores a acceder solo por HTTPS",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-020",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Sobre «Puerto de DNS»: ¿cuál es la respuesta correcta?",
+  "a": "53/UDP",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-021",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "DNS: tamaño máximo de UDP antes de usar TCP",
+  "a": "512 bytes",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-022",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Longitud máxima de una etiqueta de dominio",
+  "a": "63 caracteres",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-023",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Dominio .es de segundo nivel: longitud",
+  "a": "Mínimo 3 y máximo 63 caracteres",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-024",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Resolución inversa IPv4 e IPv6",
+  "a": "in-addr.arpa e ip6.arpa",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-025",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Registro DNS: IPv6, correo, inversa",
+  "a": "AAAA, MX y PTR",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-026",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Registro DNS SOA",
+  "a": "Información básica del dominio y de la zona",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-027",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Registro DNS CAA",
+  "a": "Autoridad de certificación autorizada para el dominio",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-028",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Registro DNS RRSIG",
+  "a": "Firma digital para DNSSEC",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-029",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Registro DNS LOC",
+  "a": "Ubicación geográfica del dominio",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-030",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Sobre «Flag AA en DNS»: ¿cuál es la respuesta correcta?",
+  "a": "Respuesta de un servidor autoritativo",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-031",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Secciones de un mensaje DNS",
+  "a": "QUESTION, ANSWER, AUTHORITY y ADDITIONAL",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-032",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Campo QR en DNS",
+  "a": "Indica consulta (0) o respuesta (1)",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-033",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Transferencia de zona DNS",
+  "a": "El servidor secundario actualiza la zona desde el primario",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-034",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "DNSSEC: clave pública de confianza",
+  "a": "Trust anchor",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-035",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "FTP: puertos de control y datos",
+  "a": "21 control y 20 datos",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-036",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Sobre «FTPS: puerto»: ¿cuál es la respuesta correcta?",
+  "a": "990",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-037",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "FTP pasivo: ¿quién inicia la conexión de datos?",
+  "a": "El cliente",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-038",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "Sobre «TFTP: puerto»: ¿cuál es la respuesta correcta?",
+  "a": "UDP/69",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-039",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "WHOIS, NTP y SIP: puertos",
+  "a": "TCP/43, UDP/123 y 5060 (5061 cifrada)",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.08-040",
+  "t": "T4.08",
+  "tipo": "definicion",
+  "q": "DHCP y DHCPv6: puertos",
+  "a": "UDP/67 y 68; UDP/546 y 547",
+  "ref": "Internet, web y servicios de aplicación",
+  "src": "curada"
+ }
+]

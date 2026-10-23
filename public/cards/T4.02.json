@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T4.02-001",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "Hipervisor tipo 1: ¿dónde se ejecuta?",
+  "a": "Directamente sobre el hardware, sin SO anfitrión",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-002",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "Hipervisor tipo 2: ¿cómo se ejecuta?",
+  "a": "Como un programa más sobre un SO anfitrión",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-003",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "Hipervisores: ¿ejemplo de tipo 1 y de tipo 2?",
+  "a": "Tipo 1: VMware ESXi. Tipo 2: VMware Workstation",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-004",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es LXC?»: ¿cuál es la respuesta correcta?",
+  "a": "Virtualización a nivel de sistema operativo para Linux",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-005",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es VDI?»: ¿cuál es la respuesta correcta?",
+  "a": "Alojamiento de escritorios virtuales en un servidor central",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-006",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "¿Qué es PowerVM?",
+  "a": "Solución de virtualización de IBM",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-007",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "¿Qué ventaja NO aporta la virtualización?",
+  "a": "Mayor rendimiento",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-008",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "Docker: ¿qué lista todos los contenedores?",
+  "a": "docker ps -a",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-009",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "Docker: ¿cómo se crea una imagen desde un contenedor?",
+  "a": "docker commit",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-010",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "Docker: ¿cómo se elimina una imagen?",
+  "a": "docker rmi",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-011",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "Docker: ¿cómo se busca una imagen en Docker Hub?",
+  "a": "docker search http",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-012",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "¿Qué es Docker Hub?",
+  "a": "Registro en la nube de imágenes de contenedores",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-013",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "¿Qué tecnologías de contenedores existen?",
+  "a": "Docker, containerd y Podman",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-014",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "¿Qué es Kubernetes?",
+  "a": "Plataforma de orquestación de contenedores de código abierto",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-015",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "Kubernetes: ¿cuáles son los objetos básicos?",
+  "a": "Pod, Service, Volume y Namespace",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-016",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "Kubernetes: ¿qué componente decide dónde se ejecuta cada pod?",
+  "a": "kube-scheduler",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-017",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "Kubernetes: ¿dónde se ejecuta un pod?",
+  "a": "En un nodo",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-018",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "Kubernetes: ¿qué campo identifica unívocamente un objeto?",
+  "a": "metadata",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-019",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "¿Cuál es la distribución open source de OpenShift?",
+  "a": "OKD",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-020",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "SAN y NAS: ¿qué almacenamiento es por archivos y cuál por bloques?",
+  "a": "NAS: archivos. SAN y DAS: bloques",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-021",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es DAS?»: ¿cuál es la respuesta correcta?",
+  "a": "Almacenamiento conectado directamente que opera a nivel de bloques",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-022",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "FCoE: ¿qué hace?",
+  "a": "Encapsula tramas Fibre Channel en Ethernet; base de LAN+SAN convergente",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-023",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "FCIP: ¿qué hace?",
+  "a": "Transmite tramas Fibre Channel por túneles IP",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-024",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "FCP: ¿qué hace?",
+  "a": "Transmite comandos SCSI sobre Fibre Channel",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-025",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "¿Qué proporciona el zoning en una SAN?",
+  "a": "Segmentar la red SAN",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-026",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "¿Qué capas tiene una SAN?",
+  "a": "Hosts, infraestructura y almacenamiento",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-027",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "LVM: ¿qué es un Volume Group?",
+  "a": "Grupo de volúmenes físicos contenedor de volúmenes lógicos",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-028",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "LVM: ¿qué comando crea un volumen físico?",
+  "a": "pvcreate",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-029",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "RAID 1+0: ¿cuántos discos mínimo?",
+  "a": "4 discos",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-030",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "RAID 100: ¿cuántos discos mínimo?",
+  "a": "8 discos",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-031",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "RAID 6 con 5 discos de 4 TB: ¿capacidad neta?",
+  "a": "12 TB",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-032",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "RAID 0, 1, 3 y 5: ¿qué hace cada uno?",
+  "a": "0: striping por bloques. 1: espejo. 3: byte con paridad. 5: paridad distribuida",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-033",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "Backup diferencial: ¿qué copia?",
+  "a": "Todo lo modificado desde el último backup completo",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-034",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "¿Qué es un snapshot frente a un backup?",
+  "a": "Snapshot: estado en un instante; el backup es copia independiente",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-035",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "¿Qué es thin provisioning?",
+  "a": "Asignar espacio de almacenamiento solo cuando se necesita",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-036",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "MySQL: ¿cómo se conecta a FRAUDE con USER?",
+  "a": "mysql -u USER -p FRAUDE",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-037",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "PostgreSQL: ¿cómo se conecta a PRUEBAS?",
+  "a": "psql -d PRUEBAS",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-038",
+  "t": "T4.02",
+  "tipo": "definicion",
+  "q": "MySQL: ¿qué actualiza estadísticas de VENTAS?",
+  "a": "ANALYZE TABLE VENTAS",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-039",
+  "t": "T4.02",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es tipo de backup: completo, diferencial, incremental, compartimental?",
+  "a": "Compartimental",
+  "ref": "Infraestructura",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T4.02-040",
+  "t": "T4.02",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es herramienta de registro de contenedores: Docker Hub, Harbor, Terraform?",
+  "a": "Terraform",
+  "ref": "Infraestructura",
+  "src": "curada"
+ }
+]

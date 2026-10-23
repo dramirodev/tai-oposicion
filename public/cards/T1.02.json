@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T1.02-001",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Entre qué mínimo y máximo de Diputados se compone el Congreso?",
+  "a": "Mínimo 300, máximo 400 (art. 68.1 CE)",
+  "ref": "CE art. 68.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-002",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Cuándo tienen lugar las elecciones al Congreso tras acabar el mandato?",
+  "a": "Entre 30 y 60 días desde la terminación del mandato",
+  "ref": "CE art. 68.6",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-003",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿En qué plazo debe convocarse el Congreso electo?",
+  "a": "Dentro de los 25 días siguientes a las elecciones",
+  "ref": "CE art. 68.6",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-004",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Cuántos Senadores se eligen por cada provincia peninsular?",
+  "a": "Cuatro, por sufragio universal, libre, igual, directo y secreto",
+  "ref": "CE art. 69.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-005",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Cuántos Senadores eligen Ceuta y Melilla, y cuántos Diputados?",
+  "a": "Senadores: 2 cada una. Diputados: 1 cada una",
+  "ref": "CE arts. 69.4 y 68.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-006",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Cuántos Senadores corresponden a Gran Canaria, Mallorca y Tenerife? ¿Y a Menorca?",
+  "a": "Tres a cada isla mayor; uno a Menorca",
+  "ref": "CE art. 69.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-007",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Cuántos Senadores designa además cada Comunidad Autónoma?",
+  "a": "Uno, más otro por cada millón de habitantes",
+  "ref": "CE art. 69.5",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-008",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Cuántos miembros tiene como mínimo la Diputación Permanente de cada Cámara?",
+  "a": "Veintiún miembros",
+  "ref": "CE art. 78.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-009",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Cuántos periodos ordinarios de sesiones hay al año y cuáles son?",
+  "a": "Dos: septiembre a diciembre y febrero a junio",
+  "ref": "CE art. 73.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-010",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Cuántos miembros tiene el Tribunal Constitucional y quién los nombra?",
+  "a": "12 miembros, nombrados por el Rey",
+  "ref": "CE art. 159.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-011",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Cuántos magistrados del TC propone cada órgano: Congreso, Senado, Gobierno y CGPJ?",
+  "a": "Congreso 4, Senado 4, Gobierno 2, CGPJ 2",
+  "ref": "CE art. 159.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-012",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Qué mayoría exigen Congreso y Senado para proponer sus 4 magistrados del TC?",
+  "a": "Tres quintos de sus miembros",
+  "ref": "CE art. 159.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-013",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Por cuánto tiempo se designa a los magistrados del TC y cómo se renuevan?",
+  "a": "Nueve años; renovación por terceras partes cada tres",
+  "ref": "CE art. 159.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-014",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Cuántos Diputados o Senadores bastan para interponer recurso de inconstitucionalidad?",
+  "a": "50 Diputados o 50 Senadores",
+  "ref": "CE art. 162.1.a",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-015",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Qué parte de los Diputados debe proponer una moción de censura?",
+  "a": "Al menos la décima parte",
+  "ref": "CE art. 113.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-016",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Cuántos días tiene el Congreso para convalidar un Decreto-ley?",
+  "a": "Treinta días siguientes a su promulgación",
+  "ref": "CE art. 86.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-017",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Cuántas firmas exige la iniciativa legislativa popular?",
+  "a": "500.000 firmas acreditadas",
+  "ref": "CE art. 87.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-018",
+  "t": "T1.02",
+  "tipo": "cifra",
+  "q": "¿Qué plazo tiene el Senado para vetar o enmendar un proyecto? ¿Y si es urgente?",
+  "a": "Dos meses; veinte días naturales si es urgente",
+  "ref": "CE art. 90.2 y 90.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-019",
+  "t": "T1.02",
+  "tipo": "definicion",
+  "q": "¿Qué es el Defensor del Pueblo según el art. 54 CE?",
+  "a": "Alto comisionado de las Cortes Generales, designado por ellas para defender los derechos del Título I",
+  "ref": "CE art. 54",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-020",
+  "t": "T1.02",
+  "tipo": "definicion",
+  "q": "¿Qué mayoría necesita el Defensor del Pueblo para ser elegido y por cuánto tiempo?",
+  "a": "Tres quintos del Congreso y del Senado; cinco años",
+  "ref": "LO 3/1981 arts. 2 y 3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-021",
+  "t": "T1.02",
+  "tipo": "definicion",
+  "q": "¿Qué es la inviolabilidad parlamentaria?",
+  "a": "Diputados y Senadores no responden por las opiniones manifestadas en el ejercicio de sus funciones",
+  "ref": "CE art. 71.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-022",
+  "t": "T1.02",
+  "tipo": "definicion",
+  "q": "¿En qué consiste la inmunidad parlamentaria?",
+  "a": "Solo pueden ser detenidos en caso de flagrante delito; inculpar o procesar exige autorización de la Cámara",
+  "ref": "CE art. 71.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-023",
+  "t": "T1.02",
+  "tipo": "alcance",
+  "q": "¿Quién es competente en las causas contra Diputados y Senadores?",
+  "a": "La Sala de lo Penal del Tribunal Supremo",
+  "ref": "CE art. 71.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-024",
+  "t": "T1.02",
+  "tipo": "definicion",
+  "q": "¿Qué caracteriza el voto de Diputados y Senadores?",
+  "a": "Es personal e indelegable; no hay mandato imperativo",
+  "ref": "CE arts. 67.2 y 79.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-025",
+  "t": "T1.02",
+  "tipo": "alcance",
+  "q": "¿Qué mayoría exigen los acuerdos de las Cámaras como regla general?",
+  "a": "Mayoría de los miembros presentes, con quórum de mayoría de miembros",
+  "ref": "CE art. 79.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-026",
+  "t": "T1.02",
+  "tipo": "alcance",
+  "q": "¿Qué mayoría exige el Reglamento de cada Cámara?",
+  "a": "Mayoría absoluta de cada Cámara",
+  "ref": "CE art. 72.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-027",
+  "t": "T1.02",
+  "tipo": "alcance",
+  "q": "¿Quién puede solicitar sesiones extraordinarias de las Cámaras?",
+  "a": "Gobierno, Diputación Permanente o mayoría absoluta de los miembros de cualquier Cámara",
+  "ref": "CE art. 73.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-028",
+  "t": "T1.02",
+  "tipo": "alcance",
+  "q": "¿Qué efectos tienen las conclusiones de una Comisión de investigación?",
+  "a": "No vinculan a los tribunales ni afectan a resoluciones judiciales; pueden comunicarse al Ministerio Fiscal",
+  "ref": "CE art. 76.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-029",
+  "t": "T1.02",
+  "tipo": "alcance",
+  "q": "¿Qué puede delegarse en las Comisiones Legislativas Permanentes?",
+  "a": "La aprobación de proyectos y proposiciones de ley",
+  "ref": "CE art. 75.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-030",
+  "t": "T1.02",
+  "tipo": "contraste",
+  "q": "¿Cuál es el plazo de convalidación del Decreto-ley y cuál el de elecciones al Congreso?",
+  "a": "Convalidación: 30 días desde promulgación. Elecciones: 30 a 60 días desde fin del mandato",
+  "ref": "CE arts. 86.2 y 68.6",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-031",
+  "t": "T1.02",
+  "tipo": "contraste",
+  "q": "Decreto legislativo frente a Decreto-ley: ¿cuál es legislación delegada y cuál exige extraordinaria y urgente necesidad?",
+  "a": "Decreto legislativo: delegada. Decreto-ley: urgente necesidad",
+  "ref": "CE arts. 82 y 86",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-032",
+  "t": "T1.02",
+  "tipo": "contraste",
+  "q": "Delegación legislativa: ¿ley de bases u ordinaria para textos articulados? ¿Y para refundir textos?",
+  "a": "Textos articulados: ley de bases. Refundir: ley ordinaria",
+  "ref": "CE art. 82.2 y 82.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-033",
+  "t": "T1.02",
+  "tipo": "contraste",
+  "q": "¿Qué Cámara es de representación territorial y cuál representa a todo el pueblo español vía distritos provinciales?",
+  "a": "Territorial: Senado. Congreso: Diputados por circunscripción provincial",
+  "ref": "CE arts. 68 y 69",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-034",
+  "t": "T1.02",
+  "tipo": "intrusa",
+  "q": "¿Cuál NO puede delegarse en Comisiones Legislativas: ley orgánica, ley ordinaria, reforma constitucional, Presupuestos?",
+  "a": "La ley ordinaria sí puede; no la orgánica, reforma, ley de bases ni Presupuestos",
+  "ref": "CE art. 75.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-035",
+  "t": "T1.02",
+  "tipo": "intrusa",
+  "q": "¿Cuál NO es materia de ley orgánica: estatutos de autonomía, régimen electoral general, derechos fundamentales, Presupuestos Generales?",
+  "a": "Los Presupuestos Generales (ley ordinaria)",
+  "ref": "CE art. 81.1 y 134",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-036",
+  "t": "T1.02",
+  "tipo": "intrusa",
+  "q": "¿Quién NO puede interponer recurso de inconstitucionalidad: Defensor del Pueblo, Presidente del Gobierno, Presidente del Senado, 50 Diputados?",
+  "a": "El Presidente del Senado",
+  "ref": "CE art. 162.1.a",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-037",
+  "t": "T1.02",
+  "tipo": "intrusa",
+  "q": "¿Quién NO puede pedir sesión extraordinaria: Gobierno, Diputación Permanente, Mesa de la Cámara, mayoría absoluta de una Cámara?",
+  "a": "La Mesa de la Cámara",
+  "ref": "CE art. 73.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-038",
+  "t": "T1.02",
+  "tipo": "intrusa",
+  "q": "¿Quién NO está legitimado para recurso de amparo: Defensor del Pueblo, Ministerio Fiscal, persona con interés legítimo, Presidente del Senado?",
+  "a": "El Presidente del Senado",
+  "ref": "CE art. 162.1.b",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-039",
+  "t": "T1.02",
+  "tipo": "intrusa",
+  "q": "¿Quién NO es inelegible por art. 70 CE: Defensor del Pueblo, magistrados en activo, abogados en activo, militares en activo?",
+  "a": "Los abogados en ejercicio",
+  "ref": "CE art. 70.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.02-040",
+  "t": "T1.02",
+  "tipo": "contraste",
+  "q": "Inmunidad frente a inviolabilidad: ¿cuál cubre opiniones y cuál la detención?",
+  "a": "Inviolabilidad: opiniones. Inmunidad: detención solo en flagrante delito",
+  "ref": "CE art. 71",
+  "src": "curada"
+ }
+]

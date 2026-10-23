@@ -1,0 +1,336 @@
+[
+ {
+  "id": "FC-T1.05-001",
+  "t": "T1.05",
+  "tipo": "cifra",
+  "q": "¿Qué norma aprueba el texto refundido del Estatuto Básico del Empleado Público?",
+  "a": "Real Decreto Legislativo 5/2015, de 30 de octubre",
+  "ref": "TREBEP",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-002",
+  "t": "T1.05",
+  "tipo": "definicion",
+  "q": "¿Quiénes son empleados públicos según el TREBEP?",
+  "a": "Quienes desempeñan funciones retribuidas en las Administraciones Públicas al servicio de los intereses generales",
+  "ref": "TREBEP art. 8",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-003",
+  "t": "T1.05",
+  "tipo": "definicion",
+  "q": "¿Cómo se clasifican los empleados públicos?",
+  "a": "Funcionarios de carrera, funcionarios interinos, personal laboral y personal eventual",
+  "ref": "TREBEP art. 8.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-004",
+  "t": "T1.05",
+  "tipo": "definicion",
+  "q": "¿Qué es un funcionario de carrera?",
+  "a": "Quien, en virtud de nombramiento legal, desempeña servicios profesionales retribuidos de carácter permanente, regidos por Derecho administrativo",
+  "ref": "TREBEP art. 9.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-005",
+  "t": "T1.05",
+  "tipo": "alcance",
+  "q": "¿Quién puede ejercer potestades públicas o salvaguarda de intereses generales del Estado?",
+  "a": "Solo los funcionarios de carrera",
+  "ref": "TREBEP art. 9.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-006",
+  "t": "T1.05",
+  "tipo": "definicion",
+  "q": "¿En qué casos se nombra a un funcionario interino?",
+  "a": "Vacante, sustitución transitoria, programas temporales o exceso o acumulación de tareas",
+  "ref": "TREBEP art. 10.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-007",
+  "t": "T1.05",
+  "tipo": "cifra",
+  "q": "¿Qué duración máxima tienen los programas temporales que justifican un interino?",
+  "a": "Tres años, ampliables hasta doce meses más",
+  "ref": "TREBEP art. 10.1.c",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-008",
+  "t": "T1.05",
+  "tipo": "cifra",
+  "q": "¿Cuánto puede durar el nombramiento por exceso o acumulación de tareas?",
+  "a": "Seis meses dentro de un periodo de doce meses",
+  "ref": "TREBEP art. 10.1.d",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-009",
+  "t": "T1.05",
+  "tipo": "definicion",
+  "q": "¿Cómo puede ser el personal laboral según la duración del contrato?",
+  "a": "Fijo, por tiempo indefinido o temporal",
+  "ref": "TREBEP art. 11.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-010",
+  "t": "T1.05",
+  "tipo": "definicion",
+  "q": "¿Qué realiza el personal eventual y cuándo cesa?",
+  "a": "Funciones de confianza o asesoramiento especial; cesa cuando cesa la autoridad a la que presta su función",
+  "ref": "TREBEP art. 12",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-011",
+  "t": "T1.05",
+  "tipo": "alcance",
+  "q": "¿Puede ser mérito el puesto de personal eventual para el acceso a la función pública?",
+  "a": "No: no puede constituir mérito para el acceso a la función pública ni la promoción interna",
+  "ref": "TREBEP art. 12.5",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-012",
+  "t": "T1.05",
+  "tipo": "alcance",
+  "q": "¿Qué procedimiento rige la designación del personal directivo profesional?",
+  "a": "Procedimientos que garanticen publicidad y concurrencia",
+  "ref": "TREBEP art. 13.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-013",
+  "t": "T1.05",
+  "tipo": "alcance",
+  "q": "¿A qué personal se aplica directamente el TREBEP solo si lo dispone su legislación específica?",
+  "a": "Entre otros, al personal del Centro Nacional de Inteligencia y de las Cortes Generales",
+  "ref": "TREBEP art. 4",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-014",
+  "t": "T1.05",
+  "tipo": "alcance",
+  "q": "¿Qué legislación se aplica a los funcionarios de las Entidades Locales?",
+  "a": "La estatal básica y las normas de la Comunidad Autónoma respetando la autonomía local",
+  "ref": "TREBEP art. 3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-015",
+  "t": "T1.05",
+  "tipo": "alcance",
+  "q": "¿Cómo se ejerce el derecho de huelga de los empleados públicos?",
+  "a": "Con garantía del mantenimiento de los servicios esenciales de la comunidad",
+  "ref": "TREBEP art. 15.1.d",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-016",
+  "t": "T1.05",
+  "tipo": "cifra",
+  "q": "¿Cuántos días hábiles de vacaciones corresponden por año completo de servicios?",
+  "a": "22 días hábiles",
+  "ref": "TREBEP art. 50",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-017",
+  "t": "T1.05",
+  "tipo": "alcance",
+  "q": "Teletrabajo: ¿quién proporciona y mantiene los medios tecnológicos necesarios?",
+  "a": "La Administración",
+  "ref": "TREBEP art. 47 bis",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-018",
+  "t": "T1.05",
+  "tipo": "definicion",
+  "q": "¿Cuáles son los principios del acceso al empleo público del art. 55 TREBEP?",
+  "a": "Igualdad, mérito y capacidad, entre otros como publicidad, transparencia e imparcialidad",
+  "ref": "TREBEP art. 55",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-019",
+  "t": "T1.05",
+  "tipo": "alcance",
+  "q": "Requisito general de acceso: ¿qué edad mínima se exige?",
+  "a": "Tener dieciséis años y no exceder la edad máxima de jubilación forzosa",
+  "ref": "TREBEP art. 56",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-020",
+  "t": "T1.05",
+  "tipo": "definicion",
+  "q": "¿Qué requisitos sucesivos permiten adquirir la condición de funcionario de carrera?",
+  "a": "Superar el proceso selectivo, ser nombrado, acatar la Constitución y tomar posesión",
+  "ref": "TREBEP art. 62",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-021",
+  "t": "T1.05",
+  "tipo": "alcance",
+  "q": "Nombrado un funcionario, ¿qué implica no tomar posesión en plazo?",
+  "a": "No adquiere la condición de funcionario",
+  "ref": "TREBEP art. 62.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-022",
+  "t": "T1.05",
+  "tipo": "definicion",
+  "q": "¿Qué causas hacen perder la condición de funcionario de carrera?",
+  "a": "Renuncia, pérdida de nacionalidad, jubilación total, separación del servicio e inhabilitación absoluta",
+  "ref": "TREBEP art. 63",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-023",
+  "t": "T1.05",
+  "tipo": "alcance",
+  "q": "¿Cómo ha de manifestarse la renuncia a la condición de funcionario?",
+  "a": "Por escrito; no inhabilita para nuevo ingreso por proceso selectivo",
+  "ref": "TREBEP art. 64",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-024",
+  "t": "T1.05",
+  "tipo": "cifra",
+  "q": "¿A qué edad se declara la jubilación forzosa de oficio?",
+  "a": "A los 65 años",
+  "ref": "TREBEP art. 67.3",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-025",
+  "t": "T1.05",
+  "tipo": "definicion",
+  "q": "¿Qué es la Oferta de Empleo Público?",
+  "a": "Instrumento que obliga a convocar los procesos selectivos de las plazas comprometidas y hasta un 10% adicional",
+  "ref": "TREBEP art. 70",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-026",
+  "t": "T1.05",
+  "tipo": "cifra",
+  "q": "¿En qué plazo debe ejecutarse la Oferta de Empleo Público?",
+  "a": "Plazo improrrogable de tres años",
+  "ref": "TREBEP art. 70.1",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-027",
+  "t": "T1.05",
+  "tipo": "alcance",
+  "q": "¿Cómo se crean, modifican y suprimen los cuerpos y escalas de funcionarios?",
+  "a": "Por ley de las Cortes Generales o de las asambleas legislativas autonómicas",
+  "ref": "TREBEP art. 75",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-028",
+  "t": "T1.05",
+  "tipo": "definicion",
+  "q": "¿Con qué criterio se clasifican los cuerpos y escalas?",
+  "a": "Según la titulación exigida para el acceso",
+  "ref": "TREBEP art. 76",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-029",
+  "t": "T1.05",
+  "tipo": "cifra",
+  "q": "¿Qué intervalo de niveles corresponde a los subgrupos A2 y C1?",
+  "a": "A2: del 20 al 26. C1: del 16 al 22",
+  "ref": "RDL 6/2023",
+  "src": "curada",
+  "caduca": true
+ },
+ {
+  "id": "FC-T1.05-030",
+  "t": "T1.05",
+  "tipo": "definicion",
+  "q": "Carrera vertical frente a promoción interna: ¿en qué consiste la carrera vertical?",
+  "a": "Ascenso en la estructura de puestos de trabajo mediante los procedimientos de provisión",
+  "ref": "TREBEP art. 16",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-031",
+  "t": "T1.05",
+  "tipo": "definicion",
+  "q": "¿En qué consiste la promoción interna?",
+  "a": "Ascenso desde un cuerpo o escala de un subgrupo a otro superior o del mismo grupo",
+  "ref": "TREBEP art. 18",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-032",
+  "t": "T1.05",
+  "tipo": "cifra",
+  "q": "¿Qué antigüedad se exige en el subgrupo inferior para promoción interna?",
+  "a": "Dos años de servicio activo",
+  "ref": "TREBEP art. 18.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-033",
+  "t": "T1.05",
+  "tipo": "contraste",
+  "q": "Funcionario interino frente a personal eventual: ¿cuál cubre vacantes y cuál cesa con la autoridad?",
+  "a": "Interino: vacantes o tareas temporales. Eventual: cesa con la autoridad de confianza",
+  "ref": "TREBEP arts. 10 y 12",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-034",
+  "t": "T1.05",
+  "tipo": "contraste",
+  "q": "Personal laboral frente a funcionario de carrera: ¿qué Derecho rige a cada uno?",
+  "a": "Laboral: Derecho laboral. Funcionario: Derecho administrativo",
+  "ref": "TREBEP arts. 9 y 11",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-035",
+  "t": "T1.05",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es clase de empleado público: funcionario de carrera, interino, personal eventual, personal voluntario?",
+  "a": "El personal voluntario",
+  "ref": "TREBEP art. 8.2",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-036",
+  "t": "T1.05",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es requisito para adquirir condición de funcionario: proceso selectivo, nombramiento, acatamiento de la Constitución, haber sido eventual?",
+  "a": "Haber sido personal eventual",
+  "ref": "TREBEP art. 62",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T1.05-037",
+  "t": "T1.05",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es causa de pérdida de condición de funcionario: renuncia, jubilación total, separación del servicio, suspensión firme de funciones?",
+  "a": "La suspensión firme de funciones",
+  "ref": "TREBEP art. 63",
+  "src": "curada"
+ }
+]

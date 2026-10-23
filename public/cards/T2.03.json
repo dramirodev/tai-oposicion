@@ -1,0 +1,362 @@
+[
+ {
+  "id": "FC-T2.03-001",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "Recorrido preorden de un árbol binario: ¿en qué orden?",
+  "a": "Raíz, subárbol izquierdo, subárbol derecho",
+  "ref": "Árboles",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-002",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "Recorrido inorden de un árbol binario: ¿en qué orden?",
+  "a": "Subárbol izquierdo, raíz, subárbol derecho",
+  "ref": "Árboles",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-003",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "Recorrido postorden de un árbol binario: ¿en qué orden?",
+  "a": "Subárbol izquierdo, subárbol derecho, raíz",
+  "ref": "Árboles",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-004",
+  "t": "T2.03",
+  "tipo": "contraste",
+  "q": "Si el preorden empieza en 7 y el postorden acaba en 0, ¿cuál es la raíz en cada caso?",
+  "a": "Preorden: la raíz es el primero. Postorden: la raíz es el último",
+  "ref": "Árboles",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-005",
+  "t": "T2.03",
+  "tipo": "cifra",
+  "q": "Con nivel 1 como raíz, ¿cuántos nodos máximos tiene un árbol binario de 4 niveles?",
+  "a": "15 nodos",
+  "ref": "Árboles",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-006",
+  "t": "T2.03",
+  "tipo": "cifra",
+  "q": "¿Cuántos nodos máximos tiene el nivel i de un árbol binario?",
+  "a": "2^(i-1)",
+  "ref": "Árboles",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-007",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué es el grado de un árbol?",
+  "a": "El máximo grado de sus nodos",
+  "ref": "Árboles",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-008",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué es la altura de un árbol?",
+  "a": "El máximo nivel de sus elementos menos uno",
+  "ref": "Árboles",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-009",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Cuándo está equilibrado un árbol?",
+  "a": "Si en cada nodo las alturas de sus subárboles difieren como máximo en 1",
+  "ref": "Árboles",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-010",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Cómo es la raíz en un árbol rojo-negro?",
+  "a": "Es un nodo negro",
+  "ref": "Árboles",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-011",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Cuántos hijos pueden tener los nodos de un árbol 2-3-4?",
+  "a": "2, 3 o 4 hijos",
+  "ref": "Árboles",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-012",
+  "t": "T2.03",
+  "tipo": "contraste",
+  "q": "AVL: ¿es un árbol multicamino de grado 3?",
+  "a": "No: es un árbol binario de búsqueda equilibrado",
+  "ref": "Árboles",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-013",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué comportamiento tiene una pila?",
+  "a": "LIFO: último en entrar, primero en salir; se añade y quita por el mismo extremo",
+  "ref": "TAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-014",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué comportamiento tiene una cola?",
+  "a": "FIFO (first in, first out); tiene cabecera y cola",
+  "ref": "TAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-015",
+  "t": "T2.03",
+  "tipo": "alcance",
+  "q": "¿Qué usa una pila en aritmética?",
+  "a": "Notación postfija (postfix)",
+  "ref": "TAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-016",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué es un registro?",
+  "a": "Estructura de elementos ordenados que pueden ser de distinto tipo",
+  "ref": "Estructuras de datos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-017",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Cómo se llama el conjunto de elementos del mismo tipo referenciados por posición?",
+  "a": "Vector (array)",
+  "ref": "Estructuras de datos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-018",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué es un mapa y tienen orden definido sus elementos?",
+  "a": "Pares clave-valor sin orden; las claves no pueden repetirse",
+  "ref": "TAD",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-019",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Cómo se resuelven colisiones en tablas hash?",
+  "a": "Hashing abierto y hashing cerrado",
+  "ref": "Tablas hash",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-020",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Cuándo es un grafo conexo?",
+  "a": "Si cada par de vértices está unido por un camino",
+  "ref": "Grafos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-021",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué es un árbol en teoría de grafos?",
+  "a": "Grafo conexo sin ciclos",
+  "ref": "Grafos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-022",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué es el grado de un nodo en un grafo?",
+  "a": "El número de aristas que inciden en él",
+  "ref": "Grafos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-023",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué calcula el algoritmo de Dijkstra?",
+  "a": "Camino más corto desde un vértice origen al resto",
+  "ref": "Grafos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-024",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué calcula el algoritmo de Kruskal?",
+  "a": "Árbol recubridor mínimo en un grafo conexo ponderado",
+  "ref": "Grafos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-025",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué calcula el algoritmo de Floyd-Warshall?",
+  "a": "Caminos mínimos entre todos los pares de vértices",
+  "ref": "Grafos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-026",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué algoritmo de ordenación usa un pivote?",
+  "a": "Quicksort",
+  "ref": "Ordenación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-027",
+  "t": "T2.03",
+  "tipo": "cifra",
+  "q": "¿Qué complejidad tiene Quicksort en el peor caso?",
+  "a": "O(n²)",
+  "ref": "Ordenación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-028",
+  "t": "T2.03",
+  "tipo": "cifra",
+  "q": "¿Qué complejidad tiene la ordenación por mezcla (merge sort)?",
+  "a": "O(n log n)",
+  "ref": "Ordenación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-029",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué ordenación es de complejidad cuadrática y compara pares adyacentes?",
+  "a": "Burbuja (BubbleSort)",
+  "ref": "Ordenación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-030",
+  "t": "T2.03",
+  "tipo": "cifra",
+  "q": "¿Cuántas pasadas máximas hace la burbuja con N elementos?",
+  "a": "N-1",
+  "ref": "Ordenación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-031",
+  "t": "T2.03",
+  "tipo": "cifra",
+  "q": "¿Cuántas comparaciones hace la ordenación por selección con N elementos?",
+  "a": "N(N-1)/2",
+  "ref": "Ordenación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-032",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué algoritmo de ordenación es lineal?",
+  "a": "Radix",
+  "ref": "Ordenación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-033",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "Búsqueda binaria: ¿qué exige del array?",
+  "a": "Que esté totalmente ordenado",
+  "ref": "Búsqueda",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-034",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué formato es de gráficos vectoriales?",
+  "a": "SVG",
+  "ref": "Formatos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-035",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué RFC define JSON y qué es un objeto JSON?",
+  "a": "RFC 8259; colección no ordenada de pares nombre/valor",
+  "ref": "JSON",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-036",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué RFC define CSV y cómo separa los registros?",
+  "a": "RFC 4180; un registro por línea separado por CRLF",
+  "ref": "CSV",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-037",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es YAML?»: ¿cuál es la respuesta correcta?",
+  "a": "Lenguaje de serialización legible por humanos, usado en despliegue de contenedores",
+  "ref": "YAML",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-038",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "¿Qué norma ISO/IEC aprobó OpenDocument 1.0?",
+  "a": "ISO/IEC 26300:2006",
+  "ref": "ODF",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-039",
+  "t": "T2.03",
+  "tipo": "definicion",
+  "q": "JPEG: ¿tiene compresión con pérdida y ajustable?",
+  "a": "Sí: es con pérdida y permite ajustar el grado de compresión",
+  "ref": "Imagen",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.03-040",
+  "t": "T2.03",
+  "tipo": "intrusa",
+  "q": "¿Qué NO es algoritmo de ordenación: Heapsort, Quicksort, Dijkstra, Burbuja?",
+  "a": "Dijkstra (es de grafos)",
+  "ref": "Algoritmos",
+  "src": "curada"
+ }
+]

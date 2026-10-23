@@ -1,0 +1,354 @@
+[
+ {
+  "id": "FC-T2.01-001",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "Taxonomía de Flynn: ¿qué cuatro categorías hay?",
+  "a": "SISD, SIMD, MISD y MIMD, según flujo de instrucciones y de datos",
+  "ref": "Flynn",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-002",
+  "t": "T2.01",
+  "tipo": "contraste",
+  "q": "Flynn: ¿en qué categoría están los multinúcleo y los clústeres? ¿Y los vectoriales y matriciales?",
+  "a": "Multinúcleo y clústeres: MIMD. Vectoriales y matriciales: SIMD",
+  "ref": "Flynn",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-003",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "¿Qué caracteriza a SISD?",
+  "a": "Un único flujo de instrucciones sobre un único flujo de datos",
+  "ref": "Flynn",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-004",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "¿Qué componentes forman la CPU en la arquitectura Von Neumann?",
+  "a": "Registros, ALU y unidad de control",
+  "ref": "Von Neumann",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-005",
+  "t": "T2.01",
+  "tipo": "contraste",
+  "q": "Von Neumann frente a Harvard: ¿qué diferencia las memorias?",
+  "a": "Von Neumann: memoria única. Harvard: memorias separadas de datos e instrucciones",
+  "ref": "Arquitecturas",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-006",
+  "t": "T2.01",
+  "tipo": "contraste",
+  "q": "CISC frente a RISC: ¿cuál tiene instrucciones complejas y de longitud variable?",
+  "a": "CISC; RISC tiene pocas instrucciones simples y no usa microprogramación",
+  "ref": "CISC/RISC",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-007",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es ARM?»: ¿cuál es la respuesta correcta?",
+  "a": "Una arquitectura de microprocesadores RISC",
+  "ref": "ARM",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-008",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "¿Qué almacena el registro de instrucción (IR)?",
+  "a": "La instrucción que se está ejecutando",
+  "ref": "Unidad de control",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-009",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "¿Dónde guarda la ALU el resultado de una operación?",
+  "a": "En el registro acumulador",
+  "ref": "ALU",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-010",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "¿Qué modo de direccionamiento usa el contador de programa (PC)?",
+  "a": "Direccionamiento relativo",
+  "ref": "Direccionamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-011",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "¿Qué es una microoperación?",
+  "a": "Cada una de las operaciones elementales durante la ejecución de una instrucción",
+  "ref": "Unidad de control",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-012",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "¿Qué es la segmentación o pipelining?",
+  "a": "Ejecución solapada de etapas de distintas instrucciones; no reduce el tiempo de cada una",
+  "ref": "Segmentación",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-013",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "¿Qué caché es más rápida y pequeña, y está dentro del núcleo?",
+  "a": "L1",
+  "ref": "Caché",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-014",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "Jerarquía de memoria: ¿orden de más lento a más rápido?",
+  "a": "RAM, L3, L2, L1",
+  "ref": "Caché",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-015",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "¿Qué organización de caché carece de campo índice?",
+  "a": "Totalmente asociativa",
+  "ref": "Caché",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-016",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "¿En qué consiste el refresco de una DRAM?",
+  "a": "Reescritura periódica para que no pierda la información",
+  "ref": "Memoria",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-017",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "¿Cuál es la función principal del bus del sistema?",
+  "a": "Transferir datos, direcciones y señales de control entre CPU, memoria y periféricos",
+  "ref": "Bus",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-018",
+  "t": "T2.01",
+  "tipo": "alcance",
+  "q": "¿Qué gestionaba el Northbridge del chipset?",
+  "a": "Acceso a la RAM y al controlador gráfico AGP",
+  "ref": "Chipset",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-019",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "Sobre «¿Qué es FLOPS?»: ¿cuál es la respuesta correcta?",
+  "a": "Operaciones de coma flotante por segundo",
+  "ref": "Rendimiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-020",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "¿Qué tipo de socket tiene los pines en el procesador?",
+  "a": "PGA",
+  "ref": "Sockets",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-021",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "Intel de menor a mayor prestaciones: ¿cuál es el orden?",
+  "a": "Atom, Celeron, Core, Xeon",
+  "ref": "Intel",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-022",
+  "t": "T2.01",
+  "tipo": "cifra",
+  "q": "¿Cuántos bits tiene un nibble y cuántos bytes son ocho nibbles?",
+  "a": "Nibble: 4 bits. Ocho nibbles: 4 bytes",
+  "ref": "Unidades",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-023",
+  "t": "T2.01",
+  "tipo": "cifra",
+  "q": "¿Cuántos bytes son un yottabyte y un zettabyte?",
+  "a": "Yotta: 10^24. Zetta: 10^21",
+  "ref": "Unidades",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-024",
+  "t": "T2.01",
+  "tipo": "cifra",
+  "q": "¿Qué prefijo binario es 2^70 bytes y cuál 2^90?",
+  "a": "2^70: zebibyte. 2^90: robibyte",
+  "ref": "Unidades",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-025",
+  "t": "T2.01",
+  "tipo": "cifra",
+  "q": "¿Cuál es la capacidad de 2048 palabras de 16 bits?",
+  "a": "4 KB",
+  "ref": "Memoria",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-026",
+  "t": "T2.01",
+  "tipo": "cifra",
+  "q": "¿Cuántos GB de RAM direcciona como máximo Windows de 32 bits?",
+  "a": "4 GB",
+  "ref": "Sistemas operativos",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-027",
+  "t": "T2.01",
+  "tipo": "cifra",
+  "q": "¿Cuántos bits tiene un número de coma flotante de doble precisión (IEEE 754)?",
+  "a": "64 bits",
+  "ref": "IEEE 754",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-028",
+  "t": "T2.01",
+  "tipo": "cifra",
+  "q": "¿Cuántos bytes puede usar UTF-8 para un carácter?",
+  "a": "De uno a cuatro bytes",
+  "ref": "UTF-8",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-029",
+  "t": "T2.01",
+  "tipo": "cifra",
+  "q": "¿Cuál es el valor decimal de 3B hexadecimal?",
+  "a": "59",
+  "ref": "Sistemas de numeración",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-030",
+  "t": "T2.01",
+  "tipo": "cifra",
+  "q": "¿Cuál es el valor decimal de BA1 hexadecimal?",
+  "a": "2977",
+  "ref": "Sistemas de numeración",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-031",
+  "t": "T2.01",
+  "tipo": "cifra",
+  "q": "¿Qué es 450 decimal en binario?",
+  "a": "111000010",
+  "ref": "Sistemas de numeración",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-032",
+  "t": "T2.01",
+  "tipo": "cifra",
+  "q": "¿Qué es 53 decimal en octal?",
+  "a": "65",
+  "ref": "Sistemas de numeración",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-033",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "¿Cuándo devuelve 1 una puerta XOR de dos entradas?",
+  "a": "Cuando solo una entrada vale 1",
+  "ref": "Lógica",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-034",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "¿Cuándo devuelve 1 una puerta XNOR?",
+  "a": "Cuando las dos entradas son iguales",
+  "ref": "Lógica",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-035",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "¿Cuándo devuelve 1 una puerta NOR?",
+  "a": "Cuando ninguna entrada vale 1",
+  "ref": "Lógica",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-036",
+  "t": "T2.01",
+  "tipo": "definicion",
+  "q": "¿Qué nivel de un sistema de información toma decisiones a medio y largo plazo?",
+  "a": "El nivel estratégico",
+  "ref": "Sistemas de información",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-037",
+  "t": "T2.01",
+  "tipo": "cifra",
+  "q": "M4 de Apple: ¿cómo se compone su CPU en la versión citada?",
+  "a": "4 núcleos de rendimiento y 6 de eficiencia",
+  "ref": "Apple M4",
+  "src": "curada",
+  "caduca": true
+ },
+ {
+  "id": "FC-T2.01-038",
+  "t": "T2.01",
+  "tipo": "intrusa",
+  "q": "¿Cuál NO es modo de direccionamiento: relativo, directo, indirecto, asociativo?",
+  "a": "El direccionamiento asociativo",
+  "ref": "Direccionamiento",
+  "src": "curada"
+ },
+ {
+  "id": "FC-T2.01-039",
+  "t": "T2.01",
+  "tipo": "intrusa",
+  "q": "¿Cuál NO es componente de la placa base: chipset, zócalo, ranuras, chip EAC?",
+  "a": "El chip EAC",
+  "ref": "Placa base",
+  "src": "curada"
+ }
+]
