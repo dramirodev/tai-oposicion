@@ -267,7 +267,7 @@ input[type=checkbox],input[type=radio]{width:24px;height:24px}
 .opt:not(.dis):not(:disabled):active{background:var(--sel)}
 .opt:disabled:not(.ok):not(.bad){opacity:.6}
 .tag{font-size:13px;padding:4px 10px}
-.sub{font-weight:600;color:var(--ink);font-size:20px;margin:6px 0 10px}
+h1.sub{font-weight:600;color:var(--ink);font-size:20px;margin:6px 0 10px}
 .seg button{border-radius:99px;min-height:44px}
 .seg{margin-bottom:10px}
 .mot button{border-radius:99px;min-height:44px;padding:0 14px;font-size:15px}

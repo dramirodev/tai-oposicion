@@ -65,7 +65,7 @@ function go(h) { if (location.hash === h) route(); else location.hash = h; }
 async function route() {
   if (cleanup) { cleanup(); cleanup = null; }
   const [, name, ...args] = (location.hash || '#/home').split('/');
-  const sect = { quiz: RUN?.kind === 'sim' ? 'sim' : RUN?.kind === 'test' ? 'test' : 'home', result: LAST?.ses?.kind === 'sim' ? 'sim' : LAST?.ses?.kind === 'test' ? 'test' : 'home', sim2: 'sim', errores: 'settings', cards: 'home' }[name] || name;
+  const sect = { quiz: RUN?.kind === 'sim' ? 'sim' : RUN?.kind === 'test' ? 'test' : 'home', result: LAST?.ses?.kind === 'sim' ? 'sim' : LAST?.ses?.kind === 'test' ? 'test' : 'home', sim2: 'sim', examenes: 'sim', errores: 'settings', cards: 'home' }[name] || name;
   document.querySelectorAll('nav a').forEach(a => { const on = a.dataset.r === sect; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   document.body.classList.toggle('inquiz', name === 'quiz');
   const f = routes[name] || routes.home;
@@ -548,6 +548,7 @@ function cardSession() {
       ${R.rev ? `<div class="fa"><small>Respuesta</small><div class="pre">${esc(c.a)}</div>
         ${c.nota ? `<div class="cita"><span>Nota</span>${esc(c.nota)}</div>` : ''}
         ${c.ref ? `<div class="cita"><span>Temario</span>${esc(c.ref)}</div>` : ''}
+        <div class="repw" id="crep"></div>
         ${c.src === 'fallo' ? '<button class="ghost fl" id="quit">🗑 Quitar esta tarjeta</button>' : ''}</div>` : '<div class="fh">Toca para ver la respuesta</div>'}
     </div>
     <div class="bar2">${R.rev ? NOMBRE.map((t, g) => `<button class="btn ${g === 0 ? 'bad' : g === 1 ? 'sec' : ''}" data-g="${g}">${t}</button>`).join('') : '<button class="btn" id="show">Mostrar respuesta</button>'}</div>
@@ -556,6 +557,7 @@ function cardSession() {
     $('#show') && ($('#show').onclick = show);
     $('#fc').onclick = e => { if (!R.rev && !e.target.closest('button')) show(); };
     app.querySelectorAll('[data-g]').forEach(b => b.onclick = () => grade(+b.dataset.g));
+    $('#crep') && reportBox({ i: c.id, t: c.t }, $('#crep'));
     $('#quit') && ($('#quit').onclick = () => { store.removeCard(c.id); R.items.splice(R.idx, 1); R.rev = false; draw(); });
   }
   function fin() {
@@ -670,6 +672,7 @@ routes.home = async function () {
     ${row('cards', '▭', 'Tarjetas de repaso', (() => { const c = Object.values(store.getCards()), h = c.filter(r => r[3] >= 0 && r[4] <= now()).length; return c.length ? (h ? h + ' tarjetas vencen hoy' : 'Nada vence hoy · ' + c.length + ' en tu mazo') : 'Convierte tus fallos en tarjetas y repásalas con repetición espaciada'; })())}
     ${row('test', '✎', 'Test por tema', '10–40 preguntas con corrección inmediata')}
     ${row('sim', '⏱', 'Simulacro', 'Parte 1 con tiempo y nota oficial + supuesto práctico')}
+    ${row('examenes', '☷', 'Exámenes y simulacros', 'Elige uno por número y contesta solo sus preguntas')}
   </div>
   <div class="gtitle">Seguimiento</div>
   <div class="lgroup">
@@ -694,6 +697,7 @@ routes.home = async function () {
   $('#temario').onclick = () => go('#/temario');
   $('#test').onclick = () => go('#/test');
   $('#sim').onclick = () => go('#/sim');
+  $('#examenes').onclick = () => go('#/examenes');
   $('#stats').onclick = () => go('#/stats');
 };
 
@@ -788,6 +792,63 @@ routes.test = async function () {
     return `${v}/${n}${tot ? ' · ' + pct(ok, tot) + '%' : ''}`;
   }
   draw();
+};
+
+
+// ───────── exámenes y simulacros por número ─────────
+const EX_OFICIALES = {
+  'TAIL2022-P1': 'Ingreso libre 2022 (conv. 2023)', 'TAI2024B-P1': 'Ingreso libre 2023-24 (conv. 2024)', 'L2018-P1': 'Ingreso libre 2018',
+  'L2019-P1': 'Ingreso libre 2019', 'L2025A-P1': 'Ingreso libre 2025', 'L2025X-P1': 'Ingreso libre 2025 (extraordinario)',
+  'P2018-P1': 'Promoción interna 2018', 'P2019-P1': 'Promoción interna 2019', 'P2022-P1': 'Promoción interna 2022 (conv. 2023)',
+  'P2024A-P1': 'Promoción interna 2021-24 (conv. 2024)', 'P2025A-P1': 'Promoción interna 2025',
+};
+function listaExamenes() {
+  const g = {};
+  for (const id in META) {
+    if (id === '_by') continue; const o = META[id][1];
+    if (o !== 'O' && o !== 'A') continue;
+    const m = /^(.*-P1)-(\d+)$/.exec(id); if (!m) continue; // las de reserva (-R-) quedan fuera
+    (g[m[1]] ||= []).push(id);
+  }
+  const sims = [], ofi = [];
+  for (const k in g) {
+    const ids = g[k].sort(), a = /^AS(\d+)([A-Z]?)-P1$/.exec(k);
+    if (a && ids.length >= 20) sims.push({ k, ids, n: +a[1], nombre: `Simulacro ${+a[1]}${a[2] ? ' (' + a[2] + ')' : ''}` });
+    else if (EX_OFICIALES[k] && ids.length >= 20) ofi.push({ k, ids, nombre: EX_OFICIALES[k] });
+  }
+  sims.sort((x, y) => x.n - y.n || x.k.localeCompare(y.k)); ofi.sort((x, y) => x.nombre.localeCompare(y.nombre));
+  // tests por tema de la academia (AT…): el tema es el que más se repite entre sus preguntas
+  const tests = [];
+  for (const k in g) {
+    if (!/^AT\d+(ALT)?-P1$/.test(k) || g[k].length < 10) continue;
+    const c = {}; for (const id of g[k]) { const t = META[id][0]; c[t] = (c[t] || 0) + 1; }
+    const tema = Object.keys(c).sort((a, b) => c[b] - c[a])[0];
+    tests.push({ k, ids: g[k].sort(), tema, nombre: '' });
+  }
+  tests.sort((a, b) => a.tema.localeCompare(b.tema) || a.k.localeCompare(b.k));
+  const vistos = {};
+  for (const t of tests) { const n = vistos[t.tema] = (vistos[t.tema] || 0) + 1; t.nombre = `Test ${t.tema} · ${temaName(t.tema)}${tests.filter(x => x.tema === t.tema).length > 1 ? ' (' + n + ')' : ''}`; }
+  return { sims, ofi, tests };
+}
+routes.examenes = async function () {
+  await getIndex(); await getMeta(); const { sims, ofi, tests } = listaExamenes();
+  const ses = store.getSessions();
+  const info = nombre => { const h = ses.filter(x => x.titulo === nombre); return h.length ? `Última nota ${h[0].nota} · mejor ${Math.max(...h.map(x => x.nota))} · ${h.length} intento${h.length === 1 ? '' : 's'}` : 'Sin hacer'; };
+  const fila = e => `<div class="card"><b>${esc(e.nombre)}</b> <small>· ${e.ids.length} preguntas</small><div class="sub sm">${esc(info(e.nombre))}</div>
+    <div class="row"><button class="btn" data-k="${esc(e.k)}" data-m="sim">Cronometrado</button><button class="btn sec" data-k="${esc(e.k)}" data-m="est">Con corrección</button></div></div>`;
+  app.innerHTML = `<h1>Exámenes</h1><div class="sub">Elige un examen y contesta solo sus preguntas. «Cronometrado» no corrige hasta el final y puntúa con la nota oficial; «Con corrección» te explica cada pregunta al momento.</div>
+    <h2 class="h3">Simulacros de la academia</h2>${sims.map(fila).join('') || '<p class="sub">No hay simulacros cargados.</p>'}
+    <h2 class="h3">Exámenes oficiales</h2>${ofi.map(fila).join('') || '<p class="sub">No hay exámenes cargados.</p>'}
+    <h2 class="h3">Tests por tema de la academia</h2>${tests.map(fila).join('') || '<p class="sub">No hay tests cargados.</p>'}`;
+  app.onclick = async e => {
+    const b = e.target.closest('button[data-k]'); if (!b) return;
+    const ex = [...sims, ...ofi, ...tests].find(x => x.k === b.dataset.k); if (!ex) return;
+    const items = (await byIds(ex.ids)).filter(q => !q.s);
+    if (!items.length) { alert('No se pudieron cargar las preguntas.'); return; }
+    if (b.dataset.m === 'sim') startRun({ kind: 'sim', feedback: false, items, limit: 90, titulo: ex.nombre });
+    else startRun({ kind: 'test', feedback: true, items, titulo: ex.nombre });
+  };
+  cleanup = () => { app.onclick = null; };
 };
 
 // ───────── simulacro ─────────
@@ -904,20 +965,21 @@ routes.errores = async function () {
     const R = store.getReports(), f = flt();
     const all = Object.entries(R).filter(([, r]) => r.st !== 'quitado').sort((a, b) => b[1].ts - a[1].ts);
     const list = all.filter(([, r]) => f === 'todos' || r.st === f);
-    const by = new Map((await byIds(list.map(([id]) => id))).map(q => [q.i, q]));
+    const by = new Map((await byIds(list.filter(([id]) => !id.startsWith('FC-')).map(([id]) => id))).map(q => [q.i, q]));
+    const cby = list.some(([id]) => id.startsWith('FC-')) ? new Map((await allCards()).map(c => [c.id, c])) : new Map();
     const nOpen = all.filter(([, r]) => r.st === 'abierto').length;
     app.innerHTML = `<h1>Errores del banco</h1>
     <p class="sub">${nOpen} por revisar · ${all.length - nOpen} resueltos. Las preguntas que marcas con «Avisar de error» llegan aquí.</p>
     <div class="seg" id="ef">${[['abierto', 'Por revisar'], ['resuelto', 'Resueltos'], ['todos', 'Todos']].map(([v, t]) => `<button class="${f === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
     <div class="row"><button class="btn sec" id="exp" ${all.length ? '' : 'disabled'}>Exportar para corregir</button></div>
-    ${list.map(([id, r]) => { const q = by.get(id); return `<div class="card"><div class="meta"><span class="tag">${esc(id)}</span>${q ? `<span class="tag o${q.o}">${ORIGEN[q.o]}</span>` : ''}<span class="tag warn">${esc(r.motivo || 'Otro')}</span>${r.st === 'resuelto' ? '<span class="tag oG">Resuelto</span>' : ''}</div>
+    ${list.map(([id, r]) => { const q = by.get(id); return `<div class="card"><div class="meta"><span class="tag">${esc(id)}</span>${q ? `<span class="tag o${q.o}">${ORIGEN[q.o]}</span>` : ''}${cby.has(id) ? '<span class="tag">Tarjeta</span>' : ''}<span class="tag warn">${esc(r.motivo || 'Otro')}</span>${r.st === 'resuelto' ? '<span class="tag oG">Resuelto</span>' : ''}</div>
       ${r.nota ? `<p class="sm"><b>Nota:</b> ${esc(r.nota)}</p>` : ''}
-      ${q ? `<div class="pre sm">${esc(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : ''}"><b>${L[i]}</b> ${esc(o)}${i === q.c ? ' ✓' : ''}</div>`).join('')}${q.u ? `<div class="cita"><span>Temario</span>${esc(q.u)}</div>` : ''}` : '<p class="sub">La pregunta ya no está en el banco.</p>'}
+      ${cby.has(id) ? (c => `<div class="pre sm">${esc(c.q)}</div><div class="ro ok"><b>R</b> ${esc(c.a)}</div>${c.ref ? `<div class="cita"><span>Temario</span>${esc(c.ref)}</div>` : ''}`)(cby.get(id)) : q ? `<div class="pre sm">${esc(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : ''}"><b>${L[i]}</b> ${esc(o)}${i === q.c ? ' ✓' : ''}</div>`).join('')}${q.u ? `<div class="cita"><span>Temario</span>${esc(q.u)}</div>` : ''}` : '<p class="sub">La pregunta ya no está en el banco.</p>'}
       <div class="row"><button class="btn sec" data-st="${r.st === 'resuelto' ? 'abierto' : 'resuelto'}" data-id="${esc(id)}">${r.st === 'resuelto' ? 'Reabrir' : 'Marcar resuelto'}</button><button class="btn sec" data-st="quitado" data-id="${esc(id)}">Quitar</button></div></div>`; }).join('') || '<div class="card"><p class="sub">Nada en esta lista.</p></div>'}`;
     $('#ef').onclick = e => { if (e.target.dataset.v) { store.setCfg('errf', e.target.dataset.v); } };
     app.querySelectorAll('[data-st]').forEach(b => b.onclick = () => store.setReportState(b.dataset.id, b.dataset.st));
     $('#exp').onclick = () => {
-      const out = all.map(([id, r]) => { const q = by.get(id) || null; return { id, tema: r.tema, estado: r.st, motivo: r.motivo, nota: r.nota, origen: q ? ORIGEN[q.o] : null, enunciado: q?.q, opciones: q?.a, correcta: q ? L[q.c] : null, cita: q?.u || null, trampas: (q?.x || []).map(x => TRAMPAS[x] || x) }; });
+      const out = all.map(([id, r]) => { const q = by.get(id) || null, c = cby.get(id) || null; return { id, tarjeta: c ? { pregunta: c.q, respuesta: c.a, ref: c.ref || null } : undefined, tema: r.tema, estado: r.st, motivo: r.motivo, nota: r.nota, origen: q ? ORIGEN[q.o] : null, enunciado: q?.q, opciones: q?.a, correcta: q ? L[q.c] : null, cita: q?.u || null, trampas: (q?.x || []).map(x => TRAMPAS[x] || x) }; });
       const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify({ generado: new Date().toISOString(), errores: out }, null, 1)], { type: 'application/json' })); a.download = 'errores-banco.json'; a.click();
     };
   };
