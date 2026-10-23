@@ -43,7 +43,6 @@ jobs:
         run: npx --yes firebase-tools@13.35.1 deploy --only hosting --project tai-oposicion --non-interactive
 
       # Las reglas de Firestore necesitan el rol «Firebase Rules Admin» en la cuenta de servicio.
-      # Si aún no se lo has dado, este paso falla sin romper el despliegue del hosting.
+      # Si aún no se lo has dado, no rompe el hosting, pero deja un aviso visible en la ejecución.
       - name: Desplegar reglas de Firestore
-        continue-on-error: true
-        run: npx --yes firebase-tools@13.35.1 deploy --only firestore:rules --project tai-oposicion --non-interactive
+        run: npx --yes firebase-tools@13.35.1 deploy --only firestore:rules --project tai-oposicion --non-interactive || echo "::warning title=Reglas de Firestore::NO se han desplegado; revisa el rol Firebase Rules Admin de la cuenta de servicio" 

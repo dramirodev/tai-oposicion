@@ -8,9 +8,23 @@ const L = 'ABCD';
 
 // avisos y confirmaciones propios (sustituyen a alert/confirm nativos)
 let toastT = null;
-function toast(msg) {
+function toastEl() {
   let t = $('#toast');
   if (!t) { t = document.createElement('div'); t.id = 'toast'; t.setAttribute('role', 'status'); document.body.append(t); }
+  return t;
+}
+toastEl(); // la región viva debe existir antes del primer aviso para que se anuncie
+// botón ocupado mientras carga: evita dobles pulsaciones y da respuesta inmediata
+const guard = fn => async function (...a) {
+  if (this.disabled) return;
+  const h = this.innerHTML; this.disabled = true; this.textContent = 'Cargando…';
+  try { return await fn.apply(this, a); } finally { this.disabled = false; this.innerHTML = h; }
+};
+addEventListener('tai-persist-error', () => toast('No se pudo guardar el progreso en este dispositivo (¿poco espacio?). Exporta una copia en Ajustes.'));
+addEventListener('offline', () => toast('Sin conexión: solo funciona lo ya descargado.'));
+addEventListener('online', () => toast('Conexión recuperada.'));
+function toast(msg) {
+  const t = toastEl();
   t.textContent = msg; t.classList.add('show');
   clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 4500);
 }
@@ -66,7 +80,7 @@ async function getMeta() {
   return META;
 }
 const temaOf = id => META && META[id] ? META[id][0] : null;
-async function getTema(t) { if (!cache.has(t)) cache.set(t, j(`data/${t}.json`)); return cache.get(t); }
+async function getTema(t) { if (!cache.has(t)) cache.set(t, j(`data/${t}.json`).catch(e => { cache.delete(t); throw e; })); return cache.get(t); }
 async function getSup() { return SUP ||= await j('data/supuestos.json'); }
 const temaName = t => (INDEX?.temas.find(x => x.id === t)?.nombre) || t;
 
@@ -88,14 +102,16 @@ store.onChange(applyUi);
 const routes = {};
 let cleanup = null;
 function go(h) { if (location.hash === h) route(); else location.hash = h; }
+let routeSeq = 0;
 async function route() {
+  const my = ++routeSeq;
   if (cleanup) { cleanup(); cleanup = null; }
   const [, name, ...args] = (location.hash || '#/home').split('/');
   const sect = { quiz: RUN?.kind === 'sim' ? 'sim' : RUN?.kind === 'test' ? 'test' : 'home', result: LAST?.ses?.kind === 'sim' ? 'sim' : LAST?.ses?.kind === 'test' ? 'test' : 'home', sim2: 'sim', examenes: 'sim', errores: 'settings', cards: 'home' }[name] || name;
   document.querySelectorAll('nav a').forEach(a => { const on = a.dataset.r === sect; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   const f = routes[name] || routes.home;
   window.scrollTo(0, 0);
-  try { await getIndex(); await getMeta(); await f(...args); app.focus({ preventScroll: true }); if (RUN && name !== 'quiz') { const b = document.createElement('div'); b.className = 'note run'; b.innerHTML = `<b>${esc(RUN.titulo || 'Test')}</b> en curso · ${Math.min(RUN.idx + 1, RUN.items.length)}/${RUN.items.length} <button class="btn" id="resume">Continuar</button>`; app.prepend(b); $('#resume').onclick = () => go('#/quiz'); } } catch (e) { app.innerHTML = `<div class="card" role="alert"><h2>No se pudo cargar</h2><p>Comprueba la conexión e inténtalo de nuevo.</p><button class="btn" id="retryRoute">Reintentar</button></div>`; $('#retryRoute').onclick = () => route(); console.error(e); }
+  try { await getIndex(); await getMeta(); if (my !== routeSeq) return; await f(...args); if (my !== routeSeq) return; const hd = app.querySelector('h1'); if (hd) hd.tabIndex = -1; (hd || app).focus({ preventScroll: true }); if (RUN && name !== 'quiz') { const b = document.createElement('div'); b.className = 'note run'; b.innerHTML = `<b>${esc(RUN.titulo || 'Test')}</b> en curso · ${Math.min(RUN.idx + 1, RUN.items.length)}/${RUN.items.length} <button class="btn" id="resume">Continuar</button>`; app.prepend(b); $('#resume').onclick = () => go('#/quiz'); } } catch (e) { app.innerHTML = `<div class="card" role="alert"><h2>No se pudo cargar</h2><p>${navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button class="btn" id="retryRoute">Reintentar</button></div>`; $('#retryRoute').onclick = () => route(); console.error(e); }
 }
 window.addEventListener('hashchange', route);
 
@@ -134,22 +150,43 @@ async function byIds(ids) {
 // ───────── motor de preguntas ─────────
 let RUN = null;
 function startRun(cfg) { RUN = { ...cfg, idx: 0, ans: [], t0: now(), secs: 0, paused: false }; go('#/quiz'); }
+// La sesión en curso se guarda para sobrevivir al cierre de la app por iOS (solo sesiones del banco, no los supuestos)
+const RUN_KEY = 'tai.run';
+function clearRun() { try { localStorage.removeItem(RUN_KEY); } catch (e) {} }
+function saveRun() {
+  if (!RUN || RUN.supTexto || !RUN.items.every(q => q.i && META && META[q.i])) return;
+  const { kind, feedback, titulo, limit, idx, ans, times, secs } = RUN;
+  try { localStorage.setItem(RUN_KEY, JSON.stringify({ kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, ids: RUN.items.map(q => q.i), savedAt: Date.now() })); } catch (e) {}
+}
+async function resumeRun() {
+  let s = null; try { s = JSON.parse(localStorage.getItem(RUN_KEY) || 'null'); } catch (e) {}
+  if (!s || RUN) return;
+  if (!Array.isArray(s.ids) || !s.ids.length || Date.now() - (s.savedAt || 0) > 2 * 86400000) return clearRun();
+  const items = await byIds(s.ids);
+  if (items.length !== s.ids.length) return clearRun();
+  const n = items.length, i = Math.min(s.idx + 1, n);
+  if (!(await ask(`Tienes sin terminar «${s.titulo || 'Test'}» (${i}/${n}${s.limit ? ', quedan ' + fmtT(Math.max(0, s.limit * 60 - s.secs)) : ''}). ¿Continuar donde lo dejaste?`, 'Continuar'))) return clearRun();
+  const un = a => Array.from(a || [], x => x === null ? undefined : x);
+  RUN = { kind: s.kind, feedback: !!s.feedback, titulo: s.titulo, limit: s.limit || 0, items, idx: s.idx, ans: un(s.ans), times: un(s.times), t0: now(), secs: s.secs || 0, paused: false };
+  go('#/quiz');
+}
 
 routes.quiz = async function () {
   if (!RUN) return go('#/home');
   const R = RUN;
   let tick = null;
-  if (R.limit) {
+  {
+    // el tiempo sale de la hora real (no de contar ticks): iOS frena los timers con la pantalla bloqueada
     tick = setInterval(() => {
-      if (R.paused) return;
-      R.secs += 1;
+      if (R.paused) { R.since = null; return; }
+      if (R.since == null) { R.since = Date.now(); R.base = R.secs; }
+      R.secs = R.base + Math.floor((Date.now() - R.since) / 1000);
+      if (!R.limit) return;
       const left = R.limit * 60 - R.secs;
       const el = $('#clock'); if (el) el.textContent = fmtT(left);
       const pc = $('#pace'); if (pc) { const d = ritmoSimulacro(R.idx, R.items.length, R.limit * 60, R.secs), bud = Math.round(R.limit * 60 / R.items.length); pc.className = 'pace ' + (d >= 0 ? 'up' : d > -3 ? 'mid' : 'low'); pc.textContent = `Ritmo: ${d > 0 ? d + ' por delante' : d < 0 ? -d + ' por detrás' : 'al día'} · ${bud} s por pregunta`; }
       if (left <= 0) { clearInterval(tick); finish(); }
-    }, 1000);
-  } else {
-    tick = setInterval(() => { if (!R.paused) R.secs += 1; }, 1000);
+    }, 500);
   }
   const onKey = e => {
     if (/^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName || ''))) return;
@@ -165,7 +202,7 @@ routes.quiz = async function () {
     else if (act.t === 'pause') { const b = R.paused ? $('.overlay #resume') : $('#pause'); b && b.click(); }
   };
   let tx = null;
-  const onTs = e => { const t = e.touches[0]; tx = e.touches.length === 1 && t.clientX > 24 && t.clientX < innerWidth - 24 && !e.target.closest('details,input,textarea,button.ghost') ? [t.clientX, t.clientY] : null; };
+  const onTs = e => { const t = e.touches[0]; tx = e.touches.length === 1 && t.clientX > 24 && t.clientX < innerWidth - 24 && !e.target.closest('details,input,textarea,button,.opt') ? [t.clientX, t.clientY] : null; };
   const onTe = e => {
     if (!tx) return; const t = e.changedTouches[0];
     const d = swipeDir(t.clientX - tx[0], t.clientY - tx[1]); tx = null;
@@ -180,6 +217,7 @@ routes.quiz = async function () {
 
   function draw() {
     if (R.idx >= R.items.length) return finish();
+    saveRun();
     if (R.tIdx !== R.idx) { R.tIdx = R.idx; R.q0 = R.secs; R.qT0 = Date.now(); }
     const LEC = normUi(store.getCfg().ui).lectura, kw = t => LEC ? claveHtml(t) : esc(t);
     const q = R.items[R.idx];
@@ -187,6 +225,7 @@ routes.quiz = async function () {
     const reveal = R.feedback && a !== undefined;
     const inSup = !!q.s;
     app.innerHTML = `
+    <h1 class="sr">${esc(R.titulo || 'Test')} · pregunta ${R.idx + 1} de ${R.items.length}</h1>
     <div class="qhead">
       <button class="ghost" id="exit" aria-label="Salir">✕</button>
       <div class="prog"><div style="width:${100 * R.idx / R.items.length}%"></div></div>
@@ -235,11 +274,13 @@ routes.quiz = async function () {
         upd(); R.gt = setInterval(upd, 400);
       }
     }
+    if (reveal) { const lv = $('#live'); if (lv) lv.textContent = (a === -1 ? 'Sin responder' : a === q.c ? 'Correcto' : 'Incorrecto') + '. Respuesta: ' + L[q.c]; const nx = $('#next'); nx && nx.focus({ preventScroll: true }); }
+    else if (a !== undefined && !R.paused) { const so = app.querySelector('.opt.sel'); so && so.focus({ preventScroll: true }); }
     if (reveal) { const f = $('.fb'); if (f) setTimeout(() => f.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth' }), 60); }
   }
   function feedback(q, a) {
     const ok = a === q.c;
-    return `<div class="fb ${ok ? 'good' : 'wrong'}" role="status"><b>${a === -1 ? 'Sin responder' : ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${!ok && a !== -1 && R.fast?.[R.idx] ? `<div class="fbsub">Marcaste ${L[a]} en ${R.fast[R.idx][0]} s${R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? `; leerla con calma lleva unos ${R.fast[R.idx][1]} s` : ''}.</div>` : ''}
+    return `<div class="fb ${ok ? 'good' : 'wrong'}"><b>${a === -1 ? 'Sin responder' : ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${!ok && a !== -1 && R.fast?.[R.idx] ? `<div class="fbsub">Marcaste ${L[a]} en ${R.fast[R.idx][0]} s${R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? `; leerla con calma lleva unos ${R.fast[R.idx][1]} s` : ''}.</div>` : ''}
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}
       ${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}
       ${q.x?.length ? `<div class="trap">Trampa: ${q.x.map(x => esc(TRAMPAS[x] || x)).join(' · ')}</div>` : ''}
@@ -249,7 +290,7 @@ routes.quiz = async function () {
       <div class="repw" id="rep"></div></div>`;
   }
   function bind(q) {
-    $('#exit').onclick = async () => { if (await ask(R.feedback ? '¿Salir? Lo ya respondido queda guardado.' : '¿Abandonar el simulacro? Se perderá.', 'Salir', !R.feedback)) { if (R.feedback && R.ans.some(x => x !== undefined)) finish(); else { RUN = null; go('#/home'); } } };
+    $('#exit').onclick = async () => { if (await ask(R.feedback ? '¿Salir? Lo ya respondido queda guardado.' : '¿Abandonar el simulacro? Se perderá.', 'Salir', !R.feedback)) { if (R.feedback && R.ans.some(x => x !== undefined)) finish(); else { RUN = null; clearRun(); go('#/home'); } } };
     $('#pause') && ($('#pause').onclick = () => { R.paused = true; draw(); });
     $('#resume') && ($('#resume').onclick = () => { R.paused = false; draw(); const pb = $('#pause'); pb && pb.focus(); });
     app.querySelectorAll('.opt').forEach(b => b.onclick = () => {
@@ -282,7 +323,7 @@ routes.quiz = async function () {
     store.record(q.i, q.t, i === q.c ? 1 : 0, now(), i === -1 ? undefined : Math.max(1, R.secs - R.q0));
   }
   async function finish() {
-    clearInterval(tick);
+    clearInterval(tick); clearRun();
     const items = R.items, res = { a: 0, f: 0, b: 0 }, fails = [], porTema = {}, porTipo = {};
     items.forEach((q, k) => {
       const x = R.ans[k]; const ok = x === q.c;
@@ -488,10 +529,10 @@ routes.lectura = async function () {
 // ───────── tarjetas (flashcards) ─────────
 let CARDIDX; const cardCache = new Map(); let CRUN = null;
 async function curatedCards() {
-  if (CARDIDX === undefined) { try { CARDIDX = (await j('cards/index.json')).temas || {}; } catch (e) { CARDIDX = {}; } }
+  if (CARDIDX === undefined) { try { CARDIDX = (await j('cards/index.json')).temas || {}; } catch (e) { return []; } } // sin caché del fallo: se reintenta
   const out = [];
   for (const t in CARDIDX) {
-    if (!cardCache.has(t)) cardCache.set(t, j(`cards/${t}.json`).catch(() => []));
+    if (!cardCache.has(t)) cardCache.set(t, j(`cards/${t}.json`).catch(e => { cardCache.delete(t); return []; }));
     for (const c of await cardCache.get(t)) if (c && c.id && c.q && c.a && !c.revisar) out.push({ ...c, t });
   }
   return out;
@@ -638,7 +679,7 @@ routes.result = async function () {
   <h2>Revisión</h2>
   <div class="card">${items.map((q, k) => {
     const x = ans[k]; const st = x === undefined || x === -1 ? 'b' : x === q.c ? 'g' : 'r';
-    return `<details class="rv ${st}"><summary><i></i>${esc(q.q.slice(0, 110))}${q.q.length > 110 ? '…' : ''}</summary>
+    return `<details class="rv ${st}"><summary><i></i><span class="sr">${st === 'g' ? 'Acierto' : st === 'r' ? 'Fallo' : 'En blanco'}: </span>${esc(q.q.slice(0, 110))}${q.q.length > 110 ? '…' : ''}</summary>
       <div class="pre">${esc(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : i === x ? 'bad' : ''}"><b>${L[i]}</b> ${esc(o)}</div>`).join('')}
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}<div class="repw" data-rq="${k}"></div></details>`;
   }).join('')}</div>`;
@@ -678,7 +719,7 @@ routes.home = async function () {
   let streak = 0; const d = new Date();
   if (!dias.has(d.toDateString())) d.setDate(d.getDate() - 1);
   while (dias.has(d.toDateString())) { streak++; d.setDate(d.getDate() - 1); }
-  const ex = new Date('2027-06-01T09:00:00'); const dd = Math.ceil((ex - new Date()) / 86400000);
+  const ex = new Date((store.getCfg().exam || '2027-06-01') + 'T09:00:00'); const dd = Math.ceil((ex - new Date()) / 86400000);
   const nCards = Object.values(store.getCards()).filter(r => r[3] >= 0 && r[4] <= now()).length;
   const vel = velocidad(st);
   const row = (id, ico, t, sub, dis) => `<button class="lrow" id="${id}" ${dis ? 'disabled' : ''}><i aria-hidden="true">${ico}</i><span><b>${t}</b><small>${sub}</small></span></button>`;
@@ -687,12 +728,6 @@ routes.home = async function () {
   <div class="hero"><div class="hnum"><b>${dd > 0 ? dd : 0}</b><span>días al examen</span></div>
     <div class="hbars"><div class="hl"><span>Preguntas vistas</span><b>${seen} / ${idx.n}</b></div><div class="hb"><i style="width:${Math.min(100, pct(seen, idx.n))}%"></i></div><div class="hl"><span>Acierto global</span><b>${pct(ok, n)}%</b></div></div></div>
   <button class="cta" id="quick"><i aria-hidden="true">⚡</i><span><b>Sesión rápida · 5 min</b><small>${quickN(st)} preguntas: ${due ? 'tus repasos pendientes (' + due + ') mezclados con ' : ''}nuevas de tus temas más débiles</small></span></button>
-  <div class="gtitle">Entrenar un hábito</div>
-  <div class="lgroup">
-    ${row('trampas', '🔎', 'Detective de trampas', 'Marca qué trampas esconde cada pregunta')}
-    ${row('lectura', '👁', 'Lectura atenta', vel.n ? vel.n + ' fallos por velocidad: entrena a leer con método' : 'Qué piden, palabras clave y respuesta')}
-    ${row('relam', '⚡', 'Pregunta relámpago', 'Una sola, empezando por las marcadas como suerte')}
-  </div>
   <div class="gtitle">Estudiar</div>
   <div class="lgroup">
     ${row('rev', '↻', 'Repaso de fallos', due ? due + ' preguntas toca repasar hoy' : 'Nada pendiente hoy', !due)}
@@ -701,21 +736,28 @@ routes.home = async function () {
     ${row('sim', '⏱', 'Simulacro', 'Parte 1 con tiempo y nota oficial + supuesto práctico')}
     ${row('examenes', '☷', 'Exámenes y simulacros', 'Elige uno por número y contesta solo sus preguntas')}
   </div>
+  <div class="gtitle">Entrenar un hábito</div>
+  <div class="lgroup">
+    ${row('trampas', '🔎', 'Detective de trampas', 'Marca qué trampas esconde cada pregunta')}
+    ${row('lectura', '👁', 'Lectura atenta', vel.n ? vel.n + ' fallos por velocidad: entrena a leer con método' : 'Qué piden, palabras clave y respuesta')}
+    ${row('relam', '⚡', 'Pregunta relámpago', 'Una sola, empezando por las marcadas como suerte')}
+  </div>
   <div class="gtitle">Seguimiento</div>
   <div class="lgroup">
     ${row('mapa', '◎', 'Mapa de dominio', (() => { const dm = dominioTemas(idx), c = k => dm.filter(x => x.est === k).length; return c('r') + c('y') + c('g') ? `🔴 ${c('r')} reforzar · 🟠 ${c('y')} a vigilar · 🟢 ${c('g')} dominados` : 'Aparecerá cuando empieces a contestar'; })())}
     ${row('temario', '☰', 'Temas vistos', store.getSeen().length ? store.getSeen().length + ' de ' + idx.temas.length + ' temas marcados · el simulacro usa estos' : 'Marca lo que ya has estudiado y el simulacro lo tendrá en cuenta')}
   </div>
   <div class="mini"><div><b>${due}</b><span>repasos hoy</span></div><div><b>${nCards}</b><span>tarjetas vencen</span></div><div><b>${streak}</b><span>días seguidos</span></div></div>
+  ${navigator.onLine === false ? `<div class="note">Sin conexión: solo funcionan las preguntas ya descargadas (Ajustes → Uso sin conexión).</div>` : ''}
   ${sync.status.state === 'sin sesión' ? `<div class="note">Inicia sesión en <a href="#/settings">Ajustes</a> para sincronizar iPhone e iPad.</div>` : ''}
   ${sync.status.state === 'sin configurar' ? `<div class="note">Firebase aún no está configurado: el progreso se guarda solo en este dispositivo.</div>` : ''}`;
-  $('#quick').onclick = () => quickSession();
-  $('#rev').onclick = async () => {
+  $('#quick').onclick = guard(() => quickSession());
+  $('#rev').onclick = guard(async () => {
     await getMeta(); const st = store.getStats(), t0 = now();
     const cand = []; for (const id in st) { const r = st[id]; if (r[3] >= 0 && r[4] <= t0 && META[id]) cand.push({ i: id, t: META[id][0], due: r[4] }); }
     const ids = pickRepaso(cand, 30).map(x => x.i);
     startRun({ kind: 'rev', feedback: true, items: await byIds(ids), titulo: 'Repaso de fallos · más vencidas primero, temas mezclados' });
-  };
+  });
   $('#cards').onclick = () => go('#/cards');
   $('#lectura').onclick = () => go('#/lectura');
   $('#trampas').onclick = () => go('#/trampas');
@@ -800,7 +842,7 @@ routes.test = async function () {
     app.querySelectorAll('[data-t]').forEach(c => c.onchange = () => { c.checked ? sel.add(c.dataset.t) : sel.delete(c.dataset.t); save(); draw(); });
     app.querySelectorAll('[data-b]').forEach(b => b.onclick = () => { const ids = idx.temas.filter(t => t.id.startsWith(b.dataset.b)).map(t => t.id); const all = ids.every(i => sel.has(i)); ids.forEach(i => all ? sel.delete(i) : sel.add(i)); save(); draw(); });
     $('#useSeen').onclick = () => { const v = store.getSeen(); if (!v.length) { toast('Aún no has marcado temas vistos (pantalla «Temas vistos» en Inicio).'); return; } sel.clear(); v.forEach(t => sel.add(t)); save(); draw(); };
-    $('#go').onclick = async () => {
+    $('#go').onclick = guard(async () => {
       const temas = sel.size ? [...sel] : idx.temas.map(t => t.id);
       if (cfg.mode === 'trampas') {
         const r = await trapTest(cfg.n, null, sel.size ? [...sel] : null);
@@ -810,7 +852,7 @@ routes.test = async function () {
       const items = await pick({ temas, origins: org, mode: cfg.mode, n: cfg.n });
       if (!items.length) { toast(cfg.mode === 'falladas' ? 'No tienes falladas en esa selección.' : cfg.mode === 'dudosas' ? 'No tienes preguntas marcadas como dudosas ahí.' : 'No hay preguntas con ese filtro.'); return; }
       startRun({ kind: 'test', feedback: true, items, titulo: sel.size === 1 ? temaName([...sel][0]) : 'Test' });
-    };
+    });
   };
   function save() { store.setCfg('test', { sel: [...sel], n: cfg.n, mode: cfg.mode, o: [...org] }); }
   function tstat(t, n) {
@@ -907,13 +949,13 @@ routes.sim = async function () {
     $('#min').onclick = e => { if (e.target.dataset.v) { cfg.min = +e.target.dataset.v; save(); draw(); } };
     $('#org').onclick = e => { const v = e.target.dataset.v; if (v) { org.has(v) ? org.delete(v) : org.add(v); if (!org.size) org.add(v); save(); draw(); } };
     $('#p2').onchange = e => { cfg.parte2 = e.target.checked; save(); };
-    $('#go').onclick = async () => {
+    $('#go').onclick = guard(async () => {
       const useSeen = cfg.scope !== 'todos' && seenN;
       const items = await simParte1(idx, org, cfg.n, useSeen ? new Set(store.getSeen()) : null);
       if (!items.length) { toast('No hay preguntas con esos filtros.'); return; }
       SIMCFG = { parte2: cfg.parte2, org: [...org], min2: Math.round(cfg.min * 0.45) };
       startRun({ kind: 'sim', feedback: false, items, limit: cfg.min, titulo: 'Simulacro · Parte 1' });
-    };
+    });
   };
   function save() { store.setCfg('sim', { n: cfg.n, min: cfg.min, o: [...org], parte2: cfg.parte2, scope: cfg.scope }); }
   draw();
@@ -978,8 +1020,8 @@ function reportBox(q, host) {
   };
   const form = () => {
     const r = store.getReports()[q.i];
-    host.innerHTML = `<div class="repf"><select data-m>${MOTIVOS.map(m => `<option ${r && r.motivo === m ? 'selected' : ''}>${esc(m)}</option>`).join('')}</select>
-      <input data-n maxlength="300" placeholder="Qué falla (opcional)" value="${esc(r?.nota || '')}">
+    host.innerHTML = `<div class="repf"><select data-m aria-label="Motivo del error">${MOTIVOS.map(m => `<option ${r && r.motivo === m ? 'selected' : ''}>${esc(m)}</option>`).join('')}</select>
+      <input data-n aria-label="Qué falla" maxlength="300" placeholder="Qué falla (opcional)" value="${esc(r?.nota || '')}">
       <div class="row"><button class="btn" data-s>Guardar</button><button class="btn sec" data-c>Cancelar</button></div></div>`;
     host.querySelector('[data-s]').onclick = () => { store.addReport(q.i, q.t, host.querySelector('[data-m]').value, host.querySelector('[data-n]').value.trim()); show(); };
     host.querySelector('[data-c]').onclick = show;
@@ -1042,7 +1084,7 @@ function paintSims() {
     const ia = Math.min(Math.max(0, c.a ?? P1.length - 2), P1.length - 1), ib = Math.min(Math.max(0, c.b ?? P1.length - 1), P1.length - 1);
     const opt = sel => P1.map((h, i) => `<option value="${i}" ${i === sel ? 'selected' : ''}>${fmtD(h.ts)} · ${esc(String(h.nota))}</option>`).join('');
     const C = compareSessions(P1[ia], P1[ib]);
-    cmp = `<div class="row"><select id="sca">${opt(ia)}</select><select id="scb">${opt(ib)}</select></div>
+    cmp = `<div class="row"><select id="sca" aria-label="Intento A">${opt(ia)}</select><select id="scb" aria-label="Intento B">${opt(ib)}</select></div>
       <p class="sm">Nota: <b>${dlt(C.dNota)}</b> · acierto ${dlt(C.dAcierto, ' pts')}${C.dSeg !== null ? ' · ritmo ' + dlt(C.dSeg, ' s/preg.', true) : ''}</p>
       <table class="tb"><tr><th>Tema</th><th>A</th><th>B</th><th>Δ</th></tr>${C.rows.map(r => `<tr><td>${r.t}</td><td>${r.pa ?? '—'}</td><td>${r.pb ?? '—'}</td><td>${r.d === null ? '' : dlt(r.d)}</td></tr>`).join('')}</table>
       <p class="legend">A es el intento de la izquierda y B el de la derecha; Δ en puntos de acierto por tema.</p>`;
@@ -1194,6 +1236,7 @@ routes.settings = async function () {
       <p><small>Teclado (iPad): 1–4 o A–D responden · Intro, → o espacio: siguiente · ←: anterior · B: en blanco · F: dudosa · P: pausa. Gestos: desliza a la izquierda para pasar y a la derecha para volver.</small></p>
       <p><small>Se guarda solo en este dispositivo.</small></p>
     </div>
+    <div class="card"><h2 class="h3">Fecha del examen</h2><label class="sm" for="exd">Para la cuenta atrás de Inicio</label><input type="date" id="exd" value="${esc(store.getCfg().exam || '2027-06-01')}"></div>
     <div class="card"><h2 class="h3">Errores del banco</h2><p>${Object.values(store.getReports()).filter(r => r.st === 'abierto').length} por revisar. Anótalos con «Avisar de error» al contestar y exporta la lista para corregirlos.</p><button class="btn sec" id="errs">Ver errores del banco</button></div>
     <div class="card"><h2 class="h3">Uso sin conexión</h2><p id="off">Pulsa para descargar todo el banco en el dispositivo (≈9 MB).</p><button class="btn sec" id="dl">Descargar para uso sin conexión</button></div>
     <div class="card"><h2 class="h3">Tarjetas</h2><p>Exporta las tarjetas curadas (y tus fallos convertidos en tarjeta) a Anki: texto separado por tabuladores, importable con «Archivo → Importar».</p><button class="btn sec" id="anki">Exportar tarjetas a Anki (.txt)</button></div>
@@ -1203,6 +1246,7 @@ routes.settings = async function () {
     $('#in') && ($('#in').onclick = () => sync.login());
     $('#out') && ($('#out').onclick = () => sync.logout());
     $('#errs').onclick = () => go('#/errores');
+    $('#exd').onchange = e => { if (/^\d{4}-\d\d-\d\d$/.test(e.target.value)) store.setCfg('exam', e.target.value); };
     $('#th').onclick = e => { const b = e.target.closest('button'); if (b) { store.setCfg('ui', { ...normUi(store.getCfg().ui), theme: b.dataset.v }); draw(); } };
     $('#lec').onclick = e => { const b = e.target.closest('button'); if (b) { store.setCfg('ui', { ...normUi(store.getCfg().ui), lectura: +b.dataset.v }); draw(); } };
     $('#fz').onclick = e => { const b = e.target.closest('button'); if (b) { store.setCfg('ui', { ...normUi(store.getCfg().ui), size: +b.dataset.v }); draw(); } };
@@ -1237,6 +1281,8 @@ routes.settings = async function () {
   addEventListener('pagehide', () => store.flushNow());
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').then(watchUpdates).catch(() => {});
   await route(); // primer pintado sin esperar a Firebase
+  addEventListener('pagehide', saveRun); document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') saveRun(); });
+  resumeRun().catch(() => {});
   try { await getMeta(); await sync.init({ temaOf, idsOfTema: t => META._by[t] || [] }); } catch (e) { console.error(e); }
 })();
 

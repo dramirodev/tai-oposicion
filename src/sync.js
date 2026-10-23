@@ -88,7 +88,7 @@ function start() {
   unsubs.push(onSnapshot(query(collection(db, 'users', uid, 'sessions'), orderBy('ts', 'desc'), limit(300)), snap => {
     const l = []; snap.forEach(d => l.push(d.data()));
     store.mergeSessions(l);
-  }, () => {}));
+  }, e => { status.error = 'Sesiones: ' + e.message; emit(); }));
   unsubs.push(onSnapshot(doc(db, 'users', uid, 'cfg', 'seen'), d => {
     if (d.exists()) store.mergeSeen(d.data());
     const loc = store.getSeenDoc(), rem = d.exists() ? d.data() : null;
@@ -110,7 +110,7 @@ let cardsT = null;
 export function pushCards(m) {
   if (!uid) return;
   clearTimeout(cardsT);
-  cardsT = setTimeout(() => setDoc(doc(db, 'users', uid, 'cfg', 'cards'), { m, u: Date.now() }).catch(writeErr), 3000);
+  cardsT = setTimeout(() => setDoc(doc(db, 'users', uid, 'cfg', 'cards'), { m, u: Date.now() }, { merge: true }).catch(writeErr), 3000);
 }
 function stop() { unsubs.forEach(u => u()); unsubs = []; }
 
@@ -121,7 +121,7 @@ function pushAll(remote) {
     const r = remote[id];
     if (!r || local[id][2] > r[2]) { const t = temaOf(id); if (t) (byTema[t] ||= {})[enc(id)] = local[id]; }
   }
-  for (const t in byTema) setDoc(doc(db, 'users', uid, 'stats', t), { m: byTema[t], u: Date.now() }, { merge: true }).catch(() => {});
+  for (const t in byTema) setDoc(doc(db, 'users', uid, 'stats', t), { m: byTema[t], u: Date.now() }, { merge: true }).catch(writeErr);
 }
 
 export function schedule() {
@@ -152,7 +152,7 @@ export function pushSeen(d) {
 
 export function pushReports(m) {
   if (!uid) return;
-  setDoc(doc(db, 'users', uid, 'cfg', 'reports'), { m, u: Date.now() }).catch(writeErr);
+  setDoc(doc(db, 'users', uid, 'cfg', 'reports'), { m, u: Date.now() }, { merge: true }).catch(writeErr);
 }
 
 function writeErr(e) { status.error = 'No se pudo guardar en la nube (' + (e.code || e.message) + ')'; emit(); }

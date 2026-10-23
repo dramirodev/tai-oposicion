@@ -40,7 +40,7 @@ a{color:var(--selb)}
 .big-btn span{color:var(--mute);font-size:14px}
 .big-btn:active{transform:scale(.985)}
 .big-btn:disabled{opacity:.5}
-.btn{appearance:none;border:0;background:var(--brand);color:#fff;font:600 17px/1 inherit;padding:15px 22px;border-radius:14px;cursor:pointer;min-height:50px}
+.btn{appearance:none;border:0;background:var(--brand);color:#fff;font:600 17px/1 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;padding:15px 22px;border-radius:14px;cursor:pointer;min-height:50px}
 @media(prefers-color-scheme:dark){:where(:root:not([data-theme=light])) .btn{color:#14213d}}
 :where(:root[data-theme=dark]) .btn{color:#14213d}
 .btn.sec{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
@@ -228,6 +228,9 @@ input[type=checkbox],input[type=radio]{width:24px;height:24px}
 .mini{display:flex;gap:10px;margin:16px 0}.mini div{flex:1;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px}.mini b{display:block;font-size:22px}.mini span{font-size:13px;color:var(--mute)}
 @media(prefers-color-scheme:dark){:where(:root:not([data-theme=light])) .hero{color:#14213d}:where(:root:not([data-theme=light])) .hb{background:rgba(20,33,61,.25)}}
 :where(:root[data-theme=dark]) .hero{color:#14213d}:where(:root[data-theme=dark]) .hb{background:rgba(20,33,61,.25)}
+/* en oscuro el héroe es naranja: el relleno debe ser oscuro para distinguirse del fondo */
+@media(prefers-color-scheme:dark){:where(:root:not([data-theme=light])) .hb i{background:#14213d}}
+:where(:root[data-theme=dark]) .hb i{background:#14213d}
 
 .pide{display:inline-block;font-size:13px;font-weight:700;color:#7a4b00;background:#fff2d6;border-radius:99px;padding:4px 10px;margin:0 0 8px}
 @media(prefers-color-scheme:dark){:where(:root:not([data-theme=light])) .pide{color:#ffd88a;background:#4a3510}}
@@ -310,4 +313,23 @@ label:has(input[type=checkbox]),.chk{min-height:44px;display:flex;align-items:ce
 .overlay{background:rgba(0,0,0,.55)}
 .overlay .card{max-width:420px;width:100%}
 .overlay .row{margin-bottom:0}
+
+/* zona segura superior (barra de estado translúcida) y cabeceras fijas */
+:root{--top:#14213d}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--top:#0e1424}}
+:root[data-theme=dark]{--top:#0e1424}
+body::before{content:"";position:fixed;top:0;left:0;right:0;height:var(--sat);background:var(--top);z-index:40}
+.qhead,.note.run{top:var(--sat)}
+.loading{min-height:60vh}
+
+/* estado de la respuesta sin depender solo del color */
+.opt.ok::after,.opt.bad::after{margin-left:auto;font-weight:700;flex:none}
+.opt.ok::after{content:"✓";color:var(--okd)}
+.opt.bad::after{content:"✗";color:var(--badd)}
+.btn.file:focus-within{outline:3px solid var(--selb);outline-offset:2px}
+.cgc small,.gt{font-size:12px}.dmt small{font-size:12px}
+
+/* navegación: iconos SVG */
+nav a i{line-height:1}
+nav a svg{display:block;width:24px;height:24px;margin:0 auto;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 @media(prefers-reduced-motion:reduce){#toast{transition:none}}

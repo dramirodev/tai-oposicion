@@ -122,8 +122,12 @@ function load() {
   } catch (e) {}
   return { stats: {}, sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: {}, cards: {} };
 }
+let persistWarned = false;
 function persist() {
-  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {
+    // sin espacio o sin permiso: avisar una vez (la copia de IndexedDB sigue intentándose)
+    if (!persistWarned) { persistWarned = true; try { dispatchEvent(new Event('tai-persist-error')); } catch (e2) {} }
+  }
   mirror();
 }
 // Copia de seguridad en IndexedDB: en iOS, localStorage puede perder las últimas escrituras si se cierra la app enseguida.
