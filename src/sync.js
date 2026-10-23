@@ -11,7 +11,7 @@ const dec = id => id.replace(/~/g, '.');
 
 export let configured = false;
 export const diag = () => ({ host: location.host, authDomain: (auth && auth.config && auth.config.authDomain) || '' });
-export const status = { user: null, state: 'sin configurar', lastSync: 0, error: '', detail: '' };
+export const status = { user: null, state: 'iniciando', lastSync: 0, error: '', detail: '' };
 const subs = new Set();
 export const onStatus = fn => { subs.add(fn); return () => subs.delete(fn); };
 const emit = () => subs.forEach(f => f(status));
@@ -22,17 +22,18 @@ let idsOfTema = () => [];
 
 export async function init(metaFns) {
   temaOf = metaFns.temaOf; idsOfTema = metaFns.idsOfTema;
-  let firebaseConfig = {};
-  try { firebaseConfig = await (await fetch('firebase-config.json', { cache: 'no-cache' })).json(); } catch (e) {
-    try { firebaseConfig = await (await fetch('firebase-config.json')).json(); } catch (e2) {}
+  let firebaseConfig = {}, leida = false;
+  try { firebaseConfig = await (await fetch('firebase-config.json', { cache: 'no-cache' })).json(); leida = true; } catch (e) {
+    try { firebaseConfig = await (await fetch('firebase-config.json')).json(); leida = true; } catch (e2) {}
   }
   configured = !!firebaseConfig.apiKey && !/PEGA/i.test(firebaseConfig.apiKey);
-  if (!configured) { emit(); return; }
+  // «sin configurar» solo si el fichero se leyó y no trae clave; si no se pudo leer (sin red) no es un problema de configuración
+  if (!configured) { status.state = leida ? 'sin configurar' : 'sin conexión'; emit(); return; }
   // Un único origen: el almacenamiento local (progreso, temas vistos) es distinto en cada dominio.
   if (firebaseConfig.authDomain && location.hostname !== firebaseConfig.authDomain && /\.web\.app$/.test(location.hostname)) {
     location.replace('https://' + firebaseConfig.authDomain + location.pathname + location.search + location.hash); return;
   }
-  status.state = 'sin sesión';
+  status.state = 'comprobando sesión…'; emit();
   const app = initializeApp(firebaseConfig);
   // Persistencia explícita (IndexedDB y, si no, localStorage): en iOS la sesión debe sobrevivir al cierre de la app.
   auth = initializeAuth(app, { persistence: [indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence], popupRedirectResolver: browserPopupRedirectResolver });

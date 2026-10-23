@@ -747,8 +747,14 @@ routes.home = async function () {
   </div>
   <div class="mini"><div><b>${due}</b><span>repasos hoy</span></div><div><b>${nCards}</b><span>tarjetas vencen</span></div><div><b>${streak}</b><span>días seguidos</span></div></div>
   ${navigator.onLine === false ? `<div class="note">Sin conexión: solo funcionan las preguntas ya descargadas (Ajustes → Uso sin conexión).</div>` : ''}
-  ${sync.status.state === 'sin sesión' ? `<div class="note">Inicia sesión en <a href="#/settings">Ajustes</a> para sincronizar iPhone e iPad.</div>` : ''}
-  ${sync.status.state === 'sin configurar' ? `<div class="note">Firebase aún no está configurado: el progreso se guarda solo en este dispositivo.</div>` : ''}`;
+<div id="syncnote"></div>`;
+  // el aviso de cuenta se decide cuando Firebase ya ha arrancado (antes mostraba «no configurado» un instante al abrir)
+  const paintNote = () => {
+    const el = $('#syncnote'); if (!el) return; const st = sync.status.state;
+    el.innerHTML = st === 'sin sesión' ? '<div class="note">Inicia sesión en <a href="#/settings">Ajustes</a> para sincronizar iPhone e iPad.</div>'
+      : st === 'sin configurar' ? '<div class="note">Firebase aún no está configurado: el progreso se guarda solo en este dispositivo.</div>' : '';
+  };
+  paintNote(); cleanup = sync.onStatus(paintNote);
   $('#quick').onclick = guard(() => quickSession());
   $('#rev').onclick = guard(async () => {
     await getMeta(); const st = store.getStats(), t0 = now();
@@ -1217,7 +1223,7 @@ routes.settings = async function () {
     app.innerHTML = `
     <h1>Ajustes</h1>
     <div class="card"><h2 class="h3">Cuenta y sincronización</h2>
-      ${!sync.configured ? '<p>Firebase no está configurado todavía (ver README).</p>' :
+      ${s.state === 'iniciando' || s.state === 'comprobando sesión…' ? '<p>Comprobando cuenta…</p>' : s.state === 'sin conexión' ? '<p>Sin conexión: ahora no se puede comprobar la cuenta.</p>' : !sync.configured ? '<p>Firebase no está configurado todavía (ver README).</p>' :
         s.user ? `<p>Conectado como <b>${esc(s.user.name)}</b><br><small>${esc(s.state)}${s.lastSync ? ' · ' + new Date(s.lastSync).toLocaleTimeString('es-ES') : ''}</small></p><button class="btn sec" id="out">Cerrar sesión</button>` :
           '<p>Inicia sesión para tener el mismo historial en iPhone y iPad.</p><button class="btn" id="in">Entrar con Google</button>'}
       ${s.error ? `<p class="r"><small>${esc(s.error)}</small></p>` : ''}
