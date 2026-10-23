@@ -288,3 +288,12 @@ nav a.on{background:var(--sel);color:var(--selb);font-weight:700}
 details.sup{border-radius:14px}
 h1{font-size:26px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.fb.wrong{background:var(--badbg);border-color:var(--bad);border-width:1.5px}
+.fb.wrong>b:first-child{color:#b42323}
+.fb.good>b:first-child{color:#14613a}
+@media(prefers-color-scheme:dark){:where(:root:not([data-theme=light])) .fb.wrong>b:first-child{color:#ff9b9b}:where(:root:not([data-theme=light])) .fb.good>b:first-child{color:#7fe0a8}}
+:where(:root[data-theme=dark]) .fb.wrong>b:first-child{color:#ff9b9b}:where(:root[data-theme=dark]) .fb.good>b:first-child{color:#7fe0a8}
+.fb.wrong{color:#7a1a1a}.fb.good{color:#0f4d2c}
+.fb.wrong>b:first-child,.fb.good>b:first-child{color:inherit}
+@media(prefers-color-scheme:dark){:where(:root:not([data-theme=light])) .fb.wrong{color:#ffc9c9}:where(:root:not([data-theme=light])) .fb.good{color:#b8f0cf}}
+:where(:root[data-theme=dark]) .fb.wrong{color:#ffc9c9}:where(:root[data-theme=dark]) .fb.good{color:#b8f0cf}
