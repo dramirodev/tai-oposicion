@@ -1,6 +1,6 @@
 // Service worker: shell + datos, "stale-while-revalidate" para todo lo del mismo origen.
-const V = 'tai-v36';
-const SHELL = ['./', 'index.html', 'app.js', 'style.css', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-180.png', 'data/index.json', 'data/meta.json'];
+const V = 'tai-v37';
+const SHELL = ['./', 'index.html', 'app.js', 'style.css', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-512-maskable.png', 'icons/icon-180.png', 'data/index.json', 'data/meta.json'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', e => {
@@ -10,6 +10,20 @@ self.addEventListener('fetch', e => {
   if (u.origin !== location.origin || u.pathname.startsWith('/__/')) return; // Firebase/Google: red directa
   if (u.pathname.endsWith('/firebase-config.json')) { // la configuración siempre de red; caché solo sin conexión
     e.respondWith(fetch(r, { cache: 'no-store' }).catch(() => caches.match(r, { ignoreSearch: true })));
+    return;
+  }
+  // shell (HTML/JS/CSS): red primero con límite de 3 s para no mezclar versiones; el resto, stale-while-revalidate
+  if (r.mode === 'navigate' || /\.(js|css|webmanifest)$/.test(u.pathname) && !u.pathname.endsWith('/sw.js')) {
+    e.respondWith((async () => {
+      const c = await caches.open(V);
+      try {
+        const res = await Promise.race([fetch(r), new Promise((_, no) => setTimeout(no, 3000))]);
+        if (res && res.ok) c.put(r, res.clone());
+        return res;
+      } catch (err) {
+        return (await c.match(r, { ignoreSearch: true })) || (r.mode === 'navigate' && await c.match('index.html')) || Response.error();
+      }
+    })());
     return;
   }
   e.respondWith((async () => {

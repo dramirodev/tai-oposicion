@@ -5,6 +5,32 @@ import { esc, shuffle, fmtT, pct, nota, allowed, composeSim, dominioCalc, aggreg
 const $ = (s, r = document) => r.querySelector(s);
 const app = $('#app');
 const L = 'ABCD';
+
+// avisos y confirmaciones propios (sustituyen a alert/confirm nativos)
+let toastT = null;
+function toast(msg) {
+  let t = $('#toast');
+  if (!t) { t = document.createElement('div'); t.id = 'toast'; t.setAttribute('role', 'status'); document.body.append(t); }
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 4500);
+}
+function ask(msg, okLabel = 'Aceptar', danger = false) {
+  return new Promise(res => {
+    const prev = document.activeElement, o = document.createElement('div');
+    o.className = 'overlay'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.setAttribute('aria-labelledby', 'askm');
+    o.innerHTML = `<div class="card"><p id="askm"></p><div class="row"><button class="btn sec" data-v="0">Cancelar</button><button class="btn ${danger ? 'danger' : ''}" data-v="1">${esc(okLabel)}</button></div></div>`;
+    $('#askm', o).textContent = msg;
+    const done = v => { document.removeEventListener('keydown', key, true); o.remove(); prev && prev.focus && prev.focus(); res(v); };
+    const key = e => {
+      if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); done(false); }
+      else if (e.key === 'Tab') { const bs = [...o.querySelectorAll('button')], i = bs.indexOf(document.activeElement); e.preventDefault(); bs[(i + (e.shiftKey ? -1 : 1) + bs.length) % bs.length].focus(); }
+      else e.stopPropagation();
+    };
+    o.onclick = e => { const b = e.target.closest('button'); if (b) done(b.dataset.v === '1'); };
+    document.addEventListener('keydown', key, true);
+    document.body.append(o); o.querySelector('[data-v="1"]').focus();
+  });
+}
 const ORIGEN = { O: 'Oficial', A: 'Academia', G: 'Generada' };
 const TRAMPAS = { 1: 'Cambio de sujeto/órgano', 2: 'Cifra o plazo vecino', 3: 'Alcance del sujeto', 4: 'Pregunta inversa', 5: 'Obligación/facultad', 6: 'Numeración de normas', 7: 'Conceptos casi idénticos', 8: 'Orden invertido', 9: 'Inventado que suena real', 10: 'Trampa del supuesto', 11: 'Contaminación entre normas', 12: 'Absolutización', 13: 'Intruso', 14: 'Cierta pero no responde' };
 const TRAMPA_EXPL = {
@@ -67,10 +93,9 @@ async function route() {
   const [, name, ...args] = (location.hash || '#/home').split('/');
   const sect = { quiz: RUN?.kind === 'sim' ? 'sim' : RUN?.kind === 'test' ? 'test' : 'home', result: LAST?.ses?.kind === 'sim' ? 'sim' : LAST?.ses?.kind === 'test' ? 'test' : 'home', sim2: 'sim', examenes: 'sim', errores: 'settings', cards: 'home' }[name] || name;
   document.querySelectorAll('nav a').forEach(a => { const on = a.dataset.r === sect; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
-  document.body.classList.toggle('inquiz', name === 'quiz');
   const f = routes[name] || routes.home;
   window.scrollTo(0, 0);
-  try { await f(...args); if (RUN && name !== 'quiz') { const b = document.createElement('div'); b.className = 'note run'; b.innerHTML = `<b>${esc(RUN.titulo || 'Test')}</b> en curso · ${Math.min(RUN.idx + 1, RUN.items.length)}/${RUN.items.length} <button class="btn" id="resume">Continuar</button>`; app.prepend(b); $('#resume').onclick = () => go('#/quiz'); } } catch (e) { app.innerHTML = `<div class="card"><h2>Error</h2><p>${esc(e.message)}</p></div>`; console.error(e); }
+  try { await getIndex(); await getMeta(); await f(...args); app.focus({ preventScroll: true }); if (RUN && name !== 'quiz') { const b = document.createElement('div'); b.className = 'note run'; b.innerHTML = `<b>${esc(RUN.titulo || 'Test')}</b> en curso · ${Math.min(RUN.idx + 1, RUN.items.length)}/${RUN.items.length} <button class="btn" id="resume">Continuar</button>`; app.prepend(b); $('#resume').onclick = () => go('#/quiz'); } } catch (e) { app.innerHTML = `<div class="card" role="alert"><h2>No se pudo cargar</h2><p>Comprueba la conexión e inténtalo de nuevo.</p><button class="btn" id="retryRoute">Reintentar</button></div>`; $('#retryRoute').onclick = () => route(); console.error(e); }
 }
 window.addEventListener('hashchange', route);
 
@@ -139,7 +164,7 @@ routes.quiz = async function () {
     else if (act.t === 'pause') { const b = $('#pause') || $('#resume'); b && b.click(); }
   };
   let tx = null;
-  const onTs = e => { const t = e.touches[0]; tx = e.touches.length === 1 && !e.target.closest('details,input,textarea,button.ghost') ? [t.clientX, t.clientY] : null; };
+  const onTs = e => { const t = e.touches[0]; tx = e.touches.length === 1 && t.clientX > 24 && t.clientX < innerWidth - 24 && !e.target.closest('details,input,textarea,button.ghost') ? [t.clientX, t.clientY] : null; };
   const onTe = e => {
     if (!tx) return; const t = e.changedTouches[0];
     const d = swipeDir(t.clientX - tx[0], t.clientY - tx[1]); tx = null;
@@ -162,10 +187,10 @@ routes.quiz = async function () {
     const inSup = !!q.s;
     app.innerHTML = `
     <div class="qhead">
-      <button class="ghost" id="exit">✕</button>
+      <button class="ghost" id="exit" aria-label="Salir">✕</button>
       <div class="prog"><div style="width:${100 * R.idx / R.items.length}%"></div></div>
       <div class="cnt">${R.idx + 1}/${R.items.length}</div>
-      ${R.limit ? `<div class="clock" id="clock">${fmtT(R.limit * 60 - R.secs)}</div><button class="ghost" id="pause">⏸</button>` : ''}
+      ${R.limit ? `<div class="clock" id="clock">${fmtT(R.limit * 60 - R.secs)}</div><button class="ghost" id="pause" aria-label="Pausar">⏸</button>` : ''}
     </div>
     ${R.titulo ? `<div class="sub">${esc(R.titulo)}</div>` : ''}
     ${R.limit && R.kind === 'sim' ? '<div class="pace" id="pace"></div>' : ''}
@@ -186,7 +211,7 @@ routes.quiz = async function () {
         let cl = 'opt';
         if (reveal) { if (i === q.c) cl += ' ok'; else if (i === a) cl += ' bad'; cl += ' dis'; }
         else if (a === i) cl += ' sel';
-        return `<button class="${cl}" data-i="${i}"><b>${L[i]}</b><span class="pre">${kw(o)}</span></button>`;
+        return `<button class="${cl}" data-i="${i}" ${a === i && !reveal ? 'aria-pressed="true"' : ''}><b>${L[i]}</b><span class="pre">${kw(o)}</span>${reveal && i === q.c ? '<span class="sr">(respuesta correcta)</span>' : reveal && i === a ? '<span class="sr">(tu respuesta, incorrecta)</span>' : ''}</button>`;
       }).join('')}
       </div>
       ${reveal ? feedback(q, a) : ''}
@@ -196,7 +221,7 @@ routes.quiz = async function () {
         : `<button class="btn sec" id="blank">${a === -1 ? '✓ En blanco' : 'Dejar en blanco'}</button>
            <button class="btn" id="next">${R.idx + 1 === R.items.length ? 'Terminar' : 'Siguiente'} →</button>`}
     </div>
-    ${R.paused ? `<div class="overlay"><div class="card"><h2>En pausa</h2><p>El tiempo está detenido.</p><button class="btn" id="resume">Continuar</button></div></div>` : ''}`;
+    ${R.paused ? `<div class="overlay" role="dialog" aria-modal="true" aria-labelledby="pt"><div class="card"><h2 id="pt">En pausa</h2><p>El tiempo está detenido.</p><button class="btn" id="resume">Continuar</button></div></div>` : ''}`;
     bind(q);
     clearInterval(R.gt);
     if (LEC === 2 && !reveal && a === undefined && !R.paused) {
@@ -208,11 +233,11 @@ routes.quiz = async function () {
         upd(); R.gt = setInterval(upd, 400);
       }
     }
-    if (reveal) { const f = $('.fb'); if (f) setTimeout(() => f.scrollIntoView({ block: 'center', behavior: 'smooth' }), 60); }
+    if (reveal) { const f = $('.fb'); if (f) setTimeout(() => f.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth' }), 60); }
   }
   function feedback(q, a) {
     const ok = a === q.c;
-    return `<div class="fb ${ok ? 'good' : 'wrong'}"><b>${a === -1 ? 'Sin responder' : ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${!ok && a !== -1 && R.fast?.[R.idx] ? `<div class="fbsub">Marcaste ${L[a]} en ${R.fast[R.idx][0]} s${R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? `; leerla con calma lleva unos ${R.fast[R.idx][1]} s` : ''}.</div>` : ''}
+    return `<div class="fb ${ok ? 'good' : 'wrong'}" role="status"><b>${a === -1 ? 'Sin responder' : ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${!ok && a !== -1 && R.fast?.[R.idx] ? `<div class="fbsub">Marcaste ${L[a]} en ${R.fast[R.idx][0]} s${R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? `; leerla con calma lleva unos ${R.fast[R.idx][1]} s` : ''}.</div>` : ''}
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}
       ${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}
       ${q.x?.length ? `<div class="trap">Trampa: ${q.x.map(x => esc(TRAMPAS[x] || x)).join(' · ')}</div>` : ''}
@@ -222,7 +247,7 @@ routes.quiz = async function () {
       <div class="repw" id="rep"></div></div>`;
   }
   function bind(q) {
-    $('#exit').onclick = () => { if (confirm(R.feedback ? '¿Salir? Lo ya respondido queda guardado.' : '¿Abandonar el simulacro? Se perderá.')) { if (R.feedback && R.ans.some(x => x !== undefined)) finish(); else { RUN = null; go('#/home'); } } };
+    $('#exit').onclick = async () => { if (await ask(R.feedback ? '¿Salir? Lo ya respondido queda guardado.' : '¿Abandonar el simulacro? Se perderá.', 'Salir', !R.feedback)) { if (R.feedback && R.ans.some(x => x !== undefined)) finish(); else { RUN = null; go('#/home'); } } };
     $('#pause') && ($('#pause').onclick = () => { R.paused = true; draw(); });
     $('#resume') && ($('#resume').onclick = () => { R.paused = false; draw(); });
     app.querySelectorAll('.opt').forEach(b => b.onclick = () => {
@@ -328,7 +353,7 @@ routes.trampas = async function () {
     const q = R.items[R.k], good = new Set(q.x.map(Number));
     const dis = shuffle(ALL.filter(k => !good.has(k))).slice(0, Math.max(3, 8 - good.size));
     const chips = shuffle([...good, ...dis]), sel = new Set();
-    app.innerHTML = `<div class="qhead"><button class="ghost" id="exit">✕</button><div class="prog"><div style="width:${100 * R.k / R.items.length}%"></div></div><div class="cnt">${R.k + 1}/${R.items.length}</div></div>
+    app.innerHTML = `<div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog"><div style="width:${100 * R.k / R.items.length}%"></div></div><div class="cnt">${R.k + 1}/${R.items.length}</div></div>
     <h1 class="sub">🕵️ Detective de trampas</h1>
     <div class="seg" id="md">${[[0, 'Solo enunciado'], [1, 'Con opciones']].map(([v, t]) => `<button class="${mode === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
     <div class="card q"><div class="meta"><span class="tag">${esc(q.t)} · ${esc(temaName(q.t))}</span></div>
@@ -336,12 +361,12 @@ routes.trampas = async function () {
       <div class="enun pre">${claveHtml(q.q)}</div>
       ${mode ? `<div class="opts">${q.a.map((o, i) => `<div class="opt dis" id="o${i}"><b>${L[i]}</b><span class="pre">${claveHtml(o)}</span></div>`).join('')}</div>` : ''}
       <p><b>¿Qué trampas ves aquí?</b> <small>Marca todas las que apliquen (${good.size === 1 ? 'hay 1' : 'hay varias'} posible${good.size === 1 ? '' : 's'}).</small></p>
-      <div class="mot" id="chips">${chips.map(k => `<button data-k="${k}">${esc(TRAMPAS[k])}</button>`).join('')}</div>
+      <div class="mot" id="chips">${chips.map(k => `<button aria-pressed="false" data-k="${k}">${esc(TRAMPAS[k])}</button>`).join('')}</div>
       <div id="fb"></div></div>
     <div class="bar2"><button class="btn" id="chk">Comprobar</button></div>`;
-    $('#exit').onclick = () => { if (confirm('¿Salir del ejercicio?')) { TRUN = null; go('#/home'); } };
+    $('#exit').onclick = async () => { if (await ask('¿Salir del ejercicio?', 'Salir')) { TRUN = null; go('#/home'); } };
     $('#md').onclick = e => { const b = e.target.closest('button'); if (b) { store.setCfg('tmode', +b.dataset.v); draw(); } };
-    $('#chips').onclick = e => { const b = e.target.closest('button'); if (!b || b.disabled) return; const k = +b.dataset.k; sel.has(k) ? sel.delete(k) : sel.add(k); b.classList.toggle('on'); };
+    $('#chips').onclick = e => { const b = e.target.closest('button'); if (!b || b.disabled) return; const k = +b.dataset.k; sel.has(k) ? sel.delete(k) : sel.add(k); b.setAttribute('aria-pressed', String(b.classList.toggle('on'))); };
     $('#chk').onclick = () => {
       if ($('#chk').dataset.done) { R.k++; draw(); window.scrollTo(0, 0); return; }
       let hit = 0, fa = 0, miss = 0; const td = { ...(store.getCfg().tdet || {}) };
@@ -360,7 +385,7 @@ routes.trampas = async function () {
         ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}
         ${!mode ? `<details><summary>Ver opciones</summary>${q.a.map((o, i) => `<div class="line"><span><b>${L[i]}</b> ${esc(o)}</span><span>${i === q.c ? '✔' : ''}</span></div>`).join('')}</details>` : ''}</div>`;
       $('#chk').textContent = R.k + 1 === R.items.length ? 'Terminar →' : 'Siguiente →'; $('#chk').dataset.done = 1;
-      $('#fb').scrollIntoView({ block: 'center', behavior: 'smooth' });
+      $('#fb').scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth' });
     };
   }
   function end() {
@@ -400,7 +425,7 @@ routes.lectura = async function () {
     clearInterval(gt);
     if (R.k >= R.items.length) return end();
     const q = R.items[R.k], neg = pideNegativa(q.q);
-    const head = `<div class="qhead"><button class="ghost" id="exit">✕</button><div class="prog"><div style="width:${100 * R.k / R.items.length}%"></div></div><div class="cnt">${R.k + 1}/${R.items.length}</div></div><h1 class="sub">Lectura atenta · paso ${R.step + 1} de 3</h1>`;
+    const head = `<div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog"><div style="width:${100 * R.k / R.items.length}%"></div></div><div class="cnt">${R.k + 1}/${R.items.length}</div></div><h1 class="sub">Lectura atenta · paso ${R.step + 1} de 3</h1>`;
     if (R.step === 0) {
       app.innerHTML = `${head}<div class="card q"><div class="enun pre">${esc(q.q)}</div><p><b>1. ¿Qué te piden?</b> Antes de ver las opciones.</p>
         <div class="opts"><button class="opt" data-v="0"><b>✔</b><span>La opción CORRECTA / VERDADERA</span></button><button class="opt" data-v="1"><b>✖</b><span>La INCORRECTA / FALSA / la excepción</span></button></div><div id="fb0"></div></div>`;
@@ -411,10 +436,10 @@ routes.lectura = async function () {
       });
     } else if (R.step === 1) {
       const toks = words(q.q), spans = claveSpans(q.q); let pos = 0, wi = 0, key = [];
-      const html = toks.map(t => { const a = pos; pos += t.length; if (/^\s+$/.test(t) || !t) return esc(t); const id = wi++; const k = spans.some(([x, y]) => a >= x && a < y); if (k) key.push(id); return `<span class="tk" data-id="${id}" data-k="${k ? 1 : 0}">${esc(t)}</span>`; }).join('');
+      const html = toks.map(t => { const a = pos; pos += t.length; if (/^\s+$/.test(t) || !t) return esc(t); const id = wi++; const k = spans.some(([x, y]) => a >= x && a < y); if (k) key.push(id); return `<button type="button" class="tk" aria-pressed="false" data-id="${id}" data-k="${k ? 1 : 0}">${esc(t)}</button>`; }).join('');
       app.innerHTML = `${head}<div class="card q"><p><b>2. Toca las palabras que cambian el sentido</b> (negaciones, excepciones, absolutos, cifras y plazos).</p><div class="enun pre tks">${html}</div><div id="fb1"></div><div class="bar2"><button class="btn sec" id="none">No contiene</button><button class="btn" id="chk">Continuar</button></div></div>`;
-      app.querySelectorAll('.tk').forEach(el => el.onclick = () => el.classList.toggle('on'));
-      $('#none').onclick = () => { app.querySelectorAll('.tk.on').forEach(el => el.classList.remove('on')); $('#chk').dataset.claim = 'none'; $('#chk').click(); };
+      app.querySelectorAll('.tk').forEach(el => el.onclick = () => el.setAttribute('aria-pressed', String(el.classList.toggle('on'))));
+      $('#none').onclick = () => { app.querySelectorAll('.tk.on').forEach(el => { el.classList.remove('on'); el.setAttribute('aria-pressed', 'false'); }); $('#chk').dataset.claim = 'none'; $('#chk').click(); };
       $('#chk').onclick = () => {
         if ($('#chk').dataset.done) { R.step = 2; draw(); return; }
         const claimNone = $('#chk').dataset.claim === 'none'; $('#none').remove();
@@ -445,7 +470,7 @@ routes.lectura = async function () {
         $('#n2').onclick = () => { R.k++; R.step = 0; draw(); window.scrollTo(0, 0); };
       });
     }
-    $('#exit').onclick = () => { if (confirm('¿Salir del ejercicio?')) { LRUN = null; go('#/home'); } };
+    $('#exit').onclick = async () => { if (await ask('¿Salir del ejercicio?', 'Salir')) { LRUN = null; go('#/home'); } };
   }
   function end() {
     const n = R.res.length, ok = R.res.filter(r => r.ok).length, pide = R.res.filter(r => r.pide).length;
@@ -506,7 +531,7 @@ routes.cards = async function () {
     $('#go') && ($('#go').onclick = () => {
       const seen = new Set(store.getSeen());
       const ids = pickCards(cards, recs, { n: cfg.n, now: now(), maxNew: 10, seen: cfg.scope === 'vistos' && seen.size ? seen : null });
-      if (!ids.length) { alert('No hay tarjetas pendientes ahora mismo. Vuelve cuando venza alguna.'); return; }
+      if (!ids.length) { toast('No hay tarjetas pendientes ahora mismo. Vuelve cuando venza alguna.'); return; }
       const by = new Map(cards.map(c => [c.id, c]));
       CRUN = { items: ids.map(id => by.get(id)).filter(Boolean), idx: 0, rev: false, res: [0, 0, 0] };
       cardSession();
@@ -522,7 +547,7 @@ function cardSession() {
     if (!R.rev) return;
     store.gradeCard(R.items[R.idx].id, g, now()); R.res[g]++; R.idx++; R.rev = false; draw(); window.scrollTo(0, 0);
   };
-  const show = () => { if (!R.rev) { R.rev = true; draw(); const a = $('.fa'); a && a.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } };
+  const show = () => { if (!R.rev) { R.rev = true; draw(); const a = $('.fa'); a && a.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth' }); } };
   const onKey = e => {
     if (e.ctrlKey || e.metaKey || e.altKey || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName || '')) return;
     const k = e.key;
@@ -532,7 +557,7 @@ function cardSession() {
     else if (R.rev && (k === '3' || k === 'ArrowRight')) { e.preventDefault(); grade(2); }
   };
   let tx = null;
-  const onTs = e => { const t = e.touches[0]; tx = e.touches.length === 1 && !e.target.closest('button,details,input,textarea') ? [t.clientX, t.clientY] : null; };
+  const onTs = e => { const t = e.touches[0]; tx = e.touches.length === 1 && t.clientX > 24 && t.clientX < innerWidth - 24 && !e.target.closest('button,details,input,textarea') ? [t.clientX, t.clientY] : null; };
   const onTe = e => { if (!tx) return; const t = e.changedTouches[0]; const d = swipeDir(t.clientX - tx[0], t.clientY - tx[1]); tx = null; if (R.rev && d === 'next') grade(0); else if (R.rev && d === 'prev') grade(2); };
   document.addEventListener('keydown', onKey); document.addEventListener('touchstart', onTs, { passive: true }); document.addEventListener('touchend', onTe, { passive: true });
   cleanup = () => { document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); };
@@ -541,7 +566,7 @@ function cardSession() {
     if (R.idx >= R.items.length) return fin();
     const c = R.items[R.idx];
     app.innerHTML = `
-    <div class="qhead"><button class="ghost" id="exit">✕</button><div class="prog"><div style="width:${100 * R.idx / R.items.length}%"></div></div><div class="cnt">${R.idx + 1}/${R.items.length}</div></div>
+    <div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog" role="progressbar" aria-label="Progreso" aria-valuemin="0" aria-valuemax="${R.items.length}" aria-valuenow="${R.idx}"><div style="width:${100 * R.idx / R.items.length}%"></div></div><div class="cnt">${R.idx + 1}/${R.items.length}</div></div>
     <div class="card q fc" id="fc">
       <div class="meta"><span class="tag">${esc(c.t)} · ${esc(temaName(c.t))}</span>${c.tipo ? `<span class="tag">${esc(c.tipo)}</span>` : ''}${c.caduca ? '<span class="tag warn">Puede caducar</span>' : ''}</div>
       <div class="enun pre">${esc(c.q)}</div>
@@ -636,7 +661,7 @@ async function quickSession() {
   const pools = [];
   for (const t of temas.slice(0, 8)) pools.push(shuffle((await getTema(t.id)).filter(q => allowed(q, orgs) && !store.rec(q.i))));
   const items = pickQuick(due, pools, N);
-  if (!items.length) { alert('No hay preguntas nuevas ni repasos con esos filtros.'); return; }
+  if (!items.length) { toast('No hay preguntas nuevas ni repasos con esos filtros.'); return; }
   const nd = items.filter(q => store.rec(q.i)).length;
   startRun({ kind: 'rev', feedback: true, items, titulo: `Sesión rápida · ${nd} repasos + ${items.length - nd} nuevas` });
 }
@@ -772,16 +797,16 @@ routes.test = async function () {
     $('#org').onclick = e => { const v = e.target.dataset.v; if (v) { org.has(v) ? org.delete(v) : org.add(v); if (!org.size) org.add(v); save(); draw(); } };
     app.querySelectorAll('[data-t]').forEach(c => c.onchange = () => { c.checked ? sel.add(c.dataset.t) : sel.delete(c.dataset.t); save(); draw(); });
     app.querySelectorAll('[data-b]').forEach(b => b.onclick = () => { const ids = idx.temas.filter(t => t.id.startsWith(b.dataset.b)).map(t => t.id); const all = ids.every(i => sel.has(i)); ids.forEach(i => all ? sel.delete(i) : sel.add(i)); save(); draw(); });
-    $('#useSeen').onclick = () => { const v = store.getSeen(); if (!v.length) { alert('Aún no has marcado temas vistos (pantalla «Temas vistos» en Inicio).'); return; } sel.clear(); v.forEach(t => sel.add(t)); save(); draw(); };
+    $('#useSeen').onclick = () => { const v = store.getSeen(); if (!v.length) { toast('Aún no has marcado temas vistos (pantalla «Temas vistos» en Inicio).'); return; } sel.clear(); v.forEach(t => sel.add(t)); save(); draw(); };
     $('#go').onclick = async () => {
       const temas = sel.size ? [...sel] : idx.temas.map(t => t.id);
       if (cfg.mode === 'trampas') {
         const r = await trapTest(cfg.n, null, sel.size ? [...sel] : null);
-        if (!r.items.length) { alert('Aún no hay datos de trampas: contesta al menos 5 preguntas de alguna trampa y falla alguna.'); return; }
+        if (!r.items.length) { toast('Aún no hay datos de trampas: contesta al menos 5 preguntas de alguna trampa y falla alguna.'); return; }
         startRun({ kind: 'test', feedback: true, items: r.items, titulo: 'Mis trampas · ' + r.targets.map(k => TRAMPAS[k] || k).join(', ') }); return;
       }
       const items = await pick({ temas, origins: org, mode: cfg.mode, n: cfg.n });
-      if (!items.length) { alert(cfg.mode === 'falladas' ? 'No tienes falladas en esa selección.' : cfg.mode === 'dudosas' ? 'No tienes preguntas marcadas como dudosas ahí.' : 'No hay preguntas con ese filtro.'); return; }
+      if (!items.length) { toast(cfg.mode === 'falladas' ? 'No tienes falladas en esa selección.' : cfg.mode === 'dudosas' ? 'No tienes preguntas marcadas como dudosas ahí.' : 'No hay preguntas con ese filtro.'); return; }
       startRun({ kind: 'test', feedback: true, items, titulo: sel.size === 1 ? temaName([...sel][0]) : 'Test' });
     };
   };
@@ -844,7 +869,7 @@ routes.examenes = async function () {
     const b = e.target.closest('button[data-k]'); if (!b) return;
     const ex = [...sims, ...ofi, ...tests].find(x => x.k === b.dataset.k); if (!ex) return;
     const items = (await byIds(ex.ids)).filter(q => !q.s);
-    if (!items.length) { alert('No se pudieron cargar las preguntas.'); return; }
+    if (!items.length) { toast('No se pudieron cargar las preguntas.'); return; }
     if (b.dataset.m === 'sim') startRun({ kind: 'sim', feedback: false, items, limit: 90, titulo: ex.nombre });
     else startRun({ kind: 'test', feedback: true, items, titulo: ex.nombre });
   };
@@ -883,7 +908,7 @@ routes.sim = async function () {
     $('#go').onclick = async () => {
       const useSeen = cfg.scope !== 'todos' && seenN;
       const items = await simParte1(idx, org, cfg.n, useSeen ? new Set(store.getSeen()) : null);
-      if (!items.length) { alert('No hay preguntas con esos filtros.'); return; }
+      if (!items.length) { toast('No hay preguntas con esos filtros.'); return; }
       SIMCFG = { parte2: cfg.parte2, org: [...org], min2: Math.round(cfg.min * 0.45) };
       startRun({ kind: 'sim', feedback: false, items, limit: cfg.min, titulo: 'Simulacro · Parte 1' });
     };
@@ -1127,7 +1152,7 @@ routes.stats = async function () {
   <h2>Por origen y tipo</h2><div class="card">${Object.entries(OR).map(([k, v]) => `<div class="line"><span>${ORIGEN[k]}</span><span>${pct(v[1], v[0])}% <small>(${v[0]})</small></span></div>`).join('')}
   ${Object.entries(TI).map(([k, v]) => `<div class="line"><span>${TIPOS[k] || k}</span><span>${pct(v[1], v[0])}% <small>(${v[0]})</small></span></div>`).join('')}</div>
   <h2>Últimas sesiones</h2><div class="card">${ses.map(s => `<div class="line"><span>${new Date(s.ts).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })} · ${s.kind === 'sim' ? 'Simulacro' : s.kind === 'rev' ? 'Repaso' : 'Test'} ${esc(String(s.n))}p</span><span>${s.kind === 'sim' ? esc(String(s.nota)) + '/100' : pct(s.a, s.n) + '%'}</span></div>`).join('') || '<p class="sub">Sin sesiones todavía.</p>'}</div>`;
-  app.querySelectorAll('[data-trap]').forEach(b => b.onclick = async () => { const r = await trapTest(15, [+b.dataset.trap]); if (!r.items.length) { alert('No hay preguntas con esa trampa.'); return; } startRun({ kind: 'test', feedback: true, items: r.items, titulo: 'Trampa: ' + (TRAMPAS[b.dataset.trap] || b.dataset.trap) }); });
+  app.querySelectorAll('[data-trap]').forEach(b => b.onclick = async () => { const r = await trapTest(15, [+b.dataset.trap]); if (!r.items.length) { toast('No hay preguntas con esa trampa.'); return; } startRun({ kind: 'test', feedback: true, items: r.items, titulo: 'Trampa: ' + (TRAMPAS[b.dataset.trap] || b.dataset.trap) }); });
   $('#carga').innerHTML = cargaHTML;
   { const v = velocidad(st), lentos = Object.keys(st).filter(id => st[id][8] >= 3 && st[id][7] / st[id][8] < 6).length;
     $('#vel').innerHTML = `<h2>Velocidad de lectura</h2><div class="card">${v.tot ? `<div class="line"><span>Fallos por velocidad</span><span><b>${v.n}</b> de ${v.tot} <small>(${v.p}%)</small></span></div>` : '<p class="sub">Aún no has etiquetado fallos. Al fallar, pulsa «Velocidad» si leíste deprisa.</p>'}
@@ -1186,8 +1211,8 @@ routes.settings = async function () {
       const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([txt], { type: 'text/plain;charset=utf-8' })); a.download = 'tai-tarjetas-anki.txt'; a.click();
     };
     $('#ex').onclick = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([store.exportAll()], { type: 'application/json' })); a.download = 'tai-progreso.json'; a.click(); };
-    $('#im').onchange = async e => { try { store.importAll(await e.target.files[0].text()); alert('Progreso importado'); } catch (x) { alert(x.message); } };
-    $('#rs').onclick = () => { if (confirm('¿Borrar TODO el progreso de este dispositivo? (Si hay sesión iniciada, lo sincronizado en la nube se volverá a descargar.)')) { store.resetAll(); alert('Borrado'); } };
+    $('#im').onchange = async e => { try { store.importAll(await e.target.files[0].text()); toast('Progreso importado'); } catch (x) { toast(x.message); } };
+    $('#rs').onclick = async () => { if (await ask('¿Borrar TODO el progreso de este dispositivo? (Si hay sesión iniciada, lo sincronizado en la nube se volverá a descargar.)', 'Borrar todo', true)) { store.resetAll(); toast('Borrado'); } };
   };
   async function download() {
     const el = $('#off'); let k = 0;
@@ -1208,8 +1233,14 @@ routes.settings = async function () {
   await store.recover(); // copia de seguridad en IndexedDB
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') store.flushNow(); });
   addEventListener('pagehide', () => store.flushNow());
-  const idx = await getIndex(); await getMeta();
-  await sync.init({ temaOf, idsOfTema: t => META._by[t] || [] });
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
-  route();
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').then(watchUpdates).catch(() => {});
+  await route(); // primer pintado sin esperar a Firebase
+  try { await getMeta(); await sync.init({ temaOf, idsOfTema: t => META._by[t] || [] }); } catch (e) { console.error(e); }
 })();
+
+// aviso de nueva versión del service worker
+function watchUpdates(reg) {
+  const ready = w => w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) toast('Hay una versión nueva: cierra y abre la app para actualizar.'); });
+  if (reg.installing) ready(reg.installing);
+  reg.addEventListener('updatefound', () => reg.installing && ready(reg.installing));
+}
