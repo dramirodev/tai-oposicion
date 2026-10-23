@@ -1,6 +1,6 @@
 import * as store from './store.js';
 import * as sync from './syncfacade.js';
-import { esc, shuffle, fmtT, pct, nota, allowed, composeSim, dominioCalc, aggregateWeeks, slowList, quickN, pickQuick, simHistory, compareSessions, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, cargaRepasos, motivosFallo, suertes, normUi, ZOOMS, swipeDir, keyAction, pickCards, cardStats, cardFromQuestion, hiliteHtml, claveHtml, claveSpans, pideNegativa, minLectura, velocidad, CONSEJOS_LECTURA, analisisSimulacro, ritmoSimulacro } from './logic.js';
+import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, composeSim, dominioCalc, aggregateWeeks, slowList, quickN, pickQuick, simHistory, compareSessions, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, cargaRepasos, motivosFallo, suertes, normUi, ZOOMS, swipeDir, keyAction, pickCards, cardStats, cardFromQuestion, hiliteHtml, claveHtml, claveSpans, pideNegativa, minLectura, velocidad, CONSEJOS_LECTURA, analisisSimulacro, ritmoSimulacro } from './logic.js';
 
 const APP_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : 'dev';
 const APP_BUILD = typeof __APP_BUILD__ !== 'undefined' ? __APP_BUILD__ : 'dev';
@@ -222,7 +222,7 @@ routes.quiz = async function () {
     if (R.idx >= R.items.length) return finish();
     saveRun();
     if (R.tIdx !== R.idx) { R.tIdx = R.idx; R.q0 = R.secs; R.qT0 = Date.now(); }
-    const LEC = normUi(store.getCfg().ui).lectura, kw = t => LEC ? claveHtml(t) : esc(t);
+    const LEC = normUi(store.getCfg().ui).lectura, kw = t => richHtml(t, !!LEC);
     const q = R.items[R.idx];
     const a = R.ans[R.idx];
     const reveal = R.feedback && a !== undefined;
@@ -246,7 +246,7 @@ routes.quiz = async function () {
         ${q.o === 'G' && q.v ? '<span class="tag">Variante</span>' : ''}
       </div>
       ${inSup ? `<details class="sup"><summary>Enunciado del supuesto</summary><div class="pre">${esc(R.supTexto || '')}</div></details>` : ''}
-      ${q.cp ? `<div class="ctx pre">${esc(q.cp)}</div>` : ''}
+      ${q.cp ? `<div class="ctx pre">${richHtml(q.cp)}</div>` : ''}
       ${pideNegativa(q.q) ? '<div class="pide">Ojo: te piden la opción INCORRECTA o la excepción</div>' : ''}
       <div class="enun pre">${kw(q.q)}</div>
       <div class="opts">
@@ -357,7 +357,7 @@ routes.relampago = async function () {
   for (const q0 of await byIds(shuffle(cand).slice(0, 8))) if (!q0.s && !q0.cp) { q = q0; break; }
   if (!q) { app.innerHTML = '<div class="card"><p>No hay pregunta disponible.</p></div>'; return; }
   const why = lucky.includes(q.i) ? '🍀 Marcada como suerte' : due.includes(q.i) ? '⏰ Toca repasarla' : fallos.includes(q.i) ? '↩ La fallaste' : '🆕 Nueva';
-  const LEC = normUi(store.getCfg().ui).lectura, kw = x => LEC ? claveHtml(x) : esc(x), t0 = Date.now();
+  const LEC = normUi(store.getCfg().ui).lectura, kw = x => richHtml(x, !!LEC), t0 = Date.now();
   app.innerHTML = `<h1>⚡ Pregunta relámpago</h1><div class="sub">${why}</div>
   <div class="card q"><div class="meta"><span class="tag">${esc(q.t)} · ${esc(temaName(q.t))}</span></div>
   <div class="enun pre">${kw(q.q)}</div>
@@ -403,9 +403,9 @@ routes.trampas = async function () {
     <h1 class="sub">🕵️ Detective de trampas</h1>
     <div class="seg" id="md">${[[0, 'Solo enunciado'], [1, 'Con opciones']].map(([v, t]) => `<button class="${mode === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
     <div class="card q"><div class="meta"><span class="tag">${esc(q.t)} · ${esc(temaName(q.t))}</span></div>
-      ${q.cp ? `<div class="ctx pre">${esc(q.cp)}</div>` : ''}
-      <div class="enun pre">${claveHtml(q.q)}</div>
-      ${mode ? `<div class="opts">${q.a.map((o, i) => `<div class="opt dis" id="o${i}"><b>${L[i]}</b><span class="pre">${claveHtml(o)}</span></div>`).join('')}</div>` : ''}
+      ${q.cp ? `<div class="ctx pre">${richHtml(q.cp)}</div>` : ''}
+      <div class="enun pre">${richHtml(q.q, true)}</div>
+      ${mode ? `<div class="opts">${q.a.map((o, i) => `<div class="opt dis" id="o${i}"><b>${L[i]}</b><span class="pre">${richHtml(o, true)}</span></div>`).join('')}</div>` : ''}
       <p><b>¿Qué trampas ves aquí?</b> <small>Marca todas las que apliquen (${good.size === 1 ? 'hay 1' : 'hay varias'} posible${good.size === 1 ? '' : 's'}).</small></p>
       <div class="mot" id="chips">${chips.map(k => `<button aria-pressed="false" data-k="${k}">${esc(TRAMPAS[k])}</button>`).join('')}</div>
       <div id="fb"></div></div>
@@ -429,7 +429,7 @@ routes.trampas = async function () {
       $('#fb').innerHTML = `<div class="fb ${miss || fa ? 'wrong' : 'good'}"><b>${!miss && !fa ? '¡Detectadas todas!' : `Detectaste ${hit} de ${good.size}${fa ? ` y marcaste ${fa} de más` : ''}.`}</b> Respuesta correcta: <b>${L[q.c]}</b>
         ${[...good].map(k => `<div class="trapx ${sel.has(k) ? 'hit' : 'miss'}"><b>${sel.has(k) ? 'Detectada' : 'No la viste'}: ${esc(TRAMPAS[k] || k)}</b><p>${esc(TRAMPA_EXPL[k] || '')}</p></div>`).join('')}${[...sel].filter(k => !good.has(k)).map(k => `<div class="trapx fa"><b>Falsa alarma: ${esc(TRAMPAS[k] || k)}</b><p>No aplica aquí. ${esc(TRAMPA_EXPL[k] || '')}</p></div>`).join('')}
         ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}
-        ${!mode ? `<details><summary>Ver opciones</summary>${q.a.map((o, i) => `<div class="line"><span><b>${L[i]}</b> ${esc(o)}</span><span>${i === q.c ? '✔' : ''}</span></div>`).join('')}</details>` : ''}</div>`;
+        ${!mode ? `<details><summary>Ver opciones</summary>${q.a.map((o, i) => `<div class="line"><span><b>${L[i]}</b> ${richHtml(o)}</span><span>${i === q.c ? '✔' : ''}</span></div>`).join('')}</details>` : ''}</div>`;
       $('#chk').textContent = R.k + 1 === R.items.length ? 'Terminar →' : 'Siguiente →'; $('#chk').dataset.done = 1;
       $('#fb').scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth' });
     };
@@ -473,7 +473,7 @@ routes.lectura = async function () {
     const q = R.items[R.k], neg = pideNegativa(q.q);
     const head = `<div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog"><div style="width:${100 * R.k / R.items.length}%"></div></div><div class="cnt">${R.k + 1}/${R.items.length}</div></div><h1 class="sub">Lectura atenta · paso ${R.step + 1} de 3</h1>`;
     if (R.step === 0) {
-      app.innerHTML = `${head}<div class="card q"><div class="enun pre">${esc(q.q)}</div><p><b>1. ¿Qué te piden?</b> Antes de ver las opciones.</p>
+      app.innerHTML = `${head}<div class="card q"><div class="enun pre">${richHtml(q.q)}</div><p><b>1. ¿Qué te piden?</b> Antes de ver las opciones.</p>
         <div class="opts"><button class="opt" data-v="0"><b>✔</b><span>La opción CORRECTA / VERDADERA</span></button><button class="opt" data-v="1"><b>✖</b><span>La INCORRECTA / FALSA / la excepción</span></button></div><div id="fb0"></div></div>`;
       app.querySelectorAll('.opt').forEach(b => b.onclick = () => {
         const ok = (+b.dataset.v === 1) === neg; R.pideOk = ok; b.classList.add(ok ? 'ok' : 'bad'); if (!ok) app.querySelectorAll('.opt').forEach(x => { if (x !== b) x.classList.add('ok'); });
@@ -503,7 +503,7 @@ routes.lectura = async function () {
       };
     } else {
       const need = minLectura(q); R.t0 = Date.now();
-      app.innerHTML = `${head}<div class="card q"><div class="enun pre">${claveHtml(q.q)}</div><p class="sm"><b>3. Lee las cuatro opciones enteras</b> antes de responder.</p><div class="opts">${q.a.map((o, i) => `<button class="opt" data-i="${i}" disabled><b>${L[i]}</b><span class="pre">${claveHtml(o)}</span></button>`).join('')}</div><div class="gate" id="gate"></div><div id="fb2"></div></div>`;
+      app.innerHTML = `${head}<div class="card q"><div class="enun pre">${richHtml(q.q, true)}</div><p class="sm"><b>3. Lee las cuatro opciones enteras</b> antes de responder.</p><div class="opts">${q.a.map((o, i) => `<button class="opt" data-i="${i}" disabled><b>${L[i]}</b><span class="pre">${richHtml(o, true)}</span></button>`).join('')}</div><div class="gate" id="gate"></div><div id="fb2"></div></div>`;
       const upd = () => { const l = Math.ceil(need - (Date.now() - R.t0) / 1000), g = $('#gate'); if (!g) return clearInterval(gt); if (l <= 0) { clearInterval(gt); g.remove(); app.querySelectorAll('.opt').forEach(b => b.disabled = false); } else g.textContent = `Lectura mínima: ${l} s`; };
       upd(); gt = setInterval(upd, 400);
       app.querySelectorAll('.opt').forEach(b => b.onclick = () => {
@@ -612,8 +612,8 @@ function cardSession() {
     <div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog" role="progressbar" aria-label="Progreso" aria-valuemin="0" aria-valuemax="${R.items.length}" aria-valuenow="${R.idx}"><div style="width:${100 * R.idx / R.items.length}%"></div></div><div class="cnt">${R.idx + 1}/${R.items.length}</div></div>
     <div class="card q fc" id="fc">
       <div class="meta"><span class="tag">${esc(c.t)} · ${esc(temaName(c.t))}</span>${c.tipo ? `<span class="tag">${esc(c.tipo)}</span>` : ''}${c.caduca ? '<span class="tag warn">Puede caducar</span>' : ''}</div>
-      <div class="enun pre">${esc(c.q)}</div>
-      ${R.rev ? `<div class="fa"><small>Respuesta</small><div class="pre">${esc(c.a)}</div>
+      <div class="enun pre">${richHtml(c.q)}</div>
+      ${R.rev ? `<div class="fa"><small>Respuesta</small><div class="pre">${richHtml(c.a)}</div>
         ${c.nota ? `<div class="cita"><span>Nota</span>${esc(c.nota)}</div>` : ''}
         ${c.ref ? `<div class="cita"><span>Temario</span>${esc(c.ref)}</div>` : ''}
         <div class="repw" id="crep"></div>
@@ -680,7 +680,7 @@ routes.result = async function () {
   <div class="card">${items.map((q, k) => {
     const x = ans[k]; const st = x === undefined || x === -1 ? 'b' : x === q.c ? 'g' : 'r';
     return `<details class="rv ${st}"><summary><i></i><span class="sr">${st === 'g' ? 'Acierto' : st === 'r' ? 'Fallo' : 'En blanco'}: </span>${esc(q.q.slice(0, 110))}${q.q.length > 110 ? '…' : ''}</summary>
-      <div class="pre">${esc(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : i === x ? 'bad' : ''}"><b>${L[i]}</b> ${esc(o)}</div>`).join('')}
+      <div class="pre">${richHtml(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : i === x ? 'bad' : ''}"><b>${L[i]}</b> ${richHtml(o)}</div>`).join('')}
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}<div class="repw" data-rq="${k}"></div></details>`;
   }).join('')}</div>`;
   app.querySelectorAll('[data-rq]').forEach(el => reportBox(items[+el.dataset.rq], el));
@@ -730,8 +730,7 @@ async function openMenu() {
       ['↻', 'Repaso de fallos', due ? due + ' preguntas toca repasar hoy' : 'Nada pendiente hoy', () => startRepaso()],
       ['▭', 'Tarjetas de repaso', nCards ? nCards + ' tarjetas vencen hoy' : 'Repetición espaciada', '#/cards'],
       ['✎', 'Test por tema', '10–40 preguntas con corrección inmediata', '#/test'],
-      ['⏱', 'Simulacro', 'Parte 1 con tiempo y supuesto práctico', '#/sim'],
-      ['☷', 'Exámenes', 'Simulacros, oficiales y tests por número', '#/examenes'],
+      ['⏱', 'Simulacros', 'Completo, por examen o por tema', '#/sim'],
     ]],
     ['Entrenar un hábito', [
       ['🔎', 'Detective de trampas', 'Marca qué trampas esconde cada pregunta', '#/trampas'],
@@ -781,32 +780,25 @@ routes.home = async function () {
   const ex = new Date((store.getCfg().exam || '2027-06-01') + 'T09:00:00'); const dd = Math.ceil((ex - new Date()) / 86400000);
   const nCards = Object.values(store.getCards()).filter(r => r[3] >= 0 && r[4] <= now()).length;
   const vel = velocidad(st);
+  const IC = { test: '<path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/>', sim: '<circle cx="12" cy="13" r="7"/><path d="M12 9v4l2.5 2M9.5 3h5"/>', card: '<rect x="3" y="6" width="18" height="13" rx="3"/><path d="M7 3h10"/>', det: '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.5-4.5"/>', lec: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>', rel: '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>', map: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/>', list: '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>', play: '<path d="M8 5v14l11-7z"/>', redo: '<path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/>' };
+  const svg = k => `<svg viewBox="0 0 24 24" aria-hidden="true">${IC[k]}</svg>`;
   const row = (id, ico, t, sub, dis) => `<button class="lrow" id="${id}" ${dis ? 'disabled' : ''}><i aria-hidden="true">${ico}</i><span><b>${t}</b><small>${sub}</small></span></button>`;
+  const tile = (id, k, t, sub, badge) => `<button class="tile" id="${id}"><i aria-hidden="true">${svg(k)}</i>${badge ? `<em class="bdg" aria-label="${badge} pendientes">${badge}</em>` : ''}<span><b>${t}</b><small>${sub}</small></span></button>`;
   app.innerHTML = `
-  <div class="hhead"><div><div class="eyebrow">Preparación TAI</div><h1>Hola, David</h1></div><button class="iconbtn" id="menu" aria-label="Menú" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
-  <div class="hero"><div class="hnum"><b>${dd > 0 ? dd : 0}</b><span>días al examen</span></div>
-    <div class="hbars"><div class="hl"><span>Preguntas vistas</span><b>${seen} / ${idx.n}</b></div><div class="hb"><i style="width:${Math.min(100, pct(seen, idx.n))}%"></i></div><div class="hl"><span>Acierto global</span><b>${pct(ok, n)}%</b></div></div></div>
-  <button class="cta" id="quick"><i aria-hidden="true">⚡</i><span><b>Sesión rápida · 5 min</b><small>${quickN(st)} preguntas: ${due ? 'tus repasos pendientes (' + due + ') mezclados con ' : ''}nuevas de tus temas más débiles</small></span></button>
-  <div class="gtitle">Estudiar</div>
-  <div class="lgroup">
-    ${row('rev', '↻', 'Repaso de fallos', due ? due + ' preguntas toca repasar hoy' : 'Nada pendiente hoy', !due)}
-    ${row('cards', '▭', 'Tarjetas de repaso', (() => { const c = Object.values(store.getCards()), h = c.filter(r => r[3] >= 0 && r[4] <= now()).length; return c.length ? (h ? h + ' tarjetas vencen hoy' : 'Nada vence hoy · ' + c.length + ' en tu mazo') : 'Convierte tus fallos en tarjetas y repásalas con repetición espaciada'; })())}
-    ${row('test', '✎', 'Test por tema', '10–40 preguntas con corrección inmediata')}
-    ${row('sim', '⏱', 'Simulacro', 'Parte 1 con tiempo y nota oficial + supuesto práctico')}
-    ${row('examenes', '☷', 'Exámenes y simulacros', 'Elige uno por número y contesta solo sus preguntas')}
+  <div class="hhead"><div><h1>Hola, David</h1>
+    <div class="hsub"><b>${dd > 0 ? dd : 0} días</b> al examen · ${seen} de ${idx.n.toLocaleString("es-ES")} vistas${streak >= 2 ? ` · racha de ${streak} días` : ''}</div></div>
+    <button class="iconbtn" id="menu" aria-label="Menú" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
+  <div class="hbar" role="img" aria-label="${pct(seen, idx.n)} % de las preguntas vistas"><i style="width:${Math.max(2, Math.min(100, pct(seen, idx.n)))}%"></i></div>
+  <button class="cta" id="quick"><span><b class="ctt">Sesión rápida</b><small>5 min · ${quickN(st)} preguntas: ${due ? 'tus repasos pendientes (' + due + ') y ' : ''}nuevas de tus temas más débiles</small></span><i class="play" aria-hidden="true">${svg('play')}</i></button>
+  ${due ? `<button class="repaso" id="rev"><i aria-hidden="true">${svg('redo')}</i><span><b>Repaso de fallos</b><small>${due} preguntas pendientes hoy</small></span></button>` : ''}
+  <div class="tiles">
+    ${tile('test', 'test', 'Test', 'por tema')}${tile('sim', 'sim', 'Simulacros', 'con tiempo')}${tile('cards', 'card', 'Tarjetas', nCards ? nCards + ' vencen' : 'repaso', nCards || '')}
+    ${tile('trampas', 'det', 'Detective', 'de trampas')}${tile('lectura', 'lec', 'Lectura', vel.n ? vel.n + ' por velocidad' : 'atenta')}${tile('relam', 'rel', 'Relámpago', 'una pregunta')}
   </div>
-  <div class="gtitle">Entrenar un hábito</div>
-  <div class="lgroup">
-    ${row('trampas', '🔎', 'Detective de trampas', 'Marca qué trampas esconde cada pregunta')}
-    ${row('lectura', '👁', 'Lectura atenta', vel.n ? vel.n + ' fallos por velocidad: entrena a leer con método' : 'Qué piden, palabras clave y respuesta')}
-    ${row('relam', '⚡', 'Pregunta relámpago', 'Una sola, empezando por las marcadas como suerte')}
+  <div class="lgroup seg2">
+    ${row('mapa', svg('map'), 'Mapa de dominio', (() => { const dm = dominioTemas(idx), c = k => dm.filter(x => x.est === k).length; return c('r') + c('y') + c('g') ? `${c('r')} por reforzar · ${c('g')} dominados` : 'Aparecerá cuando empieces a contestar'; })())}
+    ${row('temario', svg('list'), 'Temas vistos', store.getSeen().length ? store.getSeen().length + ' de ' + idx.temas.length : 'Marca lo que ya has estudiado')}
   </div>
-  <div class="gtitle">Seguimiento</div>
-  <div class="lgroup">
-    ${row('mapa', '◎', 'Mapa de dominio', (() => { const dm = dominioTemas(idx), c = k => dm.filter(x => x.est === k).length; return c('r') + c('y') + c('g') ? `🔴 ${c('r')} reforzar · 🟠 ${c('y')} a vigilar · 🟢 ${c('g')} dominados` : 'Aparecerá cuando empieces a contestar'; })())}
-    ${row('temario', '☰', 'Temas vistos', store.getSeen().length ? store.getSeen().length + ' de ' + idx.temas.length + ' temas marcados · el simulacro usa estos' : 'Marca lo que ya has estudiado y el simulacro lo tendrá en cuenta')}
-  </div>
-  <div class="mini"><div><b>${due}</b><span>repasos hoy</span></div><div><b>${nCards}</b><span>tarjetas vencen</span></div><div><b>${streak}</b><span>días seguidos</span></div></div>
   ${navigator.onLine === false ? `<div class="note">Sin conexión: solo funcionan las preguntas ya descargadas (Ajustes → Uso sin conexión).</div>` : ''}
 <div id="syncnote"></div>`;
   // el aviso de cuenta se decide cuando Firebase ya ha arrancado (antes mostraba «no configurado» un instante al abrir)
@@ -817,7 +809,7 @@ routes.home = async function () {
   };
   paintNote(); cleanup = sync.onStatus(paintNote);
   $('#quick').onclick = guard(() => quickSession());
-  $('#rev').onclick = guard(startRepaso);
+  $('#rev') && ($('#rev').onclick = guard(startRepaso));
   $('#cards').onclick = () => go('#/cards');
   $('#lectura').onclick = () => go('#/lectura');
   $('#trampas').onclick = () => go('#/trampas');
@@ -826,7 +818,6 @@ routes.home = async function () {
   $('#temario').onclick = () => go('#/temario');
   $('#test').onclick = () => go('#/test');
   $('#sim').onclick = () => go('#/sim');
-  $('#examenes').onclick = () => go('#/examenes');
   $('#menu').onclick = () => openMenu();
 };
 
@@ -959,33 +950,8 @@ function listaExamenes() {
   for (const t of tests) { const n = vistos[t.tema] = (vistos[t.tema] || 0) + 1; t.nombre = `Test ${t.tema} · ${temaName(t.tema)}${tests.filter(x => x.tema === t.tema).length > 1 ? ' (' + n + ')' : ''}`; }
   return { sims, ofi, tests };
 }
-routes.examenes = async function () {
-  await getIndex(); await getMeta(); const { sims, ofi, tests } = listaExamenes();
-  const todos = [...sims, ...ofi, ...tests];
-  const grupos = [['Simulacros de la academia', sims], ['Exámenes oficiales', ofi], ['Tests por tema de la academia', tests]];
-  const ses = store.getSessions();
-  const info = nombre => { const h = ses.filter(x => x.titulo === nombre); return h.length ? `Última nota ${h[0].nota} · mejor ${Math.max(...h.map(x => x.nota))} · ${h.length} intento${h.length === 1 ? '' : 's'}` : 'Sin hacer'; };
-  let sel = store.getCfg().exsel; if (!todos.some(x => x.k === sel)) sel = todos[0]?.k;
-  const draw = () => {
-    const ex = todos.find(x => x.k === sel);
-    app.innerHTML = `<h1>Exámenes</h1><div class="sub">Elige un examen y contesta solo sus preguntas. «Cronometrado» no corrige hasta el final y puntúa con la nota oficial; «Con corrección» te explica cada pregunta al momento.</div>
-    ${ex ? `<div class="card"><h2 class="h3"><label for="exsel">Examen</label></h2>
-      <select id="exsel" class="wide">${grupos.map(([t, l]) => l.length ? `<optgroup label="${esc(t)}">${l.map(e => `<option value="${esc(e.k)}" ${e.k === sel ? 'selected' : ''}>${esc(e.nombre)} · ${e.ids.length} preguntas</option>`).join('')}</optgroup>` : '').join('')}</select>
-      <p class="sub sm" id="exinfo">${esc(info(ex.nombre))}</p>
-      <div class="row"><button class="btn" data-m="sim">Cronometrado</button><button class="btn sec" data-m="est">Con corrección</button></div></div>`
-      : '<p class="sub">No hay exámenes cargados.</p>'}`;
-    const dd = $('#exsel');
-    if (dd) dd.onchange = () => { sel = dd.value; store.setCfg('exsel', sel); draw(); const n = $('#exsel'); n && n.focus({ preventScroll: true }); };
-    app.querySelectorAll('button[data-m]').forEach(b => b.onclick = guard(async function () {
-      const ex2 = todos.find(x => x.k === sel); if (!ex2) return;
-      const items = (await byIds(ex2.ids)).filter(q => !q.s);
-      if (!items.length) { toast('No se pudieron cargar las preguntas.'); return; }
-      if (b.dataset.m === 'sim') startRun({ kind: 'sim', feedback: false, items, limit: 90, titulo: ex2.nombre });
-      else startRun({ kind: 'test', feedback: true, items, titulo: ex2.nombre });
-    }));
-  };
-  draw();
-};
+// «Exámenes» ya no es una pantalla aparte: son las pestañas «Por examen» y «Por tema» de Simulacros
+routes.examenes = async function () { store.setCfg('simtab', 'examen'); go('#/sim'); };
 
 // ───────── simulacro ─────────
 routes.sim = async function () {
@@ -993,9 +959,8 @@ routes.sim = async function () {
   const cfg = Object.assign({ n: 80, min: 90, o: ['O', 'G'], parte2: true, scope: 'vistos' }, store.getCfg().sim || {});
   const seenN = store.getSeen().length;
   const org = new Set(cfg.o);
-  const draw = () => {
-    app.innerHTML = `
-    <h1>Simulacro</h1>
+  const drawCompleto = () => {
+    $('#simbody').innerHTML = `
     <div class="card">
       <h2 class="h3">Parte 1 · conocimientos</h2>
       <div class="seg" id="n">${[40, 80].map(v => `<button class="${cfg.n === v ? 'on' : ''}" data-v="${v}">${v} preguntas</button>`).join('')}</div>
@@ -1011,10 +976,10 @@ routes.sim = async function () {
     </div>
     <div class="note">Reparto por temas calcado a los exámenes oficiales. Cada fallo resta 1/3 de acierto; en blanco no resta. No hay corrección hasta el final.</div>
     <div class="bar2"><button class="btn" id="go">Empezar simulacro</button></div>`;
-    $('#n').onclick = e => { if (e.target.dataset.v) { cfg.n = +e.target.dataset.v; if (cfg.n === 40 && cfg.min > 60) cfg.min = 45; if (cfg.n === 80 && cfg.min < 90) cfg.min = 90; save(); draw(); } };
-    $('#scope').onclick = e => { if (e.target.dataset.v) { cfg.scope = e.target.dataset.v; save(); draw(); } };
-    $('#min').onclick = e => { if (e.target.dataset.v) { cfg.min = +e.target.dataset.v; save(); draw(); } };
-    $('#org').onclick = e => { const v = e.target.dataset.v; if (v) { org.has(v) ? org.delete(v) : org.add(v); if (!org.size) org.add(v); save(); draw(); } };
+    $('#n').onclick = e => { if (e.target.dataset.v) { cfg.n = +e.target.dataset.v; if (cfg.n === 40 && cfg.min > 60) cfg.min = 45; if (cfg.n === 80 && cfg.min < 90) cfg.min = 90; save(); drawCompleto(); } };
+    $('#scope').onclick = e => { if (e.target.dataset.v) { cfg.scope = e.target.dataset.v; save(); drawCompleto(); } };
+    $('#min').onclick = e => { if (e.target.dataset.v) { cfg.min = +e.target.dataset.v; save(); drawCompleto(); } };
+    $('#org').onclick = e => { const v = e.target.dataset.v; if (v) { org.has(v) ? org.delete(v) : org.add(v); if (!org.size) org.add(v); save(); drawCompleto(); } };
     $('#p2').onchange = e => { cfg.parte2 = e.target.checked; save(); };
     $('#go').onclick = guard(async () => {
       const useSeen = cfg.scope !== 'todos' && seenN;
@@ -1025,7 +990,34 @@ routes.sim = async function () {
     });
   };
   function save() { store.setCfg('sim', { n: cfg.n, min: cfg.min, o: [...org], parte2: cfg.parte2, scope: cfg.scope }); }
-  draw();
+  // pestañas: Completo (parte 1 + supuesto) · Por examen (simulacros y oficiales) · Por tema (tests de la academia)
+  const TABS = [['completo', 'Completo'], ['examen', 'Por examen'], ['tema', 'Por tema']];
+  let tab = store.getCfg().simtab; if (!TABS.some(t => t[0] === tab)) tab = 'completo';
+  const L2 = listaExamenes();
+  const grupos = () => tab === 'tema' ? [['Tests de la academia', L2.tests]] : [['Simulacros de la academia', L2.sims], ['Exámenes oficiales', L2.ofi]];
+  const nf = n => (Math.round(n * 10) / 10).toFixed(1).replace('.', ',');
+  const drawLista = () => {
+    const ses = store.getSessions(), todos = grupos().flatMap(g => g[1]);
+    let sel = store.getCfg().exsel; if (!todos.some(x => x.k === sel)) sel = todos[0]?.k;
+    const info = e => { const h = ses.filter(x => x.titulo === e.nombre); return h.length ? { nota: h[0].nota, n: h.length, mejor: Math.max(...h.map(x => x.nota)) } : null; };
+    $('#simbody').innerHTML = `<p class="sub sm">Elige uno y contesta solo sus preguntas. Notas sobre 100; cada fallo resta 1/3.</p>
+      ${grupos().map(([t, l]) => `<h2 class="h3">${esc(t)}</h2><div class="exlist">${l.map(e => { const i = info(e); return `<button class="exrow ${e.k === sel ? 'on' : ''}" data-k="${esc(e.k)}" aria-pressed="${e.k === sel}"><span><b>${esc(e.nombre)}</b><small>${e.ids.length} preguntas${i && i.n > 1 ? ` · ${i.n} intentos · mejor ${nf(i.mejor)}` : ''}</small></span><em class="nt ${i ? (i.nota >= 50 ? 'ok' : 'mid') : ''}">${i ? nf(i.nota) : 'Sin hacer'}</em></button>`; }).join('')}</div>`).join('')}
+      <div class="bar2"><button class="btn sec" data-m="est">Estudiar</button><button class="btn" data-m="sim">Examen · 90 min</button></div>`;
+    $('#simbody').querySelectorAll('.exrow').forEach(b => b.onclick = () => { store.setCfg('exsel', b.dataset.k); drawLista(); const n = $('#simbody').querySelector('.exrow.on'); n && n.focus({ preventScroll: true }); });
+    $('#simbody').querySelectorAll('button[data-m]').forEach(b => b.onclick = guard(async () => {
+      const ex = todos.find(x => x.k === sel); if (!ex) return;
+      const items = (await byIds(ex.ids)).filter(q => !q.s);
+      if (!items.length) { toast('No se pudieron cargar las preguntas.'); return; }
+      if (b.dataset.m === 'sim') startRun({ kind: 'sim', feedback: false, items, limit: 90, titulo: ex.nombre });
+      else startRun({ kind: 'test', feedback: true, items, titulo: ex.nombre });
+    }));
+  };
+  const shell = () => {
+    app.innerHTML = `<h1>Simulacros</h1><div class="seg tabs" id="simtabs" role="group" aria-label="Tipo de simulacro">${TABS.map(([v, t]) => `<button class="${tab === v ? 'on' : ''}" data-v="${v}" aria-pressed="${tab === v}">${t}</button>`).join('')}</div><div id="simbody"></div>`;
+    $('#simtabs').onclick = e => { const b = e.target.closest('button'); if (!b || b.dataset.v === tab) return; tab = b.dataset.v; store.setCfg('simtab', tab); shell(); };
+    tab === 'completo' ? drawCompleto() : drawLista();
+  };
+  shell();
 };
 let SIMCFG = null;
 async function simParte1(idx, org, N, only) {
@@ -1111,7 +1103,7 @@ routes.errores = async function () {
     <div class="row"><button class="btn sec" id="exp" ${all.length ? '' : 'disabled'}>Exportar para corregir</button></div>
     ${list.map(([id, r]) => { const q = by.get(id); return `<div class="card"><div class="meta"><span class="tag">${esc(id)}</span>${q ? `<span class="tag o${q.o}">${ORIGEN[q.o]}</span>` : ''}${cby.has(id) ? '<span class="tag">Tarjeta</span>' : ''}<span class="tag warn">${esc(r.motivo || 'Otro')}</span>${r.st === 'resuelto' ? '<span class="tag oG">Resuelto</span>' : ''}</div>
       ${r.nota ? `<p class="sm"><b>Nota:</b> ${esc(r.nota)}</p>` : ''}
-      ${cby.has(id) ? (c => `<div class="pre sm">${esc(c.q)}</div><div class="ro ok"><b>R</b> ${esc(c.a)}</div>${c.ref ? `<div class="cita"><span>Temario</span>${esc(c.ref)}</div>` : ''}`)(cby.get(id)) : q ? `<div class="pre sm">${esc(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : ''}"><b>${L[i]}</b> ${esc(o)}${i === q.c ? ' ✓' : ''}</div>`).join('')}${q.u ? `<div class="cita"><span>Temario</span>${esc(q.u)}</div>` : ''}` : '<p class="sub">La pregunta ya no está en el banco.</p>'}
+      ${cby.has(id) ? (c => `<div class="pre sm">${richHtml(c.q)}</div><div class="ro ok"><b>R</b> ${richHtml(c.a)}</div>${c.ref ? `<div class="cita"><span>Temario</span>${esc(c.ref)}</div>` : ''}`)(cby.get(id)) : q ? `<div class="pre sm">${esc(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : ''}"><b>${L[i]}</b> ${esc(o)}${i === q.c ? ' ✓' : ''}</div>`).join('')}${q.u ? `<div class="cita"><span>Temario</span>${esc(q.u)}</div>` : ''}` : '<p class="sub">La pregunta ya no está en el banco.</p>'}
       <div class="row"><button class="btn sec" data-st="${r.st === 'resuelto' ? 'abierto' : 'resuelto'}" data-id="${esc(id)}">${r.st === 'resuelto' ? 'Reabrir' : 'Marcar resuelto'}</button><button class="btn sec" data-st="quitado" data-id="${esc(id)}">Quitar</button></div></div>`; }).join('') || '<div class="card"><p class="sub">Nada en esta lista.</p></div>'}`;
     $('#ef').onclick = e => { if (e.target.dataset.v) { store.setCfg('errf', e.target.dataset.v); } };
     app.querySelectorAll('[data-st]').forEach(b => b.onclick = () => store.setReportState(b.dataset.id, b.dataset.st));

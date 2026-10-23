@@ -307,6 +307,84 @@ export function claveHtml(text) {
   for (const [a, b] of claveSpans(t)) { h += esc(t.slice(p, a)) + '<mark class="kw">' + esc(t.slice(a, b)) + '</mark>'; p = b; }
   return h + esc(t.slice(p));
 }
+
+// ───────── código: detección y marcado (SQL, comandos, etiquetas, funciones, rutas…) ─────────
+const SQL_KW = 'SELECT|FROM|WHERE|GROUP BY|ORDER BY|HAVING|LEFT OUTER JOIN|RIGHT OUTER JOIN|FULL OUTER JOIN|LEFT JOIN|RIGHT JOIN|INNER JOIN|CROSS JOIN|NATURAL JOIN|JOIN|ON|AS|AND|OR|NOT NULL|NOT|NULL|IS|IN|BETWEEN|LIKE|DISTINCT|UNION ALL|UNION|INSERT INTO|VALUES|UPDATE|SET|DELETE FROM|CREATE TABLE|CREATE VIEW|CREATE INDEX|ALTER TABLE|DROP TABLE|DROP VIEW|DROP INDEX|PRIMARY KEY|FOREIGN KEY|REFERENCES|GRANT|REVOKE|COMMIT|ROLLBACK|TRUNCATE|ASC|DESC|LIMIT|EXISTS|ALL|ANY|COUNT|SUM|AVG|MAX|MIN';
+const SQL_KW_RE = new RegExp('(?<![\\p{L}\\d_])(' + SQL_KW + ')(?![\\p{L}\\d_])', 'gu');
+const SQL_START = /(?<![\p{L}\d_])(SELECT\s|INSERT INTO\s|UPDATE\s+[\p{L}_]+\s+SET|DELETE FROM\s|CREATE\s+(?:TABLE|VIEW|INDEX|DATABASE)\s|ALTER\s+TABLE\s|DROP\s+(?:TABLE|VIEW|INDEX|DATABASE)\s|GRANT\s|REVOKE\s)/gu;
+const SQL_WORDS = /(?<![\p{L}\d_])(ORDER BY|GROUP BY|(?:LEFT|RIGHT|FULL)(?: OUTER)? JOIN|INNER JOIN|CROSS JOIN|NATURAL JOIN|PRIMARY KEY|FOREIGN KEY|NOT NULL|UNION(?: ALL)?|SELECT|INSERT|UPDATE|DELETE|WHERE|HAVING|DISTINCT|COMMIT|ROLLBACK|TRUNCATE|NULL|COUNT\(\*\))(?![\p{L}\d_])/gu;
+const CMDS = '(?:chmod|chown|chgrp|grep|sudo|ping|ssh|scp|ifconfig|ipconfig|nslookup|traceroute|netstat|systemctl|mkdir|rsync|apt-get|umask|git\\s+(?:add|commit|push|pull|clone|status|log|branch|checkout|merge|rebase|init|fetch|diff|stash|reset|remote|tag)|docker\\s+(?:run|build|ps|pull|push|exec|images|compose|stop|rm|start)|kubectl\\s+(?:get|apply|describe|delete|logs|exec)|curl|wget)';
+const CODE_RES = [
+  /<\?php[\s\S]*?(?:\?>|$)/g,                                                              // PHP
+  /<\/?[A-Za-z][\w:-]*(?:\s[^<>]*)?\/?>/g,                                                  // etiquetas HTML/XML y genéricos <tipo>
+  /(?<![\w.])\/(?:etc|var|usr|home|bin|dev|proc|tmp|opt|root)(?:\/[\w.*-]+)*/g,             // rutas Linux
+  /(?<![\w.-])[a-z0-9_][\w-]*\.(?:php|java|js|ts|py|xml|html|css|conf|sh|sql|json|ini|txt|log|yml|yaml|cfg|bat)\b/g, // ficheros
+  new RegExp('(?<![\\w-])' + CMDS + '\\b(?:\\s+-{1,2}[\\w-]+|\\s+\\d{3,4}\\b)*', 'g'),     // comandos con sus opciones
+  /(?<=^|[\s(])--?[A-Za-z][\w-]*(?=[\s.,;:)]|$)/g,                                         // opciones -R, --force
+  /(?<![\p{L}\d_$.])[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*\((?:[^()]|\([^()]*\))*\)/gu,   // llamadas f(...), a.b(...)
+  /[^\s]*(?:===?|!==?|\+\+|->|=>|&&|\|\|)[^\s]*/g,                                         // operadores
+  /(?<![\p{L}\d_$])[A-Za-z_$][\w$.]*=[\w$.'"]+/gu,                                          // a=b, A.a=B.b
+  /(?<![\p{L}\d_$])[a-z][a-z0-9]*(?:_[a-z0-9]+)+(?![\p{L}\d_$])/gu,                        // snake_case
+  /(?<![\p{L}\d_$])(?!(?:macOS|iOS|iPadOS|iPhone|iPad|iCloud|iMac|tvOS|watchOS|visionOS|openSUSE|eDNI|eIDAS|iTunes|eBay|iOS)\b)[a-z]{2,}(?:[A-Z][a-z0-9]*)+(?![\p{L}\d_$])/gu, // camelCase
+];
+const noEsLlamada = /^(?:\d|[A-Z]{1,2}$)/;
+function rangosCodigo(t) {
+  const r = [];
+  // sentencias SQL completas: desde la palabra inicial hasta «;», o hasta el final de la frase, o el final del texto
+  SQL_START.lastIndex = 0; let m;
+  while ((m = SQL_START.exec(t))) {
+    const a = m.index; let b = t.length;
+    const semi = t.indexOf(';', a); if (semi >= 0) b = semi + 1;
+    const fin = /\.\s+(?=[¿¡A-ZÁÉÍÓÚÑ])|[?!]\s|\?$/g; fin.lastIndex = a; const f = fin.exec(t);
+    if (f && f.index < b) b = f.index;
+    let e = b; while (e > a && /[\s.]/.test(t[e - 1])) e--;
+    if (e > a + 6) { r.push([a, e]); SQL_START.lastIndex = Math.max(e, a + 1); }
+  }
+  for (const re of CODE_RES) {
+    re.lastIndex = 0;
+    while ((m = re.exec(t))) {
+      if (m[0] === '') { re.lastIndex++; continue; }
+      let a = m.index, b = a + m[0].length;
+      if (re === CODE_RES[6] && noEsLlamada.test(m[0])) continue;
+      if (re === CODE_RES[7] && /^C\+\+/.test(m[0])) continue;
+      // no marcar paréntesis finales de frase: «cuando (a)» no es una llamada, pero sí «f(a)»
+      while (b > a && /[.,;:]$/.test(t.slice(a, b)) && !/[)}\]]$/.test(t.slice(a, b - 1))) b--;
+      if (b > a) r.push([a, b]);
+    }
+  }
+  // bloques con llaves { … }: desde la sentencia que los abre hasta la última llave
+  const o = t.indexOf('{'), c = t.lastIndexOf('}');
+  if (o >= 0 && c > o) {
+    let ini = 0; const pre = t.slice(0, o); const sb = /[.?!:]\s+(?=\S)/g; let q; while ((q = sb.exec(pre))) ini = q.index + q[0].length;
+    const k = /\b(?:function|public|private|protected|static|class|interface|void|int|for|while|if|switch|try|def|echo|print)\b|[A-Za-z_$][\w$]*\(/.exec(t.slice(ini, o));
+    r.push([k ? ini + k.index : o, c + 1]);
+  }
+  while ((m = SQL_WORDS.exec(t))) r.push([m.index, m.index + m[0].length]);
+  r.sort((x, y) => x[0] - y[0] || y[1] - x[1]);
+  const u = [];
+  for (const [a, b] of r) { const l = u[u.length - 1]; if (l && a <= l[1]) l[1] = Math.max(l[1], b); else u.push([a, b]); }
+  return u;
+}
+export function codeSpans(text) { return rangosCodigo(String(text ?? '')); }
+const codeInner = h => h.replace(SQL_KW_RE, '<b class="sk">$1</b>');
+// Texto → HTML seguro: escapa todo, pone en tipografía de código lo que lo parece y (opcional) resalta las palabras clave de lectura.
+export function richHtml(text, clave = false) {
+  const t = String(text ?? ''), code = rangosCodigo(t), key = clave ? claveSpans(t) : [];
+  const cuts = new Set([0, t.length]);
+  for (const [a, b] of code) { cuts.add(a); cuts.add(b); }
+  for (const [a, b] of key) { cuts.add(a); cuts.add(b); }
+  const pts = [...cuts].sort((x, y) => x - y); let h = '';
+  const dentro = (L, i) => L.some(([a, b]) => i >= a && i < b);
+  for (let i = 0; i < pts.length - 1; i++) {
+    const a = pts[i], b = pts[i + 1]; if (a === b) continue;
+    const seg = esc(t.slice(a, b));
+    if (dentro(code, a)) h += '<code class="cd">' + codeInner(seg) + '</code>';
+    else if (dentro(key, a)) h += '<mark class="kw">' + seg + '</mark>';
+    else h += seg;
+  }
+  return h.replace(/<\/code><code class="cd">/g, '');
+}
+
 // ¿La pregunta pide la opción incorrecta/excepción?
 export const pideNegativa = q => /\b(INCORRECT[OA]S?|FALS[OA]S?|EXCEPTO|SALVO|NO)\b/.test(q) || /\b(incorrect[oa]s?|fals[oa]s?|excepto|salvo)\b/i.test(q) || /\bno (es|son|se|forma|corresponde|pertenece|permite)\b/i.test(q);
 // Segundos mínimos razonables para leer enunciado + opciones con atención (~3,3 palabras/s)

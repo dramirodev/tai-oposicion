@@ -335,3 +335,24 @@ describe('analisisSimulacro', () => {
     expect(ritmoSimulacro(0, 0, 0, 5)).toBe(0);
   });
 });
+
+describe('richHtml (código)', () => {
+  it('escapa siempre y marca sentencias SQL, comandos y etiquetas', async () => {
+    const { richHtml, codeSpans } = await import('../src/logic.js');
+    const sql = richHtml('¿Qué devuelve SELECT * FROM A WHERE B IS NULL; en SQL?');
+    expect(sql).toContain('<code class="cd"><b class="sk">SELECT</b> * <b class="sk">FROM</b>');
+    expect(sql).toContain('en SQL?');
+    expect(richHtml('El comando chmod 755 f.txt y la opción -R')).toMatch(/<code class="cd">chmod 755<\/code>/);
+    const evil = richHtml('<script>alert(1)</script> y <img src=x onerror=alert(1)>');
+    expect(evil).not.toMatch(/<script|<img/);
+    expect(evil).toContain('&lt;script&gt;');
+    expect(codeSpans('La Constitución Española de 1978 (CE) regula la Corona.')).toEqual([]);
+    expect(codeSpans('Lenguaje C++ y Node.js son conocidos')).toEqual([]);
+  });
+  it('combina palabras clave de lectura fuera del código', async () => {
+    const { richHtml } = await import('../src/logic.js');
+    const h = richHtml('Señale la INCORRECTA sobre SELECT.', true);
+    expect(h).toContain('<mark class="kw">INCORRECTA</mark>');
+    expect(h).toContain('<code class="cd"><b class="sk">SELECT</b></code>');
+  });
+});
