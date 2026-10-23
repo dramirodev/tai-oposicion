@@ -155,7 +155,7 @@ select.wide{width:100%;flex:none}
 .qhead{display:flex;align-items:center;gap:12px;position:sticky;top:var(--sat);background:var(--bg);padding:10px 0 8px;z-index:3}
 .qhead #exit{width:48px;height:48px;border-radius:var(--r-m);border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:var(--fs-xl);padding:0;flex:none}
 .prog{flex:1;height:8px;border-radius:var(--r-pill);background:var(--line);overflow:hidden}
-.prog div{height:100%;background:var(--selb);transition:width .2s}
+.prog div{height:100%;background:var(--selb);animation:grow .45s cubic-bezier(.2,.7,.2,1)}
 .cnt{font-size:var(--fs-m);font-weight:600;color:var(--mute);min-width:44px;text-align:right}
 .clock{font:600 var(--fs-b) ui-monospace,Menlo,monospace;background:var(--sel);padding:4px 9px;border-radius:var(--r-s)}
 .meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
@@ -359,3 +359,20 @@ code.cd .sk{color:var(--sk);font-weight:700}
 #net{pointer-events:none;position:fixed;top:0;left:0;right:0;z-index:50;text-align:center;font-size:var(--fs-s);font-weight:600;padding:calc(4px + env(safe-area-inset-top)) 12px 4px;display:none}
 #net.off{display:block;background:var(--pill-bg);color:var(--pill-ink);border-bottom:1px solid var(--amber-strong)}
 #net.on{display:block;background:var(--okbg);color:var(--good-ink);border-bottom:1px solid var(--line)}
+#toast.act.show{pointer-events:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+#toast button{flex:none;min-height:44px;padding:0 16px;border:0;border-radius:var(--r-pill);background:var(--bg);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+
+/* ===== animaciones (solo responden a una acción; se apagan con «reducir movimiento») ===== */
+@keyframes grow{from{width:var(--from,0%)}}
+@keyframes enter{from{opacity:0}}
+@keyframes pulseok{0%{transform:scale(1)}40%{transform:scale(1.025);box-shadow:0 0 0 6px color-mix(in srgb,var(--ok) 28%,transparent)}100%{transform:scale(1);box-shadow:0 0 0 0 transparent}}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-6px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+@keyframes flipin{from{transform:perspective(600px) rotateX(-80deg);opacity:0}to{transform:perspective(600px) rotateX(0);opacity:1}}
+@keyframes fbin{from{opacity:0;transform:translateY(-4px)}}
+.hbar i{animation:grow .7s cubic-bezier(.2,.7,.2,1)}
+.enter{animation:enter .18s ease-out}
+.opt.ok{animation:pulseok .5s ease-out}
+.opt.bad{animation:shake .4s ease-in-out}
+.fb{animation:fbin .2s ease-out}
+.fa{transform-origin:top center;animation:flipin .38s cubic-bezier(.2,.7,.2,1)}
+@media(prefers-reduced-motion:reduce){.prog div,.hbar i,.enter,.opt.ok,.opt.bad,.fb,.fa{animation:none!important}}

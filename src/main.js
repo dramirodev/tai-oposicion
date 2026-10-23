@@ -120,6 +120,20 @@ store.onChange(applyUi);
 const routes = {};
 let cleanup = null;
 function go(h) { if (location.hash === h) route(); else location.hash = h; }
+// animaciones: barra de progreso que crece desde el valor anterior, entrada de pantalla y nota que cuenta
+const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+let lastP = 0;
+function pw(p) { const f = lastP; lastP = p; return `style="--from:${f}%;width:${p}%"`; }
+function enter(el = app) { if (reduceMotion()) return; el.classList.remove('enter'); void el.offsetWidth; el.classList.add('enter'); }
+function countUp() {
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const to = parseFloat(String(el.dataset.count).replace(',', '.')); if (!isFinite(to) || reduceMotion()) return;
+    const dec = (String(el.dataset.count).split(/[.,]/)[1] || '').length, tn = el.firstChild; if (!tn || tn.nodeType !== 3) return;
+    const t0 = performance.now(), D = 900;
+    const step = t => { const k = Math.min(1, (t - t0) / D), v = to * (1 - Math.pow(1 - k, 3)); tn.nodeValue = v.toFixed(dec); if (k < 1 && tn.isConnected) requestAnimationFrame(step); else tn.nodeValue = String(el.dataset.count); };
+    requestAnimationFrame(step);
+  });
+}
 let routeSeq = 0;
 async function route() {
   const my = ++routeSeq;
@@ -128,9 +142,10 @@ async function route() {
   const sect = { quiz: RUN?.kind === 'sim' ? 'sim' : RUN?.kind === 'test' ? 'test' : 'home', result: LAST?.ses?.kind === 'sim' ? 'sim' : LAST?.ses?.kind === 'test' ? 'test' : 'home', sim2: 'sim', examenes: 'sim', errores: 'settings', cards: 'home' }[name] || name;
   document.querySelectorAll('nav a').forEach(a => { const on = a.dataset.r === sect; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   const f = routes[name] || routes.home;
+  lastP = 0;
   window.scrollTo(0, 0);
   const lt = setTimeout(() => { if (my === routeSeq) app.innerHTML = '<p class="sub loading" role="status">Cargando…</p>'; }, 120); // respuesta visible si los datos tardan
-  try { await getIndex(); await getMeta(); if (my !== routeSeq) return; await f(...args); clearTimeout(lt); if (my !== routeSeq) return; const hd = app.querySelector('h1'); if (hd) hd.tabIndex = -1; (hd || app).focus({ preventScroll: true }); if (RUN && name !== 'quiz') { const b = document.createElement('div'); b.className = 'note run'; b.innerHTML = `<b>${esc(RUN.titulo || 'Test')}</b> en curso · ${Math.min(RUN.idx + 1, RUN.items.length)}/${RUN.items.length} <button class="btn" id="resume">Continuar</button>`; app.prepend(b); $('#resume').onclick = () => go('#/quiz'); } } catch (e) { clearTimeout(lt); app.innerHTML = `<div class="card" role="alert"><h2>No se pudo cargar</h2><p>${navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button class="btn" id="retryRoute">Reintentar</button></div>`; $('#retryRoute').onclick = () => route(); console.error(e); }
+  try { await getIndex(); await getMeta(); if (my !== routeSeq) return; await f(...args); clearTimeout(lt); if (my !== routeSeq) return; enter(); countUp(); const hd = app.querySelector('h1'); if (hd) hd.tabIndex = -1; (hd || app).focus({ preventScroll: true }); if (RUN && name !== 'quiz') { const b = document.createElement('div'); b.className = 'note run'; b.innerHTML = `<b>${esc(RUN.titulo || 'Test')}</b> en curso · ${Math.min(RUN.idx + 1, RUN.items.length)}/${RUN.items.length} <button class="btn" id="resume">Continuar</button>`; app.prepend(b); $('#resume').onclick = () => go('#/quiz'); } } catch (e) { clearTimeout(lt); app.innerHTML = `<div class="card" role="alert"><h2>No se pudo cargar</h2><p>${navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button class="btn" id="retryRoute">Reintentar</button></div>`; $('#retryRoute').onclick = () => route(); console.error(e); }
 }
 window.addEventListener('hashchange', route);
 
@@ -247,7 +262,7 @@ routes.quiz = async function () {
     <h1 class="sr">${esc(R.titulo || 'Test')} · pregunta ${R.idx + 1} de ${R.items.length}</h1>
     <div class="qhead">
       <button class="ghost" id="exit" aria-label="Salir">✕</button>
-      <div class="prog"><div style="width:${100 * R.idx / R.items.length}%"></div></div>
+      <div class="prog"><div ${pw(100 * R.idx / R.items.length)}></div></div>
       <div class="cnt">${R.idx + 1}/${R.items.length}</div>
       ${R.limit ? `<div class="clock" id="clock">${fmtT(R.limit * 60 - R.secs)}</div><button class="ghost" id="pause" aria-label="Pausar">⏸</button>` : ''}
     </div>
@@ -415,7 +430,7 @@ routes.trampas = async function () {
     const q = R.items[R.k], good = new Set(q.x.map(Number));
     const dis = shuffle(ALL.filter(k => !good.has(k))).slice(0, Math.max(3, 8 - good.size));
     const chips = shuffle([...good, ...dis]), sel = new Set();
-    app.innerHTML = `<div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog"><div style="width:${100 * R.k / R.items.length}%"></div></div><div class="cnt">${R.k + 1}/${R.items.length}</div></div>
+    app.innerHTML = `<div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog"><div ${pw(100 * R.k / R.items.length)}></div></div><div class="cnt">${R.k + 1}/${R.items.length}</div></div>
     <h1 class="sub">🕵️ Detective de trampas</h1>
     <div class="seg" id="md">${[[0, 'Solo enunciado'], [1, 'Con opciones']].map(([v, t]) => `<button class="${mode === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
     <div class="card q"><div class="meta"><span class="tag">${esc(q.t)} · ${esc(temaName(q.t))}</span></div>
@@ -487,7 +502,7 @@ routes.lectura = async function () {
     clearInterval(gt);
     if (R.k >= R.items.length) return end();
     const q = R.items[R.k], neg = pideNegativa(q.q);
-    const head = `<div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog"><div style="width:${100 * R.k / R.items.length}%"></div></div><div class="cnt">${R.k + 1}/${R.items.length}</div></div><h1 class="sub">Lectura atenta · paso ${R.step + 1} de 3</h1>`;
+    const head = `<div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog"><div ${pw(100 * R.k / R.items.length)}></div></div><div class="cnt">${R.k + 1}/${R.items.length}</div></div><h1 class="sub">Lectura atenta · paso ${R.step + 1} de 3</h1>`;
     if (R.step === 0) {
       app.innerHTML = `${head}<div class="card q"><div class="enun pre">${richHtml(q.q)}</div><p><b>1. ¿Qué te piden?</b> Antes de ver las opciones.</p>
         <div class="opts"><button class="opt" data-v="0"><b>✔</b><span>La opción CORRECTA / VERDADERA</span></button><button class="opt" data-v="1"><b>✖</b><span>La INCORRECTA / FALSA / la excepción</span></button></div><div id="fb0"></div></div>`;
@@ -625,7 +640,7 @@ function cardSession() {
     if (R.idx >= R.items.length) return fin();
     const c = R.items[R.idx];
     app.innerHTML = `
-    <div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog" role="progressbar" aria-label="Progreso" aria-valuemin="0" aria-valuemax="${R.items.length}" aria-valuenow="${R.idx}"><div style="width:${100 * R.idx / R.items.length}%"></div></div><div class="cnt">${R.idx + 1}/${R.items.length}</div></div>
+    <div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog" role="progressbar" aria-label="Progreso" aria-valuemin="0" aria-valuemax="${R.items.length}" aria-valuenow="${R.idx}"><div ${pw(100 * R.idx / R.items.length)}></div></div><div class="cnt">${R.idx + 1}/${R.items.length}</div></div>
     <div class="card q fc" id="fc">
       <div class="meta"><span class="tag">${esc(c.t)} · ${esc(temaName(c.t))}</span>${c.tipo ? `<span class="tag">${esc(c.tipo)}</span>` : ''}${c.caduca ? '<span class="tag warn">Puede caducar</span>' : ''}</div>
       <div class="enun pre">${richHtml(c.q)}</div>
@@ -679,7 +694,7 @@ routes.result = async function () {
   app.innerHTML = `
   <h1>Resultado</h1>
   <div class="card big">
-    <div class="score">${ses.nota}<small>/100</small></div>
+    <div class="score" data-count="${ses.nota}">${ses.nota}<small>/100</small></div>
     <div class="legend">(aciertos − fallos/3) / total</div>
     <div class="trio"><div class="g"><b>${ses.a}</b>Aciertos</div><div class="r"><b>${ses.f}</b>Fallos</div><div><b>${ses.b}</b>Blanco</div></div>
     <div class="legend">${pct(ses.a, ses.n)} % de acierto · ${fmtT(ses.secs)}</div>
@@ -804,7 +819,7 @@ routes.home = async function () {
   <div class="hhead"><div><h1>Hola, David</h1>
     <div class="hsub"><b>${dd > 0 ? dd : 0} días</b> al examen · ${seen} de ${idx.n.toLocaleString("es-ES")} vistas${streak >= 2 ? ` · racha de ${streak} días` : ''}</div></div>
     <button class="iconbtn" id="menu" aria-label="Menú" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
-  <div class="hbar" role="img" aria-label="${pct(seen, idx.n)} % de las preguntas vistas"><i style="width:${Math.max(2, Math.min(100, pct(seen, idx.n)))}%"></i></div>
+  <div class="hbar" role="img" aria-label="${pct(seen, idx.n)} % de las preguntas vistas"><i style="--from:0%;width:${Math.max(2, Math.min(100, pct(seen, idx.n)))}%"></i></div>
   <button class="cta" id="quick"><span><b class="ctt">Sesión rápida</b><small>5 min · ${quickN(st)} preguntas: ${due ? 'tus repasos pendientes (' + due + ') y ' : ''}nuevas de tus temas más débiles</small></span><i class="play" aria-hidden="true">${svg('play')}</i></button>
   ${due ? `<button class="repaso" id="rev"><i aria-hidden="true">${svg('redo')}</i><span><b>Repaso de fallos</b><small>${due} preguntas pendientes hoy</small></span></button>` : ''}
   <div class="tiles">
@@ -1029,7 +1044,7 @@ routes.sim = async function () {
   };
   const shell = () => {
     app.innerHTML = `<h1>Simulacros</h1><div class="seg tabs" id="simtabs" role="group" aria-label="Tipo de simulacro">${TABS.map(([v, t]) => `<button class="${tab === v ? 'on' : ''}" data-v="${v}" aria-pressed="${tab === v}">${t}</button>`).join('')}</div><div id="simbody"></div>`;
-    $('#simtabs').onclick = e => { const b = e.target.closest('button'); if (!b || b.dataset.v === tab) return; tab = b.dataset.v; store.setCfg('simtab', tab); shell(); };
+    $('#simtabs').onclick = e => { const b = e.target.closest('button'); if (!b || b.dataset.v === tab) return; tab = b.dataset.v; store.setCfg('simtab', tab); shell(); enter($('#simbody')); };
     tab === 'completo' ? drawCompleto() : drawLista();
   };
   shell();
