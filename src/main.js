@@ -372,12 +372,13 @@ routes.lectura = async function () {
   await getMeta(); const st = store.getStats();
   if (!LRUN) {
     const vel = velocidad(st).ids;
-    let recent = []; try { recent = JSON.parse(localStorage.getItem('tai.lrec') || '[]'); } catch { }
+    let recent = []; try { const r = JSON.parse(localStorage.getItem('tai.lrec') || '[]'); if (Array.isArray(r)) recent = r.map(String); } catch { }
     const rec = new Set(recent), velS = new Set(vel);
     const fallos = Object.keys(st).filter(id => st[id][5] === 0 && !velS.has(id));
     const fS = new Set(fallos);
     const rest = Object.keys(META).filter(k => k !== '_by' && META[k] && !velS.has(k) && !fS.has(k));
-    const fresh = a => { const n = a.filter(id => !rec.has(id)); return shuffle(n.length >= 3 ? n : a); };
+    // primero las no vistas recientemente; las recientes solo rellenan si faltan
+    const fresh = a => [...shuffle(a.filter(id => !rec.has(String(id)))), ...shuffle(a.filter(id => rec.has(String(id))))];
     // mezcla aleatoria: hasta 3 de velocidad, 2 de fallos y el resto al azar; el orden final también es aleatorio
     const pick = [...fresh(vel).slice(0, 3), ...fresh(fallos).slice(0, 2)];
     const chosen = new Set(pick);
@@ -386,7 +387,7 @@ routes.lectura = async function () {
     const got = new Map((await byIds(ids)).filter(q => !q.s && !q.cp).map(q => [String(q.i), q]));
     const ok = ids.map(id => got.get(String(id))).filter(Boolean);
     const items = shuffle(ok.slice(0, 8));
-    try { localStorage.setItem('tai.lrec', JSON.stringify([...items.map(q => String(q.i)), ...recent].slice(0, 80))); } catch { }
+    if (!items.length) { app.innerHTML = `<h1>Lectura atenta</h1><div class="card"><p>No hay preguntas disponibles ahora mismo. Comprueba la conexión e inténtalo de nuevo.</p></div><div class="bar2"><button class="btn" id="retry">Reintentar</button><button class="btn sec" id="home">Inicio</button></div>`; $('#retry').onclick = () => route(); $('#home').onclick = () => go('#/home'); return; }
     LRUN = { items, k: 0, step: 0, res: [], mark: new Set() };
   }
   const R = LRUN; let gt = null;
@@ -401,7 +402,7 @@ routes.lectura = async function () {
       app.innerHTML = `${head}<div class="card q"><div class="enun pre">${esc(q.q)}</div><p><b>1. ¿Qué te piden?</b> Antes de ver las opciones.</p>
         <div class="opts"><button class="opt" data-v="0"><b>✔</b><span>La opción CORRECTA / VERDADERA</span></button><button class="opt" data-v="1"><b>✖</b><span>La INCORRECTA / FALSA / la excepción</span></button></div><div id="fb0"></div></div>`;
       app.querySelectorAll('.opt').forEach(b => b.onclick = () => {
-        const ok = (+b.dataset.v === 1) === neg; R.pideOk = ok; b.classList.add(ok ? 'ok' : 'bad');
+        const ok = (+b.dataset.v === 1) === neg; R.pideOk = ok; b.classList.add(ok ? 'ok' : 'bad'); if (!ok) app.querySelectorAll('.opt').forEach(x => { if (x !== b) x.classList.add('ok'); });
         $('#fb0').innerHTML = `<div class="fb ${ok ? 'good' : 'wrong'}"><b>${ok ? '¡Bien leído!' : 'Ojo: lo habías leído al revés.'}</b> Te piden la opción <b>${neg ? 'INCORRECTA / excepción' : 'CORRECTA'}</b>.</div><div class="bar2"><button class="btn" id="n0">Siguiente →</button></div>`;
         app.querySelectorAll('.opt').forEach(x => x.disabled = true); $('#n0').onclick = () => { R.step = 1; R.mark = new Set(); draw(); };
       });
@@ -423,7 +424,7 @@ routes.lectura = async function () {
           $('#fb1').innerHTML = `<div class="fb ${okN ? 'good' : 'wrong'}">${okN ? '<b>Correcto:</b> no hay palabras clave destacables. Lo importante es entender bien qué pide.' : `<b>Ojo:</b> sí había ${key.length} palabra${key.length === 1 ? '' : 's'} clave (resaltada${key.length === 1 ? '' : 's'}). Mira qué cambia el sentido.`}</div>`;
           $('#chk').textContent = 'Ver opciones →'; $('#chk').dataset.done = 1; return;
         }
-        $('#fb1').innerHTML = `<div class="fb ${miss || extra ? 'wrong' : 'good'}">${key.length ? `Detectaste <b>${hit}</b> de <b>${key.length}</b> palabras clave${miss ? ' (las que faltaban están resaltadas)' : ''}.` : 'Esta pregunta no tiene palabras clave destacables: lo importante es entender bien qué pide.'}${extra ? ` Marcaste ${extra} que no eran clave.` : ''}</div>`;
+        $('#fb1').innerHTML = `<div class="fb ${miss ? 'wrong' : 'good'}">${key.length ? `Detectaste <b>${hit}</b> de <b>${key.length}</b> palabras clave${miss ? ' (las que faltaban están resaltadas)' : ''}.` : 'Esta pregunta no tiene palabras clave destacables: lo importante es entender bien qué pide.'}${extra ? ` Marcaste ${extra} que no eran clave.` : ''}</div>`;
         $('#chk').textContent = 'Ver opciones →'; $('#chk').dataset.done = 1;
       };
     } else {
@@ -434,6 +435,7 @@ routes.lectura = async function () {
       app.querySelectorAll('.opt').forEach(b => b.onclick = () => {
         const i = +b.dataset.i, ok = i === q.c, secs = Math.max(1, Math.round((Date.now() - R.t0) / 1000));
         store.record(q.i, q.t, ok ? 1 : 0, now(), secs);
+        try { let r = JSON.parse(localStorage.getItem('tai.lrec') || '[]'); if (!Array.isArray(r)) r = []; localStorage.setItem('tai.lrec', JSON.stringify([String(q.i), ...r.filter(x => String(x) !== String(q.i))].slice(0, 80))); } catch { }
         R.res.push({ q: q.i, ok, pide: R.pideOk, marc: R.marcadas });
         app.querySelectorAll('.opt').forEach((x, k) => { x.disabled = true; x.classList.add('dis'); if (k === q.c) x.classList.add('ok'); else if (k === i) x.classList.add('bad'); });
         $('#fb2').innerHTML = `<div class="fb ${ok ? 'good' : 'wrong'}"><b>${ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}</div><div class="bar2"><button class="btn" id="n2">${R.k + 1 === R.items.length ? 'Terminar' : 'Siguiente'} →</button></div>`;
