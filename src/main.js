@@ -709,6 +709,65 @@ async function quickSession() {
   startRun({ kind: 'rev', feedback: true, items, titulo: `Sesión rápida · ${nd} repasos + ${items.length - nd} nuevas` });
 }
 
+async function startRepaso() {
+  await getMeta(); const st = store.getStats(), t0 = now();
+  const cand = []; for (const id in st) { const r = st[id]; if (r[3] >= 0 && r[4] <= t0 && META[id]) cand.push({ i: id, t: META[id][0], due: r[4] }); }
+  const ids = pickRepaso(cand, 30).map(x => x.i);
+  if (!ids.length) { toast('No tienes repasos pendientes hoy.'); return; }
+  startRun({ kind: 'rev', feedback: true, items: await byIds(ids), titulo: 'Repaso de fallos · más vencidas primero, temas mezclados' });
+}
+
+// ───────── menú general ─────────
+async function openMenu() {
+  if ($('#menuov')) return;
+  await getMeta();
+  const due = (await dueList()).length, nCards = Object.values(store.getCards()).filter(r => r[3] >= 0 && r[4] <= now()).length;
+  const nErr = Object.values(store.getReports()).filter(r => r.st === 'abierto').length, vel = velocidad(store.getStats());
+  const aqui = location.hash || '#/home';
+  const G = [
+    ['Estudiar', [
+      ['⚡', 'Sesión rápida', '10 preguntas en unos 5 minutos', () => quickSession()],
+      ['↻', 'Repaso de fallos', due ? due + ' preguntas toca repasar hoy' : 'Nada pendiente hoy', () => startRepaso()],
+      ['▭', 'Tarjetas de repaso', nCards ? nCards + ' tarjetas vencen hoy' : 'Repetición espaciada', '#/cards'],
+      ['✎', 'Test por tema', '10–40 preguntas con corrección inmediata', '#/test'],
+      ['⏱', 'Simulacro', 'Parte 1 con tiempo y supuesto práctico', '#/sim'],
+      ['☷', 'Exámenes', 'Simulacros, oficiales y tests por número', '#/examenes'],
+    ]],
+    ['Entrenar un hábito', [
+      ['🔎', 'Detective de trampas', 'Marca qué trampas esconde cada pregunta', '#/trampas'],
+      ['👁', 'Lectura atenta', vel.n ? vel.n + ' fallos por velocidad' : 'Qué piden, palabras clave y respuesta', '#/lectura'],
+      ['⚡', 'Pregunta relámpago', 'Una sola pregunta', '#/relampago'],
+    ]],
+    ['Seguimiento', [
+      ['▤', 'Estadísticas', 'Mapa de dominio, simulacros y evolución', '#/stats'],
+      ['☰', 'Temas vistos', store.getSeen().length + ' temas marcados', '#/temario'],
+      ['⚠', 'Errores del banco', nErr ? nErr + ' por revisar' : 'Nada por revisar', '#/errores'],
+    ]],
+    ['La app', [
+      ['⌂', 'Inicio', 'Resumen y cuenta atrás', '#/home'],
+      ['⚙', 'Ajustes', NEWV ? 'Hay una versión nueva' : 'Cuenta, apariencia, copia y versión ' + APP_VERSION, '#/settings'],
+    ]],
+  ];
+  const prev = document.activeElement, o = document.createElement('div');
+  o.id = 'menuov'; o.className = 'overlay'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.setAttribute('aria-labelledby', 'menut');
+  const acts = [];
+  o.innerHTML = `<div class="card menu"><div class="menuhead"><h2 id="menut">Menú</h2><button class="ghost" id="menux" aria-label="Cerrar menú">✕</button></div>
+    ${G.map(([t, l]) => `<div class="gtitle">${esc(t)}</div><div class="lgroup">${l.map(([ic, n, sub, a]) => { const i = acts.push(a) - 1; return `<button class="lrow ${a === aqui ? 'here' : ''}" data-a="${i}" ${a === aqui ? 'aria-current="page"' : ''}><i aria-hidden="true">${ic}</i><span><b>${esc(n)}</b><small>${esc(sub)}</small></span></button>`; }).join('')}</div>`).join('')}</div>`;
+  const done = () => { document.removeEventListener('keydown', key, true); o.remove(); prev && prev.focus && prev.focus(); };
+  const key = e => {
+    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); done(); }
+    else if (e.key === 'Tab') { const bs = [...o.querySelectorAll('button')], i = bs.indexOf(document.activeElement); e.preventDefault(); bs[(i + (e.shiftKey ? -1 : 1) + bs.length) % bs.length].focus(); }
+  };
+  o.onclick = e => {
+    if (e.target === o || e.target.closest('#menux')) return done();
+    const b = e.target.closest('[data-a]'); if (!b) return;
+    const a = acts[+b.dataset.a]; done();
+    if (typeof a === 'function') a(); else go(a);
+  };
+  document.addEventListener('keydown', key, true);
+  document.body.append(o); $('#menux', o).focus();
+}
+
 // ───────── inicio ─────────
 routes.home = async function () {
   const idx = await getIndex(); await getMeta();
@@ -724,7 +783,7 @@ routes.home = async function () {
   const vel = velocidad(st);
   const row = (id, ico, t, sub, dis) => `<button class="lrow" id="${id}" ${dis ? 'disabled' : ''}><i aria-hidden="true">${ico}</i><span><b>${t}</b><small>${sub}</small></span></button>`;
   app.innerHTML = `
-  <div class="hhead"><div><div class="eyebrow">Preparación TAI</div><h1>Hola, David</h1></div><button class="iconbtn" id="stats" aria-label="Estadísticas">▤</button></div>
+  <div class="hhead"><div><div class="eyebrow">Preparación TAI</div><h1>Hola, David</h1></div><button class="iconbtn" id="menu" aria-label="Menú" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
   <div class="hero"><div class="hnum"><b>${dd > 0 ? dd : 0}</b><span>días al examen</span></div>
     <div class="hbars"><div class="hl"><span>Preguntas vistas</span><b>${seen} / ${idx.n}</b></div><div class="hb"><i style="width:${Math.min(100, pct(seen, idx.n))}%"></i></div><div class="hl"><span>Acierto global</span><b>${pct(ok, n)}%</b></div></div></div>
   <button class="cta" id="quick"><i aria-hidden="true">⚡</i><span><b>Sesión rápida · 5 min</b><small>${quickN(st)} preguntas: ${due ? 'tus repasos pendientes (' + due + ') mezclados con ' : ''}nuevas de tus temas más débiles</small></span></button>
@@ -758,12 +817,7 @@ routes.home = async function () {
   };
   paintNote(); cleanup = sync.onStatus(paintNote);
   $('#quick').onclick = guard(() => quickSession());
-  $('#rev').onclick = guard(async () => {
-    await getMeta(); const st = store.getStats(), t0 = now();
-    const cand = []; for (const id in st) { const r = st[id]; if (r[3] >= 0 && r[4] <= t0 && META[id]) cand.push({ i: id, t: META[id][0], due: r[4] }); }
-    const ids = pickRepaso(cand, 30).map(x => x.i);
-    startRun({ kind: 'rev', feedback: true, items: await byIds(ids), titulo: 'Repaso de fallos · más vencidas primero, temas mezclados' });
-  });
+  $('#rev').onclick = guard(startRepaso);
   $('#cards').onclick = () => go('#/cards');
   $('#lectura').onclick = () => go('#/lectura');
   $('#trampas').onclick = () => go('#/trampas');
@@ -773,7 +827,7 @@ routes.home = async function () {
   $('#test').onclick = () => go('#/test');
   $('#sim').onclick = () => go('#/sim');
   $('#examenes').onclick = () => go('#/examenes');
-  $('#stats').onclick = () => go('#/stats');
+  $('#menu').onclick = () => openMenu();
 };
 
 

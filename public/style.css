@@ -302,3 +302,13 @@ ul.tips{padding-left:20px;margin:8px 0}ul.tips li{margin:4px 0;font-size:var(--f
 .lrow b{display:block;font-size:var(--fs-l)}.lrow small{display:block;font-size:var(--fs-s);color:var(--mute);margin-top:1px}
 .mini{display:flex;gap:10px;margin:16px 0}.mini div{flex:1;background:var(--card);border:1px solid var(--line);border-radius:var(--r-l);padding:12px 14px}.mini b{display:block;font-size:var(--fs-2xl)}.mini span{font-size:var(--fs-s);color:var(--mute)}
 .sub.sm a{display:inline-block;padding:10px 0}
+.iconbtn svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;display:block;margin:0 auto}
+/* menú general */
+.overlay .card.menu{text-align:left;max-width:460px;max-height:calc(100dvh - 40px);overflow-y:auto;overscroll-behavior:contain;padding:14px 14px 18px}
+.menuhead{display:flex;justify-content:space-between;align-items:center;position:sticky;top:-14px;background:var(--card);margin:-14px -14px 0;padding:10px 8px 6px 18px;z-index:1}
+.menuhead h2{margin:0}
+.menu .gtitle:first-of-type{margin-top:4px}
+.lrow.here{background:var(--sel)}
+.menu .lrow{min-height:54px;padding:8px 12px}
+.menu .lrow i{width:36px;height:36px}
+.menu .lrow b{font-size:var(--fs-b)}
