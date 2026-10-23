@@ -11,7 +11,7 @@ service cloud.firestore {
     match /users/{uid}/stats/{tema} {
       allow read: if isOwner(uid);
       allow create, update: if isOwner(uid)
-        && request.resource.data.keys().hasAll(['m', 'u'])
+        && request.resource.data.keys().hasOnly(['m', 'u'])
         && request.resource.data.u is number
         && request.resource.data.m is map;
     }
@@ -26,7 +26,7 @@ service cloud.firestore {
     match /users/{uid}/cfg/seen {
       allow read: if isOwner(uid);
       allow create, update: if isOwner(uid)
-        && request.resource.data.keys().hasAll(['t', 'ts'])
+        && request.resource.data.keys().hasOnly(['t', 'ts'])
         && request.resource.data.t is list
         && request.resource.data.ts is number;
     }
@@ -34,14 +34,14 @@ service cloud.firestore {
     match /users/{uid}/cfg/cards {
       allow read: if isOwner(uid);
       allow create, update: if isOwner(uid)
-        && request.resource.data.keys().hasAll(['m', 'u'])
+        && request.resource.data.keys().hasOnly(['m', 'u'])
         && request.resource.data.m is map
         && request.resource.data.u is number;
     }
     match /users/{uid}/cfg/reports {
       allow read: if isOwner(uid);
       allow create, update: if isOwner(uid)
-        && request.resource.data.keys().hasAll(['m', 'u'])
+        && request.resource.data.keys().hasOnly(['m', 'u'])
         && request.resource.data.m is map
         && request.resource.data.u is number;
     }

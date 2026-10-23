@@ -98,6 +98,18 @@ export function mergeReports(m0) {
   return ch;
 }
 
+// Ajustes: solo claves simples y valores primitivos (evita basura o claves como __proto__ venidas de copias externas)
+function cleanCfg(c) {
+  const out = {};
+  if (!c || typeof c !== 'object' || Array.isArray(c)) return out;
+  for (const k of Object.keys(c)) {
+    if (!/^[A-Za-z0-9_.-]{1,40}$/.test(k) || k === '__proto__') continue;
+    const v = c[k];
+    if (v === null || ['string', 'number', 'boolean'].includes(typeof v)) out[k] = typeof v === 'string' ? v.slice(0, 200) : v;
+  }
+  return out;
+}
+
 let S = load();
 const listeners = new Set();
 let dirty = new Set();
@@ -106,7 +118,7 @@ let syncer = null;
 function load() {
   try {
     const s = JSON.parse(localStorage.getItem(KEY) || 'null');
-    if (s && s.stats) return { stats: cleanStats(s.stats), sessions: cleanSessions(s.sessions).slice(0, MAX_SESIONES), cfg: (s.cfg && typeof s.cfg === 'object') ? s.cfg : {}, seen: cleanSeen(s.seen), reports: cleanReports(s.reports), cards: cleanCards(s.cards) };
+    if (s && s.stats) return { stats: cleanStats(s.stats), sessions: cleanSessions(s.sessions).slice(0, MAX_SESIONES), cfg: cleanCfg(s.cfg), seen: cleanSeen(s.seen), reports: cleanReports(s.reports), cards: cleanCards(s.cards) };
   } catch (e) {}
   return { stats: {}, sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: {}, cards: {} };
 }
@@ -144,7 +156,7 @@ export async function recover() {
     const o = JSON.parse(txt); if (!o || typeof o !== 'object') return false;
     let ch = false;
     ch = mergeRemote(o.stats) || ch; ch = mergeSessions(o.sessions) || ch; ch = mergeSeen(o.seen) || ch; ch = mergeReports(o.reports) || ch; ch = mergeCards(o.cards) || ch;
-    if (o.cfg && typeof o.cfg === 'object') for (const k in o.cfg) if (!(k in S.cfg)) { S.cfg[k] = o.cfg[k]; ch = true; }
+    if (o.cfg && typeof o.cfg === 'object') { const c = cleanCfg(o.cfg); for (const k in c) if (!(k in S.cfg)) { S.cfg[k] = c[k]; ch = true; } }
     if (ch) { persist(); emit(); }
     return ch;
   } catch (e) { return false; }
@@ -262,6 +274,7 @@ export function mergeSessions(list0) {
   let ch = false;
   for (const s of list) if (!have.has(s.id)) { S.sessions.push(s); ch = true; }
   if (ch) { S.sessions.sort((a, b) => b.ts - a.ts); S.sessions = S.sessions.slice(0, MAX_SESIONES); persist(); emit(); }
+  return ch;
 }
 // ── API de tarjetas ──
 export const getCards = () => S.cards || (S.cards = {});
