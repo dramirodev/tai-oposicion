@@ -111,7 +111,8 @@ async function route() {
   document.querySelectorAll('nav a').forEach(a => { const on = a.dataset.r === sect; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   const f = routes[name] || routes.home;
   window.scrollTo(0, 0);
-  try { await getIndex(); await getMeta(); if (my !== routeSeq) return; await f(...args); if (my !== routeSeq) return; const hd = app.querySelector('h1'); if (hd) hd.tabIndex = -1; (hd || app).focus({ preventScroll: true }); if (RUN && name !== 'quiz') { const b = document.createElement('div'); b.className = 'note run'; b.innerHTML = `<b>${esc(RUN.titulo || 'Test')}</b> en curso · ${Math.min(RUN.idx + 1, RUN.items.length)}/${RUN.items.length} <button class="btn" id="resume">Continuar</button>`; app.prepend(b); $('#resume').onclick = () => go('#/quiz'); } } catch (e) { app.innerHTML = `<div class="card" role="alert"><h2>No se pudo cargar</h2><p>${navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button class="btn" id="retryRoute">Reintentar</button></div>`; $('#retryRoute').onclick = () => route(); console.error(e); }
+  const lt = setTimeout(() => { if (my === routeSeq) app.innerHTML = '<p class="sub loading" role="status">Cargando…</p>'; }, 120); // respuesta visible si los datos tardan
+  try { await getIndex(); await getMeta(); if (my !== routeSeq) return; await f(...args); clearTimeout(lt); if (my !== routeSeq) return; const hd = app.querySelector('h1'); if (hd) hd.tabIndex = -1; (hd || app).focus({ preventScroll: true }); if (RUN && name !== 'quiz') { const b = document.createElement('div'); b.className = 'note run'; b.innerHTML = `<b>${esc(RUN.titulo || 'Test')}</b> en curso · ${Math.min(RUN.idx + 1, RUN.items.length)}/${RUN.items.length} <button class="btn" id="resume">Continuar</button>`; app.prepend(b); $('#resume').onclick = () => go('#/quiz'); } } catch (e) { clearTimeout(lt); app.innerHTML = `<div class="card" role="alert"><h2>No se pudo cargar</h2><p>${navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button class="btn" id="retryRoute">Reintentar</button></div>`; $('#retryRoute').onclick = () => route(); console.error(e); }
 }
 window.addEventListener('hashchange', route);
 
@@ -125,7 +126,7 @@ function prioridad(q, mode) {
 }
 async function pick({ temas, origins, mode, n }) {
   const pool = [];
-  for (const t of temas) for (const q of await getTema(t)) if (allowed(q, origins)) pool.push(q);
+  for (const l of await Promise.all(temas.map(getTema))) for (const q of l) if (allowed(q, origins)) pool.push(q);
   let c = shuffle(pool).map(q => [prioridad(q, mode), q]);
   if (mode === 'falladas' || mode === 'dudosas') c = c.filter(x => x[0] === 0);
   else if (mode === 'nuevas') c.sort((a, b) => a[0] - b[0] || (store.rec(a[1].i)?.[2] || 0) - (store.rec(b[1].i)?.[2] || 0));
@@ -143,7 +144,7 @@ async function byIds(ids) {
   await getMeta();
   const need = new Set(ids.map(id => META[id]?.[0]).filter(Boolean));
   const m = new Map();
-  for (const t of need) for (const q of await getTema(t)) m.set(q.i, q);
+  for (const l of await Promise.all([...need].map(getTema))) for (const q of l) m.set(q.i, q);
   return ids.map(id => m.get(id)).filter(Boolean);
 }
 
@@ -530,20 +531,17 @@ routes.lectura = async function () {
 let CARDIDX; const cardCache = new Map(); let CRUN = null;
 async function curatedCards() {
   if (CARDIDX === undefined) { try { CARDIDX = (await j('cards/index.json')).temas || {}; } catch (e) { return []; } } // sin caché del fallo: se reintenta
-  const out = [];
-  for (const t in CARDIDX) {
-    if (!cardCache.has(t)) cardCache.set(t, j(`cards/${t}.json`).catch(e => { cardCache.delete(t); return []; }));
-    for (const c of await cardCache.get(t)) if (c && c.id && c.q && c.a && !c.revisar) out.push({ ...c, t });
-  }
+  const out = [], ts = Object.keys(CARDIDX);
+  for (const t of ts) if (!cardCache.has(t)) cardCache.set(t, j(`cards/${t}.json`).catch(e => { cardCache.delete(t); return []; }));
+  const lists = await Promise.all(ts.map(t => cardCache.get(t))); // en paralelo: antes eran peticiones una tras otra
+  ts.forEach((t, i) => { for (const c of lists[i]) if (c && c.id && c.q && c.a && !c.revisar) out.push({ ...c, t }); });
   return out;
 }
 async function falloCards() {
   await getMeta(); const out = [];
-  for (const id in store.getCards()) {
-    if (!id.startsWith('FC-Q-')) continue;
-    const qid = id.slice(5), t = temaOf(qid); if (!t) continue;
-    const q = (await getTema(t)).find(x => x.i === qid); if (q) out.push(cardFromQuestion(q));
-  }
+  const ids = Object.keys(store.getCards()).filter(id => id.startsWith('FC-Q-')).map(id => [id.slice(5), temaOf(id.slice(5))]).filter(x => x[1]);
+  const temas = new Map(await Promise.all([...new Set(ids.map(x => x[1]))].map(async t => [t, await getTema(t)])));
+  for (const [qid, t] of ids) { const q = temas.get(t).find(x => x.i === qid); if (q) out.push(cardFromQuestion(q)); }
   return out;
 }
 const allCards = async () => [...await curatedCards(), ...await falloCards()];
@@ -702,7 +700,7 @@ async function quickSession() {
   if (!temas.length) temas = dominioTemas(idx);
   temas.sort((a, b) => (ord[a.est] - ord[b.est]) || ((b.dias ?? 0) - (a.dias ?? 0)));
   const pools = [];
-  for (const t of temas.slice(0, 8)) pools.push(shuffle((await getTema(t.id)).filter(q => allowed(q, orgs) && !store.rec(q.i))));
+  for (const l of await Promise.all(temas.slice(0, 8).map(t => getTema(t.id)))) pools.push(shuffle(l.filter(q => allowed(q, orgs) && !store.rec(q.i))));
   const items = pickQuick(due, pools, N);
   if (!items.length) { toast('No hay preguntas nuevas ni repasos con esos filtros.'); return; }
   const nd = items.filter(q => store.rec(q.i)).length;
@@ -964,7 +962,8 @@ let SIMCFG = null;
 async function simParte1(idx, org, N, only) {
   const temas = idx.temas.filter(t => !only || only.has(t.id));
   const pools = {};
-  for (const t of temas) pools[t.id] = shuffle((await getTema(t.id)).filter(x => allowed(x, org))).sort((a, b) => (store.rec(a.i) ? 1 : 0) - (store.rec(b.i) ? 1 : 0));
+  const ls = await Promise.all(temas.map(t => getTema(t.id)));
+  temas.forEach((t, i) => { pools[t.id] = shuffle(ls[i].filter(x => allowed(x, org))).sort((a, b) => (store.rec(a.i) ? 1 : 0) - (store.rec(b.i) ? 1 : 0)); });
   return composeSim(temas, pools, N);
 }
 // Parte 2 tras la parte 1: ofrece 2 supuestos
@@ -1263,7 +1262,7 @@ routes.settings = async function () {
   async function download() {
     const el = $('#off'); let k = 0;
     try {
-      for (const t of idx.temas) { await getTema(t.id); k++; el.textContent = `Descargando… ${k}/${idx.temas.length}`; }
+      await Promise.all(idx.temas.map(t => getTema(t.id).then(() => { k++; el.textContent = `Descargando… ${k}/${idx.temas.length}`; })));
       await getSup(); await getMeta(); await curatedCards();
       el.textContent = 'Listo: todo el banco está disponible sin conexión.';
     } catch (e) { el.textContent = 'Error de descarga: ' + e.message; }
@@ -1283,8 +1282,21 @@ routes.settings = async function () {
   await route(); // primer pintado sin esperar a Firebase
   addEventListener('pagehide', saveRun); document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') saveRun(); });
   resumeRun().catch(() => {});
+  setTimeout(prefetchBanco, 4000);
   try { await getMeta(); await sync.init({ temaOf, idsOfTema: t => META._by[t] || [] }); } catch (e) { console.error(e); }
 })();
+
+// Descarga el banco en segundo plano (2 a la vez) para que Test, Simulacro y Repaso arranquen sin esperar a la red
+async function prefetchBanco() {
+  if (navigator.connection?.saveData || navigator.onLine === false || !window.caches) return;
+  try {
+    const idx = await getIndex(), c = await caches.open('tai-data');
+    const falta = [];
+    for (const t of idx.temas) { const u = `data/${t.id}.json`; if (!(await c.match(u))) falta.push(u); }
+    const w = async () => { for (let u; (u = falta.shift());) { try { await (await fetch(u)).arrayBuffer(); } catch (e) { return; } } };
+    await Promise.all([w(), w()]);
+  } catch (e) {}
+}
 
 // aviso de nueva versión del service worker
 function watchUpdates(reg) {

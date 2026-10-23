@@ -71,6 +71,21 @@ export async function login() {
 }
 export const logout = () => auth && signOut(auth);
 
+// Errores transitorios (red, servidor ocupado): no son un fallo real; se reintenta la suscripción con espera creciente.
+// Un listener de Firestore que falla queda cancelado para siempre, así que sin reintento la sincronización moría hasta volver a entrar.
+const TRANSIENT = new Set(['unavailable', 'deadline-exceeded', 'cancelled', 'aborted', 'internal', 'resource-exhausted']);
+let retryT = null, retryN = 0;
+function listenErr(e) {
+  if (!e.code || TRANSIENT.has(e.code)) {
+    status.state = 'reconectando…'; emit();
+    clearTimeout(retryT); retryT = setTimeout(() => { if (uid) start(); }, Math.min(60000, 3000 * 2 ** retryN++));
+  } else { status.error = e.message; status.state = 'error'; emit(); }
+}
+function ok() { retryN = 0; status.error = ''; status.lastSync = Date.now(); status.state = 'sincronizado'; emit(); }
+function revive() { if (uid && (status.state === 'error' || status.state === 'reconectando…')) { retryN = 0; start(); } }
+addEventListener('online', revive);
+if (typeof document !== 'undefined') document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') revive(); });
+
 function start() {
   stop();
   // estadísticas: un documento por tema
@@ -81,30 +96,30 @@ function start() {
       for (const k in m) map[dec(k)] = m[k];
     });
     store.mergeRemote(map);
-    status.lastSync = Date.now(); status.state = 'sincronizado'; emit();
+    ok();
     // sube lo local que el servidor no tenga o tenga más antiguo
     pushAll(map);
-  }, e => { status.error = e.message; status.state = 'error'; emit(); }));
+  }, listenErr));
   unsubs.push(onSnapshot(query(collection(db, 'users', uid, 'sessions'), orderBy('ts', 'desc'), limit(300)), snap => {
     const l = []; snap.forEach(d => l.push(d.data()));
     store.mergeSessions(l);
-  }, e => { status.error = 'Sesiones: ' + e.message; emit(); }));
+  }, listenErr));
   unsubs.push(onSnapshot(doc(db, 'users', uid, 'cfg', 'seen'), d => {
     if (d.exists()) store.mergeSeen(d.data());
     const loc = store.getSeenDoc(), rem = d.exists() ? d.data() : null;
     if (loc.ts && (!rem || loc.ts > (rem.ts || 0))) pushSeen(loc);
-  }, () => {}));
+  }, listenErr));
   unsubs.push(onSnapshot(doc(db, 'users', uid, 'cfg', 'reports'), d => {
     if (d.exists()) store.mergeReports((d.data() || {}).m);
     const loc = store.getReports(), rem = d.exists() ? ((d.data() || {}).m || {}) : {};
     if (Object.keys(loc).some(k => !rem[k] || loc[k].ts > rem[k].ts)) pushReports(loc);
-  }, () => {}));
+  }, listenErr));
   unsubs.push(onSnapshot(doc(db, 'users', uid, 'cfg', 'cards'), d => {
     const rem = d.exists() ? ((d.data() || {}).m || {}) : {};
     if (d.exists()) store.mergeCards(rem);
     const loc = store.getCards();
     if (Object.keys(loc).some(k => !rem[k] || loc[k][2] > rem[k][2])) pushCards(loc);
-  }, () => {}));
+  }, listenErr));
 }
 let cardsT = null;
 export function pushCards(m) {
@@ -136,8 +151,8 @@ function flush() {
     const m = {};
     for (const id of idsOfTema(t)) if (stats[id]) m[enc(id)] = stats[id];
     setDoc(doc(db, 'users', uid, 'stats', t), { m, u: Date.now() }, { merge: true })
-      .then(() => { status.lastSync = Date.now(); status.state = 'sincronizado'; emit(); })
-      .catch(e => { status.error = e.message; emit(); });
+      .then(ok)
+      .catch(writeErr);
   }
 }
 export function pushSession(s) {
@@ -155,4 +170,4 @@ export function pushReports(m) {
   setDoc(doc(db, 'users', uid, 'cfg', 'reports'), { m, u: Date.now() }, { merge: true }).catch(writeErr);
 }
 
-function writeErr(e) { status.error = 'No se pudo guardar en la nube (' + (e.code || e.message) + ')'; emit(); }
+function writeErr(e) { if (!e.code || TRANSIENT.has(e.code)) return; status.error = 'No se pudo guardar en la nube (' + (e.code || e.message) + ')'; emit(); }
