@@ -1221,6 +1221,7 @@ routes.settings = async function () {
         s.user ? `<p>Conectado como <b>${esc(s.user.name)}</b><br><small>${esc(s.state)}${s.lastSync ? ' · ' + new Date(s.lastSync).toLocaleTimeString('es-ES') : ''}</small></p><button class="btn sec" id="out">Cerrar sesión</button>` :
           '<p>Inicia sesión para tener el mismo historial en iPhone y iPad.</p><button class="btn" id="in">Entrar con Google</button>'}
       ${s.error ? `<p class="r"><small>${esc(s.error)}</small></p>` : ''}
+      ${s.user && s.state !== 'sincronizado' && s.state !== 'sincronizando…' ? `${s.detail ? `<p><small>${esc(s.detail)}</small></p>` : ''}<button class="btn sec" id="retrySync">Reintentar sincronización</button>` : ''}
       <p><small>En este dispositivo: ${Object.keys(store.getStats()).length} preguntas vistas · ${store.getSeen().length} temas vistos · ${store.getSessions().length} sesiones</small></p>
       ${sync.configured ? `<p><small>Dominio: ${esc(sync.diag().host)} · auth: ${esc(sync.diag().authDomain)}</small></p>` : ''}
     </div>
@@ -1244,6 +1245,7 @@ routes.settings = async function () {
     <p class="sub">Banco: ${idx.n} preguntas + ${idx.nsup} de supuestos. Versión 1.0</p>`;
     $('#in') && ($('#in').onclick = () => sync.login());
     $('#out') && ($('#out').onclick = () => sync.logout());
+    $('#retrySync') && ($('#retrySync').onclick = () => sync.retry());
     $('#errs').onclick = () => go('#/errores');
     $('#exd').onchange = e => { if (/^\d{4}-\d\d-\d\d$/.test(e.target.value)) store.setCfg('exam', e.target.value); };
     $('#th').onclick = e => { const b = e.target.closest('button'); if (b) { store.setCfg('ui', { ...normUi(store.getCfg().ui), theme: b.dataset.v }); draw(); } };

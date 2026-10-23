@@ -11,7 +11,7 @@ const dec = id => id.replace(/~/g, '.');
 
 export let configured = false;
 export const diag = () => ({ host: location.host, authDomain: (auth && auth.config && auth.config.authDomain) || '' });
-export const status = { user: null, state: 'sin configurar', lastSync: 0, error: '' };
+export const status = { user: null, state: 'sin configurar', lastSync: 0, error: '', detail: '' };
 const subs = new Set();
 export const onStatus = fn => { subs.add(fn); return () => subs.delete(fn); };
 const emit = () => subs.forEach(f => f(status));
@@ -36,7 +36,7 @@ export async function init(metaFns) {
   const app = initializeApp(firebaseConfig);
   // Persistencia explícita (IndexedDB y, si no, localStorage): en iOS la sesión debe sobrevivir al cierre de la app.
   auth = initializeAuth(app, { persistence: [indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence], popupRedirectResolver: browserPopupRedirectResolver });
-  db = initializeFirestore(app, { localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }) });
+  db = initializeFirestore(app, { localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }), experimentalAutoDetectLongPolling: true }); // Safari/iOS: si el canal en streaming falla, usa long-polling
   const pend = (() => { try { return localStorage.getItem('tai.redir'); } catch (e) { return null; } })();
   getRedirectResult(auth).then(r => {
     try { localStorage.removeItem('tai.redir'); } catch (e) {}
@@ -70,18 +70,18 @@ export async function login() {
   emit();
 }
 export const logout = () => auth && signOut(auth);
+export function retry() { status.error = ''; retryN = 0; if (uid) { status.state = 'sincronizando…'; emit(); start(); } }
 
 // Errores transitorios (red, servidor ocupado): no son un fallo real; se reintenta la suscripción con espera creciente.
 // Un listener de Firestore que falla queda cancelado para siempre, así que sin reintento la sincronización moría hasta volver a entrar.
-const TRANSIENT = new Set(['unavailable', 'deadline-exceeded', 'cancelled', 'aborted', 'internal', 'resource-exhausted']);
 let retryT = null, retryN = 0;
 function listenErr(e) {
-  if (!e.code || TRANSIENT.has(e.code)) {
-    status.state = 'reconectando…'; emit();
+  if (e.code !== 'permission-denied' && e.code !== 'unauthenticated') {
+    status.state = 'reconectando…'; status.detail = (e.code || '') + ' ' + (e.message || ''); console.warn('Firestore:', e.code, e.message); emit();
     clearTimeout(retryT); retryT = setTimeout(() => { if (uid) start(); }, Math.min(60000, 3000 * 2 ** retryN++));
   } else { status.error = e.message; status.state = 'error'; emit(); }
 }
-function ok() { retryN = 0; status.error = ''; status.lastSync = Date.now(); status.state = 'sincronizado'; emit(); }
+function ok() { retryN = 0; status.error = ''; status.detail = ''; status.lastSync = Date.now(); status.state = 'sincronizado'; emit(); }
 function revive() { if (uid && (status.state === 'error' || status.state === 'reconectando…')) { retryN = 0; start(); } }
 addEventListener('online', revive);
 if (typeof document !== 'undefined') document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') revive(); });
@@ -170,4 +170,4 @@ export function pushReports(m) {
   setDoc(doc(db, 'users', uid, 'cfg', 'reports'), { m, u: Date.now() }, { merge: true }).catch(writeErr);
 }
 
-function writeErr(e) { if (!e.code || TRANSIENT.has(e.code)) return; status.error = 'No se pudo guardar en la nube (' + (e.code || e.message) + ')'; emit(); }
+function writeErr(e) { if (e.code !== 'permission-denied' && e.code !== 'unauthenticated') { console.warn('Firestore (escritura):', e.code, e.message); return; } status.error = 'No se pudo guardar en la nube (' + (e.code || e.message) + ')'; emit(); }
