@@ -301,6 +301,13 @@ routes.relampago = async function () {
   });
 };
 
+// mezcla aleatoria: cada grupo aporta hasta k ids prioritarios y el resto rellena hasta n; las ids de `rec` solo se usan si faltan
+const mezclaIds = (grupos, resto, n = 40, rec = new Set()) => {
+  const fresh = a => [...shuffle(a.filter(id => !rec.has(String(id)))), ...shuffle(a.filter(id => rec.has(String(id))))];
+  const pick = grupos.flatMap(([a, k]) => fresh(a).slice(0, k)), got = new Set(pick);
+  return [...pick, ...fresh(resto).filter(id => !got.has(id)).slice(0, n)];
+};
+
 // ───────── detective de trampas: ejercicio ─────────
 let TRUN = null;
 routes.trampas = async function () {
@@ -309,7 +316,7 @@ routes.trampas = async function () {
     const st = store.getStats();
     const ids = Object.keys(META).filter(id => id !== '_by' && (META[id][3] || []).length);
     const fail = ids.filter(id => st[id] && st[id][5] === 0), rest = ids.filter(id => !fail.includes(id));
-    const items = (await byIds([...shuffle(fail).slice(0, 4), ...shuffle(rest).slice(0, 40)])).filter(q => !q.s && q.x?.length).slice(0, 8);
+    const items = (await byIds(mezclaIds([[fail, 4]], rest))).filter(q => !q.s && q.x?.length).slice(0, 8);
     TRUN = { items, k: 0, res: [] };
   }
   const R = TRUN; const ALL = Object.keys(TRAMPAS).map(Number);
@@ -377,13 +384,7 @@ routes.lectura = async function () {
     const fallos = Object.keys(st).filter(id => st[id][5] === 0 && !velS.has(id));
     const fS = new Set(fallos);
     const rest = Object.keys(META).filter(k => k !== '_by' && META[k] && !velS.has(k) && !fS.has(k));
-    // primero las no vistas recientemente; las recientes solo rellenan si faltan
-    const fresh = a => [...shuffle(a.filter(id => !rec.has(String(id)))), ...shuffle(a.filter(id => rec.has(String(id))))];
-    // mezcla aleatoria: hasta 3 de velocidad, 2 de fallos y el resto al azar; el orden final también es aleatorio
-    const pick = [...fresh(vel).slice(0, 3), ...fresh(fallos).slice(0, 2)];
-    const chosen = new Set(pick);
-    const extra = fresh(rest).filter(id => !chosen.has(id)).slice(0, 40);
-    const ids = [...pick, ...extra];
+    const ids = mezclaIds([[vel, 3], [fallos, 2]], rest, 40, rec);
     const got = new Map((await byIds(ids)).filter(q => !q.s && !q.cp).map(q => [String(q.i), q]));
     const ok = ids.map(id => got.get(String(id))).filter(Boolean);
     const items = shuffle(ok.slice(0, 8));
