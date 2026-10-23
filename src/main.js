@@ -1404,9 +1404,15 @@ async function checkUpdate() {
 async function applyUpdate() {
   saveRun(); // si hay un test en curso, se retoma al volver
   try { await store.flushNow(); } catch (e) {}
-  try { const reg = await navigator.serviceWorker?.getRegistration(); if (reg) { await reg.update(); reg.waiting?.postMessage('skip'); } } catch (e) {}
-  // vaciar la caché del shell (no el banco de preguntas) para que la recarga traiga todo de la red
-  try { if (navigator.onLine !== false) for (const k of await caches.keys()) if (k !== 'tai-data') await caches.delete(k); } catch (e) {}
+  try {
+    const reg = await navigator.serviceWorker?.getRegistration();
+    if (reg) {
+      await reg.update(); reg.waiting?.postMessage('skip');
+      const w = reg.installing || reg.waiting;
+      // esperar (máx. 6 s) a que el service worker nuevo termine de instalarse antes de recargar
+      if (w && w.state !== 'activated') await new Promise(ok => { const t = setTimeout(ok, 6000); w.addEventListener('statechange', () => { if (w.state === 'activated' || w.state === 'redundant') { clearTimeout(t); ok(); } }); });
+    }
+  } catch (e) {}
   location.reload();
 }
 
