@@ -147,6 +147,7 @@ nav a svg{display:block;width:24px;height:24px;margin:0 auto;fill:none;stroke:cu
 .tm small{white-space:nowrap}
 select{font:inherit;font-size:var(--fs-b);padding:10px;border-radius:var(--r-m);border:1.5px solid var(--line);background:var(--card);color:var(--ink);flex:1;min-width:0}
 .row select{flex:1 1 140px}
+select.wide{width:100%;flex:none}
 
 /* ===== pregunta ===== */
 .qhead{display:flex;align-items:center;gap:12px;position:sticky;top:var(--sat);background:var(--bg);padding:10px 0 8px;z-index:3}

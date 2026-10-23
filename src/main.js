@@ -907,23 +907,30 @@ function listaExamenes() {
 }
 routes.examenes = async function () {
   await getIndex(); await getMeta(); const { sims, ofi, tests } = listaExamenes();
+  const todos = [...sims, ...ofi, ...tests];
+  const grupos = [['Simulacros de la academia', sims], ['Exámenes oficiales', ofi], ['Tests por tema de la academia', tests]];
   const ses = store.getSessions();
   const info = nombre => { const h = ses.filter(x => x.titulo === nombre); return h.length ? `Última nota ${h[0].nota} · mejor ${Math.max(...h.map(x => x.nota))} · ${h.length} intento${h.length === 1 ? '' : 's'}` : 'Sin hacer'; };
-  const fila = e => `<div class="card"><b>${esc(e.nombre)}</b> <small>· ${e.ids.length} preguntas</small><div class="sub sm">${esc(info(e.nombre))}</div>
-    <div class="row"><button class="btn" data-k="${esc(e.k)}" data-m="sim">Cronometrado</button><button class="btn sec" data-k="${esc(e.k)}" data-m="est">Con corrección</button></div></div>`;
-  app.innerHTML = `<h1>Exámenes</h1><div class="sub">Elige un examen y contesta solo sus preguntas. «Cronometrado» no corrige hasta el final y puntúa con la nota oficial; «Con corrección» te explica cada pregunta al momento.</div>
-    <h2 class="h3">Simulacros de la academia</h2>${sims.map(fila).join('') || '<p class="sub">No hay simulacros cargados.</p>'}
-    <h2 class="h3">Exámenes oficiales</h2>${ofi.map(fila).join('') || '<p class="sub">No hay exámenes cargados.</p>'}
-    <h2 class="h3">Tests por tema de la academia</h2>${tests.map(fila).join('') || '<p class="sub">No hay tests cargados.</p>'}`;
-  app.onclick = async e => {
-    const b = e.target.closest('button[data-k]'); if (!b) return;
-    const ex = [...sims, ...ofi, ...tests].find(x => x.k === b.dataset.k); if (!ex) return;
-    const items = (await byIds(ex.ids)).filter(q => !q.s);
-    if (!items.length) { toast('No se pudieron cargar las preguntas.'); return; }
-    if (b.dataset.m === 'sim') startRun({ kind: 'sim', feedback: false, items, limit: 90, titulo: ex.nombre });
-    else startRun({ kind: 'test', feedback: true, items, titulo: ex.nombre });
+  let sel = store.getCfg().exsel; if (!todos.some(x => x.k === sel)) sel = todos[0]?.k;
+  const draw = () => {
+    const ex = todos.find(x => x.k === sel);
+    app.innerHTML = `<h1>Exámenes</h1><div class="sub">Elige un examen y contesta solo sus preguntas. «Cronometrado» no corrige hasta el final y puntúa con la nota oficial; «Con corrección» te explica cada pregunta al momento.</div>
+    ${ex ? `<div class="card"><h2 class="h3"><label for="exsel">Examen</label></h2>
+      <select id="exsel" class="wide">${grupos.map(([t, l]) => l.length ? `<optgroup label="${esc(t)}">${l.map(e => `<option value="${esc(e.k)}" ${e.k === sel ? 'selected' : ''}>${esc(e.nombre)} · ${e.ids.length} preguntas</option>`).join('')}</optgroup>` : '').join('')}</select>
+      <p class="sub sm" id="exinfo">${esc(info(ex.nombre))}</p>
+      <div class="row"><button class="btn" data-m="sim">Cronometrado</button><button class="btn sec" data-m="est">Con corrección</button></div></div>`
+      : '<p class="sub">No hay exámenes cargados.</p>'}`;
+    const dd = $('#exsel');
+    if (dd) dd.onchange = () => { sel = dd.value; store.setCfg('exsel', sel); draw(); const n = $('#exsel'); n && n.focus({ preventScroll: true }); };
+    app.querySelectorAll('button[data-m]').forEach(b => b.onclick = guard(async function () {
+      const ex2 = todos.find(x => x.k === sel); if (!ex2) return;
+      const items = (await byIds(ex2.ids)).filter(q => !q.s);
+      if (!items.length) { toast('No se pudieron cargar las preguntas.'); return; }
+      if (b.dataset.m === 'sim') startRun({ kind: 'sim', feedback: false, items, limit: 90, titulo: ex2.nombre });
+      else startRun({ kind: 'test', feedback: true, items, titulo: ex2.nombre });
+    }));
   };
-  cleanup = () => { app.onclick = null; };
+  draw();
 };
 
 // ───────── simulacro ─────────
