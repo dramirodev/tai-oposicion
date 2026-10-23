@@ -2,6 +2,8 @@ import * as store from './store.js';
 import * as sync from './syncfacade.js';
 import { esc, shuffle, fmtT, pct, nota, allowed, composeSim, dominioCalc, aggregateWeeks, slowList, quickN, pickQuick, simHistory, compareSessions, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, cargaRepasos, motivosFallo, suertes, normUi, ZOOMS, swipeDir, keyAction, pickCards, cardStats, cardFromQuestion, hiliteHtml, claveHtml, claveSpans, pideNegativa, minLectura, velocidad, CONSEJOS_LECTURA, analisisSimulacro, ritmoSimulacro } from './logic.js';
 
+const APP_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : 'dev';
+const APP_BUILD = typeof __APP_BUILD__ !== 'undefined' ? __APP_BUILD__ : 'dev';
 const $ = (s, r = document) => r.querySelector(s);
 const app = $('#app');
 const L = 'ABCD';
@@ -1242,17 +1244,30 @@ routes.settings = async function () {
       <p><small>Teclado (iPad): 1–4 o A–D responden · Intro, → o espacio: siguiente · ←: anterior · B: en blanco · F: dudosa · P: pausa. Gestos: desliza a la izquierda para pasar y a la derecha para volver.</small></p>
       <p><small>Se guarda solo en este dispositivo.</small></p>
     </div>
+    <div class="card"><h2 class="h3">Versión de la app</h2>
+      <p>Versión <b>${esc(APP_VERSION)}</b> <small>(${esc(APP_BUILD.split('+')[1] || APP_BUILD)})</small></p>
+      <p id="updmsg" class="sm">${NEWV ? `Hay una versión nueva: <b>${esc(NEWV.version)}</b>.` : 'Comprueba si hay una versión nueva; si la hay, la app se recarga para usarla.'}</p>
+      <button class="btn ${NEWV ? '' : 'sec'}" id="upd">${NEWV ? 'Actualizar ahora' : 'Buscar actualización'}</button></div>
     <div class="card"><h2 class="h3">Fecha del examen</h2><label class="sm" for="exd">Para la cuenta atrás de Inicio</label><input type="date" id="exd" value="${esc(store.getCfg().exam || '2027-06-01')}"></div>
     <div class="card"><h2 class="h3">Errores del banco</h2><p>${Object.values(store.getReports()).filter(r => r.st === 'abierto').length} por revisar. Anótalos con «Avisar de error» al contestar y exporta la lista para corregirlos.</p><button class="btn sec" id="errs">Ver errores del banco</button></div>
     <div class="card"><h2 class="h3">Uso sin conexión</h2><p id="off">Pulsa para descargar todo el banco en el dispositivo (≈9 MB).</p><button class="btn sec" id="dl">Descargar para uso sin conexión</button></div>
     <div class="card"><h2 class="h3">Tarjetas</h2><p>Exporta las tarjetas curadas (y tus fallos convertidos en tarjeta) a Anki: texto separado por tabuladores, importable con «Archivo → Importar».</p><button class="btn sec" id="anki">Exportar tarjetas a Anki (.txt)</button></div>
     <div class="card"><h2 class="h3">Copia de seguridad</h2><button class="btn sec" id="ex">Exportar progreso</button> <label class="btn sec file">Importar<input type="file" id="im" accept=".json"></label></div>
     <div class="card"><h2 class="h3">Zona delicada</h2><button class="btn danger" id="rs">Borrar progreso de este dispositivo</button></div>
-    <p class="sub">Banco: ${idx.n} preguntas + ${idx.nsup} de supuestos. Versión 1.0</p>`;
+    <p class="sub">Banco: ${idx.n} preguntas + ${idx.nsup} de supuestos.</p>`;
     $('#in') && ($('#in').onclick = () => sync.login());
     $('#out') && ($('#out').onclick = () => sync.logout());
     $('#retrySync') && ($('#retrySync').onclick = () => sync.retry());
     $('#errs').onclick = () => go('#/errores');
+    $('#upd').onclick = async () => {
+      if (!NEWV) {
+        $('#upd').disabled = true; $('#upd').textContent = 'Buscando…';
+        const n = await checkUpdate();
+        if (n === undefined) { toast('No se pudo comprobar: sin conexión.'); } else if (!n) { toast('Ya tienes la última versión.'); }
+        draw(); return;
+      }
+      if (await ask(`Se recargará la app para pasar a la versión ${NEWV.version}. Lo que tengas en curso se guarda.`, 'Actualizar')) applyUpdate();
+    };
     $('#exd').onchange = e => { if (/^\d{4}-\d\d-\d\d$/.test(e.target.value)) store.setCfg('exam', e.target.value); };
     $('#th').onclick = e => { const b = e.target.closest('button'); if (b) { store.setCfg('ui', { ...normUi(store.getCfg().ui), theme: b.dataset.v }); draw(); } };
     $('#lec').onclick = e => { const b = e.target.closest('button'); if (b) { store.setCfg('ui', { ...normUi(store.getCfg().ui), lectura: +b.dataset.v }); draw(); } };
@@ -1291,6 +1306,9 @@ routes.settings = async function () {
   addEventListener('pagehide', saveRun); document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') saveRun(); });
   resumeRun().catch(() => {});
   setTimeout(prefetchBanco, 4000);
+  const aviso = async () => { const n = await checkUpdate(); if (n) toast(`Hay una versión nueva (${n.version}). Ajustes → Actualizar la app.`); };
+  setTimeout(aviso, 6000);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') aviso(); });
   try { await getMeta(); await sync.init({ temaOf, idsOfTema: t => META._by[t] || [] }); } catch (e) { console.error(e); }
 })();
 
@@ -1306,9 +1324,25 @@ async function prefetchBanco() {
   } catch (e) {}
 }
 
+// ───────── versión y actualización ─────────
+let NEWV = null; // versión nueva detectada en el servidor (objeto de version.json)
+async function checkUpdate() {
+  try {
+    const v = await (await fetch('version.json', { cache: 'no-store' })).json();
+    NEWV = v && v.build && v.build !== APP_BUILD ? v : null;
+  } catch (e) { return undefined; } // sin red: no sabemos
+  return NEWV;
+}
+async function applyUpdate() {
+  saveRun(); // si hay un test en curso, se retoma al volver
+  try { await store.flushNow(); } catch (e) {}
+  try { const reg = await navigator.serviceWorker?.getRegistration(); if (reg) await reg.update(); } catch (e) {}
+  location.reload();
+}
+
 // aviso de nueva versión del service worker
 function watchUpdates(reg) {
-  const ready = w => w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) toast('Hay una versión nueva: cierra y abre la app para actualizar.'); });
+  const ready = w => w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) toast('Hay una versión nueva: Ajustes → Actualizar la app.'); });
   if (reg.installing) ready(reg.installing);
   reg.addEventListener('updatefound', () => reg.installing && ready(reg.installing));
 }

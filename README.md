@@ -71,3 +71,10 @@ El progreso se guarda en `localStorage` y se duplica en IndexedDB (también al p
 ## Tarjetas de repaso (flashcards)
 - **Fase A (hecha):** al fallar una pregunta (motivo distinto de «Despiste») pulsa «📇 Hacer tarjeta». En Inicio → «Tarjetas de repaso»: primero ves la pregunta, pulsas para ver la respuesta y valoras *Fallé / Dudaba / Lo sabía* (teclas 1·2·3, deslizar ← / →). Mismos intervalos que las preguntas (2/5/14/30/60 días); fallar o dudar vuelve a +2 días. Las vencidas salen primero, mezcladas por tema.
 - **Fase B (pendiente):** tarjetas curadas por tema en `public/cards/Txx.json` + `public/cards/index.json`; se validan con `node scripts/validate_cards.mjs` (también en `npm test`). Ver `docs/PLAN_FLASHCARDS.md`.
+
+## Versiones
+
+- La versión es la de `package.json` (semver). Para publicar una nueva: `npm version patch|minor|major` (o editar el campo) y hacer push; el CI compila y despliega.
+- `npm run build` (`scripts/build.mjs`) inyecta la versión y el commit en la app y genera `public/version.json` (no se versiona).
+- En Ajustes → «Versión de la app» se ve la versión instalada. La app consulta `version.json` al abrirse y al volver a primer plano; si es distinta, avisa y el botón «Actualizar ahora» guarda lo que haya en curso y recarga.
+- Si cambias el service worker, sube también su `V` en `public/sw.js`.

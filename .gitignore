@@ -5,3 +5,4 @@ coverage/
 *.log
 public/app.js
 public/chunks/
+public/version.json
