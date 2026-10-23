@@ -33,10 +33,18 @@ function netShow() {
   else if (netEl.className === 'off') { netEl.className = 'on'; netEl.textContent = 'De nuevo en línea'; netT = setTimeout(() => { netEl.className = ''; netEl.textContent = ''; }, 3000); }
 }
 addEventListener('offline', netShow); addEventListener('online', netShow); netShow();
-function toast(msg) {
+function toast(msg, action) {
   const t = toastEl();
-  t.textContent = msg; t.classList.add('show');
-  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 4500);
+  t.onclick = null; t.textContent = msg; t.classList.toggle('act', !!action);
+  if (action) {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = action.label;
+    const go = () => { t.onclick = null; t.textContent = 'Actualizando…'; t.classList.remove('act'); action.fn(); };
+    b.onclick = e => { e.stopPropagation(); go(); };
+    t.onclick = go; // pulsar en cualquier parte del aviso también actualiza
+    t.append(b);
+  }
+  t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), action ? 20000 : 4500);
 }
 function ask(msg, okLabel = 'Aceptar', danger = false) {
   return new Promise(res => {
@@ -1366,7 +1374,7 @@ routes.settings = async function () {
   addEventListener('pagehide', saveRun); document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') saveRun(); });
   resumeRun().catch(() => {});
   setTimeout(prefetchBanco, 4000);
-  const aviso = async () => { const n = await checkUpdate(); if (n) toast(`Hay una versión nueva (${n.version}). Ajustes → Actualizar la app.`); };
+  const aviso = async () => { const n = await checkUpdate(); if (n) toast(`Hay una versión nueva (${n.version}).`, { label: 'Actualizar', fn: applyUpdate }); };
   setTimeout(aviso, 6000);
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') aviso(); });
   try { await getMeta(); await sync.init({ temaOf, idsOfTema: t => META._by[t] || [] }); } catch (e) { console.error(e); }
@@ -1396,13 +1404,15 @@ async function checkUpdate() {
 async function applyUpdate() {
   saveRun(); // si hay un test en curso, se retoma al volver
   try { await store.flushNow(); } catch (e) {}
-  try { const reg = await navigator.serviceWorker?.getRegistration(); if (reg) await reg.update(); } catch (e) {}
+  try { const reg = await navigator.serviceWorker?.getRegistration(); if (reg) { await reg.update(); reg.waiting?.postMessage('skip'); } } catch (e) {}
+  // vaciar la caché del shell (no el banco de preguntas) para que la recarga traiga todo de la red
+  try { if (navigator.onLine !== false) for (const k of await caches.keys()) if (k !== 'tai-data') await caches.delete(k); } catch (e) {}
   location.reload();
 }
 
 // aviso de nueva versión del service worker
 function watchUpdates(reg) {
-  const ready = w => w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) toast('Hay una versión nueva: Ajustes → Actualizar la app.'); });
+  const ready = w => w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) toast('Hay una versión nueva.', { label: 'Actualizar', fn: applyUpdate }); });
   if (reg.installing) ready(reg.installing);
   reg.addEventListener('updatefound', () => reg.installing && ready(reg.installing));
 }
