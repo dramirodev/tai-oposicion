@@ -153,6 +153,7 @@ routes.quiz = async function () {
   }
   const onKey = e => {
     if (/^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName || ''))) return;
+    if (R.paused && e.key === 'Tab') { e.preventDefault(); const rb = $('.overlay #resume'); rb && rb.focus(); return; }
     if (R.items[R.idx] === undefined) return;
     const act = keyAction(e, R.items[R.idx].a.length); if (!act) return;
     e.preventDefault();
@@ -161,7 +162,7 @@ routes.quiz = async function () {
     else if (act.t === 'prev') prev();
     else if (act.t === 'blank') { const b = $('#blank'); b && b.click(); }
     else if (act.t === 'flag') { const b = $('#flag'); b && b.click(); }
-    else if (act.t === 'pause') { const b = $('#pause') || $('#resume'); b && b.click(); }
+    else if (act.t === 'pause') { const b = R.paused ? $('.overlay #resume') : $('#pause'); b && b.click(); }
   };
   let tx = null;
   const onTs = e => { const t = e.touches[0]; tx = e.touches.length === 1 && t.clientX > 24 && t.clientX < innerWidth - 24 && !e.target.closest('details,input,textarea,button.ghost') ? [t.clientX, t.clientY] : null; };
@@ -223,6 +224,7 @@ routes.quiz = async function () {
     </div>
     ${R.paused ? `<div class="overlay" role="dialog" aria-modal="true" aria-labelledby="pt"><div class="card"><h2 id="pt">En pausa</h2><p>El tiempo está detenido.</p><button class="btn" id="resume">Continuar</button></div></div>` : ''}`;
     bind(q);
+    if (R.paused) { app.querySelectorAll('.qhead,.sub,.pace,.card.q,.bar2').forEach(el => { if (!el.closest('.overlay')) el.inert = true; }); const rb = $('.overlay #resume'); rb && rb.focus(); }
     clearInterval(R.gt);
     if (LEC === 2 && !reveal && a === undefined && !R.paused) {
       const need = minLectura(q), left = () => Math.ceil(need - (Date.now() - R.qT0) / 1000);
@@ -249,7 +251,7 @@ routes.quiz = async function () {
   function bind(q) {
     $('#exit').onclick = async () => { if (await ask(R.feedback ? '¿Salir? Lo ya respondido queda guardado.' : '¿Abandonar el simulacro? Se perderá.', 'Salir', !R.feedback)) { if (R.feedback && R.ans.some(x => x !== undefined)) finish(); else { RUN = null; go('#/home'); } } };
     $('#pause') && ($('#pause').onclick = () => { R.paused = true; draw(); });
-    $('#resume') && ($('#resume').onclick = () => { R.paused = false; draw(); });
+    $('#resume') && ($('#resume').onclick = () => { R.paused = false; draw(); const pb = $('#pause'); pb && pb.focus(); });
     app.querySelectorAll('.opt').forEach(b => b.onclick = () => {
       if (R.paused) return;
       const i = +b.dataset.i;
