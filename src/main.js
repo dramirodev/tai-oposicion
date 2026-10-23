@@ -397,13 +397,21 @@ routes.lectura = async function () {
     } else if (R.step === 1) {
       const toks = words(q.q), spans = claveSpans(q.q); let pos = 0, wi = 0, key = [];
       const html = toks.map(t => { const a = pos; pos += t.length; if (/^\s+$/.test(t) || !t) return esc(t); const id = wi++; const k = spans.some(([x, y]) => a >= x && a < y); if (k) key.push(id); return `<span class="tk" data-id="${id}" data-k="${k ? 1 : 0}">${esc(t)}</span>`; }).join('');
-      app.innerHTML = `${head}<div class="card q"><p><b>2. Toca las palabras que cambian el sentido</b> (negaciones, excepciones, absolutos, cifras y plazos).</p><div class="enun pre tks">${html}</div><div id="fb1"></div><div class="bar2"><button class="btn" id="chk">Comprobar</button></div></div>`;
+      app.innerHTML = `${head}<div class="card q"><p><b>2. Toca las palabras que cambian el sentido</b> (negaciones, excepciones, absolutos, cifras y plazos).</p><div class="enun pre tks">${html}</div><div id="fb1"></div><div class="bar2"><button class="btn sec" id="none">No contiene</button><button class="btn" id="chk">Continuar</button></div></div>`;
       app.querySelectorAll('.tk').forEach(el => el.onclick = () => el.classList.toggle('on'));
+      $('#none').onclick = () => { app.querySelectorAll('.tk.on').forEach(el => el.classList.remove('on')); $('#chk').dataset.claim = 'none'; $('#chk').click(); };
       $('#chk').onclick = () => {
         if ($('#chk').dataset.done) { R.step = 2; draw(); return; }
+        const claimNone = $('#chk').dataset.claim === 'none'; $('#none').remove();
         let hit = 0, miss = 0, extra = 0;
         app.querySelectorAll('.tk').forEach(el => { const on = el.classList.contains('on'), k = el.dataset.k === '1'; if (k) { el.classList.add('key'); on ? hit++ : miss++; } else if (on) extra++; });
         R.marcadas = [hit, key.length];
+        if (claimNone) {
+          const okN = key.length === 0;
+          R.marcadas = [0, key.length];
+          $('#fb1').innerHTML = `<div class="fb ${okN ? 'good' : 'wrong'}">${okN ? '<b>Correcto:</b> no hay palabras clave destacables. Lo importante es entender bien qué pide.' : `<b>Ojo:</b> sí había ${key.length} palabra${key.length === 1 ? '' : 's'} clave (resaltada${key.length === 1 ? '' : 's'}). Mira qué cambia el sentido.`}</div>`;
+          $('#chk').textContent = 'Ver opciones →'; $('#chk').dataset.done = 1; return;
+        }
         $('#fb1').innerHTML = `<div class="fb ${miss ? 'wrong' : 'good'}">${key.length ? `Detectaste <b>${hit}</b> de <b>${key.length}</b> palabras clave${miss ? ' (las que faltaban están resaltadas)' : ''}.` : 'Esta pregunta no tiene palabras clave destacables: lo importante es entender bien qué pide.'}${extra ? ` Marcaste ${extra} que no eran clave.` : ''}</div>`;
         $('#chk').textContent = 'Ver opciones →'; $('#chk').dataset.done = 1;
       };
