@@ -850,7 +850,7 @@ function mapaHTML(dm, orden) {
   const c = k => dm.filter(x => x.est === k).length;
   return `<div class="dmsum"><span class="dot r"></span>${c('r')} <span class="dot y"></span>${c('y')} <span class="dot g"></span>${c('g')} <span class="dot n"></span>${c('n')}</div>
   <div class="seg" id="dmord"><button class="${orden !== 'frios' ? 'on' : ''}" data-v="tema">Por tema</button><button class="${orden === 'frios' ? 'on' : ''}" data-v="frios">Más urgentes primero</button></div>
-  <div class="dm">${l.map(t => `<button class="dmt ${t.est}" data-dt="${t.id}"><div class="dmh"><span class="dot ${t.est}"></span><b>${t.id}</b><small>${hace(t.dias)}</small></div><div class="dmn">${esc(t.nombre)}</div><div class="dmb"><i style="width:${t.score}%"></i></div><small>${ESTADO[t.est]} · ${t.why}${t.due ? ' · ' + t.due + ' repasos' : ''}</small></button>`).join('')}</div>
+  <div class="dm">${l.map(t => `<button class="dmt ${t.est}" data-dt="${t.id}"><div class="dmh"><span class="dot ${t.est}"></span><b>${t.id}</b><small>${hace(t.dias)}</small></div><div class="dmn">${esc(t.nombre)}</div><div class="dmb"><i style="width:${t.score}%"></i></div><small>${ESTADO[t.est]} · ${esc(t.why)}${t.due ? ' · ' + t.due + ' repasos' : ''}</small></button>`).join('')}</div>
   <p class="legend">Rojo: precisión o cobertura bajas, o más de 30 días sin tocar. Ámbar: va bien pero falta práctica o lleva más de 2 semanas parado. Verde: precisión alta y reciente. La puntuación mezcla tu acierto actual (65 %) y las preguntas vistas respecto al 60 % del banco (35 %). Toca un tema para practicarlo.</p>`;
 }
 function bindMapa(root, dm, redraw) {
@@ -926,15 +926,15 @@ function paintSims() {
     const X = i => L0 + (P1.length === 1 ? iw / 2 : iw * i / (P1.length - 1)), Y = v => T0 + ih * (1 - (v - lo) / (hi - lo));
     const grid = [lo, (lo + hi) / 2, hi].map(v => `<line x1="${L0}" x2="${Wd - R0}" y1="${Y(v)}" y2="${Y(v)}" class="gl"/><text x="${L0 - 6}" y="${Y(v) + 4}" text-anchor="end" class="gt">${Math.round(v)}</text>`).join('');
     const line = P1.length > 1 ? `<polyline points="${P1.map((h, i) => X(i) + ',' + Y(h.nota)).join(' ')}" class="ln"/>` : '';
-    const dots = P1.map((h, i) => `<circle cx="${X(i)}" cy="${Y(h.nota)}" r="4.5" class="pt"><title>${fmtD(h.ts)}: ${h.nota}/100</title></circle>`).join('');
+    const dots = P1.map((h, i) => `<circle cx="${X(i)}" cy="${Y(h.nota)}" r="4.5" class="pt"><title>${fmtD(h.ts)}: ${esc(String(h.nota))}/100</title></circle>`).join('');
     const last = P1[P1.length - 1], k = P1.length - 1;
     chart = `<div class="evo"><svg viewBox="0 0 ${Wd} ${Ht}" role="img" aria-label="Nota por simulacro">${grid}${line}${dots}<text x="${Math.min(X(k), Wd - R0 - 2)}" y="${Y(last.nota) - 9}" text-anchor="end" class="vl">${last.nota}</text><text x="${L0}" y="${Ht - 6}" class="gt">${fmtD(P1[0].ts)}</text><text x="${Wd - R0}" y="${Ht - 6}" text-anchor="end" class="gt">${fmtD(last.ts)}</text></svg></div>`;
   }
-  const rows = H.slice().reverse().slice(0, 15).map(h => `<div class="sl"><div class="slh"><b>${h.nota}</b><small>${fmtD(h.ts)} · ${h.part === 'p2' ? 'Parte 2 (supuesto)' : 'Parte 1'}${h.dNota === null ? '' : ' · ' + dlt(h.dNota)}</small></div><div class="sm">${h.a} aciertos · ${h.f} fallos · ${h.b} en blanco · ${fmtT(h.secs)}</div></div>`).join('');
+  const rows = H.slice().reverse().slice(0, 15).map(h => `<div class="sl"><div class="slh"><b>${esc(String(h.nota))}</b><small>${fmtD(h.ts)} · ${h.part === 'p2' ? 'Parte 2 (supuesto)' : 'Parte 1'}${h.dNota === null ? '' : ' · ' + dlt(h.dNota)}</small></div><div class="sm">${h.a} aciertos · ${h.f} fallos · ${h.b} en blanco · ${fmtT(h.secs)}</div></div>`).join('');
   let cmp = '<p class="sub sm">Haz al menos 2 simulacros de la parte 1 para compararlos.</p>';
   if (P1.length >= 2) {
     const ia = Math.min(Math.max(0, c.a ?? P1.length - 2), P1.length - 1), ib = Math.min(Math.max(0, c.b ?? P1.length - 1), P1.length - 1);
-    const opt = sel => P1.map((h, i) => `<option value="${i}" ${i === sel ? 'selected' : ''}>${fmtD(h.ts)} · ${h.nota}</option>`).join('');
+    const opt = sel => P1.map((h, i) => `<option value="${i}" ${i === sel ? 'selected' : ''}>${fmtD(h.ts)} · ${esc(String(h.nota))}</option>`).join('');
     const C = compareSessions(P1[ia], P1[ib]);
     cmp = `<div class="row"><select id="sca">${opt(ia)}</select><select id="scb">${opt(ib)}</select></div>
       <p class="sm">Nota: <b>${dlt(C.dNota)}</b> · acierto ${dlt(C.dAcierto, ' pts')}${C.dSeg !== null ? ' · ritmo ' + dlt(C.dSeg, ' s/preg.', true) : ''}</p>
@@ -977,7 +977,7 @@ function paintEvo(idx) {
     const cols = W.map((w, i) => `<rect x="${X(i) - iw / W.length / 2}" y="${T}" width="${iw / W.length}" height="${ih}" class="hit" data-i="${i}"/>`).join('');
     chart = `<div class="evo"><svg viewBox="0 0 ${Wd} ${H}" role="img" aria-label="Evolución semanal">${grid}${line}${dots}${lab}${xt}${cols}</svg><div class="tip" id="tip" hidden></div></div>`;
   }
-  const tabla = c.tabla ? `<table class="tb"><tr><th>Semana</th><th>${c.m === 'tiempo' ? 'seg/preg.' : 'Acierto'}</th><th>Resp.</th></tr>${W.filter(w => w.n).map(w => `<tr><td>${fmtD(w.start)}</td><td>${w[key] ?? '—'}</td><td>${w.n}</td></tr>`).join('') || '<tr><td colspan="3">Sin datos</td></tr>'}</table>` : '';
+  const tabla = c.tabla ? `<table class="tb"><tr><th>Semana</th><th>${c.m === 'tiempo' ? 'seg/preg.' : 'Acierto'}</th><th>Resp.</th></tr>${W.filter(w => w.n).map(w => `<tr><td>${fmtD(w.start)}</td><td>${w[key] ?? '—'}</td><td>${esc(String(w.n))}</td></tr>`).join('') || '<tr><td colspan="3">Sin datos</td></tr>'}</table>` : '';
   el.innerHTML = `<div class="card">
     <div class="seg" id="evm"><button class="${c.m !== 'tiempo' ? 'on' : ''}" data-v="acierto">Acierto</button><button class="${c.m === 'tiempo' ? 'on' : ''}" data-v="tiempo">Tiempo por pregunta</button></div>
     <div class="row"><select id="evf" aria-label="Qué medir en la evolución" ${c.m === 'tiempo' ? 'disabled' : ''}>${opts}</select><select id="evw" aria-label="Número de semanas">${[8, 12, 26].map(v => `<option value="${v}" ${c.w === v ? 'selected' : ''}>${v} semanas</option>`).join('')}</select></div>
@@ -989,7 +989,7 @@ function paintEvo(idx) {
   $('#evt').onclick = () => { c.tabla = !c.tabla; save(); paintEvo(idx); };
   const tip = $('#tip');
   el.querySelectorAll('.hit').forEach(r => {
-    const show = () => { const w = W[+r.dataset.i]; if (!w.n) { tip.hidden = true; return; } tip.hidden = false; tip.innerHTML = `<b>Semana del ${fmtD(w.start)}</b><br>${c.m === 'tiempo' ? (w.segPreg ?? '—') + ' s/pregunta' : w.acierto + ' % de acierto'}<br>${w.n} respuestas · ${w.ses} sesiones`; tip.style.left = Math.min(Math.max(8, 100 * (+r.dataset.i) / Math.max(1, W.length - 1)), 70) + '%'; };
+    const show = () => { const w = W[+r.dataset.i]; if (!w.n) { tip.hidden = true; return; } tip.hidden = false; tip.innerHTML = `<b>Semana del ${fmtD(w.start)}</b><br>${c.m === 'tiempo' ? (w.segPreg ?? '—') + ' s/pregunta' : w.acierto + ' % de acierto'}<br>${esc(String(w.n))} respuestas · ${esc(String(w.ses))} sesiones`; tip.style.left = Math.min(Math.max(8, 100 * (+r.dataset.i) / Math.max(1, W.length - 1)), 70) + '%'; };
     r.onpointerenter = show; r.onpointerdown = show;
   });
 }
@@ -1047,7 +1047,7 @@ routes.stats = async function () {
   <h2>Errores por tipo de trampa</h2><div class="card">${Object.entries(TR).filter(([, v]) => v[0] >= 5).sort((a, b) => b[1][1] / b[1][0] - a[1][1] / a[1][0]).map(([k, v]) => `<div class="trow"><div class="line"><span>${esc(TRAMPAS[k] || k)}</span><span>${pct(v[1], v[0])}% fallos <small>(${v[0]})</small> <button class="ghost sm" data-trap="${k}">practicar</button></span></div>${bar(100 - pct(v[1], v[0]))}</div>`).join('') || '<p class="sub">Aún no hay datos suficientes (se necesitan ≥5 respuestas por trampa).</p>'}</div>
   <h2>Por origen y tipo</h2><div class="card">${Object.entries(OR).map(([k, v]) => `<div class="line"><span>${ORIGEN[k]}</span><span>${pct(v[1], v[0])}% <small>(${v[0]})</small></span></div>`).join('')}
   ${Object.entries(TI).map(([k, v]) => `<div class="line"><span>${TIPOS[k] || k}</span><span>${pct(v[1], v[0])}% <small>(${v[0]})</small></span></div>`).join('')}</div>
-  <h2>Últimas sesiones</h2><div class="card">${ses.map(s => `<div class="line"><span>${new Date(s.ts).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })} · ${s.kind === 'sim' ? 'Simulacro' : s.kind === 'rev' ? 'Repaso' : 'Test'} ${s.n}p</span><span>${s.kind === 'sim' ? esc(String(s.nota)) + '/100' : pct(s.a, s.n) + '%'}</span></div>`).join('') || '<p class="sub">Sin sesiones todavía.</p>'}</div>`;
+  <h2>Últimas sesiones</h2><div class="card">${ses.map(s => `<div class="line"><span>${new Date(s.ts).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })} · ${s.kind === 'sim' ? 'Simulacro' : s.kind === 'rev' ? 'Repaso' : 'Test'} ${esc(String(s.n))}p</span><span>${s.kind === 'sim' ? esc(String(s.nota)) + '/100' : pct(s.a, s.n) + '%'}</span></div>`).join('') || '<p class="sub">Sin sesiones todavía.</p>'}</div>`;
   app.querySelectorAll('[data-trap]').forEach(b => b.onclick = async () => { const r = await trapTest(15, [+b.dataset.trap]); if (!r.items.length) { alert('No hay preguntas con esa trampa.'); return; } startRun({ kind: 'test', feedback: true, items: r.items, titulo: 'Trampa: ' + (TRAMPAS[b.dataset.trap] || b.dataset.trap) }); });
   $('#carga').innerHTML = cargaHTML;
   { const v = velocidad(st), lentos = Object.keys(st).filter(id => st[id][8] >= 3 && st[id][7] / st[id][8] < 6).length;
