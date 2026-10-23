@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "esbuild src/main.js --bundle --minify --format=iife --target=safari15 --outfile=public/app.js",
+    "build": "rm -rf public/app.js public/chunks && esbuild src/main.js --bundle --splitting --minify --format=esm --target=safari15 --outdir=public --entry-names=app --chunk-names=chunks/[name]-[hash]",
     "test": "vitest run",
     "test:watch": "vitest"
   },

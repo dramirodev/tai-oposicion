@@ -36,7 +36,7 @@ Banco: 15.666 preguntas (oficiales, academia y generadas; cada una muestra su or
 
 ## Regenerar o modificar
 - Datos: `python3 build_data.py` (lee los bancos de `BANCO_PREGUNTAS`).
-- App: `npm install && npm run build` (el código está en `src/`, el resultado en `public/app.js`).
+- App: `npm install && npm run build` (el código está en `src/`, el resultado en `public/app.js` y `public/chunks/`; no se versionan: los genera el CI y, para desplegar a mano, `npm run build`).
 - Avisos: las preguntas de **academia** llevan etiqueta propia porque sus respuestas no son oficiales y pueden contener errores; las oficiales de 2025 con plantilla provisional se marcan «Respuesta provisional».
 
 ## Cabeceras de seguridad (`firebase.json`)

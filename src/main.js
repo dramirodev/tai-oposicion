@@ -1,5 +1,5 @@
 import * as store from './store.js';
-import * as sync from './sync.js';
+import * as sync from './syncfacade.js';
 import { esc, shuffle, fmtT, pct, nota, allowed, composeSim, dominioCalc, aggregateWeeks, slowList, quickN, pickQuick, simHistory, compareSessions, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, cargaRepasos, motivosFallo, suertes, normUi, ZOOMS, swipeDir, keyAction, pickCards, cardStats, cardFromQuestion, hiliteHtml, claveHtml, claveSpans, pideNegativa, minLectura, velocidad, CONSEJOS_LECTURA, analisisSimulacro, ritmoSimulacro } from './logic.js';
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -1127,7 +1127,7 @@ function paintEvo(idx) {
     const lab = `<text x="${Math.min(X(last.i), Wd - R - 2)}" y="${Y(last.v) - 9}" text-anchor="end" class="vl">${last.v}${unit.trim()}</text>`;
     const step = Math.ceil(W.length / 6);
     const xt = W.map((w, i) => i % step === (W.length - 1) % step ? `<text x="${X(i)}" y="${H - 6}" text-anchor="${i === W.length - 1 ? 'end' : 'middle'}" class="gt">${fmtD(w.start)}</text>` : '').join('');
-    const cols = W.map((w, i) => `<rect x="${X(i) - iw / W.length / 2}" y="${T}" width="${iw / W.length}" height="${ih}" class="hit" data-i="${i}"/>`).join('');
+    const cols = W.map((w, i) => `<rect x="${X(i) - iw / W.length / 2}" y="${T}" width="${iw / W.length}" height="${ih}" class="hit" data-i="${i}" tabindex="0" role="img" aria-label="Semana del ${fmtD(w.start)}: ${w.n ? (c.m === 'tiempo' ? (w.segPreg ?? '—') + ' s por pregunta' : w.acierto + ' % de acierto') : 'sin datos'}"/>`).join('');
     chart = `<div class="evo"><svg viewBox="0 0 ${Wd} ${H}" role="img" aria-label="Evolución semanal">${grid}${line}${dots}${lab}${xt}${cols}</svg><div class="tip" id="tip" hidden></div></div>`;
   }
   const tabla = c.tabla ? `<table class="tb"><tr><th>Semana</th><th>${c.m === 'tiempo' ? 'seg/preg.' : 'Acierto'}</th><th>Resp.</th></tr>${W.filter(w => w.n).map(w => `<tr><td>${fmtD(w.start)}</td><td>${w[key] ?? '—'}</td><td>${esc(String(w.n))}</td></tr>`).join('') || '<tr><td colspan="3">Sin datos</td></tr>'}</table>` : '';
@@ -1143,7 +1143,7 @@ function paintEvo(idx) {
   const tip = $('#tip');
   el.querySelectorAll('.hit').forEach(r => {
     const show = () => { const w = W[+r.dataset.i]; if (!w.n) { tip.hidden = true; return; } tip.hidden = false; tip.innerHTML = `<b>Semana del ${fmtD(w.start)}</b><br>${c.m === 'tiempo' ? (w.segPreg ?? '—') + ' s/pregunta' : w.acierto + ' % de acierto'}<br>${esc(String(w.n))} respuestas · ${esc(String(w.ses))} sesiones`; tip.style.left = Math.min(Math.max(8, 100 * (+r.dataset.i) / Math.max(1, W.length - 1)), 70) + '%'; };
-    r.onpointerenter = show; r.onpointerdown = show;
+    r.onpointerenter = show; r.onpointerdown = show; r.onfocus = show;
   });
 }
 async function paintSlow() {
@@ -1223,13 +1223,13 @@ routes.settings = async function () {
     app.innerHTML = `
     <h1>Ajustes</h1>
     <div class="card"><h2 class="h3">Cuenta y sincronización</h2>
-      ${s.state === 'iniciando' || s.state === 'comprobando sesión…' ? '<p>Comprobando cuenta…</p>' : s.state === 'sin conexión' ? '<p>Sin conexión: ahora no se puede comprobar la cuenta.</p>' : !sync.configured ? '<p>Firebase no está configurado todavía (ver README).</p>' :
+      ${s.state === 'iniciando' || s.state === 'comprobando sesión…' ? '<p>Comprobando cuenta…</p>' : s.state === 'sin conexión' ? '<p>Sin conexión: ahora no se puede comprobar la cuenta.</p>' : !sync.status.configured ? '<p>Firebase no está configurado todavía (ver README).</p>' :
         s.user ? `<p>Conectado como <b>${esc(s.user.name)}</b><br><small>${esc(s.state)}${s.lastSync ? ' · ' + new Date(s.lastSync).toLocaleTimeString('es-ES') : ''}</small></p><button class="btn sec" id="out">Cerrar sesión</button>` :
           '<p>Inicia sesión para tener el mismo historial en iPhone y iPad.</p><button class="btn" id="in">Entrar con Google</button>'}
       ${s.error ? `<p class="r"><small>${esc(s.error)}</small></p>` : ''}
       ${s.user && s.state !== 'sincronizado' && s.state !== 'sincronizando…' ? `${s.detail ? `<p><small>${esc(s.detail)}</small></p>` : ''}<button class="btn sec" id="retrySync">Reintentar sincronización</button>` : ''}
       <p><small>En este dispositivo: ${Object.keys(store.getStats()).length} preguntas vistas · ${store.getSeen().length} temas vistos · ${store.getSessions().length} sesiones</small></p>
-      ${sync.configured ? `<p><small>Dominio: ${esc(sync.diag().host)} · auth: ${esc(sync.diag().authDomain)}</small></p>` : ''}
+      ${sync.status.configured ? `<p><small>Dominio: ${esc(sync.status.host)} · auth: ${esc(sync.status.authDomain)}</small></p>` : ''}
     </div>
     <div class="card"><h2 class="h3">Comodidad</h2>
       <p class="sm">Tema</p>

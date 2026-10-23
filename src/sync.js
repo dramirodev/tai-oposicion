@@ -9,12 +9,7 @@ import * as store from './store.js';
 const enc = id => id.replace(/\./g, '~');
 const dec = id => id.replace(/~/g, '.');
 
-export let configured = false;
-export const diag = () => ({ host: location.host, authDomain: (auth && auth.config && auth.config.authDomain) || '' });
-export const status = { user: null, state: 'iniciando', lastSync: 0, error: '', detail: '' };
-const subs = new Set();
-export const onStatus = fn => { subs.add(fn); return () => subs.delete(fn); };
-const emit = () => subs.forEach(f => f(status));
+import { status, emit } from './syncstate.js';
 
 let auth, db, uid = null, timer = null, unsubs = [];
 let temaOf = () => null; // id -> tema
@@ -26,7 +21,8 @@ export async function init(metaFns) {
   try { firebaseConfig = await (await fetch('firebase-config.json', { cache: 'no-cache' })).json(); leida = true; } catch (e) {
     try { firebaseConfig = await (await fetch('firebase-config.json')).json(); leida = true; } catch (e2) {}
   }
-  configured = !!firebaseConfig.apiKey && !/PEGA/i.test(firebaseConfig.apiKey);
+  const configured = status.configured = !!firebaseConfig.apiKey && !/PEGA/i.test(firebaseConfig.apiKey);
+  status.host = location.host; status.authDomain = firebaseConfig.authDomain || '';
   // «sin configurar» solo si el fichero se leyó y no trae clave; si no se pudo leer (sin red) no es un problema de configuración
   if (!configured) { status.state = leida ? 'sin configurar' : 'sin conexión'; emit(); return; }
   // Un único origen: el almacenamiento local (progreso, temas vistos) es distinto en cada dominio.
@@ -52,7 +48,7 @@ export async function init(metaFns) {
 }
 
 export async function login() {
-  if (!configured) return;
+  if (!status.configured) return;
   const p = new GoogleAuthProvider();
   p.setCustomParameters({ prompt: 'select_account' });
   status.error = ''; status.state = 'abriendo Google…'; emit();

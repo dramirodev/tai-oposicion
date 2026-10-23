@@ -30,7 +30,7 @@ export function cleanStats(map) {
 // ── Tarjetas (flashcards): { idTarjeta: [n, ok, last, box, due, lastGrade] } ──
 // n=veces repasada, ok=veces «lo sabía», box=-1 dominada (0..4 en repaso), due=próximo repaso, lastGrade=0 fallé/1 dudaba/2 lo sabía
 export const CARD_RE = /^FC-[A-Za-z0-9._~-]{1,60}$/;
-export const MAX_CARDS = 20000;
+export const MAX_CARDS = 8000; // ≈70 B por tarjeta: queda por debajo del límite de 1 MB por documento de Firestore
 export function cleanCard(r) {
   if (!Array.isArray(r) || r.length < 5) return null;
   const n = num(r[0], 0, 1e6), ok = num(r[1], 0, 1e6), last = num(r[2]);
