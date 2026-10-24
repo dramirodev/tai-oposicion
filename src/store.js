@@ -269,7 +269,7 @@ export function setReviewed(id, tema, value) {
   const streak = failureStreak(r);
   while (r.length < 12) r.push(0);
   r[10] = streak; r[11] = value ? 1 : 0;
-  r[2] = Math.max(Date.now(), r[2] + 1);
+  r[2] += 1; // gana en la sincronización (estrictamente mayor) sin mover la fecha de actividad: marcar el temario no cuenta como día de estudio
   dirty.add(tema); persist(); emit();
   if (syncer) syncer.schedule();
 }

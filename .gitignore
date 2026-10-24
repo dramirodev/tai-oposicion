@@ -10,3 +10,6 @@ public/version.json
 # Caché local de los scripts de auditoría
 __pycache__/
 *.pyc
+
+# Informes locales de auditoría del temario
+auditoria-temario-*/
