@@ -46,19 +46,23 @@ export function toast(msg: string, action?: ToastAction): void {
   t.classList.add('show');
   clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), action ? 20000 : 4500);
 }
-export function ask(msg: string, okLabel = 'Aceptar', danger = false): Promise<boolean> {
+export function ask(msg: string, okLabel = 'Aceptar', danger = false, signal?: AbortSignal): Promise<boolean> {
   return new Promise<boolean>(res => {
+    if (signal?.aborted) { res(false); return; }
     const prev = document.activeElement, o = document.createElement('div');
     o.className = 'overlay'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.setAttribute('aria-labelledby', 'askm');
     o.innerHTML = `<div class="card"><p id="askm"></p><div class="row"><button class="btn sec" data-v="0">Cancelar</button><button class="btn ${danger ? 'danger' : ''}" data-v="1">${esc(okLabel)}</button></div></div>`;
     $('#askm', o).textContent = msg;
-    const done = (v: boolean) => { document.removeEventListener('keydown', key, true); o.remove(); prev && (prev as HTMLElement).focus && (prev as HTMLElement).focus(); res(v); };
+    let settled = false;
+    const abort = () => done(false);
+    const done = (v: boolean) => { if (settled) return; settled = true; signal?.removeEventListener('abort', abort); document.removeEventListener('keydown', key, true); o.remove(); prev && (prev as HTMLElement).focus && (prev as HTMLElement).focus(); res(v); };
     const key = (e: KeyboardEvent) => {
       if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); done(false); }
       else if (e.key === 'Tab') { const bs = [...o.querySelectorAll('button')], i = bs.indexOf(document.activeElement as HTMLButtonElement); e.preventDefault(); bs[(i + (e.shiftKey ? -1 : 1) + bs.length) % bs.length].focus(); }
       else e.stopPropagation();
     };
     o.onclick = e => { const b = (e.target as HTMLElement).closest('button'); if (b) done(b.dataset.v === '1'); };
+    signal?.addEventListener('abort', abort, {once:true});
     document.addEventListener('keydown', key, true);
     document.body.append(o); (o.querySelector('[data-v="1"]') as HTMLElement).focus();
   });

@@ -87,6 +87,21 @@ it('confirma el cierre desde el mapa si quedan preguntas sin responder',async()=
  document.querySelector('[data-jump="2"]').click();document.querySelector(`.opt[data-i="${qs[2].c}"]`).click();document.querySelector('#next').click();
  await vi.waitFor(()=>expect(document.querySelector('.overlay')?.textContent).toContain('sin responder'));
  document.querySelector('.overlay [data-v="0"]').click();expect(engine.state.run).toBe(run);await Promise.resolve();
+ expect(run.idx).toBe(2);
+ document.querySelector('.opt[data-i="0"]').click();expect(run.ans[2]).toBe(0);expect(run.ans[3]).toBeUndefined();
  document.querySelector('#next').click();await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull());document.querySelector('.overlay [data-v="1"]').click();
  await waitText('Sesión interrumpida');expect(store.getSessions()[0].interrupted).toBe(true);
+});
+
+it.each(['finish','exit'])('el vencimiento cierra una sola vez y retira la confirmación pendiente: %s',async action=>{
+ const qs=JSON.parse(readFileSync('public/data/T1.01.json','utf8')).slice(0,3);
+ vi.useFakeTimers({toFake:['setInterval','clearInterval']});
+ try {
+  const run=engine.createRun({kind:'sim',feedback:false,items:qs,limit:1});await navigate('quiz','pregunta 1');
+  document.querySelector('.opt[data-i="0"]').click();document.querySelector('[data-jump="2"]').click();document.querySelector(action === 'exit' ? '#exit' : '#next').click();
+  await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull());
+  run.secs=60;await vi.advanceTimersByTimeAsync(500);
+  expect(engine.state.run).toBeNull();expect(document.querySelector('.overlay')).toBeNull();
+  expect(store.getSessions()).toHaveLength(1);
+ } finally {vi.useRealTimers();}
 });

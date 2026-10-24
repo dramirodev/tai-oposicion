@@ -49,7 +49,7 @@ it('no importa en otra cuenta si esta cambia mientras el diálogo está abierto'
 });
 it('verifica la descarga completa de banco y tarjetas antes de guardar la fecha', async () => {
  const {entries} = fakeCaches();
- vi.stubGlobal('fetch', async u => new Response(JSON.stringify(u === 'cards/index.json' ? {temas:{'T1.01':1}} : [])));
+ vi.stubGlobal('fetch', async u => new Response(JSON.stringify(u === 'cards/index.json' ? {temas:{'T1.01':1}} : u === 'data/index.json' ? {temas:[{id:'T1.01'}]} : [])));
  const {downloadOffline, inspectOffline} = await import('../src/offline.js');
  const idx={temas:[{id:'T1.01'}]}; const saved=await downloadOffline(idx);
  expect(saved.complete).toBe(true); expect(saved.completedAt).toBeGreaterThan(0);
@@ -75,4 +75,14 @@ it('no abre ni aplica una copia si cambia la cuenta mientras se lee el archivo',
  let release; const input=document.querySelector('#im'); Object.defineProperty(input,'files',{value:[{text:()=>new Promise(resolve=>{release=resolve})}]}); input.dispatchEvent(new Event('change'));
  store.switchAccount('destino'); release(JSON.stringify({stats:{nuevo:[1,1,200]}}));
  await new Promise(resolve=>setTimeout(resolve,5)); expect(document.querySelector('.overlay')).toBeNull(); expect(store.rec('nuevo')).toBeUndefined(); screen.cleanup();
+});
+
+it.each(['<html>Error</html>','{"unfinished":','null'])('rechaza recursos offline dañados: %s',async body=>{
+ const {entries}=fakeCaches();
+ for(const p of ['data/index.json','data/meta.json','data/supuestos.json','data/T1.01.json','cards/T1.01.json']) entries.set(p,new Response('{}'));
+ entries.set('cards/index.json',new Response(JSON.stringify({temas:{'T1.01':1}})));
+ entries.set('data/T1.01.json',new Response(body));
+ const {inspectOffline}=await import('../src/offline.js');
+ const state=await inspectOffline({temas:[{id:'T1.01'}]});
+ expect(state.complete).toBe(false);expect(state.missing).toContain('data/T1.01.json');expect(state.completedAt).toBeNull();
 });

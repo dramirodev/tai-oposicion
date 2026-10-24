@@ -19,7 +19,14 @@ export async function inspectOffline(idx: Index): Promise<OfflineState> {
   const missing: string[] = [];
   for (const u of need) {
     const hit = await cache.match(u, {ignoreSearch:true});
-    if (!hit?.ok || u === 'cards/index.json' && !validCards) missing.push(u);
+    try {
+      if (!hit?.ok) throw new Error('Archivo no disponible');
+      const body = await hit.json();
+      if (!body || typeof body !== 'object') throw new Error('JSON no válido');
+      if (/^(data|cards)\/T\d\.\d\d\.json$/.test(u) && !Array.isArray(body)) throw new Error('Lista no válida');
+      if (u === 'data/index.json' && !Array.isArray(body.temas)) throw new Error('Índice no válido');
+      if (u === 'cards/index.json' && !validCards) throw new Error('Índice de tarjetas no válido');
+    } catch { missing.push(u); }
   }
   const complete = missing.length === 0 && validCards;
   let completedAt: number | null = null;

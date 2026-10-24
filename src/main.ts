@@ -85,7 +85,7 @@ async function resumeSaved() {
 routes.quiz = async function () {
   if (!state.run) return go('#/home');
   const R = state.run;
-  let tick: any = null, closing = false;
+  let tick: any = null, closing = false, endConfirmation: AbortController | null = null;
   {
     // el tiempo sale de la hora real (no de contar ticks): iOS frena los timers con la pantalla bloqueada
     tick = setInterval(() => {
@@ -123,7 +123,7 @@ routes.quiz = async function () {
   document.addEventListener('keydown', onKey);
   document.addEventListener('touchstart', onTs, { passive: true });
   document.addEventListener('touchend', onTe, { passive: true });
-  cleanup = () => { clearInterval(tick); clearInterval(R.gt); document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); };
+  cleanup = () => { endConfirmation?.abort(); clearInterval(tick); clearInterval(R.gt); document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); };
   draw();
 
   function draw() {
@@ -206,7 +206,12 @@ routes.quiz = async function () {
     app.querySelectorAll<El>('[data-jump]').forEach(b => b.onclick = () => { if (state.run !== R || R.paused) return; R.idx = +b.dataset.jump!; draw(); window.scrollTo(0, 0); });
     $('#review-question') && ($('#review-question').onclick = () => { if (state.run !== R || R.paused) return; const ids = new Set(R.review || []); ids.has(R.idx) ? ids.delete(R.idx) : ids.add(R.idx); R.review = [...ids].sort((a,b) => a-b); draw(); });
     $('#exit').onclick = async () => {
-      const accepted = await ask('¿Salir? Lo respondido se guardará como sesión interrumpida.', 'Salir');
+      if (closing || state.run !== R) return;
+      closing = true;
+      endConfirmation = new AbortController();
+      const accepted = await ask('¿Salir? Lo respondido se guardará como sesión interrumpida.', 'Salir', false, endConfirmation.signal);
+      endConfirmation = null;
+      closing = false;
       if (!accepted || state.run !== R) return;
       if (R.ans.some(x => x !== undefined)) finish('interrupted');
       else { state.run = null; clearRun(); go('#/home'); }
@@ -223,7 +228,7 @@ routes.quiz = async function () {
       if (R.feedback) { if (R.ans[R.idx] === undefined) { answer(q, -1); draw(); } }
       else { R.ans[R.idx] = R.ans[R.idx] === -1 ? undefined : -1; draw(); }
     });
-    $('#next') && ($('#next').onclick = () => { R.idx++; draw(); window.scrollTo(0, 0); });
+    $('#next') && ($('#next').onclick = () => { if (R.idx === R.items.length - 1) { void finish(); return; } R.idx++; draw(); window.scrollTo(0, 0); });
     $('#mot') && ($('#mot').onclick = e => {
       const b = (e.target as El).closest<El>('button'); if (!b) return;
       const mk = $('#mkcard'), id = 'FC-Q-' + q.i;
@@ -238,11 +243,14 @@ routes.quiz = async function () {
   }
   function answer(q: any, i: any) { answerQuestion(R, q, i, minLectura(q)); }
   async function finish(reason: 'complete' | 'interrupted' | 'timeout' = 'complete') {
-    if (state.run !== R || closing) return;
+    if (state.run !== R || closing && reason !== 'timeout') return;
+    if (reason === 'timeout') endConfirmation?.abort();
     const missing = R.items.filter((_, k) => R.ans[k] === undefined).length;
     if (reason === 'complete' && !R.feedback && missing) {
       closing = true;
-      const accepted = await ask(`Quedan ${missing} preguntas sin responder. ¿Terminar y guardar la sesión como interrumpida?`, 'Terminar');
+      endConfirmation = new AbortController();
+      const accepted = await ask(`Quedan ${missing} preguntas sin responder. ¿Terminar y guardar la sesión como interrumpida?`, 'Terminar', false, endConfirmation.signal);
+      endConfirmation = null;
       closing = false;
       if (!accepted || state.run !== R) return;
       reason = 'interrupted';
