@@ -334,21 +334,24 @@ export function claveHtml(text: unknown): string {
 }
 
 // ───────── código: detección y marcado (SQL, comandos, etiquetas, funciones, rutas…) ─────────
-const SQL_KW = 'SELECT|FROM|WHERE|GROUP BY|ORDER BY|HAVING|LEFT OUTER JOIN|RIGHT OUTER JOIN|FULL OUTER JOIN|LEFT JOIN|RIGHT JOIN|INNER JOIN|CROSS JOIN|NATURAL JOIN|JOIN|ON|AS|AND|OR|NOT NULL|NOT|NULL|IS|IN|BETWEEN|LIKE|DISTINCT|UNION ALL|UNION|INSERT INTO|VALUES|UPDATE|SET|DELETE FROM|CREATE TABLE|CREATE VIEW|CREATE INDEX|ALTER TABLE|DROP TABLE|DROP VIEW|DROP INDEX|PRIMARY KEY|FOREIGN KEY|REFERENCES|GRANT|REVOKE|COMMIT|ROLLBACK|TRUNCATE|ASC|DESC|LIMIT|EXISTS|ALL|ANY|COUNT|SUM|AVG|MAX|MIN';
+const SQL_KW = 'ALTER|MODIFY|ADD|COLUMN|TABLE|CREATE|DROP|SAVEPOINT|INTO|SELECT|FROM|WHERE|GROUP BY|ORDER BY|HAVING|LEFT OUTER JOIN|RIGHT OUTER JOIN|FULL OUTER JOIN|LEFT JOIN|RIGHT JOIN|INNER JOIN|CROSS JOIN|NATURAL JOIN|JOIN|ON|AS|AND|OR|NOT NULL|NOT|NULL|IS|IN|BETWEEN|LIKE|DISTINCT|UNION ALL|UNION|INSERT INTO|VALUES|UPDATE|SET|DELETE FROM|CREATE TABLE|CREATE VIEW|CREATE INDEX|ALTER TABLE|DROP TABLE|DROP VIEW|DROP INDEX|PRIMARY KEY|FOREIGN KEY|REFERENCES|GRANT|REVOKE|COMMIT|ROLLBACK|TRUNCATE|ASC|DESC|LIMIT|EXISTS|ALL|ANY|COUNT|SUM|AVG|MAX|MIN';
 const SQL_KW_RE = new RegExp('(?<![\\p{L}\\d_])(' + SQL_KW + ')(?![\\p{L}\\d_])', 'gu');
-const SQL_START = /(?<![\p{L}\d_])(SELECT\s|INSERT INTO\s|UPDATE\s+[\p{L}_]+\s+SET|DELETE FROM\s|CREATE\s+(?:TABLE|VIEW|INDEX|DATABASE)\s|ALTER\s+TABLE\s|DROP\s+(?:TABLE|VIEW|INDEX|DATABASE)\s|GRANT\s|REVOKE\s)/gu;
+const SQL_START = /(?<![\p{L}\d_])(SELECT\s|INSERT INTO\s|UPDATE\s+[\p{L}_]+\s+SET|DELETE FROM\s|CREATE\s+(?:TABLE|VIEW|INDEX|DATABASE)\s|ALTER\s+TABLE\s|DROP\s+(?:TABLE|VIEW|INDEX|DATABASE)\s|GRANT\s|REVOKE\s)/giu;
+// una sentencia SELECT necesita FROM, y GRANT/REVOKE necesitan ON/TO/FROM: «una sentencia SELECT grupos de…» es prosa
+const sqlCompleta = (s: string): boolean => /^select/i.test(s) ? /\bfrom\b/i.test(s) : /^(grant|revoke)/i.test(s) ? /\b(on|to|from)\b/i.test(s) : true;
 const SQL_WORDS = /(?<![\p{L}\d_])(ORDER BY|GROUP BY|(?:LEFT|RIGHT|FULL)(?: OUTER)? JOIN|INNER JOIN|CROSS JOIN|NATURAL JOIN|PRIMARY KEY|FOREIGN KEY|NOT NULL|UNION(?: ALL)?|SELECT|INSERT|UPDATE|DELETE|WHERE|HAVING|DISTINCT|COMMIT|ROLLBACK|TRUNCATE|NULL|COUNT\(\*\))(?![\p{L}\d_])/gu;
 const CMDS = '(?:chmod|chown|chgrp|grep|sudo|ping|ssh|scp|ifconfig|ipconfig|nslookup|traceroute|netstat|systemctl|mkdir|rsync|tar(?=\\s+-)|apt-get|umask|git\\s+(?:add|commit|push|pull|clone|status|log|branch|checkout|merge|rebase|init|fetch|diff|stash|reset|remote|tag)|docker\\s+(?:run|build|ps|pull|push|exec|images|compose|stop|rm|start)|kubectl\\s+(?:get|apply|describe|delete|logs|exec)|curl|wget)';
 const CODE_RES = [
   /<\?php[\s\S]*?(?:\?>|$)/g,                                                              // PHP
   /<\/?[A-Za-z][\w:-]*(?:\s[^<>]*)?\/?>/g,                                                  // etiquetas HTML/XML y genéricos <tipo>
-  /(?<![\w.])\/(?:etc|var|usr|home|bin|dev|proc|tmp|opt|root)(?:\/[\w.*-]+)*/g,             // rutas Linux
+  /(?<![\w.])\/(?:etc|var|usr|home|s?bin|dev|proc|tmp|opt|root|lib|boot|mnt|media|srv|sys|run)(?:\/[\w.*-]+)*/g,             // rutas Linux
   /(?<![\w.-])[a-z0-9_][\w-]*\.(?:php|java|js|ts|py|xml|html|css|conf|sh|sql|json|ini|txt|log|yml|yaml|cfg|bat|tar|gz|zip)\b/g, // ficheros
   new RegExp('(?<![\\w-])' + CMDS + '\\b(?:\\s+-{1,2}[\\w-]+|\\s+\\d{3,4}\\b)*', 'g'),     // comandos con sus opciones
   /(?<=^|[\s(])--?[A-Za-z][\w-]*(?=[\s.,;:)]|$)/g,                                         // opciones -R, --force
   /(?<![\p{L}\d_$.])[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*\((?:[^()]|\([^()]*\))*\)/gu,   // llamadas f(...), a.b(...)
   /[^\s]*(?:===?|!==?|\+\+|->|=>|&&|\|\|)[^\s]*/g,                                         // operadores
-  /(?<![\p{L}\d_$])[A-Za-z_$][\w$.]*=[\w$.'"]+/gu,                                          // a=b, A.a=B.b
+  /(?<![\p{L}\d_$])[A-Za-z_$][\w$.]*=[&*]?[\w$.'"]+/gu,                                          // a=b, A.a=B.b
+  /(?<![\p{L}\d_$])(?:int|float|char|double|long|short|void|boolean|String)(?:\[\])*\s*\*{0,2}\s*[A-Za-z_]\w*(?:\s*,\s*\*{0,2}[A-Za-z_]\w*)*\s*(?:=\s*new\s+\w+\[[^\]]*\])?;/gu, // int *a,b;  float[] x = new float[12];
   /(?<![\p{L}\d_$])[a-z][a-z0-9]*(?:_[a-z0-9]+)+(?![\p{L}\d_$])/gu,                        // snake_case
   /(?<![\p{L}\d_$])(?!(?:macOS|iOS|iPadOS|iPhone|iPad|iCloud|iMac|tvOS|watchOS|visionOS|openSUSE|eDNI|eIDAS|iTunes|eBay|iOS)\b)[a-z]{2,}(?:[A-Z][a-z0-9]*)+(?![\p{L}\d_$])/gu, // camelCase
   /(?<![\p{L}\d_$])[a-z]\s+(?:XNOR|NAND|XOR|NOR|AND|OR)\s+[a-z]\s*=\s*\d(?![\p{L}\d_$])/gu,        // a XOR b = 1
@@ -364,7 +367,7 @@ function rangosCodigo(t: string): Span[] {
     const fin = /\.\s+(?=[¿¡A-ZÁÉÍÓÚÑ])|[?!]\s|\?$/g; fin.lastIndex = a; const f = fin.exec(t);
     if (f && f.index < b) b = f.index;
     let e = b; while (e > a && /[\s.]/.test(t[e - 1])) e--;
-    if (e > a + 6) { r.push([a, e]); SQL_START.lastIndex = Math.max(e, a + 1); }
+    if (e > a + 6 && sqlCompleta(t.slice(a, e))) { r.push([a, e]); SQL_START.lastIndex = Math.max(e, a + 1); }
   }
   for (const re of CODE_RES) {
     re.lastIndex = 0;
@@ -399,9 +402,29 @@ function rangosCodigo(t: string): Span[] {
 }
 export function codeSpans(text: unknown): Span[] { return rangosCodigo(String(text ?? '')); }
 const codeInner = (h: string) => h.replace(SQL_KW_RE, '<b class="sk">$1</b>');
+// Un texto corto que es todo código (p. ej. una opción «((a>b) and (a<d))», «GRANT.», «MODIFY TABLE t ADD (x INT)»)
+// se pinta como un único bloque, en vez de trocearlo según qué fragmentos reconozca cada regla.
+const PROSA = /[áéíóúñ¿¡]|(?<![\p{L}\d_])(?:de|la|el|los|las|un|una|y|o|que|en|se|por|para|con|del|al|es|son|no|su|sus|lo|como|más|sin|si|entre|cuando)(?![\p{L}\d_])/iu;
+const SQLISH = /(?<![\p{L}\d_])(?:SELECT|FROM|WHERE|TABLE|COLUMN|ADD|MODIFY|ALTER|CREATE|DROP|INSERT|INTO|VALUES|UPDATE|SET|DELETE|GRANT|REVOKE|ROLLBACK|COMMIT|SAVEPOINT|TRUNCATE|INDEX|VIEW|CONSTRAINT|PRIMARY|KEY|ORDER|GROUP|BY|JOIN|HAVING|DISTINCT|UNION)(?![\p{L}\d_])/gu;
+const ETIQUETA = /<\/?[A-Za-z][^<>]*>/g;
+export function todoCodigo(text: unknown): boolean {
+  const s = String(text ?? '').trim().replace(/\.$/, '');
+  if (!s || s.length > 160 || !/[A-Za-z]/.test(s) || PROSA.test(s)) return false;
+  if (/^[A-Z]+$/.test(s)) return (s.match(SQLISH) || []).length === 1; // «GRANT», «ROLLBACK»
+  const sinEtiquetas = s.replace(ETIQUETA, ' ');
+  if (/[={}\[\]<>]|&&|\|\|/.test(sinEtiquetas)) return true;
+  // «;» solo cuenta si no separa frases con palabras en mayúscula inicial («I Plan 2012-2014; II Plan 2014-2016»)
+  if (/;/.test(s) && (s.match(/(?<![\p{L}\d_])[A-Z][a-z]{2,}(?![\p{L}\d_])/gu) || []).length < 2) return true;
+  // varias palabras SQL, empezando por una de ellas o en mayúsculas («Permite ejecutar SELECT … FROM DUAL» es prosa)
+  if ((s.match(SQLISH) || []).length >= 2 && /^[^A-Za-z]*[A-Z]{2,}(?![a-z])/.test(s)) return true;
+  // solo etiquetas: «<footer>», «<CRLF>#<CRLF>»; con texto alrededor («Solo obligatorio <html>») se marca solo la etiqueta
+  return sinEtiquetas !== s && !/[A-Za-z]{3,}/.test(sinEtiquetas);
+}
 // Texto → HTML seguro: escapa todo, pone en tipografía de código lo que lo parece y (opcional) resalta las palabras clave de lectura.
 export function richHtml(text: unknown, clave = false): string {
-  const t = String(text ?? ''), code = rangosCodigo(t), key = clave ? claveSpans(t) : [];
+  const t = String(text ?? '');
+  if (todoCodigo(t)) { const m = /^(\s*)([\s\S]*?)(\.?\s*)$/.exec(t)!; const blk = /\s/.test(m[2]) && m[2].length > 18 ? ' blk' : ''; return esc(m[1]) + '<code class="cd' + blk + '">' + codeInner(esc(m[2])) + '</code>' + (blk ? '' : esc(m[3])); } // en bloque, el punto final quedaría en una línea suelta
+  const code = rangosCodigo(t), key = clave ? claveSpans(t).filter(([a, b]) => !code.some(([c, d]) => a < d && c < b)) : [];
   const cuts = new Set([0, t.length]);
   for (const [a, b] of code) { cuts.add(a); cuts.add(b); }
   for (const [a, b] of key) { cuts.add(a); cuts.add(b); }

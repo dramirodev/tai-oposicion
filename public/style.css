@@ -170,10 +170,10 @@ select.wide{width:100%;flex:none}
 .sup summary{color:var(--selb);cursor:pointer}
 .opts{display:flex;flex-direction:column;gap:10px}
 .opt{display:flex;gap:12px;align-items:center;text-align:left;width:100%;font:inherit;font-size:var(--fs-l);padding:14px;border-radius:var(--r-l);border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;min-height:56px}
-.opt b{flex:none;width:30px;height:30px;border-radius:50%;background:var(--line);display:flex;align-items:center;justify-content:center;font-size:var(--fs-m)}
-.opt.sel{background:var(--sel);border-color:var(--selb)}.opt.sel b{background:var(--selb);color:var(--onselb)}
-.opt.ok{background:var(--okbg);border-color:var(--ok)}.opt.ok b{background:var(--okd);color:#fff}
-.opt.bad{background:var(--badbg);border-color:var(--bad)}.opt.bad b{background:var(--badd);color:#fff}
+.opt>b{flex:none;width:30px;height:30px;border-radius:50%;background:var(--line);display:flex;align-items:center;justify-content:center;font-size:var(--fs-m)}
+.opt.sel{background:var(--sel);border-color:var(--selb)}.opt.sel>b{background:var(--selb);color:var(--onselb)}
+.opt.ok{background:var(--okbg);border-color:var(--ok)}.opt.ok>b{background:var(--okd);color:#fff}
+.opt.bad{background:var(--badbg);border-color:var(--bad)}.opt.bad>b{background:var(--badd);color:#fff}
 .opt.dis{cursor:default}
 .opt:not(.dis):not(:disabled):active{background:var(--sel)}
 .opt:disabled:not(.ok):not(.bad){opacity:.6}
@@ -352,6 +352,9 @@ h1{font-weight:600}
 /* código */
 code.cd{font-family:var(--mono);font-size:.88em;background:var(--code-bg);color:var(--code-ink);padding:1px 5px;border-radius:6px;overflow-wrap:anywhere;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 code.cd .sk{color:var(--sk);font-weight:700}
+/* las palabras clave dentro del código nunca heredan estilos de <b> de su contenedor (p. ej. la letra circular de la opción) */
+code.cd.blk{display:block;white-space:pre-wrap;overflow-wrap:anywhere;padding:6px 9px;line-height:1.45;border-radius:8px}
+code.cd b.sk{display:inline;flex:none;width:auto;height:auto;margin:0;padding:0;background:none;border-radius:0;font-size:inherit;line-height:inherit}
 
 /* indicador de conexión */
 #net{pointer-events:none;position:fixed;top:0;left:0;right:0;z-index:50;text-align:center;font-size:var(--fs-s);font-weight:600;padding:calc(4px + env(safe-area-inset-top)) 12px 4px;display:none}

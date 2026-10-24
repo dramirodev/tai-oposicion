@@ -363,6 +363,28 @@ describe('richHtml (código)', () => {
   });
 });
 
+describe('richHtml: opciones que son todo código', () => {
+  it('pinta la opción entera como un único bloque y deja el punto final fuera (o lo quita si es un bloque)', async () => {
+    const { richHtml } = await import('../src/logic.js');
+    const strip = h => h.replace(/<b class="sk">|<\/b>/g, '');
+    expect(strip(richHtml('GRANT.'))).toBe('<code class="cd">GRANT</code>.');
+    expect(strip(richHtml('/sbin.'))).toBe('<code class="cd">/sbin</code>.');
+    expect(strip(richHtml('((a>b) and (a<d)) or ((a==d) and (b<=a)).'))).toBe('<code class="cd blk">((a&gt;b) and (a&lt;d)) or ((a==d) and (b&lt;=a))</code>');
+    expect(strip(richHtml('MODIFY TABLE P ADD COLUMN (sexo VARCHAR2(10))'))).toBe('<code class="cd blk">MODIFY TABLE P ADD COLUMN (sexo VARCHAR2(10))</code>');
+    expect(richHtml('for (int i=0; i<12; i++) x[i];')).toMatch(/^<code class="cd blk">for \(int i=0; i&lt;12; i\+\+\) x\[i\];<\/code>$/);
+  });
+  it('no convierte en código la prosa', async () => {
+    const { richHtml, todoCodigo } = await import('../src/logic.js');
+    for (const t of ['La dirección de memoria de b.', 'I Plan 2012-2014; II Plan 2014-2016.', 'Solo obligatorio <html>.', 'BYOD', 'HTTP, FTP (puerto 21)', 'Permite ejecutar SELECT SYSDATE FROM DUAL.'])
+      expect(todoCodigo(t)).toBe(false);
+    // SELECT sin FROM dentro de una frase no es una sentencia
+    expect(richHtml('Obtener en una sentencia SELECT grupos de tuplas.')).toBe('Obtener en una sentencia <code class="cd"><b class="sk">SELECT</b></code> grupos de tuplas.');
+    // sentencia en minúsculas con FROM sí lo es
+    expect(richHtml('Tras int *a,b; a=&b; la variable a contiene:')).toContain('<code class="cd">int *a,b; a=&amp;b;</code>');
+    expect(richHtml('Dada la sentencia: select nombre from pacientes where x=1')).toContain('<code class="cd">select nombre from pacientes where x=1</code>');
+  });
+});
+
 describe('sesión rápida de invitado', () => {
   const pool = (t, n) => ({ t, qs: Array.from({ length: n }, (_, k) => ({ i: `${t}-${k}`, t })) });
   const pools = ['A', 'B', 'C', 'D', 'E', 'F'].map(t => pool(t, 5));
