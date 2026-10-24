@@ -3,7 +3,7 @@ import * as sync from './syncfacade.js';
 import * as store from './store.js';
 import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, pickGuest, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from './logic.js';
 import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds } from './data.js';
-import { $, app, L, toast, ask, guard, type El } from './ui.js';
+import { $, app, L, toast, ask, guard, focusHeading, type El } from './ui.js';
 import { ORIGEN, TRAMPAS } from './labels.js';
 import { APP_VERSION, APP_BUILD } from './version.js';
 import { registerTraining } from './screens/training.js';
@@ -119,7 +119,7 @@ routes.quiz = async function () {
     const d = swipeDir(t.clientX - tx[0], t.clientY - tx[1]); tx = null;
     if (d === 'next') { const b = $('#next'); b && b.click(); } else if (d === 'prev') prev();
   };
-  function prev() { if (R.paused || R.idx <= 0) return; R.idx--; draw(); window.scrollTo(0, 0); }
+  function prev() { if (R.paused || R.idx <= 0) return; R.idx--; draw(); focusHeading(); window.scrollTo(0, 0); }
   document.addEventListener('keydown', onKey);
   document.addEventListener('touchstart', onTs, { passive: true });
   document.addEventListener('touchend', onTe, { passive: true });
@@ -145,7 +145,7 @@ routes.quiz = async function () {
     </div>
     ${R.titulo ? `<div class="sub">${esc(R.titulo)}</div>` : ''}
     ${R.limit && R.kind === 'sim' ? '<div class="pace" id="pace"></div>' : ''}
-    ${!R.feedback ? `<details class="question-map"><summary>Mapa de preguntas · ${R.ans.filter(x => x !== undefined && x >= 0).length} respondidas · ${(R.review || []).length} para revisar</summary><div class="question-grid">${R.items.map((_, k) => { const status = R.ans[k] === undefined ? 'Sin responder' : R.ans[k] === -1 ? 'En blanco' : 'Respondida'; return `<button data-jump="${k}" ${k === R.idx ? 'aria-current="step"' : ''} class="${R.ans[k] !== undefined && R.ans[k] >= 0 ? 'answered' : ''}">${k + 1}<small>${status}${R.review?.includes(k) ? ' · Revisar' : ''}</small></button>`; }).join('')}</div></details><button class="ghost" id="review-question" aria-pressed="${!!R.review?.includes(R.idx)}">${R.review?.includes(R.idx) ? '✓ Marcada para revisar' : 'Marcar para revisar'}</button>` : ''}
+    ${!R.feedback ? `<details class="question-map"><summary>Mapa de preguntas · ${R.ans.filter(x => x !== undefined && x >= 0).length} ${R.ans.filter(x => x !== undefined && x >= 0).length === 1 ? 'respondida' : 'respondidas'} · ${(R.review || []).length} para revisar</summary><div class="question-grid">${R.items.map((_, k) => { const status = R.ans[k] === undefined ? 'Sin responder' : R.ans[k] === -1 ? 'En blanco' : 'Respondida'; return `<button data-jump="${k}" ${k === R.idx ? 'aria-current="step"' : ''} class="${R.ans[k] !== undefined && R.ans[k] >= 0 ? 'answered' : ''}">${k + 1}<small>${status}${R.review?.includes(k) ? ' · Revisar' : ''}</small></button>`; }).join('')}</div></details><button class="ghost" id="review-question" aria-pressed="${!!R.review?.includes(R.idx)}">${R.review?.includes(R.idx) ? '✓ Marcada para revisar' : 'Marcar para revisar'}</button>` : ''}
     <div class="card q ${inSup ? 'with-sup' : ''}">
       <div class="meta">
         <span class="tag">${esc(q.t)} · ${esc(temaName(q.t))}</span>
@@ -203,8 +203,8 @@ routes.quiz = async function () {
       <div class="repw" id="rep"></div></div>`;
   }
   function bind(q: any) {
-    app.querySelectorAll<El>('[data-jump]').forEach(b => b.onclick = () => { if (state.run !== R || R.paused) return; R.idx = +b.dataset.jump!; draw(); window.scrollTo(0, 0); });
-    $('#review-question') && ($('#review-question').onclick = () => { if (state.run !== R || R.paused) return; const ids = new Set(R.review || []); ids.has(R.idx) ? ids.delete(R.idx) : ids.add(R.idx); R.review = [...ids].sort((a,b) => a-b); draw(); });
+    app.querySelectorAll<El>('[data-jump]').forEach(b => b.onclick = () => { if (state.run !== R || R.paused) return; R.idx = +b.dataset.jump!; draw(); focusHeading(); window.scrollTo(0, 0); });
+    $('#review-question') && ($('#review-question').onclick = () => { if (state.run !== R || R.paused) return; const ids = new Set(R.review || []); ids.has(R.idx) ? ids.delete(R.idx) : ids.add(R.idx); R.review = [...ids].sort((a,b) => a-b); draw(); $('#review-question').focus({preventScroll:true}); });
     $('#exit').onclick = async () => {
       if (closing || state.run !== R) return;
       closing = true;
@@ -228,7 +228,7 @@ routes.quiz = async function () {
       if (R.feedback) { if (R.ans[R.idx] === undefined) { answer(q, -1); draw(); } }
       else { R.ans[R.idx] = R.ans[R.idx] === -1 ? undefined : -1; draw(); }
     });
-    $('#next') && ($('#next').onclick = () => { if (R.idx === R.items.length - 1) { void finish(); return; } R.idx++; draw(); window.scrollTo(0, 0); });
+    $('#next') && ($('#next').onclick = () => { if (R.idx === R.items.length - 1) { void finish(); return; } R.idx++; draw(); focusHeading(); window.scrollTo(0, 0); });
     $('#mot') && ($('#mot').onclick = e => {
       const b = (e.target as El).closest<El>('button'); if (!b) return;
       const mk = $('#mkcard'), id = 'FC-Q-' + q.i;
@@ -334,8 +334,8 @@ async function openMenu() {
   const G = [
     ['Estudiar', [
       ['⚡', 'Sesión rápida', '10 preguntas en unos 5 minutos', () => quickSession()],
-      ['↻', 'Repaso de fallos', due ? due + ' preguntas toca repasar hoy' : 'Nada pendiente hoy', () => startRepaso()],
-      ['▭', 'Tarjetas de repaso', nCards ? nCards + ' tarjetas vencen hoy' : 'Repetición espaciada', '#/cards'],
+      ['↻', 'Repaso de fallos', due ? due + (due === 1 ? ' pregunta toca repasar hoy' : ' preguntas toca repasar hoy') : 'Nada pendiente hoy', () => startRepaso()],
+      ['▭', 'Tarjetas de repaso', nCards ? nCards + (nCards === 1 ? ' tarjeta vence hoy' : ' tarjetas vencen hoy') : 'Repetición espaciada', '#/cards'],
       ['✎', 'Test por tema', '10–40 preguntas con corrección inmediata', '#/test'],
       ['⏱', 'Simulacros', 'Completo, por examen o por tema', '#/sim'],
     ]],
@@ -345,7 +345,7 @@ async function openMenu() {
       ['⚡', 'Pregunta relámpago', 'Una sola pregunta', '#/relampago'],
     ]],
     ['Seguimiento', [
-      ['▤', 'Estadísticas', 'Mapa de dominio, simulacros y evolución', '#/stats'],
+      ['▤', 'Progreso', 'Mapa de dominio, simulacros y evolución', '#/stats'],
       ['☰', 'Temas vistos', store.getSeen().length + ' temas marcados', '#/temario'],
       ['✗', 'Preguntas falladas', falladasIds().length + ' para buscar y releer', '#/falladas'],
       ['⚠', 'Errores del banco', nErr ? nErr + ' por revisar' : 'Nada por revisar', '#/errores'],
@@ -559,7 +559,7 @@ routes.sim = async function () {
   };
   const shell = () => {
     app.innerHTML = `<h1>Simulacros</h1><div class="seg tabs" id="simtabs" role="group" aria-label="Tipo de simulacro">${TABS.map(([v, t]) => `<button class="${tab === v ? 'on' : ''}" data-v="${v}" aria-pressed="${tab === v}">${t}</button>`).join('')}</div><div id="simbody"></div>`;
-    $('#simtabs').onclick = e => { const b = (e.target as El).closest<El>('button'); if (!b || b.dataset.v! === tab) return; tab = b.dataset.v!; store.setCfg('simtab', tab); shell(); enter($('#simbody') as any); };
+    $('#simtabs').onclick = e => { const b = (e.target as El).closest<El>('button'); if (!b || b.dataset.v! === tab) return; tab = b.dataset.v!; store.setCfg('simtab', tab); shell(); $('#simtabs .on').focus({preventScroll:true}); enter($('#simbody') as any); };
     tab === 'completo' ? drawCompleto() : drawLista();
   };
   shell();

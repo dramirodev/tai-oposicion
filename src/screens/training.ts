@@ -2,7 +2,7 @@ import { questionNotice, sourceHtml } from '../study-ui.js';
 import * as store from '../store.js';
 import { esc, richHtml, shuffle, pct, normUi, hiliteHtml, claveSpans, pideNegativa, minLectura, velocidad, CONSEJOS_LECTURA } from '../logic.js';
 import { META, getMeta, temaName, now, pick, dueList, byIds } from '../data.js';
-import { $, app, L, ask, type El } from '../ui.js';
+import { $, app, L, ask, focusHeading, type El } from '../ui.js';
 import { TRAMPAS, TRAMPA_EXPL } from '../labels.js';
 export function registerTraining({ routes, go, route, pw }: any, screen: any) {
 let generation = 0;
@@ -39,6 +39,7 @@ routes.relampago = async function () {
     $('#fb').innerHTML = `<div class="fb ${ok ? 'good' : 'wrong'}"><b>${ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}${q.x?.length ? `<div class="trap">Trampa: ${q.x.map((x: any) => esc(TRAMPAS[x] || x)).join(' · ')}</div>` : ''}</div>`;
     $('#bar').innerHTML = '<button class="btn" id="more">Otra →</button><button class="btn sec" id="home">Inicio</button>';
     $('#more').onclick = () => route(); $('#home').onclick = () => go('#/home');
+    $('#more').focus({preventScroll:true});
   });
 };
 
@@ -100,8 +101,10 @@ routes.trampas = async function () {
         ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}
         </div>`;
       $('#chk').textContent = R.k + 1 === R.items.length ? 'Terminar →' : 'Siguiente →'; $('#chk').dataset.done = '1';
+      $('#chk').focus({preventScroll:true});
       $('#fb').scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth' });
     };
+    focusHeading();
   }
   function end() {
     const n = R.res.length, tot = R.res.reduce((a: any, r: any) => a + r.n, 0), hit = R.res.reduce((a: any, r: any) => a + r.hit, 0), fa = R.res.reduce((a: any, r: any) => a + r.fa, 0);
@@ -111,6 +114,7 @@ routes.trampas = async function () {
     <div class="card"><h2 class="h3">Las que más se te escapan</h2>${rows.length ? rows.map(([k, v]) => `<div class="line"><span>${esc(TRAMPAS[k] || k)}</span><span>${pct(v[1], v[0])}% <small>(${v[1]}/${v[0]})</small></span></div>`).join('') : '<p class="sub">Aparecerá cuando hayas visto cada trampa ≥3 veces.</p>'}</div>
     <div class="bar2"><button class="btn" id="again">Otra tanda</button><button class="btn sec" id="home">Inicio</button></div>`;
     TRUN = null; $('#again').onclick = () => route(); $('#home').onclick = () => go('#/home');
+    focusHeading();
   }
   draw();
 };
@@ -149,7 +153,7 @@ routes.lectura = async function () {
         if (mine !== generation || R !== LRUN || b.disabled) return;
         const ok = (+b.dataset.v! === 1) === neg; R.pideOk = ok; b.classList.add(ok ? 'ok' : 'bad'); if (!ok) app.querySelectorAll<El>('.opt').forEach(x => { if (x !== b) x.classList.add('ok'); });
         $('#fb0').innerHTML = `<div class="fb ${ok ? 'good' : 'wrong'}"><b>${ok ? '¡Bien leído!' : 'Ojo: lo habías leído al revés.'}</b> Te piden la opción <b>${neg ? 'INCORRECTA / excepción' : 'CORRECTA'}</b>.</div><div class="bar2"><button class="btn" id="n0">Siguiente →</button></div>`;
-        app.querySelectorAll<El>('.opt').forEach(x => x.disabled = true); $('#n0').onclick = () => { R.step = 1; R.mark = new Set(); draw(); };
+        app.querySelectorAll<El>('.opt').forEach(x => x.disabled = true); $('#n0').focus({preventScroll:true}); $('#n0').onclick = () => { R.step = 1; R.mark = new Set(); draw(); };
       });
     } else if (R.step === 1) {
       const toks = words(q.q), spans = claveSpans(q.q); let pos = 0, wi = 0, key = [];
@@ -166,7 +170,7 @@ routes.lectura = async function () {
           else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); el.click(); }
         };
       });
-      $('#none').onclick = () => { if (mine !== generation || R !== LRUN) return; app.querySelectorAll<El>('.tk.on').forEach(el => { el.classList.remove('on'); el.setAttribute('aria-pressed', 'false'); }); $('#chk').dataset.claim = 'none'; $('#chk').click(); };
+      $('#none').onclick = () => { if (mine !== generation || R !== LRUN) return; app.querySelectorAll<El>('.tk.on').forEach(el => { el.classList.remove('on'); el.setAttribute('aria-pressed', 'false'); }); $('#chk').dataset.claim = 'none'; $('#chk').click(); $('#chk').focus({preventScroll:true}); };
       $('#chk').onclick = () => {
         if (mine !== generation || R !== LRUN) return;
         if ($('#chk').dataset.done!) { R.step = 2; draw(); return; }
@@ -196,10 +200,12 @@ routes.lectura = async function () {
         R.res.push({ q: q.i, ok, pide: R.pideOk, marc: R.marcadas });
         app.querySelectorAll<El>('.opt').forEach((x, k) => { x.disabled = true; x.classList.add('dis'); if (k === q.c) x.classList.add('ok'); else if (k === i) x.classList.add('bad'); });
         $('#fb2').innerHTML = `<div class="fb ${ok ? 'good' : 'wrong'}"><b>${ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}</div><div class="bar2"><button class="btn" id="n2">${R.k + 1 === R.items.length ? 'Terminar' : 'Siguiente'} →</button></div>`;
+        $('#n2').focus({preventScroll:true});
         $('#n2').onclick = () => { R.k++; R.step = 0; draw(); window.scrollTo(0, 0); };
       });
     }
     $('#exit').onclick = async () => { if (await ask('¿Salir del ejercicio?', 'Salir') && mine === generation) { LRUN = null; go('#/home'); } };
+    focusHeading();
   }
   function end() {
     const n = R.res.length, ok = R.res.filter((r: any) => r.ok).length, pide = R.res.filter((r: any) => r.pide).length;
@@ -208,6 +214,7 @@ routes.lectura = async function () {
     <div class="card"><h2 class="h3">Método de 3 pasos</h2><ul class="tips">${CONSEJOS_LECTURA.map(c => `<li>${esc(c)}</li>`).join('')}</ul></div>
     <div class="bar2"><button class="btn" id="again">Otra tanda</button><button class="btn sec" id="home">Inicio</button></div>`;
     LRUN = null; $('#again').onclick = () => route(); $('#home').onclick = () => go('#/home');
+    focusHeading();
   }
   draw();
 };

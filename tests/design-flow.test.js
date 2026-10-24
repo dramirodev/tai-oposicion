@@ -80,6 +80,7 @@ it('anticipa el número efectivo de tarjetas y su próximo repaso sin valorarlas
  const before=JSON.stringify(store.getCards());document.querySelector('#go').click();await waitText('Mostrar respuesta');document.querySelector('#show').click();
  expect(document.querySelector('[data-g="0"]').textContent).toContain('2 días');
  expect(JSON.stringify(store.getCards())).toBe(before);
+ document.querySelector('#exit').click();await waitText('Sesión rápida');
 });
 it('confirma el cierre desde el mapa si quedan preguntas sin responder',async()=>{
  const qs=JSON.parse(readFileSync('public/data/T1.01.json','utf8')).slice(0,3);
@@ -104,4 +105,28 @@ it.each(['finish','exit'])('el vencimiento cierra una sola vez y retira la confi
   expect(engine.state.run).toBeNull();expect(document.querySelector('.overlay')).toBeNull();
   expect(store.getSessions()).toHaveLength(1);
  } finally {vi.useRealTimers();}
+});
+it('cambiar pestaña conserva el foco inmediatamente en el nuevo selector',async()=>{
+ await navigate('sim','Simulacros');
+ const tab=document.querySelector('#simtabs [data-v="examen"]');tab.focus();tab.click();
+ expect(document.activeElement).toBe(document.querySelector('#simtabs [data-v="examen"]'));
+});
+it('el mapa y la marca de revisión conservan un destino de foco útil',async()=>{
+ const qs=JSON.parse(readFileSync('public/data/T1.01.json','utf8')).slice(0,3);
+ engine.createRun({kind:'sim',feedback:false,items:qs});await navigate('quiz','pregunta 1');
+ const mark=document.querySelector('#review-question');mark.focus();mark.click();
+ expect(document.activeElement.id).toBe('review-question');
+ document.querySelector('[data-jump="1"]').click();
+ expect(document.activeElement).toBe(document.querySelector('#app h1'));
+ document.querySelector('#next').click();expect(document.activeElement).toBe(document.querySelector('#app h1'));
+ document.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowLeft',bubbles:true}));expect(document.activeElement).toBe(document.querySelector('#app h1'));
+});
+it('abrir el supuesto de una tarjeta no revela la respuesta y el avance conserva el foco',async()=>{
+ store.addFallo('TAI2024B-S1-01');await navigate('cards','Tarjetas de repaso');
+ document.querySelector('#go').click();await waitText('Mostrar respuesta');
+ expect(document.activeElement).toBe(document.querySelector('#app h1'));
+ const summary=document.querySelector('#fc details summary');expect(summary).not.toBeNull();summary.click();
+ expect(document.querySelector('#show')).not.toBeNull();expect(document.querySelector('.fa')).toBeNull();
+ document.querySelector('#show').click();expect(document.activeElement).toBe(document.querySelector('.fa'));
+ document.querySelector('[data-g="2"]').click();expect(document.activeElement).toBe(document.querySelector('#app h1'));
 });

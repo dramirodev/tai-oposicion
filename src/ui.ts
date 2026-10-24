@@ -7,6 +7,12 @@ export const $ = <T extends HTMLElement = El>(s: string, r: ParentNode = documen
 export const app = $('#app') as El;
 export const L = 'ABCD';
 
+/** Mantiene un punto de lectura al reemplazar una vista dentro de la misma ruta. */
+export function focusHeading(): void {
+  const heading = app.querySelector<HTMLElement>('h1');
+  if (heading) { heading.tabIndex = -1; heading.focus({preventScroll:true}); }
+}
+
 // avisos y confirmaciones propios (sustituyen a alert/confirm nativos)
 let toastT: ReturnType<typeof setTimeout> | undefined;
 function toastEl() {

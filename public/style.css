@@ -51,7 +51,7 @@
 
 /* ===== base ===== */
 input[type=checkbox],input[type=radio],input[type=range]{accent-color:var(--selb)}
-input[type=checkbox],input[type=radio]{width:24px;height:24px}
+input[type=checkbox],input[type=radio]{width:24px;height:24px;flex-shrink:0}
 #app{zoom:var(--z,1)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--sat) + 80px * var(--z,1));scroll-padding-bottom:calc(var(--navh) + var(--sab) + 96px * var(--z,1))}
@@ -107,7 +107,7 @@ a{color:var(--selb)}
 .btn:disabled{opacity:.5}
 .ghost{appearance:none;background:none;border:0;color:var(--mute);font:inherit;font-size:var(--fs-xl);padding:6px 10px;cursor:pointer}
 .ghost.sm{font-size:var(--fs-m);color:var(--selb)}
-button.ghost{min-height:44px}
+button.ghost{min-height:44px;min-width:44px}
 button.ghost.sm{padding:10px 12px}
 .iconbtn{flex:none;width:48px;height:48px;border-radius:var(--r-m);border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:var(--fs-xl);cursor:pointer}
 .row{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
@@ -167,6 +167,8 @@ select.wide{width:100%;flex:none}
 .q .enun{font-size:var(--fs-xl);line-height:1.45;margin:6px 0 16px}
 .ctx{background:var(--bg);border-radius:var(--r-m);padding:10px;font-size:var(--fs-b);margin-bottom:10px}
 .sup{margin:8px 0 12px;font-size:var(--fs-b);border-radius:var(--r-m)}
+summary{min-height:44px;padding:10px 0}
+input[type=date]{min-height:48px;max-width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(--mute);border-radius:var(--r-s);background:var(--card);color:var(--ink)}
 .sup summary{color:var(--selb);cursor:pointer}
 .opts{display:flex;flex-direction:column;gap:10px}
 .opt{display:flex;gap:12px;align-items:center;text-align:left;width:100%;font:inherit;font-size:var(--fs-l);padding:14px;border-radius:var(--r-l);border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;min-height:56px}
@@ -214,7 +216,7 @@ select.wide{width:100%;flex:none}
 .trapx.hit{border-left-color:var(--ok)}.trapx.miss{border-left-color:var(--amber-strong)}.trapx.fa{border-left-color:var(--bad)}
 mark.kw{background:rgba(255,200,0,.28);color:inherit;border-radius:3px;padding:0 2px}
 .gate{margin:10px 0;padding:8px 12px;border-radius:var(--r-s);background:rgba(255,200,0,.18);font-size:var(--fs-m)}
-.tks .tk{appearance:none;border:0;background:none;color:inherit;font:inherit;text-align:inherit;cursor:pointer;padding:2px 3px;margin:0;border-radius:4px;display:inline-block;min-height:44px}
+.tks .tk{appearance:none;border:0;background:none;color:inherit;font:inherit;text-align:inherit;cursor:pointer;padding:2px 3px;margin:0;border-radius:4px;display:inline-block;min-height:44px;min-width:44px}
 .tks .tk.on{background:var(--sel);outline:2px solid var(--selb)}
 .tks .tk.key{background:rgba(255,200,0,.35)}
 ul.tips{padding-left:20px;margin:8px 0}ul.tips li{margin:4px 0;font-size:var(--fs-m)}
@@ -457,4 +459,17 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),select{border-col
  .with-sup>.scenario-context{float:left;width:38%;margin:0 22px 20px 0;position:sticky;top:80px;max-height:65vh;overflow:auto;border:1px solid var(--line);padding:12px}
  .with-sup>.scenario-context summary{font-weight:600;min-height:44px}
  .with-sup>.opts,.with-sup>.enun{overflow:hidden}
+}
+
+/* Con letra ampliada, el reloj y las acciones deben caber también en 320 px. */
+@media(max-width:600px){
+ :root:not([data-text-size="0"]) .qhead:has(.clock){display:grid;grid-template-columns:48px minmax(0,1fr) 44px;gap:8px}
+ :root:not([data-text-size="0"]) .qhead:has(.clock) #exit{grid-column:1;grid-row:1}
+ :root:not([data-text-size="0"]) .qhead:has(.clock) .prog{grid-column:2;grid-row:1;width:100%}
+ :root:not([data-text-size="0"]) .qhead:has(.clock) #pause{grid-column:3;grid-row:1}
+ :root:not([data-text-size="0"]) .qhead:has(.clock) .cnt{grid-column:1;grid-row:2;text-align:left}
+ :root:not([data-text-size="0"]) .qhead:has(.clock) .clock{grid-column:2 / 4;grid-row:2;justify-self:end}
+ :root[data-text-size="2"] .bar2,:root[data-text-size="3"] .bar2{flex-direction:column}
+ :root[data-text-size="2"] main:has(.bar2),:root[data-text-size="3"] main:has(.bar2){padding-bottom:calc(230px + var(--sab))}
+ :root[data-text-size="2"] main:has(.bar2 button:nth-child(3)),:root[data-text-size="3"] main:has(.bar2 button:nth-child(3)){padding-bottom:calc(340px + var(--sab))}
 }

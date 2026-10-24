@@ -2,7 +2,7 @@ import { cardNextReview, sourceHtml, questionNotice } from '../study-ui.js';
 import * as store from '../store.js';
 import { esc, richHtml, pct, swipeDir, pickCards, cardStats, cardFromQuestion } from '../logic.js';
 import { j, getIndex, getMeta, byIds, temaName, now } from '../data.js';
-import { $, app, toast, type El } from '../ui.js';
+import { $, app, toast, focusHeading, type El } from '../ui.js';
 export function registerCards({ routes, go, pw, reportBox }: any, screen: any) {
 // ───────── tarjetas (flashcards) ─────────
 let CARDIDX: any; const cardCache = new Map<string, any>(); let CRUN: any = null;
@@ -106,13 +106,14 @@ function cardSession() {
     if (R.idx >= R.items.length) return fin();
     const c = R.items[R.idx];
     app.innerHTML = `
+    <h1 class="sr">Tarjetas · tarjeta ${R.idx + 1} de ${R.items.length}</h1>
     <div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog" role="progressbar" aria-label="Progreso" aria-valuemin="0" aria-valuemax="${R.items.length}" aria-valuenow="${R.idx}"><div ${pw(100 * R.idx / R.items.length)}></div></div><div class="cnt">${R.idx + 1}/${R.items.length}</div></div>
     <div class="card q fc" id="fc">
       <div class="meta"><span class="tag">${esc(c.t)} · ${esc(temaName(c.t))}</span>${c.tipo ? `<span class="tag">${esc(c.tipo)}</span>` : ''}${c.caduca ? '<span class="tag warn">Puede caducar</span>' : ''}</div>
       ${questionNotice({ n: c.nota, np: c.np })}
       ${c.supTexto ? `<details class="sup"><summary>Enunciado del supuesto</summary><div class="pre">${esc(c.supTexto)}</div></details>` : ''}${c.cp ? `<div class="ctx pre">${richHtml(c.cp)}</div>` : ''}
       <div class="enun pre">${richHtml(c.q)}</div>
-      ${R.rev ? `<div class="fa"><small>Respuesta</small><div class="pre">${richHtml(c.a)}</div>
+      ${R.rev ? `<div class="fa" role="region" aria-label="Respuesta de la tarjeta" tabindex="-1"><small>Respuesta</small><div class="pre">${richHtml(c.a)}</div>
         ${c.nota ? `<div class="cita"><span>Nota</span>${esc(c.nota)}</div>` : ''}
         ${c.ref ? `<div class="cita"><span>Temario</span>${esc(c.ref)}</div>` : ''}
 ${sourceHtml({ source: c.source, u: c.ref })}
@@ -123,10 +124,11 @@ ${sourceHtml({ source: c.source, u: c.ref })}
     ${R.rev ? '<p class="sub fgl">Teclado 1·2·3 · deslizar ← Fallé · → Lo sabía</p>' : ''}`;
     $('#exit').onclick = () => { CRUN = null; go('#/home'); };
     $('#show') && ($('#show').onclick = show);
-    $('#fc').onclick = e => { if (!R.rev && !(e.target as El).closest<El>('button')) show(); };
+    $('#fc').onclick = e => { if (!R.rev && !(e.target as El).closest<El>('button,a,details,input,select,textarea')) show(); };
     app.querySelectorAll<El>('[data-g]').forEach(b => b.onclick = () => grade(+b.dataset.g!));
     $('#crep') && reportBox({ i: c.id, t: c.t }, $('#crep'));
     $('#quit') && ($('#quit').onclick = () => { store.removeCard(c.id); R.items.splice(R.idx, 1); R.rev = false; draw(); });
+    if (R.rev) $('.fa').focus({preventScroll:true}); else focusHeading();
   }
   function fin() {
     const rs = R.res, tot = rs[0] + rs[1] + rs[2];
@@ -137,6 +139,7 @@ ${sourceHtml({ source: c.source, u: c.ref })}
     <p class="sub">${rs[0] + rs[1] ? 'Las que fallaste o dudaste vuelven en 2 días.' : '¡Todas recordadas!'}${sig ? ' Próximo repaso: ' + new Date(sig).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short' }) + '.' : ''}</p>
     <button class="btn" id="otra">Otra sesión</button> <button class="btn sec" id="ini">Inicio</button>`;
     $('#otra').onclick = () => go('#/cards'); $('#ini').onclick = () => go('#/home');
+    focusHeading();
   }
   draw();
 }

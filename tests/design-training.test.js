@@ -60,3 +60,23 @@ it('completar Lectura guarda un solo acierto, aísla recientes y conserva el pro
   store.switchAccount('otra-cuenta'); expect(store.rec('TRAIN-1')).toBeUndefined();
   store.switchAccount('estudiante'); expect(store.rec('TRAIN-1')[0]).toBe(1);
 });
+it('relámpago conserva el foco al pasar de respuesta a la siguiente acción',async()=>{
+ await routes.relampago();const opt=document.querySelector('.opt');opt.focus();opt.click();
+ expect(document.activeElement.id).toBe('more');
+});
+it('lectura conserva el foco entre pasos y al mostrar la corrección',async()=>{
+ await routes.lectura();const opt=document.querySelector('[data-v="1"]');opt.focus();opt.click();
+ expect(document.activeElement.id).toBe('n0');document.querySelector('#n0').click();
+ expect(document.activeElement).toBe(document.querySelector('h1'));
+ document.querySelector('#none').click();expect(document.activeElement.id).toBe('chk');
+});
+it('los resúmenes de Detective y Lectura mantienen el foco en su encabezado',async()=>{
+ await routes.trampas();document.querySelector('#chk').click();document.querySelector('#chk').click();
+ expect(document.activeElement).toBe(document.querySelector('h1'));
+ expect(document.querySelector('#app').textContent).toContain('Otra tanda');
+ vi.useFakeTimers();await routes.lectura();document.querySelector('[data-v="1"]').click();document.querySelector('#n0').click();
+ document.querySelector('#none').click();document.querySelector('#chk').click();
+ await vi.advanceTimersByTimeAsync(60000);document.querySelector('.opt[data-i="0"]').click();document.querySelector('#n2').click();
+ expect(document.querySelector('#app').textContent).toContain('Método de 3 pasos');
+ expect(document.activeElement).toBe(document.querySelector('h1'));
+});
