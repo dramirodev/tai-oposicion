@@ -1,0 +1,899 @@
+[
+  {
+    "id": "AS05G-P1-60",
+    "file": "public/data/T2.05.json",
+    "before": {
+      "i": "AS05G-P1-60",
+      "t": "T2.05",
+      "o": "A",
+      "q": "Respecto a los sistemas de gestión de bases de datos relacionales, ¿cuál de las siguientes NO es una regla de Codd?",
+      "a": [
+        "Independencia de la distribución.",
+        "Regla de la inversión.",
+        "Catálogo dinámico.",
+        "Independencia de la distribución."
+      ],
+      "c": 1,
+      "k": "I",
+      "x": [],
+      "d": null
+    },
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/SIMULACROS/Simulacro 05 - versión GLOBE.pdf",
+        "sha256": "0d462090eff3e69e20983595b8fb1f7f3ef1045148afd90c86e477d57c6085ba",
+        "pages": [
+          10,
+          17
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "status": "conservada con advertencia",
+    "reason": "ADVERTENCIA: el original repite las alternativas A y D; se conservan literalmente. La duplicación no afecta a la respuesta B: Regla de la inversión. Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json.",
+    "after": {
+      "i": "AS05G-P1-60",
+      "t": "T2.05",
+      "o": "A",
+      "q": "Respecto a los sistemas de gestión de bases de datos relacionales, ¿cuál de las siguientes NO es una regla de Codd?",
+      "a": [
+        "Independencia de la distribución.",
+        "Regla de la inversión.",
+        "Catálogo dinámico.",
+        "Independencia de la distribución."
+      ],
+      "c": 1,
+      "k": "I",
+      "x": [],
+      "d": null,
+      "n": "ADVERTENCIA: el original repite las alternativas A y D; se conservan literalmente. La duplicación no afecta a la respuesta B: Regla de la inversión. Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json."
+    },
+    "fields": [
+      "n"
+    ],
+    "warning": "ADVERTENCIA: el original repite las alternativas A y D; se conservan literalmente. La duplicación no afecta a la respuesta B: Regla de la inversión. Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json.",
+    "scoring_exclusion_implemented": false
+  },
+  {
+    "id": "AS08B-P1-R-01",
+    "file": "public/data/T1.08.json",
+    "before": {
+      "i": "AS08B-P1-R-01",
+      "t": "T1.08",
+      "o": "A",
+      "q": "Respecto a la firma electrónica, según el Reglamento eIDAS, indique qué afirmación NO es correcta:",
+      "a": [
+        "Firma electrónica cualificada es una firma electrónica avanzada que se crea mediante un dispositivo cualificado de creación de firmas electrónicas y que se basa en un certificado cualificado de firma electrónica.",
+        "Una firma electrónica avanzada estará vinculada al firmante de manera única.",
+        "Una firma electrónica avanzada estará vinculada al firmante de manera única.",
+        "Una firma electrónica avanzada tendrá un efecto jurídico equivalente al de una firma manuscrita."
+      ],
+      "c": 3,
+      "k": "I",
+      "x": [],
+      "d": null
+    },
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/SIMULACROS/Simulacro 08 (bis).pdf",
+        "sha256": "b461c4e75685cf88cb416a820cdf8f1b355a5a70024067db9d00866c5e70d23f",
+        "pages": [
+          16,
+          17
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://eur-lex.europa.eu/eli/reg/2014/910/oj/eng",
+      "https://www.boe.es/buscar/doc.php?id=DOUE-L-2014-81822"
+    ],
+    "status": "conservada con advertencia",
+    "reason": "ADVERTENCIA: el original repite las alternativas B y C; se conservan literalmente. La duplicación no afecta a la respuesta D: la equivalencia con la firma manuscrita corresponde a la firma cualificada. Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json.",
+    "after": {
+      "i": "AS08B-P1-R-01",
+      "t": "T1.08",
+      "o": "A",
+      "q": "Respecto a la firma electrónica, según el Reglamento eIDAS, indique qué afirmación NO es correcta:",
+      "a": [
+        "Firma electrónica cualificada es una firma electrónica avanzada que se crea mediante un dispositivo cualificado de creación de firmas electrónicas y que se basa en un certificado cualificado de firma electrónica.",
+        "Una firma electrónica avanzada estará vinculada al firmante de manera única.",
+        "Una firma electrónica avanzada estará vinculada al firmante de manera única.",
+        "Una firma electrónica avanzada tendrá un efecto jurídico equivalente al de una firma manuscrita."
+      ],
+      "c": 3,
+      "k": "I",
+      "x": [],
+      "d": null,
+      "n": "ADVERTENCIA: el original repite las alternativas B y C; se conservan literalmente. La duplicación no afecta a la respuesta D: la equivalencia con la firma manuscrita corresponde a la firma cualificada. Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json."
+    },
+    "fields": [
+      "n"
+    ],
+    "warning": "ADVERTENCIA: el original repite las alternativas B y C; se conservan literalmente. La duplicación no afecta a la respuesta D: la equivalencia con la firma manuscrita corresponde a la firma cualificada. Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json.",
+    "scoring_exclusion_implemented": false
+  },
+  {
+    "id": "AS11B-P1-70",
+    "file": "public/data/T3.08.json",
+    "before": {
+      "i": "AS11B-P1-70",
+      "t": "T3.08",
+      "o": "A",
+      "q": "En JavaScript, ¿cómo se escribe una sentencia condicional para comprobar que la variable \"x\" es distinta de 2?",
+      "a": [
+        "if x <> 2",
+        "if (x != 2)",
+        "if x <> 2",
+        "if x != 2"
+      ],
+      "c": 1,
+      "k": "D",
+      "x": [],
+      "d": null,
+      "z": 1
+    },
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/SIMULACROS/Simulacro 11 (bis).pdf",
+        "sha256": "db3cc08e6578782d9c00f6dbe2963989b84056eedd492f2fa54aab9ea2c556e1",
+        "pages": [
+          11,
+          17
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "status": "conservada con advertencia",
+    "reason": "ADVERTENCIA: el original repite las alternativas A y C; se conservan literalmente. La duplicación no afecta a la respuesta B: if (x != 2). Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json.",
+    "after": {
+      "i": "AS11B-P1-70",
+      "t": "T3.08",
+      "o": "A",
+      "q": "En JavaScript, ¿cómo se escribe una sentencia condicional para comprobar que la variable \"x\" es distinta de 2?",
+      "a": [
+        "if x <> 2",
+        "if (x != 2)",
+        "if x <> 2",
+        "if x != 2"
+      ],
+      "c": 1,
+      "k": "D",
+      "x": [],
+      "d": null,
+      "z": 1,
+      "n": "ADVERTENCIA: el original repite las alternativas A y C; se conservan literalmente. La duplicación no afecta a la respuesta B: if (x != 2). Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json."
+    },
+    "fields": [
+      "n"
+    ],
+    "warning": "ADVERTENCIA: el original repite las alternativas A y C; se conservan literalmente. La duplicación no afecta a la respuesta B: if (x != 2). Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json.",
+    "scoring_exclusion_implemented": false
+  },
+  {
+    "id": "AS12B-S2-12",
+    "file": "public/data/supuestos.json",
+    "before": {
+      "i": "AS12B-S2-12",
+      "t": "T4.02",
+      "o": "A",
+      "q": "Se requiere la instalación de un motor de contenedores (container Engine) y le consultan sobre esta cuestión. Indique cuál de los siguientes NO es un motor de contenedores:",
+      "a": [
+        "Docker.",
+        "BorgCube.",
+        "Microsoft Hyper-V.",
+        "LXC."
+      ],
+      "c": 1,
+      "k": "I",
+      "x": [
+        9
+      ],
+      "d": 1,
+      "n": "DUDOSA — cotejo del original: El original contiene BorgCube y Microsoft Hyper-V; la clave B no elimina la objeción de que Hyper-V es un hipervisor. No hay distractor perdido que pueda restituirse.",
+      "s": "AS12B-S2"
+    },
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/SIMULACROS/Simulacro 12 (bis).pdf",
+        "sha256": "05f942757c317f295ba81d922a95e924891a5956a67731e2b92c6ceb39a3da5b",
+        "pages": [
+          20,
+          22
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/overview"
+    ],
+    "status": "reformulada",
+    "reason": "VERSIÓN EDITORIAL: se sustituye la pregunta ambigua sobre motores por la identificación de un hipervisor. Hyper-V es un hipervisor de tipo 1. La clave cambia de B (c=1) a C (c=2); no es la clave del simulacro literal. Fuente: https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/overview",
+    "after": {
+      "i": "AS12B-S2-12",
+      "t": "T4.02",
+      "o": "A",
+      "q": "¿Cuál de estas tecnologías es un hipervisor?",
+      "a": [
+        "Docker Engine.",
+        "containerd.",
+        "Microsoft Hyper-V.",
+        "CRI-O."
+      ],
+      "c": 2,
+      "k": "D",
+      "x": [
+        9
+      ],
+      "d": 1,
+      "n": "VERSIÓN EDITORIAL: se sustituye la pregunta ambigua sobre motores por la identificación de un hipervisor. Hyper-V es un hipervisor de tipo 1. La clave cambia de B (c=1) a C (c=2); no es la clave del simulacro literal. Fuente: https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/overview",
+      "s": "AS12B-S2"
+    },
+    "fields": [
+      "a",
+      "c",
+      "k",
+      "n",
+      "q"
+    ],
+    "warning": "VERSIÓN EDITORIAL: se sustituye la pregunta ambigua sobre motores por la identificación de un hipervisor. Hyper-V es un hipervisor de tipo 1. La clave cambia de B (c=1) a C (c=2); no es la clave del simulacro literal. Fuente: https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/overview",
+    "scoring_exclusion_implemented": false
+  },
+  {
+    "id": "AS12B-S2-13",
+    "file": "public/data/supuestos.json",
+    "before": {
+      "i": "AS12B-S2-13",
+      "t": "T4.01",
+      "o": "A",
+      "q": "Para asignar la dirección IPv6 2001:0:0:abcd:0:8a2e:0370:7334/64 a la interfaz eth1 en un sistema Linux, seleccione el comando que lo realiza:",
+      "a": [
+        "ip addr add 2001:0:0:abcd:0:8a2e:0370:7334/64 dev eth1",
+        "ip -6 addr add 2001:0:0:abcd:0:8a2e:0370:7334/64 dev eth1",
+        "ip -v6 addr add 2001:0:0:abcd:0:8a2e:0370:7334/64 dev eth1",
+        "ip route add 2001:0:0:abcd:0:8a2e:0370:7334/64 dev eth1"
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [
+        10
+      ],
+      "d": 2,
+      "n": "DUDOSA — cotejo del original: El PDF conserva ambas formas ip addr add e ip -6 addr add; IPv6 puede deducirse de la dirección. La plantilla B se conserva, pero A también es válida.",
+      "s": "AS12B-S2"
+    },
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/SIMULACROS/Simulacro 12 (bis).pdf",
+        "sha256": "05f942757c317f295ba81d922a95e924891a5956a67731e2b92c6ceb39a3da5b",
+        "pages": [
+          20,
+          22
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://man7.org/linux/man-pages/man8/ip.8.html"
+    ],
+    "status": "reformulada",
+    "reason": "VERSIÓN EDITORIAL: se exige especificar explícitamente la familia con la opción abreviada -6; por eso B es la única que satisface el enunciado. A también puede asignar la dirección al deducir IPv6, pero no incluye esa opción. Clave B conservada. Fuente: https://man7.org/linux/man-pages/man8/ip.8.html",
+    "after": {
+      "i": "AS12B-S2-13",
+      "t": "T4.01",
+      "o": "A",
+      "q": "¿Qué comando asigna la dirección IPv6 2001:0:0:abcd:0:8a2e:0370:7334/64 a eth1 especificando explícitamente la familia IPv6 mediante la opción abreviada documentada?",
+      "a": [
+        "ip addr add 2001:0:0:abcd:0:8a2e:0370:7334/64 dev eth1",
+        "ip -6 addr add 2001:0:0:abcd:0:8a2e:0370:7334/64 dev eth1",
+        "ip -v6 addr add 2001:0:0:abcd:0:8a2e:0370:7334/64 dev eth1",
+        "ip route add 2001:0:0:abcd:0:8a2e:0370:7334/64 dev eth1"
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [
+        10
+      ],
+      "d": 2,
+      "n": "VERSIÓN EDITORIAL: se exige especificar explícitamente la familia con la opción abreviada -6; por eso B es la única que satisface el enunciado. A también puede asignar la dirección al deducir IPv6, pero no incluye esa opción. Clave B conservada. Fuente: https://man7.org/linux/man-pages/man8/ip.8.html",
+      "s": "AS12B-S2"
+    },
+    "fields": [
+      "n",
+      "q"
+    ],
+    "warning": "VERSIÓN EDITORIAL: se exige especificar explícitamente la familia con la opción abreviada -6; por eso B es la única que satisface el enunciado. A también puede asignar la dirección al deducir IPv6, pero no incluye esa opción. Clave B conservada. Fuente: https://man7.org/linux/man-pages/man8/ip.8.html",
+    "scoring_exclusion_implemented": false
+  },
+  {
+    "id": "AT309-P1-12",
+    "file": "public/data/T3.09.json",
+    "before": {
+      "i": "AT309-P1-12",
+      "t": "T3.09",
+      "o": "A",
+      "q": "En WCAG 2.2, en relación al Nivel AAA señale la respuesta INCORRECTA:",
+      "a": [
+        "Son los criterios de menor importancia.",
+        "Si se cumplen confieren a la página web un buen nivel de accesibilidad.",
+        "Se deben satisfacer los criterios de Nivel A, Nivel AA y Nivel AAA.",
+        "Eliminan importantes barreras de acceso."
+      ],
+      "c": 3,
+      "k": "I",
+      "x": [],
+      "d": null,
+      "n": "DUDOSA — cotejo del original: Texto y clave D coinciden con el Test T3.09. La valoración de AAA como criterios de menor importancia no permite una única incorrecta inequívoca; no se reescriben las opciones."
+    },
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Test.pdf",
+        "sha256": "67c13c545b63b5dd31d7ebe8d147062cdee6b6884d4945caf26ffc23cca7acc6",
+        "pages": [
+          3,
+          12
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://www.w3.org/TR/WCAG22/#conformance-reqs",
+      "https://www.w3.org/TR/WCAG22/#cc1"
+    ],
+    "status": "reformulada",
+    "reason": "VERSIÓN EDITORIAL: se sustituye la valoración ambigua de importancia por el requisito de conformidad AAA: satisfacer los criterios A, AA y AAA. Cambia de D (c=3) a C (c=2). Es una nueva pregunta editorial, no una restitución OCR. Fuente: https://www.w3.org/TR/WCAG22/#cc1",
+    "after": {
+      "i": "AT309-P1-12",
+      "t": "T3.09",
+      "o": "A",
+      "q": "Para alcanzar conformidad de nivel AAA en WCAG 2.2, ¿qué niveles de criterios de éxito deben satisfacerse?",
+      "a": [
+        "Solo AAA.",
+        "AA y AAA.",
+        "A, AA y AAA.",
+        "Solo A y AA."
+      ],
+      "c": 2,
+      "k": "D",
+      "x": [],
+      "d": null,
+      "n": "VERSIÓN EDITORIAL: se sustituye la valoración ambigua de importancia por el requisito de conformidad AAA: satisfacer los criterios A, AA y AAA. Cambia de D (c=3) a C (c=2). Es una nueva pregunta editorial, no una restitución OCR. Fuente: https://www.w3.org/TR/WCAG22/#cc1"
+    },
+    "fields": [
+      "a",
+      "c",
+      "k",
+      "n",
+      "q"
+    ],
+    "warning": "VERSIÓN EDITORIAL: se sustituye la valoración ambigua de importancia por el requisito de conformidad AAA: satisfacer los criterios A, AA y AAA. Cambia de D (c=3) a C (c=2). Es una nueva pregunta editorial, no una restitución OCR. Fuente: https://www.w3.org/TR/WCAG22/#cc1",
+    "scoring_exclusion_implemented": false
+  },
+  {
+    "id": "GEN-T3.03-48",
+    "file": "public/data/T3.03.json",
+    "before": {
+      "i": "GEN-T3.03-48",
+      "t": "T3.03",
+      "o": "G",
+      "q": "Normalmente, los lenguajes débilmente tipados tendrán:",
+      "a": [
+        "Solamente conversiones explícitas.",
+        "Ninguna conversión.",
+        "Solamente conversiones implícitas.",
+        "Conversiones implícitas y explícitas."
+      ],
+      "c": 2,
+      "k": "C",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.03-48",
+      "u": "Normalmente: Los lenguajes fuertemente tipados tendrán conversiones implícitas y explícitas. Los lenguajes débilmente tipados solamente las conversiones implícitas. … casting\" (convertir): es el proceso de transformar un valor de un tipo a un valor de otro tipo.",
+      "v": 0,
+      "n": "DUDOSA — cotejo del original: El Temario T3.03 se contradice entre pp. 16 y 21 sobre tipado y conversiones. La distinción fuerte/débil no justifica una regla universal de conversiones implícitas/explícitas; se conserva la clave sin certificarla."
+    },
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb",
+        "pages": [
+          16,
+          21
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/types/casting-and-type-conversions"
+    ],
+    "status": "reformulada",
+    "reason": "VERSIÓN EDITORIAL: se reemplaza la generalización contradictoria sobre tipado débil por la definición de conversión implícita. Se conserva el id y la clave C; f y v se mantienen por trazabilidad, no como afirmación de equivalencia entre variantes. u es una explicación editorial, no una cita del temario. Fuente: https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/types/casting-and-type-conversions",
+    "after": {
+      "i": "GEN-T3.03-48",
+      "t": "T3.03",
+      "o": "G",
+      "q": "¿Cómo se denomina una conversión de tipo que realiza el lenguaje sin que el programador la solicite expresamente?",
+      "a": [
+        "Explícita.",
+        "Compilación.",
+        "Implícita.",
+        "Enlazado."
+      ],
+      "c": 2,
+      "k": "D",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.03-48",
+      "u": "Explicación editorial: las conversiones implícitas se realizan automáticamente; las explícitas requieren que el programador las solicite. Las conversiones permitidas y su sintaxis dependen del lenguaje.",
+      "v": 0,
+      "n": "VERSIÓN EDITORIAL: se reemplaza la generalización contradictoria sobre tipado débil por la definición de conversión implícita. Se conserva el id y la clave C; f y v se mantienen por trazabilidad, no como afirmación de equivalencia entre variantes. u es una explicación editorial, no una cita del temario. Fuente: https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/types/casting-and-type-conversions"
+    },
+    "fields": [
+      "a",
+      "k",
+      "n",
+      "q",
+      "u"
+    ],
+    "warning": "VERSIÓN EDITORIAL: se reemplaza la generalización contradictoria sobre tipado débil por la definición de conversión implícita. Se conserva el id y la clave C; f y v se mantienen por trazabilidad, no como afirmación de equivalencia entre variantes. u es una explicación editorial, no una cita del temario. Fuente: https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/types/casting-and-type-conversions",
+    "scoring_exclusion_implemented": false
+  },
+  {
+    "id": "GEN-T3.03-48.v1",
+    "file": "public/data/T3.03.json",
+    "before": {
+      "i": "GEN-T3.03-48.v1",
+      "t": "T3.03",
+      "o": "G",
+      "q": "Normalmente, los lenguajes fuertemente tipados tendrán:",
+      "a": [
+        "Solamente conversiones explícitas.",
+        "Ninguna conversión.",
+        "Solamente conversiones implícitas.",
+        "Conversiones implícitas y explícitas."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.03-48",
+      "u": "Normalmente: Los lenguajes fuertemente tipados tendrán conversiones implícitas y explícitas. Los lenguajes débilmente tipados solamente las conversiones implícitas. … casting\" (convertir): es el proceso de transformar un valor de un tipo a un valor de otro tipo.",
+      "v": 1,
+      "n": "DUDOSA — cotejo del original: El Temario T3.03 se contradice entre pp. 16 y 21 sobre tipado y conversiones. La distinción fuerte/débil no justifica una regla universal de conversiones implícitas/explícitas; se conserva la clave sin certificarla."
+    },
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb",
+        "pages": [
+          16,
+          21
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/types/casting-and-type-conversions"
+    ],
+    "status": "reformulada",
+    "reason": "VERSIÓN EDITORIAL: se reemplaza la generalización contradictoria sobre tipado fuerte por la definición de conversión explícita. Se conserva el id y la clave D; f y v se mantienen por trazabilidad, no como afirmación de equivalencia entre variantes. u es una explicación editorial, no una cita del temario. Fuente: https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/types/casting-and-type-conversions",
+    "after": {
+      "i": "GEN-T3.03-48.v1",
+      "t": "T3.03",
+      "o": "G",
+      "q": "¿Cómo se denomina una conversión de tipo solicitada expresamente por el programador?",
+      "a": [
+        "Implícita.",
+        "Inferencia de tipos.",
+        "Enlazado.",
+        "Explícita."
+      ],
+      "c": 3,
+      "k": "D",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.03-48",
+      "u": "Explicación editorial: las conversiones implícitas se realizan automáticamente; las explícitas requieren que el programador las solicite. Las conversiones permitidas y su sintaxis dependen del lenguaje.",
+      "v": 1,
+      "n": "VERSIÓN EDITORIAL: se reemplaza la generalización contradictoria sobre tipado fuerte por la definición de conversión explícita. Se conserva el id y la clave D; f y v se mantienen por trazabilidad, no como afirmación de equivalencia entre variantes. u es una explicación editorial, no una cita del temario. Fuente: https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/types/casting-and-type-conversions"
+    },
+    "fields": [
+      "a",
+      "k",
+      "n",
+      "q",
+      "u"
+    ],
+    "warning": "VERSIÓN EDITORIAL: se reemplaza la generalización contradictoria sobre tipado fuerte por la definición de conversión explícita. Se conserva el id y la clave D; f y v se mantienen por trazabilidad, no como afirmación de equivalencia entre variantes. u es una explicación editorial, no una cita del temario. Fuente: https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/types/casting-and-type-conversions",
+    "scoring_exclusion_implemented": false
+  },
+  {
+    "id": "GEN-T3.08-418.v1",
+    "file": "public/data/T3.08.json",
+    "before": {
+      "i": "GEN-T3.08-418.v1",
+      "t": "T3.08",
+      "o": "G",
+      "q": "Un elemento NO soportado en HTML5, según el temario, es:",
+      "a": [
+        "<b>.",
+        "<em>.",
+        "<u>.",
+        "<i>."
+      ],
+      "c": 2,
+      "k": "I",
+      "x": [
+        8,
+        12
+      ],
+      "d": 3,
+      "f": "GEN-T3.08-418",
+      "u": "<u> Muestra el texto subrayado No soportado en HTML5 … <font> Fuente del texto No soportado en HTML5",
+      "v": 1,
+      "n": "DUDOSA — cotejo del original: El temario imprime <u> como no soportado en HTML5, pero las cuatro opciones b/em/u/i son elementos HTML válidos. No se sustituye por <font>, que sería inventar un distractor distinto."
+    },
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba",
+        "pages": [
+          36
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-u-element",
+      "https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features"
+    ],
+    "status": "reformulada",
+    "reason": "VERSIÓN EDITORIAL: se sustituye expresamente <u> por <font> en C y se pregunta por conformidad, no por soporte de navegadores. c=2 se conserva. Se reemplaza el fragmento u erróneo por una explicación identificada como editorial. No es texto recuperado del original. Fuente: https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features",
+    "after": {
+      "i": "GEN-T3.08-418.v1",
+      "t": "T3.08",
+      "o": "G",
+      "q": "¿Cuál de estos elementos se considera obsoleto y no conforme para autores en HTML actual?",
+      "a": [
+        "<b>.",
+        "<em>.",
+        "<font>.",
+        "<i>."
+      ],
+      "c": 2,
+      "k": "I",
+      "x": [
+        8,
+        12
+      ],
+      "d": 3,
+      "f": "GEN-T3.08-418",
+      "u": "Explicación editorial: <font> es un elemento obsoleto y no conforme para autores; la presentación se define con CSS. <u> es un elemento válido con semántica propia y no se mantiene como respuesta incorrecta.",
+      "v": 1,
+      "n": "VERSIÓN EDITORIAL: se sustituye expresamente <u> por <font> en C y se pregunta por conformidad, no por soporte de navegadores. c=2 se conserva. Se reemplaza el fragmento u erróneo por una explicación identificada como editorial. No es texto recuperado del original. Fuente: https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features"
+    },
+    "fields": [
+      "a",
+      "n",
+      "q",
+      "u"
+    ],
+    "warning": "VERSIÓN EDITORIAL: se sustituye expresamente <u> por <font> en C y se pregunta por conformidad, no por soporte de navegadores. c=2 se conserva. Se reemplaza el fragmento u erróneo por una explicación identificada como editorial. No es texto recuperado del original. Fuente: https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features",
+    "scoring_exclusion_implemented": false
+  },
+  {
+    "id": "L2018S-S2-R-03",
+    "file": "public/data/supuestos.json",
+    "before": {
+      "i": "L2018S-S2-R-03",
+      "t": "T4.02",
+      "o": "O",
+      "q": "¿Cómo podría ver en \"Docker Hub\" las imágenes disponibles?",
+      "a": [
+        "docker show images",
+        "docker images",
+        "docker list",
+        "docker list-images"
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [
+        10
+      ],
+      "d": 1,
+      "n": "DUDOSA — cotejo del original: Cuestionario p. 9 y plantilla definitiva B coinciden. docker images muestra imágenes locales, no las disponibles en Docker Hub. Se conserva el examen histórico y se advierte del error técnico del original.",
+      "y": "Ingreso libre OEP 2018 (2º ejercicio práctico)",
+      "r": 1,
+      "s": "L2018S-S2"
+    },
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/ingreso-libre-OEP2018__CUESTIONARIO__SEGUNDO_EJERCICIO_TAILI_ OEP_2018_154AB89SD658.pdf",
+        "sha256": "1ae6e873e0261e8ea0839b7de91681d6b56aaa6261c0ad228f3c50efd00949be",
+        "pages": [
+          9
+        ]
+      },
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/ingreso-libre-OEP2018__2jer_Plantilla_definitiva TAILI_OEP2018__154AB89SD658.pdf",
+        "sha256": "2317103a989c6e43b874ecc709706b23ba4c184b5928f9bc8b8c47908d2f5640",
+        "pages": [
+          1
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://docs.docker.com/reference/cli/docker/image/ls/"
+    ],
+    "status": "conservada histórica; exclusión recomendada",
+    "reason": "ADVERTENCIA HISTÓRICA: se conserva el enunciado literal y la clave oficial B. docker images enumera imágenes locales; el original menciona Docker Hub de forma técnicamente incorrecta. No usar para evaluación puntuable sin reformular el enunciado para referirse al equipo local. La exclusión se documenta aquí; la aplicación actual no la aplica automáticamente. Fuente: https://docs.docker.com/reference/cli/docker/image/ls/",
+    "after": {
+      "i": "L2018S-S2-R-03",
+      "t": "T4.02",
+      "o": "O",
+      "q": "¿Cómo podría ver en \"Docker Hub\" las imágenes disponibles?",
+      "a": [
+        "docker show images",
+        "docker images",
+        "docker list",
+        "docker list-images"
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [
+        10
+      ],
+      "d": 1,
+      "n": "ADVERTENCIA HISTÓRICA: se conserva el enunciado literal y la clave oficial B. docker images enumera imágenes locales; el original menciona Docker Hub de forma técnicamente incorrecta. No usar para evaluación puntuable sin reformular el enunciado para referirse al equipo local. La exclusión se documenta aquí; la aplicación actual no la aplica automáticamente. Fuente: https://docs.docker.com/reference/cli/docker/image/ls/",
+      "y": "Ingreso libre OEP 2018 (2º ejercicio práctico)",
+      "r": 1,
+      "s": "L2018S-S2"
+    },
+    "fields": [
+      "n"
+    ],
+    "warning": "ADVERTENCIA HISTÓRICA: se conserva el enunciado literal y la clave oficial B. docker images enumera imágenes locales; el original menciona Docker Hub de forma técnicamente incorrecta. No usar para evaluación puntuable sin reformular el enunciado para referirse al equipo local. La exclusión se documenta aquí; la aplicación actual no la aplica automáticamente. Fuente: https://docs.docker.com/reference/cli/docker/image/ls/",
+    "scoring_exclusion_implemented": false
+  },
+  {
+    "id": "L2025A-S1-R-02",
+    "file": "public/data/supuestos.json",
+    "before": {
+      "i": "L2025A-S1-R-02",
+      "t": "T3.06",
+      "o": "O",
+      "q": "Para el mantenimiento de la aplicación, se requiere ejecutar un código de limpieza cuando el motor Catalina de Tomcat se detenga por completo, pero antes de que la máquina virtual de Java finalice. ¿Cuál es la opción correcta para ello?",
+      "a": [
+        "Registrar un shutdown hook.",
+        "Usar una anotación @PreDestroy en la clase del código de limpieza.",
+        "Implementar un LifecycleListener y registrarlo en el elemento <server> del fichero \"server.xml\".",
+        "Definir en Tomcat una Valve personalizada en el elemento <Server> con el método de limpieza."
+      ],
+      "c": 2,
+      "k": "D",
+      "x": [
+        7
+      ],
+      "d": 3,
+      "n": "DUDOSA — cotejo del original: El cuestionario LI modelo A contiene la reserva 2; la plantilla LI disponible es PROVISIONAL y marca C. La definitiva PI anula su reserva 1 equivalente, pero esa anulación no se traslada a LI. Se mantienen c=2 y p=1 hasta disponer de una definitiva LI aplicable.",
+      "y": "Ingreso libre convocatoria 2025",
+      "p": 1,
+      "r": 1,
+      "s": "L2025A-S1"
+    },
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/ingreso-libre-conv2025__Cuestionario TAI-L-ModeloA.pdf",
+        "sha256": "68b7942718e9c3f3bd9c39a1d6414afec09f79306efff4b0a70a1c1f4a038f7a",
+        "pages": [
+          11
+        ]
+      },
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/ingreso-libre-conv2025__Plantilla respuestas TAI-L-A_act.pdf",
+        "sha256": "7760d30037425b32b17dcde3b310dff9b9e556a8336532d3388c58030fa81af3",
+        "pages": [
+          1
+        ]
+      },
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/promocion-interna-conv2025__Cuestionario TAI-P-ModeloA.pdf",
+        "sha256": "962c989a5f81a83375bd2e52afbdd3bb94de8ae1f5339f910ff46087430f77e6",
+        "pages": [
+          9
+        ]
+      },
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/promocion-interna-conv2025__Plantilla respuestas Def TAI-P-A.pdf",
+        "sha256": "b71936a38162bec29218c5a27382b9007226eec1d990ac4c53970ba6f264ac5f",
+        "pages": [
+          1
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "status": "conservada provisional; confirmación pendiente",
+    "reason": "ADVERTENCIA PROVISIONAL: se conserva C y p=1 según la plantilla provisional de ingreso libre disponible. Pendiente de plantilla definitiva de ingreso libre aplicable al modelo A; la anulación de la pregunta equivalente en promoción interna no determina su estado en ingreso libre. No usar en evaluación puntuable hasta confirmación. La aplicación actual no excluye automáticamente esta pregunta por este aviso. Fuentes locales y páginas: public/data/revision-ocr/editorial-13.json.",
+    "after": {
+      "i": "L2025A-S1-R-02",
+      "t": "T3.06",
+      "o": "O",
+      "q": "Para el mantenimiento de la aplicación, se requiere ejecutar un código de limpieza cuando el motor Catalina de Tomcat se detenga por completo, pero antes de que la máquina virtual de Java finalice. ¿Cuál es la opción correcta para ello?",
+      "a": [
+        "Registrar un shutdown hook.",
+        "Usar una anotación @PreDestroy en la clase del código de limpieza.",
+        "Implementar un LifecycleListener y registrarlo en el elemento <server> del fichero \"server.xml\".",
+        "Definir en Tomcat una Valve personalizada en el elemento <Server> con el método de limpieza."
+      ],
+      "c": 2,
+      "k": "D",
+      "x": [
+        7
+      ],
+      "d": 3,
+      "n": "ADVERTENCIA PROVISIONAL: se conserva C y p=1 según la plantilla provisional de ingreso libre disponible. Pendiente de plantilla definitiva de ingreso libre aplicable al modelo A; la anulación de la pregunta equivalente en promoción interna no determina su estado en ingreso libre. No usar en evaluación puntuable hasta confirmación. La aplicación actual no excluye automáticamente esta pregunta por este aviso. Fuentes locales y páginas: public/data/revision-ocr/editorial-13.json.",
+      "y": "Ingreso libre convocatoria 2025",
+      "p": 1,
+      "r": 1,
+      "s": "L2025A-S1"
+    },
+    "fields": [
+      "n"
+    ],
+    "warning": "ADVERTENCIA PROVISIONAL: se conserva C y p=1 según la plantilla provisional de ingreso libre disponible. Pendiente de plantilla definitiva de ingreso libre aplicable al modelo A; la anulación de la pregunta equivalente en promoción interna no determina su estado en ingreso libre. No usar en evaluación puntuable hasta confirmación. La aplicación actual no excluye automáticamente esta pregunta por este aviso. Fuentes locales y páginas: public/data/revision-ocr/editorial-13.json.",
+    "scoring_exclusion_implemented": false
+  },
+  {
+    "id": "P2018-S2-01",
+    "file": "public/data/supuestos.json",
+    "before": {
+      "i": "P2018-S2-01",
+      "t": "T4.01",
+      "o": "O",
+      "q": "En el nuevo CPD tenemos un servidor con Linux llamado \"servidor_del_traslado\" y se ha decidido crear un usuario específico que se llamará \"traslado\" con contraseña \"zzzz\", que pertenezca al grupo ya existente \"migracion\" y cuyo directorio principal (HOME_DIR) sea /traslado/respaldo ¿Cómo lo haría?",
+      "a": [
+        "useradd traslado -d /traslado/respaldo -p migracion -g zzzz",
+        "useradd -d /traslado/respaldo -g migracion -p zzzz traslado",
+        "useradd -g /traslado/respaldo -d migracion -p zzzz traslado",
+        "useradd -p /traslado/respaldo -g migracion -d zzzz traslado"
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [
+        10,
+        8
+      ],
+      "d": 2,
+      "n": "DUDOSA — cotejo del original: Cuestionario p. 9 y plantilla definitiva B coinciden. useradd -p espera una contraseña ya cifrada, no el texto claro zzzz. La posición de opciones concuerda con B, pero no ejecuta literalmente el requisito de contraseña. Se conserva la clave oficial y se advierte.",
+      "y": "Promoción interna OEP 2018",
+      "s": "P2018-S2"
+    },
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/promocion-interna-OEP2018__08TAIPI_154AB89SD658.pdf",
+        "sha256": "99abc22c9c8f3892b7e53e3a9f205f650150530cbef0a2f0b1753dda1052dbf8",
+        "pages": [
+          9
+        ]
+      },
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/promocion-interna-OEP2018__Plantilla_defTAI-Pejerunico_154AB89SD658.pdf",
+        "sha256": "7784c87aac24ab4fb81e85ab225c7ae9fe8170cc6b085762b1d84245583224a5",
+        "pages": [
+          1
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://man7.org/linux/man-pages/man8/useradd.8.html"
+    ],
+    "status": "reformulada",
+    "reason": "VERSIÓN EDITORIAL: se sustituye zzzz por HASH_CRYPT en el requisito y en las cuatro opciones. Es un marcador de un hash ya calculado y pasado como un único argumento; -p no recibe texto claro. B conserva -d para HOME_DIR, -g para el grupo y -p para el hash. Clave B conservada; no se ejecuta useradd en el equipo. Fuente: https://man7.org/linux/man-pages/man8/useradd.8.html",
+    "after": {
+      "i": "P2018-S2-01",
+      "t": "T4.01",
+      "o": "O",
+      "q": "En el nuevo CPD tenemos un servidor con Linux llamado \"servidor_del_traslado\" y se ha decidido crear un usuario específico que se llamará \"traslado\" con una contraseña cuyo hash ya calculado es HASH_CRYPT, que pertenezca al grupo ya existente \"migracion\" y cuyo directorio principal (HOME_DIR) sea /traslado/respaldo ¿Cómo lo haría? HASH_CRYPT representa el hash cifrado completo que debe pasarse como un único argumento, no una contraseña en claro.",
+      "a": [
+        "useradd traslado -d /traslado/respaldo -p migracion -g HASH_CRYPT",
+        "useradd -d /traslado/respaldo -g migracion -p HASH_CRYPT traslado",
+        "useradd -g /traslado/respaldo -d migracion -p HASH_CRYPT traslado",
+        "useradd -p /traslado/respaldo -g migracion -d HASH_CRYPT traslado"
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [
+        10,
+        8
+      ],
+      "d": 2,
+      "n": "VERSIÓN EDITORIAL: se sustituye zzzz por HASH_CRYPT en el requisito y en las cuatro opciones. Es un marcador de un hash ya calculado y pasado como un único argumento; -p no recibe texto claro. B conserva -d para HOME_DIR, -g para el grupo y -p para el hash. Clave B conservada; no se ejecuta useradd en el equipo. Fuente: https://man7.org/linux/man-pages/man8/useradd.8.html",
+      "y": "Promoción interna OEP 2018",
+      "s": "P2018-S2"
+    },
+    "fields": [
+      "a",
+      "n",
+      "q"
+    ],
+    "warning": "VERSIÓN EDITORIAL: se sustituye zzzz por HASH_CRYPT en el requisito y en las cuatro opciones. Es un marcador de un hash ya calculado y pasado como un único argumento; -p no recibe texto claro. B conserva -d para HOME_DIR, -g para el grupo y -p para el hash. Clave B conservada; no se ejecuta useradd en el equipo. Fuente: https://man7.org/linux/man-pages/man8/useradd.8.html",
+    "scoring_exclusion_implemented": false
+  },
+  {
+    "id": "P2018-S2-03",
+    "file": "public/data/supuestos.json",
+    "before": {
+      "i": "P2018-S2-03",
+      "t": "T4.01",
+      "o": "O",
+      "q": "Le piden que en el servidor Linux añada una ruta que permita ir al destino 10.254.252.4 a través del gateway 10.253.1.254 que está conectado a un firewall. ¿Cómo lo haría?",
+      "a": [
+        "route new-net 10.254.252.4 netmask 255.255.255.0 gw 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw via 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw add 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw 10.253.1.254"
+      ],
+      "c": 3,
+      "k": "K",
+      "x": [
+        10
+      ],
+      "d": 2,
+      "n": "DUDOSA — cotejo del original: Cuestionario p. 9 y plantilla definitiva D coinciden. 10.254.252.4 tiene bits de host para máscara /24 (la red es 10.254.252.0); no se inventa una ruta -host ni se cambia el destino. Se conserva D con advertencia técnica.",
+      "y": "Promoción interna OEP 2018",
+      "s": "P2018-S2"
+    },
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/promocion-interna-OEP2018__08TAIPI_154AB89SD658.pdf",
+        "sha256": "99abc22c9c8f3892b7e53e3a9f205f650150530cbef0a2f0b1753dda1052dbf8",
+        "pages": [
+          9
+        ]
+      },
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/promocion-interna-OEP2018__Plantilla_defTAI-Pejerunico_154AB89SD658.pdf",
+        "sha256": "7784c87aac24ab4fb81e85ab225c7ae9fe8170cc6b085762b1d84245583224a5",
+        "pages": [
+          1
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://man7.org/linux/man-pages/man8/route.8.html"
+    ],
+    "status": "conservada histórica; exclusión recomendada",
+    "reason": "ADVERTENCIA HISTÓRICA: se conserva el enunciado y la clave oficial D. 10.254.252.4 contiene bits de host para máscara /24: la red es 10.254.252.0/24. No usar para evaluación puntuable sin aclarar si se pretende una ruta de host o de red. No se cambia el destino por conjetura. La exclusión se documenta; la aplicación actual no la aplica automáticamente. Fuente: https://man7.org/linux/man-pages/man8/route.8.html",
+    "after": {
+      "i": "P2018-S2-03",
+      "t": "T4.01",
+      "o": "O",
+      "q": "Le piden que en el servidor Linux añada una ruta que permita ir al destino 10.254.252.4 a través del gateway 10.253.1.254 que está conectado a un firewall. ¿Cómo lo haría?",
+      "a": [
+        "route new-net 10.254.252.4 netmask 255.255.255.0 gw 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw via 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw add 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw 10.253.1.254"
+      ],
+      "c": 3,
+      "k": "K",
+      "x": [
+        10
+      ],
+      "d": 2,
+      "n": "ADVERTENCIA HISTÓRICA: se conserva el enunciado y la clave oficial D. 10.254.252.4 contiene bits de host para máscara /24: la red es 10.254.252.0/24. No usar para evaluación puntuable sin aclarar si se pretende una ruta de host o de red. No se cambia el destino por conjetura. La exclusión se documenta; la aplicación actual no la aplica automáticamente. Fuente: https://man7.org/linux/man-pages/man8/route.8.html",
+      "y": "Promoción interna OEP 2018",
+      "s": "P2018-S2"
+    },
+    "fields": [
+      "n"
+    ],
+    "warning": "ADVERTENCIA HISTÓRICA: se conserva el enunciado y la clave oficial D. 10.254.252.4 contiene bits de host para máscara /24: la red es 10.254.252.0/24. No usar para evaluación puntuable sin aclarar si se pretende una ruta de host o de red. No se cambia el destino por conjetura. La exclusión se documenta; la aplicación actual no la aplica automáticamente. Fuente: https://man7.org/linux/man-pages/man8/route.8.html",
+    "scoring_exclusion_implemented": false
+  }
+]

@@ -5,11 +5,11 @@ App web instalable para iPhone y iPad: test por tema, simulacro (parte 1 + supue
 
 Banco: 15.666 preguntas (oficiales, academia y generadas; cada una muestra su origen) + 417 de supuestos prácticos.
 
-## Estado actual (23 de octubre de 2026)
+## Estado actual (24 de octubre de 2026)
 
 Versión **1.1.3**. Banco de **36 temas**, **15.666 preguntas**, **417 preguntas de supuestos** y
 **1.410 tarjetas curadas**. Las tarjetas marcadas `revisar: true` se excluyen del repaso y de la exportación.
-Comprobación local: **130 pruebas en 8 archivos aprobadas**, validación de tarjetas y compilación correctas.
+Comprobación local: **132 pruebas en 9 archivos aprobadas**, validación de tarjetas y compilación correctas.
 Esto no acredita el último despliegue ni sustituye las pruebas reales de login, sincronización e instalación en iOS.
 
 ## Organización del proyecto
@@ -78,6 +78,8 @@ Abre [la aplicación local](http://127.0.0.1:4173). Para instalar la PWA fuera d
 ## Modos
 - **Test por tema**: 10–40 preguntas, con corrección inmediata y la cita del temario en las generadas. Filtros: nuevas primero, aleatorio, falladas, dudosas; origen oficial/academia/generada.
 - **Simulacro**: reparto por temas calcado a los exámenes oficiales, cronómetro con pausa, sin corrección hasta el final, nota = (aciertos − fallos/3) / total × 100. Parte 2 opcional: eliges 1 de 2 supuestos reales.
+- **Falladas**: buscador con filtro por tema, respuesta correcta y fragmento del temario. Cada pregunta muestra un contador de aciertos seguidos (0/3) y una casilla «Repasada en el temario», que se puede marcar y desmarcar. La pregunta sale de Falladas al tercer acierto seguido; un nuevo fallo reinicia el contador y dejar en blanco lo conserva. La casilla no cuenta como acierto ni elimina la pregunta. Permite practicar hasta 40 resultados.
+  El repaso espaciado mantiene su calendario independiente. Los registros antiguos aún pendientes empiezan en 0/3 porque no guardaban una racha reconstruible; no se inventan aciertos históricos. Contador y marca se guardan localmente, se incluyen en exportaciones y usan el registro de sincronización existente.
 - **Repaso de fallos**: toda pregunta fallada entra en cola y reaparece a +2, +5, +14, +30 y +60 días.
 - **Estadísticas**: acierto por tema, por tipo de trampa, por origen y últimas sesiones.
 
@@ -210,3 +212,19 @@ para las barras y se reajusta al terminar el giro. El menú dispone de desplazam
 
 Estas comprobaciones verifican el diseño en tamaños representativos; la instalación PWA, el teclado en pantalla
 y las áreas seguras reales de Safari/iPadOS necesitan una prueba en el dispositivo.
+
+## Revisión OCR
+
+`python3 public/data/revision-ocr/audit.py --output /tmp/pwa-tai-audit` genera candidatos y una muestra reproducible de hasta 300 preguntas no marcadas (semilla 20183321). `--root` permite comparar otra copia del proyecto. No modifica el banco. Los avisos son heurísticos: requieren cotejo con el original antes de corregir respuestas o distractores. La carpeta `data/revision-ocr/` está excluida de Firebase Hosting; guarda los informes fuera de `public/`.
+
+La auditoría local del 24 de octubre cubre búsqueda inmediata y navegación durante cargas de Falladas, validación OCR de opciones mal formadas, bancos pequeños y falsos positivos en preguntas tipo test sobre ENISA. La compilación y las pruebas automáticas no acreditan login, sincronización ni un iPad físico.
+
+### Estado de la revisión editorial y de Falladas
+
+Las 13 decisiones editoriales autorizadas se documentan en `public/data/revision-ocr/editorial-13.md`: siete reformulaciones y seis conservaciones con advertencia. Las tres preguntas históricas están marcadas `np: 1`: se excluyen automáticamente de los simulacros puntuables y se conservan para estudiar con sus advertencias. La definitiva de ingreso libre para Tomcat sigue pendiente.
+
+Por petición posterior se modifica Falladas: la extensión opcional de cada registro guarda la racha en la posición 10 (-1 sin fallo pendiente histórico; 0–3 tras fallo) y la marca de temario en la 11 (0/1). La validación, importación y fusión remota conservan ambos campos; los registros antiguos siguen siendo legibles. Versiones antiguas de la aplicación que no conocen la extensión podrían descartarla si reescriben el progreso, por lo que conviene usar la misma versión en todos los dispositivos.
+
+### Exclusión de preguntas históricas
+
+`np: 1` excluye L2018S-S2-R-03, L2025A-S1-R-02 y P2018-S2-03 de sesiones sin corrección inmediata (simulacros puntuables). La selección de partes 1 y 2 filtra antes de completar el cupo; el motor aplica además el filtro al iniciar cualquier simulacro. Las sesiones puntuables antiguas guardadas que incluyan una excluida se descartan para no desalinear respuestas. Las sesiones de estudio conservan preguntas, opciones, claves y advertencias. No se cambia la marca de reserva para simular la exclusión.

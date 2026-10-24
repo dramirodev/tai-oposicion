@@ -24,7 +24,7 @@ export const now = () => Date.now();
 // ───────── selección de preguntas ─────────
 function prioridad(q, mode) {
   const r = store.rec(q.i);
-  if (mode === 'falladas') return r && (r[5] === 0 || r[3] >= 0) ? 0 : 9;
+  if (mode === 'falladas') return store.pendingFailure(r) ? 0 : 9;
   if (mode === 'dudosas') return r && r[6] ? 0 : 9;
   if (mode === 'nuevas') return !r ? 0 : (r[5] === 0 ? 1 : 2);
   return 0;

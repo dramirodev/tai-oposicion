@@ -1,0 +1,149 @@
+[
+  {
+    "id": "L2025A-S1-R-02",
+    "before": {
+      "i": "L2025A-S1-R-02",
+      "t": "T3.06",
+      "o": "O",
+      "q": "Para el mantenimiento de la aplicación, se requiere ejecutar un código de limpieza cuando el motor Catalina de Tomcat se detenga por completo, pero antes de que la máquina virtual de Java finalice. ¿Cuál es la opción correcta para ello?",
+      "a": [
+        "Registrar un shutdown hook.",
+        "Usar una anotación @PreDestroy en la clase del código de limpieza.",
+        "Implementar un LifecycleListener y registrarlo en el elemento <server> del fichero \"server.xml\".",
+        "Definir en Tomcat una Valve personalizada en el elemento <Server> con el método de limpieza."
+      ],
+      "c": 2,
+      "k": "D",
+      "x": [
+        7
+      ],
+      "d": 3,
+      "n": "ADVERTENCIA PROVISIONAL: se conserva C y p=1 según la plantilla provisional de ingreso libre disponible. Pendiente de plantilla definitiva de ingreso libre aplicable al modelo A; la anulación de la pregunta equivalente en promoción interna no determina su estado en ingreso libre. No usar en evaluación puntuable hasta confirmación. La aplicación actual no excluye automáticamente esta pregunta por este aviso. Fuentes locales y páginas: public/data/revision-ocr/editorial-13.json.",
+      "y": "Ingreso libre convocatoria 2025",
+      "p": 1,
+      "r": 1,
+      "s": "L2025A-S1"
+    },
+    "after": {
+      "i": "L2025A-S1-R-02",
+      "t": "T3.06",
+      "o": "O",
+      "q": "Para el mantenimiento de la aplicación, se requiere ejecutar un código de limpieza cuando el motor Catalina de Tomcat se detenga por completo, pero antes de que la máquina virtual de Java finalice. ¿Cuál es la opción correcta para ello?",
+      "a": [
+        "Registrar un shutdown hook.",
+        "Usar una anotación @PreDestroy en la clase del código de limpieza.",
+        "Implementar un LifecycleListener y registrarlo en el elemento <server> del fichero \"server.xml\".",
+        "Definir en Tomcat una Valve personalizada en el elemento <Server> con el método de limpieza."
+      ],
+      "c": 2,
+      "k": "D",
+      "x": [
+        7
+      ],
+      "d": 3,
+      "n": "ADVERTENCIA PROVISIONAL: se conserva C y p=1 según la plantilla provisional de ingreso libre disponible. Pendiente de plantilla definitiva de ingreso libre aplicable al modelo A; la anulación de la pregunta equivalente en promoción interna no determina su estado en ingreso libre. No usar en evaluación puntuable hasta confirmación. Excluida automáticamente de los simulacros puntuables; disponible para estudiar. Fuentes locales y páginas: public/data/revision-ocr/editorial-13.json.",
+      "y": "Ingreso libre convocatoria 2025",
+      "p": 1,
+      "r": 1,
+      "s": "L2025A-S1",
+      "np": 1
+    },
+    "reason": "Exclusión puntuable autorizada; conservar original para estudio."
+  },
+  {
+    "id": "L2018S-S2-R-03",
+    "before": {
+      "i": "L2018S-S2-R-03",
+      "t": "T4.02",
+      "o": "O",
+      "q": "¿Cómo podría ver en \"Docker Hub\" las imágenes disponibles?",
+      "a": [
+        "docker show images",
+        "docker images",
+        "docker list",
+        "docker list-images"
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [
+        10
+      ],
+      "d": 1,
+      "n": "ADVERTENCIA HISTÓRICA: se conserva el enunciado literal y la clave oficial B. docker images enumera imágenes locales; el original menciona Docker Hub de forma técnicamente incorrecta. No usar para evaluación puntuable sin reformular el enunciado para referirse al equipo local. La exclusión se documenta aquí; la aplicación actual no la aplica automáticamente. Fuente: https://docs.docker.com/reference/cli/docker/image/ls/",
+      "y": "Ingreso libre OEP 2018 (2º ejercicio práctico)",
+      "r": 1,
+      "s": "L2018S-S2"
+    },
+    "after": {
+      "i": "L2018S-S2-R-03",
+      "t": "T4.02",
+      "o": "O",
+      "q": "¿Cómo podría ver en \"Docker Hub\" las imágenes disponibles?",
+      "a": [
+        "docker show images",
+        "docker images",
+        "docker list",
+        "docker list-images"
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [
+        10
+      ],
+      "d": 1,
+      "n": "ADVERTENCIA HISTÓRICA: se conserva el enunciado literal y la clave oficial B. docker images enumera imágenes locales; el original menciona Docker Hub de forma técnicamente incorrecta. No usar para evaluación puntuable sin reformular el enunciado para referirse al equipo local. Excluida automáticamente de los simulacros puntuables; disponible para estudiar. Fuente: https://docs.docker.com/reference/cli/docker/image/ls/",
+      "y": "Ingreso libre OEP 2018 (2º ejercicio práctico)",
+      "r": 1,
+      "s": "L2018S-S2",
+      "np": 1
+    },
+    "reason": "Exclusión puntuable autorizada; conservar original para estudio."
+  },
+  {
+    "id": "P2018-S2-03",
+    "before": {
+      "i": "P2018-S2-03",
+      "t": "T4.01",
+      "o": "O",
+      "q": "Le piden que en el servidor Linux añada una ruta que permita ir al destino 10.254.252.4 a través del gateway 10.253.1.254 que está conectado a un firewall. ¿Cómo lo haría?",
+      "a": [
+        "route new-net 10.254.252.4 netmask 255.255.255.0 gw 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw via 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw add 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw 10.253.1.254"
+      ],
+      "c": 3,
+      "k": "K",
+      "x": [
+        10
+      ],
+      "d": 2,
+      "n": "ADVERTENCIA HISTÓRICA: se conserva el enunciado y la clave oficial D. 10.254.252.4 contiene bits de host para máscara /24: la red es 10.254.252.0/24. No usar para evaluación puntuable sin aclarar si se pretende una ruta de host o de red. No se cambia el destino por conjetura. La exclusión se documenta; la aplicación actual no la aplica automáticamente. Fuente: https://man7.org/linux/man-pages/man8/route.8.html",
+      "y": "Promoción interna OEP 2018",
+      "s": "P2018-S2"
+    },
+    "after": {
+      "i": "P2018-S2-03",
+      "t": "T4.01",
+      "o": "O",
+      "q": "Le piden que en el servidor Linux añada una ruta que permita ir al destino 10.254.252.4 a través del gateway 10.253.1.254 que está conectado a un firewall. ¿Cómo lo haría?",
+      "a": [
+        "route new-net 10.254.252.4 netmask 255.255.255.0 gw 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw via 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw add 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw 10.253.1.254"
+      ],
+      "c": 3,
+      "k": "K",
+      "x": [
+        10
+      ],
+      "d": 2,
+      "n": "ADVERTENCIA HISTÓRICA: se conserva el enunciado y la clave oficial D. 10.254.252.4 contiene bits de host para máscara /24: la red es 10.254.252.0/24. No usar para evaluación puntuable sin aclarar si se pretende una ruta de host o de red. No se cambia el destino por conjetura. Excluida automáticamente de los simulacros puntuables; disponible para estudiar. Fuente: https://man7.org/linux/man-pages/man8/route.8.html",
+      "y": "Promoción interna OEP 2018",
+      "s": "P2018-S2",
+      "np": 1
+    },
+    "reason": "Exclusión puntuable autorizada; conservar original para estudio."
+  }
+]

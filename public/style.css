@@ -380,3 +380,10 @@ code.cd .sk{color:var(--sk);font-weight:700}
 .grid>*,.tiles>*,.hhead>div,.cta>span,.lrow>span,.line>span,.opt>span,.tm span,.exrow>span{min-width:0}
 .tile,.cta>span,.lrow>span,.line>span,.opt>span,.tm span,.exrow>span{overflow-wrap:anywhere}
 @media(max-width:380px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}nav a{font-size:11px}}
+
+/* falladas: buscador y filtro */
+#fq,#ft{display:block;width:100%;box-sizing:border-box;min-height:48px;margin:0 0 10px;font:inherit;font-size:var(--fs-b);padding:10px 12px;border-radius:var(--r-m);border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
+#ft{margin-bottom:0}
+#flist h2.h3 small{color:var(--mute);font-weight:400}
+.rv.f summary i{background:var(--bad)}
+#flist .rv .ro{margin-top:6px}

@@ -1,0 +1,730 @@
+{
+  "ok": true,
+  "json_files": 76,
+  "records": {
+    "data": 16083,
+    "cards": 1410
+  },
+  "modified_question_or_card_records": 174,
+  "changed_c": 3,
+  "answer_changes": [
+    {
+      "id": "AT309-P1-12",
+      "before": 3,
+      "after": 2
+    },
+    {
+      "id": "AS12B-S1-02",
+      "before": 1,
+      "after": 0
+    },
+    {
+      "id": "AS12B-S2-12",
+      "before": 1,
+      "after": 2
+    }
+  ],
+  "documented_duplicate_exceptions": [
+    "AS05G-P1-60",
+    "AS08B-P1-R-01",
+    "AS11B-P1-70"
+  ],
+  "modified": [
+    {
+      "file": "public/data/T1.01.json",
+      "id": "L2018-P1-01"
+    },
+    {
+      "file": "public/data/T1.01.json",
+      "id": "L2018-P1-R-04"
+    },
+    {
+      "file": "public/data/T1.01.json",
+      "id": "AT1012-P1-39"
+    },
+    {
+      "file": "public/data/T1.02.json",
+      "id": "AT102-P1-20"
+    },
+    {
+      "file": "public/data/T1.04.json",
+      "id": "L2018-P1-07"
+    },
+    {
+      "file": "public/data/T1.04.json",
+      "id": "AS07-P1-18"
+    },
+    {
+      "file": "public/data/T1.06.json",
+      "id": "L2018-P1-10"
+    },
+    {
+      "file": "public/data/T1.06.json",
+      "id": "L2018-P1-11"
+    },
+    {
+      "file": "public/data/T1.08.json",
+      "id": "L2018-P1-14"
+    },
+    {
+      "file": "public/data/T1.08.json",
+      "id": "AS08B-P1-R-01"
+    },
+    {
+      "file": "public/data/T1.08.json",
+      "id": "AS12B-P1-12"
+    },
+    {
+      "file": "public/data/T1.09.json",
+      "id": "L2018-P1-15"
+    },
+    {
+      "file": "public/data/T1.10.json",
+      "id": "L2018-P1-16"
+    },
+    {
+      "file": "public/data/T1.10.json",
+      "id": "P2018-P1-04"
+    },
+    {
+      "file": "public/data/T1.11.json",
+      "id": "L2018-P1-20"
+    },
+    {
+      "file": "public/data/T2.01.json",
+      "id": "L2018-P1-21"
+    },
+    {
+      "file": "public/data/T2.01.json",
+      "id": "P2018-P1-12"
+    },
+    {
+      "file": "public/data/T2.01.json",
+      "id": "GEN-T2.01-12"
+    },
+    {
+      "file": "public/data/T2.01.json",
+      "id": "GEN-T2.01-12.v1"
+    },
+    {
+      "file": "public/data/T2.01.json",
+      "id": "GEN-T2.01-12.v2"
+    },
+    {
+      "file": "public/data/T2.01.json",
+      "id": "GEN-T2.01-13"
+    },
+    {
+      "file": "public/data/T2.01.json",
+      "id": "GEN-T2.01-13.v1"
+    },
+    {
+      "file": "public/data/T2.01.json",
+      "id": "GEN-T2.01-13.v2"
+    },
+    {
+      "file": "public/data/T2.02.json",
+      "id": "L2018-P1-27"
+    },
+    {
+      "file": "public/data/T2.02.json",
+      "id": "L2018-P1-28"
+    },
+    {
+      "file": "public/data/T2.02.json",
+      "id": "P2018-P1-11"
+    },
+    {
+      "file": "public/data/T2.03.json",
+      "id": "L2018-P1-32"
+    },
+    {
+      "file": "public/data/T2.03.json",
+      "id": "P2018-P1-13"
+    },
+    {
+      "file": "public/data/T2.03.json",
+      "id": "AT203-P1-27"
+    },
+    {
+      "file": "public/data/T2.03.json",
+      "id": "GEN-T2.03-78"
+    },
+    {
+      "file": "public/data/T2.03.json",
+      "id": "GEN-T2.03-78.v1"
+    },
+    {
+      "file": "public/data/T2.03.json",
+      "id": "GEN-T2.03-78.v2"
+    },
+    {
+      "file": "public/data/T2.03.json",
+      "id": "GEN-T2.03-86.v2"
+    },
+    {
+      "file": "public/data/T2.04.json",
+      "id": "L2018-P1-33"
+    },
+    {
+      "file": "public/data/T2.04.json",
+      "id": "L2018-P1-36"
+    },
+    {
+      "file": "public/data/T2.04.json",
+      "id": "L2018-P1-37"
+    },
+    {
+      "file": "public/data/T2.04.json",
+      "id": "P2018-P1-16"
+    },
+    {
+      "file": "public/data/T2.04.json",
+      "id": "P2018-P1-17"
+    },
+    {
+      "file": "public/data/T2.04.json",
+      "id": "P2018-P1-R-04"
+    },
+    {
+      "file": "public/data/T2.05.json",
+      "id": "L2018-P1-39"
+    },
+    {
+      "file": "public/data/T2.05.json",
+      "id": "L2018-P1-47"
+    },
+    {
+      "file": "public/data/T2.05.json",
+      "id": "L2018-P1-51"
+    },
+    {
+      "file": "public/data/T2.05.json",
+      "id": "L2018-P1-R-05"
+    },
+    {
+      "file": "public/data/T2.05.json",
+      "id": "AS02-P1-R-03"
+    },
+    {
+      "file": "public/data/T2.05.json",
+      "id": "AS05G-P1-60"
+    },
+    {
+      "file": "public/data/T3.02.json",
+      "id": "L2018-P1-43"
+    },
+    {
+      "file": "public/data/T3.02.json",
+      "id": "L2018-P1-44"
+    },
+    {
+      "file": "public/data/T3.02.json",
+      "id": "AS01-P1-100"
+    },
+    {
+      "file": "public/data/T3.03.json",
+      "id": "P2018-P1-25"
+    },
+    {
+      "file": "public/data/T3.03.json",
+      "id": "GEN-T3.03-48"
+    },
+    {
+      "file": "public/data/T3.03.json",
+      "id": "GEN-T3.03-48.v1"
+    },
+    {
+      "file": "public/data/T3.03.json",
+      "id": "GEN-T3.03-48.v2"
+    },
+    {
+      "file": "public/data/T3.04.json",
+      "id": "L2018-P1-49"
+    },
+    {
+      "file": "public/data/T3.04.json",
+      "id": "L2018-P1-50"
+    },
+    {
+      "file": "public/data/T3.04.json",
+      "id": "P2018-P1-26"
+    },
+    {
+      "file": "public/data/T3.05.json",
+      "id": "L2018-P1-41"
+    },
+    {
+      "file": "public/data/T3.05.json",
+      "id": "L2018-P1-52"
+    },
+    {
+      "file": "public/data/T3.05.json",
+      "id": "L2018-P1-53"
+    },
+    {
+      "file": "public/data/T3.05.json",
+      "id": "L2018-P1-54"
+    },
+    {
+      "file": "public/data/T3.06.json",
+      "id": "L2018-P1-56"
+    },
+    {
+      "file": "public/data/T3.06.json",
+      "id": "P2018-P1-32"
+    },
+    {
+      "file": "public/data/T3.06.json",
+      "id": "GEN-T3.06-06"
+    },
+    {
+      "file": "public/data/T3.06.json",
+      "id": "GEN-T3.06-55.v1"
+    },
+    {
+      "file": "public/data/T3.06.json",
+      "id": "GEN-T3.06-338"
+    },
+    {
+      "file": "public/data/T3.06.json",
+      "id": "GEN-T3.06-338.v1"
+    },
+    {
+      "file": "public/data/T3.06.json",
+      "id": "GEN-T3.06-338.v2"
+    },
+    {
+      "file": "public/data/T3.06.json",
+      "id": "GEN-T3.06-340"
+    },
+    {
+      "file": "public/data/T3.06.json",
+      "id": "GEN-T3.06-340.v1"
+    },
+    {
+      "file": "public/data/T3.06.json",
+      "id": "GEN-T3.06-340.v2"
+    },
+    {
+      "file": "public/data/T3.07.json",
+      "id": "L2018-P1-59"
+    },
+    {
+      "file": "public/data/T3.07.json",
+      "id": "L2018-P1-60"
+    },
+    {
+      "file": "public/data/T3.08.json",
+      "id": "L2018-P1-64"
+    },
+    {
+      "file": "public/data/T3.08.json",
+      "id": "AT308-P1-82"
+    },
+    {
+      "file": "public/data/T3.08.json",
+      "id": "AS09B-P1-59"
+    },
+    {
+      "file": "public/data/T3.08.json",
+      "id": "AS11B-P1-70"
+    },
+    {
+      "file": "public/data/T3.08.json",
+      "id": "GEN-T3.08-418.v1"
+    },
+    {
+      "file": "public/data/T3.08.json",
+      "id": "GEN-T3.08-588"
+    },
+    {
+      "file": "public/data/T3.09.json",
+      "id": "L2018-P1-R-02"
+    },
+    {
+      "file": "public/data/T3.09.json",
+      "id": "AT309-P1-12"
+    },
+    {
+      "file": "public/data/T3.09.json",
+      "id": "AT309-P1-04"
+    },
+    {
+      "file": "public/data/T3.10.json",
+      "id": "L2018-P1-66"
+    },
+    {
+      "file": "public/data/T3.10.json",
+      "id": "L2018-P1-67"
+    },
+    {
+      "file": "public/data/T3.10.json",
+      "id": "L2018-P1-70"
+    },
+    {
+      "file": "public/data/T4.01.json",
+      "id": "L2018-P1-71"
+    },
+    {
+      "file": "public/data/T4.01.json",
+      "id": "L2018-P1-72"
+    },
+    {
+      "file": "public/data/T4.01.json",
+      "id": "L2018-P1-80"
+    },
+    {
+      "file": "public/data/T4.02.json",
+      "id": "L2018-P1-74"
+    },
+    {
+      "file": "public/data/T4.02.json",
+      "id": "P2018-P1-37"
+    },
+    {
+      "file": "public/data/T4.03.json",
+      "id": "L2018-P1-78"
+    },
+    {
+      "file": "public/data/T4.03.json",
+      "id": "L2018-P1-79"
+    },
+    {
+      "file": "public/data/T4.04.json",
+      "id": "GEN-T4.04-10.v2"
+    },
+    {
+      "file": "public/data/T4.05.json",
+      "id": "P2018-P1-41"
+    },
+    {
+      "file": "public/data/T4.05.json",
+      "id": "P2018-P1-R-05"
+    },
+    {
+      "file": "public/data/T4.06.json",
+      "id": "L2018-P1-82"
+    },
+    {
+      "file": "public/data/T4.06.json",
+      "id": "L2018-P1-86"
+    },
+    {
+      "file": "public/data/T4.06.json",
+      "id": "L2018-P1-99"
+    },
+    {
+      "file": "public/data/T4.06.json",
+      "id": "P2018-P1-43"
+    },
+    {
+      "file": "public/data/T4.07.json",
+      "id": "L2018-P1-91"
+    },
+    {
+      "file": "public/data/T4.07.json",
+      "id": "L2018-P1-92"
+    },
+    {
+      "file": "public/data/T4.07.json",
+      "id": "AT407-P1-13"
+    },
+    {
+      "file": "public/data/T4.08.json",
+      "id": "L2018-P1-93"
+    },
+    {
+      "file": "public/data/T4.09.json",
+      "id": "L2018-P1-94"
+    },
+    {
+      "file": "public/data/T4.09.json",
+      "id": "L2018-P1-98"
+    },
+    {
+      "file": "public/data/T4.09.json",
+      "id": "L2018-P1-R-03"
+    },
+    {
+      "file": "public/data/T4.09.json",
+      "id": "P2018-P1-50"
+    },
+    {
+      "file": "public/data/T4.10.json",
+      "id": "L2018-P1-89"
+    },
+    {
+      "file": "public/data/T4.10.json",
+      "id": "L2018-P1-100"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2025A-S1-R-02"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-01"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-02"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-03"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-04"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-05"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-07"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-08"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-09"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-10"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-11"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-12"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-13"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-14"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-15"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-16"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-17"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-18"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-19"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-22"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-23"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-25"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-27"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S1-R-05"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-01"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-02"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-05"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-07"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-08"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-11"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-12"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-13"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-14"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-15"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-17"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-18"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-19"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-22"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-23"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-24"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-25"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-26"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-27"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-28"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-30"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-R-02"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-R-03"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "L2018S-S2-R-05"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "P2018-S1-01"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "P2018-S1-06"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "P2018-S1-07"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "P2018-S1-08"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "P2018-S1-12"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "P2018-S2-01"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "P2018-S2-02"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "P2018-S2-03"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "P2018-S2-04"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "P2018-S2-05"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "P2018-S2-06"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "P2018-S2-07"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "P2018-S2-R-01"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "P2018-S2-R-02"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "AS12B-S1-R-03"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "AS12B-S1-02"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "AS12B-S2-12"
+    },
+    {
+      "file": "public/data/supuestos.json",
+      "id": "AS12B-S2-13"
+    },
+    {
+      "file": "public/cards/T4.05.json",
+      "id": "FC-T4.05-036"
+    }
+  ]
+}

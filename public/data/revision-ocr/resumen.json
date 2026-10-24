@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-24",
+  "branch": "codex/revision-ocr",
+  "baseline_commit": "e8b8e6684b524d525f9cde9181516c7e8767e88a",
+  "questions_topics": 15666,
+  "questions_scenarios": 417,
+  "cards": 1410,
+  "scenario_contexts": 32,
+  "candidates_initial": 1177,
+  "candidates_expanded": 1354,
+  "manual_sample_initial": 300,
+  "manual_sample_final_non_candidates": 300,
+  "manual_extra_replacements": 4,
+  "corrected_questions": 173,
+  "corrected_cards": 1,
+  "corrected_contexts": 3,
+  "doubtful_records": 3,
+  "changed_c": 3,
+  "changed_card_answers": 1,
+  "original_data_backup": "/tmp/pwa-tai-antes-revision-ocr.tar.gz",
+  "tests": {
+    "npm test": "9 archivos, 136 tests pasados (incluye Falladas)",
+    "node scripts/validate_cards.mjs": "OK, 36 temas con tarjetas",
+    "npm run build": "OK, 1.1.3+e8b8e66"
+  },
+  "manual_only_candidates": 7,
+  "candidate_records_total": 1361,
+  "second_review": {
+    "reviewed": 43,
+    "resolved": 30,
+    "pending": 13,
+    "modified_records": 39,
+    "original_data_backup": "/tmp/pwa-tai-antes-segunda-revision-ocr.tar.gz"
+  },
+  "editorial_review": {
+    "reviewed": 13,
+    "reformulated": 7,
+    "kept_with_warning": 6,
+    "documented_duplicate_options": 3,
+    "historical_scoring_warnings": 3,
+    "scoring_exclusions_implemented": true,
+    "awaiting_definitive_LI": [
+      "L2025A-S1-R-02"
+    ],
+    "exclusion_ids": [
+      "L2025A-S1-R-02",
+      "L2018S-S2-R-03",
+      "P2018-S2-03"
+    ]
+  },
+  "falladas_feature": {
+    "consecutive_successes_required": 3,
+    "blank_keeps_streak": true,
+    "failure_resets_streak": true,
+    "reviewed_flag_independent": true,
+    "qa": "falladas-verificacion.json"
+  }
+}

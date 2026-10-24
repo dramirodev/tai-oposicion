@@ -342,7 +342,7 @@ describe('richHtml (código)', () => {
     const sql = richHtml('¿Qué devuelve SELECT * FROM A WHERE B IS NULL; en SQL?');
     expect(sql).toContain('<code class="cd"><b class="sk">SELECT</b> * <b class="sk">FROM</b>');
     expect(sql).toContain('en SQL?');
-    expect(richHtml('El comando chmod 755 f.txt y la opción -R')).toMatch(/<code class="cd">chmod 755<\/code>/);
+    expect(richHtml('El comando chmod 755 f.txt y la opción -R')).toMatch(/<code class="cd">chmod 755 f.txt<\/code>/);
     const evil = richHtml('<script>alert(1)</script> y <img src=x onerror=alert(1)>');
     expect(evil).not.toMatch(/<script|<img/);
     expect(evil).toContain('&lt;script&gt;');
@@ -354,5 +354,11 @@ describe('richHtml (código)', () => {
     const h = richHtml('Señale la INCORRECTA sobre SELECT.', true);
     expect(h).toContain('<mark class="kw">INCORRECTA</mark>');
     expect(h).toContain('<code class="cd"><b class="sk">SELECT</b></code>');
+  });
+  it('un fragmento de código con identificadores sueltos queda en un solo bloque', async () => {
+    const { richHtml } = await import('../src/logic.js');
+    const h = richHtml('siguiente código: a=10,b; b=a++;');
+    expect(h).toContain('<code class="cd">a=10,b; b=a++;</code>');
+    expect(richHtml('a=10, b=10')).toBe('<code class="cd">a=10, b=10</code>');
   });
 });

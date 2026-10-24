@@ -1,0 +1,50 @@
+[
+  {
+    "command": [
+      "cc",
+      "-std=c90",
+      "-pedantic-errors",
+      "-fsyntax-only",
+      "/tmp/ocr-compiler-checks/mixed.c"
+    ],
+    "expected_success": false,
+    "exit_code": 1,
+    "output": "/tmp/ocr-compiler-checks/mixed.c:1:36: error: mixing declarations and code is a C99 extension [-Werror,-Wdeclaration-after-statement]\n    1 | int main(void) { int x=1; x++; int y=2; return x-y; }\n      |                                    ^\n1 error generated.\n"
+  },
+  {
+    "command": [
+      "cc",
+      "-std=c99",
+      "-pedantic-errors",
+      "-fsyntax-only",
+      "/tmp/ocr-compiler-checks/mixed.c"
+    ],
+    "expected_success": true,
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "c++",
+      "-std=c++17",
+      "-pedantic-errors",
+      "-fsyntax-only",
+      "/tmp/ocr-compiler-checks/conditions.cpp"
+    ],
+    "expected_success": true,
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "c++",
+      "-std=c++17",
+      "-pedantic-errors",
+      "-fsyntax-only",
+      "/tmp/ocr-compiler-checks/do.cpp"
+    ],
+    "expected_success": false,
+    "exit_code": 1,
+    "output": "/tmp/ocr-compiler-checks/do.cpp:1:31: error: expected '(' for function-style cast or type construction\n    1 | int main() { do {} while (int x=0); return 0; }\n      |                           ~~~ ^\n1 error generated.\n"
+  }
+]

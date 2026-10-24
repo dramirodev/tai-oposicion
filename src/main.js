@@ -1,6 +1,6 @@
 import * as sync from './syncfacade.js';
 import * as store from './store.js';
-import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, composeSim, quickN, pickQuick, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from './logic.js';
+import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from './logic.js';
 import { META, getIndex, getMeta, temaOf, getTema, getSup, temaName, now, pick, dueList, byIds } from './data.js';
 import { $, app, L, toast, ask, guard } from './ui.js';
 import { ORIGEN, TRAMPAS } from './labels.js';
@@ -44,7 +44,7 @@ async function route() {
   const my = ++routeSeq;
   if (cleanup) { cleanup(); cleanup = null; }
   const [, name, ...args] = (location.hash || '#/home').split('/');
-  const sect = { quiz: RUN?.kind === 'sim' ? 'sim' : RUN?.kind === 'test' ? 'test' : 'home', result: LAST?.ses?.kind === 'sim' ? 'sim' : LAST?.ses?.kind === 'test' ? 'test' : 'home', sim2: 'sim', examenes: 'sim', errores: 'settings', cards: 'home' }[name] || name;
+  const sect = { quiz: RUN?.kind === 'sim' ? 'sim' : RUN?.kind === 'test' ? 'test' : 'home', result: LAST?.ses?.kind === 'sim' ? 'sim' : LAST?.ses?.kind === 'test' ? 'test' : 'home', sim2: 'sim', examenes: 'sim', errores: 'settings', falladas: 'home', cards: 'home' }[name] || name;
   document.querySelectorAll('nav a').forEach(a => { const on = a.dataset.r === sect; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   const f = routes[name] || routes.home;
   lastP = 0;
@@ -56,7 +56,11 @@ window.addEventListener('hashchange', route);
 
 // ───────── motor de preguntas ─────────
 let RUN = null;
-function startRun(cfg) { RUN = { ...cfg, idx: 0, ans: [], t0: now(), secs: 0, paused: false }; go('#/quiz'); }
+function startRun(cfg) {
+  const items = questionsForSession(cfg.items, cfg.feedback);
+  if (!items.length) { toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.'); return; }
+  RUN = { ...cfg, items, idx: 0, ans: [], t0: now(), secs: 0, paused: false }; go('#/quiz');
+}
 // La sesión en curso se guarda para sobrevivir al cierre de la app por iOS (solo sesiones del banco, no los supuestos)
 const RUN_KEY = 'tai.run';
 function clearRun() { try { localStorage.removeItem(RUN_KEY); } catch (e) {} }
@@ -70,7 +74,7 @@ async function resumeRun() {
   if (!s || RUN) return;
   if (!Array.isArray(s.ids) || !s.ids.length || Date.now() - (s.savedAt || 0) > 2 * 86400000) return clearRun();
   const items = await byIds(s.ids);
-  if (items.length !== s.ids.length) return clearRun();
+  if (items.length !== s.ids.length || questionsForSession(items, !!s.feedback).length !== items.length) return clearRun();
   const n = items.length, i = Math.min(s.idx + 1, n);
   if (!(await ask(`Tienes sin terminar «${s.titulo || 'Test'}» (${s.pt ? 'pregunta ' + i : i + '/' + n}${s.limit ? ', quedan ' + fmtT(Math.max(0, s.limit * 60 - s.secs)) : ''}). ¿Continuar donde lo dejaste?`, 'Continuar'))) return clearRun();
   const un = a => Array.from(a || [], x => x === null ? undefined : x);
@@ -292,7 +296,7 @@ routes.result = async function () {
   <div class="card">${items.map((q, k) => {
     const x = ans[k]; const st = x === undefined || x === -1 ? 'b' : x === q.c ? 'g' : 'r';
     return `<details class="rv ${st}"><summary><i></i><span class="sr">${st === 'g' ? 'Acierto' : st === 'r' ? 'Fallo' : 'En blanco'}: </span>${esc(q.q.slice(0, 110))}${q.q.length > 110 ? '…' : ''}</summary>
-      <div class="pre">${richHtml(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : i === x ? 'bad' : ''}"><b>${L[i]}</b> ${richHtml(o)}</div>`).join('')}
+      <div class="pre">${richHtml(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : i === x ? 'bad' : ''}"><b>${L[i]}</b> ${richHtml(o)}${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}<div class="repw" data-rq="${k}"></div></details>`;
   }).join('')}</div>`;
   app.querySelectorAll('[data-rq]').forEach(el => reportBox(items[+el.dataset.rq], el));
@@ -352,6 +356,7 @@ async function openMenu() {
     ['Seguimiento', [
       ['▤', 'Estadísticas', 'Mapa de dominio, simulacros y evolución', '#/stats'],
       ['☰', 'Temas vistos', store.getSeen().length + ' temas marcados', '#/temario'],
+      ['✗', 'Preguntas falladas', falladasIds().length + ' para buscar y releer', '#/falladas'],
       ['⚠', 'Errores del banco', nErr ? nErr + ' por revisar' : 'Nada por revisar', '#/errores'],
     ]],
     ['La app', [
@@ -557,20 +562,20 @@ async function simParte1(idx, org, N, only) {
   const temas = idx.temas.filter(t => !only || only.has(t.id));
   const pools = {};
   const ls = await Promise.all(temas.map(t => getTema(t.id)));
-  temas.forEach((t, i) => { pools[t.id] = shuffle(ls[i].filter(x => allowed(x, org))).sort((a, b) => (store.rec(a.i) ? 1 : 0) - (store.rec(b.i) ? 1 : 0)); });
+  temas.forEach((t, i) => { pools[t.id] = shuffle(ls[i].filter(x => allowed(x, org) && x.np !== 1)).sort((a, b) => (store.rec(a.i) ? 1 : 0) - (store.rec(b.i) ? 1 : 0)); });
   return composeSim(temas, pools, N);
 }
 // Parte 2 tras la parte 1: ofrece 2 supuestos
 routes.sim2 = async function () {
   const sup = await getSup();
-  const ok = Object.entries(sup).filter(([k, v]) => v.q.filter(x => !x.r).length >= 18 && /libre/i.test(v.conv || '') && !/2018/.test(v.conv || ''));
+  const ok = Object.entries(sup).filter(([k, v]) => v.q.filter(x => !x.r && x.np !== 1).length >= 18 && /libre/i.test(v.conv || '') && !/2018/.test(v.conv || ''));
   const two = shuffle(ok).slice(0, 2);
   app.innerHTML = `<h1>Parte 2 · Supuesto práctico</h1><div class="note">Elige uno de los dos supuestos. Son ejercicios reales de convocatorias anteriores.</div>
   ${two.map(([k, v], i) => `<div class="card"><h2 class="h3">Supuesto ${i + 1}</h2><div class="pre sm">${esc(v.texto.slice(0, 700))}${v.texto.length > 700 ? '…' : ''}</div><button class="btn" data-k="${k}">Elegir este supuesto</button></div>`).join('')}
   <button class="btn sec" id="skip">Saltar la parte 2</button>`;
   app.querySelectorAll('[data-k]').forEach(b => b.onclick = () => {
     const v = sup[b.dataset.k];
-    const items = v.q.filter(x => !x.r).slice(0, 20);
+    const items = v.q.filter(x => !x.r && x.np !== 1).slice(0, 20);
     startRun({ kind: 'sim', feedback: false, items, limit: SIMCFG?.min2 || 40, supTexto: v.texto, titulo: 'Simulacro · Parte 2 (supuesto)' });
   });
   $('#skip').onclick = () => go('#/home');
@@ -626,10 +631,66 @@ routes.errores = async function () {
 
 // Las pantallas comparten navegación y limpieza; cada módulo conserva su estado de sesión.
 const screen = { get cleanup() { return cleanup; }, set cleanup(fn) { cleanup = fn; } };
+// ───────── preguntas falladas: buscar por texto o tema y releer el fragmento del temario ─────────
+const falladasIds = () => { const st = store.getStats(); return Object.keys(st).filter(id => META?.[id] && store.pendingFailure(st[id])); };
+const fold = t => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+routes.falladas = async function () {
+  let active = true, tm;
+  cleanup = () => { active = false; clearTimeout(tm); };
+  await getMeta();
+  if (!active) return;
+  const qs = (await byIds(falladasIds())).sort((a, b) => (store.rec(b.i)?.[2] || 0) - (store.rec(a.i)?.[2] || 0));
+  if (!active) return;
+  const idx = await getIndex();
+  if (!active) return;
+  const F = { q: '', t: '' };
+  const fd = ts => new Date(ts).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+  const conteo = {}; qs.forEach(q => { conteo[q.t] = (conteo[q.t] || 0) + 1; });
+  const filtra = () => { const k = fold(F.q).trim(); return qs.filter(q => (!F.t || q.t === F.t) && (!k || fold([q.q, ...q.a, q.u, q.n].join(' ')).includes(k))); };
+  const lista = () => {
+    const L2 = filtra(), host = $('#flist'); if (!active || !host) return;
+    $('#fcount').textContent = L2.length === qs.length ? `${qs.length} ${qs.length === 1 ? 'pregunta' : 'preguntas'}` : `${L2.length} de ${qs.length} ${qs.length === 1 ? 'pregunta' : 'preguntas'}`;
+    const gr = {}; L2.forEach(q => (gr[q.t] ||= []).push(q));
+    host.innerHTML = L2.length ? Object.keys(gr).sort().map(t => `<h2 class="h3">${esc(t)} · ${esc(temaName(t))} <small>(${gr[t].length})</small></h2><div class="card">${gr[t].map(q => {
+      const r = store.rec(q.i) || [0, 0, 0];
+      return `<details class="rv f"><summary><i></i><span class="pre">${richHtml(q.q)}<br><small class="sub">Aciertos seguidos: ${Math.max(0, store.failureStreak(r))}/3 · <span data-review-status="${esc(q.i)}">${r[11] ? 'Temario repasado' : 'Pendiente de temario'}</span></small></span></summary>
+      <label class="chk"><input type="checkbox" data-reviewed="${esc(q.i)}" ${r[11] ? 'checked' : ''}>Repasada en el temario</label>
+      ${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : ''}"><b>${L[i]}</b> ${richHtml(o)}${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
+      ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : '<p class="sm sub">Esta pregunta no tiene fragmento de temario asociado.</p>'}${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}
+      <p class="sm sub">Última actividad: ${fd(r[2])} · acertada ${r[1]} de ${r[0]} veces${q.y ? ' · ' + esc(q.y) : ''}</p></details>`;
+    }).join('')}</div>`).join('')
+      : '<div class="card"><p class="sub">Ninguna pregunta coincide con la búsqueda.</p></div>';
+  };
+  if (!qs.length) { app.innerHTML = '<h1>Falladas</h1><div class="card"><p class="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p></div><div class="row"><button class="btn sec" id="home">Inicio</button></div>'; $('#home').onclick = () => go('#/home'); return; }
+  app.innerHTML = `<h1>Falladas</h1>
+  <p class="sub">Cada pregunta permanece hasta acertarla tres veces seguidas. Un fallo reinicia el contador; dejarla en blanco no cuenta. Marcar el temario no la quita de la lista.</p>
+  <p class="sub" id="fcount"></p>
+  <div class="card">
+    <label class="sr" for="fq">Buscar en las preguntas falladas</label>
+    <input id="fq" type="search" placeholder="Buscar: palabra, artículo, comando…" autocomplete="off" enterkeyhint="search">
+    <label class="sr" for="ft">Filtrar por tema</label>
+    <select id="ft"><option value="">Todos los temas</option>${idx.temas.filter(t => conteo[t.id]).map(t => `<option value="${esc(t.id)}">${esc(t.id)} · ${esc(t.nombre)} (${conteo[t.id]})</option>`).join('')}</select>
+  </div>
+  <div id="flist"></div>
+  <div class="bar2"><button class="btn" id="fgo">Practicar estas</button></div>`;
+  $('#flist').onchange = e => {
+    const input = e.target.closest('[data-reviewed]'); if (!input) return;
+    const q = qs.find(q => q.i === input.dataset.reviewed); if (!q) return;
+    store.setReviewed(q.i, q.t, input.checked);
+    const status = input.closest('details').querySelector('[data-review-status]');
+    if (status) status.textContent = input.checked ? 'Temario repasado' : 'Pendiente de temario';
+  };
+  $('#fq').oninput = e => { F.q = e.target.value; clearTimeout(tm); tm = setTimeout(lista, 150); };
+  $('#ft').onchange = e => { clearTimeout(tm); F.t = e.target.value; lista(); };
+  $('#fgo').onclick = () => { const L2 = filtra(); if (!L2.length) return toast('No hay preguntas con ese filtro.'); startRun({ kind: 'test', feedback: true, items: shuffle(L2).slice(0, 40), titulo: 'Falladas' + (F.t ? ' · ' + F.t : '') }); };
+  lista();
+};
+
+
 registerTraining({ routes, go, route, pw }, screen);
 const { allCards, curatedCards } = registerCards({ routes, go, pw, reportBox }, screen);
 const { dominioTemas } = registerStats({ routes, go, trapTest, startRun });
-registerHome({ routes, go, saludo, quickSession, startRepaso, openMenu, dominioTemas }, screen);
+registerHome({ routes, go, saludo, quickSession, startRepaso, openMenu, dominioTemas, falladasIds }, screen);
 registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate }, screen);
 
 // ───────── arranque ─────────
