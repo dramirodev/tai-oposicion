@@ -1,5 +1,5 @@
 // Service worker: shell + datos, "stale-while-revalidate" para todo lo del mismo origen.
-const V = 'tai-v64', DATA = 'tai-data'; // el banco descargado vive en su propia caché: un despliegue no lo borra
+const V = 'tai-v65', DATA = 'tai-data'; // el banco descargado vive en su propia caché: un despliegue no lo borra
 const SHELL = ['./', 'index.html', 'app.js', 'style.css', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-512-maskable.png', 'icons/icon-180.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => caches.open(DATA)).then(c => c.addAll(['data/index.json', 'data/meta.json'])).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V && k !== DATA).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
@@ -34,7 +34,8 @@ self.addEventListener('fetch', e => {
         // el límite de 3 s solo si hay copia en caché a la que recurrir; sin copia se espera a la red
         const hay = await c.match(r, { ignoreSearch: true });
         const res = hay ? await Promise.race([net, new Promise((_, no) => setTimeout(no, 3000))]) : await net;
-        if (res && res.ok) c.put(r, res.clone());
+        if (!res || !res.ok) throw new Error('shell no disponible');
+        e.waitUntil(c.put(r, res.clone()).catch(() => {}));
         return res;
       } catch (err) {
         return (await c.match(r, { ignoreSearch: true })) || (r.mode === 'navigate' && await c.match('index.html')) || Response.error();

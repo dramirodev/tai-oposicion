@@ -5,6 +5,7 @@ import { $, app, toast, type El } from '../ui.js';
 export function registerCards({ routes, go, pw, reportBox }: any, screen: any) {
 // ───────── tarjetas (flashcards) ─────────
 let CARDIDX: any; const cardCache = new Map<string, any>(); let CRUN: any = null;
+store.onAccountChange(() => { CRUN = null; });
 async function curatedCards() {
   if (CARDIDX === undefined) { try { CARDIDX = (await j('cards/index.json')).temas || {}; } catch (e) { return []; } } // sin caché del fallo: se reintenta
   const out: any[] = [], ts = Object.keys(CARDIDX);
@@ -61,7 +62,7 @@ function cardSession() {
   const R = CRUN; if (!R) return go('#/cards');
   const NOMBRE = ['Fallé', 'Dudaba', 'Lo sabía'];
   const grade = (g: any) => {
-    if (!R.rev) return;
+    if (R !== CRUN || !R.rev) return;
     store.gradeCard(R.items[R.idx].id, g, now()); R.res[g]++; R.idx++; R.rev = false; draw(); window.scrollTo(0, 0);
   };
   const show = () => {

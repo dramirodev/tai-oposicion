@@ -156,7 +156,7 @@ describe('validación de datos externos', () => {
     expect(Object.keys(st.getStats())).toEqual(['q9']); expect(st.getSessions()).toHaveLength(1); expect(st.getSessions()[0].nota).toBe(0);
   });
   it('un localStorage corrupto no rompe la carga', async () => {
-    localStorage.setItem('tai.v1', JSON.stringify({ stats: { x: 'basura', y: [1, 1, 1, -1, 0, 1, 0] }, sessions: 'no', seen: 5 }));
+    localStorage.setItem('tai.v1:guest', JSON.stringify({ stats: { x: 'basura', y: [1, 1, 1, -1, 0, 1, 0] }, sessions: 'no', seen: 5 }));
     vi.resetModules(); const s2 = await import('../src/store.js');
     expect(Object.keys(s2.getStats())).toEqual(['y']); expect(s2.getSessions()).toEqual([]); expect(s2.getSeen()).toEqual([]);
   });
@@ -170,7 +170,7 @@ describe('copia de seguridad en IndexedDB', () => {
     expect(s2.getSeen()).toEqual([]); expect(s2.rec('q1')).toBeUndefined();
     expect(await s2.recover()).toBe(true);
     expect(s2.rec('q1')[0]).toBe(1); expect(s2.getSeen()).toEqual(['T1.01', 'T3.04']); expect(s2.getReports().q1.nota).toBe('n');
-    expect(JSON.parse(localStorage.getItem('tai.v1')).seen.t).toEqual(['T1.01', 'T3.04']); // y lo vuelve a guardar en localStorage
+    expect(JSON.parse(localStorage.getItem('tai.v1:guest')).seen.t).toEqual(['T1.01', 'T3.04']); // y lo vuelve a guardar en localStorage
   });
   it('no pisa datos locales más recientes', async () => {
     st.setSeen(['T1.01']); await st.flushNow();
@@ -269,7 +269,7 @@ describe('auditoría: persistencia y datos externos', () => {
     st.setCfg('ui', { theme: 'dark', size: 2 });
     const text = st.exportAll(); st.resetAll(); st.importAll(text);
     expect(st.getCfg().ui).toEqual({ theme: 'dark', size: 2 });
-    localStorage.setItem('tai.v1', '{"stats":{},"cfg":{"ui":{"theme":"dark","__proto__":{"x":1}},"constructor":"x"}}');
+    localStorage.setItem('tai.v1:guest', '{"stats":{},"cfg":{"ui":{"theme":"dark","__proto__":{"x":1}},"constructor":"x"}}');
     vi.resetModules(); const next = await import('../src/store.js');
     expect(next.getCfg().ui).toEqual({ theme: 'dark' });
     expect(Object.keys(next.getCfg())).toEqual(['ui']);

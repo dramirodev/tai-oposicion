@@ -34,3 +34,8 @@ it('usa la copia de configuración ante un error del servidor y da una respuesta
   const empty = worker(); empty.network(async () => { throw new Error('offline'); });
   expect((await empty.get('firebase-config.json')).type).toBe('error');
 });
+
+it('recupera el shell cacheado cuando el servidor responde 503', async () => {
+ const w=worker(); await w.get('app.js'); w.network(async()=>new Response('error',{status:503}));
+ expect((await w.get('app.js')).status).toBe(200);
+});

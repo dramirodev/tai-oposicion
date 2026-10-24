@@ -1,0 +1,24 @@
+import 'fake-indexeddb/auto';
+import {it,expect,vi} from 'vitest';
+import {readFileSync} from 'node:fs';
+import path from 'node:path';
+vi.mock('../src/syncfacade.js',()=>({status:{user:null,state:'sin sesión',configured:false},init:async()=>{},onStatus:()=>()=>{},login:async()=>{},logout:async()=>{},retry:()=>{}}));
+it('doble pulsación en Terminar no duplica el intento de examen',async()=>{
+ document.documentElement.innerHTML=readFileSync('public/index.html','utf8');localStorage.clear();
+ vi.stubGlobal('matchMedia',()=>({matches:true}));vi.stubGlobal('scrollTo',()=>{});Element.prototype.scrollIntoView=()=>{};
+ vi.stubGlobal('fetch',async url=>{try{return {ok:true,json:async()=>JSON.parse(readFileSync(path.join('public',String(url)),'utf8'))};}catch{return {ok:false,json:async()=>null};}});
+ await import('../src/main.js');
+ const waitText=async text=>vi.waitFor(()=>expect(document.querySelector('#app').textContent).toContain(text));
+ await waitText('Sesión rápida');location.hash='#/sim';await waitText('Simulacros');
+ await vi.waitFor(()=>expect(document.querySelector('#simtabs [data-v="examen"]')).not.toBeNull());
+ document.querySelector('#simtabs [data-v="examen"]').click();
+ document.querySelector('[data-k="L2018-P1"]').click();
+ document.querySelector('#simbody [data-m="sim"]').click();
+ await vi.waitFor(()=>expect(document.querySelector('#next')).not.toBeNull());
+ const {state}=await import('../src/engine.js');
+ while(state.run.idx<state.run.items.length-1)document.querySelector('#next').click();
+ const q=state.run.items[state.run.idx];document.querySelector(`.opt[data-i="${q.c}"]`).click();
+ const finish=document.querySelector('#next');finish.click();finish.click();
+ await waitText('Resultado');
+ const store=await import('../src/store.js');expect(store.rec(q.i)[0]).toBe(1);
+},15000);

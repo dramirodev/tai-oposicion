@@ -1,7 +1,7 @@
 import * as sync from './syncfacade.js';
 import * as store from './store.js';
 import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, pickGuest, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from './logic.js';
-import { META, getIndex, getMeta, temaOf, getTema, getSup, temaName, now, pick, dueList, byIds } from './data.js';
+import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds } from './data.js';
 import { $, app, L, toast, ask, guard, type El } from './ui.js';
 import { ORIGEN, TRAMPAS } from './labels.js';
 import { APP_VERSION, APP_BUILD } from './version.js';
@@ -75,8 +75,10 @@ function startRun(cfg: any) {
 async function resumeSaved() {
   const p = await pendingRun(isFull());
   if (!p) return;
-  if (!(await ask(pendingPrompt(p), 'Continuar'))) return clearRun();
-  resumeRun(p); go('#/quiz');
+  const accepted = await ask(pendingPrompt(p), 'Continuar');
+  if (p.account !== store.accountId()) return;
+  if (!accepted) return clearRun();
+  if (resumeRun(p)) go('#/quiz');
 }
 
 routes.quiz = async function () {
@@ -150,7 +152,7 @@ routes.quiz = async function () {
         ${q.w ? '<span class="tag warn">Puede caducar</span>' : ''}
         ${q.o === 'G' && q.v ? '<span class="tag">Variante</span>' : ''}
       </div>
-      ${inSup ? `<details class="sup"><summary>Enunciado del supuesto</summary><div class="pre">${esc(R.supTexto || '')}</div></details>` : ''}
+      ${inSup ? `<details class="sup"><summary>Enunciado del supuesto</summary><div class="pre">${esc(R.supTexto || q.supTexto || '')}</div></details>` : ''}
       ${q.cp ? `<div class="ctx pre">${richHtml(q.cp)}</div>` : ''}
       ${pideNegativa(q.q) ? '<div class="pide">Ojo: te piden la opción INCORRECTA o la excepción</div>' : ''}
       <div class="enun pre">${kw(q.q)}</div>
@@ -226,6 +228,7 @@ routes.quiz = async function () {
   }
   function answer(q: any, i: any) { answerQuestion(R, q, i, minLectura(q)); }
   function finish() {
+    if (state.run !== R) return;
     clearInterval(tick);
     if (!finishRun(R)) { toast('Se acabó el tiempo sin contestar ninguna pregunta.'); return go('#/home'); }
     go('#/result');
@@ -602,6 +605,8 @@ routes.falladas = async function () {
     host.innerHTML = L2.length ? Object.keys(gr).sort().map(t => `<h2 class="h3">${esc(t)} · ${esc(temaName(t))} <small>(${gr[t].length})</small></h2><div class="card">${gr[t].map((q: any) => {
       const r = store.rec(q.i) || [0, 0, 0];
       return `<details class="rv f"><summary><i></i><span class="pre">${richHtml(q.q)}<br><small class="sub">Aciertos seguidos: ${Math.max(0, store.failureStreak(r))}/3 · <span data-review-status="${esc(q.i)}">${r[11] ? 'Temario repasado' : 'Pendiente de temario'}</span></small></span></summary>
+      ${q.supTexto ? `<details class="sup"><summary>Enunciado del supuesto</summary><div class="pre">${esc(q.supTexto)}</div></details>` : ''}
+      ${q.cp ? `<div class="ctx pre">${richHtml(q.cp)}</div>` : ''}
       <label class="chk"><input type="checkbox" data-reviewed="${esc(q.i)}" ${r[11] ? 'checked' : ''}>Repasada en el temario</label>
       ${q.a.map((o: any, i: any) => `<div class="ro ${i === q.c ? 'ok' : ''}"><b>${L[i]}</b> ${richHtml(o)}${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : '<p class="sm sub">Esta pregunta no tiene fragmento de temario asociado.</p>'}${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}
@@ -656,7 +661,7 @@ registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV
   const aviso = async () => { const n = await checkUpdate(); if (n) toast(`Hay una versión nueva (${n.version}).`, { label: 'Actualizar', fn: applyUpdate }); };
   setTimeout(aviso, 6000);
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') aviso(); });
-  try { await getMeta(); await sync.init({ temaOf, idsOfTema: t => META._by[t] || [] }); } catch (e) { console.error(e); }
+  try { await getMeta(); await sync.init({ temaOf, idsOfTema }); } catch (e) { console.error(e); }
 })();
 
 // Descarga el banco en segundo plano (2 a la vez) para que Test, Simulacro y Repaso arranquen sin esperar a la red
@@ -701,3 +706,5 @@ function watchUpdates(reg: any) {
   if (reg.installing) ready(reg.installing);
   reg.addEventListener('updatefound', () => reg.installing && ready(reg.installing));
 }
+
+store.onAccountChange(() => { go('#/home'); });

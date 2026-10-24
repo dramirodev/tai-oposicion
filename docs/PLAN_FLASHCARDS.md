@@ -42,7 +42,7 @@ Las tarjetas con `revisar: true` se excluyen del repaso y de la exportación a A
 - `src/logic.js`: `pickCards(cards, recs, {n, now, maxNew, seen})`, `cardStats(cards, recs, now)` y `cardFromQuestion(q)`.
 - `src/store.js`: `S.cards`, validación, `addFallo(qid, now)`, `gradeCard(id, grade, now)`, `removeCard(id)` y `mergeCards(m)`.
 - Registro: `[n, ok, last, box, due, lastGrade]`. La fusión conserva el registro con `last` más reciente. `lastGrade = -1` identifica una marca de borrado, excluida del repaso.
-- Persistencia: `localStorage` (`tai.v1`), copia IndexedDB y exportación/importación del progreso completo.
+- Persistencia: `localStorage` (`tai.v1:<uid>` o `tai.v1:guest`; `tai.v1` se conserva como copia anterior), copia IndexedDB y exportación/importación del progreso completo.
 - `src/sync.js`: escucha y escritura del progreso en `users/{uid}/cfg/cards`, con `{m, u}`; no se usa la colección por tema propuesta en el plan inicial.
 - `firestore.rules`: regla de `cfg/cards`, con uid propietario y correo autorizado verificado.
 - `src/syncfacade.js` y `src/syncstate.js`: carga de Firebase bajo demanda y estado compartido.

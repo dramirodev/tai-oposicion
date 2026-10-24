@@ -81,7 +81,7 @@ it('la solicitud pasa a pendiente y el aprobado empieza a sincronizar', async ()
   expect(status.access).toBe('pendiente');
   snap('access/u2', { ok: true });
   expect(status.access).toBe('aprobado');
-  expect(localStorage.getItem('tai.acc')).toBe('aprobado');
+  expect(localStorage.getItem('tai.acc:u2')).toBe('aprobado');
   expect(paths()).toContain('users/u2/stats');
   snap('access/u2', null);
   expect(status.access).not.toBe('aprobado');
@@ -93,4 +93,53 @@ it('aprobar escribe el acceso y borra la solicitud; revocar lo borra', async () 
   expect(boundary.writes[1]).toEqual({ path: 'requests/u9', deleted: true });
   await sync.revoke('u9');
   expect(boundary.writes.at(-1)).toEqual({ path: 'access/u9', deleted: true });
+});
+
+it('una segunda cuenta aprobada inicia sus propios listeners', async () => {
+  user('friend1','friend1@example.test'); snap('access/friend1',{ok:true});
+  boundary.snapshots.length=0;
+  user('friend2','friend2@example.test'); snap('access/friend2',{ok:true});
+  expect(paths()).toContain('users/friend2/stats');
+});
+it('no publica el progreso de la cuenta anterior en la cuenta nueva', async () => {
+  store.record('q-private-owner','T1.01',0,1000);
+  await sync.logout();
+  user('friend1','friend1@example.test'); snap('access/friend1',{ok:true});
+  const stats=boundary.snapshots.filter(x=>x.ref.path==='users/friend1/stats').at(-1);
+  stats.cb({forEach:()=>{}});
+  expect(boundary.writes.filter(x=>x.path==='users/friend1/stats/T1.01')).toEqual([]);
+});
+it('No lo sé conserva la racha como el blanco que puntúa el resultado', async () => {
+  const engine=await import('../src/engine.js');
+  const q={i:'f-review',t:'T1.01',o:'G',q:'Prueba',a:['A','B','C','D'],c:0,k:'D',x:[],d:1};
+  store.record(q.i,q.t,0,1000);store.record(q.i,q.t,1,2000);store.record(q.i,q.t,1,3000);
+  const run=engine.createRun({kind:'test',feedback:true,items:[q]});
+  engine.answerQuestion(run,q,-1,0);
+  expect(store.failureStreak(store.rec(q.i))).toBe(2);
+});
+
+it('importar con listeners activos publica los registros nuevos', async () => {
+  boundary.snapshots.find(x=>x.ref.path==='users/user1/stats').cb({forEach:()=>{}});
+  boundary.writes.length=0;
+  store.importAll(JSON.stringify({stats:{'q-import':[1,0,1000,0,2000,0,0]},sessions:[]}));
+  await vi.advanceTimersByTimeAsync(4000);
+  expect(boundary.writes.some(x=>x.path==='users/user1/stats/T1.01' && x.value.m['q-import'])).toBe(true);
+});
+
+it('restaura el progreso propio al volver a una cuenta y descarta sus sesiones en pantalla', async()=>{
+ const engine=await import('../src/engine.js');
+ store.record('owner-question','T1.01',0,1000);
+ engine.createRun({kind:'test',feedback:true,items:[{i:'owner-question',t:'T1.01',q:'x',a:['a','b','c','d'],c:0}]});
+ user('friend','friend@example.test'); snap('access/friend',{ok:true});
+ expect(store.rec('owner-question')).toBeUndefined(); expect(engine.state.run).toBeNull();
+ store.record('friend-question','T1.01',1,2000);
+ user('user1');
+ expect(store.rec('owner-question')[0]).toBe(1); expect(store.rec('friend-question')).toBeUndefined();
+});
+it('una marca de temario local se publica aunque la respuesta remota sea posterior',()=>{
+ store.record('q-mark','T1.01',0,1000);store.setReviewed('q-mark','T1.01',true);
+ const listener=boundary.snapshots.find(x=>x.ref.path==='users/user1/stats');
+ listener.cb({forEach:f=>f({data:()=>({m:{'q-mark':[2,1,2000,0,5000,1,0,0,0,0,1,0]}})})});
+ expect(store.rec('q-mark')[0]).toBe(2);
+ expect(boundary.writes.find(x=>x.path==='users/user1/stats/T1.01').value.m['q-mark'][11]).toBe(1);
 });

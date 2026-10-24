@@ -4,10 +4,10 @@
 export type Res = 0 | 1 | 2;
 
 /**
- * Registro por pregunta: [n, ok, last, box, due, lastRes, flag, secs, nsecs, motivo, racha?, repasada?]
+ * Registro por pregunta: [n, ok, last, box, due, lastRes, flag, secs, nsecs, motivo, racha?, repasada?, fechaRepasada?]
  * n=intentos, ok=aciertos, last=ms de la última actividad, box=-1 fuera del repaso (0..3 en repaso),
  * due=ms del próximo repaso, lastRes=Res, flag=1 dudosa, secs/nsecs=tiempo acumulado, motivo=1..8,
- * [10]=racha tras fallo, [11]=temario repasado (0/1).
+ * [10]=racha tras fallo, [11]=temario repasado (0/1), [12]=fecha de cambio de esa marca.
  */
 export type StatRec = number[];
 export type StatMap = Record<string, StatRec>;
@@ -41,7 +41,7 @@ export interface Question {
   i: string; t: string; o: Origin; q: string; a: string[]; c: number;
   k?: string; x?: number[]; d?: number; n?: string; y?: string; u?: string; np?: number;
   /** Contexto previo, supuesto (s), provisional (p), puede caducar (w), variante (v). */
-  cp?: string; s?: unknown; p?: unknown; w?: unknown; v?: unknown;
+  cp?: string; supTexto?: string; s?: unknown; p?: unknown; w?: unknown; v?: unknown;
 }
 
 /** Entrada de meta.json: [tema, ...datos auxiliares]. */

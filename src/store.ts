@@ -4,8 +4,15 @@ import type { AppState, CardMap, CardRec, Cfg, Report, ReportMap, ReportState, R
 // Registro por pregunta: [n, ok, last, box, due, lastRes, flag]
 //   n=intentos, ok=aciertos, last=timestamp ms, box=-1 fuera del repaso (0..3 en repaso),
 //   due=timestamp ms del próximo repaso, lastRes=1/0/2(blanco), flag=1 dudosa
-// Extensión opcional: [10]=racha tras fallo (-1 nunca/ya fuera del historial antiguo, 0..3); [11]=temario repasado (0/1).
-const KEY = 'tai.v1';
+// Extensión opcional: [10]=racha tras fallo (-1 nunca/ya fuera del historial antiguo, 0..3); [11]=temario repasado (0/1); [12]=fecha del cambio de marca.
+const LEGACY_KEY = 'tai.v1';
+let account: string | null = (() => { try { return localStorage.getItem('tai.account'); } catch { return null; } })();
+const stateKey = () => account ? LEGACY_KEY + ':' + account : LEGACY_KEY + ':guest';
+const mirrorKey = () => account ? 'state:' + account : 'state:guest';
+export const accountId = () => account;
+const accountListeners = new Set<() => void>();
+export const onAccountChange = (fn: () => void) => { accountListeners.add(fn); return () => accountListeners.delete(fn); };
+
 export const MAX_SESIONES = 300;
 export const DAY = 86400000;
 export const INTERVALS = [2, 5, 14, 30, 60]; // días
@@ -32,6 +39,8 @@ export function cleanRec(r: unknown): StatRec | null {
   const mo = num(r[9], 0, 8) || 0, ts = num(r[7], 0, 1e7) || 0, tn = Math.min(num(r[8], 0, 1e6) || 0, n); // segundos acumulados y nº de respuestas cronometradas
   const out = [n, Math.min(ok, n), last, box === null ? -1 : Math.floor(box), due || 0, lr === null ? 0 : Math.floor(lr), fl ? 1 : 0, tn ? ts : 0, tn, Math.floor(mo)];
   if (r.length > 10) out.push(Math.floor(num(r[10], -1, 3) ?? failureStreak(out)), r[11] === 1 ? 1 : 0);
+  if (r.length > 12) out.push(num(r[12]) || 0);
+  else if (r[11] === 1) out.push(last);
   return out;
 }
 export function cleanStats(map: unknown): StatMap {
@@ -113,22 +122,36 @@ export function mergeReports(m0: unknown): boolean {
 }
 
 
-export interface Syncer { schedule(): void; pushSession?(s: Session): void; pushSeen?(d: SeenDoc): void; pushReports?(m: ReportMap): void; pushCards?(m: CardMap): void }
+export interface Syncer { schedule(): void; pushSession?(s: Session): void; pushSeen?(d: SeenDoc): void; pushReports?(m: ReportMap): void; pushCards?(m: CardMap): void; pushImport?(): void }
 let S: AppState = load();
 const listeners = new Set<() => void>();
 let dirty = new Set<string>();
 let syncer: Syncer | null = null;
 
-function load(): AppState {
+function load(key = stateKey()): AppState {
   try {
-    const s = JSON.parse(localStorage.getItem(KEY) || 'null');
+    const s = JSON.parse(localStorage.getItem(key) || 'null');
     if (s && s.stats) return { stats: cleanStats(s.stats), sessions: cleanSessions(s.sessions).slice(0, MAX_SESIONES), cfg: cleanCfg(s.cfg), seen: cleanSeen(s.seen), reports: cleanReports(s.reports), cards: cleanCards(s.cards) };
   } catch (e) {}
   return { stats: dict(), sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: dict(), cards: dict() };
 }
+// La copia antigua queda intacta; solo el propietario puede adoptarla.
+export function switchAccount(next: string | null, adoptLegacy = false): void {
+  if (account === next) return;
+  void flushNow();
+  account = next;
+  try { next ? localStorage.setItem('tai.account', next) : localStorage.removeItem('tai.account'); } catch {}
+  const hasLocal = (() => { try { return !!localStorage.getItem(stateKey()); } catch { return false; } })();
+  S = load(!hasLocal && adoptLegacy ? LEGACY_KEY : stateKey());
+  if (!hasLocal && adoptLegacy && next) {
+    try { localStorage.setItem('tai.legacy-pending:' + next, '1'); } catch {}
+  }
+  dirty.clear(); persist();
+  accountListeners.forEach(fn => fn()); emit();
+}
 let persistWarned = false;
 function persist() {
-  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {
+  try { localStorage.setItem(stateKey(), JSON.stringify(S)); } catch (e) {
     // sin espacio o sin permiso: avisar una vez (la copia de IndexedDB sigue intentándose)
     if (!persistWarned) { persistWarned = true; try { dispatchEvent(new Event('tai-persist-error')); } catch (e2) {} }
   }
@@ -149,27 +172,38 @@ function mirror() { clearTimeout(mirrorTimer); mirrorTimer = setTimeout(flushMir
 export async function flushMirror(): Promise<void> {
   clearTimeout(mirrorTimer);
   try {
+    const key = mirrorKey(), payload = JSON.stringify(S);
     const db = await openIdb();
-    await new Promise<void>((res, rej) => { const tx = db.transaction('kv', 'readwrite'); tx.objectStore('kv').put(JSON.stringify(S), 'state'); tx.oncomplete = () => res(); tx.onerror = () => rej(tx.error); });
+    await new Promise<void>((res, rej) => { const tx = db.transaction('kv', 'readwrite'); tx.objectStore('kv').put(payload, key); tx.oncomplete = () => res(); tx.onerror = () => rej(tx.error); });
     db.close();
   } catch (e) {}
 }
 // Al arrancar: fusiona lo que haya en la copia de IndexedDB (gana siempre lo más reciente). Devuelve true si recuperó algo.
 export async function recover(): Promise<boolean> {
   try {
+    const key = mirrorKey();
     const db = await openIdb();
-    const txt = await new Promise<string | null | undefined>(res => { const r = db.transaction('kv').objectStore('kv').get('state'); r.onsuccess = () => res(r.result as string | undefined); r.onerror = () => res(null); });
+    const pendingKey = 'tai.legacy-pending:' + account;
+    const legacy = account && localStorage.getItem(pendingKey) === '1';
+    const copies = await Promise.all([key, ...(legacy ? ['state'] : [])].map(k => new Promise<string | null | undefined>(res => {
+      const r = db.transaction('kv').objectStore('kv').get(k);
+      r.onsuccess = () => res(r.result as string | undefined); r.onerror = () => res(null);
+    })));
     db.close();
-    if (!txt) return false;
-    const o = JSON.parse(txt); if (!o || typeof o !== 'object') return false;
+    if (key !== mirrorKey()) return false;
     let ch = false;
-    ch = mergeRemote(o.stats) || ch; ch = mergeSessions(o.sessions) || ch; ch = mergeSeen(o.seen) || ch; ch = mergeReports(o.reports) || ch; ch = mergeCards(o.cards) || ch;
-    if (o.cfg && typeof o.cfg === 'object') { const c = cleanCfg(o.cfg); for (const k in c) if (!(k in S.cfg)) { S.cfg[k] = c[k]; ch = true; } }
+    for (const txt of copies) {
+      if (!txt) continue;
+      const o = JSON.parse(txt); if (!o || typeof o !== 'object') continue;
+      ch = mergeRemote(o.stats) || ch; ch = mergeSessions(o.sessions) || ch; ch = mergeSeen(o.seen) || ch; ch = mergeReports(o.reports) || ch; ch = mergeCards(o.cards) || ch;
+      if (o.cfg && typeof o.cfg === 'object') { const c = cleanCfg(o.cfg); for (const k in c) if (!(k in S.cfg)) { S.cfg[k] = c[k]; ch = true; } }
+    }
     if (ch) { persist(); emit(); }
+    if (legacy) localStorage.removeItem(pendingKey);
     return ch;
   } catch (e) { return false; }
 }
-export function flushNow(): Promise<void> { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} return flushMirror(); }
+export function flushNow(): Promise<void> { try { localStorage.setItem(stateKey(), JSON.stringify(S)); } catch (e) {} return flushMirror(); }
 export function onChange(fn: () => void): () => void { listeners.add(fn); return () => listeners.delete(fn); }
 function emit() { listeners.forEach(f => f()); }
 
@@ -271,7 +305,7 @@ export function setReviewed(id: string, tema: string, value: boolean): void {
   const streak = failureStreak(r);
   while (r.length < 12) r.push(0);
   r[10] = streak; r[11] = value ? 1 : 0;
-  r[2] += 1; // gana en la sincronización (estrictamente mayor) sin mover la fecha de actividad: marcar el temario no cuenta como día de estudio
+  r[12] = Math.max(Date.now(), reviewClock(r) + 1); // reloj independiente: no cambia el día de estudio
   dirty.add(tema); persist(); emit();
   if (syncer) syncer.schedule();
 }
@@ -281,13 +315,27 @@ export function addSession(s: Session): void {
   persist(); emit();
   if (syncer?.pushSession) syncer.pushSession(s);
 }
+// [12] fecha de cambio de la marca de temario; independiente del resultado [2].
+export const reviewClock = (r?: StatRec) => r ? (r[12] ?? (r[11] === 1 ? r[2] : 0)) : 0;
+export const needsSync = (local: StatRec, remote?: StatRec) => !remote || local[2] > remote[2] || reviewClock(local) > reviewClock(remote);
 // Mezcla registros remotos (gana el más reciente por pregunta). Devuelve true si cambió algo local.
 export function mergeRemote(map0: unknown): boolean {
   const map = cleanStats(map0);
   let changed = false;
   for (const id of Object.keys(map)) {
     const a = S.stats[id], b = map[id];
-    if (!a || b[2] > a[2]) { S.stats[id] = b; changed = true; }
+    if (!a) { S.stats[id] = b; changed = true; continue; }
+    const base = b[2] > a[2] ? b : a;
+    const review = reviewClock(b) > reviewClock(a) ? b : a;
+    const merged = base.slice();
+    if (base.length > 10 || review.length > 10) {
+      const streak = failureStreak(base);
+      while (merged.length < 12) merged.push(0);
+      merged[10] = streak;
+      merged[11] = review[11] === 1 ? 1 : 0;
+      if (reviewClock(review)) merged[12] = reviewClock(review);
+    }
+    if (JSON.stringify(a) !== JSON.stringify(merged)) { S.stats[id] = merged; changed = true; }
   }
   if (changed) { persist(); emit(); }
   return changed;
@@ -353,5 +401,6 @@ export function importAll(txt: unknown): void {
   if (o.reports) mergeReports(o.reports);
   if (o.cards) mergeCards(o.cards);
   if (o.cfg) { S.cfg = { ...S.cfg, ...cleanCfg(o.cfg) }; persist(); emit(); }
+  syncer?.pushImport?.();
 }
 export function resetAll(): void { S = { stats: dict(), sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: dict(), cards: dict() }; persist(); emit(); }

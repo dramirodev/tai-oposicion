@@ -19,6 +19,12 @@ it('marcar el temario como repasado no cambia el día de actividad de la pregunt
   store.setReviewed('AT101-P1-01', 'T1.01', true);
   const r = store.rec('AT101-P1-01');
   expect(r[11]).toBe(1);
-  expect(r[2] - t0).toBeLessThan(5);
-  expect(r[2]).toBeGreaterThan(t0);
+  expect(r[2]).toBe(t0);
+  expect(r[12]).toBeGreaterThan(t0);
+});
+
+it('las cuatro preguntas ambiguas advierten del problema y no puntúan', () => {
+ for(const [f,id] of [['T3.09.json','AT309-P1-12'],['T3.03.json','GEN-T3.03-48'],['T3.03.json','GEN-T3.03-48.v1'],['T3.08.json','GEN-T3.08-418.v1']]) {
+  const q=by(f,id); expect(q.n?.length,id).toBeGreaterThan(40); expect(q.np,id).toBe(1);
+ }
 });

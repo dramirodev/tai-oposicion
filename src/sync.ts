@@ -46,11 +46,15 @@ export async function init(metaFns: { temaOf: (id: string) => string | null; ids
   }).catch(e => { try { localStorage.removeItem('tai.redir'); } catch (x) {} status.error = (e.code || '') + ' ' + e.message; emit(); });
   onAuthStateChanged(auth, (u: User | null) => {
     status.user = u ? { name: u.displayName || u.email || '', email: u.email || '', verified: !!u.emailVerified } : null;
-    stopAcc();
+    stopAcc(); stop(); uid = null;
+    status.requested = false; status.reqs = []; status.grants = []; status.access = 'invitado';
+    store.switchAccount(u?.uid || null, !!u && u.email === OWNER && u.emailVerified);
     if (u) { uid = u.uid; resolveAccess(u); }
     else { uid = null; stop(); status.requested = false; status.reqs = []; status.grants = []; setAccess('invitado'); status.state = 'sin sesión'; emit(); }
+    const epoch = accessEpoch;
+    void store.recover().then(ch => { if (ch && epoch === accessEpoch && uid === (u?.uid || null)) pushImport(); });
   });
-  store.setSyncer({ schedule, pushSession, pushSeen, pushReports, pushCards });
+  store.setSyncer({ schedule, pushSession, pushSeen, pushReports, pushCards, pushImport });
 }
 
 export async function login(): Promise<void> {
@@ -74,12 +78,13 @@ export async function login(): Promise<void> {
 }
 // ── Acceso: el propietario tiene todo; el resto es invitado hasta que el propietario lo apruebe (access/{uid}) ──
 let accUnsubs: Unsubscribe[] = [];
+let accessEpoch = 0;
 const canSync = () => !!uid && (status.access === 'propietario' || status.access === 'aprobado');
-function stopAcc() { accUnsubs.forEach(f => { try { f(); } catch (e: any) {} }); accUnsubs = []; }
+function stopAcc() { accessEpoch++; accUnsubs.forEach(f => { try { f(); } catch (e: any) {} }); accUnsubs = []; }
 function setAccess(l: AccessLevel) { status.access = l; rememberAccess(l); }
 function accErr(e: any) { status.accessErr = (e && e.code) || String(e); emit(); }
 function resolveAccess(u: User) {
-  const mine = u.uid, vivo = () => uid === mine;
+  const mine = u.uid, epoch = accessEpoch, vivo = () => uid === mine && epoch === accessEpoch;
   status.accessErr = '';
   if (u.email === OWNER && u.emailVerified) {
     setAccess('propietario'); status.state = 'sincronizando…'; emit(); start();
@@ -136,7 +141,7 @@ if (typeof document !== 'undefined') document.addEventListener('visibilitychange
 
 function start(): void {
   stop();
-  if (!uid) return;
+  if (!canSync() || !uid) return;
   const me: string = uid, sessionUid = uid, epoch = syncEpoch;
   const active = () => uid === sessionUid && epoch === syncEpoch;
   const error = (e: FirestoreError) => { if (active()) listenErr(e); };
@@ -157,6 +162,8 @@ function start(): void {
     if (!active()) return;
     const l: unknown[] = []; snap.forEach(d => l.push(d.data()));
     store.mergeSessions(l);
+    const remoteIds = new Set(l.map(s => (s as Session).id));
+    for (const s of store.getSessions()) if (!remoteIds.has(s.id)) pushSession(s);
   }, error));
   unsubs.push(onSnapshot(doc(db, 'users', me, 'cfg', 'seen'), d => {
     if (!active()) return;
@@ -195,14 +202,21 @@ function stop(): void {
 }
 
 function pushAll(remote: StatMap): void {
-  const me = uid; if (!me) return;
+  const me = uid; if (!canSync() || !me) return;
   const local = store.getStats();
   const byTema: Record<string, StatMap> = {};
   for (const id in local) {
     const r = remote[id];
-    if (!r || local[id][2] > r[2]) { const t = temaOf(id); if (t) (byTema[t] ||= {})[enc(id)] = local[id]; }
+    if (store.needsSync(local[id], r)) { const t = temaOf(id); if (t) (byTema[t] ||= {})[enc(id)] = local[id]; }
   }
   for (const t in byTema) setDoc(doc(db, 'users', me, 'stats', t), { m: byTema[t], u: Date.now() }, { merge: true }).catch(writeErr);
+}
+
+function pushImport(): void {
+  if (!canSync()) return;
+  pushAll({});
+  for (const s of store.getSessions()) pushSession(s);
+  pushSeen(store.getSeenDoc()); pushReports(store.getReports()); pushCards(store.getCardsDoc());
 }
 
 export function schedule(): void {

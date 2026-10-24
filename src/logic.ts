@@ -223,11 +223,12 @@ export function pickRepaso<T extends { t: string; due: number }>(items: T[], n: 
 }
 // Preguntas que vencen cada día: [hoy y atrasadas, +1, …, +(days-1)] (días naturales locales)
 export function cargaRepasos(stats: StatMap, now: number, days = 14): number[] {
-  const d0 = new Date(now); d0.setHours(0, 0, 0, 0);
+  const ordinal = (t: number) => { const d = new Date(t); return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / DIA; };
+  const d0 = ordinal(now);
   const out: number[] = new Array(days).fill(0);
   for (const id in stats) {
     const r = stats[id]; if (!(r[3] >= 0) || !r[4]) continue;
-    const k = Math.floor((r[4] - d0.getTime()) / DIA);
+    const k = ordinal(r[4]) - d0;
     if (k < days) out[Math.max(0, k)]++;
   }
   return out;
