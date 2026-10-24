@@ -12,7 +12,7 @@ const buildId = `${version}+${sha}`;
 rmSync('public/app.js', { force: true });
 rmSync('public/chunks', { recursive: true, force: true });
 await build({
-  entryPoints: ['src/main.js'], bundle: true, splitting: true, minify: true, format: 'esm', target: 'safari15',
+  entryPoints: ['src/main.ts'], bundle: true, splitting: true, minify: true, format: 'esm', target: 'safari15',
   outdir: 'public', entryNames: 'app', chunkNames: 'chunks/[name]-[hash]',
   define: { __APP_VERSION__: JSON.stringify(version), __APP_BUILD__: JSON.stringify(buildId) },
 });

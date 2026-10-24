@@ -1,23 +1,23 @@
 import * as store from '../store.js';
 import { esc, richHtml, pct, swipeDir, pickCards, cardStats, cardFromQuestion } from '../logic.js';
 import { j, getIndex, getMeta, temaOf, getTema, temaName, now } from '../data.js';
-import { $, app, toast } from '../ui.js';
-export function registerCards({ routes, go, pw, reportBox }, screen) {
+import { $, app, toast, type El } from '../ui.js';
+export function registerCards({ routes, go, pw, reportBox }: any, screen: any) {
 // ───────── tarjetas (flashcards) ─────────
-let CARDIDX; const cardCache = new Map(); let CRUN = null;
+let CARDIDX: any; const cardCache = new Map<string, any>(); let CRUN: any = null;
 async function curatedCards() {
   if (CARDIDX === undefined) { try { CARDIDX = (await j('cards/index.json')).temas || {}; } catch (e) { return []; } } // sin caché del fallo: se reintenta
-  const out = [], ts = Object.keys(CARDIDX);
+  const out: any[] = [], ts = Object.keys(CARDIDX);
   for (const t of ts) if (!cardCache.has(t)) cardCache.set(t, j(`cards/${t}.json`).catch(e => { cardCache.delete(t); return []; }));
   const lists = await Promise.all(ts.map(t => cardCache.get(t))); // en paralelo: antes eran peticiones una tras otra
   ts.forEach((t, i) => { for (const c of lists[i]) if (c && c.id && c.q && c.a && !c.revisar) out.push({ ...c, t }); });
   return out;
 }
 async function falloCards() {
-  await getMeta(); const out = [];
+  await getMeta(); const out: any[] = [];
   const ids = Object.keys(store.getCards()).filter(id => id.startsWith('FC-Q-')).map(id => [id.slice(5), temaOf(id.slice(5))]).filter(x => x[1]);
-  const temas = new Map(await Promise.all([...new Set(ids.map(x => x[1]))].map(async t => [t, await getTema(t)])));
-  for (const [qid, t] of ids) { const q = temas.get(t).find(x => x.i === qid); if (q) out.push(cardFromQuestion(q)); }
+  const temas = new Map<string, any[]>(await Promise.all([...new Set(ids.map(x => x[1] as string))].map(async (t): Promise<[string, any[]]> => [t, await getTema(t)])));
+  for (const [qid, t] of ids) { const q = temas.get(t as string)!.find((x: any) => x.i === qid); if (q) out.push(cardFromQuestion(q)); }
   return out;
 }
 const allCards = async () => [...await curatedCards(), ...await falloCards()];
@@ -43,8 +43,8 @@ routes.cards = async function () {
       <p class="sm"><small>Las vencidas salen primero, mezcladas por tema. Como máximo 10 nuevas por sesión.</small></p></div>
       <div class="bar2"><button class="btn" id="go">Empezar</button></div>` :
       `<div class="note">Aún no tienes tarjetas. Al fallar una pregunta en un test pulsa <b>«📇 Hacer tarjeta»</b> (si el motivo no es un despiste) y aparecerá aquí.</div>`}`;
-    $('#cn') && ($('#cn').onclick = e => { const b = e.target.closest('button'); if (b) { store.setCfg('cardsc', { ...cfg, n: +b.dataset.v }); cfg.n = +b.dataset.v; draw(); } });
-    $('#cs') && ($('#cs').onclick = e => { const b = e.target.closest('button'); if (b) { store.setCfg('cardsc', { ...cfg, scope: b.dataset.v }); cfg.scope = b.dataset.v; draw(); } });
+    $('#cn') && ($('#cn').onclick = e => { const b = (e.target as El).closest<El>('button'); if (b) { store.setCfg('cardsc', { ...cfg, n: +b.dataset.v! }); cfg.n = +b.dataset.v!; draw(); } });
+    $('#cs') && ($('#cs').onclick = e => { const b = (e.target as El).closest<El>('button'); if (b) { store.setCfg('cardsc', { ...cfg, scope: b.dataset.v! }); cfg.scope = b.dataset.v!; draw(); } });
     $('#go') && ($('#go').onclick = () => {
       const seen = new Set(store.getSeen());
       const ids = pickCards(cards, recs, { n: cfg.n, now: now(), maxNew: 10, seen: cfg.scope === 'vistos' && seen.size ? seen : null });
@@ -60,7 +60,7 @@ routes.cards = async function () {
 function cardSession() {
   const R = CRUN; if (!R) return go('#/cards');
   const NOMBRE = ['Fallé', 'Dudaba', 'Lo sabía'];
-  const grade = g => {
+  const grade = (g: any) => {
     if (!R.rev) return;
     store.gradeCard(R.items[R.idx].id, g, now()); R.res[g]++; R.idx++; R.rev = false; draw(); window.scrollTo(0, 0);
   };
@@ -73,19 +73,19 @@ function cardSession() {
     // El giro cambia el rectángulo visible: reajustar cuando alcance su altura final.
     if (answer && !reduced) answer.addEventListener('animationend', scroll, { once: true });
   };
-  const onKey = e => {
+  const onKey = (e: any) => {
     // Enter/Espacio deben activar el control enfocado mediante el comportamiento nativo.
-    if ((e.key === 'Enter' || e.key === ' ') && e.target.closest?.('button,a,[role="button"]')) return;
-    if (e.ctrlKey || e.metaKey || e.altKey || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName || '')) return;
+    if ((e.key === 'Enter' || e.key === ' ') && (e.target as El).closest?.('button,a,[role="button"]')) return;
+    if (e.ctrlKey || e.metaKey || e.altKey || /^(INPUT|TEXTAREA|SELECT)$/.test((e.target as El).tagName || '')) return;
     const k = e.key;
     if (k === ' ' || k === 'Enter') { e.preventDefault(); if (!R.rev) show(); }
     else if (R.rev && (k === '1' || k === 'ArrowLeft')) { e.preventDefault(); grade(0); }
     else if (R.rev && k === '2') { e.preventDefault(); grade(1); }
     else if (R.rev && (k === '3' || k === 'ArrowRight')) { e.preventDefault(); grade(2); }
   };
-  let tx = null;
-  const onTs = e => { const t = e.touches[0]; tx = e.touches.length === 1 && t.clientX > 24 && t.clientX < innerWidth - 24 && !e.target.closest('button,details,input,textarea') ? [t.clientX, t.clientY] : null; };
-  const onTe = e => { if (!tx) return; const t = e.changedTouches[0]; const d = swipeDir(t.clientX - tx[0], t.clientY - tx[1]); tx = null; if (R.rev && d === 'next') grade(0); else if (R.rev && d === 'prev') grade(2); };
+  let tx: any = null;
+  const onTs = (e: any) => { const t = e.touches[0]; tx = e.touches.length === 1 && t.clientX > 24 && t.clientX < innerWidth - 24 && !(e.target as El).closest<El>('button,details,input,textarea') ? [t.clientX, t.clientY] : null; };
+  const onTe = (e: any) => { if (!tx) return; const t = e.changedTouches[0]; const d = swipeDir(t.clientX - tx[0], t.clientY - tx[1]); tx = null; if (R.rev && d === 'next') grade(0); else if (R.rev && d === 'prev') grade(2); };
   document.addEventListener('keydown', onKey); document.addEventListener('touchstart', onTs, { passive: true }); document.addEventListener('touchend', onTe, { passive: true });
   screen.cleanup = () => { document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); };
 
@@ -107,8 +107,8 @@ function cardSession() {
     ${R.rev ? '<p class="sub fgl">Teclado 1·2·3 · deslizar ← Fallé · → Lo sabía</p>' : ''}`;
     $('#exit').onclick = () => { CRUN = null; go('#/home'); };
     $('#show') && ($('#show').onclick = show);
-    $('#fc').onclick = e => { if (!R.rev && !e.target.closest('button')) show(); };
-    app.querySelectorAll('[data-g]').forEach(b => b.onclick = () => grade(+b.dataset.g));
+    $('#fc').onclick = e => { if (!R.rev && !(e.target as El).closest<El>('button')) show(); };
+    app.querySelectorAll<El>('[data-g]').forEach(b => b.onclick = () => grade(+b.dataset.g!));
     $('#crep') && reportBox({ i: c.id, t: c.t }, $('#crep'));
     $('#quit') && ($('#quit').onclick = () => { store.removeCard(c.id); R.items.splice(R.idx, 1); R.rev = false; draw(); });
   }

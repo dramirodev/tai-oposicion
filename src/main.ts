@@ -1,8 +1,8 @@
 import * as sync from './syncfacade.js';
 import * as store from './store.js';
-import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from './logic.js';
+import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, pickGuest, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from './logic.js';
 import { META, getIndex, getMeta, temaOf, getTema, getSup, temaName, now, pick, dueList, byIds } from './data.js';
-import { $, app, L, toast, ask, guard } from './ui.js';
+import { $, app, L, toast, ask, guard, type El } from './ui.js';
 import { ORIGEN, TRAMPAS } from './labels.js';
 import { APP_VERSION, APP_BUILD } from './version.js';
 import { registerTraining } from './screens/training.js';
@@ -10,22 +10,25 @@ import { registerCards } from './screens/cards.js';
 import { registerStats } from './screens/stats.js';
 import { registerHome } from './screens/home.js';
 import { registerSettings } from './screens/settings.js';
+import { registerAcceso } from './screens/acceso.js';
+import { isFull, isOwner, GUEST_ROUTES } from './access.js';
+import { state, createRun, clearRun, saveRun, pendingRun, pendingPrompt, resumeRun, tickRun, segundosRestantes, answerQuestion, answerDeferred, finishRun, quickItems, repasoItems, trapTest, dominioTemas, falladasIds } from './engine.js';
 
 // ───────── router ─────────
-const routes = {};
-let cleanup = null;
-function go(h) { if (location.hash === h) route(); else location.hash = h; }
+const routes: Record<string, any> = {};
+let cleanup: any = null;
+function go(h: any) { if (location.hash === h) route(); else location.hash = h; }
 // animaciones: barra de progreso que crece desde el valor anterior, entrada de pantalla y nota que cuenta
 const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 let lastP = 0;
-function pw(p) { const f = lastP; lastP = p; return `style="--from:${f}%;width:${p}%"`; }
+function pw(p: any) { const f = lastP; lastP = p; return `style="--from:${f}%;width:${p}%"`; }
 function enter(el = app) { if (reduceMotion()) return; el.classList.remove('enter'); void el.offsetWidth; el.classList.add('enter'); }
 function countUp() {
-  document.querySelectorAll('[data-count]').forEach(el => {
-    const to = parseFloat(String(el.dataset.count).replace(',', '.')); if (!isFinite(to) || reduceMotion()) return;
-    const dec = (String(el.dataset.count).split(/[.,]/)[1] || '').length, tn = el.firstChild; if (!tn || tn.nodeType !== 3) return;
+  document.querySelectorAll<El>('[data-count]').forEach(el => {
+    const to = parseFloat(String(el.dataset.count!).replace(',', '.')); if (!isFinite(to) || reduceMotion()) return;
+    const dec = (String(el.dataset.count!).split(/[.,]/)[1] || '').length, tn = el.firstChild; if (!tn || tn.nodeType !== 3) return;
     const t0 = performance.now(), D = 900;
-    const step = t => { const k = Math.min(1, (t - t0) / D), v = to * (1 - Math.pow(1 - k, 3)); tn.nodeValue = v.toFixed(dec); if (k < 1 && tn.isConnected) requestAnimationFrame(step); else tn.nodeValue = String(el.dataset.count); };
+    const step = (t: any) => { const k = Math.min(1, (t - t0) / D), v = to * (1 - Math.pow(1 - k, 3)); tn.nodeValue = v.toFixed(dec); if (k < 1 && tn.isConnected) requestAnimationFrame(step); else tn.nodeValue = String(el.dataset.count!); };
     requestAnimationFrame(step);
   });
 }
@@ -43,80 +46,72 @@ let routeSeq = 0;
 async function route() {
   const my = ++routeSeq;
   if (cleanup) { cleanup(); cleanup = null; }
-  const [, name, ...args] = (location.hash || '#/home').split('/');
-  const sect = { quiz: RUN?.kind === 'sim' ? 'sim' : RUN?.kind === 'test' ? 'test' : 'home', result: LAST?.ses?.kind === 'sim' ? 'sim' : LAST?.ses?.kind === 'test' ? 'test' : 'home', sim2: 'sim', examenes: 'sim', errores: 'settings', falladas: 'home', cards: 'home' }[name] || name;
-  document.querySelectorAll('nav a').forEach(a => { const on = a.dataset.r === sect; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  let [, name, ...args] = (location.hash || '#/home').split('/');
+  paintNav();
+  if (!isFull() && !GUEST_ROUTES.has(name)) { name = 'home'; args = []; if (location.hash !== '#/home') history.replaceState(null, '', '#/home'); }
+  const sect = { quiz: state.run?.kind === 'sim' ? 'sim' : state.run?.kind === 'test' ? 'test' : 'home', result: state.last?.ses?.kind === 'sim' ? 'sim' : state.last?.ses?.kind === 'test' ? 'test' : 'home', sim2: 'sim', examenes: 'sim', errores: 'settings', falladas: 'home', cards: 'home' }[name] || name;
+  document.querySelectorAll<El>('nav a').forEach(a => { const on = a.dataset.r! === sect; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   const f = routes[name] || routes.home;
   lastP = 0;
   window.scrollTo(0, 0);
   const lt = setTimeout(() => { if (my === routeSeq) app.innerHTML = '<p class="sub loading" role="status">Cargando…</p>'; }, 120); // respuesta visible si los datos tardan
-  try { await getIndex(); await getMeta(); if (my !== routeSeq) return; await f(...args); clearTimeout(lt); if (my !== routeSeq) return; enter(); countUp(); const hd = app.querySelector('h1'); if (hd) hd.tabIndex = -1; (hd || app).focus({ preventScroll: true }); if (RUN && name !== 'quiz') { const b = document.createElement('div'); b.className = 'note run'; b.innerHTML = `<b>${esc(RUN.titulo || 'Test')}</b> en curso · ${Math.min(RUN.idx + 1, RUN.items.length)}/${RUN.items.length} <button class="btn" id="resume">Continuar</button>`; app.prepend(b); $('#resume').onclick = () => go('#/quiz'); } } catch (e) { clearTimeout(lt); app.innerHTML = `<div class="card" role="alert"><h2>No se pudo cargar</h2><p>${navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button class="btn" id="retryRoute">Reintentar</button></div>`; $('#retryRoute').onclick = () => route(); console.error(e); }
+  try { await getIndex(); await getMeta(); if (my !== routeSeq) return; await f(...args); clearTimeout(lt); if (my !== routeSeq) return; enter(); countUp(); const hd = app.querySelector<El>('h1'); if (hd) hd.tabIndex = -1; (hd || app).focus({ preventScroll: true }); if (state.run && name !== 'quiz') { const b = document.createElement('div'); b.className = 'note run'; b.innerHTML = `<b>${esc(state.run.titulo || 'Test')}</b> en curso · ${Math.min(state.run.idx + 1, state.run.items.length)}/${state.run.items.length} <button class="btn" id="resume">Continuar</button>`; app.prepend(b); $('#resume').onclick = () => go('#/quiz'); } } catch (e) { clearTimeout(lt); app.innerHTML = `<div class="card" role="alert"><h2>No se pudo cargar</h2><p>${navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button class="btn" id="retryRoute">Reintentar</button></div>`; $('#retryRoute').onclick = () => route(); console.error(e); }
 }
 window.addEventListener('hashchange', route);
+// Invitado: la barra inferior solo ofrece Inicio y Ajustes.
+function paintNav() {
+  const full = isFull();
+  document.querySelectorAll<El>('nav a').forEach(a => { a.style.display = full || GUEST_ROUTES.has(a.dataset.r!) ? '' : 'none'; });
+}
+// Si cambia el nivel de acceso (aprobación, cierre de sesión…) se repinta la pantalla en curso.
+let lastFull = isFull();
+sync.onStatus(() => { const f = isFull(); if (f !== lastFull) { lastFull = f; if (!state.run) route(); else paintNav(); } });
 
 // ───────── motor de preguntas ─────────
-let RUN = null;
-function startRun(cfg) {
-  const items = questionsForSession(cfg.items, cfg.feedback);
-  if (!items.length) { toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.'); return; }
-  RUN = { ...cfg, items, idx: 0, ans: [], t0: now(), secs: 0, paused: false }; go('#/quiz');
-}
-// La sesión en curso se guarda para sobrevivir al cierre de la app por iOS (solo sesiones del banco, no los supuestos)
-const RUN_KEY = 'tai.run';
-function clearRun() { try { localStorage.removeItem(RUN_KEY); } catch (e) {} }
-function saveRun() {
-  if (!RUN || RUN.supTexto || !RUN.items.every(q => q.i && META && META[q.i])) return;
-  const { kind, feedback, titulo, limit, idx, ans, times, secs, porTiempo } = RUN;
-  try { localStorage.setItem(RUN_KEY, JSON.stringify({ kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: RUN.items.map(q => q.i), savedAt: Date.now() })); } catch (e) {}
-}
-async function resumeRun() {
-  let s = null; try { s = JSON.parse(localStorage.getItem(RUN_KEY) || 'null'); } catch (e) {}
-  if (!s || RUN) return;
-  if (!Array.isArray(s.ids) || !s.ids.length || Date.now() - (s.savedAt || 0) > 2 * 86400000) return clearRun();
-  const items = await byIds(s.ids);
-  if (items.length !== s.ids.length || questionsForSession(items, !!s.feedback).length !== items.length) return clearRun();
-  const n = items.length, i = Math.min(s.idx + 1, n);
-  if (!(await ask(`Tienes sin terminar «${s.titulo || 'Test'}» (${s.pt ? 'pregunta ' + i : i + '/' + n}${s.limit ? ', quedan ' + fmtT(Math.max(0, s.limit * 60 - s.secs)) : ''}). ¿Continuar donde lo dejaste?`, 'Continuar'))) return clearRun();
-  const un = a => Array.from(a || [], x => x === null ? undefined : x);
-  RUN = { kind: s.kind, feedback: !!s.feedback, titulo: s.titulo, limit: s.limit || 0, porTiempo: !!s.pt, items, idx: s.idx, ans: un(s.ans), times: un(s.times), t0: now(), secs: s.secs || 0, paused: false };
+function startRun(cfg: any) {
+  if (!createRun(cfg)) { toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.'); return; }
   go('#/quiz');
+}
+async function resumeSaved() {
+  const p = await pendingRun(isFull());
+  if (!p) return;
+  if (!(await ask(pendingPrompt(p), 'Continuar'))) return clearRun();
+  resumeRun(p); go('#/quiz');
 }
 
 routes.quiz = async function () {
-  if (!RUN) return go('#/home');
-  const R = RUN;
-  let tick = null;
+  if (!state.run) return go('#/home');
+  const R = state.run;
+  let tick: any = null;
   {
     // el tiempo sale de la hora real (no de contar ticks): iOS frena los timers con la pantalla bloqueada
     tick = setInterval(() => {
-      if (R.paused) { R.since = null; return; }
-      if (R.since == null) { R.since = Date.now(); R.base = R.secs; }
-      R.secs = R.base + Math.floor((Date.now() - R.since) / 1000);
+      tickRun(R);
       if (!R.limit) return;
-      const left = R.limit * 60 - R.secs;
+      const left = segundosRestantes(R);
       const el = $('#clock'); if (el) el.textContent = fmtT(left);
       const pc = $('#pace'); if (pc) { const d = ritmoSimulacro(R.idx, R.items.length, R.limit * 60, R.secs), bud = Math.round(R.limit * 60 / R.items.length); pc.className = 'pace ' + (d >= 0 ? 'up' : d > -3 ? 'mid' : 'low'); pc.textContent = `Ritmo: ${d > 0 ? d + ' por delante' : d < 0 ? -d + ' por detrás' : 'al día'} · ${bud} s por pregunta`; }
       if (left <= 0) { clearInterval(tick); finish(); }
     }, 500);
   }
-  const onKey = e => {
+  const onKey = (e: any) => {
     // Enter/Espacio deben activar el control enfocado mediante el comportamiento nativo.
-    if ((e.key === 'Enter' || e.key === ' ') && e.target.closest?.('button,a,[role="button"]')) return;
-    if (/^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName || ''))) return;
+    if ((e.key === 'Enter' || e.key === ' ') && (e.target as El).closest?.('button,a,[role="button"]')) return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(((e.target as El).tagName || ''))) return;
     if (R.paused && e.key === 'Tab') { e.preventDefault(); const rb = $('.overlay #resume'); rb && rb.focus(); return; }
     if (R.items[R.idx] === undefined) return;
     const act = keyAction(e, R.items[R.idx].a.length); if (!act) return;
     e.preventDefault();
-    if (act.t === 'opt') { const b = app.querySelector(`.opt[data-i="${act.i}"]`); b && b.click(); }
+    if (act.t === 'opt') { const b = app.querySelector<El>(`.opt[data-i="${act.i}"]`); b && b.click(); }
     else if (act.t === 'next') { const b = $('#next'); b && b.click(); }
     else if (act.t === 'prev') prev();
     else if (act.t === 'blank') { const b = $('#blank'); b && b.click(); }
     else if (act.t === 'flag') { const b = $('#flag'); b && b.click(); }
     else if (act.t === 'pause') { const b = R.paused ? $('.overlay #resume') : $('#pause'); b && b.click(); }
   };
-  let tx = null;
-  const onTs = e => { const t = e.touches[0]; tx = e.touches.length === 1 && t.clientX > 24 && t.clientX < innerWidth - 24 && !e.target.closest('details,input,textarea,button,.opt') ? [t.clientX, t.clientY] : null; };
-  const onTe = e => {
+  let tx: any = null;
+  const onTs = (e: any) => { const t = e.touches[0]; tx = e.touches.length === 1 && t.clientX > 24 && t.clientX < innerWidth - 24 && !(e.target as El).closest<El>('details,input,textarea,button,.opt') ? [t.clientX, t.clientY] : null; };
+  const onTe = (e: any) => {
     if (!tx) return; const t = e.changedTouches[0];
     const d = swipeDir(t.clientX - tx[0], t.clientY - tx[1]); tx = null;
     if (d === 'next') { const b = $('#next'); b && b.click(); } else if (d === 'prev') prev();
@@ -132,7 +127,7 @@ routes.quiz = async function () {
     if (R.idx >= R.items.length) return finish();
     saveRun();
     if (R.tIdx !== R.idx) { R.tIdx = R.idx; R.q0 = R.secs; R.qT0 = Date.now(); }
-    const LEC = normUi(store.getCfg().ui).lectura, kw = t => richHtml(t, !!LEC);
+    const LEC = normUi(store.getCfg().ui).lectura, kw = (t: any) => richHtml(t, !!LEC);
     const q = R.items[R.idx];
     const a = R.ans[R.idx];
     const reveal = R.feedback && a !== undefined;
@@ -141,7 +136,7 @@ routes.quiz = async function () {
     <h1 class="sr">${esc(R.titulo || 'Test')} · pregunta ${R.idx + 1}${R.porTiempo ? '' : ' de ' + R.items.length}</h1>
     <div class="qhead">
       <button class="ghost" id="exit" aria-label="Salir">✕</button>
-      <div class="prog"><div ${pw(R.porTiempo ? Math.min(100, 100 * R.secs / (R.limit * 60)) : 100 * R.idx / R.items.length)}></div></div>
+      <div class="prog"><div ${pw(R.porTiempo ? Math.min(100, 100 * R.secs / (R.limit! * 60)) : 100 * R.idx / R.items.length)}></div></div>
       <div class="cnt">${R.porTiempo ? '#' + (R.idx + 1) : (R.idx + 1) + '/' + R.items.length}</div>
       ${R.limit ? `<div class="clock" id="clock">${fmtT(R.limit * 60 - R.secs)}</div><button class="ghost" id="pause" aria-label="Pausar">⏸</button>` : ''}
     </div>
@@ -176,41 +171,41 @@ routes.quiz = async function () {
     </div>
     ${R.paused ? `<div class="overlay" role="dialog" aria-modal="true" aria-labelledby="pt"><div class="card"><h2 id="pt">En pausa</h2><p>El tiempo está detenido.</p><button class="btn" id="resume">Continuar</button></div></div>` : ''}`;
     bind(q);
-    if (R.paused) { app.querySelectorAll('.qhead,.sub,.pace,.card.q,.bar2').forEach(el => { if (!el.closest('.overlay')) el.inert = true; }); const rb = $('.overlay #resume'); rb && rb.focus(); }
+    if (R.paused) { app.querySelectorAll<El>('.qhead,.sub,.pace,.card.q,.bar2').forEach(el => { if (!el.closest<El>('.overlay')) el.inert = true; }); const rb = $('.overlay #resume'); rb && rb.focus(); }
     clearInterval(R.gt);
     if (LEC === 2 && !reveal && a === undefined && !R.paused) {
-      const need = minLectura(q), left = () => Math.ceil(need - (Date.now() - R.qT0) / 1000);
+      const need = minLectura(q), left = () => Math.ceil(need - (Date.now() - R.qT0!) / 1000);
       if (left() > 0) {
-        const opts = app.querySelectorAll('.opt'); opts.forEach(b => b.disabled = true);
+        const opts = app.querySelectorAll<El>('.opt'); opts.forEach(b => b.disabled = true);
         $('.opts').insertAdjacentHTML('afterend', `<div class="gate" id="gate"></div>`);
-        const upd = () => { const l = left(), g = $('#gate'); if (!g) return clearInterval(R.gt); if (l <= 0) { clearInterval(R.gt); g.remove(); app.querySelectorAll('.opt').forEach(b => b.disabled = false); } else g.textContent = `👀 Lee con calma: podrás responder en ${l} s. ¿Qué te piden? ¿Hay NO, SALVO, cifras?`; };
+        const upd = () => { const l = left(), g = $<El>('#gate'); if (!g) return clearInterval(R.gt); if (l <= 0) { clearInterval(R.gt); g.remove(); app.querySelectorAll<El>('.opt').forEach(b => b.disabled = false); } else g.textContent = `👀 Lee con calma: podrás responder en ${l} s. ¿Qué te piden? ¿Hay NO, SALVO, cifras?`; };
         upd(); R.gt = setInterval(upd, 400);
       }
     }
     if (reveal) { const lv = $('#live'); if (lv) lv.textContent = (a === -1 ? 'Sin responder' : a === q.c ? 'Correcto' : 'Incorrecto') + '. Respuesta: ' + L[q.c]; const nx = $('#next'); nx && nx.focus({ preventScroll: true }); }
-    else if (a !== undefined && !R.paused) { const so = app.querySelector('.opt.sel'); so && so.focus({ preventScroll: true }); }
+    else if (a !== undefined && !R.paused) { const so = app.querySelector<El>('.opt.sel'); so && so.focus({ preventScroll: true }); }
     if (reveal) { const f = $('.fb'); if (f) setTimeout(() => f.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth' }), 60); }
   }
-  function feedback(q, a) {
+  function feedback(q: any, a: any) {
     const ok = a === q.c;
     return `<div class="fb ${ok ? 'good' : 'wrong'}"><b>${a === -1 ? 'Sin responder' : ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${!ok && a !== -1 && R.fast?.[R.idx] ? `<div class="fbsub">Marcaste ${L[a]} en ${R.fast[R.idx][0]} s${R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? `; leerla con calma lleva unos ${R.fast[R.idx][1]} s` : ''}.</div>` : ''}
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}
       ${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}
-      ${q.x?.length ? `<div class="trap">Trampa: ${q.x.map(x => esc(TRAMPAS[x] || x)).join(' · ')}</div>` : ''}
+      ${q.x?.length ? `<div class="trap">Trampa: ${q.x.map((x: any) => esc(TRAMPAS[x] || x)).join(' · ')}</div>` : ''}
       ${!ok && a !== -1 && R.feedback ? `<div class="mot" id="mot"><small>¿Por qué fallé?${(() => { const f = R.fast?.[R.idx]; return f && f[0] < f[1] * 0.6 ? ` <b class="r">Respondiste en ${f[0]} s; leerla bien lleva ≈${f[1]} s. ¿Fue velocidad?</b>` : ''; })()}</small>${[5, 7, 1, 2, 3, 4].map(m => `<button class="${store.rec(q.i)?.[9] === m ? 'on' : (m === 7 && R.fast?.[R.idx] && R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? 'sug' : '')}" data-m="${m}">${MOTIVOS_FALLO[m]}</button>`).join('')}<button class="mk" id="mkcard" ${store.rec(q.i)?.[9] === 4 && !store.cardRec('FC-Q-' + q.i) ? 'hidden' : ''}>${store.cardRec('FC-Q-' + q.i) ? '📇 Tarjeta creada ✓' : '📇 Hacer tarjeta'}</button></div>` : ''}
       ${ok && a !== -1 && R.feedback ? (() => { const r = store.rec(q.i) || [], en = r[3] === 0 && r[4] > now() + 86400000 * 1.5; return `<div class="mot" id="acc"><small>¿Seguro? (entra en repaso a +2 días)</small>${(() => { const pl = R.luck?.[R.idx]; return pl === 6 ? '<b class="r">🍀 Marcada como suerte: acierto 1/2. Otra vez bien y se quita la etiqueta.</b>' : pl === 8 ? '<b class="r">🍀 ¡Acierto 2/2! Etiqueta de suerte quitada: ya la sabes.</b>' : ''; })()}<button class="${en && r[9] !== 6 && r[9] !== 8 ? 'on' : ''}" data-a="doubt">🤔 Acerté dudando</button><button class="${r[9] === 6 || r[9] === 8 ? 'on' : ''}" data-a="suerte">🍀 Fue suerte</button></div>`; })() : ''}
       <button class="ghost fl" id="flag">${store.rec(q.i)?.[6] ? '★ Dudosa' : '☆ Marcar como dudosa'}</button>
       <div class="repw" id="rep"></div></div>`;
   }
-  function bind(q) {
-    $('#exit').onclick = async () => { if (await ask(R.feedback ? '¿Salir? Lo ya respondido queda guardado.' : '¿Abandonar el simulacro? Se perderá.', 'Salir', !R.feedback)) { if (R.feedback && R.ans.some(x => x !== undefined)) finish(); else { RUN = null; clearRun(); go('#/home'); } } };
+  function bind(q: any) {
+    $('#exit').onclick = async () => { if (await ask(R.feedback ? '¿Salir? Lo ya respondido queda guardado.' : '¿Abandonar el simulacro? Se perderá.', 'Salir', !R.feedback)) { if (R.feedback && R.ans.some(x => x !== undefined)) finish(); else { state.run = null; clearRun(); go('#/home'); } } };
     $('#pause') && ($('#pause').onclick = () => { R.paused = true; draw(); });
     $('#resume') && ($('#resume').onclick = () => { R.paused = false; draw(); const pb = $('#pause'); pb && pb.focus(); });
-    app.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+    app.querySelectorAll<El>('.opt').forEach(b => b.onclick = () => {
       if (R.paused) return;
-      const i = +b.dataset.i;
+      const i = +b.dataset.i!;
       if (R.feedback) { if (R.ans[R.idx] !== undefined) return; answer(q, i); draw(); }
-      else { R.ans[R.idx] = i; (R.times ||= [])[R.idx] = Math.max(1, R.secs - R.q0); draw(); }
+      else { answerDeferred(R, i); draw(); }
     });
     $('#blank') && ($('#blank').onclick = () => {
       if (R.feedback) { if (R.ans[R.idx] === undefined) { answer(q, -1); draw(); } }
@@ -218,48 +213,27 @@ routes.quiz = async function () {
     });
     $('#next') && ($('#next').onclick = () => { R.idx++; draw(); window.scrollTo(0, 0); });
     $('#mot') && ($('#mot').onclick = e => {
-      const b = e.target.closest('button'); if (!b) return;
+      const b = (e.target as El).closest<El>('button'); if (!b) return;
       const mk = $('#mkcard'), id = 'FC-Q-' + q.i;
       if (b === mk) { if (store.cardRec(id)) { store.removeCard(id); mk.textContent = '📇 Hacer tarjeta'; } else { store.addFallo(q.i); mk.textContent = '📇 Tarjeta creada ✓'; } return; }
-      store.setMotivo(q.i, q.t, +b.dataset.m);
-      $('#mot').querySelectorAll('button[data-m]').forEach(x => x.classList.toggle('on', x === b));
-      if (mk) mk.hidden = +b.dataset.m === 4 && !store.cardRec(id); // el despiste no merece tarjeta
+      store.setMotivo(q.i, q.t, +b.dataset.m!);
+      $('#mot').querySelectorAll<El>('button[data-m]').forEach(x => x.classList.toggle('on', x === b));
+      if (mk) mk.hidden = +b.dataset.m! === 4 && !store.cardRec(id); // el despiste no merece tarjeta
     });
-    $('#acc') && ($('#acc').onclick = e => { const b = e.target.closest('button'); if (!b) return; if (b.dataset.a === 'suerte') store.suerte(q.i, q.t); else store.doubt(q.i, q.t); $('#acc').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); });
+    $('#acc') && ($('#acc').onclick = e => { const b = (e.target as El).closest<El>('button'); if (!b) return; if (b.dataset.a! === 'suerte') store.suerte(q.i, q.t); else store.doubt(q.i, q.t); $('#acc').querySelectorAll<El>('button').forEach(x => x.classList.toggle('on', x === b)); });
     $('#rep') && reportBox(q, $('#rep'));
     $('#flag') && ($('#flag').onclick = () => { store.toggleFlag(q.i, q.t); $('#flag').textContent = store.rec(q.i)?.[6] ? '★ Dudosa' : '☆ Marcar como dudosa'; });
   }
-  function answer(q, i) {
-    R.ans[R.idx] = i;
-    (R.luck ||= {})[R.idx] = store.rec(q.i)?.[9] || 0;
-    (R.fast ||= {})[R.idx] = [Math.round((Date.now() - R.qT0) / 1000), minLectura(q)];
-    store.record(q.i, q.t, i === q.c ? 1 : 0, now(), i === -1 ? undefined : Math.max(1, R.secs - R.q0));
-  }
-  async function finish() {
-    clearInterval(tick); clearRun();
-    // «por tiempo»: solo cuentan las preguntas que llegaste a contestar (la que estaba abierta al acabar el tiempo no)
-    let hechas = R.items.length;
-    if (R.porTiempo) { hechas = 0; R.ans.forEach((x, k) => { if (x !== undefined) hechas = k + 1; }); if (!hechas) { RUN = null; toast('Se acabó el tiempo sin contestar ninguna pregunta.'); return go('#/home'); } }
-    const items = R.items.slice(0, hechas), res = { a: 0, f: 0, b: 0 }, fails = [], porTema = {}, porTipo = {};
-    items.forEach((q, k) => {
-      const x = R.ans[k]; const ok = x === q.c;
-      const pt = porTema[q.t] ||= [0, 0]; pt[1]++;
-      const tk = META[q.i]?.[2]; const ptk = tk ? (porTipo[tk] ||= [0, 0]) : null; if (ptk) ptk[1]++;
-      if (x === undefined || x === -1) { res.b++; if (!R.feedback) store.record(q.i, q.t, 2); }
-      else if (ok) { res.a++; pt[0]++; if (ptk) ptk[0]++; if (!R.feedback) store.record(q.i, q.t, 1, now(), R.times?.[k]); }
-      else { res.f++; fails.push(q.i); if (!R.feedback) store.record(q.i, q.t, 0, now(), R.times?.[k]); }
-    });
-    const n = items.length;
-    const ses = { id: 's' + now().toString(36), ts: now(), kind: R.kind, n, a: res.a, f: res.f, b: res.b, secs: R.porTiempo ? Math.min(R.secs, R.limit * 60) : R.secs, nota: nota(res.a, res.f, n), temas: porTema, tipos: porTipo, fails, titulo: R.titulo || '', ...(R.porTiempo ? { porTiempo: true } : {}) };
-    store.addSession(ses);
-    RUN = null; LAST = { ses, items, ans: R.ans, times: R.times || [], limit: R.limit || 0 };
+  function answer(q: any, i: any) { answerQuestion(R, q, i, minLectura(q)); }
+  function finish() {
+    clearInterval(tick);
+    if (!finishRun(R)) { toast('Se acabó el tiempo sin contestar ninguna pregunta.'); return go('#/home'); }
     go('#/result');
   }
 };
 
-let LAST = null;
-function simAnalisis({ ses, items, ans, times, limit }) {
-  const r = analisisSimulacro({ correct: items.map(q => q.c), ans, times, limitSecs: limit * 60, secs: ses.secs });
+function simAnalisis({ ses, items, ans, times, limit }: any) {
+  const r = analisisSimulacro({ correct: items.map((q: any) => q.c), ans, times, limitSecs: limit * 60, secs: ses.secs });
   const pts = [];
   pts.push(`<div class="line"><span>Nota sin penalización</span><span>${r.sinPenal}</span></div>`);
   pts.push(`<div class="line"><span>Puntos que te restaron los fallos</span><span class="${r.perdidoFallos ? 'r' : ''}">−${r.perdidoFallos}</span></div>`);
@@ -273,8 +247,8 @@ function simAnalisis({ ses, items, ans, times, limit }) {
   return `<h2>Ritmo y puntos</h2><div class="card">${pts.join('')}${tips.length ? `<ul class="tips">${tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}</div>`;
 }
 routes.result = async function () {
-  if (!LAST) return go('#/home');
-  const { ses, items, ans } = LAST;
+  if (!state.last) return go('#/home');
+  const { ses, items, ans } = state.last;
   const ng = ses.f;
   app.innerHTML = `
   <h1>Resultado</h1>
@@ -289,7 +263,7 @@ routes.result = async function () {
     ${ng ? '<button class="btn" id="again">Repetir las falladas</button>' : ''}
     <button class="btn sec" id="home">Inicio</button>
   </div>
-  ${LAST.limit && !LAST.ses.porTiempo ? simAnalisis(LAST) : ''}
+  ${state.last.limit && !state.last.ses.porTiempo ? simAnalisis(state.last) : ''}
   <h2>Por tema</h2>
   <div class="card">${Object.entries(ses.temas).sort((a, b) => a[0].localeCompare(b[0])).map(([t, [a, n]]) => `<div class="line"><span>${esc(t)} ${esc(temaName(t))}</span><span>${a}/${n}</span></div>`).join('')}</div>
   <h2>Revisión</h2>
@@ -299,7 +273,7 @@ routes.result = async function () {
       <div class="pre">${richHtml(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : i === x ? 'bad' : ''}"><b>${L[i]}</b> ${richHtml(o)}${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}<div class="repw" data-rq="${k}"></div></details>`;
   }).join('')}</div>`;
-  app.querySelectorAll('[data-rq]').forEach(el => reportBox(items[+el.dataset.rq], el));
+  app.querySelectorAll<El>('[data-rq]').forEach(el => reportBox(items[+el.dataset.rq!], el));
   $('#home').onclick = () => go('#/home');
   $('#p2go') && ($('#p2go').onclick = () => go('#/sim2'));
   $('#again') && ($('#again').onclick = async () => startRun({ kind: 'rev', feedback: true, items: shuffle(items.filter((q, k) => ans[k] !== q.c)), titulo: 'Repetición de falladas' }));
@@ -308,32 +282,18 @@ routes.result = async function () {
 
 // ───────── sesión rápida (~5 min) ─────────
 async function quickSession() {
-  const idx = await getIndex(); await getMeta();
-  const N = quickN(store.getStats());
-  const orgs = new Set((store.getCfg().test || {}).o || ['O', 'A', 'G']);
-  const due = (await byIds((await dueList()).slice(0, N))).filter(q => allowed(q, orgs));
-  const seen = new Set(store.getSeen());
-  const ord = { r: 0, y: 1, n: 2, g: 3 };
-  let temas = dominioTemas(idx).filter(t => !seen.size || seen.has(t.id));
-  if (!temas.length) temas = dominioTemas(idx);
-  temas.sort((a, b) => (ord[a.est] - ord[b.est]) || ((b.dias ?? 0) - (a.dias ?? 0)));
-  const pools = [];
-  for (const l of await Promise.all(temas.slice(0, 8).map(t => getTema(t.id)))) pools.push(shuffle(l.filter(q => allowed(q, orgs) && !store.rec(q.i))));
-  const items = pickQuick(due, pools, N);
-  if (!items.length) { toast('No hay preguntas nuevas ni repasos con esos filtros.'); return; }
-  const nd = items.filter(q => store.rec(q.i)).length;
-  startRun({ kind: 'rev', feedback: true, items, titulo: `Sesión rápida · ${nd} repasos + ${items.length - nd} nuevas` });
+  const r = await quickItems(isFull());
+  if (!r.items.length) { toast(isFull() ? 'No hay preguntas nuevas ni repasos con esos filtros.' : 'No hay preguntas disponibles ahora mismo.'); return; }
+  startRun({ kind: 'rev', feedback: true, items: r.items, titulo: r.titulo });
 }
-
 async function startRepaso() {
-  await getMeta(); const st = store.getStats(), t0 = now();
-  const cand = []; for (const id in st) { const r = st[id]; if (r[3] >= 0 && r[4] <= t0 && META[id]) cand.push({ i: id, t: META[id][0], due: r[4] }); }
-  const ids = pickRepaso(cand, 30).map(x => x.i);
-  if (!ids.length) { toast('No tienes repasos pendientes hoy.'); return; }
-  startRun({ kind: 'rev', feedback: true, items: await byIds(ids), titulo: 'Repaso de fallos · más vencidas primero, temas mezclados' });
+  const r = await repasoItems();
+  if (!r.items.length) { toast('No tienes repasos pendientes hoy.'); return; }
+  startRun({ kind: 'rev', feedback: true, ...r });
 }
 
 // ───────── menú general ─────────
+const GUEST_MENU = (G: any) => [['Estudiar', [G[0][1][0]]], G[3]];
 async function openMenu() {
   if ($('#menuov')) return;
   await getMeta();
@@ -361,23 +321,24 @@ async function openMenu() {
     ]],
     ['La app', [
       ['⌂', 'Inicio', 'Resumen y cuenta atrás', '#/home'],
+      ...(isOwner() ? [['🔑', 'Accesos', sync.status.reqs.length ? sync.status.reqs.length + ' solicitudes por revisar' : 'Quién puede usar la app', '#/acceso']] : []),
       ['⚙', 'Ajustes', NEWV ? 'Hay una versión nueva' : 'Cuenta, apariencia, copia y versión ' + APP_VERSION, '#/settings'],
     ]],
   ];
   const prev = document.activeElement, o = document.createElement('div');
   o.id = 'menuov'; o.className = 'overlay'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.setAttribute('aria-labelledby', 'menut');
-  const acts = [];
+  const acts: any[] = [];
   o.innerHTML = `<div class="card menu"><div class="menuhead"><h2 id="menut">Menú</h2><button class="ghost" id="menux" aria-label="Cerrar menú">✕</button></div>
-    ${G.map(([t, l]) => `<div class="gtitle">${esc(t)}</div><div class="lgroup">${l.map(([ic, n, sub, a]) => { const i = acts.push(a) - 1; return `<button class="lrow ${a === aqui ? 'here' : ''}" data-a="${i}" ${a === aqui ? 'aria-current="page"' : ''}><i aria-hidden="true">${ic}</i><span><b>${esc(n)}</b><small>${esc(sub)}</small></span></button>`; }).join('')}</div>`).join('')}</div>`;
-  const done = () => { document.removeEventListener('keydown', key, true); o.remove(); prev && prev.focus && prev.focus(); };
-  const key = e => {
+    ${(isFull() ? G : GUEST_MENU(G)).map(([t, l]) => `<div class="gtitle">${esc(t)}</div><div class="lgroup">${l.map(([ic, n, sub, a]: any) => { const i = acts.push(a) - 1; return `<button class="lrow ${a === aqui ? 'here' : ''}" data-a="${i}" ${a === aqui ? 'aria-current="page"' : ''}><i aria-hidden="true">${ic}</i><span><b>${esc(n)}</b><small>${esc(sub)}</small></span></button>`; }).join('')}</div>`).join('')}</div>`;
+  const done = () => { document.removeEventListener('keydown', key, true); o.remove(); prev && (prev as El).focus && (prev as El).focus(); };
+  const key = (e: any) => {
     if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); done(); }
-    else if (e.key === 'Tab') { const bs = [...o.querySelectorAll('button')], i = bs.indexOf(document.activeElement); e.preventDefault(); bs[(i + (e.shiftKey ? -1 : 1) + bs.length) % bs.length].focus(); }
+    else if (e.key === 'Tab') { const bs = [...o.querySelectorAll<El>('button')], i = bs.indexOf(document.activeElement as any); e.preventDefault(); bs[(i + (e.shiftKey ? -1 : 1) + bs.length) % bs.length].focus(); }
   };
   o.onclick = e => {
-    if (e.target === o || e.target.closest('#menux')) return done();
-    const b = e.target.closest('[data-a]'); if (!b) return;
-    const a = acts[+b.dataset.a]; done();
+    if ((e.target as any) === o || (e.target as El).closest<El>('#menux')) return done();
+    const b = (e.target as El).closest<El>('[data-a]'); if (!b) return;
+    const a = acts[+b.dataset.a!]; done();
     if (typeof a === 'function') a(); else go(a);
   };
   document.addEventListener('keydown', key, true);
@@ -385,18 +346,6 @@ async function openMenu() {
 }
 
 // ───────── mis trampas ─────────
-async function trapTest(n, only, temas) {
-  await getMeta();
-  const rates = trapRates(store.getStats(), id => META[id]?.[3] || [], 5).filter(r => r.err > 0);
-  const targets = only || rates.slice(0, 3).map(r => r.k);
-  if (!targets.length) return { items: [], targets };
-  const tg = new Set(targets.map(Number)), ts = temas && temas.length ? new Set(temas) : null;
-  const ids = Object.keys(META).filter(id => id !== '_by' && (!ts || ts.has(META[id][0])) && (META[id][3] || []).some(k => tg.has(+k)));
-  const orgs = new Set((store.getCfg().test || {}).o || ['O', 'A', 'G']);
-  const cands = (await byIds(ids)).filter(q => allowed(q, orgs));
-  return { items: pickTrampas(cands, id => store.rec(id), targets, n), targets };
-}
-
 // ───────── test por tema ─────────
 routes.test = async function () {
   const idx = await getIndex(); await getMeta();
@@ -423,28 +372,28 @@ routes.test = async function () {
       ${idx.temas.filter(t => t.id.startsWith(b)).map(t => `<label class="tm ${sel.has(t.id) ? 'on' : ''}"><input type="checkbox" data-t="${t.id}" ${sel.has(t.id) ? 'checked' : ''}><span><b>${t.id}</b> ${esc(t.nombre)}</span><small>${tstat(t.id, t.n)}</small></label>`).join('')}</div>`).join('')}
     </div>
     <div class="bar2"><button class="btn" id="go">Empezar</button></div>`;
-    $('#by').onclick = e => { if (e.target.dataset.v) { cfg.pt = +e.target.dataset.v; save(); draw(); } };
-    $('#n') && ($('#n').onclick = e => { if (e.target.dataset.v) { cfg.n = +e.target.dataset.v; save(); draw(); } });
-    $('#mins') && ($('#mins').onclick = e => { if (e.target.dataset.v) { cfg.min = +e.target.dataset.v; save(); draw(); } });
-    $('#mode').onclick = e => { if (e.target.dataset.v) { cfg.mode = e.target.dataset.v; save(); draw(); } };
-    $('#org').onclick = e => { const v = e.target.dataset.v; if (v) { org.has(v) ? org.delete(v) : org.add(v); if (!org.size) org.add(v); save(); draw(); } };
-    app.querySelectorAll('[data-t]').forEach(c => c.onchange = () => { c.checked ? sel.add(c.dataset.t) : sel.delete(c.dataset.t); save(); draw(); });
-    app.querySelectorAll('[data-b]').forEach(b => b.onclick = () => { const ids = idx.temas.filter(t => t.id.startsWith(b.dataset.b)).map(t => t.id); const all = ids.every(i => sel.has(i)); ids.forEach(i => all ? sel.delete(i) : sel.add(i)); save(); draw(); });
+    $('#by').onclick = e => { if ((e.target as El).dataset.v!) { cfg.pt = +(e.target as El).dataset.v!; save(); draw(); } };
+    $('#n') && ($('#n').onclick = e => { if ((e.target as El).dataset.v!) { cfg.n = +(e.target as El).dataset.v!; save(); draw(); } });
+    $('#mins') && ($('#mins').onclick = e => { if ((e.target as El).dataset.v!) { cfg.min = +(e.target as El).dataset.v!; save(); draw(); } });
+    $('#mode').onclick = e => { if ((e.target as El).dataset.v!) { cfg.mode = (e.target as El).dataset.v!; save(); draw(); } };
+    $('#org').onclick = e => { const v = (e.target as El).dataset.v!; if (v) { org.has(v) ? org.delete(v) : org.add(v); if (!org.size) org.add(v); save(); draw(); } };
+    app.querySelectorAll<El>('[data-t]').forEach(c => c.onchange = () => { c.checked ? sel.add(c.dataset.t!) : sel.delete(c.dataset.t!); save(); draw(); });
+    app.querySelectorAll<El>('[data-b]').forEach(b => b.onclick = () => { const ids = idx.temas.filter(t => t.id.startsWith(b.dataset.b!)).map(t => t.id); const all = ids.every(i => sel.has(i)); ids.forEach(i => all ? sel.delete(i) : sel.add(i)); save(); draw(); });
     $('#useSeen').onclick = () => { const v = store.getSeen(); if (!v.length) { toast('Aún no has marcado temas vistos (pantalla «Temas vistos» en Inicio).'); return; } sel.clear(); v.forEach(t => sel.add(t)); save(); draw(); };
     $('#go').onclick = guard(async () => {
       const temas = sel.size ? [...sel] : idx.temas.map(t => t.id);
       if (cfg.mode === 'trampas') {
-        const r = await trapTest(cfg.pt ? 300 : cfg.n, null, sel.size ? [...sel] : null);
+        const r = await trapTest(cfg.pt ? 300 : cfg.n, undefined, sel.size ? ([...sel] as string[]) : undefined);
         if (!r.items.length) { toast('Aún no hay datos de trampas: contesta al menos 5 preguntas de alguna trampa y falla alguna.'); return; }
         startRun({ kind: 'test', feedback: true, items: r.items, titulo: 'Mis trampas · ' + r.targets.map(k => TRAMPAS[k] || k).join(', '), ...(cfg.pt ? { limit: cfg.min || 20, porTiempo: true } : {}) }); return;
       }
-      const items = await pick({ temas, origins: org, mode: cfg.mode, n: cfg.pt ? 300 : cfg.n });
+      const items = await pick({ temas: temas as string[], origins: org, mode: cfg.mode, n: cfg.pt ? 300 : cfg.n });
       if (!items.length) { toast(cfg.mode === 'falladas' ? 'No tienes falladas en esa selección.' : cfg.mode === 'dudosas' ? 'No tienes preguntas marcadas como dudosas ahí.' : 'No hay preguntas con ese filtro.'); return; }
-      startRun({ kind: 'test', feedback: true, items, titulo: (sel.size === 1 ? temaName([...sel][0]) : 'Test') + (cfg.pt ? ' · ' + (cfg.min || 20) + ' min' : ''), ...(cfg.pt ? { limit: cfg.min || 20, porTiempo: true } : {}) });
+      startRun({ kind: 'test', feedback: true, items, titulo: (sel.size === 1 ? temaName([...sel][0] as string) : 'Test') + (cfg.pt ? ' · ' + (cfg.min || 20) + ' min' : ''), ...(cfg.pt ? { limit: cfg.min || 20, porTiempo: true } : {}) });
     });
   };
   function save() { store.setCfg('test', { sel: [...sel], n: cfg.n, mode: cfg.mode, o: [...org], pt: cfg.pt || 0, min: cfg.min || 20 }); }
-  function tstat(t, n) {
+  function tstat(t: any, n: any) {
     let v = 0, ok = 0, tot = 0;
     for (const id of META._by[t] || []) { const r = store.rec(id); if (r) { v++; ok += r[1]; tot += r[0]; } }
     return `${v}/${n}${tot ? ' · ' + pct(ok, tot) + '%' : ''}`;
@@ -454,14 +403,14 @@ routes.test = async function () {
 
 
 // ───────── exámenes y simulacros por número ─────────
-const EX_OFICIALES = {
+const EX_OFICIALES: Record<string, string> = {
   'TAIL2022-P1': 'Ingreso libre 2022 (conv. 2023)', 'TAI2024B-P1': 'Ingreso libre 2023-24 (conv. 2024)', 'L2018-P1': 'Ingreso libre 2018',
   'L2019-P1': 'Ingreso libre 2019', 'L2025A-P1': 'Ingreso libre 2025', 'L2025X-P1': 'Ingreso libre 2025 (extraordinario)',
   'P2018-P1': 'Promoción interna 2018', 'P2019-P1': 'Promoción interna 2019', 'P2022-P1': 'Promoción interna 2022 (conv. 2023)',
   'P2024A-P1': 'Promoción interna 2021-24 (conv. 2024)', 'P2025A-P1': 'Promoción interna 2025',
 };
 function listaExamenes() {
-  const g = {};
+  const g: Record<string, any> = {};
   for (const id in META) {
     if (id === '_by') continue; const o = META[id][1];
     if (o !== 'O' && o !== 'A') continue;
@@ -479,12 +428,12 @@ function listaExamenes() {
   const tests = [];
   for (const k in g) {
     if (!/^AT\d+(ALT)?-P1$/.test(k) || g[k].length < 10) continue;
-    const c = {}; for (const id of g[k]) { const t = META[id][0]; c[t] = (c[t] || 0) + 1; }
+    const c: Record<string, any> = {}; for (const id of g[k]) { const t = META[id][0]; c[t] = (c[t] || 0) + 1; }
     const tema = Object.keys(c).sort((a, b) => c[b] - c[a])[0];
     tests.push({ k, ids: g[k].sort(), tema, nombre: '' });
   }
   tests.sort((a, b) => a.tema.localeCompare(b.tema) || a.k.localeCompare(b.k));
-  const vistos = {};
+  const vistos: Record<string, any> = {};
   for (const t of tests) { const n = vistos[t.tema] = (vistos[t.tema] || 0) + 1; t.nombre = `Test ${t.tema} · ${temaName(t.tema)}${tests.filter(x => x.tema === t.tema).length > 1 ? ' (' + n + ')' : ''}`; }
   return { sims, ofi, tests };
 }
@@ -514,11 +463,11 @@ routes.sim = async function () {
     </div>
     <div class="note">Reparto por temas calcado a los exámenes oficiales. Cada fallo resta 1/3 de acierto; en blanco no resta. No hay corrección hasta el final.</div>
     <div class="bar2"><button class="btn" id="go">Empezar simulacro</button></div>`;
-    $('#n').onclick = e => { if (e.target.dataset.v) { cfg.n = +e.target.dataset.v; if (cfg.n === 40 && cfg.min > 60) cfg.min = 45; if (cfg.n === 80 && cfg.min < 90) cfg.min = 90; save(); drawCompleto(); } };
-    $('#scope').onclick = e => { if (e.target.dataset.v) { cfg.scope = e.target.dataset.v; save(); drawCompleto(); } };
-    $('#min').onclick = e => { if (e.target.dataset.v) { cfg.min = +e.target.dataset.v; save(); drawCompleto(); } };
-    $('#org').onclick = e => { const v = e.target.dataset.v; if (v) { org.has(v) ? org.delete(v) : org.add(v); if (!org.size) org.add(v); save(); drawCompleto(); } };
-    $('#p2').onchange = e => { cfg.parte2 = e.target.checked; save(); };
+    $('#n').onclick = e => { if ((e.target as El).dataset.v!) { cfg.n = +(e.target as El).dataset.v!; if (cfg.n === 40 && cfg.min > 60) cfg.min = 45; if (cfg.n === 80 && cfg.min < 90) cfg.min = 90; save(); drawCompleto(); } };
+    $('#scope').onclick = e => { if ((e.target as El).dataset.v!) { cfg.scope = (e.target as El).dataset.v!; save(); drawCompleto(); } };
+    $('#min').onclick = e => { if ((e.target as El).dataset.v!) { cfg.min = +(e.target as El).dataset.v!; save(); drawCompleto(); } };
+    $('#org').onclick = e => { const v = (e.target as El).dataset.v!; if (v) { org.has(v) ? org.delete(v) : org.add(v); if (!org.size) org.add(v); save(); drawCompleto(); } };
+    $<El>('#p2').onchange = e => { cfg.parte2 = (e.target as El).checked; save(); };
     $('#go').onclick = guard(async () => {
       const useSeen = cfg.scope !== 'todos' && seenN;
       const items = await simParte1(idx, org, cfg.n, useSeen ? new Set(store.getSeen()) : null);
@@ -532,50 +481,50 @@ routes.sim = async function () {
   const TABS = [['completo', 'Completo'], ['examen', 'Por examen'], ['tema', 'Por tema']];
   let tab = store.getCfg().simtab; if (!TABS.some(t => t[0] === tab)) tab = 'completo';
   const L2 = listaExamenes();
-  const grupos = () => tab === 'tema' ? [['Tests de la academia', L2.tests]] : [['Simulacros de la academia', L2.sims], ['Exámenes oficiales', L2.ofi]];
-  const nf = n => (Math.round(n * 10) / 10).toFixed(1).replace('.', ',');
+  const grupos = (): [string, any[]][] => tab === 'tema' ? [['Tests de la academia', L2.tests]] : [['Simulacros de la academia', L2.sims], ['Exámenes oficiales', L2.ofi]];
+  const nf = (n: any) => (Math.round(n * 10) / 10).toFixed(1).replace('.', ',');
   const drawLista = () => {
     const ses = store.getSessions(), todos = grupos().flatMap(g => g[1]);
     let sel = store.getCfg().exsel; if (!todos.some(x => x.k === sel)) sel = todos[0]?.k;
-    const info = e => { const h = ses.filter(x => x.titulo === e.nombre); return h.length ? { nota: h[0].nota, n: h.length, mejor: Math.max(...h.map(x => x.nota)) } : null; };
+    const info = (e: any) => { const h = ses.filter(x => x.titulo === e.nombre); return h.length ? { nota: h[0].nota, n: h.length, mejor: Math.max(...h.map(x => x.nota)) } : null; };
     $('#simbody').innerHTML = `<p class="sub sm">Elige uno y contesta solo sus preguntas. Notas sobre 100; cada fallo resta 1/3.</p>
-      ${grupos().map(([t, l]) => `<h2 class="h3">${esc(t)}</h2><div class="exlist">${l.map(e => { const i = info(e); return `<button class="exrow ${e.k === sel ? 'on' : ''}" data-k="${esc(e.k)}" aria-pressed="${e.k === sel}"><span><b>${esc(e.nombre)}</b><small>${e.ids.length} preguntas${i && i.n > 1 ? ` · ${i.n} intentos · mejor ${nf(i.mejor)}` : ''}</small></span><em class="nt ${i ? (i.nota >= 50 ? 'ok' : 'mid') : ''}">${i ? nf(i.nota) : 'Sin hacer'}</em></button>`; }).join('')}</div>`).join('')}
+      ${grupos().map(([t, l]) => `<h2 class="h3">${esc(t)}</h2><div class="exlist">${l.map((e: any) => { const i = info(e); return `<button class="exrow ${e.k === sel ? 'on' : ''}" data-k="${esc(e.k)}" aria-pressed="${e.k === sel}"><span><b>${esc(e.nombre)}</b><small>${e.ids.length} preguntas${i && i.n > 1 ? ` · ${i.n} intentos · mejor ${nf(i.mejor)}` : ''}</small></span><em class="nt ${i ? (i.nota >= 50 ? 'ok' : 'mid') : ''}">${i ? nf(i.nota) : 'Sin hacer'}</em></button>`; }).join('')}</div>`).join('')}
       <div class="bar2"><button class="btn sec" data-m="est">Estudiar</button><button class="btn" data-m="sim">Examen · 90 min</button></div>`;
-    $('#simbody').querySelectorAll('.exrow').forEach(b => b.onclick = () => { store.setCfg('exsel', b.dataset.k); drawLista(); const n = $('#simbody').querySelector('.exrow.on'); n && n.focus({ preventScroll: true }); });
-    $('#simbody').querySelectorAll('button[data-m]').forEach(b => b.onclick = guard(async () => {
+    $('#simbody').querySelectorAll<El>('.exrow').forEach(b => b.onclick = () => { store.setCfg('exsel', b.dataset.k!); drawLista(); const n = $('#simbody').querySelector<El>('.exrow.on'); n && n.focus({ preventScroll: true }); });
+    $('#simbody').querySelectorAll<El>('button[data-m]').forEach(b => b.onclick = guard(async () => {
       const ex = todos.find(x => x.k === sel); if (!ex) return;
       const items = (await byIds(ex.ids)).filter(q => !q.s);
       if (!items.length) { toast('No se pudieron cargar las preguntas.'); return; }
-      if (b.dataset.m === 'sim') startRun({ kind: 'sim', feedback: false, items, limit: 90, titulo: ex.nombre });
+      if (b.dataset.m! === 'sim') startRun({ kind: 'sim', feedback: false, items, limit: 90, titulo: ex.nombre });
       else startRun({ kind: 'test', feedback: true, items, titulo: ex.nombre });
     }));
   };
   const shell = () => {
     app.innerHTML = `<h1>Simulacros</h1><div class="seg tabs" id="simtabs" role="group" aria-label="Tipo de simulacro">${TABS.map(([v, t]) => `<button class="${tab === v ? 'on' : ''}" data-v="${v}" aria-pressed="${tab === v}">${t}</button>`).join('')}</div><div id="simbody"></div>`;
-    $('#simtabs').onclick = e => { const b = e.target.closest('button'); if (!b || b.dataset.v === tab) return; tab = b.dataset.v; store.setCfg('simtab', tab); shell(); enter($('#simbody')); };
+    $('#simtabs').onclick = e => { const b = (e.target as El).closest<El>('button'); if (!b || b.dataset.v! === tab) return; tab = b.dataset.v!; store.setCfg('simtab', tab); shell(); enter($('#simbody') as any); };
     tab === 'completo' ? drawCompleto() : drawLista();
   };
   shell();
 };
-let SIMCFG = null;
-async function simParte1(idx, org, N, only) {
-  const temas = idx.temas.filter(t => !only || only.has(t.id));
-  const pools = {};
-  const ls = await Promise.all(temas.map(t => getTema(t.id)));
-  temas.forEach((t, i) => { pools[t.id] = shuffle(ls[i].filter(x => allowed(x, org) && x.np !== 1)).sort((a, b) => (store.rec(a.i) ? 1 : 0) - (store.rec(b.i) ? 1 : 0)); });
+let SIMCFG: any = null;
+async function simParte1(idx: any, org: any, N: any, only: any) {
+  const temas = idx.temas.filter((t: any) => !only || only.has(t.id));
+  const pools: Record<string, any> = {};
+  const ls = await Promise.all(temas.map((t: any) => getTema(t.id)));
+  temas.forEach((t: any, i: any) => { pools[t.id] = shuffle(ls[i].filter((x: any) => allowed(x, org) && x.np !== 1)).sort((a: any, b: any) => (store.rec(a.i) ? 1 : 0) - (store.rec(b.i) ? 1 : 0)); });
   return composeSim(temas, pools, N);
 }
 // Parte 2 tras la parte 1: ofrece 2 supuestos
 routes.sim2 = async function () {
   const sup = await getSup();
-  const ok = Object.entries(sup).filter(([k, v]) => v.q.filter(x => !x.r && x.np !== 1).length >= 18 && /libre/i.test(v.conv || '') && !/2018/.test(v.conv || ''));
+  const ok = (Object.entries(sup) as [string, any][]).filter(([k, v]) => v.q.filter((x: any) => !x.r && x.np !== 1).length >= 18 && /libre/i.test(v.conv || '') && !/2018/.test(v.conv || ''));
   const two = shuffle(ok).slice(0, 2);
   app.innerHTML = `<h1>Parte 2 · Supuesto práctico</h1><div class="note">Elige uno de los dos supuestos. Son ejercicios reales de convocatorias anteriores.</div>
   ${two.map(([k, v], i) => `<div class="card"><h2 class="h3">Supuesto ${i + 1}</h2><div class="pre sm">${esc(v.texto.slice(0, 700))}${v.texto.length > 700 ? '…' : ''}</div><button class="btn" data-k="${k}">Elegir este supuesto</button></div>`).join('')}
   <button class="btn sec" id="skip">Saltar la parte 2</button>`;
-  app.querySelectorAll('[data-k]').forEach(b => b.onclick = () => {
-    const v = sup[b.dataset.k];
-    const items = v.q.filter(x => !x.r && x.np !== 1).slice(0, 20);
+  app.querySelectorAll<El>('[data-k]').forEach(b => b.onclick = () => {
+    const v = sup[b.dataset.k!];
+    const items = v.q.filter((x: any) => !x.r && x.np !== 1).slice(0, 20);
     startRun({ kind: 'sim', feedback: false, items, limit: SIMCFG?.min2 || 40, supTexto: v.texto, titulo: 'Simulacro · Parte 2 (supuesto)' });
   });
   $('#skip').onclick = () => go('#/home');
@@ -583,19 +532,19 @@ routes.sim2 = async function () {
 
 
 // ───────── avisar de error en el banco ─────────
-function reportBox(q, host) {
+function reportBox(q: any, host: El) {
   const show = () => {
     const r = store.getReports()[q.i];
     host.innerHTML = r && r.st === 'abierto' ? `<span class="rep ok">✓ Error anotado <button class="ghost sm" data-rep>editar</button></span>` : `<button class="ghost fl" data-rep>⚠ Avisar de error</button>`;
-    host.querySelector('[data-rep]').onclick = form;
+    host.querySelector<El>('[data-rep]')!.onclick = form;
   };
   const form = () => {
     const r = store.getReports()[q.i];
     host.innerHTML = `<div class="repf"><select data-m aria-label="Motivo del error">${MOTIVOS.map(m => `<option ${r && r.motivo === m ? 'selected' : ''}>${esc(m)}</option>`).join('')}</select>
       <input data-n aria-label="Qué falla" maxlength="300" placeholder="Qué falla (opcional)" value="${esc(r?.nota || '')}">
       <div class="row"><button class="btn" data-s>Guardar</button><button class="btn sec" data-c>Cancelar</button></div></div>`;
-    host.querySelector('[data-s]').onclick = () => { store.addReport(q.i, q.t, host.querySelector('[data-m]').value, host.querySelector('[data-n]').value.trim()); show(); };
-    host.querySelector('[data-c]').onclick = show;
+    host.querySelector<El>('[data-s]')!.onclick = () => { store.addReport(q.i, q.t, host.querySelector<El>('[data-m]')!.value, host.querySelector<El>('[data-n]')!.value.trim()); show(); };
+    host.querySelector<El>('[data-c]')!.onclick = show;
   };
   show();
 }
@@ -616,8 +565,8 @@ routes.errores = async function () {
       ${r.nota ? `<p class="sm"><b>Nota:</b> ${esc(r.nota)}</p>` : ''}
       ${cby.has(id) ? (c => `<div class="pre sm">${richHtml(c.q)}</div><div class="ro ok"><b>R</b> ${richHtml(c.a)}</div>${c.ref ? `<div class="cita"><span>Temario</span>${esc(c.ref)}</div>` : ''}`)(cby.get(id)) : q ? `<div class="pre sm">${esc(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : ''}"><b>${L[i]}</b> ${esc(o)}${i === q.c ? ' ✓' : ''}</div>`).join('')}${q.u ? `<div class="cita"><span>Temario</span>${esc(q.u)}</div>` : ''}` : '<p class="sub">La pregunta ya no está en el banco.</p>'}
       <div class="row"><button class="btn sec" data-st="${r.st === 'resuelto' ? 'abierto' : 'resuelto'}" data-id="${esc(id)}">${r.st === 'resuelto' ? 'Reabrir' : 'Marcar resuelto'}</button><button class="btn sec" data-st="quitado" data-id="${esc(id)}">Quitar</button></div></div>`; }).join('') || '<div class="card"><p class="sub">Nada en esta lista.</p></div>'}`;
-    $('#ef').onclick = e => { if (e.target.dataset.v) { store.setCfg('errf', e.target.dataset.v); } };
-    app.querySelectorAll('[data-st]').forEach(b => b.onclick = () => store.setReportState(b.dataset.id, b.dataset.st));
+    $('#ef').onclick = e => { if ((e.target as El).dataset.v!) { store.setCfg('errf', (e.target as El).dataset.v!); } };
+    app.querySelectorAll<El>('[data-st]').forEach(b => b.onclick = () => store.setReportState(b.dataset.id!, b.dataset.st! as any));
     $('#exp').onclick = () => {
       const out = all.map(([id, r]) => { const q = by.get(id) || null, c = cby.get(id) || null; return { id, tarjeta: c ? { pregunta: c.q, respuesta: c.a, ref: c.ref || null } : undefined, tema: r.tema, estado: r.st, motivo: r.motivo, nota: r.nota, origen: q ? ORIGEN[q.o] : null, enunciado: q?.q, opciones: q?.a, correcta: q ? L[q.c] : null, cita: q?.u || null, trampas: (q?.x || []).map(x => TRAMPAS[x] || x) }; });
       const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify({ generado: new Date().toISOString(), errores: out }, null, 1)], { type: 'application/json' })); a.download = 'errores-banco.json'; a.click();
@@ -632,10 +581,9 @@ routes.errores = async function () {
 // Las pantallas comparten navegación y limpieza; cada módulo conserva su estado de sesión.
 const screen = { get cleanup() { return cleanup; }, set cleanup(fn) { cleanup = fn; } };
 // ───────── preguntas falladas: buscar por texto o tema y releer el fragmento del temario ─────────
-const falladasIds = () => { const st = store.getStats(); return Object.keys(st).filter(id => META?.[id] && store.pendingFailure(st[id])); };
-const fold = t => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const fold = (t: any) => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 routes.falladas = async function () {
-  let active = true, tm;
+  let active = true, tm: any;
   cleanup = () => { active = false; clearTimeout(tm); };
   await getMeta();
   if (!active) return;
@@ -644,18 +592,18 @@ routes.falladas = async function () {
   const idx = await getIndex();
   if (!active) return;
   const F = { q: '', t: '' };
-  const fd = ts => new Date(ts).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-  const conteo = {}; qs.forEach(q => { conteo[q.t] = (conteo[q.t] || 0) + 1; });
+  const fd = (ts: any) => new Date(ts).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+  const conteo: Record<string, any> = {}; qs.forEach(q => { conteo[q.t] = (conteo[q.t] || 0) + 1; });
   const filtra = () => { const k = fold(F.q).trim(); return qs.filter(q => (!F.t || q.t === F.t) && (!k || fold([q.q, ...q.a, q.u, q.n].join(' ')).includes(k))); };
   const lista = () => {
     const L2 = filtra(), host = $('#flist'); if (!active || !host) return;
     $('#fcount').textContent = L2.length === qs.length ? `${qs.length} ${qs.length === 1 ? 'pregunta' : 'preguntas'}` : `${L2.length} de ${qs.length} ${qs.length === 1 ? 'pregunta' : 'preguntas'}`;
-    const gr = {}; L2.forEach(q => (gr[q.t] ||= []).push(q));
-    host.innerHTML = L2.length ? Object.keys(gr).sort().map(t => `<h2 class="h3">${esc(t)} · ${esc(temaName(t))} <small>(${gr[t].length})</small></h2><div class="card">${gr[t].map(q => {
+    const gr: Record<string, any> = {}; L2.forEach(q => (gr[q.t] ||= []).push(q));
+    host.innerHTML = L2.length ? Object.keys(gr).sort().map(t => `<h2 class="h3">${esc(t)} · ${esc(temaName(t))} <small>(${gr[t].length})</small></h2><div class="card">${gr[t].map((q: any) => {
       const r = store.rec(q.i) || [0, 0, 0];
       return `<details class="rv f"><summary><i></i><span class="pre">${richHtml(q.q)}<br><small class="sub">Aciertos seguidos: ${Math.max(0, store.failureStreak(r))}/3 · <span data-review-status="${esc(q.i)}">${r[11] ? 'Temario repasado' : 'Pendiente de temario'}</span></small></span></summary>
       <label class="chk"><input type="checkbox" data-reviewed="${esc(q.i)}" ${r[11] ? 'checked' : ''}>Repasada en el temario</label>
-      ${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : ''}"><b>${L[i]}</b> ${richHtml(o)}${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
+      ${q.a.map((o: any, i: any) => `<div class="ro ${i === q.c ? 'ok' : ''}"><b>${L[i]}</b> ${richHtml(o)}${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : '<p class="sm sub">Esta pregunta no tiene fragmento de temario asociado.</p>'}${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}
       <p class="sm sub">Última actividad: ${fd(r[2])} · acertada ${r[1]} de ${r[0]} veces${q.y ? ' · ' + esc(q.y) : ''}</p></details>`;
     }).join('')}</div>`).join('')
@@ -674,14 +622,14 @@ routes.falladas = async function () {
   <div id="flist"></div>
   <div class="bar2"><button class="btn" id="fgo">Practicar estas</button></div>`;
   $('#flist').onchange = e => {
-    const input = e.target.closest('[data-reviewed]'); if (!input) return;
-    const q = qs.find(q => q.i === input.dataset.reviewed); if (!q) return;
+    const input = (e.target as El).closest<El>('[data-reviewed]'); if (!input) return;
+    const q = qs.find(q => q.i === input.dataset.reviewed!); if (!q) return;
     store.setReviewed(q.i, q.t, input.checked);
-    const status = input.closest('details').querySelector('[data-review-status]');
+    const status = input.closest<El>('details')!.querySelector<El>('[data-review-status]');
     if (status) status.textContent = input.checked ? 'Temario repasado' : 'Pendiente de temario';
   };
-  $('#fq').oninput = e => { F.q = e.target.value; clearTimeout(tm); tm = setTimeout(lista, 150); };
-  $('#ft').onchange = e => { clearTimeout(tm); F.t = e.target.value; lista(); };
+  $<El>('#fq').oninput = e => { F.q = (e.target as El).value; clearTimeout(tm); tm = setTimeout(lista, 150); };
+  $<El>('#ft').onchange = e => { clearTimeout(tm); F.t = (e.target as El).value; lista(); };
   $('#fgo').onclick = () => { const L2 = filtra(); if (!L2.length) return toast('No hay preguntas con ese filtro.'); startRun({ kind: 'test', feedback: true, items: shuffle(L2).slice(0, 40), titulo: 'Falladas' + (F.t ? ' · ' + F.t : '') }); };
   lista();
 };
@@ -689,8 +637,9 @@ routes.falladas = async function () {
 
 registerTraining({ routes, go, route, pw }, screen);
 const { allCards, curatedCards } = registerCards({ routes, go, pw, reportBox }, screen);
-const { dominioTemas } = registerStats({ routes, go, trapTest, startRun });
+registerStats({ routes, go, trapTest, startRun });
 registerHome({ routes, go, saludo, quickSession, startRepaso, openMenu, dominioTemas, falladasIds }, screen);
+registerAcceso({ routes, go }, screen);
 registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate }, screen);
 
 // ───────── arranque ─────────
@@ -702,7 +651,7 @@ registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').then(watchUpdates).catch(() => {});
   await route(); // primer pintado sin esperar a Firebase
   addEventListener('pagehide', saveRun); document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') saveRun(); });
-  resumeRun().catch(() => {});
+  resumeSaved().catch(() => {});
   setTimeout(prefetchBanco, 4000);
   const aviso = async () => { const n = await checkUpdate(); if (n) toast(`Hay una versión nueva (${n.version}).`, { label: 'Actualizar', fn: applyUpdate }); };
   setTimeout(aviso, 6000);
@@ -712,10 +661,10 @@ registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV
 
 // Descarga el banco en segundo plano (2 a la vez) para que Test, Simulacro y Repaso arranquen sin esperar a la red
 async function prefetchBanco() {
-  if (navigator.connection?.saveData || navigator.onLine === false || !window.caches) return;
+  if ((navigator as any).connection?.saveData || navigator.onLine === false || !window.caches) return;
   try {
     const idx = await getIndex(), c = await caches.open('tai-data');
-    const falta = [];
+    const falta: any[] = [];
     for (const t of idx.temas) { const u = `data/${t.id}.json`; if (!(await c.match(u))) falta.push(u); }
     const w = async () => { for (let u; (u = falta.shift());) { try { await (await fetch(u)).arrayBuffer(); } catch (e) { return; } } };
     await Promise.all([w(), w()]);
@@ -723,7 +672,7 @@ async function prefetchBanco() {
 }
 
 // ───────── versión y actualización ─────────
-let NEWV = null; // versión nueva detectada en el servidor (objeto de version.json)
+let NEWV: any = null; // versión nueva detectada en el servidor (objeto de version.json)
 async function checkUpdate() {
   try {
     const v = await (await fetch('version.json', { cache: 'no-store' })).json();
@@ -740,15 +689,15 @@ async function applyUpdate() {
       await reg.update(); reg.waiting?.postMessage('skip');
       const w = reg.installing || reg.waiting;
       // esperar (máx. 6 s) a que el service worker nuevo termine de instalarse antes de recargar
-      if (w && w.state !== 'activated') await new Promise(ok => { const t = setTimeout(ok, 6000); w.addEventListener('statechange', () => { if (w.state === 'activated' || w.state === 'redundant') { clearTimeout(t); ok(); } }); });
+      if (w && w.state !== 'activated') await new Promise<void>(ok => { const t = setTimeout(ok, 6000); w.addEventListener('statechange', () => { if (w.state === 'activated' || w.state === 'redundant') { clearTimeout(t); ok(); } }); });
     }
   } catch (e) {}
   location.reload();
 }
 
 // aviso de nueva versión del service worker
-function watchUpdates(reg) {
-  const ready = w => w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) toast('Hay una versión nueva.', { label: 'Actualizar', fn: applyUpdate }); });
+function watchUpdates(reg: any) {
+  const ready = (w: any) => w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) toast('Hay una versión nueva.', { label: 'Actualizar', fn: applyUpdate }); });
   if (reg.installing) ready(reg.installing);
   reg.addEventListener('updatefound', () => reg.installing && ready(reg.installing));
 }

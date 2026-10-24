@@ -1,46 +1,76 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Solo el dueño de los datos y solo con la cuenta de Google autorizada.
-    function isOwner(uid) {
-      return request.auth != null && request.auth.uid == uid
+    // Administrador: solo la cuenta de Google del propietario (correo verificado).
+    function isAdmin() {
+      return request.auth != null
         && request.auth.token.email == 'dramiro@gmail.com'
         && request.auth.token.email_verified == true;
     }
-    // Cada usuario solo accede a lo suyo; el resto está denegado por defecto.
+    function isOwner(uid) { return isAdmin() && request.auth.uid == uid; }
+    // Usuario aprobado por el propietario: existe access/{uid} con ok == true.
+    function isApproved(uid) {
+      return request.auth != null && request.auth.uid == uid
+        && request.auth.token.email_verified == true
+        && exists(/databases/$(database)/documents/access/$(uid))
+        && get(/databases/$(database)/documents/access/$(uid)).data.ok == true;
+    }
+    // Pueden leer y escribir sus propios datos el propietario y los aprobados.
+    function canUse(uid) { return isOwner(uid) || isApproved(uid); }
+
+    // Aprobaciones: las escribe solo el propietario; cada usuario puede leer la suya.
+    match /access/{uid} {
+      allow read: if isAdmin() || (request.auth != null && request.auth.uid == uid);
+      allow create, update: if isAdmin()
+        && request.resource.data.keys().hasOnly(['ok', 'email', 'name', 'ts'])
+        && request.resource.data.ok is bool;
+      allow delete: if isAdmin();
+    }
+    // Solicitudes de acceso: cada usuario crea y ve la suya; el propietario las ve todas y las resuelve.
+    match /requests/{uid} {
+      allow read: if isAdmin() || (request.auth != null && request.auth.uid == uid);
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.auth.token.email_verified == true
+        && request.resource.data.keys().hasOnly(['email', 'name', 'ts'])
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.name is string && request.resource.data.name.size() < 200
+        && request.resource.data.ts is number;
+      allow delete: if isAdmin() || (request.auth != null && request.auth.uid == uid);
+    }
+    // Cada usuario aprobado solo accede a lo suyo; el resto está denegado por defecto.
     match /users/{uid}/stats/{tema} {
-      allow read: if isOwner(uid);
-      allow create, update: if isOwner(uid)
+      allow read: if canUse(uid);
+      allow create, update: if canUse(uid)
         && request.resource.data.keys().hasOnly(['m', 'u'])
         && request.resource.data.u is number
         && request.resource.data.m is map;
     }
     match /users/{uid}/sessions/{sessionId} {
-      allow read: if isOwner(uid);
-      allow create, update: if isOwner(uid)
+      allow read: if canUse(uid);
+      allow create, update: if canUse(uid)
         && request.resource.data.keys().hasAll(['id', 'ts', 'nota', 'titulo'])
         && request.resource.data.nota is number
         && request.resource.data.titulo is string;
     }
     // Temas vistos
     match /users/{uid}/cfg/seen {
-      allow read: if isOwner(uid);
-      allow create, update: if isOwner(uid)
+      allow read: if canUse(uid);
+      allow create, update: if canUse(uid)
         && request.resource.data.keys().hasOnly(['t', 'ts'])
         && request.resource.data.t is list
         && request.resource.data.ts is number;
     }
     // Informes de errores del banco
     match /users/{uid}/cfg/cards {
-      allow read: if isOwner(uid);
-      allow create, update: if isOwner(uid)
+      allow read: if canUse(uid);
+      allow create, update: if canUse(uid)
         && request.resource.data.keys().hasOnly(['m', 'u'])
         && request.resource.data.m is map
         && request.resource.data.u is number;
     }
     match /users/{uid}/cfg/reports {
-      allow read: if isOwner(uid);
-      allow create, update: if isOwner(uid)
+      allow read: if canUse(uid);
+      allow create, update: if canUse(uid)
         && request.resource.data.keys().hasOnly(['m', 'u'])
         && request.resource.data.m is map
         && request.resource.data.u is number;

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { esc, shuffle, fmtT, pct, nota, allowed, composeSim, dominioCalc, weekStart, aggregateWeeks, slowList, quickN, pickQuick, simHistory, compareSessions, trapRates, pickTrampas, MOTIVOS } from '../src/logic.js';
+import { esc, shuffle, fmtT, pct, nota, allowed, composeSim, dominioCalc, weekStart, aggregateWeeks, slowList, quickN, pickQuick, pickGuest, simHistory, compareSessions, trapRates, pickTrampas, MOTIVOS } from '../src/logic.js';
 
 describe('nota', () => {
   it('aciertos suman y fallos restan un tercio', () => {
@@ -360,5 +360,25 @@ describe('richHtml (código)', () => {
     const h = richHtml('siguiente código: a=10,b; b=a++;');
     expect(h).toContain('<code class="cd">a=10,b; b=a++;</code>');
     expect(richHtml('a=10, b=10')).toBe('<code class="cd">a=10, b=10</code>');
+  });
+});
+
+describe('sesión rápida de invitado', () => {
+  const pool = (t, n) => ({ t, qs: Array.from({ length: n }, (_, k) => ({ i: `${t}-${k}`, t })) });
+  const pools = ['A', 'B', 'C', 'D', 'E', 'F'].map(t => pool(t, 5));
+  it('una pregunta por tema', () => {
+    const r = pickGuest(pools, 4);
+    expect(r).toHaveLength(4); expect(new Set(r.map(q => q.t)).size).toBe(4);
+  });
+  it('no repite las de la sesión anterior ni las ya vistas si hay otras', () => {
+    const evitar = new Set(pools.flatMap(p => p.qs.slice(0, 4).map(q => q.i)));
+    for (let k = 0; k < 20; k++) for (const q of pickGuest(pools, 6, () => false, evitar)) expect(q.i.endsWith('-4')).toBe(true);
+    const vistas = id => !id.endsWith('-3');
+    for (let k = 0; k < 20; k++) for (const q of pickGuest(pools, 6, vistas)) expect(q.i.endsWith('-3')).toBe(true);
+  });
+  it('varía entre llamadas y no falla si faltan preguntas', () => {
+    const firmas = new Set(Array.from({ length: 30 }, () => pickGuest(pools, 3).map(q => q.i).join()));
+    expect(firmas.size).toBeGreaterThan(5);
+    expect(pickGuest([pool('A', 0), pool('B', 1)], 5)).toHaveLength(1);
   });
 });

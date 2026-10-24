@@ -1,35 +1,41 @@
 // Lógica pura (sin DOM ni almacenamiento): se prueba con `npm test`.
-export const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-export function shuffle(a, rnd = Math.random) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const k = Math.floor(rnd() * (i + 1)); [a[i], a[k]] = [a[k], a[i]]; } return a; }
-export const fmtT = s => { s = Math.max(0, Math.round(s)); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60; return (h ? h + ':' : '') + String(m).padStart(h ? 2 : 1, '0') + ':' + String(x).padStart(2, '0'); };
-export const pct = (a, b) => b ? Math.round(100 * a / b) : 0;
+import type { Origin, Question, Session, StatMap, StatRec } from './types.js';
+
+type Rnd = () => number;
+type Span = [number, number];
+export const esc = (s: unknown): string => String(s ?? '').replace(/[&<>"']/g, c => (({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' } as Record<string, string>)[c]));
+export function shuffle<T>(a: readonly T[], rnd: Rnd = Math.random): T[] { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const k = Math.floor(rnd() * (i + 1)); [b[i], b[k]] = [b[k], b[i]]; } return b; }
+export const fmtT = (s: number): string => { s = Math.max(0, Math.round(s)); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60; return (h ? h + ':' : '') + String(m).padStart(h ? 2 : 1, '0') + ':' + String(x).padStart(2, '0'); };
+export const pct = (a: number, b: number): number => b ? Math.round(100 * a / b) : 0;
 // Nota del examen: (aciertos − fallos/3) / total × 100, un decimal. En blanco no resta.
-export const nota = (a, f, n) => n ? Math.round(1000 * (a - f / 3) / n) / 10 : 0;
+export const nota = (a: number, f: number, n: number): number => n ? Math.round(1000 * (a - f / 3) / n) / 10 : 0;
 // Las históricas no puntuables siguen disponibles en sesiones de estudio.
-export const questionsForSession = (items, feedback) => feedback ? items.slice() : items.filter(q => q.np !== 1);
-export function allowed(q, o) { return o.has(q.o) && !q.r; }
+export const questionsForSession = <T extends { np?: number }>(items: T[], feedback?: boolean): T[] => feedback ? items.slice() : items.filter(q => q.np !== 1);
+export function allowed(q: Question & { r?: unknown }, o: { has(x: any): boolean }): boolean { return o.has(q.o) && !q.r; }
 
 // Reparto de las N preguntas de la parte 1 por temas, según su peso oficial `w`.
 // pools: { idTema: [preguntas ya filtradas y ordenadas por prioridad] }
-export function composeSim(temas, pools, N, rnd = Math.random) {
+export interface TemaPeso { id: string; w?: number; n?: number; nombre?: string }
+export function composeSim(temas: TemaPeso[], pools: Record<string, Question[]>, N: number, rnd: Rnd = Math.random): Question[] {
   const act = temas.filter(t => (pools[t.id] || []).length);
   if (!act.length) return [];
   N = Math.min(N, act.reduce((s, t) => s + pools[t.id].length, 0));
-  const wt = t => (t.w > 0 ? t.w : 1); // un tema sin peso oficial cuenta como 1
+  const wt = (t: TemaPeso) => ((t.w ?? 0) > 0 ? t.w! : 1); // un tema sin peso oficial cuenta como 1
   const tot = act.reduce((s, t) => s + wt(t), 0);
-  const q = act.map(t => ({ t: t.id, x: N * wt(t) / tot }));
+  const q = act.map(t => ({ t: t.id, x: N * wt(t) / tot, k: 0, r: 0 }));
   q.forEach(o => { o.k = Math.min(Math.floor(o.x), pools[o.t].length); o.r = o.x - Math.floor(o.x); });
   let rest = N - q.reduce((s, o) => s + o.k, 0);
   for (const o of q.slice().sort((a, b) => b.r - a.r)) { if (rest > 0 && o.k < pools[o.t].length) { o.k++; rest--; } }
   while (rest > 0) { const o = q.find(x => x.k < pools[x.t].length); if (!o) break; o.k++; rest--; }
-  const out = [];
+  const out: Question[] = [];
   for (const o of q) out.push(...pools[o.t].slice(0, o.k));
   return shuffle(out, rnd);
 }
 
 // Mapa de dominio por tema (ver README). rec(id) devuelve el registro [n, ok, last, box, due, lastRes, flag] o undefined.
 export const COV_OBJ = 0.6;
-export function dominioCalc(temas, idsOf, rec, t0) {
+export type Est = 'n' | 'r' | 'y' | 'g';
+export function dominioCalc<T extends { id: string; n: number }>(temas: T[], idsOf: (t: string) => string[] | undefined, rec: (id: string) => StatRec | undefined, t0: number) {
   return temas.map(t => {
     let seen = 0, okNow = 0, last = 0, due = 0, att = 0;
     for (const id of idsOf(t.id) || []) {
@@ -39,14 +45,14 @@ export function dominioCalc(temas, idsOf, rec, t0) {
     }
     const prec = seen ? okNow / seen : 0;
     const cob = Math.min(1, seen / Math.max(1, t.n * COV_OBJ));
-    const dias = last ? Math.floor((t0 - last) / 86400000) : null;
+    const dias: number | null = last ? Math.floor((t0 - last) / 86400000) : null;
     const score = Math.round(100 * (0.65 * prec + 0.35 * cob));
-    let est, why;
+    let est: Est, why: string;
     if (!seen || att < 5) { est = 'n'; why = seen ? 'Pocas respuestas todavía' : 'Sin empezar'; }
     else if (score < 50) { est = 'r'; why = prec < 0.5 ? 'Muchos fallos recientes' : 'Cobertura baja'; }
-    else if (dias > 30) { est = 'r'; why = 'Más de 30 días sin tocar'; }
+    else if (dias! > 30) { est = 'r'; why = 'Más de 30 días sin tocar'; }
     else if (score < 75) { est = 'y'; why = prec < 0.75 ? 'Aún fallas bastante' : 'Te falta ver preguntas'; }
-    else if (dias > 14) { est = 'y'; why = 'Se está enfriando'; }
+    else if (dias! > 14) { est = 'y'; why = 'Se está enfriando'; }
     else { est = 'g'; why = 'Bien y reciente'; }
     return { ...t, seen, prec: Math.round(100 * prec), cob: Math.round(100 * cob), score, dias, due, est, why };
   });
@@ -54,15 +60,15 @@ export function dominioCalc(temas, idsOf, rec, t0) {
 
 // ── Evolución por semanas ──
 // Lunes (hora local) 00:00 de la semana de ts.
-export function weekStart(ts) { const d = new Date(ts); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return d.getTime(); }
+export function weekStart(ts: number): number { const d = new Date(ts); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return d.getTime(); }
 // sessions: sesiones guardadas. filtro: {tema} | {tipo} | {}. Devuelve las últimas `weeks` semanas (con huecos a n=0).
-export function aggregateWeeks(sessions, { tema, tipo, weeks = 12, now = Date.now() } = {}) {
-  const w0 = weekStart(now), out = [];
+export function aggregateWeeks(sessions: Session[], { tema, tipo, weeks = 12, now = Date.now() }: { tema?: string; tipo?: string; weeks?: number; now?: number } = {}) {
+  const w0 = weekStart(now), out: { start: number; n: number; ok: number; secs: number; ses: number }[] = [];
   for (let i = weeks - 1; i >= 0; i--) { const d = new Date(w0); d.setDate(d.getDate() - 7 * i); out.push({ start: d.getTime(), n: 0, ok: 0, secs: 0, ses: 0 }); }
   const byStart = new Map(out.map(o => [o.start, o]));
   for (const s of sessions) {
     const o = byStart.get(weekStart(s.ts)); if (!o) continue;
-    let ok, n;
+    let ok: number, n: number;
     if (tema) { const v = s.temas && s.temas[tema]; if (!v) continue; [ok, n] = v; }
     else if (tipo) { const v = s.tipos && s.tipos[tipo]; if (!v) continue; [ok, n] = v; }
     else { ok = s.a; n = s.n; }
@@ -75,8 +81,8 @@ export function aggregateWeeks(sessions, { tema, tipo, weeks = 12, now = Date.no
 
 // ── Preguntas lentas ──
 // stats: { id: registro }. Registro: [n, ok, last, box, due, lastRes, flag, segTotales, nCronometradas]
-export function slowList(stats, { soloAcertadas = false, min = 1, limit = 15 } = {}) {
-  const out = [];
+export function slowList(stats: StatMap, { soloAcertadas = false, min = 1, limit = 15 }: { soloAcertadas?: boolean; min?: number; limit?: number } = {}) {
+  const out: { id: string; avg: number; n: number; ok: number; last: number; tn: number }[] = [];
   for (const id in stats) {
     const r = stats[id]; const tn = r[8] || 0; if (tn < min) continue;
     if (soloAcertadas && r[5] !== 1) continue;
@@ -87,7 +93,7 @@ export function slowList(stats, { soloAcertadas = false, min = 1, limit = 15 } =
 
 // ── Sesión rápida ──
 // Nº de preguntas para ~5 minutos según tu tiempo medio por pregunta (30 s si aún no hay datos).
-export function quickN(stats, minutos = 5) {
+export function quickN(stats: StatMap, minutos = 5): number {
   let secs = 0, n = 0;
   for (const id in stats) { const r = stats[id]; if (r[8]) { secs += r[7]; n += r[8]; } }
   const avg = n >= 10 ? secs / n : 30;
@@ -95,7 +101,7 @@ export function quickN(stats, minutos = 5) {
 }
 // due: preguntas con repaso vencido (las más antiguas primero). pools: preguntas nuevas por tema, temas más débiles primero.
 // Hasta el 60 % son repasos; el resto, nuevas repartidas por turnos entre los temas. Si faltan de un tipo, se completa con el otro.
-export function pickQuick(due, pools, N, rnd = Math.random) {
+export function pickQuick(due: Question[], pools: Question[][], N: number, rnd: Rnd = Math.random): Question[] {
   const nDue = Math.min(due.length, Math.ceil(N * 0.6));
   const out = due.slice(0, nDue), seen = new Set(out.map(q => q.i));
   const cur = pools.map(p => p.filter(q => !seen.has(q.i)));
@@ -107,12 +113,25 @@ export function pickQuick(due, pools, N, rnd = Math.random) {
   return shuffle(out, rnd);
 }
 
+// Sesión rápida de invitado: una pregunta de cada tema, temas al azar. Entre las preguntas de un tema prefiere las
+// no vistas y las que no salieron en la sesión anterior; así cada sesión es distinta.
+// pools: [{ t, qs }]; vistas: id => ¿ya contestada?; evitar: Set de ids de la última sesión.
+export function pickGuest(pools: { t: string; qs: Question[] }[], N: number, vistas: (id: string) => boolean = () => false, evitar: Set<string> = new Set(), rnd: Rnd = Math.random): Question[] {
+  const out: Question[] = [];
+  for (const p of shuffle(pools.filter(x => x.qs.length), rnd)) {
+    if (out.length >= N) break;
+    const mejores: ((q: Question) => boolean)[] = [q => !vistas(q.i) && !evitar.has(q.i), q => !evitar.has(q.i), () => true];
+    for (const ok of mejores) { const c = p.qs.filter(ok); if (c.length) { out.push(c[Math.floor(rnd() * c.length)]); break; } }
+  }
+  return out;
+}
+
 // ── Historial de simulacros ──
 // Devuelve las sesiones de simulacro en orden cronológico, con la parte (p1 conocimientos / p2 supuesto) y la
 // diferencia de nota respecto al intento anterior de la misma parte.
-export function simHistory(sessions) {
+export function simHistory(sessions: Session[]) {
   const sims = sessions.filter(s => s.kind === 'sim').slice().sort((a, b) => a.ts - b.ts);
-  const prev = {};
+  const prev: Record<string, Session> = {};
   return sims.map(s => {
     const part = /Parte 2/.test(s.titulo || '') ? 'p2' : 'p1';
     const p = prev[part]; prev[part] = s;
@@ -120,17 +139,17 @@ export function simHistory(sessions) {
   });
 }
 // Compara dos sesiones por tema (acierto %), más totales. d = b − a (puntos porcentuales).
-export function compareSessions(a, b) {
+export function compareSessions(a: Session, b: Session) {
   const temas = [...new Set([...Object.keys(a.temas || {}), ...Object.keys(b.temas || {})])].sort();
-  const pc = v => (v && v[1]) ? Math.round(100 * v[0] / v[1]) : null;
+  const pc = (v?: [number, number]) => (v && v[1]) ? Math.round(100 * v[0] / v[1]) : null;
   const rows = temas.map(t => { const pa = pc(a.temas?.[t]), pb = pc(b.temas?.[t]); return { t, pa, pb, na: a.temas?.[t]?.[1] || 0, nb: b.temas?.[t]?.[1] || 0, d: pa !== null && pb !== null ? pb - pa : null }; });
   return { rows, dNota: Math.round((b.nota - a.nota) * 10) / 10, dAcierto: pct(b.a, b.n) - pct(a.a, a.n), dSeg: a.n && b.n ? Math.round(10 * (b.secs / b.n - a.secs / a.n)) / 10 : null };
 }
 
 // ── Mis trampas ──
 // trapsOf(id) → lista de ids de trampa de la pregunta. Devuelve las trampas con más fallos (≥ min respuestas).
-export function trapRates(stats, trapsOf, min = 5) {
-  const T = {};
+export function trapRates(stats: StatMap, trapsOf: (id: string) => (number | string)[] | undefined, min = 5) {
+  const T: Record<string, { k: number; n: number; err: number }> = {};
   for (const id in stats) {
     const r = stats[id]; const err = r[0] - r[1];
     for (const k of trapsOf(id) || []) { const b = T[k] ||= { k: +k, n: 0, err: 0 }; b.n += r[0]; b.err += err; }
@@ -139,16 +158,16 @@ export function trapRates(stats, trapsOf, min = 5) {
 }
 // cands: preguntas con `x` (lista de trampas); rec(id) → registro. Prioridad: falladas la última vez, luego nunca vistas, luego el resto;
 // dentro de cada grupo, primero las que reúnen más trampas objetivo.
-export function pickTrampas(cands, rec, targets, N, rnd = Math.random) {
+export function pickTrampas(cands: Question[], rec: (id: string) => StatRec | undefined, targets: (number | string)[], N: number, rnd: Rnd = Math.random): Question[] {
   const tg = new Set(targets.map(Number));
-  const score = q => (q.x || []).filter(k => tg.has(+k)).length;
-  const tier = q => { const r = rec(q.i); return r && r[5] === 0 ? 0 : !r ? 1 : 2; };
-  const g = [[], [], []];
+  const score = (q: Question) => (q.x || []).filter(k => tg.has(+k)).length;
+  const tier = (q: Question) => { const r = rec(q.i); return r && r[5] === 0 ? 0 : !r ? 1 : 2; };
+  const g: Question[][] = [[], [], []];
   for (const q of cands) if (score(q)) g[tier(q)].push(q);
-  const out = [];
+  const out: Question[] = [];
   for (const grp of g) {
-    const byScore = {}; for (const q of grp) (byScore[score(q)] ||= []).push(q);
-    for (const s of Object.keys(byScore).sort((a, b) => b - a)) out.push(...shuffle(byScore[s], rnd));
+    const byScore: Record<number, Question[]> = {}; for (const q of grp) (byScore[score(q)] ||= []).push(q);
+    for (const s of Object.keys(byScore).sort((a, b) => +b - +a)) out.push(...shuffle(byScore[+s], rnd));
   }
   return out.slice(0, N);
 }
@@ -158,19 +177,21 @@ export const MOTIVOS = ['Respuesta correcta mal marcada', 'Enunciado erróneo o 
 
 // ───────── comodidad: tema, tamaño, gestos y teclado ─────────
 export const TEMAS_UI = ['auto', 'light', 'dark'];
+export interface UiCfg { theme: string; size: number; lectura: number }
 export const ZOOMS = [1, 1.15, 1.3, 1.5];
-export function normUi(u) {
-  u = u && typeof u === 'object' ? u : {};
+export function normUi(u0: unknown): UiCfg {
+  const u: any = u0 && typeof u0 === 'object' ? u0 : {};
   return { theme: TEMAS_UI.includes(u.theme) ? u.theme : 'auto', size: Number.isInteger(u.size) && u.size >= 0 && u.size < ZOOMS.length ? u.size : 0, lectura: [0, 1, 2].includes(u.lectura) ? u.lectura : 0 };
 }
 // Desplazamiento horizontal claro y no vertical → 'next' | 'prev' | null
-export function swipeDir(dx, dy, min = 70) {
+export function swipeDir(dx: number, dy: number, min = 70): 'next' | 'prev' | null {
   const ax = Math.abs(dx), ay = Math.abs(dy);
   if (ax < min || ax < ay * 1.6 || ay > 90) return null;
   return dx < 0 ? 'next' : 'prev';
 }
 // Tecla → acción del test (nOpts = nº de opciones de la pregunta)
-export function keyAction(e, nOpts = 4) {
+export type KeyAct = { t: 'opt'; i: number } | { t: 'next' | 'prev' | 'blank' | 'flag' | 'pause' };
+export function keyAction(e: { key?: string; ctrlKey?: boolean; metaKey?: boolean; altKey?: boolean }, nOpts = 4): KeyAct | null {
   if (e.ctrlKey || e.metaKey || e.altKey) return null;
   const k = String(e.key || '').toLowerCase();
   if (/^[1-9]$/.test(k) && +k <= nOpts) return { t: 'opt', i: +k - 1 };
@@ -187,23 +208,23 @@ export function keyAction(e, nOpts = 4) {
 export const MOTIVOS_FALLO = ['', 'Contenido', 'Trampa', 'Dudaba entre dos', 'Despiste', 'No lo sabía', '', 'Velocidad']; // 6 = acierto por suerte (solo en aciertos); 7 = fallo por leer deprisa o sin terminar
 const DIA = 86400000;
 // items: [{ i, t, due }]. Las más vencidas primero (hasta n) y mezcladas por tema, sin repetir tema seguido si se puede.
-export function pickRepaso(items, n) {
+export function pickRepaso<T extends { t: string; due: number }>(items: T[], n: number): T[] {
   const top = [...items].sort((a, b) => a.due - b.due).slice(0, n);
-  const by = new Map();
-  for (const x of top) { if (!by.has(x.t)) by.set(x.t, []); by.get(x.t).push(x); }
-  const out = []; let last = null;
+  const by = new Map<string, T[]>();
+  for (const x of top) { if (!by.has(x.t)) by.set(x.t, []); by.get(x.t)!.push(x); }
+  const out: T[] = []; let last: string | null = null;
   while (out.length < top.length) {
-    const keys = [...by.keys()].filter(k => by.get(k).length);
-    keys.sort((a, b) => by.get(b).length - by.get(a).length);
+    const keys = [...by.keys()].filter(k => by.get(k)!.length);
+    keys.sort((a, b) => by.get(b)!.length - by.get(a)!.length);
     const k = keys.find(x => x !== last) ?? keys[0];
-    out.push(by.get(k).shift()); last = k;
+    out.push(by.get(k)!.shift()!); last = k;
   }
   return out;
 }
 // Preguntas que vencen cada día: [hoy y atrasadas, +1, …, +(days-1)] (días naturales locales)
-export function cargaRepasos(stats, now, days = 14) {
+export function cargaRepasos(stats: StatMap, now: number, days = 14): number[] {
   const d0 = new Date(now); d0.setHours(0, 0, 0, 0);
-  const out = new Array(days).fill(0);
+  const out: number[] = new Array(days).fill(0);
   for (const id in stats) {
     const r = stats[id]; if (!(r[3] >= 0) || !r[4]) continue;
     const k = Math.floor((r[4] - d0.getTime()) / DIA);
@@ -212,13 +233,13 @@ export function cargaRepasos(stats, now, days = 14) {
   return out;
 }
 // Recuento de motivos de la última falta (solo preguntas cuya última respuesta fue un fallo)
-export function motivosFallo(stats) {
+export function motivosFallo(stats: StatMap): number[] {
   const c = [0, 0, 0, 0, 0, 0, 0, 0];
   for (const id in stats) { const r = stats[id]; if (r[5] === 0 && (r[9] >= 1 && r[9] <= 5 || r[9] === 7)) c[r[9]]++; }
   return c;
 }
 // Aciertos marcados como «suerte» (último resultado acierto)
-export function suertes(stats) {
+export function suertes(stats: StatMap): number {
   let n = 0;
   for (const id in stats) { const r = stats[id]; if (r[5] === 1 && (r[9] === 6 || r[9] === 8)) n++; }
   return n;
@@ -228,8 +249,9 @@ export function suertes(stats) {
 // cards: [{ id, t, ... }]; recs: { id: [n, ok, last, box, due, lastGrade] }
 // Devuelve hasta n tarjetas: primero las vencidas (más atrasadas primero), luego nuevas de los temas permitidos
 // (máx. maxNew), todo mezclado por tema. seen: Set de temas permitidos para las nuevas (null = todos).
-export function pickCards(cards, recs, { n = 20, now = Date.now(), maxNew = 10, seen = null } = {}) {
-  const due = [], fresh = [];
+export interface CardDef { id: string; t: string; [k: string]: any }
+export function pickCards(cards: CardDef[], recs: Record<string, number[]>, { n = 20, now = Date.now(), maxNew = 10, seen = null }: { n?: number; now?: number; maxNew?: number; seen?: Set<string> | null } = {}): string[] {
+  const due: { i: string; t: string; due: number }[] = [], fresh: CardDef[] = [];
   for (const c of cards) {
     const r = recs[c.id];
     if (r) { if (r[3] >= 0 && r[4] <= now) due.push({ i: c.id, t: c.t, due: r[4] }); }
@@ -238,14 +260,14 @@ export function pickCards(cards, recs, { n = 20, now = Date.now(), maxNew = 10, 
   const out = pickRepaso(due, n).map(x => x.i);
   const room = Math.min(n - out.length, maxNew);
   if (room > 0 && fresh.length) {
-    const by = new Map();
-    for (const c of fresh) { if (!by.has(c.t)) by.set(c.t, []); by.get(c.t).push(c.id); }
+    const by = new Map<string, string[]>();
+    for (const c of fresh) { if (!by.has(c.t)) by.set(c.t, []); by.get(c.t)!.push(c.id); }
     const ts = [...by.keys()].sort(); let k = 0;
-    while (k < room && ts.some(t => by.get(t).length)) for (const t of ts) { if (k >= room) break; const x = by.get(t).shift(); if (x) { out.push(x); k++; } }
+    while (k < room && ts.some(t => by.get(t)!.length)) for (const t of ts) { if (k >= room) break; const x = by.get(t)!.shift(); if (x) { out.push(x); k++; } }
   }
   return out;
 }
-export function cardStats(cards, recs, now = Date.now()) {
+export function cardStats(cards: CardDef[], recs: Record<string, number[]>, now = Date.now()) {
   const s = { nuevas: 0, enRepaso: 0, dominadas: 0, hoy: 0 };
   for (const c of cards) {
     const r = recs[c.id];
@@ -256,23 +278,23 @@ export function cardStats(cards, recs, now = Date.now()) {
   return s;
 }
 // Tarjeta construida desde una pregunta fallada: q = pregunta del banco ({ q, a[], c, n, u, t })
-export function cardFromQuestion(q) {
+export function cardFromQuestion(q: Question) {
   return { id: 'FC-Q-' + q.i, t: q.t, tipo: 'fallo', src: 'fallo', q: q.q, a: q.a[q.c], nota: q.n || '', ref: q.u || '' };
 }
 
 // Resalta en negrita (HTML ya escapado) el fragmento de `u` que mejor responde con `ans`.
 const STOP = new Set('para como pero este esta estos estas esos esas sobre entre desde hasta cada todo todos toda todas otro otra otros otras puede pueden será serán solo sólo tiene tienen según cuando donde mientras ellos ellas dicho dicha cual cuales'.split(' '));
-const normW = w => w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9ñ]/g, '');
-export function hiliteHtml(u, ans) {
-  const escH = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  u = String(u || ''); ans = String(ans || '');
+const normW = (w: string) => w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9ñ]/g, '');
+export function hiliteHtml(u0: unknown, ans0: unknown): string {
+  const escH = (s: unknown) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const u = String(u0 || ''), ans = String(ans0 || '');
   const toks = u.split(/(\s+)/);           // palabras y separadores
-  const idx = []; toks.forEach((t, i) => { if (t && !/^\s+$/.test(t)) idx.push(i); });
+  const idx: number[] = []; toks.forEach((t, i) => { if (t && !/^\s+$/.test(t)) idx.push(i); });
   const nw = idx.map(i => normW(toks[i]));
   const aw = new Set(ans.split(/\s+/).map(normW).filter(w => w.length > 3 && !STOP.has(w) || /^\d+$/.test(w)));
   if (!aw.size || !idx.length) return escH(u);
   const hit = nw.map(w => aw.has(w));
-  let best = null; const maxLen = Math.min(idx.length, aw.size * 2 + 6);
+  let best: { i: number; j: number; sc: number; n: number } | null = null; const maxLen = Math.min(idx.length, aw.size * 2 + 6);
   for (let i = 0; i < idx.length; i++) {
     if (!hit[i]) continue;
     const seen = new Set();
@@ -292,8 +314,8 @@ export function hiliteHtml(u, ans) {
 // Palabras que cambian el sentido: negaciones, excepciones, absolutos, restrictivos y cifras/plazos.
 const KW = /(?<![\p{L}\d])(NO|NUNCA|NINGUN[OA]S?|NADA|SIEMPRE|TODOS|TODAS|SOLO|SÓLO|ÚNICAMENTE|EXCLUSIVAMENTE|EXCEPTO|SALVO|INCORRECT[OA]S?|FALS[OA]S?|VERDADER[OA]S?|CORRECT[OA]S?|MÁXIM[OA]S?|MÍNIM[OA]S?|SIN|MENOS|MÁS|ANTES|DESPUÉS|HÁBILES|NATURALES)(?![\p{L}\d])|(?<![\p{L}\d])\d[\d.,]*\s?(?:%|bits?|bytes?|GB|MB|KB|Mbps|Gbps|MHz|GHz|días?|meses|años?|horas?|segundos?|puertos?)?/giu;
 const KW_STRICT = /^(NO|NUNCA|NINGUN[OA]S?|NADA|SIEMPRE|TODOS|TODAS|SOLO|SÓLO|ÚNICAMENTE|EXCLUSIVAMENTE|EXCEPTO|SALVO|INCORRECT[OA]S?|FALS[OA]S?|SIN|MENOS)$/;
-export function claveSpans(text) {
-  const t = String(text ?? ''), out = []; let m; KW.lastIndex = 0;
+export function claveSpans(text: unknown): Span[] {
+  const t = String(text ?? ''), out: Span[] = []; let m: RegExpExecArray | null; KW.lastIndex = 0;
   while ((m = KW.exec(t))) {
     const w = m[0];
     // «NO», «MÁS», «SIN»… en minúscula son palabras corrientes: solo se marcan en mayúsculas o los términos fuertes
@@ -304,7 +326,7 @@ export function claveSpans(text) {
   }
   return out;
 }
-export function claveHtml(text) {
+export function claveHtml(text: unknown): string {
   const t = String(text ?? ''); let h = '', p = 0;
   for (const [a, b] of claveSpans(t)) { h += esc(t.slice(p, a)) + '<mark class="kw">' + esc(t.slice(a, b)) + '</mark>'; p = b; }
   return h + esc(t.slice(p));
@@ -331,10 +353,10 @@ const CODE_RES = [
   /(?<![\p{L}\d_$])[a-z]\s+(?:XNOR|NAND|XOR|NOR|AND|OR)\s+[a-z]\s*=\s*\d(?![\p{L}\d_$])/gu,        // a XOR b = 1
 ];
 const noEsLlamada = /^(?:\d|[A-Z]{1,2}$)/;
-function rangosCodigo(t) {
-  const r = [];
+function rangosCodigo(t: string): Span[] {
+  const r: Span[] = [];
   // sentencias SQL completas: desde la palabra inicial hasta «;», o hasta el final de la frase, o el final del texto
-  SQL_START.lastIndex = 0; let m;
+  SQL_START.lastIndex = 0; let m: RegExpExecArray | null;
   while ((m = SQL_START.exec(t))) {
     const a = m.index; let b = t.length;
     const semi = t.indexOf(';', a); if (semi >= 0) b = semi + 1;
@@ -364,26 +386,26 @@ function rangosCodigo(t) {
   }
   while ((m = SQL_WORDS.exec(t))) r.push([m.index, m.index + m[0].length]);
   r.sort((x, y) => x[0] - y[0] || y[1] - x[1]);
-  const u = [];
+  const u: Span[] = [];
   for (const [a, b] of r) { const l = u[u.length - 1]; if (l && a <= l[1]) l[1] = Math.max(l[1], b); else u.push([a, b]); }
   // «;» pegado al final de una sentencia forma parte del código
   for (const x of u) if (t[x[1]] === ';') x[1]++;
   // fragmentos de código separados solo por «,», «;» o por un identificador suelto entre ellos («a=10,b; b=a++;») son un único bloque
   const GAP = /^\s+$|^\s*[,;]\s*(?:[A-Za-z_]\w{0,15}\s*[,;]\s*)?$/;
-  const v = [];
+  const v: Span[] = [];
   for (const x of u) { const l = v[v.length - 1]; if (l && x[0] >= l[1] && GAP.test(t.slice(l[1], x[0]))) l[1] = x[1]; else v.push([...x]); }
   return v;
 }
-export function codeSpans(text) { return rangosCodigo(String(text ?? '')); }
-const codeInner = h => h.replace(SQL_KW_RE, '<b class="sk">$1</b>');
+export function codeSpans(text: unknown): Span[] { return rangosCodigo(String(text ?? '')); }
+const codeInner = (h: string) => h.replace(SQL_KW_RE, '<b class="sk">$1</b>');
 // Texto → HTML seguro: escapa todo, pone en tipografía de código lo que lo parece y (opcional) resalta las palabras clave de lectura.
-export function richHtml(text, clave = false) {
+export function richHtml(text: unknown, clave = false): string {
   const t = String(text ?? ''), code = rangosCodigo(t), key = clave ? claveSpans(t) : [];
   const cuts = new Set([0, t.length]);
   for (const [a, b] of code) { cuts.add(a); cuts.add(b); }
   for (const [a, b] of key) { cuts.add(a); cuts.add(b); }
   const pts = [...cuts].sort((x, y) => x - y); let h = '';
-  const dentro = (L, i) => L.some(([a, b]) => i >= a && i < b);
+  const dentro = (L: Span[], i: number) => L.some(([a, b]) => i >= a && i < b);
   for (let i = 0; i < pts.length - 1; i++) {
     const a = pts[i], b = pts[i + 1]; if (a === b) continue;
     const seg = esc(t.slice(a, b));
@@ -395,15 +417,15 @@ export function richHtml(text, clave = false) {
 }
 
 // ¿La pregunta pide la opción incorrecta/excepción?
-export const pideNegativa = q => /\b(INCORRECT[OA]S?|FALS[OA]S?|EXCEPTO|SALVO|NO)\b/.test(q) || /\b(incorrect[oa]s?|fals[oa]s?|excepto|salvo)\b/i.test(q) || /\bno (es|son|se|forma|corresponde|pertenece|permite)\b/i.test(q);
+export const pideNegativa = (q: string): boolean => /\b(INCORRECT[OA]S?|FALS[OA]S?|EXCEPTO|SALVO|NO)\b/.test(q) || /\b(incorrect[oa]s?|fals[oa]s?|excepto|salvo)\b/i.test(q) || /\bno (es|son|se|forma|corresponde|pertenece|permite)\b/i.test(q);
 // Segundos mínimos razonables para leer enunciado + opciones con atención (~3,3 palabras/s)
-export function minLectura(q) {
+export function minLectura(q: { cp?: string; q: string; a?: string[] }): number {
   const txt = [q.cp, q.q, ...(q.a || [])].filter(Boolean).join(' ');
   const w = txt.split(/\s+/).filter(Boolean).length;
   return Math.max(4, Math.min(30, Math.round(w / 3.3)));
 }
 // Resumen de fallos por velocidad
-export function velocidad(stats) {
+export function velocidad(stats: StatMap) {
   const c = motivosFallo(stats); const tot = c.reduce((a, b) => a + b, 0);
   const ids = Object.keys(stats).filter(id => stats[id][5] === 0 && stats[id][9] === 7);
   return { n: c[7], tot, p: tot ? Math.round(100 * c[7] / tot) : 0, ids };
@@ -420,8 +442,8 @@ export const CONSEJOS_LECTURA = [
 
 // Análisis de ritmo y puntos de un simulacro. correct[k] = índice correcto; ans[k] = respuesta (undefined/-1 = blanco);
 // times[k] = segundos empleados (si se contestó); limitSecs = tiempo total del simulacro.
-export function analisisSimulacro({ correct, ans, times = [], limitSecs, secs }) {
-  const n = correct.length; let a = 0, f = 0, b = 0; const tm = [];
+export function analisisSimulacro({ correct, ans, times = [], limitSecs, secs }: { correct: number[]; ans: (number | undefined)[]; times?: number[]; limitSecs: number; secs: number }) {
+  const n = correct.length; let a = 0, f = 0, b = 0; const tm: { k: number; t: number; ok: boolean }[] = [];
   correct.forEach((c, k) => {
     const x = ans[k];
     if (x === undefined || x === -1) b++; else if (x === c) a++; else f++;
@@ -439,4 +461,4 @@ export function analisisSimulacro({ correct, ans, times = [], limitSecs, secs })
   };
 }
 // Diferencia entre preguntas contestadas y las que tocarían al ritmo del simulacro (positivo = vas por delante).
-export const ritmoSimulacro = (hechas, n, limitSecs, secs) => limitSecs && n ? Math.round(hechas - secs / (limitSecs / n)) : 0;
+export const ritmoSimulacro = (hechas: number, n: number, limitSecs: number, secs: number): number => limitSecs && n ? Math.round(hechas - secs / (limitSecs / n)) : 0;

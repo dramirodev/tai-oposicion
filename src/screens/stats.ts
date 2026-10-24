@@ -1,32 +1,32 @@
 import * as store from '../store.js';
 import { esc, shuffle, fmtT, pct, dominioCalc, aggregateWeeks, slowList, simHistory, compareSessions, MOTIVOS_FALLO, cargaRepasos, motivosFallo, suertes, velocidad, CONSEJOS_LECTURA } from '../logic.js';
 import { META, getIndex, getMeta, now, byIds } from '../data.js';
-import { $, app, L, toast } from '../ui.js';
+import { $, app, L, toast, type El } from '../ui.js';
+import { dominioTemas } from '../engine.js';
 import { ORIGEN, TRAMPAS, TIPOS } from '../labels.js';
-export function registerStats({ routes, go, trapTest, startRun }) {
+export function registerStats({ routes, go, trapTest, startRun }: any) {
 // ───────── mapa de dominio ─────────
 // Estado por tema a partir de: precisión actual (último resultado de cada pregunta vista),
 // cobertura (vistas / banco, con objetivo del 60 %) y frescura (días desde la última vez).
-const dominioTemas = idx => dominioCalc(idx.temas, t => META._by[t], id => store.rec(id), now());
-const ESTADO = { g: 'Dominado', y: 'A vigilar', r: 'Reforzar', n: 'Sin datos' };
-const hace = d => d === null ? '—' : d === 0 ? 'hoy' : d === 1 ? 'ayer' : `hace ${d} d`;
-function mapaHTML(dm, orden) {
-  const ord = { r: 0, y: 1, g: 2, n: 3 };
+const ESTADO: Record<string, string> = { g: 'Dominado', y: 'A vigilar', r: 'Reforzar', n: 'Sin datos' };
+const hace = (d: any) => d === null ? '—' : d === 0 ? 'hoy' : d === 1 ? 'ayer' : `hace ${d} d`;
+function mapaHTML(dm: any, orden: any) {
+  const ord: Record<string, number> = { r: 0, y: 1, g: 2, n: 3 };
   const l = dm.slice();
-  if (orden === 'frios') l.sort((a, b) => (ord[a.est] - ord[b.est]) || ((b.dias ?? -1) - (a.dias ?? -1)));
-  const c = k => dm.filter(x => x.est === k).length;
+  if (orden === 'frios') l.sort((a: any, b: any) => (ord[a.est] - ord[b.est]) || ((b.dias ?? -1) - (a.dias ?? -1)));
+  const c = (k: any) => dm.filter((x: any) => x.est === k).length;
   return `<div class="dmsum"><span class="dot r"></span>${c('r')} <span class="dot y"></span>${c('y')} <span class="dot g"></span>${c('g')} <span class="dot n"></span>${c('n')}</div>
   <div class="seg" id="dmord"><button class="${orden !== 'frios' ? 'on' : ''}" data-v="tema">Por tema</button><button class="${orden === 'frios' ? 'on' : ''}" data-v="frios">Más urgentes primero</button></div>
-  <div class="dm">${l.map(t => `<button class="dmt ${t.est}" data-dt="${t.id}"><div class="dmh"><span class="dot ${t.est}"></span><b>${t.id}</b><small>${hace(t.dias)}</small></div><div class="dmn">${esc(t.nombre)}</div><div class="dmb"><i style="width:${t.score}%"></i></div><small>${ESTADO[t.est]} · ${esc(t.why)}${t.due ? ' · ' + t.due + ' repasos' : ''}</small></button>`).join('')}</div>
+  <div class="dm">${l.map((t: any) => `<button class="dmt ${t.est}" data-dt="${t.id}"><div class="dmh"><span class="dot ${t.est}"></span><b>${t.id}</b><small>${hace(t.dias)}</small></div><div class="dmn">${esc(t.nombre)}</div><div class="dmb"><i style="width:${t.score}%"></i></div><small>${ESTADO[t.est]} · ${esc(t.why)}${t.due ? ' · ' + t.due + ' repasos' : ''}</small></button>`).join('')}</div>
   <p class="legend">Rojo: precisión o cobertura bajas, o más de 30 días sin tocar. Ámbar: va bien pero falta práctica o lleva más de 2 semanas parado. Verde: precisión alta y reciente. La puntuación mezcla tu acierto actual (65 %) y las preguntas vistas respecto al 60 % del banco (35 %). Toca un tema para practicarlo.</p>`;
 }
-function bindMapa(root, dm, redraw) {
-  root.querySelectorAll('[data-dt]').forEach(b => b.onclick = () => {
+function bindMapa(root: El, dm: any, redraw: any) {
+  root.querySelectorAll<El>('[data-dt]').forEach((b: any) => b.onclick = () => {
     const c = store.getCfg().test || { n: 15, mode: 'nuevas', o: ['O', 'A', 'G'] };
-    store.setCfg('test', { sel: [b.dataset.dt], n: c.n || 15, mode: 'nuevas', o: c.o || ['O', 'A', 'G'] });
+    store.setCfg('test', { sel: [b.dataset.dt!], n: c.n || 15, mode: 'nuevas', o: c.o || ['O', 'A', 'G'] });
     go('#/test');
   });
-  const o = root.querySelector('#dmord'); if (o) o.onclick = e => { if (e.target.dataset.v) { store.setCfg('dmord', e.target.dataset.v); redraw(); } };
+  const o = root.querySelector<El>('#dmord'); if (o) o.onclick = (e: any) => { if ((e.target as El).dataset.v!) { store.setCfg('dmord', (e.target as El).dataset.v!); redraw(); } };
 }
 
 
@@ -38,13 +38,13 @@ function paintSims() {
   if (!H.length) { el.innerHTML = '<div class="card"><p class="sub">Aún no has hecho ningún simulacro. Cuando lo hagas verás aquí tu nota por intento y podrás comparar dos.</p></div>'; return; }
   const c = store.getCfg().simc || {};
   const P1 = H.filter(h => h.part === 'p1');
-  const fmtD = t => new Date(t).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-  const dlt = (d, u = '', menosEsMejor = false) => d === null ? '' : `<span class="${d === 0 ? '' : (d > 0) !== menosEsMejor ? 'g' : 'r'}">${d > 0 ? '▲ +' : d < 0 ? '▼ ' : '= '}${d}${u}</span>`;
+  const fmtD = (t: any) => new Date(t).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+  const dlt = (d: any, u = '', menosEsMejor = false) => d === null ? '' : `<span class="${d === 0 ? '' : (d > 0) !== menosEsMejor ? 'g' : 'r'}">${d > 0 ? '▲ +' : d < 0 ? '▼ ' : '= '}${d}${u}</span>`;
   let chart = '';
   if (P1.length) {
     const Wd = 340, Ht = 150, L0 = 34, R0 = 14, T0 = 14, B0 = 24, iw = Wd - L0 - R0, ih = Ht - T0 - B0;
     const vals = P1.map(h => h.nota), lo = Math.min(0, Math.floor(Math.min(...vals) / 10) * 10), hi = 100;
-    const X = i => L0 + (P1.length === 1 ? iw / 2 : iw * i / (P1.length - 1)), Y = v => T0 + ih * (1 - (v - lo) / (hi - lo));
+    const X = (i: any) => L0 + (P1.length === 1 ? iw / 2 : iw * i / (P1.length - 1)), Y = (v: any) => T0 + ih * (1 - (v - lo) / (hi - lo));
     const grid = [lo, (lo + hi) / 2, hi].map(v => `<line x1="${L0}" x2="${Wd - R0}" y1="${Y(v)}" y2="${Y(v)}" class="gl"/><text x="${L0 - 6}" y="${Y(v) + 4}" text-anchor="end" class="gt">${Math.round(v)}</text>`).join('');
     const line = P1.length > 1 ? `<polyline points="${P1.map((h, i) => X(i) + ',' + Y(h.nota)).join(' ')}" class="ln"/>` : '';
     const dots = P1.map((h, i) => `<circle cx="${X(i)}" cy="${Y(h.nota)}" r="4.5" class="pt"><title>${fmtD(h.ts)}: ${esc(String(h.nota))}/100</title></circle>`).join('');
@@ -55,7 +55,7 @@ function paintSims() {
   let cmp = '<p class="sub sm">Haz al menos 2 simulacros de la parte 1 para compararlos.</p>';
   if (P1.length >= 2) {
     const ia = Math.min(Math.max(0, c.a ?? P1.length - 2), P1.length - 1), ib = Math.min(Math.max(0, c.b ?? P1.length - 1), P1.length - 1);
-    const opt = sel => P1.map((h, i) => `<option value="${i}" ${i === sel ? 'selected' : ''}>${fmtD(h.ts)} · ${esc(String(h.nota))}</option>`).join('');
+    const opt = (sel: any) => P1.map((h, i) => `<option value="${i}" ${i === sel ? 'selected' : ''}>${fmtD(h.ts)} · ${esc(String(h.nota))}</option>`).join('');
     const C = compareSessions(P1[ia], P1[ib]);
     cmp = `<div class="row"><select id="sca" aria-label="Intento A">${opt(ia)}</select><select id="scb" aria-label="Intento B">${opt(ib)}</select></div>
       <p class="sm">Nota: <b>${dlt(C.dNota)}</b> · acierto ${dlt(C.dAcierto, ' pts')}${C.dSeg !== null ? ' · ritmo ' + dlt(C.dSeg, ' s/preg.', true) : ''}</p>
@@ -68,26 +68,26 @@ function paintSims() {
 }
 
 // ───────── evolución y preguntas lentas ─────────
-function paintEvo(idx) {
+function paintEvo(idx: any) {
   const el = $('#evo'); if (!el) return;
   const c = Object.assign({ m: 'acierto', f: 'g', w: 12, tabla: false }, store.getCfg().evo || {});
   const save = () => store.setCfg('evo', c);
   const tipos = Object.keys(TIPOS);
   const opts = `<option value="g" ${c.f === 'g' ? 'selected' : ''}>Todo el temario</option>
     <optgroup label="Por tipo de pregunta">${tipos.map(k => `<option value="k:${k}" ${c.f === 'k:' + k ? 'selected' : ''}>${esc(TIPOS[k])}</option>`).join('')}</optgroup>
-    <optgroup label="Por tema">${idx.temas.map(t => `<option value="t:${t.id}" ${c.f === 't:' + t.id ? 'selected' : ''}>${t.id} ${esc(t.nombre)}</option>`).join('')}</optgroup>`;
+    <optgroup label="Por tema">${idx.temas.map((t: any) => `<option value="t:${t.id}" ${c.f === 't:' + t.id ? 'selected' : ''}>${t.id} ${esc(t.nombre)}</option>`).join('')}</optgroup>`;
   const filt = c.m === 'tiempo' || c.f === 'g' ? {} : c.f.startsWith('t:') ? { tema: c.f.slice(2) } : { tipo: c.f.slice(2) };
   const W = aggregateWeeks(store.getSessions(), { ...filt, weeks: c.w });
   const key = c.m === 'tiempo' ? 'segPreg' : 'acierto';
   const pts = W.map((w, i) => ({ i, v: w[key], w })).filter(p => p.v !== null);
-  const fmtD = t => new Date(t).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+  const fmtD = (t: any) => new Date(t).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
   const unit = c.m === 'tiempo' ? ' s' : ' %';
   let chart;
   if (!pts.length) chart = `<p class="sub">Aún no hay sesiones en este periodo${c.m !== 'tiempo' && c.f !== 'g' ? ' para este filtro (los tipos solo se guardan en sesiones nuevas)' : ''}.</p>`;
   else {
     const Wd = 340, H = 170, L = 34, R = 12, T = 14, B = 26, iw = Wd - L - R, ih = H - T - B;
-    const max = c.m === 'tiempo' ? Math.max(10, Math.ceil(Math.max(...pts.map(p => p.v)) / 10) * 10) : 100;
-    const X = i => L + (W.length === 1 ? iw / 2 : iw * i / (W.length - 1)), Y = v => T + ih * (1 - v / max);
+    const max = c.m === 'tiempo' ? Math.max(10, Math.ceil(Math.max(...pts.map(p => p.v as number)) / 10) * 10) : 100;
+    const X = (i: any) => L + (W.length === 1 ? iw / 2 : iw * i / (W.length - 1)), Y = (v: any) => T + ih * (1 - v / max);
     const grid = [0, .5, 1].map(f => `<line x1="${L}" x2="${Wd - R}" y1="${Y(max * f)}" y2="${Y(max * f)}" class="gl"/><text x="${L - 6}" y="${Y(max * f) + 4}" text-anchor="end" class="gt">${Math.round(max * f)}</text>`).join('');
     const line = pts.length > 1 ? `<polyline points="${pts.map(p => X(p.i) + ',' + Y(p.v)).join(' ')}" class="ln"/>` : '';
     const dots = pts.map(p => `<circle cx="${X(p.i)}" cy="${Y(p.v)}" r="4.5" class="pt"/>`).join('');
@@ -104,13 +104,13 @@ function paintEvo(idx) {
     <div class="row"><select id="evf" aria-label="Qué medir en la evolución" ${c.m === 'tiempo' ? 'disabled' : ''}>${opts}</select><select id="evw" aria-label="Número de semanas">${[8, 12, 26].map(v => `<option value="${v}" ${c.w === v ? 'selected' : ''}>${v} semanas</option>`).join('')}</select></div>
     ${chart}
     <p class="legend">${c.m === 'tiempo' ? 'Segundos medios por pregunta en tus sesiones (sin contar pausas).' : 'Porcentaje de aciertos por semana, sobre las preguntas contestadas en esa semana.'} <button class="ghost sm" id="evt">${c.tabla ? 'Ocultar tabla' : 'Ver tabla'}</button></p>${tabla}</div>`;
-  $('#evm').onclick = e => { if (e.target.dataset.v) { c.m = e.target.dataset.v; save(); paintEvo(idx); } };
-  $('#evf').onchange = e => { c.f = e.target.value; save(); paintEvo(idx); };
-  $('#evw').onchange = e => { c.w = +e.target.value; save(); paintEvo(idx); };
+  $('#evm').onclick = e => { if ((e.target as El).dataset.v!) { c.m = (e.target as El).dataset.v!; save(); paintEvo(idx); } };
+  $<El>('#evf').onchange = e => { c.f = (e.target as El).value; save(); paintEvo(idx); };
+  $<El>('#evw').onchange = e => { c.w = +(e.target as El).value; save(); paintEvo(idx); };
   $('#evt').onclick = () => { c.tabla = !c.tabla; save(); paintEvo(idx); };
   const tip = $('#tip');
-  el.querySelectorAll('.hit').forEach(r => {
-    const show = () => { const w = W[+r.dataset.i]; if (!w.n) { tip.hidden = true; return; } tip.hidden = false; tip.innerHTML = `<b>Semana del ${fmtD(w.start)}</b><br>${c.m === 'tiempo' ? (w.segPreg ?? '—') + ' s/pregunta' : w.acierto + ' % de acierto'}<br>${esc(String(w.n))} respuestas · ${esc(String(w.ses))} sesiones`; tip.style.left = Math.min(Math.max(8, 100 * (+r.dataset.i) / Math.max(1, W.length - 1)), 70) + '%'; };
+  el.querySelectorAll<El>('.hit').forEach(r => {
+    const show = () => { const w = W[+r.dataset.i!]; if (!w.n) { tip.hidden = true; return; } tip.hidden = false; tip.innerHTML = `<b>Semana del ${fmtD(w.start)}</b><br>${c.m === 'tiempo' ? (w.segPreg ?? '—') + ' s/pregunta' : w.acierto + ' % de acierto'}<br>${esc(String(w.n))} respuestas · ${esc(String(w.ses))} sesiones`; tip.style.left = Math.min(Math.max(8, 100 * (+r.dataset.i!) / Math.max(1, W.length - 1)), 70) + '%'; };
     r.onpointerenter = show; r.onpointerdown = show; r.onfocus = show;
   });
 }
@@ -124,7 +124,7 @@ async function paintSlow() {
     <p class="legend">Las que más tardas en contestar. Si las aciertas pero tardas mucho, probablemente aún no las dominas.</p>
     ${L.map(x => { const q = by.get(x.id); return `<div class="sl"><div class="slh"><b>${Math.round(x.avg)} s</b><small>${esc(q ? q.t : '')} · ${x.ok}/${x.n} aciertos${x.last === 1 ? ' · última ✓' : x.last === 0 ? ' · última ✗' : ''}</small></div><div class="sm">${esc(q ? q.q.slice(0, 140) + (q.q.length > 140 ? '…' : '') : x.id)}</div></div>`; }).join('')}
     <div class="row"><button class="btn" id="slgo">Practicar estas ${L.length}</button></div></div>`;
-  $('#slf').onclick = e => { if (e.target.dataset.v !== undefined) { c.ok = e.target.dataset.v === '1'; store.setCfg('slow', c); paintSlow(); } };
+  $('#slf').onclick = e => { if ((e.target as El).dataset.v! !== undefined) { c.ok = (e.target as El).dataset.v! === '1'; store.setCfg('slow', c); paintSlow(); } };
   $('#slgo').onclick = () => startRun({ kind: 'test', feedback: true, items: shuffle(L.map(x => by.get(x.id)).filter(Boolean)), titulo: 'Preguntas lentas' });
 }
 
@@ -132,7 +132,7 @@ async function paintSlow() {
 routes.stats = async function () {
   const idx = await getIndex(); await getMeta();
   const st = store.getStats();
-  const T = {}, TR = {}, OR = {}, TI = {};
+  const T: Record<string, number[]> = {}, TR: Record<string, number[]> = {}, OR: Record<string, number[]> = {}, TI: Record<string, number[]> = {};
   let n = 0, ok = 0;
   for (const id in st) {
     const r = st[id], m = META[id]; if (!m) continue;
@@ -143,12 +143,12 @@ routes.stats = async function () {
     if (m[2]) { (TI[m[2]] ||= [0, 0])[0] += r[0]; TI[m[2]][1] += r[1]; }
     for (const x of m[3]) { const b = TR[x] ||= [0, 0]; b[0] += r[0]; b[1] += err; }
   }
-  const bar = (v, w = 100) => `<div class="bar"><i style="width:${v}%" class="${v >= 75 ? 'g' : v >= 50 ? 'y' : 'r'}"></i></div>`;
+  const bar = (v: any, w = 100) => `<div class="bar"><i style="width:${v}%" class="${v >= 75 ? 'g' : v >= 50 ? 'y' : 'r'}"></i></div>`;
   const temas = idx.temas.map(t => { const a = T[t.id] || [0, 0, 0]; return { ...t, int: a[0], ok: a[1], seen: a[2], p: pct(a[1], a[0]) }; });
   const weak = temas.filter(t => t.int >= 8).sort((a, b) => a.p - b.p).slice(0, 5);
   const ses = store.getSessions().slice(0, 12);
   const carga = cargaRepasos(st, now(), 14), mx = Math.max(1, ...carga), mf = motivosFallo(st), mft = mf.reduce((a, b) => a + b, 0);
-  const diaL = k => { const d = new Date(now() + k * 86400000); return k === 0 ? 'hoy' : ['D', 'L', 'M', 'X', 'J', 'V', 'S'][d.getDay()] + d.getDate(); };
+  const diaL = (k: any) => { const d = new Date(now() + k * 86400000); return k === 0 ? 'hoy' : ['D', 'L', 'M', 'X', 'J', 'V', 'S'][d.getDay()] + d.getDate(); };
   const cargaHTML = `<div class="card"><div class="cg">${carga.map((v, k) => `<div class="cgc" title="${v} repasos"><small>${v || ''}</small><i class="${k === 0 && v ? 'hoy' : ''}" style="height:${Math.round(60 * v / mx)}px"></i><small>${diaL(k)}</small></div>`).join('')}</div>
     <p class="legend">Preguntas que vencen cada día (hoy incluye las atrasadas). Total en 14 días: ${carga.reduce((a, b) => a + b, 0)}.</p>
     ${mft ? `<h2 class="h3">Por qué fallas (último fallo)</h2>${[5, 7, 1, 2, 3, 4].map(m => `<div class="line"><span>${MOTIVOS_FALLO[m]}</span><span>${mf[m]} <small>(${pct(mf[m], mft)}%)</small></span></div>`).join('')}` : ''}
@@ -169,7 +169,7 @@ routes.stats = async function () {
   <h2>Por origen y tipo</h2><div class="card">${Object.entries(OR).map(([k, v]) => `<div class="line"><span>${ORIGEN[k]}</span><span>${pct(v[1], v[0])}% <small>(${v[0]})</small></span></div>`).join('')}
   ${Object.entries(TI).map(([k, v]) => `<div class="line"><span>${TIPOS[k] || k}</span><span>${pct(v[1], v[0])}% <small>(${v[0]})</small></span></div>`).join('')}</div>
   <h2>Últimas sesiones</h2><div class="card">${ses.map(s => `<div class="line"><span>${new Date(s.ts).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })} · ${s.kind === 'sim' ? 'Simulacro' : s.kind === 'rev' ? 'Repaso' : 'Test'} ${esc(String(s.n))}p</span><span>${s.kind === 'sim' ? esc(String(s.nota)) + '/100' : pct(s.a, s.n) + '%'}</span></div>`).join('') || '<p class="sub">Sin sesiones todavía.</p>'}</div>`;
-  app.querySelectorAll('[data-trap]').forEach(b => b.onclick = async () => { const r = await trapTest(15, [+b.dataset.trap]); if (!r.items.length) { toast('No hay preguntas con esa trampa.'); return; } startRun({ kind: 'test', feedback: true, items: r.items, titulo: 'Trampa: ' + (TRAMPAS[b.dataset.trap] || b.dataset.trap) }); });
+  app.querySelectorAll<El>('[data-trap]').forEach(b => b.onclick = async () => { const r = await trapTest(15, [+b.dataset.trap!]); if (!r.items.length) { toast('No hay preguntas con esa trampa.'); return; } startRun({ kind: 'test', feedback: true, items: r.items, titulo: 'Trampa: ' + (TRAMPAS[b.dataset.trap!] || b.dataset.trap!) }); });
   $('#carga').innerHTML = cargaHTML;
   { const v = velocidad(st), lentos = Object.keys(st).filter(id => st[id][8] >= 3 && st[id][7] / st[id][8] < 6).length;
     $('#vel').innerHTML = `<h2>Velocidad de lectura</h2><div class="card">${v.tot ? `<div class="line"><span>Fallos por velocidad</span><span><b>${v.n}</b> de ${v.tot} <small>(${v.p}%)</small></span></div>` : '<p class="sub">Aún no has etiquetado fallos. Al fallar, pulsa «Velocidad» si leíste deprisa.</p>'}
@@ -184,5 +184,5 @@ routes.stats = async function () {
 };
 
 
-return { dominioTemas };
+
 }

@@ -387,3 +387,14 @@ code.cd .sk{color:var(--sk);font-weight:700}
 #flist h2.h3 small{color:var(--mute);font-weight:400}
 .rv.f summary i{background:var(--bad)}
 #flist .rv .ro{margin-top:6px}
+
+/* ===== accesos ===== */
+.arow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.arow:first-of-type{border-top:0}
+.arow>span:first-child{display:flex;flex-direction:column;min-width:0}
+.arow b,.arow small{overflow-wrap:anywhere}
+.arow small{color:var(--mute)}
+.abtn{display:flex;gap:8px;flex-shrink:0}
+.abtn .btn{padding:8px 14px;min-height:44px}
+@media(max-width:520px){.arow{flex-direction:column;align-items:stretch}.abtn .btn{flex:1}}
+.card.guest{margin-top:16px}

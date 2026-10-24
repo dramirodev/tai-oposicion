@@ -23,6 +23,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Comprobar tipos (si fallan, no se despliega)
+        run: npm run typecheck
+
       - name: Tests (si fallan, no se despliega)
         run: npm test
 
