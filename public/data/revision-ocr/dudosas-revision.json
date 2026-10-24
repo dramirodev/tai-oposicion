@@ -1,0 +1,2701 @@
+[
+  {
+    "id": "AS01-P1-100",
+    "file": "public/data/T3.02.json",
+    "status": "resuelta",
+    "reason": "Restituidos el diagrama ternario y los cuatro subrayados como claves primarias explícitas; plantilla C, c=2 conservado.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/SIMULACROS/Simulacro 01.pdf",
+        "sha256": "bdbdec9e5a35ead20247871eb5d8c25f727f357b096461bd49b6464bacf54f95",
+        "pages": [
+          18,
+          19
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "AS01-P1-100",
+      "t": "T3.02",
+      "o": "A",
+      "q": "Dado el diagrama Entidad/Relación que se presenta a continuación, ¿qué relación se obtendrá en una transformación correcta al modelo relacional? Tenga en cuenta que los atributos a, b, c son, respectivamente, el identificador de las relaciones A, B y C. Los atributos subrayados indican que el atributo forma parte de la clave primaria.",
+      "a": [
+        "R(a, b, c).",
+        "R(a, b, c).",
+        "R(a, b, c).",
+        "R(a, b, c)."
+      ],
+      "c": 2,
+      "k": "D",
+      "x": [],
+      "d": null
+    },
+    "after": {
+      "i": "AS01-P1-100",
+      "t": "T3.02",
+      "o": "A",
+      "q": "Dado el diagrama Entidad/Relación que se presenta a continuación, ¿qué relación se obtendrá en una transformación correcta al modelo relacional? Tenga en cuenta que los atributos a, b, c son, respectivamente, el identificador de las relaciones A, B y C. El diagrama muestra una relación ternaria R entre A, B y C, sin cardinalidades indicadas. En las opciones se expresa en texto la clave primaria que aparece subrayada en el original.",
+      "a": [
+        "R(a, b, c), con clave primaria (b, c).",
+        "R(a, b, c), con clave primaria (a).",
+        "R(a, b, c), con clave primaria (a, b, c).",
+        "R(a, b, c), con clave primaria (a, c)."
+      ],
+      "c": 2,
+      "k": "D",
+      "x": [],
+      "d": null
+    },
+    "fields": [
+      "a",
+      "q"
+    ],
+    "changed": true
+  },
+  {
+    "id": "AS05G-P1-60",
+    "file": "public/data/T2.05.json",
+    "status": "pendiente",
+    "reason": "a) y d) son idénticas también en el PDF; la plantilla marca B. No se inventa un distractor sustituto.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/SIMULACROS/Simulacro 05 - versión GLOBE.pdf",
+        "sha256": "0d462090eff3e69e20983595b8fb1f7f3ef1045148afd90c86e477d57c6085ba",
+        "pages": [
+          10,
+          17
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "AS05G-P1-60",
+      "t": "T2.05",
+      "o": "A",
+      "q": "Respecto a los sistemas de gestión de bases de datos relacionales, ¿cuál de las siguientes NO es una regla de Codd?",
+      "a": [
+        "Independencia de la distribución.",
+        "Regla de la inversión.",
+        "Catálogo dinámico.",
+        "Independencia de la distribución."
+      ],
+      "c": 1,
+      "k": "I",
+      "x": [],
+      "d": null
+    },
+    "after": {
+      "i": "AS05G-P1-60",
+      "t": "T2.05",
+      "o": "A",
+      "q": "Respecto a los sistemas de gestión de bases de datos relacionales, ¿cuál de las siguientes NO es una regla de Codd?",
+      "a": [
+        "Independencia de la distribución.",
+        "Regla de la inversión.",
+        "Catálogo dinámico.",
+        "Independencia de la distribución."
+      ],
+      "c": 1,
+      "k": "I",
+      "x": [],
+      "d": null
+    },
+    "fields": [],
+    "changed": false
+  },
+  {
+    "id": "AS08B-P1-R-01",
+    "file": "public/data/T1.08.json",
+    "status": "pendiente",
+    "reason": "b) y c) son idénticas también en el PDF; la plantilla marca D. No se inventa un distractor sustituto.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/SIMULACROS/Simulacro 08 (bis).pdf",
+        "sha256": "b461c4e75685cf88cb416a820cdf8f1b355a5a70024067db9d00866c5e70d23f",
+        "pages": [
+          16,
+          17
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "AS08B-P1-R-01",
+      "t": "T1.08",
+      "o": "A",
+      "q": "Respecto a la firma electrónica, según el Reglamento eIDAS, indique qué afirmación NO es correcta:",
+      "a": [
+        "Firma electrónica cualificada es una firma electrónica avanzada que se crea mediante un dispositivo cualificado de creación de firmas electrónicas y que se basa en un certificado cualificado de firma electrónica.",
+        "Una firma electrónica avanzada estará vinculada al firmante de manera única.",
+        "Una firma electrónica avanzada estará vinculada al firmante de manera única.",
+        "Una firma electrónica avanzada tendrá un efecto jurídico equivalente al de una firma manuscrita."
+      ],
+      "c": 3,
+      "k": "I",
+      "x": [],
+      "d": null
+    },
+    "after": {
+      "i": "AS08B-P1-R-01",
+      "t": "T1.08",
+      "o": "A",
+      "q": "Respecto a la firma electrónica, según el Reglamento eIDAS, indique qué afirmación NO es correcta:",
+      "a": [
+        "Firma electrónica cualificada es una firma electrónica avanzada que se crea mediante un dispositivo cualificado de creación de firmas electrónicas y que se basa en un certificado cualificado de firma electrónica.",
+        "Una firma electrónica avanzada estará vinculada al firmante de manera única.",
+        "Una firma electrónica avanzada estará vinculada al firmante de manera única.",
+        "Una firma electrónica avanzada tendrá un efecto jurídico equivalente al de una firma manuscrita."
+      ],
+      "c": 3,
+      "k": "I",
+      "x": [],
+      "d": null
+    },
+    "fields": [],
+    "changed": false
+  },
+  {
+    "id": "AS11B-P1-70",
+    "file": "public/data/T3.08.json",
+    "status": "pendiente",
+    "reason": "a) y c) son idénticas también en el PDF; la plantilla marca B. No se inventa un distractor sustituto.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/SIMULACROS/Simulacro 11 (bis).pdf",
+        "sha256": "db3cc08e6578782d9c00f6dbe2963989b84056eedd492f2fa54aab9ea2c556e1",
+        "pages": [
+          11,
+          17
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "AS11B-P1-70",
+      "t": "T3.08",
+      "o": "A",
+      "q": "En JavaScript, ¿cómo se escribe una sentencia condicional para comprobar que la variable \"x\" es distinta de 2?",
+      "a": [
+        "if x <> 2",
+        "if (x != 2)",
+        "if x <> 2",
+        "if x != 2"
+      ],
+      "c": 1,
+      "k": "D",
+      "x": [],
+      "d": null,
+      "z": 1
+    },
+    "after": {
+      "i": "AS11B-P1-70",
+      "t": "T3.08",
+      "o": "A",
+      "q": "En JavaScript, ¿cómo se escribe una sentencia condicional para comprobar que la variable \"x\" es distinta de 2?",
+      "a": [
+        "if x <> 2",
+        "if (x != 2)",
+        "if x <> 2",
+        "if x != 2"
+      ],
+      "c": 1,
+      "k": "D",
+      "x": [],
+      "d": null,
+      "z": 1
+    },
+    "fields": [],
+    "changed": false
+  },
+  {
+    "id": "AS07-P1-77",
+    "file": "public/data/T3.04.json",
+    "status": "resuelta",
+    "reason": "El distractor INSERT IN ... {I<consulta>} es literal del original, no un fragmento OCR que pueda reconstruirse. La opción B y c=1 son correctos; se cierra sin modificar datos.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/SIMULACROS/Simulacro 07.pdf",
+        "sha256": "8c6a060dc034bca6db11b8f0a86603c1fcb00b4de1029f53ae74f55f3ad40cb0",
+        "pages": [
+          13,
+          17
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "AS07-P1-77",
+      "t": "T3.04",
+      "o": "A",
+      "q": "¿Cuál de las siguientes sentencias es sintácticamente correcta en ANSI SQL?",
+      "a": [
+        "DROP <nombreTabla> ON CASCADE",
+        "CREATE VIEW <nombreVista> AS <sentenciaSELECT>",
+        "ADD [COLUMN] <nombreColumna> FROM <nombreTabla>",
+        "INSERT IN <nombreTabla>VALUES {I<consulta>}"
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [],
+      "d": null
+    },
+    "after": {
+      "i": "AS07-P1-77",
+      "t": "T3.04",
+      "o": "A",
+      "q": "¿Cuál de las siguientes sentencias es sintácticamente correcta en ANSI SQL?",
+      "a": [
+        "DROP <nombreTabla> ON CASCADE",
+        "CREATE VIEW <nombreVista> AS <sentenciaSELECT>",
+        "ADD [COLUMN] <nombreColumna> FROM <nombreTabla>",
+        "INSERT IN <nombreTabla>VALUES {I<consulta>}"
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [],
+      "d": null
+    },
+    "fields": [],
+    "changed": false
+  },
+  {
+    "id": "AS12B-P1-12",
+    "file": "public/data/T1.08.json",
+    "status": "resuelta",
+    "reason": "Restitución de b) a 12–16, tal como está impreso; manual oficial DNIe p. 4 corrobora el rango. Eliminada la nota contradictoria. D y c=3 se mantienen.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/SIMULACROS/Simulacro 12 (bis).pdf",
+        "sha256": "05f942757c317f295ba81d922a95e924891a5956a67731e2b92c6ceb39a3da5b",
+        "pages": [
+          4,
+          22
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://www.dnielectronico.es/PDFs/CAMBIO_PIN_CON_PIN.pdf",
+      "https://www.dnielectronico.es/PortalDNIe/PRF1_Cons02.action?pag=REF_2100"
+    ],
+    "before": {
+      "i": "AS12B-P1-12",
+      "t": "T1.08",
+      "o": "A",
+      "q": "En relación al cambio de PIN del DNI electrónico (DNIe) sin conocer el PIN actual, señale la respuesta INCORRECTA:",
+      "a": [
+        "El titular debe acudir a un Punto de Actualización del DNIe.",
+        "El PIN deberá tener un mínimo de 8 y un máximo 16 caracteres, debiendo, en la medida de lo posible, contener una combinación alfanumérica, para dotar a dicha clave de mayor seguridad.",
+        "Se solicitará al titular su huella dactilar.",
+        "El titular debe informar previamente a la Dirección General de la Policía de la solicitud de cambio de PIN."
+      ],
+      "c": 3,
+      "k": "I",
+      "x": [
+        2
+      ],
+      "d": 2,
+      "n": "DUDOSA: b) \"PIN de 12 a 16\" también es falso (son 8-16): dos opciones incorrectas.",
+      "z": 1,
+      "w": 1
+    },
+    "after": {
+      "i": "AS12B-P1-12",
+      "t": "T1.08",
+      "o": "A",
+      "q": "En relación al cambio de PIN del DNI electrónico (DNIe) sin conocer el PIN actual, señale la respuesta INCORRECTA:",
+      "a": [
+        "El titular debe acudir a un Punto de Actualización del DNIe.",
+        "El PIN deberá tener un mínimo de 12 y un máximo 16 caracteres, debiendo, en la medida de lo posible, contener una combinación alfanumérica, para dotar a dicha clave de mayor seguridad.",
+        "Se solicitará al titular su huella dactilar.",
+        "El titular debe informar previamente a la Dirección General de la Policía de la solicitud de cambio de PIN."
+      ],
+      "c": 3,
+      "k": "I",
+      "x": [
+        2
+      ],
+      "d": 2,
+      "n": "Cotejado con Simulacro 12 bis, p. 4, y su plantilla D, p. 22. Se restituye 12–16 en b), coincidente con el manual oficial del DNIe (p. 4); se retira la nota que afirmaba 8–16 sin respaldo. No se exige informar previamente a la DGP: se utiliza el Punto de Actualización y la huella. Fuentes: https://www.dnielectronico.es/PDFs/CAMBIO_PIN_CON_PIN.pdf ; https://www.dnielectronico.es/PortalDNIe/PRF1_Cons02.action?pag=REF_2100",
+      "z": 1,
+      "w": 1
+    },
+    "fields": [
+      "a",
+      "n"
+    ],
+    "changed": true
+  },
+  {
+    "id": "AS12B-S1-02",
+    "file": "public/data/supuestos.json",
+    "status": "resuelta",
+    "reason": "Clave B→A (c=1→0) justificada por las comillas tipográficas literales del PDF y la plantilla A. No se modifica el código para fabricar una ejecución distinta.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/SIMULACROS/Simulacro 12 (bis).pdf",
+        "sha256": "05f942757c317f295ba81d922a95e924891a5956a67731e2b92c6ceb39a3da5b",
+        "pages": [
+          13,
+          22
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://docs.oracle.com/javase/specs/jls/se21/html/jls-3.html#jls-3.10.5",
+      "https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Integer.html"
+    ],
+    "before": {
+      "i": "AS12B-S1-02",
+      "t": "T3.06",
+      "o": "A",
+      "q": "¿Cuál es el resultado de la ejecución del siguiente código en Java? public static void main(String[] args) { Integer a = Integer.valueOf(5); Integer b = Integer. valueOf(“5”); System.out.println(a == b); }",
+      "a": [
+        "Da error de compilación.",
+        "Se muestra por consola ‘true’.",
+        "Se muestra por consola ‘false’.",
+        "Se muestra por consola ‘5’."
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [],
+      "d": 2,
+      "n": "DUDOSA: Integer.valueOf(5) == Integer.valueOf(\"5\") compila y da true (caché de enteros); la clave dice \"error de compilación\".",
+      "s": "AS12B-S1"
+    },
+    "after": {
+      "i": "AS12B-S1-02",
+      "t": "T3.06",
+      "o": "A",
+      "q": "¿Cuál es el resultado de la ejecución del siguiente código en Java? public static void main(String[] args) { Integer a = Integer.valueOf(5); Integer b = Integer. valueOf(“5”); System.out.println(a == b); }",
+      "a": [
+        "Da error de compilación.",
+        "Se muestra por consola ‘true’.",
+        "Se muestra por consola ‘false’.",
+        "Se muestra por consola ‘5’."
+      ],
+      "c": 0,
+      "k": "K",
+      "x": [],
+      "d": 2,
+      "n": "El PDF del Simulacro 12 bis, p. 13, imprime Integer.valueOf(“5”) con comillas tipográficas U+201C/U+201D y su plantilla p. 22 marca A. Ese código literal no compila: Java delimita cadenas con comillas U+0022 (JLS 3.10.5). Por ello se cambia c=1 a c=0 sin normalizar el código. Si se sustituyeran las comillas por ASCII, se obtendría true por la caché de Integer para 5, pero sería otro código. No se ha ejecutado Java. Fuentes: https://docs.oracle.com/javase/specs/jls/se21/html/jls-3.html#jls-3.10.5 ; https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Integer.html",
+      "s": "AS12B-S1"
+    },
+    "fields": [
+      "c",
+      "n"
+    ],
+    "changed": true
+  },
+  {
+    "id": "AS12B-S2-12",
+    "file": "public/data/supuestos.json",
+    "status": "pendiente",
+    "reason": "El original contiene BorgCube y Microsoft Hyper-V; la clave B no elimina la objeción de que Hyper-V es un hipervisor. No hay distractor perdido que pueda restituirse.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/SIMULACROS/Simulacro 12 (bis).pdf",
+        "sha256": "05f942757c317f295ba81d922a95e924891a5956a67731e2b92c6ceb39a3da5b",
+        "pages": [
+          20,
+          22
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/overview"
+    ],
+    "before": {
+      "i": "AS12B-S2-12",
+      "t": "T4.02",
+      "o": "A",
+      "q": "Se requiere la instalación de un motor de contenedores (container Engine) y le consultan sobre esta cuestión. Indique cuál de los siguientes NO es un motor de contenedores:",
+      "a": [
+        "Docker.",
+        "BorgCube.",
+        "Microsoft Hyper-V.",
+        "LXC."
+      ],
+      "c": 1,
+      "k": "I",
+      "x": [
+        9
+      ],
+      "d": 1,
+      "n": "\"BorgCube\" inventado.",
+      "s": "AS12B-S2"
+    },
+    "after": {
+      "i": "AS12B-S2-12",
+      "t": "T4.02",
+      "o": "A",
+      "q": "Se requiere la instalación de un motor de contenedores (container Engine) y le consultan sobre esta cuestión. Indique cuál de los siguientes NO es un motor de contenedores:",
+      "a": [
+        "Docker.",
+        "BorgCube.",
+        "Microsoft Hyper-V.",
+        "LXC."
+      ],
+      "c": 1,
+      "k": "I",
+      "x": [
+        9
+      ],
+      "d": 1,
+      "n": "DUDOSA — cotejo del original: El original contiene BorgCube y Microsoft Hyper-V; la clave B no elimina la objeción de que Hyper-V es un hipervisor. No hay distractor perdido que pueda restituirse.",
+      "s": "AS12B-S2"
+    },
+    "fields": [
+      "n"
+    ],
+    "changed": true
+  },
+  {
+    "id": "AS12B-S2-13",
+    "file": "public/data/supuestos.json",
+    "status": "pendiente",
+    "reason": "El PDF conserva ambas formas ip addr add e ip -6 addr add; IPv6 puede deducirse de la dirección. La plantilla B se conserva, pero A también es válida.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/SIMULACROS/Simulacro 12 (bis).pdf",
+        "sha256": "05f942757c317f295ba81d922a95e924891a5956a67731e2b92c6ceb39a3da5b",
+        "pages": [
+          20,
+          22
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://man7.org/linux/man-pages/man8/ip.8.html"
+    ],
+    "before": {
+      "i": "AS12B-S2-13",
+      "t": "T4.01",
+      "o": "A",
+      "q": "Para asignar la dirección IPv6 2001:0:0:abcd:0:8a2e:0370:7334/64 a la interfaz eth1 en un sistema Linux, seleccione el comando que lo realiza:",
+      "a": [
+        "ip addr add 2001:0:0:abcd:0:8a2e:0370:7334/64 dev eth1",
+        "ip -6 addr add 2001:0:0:abcd:0:8a2e:0370:7334/64 dev eth1",
+        "ip -v6 addr add 2001:0:0:abcd:0:8a2e:0370:7334/64 dev eth1",
+        "ip route add 2001:0:0:abcd:0:8a2e:0370:7334/64 dev eth1"
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [
+        10
+      ],
+      "d": 2,
+      "n": "ip -6 addr add.",
+      "s": "AS12B-S2"
+    },
+    "after": {
+      "i": "AS12B-S2-13",
+      "t": "T4.01",
+      "o": "A",
+      "q": "Para asignar la dirección IPv6 2001:0:0:abcd:0:8a2e:0370:7334/64 a la interfaz eth1 en un sistema Linux, seleccione el comando que lo realiza:",
+      "a": [
+        "ip addr add 2001:0:0:abcd:0:8a2e:0370:7334/64 dev eth1",
+        "ip -6 addr add 2001:0:0:abcd:0:8a2e:0370:7334/64 dev eth1",
+        "ip -v6 addr add 2001:0:0:abcd:0:8a2e:0370:7334/64 dev eth1",
+        "ip route add 2001:0:0:abcd:0:8a2e:0370:7334/64 dev eth1"
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [
+        10
+      ],
+      "d": 2,
+      "n": "DUDOSA — cotejo del original: El PDF conserva ambas formas ip addr add e ip -6 addr add; IPv6 puede deducirse de la dirección. La plantilla B se conserva, pero A también es válida.",
+      "s": "AS12B-S2"
+    },
+    "fields": [
+      "n"
+    ],
+    "changed": true
+  },
+  {
+    "id": "AT203-P1-27",
+    "file": "public/data/T2.03.json",
+    "status": "resuelta",
+    "reason": "Restituidos exponentes: las cuatro alternativas originales son diferentes; clave A conservada.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T2.03 Estructuras de Datos/T2.03 Estructuras de Datos - Test.pdf",
+        "sha256": "7dc22dd18cf63b258566278d9d7271cbfbc086fe0cd91915d45b5a68276a3a58",
+        "pages": [
+          6,
+          10
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "AT203-P1-27",
+      "t": "T2.03",
+      "o": "A",
+      "q": "El máximo número de nodos en un nivel i de un árbol binario para i≥1 es:",
+      "a": [
+        "2i-1",
+        "2i",
+        "2i -1",
+        "2i- 1"
+      ],
+      "c": 0,
+      "k": "C",
+      "x": [],
+      "d": null
+    },
+    "after": {
+      "i": "AT203-P1-27",
+      "t": "T2.03",
+      "o": "A",
+      "q": "El máximo número de nodos en un nivel i de un árbol binario para i≥1 es:",
+      "a": [
+        "2^(i-1)",
+        "2^i",
+        "2*i - 1",
+        "2^i - 1"
+      ],
+      "c": 0,
+      "k": "C",
+      "x": [],
+      "d": null,
+      "n": "Exponentes restituidos visualmente del Test T2.03, p. 6. Nivel raíz i=1; máximo 2^(i-1). Plantilla p. 10: A; c=0 conservado."
+    },
+    "fields": [
+      "a",
+      "n"
+    ],
+    "changed": true
+  },
+  {
+    "id": "AT309-P1-04",
+    "file": "public/data/T3.09.json",
+    "status": "resuelta",
+    "reason": "La confusión entender/percibir ya estaba impresa. Corrección técnica explícita conforme al principio 1 de WCAG 2.2, conservando la plantilla A.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Test.pdf",
+        "sha256": "67c13c545b63b5dd31d7ebe8d147062cdee6b6884d4945caf26ffc23cca7acc6",
+        "pages": [
+          2,
+          12
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://www.w3.org/TR/WCAG22/#perceivable"
+    ],
+    "before": {
+      "i": "AT309-P1-04",
+      "t": "T3.09",
+      "o": "A",
+      "q": "¿Qué principio de WCAG 2.2 se corresponde \"la información y los componentes de la interfaz de usuario deben ser mostrados a los usuarios en formas que ellos puedan entender?",
+      "a": [
+        "Perceptible.",
+        "Operable.",
+        "Comprensible.",
+        "Robusto."
+      ],
+      "c": 0,
+      "k": "D",
+      "x": [
+        7
+      ],
+      "d": 2,
+      "n": "DUDOSA: el enunciado dice \"entender\" (Comprensible) pero la respuesta es Perceptible."
+    },
+    "after": {
+      "i": "AT309-P1-04",
+      "t": "T3.09",
+      "o": "A",
+      "q": "¿Qué principio de WCAG 2.2 se corresponde con «la información y los componentes de la interfaz de usuario deben presentarse a los usuarios de formas que puedan percibir»?",
+      "a": [
+        "Perceptible.",
+        "Operable.",
+        "Comprensible.",
+        "Robusto."
+      ],
+      "c": 0,
+      "k": "D",
+      "x": [
+        7
+      ],
+      "d": 2,
+      "n": "Corrección técnica del original: el Test T3.09 p. 2 decía entender pero la plantilla p. 12 marca A. WCAG 2.2, principio 1, utiliza percibir; el principio 3 es comprender. Se corrige la definición, no la clave A (c=0). Fuente: https://www.w3.org/TR/WCAG22/#perceivable"
+    },
+    "fields": [
+      "n",
+      "q"
+    ],
+    "changed": true
+  },
+  {
+    "id": "AT309-P1-12",
+    "file": "public/data/T3.09.json",
+    "status": "pendiente",
+    "reason": "Texto y clave D coinciden con el Test T3.09. La valoración de AAA como criterios de menor importancia no permite una única incorrecta inequívoca; no se reescriben las opciones.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Test.pdf",
+        "sha256": "67c13c545b63b5dd31d7ebe8d147062cdee6b6884d4945caf26ffc23cca7acc6",
+        "pages": [
+          3,
+          12
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://www.w3.org/TR/WCAG22/#conformance-reqs"
+    ],
+    "before": {
+      "i": "AT309-P1-12",
+      "t": "T3.09",
+      "o": "A",
+      "q": "En WCAG 2.2, en relación al Nivel AAA señale la respuesta INCORRECTA:",
+      "a": [
+        "Son los criterios de menor importancia.",
+        "Si se cumplen confieren a la página web un buen nivel de accesibilidad.",
+        "Se deben satisfacer los criterios de Nivel A, Nivel AA y Nivel AAA.",
+        "Eliminan importantes barreras de acceso."
+      ],
+      "c": 3,
+      "k": "I",
+      "x": [],
+      "d": null
+    },
+    "after": {
+      "i": "AT309-P1-12",
+      "t": "T3.09",
+      "o": "A",
+      "q": "En WCAG 2.2, en relación al Nivel AAA señale la respuesta INCORRECTA:",
+      "a": [
+        "Son los criterios de menor importancia.",
+        "Si se cumplen confieren a la página web un buen nivel de accesibilidad.",
+        "Se deben satisfacer los criterios de Nivel A, Nivel AA y Nivel AAA.",
+        "Eliminan importantes barreras de acceso."
+      ],
+      "c": 3,
+      "k": "I",
+      "x": [],
+      "d": null,
+      "n": "DUDOSA — cotejo del original: Texto y clave D coinciden con el Test T3.09. La valoración de AAA como criterios de menor importancia no permite una única incorrecta inequívoca; no se reescriben las opciones."
+    },
+    "fields": [
+      "n"
+    ],
+    "changed": true
+  },
+  {
+    "id": "AT407-P1-13",
+    "file": "public/data/T4.07.json",
+    "status": "resuelta",
+    "reason": "Corrección técnica: se explicita enlace local y se sustituye FF01::1/8 por FF02::1 en a); índice c=0 conservado.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Test.pdf",
+        "sha256": "e601dc576ba7f2c1fad87225dd13b971e01ceec49a3e37b97c6d23be4ca00280",
+        "pages": [
+          3
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://www.rfc-editor.org/rfc/rfc4291.html#section-2.7.1"
+    ],
+    "before": {
+      "i": "AT407-P1-13",
+      "t": "T4.07",
+      "o": "A",
+      "q": "¿Qué dirección IPv6 representa todos los equipos de mi red?",
+      "a": [
+        "FF01::1/8",
+        "FF::/128",
+        "FE80::/10",
+        "::FFFF:1/128"
+      ],
+      "c": 0,
+      "k": "K",
+      "x": [
+        7
+      ],
+      "d": 2,
+      "n": "DUDOSA: \"todos los equipos de mi red\" es FF02::1; FF01::1 es ámbito de interfaz y el prefijo /8 no corresponde."
+    },
+    "after": {
+      "i": "AT407-P1-13",
+      "t": "T4.07",
+      "o": "A",
+      "q": "¿Qué dirección IPv6 representa todos los nodos del enlace local?",
+      "a": [
+        "FF02::1",
+        "FF::/128",
+        "FE80::/10",
+        "::FFFF:1/128"
+      ],
+      "c": 0,
+      "k": "K",
+      "x": [
+        7
+      ],
+      "d": 2,
+      "n": "Corrección técnica del Test T4.07 p. 3: el original FF01::1/8 no representa los nodos del enlace. RFC 4291 §2.7.1 distingue FF01::1 (interfaz) de FF02::1 (enlace). Se explicita el ámbito y se corrige a), conservando su índice c=0. Fuente: https://www.rfc-editor.org/rfc/rfc4291.html#section-2.7.1"
+    },
+    "fields": [
+      "a",
+      "n",
+      "q"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T2.01-12",
+    "file": "public/data/T2.01.json",
+    "status": "resuelta",
+    "reason": "Restitución de bases y exponentes del fragmento u. Comprobados 1101₂=13, 175₈=125 y 3AB₁₆=939; c conservado.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T2.01 Informática Básica/T2.01 Informática Básica - Temario.pdf",
+        "sha256": "f569674274fbe378727b5cc4073872ef5273b2e93e94d51912dd322852e9b437",
+        "pages": [
+          8
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "GEN-T2.01-12",
+      "t": "T2.01",
+      "o": "G",
+      "q": "El número binario 1101 equivale en decimal a:",
+      "a": [
+        "11.",
+        "13.",
+        "14.",
+        "15."
+      ],
+      "c": 1,
+      "k": "C",
+      "x": [
+        2,
+        7
+      ],
+      "d": 3,
+      "f": "GEN-T2.01-12",
+      "u": "1101)2 = 1*23 + 1*22 + 0*21 + 1*20 = 8 + 4 + 0 + 1 = 1310 … 175)8 = 1*82 + 7*81 + 5*80 = 64 + 56 + 5 = 12510",
+      "v": 0
+    },
+    "after": {
+      "i": "GEN-T2.01-12",
+      "t": "T2.01",
+      "o": "G",
+      "q": "El número binario 1101 equivale en decimal a:",
+      "a": [
+        "11.",
+        "13.",
+        "14.",
+        "15."
+      ],
+      "c": 1,
+      "k": "C",
+      "x": [
+        2,
+        7
+      ],
+      "d": 3,
+      "f": "GEN-T2.01-12",
+      "u": "1101₂ = 1*2^3 + 1*2^2 + 0*2^1 + 1*2^0 = 8 + 4 + 0 + 1 = 13₁₀ … 175₈ = 1*8^2 + 7*8^1 + 5*8^0 = 64 + 56 + 5 = 125₁₀",
+      "v": 0
+    },
+    "fields": [
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T2.01-12.v1",
+    "file": "public/data/T2.01.json",
+    "status": "resuelta",
+    "reason": "Restitución de bases y exponentes del fragmento u. Comprobados 1101₂=13, 175₈=125 y 3AB₁₆=939; c conservado.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T2.01 Informática Básica/T2.01 Informática Básica - Temario.pdf",
+        "sha256": "f569674274fbe378727b5cc4073872ef5273b2e93e94d51912dd322852e9b437",
+        "pages": [
+          8
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "GEN-T2.01-12.v1",
+      "t": "T2.01",
+      "o": "G",
+      "q": "El número octal 175 equivale en decimal a:",
+      "a": [
+        "117.",
+        "135.",
+        "125.",
+        "175."
+      ],
+      "c": 2,
+      "k": "C",
+      "x": [
+        2,
+        7
+      ],
+      "d": 3,
+      "f": "GEN-T2.01-12",
+      "u": "1101)2 = 1*23 + 1*22 + 0*21 + 1*20 = 8 + 4 + 0 + 1 = 1310 … 175)8 = 1*82 + 7*81 + 5*80 = 64 + 56 + 5 = 12510",
+      "v": 1
+    },
+    "after": {
+      "i": "GEN-T2.01-12.v1",
+      "t": "T2.01",
+      "o": "G",
+      "q": "El número octal 175 equivale en decimal a:",
+      "a": [
+        "117.",
+        "135.",
+        "125.",
+        "175."
+      ],
+      "c": 2,
+      "k": "C",
+      "x": [
+        2,
+        7
+      ],
+      "d": 3,
+      "f": "GEN-T2.01-12",
+      "u": "1101₂ = 1*2^3 + 1*2^2 + 0*2^1 + 1*2^0 = 8 + 4 + 0 + 1 = 13₁₀ … 175₈ = 1*8^2 + 7*8^1 + 5*8^0 = 64 + 56 + 5 = 125₁₀",
+      "v": 1
+    },
+    "fields": [
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T2.01-12.v2",
+    "file": "public/data/T2.01.json",
+    "status": "resuelta",
+    "reason": "Restitución de bases y exponentes del fragmento u. Comprobados 1101₂=13, 175₈=125 y 3AB₁₆=939; c conservado.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T2.01 Informática Básica/T2.01 Informática Básica - Temario.pdf",
+        "sha256": "f569674274fbe378727b5cc4073872ef5273b2e93e94d51912dd322852e9b437",
+        "pages": [
+          8
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "GEN-T2.01-12.v2",
+      "t": "T2.01",
+      "o": "G",
+      "q": "El número hexadecimal 3AB equivale en decimal a:",
+      "a": [
+        "929.",
+        "1.003.",
+        "949.",
+        "939."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        2,
+        7
+      ],
+      "d": 3,
+      "f": "GEN-T2.01-12",
+      "u": "1101)2 = 1*23 + 1*22 + 0*21 + 1*20 = 8 + 4 + 0 + 1 = 1310 … 175)8 = 1*82 + 7*81 + 5*80 = 64 + 56 + 5 = 12510",
+      "v": 1
+    },
+    "after": {
+      "i": "GEN-T2.01-12.v2",
+      "t": "T2.01",
+      "o": "G",
+      "q": "El número hexadecimal 3AB equivale en decimal a:",
+      "a": [
+        "929.",
+        "1.003.",
+        "949.",
+        "939."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        2,
+        7
+      ],
+      "d": 3,
+      "f": "GEN-T2.01-12",
+      "u": "1101₂ = 1*2^3 + 1*2^2 + 0*2^1 + 1*2^0 = 8 + 4 + 0 + 1 = 13₁₀ … 175₈ = 1*8^2 + 7*8^1 + 5*8^0 = 64 + 56 + 5 = 125₁₀",
+      "v": 1
+    },
+    "fields": [
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T2.01-13",
+    "file": "public/data/T2.01.json",
+    "status": "resuelta",
+    "reason": "Restitución de bases y exponentes del fragmento u: 2A0₁₆=672 y 1226₈=662; c conservado.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T2.01 Informática Básica/T2.01 Informática Básica - Temario.pdf",
+        "sha256": "f569674274fbe378727b5cc4073872ef5273b2e93e94d51912dd322852e9b437",
+        "pages": [
+          9
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "GEN-T2.01-13",
+      "t": "T2.01",
+      "o": "G",
+      "q": "Indique de entre los siguientes números cuál es menor:",
+      "a": [
+        "2A0 en sistema hexadecimal.",
+        "1010110100 en sistema binario.",
+        "690 en sistema decimal.",
+        "1226 en sistema octal."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        2,
+        7
+      ],
+      "d": 3,
+      "f": "GEN-T2.01-13",
+      "u": "Indique de entre los siguientes números cuál es menor: a) 2A0 en sistema hexadecimal. b) 1226 en sistema octal. c) 690 en sistema decimal. d) 1010110100 en sistema binario. … 2A016 = 2*162 + 10*161 = 512 + 160 = 672 12268 = 1*83 + 2*82 + 2*8 + 6 = 512 + 128 + 16 + 6 = 662",
+      "v": 0
+    },
+    "after": {
+      "i": "GEN-T2.01-13",
+      "t": "T2.01",
+      "o": "G",
+      "q": "Indique de entre los siguientes números cuál es menor:",
+      "a": [
+        "2A0 en sistema hexadecimal.",
+        "1010110100 en sistema binario.",
+        "690 en sistema decimal.",
+        "1226 en sistema octal."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        2,
+        7
+      ],
+      "d": 3,
+      "f": "GEN-T2.01-13",
+      "u": "Indique de entre los siguientes números cuál es menor: a) 2A0 en sistema hexadecimal. b) 1226 en sistema octal. c) 690 en sistema decimal. d) 1010110100 en sistema binario. … 2A0₁₆ = 2*16^2 + 10*16^1 = 512 + 160 = 672 1226₈ = 1*8^3 + 2*8^2 + 2*8 + 6 = 512 + 128 + 16 + 6 = 662",
+      "v": 0
+    },
+    "fields": [
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T2.01-13.v1",
+    "file": "public/data/T2.01.json",
+    "status": "resuelta",
+    "reason": "Restitución de bases y exponentes del fragmento u: 2A0₁₆=672 y 1226₈=662; c conservado.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T2.01 Informática Básica/T2.01 Informática Básica - Temario.pdf",
+        "sha256": "f569674274fbe378727b5cc4073872ef5273b2e93e94d51912dd322852e9b437",
+        "pages": [
+          9
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "GEN-T2.01-13.v1",
+      "t": "T2.01",
+      "o": "G",
+      "q": "El número 2A0 en sistema hexadecimal equivale en decimal a:",
+      "a": [
+        "672.",
+        "662.",
+        "690.",
+        "692."
+      ],
+      "c": 0,
+      "k": "C",
+      "x": [
+        2,
+        7
+      ],
+      "d": 3,
+      "f": "GEN-T2.01-13",
+      "u": "Indique de entre los siguientes números cuál es menor: a) 2A0 en sistema hexadecimal. b) 1226 en sistema octal. c) 690 en sistema decimal. d) 1010110100 en sistema binario. … 2A016 = 2*162 + 10*161 = 512 + 160 = 672 12268 = 1*83 + 2*82 + 2*8 + 6 = 512 + 128 + 16 + 6 = 662",
+      "v": 1
+    },
+    "after": {
+      "i": "GEN-T2.01-13.v1",
+      "t": "T2.01",
+      "o": "G",
+      "q": "El número 2A0 en sistema hexadecimal equivale en decimal a:",
+      "a": [
+        "672.",
+        "662.",
+        "690.",
+        "692."
+      ],
+      "c": 0,
+      "k": "C",
+      "x": [
+        2,
+        7
+      ],
+      "d": 3,
+      "f": "GEN-T2.01-13",
+      "u": "Indique de entre los siguientes números cuál es menor: a) 2A0 en sistema hexadecimal. b) 1226 en sistema octal. c) 690 en sistema decimal. d) 1010110100 en sistema binario. … 2A0₁₆ = 2*16^2 + 10*16^1 = 512 + 160 = 672 1226₈ = 1*8^3 + 2*8^2 + 2*8 + 6 = 512 + 128 + 16 + 6 = 662",
+      "v": 1
+    },
+    "fields": [
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T2.01-13.v2",
+    "file": "public/data/T2.01.json",
+    "status": "resuelta",
+    "reason": "Restitución de bases y exponentes del fragmento u: 2A0₁₆=672 y 1226₈=662; c conservado.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T2.01 Informática Básica/T2.01 Informática Básica - Temario.pdf",
+        "sha256": "f569674274fbe378727b5cc4073872ef5273b2e93e94d51912dd322852e9b437",
+        "pages": [
+          9
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "GEN-T2.01-13.v2",
+      "t": "T2.01",
+      "o": "G",
+      "q": "El número 1226 en sistema octal equivale en decimal a:",
+      "a": [
+        "662.",
+        "672.",
+        "692.",
+        "1.226."
+      ],
+      "c": 0,
+      "k": "C",
+      "x": [
+        2,
+        7
+      ],
+      "d": 3,
+      "f": "GEN-T2.01-13",
+      "u": "Indique de entre los siguientes números cuál es menor: a) 2A0 en sistema hexadecimal. b) 1226 en sistema octal. c) 690 en sistema decimal. d) 1010110100 en sistema binario. … 2A016 = 2*162 + 10*161 = 512 + 160 = 672 12268 = 1*83 + 2*82 + 2*8 + 6 = 512 + 128 + 16 + 6 = 662",
+      "v": 1
+    },
+    "after": {
+      "i": "GEN-T2.01-13.v2",
+      "t": "T2.01",
+      "o": "G",
+      "q": "El número 1226 en sistema octal equivale en decimal a:",
+      "a": [
+        "662.",
+        "672.",
+        "692.",
+        "1.226."
+      ],
+      "c": 0,
+      "k": "C",
+      "x": [
+        2,
+        7
+      ],
+      "d": 3,
+      "f": "GEN-T2.01-13",
+      "u": "Indique de entre los siguientes números cuál es menor: a) 2A0 en sistema hexadecimal. b) 1226 en sistema octal. c) 690 en sistema decimal. d) 1010110100 en sistema binario. … 2A0₁₆ = 2*16^2 + 10*16^1 = 512 + 160 = 672 1226₈ = 1*8^3 + 2*8^2 + 2*8 + 6 = 512 + 128 + 16 + 6 = 662",
+      "v": 1
+    },
+    "fields": [
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T2.03-78",
+    "file": "public/data/T2.03.json",
+    "status": "resuelta",
+    "reason": "El original ya omite un paréntesis. Reparación sintáctica mínima del fragmento u, coherente con la fórmula y su ejemplo mid=0+9*2/9=2; c conservado.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T2.03 Estructuras de Datos/T2.03 Estructuras de Datos - Temario.pdf",
+        "sha256": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a",
+        "pages": [
+          36
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "GEN-T2.03-78",
+      "t": "T2.03",
+      "o": "G",
+      "q": "En un vector con valores 1 a 10 en posiciones 0 a 9, al buscar la clave 3 por interpolación, el valor de mid en el primer paso es:",
+      "a": [
+        "2.",
+        "3.",
+        "4.",
+        "5."
+      ],
+      "c": 0,
+      "k": "C",
+      "x": [
+        8,
+        2
+      ],
+      "d": 3,
+      "f": "GEN-T2.03-78",
+      "u": "mid = low + (high – low) * [(key – k(low)]/[k(high) – k(low)] … mid = 0 + 9 * 2 / 9 = 2",
+      "v": 0
+    },
+    "after": {
+      "i": "GEN-T2.03-78",
+      "t": "T2.03",
+      "o": "G",
+      "q": "En un vector con valores 1 a 10 en posiciones 0 a 9, al buscar la clave 3 por interpolación, el valor de mid en el primer paso es:",
+      "a": [
+        "2.",
+        "3.",
+        "4.",
+        "5."
+      ],
+      "c": 0,
+      "k": "C",
+      "x": [
+        8,
+        2
+      ],
+      "d": 3,
+      "f": "GEN-T2.03-78",
+      "u": "mid = low + (high – low) * [(key – k(low))]/[k(high) – k(low)] … mid = 0 + 9 * 2 / 9 = 2",
+      "v": 0
+    },
+    "fields": [
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T2.03-78.v1",
+    "file": "public/data/T2.03.json",
+    "status": "resuelta",
+    "reason": "El original ya omite un paréntesis. Reparación sintáctica mínima del fragmento u, coherente con la fórmula y su ejemplo mid=0+9*2/9=2; c conservado.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T2.03 Estructuras de Datos/T2.03 Estructuras de Datos - Temario.pdf",
+        "sha256": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a",
+        "pages": [
+          36
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "GEN-T2.03-78.v1",
+      "t": "T2.03",
+      "o": "G",
+      "q": "En la búsqueda por interpolación la posición estimada se calcula como:",
+      "a": [
+        "mid = low * high / key.",
+        "mid = (low + high) / 2.",
+        "mid = low + (high – low) / 2.",
+        "mid = low + (high – low) * (key – k(low)) / (k(high) – k(low))."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        8,
+        2
+      ],
+      "d": 3,
+      "f": "GEN-T2.03-78",
+      "u": "mid = low + (high – low) * [(key – k(low)]/[k(high) – k(low)] … mid = 0 + 9 * 2 / 9 = 2",
+      "v": 1
+    },
+    "after": {
+      "i": "GEN-T2.03-78.v1",
+      "t": "T2.03",
+      "o": "G",
+      "q": "En la búsqueda por interpolación la posición estimada se calcula como:",
+      "a": [
+        "mid = low * high / key.",
+        "mid = (low + high) / 2.",
+        "mid = low + (high – low) / 2.",
+        "mid = low + (high – low) * (key – k(low)) / (k(high) – k(low))."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        8,
+        2
+      ],
+      "d": 3,
+      "f": "GEN-T2.03-78",
+      "u": "mid = low + (high – low) * [(key – k(low))]/[k(high) – k(low)] … mid = 0 + 9 * 2 / 9 = 2",
+      "v": 1
+    },
+    "fields": [
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T2.03-78.v2",
+    "file": "public/data/T2.03.json",
+    "status": "resuelta",
+    "reason": "El original ya omite un paréntesis. Reparación sintáctica mínima del fragmento u, coherente con la fórmula y su ejemplo mid=0+9*2/9=2; c conservado.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T2.03 Estructuras de Datos/T2.03 Estructuras de Datos - Temario.pdf",
+        "sha256": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a",
+        "pages": [
+          36
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "GEN-T2.03-78.v2",
+      "t": "T2.03",
+      "o": "G",
+      "q": "En la búsqueda por interpolación, si key es menor que k(mid):",
+      "a": [
+        "Se hace high igual a mid+1.",
+        "Se hace low igual a mid+1.",
+        "Se hace high igual a mid-1.",
+        "Se finaliza la búsqueda."
+      ],
+      "c": 2,
+      "k": "C",
+      "x": [
+        8,
+        2
+      ],
+      "d": 3,
+      "f": "GEN-T2.03-78",
+      "u": "mid = low + (high – low) * [(key – k(low)]/[k(high) – k(low)] … mid = 0 + 9 * 2 / 9 = 2",
+      "v": 1
+    },
+    "after": {
+      "i": "GEN-T2.03-78.v2",
+      "t": "T2.03",
+      "o": "G",
+      "q": "En la búsqueda por interpolación, si key es menor que k(mid):",
+      "a": [
+        "Se hace high igual a mid+1.",
+        "Se hace low igual a mid+1.",
+        "Se hace high igual a mid-1.",
+        "Se finaliza la búsqueda."
+      ],
+      "c": 2,
+      "k": "C",
+      "x": [
+        8,
+        2
+      ],
+      "d": 3,
+      "f": "GEN-T2.03-78",
+      "u": "mid = low + (high – low) * [(key – k(low))]/[k(high) – k(low)] … mid = 0 + 9 * 2 / 9 = 2",
+      "v": 1
+    },
+    "fields": [
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T2.03-86.v2",
+    "file": "public/data/T2.03.json",
+    "status": "resuelta",
+    "reason": "Corrección técnica del original: cualquier arista→una arista de peso mínimo. El índice correcto sigue siendo c=2.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T2.03 Estructuras de Datos/T2.03 Estructuras de Datos - Temario.pdf",
+        "sha256": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a",
+        "pages": [
+          42
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://algs4.cs.princeton.edu/43mst/index.php"
+    ],
+    "before": {
+      "i": "GEN-T2.03-86.v2",
+      "t": "T2.03",
+      "o": "G",
+      "q": "El algoritmo de Kruskal construye incrementalmente el árbol empezando por:",
+      "a": [
+        "El vértice raíz.",
+        "Cualquier vértice.",
+        "Cualquier arista.",
+        "La arista de mayor peso."
+      ],
+      "c": 2,
+      "k": "C",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T2.03-86",
+      "u": "El algoritmo de Kruskal es un algoritmo de la teoría de grafos para encontrar un árbol recubridor mínimo en un grafo conexo, no dirigido y ponderado. … El algoritmo de Prim es un algoritmo perteneciente a la teoría de los grafos para encontrar un árbol recubridor mínimo en un grafo conexo, no dirigido y cuyas aristas están etiquetadas. Empezando por cualquier vértice",
+      "v": 1
+    },
+    "after": {
+      "i": "GEN-T2.03-86.v2",
+      "t": "T2.03",
+      "o": "G",
+      "q": "El algoritmo de Kruskal construye incrementalmente el árbol empezando por:",
+      "a": [
+        "El vértice raíz.",
+        "Cualquier vértice.",
+        "Una arista de peso mínimo.",
+        "La arista de mayor peso."
+      ],
+      "c": 2,
+      "k": "C",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T2.03-86",
+      "u": "El algoritmo de Kruskal es un algoritmo de la teoría de grafos para encontrar un árbol recubridor mínimo en un grafo conexo, no dirigido y ponderado. … El algoritmo de Prim es un algoritmo perteneciente a la teoría de los grafos para encontrar un árbol recubridor mínimo en un grafo conexo, no dirigido y cuyas aristas están etiquetadas. Empezando por cualquier vértice",
+      "v": 1,
+      "n": "Corrección técnica de una errata del Temario T2.03 p. 42: Kruskal procesa aristas de menor a mayor peso, descartando las que forman ciclos. No empieza por una arista arbitraria. Se corrige la opción c), sin moverla ni cambiar c=2. Fuente: https://algs4.cs.princeton.edu/43mst/index.php"
+    },
+    "fields": [
+      "a",
+      "n"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T3.03-48",
+    "file": "public/data/T3.03.json",
+    "status": "pendiente",
+    "reason": "El Temario T3.03 se contradice entre pp. 16 y 21 sobre tipado y conversiones. La distinción fuerte/débil no justifica una regla universal de conversiones implícitas/explícitas; se conserva la clave sin certificarla.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb",
+        "pages": [
+          16,
+          21
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "GEN-T3.03-48",
+      "t": "T3.03",
+      "o": "G",
+      "q": "Normalmente, los lenguajes débilmente tipados tendrán:",
+      "a": [
+        "Solamente conversiones explícitas.",
+        "Ninguna conversión.",
+        "Solamente conversiones implícitas.",
+        "Conversiones implícitas y explícitas."
+      ],
+      "c": 2,
+      "k": "C",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.03-48",
+      "u": "Normalmente: Los lenguajes fuertemente tipados tendrán conversiones implícitas y explícitas. Los lenguajes débilmente tipados solamente las conversiones implícitas. … casting\" (convertir): es el proceso de transformar un valor de un tipo a un valor de otro tipo.",
+      "v": 0
+    },
+    "after": {
+      "i": "GEN-T3.03-48",
+      "t": "T3.03",
+      "o": "G",
+      "q": "Normalmente, los lenguajes débilmente tipados tendrán:",
+      "a": [
+        "Solamente conversiones explícitas.",
+        "Ninguna conversión.",
+        "Solamente conversiones implícitas.",
+        "Conversiones implícitas y explícitas."
+      ],
+      "c": 2,
+      "k": "C",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.03-48",
+      "u": "Normalmente: Los lenguajes fuertemente tipados tendrán conversiones implícitas y explícitas. Los lenguajes débilmente tipados solamente las conversiones implícitas. … casting\" (convertir): es el proceso de transformar un valor de un tipo a un valor de otro tipo.",
+      "v": 0,
+      "n": "DUDOSA — cotejo del original: El Temario T3.03 se contradice entre pp. 16 y 21 sobre tipado y conversiones. La distinción fuerte/débil no justifica una regla universal de conversiones implícitas/explícitas; se conserva la clave sin certificarla."
+    },
+    "fields": [
+      "n"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T3.03-48.v1",
+    "file": "public/data/T3.03.json",
+    "status": "pendiente",
+    "reason": "El Temario T3.03 se contradice entre pp. 16 y 21 sobre tipado y conversiones. La distinción fuerte/débil no justifica una regla universal de conversiones implícitas/explícitas; se conserva la clave sin certificarla.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb",
+        "pages": [
+          16,
+          21
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "GEN-T3.03-48.v1",
+      "t": "T3.03",
+      "o": "G",
+      "q": "Normalmente, los lenguajes fuertemente tipados tendrán:",
+      "a": [
+        "Solamente conversiones explícitas.",
+        "Ninguna conversión.",
+        "Solamente conversiones implícitas.",
+        "Conversiones implícitas y explícitas."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.03-48",
+      "u": "Normalmente: Los lenguajes fuertemente tipados tendrán conversiones implícitas y explícitas. Los lenguajes débilmente tipados solamente las conversiones implícitas. … casting\" (convertir): es el proceso de transformar un valor de un tipo a un valor de otro tipo.",
+      "v": 1
+    },
+    "after": {
+      "i": "GEN-T3.03-48.v1",
+      "t": "T3.03",
+      "o": "G",
+      "q": "Normalmente, los lenguajes fuertemente tipados tendrán:",
+      "a": [
+        "Solamente conversiones explícitas.",
+        "Ninguna conversión.",
+        "Solamente conversiones implícitas.",
+        "Conversiones implícitas y explícitas."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.03-48",
+      "u": "Normalmente: Los lenguajes fuertemente tipados tendrán conversiones implícitas y explícitas. Los lenguajes débilmente tipados solamente las conversiones implícitas. … casting\" (convertir): es el proceso de transformar un valor de un tipo a un valor de otro tipo.",
+      "v": 1,
+      "n": "DUDOSA — cotejo del original: El Temario T3.03 se contradice entre pp. 16 y 21 sobre tipado y conversiones. La distinción fuerte/débil no justifica una regla universal de conversiones implícitas/explícitas; se conserva la clave sin certificarla."
+    },
+    "fields": [
+      "n"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T3.03-48.v2",
+    "file": "public/data/T3.03.json",
+    "status": "resuelta",
+    "reason": "La definición de casting sí figura en p. 21. Se conserva solo ese fragmento pertinente, sin arrastrar la regla contradictoria de tipado; c=3 conservado.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb",
+        "pages": [
+          21
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "GEN-T3.03-48.v2",
+      "t": "T3.03",
+      "o": "G",
+      "q": "El casting es:",
+      "a": [
+        "La compilación de un programa.",
+        "La declaración de una variable.",
+        "La asignación de memoria a un array.",
+        "El proceso de transformar un valor de un tipo a un valor de otro tipo."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.03-48",
+      "u": "Normalmente: Los lenguajes fuertemente tipados tendrán conversiones implícitas y explícitas. Los lenguajes débilmente tipados solamente las conversiones implícitas. … casting\" (convertir): es el proceso de transformar un valor de un tipo a un valor de otro tipo.",
+      "v": 1
+    },
+    "after": {
+      "i": "GEN-T3.03-48.v2",
+      "t": "T3.03",
+      "o": "G",
+      "q": "El casting es:",
+      "a": [
+        "La compilación de un programa.",
+        "La declaración de una variable.",
+        "La asignación de memoria a un array.",
+        "El proceso de transformar un valor de un tipo a un valor de otro tipo."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.03-48",
+      "u": "El \"casting\" (convertir) es el proceso de transformar un valor de un tipo a un valor de otro tipo.",
+      "v": 1
+    },
+    "fields": [
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T3.06-06",
+    "file": "public/data/T3.06.json",
+    "status": "resuelta",
+    "reason": "Se explicita C90 para que la regla histórica del material no se generalice a C99 y posteriores. No es una versión literalmente indicada por la pregunta original; es una acotación editorial verificada.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "pages": [
+          3
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "GEN-T3.06-06",
+      "t": "T3.06",
+      "o": "G",
+      "q": "En C, las variables deben declararse:",
+      "a": [
+        "Al final de la función.",
+        "Al comienzo de un bloque, antes de la primera sentencia ejecutable.",
+        "En cualquier punto del bloque.",
+        "Solo fuera de las funciones."
+      ],
+      "c": 1,
+      "k": "C",
+      "x": [
+        3,
+        8
+      ],
+      "d": 2,
+      "f": "GEN-T3.06-06",
+      "u": "En C todas las variables han de ser declaradas antes de ser utilizadas. En concreto, las variables tienen que ser declaradas al comienzo de un bloque, antes de la primera sentencia ejecutable de dicho bloque.",
+      "v": 0
+    },
+    "after": {
+      "i": "GEN-T3.06-06",
+      "t": "T3.06",
+      "o": "G",
+      "q": "En C90, las variables locales de un bloque deben declararse:",
+      "a": [
+        "Al final de la función.",
+        "Al comienzo de un bloque, antes de la primera sentencia ejecutable.",
+        "En cualquier punto del bloque.",
+        "Solo fuera de las funciones."
+      ],
+      "c": 1,
+      "k": "C",
+      "x": [
+        3,
+        8
+      ],
+      "d": 2,
+      "f": "GEN-T3.06-06",
+      "u": "En C todas las variables han de ser declaradas antes de ser utilizadas. En concreto, las variables tienen que ser declaradas al comienzo de un bloque, antes de la primera sentencia ejecutable de dicho bloque.",
+      "v": 0,
+      "n": "Se acota editorialmente a C90 la regla del Resumen C, p. 3 (tabla de 32 palabras ANSI C). La declaración tras una sentencia se admite desde C99; la formulación sin versión era ambigua. c=1 conservado. Contraste: compilación estricta con -std=c90 y -std=c99, registrada en el informe."
+    },
+    "fields": [
+      "n",
+      "q"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T3.06-338",
+    "file": "public/data/T3.06.json",
+    "status": "resuelta",
+    "reason": "Corregida únicamente la sintaxis de @OneToMany en u; error también presente en el PDF, contraste con la API oficial.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "pages": [
+          40
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://jakarta.ee/specifications/platform/11/apidocs/jakarta/persistence/onetomany"
+    ],
+    "before": {
+      "i": "GEN-T3.06-338",
+      "t": "T3.06",
+      "o": "G",
+      "q": "En el ejemplo profesores-asignaturas, la anotación @OneToMany con mappedBy=\"profesor\" se coloca en:",
+      "a": [
+        "En una clase intermedia.",
+        "La clase Profesor.",
+        "Ambas clases.",
+        "La clase Asignatura."
+      ],
+      "c": 1,
+      "k": "C",
+      "x": [
+        3,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.06-338",
+      "u": "Una asignatura es impartida por un profesor y un profesor puede impartir una o varias asignaturas. Se establece una relación uno a muchos entre profesores y asignaturas. … @OneToMany(mappedBy=\"profesor\" cascade=\"CascadeType.ALL)",
+      "v": 0
+    },
+    "after": {
+      "i": "GEN-T3.06-338",
+      "t": "T3.06",
+      "o": "G",
+      "q": "En el ejemplo profesores-asignaturas, la anotación @OneToMany con mappedBy=\"profesor\" se coloca en:",
+      "a": [
+        "En una clase intermedia.",
+        "La clase Profesor.",
+        "Ambas clases.",
+        "La clase Asignatura."
+      ],
+      "c": 1,
+      "k": "C",
+      "x": [
+        3,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.06-338",
+      "u": "Una asignatura es impartida por un profesor y un profesor puede impartir una o varias asignaturas. Se establece una relación uno a muchos entre profesores y asignaturas. … @OneToMany(mappedBy=\"profesor\", cascade=CascadeType.ALL)",
+      "v": 0,
+      "n": "Corrección sintáctica de un error ya impreso en el Resumen Java y .NET, p. 40: coma entre atributos; cascade recibe CascadeType[], no una cadena. Se conservan mappedBy y las clases del ejemplo; c no cambia. Fuente: https://jakarta.ee/specifications/platform/11/apidocs/jakarta/persistence/onetomany"
+    },
+    "fields": [
+      "n",
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T3.06-338.v1",
+    "file": "public/data/T3.06.json",
+    "status": "resuelta",
+    "reason": "Corregida únicamente la sintaxis de @OneToMany en u; error también presente en el PDF, contraste con la API oficial.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "pages": [
+          40
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://jakarta.ee/specifications/platform/11/apidocs/jakarta/persistence/onetomany"
+    ],
+    "before": {
+      "i": "GEN-T3.06-338.v1",
+      "t": "T3.06",
+      "o": "G",
+      "q": "En el ejemplo profesores-asignaturas, la anotación @ManyToOne se coloca en:",
+      "a": [
+        "La clase Asignatura.",
+        "En una clase intermedia.",
+        "En ambas clases.",
+        "La clase Profesor."
+      ],
+      "c": 0,
+      "k": "C",
+      "x": [
+        3,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.06-338",
+      "u": "Una asignatura es impartida por un profesor y un profesor puede impartir una o varias asignaturas. Se establece una relación uno a muchos entre profesores y asignaturas. … @OneToMany(mappedBy=\"profesor\" cascade=\"CascadeType.ALL)",
+      "v": 1
+    },
+    "after": {
+      "i": "GEN-T3.06-338.v1",
+      "t": "T3.06",
+      "o": "G",
+      "q": "En el ejemplo profesores-asignaturas, la anotación @ManyToOne se coloca en:",
+      "a": [
+        "La clase Asignatura.",
+        "En una clase intermedia.",
+        "En ambas clases.",
+        "La clase Profesor."
+      ],
+      "c": 0,
+      "k": "C",
+      "x": [
+        3,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.06-338",
+      "u": "Una asignatura es impartida por un profesor y un profesor puede impartir una o varias asignaturas. Se establece una relación uno a muchos entre profesores y asignaturas. … @OneToMany(mappedBy=\"profesor\", cascade=CascadeType.ALL)",
+      "v": 1,
+      "n": "Corrección sintáctica de un error ya impreso en el Resumen Java y .NET, p. 40: coma entre atributos; cascade recibe CascadeType[], no una cadena. Se conservan mappedBy y las clases del ejemplo; c no cambia. Fuente: https://jakarta.ee/specifications/platform/11/apidocs/jakarta/persistence/onetomany"
+    },
+    "fields": [
+      "n",
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T3.06-338.v2",
+    "file": "public/data/T3.06.json",
+    "status": "resuelta",
+    "reason": "Corregida únicamente la sintaxis de @OneToMany en u; error también presente en el PDF, contraste con la API oficial.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "pages": [
+          40
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://jakarta.ee/specifications/platform/11/apidocs/jakarta/persistence/onetomany"
+    ],
+    "before": {
+      "i": "GEN-T3.06-338.v2",
+      "t": "T3.06",
+      "o": "G",
+      "q": "En el ejemplo profesores-asignaturas, la clave ajena idprofesor reside en la tabla:",
+      "a": [
+        "profesores.",
+        "profesorescursos.",
+        "cursos.",
+        "asignaturas."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        3,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.06-338",
+      "u": "Una asignatura es impartida por un profesor y un profesor puede impartir una o varias asignaturas. Se establece una relación uno a muchos entre profesores y asignaturas. … @OneToMany(mappedBy=\"profesor\" cascade=\"CascadeType.ALL)",
+      "v": 1
+    },
+    "after": {
+      "i": "GEN-T3.06-338.v2",
+      "t": "T3.06",
+      "o": "G",
+      "q": "En el ejemplo profesores-asignaturas, la clave ajena idprofesor reside en la tabla:",
+      "a": [
+        "profesores.",
+        "profesorescursos.",
+        "cursos.",
+        "asignaturas."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        3,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.06-338",
+      "u": "Una asignatura es impartida por un profesor y un profesor puede impartir una o varias asignaturas. Se establece una relación uno a muchos entre profesores y asignaturas. … @OneToMany(mappedBy=\"profesor\", cascade=CascadeType.ALL)",
+      "v": 1,
+      "n": "Corrección sintáctica de un error ya impreso en el Resumen Java y .NET, p. 40: coma entre atributos; cascade recibe CascadeType[], no una cadena. Se conservan mappedBy y las clases del ejemplo; c no cambia. Fuente: https://jakarta.ee/specifications/platform/11/apidocs/jakarta/persistence/onetomany"
+    },
+    "fields": [
+      "n",
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T3.06-340",
+    "file": "public/data/T3.06.json",
+    "status": "resuelta",
+    "reason": "Corregidos cascade y joinColumns en u según la API; errores también impresos en el PDF. No se reinterpreta la asociación.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "pages": [
+          42,
+          43
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://jakarta.ee/specifications/platform/10/apidocs/jakarta/persistence/jointable"
+    ],
+    "before": {
+      "i": "GEN-T3.06-340",
+      "t": "T3.06",
+      "o": "G",
+      "q": "En el ejemplo profesores-cursos, la clase propietaria de la relación (con @JoinTable) es:",
+      "a": [
+        "Ambas.",
+        "Ninguna.",
+        "Curso.",
+        "Profesor."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.06-340",
+      "u": "@ManyToMany(cascade=\"CascadeType.ALL) @JoinTable(name=\"profesorescursos\", JoinColumns={@JoinColumn(name=\"idprofesor\")}, inverseJoinColumns={@JoinColumn(name=\"idcurso\")}) … @ManyToMany(mappedBy=\"cursos\") private Set<Profesor> profesores;",
+      "v": 0
+    },
+    "after": {
+      "i": "GEN-T3.06-340",
+      "t": "T3.06",
+      "o": "G",
+      "q": "En el ejemplo profesores-cursos, la clase propietaria de la relación (con @JoinTable) es:",
+      "a": [
+        "Ambas.",
+        "Ninguna.",
+        "Curso.",
+        "Profesor."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.06-340",
+      "u": "@ManyToMany(cascade=CascadeType.ALL) @JoinTable(name=\"profesorescursos\", joinColumns={@JoinColumn(name=\"idprofesor\")}, inverseJoinColumns={@JoinColumn(name=\"idcurso\")}) … @ManyToMany(mappedBy=\"cursos\") private Set<Profesor> profesores;",
+      "v": 0,
+      "n": "Corrección sintáctica de errores ya impresos en el Resumen Java y .NET, p. 42: cascade es un enum, sin comillas; el atributo se llama joinColumns, con j minúscula. Se conservan las entidades y la tabla del ejemplo; c no cambia. Fuente: https://jakarta.ee/specifications/platform/10/apidocs/jakarta/persistence/jointable"
+    },
+    "fields": [
+      "n",
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T3.06-340.v1",
+    "file": "public/data/T3.06.json",
+    "status": "resuelta",
+    "reason": "Corregidos cascade y joinColumns en u según la API; errores también impresos en el PDF. No se reinterpreta la asociación.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "pages": [
+          42,
+          43
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://jakarta.ee/specifications/platform/10/apidocs/jakarta/persistence/jointable"
+    ],
+    "before": {
+      "i": "GEN-T3.06-340.v1",
+      "t": "T3.06",
+      "o": "G",
+      "q": "En el ejemplo profesores-cursos, la clase Curso declara la relación con:",
+      "a": [
+        "@ManyToMany con @JoinTable.",
+        "@OneToMany.",
+        "@ManyToOne.",
+        "@ManyToMany(mappedBy=\"cursos\")."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.06-340",
+      "u": "@ManyToMany(cascade=\"CascadeType.ALL) @JoinTable(name=\"profesorescursos\", JoinColumns={@JoinColumn(name=\"idprofesor\")}, inverseJoinColumns={@JoinColumn(name=\"idcurso\")}) … @ManyToMany(mappedBy=\"cursos\") private Set<Profesor> profesores;",
+      "v": 1
+    },
+    "after": {
+      "i": "GEN-T3.06-340.v1",
+      "t": "T3.06",
+      "o": "G",
+      "q": "En el ejemplo profesores-cursos, la clase Curso declara la relación con:",
+      "a": [
+        "@ManyToMany con @JoinTable.",
+        "@OneToMany.",
+        "@ManyToOne.",
+        "@ManyToMany(mappedBy=\"cursos\")."
+      ],
+      "c": 3,
+      "k": "C",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.06-340",
+      "u": "@ManyToMany(cascade=CascadeType.ALL) @JoinTable(name=\"profesorescursos\", joinColumns={@JoinColumn(name=\"idprofesor\")}, inverseJoinColumns={@JoinColumn(name=\"idcurso\")}) … @ManyToMany(mappedBy=\"cursos\") private Set<Profesor> profesores;",
+      "v": 1,
+      "n": "Corrección sintáctica de errores ya impresos en el Resumen Java y .NET, p. 42: cascade es un enum, sin comillas; el atributo se llama joinColumns, con j minúscula. Se conservan las entidades y la tabla del ejemplo; c no cambia. Fuente: https://jakarta.ee/specifications/platform/10/apidocs/jakarta/persistence/jointable"
+    },
+    "fields": [
+      "n",
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T3.06-340.v2",
+    "file": "public/data/T3.06.json",
+    "status": "resuelta",
+    "reason": "Corregidos cascade y joinColumns en u según la API; errores también impresos en el PDF. No se reinterpreta la asociación.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "pages": [
+          42,
+          43
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://jakarta.ee/specifications/platform/10/apidocs/jakarta/persistence/jointable"
+    ],
+    "before": {
+      "i": "GEN-T3.06-340.v2",
+      "t": "T3.06",
+      "o": "G",
+      "q": "En el ejemplo, la colección de cursos en Profesor se declara como:",
+      "a": [
+        "List<Curso>.",
+        "Curso[].",
+        "Set<Curso>.",
+        "Map<Curso>."
+      ],
+      "c": 2,
+      "k": "K",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.06-340",
+      "u": "@ManyToMany(cascade=\"CascadeType.ALL) @JoinTable(name=\"profesorescursos\", JoinColumns={@JoinColumn(name=\"idprofesor\")}, inverseJoinColumns={@JoinColumn(name=\"idcurso\")}) … @ManyToMany(mappedBy=\"cursos\") private Set<Profesor> profesores;",
+      "v": 1,
+      "cp": "Relación muchos a muchos entre Profesor y Curso, con tabla de unión «profesorescursos» (@ManyToMany y @JoinTable en Profesor; @ManyToMany(mappedBy=\"cursos\") en Curso)."
+    },
+    "after": {
+      "i": "GEN-T3.06-340.v2",
+      "t": "T3.06",
+      "o": "G",
+      "q": "En el ejemplo, la colección de cursos en Profesor se declara como:",
+      "a": [
+        "List<Curso>.",
+        "Curso[].",
+        "Set<Curso>.",
+        "Map<Curso>."
+      ],
+      "c": 2,
+      "k": "K",
+      "x": [
+        7,
+        8
+      ],
+      "d": 3,
+      "f": "GEN-T3.06-340",
+      "u": "@ManyToMany(cascade=CascadeType.ALL) @JoinTable(name=\"profesorescursos\", joinColumns={@JoinColumn(name=\"idprofesor\")}, inverseJoinColumns={@JoinColumn(name=\"idcurso\")}) … @ManyToMany(mappedBy=\"cursos\") private Set<Profesor> profesores;",
+      "v": 1,
+      "cp": "Relación muchos a muchos entre Profesor y Curso, con tabla de unión «profesorescursos» (@ManyToMany y @JoinTable en Profesor; @ManyToMany(mappedBy=\"cursos\") en Curso).",
+      "n": "Corrección sintáctica de errores ya impresos en el Resumen Java y .NET, p. 42: cascade es un enum, sin comillas; el atributo se llama joinColumns, con j minúscula. Se conservan las entidades y la tabla del ejemplo; c no cambia. Fuente: https://jakarta.ee/specifications/platform/10/apidocs/jakarta/persistence/jointable"
+    },
+    "fields": [
+      "n",
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T3.06-55.v1",
+    "file": "public/data/T3.06.json",
+    "status": "resuelta",
+    "reason": "La prohibición general ya estaba en el material. Se limita la opción b) y u a do/while, conforme a la gramática C++; índice correcto conservado.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C plus.pdf",
+        "sha256": "9243bafe5bb5be43ae4e14d28154cbad8fe5c110587560fbd782438e41abf0ff",
+        "pages": [
+          5
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://eel.is/c++draft/stmt.do",
+      "https://eel.is/c++draft/stmt.iter"
+    ],
+    "before": {
+      "i": "GEN-T3.06-55.v1",
+      "t": "T3.06",
+      "o": "G",
+      "q": "En C++, las declaraciones de variables NO pueden colocarse en:",
+      "a": [
+        "La sección de inicialización de un for.",
+        "La condición de una estructura while, do/while, for o if.",
+        "Cualquier parte del bloque.",
+        "Un bloque anidado."
+      ],
+      "c": 1,
+      "k": "I",
+      "x": [
+        3,
+        7
+      ],
+      "d": 3,
+      "f": "GEN-T3.06-55",
+      "u": "En C++, a diferencia de C, las declaraciones pueden ser colocadas en cualquier parte, siempre y cuando las declaraciones antecedan el uso de lo que se está declarando. … Las declaraciones de variables no pueden ser colocadas en la condición de una estructura while, do/while, for o if.",
+      "v": 1
+    },
+    "after": {
+      "i": "GEN-T3.06-55.v1",
+      "t": "T3.06",
+      "o": "G",
+      "q": "En C++, las declaraciones de variables NO pueden colocarse en:",
+      "a": [
+        "La sección de inicialización de un for.",
+        "La condición de una estructura do/while.",
+        "Cualquier parte del bloque.",
+        "Un bloque anidado."
+      ],
+      "c": 1,
+      "k": "I",
+      "x": [
+        3,
+        7
+      ],
+      "d": 3,
+      "f": "GEN-T3.06-55",
+      "u": "En C++, a diferencia de C, las declaraciones pueden ser colocadas en cualquier parte, siempre y cuando las declaraciones antecedan el uso de lo que se está declarando. … Las declaraciones de variables no pueden ser colocadas en la condición de una estructura do/while.",
+      "v": 1,
+      "n": "Corrección técnica de la generalización errónea del Resumen C++, p. 5: if, while y for permiten una declaración como condición; do/while exige una expresión. Se conserva b) como única respuesta y c=1. Contraste con la gramática y compilación C++17 estricta; fuente: https://eel.is/c++draft/stmt.do"
+    },
+    "fields": [
+      "a",
+      "n",
+      "u"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T3.08-418.v1",
+    "file": "public/data/T3.08.json",
+    "status": "pendiente",
+    "reason": "El temario imprime <u> como no soportado en HTML5, pero las cuatro opciones b/em/u/i son elementos HTML válidos. No se sustituye por <font>, que sería inventar un distractor distinto.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba",
+        "pages": [
+          36
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-u-element"
+    ],
+    "before": {
+      "i": "GEN-T3.08-418.v1",
+      "t": "T3.08",
+      "o": "G",
+      "q": "Un elemento NO soportado en HTML5, según el temario, es:",
+      "a": [
+        "<b>.",
+        "<em>.",
+        "<u>.",
+        "<i>."
+      ],
+      "c": 2,
+      "k": "I",
+      "x": [
+        8,
+        12
+      ],
+      "d": 3,
+      "f": "GEN-T3.08-418",
+      "u": "<u> Muestra el texto subrayado No soportado en HTML5 … <font> Fuente del texto No soportado en HTML5",
+      "v": 1
+    },
+    "after": {
+      "i": "GEN-T3.08-418.v1",
+      "t": "T3.08",
+      "o": "G",
+      "q": "Un elemento NO soportado en HTML5, según el temario, es:",
+      "a": [
+        "<b>.",
+        "<em>.",
+        "<u>.",
+        "<i>."
+      ],
+      "c": 2,
+      "k": "I",
+      "x": [
+        8,
+        12
+      ],
+      "d": 3,
+      "f": "GEN-T3.08-418",
+      "u": "<u> Muestra el texto subrayado No soportado en HTML5 … <font> Fuente del texto No soportado en HTML5",
+      "v": 1,
+      "n": "DUDOSA — cotejo del original: El temario imprime <u> como no soportado en HTML5, pero las cuatro opciones b/em/u/i son elementos HTML válidos. No se sustituye por <font>, que sería inventar un distractor distinto."
+    },
+    "fields": [
+      "n"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T3.08-588",
+    "file": "public/data/T3.08.json",
+    "status": "resuelta",
+    "reason": "Acotación editorial a Bootstrap 3, verificada con la tabla completa del original y la documentación 3.4. La versión no estaba explícita en la pregunta.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - CSS.pdf",
+        "sha256": "f871d3d81529d09b5ee8260e6c78a044df152e0b3a48155f5b54dea41fcf7fee",
+        "pages": [
+          33
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://getbootstrap.com/docs/3.4/css/#grid"
+    ],
+    "before": {
+      "i": "GEN-T3.08-588",
+      "t": "T3.08",
+      "o": "G",
+      "q": "Las pantallas medianas (MD) de Bootstrap son a partir de:",
+      "a": [
+        "768 píxeles.",
+        "992 píxeles.",
+        "600 píxeles.",
+        "1.200 píxeles."
+      ],
+      "c": 1,
+      "k": "C",
+      "x": [
+        7,
+        8,
+        9
+      ],
+      "d": 3,
+      "f": "GEN-T3.08-588",
+      "u": "Pantallas grandes (llamadas LG) a partir de 1.200 píxeles Pantallas medianas (llamadas MD) a partir de 992 píxeles … Pantallas tipo mesita (llamadas SM) a partir de 768 píxeles",
+      "v": 0
+    },
+    "after": {
+      "i": "GEN-T3.08-588",
+      "t": "T3.08",
+      "o": "G",
+      "q": "En Bootstrap 3, las pantallas medianas (MD) son a partir de:",
+      "a": [
+        "768 píxeles.",
+        "992 píxeles.",
+        "600 píxeles.",
+        "1.200 píxeles."
+      ],
+      "c": 1,
+      "k": "C",
+      "x": [
+        7,
+        8,
+        9
+      ],
+      "d": 3,
+      "f": "GEN-T3.08-588",
+      "u": "Pantallas grandes (llamadas LG) a partir de 1.200 píxeles Pantallas medianas (llamadas MD) a partir de 992 píxeles … Pantallas tipo mesita (llamadas SM) a partir de 768 píxeles",
+      "v": 0,
+      "n": "Se explicita Bootstrap 3, cuya tabla oficial SM=768, MD=992 y LG=1200 coincide con la del Temario CSS, p. 33. Es una acotación editorial por concordancia exacta de la tabla; c=1 se conserva. Fuente: https://getbootstrap.com/docs/3.4/css/#grid"
+    },
+    "fields": [
+      "n",
+      "q"
+    ],
+    "changed": true
+  },
+  {
+    "id": "GEN-T4.04-10.v2",
+    "file": "public/data/T4.04.json",
+    "status": "resuelta",
+    "reason": "Se corrige el distractor c) defectuoso, sin cambiar la clave d); arp -d necesita dirección. No se ejecutan operaciones de red en el equipo.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+        "sha256": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+        "pages": [
+          8
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://man7.org/linux/man-pages/man8/arp.8.html"
+    ],
+    "before": {
+      "i": "GEN-T4.04-10.v2",
+      "t": "T4.04",
+      "o": "G",
+      "q": "Sobre la gestión de la caché ARP en Linux, señale la afirmación INCORRECTA:",
+      "a": [
+        "\"ip neigh flush all\" elimina la caché ARP.",
+        "\"arp -a\" sin dirección muestra toda la caché.",
+        "\"arp -d\" sin argumentos borra la caché.",
+        "\"ip neigh show\" elimina por completo la caché ARP."
+      ],
+      "c": 3,
+      "k": "I",
+      "x": [
+        7,
+        1
+      ],
+      "d": 1,
+      "f": "GEN-T4.04-10",
+      "u": "ip neigh del 192.168.1.100 dev eth0 #Elimina una entrada de la cache ARP … ip neigh flush all #Elimina la cache ARP",
+      "v": 0
+    },
+    "after": {
+      "i": "GEN-T4.04-10.v2",
+      "t": "T4.04",
+      "o": "G",
+      "q": "Sobre la gestión de la caché ARP en Linux, señale la afirmación INCORRECTA:",
+      "a": [
+        "\"ip neigh flush all\" elimina la caché ARP.",
+        "\"arp -a\" sin dirección muestra toda la caché.",
+        "\"arp -d direccion\" elimina la entrada ARP de esa dirección.",
+        "\"ip neigh show\" elimina por completo la caché ARP."
+      ],
+      "c": 3,
+      "k": "I",
+      "x": [
+        7,
+        1
+      ],
+      "d": 1,
+      "f": "GEN-T4.04-10",
+      "u": "ip neigh del 192.168.1.100 dev eth0 #Elimina una entrada de la cache ARP … ip neigh flush all #Elimina la cache ARP",
+      "v": 0,
+      "n": "Corrección técnica del distractor c): en net-tools, arp -d exige una dirección/nombre de host y elimina esa entrada. La afirmación original sin argumentos era también falsa. direccion es un marcador del argumento. d) sigue siendo la única incorrecta: ip neigh show muestra, no elimina. c=3 conservado. Fuente: https://man7.org/linux/man-pages/man8/arp.8.html"
+    },
+    "fields": [
+      "a",
+      "n"
+    ],
+    "changed": true
+  },
+  {
+    "id": "L2018S-S1",
+    "file": "public/data/supuestos.json",
+    "status": "resuelta",
+    "reason": "Se sustituye exclusivamente el OCR ilegible del diagrama por su transcripción estructurada. No se completan cardinalidades ni se responden preguntas del supuesto.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/ingreso-libre-OEP2018__CUESTIONARIO__SEGUNDO_EJERCICIO_TAILI_ OEP_2018_154AB89SD658.pdf",
+        "sha256": "1ae6e873e0261e8ea0839b7de91681d6b56aaa6261c0ad228f3c50efd00949be",
+        "pages": [
+          2
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "texto": "En la Agencia de Formación en la que usted acaba de entrar a trabajar, se quiere mejorar un sistema de información que permite realizar al menos las siguientes gestiones: Gestión de acciones formativas. Gestión de alumnos/as y profesores/as. Gestión de aulas. Gestión de la selección. Para ello, y aprovechando la experiencia del equipo existente en tecnologías de software libre, se optará por un desarrollo basado en PHP, utilizando el framework Laravel v.6, y como gestor de base de datos MySQL v.8. Adicionalmente se reaprovechará algún módulo existente .NET. y en Java. El formulario que permite la inscripción a las acciones formativas está basado en HTML5, Javascript y jQuery. Se cuenta con el siguiente fragmento de código del mismo: <form action=\"\" method=\"get\"> <label for=\"nif\">NIF </label><input id=\"nif\" type=\"text\" size=\"25\" maxlength=\"9\" placeholder=\"123456789-Letra\"><br> <label for=\"nombre\">Nombre </label><input id=\"nombre\" type=\"text\"  size=\"40\" maxlength=\"40\" placeholder=\"Introduzca su nombre\"><br> <label for=\"apellidos\">Apellidos </label><input id=\"apellidos\" type=\"text\" size=\"73\" maxlength=\"80\" placeholder=\"Introduzca sus apellidos\"><br> <label for=\"email\">Correo Electrónico </label><input type=\"email\" size=\"65\" maxlength=\"10\" placeholder=\"hola@dominio.com\"><br> <label for=\"password\">Contraseña </label><input type=\"password\" size=\"30\" maxlength=\"10\" placeholder=\"Contraseña\"><br> <input type=\"submit\" value=\"Validar Datos\"> </form> A continuación se muestra un modelo Entidad Relación extendido inacabado de una parte del sistema: NIF id ( )denominacion í) numAlumnos É E7 AS idAula SS Ñ : a € nomAula SS e e a NX horasTeoricas ()— O especialidad Ñ Curso Taller Z - horasPracticas ()—— ) material Como técnico se le va a solicitar que colabore en el proyecto para ofrecer las mejoras que le soliciten. Salvo que el enunciado diga lo contrario se va a suponer que aquellas preguntas que tengan un fragmento de código tendrán declaradas correctamente todas las clases, librerías, variables.. que no aparezcan directamente. Como metodología de base el organismo aplica Métrica v3."
+    },
+    "after": {
+      "texto": "En la Agencia de Formación en la que usted acaba de entrar a trabajar, se quiere mejorar un sistema de información que permite realizar al menos las siguientes gestiones: Gestión de acciones formativas. Gestión de alumnos/as y profesores/as. Gestión de aulas. Gestión de la selección. Para ello, y aprovechando la experiencia del equipo existente en tecnologías de software libre, se optará por un desarrollo basado en PHP, utilizando el framework Laravel v.6, y como gestor de base de datos MySQL v.8. Adicionalmente se reaprovechará algún módulo existente .NET. y en Java. El formulario que permite la inscripción a las acciones formativas está basado en HTML5, Javascript y jQuery. Se cuenta con el siguiente fragmento de código del mismo: <form action=\"\" method=\"get\"> <label for=\"nif\">NIF </label><input id=\"nif\" type=\"text\" size=\"25\" maxlength=\"9\" placeholder=\"123456789-Letra\"><br> <label for=\"nombre\">Nombre </label><input id=\"nombre\" type=\"text\"  size=\"40\" maxlength=\"40\" placeholder=\"Introduzca su nombre\"><br> <label for=\"apellidos\">Apellidos </label><input id=\"apellidos\" type=\"text\" size=\"73\" maxlength=\"80\" placeholder=\"Introduzca sus apellidos\"><br> <label for=\"email\">Correo Electrónico </label><input type=\"email\" size=\"65\" maxlength=\"10\" placeholder=\"hola@dominio.com\"><br> <label for=\"password\">Contraseña </label><input type=\"password\" size=\"30\" maxlength=\"10\" placeholder=\"Contraseña\"><br> <input type=\"submit\" value=\"Validar Datos\"> </form> A continuación se muestra un modelo Entidad Relación extendido inacabado de una parte del sistema: [Transcripción textual del diagrama original: Ciudadano (clave NIF); AccionFormativa (clave idAccionFormativa; atributos denominacion y numAlumnos); Aula (clave idAula; atributos nomAula y numplazas). Hay relaciones sin nombre entre Ciudadano y AccionFormativa, y entre AccionFormativa y Aula; no se indican sus cardinalidades. AccionFormativa se especializa en Curso (horasTeoricas, horasPracticas) y Taller (especialidad, material).] Como técnico se le va a solicitar que colabore en el proyecto para ofrecer las mejoras que le soliciten. Salvo que el enunciado diga lo contrario se va a suponer que aquellas preguntas que tengan un fragmento de código tendrán declaradas correctamente todas las clases, librerías, variables.. que no aparezcan directamente. Como metodología de base el organismo aplica Métrica v3."
+    },
+    "fields": [
+      "texto"
+    ],
+    "changed": true
+  },
+  {
+    "id": "P2018-S1",
+    "file": "public/data/supuestos.json",
+    "status": "resuelta",
+    "reason": "Restituido el diagrama como texto, conservando literalmente las cardinalidades desconocidas ¿? en vez de resolverlas por conjetura.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/promocion-interna-OEP2018__08TAIPI_154AB89SD658.pdf",
+        "sha256": "99abc22c9c8f3892b7e53e3a9f205f650150530cbef0a2f0b1753dda1052dbf8",
+        "pages": [
+          6
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "texto": "Con la finalidad de informar a los ciudadanos acerca de la zona de estacionamiento regulado en todos los municipios de España, se propone la creación de un registro, donde los ayuntamientos deberán publicar su normativa al respecto reflejando para cada tramo de calle cual es la tipología de zona que le corresponde (verde/azul/..). Por otro lado también se deberá tener en cuenta las franjas horarias y la tarifa asociada a cada zona. A efectos de este supuesto se consideran las siguientes premisas: + Todos los días, incluyendo los festivos, el estacionamiento es regulado. + Cada tramo de calle está definido por la numeración que la delimita. + El SGBD utilizado será SQL Server. + El lenguaje de programación empleado en el desarrollo del sistema de información será orientado a objetos (JAVA). A continuación, se presenta un modelo Entidad Relación extendido inacabado, en lo sucesivo E/R, que representa parte del dominio de la información. idMunicipio idFranja 2 horaFin 1 : ¿? O dialem ¿? idCalle 1 1 S ¡idTartía ¿? 1 h idZona ¿<> nombre A Ss O tiempollax LN ¿? idTramoCalle O desde TramoCalle os a O parimpar"
+    },
+    "after": {
+      "texto": "Con la finalidad de informar a los ciudadanos acerca de la zona de estacionamiento regulado en todos los municipios de España, se propone la creación de un registro, donde los ayuntamientos deberán publicar su normativa al respecto reflejando para cada tramo de calle cual es la tipología de zona que le corresponde (verde/azul/..). Por otro lado también se deberá tener en cuenta las franjas horarias y la tarifa asociada a cada zona. A efectos de este supuesto se consideran las siguientes premisas: + Todos los días, incluyendo los festivos, el estacionamiento es regulado. + Cada tramo de calle está definido por la numeración que la delimita. + El SGBD utilizado será SQL Server. + El lenguaje de programación empleado en el desarrollo del sistema de información será orientado a objetos (JAVA). A continuación, se presenta un modelo Entidad Relación extendido inacabado, en lo sucesivo E/R, que representa parte del dominio de la información. [Transcripción textual del diagrama original: Municipio (clave idMunicipio; nombre); FranjaHoraria (clave idFranja; horaInicio, horaFin, diaSem); Calle (clave idCalle; nombre); TipoZona (clave idZona; nombre, tiempoMin, tiempoMax); Tarifa (clave idTarifa; precio); TramoCalle (clave idTramoCalle; desde, hasta, parImpar). Relaciones: Municipio (1) — Calle (1..N); Calle (1) — TramoCalle (1..N); TipoZona (1) — Tarifa (1). Las cardinalidades entre FranjaHoraria y TipoZona, y entre TipoZona y TramoCalle, aparecen como «¿?» en ambos extremos y quedan sin completar.]"
+    },
+    "fields": [
+      "texto"
+    ],
+    "changed": true
+  },
+  {
+    "id": "L2018S-S2-R-03",
+    "file": "public/data/supuestos.json",
+    "status": "pendiente",
+    "reason": "Cuestionario p. 9 y plantilla definitiva B coinciden. docker images muestra imágenes locales, no las disponibles en Docker Hub. Se conserva el examen histórico y se advierte del error técnico del original.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/ingreso-libre-OEP2018__CUESTIONARIO__SEGUNDO_EJERCICIO_TAILI_ OEP_2018_154AB89SD658.pdf",
+        "sha256": "1ae6e873e0261e8ea0839b7de91681d6b56aaa6261c0ad228f3c50efd00949be",
+        "pages": [
+          9
+        ]
+      },
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/ingreso-libre-OEP2018__2jer_Plantilla_definitiva TAILI_OEP2018__154AB89SD658.pdf",
+        "sha256": "2317103a989c6e43b874ecc709706b23ba4c184b5928f9bc8b8c47908d2f5640",
+        "pages": [
+          1
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://docs.docker.com/reference/cli/docker/image/ls/"
+    ],
+    "before": {
+      "i": "L2018S-S2-R-03",
+      "t": "T4.02",
+      "o": "O",
+      "q": "¿Cómo podría ver en \"Docker Hub\" las imágenes disponibles?",
+      "a": [
+        "docker show images",
+        "docker images",
+        "docker list",
+        "docker list-images"
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [
+        10
+      ],
+      "d": 1,
+      "n": "docker images.",
+      "y": "Ingreso libre OEP 2018 (2º ejercicio práctico)",
+      "r": 1,
+      "s": "L2018S-S2"
+    },
+    "after": {
+      "i": "L2018S-S2-R-03",
+      "t": "T4.02",
+      "o": "O",
+      "q": "¿Cómo podría ver en \"Docker Hub\" las imágenes disponibles?",
+      "a": [
+        "docker show images",
+        "docker images",
+        "docker list",
+        "docker list-images"
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [
+        10
+      ],
+      "d": 1,
+      "n": "DUDOSA — cotejo del original: Cuestionario p. 9 y plantilla definitiva B coinciden. docker images muestra imágenes locales, no las disponibles en Docker Hub. Se conserva el examen histórico y se advierte del error técnico del original.",
+      "y": "Ingreso libre OEP 2018 (2º ejercicio práctico)",
+      "r": 1,
+      "s": "L2018S-S2"
+    },
+    "fields": [
+      "n"
+    ],
+    "changed": true
+  },
+  {
+    "id": "L2025A-S1-R-02",
+    "file": "public/data/supuestos.json",
+    "status": "pendiente",
+    "reason": "El cuestionario LI modelo A contiene la reserva 2; la plantilla LI disponible es PROVISIONAL y marca C. La definitiva PI anula su reserva 1 equivalente, pero esa anulación no se traslada a LI. Se mantienen c=2 y p=1 hasta disponer de una definitiva LI aplicable.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/ingreso-libre-conv2025__Cuestionario TAI-L-ModeloA.pdf",
+        "sha256": "68b7942718e9c3f3bd9c39a1d6414afec09f79306efff4b0a70a1c1f4a038f7a",
+        "pages": [
+          11
+        ]
+      },
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/ingreso-libre-conv2025__Plantilla respuestas TAI-L-A_act.pdf",
+        "sha256": "7760d30037425b32b17dcde3b310dff9b9e556a8336532d3388c58030fa81af3",
+        "pages": [
+          1
+        ]
+      },
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/promocion-interna-conv2025__Cuestionario TAI-P-ModeloA.pdf",
+        "sha256": "962c989a5f81a83375bd2e52afbdd3bb94de8ae1f5339f910ff46087430f77e6",
+        "pages": [
+          9
+        ]
+      },
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/promocion-interna-conv2025__Plantilla respuestas Def TAI-P-A.pdf",
+        "sha256": "b71936a38162bec29218c5a27382b9007226eec1d990ac4c53970ba6f264ac5f",
+        "pages": [
+          1
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "before": {
+      "i": "L2025A-S1-R-02",
+      "t": "T3.06",
+      "o": "O",
+      "q": "Para el mantenimiento de la aplicación, se requiere ejecutar un código de limpieza cuando el motor Catalina de Tomcat se detenga por completo, pero antes de que la máquina virtual de Java finalice. ¿Cuál es la opción correcta para ello?",
+      "a": [
+        "Registrar un shutdown hook.",
+        "Usar una anotación @PreDestroy en la clase del código de limpieza.",
+        "Implementar un LifecycleListener y registrarlo en el elemento <server> del fichero \"server.xml\".",
+        "Definir en Tomcat una Valve personalizada en el elemento <Server> con el método de limpieza."
+      ],
+      "c": 2,
+      "k": "D",
+      "x": [
+        7
+      ],
+      "d": 3,
+      "n": "DUDOSA: Ciclo de vida de Tomcat (LifecycleListener). La plantilla definitiva de promoción interna 2025 anuló esta misma pregunta; la provisional de ingreso libre da c).",
+      "y": "Ingreso libre convocatoria 2025",
+      "p": 1,
+      "r": 1,
+      "s": "L2025A-S1"
+    },
+    "after": {
+      "i": "L2025A-S1-R-02",
+      "t": "T3.06",
+      "o": "O",
+      "q": "Para el mantenimiento de la aplicación, se requiere ejecutar un código de limpieza cuando el motor Catalina de Tomcat se detenga por completo, pero antes de que la máquina virtual de Java finalice. ¿Cuál es la opción correcta para ello?",
+      "a": [
+        "Registrar un shutdown hook.",
+        "Usar una anotación @PreDestroy en la clase del código de limpieza.",
+        "Implementar un LifecycleListener y registrarlo en el elemento <server> del fichero \"server.xml\".",
+        "Definir en Tomcat una Valve personalizada en el elemento <Server> con el método de limpieza."
+      ],
+      "c": 2,
+      "k": "D",
+      "x": [
+        7
+      ],
+      "d": 3,
+      "n": "DUDOSA — cotejo del original: El cuestionario LI modelo A contiene la reserva 2; la plantilla LI disponible es PROVISIONAL y marca C. La definitiva PI anula su reserva 1 equivalente, pero esa anulación no se traslada a LI. Se mantienen c=2 y p=1 hasta disponer de una definitiva LI aplicable.",
+      "y": "Ingreso libre convocatoria 2025",
+      "p": 1,
+      "r": 1,
+      "s": "L2025A-S1"
+    },
+    "fields": [
+      "n"
+    ],
+    "changed": true
+  },
+  {
+    "id": "P2018-S2-01",
+    "file": "public/data/supuestos.json",
+    "status": "pendiente",
+    "reason": "Cuestionario p. 9 y plantilla definitiva B coinciden. useradd -p espera una contraseña ya cifrada, no el texto claro zzzz. La posición de opciones concuerda con B, pero no ejecuta literalmente el requisito de contraseña. Se conserva la clave oficial y se advierte.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/promocion-interna-OEP2018__08TAIPI_154AB89SD658.pdf",
+        "sha256": "99abc22c9c8f3892b7e53e3a9f205f650150530cbef0a2f0b1753dda1052dbf8",
+        "pages": [
+          9
+        ]
+      },
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/promocion-interna-OEP2018__Plantilla_defTAI-Pejerunico_154AB89SD658.pdf",
+        "sha256": "7784c87aac24ab4fb81e85ab225c7ae9fe8170cc6b085762b1d84245583224a5",
+        "pages": [
+          1
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://man7.org/linux/man-pages/man8/useradd.8.html"
+    ],
+    "before": {
+      "i": "P2018-S2-01",
+      "t": "T4.01",
+      "o": "O",
+      "q": "En el nuevo CPD tenemos un servidor con Linux llamado \"servidor_del_traslado\" y se ha decidido crear un usuario específico que se llamará \"traslado\" con contraseña \"zzzz\", que pertenezca al grupo ya existente \"migracion\" y cuyo directorio principal (HOME_DIR) sea /traslado/respaldo ¿Cómo lo haría?",
+      "a": [
+        "useradd traslado -d /traslado/respaldo -p migracion -g zzzz",
+        "useradd -d /traslado/respaldo -g migracion -p zzzz traslado",
+        "useradd -g /traslado/respaldo -d migracion -p zzzz traslado",
+        "useradd -p /traslado/respaldo -g migracion -d zzzz traslado"
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [
+        10,
+        8
+      ],
+      "d": 2,
+      "n": "useradd con las opciones en su sitio.",
+      "y": "Promoción interna OEP 2018",
+      "s": "P2018-S2"
+    },
+    "after": {
+      "i": "P2018-S2-01",
+      "t": "T4.01",
+      "o": "O",
+      "q": "En el nuevo CPD tenemos un servidor con Linux llamado \"servidor_del_traslado\" y se ha decidido crear un usuario específico que se llamará \"traslado\" con contraseña \"zzzz\", que pertenezca al grupo ya existente \"migracion\" y cuyo directorio principal (HOME_DIR) sea /traslado/respaldo ¿Cómo lo haría?",
+      "a": [
+        "useradd traslado -d /traslado/respaldo -p migracion -g zzzz",
+        "useradd -d /traslado/respaldo -g migracion -p zzzz traslado",
+        "useradd -g /traslado/respaldo -d migracion -p zzzz traslado",
+        "useradd -p /traslado/respaldo -g migracion -d zzzz traslado"
+      ],
+      "c": 1,
+      "k": "K",
+      "x": [
+        10,
+        8
+      ],
+      "d": 2,
+      "n": "DUDOSA — cotejo del original: Cuestionario p. 9 y plantilla definitiva B coinciden. useradd -p espera una contraseña ya cifrada, no el texto claro zzzz. La posición de opciones concuerda con B, pero no ejecuta literalmente el requisito de contraseña. Se conserva la clave oficial y se advierte.",
+      "y": "Promoción interna OEP 2018",
+      "s": "P2018-S2"
+    },
+    "fields": [
+      "n"
+    ],
+    "changed": true
+  },
+  {
+    "id": "P2018-S2-03",
+    "file": "public/data/supuestos.json",
+    "status": "pendiente",
+    "reason": "Cuestionario p. 9 y plantilla definitiva D coinciden. 10.254.252.4 tiene bits de host para máscara /24 (la red es 10.254.252.0); no se inventa una ruta -host ni se cambia el destino. Se conserva D con advertencia técnica.",
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/promocion-interna-OEP2018__08TAIPI_154AB89SD658.pdf",
+        "sha256": "99abc22c9c8f3892b7e53e3a9f205f650150530cbef0a2f0b1753dda1052dbf8",
+        "pages": [
+          9
+        ]
+      },
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/promocion-interna-OEP2018__Plantilla_defTAI-Pejerunico_154AB89SD658.pdf",
+        "sha256": "7784c87aac24ab4fb81e85ab225c7ae9fe8170cc6b085762b1d84245583224a5",
+        "pages": [
+          1
+        ]
+      }
+    ],
+    "technical_sources": [
+      "https://man7.org/linux/man-pages/man8/route.8.html"
+    ],
+    "before": {
+      "i": "P2018-S2-03",
+      "t": "T4.01",
+      "o": "O",
+      "q": "Le piden que en el servidor Linux añada una ruta que permita ir al destino 10.254.252.4 a través del gateway 10.253.1.254 que está conectado a un firewall. ¿Cómo lo haría?",
+      "a": [
+        "route new-net 10.254.252.4 netmask 255.255.255.0 gw 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw via 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw add 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw 10.253.1.254"
+      ],
+      "c": 3,
+      "k": "K",
+      "x": [
+        10
+      ],
+      "d": 2,
+      "n": "route add -net … gw.",
+      "y": "Promoción interna OEP 2018",
+      "s": "P2018-S2"
+    },
+    "after": {
+      "i": "P2018-S2-03",
+      "t": "T4.01",
+      "o": "O",
+      "q": "Le piden que en el servidor Linux añada una ruta que permita ir al destino 10.254.252.4 a través del gateway 10.253.1.254 que está conectado a un firewall. ¿Cómo lo haría?",
+      "a": [
+        "route new-net 10.254.252.4 netmask 255.255.255.0 gw 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw via 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw add 10.253.1.254",
+        "route add -net 10.254.252.4 netmask 255.255.255.0 gw 10.253.1.254"
+      ],
+      "c": 3,
+      "k": "K",
+      "x": [
+        10
+      ],
+      "d": 2,
+      "n": "DUDOSA — cotejo del original: Cuestionario p. 9 y plantilla definitiva D coinciden. 10.254.252.4 tiene bits de host para máscara /24 (la red es 10.254.252.0); no se inventa una ruta -host ni se cambia el destino. Se conserva D con advertencia técnica.",
+      "y": "Promoción interna OEP 2018",
+      "s": "P2018-S2"
+    },
+    "fields": [
+      "n"
+    ],
+    "changed": true
+  }
+]

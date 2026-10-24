@@ -1,0 +1,12 @@
+
+> tai-pwa@1.1.3 test
+> vitest run
+
+
+ RUN  v5.0.5 /Volumes/SSD/develop/PWA_TAI
+
+
+ Test Files  9 passed (9)
+      Tests  132 passed (132)
+   Start at  09:18:43
+   Duration  1.74s (environment 59%, tests 38%, import 3%, transform 1%)

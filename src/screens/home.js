@@ -4,7 +4,7 @@ import { esc, pct, quickN, velocidad } from '../logic.js';
 import { META, getIndex, getMeta, now, dueList } from '../data.js';
 import { $, app, guard } from '../ui.js';
 import { BLOQUES } from '../labels.js';
-export function registerHome({ routes, go, saludo, quickSession, startRepaso, openMenu, dominioTemas }, screen) {
+export function registerHome({ routes, go, saludo, quickSession, startRepaso, openMenu, dominioTemas, falladasIds }, screen) {
 // ───────── inicio ─────────
 routes.home = async function () {
   const idx = await getIndex(); await getMeta();
@@ -18,6 +18,7 @@ routes.home = async function () {
   const ex = new Date((store.getCfg().exam || '2027-06-01') + 'T09:00:00'); const dd = Math.ceil((ex - new Date()) / 86400000);
   const nCards = Object.values(store.getCards()).filter(r => r[3] >= 0 && r[4] <= now()).length;
   const vel = velocidad(st);
+  const nFall = falladasIds().length;
   const IC = { test: '<path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/>', sim: '<circle cx="12" cy="13" r="7"/><path d="M12 9v4l2.5 2M9.5 3h5"/>', card: '<rect x="3" y="6" width="18" height="13" rx="3"/><path d="M7 3h10"/>', det: '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.5-4.5"/>', lec: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>', rel: '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>', map: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/>', list: '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>', play: '<path d="M8 5v14l11-7z"/>', redo: '<path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/>' };
   const svg = k => `<svg viewBox="0 0 24 24" aria-hidden="true">${IC[k]}</svg>`;
   const row = (id, ico, t, sub, dis) => `<button class="lrow" id="${id}" ${dis ? 'disabled' : ''}><i aria-hidden="true">${ico}</i><span><b>${t}</b><small>${sub}</small></span></button>`;
@@ -35,6 +36,7 @@ routes.home = async function () {
   </div>
   <div class="lgroup seg2">
     ${row('mapa', svg('map'), 'Mapa de dominio', (() => { const dm = dominioTemas(idx), c = k => dm.filter(x => x.est === k).length; return c('r') + c('y') + c('g') ? `${c('r')} por reforzar · ${c('g')} dominados` : 'Aparecerá cuando empieces a contestar'; })())}
+    ${nFall ? row('falladas', svg('redo'), 'Preguntas falladas', nFall + ' para buscar y releer') : ''}
     ${row('temario', svg('list'), 'Temas vistos', store.getSeen().length ? store.getSeen().length + ' de ' + idx.temas.length : 'Marca lo que ya has estudiado')}
   </div>
 <div id="syncnote"></div>`;
@@ -54,6 +56,7 @@ routes.home = async function () {
   $('#relam').onclick = () => go('#/relampago');
   $('#mapa').onclick = () => go('#/stats');
   $('#temario').onclick = () => go('#/temario');
+  $('#falladas') && ($('#falladas').onclick = () => go('#/falladas'));
   $('#test').onclick = () => go('#/test');
   $('#sim').onclick = () => go('#/sim');
   $('#menu').onclick = () => openMenu();

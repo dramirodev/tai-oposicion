@@ -315,3 +315,60 @@ describe('auditoría: formas de los ajustes importados', () => {
     for (const key of ['test', 'sim', 'ui', 'cardsc', 'evo']) expect(st.getCfg()[key]).toBeUndefined();
   });
 });
+
+describe('falladas hasta tres aciertos seguidos y temario repasado', () => {
+  it('sale al tercer acierto aunque siga en el repaso espaciado; otro fallo la recupera', () => {
+    st.record('f1', 'T1.01', 0, 1000);
+    expect(st.pendingFailure(st.rec('f1'))).toBe(true);
+    st.record('f1', 'T1.01', 1, 2000);
+    st.record('f1', 'T1.01', 1, 3000);
+    expect(st.failureStreak(st.rec('f1'))).toBe(2);
+    expect(st.pendingFailure(st.rec('f1'))).toBe(true);
+    st.record('f1', 'T1.01', 2, 4000);
+    expect(st.failureStreak(st.rec('f1'))).toBe(2);
+    st.record('f1', 'T1.01', 1, 5000);
+    expect(st.pendingFailure(st.rec('f1'))).toBe(false);
+    expect(st.rec('f1')[3]).toBeGreaterThanOrEqual(0);
+    st.record('f1', 'T1.01', 0, 6000);
+    expect(st.failureStreak(st.rec('f1'))).toBe(0);
+    expect(st.pendingFailure(st.rec('f1'))).toBe(true);
+  });
+  it('un fallo intermedio reinicia y despiste no evita los tres aciertos', () => {
+    st.record('f2', 'T1.01', 0, 1000);
+    st.record('f2', 'T1.01', 1, 2000);
+    st.record('f2', 'T1.01', 0, 3000);
+    st.setMotivo('f2', 'T1.01', 4, 4000);
+    expect(st.pendingFailure(st.rec('f2'))).toBe(true);
+    expect(st.failureStreak(st.rec('f2'))).toBe(0);
+    st.record('f2', 'T1.01', 1, 5000);
+    expect(st.pendingFailure(st.rec('f2'))).toBe(true);
+    st.record('bien', 'T1.01', 1, 6000);
+    st.doubt('bien', 'T1.01', 7000);
+    expect(st.pendingFailure(st.rec('bien'))).toBe(false);
+  });
+  it('marcar y desmarcar temario persiste y no cuenta como acierto', async () => {
+    st.record('f3', 'T1.01', 0, 1000);
+    st.setReviewed('f3', 'T1.01', true);
+    expect(st.rec('f3')[11]).toBe(1);
+    expect(st.rec('f3').slice(0,2)).toEqual([1,0]);
+    expect(st.pendingFailure(st.rec('f3'))).toBe(true);
+    expect(st.takeDirty().has('T1.01')).toBe(true);
+    vi.resetModules(); st = await import('../src/store.js');
+    expect(st.rec('f3')[11]).toBe(1);
+    st.setReviewed('f3', 'T1.01', false);
+    expect(st.rec('f3')[11]).toBe(0);
+    const exported=st.exportAll(); st.resetAll(); st.importAll(exported);
+    expect(st.rec('f3')[11]).toBe(0);
+    expect(st.pendingFailure(st.rec('f3'))).toBe(true);
+  });
+  it('conserva el contador y la marca al importar y fusionar; no inventa aciertos antiguos', () => {
+    st.mergeRemote({ old:[9,6,1000,2,9000,1,0], solved:[9,6,2000,3,9000,1,0,0,0,0,3,1] });
+    expect(st.failureStreak(st.rec('old'))).toBe(0);
+    expect(st.pendingFailure(st.rec('old'))).toBe(true);
+    expect(st.pendingFailure(st.rec('solved'))).toBe(false);
+    expect(st.rec('solved')[11]).toBe(1);
+    st.record('old','T1.01',1,3000);
+    expect(st.failureStreak(st.rec('old'))).toBe(1);
+    expect(st.cleanRec([2,1,5000,0,0,1,0,0,0,0,999,3]).slice(10)).toEqual([3,0]);
+  });
+});

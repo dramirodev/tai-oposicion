@@ -3,6 +3,7 @@ import { cleanCfg, cleanCfgSetting } from './config.js';
 // Registro por pregunta: [n, ok, last, box, due, lastRes, flag]
 //   n=intentos, ok=aciertos, last=timestamp ms, box=-1 fuera del repaso (0..3 en repaso),
 //   due=timestamp ms del próximo repaso, lastRes=1/0/2(blanco), flag=1 dudosa
+// Extensión opcional: [10]=racha tras fallo (-1 nunca/ya fuera del historial antiguo, 0..3); [11]=temario repasado (0/1).
 const KEY = 'tai.v1';
 export const MAX_SESIONES = 300;
 export const DAY = 86400000;
@@ -15,13 +16,22 @@ const num = (v, lo = 0, hi = 1e13) => (typeof v === 'number' && isFinite(v)) ? M
 const ID_RE = /^(?!__proto__$|constructor$|prototype$)[A-Za-z0-9._\-~]{1,48}$/;
 const dict = () => Object.create(null);
 const TEMA_RE = /^T\d\.\d\d$/;
+// El historial antiguo no guarda la racha: las pendientes existentes parten de cero.
+export function failureStreak(r) {
+  if (!r) return -1;
+  if (r.length > 10) return Math.floor(num(r[10], -1, 3) ?? -1);
+  return (r[0] > 0 && r[5] === 0 || r[3] >= 0) ? 0 : -1;
+}
+export const pendingFailure = r => { const n = failureStreak(r); return n >= 0 && n < 3; };
 export function cleanRec(r) {
   if (!Array.isArray(r) || r.length < 3) return null;
   const n = num(r[0], 0, 1e6), ok = num(r[1], 0, 1e6), last = num(r[2]);
   if (n === null || ok === null || last === null) return null;
   const box = num(r[3], -1, 4), due = num(r[4]), lr = num(r[5], 0, 2), fl = num(r[6], 0, 1);
   const mo = num(r[9], 0, 8) || 0, ts = num(r[7], 0, 1e7) || 0, tn = Math.min(num(r[8], 0, 1e6) || 0, n); // segundos acumulados y nº de respuestas cronometradas
-  return [n, Math.min(ok, n), last, box === null ? -1 : Math.floor(box), due || 0, lr === null ? 0 : Math.floor(lr), fl ? 1 : 0, tn ? ts : 0, tn, Math.floor(mo)];
+  const out = [n, Math.min(ok, n), last, box === null ? -1 : Math.floor(box), due || 0, lr === null ? 0 : Math.floor(lr), fl ? 1 : 0, tn ? ts : 0, tn, Math.floor(mo)];
+  if (r.length > 10) out.push(Math.floor(num(r[10], -1, 3) ?? failureStreak(out)), r[11] === 1 ? 1 : 0);
+  return out;
 }
 export function cleanStats(map) {
   const out = dict();
@@ -201,7 +211,9 @@ export function markDirty(tema) { dirty.add(tema); }
 // secs (opcional): segundos que tardó en contestar; se acumulan para detectar preguntas lentas
 export function record(id, tema, res, now = Date.now(), secs) {
   const r = S.stats[id] || [0, 0, 0, -1, 0, 0, 0, 0, 0, 0];
-  while (r.length < 10) r.push(0);
+  const streak = failureStreak(r);
+  while (r.length < 12) r.push(0);
+  r[10] = res === 0 ? 0 : res === 1 && streak >= 0 ? Math.min(3, streak + 1) : streak;
   if (typeof secs === 'number' && secs > 0 && res !== 2) { r[7] += Math.min(120, secs); r[8] += 1; }
   r[0] += 1;
   if (res === 1) r[1] += 1;
@@ -250,6 +262,16 @@ export function toggleFlag(id, tema) {
   S.stats[id] = r; dirty.add(tema); persist(); emit();
   if (syncer) syncer.schedule();
   return r[6];
+}
+// Marca independiente de respuestas y del calendario; viaja en el mismo registro sincronizado.
+export function setReviewed(id, tema, value) {
+  const r = S.stats[id]; if (!r || typeof value !== 'boolean') return;
+  const streak = failureStreak(r);
+  while (r.length < 12) r.push(0);
+  r[10] = streak; r[11] = value ? 1 : 0;
+  r[2] = Math.max(Date.now(), r[2] + 1);
+  dirty.add(tema); persist(); emit();
+  if (syncer) syncer.schedule();
 }
 export function addSession(s) {
   S.sessions.unshift(s);

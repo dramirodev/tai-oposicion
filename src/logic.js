@@ -5,6 +5,8 @@ export const fmtT = s => { s = Math.max(0, Math.round(s)); const h = Math.floor(
 export const pct = (a, b) => b ? Math.round(100 * a / b) : 0;
 // Nota del examen: (aciertos − fallos/3) / total × 100, un decimal. En blanco no resta.
 export const nota = (a, f, n) => n ? Math.round(1000 * (a - f / 3) / n) / 10 : 0;
+// Las históricas no puntuables siguen disponibles en sesiones de estudio.
+export const questionsForSession = (items, feedback) => feedback ? items.slice() : items.filter(q => q.np !== 1);
 export function allowed(q, o) { return o.has(q.o) && !q.r; }
 
 // Reparto de las N preguntas de la parte 1 por temas, según su peso oficial `w`.
@@ -313,12 +315,12 @@ const SQL_KW = 'SELECT|FROM|WHERE|GROUP BY|ORDER BY|HAVING|LEFT OUTER JOIN|RIGHT
 const SQL_KW_RE = new RegExp('(?<![\\p{L}\\d_])(' + SQL_KW + ')(?![\\p{L}\\d_])', 'gu');
 const SQL_START = /(?<![\p{L}\d_])(SELECT\s|INSERT INTO\s|UPDATE\s+[\p{L}_]+\s+SET|DELETE FROM\s|CREATE\s+(?:TABLE|VIEW|INDEX|DATABASE)\s|ALTER\s+TABLE\s|DROP\s+(?:TABLE|VIEW|INDEX|DATABASE)\s|GRANT\s|REVOKE\s)/gu;
 const SQL_WORDS = /(?<![\p{L}\d_])(ORDER BY|GROUP BY|(?:LEFT|RIGHT|FULL)(?: OUTER)? JOIN|INNER JOIN|CROSS JOIN|NATURAL JOIN|PRIMARY KEY|FOREIGN KEY|NOT NULL|UNION(?: ALL)?|SELECT|INSERT|UPDATE|DELETE|WHERE|HAVING|DISTINCT|COMMIT|ROLLBACK|TRUNCATE|NULL|COUNT\(\*\))(?![\p{L}\d_])/gu;
-const CMDS = '(?:chmod|chown|chgrp|grep|sudo|ping|ssh|scp|ifconfig|ipconfig|nslookup|traceroute|netstat|systemctl|mkdir|rsync|apt-get|umask|git\\s+(?:add|commit|push|pull|clone|status|log|branch|checkout|merge|rebase|init|fetch|diff|stash|reset|remote|tag)|docker\\s+(?:run|build|ps|pull|push|exec|images|compose|stop|rm|start)|kubectl\\s+(?:get|apply|describe|delete|logs|exec)|curl|wget)';
+const CMDS = '(?:chmod|chown|chgrp|grep|sudo|ping|ssh|scp|ifconfig|ipconfig|nslookup|traceroute|netstat|systemctl|mkdir|rsync|tar(?=\\s+-)|apt-get|umask|git\\s+(?:add|commit|push|pull|clone|status|log|branch|checkout|merge|rebase|init|fetch|diff|stash|reset|remote|tag)|docker\\s+(?:run|build|ps|pull|push|exec|images|compose|stop|rm|start)|kubectl\\s+(?:get|apply|describe|delete|logs|exec)|curl|wget)';
 const CODE_RES = [
   /<\?php[\s\S]*?(?:\?>|$)/g,                                                              // PHP
   /<\/?[A-Za-z][\w:-]*(?:\s[^<>]*)?\/?>/g,                                                  // etiquetas HTML/XML y genéricos <tipo>
   /(?<![\w.])\/(?:etc|var|usr|home|bin|dev|proc|tmp|opt|root)(?:\/[\w.*-]+)*/g,             // rutas Linux
-  /(?<![\w.-])[a-z0-9_][\w-]*\.(?:php|java|js|ts|py|xml|html|css|conf|sh|sql|json|ini|txt|log|yml|yaml|cfg|bat)\b/g, // ficheros
+  /(?<![\w.-])[a-z0-9_][\w-]*\.(?:php|java|js|ts|py|xml|html|css|conf|sh|sql|json|ini|txt|log|yml|yaml|cfg|bat|tar|gz|zip)\b/g, // ficheros
   new RegExp('(?<![\\w-])' + CMDS + '\\b(?:\\s+-{1,2}[\\w-]+|\\s+\\d{3,4}\\b)*', 'g'),     // comandos con sus opciones
   /(?<=^|[\s(])--?[A-Za-z][\w-]*(?=[\s.,;:)]|$)/g,                                         // opciones -R, --force
   /(?<![\p{L}\d_$.])[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*\((?:[^()]|\([^()]*\))*\)/gu,   // llamadas f(...), a.b(...)
@@ -326,6 +328,7 @@ const CODE_RES = [
   /(?<![\p{L}\d_$])[A-Za-z_$][\w$.]*=[\w$.'"]+/gu,                                          // a=b, A.a=B.b
   /(?<![\p{L}\d_$])[a-z][a-z0-9]*(?:_[a-z0-9]+)+(?![\p{L}\d_$])/gu,                        // snake_case
   /(?<![\p{L}\d_$])(?!(?:macOS|iOS|iPadOS|iPhone|iPad|iCloud|iMac|tvOS|watchOS|visionOS|openSUSE|eDNI|eIDAS|iTunes|eBay|iOS)\b)[a-z]{2,}(?:[A-Z][a-z0-9]*)+(?![\p{L}\d_$])/gu, // camelCase
+  /(?<![\p{L}\d_$])[a-z]\s+(?:XNOR|NAND|XOR|NOR|AND|OR)\s+[a-z]\s*=\s*\d(?![\p{L}\d_$])/gu,        // a XOR b = 1
 ];
 const noEsLlamada = /^(?:\d|[A-Z]{1,2}$)/;
 function rangosCodigo(t) {
@@ -363,7 +366,13 @@ function rangosCodigo(t) {
   r.sort((x, y) => x[0] - y[0] || y[1] - x[1]);
   const u = [];
   for (const [a, b] of r) { const l = u[u.length - 1]; if (l && a <= l[1]) l[1] = Math.max(l[1], b); else u.push([a, b]); }
-  return u;
+  // «;» pegado al final de una sentencia forma parte del código
+  for (const x of u) if (t[x[1]] === ';') x[1]++;
+  // fragmentos de código separados solo por «,», «;» o por un identificador suelto entre ellos («a=10,b; b=a++;») son un único bloque
+  const GAP = /^\s+$|^\s*[,;]\s*(?:[A-Za-z_]\w{0,15}\s*[,;]\s*)?$/;
+  const v = [];
+  for (const x of u) { const l = v[v.length - 1]; if (l && x[0] >= l[1] && GAP.test(t.slice(l[1], x[0]))) l[1] = x[1]; else v.push([...x]); }
+  return v;
 }
 export function codeSpans(text) { return rangosCodigo(String(text ?? '')); }
 const codeInner = h => h.replace(SQL_KW_RE, '<b class="sk">$1</b>');

@@ -6,3 +6,7 @@ coverage/
 public/app.js
 public/chunks/
 public/version.json
+
+# Caché local de los scripts de auditoría
+__pycache__/
+*.pyc

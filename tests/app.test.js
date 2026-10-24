@@ -40,8 +40,53 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   expect(session.a + session.f).toBe(1);
   expect(session.b).toBe(14);
   expect(session.a + session.f + session.b).toBe(session.n);
+  // Practicar inmediatamente debe respetar el texto recién escrito.
+  const bank = JSON.parse(readFileSync('public/data/T1.01.json', 'utf8'));
+  for (const q of bank.slice(0, 2)) store.record(q.i, q.t, 0);
+  store.record(bank[0].i, bank[0].t, 1);
+  store.record(bank[0].i, bank[0].t, 1);
+  await navigate('falladas', 'Practicar estas');
+  const reviewedSelector = `[data-reviewed="${bank[0].i}"]`;
+  const reviewed = document.querySelector(reviewedSelector);
+  expect(reviewed).not.toBeNull();
+  expect(reviewed.closest('details').textContent).toContain('2/3');
+  reviewed.closest('details').open = true;
+  reviewed.click();
+  expect(store.rec(bank[0].i)[11]).toBe(1);
+  expect(reviewed.closest('details').textContent).toContain('Temario repasado');
+  await navigate('home', 'Sesión rápida');
+  await navigate('falladas', 'Practicar estas');
+  expect(document.querySelector(reviewedSelector).checked).toBe(true);
+  store.record(bank[0].i, bank[0].t, 1);
+  await navigate('home', 'Sesión rápida');
+  await navigate('falladas', 'Practicar estas');
+  expect(document.querySelector(reviewedSelector)).toBeNull();
+  // El selector del test por tema usa el mismo criterio que el listado.
+  const filtered = await (await import('../src/data.js')).pick({temas:[bank[0].t],origins:new Set(['O','G','A']),mode:'falladas',n:100});
+  expect(filtered.some(q => q.i === bank[0].i)).toBe(false);
+  expect(filtered.some(q => q.i === bank[1].i)).toBe(true);
+  const search = document.querySelector('#fq');
+  search.value = 'termino-inexistente-94721';
+  search.dispatchEvent(new Event('input', { bubbles: true }));
+  document.querySelector('#fgo').click();
+  expect(document.querySelector('#fq')).not.toBeNull();
+  await vi.waitFor(() => expect(document.querySelector('#flist').textContent).toContain('Ninguna pregunta'));
   await navigate('sim', 'Simulacros');
+  // Una carga de Falladas pendiente no debe reemplazar la ruta de destino.
+  const data = await import('../src/data.js');
+  const originalByIds = data.byIds;
+  let release;
+  const delayed = vi.spyOn(data, 'byIds').mockImplementationOnce(ids => new Promise(resolve => {
+    release = async () => resolve(await originalByIds(ids));
+  }));
+  location.hash = '#/falladas';
+  await vi.waitFor(() => expect(release).toBeTypeOf('function'));
   await navigate('stats', 'Últimas sesiones');
+  await release();
+  await new Promise(resolve => setTimeout(resolve, 20));
+  expect(document.querySelector('#app').textContent).toContain('Últimas sesiones');
+  delayed.mockRestore();
+
   await navigate('settings', 'Exportar tarjetas a Anki');
   document.querySelector('#th [data-v="dark"]').click();
   expect(document.documentElement.getAttribute('data-theme')).toBe('dark');

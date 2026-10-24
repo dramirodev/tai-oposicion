@@ -1,0 +1,33 @@
+{
+  "ok": true,
+  "tests": {
+    "files": 9,
+    "passed": 136,
+    "failed": 0
+  },
+  "build": "1.1.3+e8b8e66",
+  "verified": [
+    "0/3, 1/3, 2/3 permanecen; 3/3 sale",
+    "fallo reinicia; blanco conserva",
+    "repaso espaciado independiente",
+    "marca de temario reversible y persistente",
+    "validación, exportación/importación y fusión preservan extensión",
+    "listado y selector de falladas usan el mismo criterio",
+    "registros antiguos pendientes empiezan en 0/3"
+  ],
+  "limits": [
+    "sin prueba física en iPad",
+    "sin prueba de sincronización real entre dispositivos",
+    "las exclusiones puntuables de los tres originales históricos solo están documentadas"
+  ],
+  "untouched_external_files_verified": [
+    "firebase.json",
+    "public/style.css",
+    "public/sw.js",
+    "src/logic.js",
+    "src/screens/home.js",
+    "tests/logic.test.js",
+    "tests/ocr.test.js"
+  ],
+  "no_push_or_deployment": true
+}

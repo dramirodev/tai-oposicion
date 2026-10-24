@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "modified_records": 13,
+  "reformulated": 7,
+  "kept_with_warning": 6,
+  "ids_counts_order_preserved": true,
+  "application_and_tests_untouched_in_editorial_review": true,
+  "changed_c": [
+    {
+      "id": "AS12B-S2-12",
+      "before": 1,
+      "after": 2
+    },
+    {
+      "id": "AT309-P1-12",
+      "before": 3,
+      "after": 2
+    }
+  ],
+  "duplicate_originals_preserved": [
+    "AS05G-P1-60",
+    "AS08B-P1-R-01",
+    "AS11B-P1-70"
+  ],
+  "scoring_exclusions_implemented": false
+}
