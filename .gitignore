@@ -13,3 +13,7 @@ __pycache__/
 
 # Informes locales de auditoría del temario
 auditoria-temario-*/
+
+dist/
+test-results/
+playwright-report/

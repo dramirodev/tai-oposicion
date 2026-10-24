@@ -1,11 +1,11 @@
-import * as sync from '../syncfacade.js';
-import * as store from '../store.js';
-import { esc, pct, quickN, velocidad } from '../logic.js';
-import { META, getIndex, getMeta, now, dueList } from '../data.js';
+import * as sync from '../core/syncfacade.js';
+import * as store from '../core/store.js';
+import { esc, pct, quickN, velocidad } from '../core/logic.js';
+import { META, getIndex, getMeta, now, dueList } from '../core/data.js';
 import { $, app, guard, toast, type El } from '../ui.js';
-import { state } from '../engine.js';
-import { BLOQUES } from '../labels.js';
-import { isFull, accessLevel } from '../access.js';
+import { state } from '../core/engine.js';
+import { BLOQUES } from '../core/labels.js';
+import { isFull, accessLevel } from '../core/access.js';
 export function registerHome({ routes, go, saludo, quickSession, startRepaso, openMenu, dominioTemas, falladasIds }: any, screen: any) {
 // ───────── inicio ─────────
 routes.home = async function () {

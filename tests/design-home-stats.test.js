@@ -2,14 +2,14 @@ import 'fake-indexeddb/auto';
 import { beforeEach, afterEach, it, expect, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-vi.mock('../src/syncfacade.js', () => ({ status: { user:null,state:'sin sesión',configured:false,reqs:[] }, onStatus:()=>()=>{} }));
+vi.mock('../src/core/syncfacade.js', () => ({ status: { user:null,state:'sin sesión',configured:false,reqs:[] }, onStatus:()=>()=>{} }));
 let routes, store, engine, screen;
 beforeEach(async () => {
   vi.resetModules(); localStorage.clear();
   document.body.innerHTML = '<main id="app"></main>';
   vi.stubGlobal('scrollTo', vi.fn()); vi.stubGlobal('matchMedia',()=>({matches:false}));
   vi.stubGlobal('fetch', async url => ({ ok:true, json:async()=>JSON.parse(readFileSync(path.join('public',String(url)), 'utf8')) }));
-  store = await import('../src/store.js'); engine = await import('../src/engine.js');
+  store = await import('../src/core/store.js'); engine = await import('../src/core/engine.js');
   routes={}; screen={};
   (await import('../src/screens/home.js')).registerHome({routes,go:vi.fn(),saludo:()=> 'Hola', quickSession:vi.fn(),startRepaso:vi.fn(),openMenu:vi.fn(),dominioTemas:engine.dominioTemas,falladasIds:engine.falladasIds},screen);
   (await import('../src/screens/stats.js')).registerStats({routes,go:vi.fn(),trapTest:vi.fn(),startRun:vi.fn()});
@@ -63,7 +63,7 @@ it('buscar y navegar no modifica el progreso y una cuenta nueva no recibe la pan
   await routes.stats();
   document.querySelector('[data-stats-view="sims"]').click();
   expect(store.exportAll()).toBe(before);
-  const data=await import('../src/data.js');
+  const data=await import('../src/core/data.js');
   let finish;
   const spy=vi.spyOn(data,'dueList').mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
   document.querySelector('#app').innerHTML='<p>Nueva pantalla</p>';

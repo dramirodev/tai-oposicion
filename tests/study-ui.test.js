@@ -19,7 +19,7 @@ it('filtra marcas y rachas sin modificar los registros',()=>{
  expect(stats.a[10]).toBe(1);
 });
 it('anticipa la próxima revisión igual que el almacén sin escribir en él',async()=>{
- const store=await import('../src/store.js');store.resetAll();
+ const store=await import('../src/core/store.js');store.resetAll();
  const now=1800000000000;
  for(const old of [undefined,[0,0,now,0,now,0],[2,1,now,1,now,2],[10,8,now,4,now,2]])for(const grade of [0,1,2]){
   store.resetAll();if(old)store.mergeCards({'FC-demo':old});

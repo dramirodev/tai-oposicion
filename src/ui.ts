@@ -1,5 +1,5 @@
-import * as store from './store.js';
-import { esc, normUi, ZOOMS } from './logic.js';
+import * as store from './core/store.js';
+import { esc, normUi, ZOOMS } from './core/logic.js';
 /** Atajo de querySelector. Se asume que el elemento existe (como en el JS original); usa `$<HTMLInputElement>(…)` para campos de formulario. */
 /** Elemento de interfaz con las propiedades de formulario habituales (value, disabled, checked…). */
 export type El = HTMLElement & Pick<HTMLInputElement, 'value' | 'disabled' | 'checked' | 'files' | 'select'>;

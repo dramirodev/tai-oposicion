@@ -1,5 +1,5 @@
 import { cleanCfg, cleanCfgSetting } from './config.js';
-import type { AppState, CardMap, CardRec, Cfg, Report, ReportMap, ReportState, Res, SeenDoc, Session, StatMap, StatRec } from './types.js';
+import type { AppState, CardMap, CardRec, Cfg, Report, ReportMap, ReportState, Res, SeenDoc, Session, StatMap, StatRec } from '../types.js';
 // Almacén local (local-first) + sincronización con Firestore.
 // Registro por pregunta: [n, ok, last, box, due, lastRes, flag]
 //   n=intentos, ok=aciertos, last=timestamp ms, box=-1 fuera del repaso (0..3 en repaso),
@@ -207,6 +207,7 @@ export async function recover(): Promise<boolean> {
 }
 export function flushNow(): Promise<void> { try { localStorage.setItem(stateKey(), JSON.stringify(S)); } catch (e) {} return flushMirror(); }
 export function onChange(fn: () => void): () => void { listeners.add(fn); return () => listeners.delete(fn); }
+export const subscribe: (fn: () => void) => () => void = onChange;
 function emit() { listeners.forEach(f => f()); }
 
 export const getStats = (): StatMap => S.stats;

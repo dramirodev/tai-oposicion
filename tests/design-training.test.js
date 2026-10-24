@@ -7,7 +7,7 @@ beforeEach(async () => {
   vi.stubGlobal('matchMedia', () => ({ matches: true })); vi.stubGlobal('scrollTo', () => {});
   Element.prototype.scrollIntoView = () => {};
   vi.stubGlobal('fetch', async url => ({ ok: true, json: async () => String(url).includes('meta.json') ? { 'TRAIN-1': ['T1.01', 'O', 'I', [1], 2] } : String(url).includes('supuestos') ? {} : [question] }));
-  store = await import('../src/store.js'); routes = {}; screen = {};
+  store = await import('../src/core/store.js'); routes = {}; screen = {};
   (await import('../src/screens/training.js')).registerTraining({ routes, go: () => {}, route: () => {}, pw: () => '' }, screen);
 });
 afterEach(() => { screen.cleanup?.(); vi.useRealTimers(); vi.unstubAllGlobals(); });

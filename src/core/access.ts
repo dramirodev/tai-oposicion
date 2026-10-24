@@ -2,7 +2,7 @@
 // de verdad las reglas de Firestore es la sincronización y la gestión de accesos.
 import { accountId } from './store.js';
 import { status } from './syncstate.js';
-import type { AccessLevel } from './types.js';
+import type { AccessLevel } from '../types.js';
 export const OWNER = 'dramiro@gmail.com';
 const ACC = () => 'tai.acc:' + (accountId() || 'guest');
 const DEV = 'tai.dev';

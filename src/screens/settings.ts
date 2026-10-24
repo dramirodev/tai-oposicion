@@ -1,12 +1,12 @@
-import * as sync from '../syncfacade.js';
-import * as store from '../store.js';
-import { esc, normUi } from '../logic.js';
-import { getIndex } from '../data.js';
-import { inspectOffline, downloadOffline, type OfflineState } from '../offline.js';
-import { cleanCfg } from '../config.js';
+import * as sync from '../core/syncfacade.js';
+import * as store from '../core/store.js';
+import { esc, normUi } from '../core/logic.js';
+import { getIndex } from '../core/data.js';
+import { inspectOffline, downloadOffline, type OfflineState } from '../core/offline.js';
+import { cleanCfg } from '../core/config.js';
 import { $, app, toast, ask, type El } from '../ui.js';
-import { APP_VERSION, APP_BUILD } from '../version.js';
-import { isFull, accessLevel, devMode, setDevMode, devRevealed, revealDev } from '../access.js';
+import { APP_VERSION, APP_BUILD } from '../core/version.js';
+import { isFull, accessLevel, devMode, setDevMode, devRevealed, revealDev } from '../core/access.js';
 // La previsualización usa los mismos validadores que la importación, sin modificar el almacén.
 export function previewImport(txt: string) {
   if (txt.length > 20e6) throw new Error('Archivo no válido: supera 20 MB');

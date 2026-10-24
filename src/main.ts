@@ -1,19 +1,19 @@
 import { questionNotice, sourceHtml, filterFailures } from './study-ui.js';
-import * as sync from './syncfacade.js';
-import * as store from './store.js';
-import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, pickGuest, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from './logic.js';
-import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds } from './data.js';
+import * as sync from './core/syncfacade.js';
+import * as store from './core/store.js';
+import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, pickGuest, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from './core/logic.js';
+import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds } from './core/data.js';
 import { $, app, L, toast, ask, guard, focusHeading, type El } from './ui.js';
-import { ORIGEN, TRAMPAS } from './labels.js';
-import { APP_VERSION, APP_BUILD } from './version.js';
+import { ORIGEN, TRAMPAS } from './core/labels.js';
+import { APP_VERSION, APP_BUILD } from './core/version.js';
 import { registerTraining } from './screens/training.js';
 import { registerCards } from './screens/cards.js';
 import { registerStats } from './screens/stats.js';
 import { registerHome } from './screens/home.js';
 import { registerSettings } from './screens/settings.js';
 import { registerAcceso } from './screens/acceso.js';
-import { isFull, isOwner, GUEST_ROUTES } from './access.js';
-import { state, createRun, clearRun, saveRun, pendingRun, pendingPrompt, resumeRun, tickRun, segundosRestantes, answerQuestion, answerDeferred, finishRun, quickItems, repasoItems, trapTest, dominioTemas, falladasIds } from './engine.js';
+import { isFull, isOwner, GUEST_ROUTES } from './core/access.js';
+import { state, createRun, clearRun, saveRun, pendingRun, pendingPrompt, resumeRun, tickRun, segundosRestantes, answerQuestion, answerDeferred, finishRun, quickItems, repasoItems, trapTest, dominioTemas, falladasIds } from './core/engine.js';
 
 // ───────── router ─────────
 const routes: Record<string, any> = {};

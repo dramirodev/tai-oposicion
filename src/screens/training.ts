@@ -1,9 +1,9 @@
 import { questionNotice, sourceHtml } from '../study-ui.js';
-import * as store from '../store.js';
-import { esc, richHtml, shuffle, pct, normUi, hiliteHtml, claveSpans, pideNegativa, minLectura, velocidad, CONSEJOS_LECTURA } from '../logic.js';
-import { META, getMeta, temaName, now, pick, dueList, byIds } from '../data.js';
+import * as store from '../core/store.js';
+import { esc, richHtml, shuffle, pct, normUi, hiliteHtml, claveSpans, pideNegativa, minLectura, velocidad, CONSEJOS_LECTURA } from '../core/logic.js';
+import { META, getMeta, temaName, now, pick, dueList, byIds } from '../core/data.js';
 import { $, app, L, ask, focusHeading, type El } from '../ui.js';
-import { TRAMPAS, TRAMPA_EXPL } from '../labels.js';
+import { TRAMPAS, TRAMPA_EXPL } from '../core/labels.js';
 export function registerTraining({ routes, go, route, pw }: any, screen: any) {
 let generation = 0;
 let TRUN: any = null, LRUN: any = null;

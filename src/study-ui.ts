@@ -1,6 +1,6 @@
-import { VERIFIED_SOURCES } from './verified-sources.js';
-import { esc } from './logic.js';
-import { failureStreak, INTERVALS, DAY } from './store.js';
+import { VERIFIED_SOURCES } from './core/verified-sources.js';
+import { esc } from './core/logic.js';
+import { failureStreak, INTERVALS, DAY } from './core/store.js';
 import type { Question, StatMap, CardRec } from './types.js';
 
 export function questionNotice(q: Pick<Question, 'n' | 'np'>): string {

@@ -4,12 +4,12 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 
 // Solo se sustituye el límite externo (Firebase y HTTP); pantallas, datos y almacén son reales.
-vi.mock('../src/syncfacade.js', () => ({
+vi.mock('../src/core/syncfacade.js', () => ({
   status: { user: null, state: 'sin sesión', configured: false },
   init: async () => {}, onStatus: () => () => {}, login: async () => {}, logout: async () => {}, retry: () => {},
 }));
 it('navega por las pantallas y conserva una valoración de tarjeta al salir y volver', async () => {
-  document.documentElement.innerHTML = readFileSync('public/index.html', 'utf8');
+  document.documentElement.innerHTML = readFileSync('index.html', 'utf8');
   localStorage.clear();
   vi.stubGlobal('matchMedia', () => ({ matches: true }));
   vi.stubGlobal('scrollTo', () => {});
@@ -35,7 +35,7 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   await vi.waitFor(() => expect(document.querySelector('.overlay').textContent).toContain('¿Salir?'));
   document.querySelector('.overlay [data-v="1"]').click();
   await waitText('Resultado');
-  const store = await import('../src/store.js');
+  const store = await import('../src/core/store.js');
   const session = store.getSessions()[0];
   expect(session.a + session.f).toBe(1);
   expect(session.b).toBe(14);
@@ -62,7 +62,7 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   await navigate('falladas', 'Practicar estas');
   expect(document.querySelector(reviewedSelector)).toBeNull();
   // El selector del test por tema usa el mismo criterio que el listado.
-  const filtered = await (await import('../src/data.js')).pick({temas:[bank[0].t],origins:new Set(['O','G','A']),mode:'falladas',n:100});
+  const filtered = await (await import('../src/core/data.js')).pick({temas:[bank[0].t],origins:new Set(['O','G','A']),mode:'falladas',n:100});
   expect(filtered.some(q => q.i === bank[0].i)).toBe(false);
   expect(filtered.some(q => q.i === bank[1].i)).toBe(true);
   const search = document.querySelector('#fq');
@@ -73,7 +73,7 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   await vi.waitFor(() => expect(document.querySelector('#flist').textContent).toContain('Ninguna pregunta'));
   await navigate('sim', 'Simulacros');
   // Una carga de Falladas pendiente no debe reemplazar la ruta de destino.
-  const data = await import('../src/data.js');
+  const data = await import('../src/core/data.js');
   const originalByIds = data.byIds;
   let release;
   const delayed = vi.spyOn(data, 'byIds').mockImplementationOnce(ids => new Promise(resolve => {

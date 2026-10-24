@@ -1,7 +1,7 @@
 import * as store from './store.js';
 import { shuffle, allowed } from './logic.js';
 import { loadBank } from './bank.js';
-import type { Index, Meta, Question } from './types.js';
+import type { Index, Meta, Question } from '../types.js';
 // ───────── datos ─────────
 export let INDEX: Index | undefined, META: Meta, SUP: unknown;
 const supQuestions = new Map<string, Question>();

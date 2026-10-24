@@ -23,7 +23,7 @@ beforeEach(async () => {
   vi.resetModules(); vi.useFakeTimers(); localStorage.clear();
   boundary.writes.length = 0; boundary.snapshots.length = 0; boundary.auth.currentUser = null;
   vi.stubGlobal('fetch', async () => ({ json: async () => ({ apiKey: 'test', authDomain: 'localhost' }) }));
-  store = await import('../src/store.js'); sync = await import('../src/sync.js');
+  store = await import('../src/core/store.js'); sync = await import('../src/core/sync.js');
   await sync.init({ temaOf: () => 'T1.01', idsOfTema: () => [] }); user('user1');
 });
 afterEach(() => { vi.clearAllTimers(); vi.useRealTimers(); vi.unstubAllGlobals(); });
@@ -54,7 +54,7 @@ it('sube la marca de borrado para impedir que reaparezca una tarjeta eliminada',
 const snap = (path, data) => boundary.snapshots.filter(x => x.ref.path === path).at(-1).cb({ exists: () => data !== null, data: () => data, id: path.split('/').pop() });
 const paths = () => boundary.snapshots.map(x => x.ref.path);
 it('el propietario sincroniza y escucha solicitudes y accesos', async () => {
-  const { status } = await import('../src/syncstate.js');
+  const { status } = await import('../src/core/syncstate.js');
   expect(status.access).toBe('propietario');
   expect(paths()).toContain('users/user1/stats');
   expect(paths()).toContain('requests'); expect(paths()).toContain('access');
@@ -62,7 +62,7 @@ it('el propietario sincroniza y escucha solicitudes y accesos', async () => {
   expect(status.reqs).toEqual([{ uid: 'u9', email: 'a@x.es', name: 'A', ts: 5 }]);
 });
 it('un invitado no sincroniza datos y queda como invitado', async () => {
-  const { status } = await import('../src/syncstate.js');
+  const { status } = await import('../src/core/syncstate.js');
   boundary.snapshots.length = 0; user('u2', 'amigo@example.test');
   expect(paths()).toEqual(['access/u2', 'requests/u2']);
   snap('access/u2', null); snap('requests/u2', null);
@@ -73,7 +73,7 @@ it('un invitado no sincroniza datos y queda como invitado', async () => {
   expect(boundary.writes).toEqual([]);
 });
 it('la solicitud pasa a pendiente y el aprobado empieza a sincronizar', async () => {
-  const { status } = await import('../src/syncstate.js');
+  const { status } = await import('../src/core/syncstate.js');
   boundary.snapshots.length = 0; user('u2', 'amigo@example.test');
   expect(await sync.requestAccess()).toBe(true);
   expect(boundary.writes.at(-1)).toMatchObject({ path: 'requests/u2', value: { email: 'amigo@example.test' } });
@@ -110,7 +110,7 @@ it('no publica el progreso de la cuenta anterior en la cuenta nueva', async () =
   expect(boundary.writes.filter(x=>x.path==='users/friend1/stats/T1.01')).toEqual([]);
 });
 it('No lo sé conserva la racha como el blanco que puntúa el resultado', async () => {
-  const engine=await import('../src/engine.js');
+  const engine=await import('../src/core/engine.js');
   const q={i:'f-review',t:'T1.01',o:'G',q:'Prueba',a:['A','B','C','D'],c:0,k:'D',x:[],d:1};
   store.record(q.i,q.t,0,1000);store.record(q.i,q.t,1,2000);store.record(q.i,q.t,1,3000);
   const run=engine.createRun({kind:'test',feedback:true,items:[q]});
@@ -127,7 +127,7 @@ it('importar con listeners activos publica los registros nuevos', async () => {
 });
 
 it('restaura el progreso propio al volver a una cuenta y descarta sus sesiones en pantalla', async()=>{
- const engine=await import('../src/engine.js');
+ const engine=await import('../src/core/engine.js');
  store.record('owner-question','T1.01',0,1000);
  engine.createRun({kind:'test',feedback:true,items:[{i:'owner-question',t:'T1.01',q:'x',a:['a','b','c','d'],c:0}]});
  user('friend','friend@example.test'); snap('access/friend',{ok:true});

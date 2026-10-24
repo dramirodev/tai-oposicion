@@ -3,7 +3,7 @@
 import * as store from './store.js';
 import { META, temaOf, getIndex, getMeta, getTema, dueList, byIds, now } from './data.js';
 import { allowed, dominioCalc, fmtT, nota, pickGuest, pickQuick, pickRepaso, pickTrampas, questionsForSession, quickN, shuffle, trapRates } from './logic.js';
-import type { Index, Question, Session, SessionKind } from './types.js';
+import type { Index, Question, Session, SessionKind } from '../types.js';
 
 // ───────── sesión en curso ─────────
 export interface RunCfg {
@@ -20,13 +20,45 @@ export interface Run extends RunCfg {
 export interface LastResult { ses: Session & { porTiempo?: boolean }; items: Question[]; ans: (number | undefined)[]; times: (number | undefined)[]; limit: number }
 
 /** Estado compartido: la sesión en curso y la última terminada. */
-export const state: { run: Run | null; last: LastResult | null } = { run: null, last: null };
+const subscribers = new Set<() => void>();
+export function subscribe(fn: () => void): () => void {
+  subscribers.add(fn);
+  return () => { subscribers.delete(fn); };
+}
+// El puente aún escribe en Run directamente. Observar objetos y arrays permite
+// avisar también de esas mutaciones sin cambiar ni el motor ni sus consumidores.
+// No se envuelven las preguntas (datos inmutables) ni los handles de timers.
+const observed = new WeakMap<object, object>();
+function observable<T extends object>(value: T): T {
+  const known = observed.get(value); if (known) return known as T;
+  const proxy = new Proxy(value, {
+    get(target, key, receiver) {
+      const v = Reflect.get(target, key, receiver);
+      return v && typeof v === 'object' && key !== 'items' && key !== 'gt'
+        && (Array.isArray(v) || Object.getPrototypeOf(v) === Object.prototype) ? observable(v) : v;
+    },
+    set(target, key, v) {
+      const changed = !Object.is(Reflect.get(target, key), v);
+      const ok = Reflect.set(target, key, v);
+      if (ok && changed) subscribers.forEach(fn => fn());
+      return ok;
+    },
+    deleteProperty(target, key) {
+      const had = Reflect.has(target, key), ok = Reflect.deleteProperty(target, key);
+      if (ok && had) subscribers.forEach(fn => fn());
+      return ok;
+    },
+  });
+  observed.set(value, proxy); observed.set(proxy, proxy);
+  return proxy;
+}
+export const state: { run: Run | null; last: LastResult | null } = observable({ run: null, last: null });
 
 /** Crea la sesión; devuelve null si no hay preguntas puntuables. No navega: eso lo decide la interfaz. */
 export function createRun(cfg: RunCfg): Run | null {
   const items = questionsForSession(cfg.items, cfg.feedback);
   if (!items.length) return null;
-  return (state.run = { ...cfg, items, idx: 0, ans: [], t0: now(), secs: 0, paused: false });
+  return (state.run = observable({ ...cfg, items, idx: 0, ans: [], t0: now(), secs: 0, paused: false }));
 }
 
 // La sesión en curso se guarda para sobrevivir al cierre de la app por iOS (solo sesiones del banco, no los supuestos)
@@ -66,7 +98,7 @@ export function pendingPrompt({ saved: s, items }: PendingRun): string {
 export function resumeRun({ saved: s, items, account }: PendingRun): Run | null {
   if (account !== store.accountId()) return null;
   const un = <T>(a?: (T | null)[]): (T | undefined)[] => Array.from(a || [], x => x === null ? undefined : x);
-  return (state.run = { kind: s.kind, feedback: !!s.feedback, titulo: s.titulo, limit: s.limit || 0, porTiempo: !!s.pt, items, idx: s.idx, ans: un(s.ans), times: un(s.times), t0: now(), secs: s.secs || 0, paused: false, review: (Array.isArray(s.review) ? s.review : []).filter(i => Number.isInteger(i) && i >= 0 && i < items.length) });
+  return (state.run = observable({ kind: s.kind, feedback: !!s.feedback, titulo: s.titulo, limit: s.limit || 0, porTiempo: !!s.pt, items, idx: s.idx, ans: un(s.ans), times: un(s.times), t0: now(), secs: s.secs || 0, paused: false, review: (Array.isArray(s.review) ? s.review : []).filter(i => Number.isInteger(i) && i >= 0 && i < items.length) }));
 }
 
 // ───────── tiempo y respuestas ─────────
@@ -115,7 +147,7 @@ export function finishRun(R: Run, reason: 'complete' | 'interrupted' | 'timeout'
   const ses = { id: 's' + now().toString(36), ts: now(), kind: R.kind, n, a: res.a, f: res.f, b: res.b, secs: R.porTiempo ? Math.min(R.secs, (R.limit ?? 0) * 60) : R.secs, nota: nota(res.a, res.f, n), temas: porTema, tipos: porTipo, fails, titulo: R.titulo || '', ...(reason === 'interrupted' ? { interrupted: true } : {}), ...(R.porTiempo ? { porTiempo: true } : {}) };
   store.addSession(ses);
   state.run = null;
-  return (state.last = { ses, items, ans: R.ans, times: R.times || [], limit: R.limit || 0 });
+  return (state.last = observable({ ses, items, ans: R.ans, times: R.times || [], limit: R.limit || 0 }));
 }
 
 // ───────── selección de preguntas ─────────
