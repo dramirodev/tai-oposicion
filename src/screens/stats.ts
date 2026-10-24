@@ -2,9 +2,9 @@ import * as store from '../store.js';
 import { esc, shuffle, fmtT, pct, dominioCalc, aggregateWeeks, slowList, simHistory, compareSessions, MOTIVOS_FALLO, cargaRepasos, motivosFallo, suertes, velocidad, CONSEJOS_LECTURA } from '../logic.js';
 import { META, getIndex, getMeta, now, byIds } from '../data.js';
 import { $, app, L, toast, type El } from '../ui.js';
-import { dominioTemas } from '../engine.js';
+import { dominioTemas, falladasIds }  from '../engine.js';
 import { ORIGEN, TRAMPAS, TIPOS } from '../labels.js';
-export function registerStats({ routes, go, trapTest, startRun }: any) {
+export function registerStats({ routes, go, trapTest, startRun, startRepaso }: any) {
 // ───────── mapa de dominio ─────────
 // Estado por tema a partir de: precisión actual (último resultado de cada pregunta vista),
 // cobertura (vistas / banco, con objetivo del 60 %) y frescura (días desde la última vez).
@@ -15,8 +15,8 @@ function mapaHTML(dm: any, orden: any) {
   const l = dm.slice();
   if (orden === 'frios') l.sort((a: any, b: any) => (ord[a.est] - ord[b.est]) || ((b.dias ?? -1) - (a.dias ?? -1)));
   const c = (k: any) => dm.filter((x: any) => x.est === k).length;
-  return `<div class="dmsum"><span class="dot r"></span>${c('r')} <span class="dot y"></span>${c('y')} <span class="dot g"></span>${c('g')} <span class="dot n"></span>${c('n')}</div>
-  <div class="seg" id="dmord"><button class="${orden !== 'frios' ? 'on' : ''}" data-v="tema">Por tema</button><button class="${orden === 'frios' ? 'on' : ''}" data-v="frios">Más urgentes primero</button></div>
+  return `<div class="dmsum"><span class="dot r"></span>${c('r')} Reforzar <span class="dot y"></span>${c('y')} A vigilar <span class="dot g"></span>${c('g')} Dominado <span class="dot n"></span>${c('n')} Sin datos</div>
+  <div class="seg" id="dmord"><button class="${orden !== 'frios' ? 'on' : ''}" data-v="tema" aria-pressed="${orden !== 'frios'}">Por tema</button><button class="${orden === 'frios' ? 'on' : ''}" data-v="frios" aria-pressed="${orden === 'frios'}">Más urgentes primero</button></div>
   <div class="dm">${l.map((t: any) => `<button class="dmt ${t.est}" data-dt="${t.id}"><div class="dmh"><span class="dot ${t.est}"></span><b>${t.id}</b><small>${hace(t.dias)}</small></div><div class="dmn">${esc(t.nombre)}</div><div class="dmb"><i style="width:${t.score}%"></i></div><small>${ESTADO[t.est]} · ${esc(t.why)}${t.due ? ' · ' + t.due + ' repasos' : ''}</small></button>`).join('')}</div>
   <p class="legend">Rojo: precisión o cobertura bajas, o más de 30 días sin tocar. Ámbar: va bien pero falta práctica o lleva más de 2 semanas parado. Verde: precisión alta y reciente. La puntuación mezcla tu acierto actual (65 %) y las preguntas vistas respecto al 60 % del banco (35 %). Toca un tema para practicarlo.</p>`;
 }
@@ -26,7 +26,7 @@ function bindMapa(root: El, dm: any, redraw: any) {
     store.setCfg('test', { sel: [b.dataset.dt!], n: c.n || 15, mode: 'nuevas', o: c.o || ['O', 'A', 'G'] });
     go('#/test');
   });
-  const o = root.querySelector<El>('#dmord'); if (o) o.onclick = (e: any) => { if ((e.target as El).dataset.v!) { store.setCfg('dmord', (e.target as El).dataset.v!); redraw(); } };
+  const o = root.querySelector<El>('#dmord'); if (o) o.onclick = (e: any) => { if ((e.target as El).dataset.v!) { const value = (e.target as El).dataset.v!; store.setCfg('dmord', value); redraw(); root.querySelector<HTMLElement>(`#dmord [data-v="${value}"]`)?.focus({ preventScroll: true }); } };
 }
 
 
@@ -59,7 +59,7 @@ function paintSims() {
     const C = compareSessions(P1[ia], P1[ib]);
     cmp = `<div class="row"><select id="sca" aria-label="Intento A">${opt(ia)}</select><select id="scb" aria-label="Intento B">${opt(ib)}</select></div>
       <p class="sm">Nota: <b>${dlt(C.dNota)}</b> · acierto ${dlt(C.dAcierto, ' pts')}${C.dSeg !== null ? ' · ritmo ' + dlt(C.dSeg, ' s/preg.', true) : ''}</p>
-      <table class="tb"><tr><th>Tema</th><th>A</th><th>B</th><th>Δ</th></tr>${C.rows.map(r => `<tr><td>${r.t}</td><td>${r.pa ?? '—'}</td><td>${r.pb ?? '—'}</td><td>${r.d === null ? '' : dlt(r.d)}</td></tr>`).join('')}</table>
+      <table class="tb"><caption>Comparación de los intentos A y B por tema</caption><tr><th scope="col">Tema</th><th>A</th><th>B</th><th>Δ</th></tr>${C.rows.map(r => `<tr><td>${r.t}</td><td>${r.pa ?? '—'}</td><td>${r.pb ?? '—'}</td><td>${r.d === null ? '' : dlt(r.d)}</td></tr>`).join('')}</table>
       <p class="legend">A es el intento de la izquierda y B el de la derecha; Δ en puntos de acierto por tema.</p>`;
   }
   el.innerHTML = `<div class="card">${chart}<p class="legend">Nota de la parte 1 por intento (sobre 100).</p><h2 class="h3">Últimos intentos</h2>${rows}<h2 class="h3">Comparar dos intentos</h2>${cmp}</div>`;
@@ -98,16 +98,16 @@ function paintEvo(idx: any) {
     const cols = W.map((w, i) => `<rect x="${X(i) - iw / W.length / 2}" y="${T}" width="${iw / W.length}" height="${ih}" class="hit" data-i="${i}" tabindex="0" role="img" aria-label="Semana del ${fmtD(w.start)}: ${w.n ? (c.m === 'tiempo' ? (w.segPreg ?? '—') + ' s por pregunta' : w.acierto + ' % de acierto') : 'sin datos'}"/>`).join('');
     chart = `<div class="evo"><svg viewBox="0 0 ${Wd} ${H}" role="img" aria-label="Evolución semanal">${grid}${line}${dots}${lab}${xt}${cols}</svg><div class="tip" id="tip" hidden></div></div>`;
   }
-  const tabla = c.tabla ? `<table class="tb"><tr><th>Semana</th><th>${c.m === 'tiempo' ? 'seg/preg.' : 'Acierto'}</th><th>Resp.</th></tr>${W.filter(w => w.n).map(w => `<tr><td>${fmtD(w.start)}</td><td>${w[key] ?? '—'}</td><td>${esc(String(w.n))}</td></tr>`).join('') || '<tr><td colspan="3">Sin datos</td></tr>'}</table>` : '';
+  const tabla = c.tabla ? `<table class="tb"><caption>Evolución semanal: ${c.m === 'tiempo' ? 'tiempo por pregunta' : 'acierto'}</caption><tr><th scope="col">Semana</th><th>${c.m === 'tiempo' ? 'seg/preg.' : 'Acierto'}</th><th>Resp.</th></tr>${W.filter(w => w.n).map(w => `<tr><td>${fmtD(w.start)}</td><td>${w[key] ?? '—'}</td><td>${esc(String(w.n))}</td></tr>`).join('') || '<tr><td colspan="3">Sin datos</td></tr>'}</table>` : '';
   el.innerHTML = `<div class="card">
-    <div class="seg" id="evm"><button class="${c.m !== 'tiempo' ? 'on' : ''}" data-v="acierto">Acierto</button><button class="${c.m === 'tiempo' ? 'on' : ''}" data-v="tiempo">Tiempo por pregunta</button></div>
+    <div class="seg" id="evm"><button class="${c.m !== 'tiempo' ? 'on' : ''}" data-v="acierto" aria-pressed="${c.m !== 'tiempo'}">Acierto</button><button class="${c.m === 'tiempo' ? 'on' : ''}" data-v="tiempo" aria-pressed="${c.m === 'tiempo'}">Tiempo por pregunta</button></div>
     <div class="row"><select id="evf" aria-label="Qué medir en la evolución" ${c.m === 'tiempo' ? 'disabled' : ''}>${opts}</select><select id="evw" aria-label="Número de semanas">${[8, 12, 26].map(v => `<option value="${v}" ${c.w === v ? 'selected' : ''}>${v} semanas</option>`).join('')}</select></div>
     ${chart}
-    <p class="legend">${c.m === 'tiempo' ? 'Segundos medios por pregunta en tus sesiones (sin contar pausas).' : 'Porcentaje de aciertos por semana, sobre las preguntas contestadas en esa semana.'} <button class="ghost sm" id="evt">${c.tabla ? 'Ocultar tabla' : 'Ver tabla'}</button></p>${tabla}</div>`;
-  $('#evm').onclick = e => { if ((e.target as El).dataset.v!) { c.m = (e.target as El).dataset.v!; save(); paintEvo(idx); } };
-  $<El>('#evf').onchange = e => { c.f = (e.target as El).value; save(); paintEvo(idx); };
-  $<El>('#evw').onchange = e => { c.w = +(e.target as El).value; save(); paintEvo(idx); };
-  $('#evt').onclick = () => { c.tabla = !c.tabla; save(); paintEvo(idx); };
+    <p class="legend">${c.m === 'tiempo' ? 'Segundos medios por pregunta en tus sesiones (sin contar pausas).' : 'Porcentaje de aciertos por semana, sobre las preguntas contestadas en esa semana.'} <button class="ghost sm" id="evt" aria-expanded="${!!c.tabla}">${c.tabla ? 'Ocultar tabla' : 'Ver tabla'}</button></p>${tabla}</div>`;
+  $('#evm').onclick = e => { if ((e.target as El).dataset.v!) { c.m = (e.target as El).dataset.v!; save(); paintEvo(idx); $(`#evm [data-v="${c.m}"]`).focus({ preventScroll: true }); } };
+  $<El>('#evf').onchange = e => { c.f = (e.target as El).value; save(); paintEvo(idx); $('#evf').focus({ preventScroll: true }); };
+  $<El>('#evw').onchange = e => { c.w = +(e.target as El).value; save(); paintEvo(idx); $('#evw').focus({ preventScroll: true }); };
+  $('#evt').onclick = () => { c.tabla = !c.tabla; save(); paintEvo(idx); $('#evt').focus({ preventScroll: true }); };
   const tip = $('#tip');
   el.querySelectorAll<El>('.hit').forEach(r => {
     const show = () => { const w = W[+r.dataset.i!]; if (!w.n) { tip.hidden = true; return; } tip.hidden = false; tip.innerHTML = `<b>Semana del ${fmtD(w.start)}</b><br>${c.m === 'tiempo' ? (w.segPreg ?? '—') + ' s/pregunta' : w.acierto + ' % de acierto'}<br>${esc(String(w.n))} respuestas · ${esc(String(w.ses))} sesiones`; tip.style.left = Math.min(Math.max(8, 100 * (+r.dataset.i!) / Math.max(1, W.length - 1)), 70) + '%'; };
@@ -115,12 +115,15 @@ function paintEvo(idx: any) {
   });
 }
 async function paintSlow() {
+  const account = store.accountId();
   const el = $('#slow'); if (!el) return;
   const c = Object.assign({ ok: false }, store.getCfg().slow || {});
   const L = slowList(store.getStats(), { soloAcertadas: c.ok, limit: 15 });
   if (!L.length) { el.innerHTML = `<div class="card"><p class="sub">Aún no hay tiempos guardados. Se registran desde ahora, al contestar cada pregunta.</p></div>`; return; }
-  const items = await byIds(L.map(x => x.id)); const by = new Map(items.map(q => [q.i, q]));
-  el.innerHTML = `<div class="card"><div class="seg" id="slf"><button class="${!c.ok ? 'on' : ''}" data-v="0">Todas</button><button class="${c.ok ? 'on' : ''}" data-v="1">Las que aciertas</button></div>
+  const items = await byIds(L.map(x => x.id));
+  if (account !== store.accountId() || !el.isConnected || $('#slow') !== el) return;
+  const by = new Map(items.map(q => [q.i, q]));
+  el.innerHTML = `<div class="card"><div class="seg" id="slf"><button class="${!c.ok ? 'on' : ''}" data-v="0" aria-pressed="${!c.ok}">Todas</button><button class="${c.ok ? 'on' : ''}" data-v="1" aria-pressed="${!!c.ok}">Las que aciertas</button></div>
     <p class="legend">Las que más tardas en contestar. Si las aciertas pero tardas mucho, probablemente aún no las dominas.</p>
     ${L.map(x => { const q = by.get(x.id); return `<div class="sl"><div class="slh"><b>${Math.round(x.avg)} s</b><small>${esc(q ? q.t : '')} · ${x.ok}/${x.n} aciertos${x.last === 1 ? ' · última ✓' : x.last === 0 ? ' · última ✗' : ''}</small></div><div class="sm">${esc(q ? q.q.slice(0, 140) + (q.q.length > 140 ? '…' : '') : x.id)}</div></div>`; }).join('')}
     <div class="row"><button class="btn" id="slgo">Practicar estas ${L.length}</button></div></div>`;
@@ -130,7 +133,9 @@ async function paintSlow() {
 
 // ───────── estadísticas ─────────
 routes.stats = async function () {
+  const account = store.accountId();
   const idx = await getIndex(); await getMeta();
+  if (account !== store.accountId()) return;
   const st = store.getStats();
   const T: Record<string, number[]> = {}, TR: Record<string, number[]> = {}, OR: Record<string, number[]> = {}, TI: Record<string, number[]> = {};
   let n = 0, ok = 0;
@@ -148,27 +153,41 @@ routes.stats = async function () {
   const weak = temas.filter(t => t.int >= 8).sort((a, b) => a.p - b.p).slice(0, 5);
   const ses = store.getSessions().slice(0, 12);
   const carga = cargaRepasos(st, now(), 14), mx = Math.max(1, ...carga), mf = motivosFallo(st), mft = mf.reduce((a, b) => a + b, 0);
-  const diaL = (k: any) => { const d = new Date(now() + k * 86400000); return k === 0 ? 'hoy' : ['D', 'L', 'M', 'X', 'J', 'V', 'S'][d.getDay()] + d.getDate(); };
+  const diaL = (k: any) => { const d = new Date(now()); d.setDate(d.getDate() + k); return k === 0 ? 'hoy' : ['D', 'L', 'M', 'X', 'J', 'V', 'S'][d.getDay()] + d.getDate(); };
   const cargaHTML = `<div class="card"><div class="cg">${carga.map((v, k) => `<div class="cgc" title="${v} repasos"><small>${v || ''}</small><i class="${k === 0 && v ? 'hoy' : ''}" style="height:${Math.round(60 * v / mx)}px"></i><small>${diaL(k)}</small></div>`).join('')}</div>
     <p class="legend">Preguntas que vencen cada día (hoy incluye las atrasadas). Total en 14 días: ${carga.reduce((a, b) => a + b, 0)}.</p>
     ${mft ? `<h2 class="h3">Por qué fallas (último fallo)</h2>${[5, 7, 1, 2, 3, 4].map(m => `<div class="line"><span>${MOTIVOS_FALLO[m]}</span><span>${mf[m]} <small>(${pct(mf[m], mft)}%)</small></span></div>`).join('')}` : ''}
     ${suertes(st) ? `<div class="line"><span>🍀 Aciertos por suerte (pendientes de repasar)</span><span>${suertes(st)}</span></div>` : ''}</div>`;
   const paintMapa = () => { const dm = dominioTemas(idx); const el = $('#mapa'); el.innerHTML = mapaHTML(dm, store.getCfg().dmord); bindMapa(el, dm, paintMapa); };
   app.innerHTML = `
-  <h1>Estadísticas</h1>
+  <h1>Progreso</h1>
+  <section id="stats-summary" class="card" aria-label="Resumen de estudio"><h2 class="h3">Tu siguiente paso</h2>
+    <p>${n ? `${n} ${n === 1 ? 'respuesta registrada' : 'respuestas registradas'} · ${pct(ok, n)}% de acierto.` : 'Empieza una sesión para descubrir qué temas necesitas reforzar.'} ${weak.length ? `Refuerza ${weak.map(t => t.id).join(', ')}.` : 'El mapa mostrará las prioridades a medida que practiques.'}</p>
+    <div class="row"><button class="btn" id="progress-review" ${carga[0] ? '' : 'disabled'}>Repasar hoy · ${carga[0]}</button><button class="btn sec" id="progress-failures">Preguntas falladas · ${falladasIds().length}</button><button class="btn sec" id="progress-test">Practicar temas</button></div>
+  </section>
+  <div class="seg stats-sections" role="group" aria-label="Sección de progreso">${[['temas','Temas'],['sims','Simulacros'],['evo','Evolución']].map(([k,v]) => `<button data-stats-view="${k}" aria-controls="stats-${k}" aria-pressed="${k === 'temas'}" class="${k === 'temas' ? 'on' : ''}">${v}</button>`).join('')}</div>
+  <section id="stats-temas" aria-label="Progreso por temas">
   <h2 style="margin-top:6px">Mapa de dominio</h2><div id="mapa"></div>
-  <h2>Simulacros</h2><div id="sims"></div>
   <div id="vel"></div>
   <h2>Carga de repasos</h2><div id="carga"></div>
-  <h2>Evolución</h2><div id="evo"></div>
-  <h2>Preguntas lentas</h2><div id="slow"></div>
-  <div class="grid"><div class="stat"><b>${n}</b><span>respuestas</span></div><div class="stat"><b>${pct(ok, n)}%</b><span>acierto</span></div></div>
+  <div class="grid"><div class="stat"><b>${n}</b><span>${n === 1 ? 'respuesta' : 'respuestas'}</span></div><div class="stat"><b>${pct(ok, n)}%</b><span>acierto</span></div></div>
   ${weak.length ? `<h2>Para reforzar</h2><div class="card">${weak.map(t => `<div class="line"><span><b>${t.id}</b> ${esc(t.nombre)}</span><span class="r">${t.p}%</span></div>`).join('')}</div>` : ''}
   <h2>Por tema</h2><div class="card">${temas.map(t => `<div class="trow"><div class="line"><span><b>${t.id}</b> ${esc(t.nombre)}</span><span>${t.int ? t.p + '%' : '—'}</span></div>${bar(t.int ? t.p : 0)}<small>${t.seen}/${t.n} vistas · ${t.int} respuestas</small></div>`).join('')}</div>
   <h2>Errores por tipo de trampa</h2><div class="card">${Object.entries(TR).filter(([, v]) => v[0] >= 5).sort((a, b) => b[1][1] / b[1][0] - a[1][1] / a[1][0]).map(([k, v]) => `<div class="trow"><div class="line"><span>${esc(TRAMPAS[k] || k)}</span><span>${pct(v[1], v[0])}% fallos <small>(${v[0]})</small> <button class="ghost sm" data-trap="${k}">practicar</button></span></div>${bar(100 - pct(v[1], v[0]))}</div>`).join('') || '<p class="sub">Aún no hay datos suficientes (se necesitan ≥5 respuestas por trampa).</p>'}</div>
   <h2>Por origen y tipo</h2><div class="card">${Object.entries(OR).map(([k, v]) => `<div class="line"><span>${ORIGEN[k]}</span><span>${pct(v[1], v[0])}% <small>(${v[0]})</small></span></div>`).join('')}
   ${Object.entries(TI).map(([k, v]) => `<div class="line"><span>${TIPOS[k] || k}</span><span>${pct(v[1], v[0])}% <small>(${v[0]})</small></span></div>`).join('')}</div>
+  </section>
+  <section id="stats-sims" aria-label="Historial de simulacros" hidden><h2>Simulacros</h2><div id="sims"></div></section>
+  <section id="stats-evo" aria-label="Evolución del estudio" hidden><h2>Evolución</h2><div id="evo"></div><h2>Preguntas lentas</h2><div id="slow"></div></section>
   <h2>Últimas sesiones</h2><div class="card">${ses.map(s => `<div class="line"><span>${new Date(s.ts).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })} · ${s.kind === 'sim' ? 'Simulacro' : s.kind === 'rev' ? 'Repaso' : 'Test'} ${esc(String(s.n))}p</span><span>${s.kind === 'sim' ? esc(String(s.nota)) + '/100' : pct(s.a, s.n) + '%'}</span></div>`).join('') || '<p class="sub">Sin sesiones todavía.</p>'}</div>`;
+  $('#progress-review').onclick = () => startRepaso ? startRepaso() : go('#/falladas');
+  $('#progress-failures').onclick = () => go('#/falladas');
+  $('#progress-test').onclick = () => go('#/test');
+  app.querySelectorAll<El>('[data-stats-view]').forEach(b => b.onclick = () => {
+    const view = b.dataset.statsView!;
+    app.querySelectorAll<El>('[data-stats-view]').forEach(x => { const active = x === b; x.setAttribute('aria-pressed', String(active)); x.classList.toggle('on', active); });
+    ['temas', 'sims', 'evo'].forEach(k => { $('#stats-' + k).hidden = k !== view; });
+  });
   app.querySelectorAll<El>('[data-trap]').forEach(b => b.onclick = async () => { const r = await trapTest(15, [+b.dataset.trap!]); if (!r.items.length) { toast('No hay preguntas con esa trampa.'); return; } startRun({ kind: 'test', feedback: true, items: r.items, titulo: 'Trampa: ' + (TRAMPAS[b.dataset.trap!] || b.dataset.trap!) }); });
   $('#carga').innerHTML = cargaHTML;
   { const v = velocidad(st), lentos = Object.keys(st).filter(id => st[id][8] >= 3 && st[id][7] / st[id][8] < 6).length;

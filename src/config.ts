@@ -12,7 +12,7 @@ type Check = (v: unknown) => boolean;
 const schemas: Record<string, { defaults: Record<string, unknown>; fields: Record<string, Check> }> = {
   ui: { defaults: {}, fields: { theme: oneOf(['auto', 'light', 'dark']), size: integer(0, 3), lectura: integer(0, 2) } },
   test: { defaults: { sel: [], n: 15, mode: 'nuevas', o: ['O', 'A', 'G'] }, fields: {
-    sel: temas, n: integer(1, 80), mode: oneOf(['nuevas', 'aleatorio', 'falladas', 'dudosas', 'trampas']), o: origins, pt: integer(0, 1), min: integer(1, 180),
+    all: bool, sel: temas, n: integer(1, 80), mode: oneOf(['nuevas', 'aleatorio', 'falladas', 'dudosas', 'trampas']), o: origins, pt: integer(0, 1), min: integer(1, 180),
   } },
   sim: { defaults: { n: 80, min: 90, o: ['O', 'G'], parte2: true, scope: 'vistos' }, fields: {
     n: oneOf([40, 80]), min: integer(1, 180), o: origins, parte2: bool, scope,

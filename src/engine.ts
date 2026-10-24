@@ -13,6 +13,7 @@ export interface RunCfg {
 export interface Run extends RunCfg {
   idx: number; ans: (number | undefined)[]; times?: (number | undefined)[]; t0: number; secs: number; paused: boolean;
   since?: number | null; base?: number; tIdx?: number; q0?: number; qT0?: number; gt?: ReturnType<typeof setInterval>;
+  review?: number[];
   luck?: Record<number, number>; fast?: Record<number, [number, number]>;
 }
 /** Último resultado, para la pantalla de resultados. */
@@ -37,12 +38,12 @@ export function clearRun(): void { try { localStorage.removeItem(runKey()); } ca
 export function saveRun(): void {
   const R = state.run;
   if (!R || R.supTexto || !R.items.every(q => q.i && META && META[q.i])) return;
-  const { kind, feedback, titulo, limit, idx, ans, times, secs, porTiempo } = R;
-  try { localStorage.setItem(runKey(), JSON.stringify({ kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: R.items.map(q => q.i), savedAt: Date.now() })); } catch (e) {}
+  const { kind, feedback, titulo, limit, idx, ans, times, secs, porTiempo, review } = R;
+  try { localStorage.setItem(runKey(), JSON.stringify({ kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: R.items.map(q => q.i), review: review || [], savedAt: Date.now() })); } catch (e) {}
 }
 interface SavedRun {
   kind: SessionKind; feedback?: boolean; titulo?: string; limit?: number; idx: number; ans?: (number | null)[]; times?: (number | null)[];
-  secs?: number; pt?: boolean; ids: string[]; savedAt?: number;
+  secs?: number; pt?: boolean; review?: number[]; ids: string[]; savedAt?: number;
 }
 export interface PendingRun { saved: SavedRun; items: Question[]; account: string | null }
 /** Sesión guardada que se puede retomar; descarta (y borra) la caducada o incoherente. */
@@ -65,7 +66,7 @@ export function pendingPrompt({ saved: s, items }: PendingRun): string {
 export function resumeRun({ saved: s, items, account }: PendingRun): Run | null {
   if (account !== store.accountId()) return null;
   const un = <T>(a?: (T | null)[]): (T | undefined)[] => Array.from(a || [], x => x === null ? undefined : x);
-  return (state.run = { kind: s.kind, feedback: !!s.feedback, titulo: s.titulo, limit: s.limit || 0, porTiempo: !!s.pt, items, idx: s.idx, ans: un(s.ans), times: un(s.times), t0: now(), secs: s.secs || 0, paused: false });
+  return (state.run = { kind: s.kind, feedback: !!s.feedback, titulo: s.titulo, limit: s.limit || 0, porTiempo: !!s.pt, items, idx: s.idx, ans: un(s.ans), times: un(s.times), t0: now(), secs: s.secs || 0, paused: false, review: (Array.isArray(s.review) ? s.review : []).filter(i => Number.isInteger(i) && i >= 0 && i < items.length) });
 }
 
 // ───────── tiempo y respuestas ─────────
@@ -93,7 +94,7 @@ export function answerDeferred(R: Run, i: number): void {
 }
 
 /** Cierra la sesión: puntúa, guarda en el progreso y deja el resultado en `state.last`. null = no se contestó nada. */
-export function finishRun(R: Run): LastResult | null {
+export function finishRun(R: Run, reason: 'complete' | 'interrupted' | 'timeout' = 'complete'): LastResult | null {
   if (closedRuns.has(R) || state.run !== R) return null;
   closedRuns.add(R);
   clearRun();
@@ -111,7 +112,7 @@ export function finishRun(R: Run): LastResult | null {
     else { res.f++; fails.push(q.i); if (!R.feedback) store.record(q.i, q.t, 0, now(), R.times?.[k]); }
   });
   const n = items.length;
-  const ses = { id: 's' + now().toString(36), ts: now(), kind: R.kind, n, a: res.a, f: res.f, b: res.b, secs: R.porTiempo ? Math.min(R.secs, (R.limit ?? 0) * 60) : R.secs, nota: nota(res.a, res.f, n), temas: porTema, tipos: porTipo, fails, titulo: R.titulo || '', ...(R.porTiempo ? { porTiempo: true } : {}) };
+  const ses = { id: 's' + now().toString(36), ts: now(), kind: R.kind, n, a: res.a, f: res.f, b: res.b, secs: R.porTiempo ? Math.min(R.secs, (R.limit ?? 0) * 60) : R.secs, nota: nota(res.a, res.f, n), temas: porTema, tipos: porTipo, fails, titulo: R.titulo || '', ...(reason === 'interrupted' ? { interrupted: true } : {}), ...(R.porTiempo ? { porTiempo: true } : {}) };
   store.addSession(ses);
   state.run = null;
   return (state.last = { ses, items, ans: R.ans, times: R.times || [], limit: R.limit || 0 });

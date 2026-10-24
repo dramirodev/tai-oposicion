@@ -86,7 +86,9 @@ export function cleanSession(s: any): Session | null {
     n: num(s.n, 0, 1e4) ?? 0, a: num(s.a, 0, 1e4) ?? 0, f: num(s.f, 0, 1e4) ?? 0, b: num(s.b, 0, 1e4) ?? 0,
     secs: num(s.secs, 0, 1e6) ?? 0, nota: num(s.nota, -100, 100) ?? 0, temas, tipos,
     fails: Array.isArray(s.fails) ? s.fails.filter((x: unknown): x is string => typeof x === 'string' && ID_RE.test(x)).slice(0, 500) : [],
-    titulo: typeof s.titulo === 'string' ? s.titulo.slice(0, 80) : ''
+    titulo: typeof s.titulo === 'string' ? s.titulo.slice(0, 80) : '',
+    ...(s.interrupted === true ? { interrupted: true } : {}),
+    ...(s.porTiempo === true ? { porTiempo: true } : {})
   };
 }
 export function cleanSessions(l: unknown): Session[] { return (Array.isArray(l) ? l : []).map(cleanSession).filter((x): x is Session => !!x); }

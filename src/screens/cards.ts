@@ -1,6 +1,7 @@
+import { cardNextReview, sourceHtml, questionNotice } from '../study-ui.js';
 import * as store from '../store.js';
 import { esc, richHtml, pct, swipeDir, pickCards, cardStats, cardFromQuestion } from '../logic.js';
-import { j, getIndex, getMeta, temaOf, getTema, temaName, now } from '../data.js';
+import { j, getIndex, getMeta, byIds, temaName, now } from '../data.js';
 import { $, app, toast, type El } from '../ui.js';
 export function registerCards({ routes, go, pw, reportBox }: any, screen: any) {
 // ───────── tarjetas (flashcards) ─────────
@@ -16,20 +17,26 @@ async function curatedCards() {
 }
 async function falloCards() {
   await getMeta(); const out: any[] = [];
-  const ids = Object.keys(store.getCards()).filter(id => id.startsWith('FC-Q-')).map(id => [id.slice(5), temaOf(id.slice(5))]).filter(x => x[1]);
-  const temas = new Map<string, any[]>(await Promise.all([...new Set(ids.map(x => x[1] as string))].map(async (t): Promise<[string, any[]]> => [t, await getTema(t)])));
-  for (const [qid, t] of ids) { const q = temas.get(t as string)!.find((x: any) => x.i === qid); if (q) out.push(cardFromQuestion(q)); }
+  const ids = Object.keys(store.getCards()).filter(id => id.startsWith('FC-Q-')).map(id => id.slice(5));
+  for (const q of await byIds(ids)) out.push({ ...cardFromQuestion(q), np: q.np, source: q.source, supTexto: q.supTexto, cp: q.cp });
   return out;
 }
 const allCards = async () => [...await curatedCards(), ...await falloCards()];
 
 routes.cards = async function () {
+  const account = store.accountId();
   await getIndex(); await getMeta();
+  if (account !== store.accountId()) return;
   if (CRUN) return cardSession();
   const cards = await allCards();
+  if (account !== store.accountId()) return;
   const cfg = Object.assign({ scope: 'vistos', n: 20 }, store.getCfg().cardsc || {});
+  if (cfg.scope === 'vistos' && !store.getSeen().length) cfg.scope = 'todos';
   const draw = () => {
     const recs = store.getCards(), cs = cardStats(cards, recs, now());
+    const seen = new Set(store.getSeen());
+    const ids = pickCards(cards, recs, { n: cfg.n, now: now(), maxNew: 10, seen: cfg.scope === 'vistos' && seen.size ? seen : null });
+    const reviews = ids.filter(id => !!recs[id]).length;
     app.innerHTML = `
     <h1>Tarjetas de repaso</h1>
     <div class="sub">Primero intenta recordar la respuesta; después pulsa para verla y valora cómo te fue.</div>
@@ -42,13 +49,12 @@ routes.cards = async function () {
     ${cards.length ? `<div class="card"><h2 class="h3">Tarjetas por sesión</h2><div class="seg" id="cn">${[10, 20, 30].map(v => `<button class="${cfg.n === v ? 'on' : ''}" data-v="${v}">${v}</button>`).join('')}</div>
       <h2 class="h3">Tarjetas nuevas de</h2><div class="seg" id="cs">${[['vistos', 'Mis temas vistos'], ['todos', 'Todos los temas']].map(([v, t]) => `<button class="${cfg.scope === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
       <p class="sm"><small>Las vencidas salen primero, mezcladas por tema. Como máximo 10 nuevas por sesión.</small></p></div>
-      <div class="bar2"><button class="btn" id="go">Empezar</button></div>` :
+      <div class="bar2 action-plan"><p class="sm" id="card-plan" role="status">${ids.length} ${ids.length === 1 ? 'tarjeta' : 'tarjetas'}: ${reviews} de repaso y ${ids.length - reviews} nuevas.</p><button class="btn" id="go" ${!ids.length ? 'disabled' : ''}>Empezar</button></div>` :
       `<div class="note">Aún no tienes tarjetas. Al fallar una pregunta en un test pulsa <b>«📇 Hacer tarjeta»</b> (si el motivo no es un despiste) y aparecerá aquí.</div>`}`;
     $('#cn') && ($('#cn').onclick = e => { const b = (e.target as El).closest<El>('button'); if (b) { store.setCfg('cardsc', { ...cfg, n: +b.dataset.v! }); cfg.n = +b.dataset.v!; draw(); } });
     $('#cs') && ($('#cs').onclick = e => { const b = (e.target as El).closest<El>('button'); if (b) { store.setCfg('cardsc', { ...cfg, scope: b.dataset.v! }); cfg.scope = b.dataset.v!; draw(); } });
     $('#go') && ($('#go').onclick = () => {
-      const seen = new Set(store.getSeen());
-      const ids = pickCards(cards, recs, { n: cfg.n, now: now(), maxNew: 10, seen: cfg.scope === 'vistos' && seen.size ? seen : null });
+      if (account !== store.accountId()) return;
       if (!ids.length) { toast('No hay tarjetas pendientes ahora mismo. Vuelve cuando venza alguna.'); return; }
       const by = new Map(cards.map(c => [c.id, c]));
       CRUN = { items: ids.map(id => by.get(id)).filter(Boolean), idx: 0, rev: false, res: [0, 0, 0] };
@@ -66,7 +72,7 @@ function cardSession() {
     store.gradeCard(R.items[R.idx].id, g, now()); R.res[g]++; R.idx++; R.rev = false; draw(); window.scrollTo(0, 0);
   };
   const show = () => {
-    if (R.rev) return;
+    if (R !== CRUN || R.rev) return;
     R.rev = true; draw();
     const answer = $('.fa'), reduced = matchMedia('(prefers-reduced-motion:reduce)').matches;
     const scroll = () => { if (answer?.isConnected) answer.scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' }); };
@@ -90,6 +96,12 @@ function cardSession() {
   document.addEventListener('keydown', onKey); document.addEventListener('touchstart', onTs, { passive: true }); document.addEventListener('touchend', onTe, { passive: true });
   screen.cleanup = () => { document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); };
 
+  function reviewLabel(id: string, grade: number): string {
+    const t = now(), next = cardNextReview(store.cardRec(id), grade, t);
+    if (!next) return 'Dominada';
+    const days = Math.round((next - t) / store.DAY);
+    return `En ${days} ${days === 1 ? 'día' : 'días'}`;
+  }
   function draw() {
     if (R.idx >= R.items.length) return fin();
     const c = R.items[R.idx];
@@ -97,14 +109,17 @@ function cardSession() {
     <div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog" role="progressbar" aria-label="Progreso" aria-valuemin="0" aria-valuemax="${R.items.length}" aria-valuenow="${R.idx}"><div ${pw(100 * R.idx / R.items.length)}></div></div><div class="cnt">${R.idx + 1}/${R.items.length}</div></div>
     <div class="card q fc" id="fc">
       <div class="meta"><span class="tag">${esc(c.t)} · ${esc(temaName(c.t))}</span>${c.tipo ? `<span class="tag">${esc(c.tipo)}</span>` : ''}${c.caduca ? '<span class="tag warn">Puede caducar</span>' : ''}</div>
+      ${questionNotice({ n: c.nota, np: c.np })}
+      ${c.supTexto ? `<details class="sup"><summary>Enunciado del supuesto</summary><div class="pre">${esc(c.supTexto)}</div></details>` : ''}${c.cp ? `<div class="ctx pre">${richHtml(c.cp)}</div>` : ''}
       <div class="enun pre">${richHtml(c.q)}</div>
       ${R.rev ? `<div class="fa"><small>Respuesta</small><div class="pre">${richHtml(c.a)}</div>
         ${c.nota ? `<div class="cita"><span>Nota</span>${esc(c.nota)}</div>` : ''}
         ${c.ref ? `<div class="cita"><span>Temario</span>${esc(c.ref)}</div>` : ''}
+${sourceHtml({ source: c.source, u: c.ref })}
         <div class="repw" id="crep"></div>
         ${c.src === 'fallo' ? '<button class="ghost fl" id="quit">🗑 Quitar esta tarjeta</button>' : ''}</div>` : '<div class="fh">Toca para ver la respuesta</div>'}
     </div>
-    <div class="bar2">${R.rev ? NOMBRE.map((t, g) => `<button class="btn ${g === 0 ? 'bad' : g === 1 ? 'sec' : ''}" data-g="${g}">${t}</button>`).join('') : '<button class="btn" id="show">Mostrar respuesta</button>'}</div>
+    <div class="bar2">${R.rev ? NOMBRE.map((t, g) => `<button class="btn ${g === 0 ? 'bad' : g === 1 ? 'sec' : ''}" data-g="${g}">${t}<small>${reviewLabel(c.id, g)}</small></button>`).join('') : '<button class="btn" id="show">Mostrar respuesta</button>'}</div>
     ${R.rev ? '<p class="sub fgl">Teclado 1·2·3 · deslizar ← Fallé · → Lo sabía</p>' : ''}`;
     $('#exit').onclick = () => { CRUN = null; go('#/home'); };
     $('#show') && ($('#show').onclick = show);

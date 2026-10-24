@@ -1,3 +1,4 @@
+import { questionNotice, sourceHtml, filterFailures } from './study-ui.js';
 import * as sync from './syncfacade.js';
 import * as store from './store.js';
 import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, pickGuest, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from './logic.js';
@@ -55,7 +56,7 @@ async function route() {
   lastP = 0;
   window.scrollTo(0, 0);
   const lt = setTimeout(() => { if (my === routeSeq) app.innerHTML = '<p class="sub loading" role="status">Cargando…</p>'; }, 120); // respuesta visible si los datos tardan
-  try { await getIndex(); await getMeta(); if (my !== routeSeq) return; await f(...args); clearTimeout(lt); if (my !== routeSeq) return; enter(); countUp(); const hd = app.querySelector<El>('h1'); if (hd) hd.tabIndex = -1; (hd || app).focus({ preventScroll: true }); if (state.run && name !== 'quiz') { const b = document.createElement('div'); b.className = 'note run'; b.innerHTML = `<b>${esc(state.run.titulo || 'Test')}</b> en curso · ${Math.min(state.run.idx + 1, state.run.items.length)}/${state.run.items.length} <button class="btn" id="resume">Continuar</button>`; app.prepend(b); $('#resume').onclick = () => go('#/quiz'); } } catch (e) { clearTimeout(lt); app.innerHTML = `<div class="card" role="alert"><h2>No se pudo cargar</h2><p>${navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button class="btn" id="retryRoute">Reintentar</button></div>`; $('#retryRoute').onclick = () => route(); console.error(e); }
+  try { await getIndex(); await getMeta(); if (my !== routeSeq) return; await f(...args); clearTimeout(lt); if (my !== routeSeq) return; enter(); countUp(); const hd = app.querySelector<El>('h1'); if (hd) hd.tabIndex = -1; (hd || app).focus({ preventScroll: true }); if (state.run && name !== 'quiz' && name !== 'home') { const b = document.createElement('div'); b.className = 'note run'; b.innerHTML = `<b>${esc(state.run.titulo || 'Test')}</b> en curso · ${Math.min(state.run.idx + 1, state.run.items.length)}/${state.run.items.length} <button class="btn" id="resume">Continuar</button>`; app.prepend(b); $('#resume').onclick = () => go('#/quiz'); } } catch (e) { clearTimeout(lt); app.innerHTML = `<div class="card" role="alert"><h2>No se pudo cargar</h2><p>${navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button class="btn" id="retryRoute">Reintentar</button></div>`; $('#retryRoute').onclick = () => route(); console.error(e); }
 }
 window.addEventListener('hashchange', route);
 // Invitado: la barra inferior solo ofrece Inicio y Ajustes.
@@ -84,7 +85,7 @@ async function resumeSaved() {
 routes.quiz = async function () {
   if (!state.run) return go('#/home');
   const R = state.run;
-  let tick: any = null;
+  let tick: any = null, closing = false;
   {
     // el tiempo sale de la hora real (no de contar ticks): iOS frena los timers con la pantalla bloqueada
     tick = setInterval(() => {
@@ -93,7 +94,7 @@ routes.quiz = async function () {
       const left = segundosRestantes(R);
       const el = $('#clock'); if (el) el.textContent = fmtT(left);
       const pc = $('#pace'); if (pc) { const d = ritmoSimulacro(R.idx, R.items.length, R.limit * 60, R.secs), bud = Math.round(R.limit * 60 / R.items.length); pc.className = 'pace ' + (d >= 0 ? 'up' : d > -3 ? 'mid' : 'low'); pc.textContent = `Ritmo: ${d > 0 ? d + ' por delante' : d < 0 ? -d + ' por detrás' : 'al día'} · ${bud} s por pregunta`; }
-      if (left <= 0) { clearInterval(tick); finish(); }
+      if (left <= 0) { clearInterval(tick); finish('timeout'); }
     }, 500);
   }
   const onKey = (e: any) => {
@@ -144,7 +145,8 @@ routes.quiz = async function () {
     </div>
     ${R.titulo ? `<div class="sub">${esc(R.titulo)}</div>` : ''}
     ${R.limit && R.kind === 'sim' ? '<div class="pace" id="pace"></div>' : ''}
-    <div class="card q">
+    ${!R.feedback ? `<details class="question-map"><summary>Mapa de preguntas · ${R.ans.filter(x => x !== undefined && x >= 0).length} respondidas · ${(R.review || []).length} para revisar</summary><div class="question-grid">${R.items.map((_, k) => { const status = R.ans[k] === undefined ? 'Sin responder' : R.ans[k] === -1 ? 'En blanco' : 'Respondida'; return `<button data-jump="${k}" ${k === R.idx ? 'aria-current="step"' : ''} class="${R.ans[k] !== undefined && R.ans[k] >= 0 ? 'answered' : ''}">${k + 1}<small>${status}${R.review?.includes(k) ? ' · Revisar' : ''}</small></button>`; }).join('')}</div></details><button class="ghost" id="review-question" aria-pressed="${!!R.review?.includes(R.idx)}">${R.review?.includes(R.idx) ? '✓ Marcada para revisar' : 'Marcar para revisar'}</button>` : ''}
+    <div class="card q ${inSup ? 'with-sup' : ''}">
       <div class="meta">
         <span class="tag">${esc(q.t)} · ${esc(temaName(q.t))}</span>
         <span class="tag o${q.o}">${ORIGEN[q.o]}${q.o === 'O' && q.y ? ' · ' + esc(q.y.replace('Ingreso libre ', '').replace('convocatoria ', '')) : ''}</span>
@@ -152,7 +154,8 @@ routes.quiz = async function () {
         ${q.w ? '<span class="tag warn">Puede caducar</span>' : ''}
         ${q.o === 'G' && q.v ? '<span class="tag">Variante</span>' : ''}
       </div>
-      ${inSup ? `<details class="sup"><summary>Enunciado del supuesto</summary><div class="pre">${esc(R.supTexto || q.supTexto || '')}</div></details>` : ''}
+      ${questionNotice(q)}
+      ${inSup ? `<details class="sup scenario-context"><summary>Enunciado del supuesto</summary><div class="pre">${esc(R.supTexto || q.supTexto || '')}</div></details>` : ''}
       ${q.cp ? `<div class="ctx pre">${richHtml(q.cp)}</div>` : ''}
       ${pideNegativa(q.q) ? '<div class="pide">Ojo: te piden la opción INCORRECTA o la excepción</div>' : ''}
       <div class="enun pre">${kw(q.q)}</div>
@@ -161,7 +164,7 @@ routes.quiz = async function () {
         let cl = 'opt';
         if (reveal) { if (i === q.c) cl += ' ok'; else if (i === a) cl += ' bad'; cl += ' dis'; }
         else if (a === i) cl += ' sel';
-        return `<button class="${cl}" data-i="${i}" ${a === i && !reveal ? 'aria-pressed="true"' : ''}><b>${L[i]}</b><span class="pre">${kw(o)}</span>${reveal && i === q.c ? '<span class="sr">(respuesta correcta)</span>' : reveal && i === a ? '<span class="sr">(tu respuesta, incorrecta)</span>' : ''}</button>`;
+        return `<button class="${cl}" data-i="${i}" aria-pressed="${a === i}"><b>${L[i]}</b><span class="pre">${kw(o)}</span>${reveal && i === q.c ? '<span class="sr">(respuesta correcta)</span>' : reveal && i === a ? '<span class="sr">(tu respuesta, incorrecta)</span>' : ''}</button>`;
       }).join('')}
       </div>
       ${reveal ? feedback(q, a) : ''}
@@ -186,13 +189,13 @@ routes.quiz = async function () {
     }
     if (reveal) { const lv = $('#live'); if (lv) lv.textContent = (a === -1 ? 'Sin responder' : a === q.c ? 'Correcto' : 'Incorrecto') + '. Respuesta: ' + L[q.c]; const nx = $('#next'); nx && nx.focus({ preventScroll: true }); }
     else if (a !== undefined && !R.paused) { const so = app.querySelector<El>('.opt.sel'); so && so.focus({ preventScroll: true }); }
-    if (reveal) { const f = $('.fb'); if (f) setTimeout(() => f.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth' }), 60); }
+    // El enunciado permanece en su sitio al revelar: sin saltos automáticos de lectura.
   }
   function feedback(q: any, a: any) {
     const ok = a === q.c;
     return `<div class="fb ${ok ? 'good' : 'wrong'}"><b>${a === -1 ? 'Sin responder' : ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${!ok && a !== -1 && R.fast?.[R.idx] ? `<div class="fbsub">Marcaste ${L[a]} en ${R.fast[R.idx][0]} s${R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? `; leerla con calma lleva unos ${R.fast[R.idx][1]} s` : ''}.</div>` : ''}
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}
-      ${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}
+      ${sourceHtml(q)}
       ${q.x?.length ? `<div class="trap">Trampa: ${q.x.map((x: any) => esc(TRAMPAS[x] || x)).join(' · ')}</div>` : ''}
       ${!ok && a !== -1 && R.feedback ? `<div class="mot" id="mot"><small>¿Por qué fallé?${(() => { const f = R.fast?.[R.idx]; return f && f[0] < f[1] * 0.6 ? ` <b class="r">Respondiste en ${f[0]} s; leerla bien lleva ≈${f[1]} s. ¿Fue velocidad?</b>` : ''; })()}</small>${[5, 7, 1, 2, 3, 4].map(m => `<button class="${store.rec(q.i)?.[9] === m ? 'on' : (m === 7 && R.fast?.[R.idx] && R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? 'sug' : '')}" data-m="${m}">${MOTIVOS_FALLO[m]}</button>`).join('')}<button class="mk" id="mkcard" ${store.rec(q.i)?.[9] === 4 && !store.cardRec('FC-Q-' + q.i) ? 'hidden' : ''}>${store.cardRec('FC-Q-' + q.i) ? '📇 Tarjeta creada ✓' : '📇 Hacer tarjeta'}</button></div>` : ''}
       ${ok && a !== -1 && R.feedback ? (() => { const r = store.rec(q.i) || [], en = r[3] === 0 && r[4] > now() + 86400000 * 1.5; return `<div class="mot" id="acc"><small>¿Seguro? (entra en repaso a +2 días)</small>${(() => { const pl = R.luck?.[R.idx]; return pl === 6 ? '<b class="r">🍀 Marcada como suerte: acierto 1/2. Otra vez bien y se quita la etiqueta.</b>' : pl === 8 ? '<b class="r">🍀 ¡Acierto 2/2! Etiqueta de suerte quitada: ya la sabes.</b>' : ''; })()}<button class="${en && r[9] !== 6 && r[9] !== 8 ? 'on' : ''}" data-a="doubt">🤔 Acerté dudando</button><button class="${r[9] === 6 || r[9] === 8 ? 'on' : ''}" data-a="suerte">🍀 Fue suerte</button></div>`; })() : ''}
@@ -200,7 +203,14 @@ routes.quiz = async function () {
       <div class="repw" id="rep"></div></div>`;
   }
   function bind(q: any) {
-    $('#exit').onclick = async () => { if (await ask(R.feedback ? '¿Salir? Lo ya respondido queda guardado.' : '¿Abandonar el simulacro? Se perderá.', 'Salir', !R.feedback)) { if (R.feedback && R.ans.some(x => x !== undefined)) finish(); else { state.run = null; clearRun(); go('#/home'); } } };
+    app.querySelectorAll<El>('[data-jump]').forEach(b => b.onclick = () => { if (state.run !== R || R.paused) return; R.idx = +b.dataset.jump!; draw(); window.scrollTo(0, 0); });
+    $('#review-question') && ($('#review-question').onclick = () => { if (state.run !== R || R.paused) return; const ids = new Set(R.review || []); ids.has(R.idx) ? ids.delete(R.idx) : ids.add(R.idx); R.review = [...ids].sort((a,b) => a-b); draw(); });
+    $('#exit').onclick = async () => {
+      const accepted = await ask('¿Salir? Lo respondido se guardará como sesión interrumpida.', 'Salir');
+      if (!accepted || state.run !== R) return;
+      if (R.ans.some(x => x !== undefined)) finish('interrupted');
+      else { state.run = null; clearRun(); go('#/home'); }
+    };
     $('#pause') && ($('#pause').onclick = () => { R.paused = true; draw(); });
     $('#resume') && ($('#resume').onclick = () => { R.paused = false; draw(); const pb = $('#pause'); pb && pb.focus(); });
     app.querySelectorAll<El>('.opt').forEach(b => b.onclick = () => {
@@ -227,10 +237,18 @@ routes.quiz = async function () {
     $('#flag') && ($('#flag').onclick = () => { store.toggleFlag(q.i, q.t); $('#flag').textContent = store.rec(q.i)?.[6] ? '★ Dudosa' : '☆ Marcar como dudosa'; });
   }
   function answer(q: any, i: any) { answerQuestion(R, q, i, minLectura(q)); }
-  function finish() {
-    if (state.run !== R) return;
+  async function finish(reason: 'complete' | 'interrupted' | 'timeout' = 'complete') {
+    if (state.run !== R || closing) return;
+    const missing = R.items.filter((_, k) => R.ans[k] === undefined).length;
+    if (reason === 'complete' && !R.feedback && missing) {
+      closing = true;
+      const accepted = await ask(`Quedan ${missing} preguntas sin responder. ¿Terminar y guardar la sesión como interrumpida?`, 'Terminar');
+      closing = false;
+      if (!accepted || state.run !== R) return;
+      reason = 'interrupted';
+    }
     clearInterval(tick);
-    if (!finishRun(R)) { toast('Se acabó el tiempo sin contestar ninguna pregunta.'); return go('#/home'); }
+    if (!finishRun(R, reason)) { toast('Se acabó el tiempo sin contestar ninguna pregunta.'); return go('#/home'); }
     go('#/result');
   }
 };
@@ -255,11 +273,13 @@ routes.result = async function () {
   const ng = ses.f;
   app.innerHTML = `
   <h1>Resultado</h1>
+  ${ses.interrupted ? `<div class="note result-status"><b>Sesión interrumpida</b><p>${ses.a + ses.f} de ${ses.n} preguntas respondidas. La puntuación global mantiene las no contestadas como blancos.</p></div>` : ''}
   <div class="card big">
+    <p class="score-label">Puntuación global</p>
     <div class="score" data-count="${ses.nota}">${ses.nota}<small>/100</small></div>
-    <div class="legend">(aciertos − fallos/3) / total</div>
+    <div class="legend">100 × (aciertos − fallos/3) / total de preguntas</div>
     <div class="trio"><div class="g"><b>${ses.a}</b>Aciertos</div><div class="r"><b>${ses.f}</b>Fallos</div><div><b>${ses.b}</b>Blanco</div></div>
-    <div class="legend">${pct(ses.a, ses.n)} % de acierto · ${fmtT(ses.secs)}</div>
+    <div class="legend">${ses.a + ses.f ? pct(ses.a, ses.a + ses.f) + ' % de acierto sobre lo contestado' : 'Sin respuestas evaluables'} · ${fmtT(ses.secs)}</div>
   </div>
   <div class="row">
     ${(ses.titulo || '').includes('Parte 1') && SIMCFG?.parte2 ? '<button class="btn" id="p2go">Seguir con la parte 2 (supuesto)</button>' : ''}
@@ -273,8 +293,8 @@ routes.result = async function () {
   <div class="card">${items.map((q, k) => {
     const x = ans[k]; const st = x === undefined || x === -1 ? 'b' : x === q.c ? 'g' : 'r';
     return `<details class="rv ${st}"><summary><i></i><span class="sr">${st === 'g' ? 'Acierto' : st === 'r' ? 'Fallo' : 'En blanco'}: </span>${esc(q.q.slice(0, 110))}${q.q.length > 110 ? '…' : ''}</summary>
-      <div class="pre">${richHtml(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : i === x ? 'bad' : ''}"><b>${L[i]}</b> ${richHtml(o)}${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
-      ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}<div class="repw" data-rq="${k}"></div></details>`;
+      ${questionNotice(q)}<div class="pre">${richHtml(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : i === x ? 'bad' : ''}"><b>${L[i]}</b> ${richHtml(o)}${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
+      ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${sourceHtml(q)}<div class="repw" data-rq="${k}"></div></details>`;
   }).join('')}</div>`;
   app.querySelectorAll<El>('[data-rq]').forEach(el => reportBox(items[+el.dataset.rq!], el));
   $('#home').onclick = () => go('#/home');
@@ -353,7 +373,10 @@ async function openMenu() {
 routes.test = async function () {
   const idx = await getIndex(); await getMeta();
   const cfg = store.getCfg().test || { sel: [], n: 15, mode: 'nuevas', o: ['O', 'A', 'G'] };
-  const sel = new Set(cfg.sel), org = new Set(cfg.o);
+  const sel = new Set<string>(cfg.sel), org = new Set(cfg.o);
+  let allTopics = typeof cfg.all === 'boolean' ? cfg.all : sel.size === 0;
+  let themeQuery = ''; const openBlocks = new Set<string>(['T1']);
+  const viewAccount = store.accountId();
   const bloques = [['T1', 'Bloque I · Organización del Estado'], ['T2', 'Bloque II · Informática básica'], ['T3', 'Bloque III · Desarrollo'], ['T4', 'Bloque IV · Sistemas y comunicaciones']];
   const draw = () => {
     app.innerHTML = `
@@ -369,33 +392,44 @@ routes.test = async function () {
       <h2 class="h3">Origen</h2>
       <div class="seg multi" id="org">${[['G', 'Generadas'], ['O', 'Oficiales'], ['A', 'Academia']].map(([v, t]) => `<button class="${org.has(v) ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
     </div>
-    <div class="card"><h2 class="h3">Temas <small>(${sel.size ? sel.size + ' elegidos' : 'ninguno = todos'})</small></h2>
+    <div class="card"><h2 class="h3">Temas <small>(${allTopics ? 'Todo el temario' : sel.size + ' elegidos'})</small></h2>
+    <div class="seg" id="test-scope"><button id="test-all" class="${allTopics ? 'on' : ''}">Todo el temario</button><button id="test-custom" class="${!allTopics ? 'on' : ''}">Elegir temas</button></div>
+    <label class="field" for="test-search">Buscar tema</label><input type="search" id="test-search" value="${esc(themeQuery)}" placeholder="Nombre o código del tema">
     <div class="row"><button class="btn sec" id="useSeen">Usar mis temas vistos (${store.getSeen().length})</button></div>
-    ${bloques.map(([b, nom]) => `<div class="bl"><div class="blh"><span>${nom}</span><button class="ghost sm" data-b="${b}">todos</button></div>
-      ${idx.temas.filter(t => t.id.startsWith(b)).map(t => `<label class="tm ${sel.has(t.id) ? 'on' : ''}"><input type="checkbox" data-t="${t.id}" ${sel.has(t.id) ? 'checked' : ''}><span><b>${t.id}</b> ${esc(t.nombre)}</span><small>${tstat(t.id, t.n)}</small></label>`).join('')}</div>`).join('')}
+    ${bloques.map(([b, nom]) => `<details class="bl topic-block" data-test-block="${b}" ${openBlocks.has(b) || themeQuery ? 'open' : ''}><summary>${nom}</summary><div class="blh"><span>Seleccionar bloque</span><button class="ghost sm" data-b="${b}">todos</button></div>
+      ${idx.temas.filter(t => t.id.startsWith(b)).map(t => `<label class="tm ${sel.has(t.id) ? 'on' : ''}"><input type="checkbox" data-t="${t.id}" ${sel.has(t.id) ? 'checked' : ''}><span><b>${t.id}</b> ${esc(t.nombre)}</span><small>${tstat(t.id, t.n)}</small></label>`).join('')}</details>`).join('')}
     </div>
-    <div class="bar2"><button class="btn" id="go">Empezar</button></div>`;
+    <div class="bar2 action-plan"><p class="sm" id="test-summary" role="status">${cfg.pt ? (cfg.min || 20) + ' min' : cfg.n + ' preguntas'} · ${allTopics ? 'Todo el temario' : sel.size ? [...sel].map(t => temaName(t)).join(', ') : 'Elige al menos un tema'} · ${[...org].map(o => ORIGEN[o as 'G'|'A'|'O']).join(', ')}</p><button class="btn" id="go" ${!allTopics && !sel.size ? 'disabled' : ''}>Empezar</button></div>`;
+    $('#test-all').onclick = () => { allTopics = true; sel.clear(); save(); draw(); };
+    $('#test-custom').onclick = () => { allTopics = false; save(); draw(); };
+    const applySearch = () => { app.querySelectorAll<El>('.tm').forEach(el => { el.hidden = !fold(el.textContent).includes(fold(themeQuery)); }); app.querySelectorAll<HTMLDetailsElement>('[data-test-block]').forEach(el => { if (themeQuery) el.open = true; el.hidden = !Array.from(el.querySelectorAll<El>('.tm')).some(x => !x.hidden); }); };
+    $('#test-search').oninput = e => { themeQuery = (e.target as El).value; applySearch(); };
+    app.querySelectorAll<HTMLDetailsElement>('[data-test-block]').forEach(el => el.ontoggle = () => { if (!el.isConnected) return; el.open ? openBlocks.add(el.dataset.testBlock!) : openBlocks.delete(el.dataset.testBlock!); });
+    applySearch();
     $('#by').onclick = e => { if ((e.target as El).dataset.v!) { cfg.pt = +(e.target as El).dataset.v!; save(); draw(); } };
     $('#n') && ($('#n').onclick = e => { if ((e.target as El).dataset.v!) { cfg.n = +(e.target as El).dataset.v!; save(); draw(); } });
     $('#mins') && ($('#mins').onclick = e => { if ((e.target as El).dataset.v!) { cfg.min = +(e.target as El).dataset.v!; save(); draw(); } });
     $('#mode').onclick = e => { if ((e.target as El).dataset.v!) { cfg.mode = (e.target as El).dataset.v!; save(); draw(); } };
     $('#org').onclick = e => { const v = (e.target as El).dataset.v!; if (v) { org.has(v) ? org.delete(v) : org.add(v); if (!org.size) org.add(v); save(); draw(); } };
-    app.querySelectorAll<El>('[data-t]').forEach(c => c.onchange = () => { c.checked ? sel.add(c.dataset.t!) : sel.delete(c.dataset.t!); save(); draw(); });
-    app.querySelectorAll<El>('[data-b]').forEach(b => b.onclick = () => { const ids = idx.temas.filter(t => t.id.startsWith(b.dataset.b!)).map(t => t.id); const all = ids.every(i => sel.has(i)); ids.forEach(i => all ? sel.delete(i) : sel.add(i)); save(); draw(); });
-    $('#useSeen').onclick = () => { const v = store.getSeen(); if (!v.length) { toast('Aún no has marcado temas vistos (pantalla «Temas vistos» en Inicio).'); return; } sel.clear(); v.forEach(t => sel.add(t)); save(); draw(); };
+    app.querySelectorAll<El>('[data-t]').forEach(c => c.onchange = () => { allTopics = false; c.checked ? sel.add(c.dataset.t!) : sel.delete(c.dataset.t!); save(); draw(); });
+    app.querySelectorAll<El>('[data-b]').forEach(b => b.onclick = () => { allTopics = false; const ids = idx.temas.filter(t => t.id.startsWith(b.dataset.b!)).map(t => t.id); const all = ids.every(i => sel.has(i)); ids.forEach(i => all ? sel.delete(i) : sel.add(i)); save(); draw(); });
+    $('#useSeen').onclick = () => { const v = store.getSeen(); if (!v.length) { toast('Aún no has marcado temas vistos (pantalla «Temas vistos» en Inicio).'); return; } allTopics = false; sel.clear(); v.forEach(t => sel.add(t)); save(); draw(); };
     $('#go').onclick = guard(async () => {
-      const temas = sel.size ? [...sel] : idx.temas.map(t => t.id);
+      if (!allTopics && !sel.size) return toast('Elige al menos un tema o selecciona Todo el temario.');
+      const temas = allTopics ? idx.temas.map(t => t.id) : [...sel];
       if (cfg.mode === 'trampas') {
         const r = await trapTest(cfg.pt ? 300 : cfg.n, undefined, sel.size ? ([...sel] as string[]) : undefined);
+        if (viewAccount !== store.accountId() || !$('#test-summary')) return;
         if (!r.items.length) { toast('Aún no hay datos de trampas: contesta al menos 5 preguntas de alguna trampa y falla alguna.'); return; }
         startRun({ kind: 'test', feedback: true, items: r.items, titulo: 'Mis trampas · ' + r.targets.map(k => TRAMPAS[k] || k).join(', '), ...(cfg.pt ? { limit: cfg.min || 20, porTiempo: true } : {}) }); return;
       }
       const items = await pick({ temas: temas as string[], origins: org, mode: cfg.mode, n: cfg.pt ? 300 : cfg.n });
+      if (viewAccount !== store.accountId() || !$('#test-summary')) return;
       if (!items.length) { toast(cfg.mode === 'falladas' ? 'No tienes falladas en esa selección.' : cfg.mode === 'dudosas' ? 'No tienes preguntas marcadas como dudosas ahí.' : 'No hay preguntas con ese filtro.'); return; }
       startRun({ kind: 'test', feedback: true, items, titulo: (sel.size === 1 ? temaName([...sel][0] as string) : 'Test') + (cfg.pt ? ' · ' + (cfg.min || 20) + ' min' : ''), ...(cfg.pt ? { limit: cfg.min || 20, porTiempo: true } : {}) });
     });
   };
-  function save() { store.setCfg('test', { sel: [...sel], n: cfg.n, mode: cfg.mode, o: [...org], pt: cfg.pt || 0, min: cfg.min || 20 }); }
+  function save() { store.setCfg('test', { all: allTopics, sel: [...sel], n: cfg.n, mode: cfg.mode, o: [...org], pt: cfg.pt || 0, min: cfg.min || 20 }); }
   function tstat(t: any, n: any) {
     let v = 0, ok = 0, tot = 0;
     for (const id of META._by[t] || []) { const r = store.rec(id); if (r) { v++; ok += r[1]; tot += r[0]; } }
@@ -448,6 +482,7 @@ routes.sim = async function () {
   const idx = await getIndex(); await getMeta();
   const cfg = Object.assign({ n: 80, min: 90, o: ['O', 'G'], parte2: true, scope: 'vistos' }, store.getCfg().sim || {});
   const seenN = store.getSeen().length;
+  const simAccount = store.accountId();
   const org = new Set(cfg.o);
   const drawCompleto = () => {
     $('#simbody').innerHTML = `
@@ -474,6 +509,7 @@ routes.sim = async function () {
     $('#go').onclick = guard(async () => {
       const useSeen = cfg.scope !== 'todos' && seenN;
       const items = await simParte1(idx, org, cfg.n, useSeen ? new Set(store.getSeen()) : null);
+      if (simAccount !== store.accountId() || !$('#simbody')) return;
       if (!items.length) { toast('No hay preguntas con esos filtros.'); return; }
       SIMCFG = { parte2: cfg.parte2, org: [...org], min2: Math.round(cfg.min * 0.45) };
       startRun({ kind: 'sim', feedback: false, items, limit: cfg.min, titulo: 'Simulacro · Parte 1' });
@@ -484,19 +520,30 @@ routes.sim = async function () {
   const TABS = [['completo', 'Completo'], ['examen', 'Por examen'], ['tema', 'Por tema']];
   let tab = store.getCfg().simtab; if (!TABS.some(t => t[0] === tab)) tab = 'completo';
   const L2 = listaExamenes();
-  const grupos = (): [string, any[]][] => tab === 'tema' ? [['Tests de la academia', L2.tests]] : [['Simulacros de la academia', L2.sims], ['Exámenes oficiales', L2.ofi]];
+  let exOrigin = 'all', exTurn = 'all', exYear = '';
+  const grupos = (): [string, any[]][] => {
+    if (tab === 'tema') return [['Tests de la academia', L2.tests]];
+    return ([['Exámenes oficiales', L2.ofi], ['Simulacros de la academia', L2.sims]] as [string, any[]][]).map(([title, list]) => [title, list.filter(e =>
+      (exOrigin === 'all' || (exOrigin === 'official' ? L2.ofi : L2.sims).includes(e)) &&
+      (exTurn === 'all' || (exTurn === 'libre' ? e.nombre.startsWith('Ingreso libre') : e.nombre.startsWith('Promoción interna'))) &&
+      (!exYear || e.nombre.includes(exYear)))] as [string, any[]]).filter(([, list]) => list.length);
+  };
   const nf = (n: any) => (Math.round(n * 10) / 10).toFixed(1).replace('.', ',');
   const drawLista = () => {
     const ses = store.getSessions(), todos = grupos().flatMap(g => g[1]);
     let sel = store.getCfg().exsel; if (!todos.some(x => x.k === sel)) sel = todos[0]?.k;
     const info = (e: any) => { const h = ses.filter(x => x.titulo === e.nombre); return h.length ? { nota: h[0].nota, n: h.length, mejor: Math.max(...h.map(x => x.nota)) } : null; };
-    $('#simbody').innerHTML = `<p class="sub sm">Elige uno y contesta solo sus preguntas. Notas sobre 100; cada fallo resta 1/3.</p>
+    const years = [...new Set(L2.ofi.flatMap(e => e.nombre.match(/20\d{2}/g) || []))].sort().reverse();
+    $('#simbody').innerHTML = `${tab === 'examen' ? `<div class="card exam-filters"><label>Origen<select id="ex-origin"><option value="all" ${exOrigin === 'all' ? 'selected' : ''}>Todos</option><option value="official" ${exOrigin === 'official' ? 'selected' : ''}>Oficiales</option><option value="academy" ${exOrigin === 'academy' ? 'selected' : ''}>Academia</option></select></label><label>Turno<select id="ex-turn"><option value="all" ${exTurn === 'all' ? 'selected' : ''}>Todos</option><option value="libre" ${exTurn === 'libre' ? 'selected' : ''}>Ingreso libre</option><option value="promotion" ${exTurn === 'promotion' ? 'selected' : ''}>Promoción interna</option></select></label><label>Año en la referencia<select id="ex-year"><option value="">Todos</option>${years.map(y => `<option value="${y}" ${exYear === y ? 'selected' : ''}>${y}</option>`).join('')}</select></label></div>` : ''}<p class="sub sm">Elige uno y contesta solo sus preguntas. Notas sobre 100; cada fallo resta 1/3.</p>
       ${grupos().map(([t, l]) => `<h2 class="h3">${esc(t)}</h2><div class="exlist">${l.map((e: any) => { const i = info(e); return `<button class="exrow ${e.k === sel ? 'on' : ''}" data-k="${esc(e.k)}" aria-pressed="${e.k === sel}"><span><b>${esc(e.nombre)}</b><small>${e.ids.length} preguntas${i && i.n > 1 ? ` · ${i.n} intentos · mejor ${nf(i.mejor)}` : ''}</small></span><em class="nt ${i ? (i.nota >= 50 ? 'ok' : 'mid') : ''}">${i ? nf(i.nota) : 'Sin hacer'}</em></button>`; }).join('')}</div>`).join('')}
-      <div class="bar2"><button class="btn sec" data-m="est">Estudiar</button><button class="btn" data-m="sim">Examen · 90 min</button></div>`;
+      ${!todos.length ? '<p class="note">No hay exámenes con estos filtros. Prueba con otro año o turno.</p>' : ''}
+      <div class="bar2"><button class="btn sec" data-m="est" ${!todos.length ? 'disabled' : ''}>Estudiar</button><button class="btn" data-m="sim">Examen · 90 min</button></div>`;
+    for (const id of ['ex-origin', 'ex-turn', 'ex-year']) { const el = $('#' + id); if (el) el.onchange = () => { if (id === 'ex-origin') exOrigin = el.value; else if (id === 'ex-turn') exTurn = el.value; else exYear = el.value; drawLista(); $('#' + id)?.focus({ preventScroll: true }); }; }
     $('#simbody').querySelectorAll<El>('.exrow').forEach(b => b.onclick = () => { store.setCfg('exsel', b.dataset.k!); drawLista(); const n = $('#simbody').querySelector<El>('.exrow.on'); n && n.focus({ preventScroll: true }); });
     $('#simbody').querySelectorAll<El>('button[data-m]').forEach(b => b.onclick = guard(async () => {
       const ex = todos.find(x => x.k === sel); if (!ex) return;
       const items = (await byIds(ex.ids)).filter(q => !q.s);
+      if (simAccount !== store.accountId() || !$('#simbody')) return;
       if (!items.length) { toast('No se pudieron cargar las preguntas.'); return; }
       if (b.dataset.m! === 'sim') startRun({ kind: 'sim', feedback: false, items, limit: 90, titulo: ex.nombre });
       else startRun({ kind: 'test', feedback: true, items, titulo: ex.nombre });
@@ -594,23 +641,23 @@ routes.falladas = async function () {
   if (!active) return;
   const idx = await getIndex();
   if (!active) return;
-  const F = { q: '', t: '' };
+  const F = { q: '', t: '', review: '', streak: '' };
   const fd = (ts: any) => new Date(ts).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
   const conteo: Record<string, any> = {}; qs.forEach(q => { conteo[q.t] = (conteo[q.t] || 0) + 1; });
-  const filtra = () => { const k = fold(F.q).trim(); return qs.filter(q => (!F.t || q.t === F.t) && (!k || fold([q.q, ...q.a, q.u, q.n].join(' ')).includes(k))); };
+  const filtra = () => filterFailures(qs, store.getStats(), F);
   const lista = () => {
     const L2 = filtra(), host = $('#flist'); if (!active || !host) return;
     $('#fcount').textContent = L2.length === qs.length ? `${qs.length} ${qs.length === 1 ? 'pregunta' : 'preguntas'}` : `${L2.length} de ${qs.length} ${qs.length === 1 ? 'pregunta' : 'preguntas'}`;
     const gr: Record<string, any> = {}; L2.forEach(q => (gr[q.t] ||= []).push(q));
     host.innerHTML = L2.length ? Object.keys(gr).sort().map(t => `<h2 class="h3">${esc(t)} · ${esc(temaName(t))} <small>(${gr[t].length})</small></h2><div class="card">${gr[t].map((q: any) => {
       const r = store.rec(q.i) || [0, 0, 0];
-      return `<details class="rv f"><summary><i></i><span class="pre">${richHtml(q.q)}<br><small class="sub">Aciertos seguidos: ${Math.max(0, store.failureStreak(r))}/3 · <span data-review-status="${esc(q.i)}">${r[11] ? 'Temario repasado' : 'Pendiente de temario'}</span></small></span></summary>
+      return `<article class="failure-item" data-failure="${esc(q.i)}"><div class="failure-state"><label class="chk"><input type="checkbox" data-reviewed="${esc(q.i)}" ${r[11] ? 'checked' : ''}>Repasada en el temario</label><span class="streak-meter" aria-label="${Math.max(0, store.failureStreak(r))} de 3 aciertos seguidos">${Math.max(0, store.failureStreak(r))}/3</span></div><details class="rv f"><summary><i></i><span class="pre">${richHtml(q.q)}<br><small class="sub">Aciertos seguidos: ${Math.max(0, store.failureStreak(r))}/3 · <span data-review-status="${esc(q.i)}">${r[11] ? 'Temario repasado' : 'Pendiente de temario'}</span></small></span></summary>
+      ${questionNotice(q)}${sourceHtml(q)}
       ${q.supTexto ? `<details class="sup"><summary>Enunciado del supuesto</summary><div class="pre">${esc(q.supTexto)}</div></details>` : ''}
       ${q.cp ? `<div class="ctx pre">${richHtml(q.cp)}</div>` : ''}
-      <label class="chk"><input type="checkbox" data-reviewed="${esc(q.i)}" ${r[11] ? 'checked' : ''}>Repasada en el temario</label>
       ${q.a.map((o: any, i: any) => `<div class="ro ${i === q.c ? 'ok' : ''}"><b>${L[i]}</b> ${richHtml(o)}${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : '<p class="sm sub">Esta pregunta no tiene fragmento de temario asociado.</p>'}${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}
-      <p class="sm sub">Última actividad: ${fd(r[2])} · acertada ${r[1]} de ${r[0]} veces${q.y ? ' · ' + esc(q.y) : ''}</p></details>`;
+      <p class="sm sub">Última actividad: ${fd(r[2])} · acertada ${r[1]} de ${r[0]} veces${q.y ? ' · ' + esc(q.y) : ''}</p></details></article>`;
     }).join('')}</div>`).join('')
       : '<div class="card"><p class="sub">Ninguna pregunta coincide con la búsqueda.</p></div>';
   };
@@ -623,6 +670,8 @@ routes.falladas = async function () {
     <input id="fq" type="search" placeholder="Buscar: palabra, artículo, comando…" autocomplete="off" enterkeyhint="search">
     <label class="sr" for="ft">Filtrar por tema</label>
     <select id="ft"><option value="">Todos los temas</option>${idx.temas.filter(t => conteo[t.id]).map(t => `<option value="${esc(t.id)}">${esc(t.id)} · ${esc(t.nombre)} (${conteo[t.id]})</option>`).join('')}</select>
+    <div class="row"><label for="freview">Repaso del temario<select id="freview"><option value="">Todos</option><option value="pending">Pendiente de temario</option><option value="reviewed">Repasada</option></select></label>
+    <label for="fstreak">Aciertos seguidos<select id="fstreak"><option value="">Todas las rachas</option><option value="0">0 de 3</option><option value="1">1 de 3</option><option value="2">2 de 3</option></select></label></div>
   </div>
   <div id="flist"></div>
   <div class="bar2"><button class="btn" id="fgo">Practicar estas</button></div>`;
@@ -630,11 +679,13 @@ routes.falladas = async function () {
     const input = (e.target as El).closest<El>('[data-reviewed]'); if (!input) return;
     const q = qs.find(q => q.i === input.dataset.reviewed!); if (!q) return;
     store.setReviewed(q.i, q.t, input.checked);
-    const status = input.closest<El>('details')!.querySelector<El>('[data-review-status]');
+    const status = input.closest<El>('.failure-item')!.querySelector<El>('[data-review-status]');
     if (status) status.textContent = input.checked ? 'Temario repasado' : 'Pendiente de temario';
+    if (F.review) lista();
   };
   $<El>('#fq').oninput = e => { F.q = (e.target as El).value; clearTimeout(tm); tm = setTimeout(lista, 150); };
   $<El>('#ft').onchange = e => { clearTimeout(tm); F.t = (e.target as El).value; lista(); };
+  for (const [id, key] of [['freview', 'review'], ['fstreak', 'streak']] as const) $('#' + id).onchange = e => { clearTimeout(tm); F[key] = (e.target as El).value; lista(); };
   $('#fgo').onclick = () => { const L2 = filtra(); if (!L2.length) return toast('No hay preguntas con ese filtro.'); startRun({ kind: 'test', feedback: true, items: shuffle(L2).slice(0, 40), titulo: 'Falladas' + (F.t ? ' · ' + F.t : '') }); };
   lista();
 };
@@ -642,7 +693,7 @@ routes.falladas = async function () {
 
 registerTraining({ routes, go, route, pw }, screen);
 const { allCards, curatedCards } = registerCards({ routes, go, pw, reportBox }, screen);
-registerStats({ routes, go, trapTest, startRun });
+registerStats({ routes, go, trapTest, startRun, startRepaso });
 registerHome({ routes, go, saludo, quickSession, startRepaso, openMenu, dominioTemas, falladasIds }, screen);
 registerAcceso({ routes, go }, screen);
 registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate }, screen);

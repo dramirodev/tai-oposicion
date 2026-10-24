@@ -40,7 +40,9 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['email', 'name', 'ts'])
         && request.resource.data.email == request.auth.token.email
         && request.resource.data.name is string && request.resource.data.name.size() < 200
-        && request.resource.data.ts is number;
+        && request.resource.data.ts is number
+        && request.resource.data.ts > request.time.toMillis() - 300000
+        && request.resource.data.ts <= request.time.toMillis() + 60000;
       allow delete: if isAdmin() || (request.auth != null && request.auth.uid == uid);
     }
     // Cada usuario aprobado solo accede a lo suyo; el resto está denegado por defecto.
@@ -54,8 +56,19 @@ service cloud.firestore {
     match /users/{uid}/sessions/{sessionId} {
       allow read: if canUse(uid);
       allow create, update: if canUse(uid)
-        && request.resource.data.keys().hasAll(['id', 'ts', 'nota', 'titulo'])
+        && request.resource.data.keys().hasOnly(['id', 'ts', 'kind', 'n', 'a', 'f', 'b', 'secs', 'nota', 'temas', 'tipos', 'fails', 'titulo', 'porTiempo', 'interrupted'])
+        && request.resource.data.id is string
+        && request.resource.data.ts is number
+        && request.resource.data.kind in ['sim', 'rev', 'test']
+        && request.resource.data.n is number && request.resource.data.a is number
+        && request.resource.data.f is number && request.resource.data.b is number
+        && request.resource.data.secs is number
         && request.resource.data.nota is number
+        && request.resource.data.temas is map
+        && (!('porTiempo' in request.resource.data) || request.resource.data.porTiempo is bool)
+        && (!('interrupted' in request.resource.data) || request.resource.data.interrupted is bool)
+        && request.resource.data.tipos is map
+        && request.resource.data.fails is list
         && request.resource.data.titulo is string;
     }
     // Temas vistos

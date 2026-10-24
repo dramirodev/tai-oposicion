@@ -49,11 +49,11 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   const reviewedSelector = `[data-reviewed="${bank[0].i}"]`;
   const reviewed = document.querySelector(reviewedSelector);
   expect(reviewed).not.toBeNull();
-  expect(reviewed.closest('details').textContent).toContain('2/3');
-  reviewed.closest('details').open = true;
+  expect(reviewed.closest('.failure-item').textContent).toContain('2/3');
+  expect(reviewed.closest('details')).toBeNull();
   reviewed.click();
   expect(store.rec(bank[0].i)[11]).toBe(1);
-  expect(reviewed.closest('details').textContent).toContain('Temario repasado');
+  expect(reviewed.closest('.failure-item').textContent).toContain('Temario repasado');
   await navigate('home', 'Sesión rápida');
   await navigate('falladas', 'Practicar estas');
   expect(document.querySelector(reviewedSelector).checked).toBe(true);

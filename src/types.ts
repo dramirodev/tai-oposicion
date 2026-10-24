@@ -18,6 +18,7 @@ export type CardMap = Record<string, CardRec>;
 
 export type SessionKind = 'sim' | 'rev' | 'test';
 export interface Session {
+  interrupted?: boolean; porTiempo?: boolean;
   id: string; ts: number; kind: SessionKind; n: number; a: number; f: number; b: number; secs: number; nota: number;
   temas: Record<string, [number, number]>; tipos: Record<string, [number, number]>; fails: string[]; titulo: string;
 }
@@ -41,6 +42,7 @@ export interface Question {
   i: string; t: string; o: Origin; q: string; a: string[]; c: number;
   k?: string; x?: number[]; d?: number; n?: string; y?: string; u?: string; np?: number;
   /** Contexto previo, supuesto (s), provisional (p), puede caducar (w), variante (v). */
+  source?: { url: string; title?: string; page?: number; verified: boolean };
   cp?: string; supTexto?: string; s?: unknown; p?: unknown; w?: unknown; v?: unknown;
 }
 

@@ -70,6 +70,7 @@ function applyUi() {
   const r = document.documentElement;
   if (u.theme === 'auto') r.removeAttribute('data-theme'); else r.setAttribute('data-theme', u.theme);
   r.style.setProperty('--z', String(ZOOMS[u.size]));
+  r.dataset.textSize = String(u.size);
   const dark = u.theme === 'dark' || (u.theme === 'auto' && matchMedia('(prefers-color-scheme:dark)').matches);
   const m = document.querySelector('meta[name=theme-color]'); if (m) (m as HTMLMetaElement).content = dark ? '#0e1424' : '#14213d';
 }
@@ -89,4 +90,24 @@ export function notice(msg: string, title = '', okLabel = 'Entendido'): Promise<
     document.addEventListener('keydown', key, true);
     document.body.append(o); o.querySelector('button')!.focus();
   });
+}
+
+// Los selectores mantienen sus estados también después de repintar una pantalla.
+export function selectionStates(root: ParentNode = app): void {
+  root.querySelectorAll<HTMLButtonElement>('.seg button').forEach(b => {
+    b.setAttribute('aria-pressed', String(b.classList.contains('on')));
+  });
+}
+if (app) {
+  new MutationObserver(() => selectionStates()).observe(app, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+  app.addEventListener('click', e => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('.seg button');
+    const group = b?.parentElement?.id, value = b?.dataset.v;
+    if (!b || !group || value === undefined) return;
+    queueMicrotask(() => {
+      if (b.isConnected || document.activeElement !== document.body) return;
+      const replacement = Array.from(document.getElementById(group)?.querySelectorAll<HTMLButtonElement>('button') || []).find(x => x.dataset.v === value);
+      replacement?.focus({ preventScroll: true });
+    });
+  }, true);
 }
