@@ -18,6 +18,12 @@ service cloud.firestore {
     // Pueden leer y escribir sus propios datos el propietario y los aprobados.
     function canUse(uid) { return isOwner(uid) || isApproved(uid); }
 
+    // Banco de preguntas: lo leen el propietario y los aprobados; solo se escribe desde el script de publicación (IAM, no reglas).
+    match /bank/{doc} {
+      allow read: if request.auth != null && (isAdmin() || isApproved(request.auth.uid));
+      allow write: if false;
+    }
+
     // Aprobaciones: las escribe solo el propietario; cada usuario puede leer la suya.
     match /access/{uid} {
       allow read: if isAdmin() || (request.auth != null && request.auth.uid == uid);

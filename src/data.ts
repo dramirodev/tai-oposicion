@@ -1,10 +1,14 @@
 import * as store from './store.js';
 import { shuffle, allowed } from './logic.js';
+import { loadBank } from './bank.js';
 import type { Index, Meta, Question } from './types.js';
 // ───────── datos ─────────
 export let INDEX: Index | undefined, META: Meta, SUP: unknown;
 const cache = new Map<string, Promise<Question[]>>();
-export async function j<T = any>(url: string): Promise<T> { const r = await fetch(url); if (!r.ok) throw new Error(url); return r.json(); }
+export async function j<T = any>(url: string): Promise<T> {
+  const m = /^data\/([\w.-]+)\.json$/.exec(url); // el banco puede venir de Firestore; si no, JSON estático
+  if (m) { const b = await loadBank<T>(m[1]); if (b !== null) return b; }
+  const r = await fetch(url); if (!r.ok) throw new Error(url); return r.json(); }
 export async function getIndex(): Promise<Index> { return (INDEX ||= await j<Index>('data/index.json')); }
 export async function getMeta(): Promise<Meta> {
   if (!META) {

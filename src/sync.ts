@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { initializeAuth, GoogleAuthProvider, signInWithRedirect, signInWithPopup, getRedirectResult, onAuthStateChanged, signOut, indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence, browserPopupRedirectResolver } from 'firebase/auth';
 import {
   initializeFirestore, persistentLocalCache, persistentMultipleTabManager,
-  doc, setDoc, deleteDoc, onSnapshot, collection, query, orderBy, limit
+  doc, getDoc, setDoc, deleteDoc, onSnapshot, collection, query, orderBy, limit
 } from 'firebase/firestore';
 import type { Auth, User } from 'firebase/auth';
 import type { Firestore, FirestoreError, QuerySnapshot, DocumentSnapshot, Unsubscribe } from 'firebase/firestore';
@@ -237,3 +237,16 @@ export function pushReports(m: ReportMap): void {
 }
 
 function writeErr(e: any) { if (e.code !== 'permission-denied' && e.code !== 'unauthenticated') { console.warn('Firestore (escritura):', e.code, e.message); return; } status.error = 'No se pudo guardar en la nube (' + (e.code || e.message) + ')'; emit(); }
+
+// ───────── banco de preguntas en Firestore (solo lectura; lo publica scripts/publish_bank.mjs) ─────────
+export interface BankMeta { v: number; files: Record<string, string> }
+/** Versión del banco y hash de cada fichero. null si no hay sesión con acceso o no se puede leer. */
+export async function bankMeta(): Promise<BankMeta | null> {
+  if (!db || !canSync()) return null;
+  try { const s = await getDoc(doc(db, 'bank', 'meta')); const d = s.exists() ? s.data() as any : null; return d && d.files ? { v: d.v, files: d.files } : null; } catch (e) { return null; }
+}
+/** Contenido gzip de un fichero del banco. */
+export async function bankFile(name: string): Promise<Uint8Array | null> {
+  if (!db || !canSync()) return null;
+  try { const s = await getDoc(doc(db, 'bank', 'f_' + name)); const z = s.exists() ? (s.data() as any).z : null; return z && typeof z.toUint8Array === 'function' ? z.toUint8Array() : null; } catch (e) { return null; }
+}
