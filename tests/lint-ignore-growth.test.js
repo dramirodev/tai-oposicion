@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { findAddedCoverage, findAddedIgnores, readIgnoreList, chooseBaselineRef } from '../scripts/lint-ignore-growth.mjs';
+import {
+  findAddedCoverage,
+  findAddedIgnores,
+  readIgnoreList,
+  chooseBaselineRef,
+  baselineCandidates,
+} from '../scripts/lint-ignore-growth.mjs';
 
 describe('lint ignore growth guard', () => {
   it('finds only exclusions added after the baseline', () => {
@@ -24,6 +30,11 @@ describe('lint ignore growth guard', () => {
   });
 
   it('uses the nearest parent that contains the baseline config after a merge commit', () => {
-    expect(chooseBaselineRef(['HEAD^', 'HEAD^2', 'HEAD~2'], ref => ref === 'HEAD^2')).toBe('HEAD^2');
+    const candidates = baselineCandidates();
+    expect(chooseBaselineRef(candidates, ref => ref === 'HEAD^2')).toBe('HEAD^2');
+  });
+
+  it('uses the explicit base alone when CI supplies LINT_BASE_REF', () => {
+    expect(baselineCandidates('origin/main')).toEqual(['origin/main']);
   });
 });

@@ -34,6 +34,12 @@ export function chooseBaselineRef(candidates, hasConfig) {
   return candidates.find(hasConfig);
 }
 
+export function baselineCandidates(explicitBase) {
+  return explicitBase
+    ? [explicitBase]
+    : ['HEAD^', 'HEAD^2', 'HEAD~2', 'origin/migracion-react'];
+}
+
 function trackedFiles(ref) {
   const previous = execFileSync('git', ['ls-tree', '-r', '--name-only', ref], { encoding: 'utf8' });
   const current = execFileSync('git', ['ls-files', '-co', '--exclude-standard'], { encoding: 'utf8' });
@@ -41,9 +47,7 @@ function trackedFiles(ref) {
 }
 
 function main() {
-  const candidates = process.env.LINT_BASE_REF
-    ? [process.env.LINT_BASE_REF]
-    : ['HEAD^', 'HEAD^2', 'HEAD~2', 'origin/migracion-react'];
+  const candidates = baselineCandidates(process.env.LINT_BASE_REF);
   const base = chooseBaselineRef(candidates, ref => {
     try {
       execFileSync('git', ['cat-file', '-e', `${ref}:eslint.config.mjs`], { stdio: 'ignore' });
