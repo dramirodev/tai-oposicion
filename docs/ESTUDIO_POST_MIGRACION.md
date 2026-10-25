@@ -90,3 +90,12 @@ No se ejecutó el emulador de Firestore Rules: el entorno no tiene Java Runtime.
 - Se añadieron accesos contextuales en la respuesta de práctica, controles del test, simulacros, falladas, tarjetas, estadísticas de fallos, puntuación y copias de seguridad.
 - Cobertura automática: prueba unitaria que compara etiquetas contra el catálogo histórico y E2E en Chromium/WebKit para menú de invitado y disponibilidad sin conexión. La calidad editorial del texto y lectores de pantalla físicos requieren revisión humana.
 - Las referencias visuales de 24 capturas se actualizaron intencionalmente para reflejar esos enlaces visibles en resultado, test, simulacro, exámenes, tarjetas y falladas, en ambos temas y motores. No se cambiaron las aserciones funcionales ni los límites de comparación.
+
+## Fase 2B — Navegación y consulta voluntaria
+
+- En práctica, el mapa muestra sin visitar, pendiente, respondida y solución consultada. Se puede retroceder/avanzar; las respuestas ya contestadas quedan deshabilitadas y el motor también rechaza una segunda respuesta.
+- «No lo sé» ahora deja la pregunta pendiente, registra el evento, no añade una respuesta al progreso y avanza a la siguiente. Al volver se puede contestar. No se muestra clave ni feedback al marcarla pendiente.
+- «Ver solución» solo aparece para una pregunta pendiente. Antes del control se informa que verla impide responder en ese intento. La consulta persiste en `tai.run:<ámbito>` y en el historial por intento, no se puntúa como acierto/fallo y en el resultado se cuenta como blanco con un contador separado.
+- Sesiones antiguas sin `studyStates` siguen siendo compatibles. Una respuesta histórica `-1` se interpreta como solución consultada porque la interfaz anterior mostraba la respuesta al pulsar «No lo sé»; no se reescribe el progreso histórico ni se fabrican eventos retroactivos.
+- El simulacro mantiene su mapa, navegación, edición de respuesta y ausencia de soluciones antes del cierre. El cambio de estado y los controles de práctica no se aplican a su flujo.
+- Pruebas: integración del motor con IndexedDB para pendiente/respuesta/consulta, importación de guardados antiguos, aserciones de progreso y Playwright en Chromium/WebKit que recarga, reanuda, navega y finaliza. Cuatro capturas de la ruta quiz (ambos temas y motores) reflejan el mapa y controles de práctica nuevos; verificaciones funcionales conservan sus asserts.

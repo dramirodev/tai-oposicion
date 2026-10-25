@@ -52,7 +52,7 @@ export const FAILURE_HELP: readonly HelpTopic[] = [
 ];
 
 export const HELP_SECTIONS = [
-  { id: 'sesiones', title: 'Tests y sesiones', body: 'En práctica puedes revisar preguntas anteriores. Una respuesta registrada no se puede cambiar en ese intento. «No lo sé» deja la pregunta pendiente sin mostrar la solución.' },
+  { id: 'sesiones', title: 'Tests y sesiones', body: 'En práctica puedes revisar preguntas anteriores. Una respuesta registrada no se puede cambiar en ese intento. «No lo sé» deja la pregunta pendiente sin mostrar la solución y puedes volver a responderla. Si eliges «Ver solución», la pregunta queda bloqueada en ese intento y cuenta como blanco consultado.' },
   { id: 'simulacros', title: 'Simulacros', body: 'Durante un simulacro no se muestran soluciones ni explicaciones. Conserva las reglas de navegación y cambio de respuesta del simulacro; la corrección aparece al finalizar.' },
   { id: 'puntuacion', title: 'Puntuación y blancos', body: 'La nota usa la penalización vigente del modo de examen. Las preguntas pendientes y las consultadas cuentan como blanco; consultar una solución no se guarda como acierto ni como fallo.' },
   { id: 'progreso', title: 'Guardado y sincronización', body: 'El progreso agregado se conserva en este dispositivo y puede sincronizarse al iniciar sesión. Si no hay conexión, vuelve a intentarlo cuando la app esté conectada. La ayuda funciona sin conexión.' },

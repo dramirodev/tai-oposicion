@@ -91,6 +91,45 @@ test('la ayuda está disponible sin conexión desde el menú de invitado y conse
   await expect(page.locator('#app #simulacros')).toContainText('no se muestran soluciones');
   expect(errors).toEqual([]);
 });
+test('práctica permite volver a pendientes, bloquea respondidas y conserva consulta tras recargar', async ({ page }) => {
+  const errors = await start(page);
+  await page.locator('#quick').click();
+  await expect(page.locator('.question-map')).toBeVisible();
+  await expect(page.locator('#prev')).toBeDisabled();
+
+  await page.locator('#blank').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 2');
+  await expect(page.locator('.fb')).toHaveCount(0);
+  await expect(page.locator('.opt.ok')).toHaveCount(0);
+  await page.locator('#blank').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 3');
+  await page.locator('#prev').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 2');
+  await page.locator('#reveal-solution').click();
+  await expect(page.locator('.fb')).toContainText('Solución consultada · cuenta como blanco');
+  await expect(page.locator('.opt:disabled')).toHaveCount(4);
+
+  await page.reload();
+  await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
+  await page.locator('.overlay [data-v="1"]').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 2');
+  await expect(page.locator('.fb')).toContainText('Solución consultada · cuenta como blanco');
+  await expect(page.locator('#reveal-solution')).toHaveCount(0);
+  await page.locator('#prev').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  await page.locator('.opt').first().click();
+  await expect(page.locator('.opt:disabled')).toHaveCount(4);
+  await expect.poll(() => page.evaluate(() => Object.keys(JSON.parse(localStorage.getItem('tai.v1:guest') || '{}').stats || {}))).toHaveLength(1);
+  await page.locator('.question-map summary').click();
+  await page.locator('[data-jump="9"]').click();
+  await page.locator('#next').click();
+  await expect(page.locator('#app h1')).toHaveText('Resultado');
+  await expect(page.locator('#consulted-count')).toContainText('1 solución consultada');
+  await expect(page.locator('.trio div:last-child')).toContainText('9');
+  await expect(page.locator('.rv')).toHaveCount(10);
+  await expect(page.locator('.rv .tag.warn')).toContainText('Solución consultada · blanco');
+  expect(errors).toEqual([]);
+});
 test('`route()` repinta la misma URL en Relámpago', async ({ page }) => {
   const errors = await start(page);
   await page.goto('/#/relampago');

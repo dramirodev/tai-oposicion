@@ -25,13 +25,14 @@ export interface RunCfg {
 }
 export interface Run extends RunCfg {
   idx: number; ans: (number | undefined)[]; times?: (number | undefined)[]; t0: number; secs: number; paused: boolean;
+  studyStates?: ('unseen' | 'pending' | 'answered' | 'revealed')[];
   since?: number | null; base?: number; tIdx?: number; q0?: number; qT0?: number; gt?: ReturnType<typeof setInterval>;
   review?: number[];
   luck?: Record<number, number>; fast?: Record<number, [number, number]>;
   attemptScope?: string; attemptSessionId?: string; attemptIds?: string[]; attemptTrackingPaused?: boolean;
 }
 /** Último resultado, para la pantalla de resultados. */
-export interface LastResult { ses: Session & { porTiempo?: boolean }; items: Question[]; ans: (number | undefined)[]; times: (number | undefined)[]; limit: number }
+export interface LastResult { ses: Session & { porTiempo?: boolean }; items: Question[]; ans: (number | undefined)[]; times: (number | undefined)[]; limit: number; studyStates?: ('unseen' | 'pending' | 'answered' | 'revealed')[] }
 
 /** Estado compartido: la sesión en curso y la última terminada. */
 const subscribers = new Set<() => void>();
@@ -157,7 +158,7 @@ export function createRun(cfg: RunCfg): Run | null {
   const items = filterScoringQuestions(cfg.items, cfg.feedback, question => question.np);
   if (!items.length) return null;
   const createdAt = now();
-  const run = { ...cfg, items, idx: 0, ans: [], t0: createdAt, secs: 0, paused: false } as Run;
+  const run = { ...cfg, items, idx: 0, ans: [], ...(cfg.feedback ? { studyStates: Array.from({ length: items.length }, () => 'unseen' as const) } : {}), t0: createdAt, secs: 0, paused: false } as Run;
   if (attemptTracker && items.every(question => question.i && META[question.i])) {
     const scope = store.accountId() || 'guest';
     const tracking = attemptTracker.beginSession(
@@ -188,12 +189,12 @@ export function saveRun(): void {
   const R = engineState.run;
   if (!R || R.supTexto || !R.items.every(q => q.i && META && META[q.i])) return;
   const { kind, feedback, titulo, limit, idx, ans, times, secs, porTiempo, review } = R;
-  try { localStorage.setItem(runKey(), JSON.stringify({ kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: R.items.map(q => q.i), review: review || [], savedAt: Date.now(), ...(R.attemptScope ? { attemptScope: R.attemptScope } : {}), ...(R.attemptSessionId ? { attemptSessionId: R.attemptSessionId } : {}), ...(R.attemptIds ? { attemptIds: R.attemptIds } : {}) })); } catch {}
+  try { localStorage.setItem(runKey(), JSON.stringify({ kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: R.items.map(q => q.i), review: review || [], ...(feedback && R.studyStates ? { studyStates: [...R.studyStates] } : {}), savedAt: Date.now(), ...(R.attemptScope ? { attemptScope: R.attemptScope } : {}), ...(R.attemptSessionId ? { attemptSessionId: R.attemptSessionId } : {}), ...(R.attemptIds ? { attemptIds: R.attemptIds } : {}) })); } catch {}
 }
 interface SavedRun {
   kind: SessionKind; feedback?: boolean; titulo?: string; limit?: number; idx: number; ans?: (number | null)[]; times?: (number | null)[];
   secs?: number; pt?: boolean; review?: number[]; ids: string[]; savedAt?: number;
-  attemptScope?: string; attemptSessionId?: string; attemptIds?: string[];
+  attemptScope?: string; attemptSessionId?: string; attemptIds?: string[]; studyStates?: ('unseen' | 'pending' | 'answered' | 'revealed')[];
 }
 export interface PendingRun { saved: SavedRun; items: Question[]; account: string | null }
 /** Sesión guardada que se puede retomar; descarta (y borra) la caducada o incoherente. */
@@ -217,7 +218,17 @@ export function resumeRun({ saved: s, items, account }: PendingRun): Run | null 
     && Array.isArray(s.attemptIds)
     && s.attemptIds.length === items.length
     && s.attemptIds.every(id => typeof id === 'string');
-  const run = { kind: s.kind, feedback: !!s.feedback, titulo: s.titulo, limit: s.limit || 0, porTiempo: !!s.pt, items, idx: s.idx, ans: un(s.ans), times: un(s.times), t0: now(), secs: s.secs || 0, paused: false, review: (Array.isArray(s.review) ? s.review : []).filter(i => Number.isInteger(i) && i >= 0 && i < items.length), ...(hasTracking ? { attemptScope: s.attemptScope, attemptSessionId: s.attemptSessionId, attemptIds: s.attemptIds!.slice() } : {}) } as Run;
+  const restoredAnswers = un(s.ans);
+  const answers = Array.from({ length: items.length }, (_, index) => restoredAnswers[index]);
+  const validStates = ['unseen', 'pending', 'answered', 'revealed'];
+  const hasValidStates = !!s.feedback && Array.isArray(s.studyStates) && s.studyStates.length === items.length
+    && s.studyStates.every((state, index) => validStates.includes(state) && (answers[index] !== undefined || state !== 'answered'));
+  const states = !!s.feedback ? answers.map((answer, index) => {
+    if (answer === -1) return 'revealed'; // Historical -1 was shown with its correct answer in the old practice UI.
+    if (typeof answer === 'number') return 'answered';
+    return hasValidStates ? s.studyStates![index] : 'unseen';
+  }) : undefined;
+  const run = { kind: s.kind, feedback: !!s.feedback, titulo: s.titulo, limit: s.limit || 0, porTiempo: !!s.pt, items, idx: s.idx, ans: answers, times: un(s.times), t0: now(), secs: s.secs || 0, paused: false, review: (Array.isArray(s.review) ? s.review : []).filter(i => Number.isInteger(i) && i >= 0 && i < items.length), ...(states ? { studyStates: states } : {}), ...(hasTracking ? { attemptScope: s.attemptScope, attemptSessionId: s.attemptSessionId, attemptIds: s.attemptIds!.slice() } : {}) } as Run;
   if (run.attemptSessionId && run.attemptScope && run.attemptIds) attemptTracker?.resumeSession(run.attemptScope, run.attemptSessionId, run.attemptIds);
   return (engineState.run = observable(run));
 }
@@ -234,12 +245,38 @@ export const segundosRestantes = (R: Run): number => R.limit ? R.limit * 60 - R.
 /** Anota en el progreso la respuesta de una pregunta con corrección inmediata (i = -1: «no lo sé»). */
 export function answerQuestion(R: Run, q: Question, i: number, minLect: number): void {
   if (engineState.run !== R) return;
+  if (!R.feedback) {
+    R.ans[R.idx] = i;
+    (R.luck ||= {})[R.idx] = store.rec(q.i)?.[9] || 0;
+    (R.fast ||= {})[R.idx] = [Math.round((Date.now() - (R.qT0 ?? Date.now())) / 1000), minLect];
+    if (i === -1) recordAttempt(R, { type: 'mark-pending' });
+    else recordAttempt(R, { type: 'answer', optionIndex: i, outcome: i === q.c ? 'correct' : 'wrong' });
+    store.record(q.i, q.t, i === -1 ? 2 : i === q.c ? 1 : 0, now(), i === -1 ? undefined : Math.max(1, R.secs - (R.q0 ?? 0)));
+    return;
+  }
+  R.studyStates ||= [];
+  const state = R.studyStates[R.idx] || 'unseen';
+  if (state === 'answered' || state === 'revealed') return;
+  if (i === -1) {
+    if (state === 'pending') return;
+    R.studyStates[R.idx] = 'pending';
+    recordAttempt(R, { type: 'mark-pending' });
+    return;
+  }
   R.ans[R.idx] = i;
+  R.studyStates[R.idx] = 'answered';
   (R.luck ||= {})[R.idx] = store.rec(q.i)?.[9] || 0;
   (R.fast ||= {})[R.idx] = [Math.round((Date.now() - (R.qT0 ?? Date.now())) / 1000), minLect];
-  if (i === -1) recordAttempt(R, { type: 'mark-pending' });
-  else recordAttempt(R, { type: 'answer', optionIndex: i, outcome: i === q.c ? 'correct' : 'wrong' });
-  store.record(q.i, q.t, i === -1 ? 2 : i === q.c ? 1 : 0, now(), i === -1 ? undefined : Math.max(1, R.secs - (R.q0 ?? 0)));
+  recordAttempt(R, { type: 'answer', optionIndex: i, outcome: i === q.c ? 'correct' : 'wrong' });
+  store.record(q.i, q.t, i === q.c ? 1 : 0, now(), Math.max(1, R.secs - (R.q0 ?? 0)));
+}
+/** Reveals only a previously deferred practice question; consultation has no score effect. */
+export function revealCurrentSolution(): boolean {
+  const run = engineState.run;
+  if (!run?.feedback || (run.studyStates?.[run.idx] || 'unseen') !== 'pending' || run.ans[run.idx] !== undefined) return false;
+  run.studyStates![run.idx] = 'revealed';
+  recordAttempt(run, { type: 'reveal' });
+  return true;
 }
 /** Respuesta en modo examen (sin corrección): se guarda al terminar. */
 export function answerDeferred(R: Run, i: number): void {
@@ -277,7 +314,7 @@ export function finishRun(R: Run, reason: 'complete' | 'interrupted' | 'timeout'
   const ses = { id: 's' + now().toString(36), ts: now(), kind: R.kind, n, a: res.a, f: res.f, b: res.b, secs: R.porTiempo ? Math.min(R.secs, (R.limit ?? 0) * 60) : R.secs, nota: calculateExamScore(res.a, res.f, n), temas: porTema, tipos: porTipo, fails, titulo: R.titulo || '', ...(reason === 'interrupted' ? { interrupted: true } : {}), ...(R.porTiempo ? { porTiempo: true } : {}) };
   store.addSession(ses);
   engineState.run = null;
-  return (engineState.last = observable({ ses, items, ans: R.ans, times: R.times || [], limit: R.limit || 0 }));
+  return (engineState.last = observable({ ses, items, ans: R.ans, times: R.times || [], limit: R.limit || 0, ...(R.studyStates ? { studyStates: [...R.studyStates] } : {}) }));
 }
 
 // ───────── selección de preguntas ─────────

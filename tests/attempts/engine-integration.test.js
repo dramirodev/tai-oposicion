@@ -70,4 +70,49 @@ describe('integración del motor con el historial local', () => {
     expect((await repository.getScopePage('guest')).attempts).toEqual([]);
     engine.clearActiveRun();
   });
+
+  it('deja No lo sé pendiente, permite contestar al volver y bloquea el primer resultado', async () => {
+    const question = (await data.getTema('T1.01')).find(item => !item.np);
+    const run = engine.createRun({ kind: 'test', feedback: true, items: [question] });
+    engine.startCurrentQuestion();
+    engine.answerQuestion(run, question, -1, 0);
+    expect(run.ans[0]).toBeUndefined();
+    expect(run.studyStates[0]).toBe('pending');
+    expect(store.rec(question.i)).toBeUndefined();
+
+    engine.answerQuestion(run, question, question.c, 0);
+    engine.answerQuestion(run, question, (question.c + 1) % question.a.length, 0);
+    expect(run.ans[0]).toBe(question.c);
+    expect(run.studyStates[0]).toBe('answered');
+    expect(store.rec(question.i)[0]).toBe(1);
+  });
+
+  it('persiste la consulta como blanco bloqueado y reconoce respuestas antiguas -1 como consulta', async () => {
+    const question = (await data.getTema('T1.01')).find(item => !item.np);
+    const run = engine.createRun({ kind: 'test', feedback: true, items: [question] });
+    engine.answerQuestion(run, question, -1, 0);
+    engine.saveRun();
+    engine.clearActiveRun();
+    const pending = await engine.pendingRun(true);
+    const resumed = engine.resumeRun(pending);
+    expect(resumed.studyStates[0]).toBe('pending');
+
+    expect(engine.revealCurrentSolution()).toBe(true);
+    engine.saveRun();
+    engine.clearActiveRun();
+    const afterReveal = engine.resumeRun(await engine.pendingRun(true));
+    expect(afterReveal.studyStates[0]).toBe('revealed');
+    expect(afterReveal.ans[0]).toBeUndefined();
+    engine.answerQuestion(afterReveal, question, question.c, 0);
+    expect(afterReveal.studyStates[0]).toBe('revealed');
+    expect(store.rec(question.i)).toBeUndefined();
+    const result = engine.finishRun(afterReveal);
+    expect(result.ses.b).toBe(1);
+    expect(result.studyStates[0]).toBe('revealed');
+    localStorage.setItem(`tai.run:${store.accountId() || 'guest'}`, JSON.stringify({
+      kind: 'test', feedback: true, idx: 0, ids: [question.i], savedAt: Date.now(), ans: [-1],
+    }));
+    expect(engine.resumeRun(await engine.pendingRun(true)).studyStates[0]).toBe('revealed');
+    engine.clearActiveRun();
+  });
 });

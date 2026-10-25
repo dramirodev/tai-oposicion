@@ -16,7 +16,7 @@ import { registerSettings } from '../features/settings/legacy.js';
 import { registerHelp } from '../features/help/legacy.js';
 import { registerAcceso } from '../features/access/legacy.js';
 import { isFull, isOwner, GUEST_ROUTES } from '../adapters/legacy/access.js';
-import { getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds } from '../core/application/legacy-engine.js';
+import { getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, revealCurrentSolution, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds } from '../core/application/legacy-engine.js';
 import { dominioTemas } from './legacy-topic-mastery.js';
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
@@ -155,7 +155,9 @@ routes.quiz = async function () {
     const LEC = normUi(store.getCfg().ui).lectura, kw = (t: any) => richHtml(t, !!LEC);
     const q = R.items[R.idx];
     const a = R.ans[R.idx];
-    const reveal = R.feedback && a !== undefined;
+    const state = R.feedback ? (R.studyStates?.[R.idx] || 'unseen') : undefined;
+    const consulted = state === 'revealed';
+    const reveal = R.feedback && (a !== undefined || consulted);
     const inSup = !!q.s;
     app.innerHTML = `
     <h1 class="sr">${esc(R.titulo || 'Test')} · pregunta ${R.idx + 1}${R.porTiempo ? '' : ' de ' + R.items.length}</h1>
@@ -167,7 +169,8 @@ routes.quiz = async function () {
     </div>
     ${R.titulo ? `<div class="sub">${esc(R.titulo)}</div>` : ''}
     ${R.limit && R.kind === 'sim' ? '<div class="pace" id="pace"></div>' : ''}
-    ${!R.feedback ? `<details class="question-map"><summary>Mapa de preguntas · ${R.ans.filter(x => x !== undefined && x >= 0).length} ${R.ans.filter(x => x !== undefined && x >= 0).length === 1 ? 'respondida' : 'respondidas'} · ${(R.review || []).length} para revisar</summary><div class="question-grid">${R.items.map((_, k) => { const status = R.ans[k] === undefined ? 'Sin responder' : R.ans[k] === -1 ? 'En blanco' : 'Respondida'; return `<button data-jump="${k}" ${k === R.idx ? 'aria-current="step"' : ''} class="${R.ans[k] !== undefined && R.ans[k] >= 0 ? 'answered' : ''}">${k + 1}<small>${status}${R.review?.includes(k) ? ' · Revisar' : ''}</small></button>`; }).join('')}</div></details><button class="ghost" id="review-question" aria-pressed="${!!R.review?.includes(R.idx)}">${R.review?.includes(R.idx) ? '✓ Marcada para revisar' : 'Marcar para revisar'}</button>` : ''}
+    ${!R.feedback ? `<details class="question-map"><summary>Mapa de preguntas · ${R.ans.filter(x => x !== undefined && x >= 0).length} ${R.ans.filter(x => x !== undefined && x >= 0).length === 1 ? 'respondida' : 'respondidas'} · ${(R.review || []).length} para revisar</summary><div class="question-grid">${R.items.map((_, k) => { const status = R.ans[k] === undefined ? 'Sin responder' : R.ans[k] === -1 ? 'En blanco' : 'Respondida'; return `<button data-jump="${k}" ${k === R.idx ? 'aria-current="step"' : ''} class="${R.ans[k] !== undefined && R.ans[k] >= 0 ? 'answered' : ''}">${k + 1}<small>${status}${R.review?.includes(k) ? ' · Revisar' : ''}</small></button>`; }).join('')}</div></details><button class="ghost" id="review-question" aria-pressed="${!!R.review?.includes(R.idx)}">${R.review?.includes(R.idx) ? '✓ Marcada para revisar' : 'Marcar para revisar'}</button>` : `<details class="question-map"><summary>Mapa de preguntas · ${R.studyStates?.filter(x => x === 'answered').length || 0} respondidas · ${R.studyStates?.filter(x => x === 'pending').length || 0} pendientes · ${R.studyStates?.filter(x => x === 'revealed').length || 0} consultadas</summary><div class="question-grid">${R.items.map((_, k) => { const itemState = R.studyStates?.[k] || 'unseen'; const label = itemState === 'answered' ? 'Respondida' : itemState === 'pending' ? 'Pendiente' : itemState === 'revealed' ? 'Solución consultada' : 'Sin visitar'; return `<button data-jump="${k}" ${k === R.idx ? 'aria-current="step"' : ''} class="${itemState}">${k + 1}<small>${label}</small></button>`; }).join('')}</div></details>`}
+    ${state === 'pending' ? '<p class="note">Si ves la solución, ya no podrás responder esta pregunta en este intento.</p>' : ''}
     <div class="card q ${inSup ? 'with-sup' : ''}">
       <div class="meta">
         <span class="tag">${esc(q.t)} · ${esc(temaName(q.t))}</span>
@@ -186,13 +189,13 @@ routes.quiz = async function () {
         let cl = 'opt';
         if (reveal) { if (i === q.c) cl += ' ok'; else if (i === a) cl += ' bad'; cl += ' dis'; }
         else if (a === i) cl += ' sel';
-        return `<button class="${cl}" data-i="${i}" aria-pressed="${a === i}"><b>${L[i]}</b><span class="pre">${kw(o)}</span>${reveal && i === q.c ? '<span class="sr">(respuesta correcta)</span>' : reveal && i === a ? '<span class="sr">(tu respuesta, incorrecta)</span>' : ''}</button>`;
+        return `<button class="${cl}" data-i="${i}" aria-pressed="${a === i}" ${reveal ? 'disabled' : ''}><b>${L[i]}</b><span class="pre">${kw(o)}</span>${reveal && i === q.c ? '<span class="sr">(respuesta correcta)</span>' : reveal && i === a ? '<span class="sr">(tu respuesta, incorrecta)</span>' : ''}</button>`;
       }).join('')}
       </div>
-      ${reveal ? feedback(q, a) : ''}
+      ${reveal ? feedback(q, a, consulted) : ''}
     </div>
     <div class="bar2">
-      ${R.feedback ? (reveal ? `<button class="btn" id="next">${R.idx + 1 === R.items.length ? 'Terminar' : 'Siguiente'} →</button>` : `<button class="btn sec" id="blank">No lo sé</button>`)
+      ${R.feedback ? `<button class="btn sec" id="prev" ${R.idx === 0 ? 'disabled' : ''}>← Anterior</button>${state === 'unseen' ? '<button class="btn sec" id="blank">No lo sé</button>' : state === 'pending' ? '<span class="tag warn" role="status">Pendiente</span><button class="btn sec" id="reveal-solution">Ver solución</button>' : state === 'revealed' ? '<span class="tag warn" role="status">Solución consultada · blanco</span>' : '<span class="tag" role="status">Respondida</span>'}<button class="btn" id="next">${R.idx + 1 === R.items.length ? 'Terminar' : 'Siguiente'} →</button>`
         : `<button class="btn sec" id="blank">${a === -1 ? '✓ En blanco' : 'Dejar en blanco'}</button>
            <button class="btn" id="next">${R.idx + 1 === R.items.length ? 'Terminar' : 'Siguiente'} →</button>`}
     </div>
@@ -214,13 +217,13 @@ routes.quiz = async function () {
     else if (a !== undefined && !R.paused) { const so = app.querySelector<El>('.opt.sel'); so && so.focus({ preventScroll: true }); }
     // El enunciado permanece en su sitio al revelar: sin saltos automáticos de lectura.
   }
-  function feedback(q: any, a: any) {
+  function feedback(q: any, a: any, wasConsulted = false) {
     const ok = a === q.c;
-    return `<div class="fb ${ok ? 'good' : 'wrong'}"><b>${a === -1 ? 'Sin responder' : ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${!ok && a !== -1 && R.fast?.[R.idx] ? `<div class="fbsub">Marcaste ${L[a]} en ${R.fast[R.idx][0]} s${R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? `; leerla con calma lleva unos ${R.fast[R.idx][1]} s` : ''}.</div>` : ''}
+    return `<div class="fb ${wasConsulted ? 'note' : ok ? 'good' : 'wrong'}"><b>${wasConsulted ? 'Solución consultada · cuenta como blanco' : a === -1 ? 'Sin responder' : ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${!wasConsulted && !ok && a !== -1 && R.fast?.[R.idx] ? `<div class="fbsub">Marcaste ${L[a]} en ${R.fast[R.idx][0]} s${R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? `; leerla con calma lleva unos ${R.fast[R.idx][1]} s` : ''}.</div>` : ''}
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}
       ${sourceHtml(q, VERIFIED_SOURCES)}
       ${q.x?.length ? `<div class="trap">Trampa: ${q.x.map((x: any) => esc(TRAMPAS[x] || x)).join(' · ')}</div>` : ''}
-      ${!ok && a !== -1 && R.feedback ? `<div class="mot" id="mot"><small>¿Por qué fallé?${(() => { const f = R.fast?.[R.idx]; return f && f[0] < f[1] * 0.6 ? ` <b class="r">Respondiste en ${f[0]} s; leerla bien lleva ≈${f[1]} s. ¿Fue velocidad?</b>` : ''; })()}</small>${[5, 7, 1, 2, 3, 4].map(m => `<button class="${store.rec(q.i)?.[9] === m ? 'on' : (m === 7 && R.fast?.[R.idx] && R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? 'sug' : '')}" data-m="${m}">${MOTIVOS_FALLO[m]}</button>`).join('')}<a class="sm" href="#/ayuda?tema=motivos">¿Qué significa cada motivo?</a><button class="mk" id="mkcard" ${store.rec(q.i)?.[9] === 4 && !store.cardRec('FC-Q-' + q.i) ? 'hidden' : ''}>${store.cardRec('FC-Q-' + q.i) ? '📇 Tarjeta creada ✓' : '📇 Hacer tarjeta'}</button></div>` : ''}
+      ${!wasConsulted && !ok && a !== -1 && R.feedback ? `<div class="mot" id="mot"><small>¿Por qué fallé?${(() => { const f = R.fast?.[R.idx]; return f && f[0] < f[1] * 0.6 ? ` <b class="r">Respondiste en ${f[0]} s; leerla bien lleva ≈${f[1]} s. ¿Fue velocidad?</b>` : ''; })()}</small>${[5, 7, 1, 2, 3, 4].map(m => `<button class="${store.rec(q.i)?.[9] === m ? 'on' : (m === 7 && R.fast?.[R.idx] && R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? 'sug' : '')}" data-m="${m}">${MOTIVOS_FALLO[m]}</button>`).join('')}<a class="sm" href="#/ayuda?tema=motivos">¿Qué significa cada motivo?</a><button class="mk" id="mkcard" ${store.rec(q.i)?.[9] === 4 && !store.cardRec('FC-Q-' + q.i) ? 'hidden' : ''}>${store.cardRec('FC-Q-' + q.i) ? '📇 Tarjeta creada ✓' : '📇 Hacer tarjeta'}</button></div>` : ''}
       ${ok && a !== -1 && R.feedback ? (() => { const r = store.rec(q.i) || [], en = r[3] === 0 && r[4] > now() + 86400000 * 1.5; return `<div class="mot" id="acc"><small>¿Seguro? (entra en repaso a +2 días)</small>${(() => { const pl = R.luck?.[R.idx]; return pl === 6 ? '<b class="r">🍀 Marcada como suerte: acierto 1/2. Otra vez bien y se quita la etiqueta.</b>' : pl === 8 ? '<b class="r">🍀 ¡Acierto 2/2! Etiqueta de suerte quitada: ya la sabes.</b>' : ''; })()}<button class="${en && r[9] !== 6 && r[9] !== 8 ? 'on' : ''}" data-a="doubt">🤔 Acerté dudando</button><button class="${r[9] === 6 || r[9] === 8 ? 'on' : ''}" data-a="suerte">🍀 Fue suerte</button></div>`; })() : ''}
       <button class="ghost fl" id="flag">${store.rec(q.i)?.[6] ? '★ Dudosa' : '☆ Marcar como dudosa'}</button>
       <div class="repw" id="rep"></div></div>`;
@@ -240,6 +243,7 @@ routes.quiz = async function () {
       else { clearActiveRun(); clearRun(); go('#/home'); }
     };
     $('#pause') && ($('#pause').onclick = () => { setRunPaused(true); draw(); });
+    $('#prev') && ($('#prev').onclick = prev);
     $('#resume') && ($('#resume').onclick = () => { setRunPaused(false); draw(); const pb = $('#pause'); pb && pb.focus(); });
     app.querySelectorAll<El>('.opt').forEach(b => b.onclick = () => {
       if (R.paused) return;
@@ -248,9 +252,10 @@ routes.quiz = async function () {
       else { answerCurrentDeferred(i); draw(); }
     });
     $('#blank') && ($('#blank').onclick = () => {
-      if (R.feedback) { if (R.ans[R.idx] === undefined) { answer(q, -1); draw(); } }
+      if (R.feedback) { if (R.ans[R.idx] === undefined) { answer(q, -1); if (R.idx < R.items.length - 1) setQuestionIndex(R.idx + 1); draw(); if (R.idx > 0) focusHeading(); } }
       else { toggleDeferredBlank(); draw(); }
     });
+    $('#reveal-solution') && ($('#reveal-solution').onclick = () => { if (revealCurrentSolution()) { draw(); focusHeading(); } });
     $('#next') && ($('#next').onclick = () => { if (R.idx === R.items.length - 1) { void finish(); return; } setQuestionIndex(R.idx + 1); draw(); focusHeading(); window.scrollTo(0, 0); });
     $('#mot') && ($('#mot').onclick = e => {
       const b = (e.target as El).closest<El>('button'); if (!b) return;
@@ -302,8 +307,9 @@ routes.result = async function () {
   const { app, $, screen: routeScreen } = legacyScope(screen);
   const lastResult = getLastResult();
   if (!lastResult) return go('#/home');
-  const { ses, items, ans } = lastResult;
+  const { ses, items, ans, studyStates = [] } = lastResult;
   const ng = ses.f;
+  const consultedCount = studyStates.filter(state => state === 'revealed').length;
   app.innerHTML = `
   <h1>Resultado</h1>
   ${ses.interrupted ? `<div class="note result-status"><b>Sesión interrumpida</b><p>${ses.a + ses.f} de ${ses.n} preguntas respondidas. La puntuación global mantiene las no contestadas como blancos.</p></div>` : ''}
@@ -312,6 +318,7 @@ routes.result = async function () {
     <div class="score" data-count="${ses.nota}">${ses.nota}<small>/100</small></div>
     <div class="legend">100 × (aciertos − fallos/3) / total de preguntas</div>
     <div class="trio"><div class="g"><b>${ses.a}</b>Aciertos</div><div class="r"><b>${ses.f}</b>Fallos</div><div><b>${ses.b}</b>Blanco</div></div>
+    ${consultedCount ? `<div class="legend" id="consulted-count">${consultedCount} ${consultedCount === 1 ? 'solución consultada' : 'soluciones consultadas'} · contadas como blanco, sin acierto ni fallo</div>` : ''}
     <div class="legend">${ses.a + ses.f ? pct(ses.a, ses.a + ses.f) + ' % de acierto sobre lo contestado' : 'Sin respuestas evaluables'} · ${fmtT(ses.secs)}</div>
   </div>
   <div class="row">
@@ -324,8 +331,9 @@ routes.result = async function () {
   <div class="card">${Object.entries(ses.temas).sort((a, b) => a[0].localeCompare(b[0])).map(([t, [a, n]]) => `<div class="line"><span>${esc(t)} ${esc(temaName(t))}</span><span>${a}/${n}</span></div>`).join('')}</div>
   <h2>Revisión</h2>
   <div class="card">${items.map((q, k) => {
-    const x = ans[k]; const st = x === undefined || x === -1 ? 'b' : x === q.c ? 'g' : 'r';
-    return `<details class="rv ${st}"><summary><i></i><span class="sr">${st === 'g' ? 'Acierto' : st === 'r' ? 'Fallo' : 'En blanco'}: </span>${esc(q.q.slice(0, 110))}${q.q.length > 110 ? '…' : ''}</summary>
+    const x = ans[k], consulted = studyStates[k] === 'revealed'; const st = consulted || x === undefined || x === -1 ? 'b' : x === q.c ? 'g' : 'r';
+    const label = consulted ? 'Solución consultada · blanco' : st === 'g' ? 'Acierto' : st === 'r' ? 'Fallo' : 'En blanco';
+    return `<details class="rv ${st}"><summary><i></i><span class="sr">${label}: </span>${consulted ? '<span class="tag warn">Solución consultada · blanco</span> ' : ''}${esc(q.q.slice(0, 110))}${q.q.length > 110 ? '…' : ''}</summary>
       ${questionNotice(q)}<div class="pre">${richHtml(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : i === x ? 'bad' : ''}"><b>${L[i]}</b> ${richHtml(o)}${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${sourceHtml(q, VERIFIED_SOURCES)}<div class="repw" data-rq="${k}"></div></details>`;
   }).join('')}</div>`;
