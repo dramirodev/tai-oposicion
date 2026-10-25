@@ -1,5 +1,7 @@
 // Lógica pura (sin DOM ni almacenamiento): se prueba con `npm test`.
 import type { Origin, Question, Session, StatMap, StatRec } from '../adapters/legacy/types.js';
+import { analyzeSimulation, simulationPace } from '../core/domain/simulation-analysis.ts';
+export { calculateExamScore as nota } from '../core/domain/scoring.ts';
 
 type Rnd = () => number;
 type Span = [number, number];
@@ -7,8 +9,6 @@ export const esc = (s: unknown): string => String(s ?? '').replace(/[&<>"']/g, c
 export function shuffle<T>(a: readonly T[], rnd: Rnd = Math.random): T[] { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const k = Math.floor(rnd() * (i + 1)); [b[i], b[k]] = [b[k], b[i]]; } return b; }
 export const fmtT = (s: number): string => { s = Math.max(0, Math.round(s)); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60; return (h ? h + ':' : '') + String(m).padStart(h ? 2 : 1, '0') + ':' + String(x).padStart(2, '0'); };
 export const pct = (a: number, b: number): number => b ? Math.round(100 * a / b) : 0;
-// Nota del examen: (aciertos − fallos/3) / total × 100, un decimal. En blanco no resta.
-export const nota = (a: number, f: number, n: number): number => n ? Math.round(1000 * (a - f / 3) / n) / 10 : 0;
 // Las históricas no puntuables siguen disponibles en sesiones de estudio.
 export const questionsForSession = <T extends { np?: number }>(items: T[], feedback?: boolean): T[] => feedback ? items.slice() : items.filter(q => q.np !== 1);
 export function allowed(q: Question & { r?: unknown }, o: { has(x: any): boolean }): boolean { return o.has(q.o) && !q.r; }
@@ -464,25 +464,21 @@ export const CONSEJOS_LECTURA = [
   'No cambies de respuesta sin un motivo concreto en el enunciado.',
 ];
 
-// Análisis de ritmo y puntos de un simulacro. correct[k] = índice correcto; ans[k] = respuesta (undefined/-1 = blanco);
-// times[k] = segundos empleados (si se contestó); limitSecs = tiempo total del simulacro.
+// Compatibility view for the legacy UI; the domain model uses complete names.
 export function analisisSimulacro({ correct, ans, times = [], limitSecs, secs }: { correct: number[]; ans: (number | undefined)[]; times?: number[]; limitSecs: number; secs: number }) {
-  const n = correct.length; let a = 0, f = 0, b = 0; const tm: { k: number; t: number; ok: boolean }[] = [];
-  correct.forEach((c, k) => {
-    const x = ans[k];
-    if (x === undefined || x === -1) b++; else if (x === c) a++; else f++;
-    if (times[k] > 0 && x !== undefined && x !== -1) tm.push({ k, t: times[k], ok: x === c });
-  });
-  const presupuesto = n && limitSecs ? limitSecs / n : 0;
-  const media = tm.length ? Math.round(tm.reduce((s, r) => s + r.t, 0) / tm.length) : 0;
-  const lentas = tm.slice().sort((x, y) => y.t - x.t).slice(0, 3).filter(r => !presupuesto || r.t > presupuesto * 1.5);
-  const rapidasFalladas = tm.filter(r => !r.ok && presupuesto && r.t < presupuesto * 0.4).length;
+  const result = analyzeSimulation({ correct, answers: ans, times, limitSeconds: limitSecs, elapsedSeconds: secs });
   return {
-    n, a, f, b, presupuesto: Math.round(presupuesto), media, lentas, rapidasFalladas,
-    sinPenal: n ? Math.round(1000 * a / n) / 10 : 0,
-    perdidoFallos: n ? Math.round(1000 * (f / 3) / n) / 10 : 0,
-    uso: limitSecs ? Math.round(100 * Math.min(secs, limitSecs) / limitSecs) : 0,
+    n: result.questionCount,
+    a: result.correctCount,
+    f: result.wrongCount,
+    b: result.blankCount,
+    presupuesto: result.secondsPerQuestion,
+    media: result.averageAnswerSeconds,
+    lentas: result.slowQuestions.map(answer => ({ k: answer.index, t: answer.seconds, ok: answer.correct })),
+    rapidasFalladas: result.fastWrongAnswers,
+    sinPenal: result.scoreWithoutPenalty,
+    perdidoFallos: result.pointsLostToWrongAnswers,
+    uso: result.timeUsedPercent,
   };
 }
-// Diferencia entre preguntas contestadas y las que tocarían al ritmo del simulacro (positivo = vas por delante).
-export const ritmoSimulacro = (hechas: number, n: number, limitSecs: number, secs: number): number => limitSecs && n ? Math.round(hechas - secs / (limitSecs / n)) : 0;
+export const ritmoSimulacro = simulationPace;

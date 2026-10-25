@@ -2,7 +2,8 @@
 // y selección de preguntas (sesión rápida, repaso, trampas). Sin DOM: la interfaz solo pinta y llama a estas funciones.
 import * as store from '../../adapters/local/legacy-store.js';
 import { META, temaOf, getIndex, getMeta, getTema, dueList, byIds, now } from '../../adapters/http/legacy-data.js';
-import { allowed, dominioCalc, fmtT, nota, pickGuest, pickQuick, pickRepaso, pickTrampas, questionsForSession, quickN, shuffle, trapRates } from '../../legacy/logic.js';
+import { calculateExamScore } from '../domain/scoring.js';
+import { allowed, dominioCalc, fmtT, pickGuest, pickQuick, pickRepaso, pickTrampas, questionsForSession, quickN, shuffle, trapRates } from '../../legacy/logic.js';
 import type { Index, Question, Session, SessionKind } from '../../adapters/legacy/types.js';
 
 // ───────── sesión en curso ─────────
@@ -147,7 +148,7 @@ export function finishRun(R: Run, reason: 'complete' | 'interrupted' | 'timeout'
     else { res.f++; fails.push(q.i); if (!R.feedback) store.record(q.i, q.t, 0, now(), R.times?.[k]); }
   });
   const n = items.length;
-  const ses = { id: 's' + now().toString(36), ts: now(), kind: R.kind, n, a: res.a, f: res.f, b: res.b, secs: R.porTiempo ? Math.min(R.secs, (R.limit ?? 0) * 60) : R.secs, nota: nota(res.a, res.f, n), temas: porTema, tipos: porTipo, fails, titulo: R.titulo || '', ...(reason === 'interrupted' ? { interrupted: true } : {}), ...(R.porTiempo ? { porTiempo: true } : {}) };
+  const ses = { id: 's' + now().toString(36), ts: now(), kind: R.kind, n, a: res.a, f: res.f, b: res.b, secs: R.porTiempo ? Math.min(R.secs, (R.limit ?? 0) * 60) : R.secs, nota: calculateExamScore(res.a, res.f, n), temas: porTema, tipos: porTipo, fails, titulo: R.titulo || '', ...(reason === 'interrupted' ? { interrupted: true } : {}), ...(R.porTiempo ? { porTiempo: true } : {}) };
   store.addSession(ses);
   state.run = null;
   return (state.last = observable({ ses, items, ans: R.ans, times: R.times || [], limit: R.limit || 0 }));
