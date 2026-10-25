@@ -1,7 +1,7 @@
-import { VERIFIED_SOURCES } from './core/verified-sources.js';
-import { esc } from './core/logic.js';
-import { failureStreak, INTERVALS, DAY } from './core/store.js';
-import type { Question, StatMap, CardRec } from './types.js';
+import { VERIFIED_SOURCES } from '../infra/verified-sources.js';
+import { esc } from '../domain/logic.js';
+import { failureStreak, INTERVALS, DAY } from '../infra/store.js';
+import type { Question, StatMap, CardRec } from '../core/types.js';
 
 export function questionNotice(q: Pick<Question, 'n' | 'np'>): string {
   if (!q.n && q.np !== 1) return '';

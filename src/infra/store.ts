@@ -1,5 +1,5 @@
-import { cleanCfg, cleanCfgSetting } from './config.js';
-import type { AppState, CardMap, CardRec, Cfg, Report, ReportMap, ReportState, Res, SeenDoc, Session, StatMap, StatRec } from '../types.js';
+import { cleanCfg, cleanCfgSetting } from '../core/config.js';
+import type { AppState, CardMap, CardRec, Cfg, Report, ReportMap, ReportState, Res, SeenDoc, Session, StatMap, StatRec } from '../core/types.js';
 // Almacén local (local-first) + sincronización con Firestore.
 // Registro por pregunta: [n, ok, last, box, due, lastRes, flag]
 //   n=intentos, ok=aciertos, last=timestamp ms, box=-1 fuera del repaso (0..3 en repaso),

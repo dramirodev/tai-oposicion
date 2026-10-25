@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import { GUEST_ROUTES, isFull } from '../core/access.js';
+import { GUEST_ROUTES, isFull } from '../../infra/access.js';
 import { renderLegacy } from '../main.js';
 /** Cada visita tiene un nodo independiente: React nunca reconcilia su HTML. */
 export function LegacyRoute() {

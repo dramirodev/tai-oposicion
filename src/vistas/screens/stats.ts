@@ -1,9 +1,9 @@
-import * as store from '../core/store.js';
-import { esc, shuffle, fmtT, pct, dominioCalc, aggregateWeeks, slowList, simHistory, compareSessions, MOTIVOS_FALLO, cargaRepasos, motivosFallo, suertes, velocidad, CONSEJOS_LECTURA } from '../core/logic.js';
-import { META, getIndex, getMeta, now, byIds } from '../core/data.js';
+import * as store from '../../infra/store.js';
+import { esc, shuffle, fmtT, pct, dominioCalc, aggregateWeeks, slowList, simHistory, compareSessions, MOTIVOS_FALLO, cargaRepasos, motivosFallo, suertes, velocidad, CONSEJOS_LECTURA } from '../../domain/logic.js';
+import { META, getIndex, getMeta, now, byIds } from '../../domain/data.js';
 import { $, app, legacyScope, L, toast, type El } from '../ui.js';
-import { dominioTemas, falladasIds }  from '../core/engine.js';
-import { ORIGEN, TRAMPAS, TIPOS } from '../core/labels.js';
+import { dominioTemas, falladasIds }  from '../../domain/engine.js';
+import { ORIGEN, TRAMPAS, TIPOS } from '../../domain/labels.js';
 export function registerStats({ routes, go, trapTest, startRun, startRepaso }: any) {
 // ───────── mapa de dominio ─────────
 // Estado por tema a partir de: precisión actual (último resultado de cada pregunta vista),

@@ -1,21 +1,21 @@
 import { questionNotice, sourceHtml, filterFailures } from './study-ui.js';
-import * as sync from './core/syncfacade.js';
-import * as store from './core/store.js';
-import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, pickGuest, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from './core/logic.js';
-import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds } from './core/data.js';
+import * as sync from '../infra/syncfacade.js';
+import * as store from '../infra/store.js';
+import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, pickGuest, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from '../domain/logic.js';
+import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds } from '../domain/data.js';
 import { $, app, legacyScope, bindLegacyHost, L, toast, ask, guard, focusHeading, type El } from './ui.js';
 import { showMenu, type MenuGroup } from './react/Dialogs.js';
-import { ORIGEN, TRAMPAS } from './core/labels.js';
-import { APP_VERSION, APP_BUILD } from './core/version.js';
+import { ORIGEN, TRAMPAS } from '../domain/labels.js';
+import { APP_VERSION, APP_BUILD } from '../infra/version.js';
 import { registerTraining } from './screens/training.js';
 import { registerCards } from './screens/cards.js';
 import { registerStats } from './screens/stats.js';
 import { registerHome } from './screens/home.js';
 import { registerSettings } from './screens/settings.js';
 import { registerAcceso } from './screens/acceso.js';
-import { isFull, isOwner, GUEST_ROUTES } from './core/access.js';
-import { state, createRun, clearRun, saveRun, pendingRun, pendingPrompt, resumeRun, tickRun, segundosRestantes, answerQuestion, answerDeferred, finishRun, quickItems, repasoItems, trapTest, dominioTemas, falladasIds } from './core/engine.js';
-import { createAccountRecovery } from './account-recovery.js';
+import { isFull, isOwner, GUEST_ROUTES } from '../infra/access.js';
+import { state, createRun, clearRun, saveRun, pendingRun, pendingPrompt, resumeRun, tickRun, segundosRestantes, answerQuestion, answerDeferred, finishRun, quickItems, repasoItems, trapTest, dominioTemas, falladasIds } from '../domain/engine.js';
+import { createAccountRecovery } from '../infra/account-recovery.js';
 
 // ───────── router ─────────
 const routes: Record<string, any> = {};
@@ -720,7 +720,7 @@ export function bootLegacy(firstPaint = firstLegacyPaint): () => void {
     await recover(); if (stopped) return;
     listen(document, 'visibilitychange', () => { if (document.visibilityState === 'hidden') store.flushNow(); });
     listen(window, 'pagehide', () => { store.flushNow(); });
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').then(reg => {
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js').then(reg => {
       if (!stopped) offUpdates = watchUpdates(reg);
     }).catch(() => {});
     await firstPaint; if (stopped) return;

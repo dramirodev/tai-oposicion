@@ -7,7 +7,7 @@ import {
 import type { Auth, User } from 'firebase/auth';
 import type { Firestore, FirestoreError, QuerySnapshot, DocumentSnapshot, Unsubscribe } from 'firebase/firestore';
 import * as store from './store.js';
-import type { AccessLevel, AccessRequest, CardMap, ReportMap, SeenDoc, Session, StatMap } from '../types.js';
+import type { AccessLevel, AccessRequest, CardMap, ReportMap, SeenDoc, Session, StatMap } from '../core/types.js';
 
 const enc = (id: string) => id.replace(/\./g, '~');
 const dec = (id: string) => id.replace(/~/g, '.');

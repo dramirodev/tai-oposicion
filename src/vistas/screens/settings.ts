@@ -1,12 +1,12 @@
-import * as sync from '../core/syncfacade.js';
-import * as store from '../core/store.js';
-import { esc, normUi } from '../core/logic.js';
-import { getIndex } from '../core/data.js';
-import { inspectOffline, downloadOffline, type OfflineState } from '../core/offline.js';
-import { cleanCfg } from '../core/config.js';
+import * as sync from '../../infra/syncfacade.js';
+import * as store from '../../infra/store.js';
+import { esc, normUi } from '../../domain/logic.js';
+import { getIndex } from '../../domain/data.js';
+import { inspectOffline, downloadOffline, type OfflineState } from '../../infra/offline.js';
+import { cleanCfg } from '../../core/config.js';
 import { $, app, legacyScope, toast, ask, type El } from '../ui.js';
-import { APP_VERSION, APP_BUILD } from '../core/version.js';
-import { isFull, accessLevel, devMode, setDevMode, devRevealed, revealDev } from '../core/access.js';
+import { APP_VERSION, APP_BUILD } from '../../infra/version.js';
+import { isFull, accessLevel, devMode, setDevMode, devRevealed, revealDev } from '../../infra/access.js';
 import { notifyAccessChange } from '../access-events.js';
 // La previsualización usa los mismos validadores que la importación, sin modificar el almacén.
 export function previewImport(txt: string) {

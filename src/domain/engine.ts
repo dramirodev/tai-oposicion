@@ -1,9 +1,9 @@
 // Motor de preguntas: estado de la sesión en curso, guardado y reanudación, registro de respuestas, cierre con nota
 // y selección de preguntas (sesión rápida, repaso, trampas). Sin DOM: la interfaz solo pinta y llama a estas funciones.
-import * as store from './store.js';
+import * as store from '../infra/store.js';
 import { META, temaOf, getIndex, getMeta, getTema, dueList, byIds, now } from './data.js';
 import { allowed, dominioCalc, fmtT, nota, pickGuest, pickQuick, pickRepaso, pickTrampas, questionsForSession, quickN, shuffle, trapRates } from './logic.js';
-import type { Index, Question, Session, SessionKind } from '../types.js';
+import type { Index, Question, Session, SessionKind } from '../core/types.js';
 
 // ───────── sesión en curso ─────────
 export interface RunCfg {

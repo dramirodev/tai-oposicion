@@ -1,7 +1,7 @@
 import { cardNextReview, sourceHtml, questionNotice } from '../study-ui.js';
-import * as store from '../core/store.js';
-import { esc, richHtml, pct, swipeDir, pickCards, cardStats, cardFromQuestion } from '../core/logic.js';
-import { j, getIndex, getMeta, byIds, temaName, now } from '../core/data.js';
+import * as store from '../../infra/store.js';
+import { esc, richHtml, pct, swipeDir, pickCards, cardStats, cardFromQuestion } from '../../domain/logic.js';
+import { j, getIndex, getMeta, byIds, temaName, now } from '../../domain/data.js';
 import { $, app, legacyScope, toast, focusHeading, type El } from '../ui.js';
 export function registerCards({ routes, go, pw, reportBox }: any, screen: any) {
 // ───────── tarjetas (flashcards) ─────────

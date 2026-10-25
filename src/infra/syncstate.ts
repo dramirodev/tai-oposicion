@@ -1,6 +1,6 @@
 // Estado de la sincronización, compartido entre la interfaz y el módulo de Firebase.
 // Vive aparte para que la interfaz no arrastre el SDK de Firebase (≈450 KB) en la primera carga.
-import type { AccessLevel, AccessRequest } from '../types.js';
+import type { AccessLevel, AccessRequest } from '../core/types.js';
 
 export interface SyncUser { name: string; email: string; verified?: boolean }
 export interface SyncStatus {

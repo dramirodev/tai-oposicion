@@ -1,7 +1,7 @@
 import { it, expect, vi } from 'vitest';
 it('React conserva confirmación, foco, trampa de teclado y cancelación por AbortSignal', async () => {
   document.body.innerHTML = '<button id="origin">Origen</button>';
-  const api = await import('../src/react/Dialogs.js');
+  const api = await import('../src/vistas/react/Dialogs.js');
   const origin = document.querySelector('#origin'); origin.focus();
   const controller = new AbortController();
   const result = api.ask('¿Continuar?', 'Seguir', true, controller.signal);
@@ -18,7 +18,7 @@ it('React conserva confirmación, foco, trampa de teclado y cancelación por Abo
   document.querySelector('.overlay [data-v="1"]').click(); expect(await second).toBe(true);
 });
 it('React conserva notice y toast con acción', async () => {
-  const api = await import('../src/react/Dialogs.js');
+  const api = await import('../src/vistas/react/Dialogs.js');
   const done = api.notice('Mensaje', 'Aviso', 'Vale');
   await vi.waitFor(() => expect(document.querySelector('#noticem')?.textContent).toBe('Mensaje'));
   expect(document.querySelector('#noticet').textContent).toBe('Aviso');

@@ -1,5 +1,5 @@
 // Lógica pura (sin DOM ni almacenamiento): se prueba con `npm test`.
-import type { Origin, Question, Session, StatMap, StatRec } from '../types.js';
+import type { Origin, Question, Session, StatMap, StatRec } from '../core/types.js';
 
 type Rnd = () => number;
 type Span = [number, number];

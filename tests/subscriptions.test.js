@@ -5,8 +5,8 @@ let store, engine;
 beforeEach(async () => {
   localStorage.clear(); vi.resetModules();
   vi.stubGlobal('fetch', async url => ({ ok: true, json: async () => JSON.parse(readFileSync('public/' + url, 'utf8')) }));
-  store = await import('../src/core/store.js'); engine = await import('../src/core/engine.js');
-  await (await import('../src/core/data.js')).getMeta();
+  store = await import('../src/infra/store.js'); engine = await import('../src/domain/engine.js');
+  await (await import('../src/domain/data.js')).getMeta();
 });
 it('store avisa después de persistir y permite cancelar la suscripción', () => {
   const snapshots = [];

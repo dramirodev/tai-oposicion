@@ -1,7 +1,7 @@
-import * as sync from '../core/syncfacade.js';
-import { esc } from '../core/logic.js';
+import * as sync from '../../infra/syncfacade.js';
+import { esc } from '../../domain/logic.js';
 import { $, app, legacyScope, toast, ask, type El } from '../ui.js';
-import { isOwner } from '../core/access.js';
+import { isOwner } from '../../infra/access.js';
 // Pantalla del propietario: aprobar o rechazar solicitudes y revocar accesos.
 export function registerAcceso({ routes, go }: any, screen: any) {
 routes.acceso = async function () {

@@ -14,14 +14,10 @@ Esto no acredita el último despliegue ni sustituye las pruebas reales de login,
 
 ## Organización del proyecto
 
-- `src/main.tsx` y `src/react/`: React 19, router hash, Layout, proveedor de diálogos y puente a las pantallas legacy en `src/main.ts`.
-- `src/screens/`: pantallas de inicio/temas vistos, tarjetas, entrenamientos, estadísticas y ajustes.
-- `src/core/data.ts`: carga y caché de preguntas, metadatos y selección; `src/ui.js`: avisos, confirmaciones y apariencia.
-- `src/core/labels.ts` y `src/core/version.ts`: etiquetas compartidas y versión de la app.
-- `src/core/logic.ts`: selección de preguntas y tarjetas, notas, estadísticas y análisis de simulacros.
-- `src/core/store.ts`: progreso local, validación, repetición espaciada y copias de seguridad.
-- `src/core/config.ts`: validación por campos de las preferencias, conservadas al recargar y al exportar/importar.
-- `src/core/sync.ts`, `src/core/syncfacade.ts`, `src/core/syncstate.ts`: Firebase, carga bajo demanda y estado de sincronización.
+- `src/core/`: tipos compartidos y validación/configuración transversal.
+- `src/domain/`: motor de sesiones, reglas de estudio, selección de preguntas y etiquetas.
+- `src/infra/`: control de acceso, persistencia local, IndexedDB, Firebase, carga del banco, modo sin conexión y versión.
+- `src/vistas/`: entrada React, router, Layout, diálogos, puente legacy, pantallas y utilidades de interfaz.
 - `index.html`: entrada de Vite. `public/`: CSS, iconos, manifiesto PWA y service worker; `public/data/` y `public/cards/` contienen preguntas y tarjetas.
 - `scripts/`: compilación, validación y comprobación de fuentes de las tarjetas; `tools/`: utilidades auxiliares.
 - `tests/`: Vitest y Playwright; `docs/`: documentación del proyecto.
@@ -106,9 +102,9 @@ mensajes «Refused to …»: indican qué dominio hay que añadir a la CSP.
 
 ## Pruebas
 `npm install` y después `npm test` (Vitest, unos 5 s). Cubren:
-- **Lógica pura** (`src/core/logic.ts`): nota, reparto del simulacro, semáforo de dominio, utilidades.
+- **Lógica pura** (`src/domain/logic.ts`): nota, reparto del simulacro, semáforo de dominio, utilidades.
 - **Sincronización y caché**: cancelación de escrituras al cerrar sesión, rechazo de listeners antiguos y recuperación de la configuración sin conexión.
-- **Almacén** (`src/core/store.ts`): importación segura, preferencias estructuradas, borrado sincronizado de tarjetas, repaso espaciado (+2, +5, +14, +30, +60 días), fusión con la nube y validación de datos externos (XSS, tipos).
+- **Almacén** (`src/infra/store.ts`): importación segura, preferencias estructuradas, borrado sincronizado de tarjetas, repaso espaciado (+2, +5, +14, +30, +60 días), fusión con la nube y validación de datos externos (XSS, tipos).
 - **Generador**: rutas externas, variables de entorno, salida y conservación del banco ante entradas ausentes.
 - **Pantallas**: navegación por las rutas principales, cambio de tema y persistencia de una valoración de tarjeta al salir y volver.
 - **Tarjetas**: selección, estadísticas, valoración, persistencia y fusión; `tests/cards.test.js` ejecuta además el validador del banco curado.

@@ -5,7 +5,10 @@ Base: `main` en `b039670`. Rama: `migracion-react`. Solo fases 0 y 1, sin public
 ## Fase 0
 
 - Vite 6, salida `dist/`, objetivo Safari 15. HTML fuente en la raíz.
-- Los 14 módulos del núcleo se mueven a `src/core/`; imports actualizados.
+- Los módulos se redistribuyen en `src/core/` (tipos/configuración), `src/domain/`
+  (motor y reglas de estudio), `src/infra/` (acceso, persistencia, red y caché) y
+  `src/vistas/` (React, pantallas y puente legacy). Solo cambian rutas de importación;
+  se conservan formatos y lógica.
 - `store.subscribe` usa sus notificaciones existentes; `engine.subscribe` observa
   también las mutaciones directas que aún realiza la interfaz (incluidos arrays).
   No cambian algoritmos, claves ni formatos de persistencia.

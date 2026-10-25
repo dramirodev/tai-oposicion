@@ -2,7 +2,7 @@ import { it, expect, vi } from 'vitest';
 it('aísla el DOM y la limpieza de una ruta pendiente después de desmontarla', async () => {
   document.body.innerHTML = '<main id="app"></main>';
   vi.stubGlobal('matchMedia', () => ({ matches: true }));
-  const ui = await import('../src/ui.js');
+  const ui = await import('../src/vistas/ui.js');
   const old = document.createElement('div'); document.querySelector('#app').append(old);
   const dispose = ui.bindLegacyHost(old);
   const scope = ui.legacyScope(); const off = vi.fn(); scope.screen.cleanup = off;

@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import { Outlet, useLocation, useNavigate } from 'react-router';
-import { isFull, GUEST_ROUTES } from '../core/access.js';
-import { state } from '../core/engine.js';
-import * as sync from '../core/syncfacade.js';
+import { isFull, GUEST_ROUTES } from '../../infra/access.js';
+import { state } from '../../domain/engine.js';
+import * as sync from '../../infra/syncfacade.js';
 import { bootLegacy } from '../main.js';
 import { subscribeAccessChanges } from '../access-events.js';
 const subscribeFull = (fn: () => void) => {
