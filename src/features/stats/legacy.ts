@@ -2,9 +2,9 @@ import * as store from '../../adapters/local/legacy-store.js';
 import { esc, shuffle, fmtT, pct, dominioCalc, aggregateWeeks, slowList, simHistory, compareSessions, MOTIVOS_FALLO, cargaRepasos, motivosFallo, suertes, velocidad, CONSEJOS_LECTURA } from '../../legacy/logic.js';
 import { META, getIndex, getMeta, now, byIds } from '../../adapters/http/legacy-data.js';
 import { $, legacyScope, L, toast, type El } from '../../shared/ui/legacy-dom.js';
-import { dominioTemas, falladasIds }  from '../../core/application/legacy-engine.js';
+import { falladasIds }  from '../../core/application/legacy-engine.js';
 import { ORIGEN, TRAMPAS, TIPOS } from '../../shared/presentation/labels.js';
-export function registerStats({ routes, go, trapTest, startRun, startRepaso }: any) {
+export function registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas }: any) {
 // ───────── mapa de dominio ─────────
 // Estado por tema a partir de: precisión actual (último resultado de cada pregunta vista),
 // cobertura (vistas / banco, con objetivo del 60 %) y frescura (días desde la última vez).

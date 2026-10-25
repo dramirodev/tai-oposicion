@@ -11,8 +11,9 @@ beforeEach(async () => {
   vi.stubGlobal('fetch', async url => ({ ok:true, json:async()=>JSON.parse(readFileSync(path.join('public',String(url)), 'utf8')) }));
   store = await import('../src/adapters/local/legacy-store.js'); engine = await import('../src/core/application/legacy-engine.js');
   routes={}; screen={};
-  (await import('../src/features/home/legacy.js')).registerHome({routes,go:vi.fn(),saludo:()=> 'Hola', quickSession:vi.fn(),startRepaso:vi.fn(),openMenu:vi.fn(),dominioTemas:engine.dominioTemas,falladasIds:engine.falladasIds},screen);
-  (await import('../src/features/stats/legacy.js')).registerStats({routes,go:vi.fn(),trapTest:vi.fn(),startRun:vi.fn()});
+  const { dominioTemas } = await import('../src/app/legacy-topic-mastery.js');
+  (await import('../src/features/home/legacy.js')).registerHome({routes,go:vi.fn(),saludo:()=> 'Hola', quickSession:vi.fn(),startRepaso:vi.fn(),openMenu:vi.fn(),dominioTemas,falladasIds:engine.falladasIds},screen);
+  (await import('../src/features/stats/legacy.js')).registerStats({routes,go:vi.fn(),trapTest:vi.fn(),startRun:vi.fn(),dominioTemas});
 });
 afterEach(()=> { screen.cleanup?.(); vi.unstubAllGlobals(); });
 it('prioriza retomar, repasar y falladas, agrupa entrenamientos y no presenta una fecha oficial inventada', async()=> {

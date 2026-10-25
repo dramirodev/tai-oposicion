@@ -3,6 +3,7 @@
 import * as store from '../../adapters/local/legacy-store.js';
 import { META, temaOf, getIndex, getMeta, getTema, dueList, byIds, now } from '../../adapters/http/legacy-data.js';
 import { calculateExamScore } from '../domain/scoring.js';
+import { analyzeTopicMastery } from '../domain/topic-mastery.js';
 import {
   estimateQuickQuestionCount,
   filterScoringQuestions,
@@ -13,7 +14,6 @@ import {
 } from '../domain/selection.js';
 import { selectSpacedReviews } from '../domain/spaced-repetition.js';
 import { calculateTrapRates, selectTrapQuestions } from '../domain/traps.js';
-import { dominioCalc } from '../../legacy/logic.js';
 import type { Index, Question, Session, SessionKind } from '../../adapters/legacy/types.js';
 
 // ───────── sesión en curso ─────────
@@ -217,7 +217,6 @@ export function finishRun(R: Run, reason: 'complete' | 'interrupted' | 'timeout'
 
 // ───────── selección de preguntas ─────────
 const origenes = (): Set<string> => new Set(((store.getCfg().test || {}) as { o?: string[] }).o || ['O', 'A', 'G']);
-export const dominioTemas = (idx: Index) => dominioCalc(idx.temas, t => META._by[t], id => store.rec(id), now());
 /** Ids de preguntas con un fallo pendiente de superar. */
 export const falladasIds = (): string[] => { const st = store.getStats(); return Object.keys(st).filter(id => temaOf(id) && store.pendingFailure(st[id])); };
 
@@ -250,8 +249,21 @@ export async function quickItems(full: boolean): Promise<Seleccion | { items: []
   const due = (await byIds((await dueList()).slice(0, N))).filter(question => questionAllowed(question, orgs));
   const seen = new Set(store.getSeen());
   const ord = { r: 0, y: 1, n: 2, g: 3 };
-  let temas = dominioTemas(idx).filter(t => !seen.size || seen.has(t.id));
-  if (!temas.length) temas = dominioTemas(idx);
+  const statusCode = { new: 'n', red: 'r', yellow: 'y', green: 'g' } as const;
+  const topicPriorities = analyzeTopicMastery(
+    idx.temas.map(topic => ({ ...topic, questionCount: topic.n })),
+    topicId => META._by[topicId],
+    questionId => {
+      const record = store.rec(questionId);
+      return record ? {
+        attempts: record[0], correct: record[1], lastSeenAt: record[2], intervalStep: record[3],
+        dueAt: record[4], lastResult: record[5],
+      } : undefined;
+    },
+    now(),
+  ).map(result => ({ id: result.topic.id, est: statusCode[result.status], dias: result.daysSinceLastSeen }));
+  let temas = topicPriorities.filter(topic => !seen.size || seen.has(topic.id));
+  if (!temas.length) temas = topicPriorities;
   temas = shuffleItems(temas, Math.random); // el orden estable de abajo conserva este azar entre temas empatados: sin datos ya no salen siempre los mismos
   temas.sort((a, b) => (ord[a.est] - ord[b.est]) || ((b.dias ?? 0) - (a.dias ?? 0)));
   const pools: Question[][] = [];

@@ -15,7 +15,8 @@ import { registerHome } from '../features/home/legacy.js';
 import { registerSettings } from '../features/settings/legacy.js';
 import { registerAcceso } from '../features/access/legacy.js';
 import { isFull, isOwner, GUEST_ROUTES } from '../adapters/legacy/access.js';
-import { getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, quickItems, repasoItems, trapTest, dominioTemas, falladasIds } from '../core/application/legacy-engine.js';
+import { getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, quickItems, repasoItems, trapTest, falladasIds } from '../core/application/legacy-engine.js';
+import { dominioTemas } from './legacy-topic-mastery.js';
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
 import type { Origin } from '../core/domain/entities.js';
@@ -720,7 +721,7 @@ routes.falladas = async function () {
 
 registerTraining({ routes, go, route, pw, verifiedSources: VERIFIED_SOURCES }, screen);
 const { allCards, curatedCards } = registerCards({ routes, go, pw, reportBox, verifiedSources: VERIFIED_SOURCES }, screen);
-registerStats({ routes, go, trapTest, startRun, startRepaso });
+registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas });
 registerHome({ routes, go, saludo, quickSession, startRepaso, openMenu, dominioTemas, falladasIds }, screen);
 registerAcceso({ routes, go }, screen);
 registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate }, screen);
