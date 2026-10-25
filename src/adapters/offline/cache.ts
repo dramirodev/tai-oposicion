@@ -1,10 +1,15 @@
 // Verificación de CacheStorage: las cachés en memoria de los lectores no prueban uso sin red.
 const CACHE = 'tai-data', STAMP = 'tai.offline-verified';
 type Index = { temas: { id: string }[] };
+type CardIndex = { temas: Record<string, unknown> };
 export interface OfflineState { complete: boolean; missing: string[]; total: number; completedAt: number | null }
 const baseFiles = (idx: Index) => ['data/index.json', 'data/meta.json', 'data/supuestos.json', 'cards/index.json', ...idx.temas.map(t => `data/${t.id}.json`)];
-function cardFiles(index: any): string[] {
-  if (!index?.temas || typeof index.temas !== 'object' || Array.isArray(index.temas)) throw new Error('Índice de tarjetas no válido');
+function isCardIndex(index: unknown): index is CardIndex {
+  return !!index && typeof index === 'object' && !Array.isArray(index)
+    && 'temas' in index && !!index.temas && typeof index.temas === 'object' && !Array.isArray(index.temas);
+}
+function cardFiles(index: unknown): string[] {
+  if (!isCardIndex(index)) throw new Error('Índice de tarjetas no válido');
   const keys = Object.keys(index.temas);
   if (!keys.length || keys.some(t => !/^T\d\.\d\d$/.test(t))) throw new Error('Índice de tarjetas no válido');
   return keys.map(t => `cards/${t}.json`);
