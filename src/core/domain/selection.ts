@@ -1,5 +1,26 @@
 export type RandomGenerator = () => number;
 
+export interface SelectionStats {
+  attempts: number;
+  lastSeenAt: number;
+  lastResult?: number;
+  intervalStep?: number;
+  doubtful?: boolean;
+  failureStreak?: number;
+}
+
+export function questionPriority(mode: string, statistics?: SelectionStats): number {
+  if (mode === 'falladas') {
+    const streak = statistics
+      ? statistics.failureStreak ?? (statistics.attempts > 0 && statistics.lastResult === 0 || (statistics.intervalStep ?? -1) >= 0 ? 0 : -1)
+      : -1;
+    return streak >= 0 && streak < 3 ? 0 : 9;
+  }
+  if (mode === 'dudosas') return statistics?.doubtful ? 0 : 9;
+  if (mode === 'nuevas') return !statistics ? 0 : statistics.lastResult === 0 ? 1 : 2;
+  return 0;
+}
+
 export interface WeightedTopic {
   id: string;
   weight?: number;

@@ -1,5 +1,6 @@
 import * as store from '../local/legacy-store.js';
 import { shuffle, allowed } from '../../legacy/logic.js';
+import { questionPriority } from '../../core/domain/selection.js';
 import { loadBank } from '../firebase/legacy-bank.js';
 import type { Index, Meta, Question } from '../legacy/types.js';
 // ───────── datos ─────────
@@ -43,11 +44,16 @@ export const now = (): number => Date.now();
 
 // ───────── selección de preguntas ─────────
 function prioridad(q: Question, mode: string): number {
-  const r = store.rec(q.i);
-  if (mode === 'falladas') return store.pendingFailure(r) ? 0 : 9;
-  if (mode === 'dudosas') return r && r[6] ? 0 : 9;
-  if (mode === 'nuevas') return !r ? 0 : (r[5] === 0 ? 1 : 2);
-  return 0;
+  const record = store.rec(q.i);
+  const statistics = record ? {
+    attempts: record[0],
+    lastSeenAt: record[2],
+    lastResult: record[5],
+    intervalStep: record[3],
+    doubtful: record[6] === 1,
+    ...(record.length > 10 ? { failureStreak: record[10] } : {}),
+  } : undefined;
+  return questionPriority(mode, statistics);
 }
 export async function pick({ temas, origins, mode, n }: { temas: string[]; origins: { has(x: any): boolean }; mode: string; n: number }): Promise<Question[]> {
   const pool: Question[] = [];

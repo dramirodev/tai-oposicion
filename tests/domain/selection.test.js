@@ -6,6 +6,7 @@ import {
   isQuestionAllowed,
   pickGuestQuestions,
   pickQuickQuestions,
+  questionPriority,
 } from '../../src/core/domain/selection.js';
 
 it('filtra preguntas no puntuables y conserva las instancias originales', () => {
@@ -14,6 +15,15 @@ it('filtra preguntas no puntuables y conserva las instancias originales', () => 
   const feedbackQuestions = filterScoringQuestions(questions, true, question => question.nonScoring);
   expect(feedbackQuestions).toEqual(questions);
   expect(feedbackQuestions[0]).toBe(questions[0]);
+});
+
+it('calcula prioridad de falladas, dudosas y nuevas con estadísticas de dominio', () => {
+  expect(questionPriority('falladas', { attempts: 4, correct: 2, lastSeenAt: 10, failureStreak: 2 })).toBe(0);
+  expect(questionPriority('falladas', { attempts: 4, correct: 2, lastSeenAt: 10, failureStreak: 3 })).toBe(9);
+  expect(questionPriority('dudosas', { attempts: 1, correct: 1, lastSeenAt: 10, doubtful: true })).toBe(0);
+  expect(questionPriority('nuevas', undefined)).toBe(0);
+  expect(questionPriority('nuevas', { attempts: 1, correct: 0, lastSeenAt: 10, lastResult: 0 })).toBe(1);
+  expect(questionPriority('nuevas', { attempts: 1, correct: 1, lastSeenAt: 10, lastResult: 1 })).toBe(2);
 });
 
 it('admite solo orígenes seleccionados y rechaza reservas', () => {
