@@ -3,6 +3,7 @@ import type { Origin, Question, Session, StatMap, StatRec } from '../adapters/le
 import { analyzeSimulation, simulationPace } from '../core/domain/simulation-analysis.ts';
 import { countReviewsByDay, selectSpacedReviews } from '../core/domain/spaced-repetition.ts';
 import { calculateTrapRates, selectTrapQuestions } from '../core/domain/traps.ts';
+import { composeWeightedQuestions, estimateQuickQuestionCount, filterScoringQuestions, isQuestionAllowed, pickGuestQuestions, pickQuickQuestions } from '../core/domain/selection.ts';
 export { calculateExamScore as nota } from '../core/domain/scoring.ts';
 
 type Rnd = () => number;
@@ -12,26 +13,14 @@ export function shuffle<T>(a: readonly T[], rnd: Rnd = Math.random): T[] { const
 export const fmtT = (s: number): string => { s = Math.max(0, Math.round(s)); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60; return (h ? h + ':' : '') + String(m).padStart(h ? 2 : 1, '0') + ':' + String(x).padStart(2, '0'); };
 export const pct = (a: number, b: number): number => b ? Math.round(100 * a / b) : 0;
 // Las históricas no puntuables siguen disponibles en sesiones de estudio.
-export const questionsForSession = <T extends { np?: number }>(items: T[], feedback?: boolean): T[] => feedback ? items.slice() : items.filter(q => q.np !== 1);
-export function allowed(q: Question & { r?: unknown }, o: { has(x: any): boolean }): boolean { return o.has(q.o) && !q.r; }
+export const questionsForSession = <T extends { np?: number }>(items: T[], feedback?: boolean): T[] => filterScoringQuestions(items, feedback, item => item.np);
+export function allowed(q: Question & { r?: unknown }, o: { has(x: unknown): boolean }): boolean { return isQuestionAllowed(q.o, q.r, o); }
 
 // Reparto de las N preguntas de la parte 1 por temas, según su peso oficial `w`.
 // pools: { idTema: [preguntas ya filtradas y ordenadas por prioridad] }
 export interface TemaPeso { id: string; w?: number; n?: number; nombre?: string }
 export function composeSim(temas: TemaPeso[], pools: Record<string, Question[]>, N: number, rnd: Rnd = Math.random): Question[] {
-  const act = temas.filter(t => (pools[t.id] || []).length);
-  if (!act.length) return [];
-  N = Math.min(N, act.reduce((s, t) => s + pools[t.id].length, 0));
-  const wt = (t: TemaPeso) => ((t.w ?? 0) > 0 ? t.w! : 1); // un tema sin peso oficial cuenta como 1
-  const tot = act.reduce((s, t) => s + wt(t), 0);
-  const q = act.map(t => ({ t: t.id, x: N * wt(t) / tot, k: 0, r: 0 }));
-  q.forEach(o => { o.k = Math.min(Math.floor(o.x), pools[o.t].length); o.r = o.x - Math.floor(o.x); });
-  let rest = N - q.reduce((s, o) => s + o.k, 0);
-  for (const o of q.slice().sort((a, b) => b.r - a.r)) { if (rest > 0 && o.k < pools[o.t].length) { o.k++; rest--; } }
-  while (rest > 0) { const o = q.find(x => x.k < pools[x.t].length); if (!o) break; o.k++; rest--; }
-  const out: Question[] = [];
-  for (const o of q) out.push(...pools[o.t].slice(0, o.k));
-  return shuffle(out, rnd);
+  return composeWeightedQuestions(temas.map(topic => ({ id: topic.id, weight: topic.w })), pools, N, rnd);
 }
 
 // Mapa de dominio por tema (ver README). rec(id) devuelve el registro [n, ok, last, box, due, lastRes, flag] o undefined.
@@ -96,36 +85,19 @@ export function slowList(stats: StatMap, { soloAcertadas = false, min = 1, limit
 // ── Sesión rápida ──
 // Nº de preguntas para ~5 minutos según tu tiempo medio por pregunta (30 s si aún no hay datos).
 export function quickN(stats: StatMap, minutos = 5): number {
-  let secs = 0, n = 0;
-  for (const id in stats) { const r = stats[id]; if (r[8]) { secs += r[7]; n += r[8]; } }
-  const avg = n >= 10 ? secs / n : 30;
-  return Math.max(6, Math.min(15, Math.round(minutos * 60 / Math.max(5, avg))));
+  return estimateQuickQuestionCount(Object.keys(stats).map(id => ({ totalSeconds: stats[id][7], count: stats[id][8] })), minutos);
 }
 // due: preguntas con repaso vencido (las más antiguas primero). pools: preguntas nuevas por tema, temas más débiles primero.
 // Hasta el 60 % son repasos; el resto, nuevas repartidas por turnos entre los temas. Si faltan de un tipo, se completa con el otro.
 export function pickQuick(due: Question[], pools: Question[][], N: number, rnd: Rnd = Math.random): Question[] {
-  const nDue = Math.min(due.length, Math.ceil(N * 0.6));
-  const out = due.slice(0, nDue), seen = new Set(out.map(q => q.i));
-  const cur = pools.map(p => p.filter(q => !seen.has(q.i)));
-  let guard = 0;
-  while (out.length < N && cur.some(p => p.length) && guard++ < 1000) {
-    for (const p of cur) { if (out.length >= N) break; const q = p.shift(); if (q && !seen.has(q.i)) { out.push(q); seen.add(q.i); } }
-  }
-  for (const q of due.slice(nDue)) { if (out.length >= N) break; if (!seen.has(q.i)) { out.push(q); seen.add(q.i); } }
-  return shuffle(out, rnd);
+  return pickQuickQuestions(due, pools, N, question => question.i, rnd);
 }
 
 // Sesión rápida de invitado: una pregunta de cada tema, temas al azar. Entre las preguntas de un tema prefiere las
 // no vistas y las que no salieron en la sesión anterior; así cada sesión es distinta.
 // pools: [{ t, qs }]; vistas: id => ¿ya contestada?; evitar: Set de ids de la última sesión.
 export function pickGuest(pools: { t: string; qs: Question[] }[], N: number, vistas: (id: string) => boolean = () => false, evitar: Set<string> = new Set(), rnd: Rnd = Math.random): Question[] {
-  const out: Question[] = [];
-  for (const p of shuffle(pools.filter(x => x.qs.length), rnd)) {
-    if (out.length >= N) break;
-    const mejores: ((q: Question) => boolean)[] = [q => !vistas(q.i) && !evitar.has(q.i), q => !evitar.has(q.i), () => true];
-    for (const ok of mejores) { const c = p.qs.filter(ok); if (c.length) { out.push(c[Math.floor(rnd() * c.length)]); break; } }
-  }
-  return out;
+  return pickGuestQuestions(pools.map(pool => ({ topicId: pool.t, questions: pool.qs })), N, question => question.i, vistas, evitar, rnd);
 }
 
 // ── Historial de simulacros ──
