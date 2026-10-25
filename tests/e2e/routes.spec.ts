@@ -80,6 +80,8 @@ test.describe('service worker real', () => {
   const html = await assets;
   const entry = html.match(/src="(\.\/assets\/[^\"]+\.js)"/)?.[1];
   expect(entry).toBeTruthy(); expect(shell).toContain('/' + entry!.slice(2));
+  const stylesheet = html.match(/href="(\.\/assets\/[^"]+\.css)"/)?.[1];
+  expect(stylesheet).toBeTruthy(); expect(shell).toContain('/' + stylesheet!.slice(2));
   await page.goto('/#/settings');
   await page.locator('#dl').click();
   await expect(page.locator('#off')).toContainText('disponibles sin conexión', { timeout: 20_000 });
@@ -95,6 +97,9 @@ test.describe('service worker real', () => {
   await page.reload();
   await expect(page.locator('#quick')).toBeVisible();
   await expect(page.locator('#net')).toContainText('Sin conexión');
+  // La hoja compilada debe llegar de la caché, no solo el HTML/JS.
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 245, 248)');
+  await expect(page.locator('#quick')).toHaveCSS('background-color', 'rgb(53, 82, 214)');
   await page.locator('#quick').click();
   await expect(page.locator('#app h1')).toContainText('pregunta 1');
   await page.locator('.enun').focus();

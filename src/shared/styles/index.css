@@ -1,0 +1,20 @@
+/* Orden explícito: tokens, base, componentes, pantallas y adaptaciones.
+   Las clases globales también son contrato del HTML heredado y sus eventos. */
+
+@import "./tokens.css";
+
+@import "./base.css";
+
+@import "./controls.css";
+
+@import "./question.css";
+
+@import "./progress.css";
+
+@import "./cards.css";
+
+@import "./home.css";
+
+@import "./motion.css";
+
+@import "./responsive.css";

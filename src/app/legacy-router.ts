@@ -39,10 +39,10 @@ function route() { navigate(location.hash || '#/home', true); }
 const recover = createAccountRecovery(store.accountId, () => store.recover());
 let painted: () => void;
 export const firstLegacyPaint = new Promise<void>(resolve => { painted = resolve; });
-// animaciones: barra de progreso que crece desde el valor anterior, entrada de pantalla y nota que cuenta
+// animaciones: barra de progreso que transforma su relleno desde el valor anterior, entrada de pantalla y nota que cuenta
 const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 let lastP = 0;
-function pw(p: any) { const f = lastP; lastP = p; return `style="--from:${f}%;width:${p}%"`; }
+function pw(p: any) { const f = lastP; lastP = p; return `style="--progress-from:${p > 0 ? f / p : 0};width:${p}%"`; }
 function enter(el: HTMLElement) { if (reduceMotion()) return; el.classList.remove('enter'); void el.offsetWidth; el.classList.add('enter'); }
 function countUp() {
   document.querySelectorAll<El>('[data-count]').forEach(el => {

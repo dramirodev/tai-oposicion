@@ -24,7 +24,7 @@ export default defineConfig({
       rmSync('dist/chunks', { recursive: true, force: true });
       const assets = readdirSync('dist/assets').map(f => `assets/${f}`);
       const source = readFileSync('public/sw.js', 'utf8');
-      const shell = ['./', 'index.html', 'style.css', 'manifest.webmanifest',
+      const shell = ['./', 'index.html', 'manifest.webmanifest',
         'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-512-maskable.png', 'icons/icon-180.png', 'explanations/index.json', ...assets];
       writeFileSync('dist/sw.js', source.replace(/const SHELL = .*;/, `const SHELL = ${JSON.stringify(shell)};`));
       writeFileSync('dist/version.json', JSON.stringify({ version, build: buildId, date: new Date().toISOString() }) + '\n');
