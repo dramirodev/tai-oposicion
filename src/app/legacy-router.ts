@@ -14,7 +14,7 @@ import { registerHome } from '../features/home/legacy.js';
 import { registerSettings } from '../features/settings/legacy.js';
 import { registerAcceso } from '../features/access/legacy.js';
 import { isFull, isOwner, GUEST_ROUTES } from '../adapters/legacy/access.js';
-import { state, createRun, clearRun, saveRun, pendingRun, pendingPrompt, resumeRun, tickRun, segundosRestantes, answerQuestion, answerDeferred, finishRun, quickItems, repasoItems, trapTest, dominioTemas, falladasIds } from '../core/application/legacy-engine.js';
+import { getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, pendingPrompt, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, quickItems, repasoItems, trapTest, dominioTemas, falladasIds } from '../core/application/legacy-engine.js';
 import { createAccountRecovery } from '../core/application/recover-account.js';
 
 // ───────── router ─────────
@@ -66,9 +66,10 @@ export function renderLegacy(host: HTMLElement, pathname: string) {
       clearTimeout(lt); enter(app); countUp();
       const hd = app.querySelector<El>('h1'); if (hd) hd.tabIndex = -1;
       (hd || app).focus({ preventScroll: true });
-      if (state.run && name !== 'quiz' && name !== 'home') {
+      const currentRun = getCurrentRun();
+      if (currentRun && name !== 'quiz' && name !== 'home') {
         const b = document.createElement('div'); b.className = 'note run';
-        b.innerHTML = `<b>${esc(state.run.titulo || 'Test')}</b> en curso · ${Math.min(state.run.idx + 1, state.run.items.length)}/${state.run.items.length} <button class="btn" id="resume">Continuar</button>`;
+        b.innerHTML = `<b>${esc(currentRun.titulo || 'Test')}</b> en curso · ${Math.min(currentRun.idx + 1, currentRun.items.length)}/${currentRun.items.length} <button class="btn" id="resume">Continuar</button>`;
         app.prepend(b); $('#resume').onclick = () => go('#/quiz');
       }
     } catch (e) {
@@ -96,15 +97,16 @@ async function resumeSaved() {
 
 routes.quiz = async function () {
   const { app, $, screen: routeScreen } = legacyScope(screen);
-  if (!state.run) return go('#/home');
-  const R = state.run;
-  let tick: any = null, closing = false, endConfirmation: AbortController | null = null;
+  const candidate = getCurrentRun();
+  if (!candidate) { go('#/home'); return; }
+  const R = candidate;
+  let tick: any = null, gateTimer: any = null, closing = false, endConfirmation: AbortController | null = null;
   {
     // el tiempo sale de la hora real (no de contar ticks): iOS frena los timers con la pantalla bloqueada
     tick = setInterval(() => {
-      tickRun(R);
+      tickCurrentRun();
       if (!R.limit) return;
-      const left = segundosRestantes(R);
+      const left = currentSecondsRemaining();
       const el = $('#clock'); if (el) el.textContent = fmtT(left);
       const pc = $('#pace'); if (pc) { const d = ritmoSimulacro(R.idx, R.items.length, R.limit * 60, R.secs), bud = Math.round(R.limit * 60 / R.items.length); pc.className = 'pace ' + (d >= 0 ? 'up' : d > -3 ? 'mid' : 'low'); pc.textContent = `Ritmo: ${d > 0 ? d + ' por delante' : d < 0 ? -d + ' por detrás' : 'al día'} · ${bud} s por pregunta`; }
       if (left <= 0) { clearInterval(tick); finish('timeout'); }
@@ -132,17 +134,17 @@ routes.quiz = async function () {
     const d = swipeDir(t.clientX - tx[0], t.clientY - tx[1]); tx = null;
     if (d === 'next') { const b = $('#next'); b && b.click(); } else if (d === 'prev') prev();
   };
-  function prev() { if (R.paused || R.idx <= 0) return; R.idx--; draw(); focusHeading(); window.scrollTo(0, 0); }
+  function prev() { if (R.paused || R.idx <= 0) return; setQuestionIndex(R.idx - 1); draw(); focusHeading(); window.scrollTo(0, 0); }
   document.addEventListener('keydown', onKey);
   document.addEventListener('touchstart', onTs, { passive: true });
   document.addEventListener('touchend', onTe, { passive: true });
-  routeScreen.cleanup = () => { endConfirmation?.abort(); clearInterval(tick); clearInterval(R.gt); document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); };
+  routeScreen.cleanup = () => { endConfirmation?.abort(); clearInterval(tick); clearInterval(gateTimer); document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); };
   draw();
 
   function draw() {
     if (R.idx >= R.items.length) return finish();
     saveRun();
-    if (R.tIdx !== R.idx) { R.tIdx = R.idx; R.q0 = R.secs; R.qT0 = Date.now(); }
+    startCurrentQuestion();
     const LEC = normUi(store.getCfg().ui).lectura, kw = (t: any) => richHtml(t, !!LEC);
     const q = R.items[R.idx];
     const a = R.ans[R.idx];
@@ -190,14 +192,14 @@ routes.quiz = async function () {
     ${R.paused ? `<div class="overlay" role="dialog" aria-modal="true" aria-labelledby="pt"><div class="card"><h2 id="pt">En pausa</h2><p>El tiempo está detenido.</p><button class="btn" id="resume">Continuar</button></div></div>` : ''}`;
     bind(q);
     if (R.paused) { app.querySelectorAll<El>('.qhead,.sub,.pace,.card.q,.bar2').forEach(el => { if (!el.closest<El>('.overlay')) el.inert = true; }); const rb = $('.overlay #resume'); rb && rb.focus(); }
-    clearInterval(R.gt);
+    clearInterval(gateTimer);
     if (LEC === 2 && !reveal && a === undefined && !R.paused) {
       const need = minLectura(q), left = () => Math.ceil(need - (Date.now() - R.qT0!) / 1000);
       if (left() > 0) {
         const opts = app.querySelectorAll<El>('.opt'); opts.forEach(b => b.disabled = true);
         $('.opts').insertAdjacentHTML('afterend', `<div class="gate" id="gate"></div>`);
-        const upd = () => { const l = left(), g = $<El>('#gate'); if (!g) return clearInterval(R.gt); if (l <= 0) { clearInterval(R.gt); g.remove(); app.querySelectorAll<El>('.opt').forEach(b => b.disabled = false); } else g.textContent = `👀 Lee con calma: podrás responder en ${l} s. ¿Qué te piden? ¿Hay NO, SALVO, cifras?`; };
-        upd(); R.gt = setInterval(upd, 400);
+        const upd = () => { const l = left(), g = $<El>('#gate'); if (!g) return clearInterval(gateTimer); if (l <= 0) { clearInterval(gateTimer); g.remove(); app.querySelectorAll<El>('.opt').forEach(b => b.disabled = false); } else g.textContent = `👀 Lee con calma: podrás responder en ${l} s. ¿Qué te piden? ¿Hay NO, SALVO, cifras?`; };
+        upd(); gateTimer = setInterval(upd, 400);
       }
     }
     if (reveal) { const lv = $('#live'); if (lv) lv.textContent = (a === -1 ? 'Sin responder' : a === q.c ? 'Correcto' : 'Incorrecto') + '. Respuesta: ' + L[q.c]; const nx = $('#next'); nx && nx.focus({ preventScroll: true }); }
@@ -216,32 +218,32 @@ routes.quiz = async function () {
       <div class="repw" id="rep"></div></div>`;
   }
   function bind(q: any) {
-    app.querySelectorAll<El>('[data-jump]').forEach(b => b.onclick = () => { if (state.run !== R || R.paused) return; R.idx = +b.dataset.jump!; draw(); focusHeading(); window.scrollTo(0, 0); });
-    $('#review-question') && ($('#review-question').onclick = () => { if (state.run !== R || R.paused) return; const ids = new Set(R.review || []); ids.has(R.idx) ? ids.delete(R.idx) : ids.add(R.idx); R.review = [...ids].sort((a,b) => a-b); draw(); $('#review-question').focus({preventScroll:true}); });
+    app.querySelectorAll<El>('[data-jump]').forEach(b => b.onclick = () => { if (getCurrentRun() !== R || R.paused) return; setQuestionIndex(+b.dataset.jump!); draw(); focusHeading(); window.scrollTo(0, 0); });
+    $('#review-question') && ($('#review-question').onclick = () => { if (getCurrentRun() !== R || R.paused) return; toggleReviewQuestion(); draw(); $('#review-question').focus({preventScroll:true}); });
     $('#exit').onclick = async () => {
-      if (closing || state.run !== R) return;
+      if (closing || getCurrentRun() !== R) return;
       closing = true;
       endConfirmation = new AbortController();
       const accepted = await ask('¿Salir? Lo respondido se guardará como sesión interrumpida.', 'Salir', false, endConfirmation.signal);
       endConfirmation = null;
       closing = false;
-      if (!accepted || state.run !== R) return;
+      if (!accepted || getCurrentRun() !== R) return;
       if (R.ans.some(x => x !== undefined)) finish('interrupted');
-      else { state.run = null; clearRun(); go('#/home'); }
+      else { clearActiveRun(); clearRun(); go('#/home'); }
     };
-    $('#pause') && ($('#pause').onclick = () => { R.paused = true; draw(); });
-    $('#resume') && ($('#resume').onclick = () => { R.paused = false; draw(); const pb = $('#pause'); pb && pb.focus(); });
+    $('#pause') && ($('#pause').onclick = () => { setRunPaused(true); draw(); });
+    $('#resume') && ($('#resume').onclick = () => { setRunPaused(false); draw(); const pb = $('#pause'); pb && pb.focus(); });
     app.querySelectorAll<El>('.opt').forEach(b => b.onclick = () => {
       if (R.paused) return;
       const i = +b.dataset.i!;
       if (R.feedback) { if (R.ans[R.idx] !== undefined) return; answer(q, i); draw(); }
-      else { answerDeferred(R, i); draw(); }
+      else { answerCurrentDeferred(i); draw(); }
     });
     $('#blank') && ($('#blank').onclick = () => {
       if (R.feedback) { if (R.ans[R.idx] === undefined) { answer(q, -1); draw(); } }
-      else { R.ans[R.idx] = R.ans[R.idx] === -1 ? undefined : -1; draw(); }
+      else { toggleDeferredBlank(); draw(); }
     });
-    $('#next') && ($('#next').onclick = () => { if (R.idx === R.items.length - 1) { void finish(); return; } R.idx++; draw(); focusHeading(); window.scrollTo(0, 0); });
+    $('#next') && ($('#next').onclick = () => { if (R.idx === R.items.length - 1) { void finish(); return; } setQuestionIndex(R.idx + 1); draw(); focusHeading(); window.scrollTo(0, 0); });
     $('#mot') && ($('#mot').onclick = e => {
       const b = (e.target as El).closest<El>('button'); if (!b) return;
       const mk = $('#mkcard'), id = 'FC-Q-' + q.i;
@@ -254,9 +256,9 @@ routes.quiz = async function () {
     $('#rep') && reportBox(q, $('#rep'));
     $('#flag') && ($('#flag').onclick = () => { store.toggleFlag(q.i, q.t); $('#flag').textContent = store.rec(q.i)?.[6] ? '★ Dudosa' : '☆ Marcar como dudosa'; });
   }
-  function answer(q: any, i: any) { answerQuestion(R, q, i, minLectura(q)); }
+  function answer(q: any, i: any) { answerCurrentQuestion(i, minLectura(q)); }
   async function finish(reason: 'complete' | 'interrupted' | 'timeout' = 'complete') {
-    if (state.run !== R || closing && reason !== 'timeout') return;
+    if (getCurrentRun() !== R || closing && reason !== 'timeout') return;
     if (reason === 'timeout') endConfirmation?.abort();
     const missing = R.items.filter((_, k) => R.ans[k] === undefined).length;
     if (reason === 'complete' && !R.feedback && missing) {
@@ -265,11 +267,11 @@ routes.quiz = async function () {
       const accepted = await ask(`Quedan ${missing} preguntas sin responder. ¿Terminar y guardar la sesión como interrumpida?`, 'Terminar', false, endConfirmation.signal);
       endConfirmation = null;
       closing = false;
-      if (!accepted || state.run !== R) return;
+      if (!accepted || getCurrentRun() !== R) return;
       reason = 'interrupted';
     }
     clearInterval(tick);
-    if (!finishRun(R, reason)) { toast('Se acabó el tiempo sin contestar ninguna pregunta.'); return go('#/home'); }
+    if (!finishCurrentRun(reason)) { toast('Se acabó el tiempo sin contestar ninguna pregunta.'); return go('#/home'); }
     go('#/result');
   }
 };
@@ -290,8 +292,9 @@ function simAnalisis({ ses, items, ans, times, limit }: any) {
 }
 routes.result = async function () {
   const { app, $, screen: routeScreen } = legacyScope(screen);
-  if (!state.last) return go('#/home');
-  const { ses, items, ans } = state.last;
+  const lastResult = getLastResult();
+  if (!lastResult) return go('#/home');
+  const { ses, items, ans } = lastResult;
   const ng = ses.f;
   app.innerHTML = `
   <h1>Resultado</h1>
@@ -308,7 +311,7 @@ routes.result = async function () {
     ${ng ? '<button class="btn" id="again">Repetir las falladas</button>' : ''}
     <button class="btn sec" id="home">Inicio</button>
   </div>
-  ${state.last.limit && !state.last.ses.porTiempo ? simAnalisis(state.last) : ''}
+  ${lastResult.limit && !lastResult.ses.porTiempo ? simAnalisis(lastResult) : ''}
   <h2>Por tema</h2>
   <div class="card">${Object.entries(ses.temas).sort((a, b) => a[0].localeCompare(b[0])).map(([t, [a, n]]) => `<div class="line"><span>${esc(t)} ${esc(temaName(t))}</span><span>${a}/${n}</span></div>`).join('')}</div>
   <h2>Revisión</h2>

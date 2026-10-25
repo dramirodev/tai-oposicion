@@ -53,26 +53,79 @@ function observable<T extends object>(value: T): T {
   observed.set(value, proxy); observed.set(proxy, proxy);
   return proxy;
 }
-export const state: { run: Run | null; last: LastResult | null } = observable({ run: null, last: null });
-export const getRunKind = (): SessionKind | null => state.run?.kind || null;
-export const getLastRunKind = (): SessionKind | null => state.last?.ses.kind || null;
-export const hasActiveRun = (): boolean => state.run !== null;
+const engineState: { run: Run | null; last: LastResult | null } = observable({ run: null, last: null });
+export interface EngineSnapshot {
+  readonly run: Readonly<Run> | null;
+  readonly last: Readonly<LastResult> | null;
+}
+export function getSnapshot(): EngineSnapshot { return engineState; }
+export const getCurrentRun = (): Readonly<Run> | null => engineState.run;
+export const getLastResult = (): Readonly<LastResult> | null => engineState.last;
+export const getRunKind = (): SessionKind | null => engineState.run?.kind || null;
+export const getLastRunKind = (): SessionKind | null => engineState.last?.ses.kind || null;
+export const hasActiveRun = (): boolean => engineState.run !== null;
+
+export function clearActiveRun(): void { engineState.run = null; }
+export function clearLastResult(): void { engineState.last = null; }
+export function setQuestionIndex(index: number): boolean {
+  const run = engineState.run;
+  if (!run || run.paused || !Number.isInteger(index) || index < 0 || index >= run.items.length) return false;
+  run.idx = index;
+  return true;
+}
+export function toggleReviewQuestion(): boolean {
+  const run = engineState.run;
+  if (!run || run.paused) return false;
+  const review = new Set(run.review || []);
+  review.has(run.idx) ? review.delete(run.idx) : review.add(run.idx);
+  run.review = [...review].sort((a, b) => a - b);
+  return true;
+}
+export function setRunPaused(paused: boolean): boolean {
+  const run = engineState.run;
+  if (!run) return false;
+  run.paused = paused;
+  return true;
+}
+export function toggleDeferredBlank(): boolean {
+  const run = engineState.run;
+  if (!run || run.feedback || run.paused) return false;
+  run.ans[run.idx] = run.ans[run.idx] === -1 ? undefined : -1;
+  return true;
+}
+export function startCurrentQuestion(t = Date.now()): void {
+  const run = engineState.run;
+  if (!run || run.tIdx === run.idx) return;
+  run.tIdx = run.idx;
+  run.q0 = run.secs;
+  run.qT0 = t;
+}
+export function tickCurrentRun(t = Date.now()): void { if (engineState.run) tickRun(engineState.run, t); }
+export const currentSecondsRemaining = (): number => engineState.run ? segundosRestantes(engineState.run) : Infinity;
+export function answerCurrentQuestion(answer: number, minimumReadingSeconds: number): void {
+  const run = engineState.run;
+  if (run) answerQuestion(run, run.items[run.idx], answer, minimumReadingSeconds);
+}
+export function answerCurrentDeferred(answer: number): void { if (engineState.run) answerDeferred(engineState.run, answer); }
+export function finishCurrentRun(reason: 'complete' | 'interrupted' | 'timeout' = 'complete'): LastResult | null {
+  return engineState.run ? finishRun(engineState.run, reason) : null;
+}
 
 /** Crea la sesión; devuelve null si no hay preguntas puntuables. No navega: eso lo decide la interfaz. */
 export function createRun(cfg: RunCfg): Run | null {
   const items = questionsForSession(cfg.items, cfg.feedback);
   if (!items.length) return null;
-  return (state.run = observable({ ...cfg, items, idx: 0, ans: [], t0: now(), secs: 0, paused: false }));
+  return (engineState.run = observable({ ...cfg, items, idx: 0, ans: [], t0: now(), secs: 0, paused: false }));
 }
 
 // La sesión en curso se guarda para sobrevivir al cierre de la app por iOS (solo sesiones del banco, no los supuestos)
 const runKey = () => 'tai.run:' + (store.accountId() || 'guest');
-store.onAccountChange(() => { state.run = null; state.last = null; });
+store.onAccountChange(() => { engineState.run = null; engineState.last = null; });
 const closedRuns = new WeakSet<Run>();
 const MAX_EDAD = 2 * 86400000;
 export function clearRun(): void { try { localStorage.removeItem(runKey()); } catch (e) {} }
 export function saveRun(): void {
-  const R = state.run;
+  const R = engineState.run;
   if (!R || R.supTexto || !R.items.every(q => q.i && META && META[q.i])) return;
   const { kind, feedback, titulo, limit, idx, ans, times, secs, porTiempo, review } = R;
   try { localStorage.setItem(runKey(), JSON.stringify({ kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: R.items.map(q => q.i), review: review || [], savedAt: Date.now() })); } catch (e) {}
@@ -86,7 +139,7 @@ export interface PendingRun { saved: SavedRun; items: Question[]; account: strin
 export async function pendingRun(full: boolean): Promise<PendingRun | null> {
   const account = store.accountId();
   let s: SavedRun | null = null; try { s = JSON.parse(localStorage.getItem(runKey()) || 'null'); } catch (e) {}
-  if (!s || state.run) return null;
+  if (!s || engineState.run) return null;
   if (!full && s.kind !== 'rev') { clearRun(); return null; }
   if (!Array.isArray(s.ids) || !s.ids.length || Date.now() - (s.savedAt || 0) > MAX_EDAD) { clearRun(); return null; }
   const items = await byIds(s.ids);
@@ -102,7 +155,7 @@ export function pendingPrompt({ saved: s, items }: PendingRun): string {
 export function resumeRun({ saved: s, items, account }: PendingRun): Run | null {
   if (account !== store.accountId()) return null;
   const un = <T>(a?: (T | null)[]): (T | undefined)[] => Array.from(a || [], x => x === null ? undefined : x);
-  return (state.run = observable({ kind: s.kind, feedback: !!s.feedback, titulo: s.titulo, limit: s.limit || 0, porTiempo: !!s.pt, items, idx: s.idx, ans: un(s.ans), times: un(s.times), t0: now(), secs: s.secs || 0, paused: false, review: (Array.isArray(s.review) ? s.review : []).filter(i => Number.isInteger(i) && i >= 0 && i < items.length) }));
+  return (engineState.run = observable({ kind: s.kind, feedback: !!s.feedback, titulo: s.titulo, limit: s.limit || 0, porTiempo: !!s.pt, items, idx: s.idx, ans: un(s.ans), times: un(s.times), t0: now(), secs: s.secs || 0, paused: false, review: (Array.isArray(s.review) ? s.review : []).filter(i => Number.isInteger(i) && i >= 0 && i < items.length) }));
 }
 
 // ───────── tiempo y respuestas ─────────
@@ -116,7 +169,7 @@ export function tickRun(R: Run, t = Date.now()): void {
 export const segundosRestantes = (R: Run): number => R.limit ? R.limit * 60 - R.secs : Infinity;
 /** Anota en el progreso la respuesta de una pregunta con corrección inmediata (i = -1: «no lo sé»). */
 export function answerQuestion(R: Run, q: Question, i: number, minLect: number): void {
-  if (state.run !== R) return;
+  if (engineState.run !== R) return;
   R.ans[R.idx] = i;
   (R.luck ||= {})[R.idx] = store.rec(q.i)?.[9] || 0;
   (R.fast ||= {})[R.idx] = [Math.round((Date.now() - (R.qT0 ?? Date.now())) / 1000), minLect];
@@ -124,19 +177,19 @@ export function answerQuestion(R: Run, q: Question, i: number, minLect: number):
 }
 /** Respuesta en modo examen (sin corrección): se guarda al terminar. */
 export function answerDeferred(R: Run, i: number): void {
-  if (state.run !== R) return;
+  if (engineState.run !== R) return;
   R.ans[R.idx] = i;
   (R.times ||= [])[R.idx] = Math.max(1, R.secs - (R.q0 ?? 0));
 }
 
-/** Cierra la sesión: puntúa, guarda en el progreso y deja el resultado en `state.last`. null = no se contestó nada. */
+/** Cierra la sesión: puntúa, guarda en el progreso y deja el resultado en `engineState.last`. null = no se contestó nada. */
 export function finishRun(R: Run, reason: 'complete' | 'interrupted' | 'timeout' = 'complete'): LastResult | null {
-  if (closedRuns.has(R) || state.run !== R) return null;
+  if (closedRuns.has(R) || engineState.run !== R) return null;
   closedRuns.add(R);
   clearRun();
   // «por tiempo»: solo cuentan las preguntas que llegaste a contestar (la que estaba abierta al acabar el tiempo no)
   let hechas = R.items.length;
-  if (R.porTiempo) { hechas = 0; R.ans.forEach((x, k) => { if (x !== undefined) hechas = k + 1; }); if (!hechas) { state.run = null; return null; } }
+  if (R.porTiempo) { hechas = 0; R.ans.forEach((x, k) => { if (x !== undefined) hechas = k + 1; }); if (!hechas) { engineState.run = null; return null; } }
   const items = R.items.slice(0, hechas), res = { a: 0, f: 0, b: 0 }, fails: string[] = [];
   const porTema: Record<string, [number, number]> = {}, porTipo: Record<string, [number, number]> = {};
   items.forEach((q, k) => {
@@ -150,8 +203,8 @@ export function finishRun(R: Run, reason: 'complete' | 'interrupted' | 'timeout'
   const n = items.length;
   const ses = { id: 's' + now().toString(36), ts: now(), kind: R.kind, n, a: res.a, f: res.f, b: res.b, secs: R.porTiempo ? Math.min(R.secs, (R.limit ?? 0) * 60) : R.secs, nota: calculateExamScore(res.a, res.f, n), temas: porTema, tipos: porTipo, fails, titulo: R.titulo || '', ...(reason === 'interrupted' ? { interrupted: true } : {}), ...(R.porTiempo ? { porTiempo: true } : {}) };
   store.addSession(ses);
-  state.run = null;
-  return (state.last = observable({ ses, items, ans: R.ans, times: R.times || [], limit: R.limit || 0 }));
+  engineState.run = null;
+  return (engineState.last = observable({ ses, items, ans: R.ans, times: R.times || [], limit: R.limit || 0 }));
 }
 
 // ───────── selección de preguntas ─────────

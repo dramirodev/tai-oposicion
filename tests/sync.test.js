@@ -131,7 +131,7 @@ it('restaura el progreso propio al volver a una cuenta y descarta sus sesiones e
  store.record('owner-question','T1.01',0,1000);
  engine.createRun({kind:'test',feedback:true,items:[{i:'owner-question',t:'T1.01',q:'x',a:['a','b','c','d'],c:0}]});
  user('friend','friend@example.test'); snap('access/friend',{ok:true});
- expect(store.rec('owner-question')).toBeUndefined(); expect(engine.state.run).toBeNull();
+ expect(store.rec('owner-question')).toBeUndefined(); expect(engine.getSnapshot().run).toBeNull();
  store.record('friend-question','T1.01',1,2000);
  user('user1');
  expect(store.rec('owner-question')[0]).toBe(1); expect(store.rec('friend-question')).toBeUndefined();

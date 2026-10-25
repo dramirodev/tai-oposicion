@@ -21,27 +21,27 @@ it('store avisa después de persistir y permite cancelar la suscripción', () =>
 it('engine notifica creación, respuestas, reloj, navegación, revisión, pausa y cierre', () => {
   const qs = JSON.parse(readFileSync('public/data/T1.01.json', 'utf8')).slice(0, 2);
   const seen = [];
-  const off = engine.subscribe(() => seen.push(JSON.stringify(engine.state)));
+  const off = engine.subscribe(() => seen.push(JSON.stringify(engine.getSnapshot())));
   const run = engine.createRun({ kind: 'test', feedback: false, items: qs });
   expect(seen.length).toBeGreaterThan(0);
   for (const change of [
-    () => engine.answerDeferred(run, 1), () => engine.tickRun(run, 1000),
-    () => engine.tickRun(run, 3000), () => { run.idx = 1; },
-    () => { run.review = [1]; }, () => { run.review.push(0); },
-    () => { run.paused = true; }, () => { run.paused = false; },
-    () => engine.finishRun(run),
+    () => engine.answerCurrentDeferred(1), () => engine.tickCurrentRun(1000),
+    () => engine.tickCurrentRun(3000), () => engine.setQuestionIndex(1),
+    () => engine.toggleReviewQuestion(), () => engine.setQuestionIndex(0),
+    () => engine.setRunPaused(true), () => engine.setRunPaused(false),
+    () => engine.finishCurrentRun(),
   ]) {
     const before = seen.length; change(); expect(seen.length).toBeGreaterThan(before);
   }
-  expect(engine.state.last.ses.n).toBe(2);
-  off(); const before = seen.length; engine.state.last = null;
+  expect(engine.getSnapshot().last.ses.n).toBe(2);
+  off(); const before = seen.length; engine.clearLastResult();
   expect(seen).toHaveLength(before);
 });
 it('engine avisa del cambio de cuenta y mantiene la identidad de la sesión', () => {
   const qs = JSON.parse(readFileSync('public/data/T1.01.json', 'utf8')).slice(0, 1);
   const run = engine.createRun({ kind: 'test', feedback: true, items: qs });
-  expect(engine.state.run).toBe(run);
+  expect(engine.getSnapshot().run).toBe(run);
   const fn = vi.fn(); const off = engine.subscribe(fn);
   store.switchAccount('another');
-  expect(engine.state.run).toBeNull(); expect(fn).toHaveBeenCalled(); off();
+  expect(engine.getSnapshot().run).toBeNull(); expect(fn).toHaveBeenCalled(); off();
 });

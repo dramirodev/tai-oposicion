@@ -3,7 +3,7 @@ import * as store from '../../adapters/local/legacy-store.js';
 import { esc, pct, quickN, velocidad } from '../../legacy/logic.js';
 import { META, getIndex, getMeta, now, dueList } from '../../adapters/http/legacy-data.js';
 import { $, legacyScope, guard, toast, type El } from '../../shared/ui/legacy-dom.js';
-import { state } from '../../core/application/legacy-engine.js';
+import { getCurrentRun } from '../../core/application/legacy-engine.js';
 import { BLOQUES } from '../../shared/presentation/labels.js';
 import { isFull, accessLevel } from '../../adapters/legacy/access.js';
 export function registerHome({ routes, go, saludo, quickSession, startRepaso, openMenu, dominioTemas, falladasIds }: any, screen: any) {
@@ -26,6 +26,7 @@ routes.home = async function () {
   const vel = velocidad(st);
   const nFall = falladasIds().length;
   const full = isFull();
+  const run = getCurrentRun();
   const IC: Record<string, string> = { test: '<path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/>', sim: '<circle cx="12" cy="13" r="7"/><path d="M12 9v4l2.5 2M9.5 3h5"/>', card: '<rect x="3" y="6" width="18" height="13" rx="3"/><path d="M7 3h10"/>', det: '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.5-4.5"/>', lec: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>', rel: '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>', map: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/>', list: '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>', play: '<path d="M8 5v14l11-7z"/>', redo: '<path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/>' };
   const svg = (k: any) => `<svg viewBox="0 0 24 24" aria-hidden="true">${IC[k]}</svg>`;
   const row = (id: any, ico: any, t: any, sub: any, dis?: any) => `<button class="lrow" id="${id}" ${dis ? 'disabled' : ''}><i aria-hidden="true">${ico}</i><span><b>${t}</b><small>${sub}</small></span></button>`;
@@ -35,7 +36,7 @@ routes.home = async function () {
     <div class="hsub">${dd !== null ? `<b>${dd} ${dd === 1 ? 'día' : 'días'}</b> hasta tu fecha objetivo · <a href="#/settings">Cambiar fecha</a>` : '<a href="#/settings">Configurar fecha objetivo</a>'} · ${seen} de ${idx.n.toLocaleString("es-ES")} preguntas vistas${streak >= 2 ? ` · racha de ${streak} días` : ''}</div></div>
     <button class="iconbtn" id="menu" aria-label="Menú" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
   <div class="hbar" role="img" aria-label="${pct(seen, idx.n)} % de las preguntas vistas"><i style="--from:0%;width:${Math.max(2, Math.min(100, pct(seen, idx.n)))}%"></i></div>
-  ${state.run ? `<button class="cta" id="continue"><span><b>Continuar sesión</b><small>${esc(state.run.titulo || 'Práctica en curso')} · pregunta ${state.run.idx + 1} de ${state.run.items.length}</small></span>${svg('play')}</button>` : ''}
+  ${run ? `<button class="cta" id="continue"><span><b>Continuar sesión</b><small>${esc(run.titulo || 'Práctica en curso')} · pregunta ${run.idx + 1} de ${run.items.length}</small></span>${svg('play')}</button>` : ''}
   ${full ? `<div class="study-priorities">${row('rev', svg('redo'), 'Repasar hoy', due ? `${due} ${due === 1 ? 'pregunta pendiente' : 'preguntas pendientes'}` : 'No hay preguntas pendientes hoy', !due)}${row('falladas', svg('redo'), 'Preguntas falladas', nFall ? `${nFall} ${nFall === 1 ? 'pregunta por afianzar' : 'preguntas por afianzar'} · tres aciertos seguidos` : 'No hay preguntas falladas', !nFall)}</div>` : ''}
   ${!n ? '<p class="note">Empieza con una sesión rápida; después marca los temas que hayas estudiado y consulta tu progreso.</p>' : ''}
   <button class="cta" id="quick"><span><b class="ctt">Sesión rápida</b><small>${!full ? '5 min · una pregunta de cada tema, distintas cada vez' : `5 min · ${quickN(st)} preguntas: ${due ? 'tus repasos pendientes (' + due + ') y ' : ''}nuevas de tus temas más débiles`}</small></span><i class="play" aria-hidden="true">${svg('play')}</i></button>

@@ -60,7 +60,7 @@ it('desmarcar el temario también prevalece sobre respuestas antiguas',()=>{
 it('no reanuda ni registra una respuesta de una sesión de otra cuenta',async()=>{
  store.switchAccount('owner-session');
  const [q]=await data.getTema('T1.01');
- const run=engine.createRun({kind:'test',feedback:true,items:[q]});engine.saveRun();engine.state.run=null;
+ const run=engine.createRun({kind:'test',feedback:true,items:[q]});engine.saveRun();engine.clearActiveRun();
  const pending=await engine.pendingRun(true);expect(pending).not.toBeNull();
  store.switchAccount('friend-session');
  expect(engine.resumeRun(pending)).toBeNull();

@@ -16,7 +16,8 @@ beforeEach(async () => {
 });
 afterEach(()=> { screen.cleanup?.(); vi.unstubAllGlobals(); });
 it('prioriza retomar, repasar y falladas, agrupa entrenamientos y no presenta una fecha oficial inventada', async()=> {
-  engine.state.run={items:[{}],idx:0};
+  const question=JSON.parse(readFileSync('public/data/T1.01.json','utf8'))[0];
+  engine.createRun({kind:'test',feedback:true,items:[question]});
   await routes.home();
   expect(document.querySelector('#continue')).not.toBeNull();
   expect(document.querySelector('#trampas').closest('details').querySelector('summary').textContent).toContain('Entrenamientos');

@@ -15,7 +15,7 @@ beforeAll(async()=>{
  vi.stubGlobal('fetch',async url=>{try{return {ok:true,json:async()=>JSON.parse(readFileSync(path.join('public',String(url)),'utf8'))};}catch{return {ok:false,json:async()=>null};}});
  await import('../src/app/main');store=await import('../src/adapters/local/legacy-store.js');engine=await import('../src/core/application/legacy-engine.js');await waitText('Sesión rápida');
 });
-beforeEach(async()=>{store.resetAll();engine.state.run=null;engine.state.last=null;await navigate('home','Sesión rápida');});
+beforeEach(async()=>{store.resetAll();engine.clearActiveRun();engine.clearLastResult();await navigate('home','Sesión rápida');});
 afterAll(()=>{vi.unstubAllGlobals();});
 it('comunica la selección al cambiar la cantidad del test',async()=>{
  await navigate('test','Test por tema');
@@ -63,7 +63,7 @@ it('prioriza oficiales y filtra por turno sin iniciar otro examen',async()=>{
  const turn=document.querySelector('#ex-turn');expect(turn).not.toBeNull();turn.value='libre';turn.dispatchEvent(new Event('change',{bubbles:true}));
  const rows=[...document.querySelectorAll('.exrow')];expect(rows.length).toBeGreaterThan(0);
  expect(rows.every(x=>!x.textContent.includes('Promoción interna'))).toBe(true);
- expect(engine.state.run).toBeNull();
+ expect(engine.getSnapshot().run).toBeNull();
 });
 it('el mapa distingue respuestas y revisión y conserva las respuestas al saltar',async()=>{
  const qs=JSON.parse(readFileSync('public/data/T1.01.json','utf8')).slice(0,3);
@@ -73,8 +73,8 @@ it('el mapa distingue respuestas y revisión y conserva las respuestas al saltar
  document.querySelector('[data-jump="1"]').click();
  expect(run.ans[0]).toBe(qs[0].c);expect(run.idx).toBe(1);expect(run.review).toEqual([0]);
  const first=document.querySelector('[data-jump="0"]');expect(first.textContent).toContain('Revisar');expect(first.textContent).toContain('Respondida');
- engine.saveRun();engine.state.run=null;const pending=await engine.pendingRun(true);engine.resumeRun(pending);
- expect(engine.state.run.review).toEqual([0]);expect(engine.state.run.ans[0]).toBe(qs[0].c);
+ engine.saveRun();engine.clearActiveRun();const pending=await engine.pendingRun(true);engine.resumeRun(pending);
+ expect(engine.getSnapshot().run.review).toEqual([0]);expect(engine.getSnapshot().run.ans[0]).toBe(qs[0].c);
 });
 it('anticipa el número efectivo de tarjetas y su próximo repaso sin valorarlas',async()=>{
  const q=JSON.parse(readFileSync('public/data/T1.01.json','utf8'))[0];store.addFallo(q.i);
@@ -90,7 +90,7 @@ it('confirma el cierre desde el mapa si quedan preguntas sin responder',async()=
  const run=engine.createRun({kind:'sim',feedback:false,items:qs});await navigate('quiz','pregunta 1');
  document.querySelector('[data-jump="2"]').click();document.querySelector(`.opt[data-i="${qs[2].c}"]`).click();document.querySelector('#next').click();
  await vi.waitFor(()=>expect(document.querySelector('.overlay')?.textContent).toContain('sin responder'));
- document.querySelector('.overlay [data-v="0"]').click();expect(engine.state.run).toBe(run);await Promise.resolve();
+ document.querySelector('.overlay [data-v="0"]').click();expect(engine.getSnapshot().run).toBe(run);await Promise.resolve();
  expect(run.idx).toBe(2);
  document.querySelector('.opt[data-i="0"]').click();expect(run.ans[2]).toBe(0);expect(run.ans[3]).toBeUndefined();
  document.querySelector('#next').click();await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull());document.querySelector('.overlay [data-v="1"]').click();
@@ -105,7 +105,7 @@ it.each(['finish','exit'])('el vencimiento cierra una sola vez y retira la confi
   document.querySelector('.opt[data-i="0"]').click();document.querySelector('[data-jump="2"]').click();document.querySelector(action === 'exit' ? '#exit' : '#next').click();
   await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull());
   run.secs=60;await vi.advanceTimersByTimeAsync(500);
-  expect(engine.state.run).toBeNull();expect(document.querySelector('.overlay')).toBeNull();
+  expect(engine.getSnapshot().run).toBeNull();expect(document.querySelector('.overlay')).toBeNull();
   expect(store.getSessions()).toHaveLength(1);
  } finally {vi.useRealTimers();}
 });
