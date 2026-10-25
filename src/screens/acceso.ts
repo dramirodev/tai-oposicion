@@ -1,10 +1,11 @@
 import * as sync from '../core/syncfacade.js';
 import { esc } from '../core/logic.js';
-import { $, app, toast, ask, type El } from '../ui.js';
+import { $, app, legacyScope, toast, ask, type El } from '../ui.js';
 import { isOwner } from '../core/access.js';
 // Pantalla del propietario: aprobar o rechazar solicitudes y revocar accesos.
 export function registerAcceso({ routes, go }: any, screen: any) {
 routes.acceso = async function () {
+  const { app, $, screen: routeScreen } = legacyScope(screen);
   if (!isOwner()) { go('#/home'); return; }
   const fecha = (ts: any) => ts ? new Date(ts).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }) : '';
   const draw = () => {
@@ -26,7 +27,7 @@ routes.acceso = async function () {
     app.querySelectorAll<El>('[data-no]').forEach(b => b.onclick = async () => { const r = rq[+b.dataset.no!]; if (await ask(`¿Rechazar la solicitud de ${r.name || r.email}?`, 'Rechazar', true)) run(b, () => sync.reject(r.uid), 'Solicitud rechazada'); });
     app.querySelectorAll<El>('[data-rv]').forEach(b => b.onclick = async () => { const g = gr[+b.dataset.rv!]; if (await ask(`¿Quitar el acceso completo a ${g.name || g.email}? Volverá a poder hacer solo la sesión rápida.`, 'Revocar', true)) run(b, () => sync.revoke(g.uid), 'Acceso revocado'); });
   };
-  screen.cleanup = sync.onStatus(draw);
+  routeScreen.cleanup = sync.onStatus(draw);
   draw();
 };
 }

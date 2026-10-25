@@ -22,10 +22,41 @@ Base: `main` en `b039670`. Rama: `migracion-react`. Solo fases 0 y 1, sin public
 - CI ejecuta e2e después de tipos/tests y antes de compilar/desplegar. Las referencias
   de otro SO se reconstruyen desde el commit de fase 0, nunca desde la app migrada.
 
-Verificado: typecheck; **224 tests** (221 originales + 3 de suscripción); build;
-validación de tarjetas (36 temas); **74 e2e**. `npm start` se ejecuta desde Playwright.
-`npm run deploy` conserva su comando, pero no se ejecuta por la prohibición de publicar.
 `public/style.css` y `firestore.rules` no cambian.
+
+## Fase 1
+
+- React 19 y React Router 7 `createHashRouter`; todas las rutas usan LegacyRoute.
+- Layout conserva la barra y el recorte `GUEST_ROUTES`, integra menú, banner de red,
+  foco de navegación y el proveedor React de toast/ask/notice.
+- El puente crea un contenedor por navegación, conserva el HTML y su cleanup y evita
+  que una carga tardía escriba en la pantalla nueva.
+- Registro/actualización del service worker, flush de progreso, guardado y reanudación
+  de sesión, prefetch y sincronización quedan en el arranque del puente.
+- 3 pruebas de diálogos, 1 de aislamiento/cleanup y 6 e2e (Chromium y WebKit) para
+  guardar/reanudar progreso, menú, foco, conectividad y rutas de invitado.
+
+Verificado: typecheck; **227 tests**; build; tarjetas (36 temas); **80 e2e**, incluidas
+68 comparaciones PNG exactas contra la fase 0. `npm start` compila y sirve la app mediante
+Playwright. La revisión independiente no encontró defectos accionables. No se ejecutó
+`npm run deploy` porque publicaría el sitio.
+
+La fixture fija Math.random para que las dependencias no desplacen las preguntas elegidas.
+Las capturas enmascaran únicamente el hash de compilación de Ajustes.
+
+## Verificación final
+
+Fase 0: typecheck; **224 tests** (221 originales + 3 de suscripción); build;
+validación de tarjetas (36 temas); 74 e2e.
+Fase 1: typecheck; **227 tests**; build; validación de tarjetas (36 temas);
+**80 e2e**, incluidas 68 comparaciones PNG exactas contra la fase 0. `npm start`
+compila y sirve la app durante Playwright. `npm run deploy` conserva su comando,
+pero no se ejecutó porque publicaría el sitio.
+
+La revisión independiente no encontró defectos accionables. La pantalla se monta de
+forma asíncrona en React; por eso dos pruebas esperan a que React confirme `#simtabs`
+antes de interactuar. Conservan las mismas pulsaciones y comprobaciones posteriores.
+No se identificó otra diferencia funcional en las rutas o capturas verificadas.
 
 ## Tamaños de JavaScript
 
@@ -35,7 +66,6 @@ Bytes minificados y gzip por archivo sumados (no incluye JSON de bancos, CSS o i
 | --- | ---: | ---: |
 | Base esbuild | 636365 | 187986 |
 | Fase 0 Vite | 706120 | 189139 |
+| Fase 1 React | 1027456 | 291951 |
 
 Vite avisa del chunk dinámico del SDK Firebase (>500 kB); sigue cargándose bajo demanda.
-La fixture fija Math.random para que las dependencias no desplacen las preguntas elegidas.
-Las capturas enmascaran únicamente el hash de compilación de Ajustes.

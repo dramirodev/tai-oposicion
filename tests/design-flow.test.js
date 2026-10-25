@@ -5,12 +5,15 @@ import path from 'node:path';
 vi.mock('../src/core/syncfacade.js',()=>({status:{user:null,state:'sin sesión',configured:false},init:async()=>{},onStatus:()=>()=>{},login:async()=>{},logout:async()=>{},retry:()=>{}}));
 let store,engine;
 const waitText=async text=>vi.waitFor(()=>expect(document.querySelector('#app').textContent).toContain(text));
-const navigate=async (route,text)=>{location.hash='#/'+route;dispatchEvent(new HashChangeEvent('hashchange'));await waitText(text);};
+const navigate=async (route,text)=>{location.hash='#/'+route;dispatchEvent(new HashChangeEvent('hashchange'));
+ // React puede conservar Inicio hasta confirmar la navegación; Inicio también dice «Simulacros».
+ if(route==='sim') await vi.waitFor(()=>expect(document.querySelector('#simtabs')).not.toBeNull());
+ await waitText(text);};
 beforeAll(async()=>{
  document.documentElement.innerHTML=readFileSync('index.html','utf8');localStorage.clear();
  vi.stubGlobal('matchMedia',()=>({matches:true}));vi.stubGlobal('scrollTo',()=>{});Element.prototype.scrollIntoView=()=>{};
  vi.stubGlobal('fetch',async url=>{try{return {ok:true,json:async()=>JSON.parse(readFileSync(path.join('public',String(url)),'utf8'))};}catch{return {ok:false,json:async()=>null};}});
- await import('../src/main.js');store=await import('../src/core/store.js');engine=await import('../src/core/engine.js');await waitText('Sesión rápida');
+ await import('../src/main.tsx');store=await import('../src/core/store.js');engine=await import('../src/core/engine.js');await waitText('Sesión rápida');
 });
 beforeEach(async()=>{store.resetAll();engine.state.run=null;engine.state.last=null;await navigate('home','Sesión rápida');});
 afterAll(()=>{vi.unstubAllGlobals();});

@@ -2,7 +2,7 @@ import { cardNextReview, sourceHtml, questionNotice } from '../study-ui.js';
 import * as store from '../core/store.js';
 import { esc, richHtml, pct, swipeDir, pickCards, cardStats, cardFromQuestion } from '../core/logic.js';
 import { j, getIndex, getMeta, byIds, temaName, now } from '../core/data.js';
-import { $, app, toast, focusHeading, type El } from '../ui.js';
+import { $, app, legacyScope, toast, focusHeading, type El } from '../ui.js';
 export function registerCards({ routes, go, pw, reportBox }: any, screen: any) {
 // ───────── tarjetas (flashcards) ─────────
 let CARDIDX: any; const cardCache = new Map<string, any>(); let CRUN: any = null;
@@ -24,6 +24,7 @@ async function falloCards() {
 const allCards = async () => [...await curatedCards(), ...await falloCards()];
 
 routes.cards = async function () {
+  const { app, $, screen: routeScreen } = legacyScope(screen);
   const account = store.accountId();
   await getIndex(); await getMeta();
   if (account !== store.accountId()) return;
@@ -65,6 +66,7 @@ routes.cards = async function () {
 };
 
 function cardSession() {
+  const { app, $, screen: routeScreen } = legacyScope(screen);
   const R = CRUN; if (!R) return go('#/cards');
   const NOMBRE = ['Fallé', 'Dudaba', 'Lo sabía'];
   const grade = (g: any) => {
@@ -94,7 +96,7 @@ function cardSession() {
   const onTs = (e: any) => { const t = e.touches[0]; tx = e.touches.length === 1 && t.clientX > 24 && t.clientX < innerWidth - 24 && !(e.target as El).closest<El>('button,details,input,textarea') ? [t.clientX, t.clientY] : null; };
   const onTe = (e: any) => { if (!tx) return; const t = e.changedTouches[0]; const d = swipeDir(t.clientX - tx[0], t.clientY - tx[1]); tx = null; if (R.rev && d === 'next') grade(0); else if (R.rev && d === 'prev') grade(2); };
   document.addEventListener('keydown', onKey); document.addEventListener('touchstart', onTs, { passive: true }); document.addEventListener('touchend', onTe, { passive: true });
-  screen.cleanup = () => { document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); };
+  routeScreen.cleanup = () => { document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); };
 
   function reviewLabel(id: string, grade: number): string {
     const t = now(), next = cardNextReview(store.cardRec(id), grade, t);
@@ -133,7 +135,7 @@ ${sourceHtml({ source: c.source, u: c.ref })}
   function fin() {
     const rs = R.res, tot = rs[0] + rs[1] + rs[2];
     const sig = Object.values(store.getCards()).filter(r => r[3] >= 0 && r[4] > now()).map(r => r[4]).sort((a, b) => a - b)[0];
-    CRUN = null; screen.cleanup && screen.cleanup(); screen.cleanup = null;
+    CRUN = null; routeScreen.cleanup && routeScreen.cleanup(); routeScreen.cleanup = null;
     app.innerHTML = `<h1>Sesión terminada</h1>
     <div class="grid"><div class="stat"><b>${rs[2]}</b><span>lo sabía</span></div><div class="stat"><b>${rs[1]}</b><span>dudaba</span></div><div class="stat"><b>${rs[0]}</b><span>fallé</span></div><div class="stat"><b>${pct(rs[2], tot)}%</b><span>retención</span></div></div>
     <p class="sub">${rs[0] + rs[1] ? 'Las que fallaste o dudaste vuelven en 2 días.' : '¡Todas recordadas!'}${sig ? ' Próximo repaso: ' + new Date(sig).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short' }) + '.' : ''}</p>

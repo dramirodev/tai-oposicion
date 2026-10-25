@@ -2,7 +2,7 @@ import { questionNotice, sourceHtml } from '../study-ui.js';
 import * as store from '../core/store.js';
 import { esc, richHtml, shuffle, pct, normUi, hiliteHtml, claveSpans, pideNegativa, minLectura, velocidad, CONSEJOS_LECTURA } from '../core/logic.js';
 import { META, getMeta, temaName, now, pick, dueList, byIds } from '../core/data.js';
-import { $, app, L, ask, focusHeading, type El } from '../ui.js';
+import { $, app, legacyScope, L, ask, focusHeading, type El } from '../ui.js';
 import { TRAMPAS, TRAMPA_EXPL } from '../core/labels.js';
 export function registerTraining({ routes, go, route, pw }: any, screen: any) {
 let generation = 0;
@@ -13,6 +13,7 @@ const warning = (q: any) => questionNotice(q) + sourceHtml(q);
 
 // ───────── pregunta relámpago (enlace #/relampago, pensado para avisos) ─────────
 routes.relampago = async function () {
+  const { app, $, screen: routeScreen } = legacyScope(screen);
   const mine = generation; await getMeta(); if (mine !== generation) return; const st = store.getStats();
   const lucky = Object.keys(st).filter(id => (st[id][9] === 6 || st[id][9] === 8) && META[id]);
   const due = await dueList(); if (mine !== generation) return;
@@ -52,6 +53,7 @@ const mezclaIds = (grupos: any, resto: any, n = 40, rec = new Set()) => {
 
 // ───────── detective de trampas: ejercicio ─────────
 routes.trampas = async function () {
+  const { app, $, screen: routeScreen } = legacyScope(screen);
   const mine = generation; await getMeta(); if (mine !== generation) return;
   if (!TRUN) {
     const st = store.getStats();
@@ -121,6 +123,7 @@ routes.trampas = async function () {
 
 // ───────── lectura atenta: ejercicio ─────────
 routes.lectura = async function () {
+  const { app, $, screen: routeScreen } = legacyScope(screen);
   const mine = generation; await getMeta(); if (mine !== generation) return; const st = store.getStats();
   if (!LRUN) {
     const vel = velocidad(st).ids;
@@ -138,7 +141,7 @@ routes.lectura = async function () {
     LRUN = { items, k: 0, step: 0, res: [], mark: new Set() };
   }
   const R = LRUN; let gt: any = null;
-  screen.cleanup = () => clearInterval(gt);
+  routeScreen.cleanup = () => clearInterval(gt);
   const words = (t: any) => t.split(/(\s+)/);
   function draw() {
     clearInterval(gt);

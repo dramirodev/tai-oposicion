@@ -2,13 +2,14 @@ import * as sync from '../core/syncfacade.js';
 import * as store from '../core/store.js';
 import { esc, pct, quickN, velocidad } from '../core/logic.js';
 import { META, getIndex, getMeta, now, dueList } from '../core/data.js';
-import { $, app, guard, toast, type El } from '../ui.js';
+import { $, app, legacyScope, guard, toast, type El } from '../ui.js';
 import { state } from '../core/engine.js';
 import { BLOQUES } from '../core/labels.js';
 import { isFull, accessLevel } from '../core/access.js';
 export function registerHome({ routes, go, saludo, quickSession, startRepaso, openMenu, dominioTemas, falladasIds }: any, screen: any) {
 // ───────── inicio ─────────
 routes.home = async function () {
+  const { app, $, screen: routeScreen } = legacyScope(screen);
   const account = store.accountId();
   const idx = await getIndex(); await getMeta();
   if (account !== store.accountId()) return;
@@ -68,7 +69,7 @@ routes.home = async function () {
     $('#greq') && ($<El>('#greq').onclick = async e => { (e.target as El).disabled = true; (e.target as El).textContent = 'Enviando…'; if (!(await sync.requestAccess())) { paintNote(); toast('No se pudo enviar la solicitud. Inténtalo de nuevo.'); } });
   };
   const paintHola = () => { const h = $('#hola'); if (h) h.textContent = saludo(); };
-  paintNote(); screen.cleanup = sync.onStatus(() => { paintNote(); paintHola(); });
+  paintNote(); routeScreen.cleanup = sync.onStatus(() => { paintNote(); paintHola(); });
   $('#continue') && ($('#continue').onclick = () => go('#/quiz'));
   $('#quick').onclick = guard(() => quickSession());
   $('#rev') && ($('#rev').onclick = guard(startRepaso));
@@ -87,6 +88,7 @@ routes.home = async function () {
 
 // ───────── temas vistos ─────────
 routes.temario = async function () {
+  const { app, $, screen: routeScreen } = legacyScope(screen);
   const account = store.accountId();
   const idx = await getIndex(); await getMeta();
   if (account !== store.accountId()) return;
@@ -122,7 +124,7 @@ routes.temario = async function () {
     window.scrollTo(0, y);
   };
   let sig = store.getSeen().join();
-  screen.cleanup = store.onChange(() => { if (account !== store.accountId()) return; const n = store.getSeen().join(); if (n !== sig) { sig = n; redraw(); } });
+  routeScreen.cleanup = store.onChange(() => { if (account !== store.accountId()) return; const n = store.getSeen().join(); if (n !== sig) { sig = n; redraw(); } });
   draw();
 };
 

@@ -9,12 +9,12 @@ Banco: 15.666 preguntas (oficiales, academia y generadas; cada una muestra su or
 
 Versión **1.1.3**. Banco de **36 temas**, **15.666 preguntas**, **417 preguntas de supuestos** y
 **1.410 tarjetas curadas**. Las tarjetas marcadas `revisar: true` se excluyen del repaso y de la exportación.
-Comprobación local: **132 pruebas en 9 archivos aprobadas**, validación de tarjetas y compilación correctas.
+Comprobación local: **227 pruebas Vitest en 23 archivos aprobadas**, validación de tarjetas y compilación correctas.
 Esto no acredita el último despliegue ni sustituye las pruebas reales de login, sincronización e instalación en iOS.
 
 ## Organización del proyecto
 
-- `src/main.js`: arranque, navegación por rutas hash, motor de preguntas y simulacros.
+- `src/main.tsx` y `src/react/`: React 19, router hash, Layout, proveedor de diálogos y puente a las pantallas legacy en `src/main.ts`.
 - `src/screens/`: pantallas de inicio/temas vistos, tarjetas, entrenamientos, estadísticas y ajustes.
 - `src/core/data.ts`: carga y caché de preguntas, metadatos y selección; `src/ui.js`: avisos, confirmaciones y apariencia.
 - `src/core/labels.ts` y `src/core/version.ts`: etiquetas compartidas y versión de la app.
@@ -22,9 +22,9 @@ Esto no acredita el último despliegue ni sustituye las pruebas reales de login,
 - `src/core/store.ts`: progreso local, validación, repetición espaciada y copias de seguridad.
 - `src/core/config.ts`: validación por campos de las preferencias, conservadas al recargar y al exportar/importar.
 - `src/core/sync.ts`, `src/core/syncfacade.ts`, `src/core/syncstate.ts`: Firebase, carga bajo demanda y estado de sincronización.
-- `public/`: HTML, CSS, iconos, manifiesto PWA y service worker; `data/` contiene las preguntas y `cards/` las tarjetas.
+- `index.html`: entrada de Vite. `public/`: CSS, iconos, manifiesto PWA y service worker; `public/data/` y `public/cards/` contienen preguntas y tarjetas.
 - `scripts/`: compilación, validación y comprobación de fuentes de las tarjetas; `tools/`: utilidades auxiliares.
-- `tests/`: pruebas con Vitest; `docs/`: documentación de tarjetas y prompt de generación.
+- `tests/`: Vitest y Playwright; `docs/`: documentación del proyecto.
 - `.github/workflows/deploy.yml`: pruebas, compilación y publicación automática en Firebase.
 
 ## Desarrollo local
@@ -245,7 +245,7 @@ que Firebase. `npm run deploy` conserva sus validaciones y su despliegue manual 
 
 `npm run test:e2e` ejecuta Chromium y WebKit en 393×852, claro y oscuro, usando el banco real,
 Firebase sin configurar y almacenamiento aislado. Instalar antes: `npx playwright install chromium webkit`.
-Las 68 capturas se guardan en `tests/e2e/snapshots/`; solo el hash de compilación visible se enmascara.
+Las 68 referencias visuales de la fase 0 se guardan en `tests/e2e/snapshots/`; solo el hash de compilación visible se enmascara. La cobertura e2e completa tiene 80 casos, incluidos reanudación, limpieza del puente y el repintado de la misma ruta.
 Las referencias son específicas de plataforma: `npm run test:e2e:ci` reconstruye el commit de fase 0
 indicado en `tests/e2e/baseline-ref.txt` para obtener las referencias del runner y después compara la app
 actual con tolerancia cero. Sin ese fichero (fase 0), crea las referencias ausentes de esa plataforma.

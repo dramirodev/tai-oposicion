@@ -4,7 +4,7 @@ import { esc, normUi } from '../core/logic.js';
 import { getIndex } from '../core/data.js';
 import { inspectOffline, downloadOffline, type OfflineState } from '../core/offline.js';
 import { cleanCfg } from '../core/config.js';
-import { $, app, toast, ask, type El } from '../ui.js';
+import { $, app, legacyScope, toast, ask, type El } from '../ui.js';
 import { APP_VERSION, APP_BUILD } from '../core/version.js';
 import { isFull, accessLevel, devMode, setDevMode, devRevealed, revealDev } from '../core/access.js';
 // La previsualización usa los mismos validadores que la importación, sin modificar el almacén.
@@ -30,11 +30,12 @@ const count = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : 
 export function registerSettings({ routes, go, allCards, getNewVersion, checkUpdate, applyUpdate }: any, screen: any) {
 // ───────── ajustes ─────────
 routes.settings = async function () {
+  const { app, $, screen: routeScreen } = legacyScope(screen);
   let active = true, generation = 0, downloading = false;
   const routeAccount = store.accountId();
   const alive = () => active && store.accountId() === routeAccount;
   const offAccount = store.onAccountChange(() => { active = false; generation++; });
-  screen.cleanup = () => { active = false; offAccount(); };
+  routeScreen.cleanup = () => { active = false; offAccount(); };
   const idx = await getIndex();
   if (!alive()) return;
   let offline: OfflineState | null = null;
@@ -152,7 +153,7 @@ routes.settings = async function () {
     } finally { downloading = false; if (alive()) { $<El>('#dl').disabled = false; if (offline?.complete) $('#off').textContent = offlineHtml(); } }
   }
   const off = sync.onStatus(draw);
-  screen.cleanup = () => { active = false; generation++; off(); offAccount(); };
+  routeScreen.cleanup = () => { active = false; generation++; off(); offAccount(); };
   draw();
   void inspectOffline(idx).then(result => { if (alive() && !downloading) { offline = result; $('#off').textContent = offlineHtml(); } }).catch(() => { if (alive() && !downloading) $('#off').textContent = 'No se pudo comprobar la descarga. Este navegador puede tener el almacenamiento bloqueado.'; });
 };

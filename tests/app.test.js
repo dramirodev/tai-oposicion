@@ -20,7 +20,7 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
       return { ok: true, json: async () => data };
     } catch { return { ok: false, json: async () => null }; }
   });
-  await import('../src/main.js');
+  await import('../src/main.tsx');
   const waitText = async text => vi.waitFor(() => expect(document.querySelector('#app').textContent).toContain(text));
   const navigate = async (route, text) => { location.hash = '#/' + route; await waitText(text); };
   await waitText('Sesión rápida');

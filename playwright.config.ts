@@ -3,7 +3,9 @@ export default defineConfig({
   testDir: './tests/e2e',
   timeout: 30_000,
   fullyParallel: true,
-  workers: process.env.CI ? 2 : 3,
+  // WebKit shares Playwright's temporary trace directory across workers on
+  // macOS; one worker avoids ENOENT while parallel traces are packed.
+  workers: 1,
   reporter: 'list',
   snapshotPathTemplate: '{testDir}/snapshots/{projectName}/{arg}{ext}',
   expect: { toHaveScreenshot: { animations: 'disabled', maxDiffPixels: 0 } },

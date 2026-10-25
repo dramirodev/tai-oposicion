@@ -3,7 +3,8 @@ import * as sync from './core/syncfacade.js';
 import * as store from './core/store.js';
 import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, pickGuest, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from './core/logic.js';
 import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds } from './core/data.js';
-import { $, app, L, toast, ask, guard, focusHeading, type El } from './ui.js';
+import { $, app, legacyScope, bindLegacyHost, L, toast, ask, guard, focusHeading, type El } from './ui.js';
+import { showMenu, type MenuGroup } from './react/Dialogs.js';
 import { ORIGEN, TRAMPAS } from './core/labels.js';
 import { APP_VERSION, APP_BUILD } from './core/version.js';
 import { registerTraining } from './screens/training.js';
@@ -17,8 +18,14 @@ import { state, createRun, clearRun, saveRun, pendingRun, pendingPrompt, resumeR
 
 // ───────── router ─────────
 const routes: Record<string, any> = {};
-let cleanup: any = null;
-function go(h: any) { if (location.hash === h) route(); else location.hash = h; }
+let navigate: (h: string, refresh?: boolean) => void = h => { location.hash = h; };
+export function configureLegacyRouter(fn: (h: string, refresh?: boolean) => void): void { navigate = fn; }
+function go(h: string) { navigate(h); }
+function route() { navigate(location.hash || '#/home', true); }
+let recovery: Promise<boolean> | undefined;
+const recover = () => recovery ||= store.recover();
+let painted: () => void;
+export const firstLegacyPaint = new Promise<void>(resolve => { painted = resolve; });
 // animaciones: barra de progreso que crece desde el valor anterior, entrada de pantalla y nota que cuenta
 const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 let lastP = 0;
@@ -43,30 +50,35 @@ function saludo() {
   } catch (e) {}
   return n ? `Hola, ${n}` : 'Hola';
 }
-let routeSeq = 0;
-async function route() {
-  const my = ++routeSeq;
-  if (cleanup) { cleanup(); cleanup = null; }
-  let [, name, ...args] = (location.hash || '#/home').split('/');
-  paintNav();
-  if (!isFull() && !GUEST_ROUTES.has(name)) { name = 'home'; args = []; if (location.hash !== '#/home') history.replaceState(null, '', '#/home'); }
-  const sect = { quiz: state.run?.kind === 'sim' ? 'sim' : state.run?.kind === 'test' ? 'test' : 'home', result: state.last?.ses?.kind === 'sim' ? 'sim' : state.last?.ses?.kind === 'test' ? 'test' : 'home', sim2: 'sim', examenes: 'sim', errores: 'settings', falladas: 'home', cards: 'home' }[name] || name;
-  document.querySelectorAll<El>('nav a').forEach(a => { const on = a.dataset.r! === sect; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+/** React es dueño del contenedor; el HTML legacy solo escribe dentro de él. */
+export function renderLegacy(host: HTMLElement, pathname: string) {
+  const release = bindLegacyHost(host);
+  const { app, $ } = legacyScope();
+  let active = true;
+  let [, name, ...args] = pathname.split('/'); name ||= 'home';
   const f = routes[name] || routes.home;
-  lastP = 0;
-  window.scrollTo(0, 0);
-  const lt = setTimeout(() => { if (my === routeSeq) app.innerHTML = '<p class="sub loading" role="status">Cargando…</p>'; }, 120); // respuesta visible si los datos tardan
-  try { await getIndex(); await getMeta(); if (my !== routeSeq) return; await f(...args); clearTimeout(lt); if (my !== routeSeq) return; enter(); countUp(); const hd = app.querySelector<El>('h1'); if (hd) hd.tabIndex = -1; (hd || app).focus({ preventScroll: true }); if (state.run && name !== 'quiz' && name !== 'home') { const b = document.createElement('div'); b.className = 'note run'; b.innerHTML = `<b>${esc(state.run.titulo || 'Test')}</b> en curso · ${Math.min(state.run.idx + 1, state.run.items.length)}/${state.run.items.length} <button class="btn" id="resume">Continuar</button>`; app.prepend(b); $('#resume').onclick = () => go('#/quiz'); } } catch (e) { clearTimeout(lt); app.innerHTML = `<div class="card" role="alert"><h2>No se pudo cargar</h2><p>${navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button class="btn" id="retryRoute">Reintentar</button></div>`; $('#retryRoute').onclick = () => route(); console.error(e); }
+  lastP = 0; window.scrollTo(0, 0);
+  const lt = setTimeout(() => { if (active) app.innerHTML = '<p class="sub loading" role="status">Cargando…</p>'; }, 120);
+  const ready = (async () => {
+    try {
+      await recover(); await getIndex(); await getMeta(); if (!active) return;
+      await f(...args); if (!active) return;
+      clearTimeout(lt); enter(app); countUp();
+      const hd = app.querySelector<El>('h1'); if (hd) hd.tabIndex = -1;
+      (hd || app).focus({ preventScroll: true });
+      if (state.run && name !== 'quiz' && name !== 'home') {
+        const b = document.createElement('div'); b.className = 'note run';
+        b.innerHTML = `<b>${esc(state.run.titulo || 'Test')}</b> en curso · ${Math.min(state.run.idx + 1, state.run.items.length)}/${state.run.items.length} <button class="btn" id="resume">Continuar</button>`;
+        app.prepend(b); $('#resume').onclick = () => go('#/quiz');
+      }
+    } catch (e) {
+      if (!active) return;
+      app.innerHTML = `<div class="card" role="alert"><h2>No se pudo cargar</h2><p>${navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button class="btn" id="retryRoute">Reintentar</button></div>`;
+      $('#retryRoute').onclick = () => route(); console.error(e);
+    } finally { clearTimeout(lt); painted(); }
+  })();
+  return { ready, dispose() { active = false; clearTimeout(lt); release(); } };
 }
-window.addEventListener('hashchange', route);
-// Invitado: la barra inferior solo ofrece Inicio y Ajustes.
-function paintNav() {
-  const full = isFull();
-  document.querySelectorAll<El>('nav a').forEach(a => { a.style.display = full || GUEST_ROUTES.has(a.dataset.r!) ? '' : 'none'; });
-}
-// Si cambia el nivel de acceso (aprobación, cierre de sesión…) se repinta la pantalla en curso.
-let lastFull = isFull();
-sync.onStatus(() => { const f = isFull(); if (f !== lastFull) { lastFull = f; if (!state.run) route(); else paintNav(); } });
 
 // ───────── motor de preguntas ─────────
 function startRun(cfg: any) {
@@ -83,6 +95,7 @@ async function resumeSaved() {
 }
 
 routes.quiz = async function () {
+  const { app, $, screen: routeScreen } = legacyScope(screen);
   if (!state.run) return go('#/home');
   const R = state.run;
   let tick: any = null, closing = false, endConfirmation: AbortController | null = null;
@@ -123,7 +136,7 @@ routes.quiz = async function () {
   document.addEventListener('keydown', onKey);
   document.addEventListener('touchstart', onTs, { passive: true });
   document.addEventListener('touchend', onTe, { passive: true });
-  cleanup = () => { endConfirmation?.abort(); clearInterval(tick); clearInterval(R.gt); document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); };
+  routeScreen.cleanup = () => { endConfirmation?.abort(); clearInterval(tick); clearInterval(R.gt); document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); };
   draw();
 
   function draw() {
@@ -276,6 +289,7 @@ function simAnalisis({ ses, items, ans, times, limit }: any) {
   return `<h2>Ritmo y puntos</h2><div class="card">${pts.join('')}${tips.length ? `<ul class="tips">${tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}</div>`;
 }
 routes.result = async function () {
+  const { app, $, screen: routeScreen } = legacyScope(screen);
   if (!state.last) return go('#/home');
   const { ses, items, ans } = state.last;
   const ng = ses.f;
@@ -356,29 +370,13 @@ async function openMenu() {
       ['⚙', 'Ajustes', NEWV ? 'Hay una versión nueva' : 'Cuenta, apariencia, copia y versión ' + APP_VERSION, '#/settings'],
     ]],
   ];
-  const prev = document.activeElement, o = document.createElement('div');
-  o.id = 'menuov'; o.className = 'overlay'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.setAttribute('aria-labelledby', 'menut');
-  const acts: any[] = [];
-  o.innerHTML = `<div class="card menu"><div class="menuhead"><h2 id="menut">Menú</h2><button class="ghost" id="menux" aria-label="Cerrar menú">✕</button></div>
-    ${(isFull() ? G : GUEST_MENU(G)).map(([t, l]) => `<div class="gtitle">${esc(t)}</div><div class="lgroup">${l.map(([ic, n, sub, a]: any) => { const i = acts.push(a) - 1; return `<button class="lrow ${a === aqui ? 'here' : ''}" data-a="${i}" ${a === aqui ? 'aria-current="page"' : ''}><i aria-hidden="true">${ic}</i><span><b>${esc(n)}</b><small>${esc(sub)}</small></span></button>`; }).join('')}</div>`).join('')}</div>`;
-  const done = () => { document.removeEventListener('keydown', key, true); o.remove(); prev && (prev as El).focus && (prev as El).focus(); };
-  const key = (e: any) => {
-    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); done(); }
-    else if (e.key === 'Tab') { const bs = [...o.querySelectorAll<El>('button')], i = bs.indexOf(document.activeElement as any); e.preventDefault(); bs[(i + (e.shiftKey ? -1 : 1) + bs.length) % bs.length].focus(); }
-  };
-  o.onclick = e => {
-    if ((e.target as any) === o || (e.target as El).closest<El>('#menux')) return done();
-    const b = (e.target as El).closest<El>('[data-a]'); if (!b) return;
-    const a = acts[+b.dataset.a!]; done();
-    if (typeof a === 'function') a(); else go(a);
-  };
-  document.addEventListener('keydown', key, true);
-  document.body.append(o); $('#menux', o).focus();
+  await showMenu((isFull() ? G : GUEST_MENU(G)) as MenuGroup[], aqui, go);
 }
 
 // ───────── mis trampas ─────────
 // ───────── test por tema ─────────
 routes.test = async function () {
+  const { app, $, screen: routeScreen } = legacyScope(screen);
   const idx = await getIndex(); await getMeta();
   const cfg = store.getCfg().test || { sel: [], n: 15, mode: 'nuevas', o: ['O', 'A', 'G'] };
   const sel = new Set<string>(cfg.sel), org = new Set(cfg.o);
@@ -483,10 +481,12 @@ function listaExamenes() {
   return { sims, ofi, tests };
 }
 // «Exámenes» ya no es una pantalla aparte: son las pestañas «Por examen» y «Por tema» de Simulacros
-routes.examenes = async function () { store.setCfg('simtab', 'examen'); go('#/sim'); };
+routes.examenes = async function () {
+  const { app, $, screen: routeScreen } = legacyScope(screen); store.setCfg('simtab', 'examen'); go('#/sim'); };
 
 // ───────── simulacro ─────────
 routes.sim = async function () {
+  const { app, $, screen: routeScreen } = legacyScope(screen);
   const idx = await getIndex(); await getMeta();
   const cfg = Object.assign({ n: 80, min: 90, o: ['O', 'G'], parte2: true, scope: 'vistos' }, store.getCfg().sim || {});
   const seenN = store.getSeen().length;
@@ -574,6 +574,7 @@ async function simParte1(idx: any, org: any, N: any, only: any) {
 }
 // Parte 2 tras la parte 1: ofrece 2 supuestos
 routes.sim2 = async function () {
+  const { app, $, screen: routeScreen } = legacyScope(screen);
   const sup = await getSup();
   const ok = (Object.entries(sup) as [string, any][]).filter(([k, v]) => v.q.filter((x: any) => !x.r && x.np !== 1).length >= 18 && /libre/i.test(v.conv || '') && !/2018/.test(v.conv || ''));
   const two = shuffle(ok).slice(0, 2);
@@ -607,6 +608,7 @@ function reportBox(q: any, host: El) {
   show();
 }
 routes.errores = async function () {
+  const { app, $, screen: routeScreen } = legacyScope(screen);
   const flt = () => (store.getCfg().errf || 'abierto');
   const draw = async () => {
     const R = store.getReports(), f = flt();
@@ -631,18 +633,19 @@ routes.errores = async function () {
     };
   };
   let sig = JSON.stringify(store.getReports()) + (store.getCfg().errf || '');
-  cleanup = store.onChange(() => { const n = JSON.stringify(store.getReports()) + (store.getCfg().errf || ''); if (n !== sig) { sig = n; draw(); } });
+  routeScreen.cleanup = store.onChange(() => { const n = JSON.stringify(store.getReports()) + (store.getCfg().errf || ''); if (n !== sig) { sig = n; draw(); } });
   await draw();
 };
 
 
 // Las pantallas comparten navegación y limpieza; cada módulo conserva su estado de sesión.
-const screen = { get cleanup() { return cleanup; }, set cleanup(fn) { cleanup = fn; } };
+const screen = { get cleanup() { return legacyScope().screen.cleanup; }, set cleanup(fn) { legacyScope().screen.cleanup = fn; } };
 // ───────── preguntas falladas: buscar por texto o tema y releer el fragmento del temario ─────────
 const fold = (t: any) => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 routes.falladas = async function () {
+  const { app, $, screen: routeScreen } = legacyScope(screen);
   let active = true, tm: any;
-  cleanup = () => { active = false; clearTimeout(tm); };
+  routeScreen.cleanup = () => { active = false; clearTimeout(tm); };
   await getMeta();
   if (!active) return;
   const qs = (await byIds(falladasIds())).sort((a, b) => (store.rec(b.i)?.[2] || 0) - (store.rec(a.i)?.[2] || 0));
@@ -707,21 +710,31 @@ registerAcceso({ routes, go }, screen);
 registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate }, screen);
 
 // ───────── arranque ─────────
-(async function boot() {
-  try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch (e) {} // pide que el navegador no borre los datos locales
-  await store.recover(); // copia de seguridad en IndexedDB
-  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') store.flushNow(); });
-  addEventListener('pagehide', () => store.flushNow());
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').then(watchUpdates).catch(() => {});
-  await route(); // primer pintado sin esperar a Firebase
-  addEventListener('pagehide', saveRun); document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') saveRun(); });
-  resumeSaved().catch(() => {});
-  setTimeout(prefetchBanco, 4000);
-  const aviso = async () => { const n = await checkUpdate(); if (n) toast(`Hay una versión nueva (${n.version}).`, { label: 'Actualizar', fn: applyUpdate }); };
-  setTimeout(aviso, 6000);
-  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') aviso(); });
-  try { await getMeta(); await sync.init({ temaOf, idsOfTema }); } catch (e) { console.error(e); }
-})();
+export function bootLegacy(firstPaint = firstLegacyPaint): () => void {
+  const controller = new AbortController(), timers: ReturnType<typeof setTimeout>[] = [];
+  let stopped = false, offUpdates: (() => void) | undefined;
+  const listen = (target: EventTarget, event: string, fn: () => void) => target.addEventListener(event, fn, { signal: controller.signal });
+  const offAccount = store.onAccountChange(() => go('#/home'));
+  void (async () => {
+    try { navigator.storage?.persist?.(); } catch (e) {}
+    await recover(); if (stopped) return;
+    listen(document, 'visibilitychange', () => { if (document.visibilityState === 'hidden') store.flushNow(); });
+    listen(window, 'pagehide', () => { store.flushNow(); });
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').then(reg => {
+      if (!stopped) offUpdates = watchUpdates(reg);
+    }).catch(() => {});
+    await firstPaint; if (stopped) return;
+    listen(window, 'pagehide', saveRun);
+    listen(document, 'visibilitychange', () => { if (document.visibilityState === 'hidden') saveRun(); });
+    resumeSaved().catch(() => {});
+    timers.push(setTimeout(prefetchBanco, 4000));
+    const aviso = async () => { const n = await checkUpdate(); if (n && !stopped) toast(`Hay una versión nueva (${n.version}).`, { label: 'Actualizar', fn: applyUpdate }); };
+    timers.push(setTimeout(aviso, 6000));
+    listen(document, 'visibilitychange', () => { if (document.visibilityState === 'visible') void aviso(); });
+    try { await getMeta(); if (!stopped) await sync.init({ temaOf, idsOfTema }); } catch (e) { console.error(e); }
+  })();
+  return () => { stopped = true; controller.abort(); timers.forEach(clearTimeout); offAccount(); offUpdates?.(); };
+}
 
 // Descarga el banco en segundo plano (2 a la vez) para que Test, Simulacro y Repaso arranquen sin esperar a la red
 async function prefetchBanco() {
@@ -760,10 +773,10 @@ async function applyUpdate() {
 }
 
 // aviso de nueva versión del service worker
-function watchUpdates(reg: any) {
-  const ready = (w: any) => w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) toast('Hay una versión nueva.', { label: 'Actualizar', fn: applyUpdate }); });
+function watchUpdates(reg: ServiceWorkerRegistration): () => void {
+  const controller = new AbortController();
+  const ready = (w: ServiceWorker) => w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) toast('Hay una versión nueva.', { label: 'Actualizar', fn: applyUpdate }); }, { signal: controller.signal });
   if (reg.installing) ready(reg.installing);
-  reg.addEventListener('updatefound', () => reg.installing && ready(reg.installing));
+  reg.addEventListener('updatefound', () => reg.installing && ready(reg.installing), { signal: controller.signal });
+  return () => controller.abort();
 }
-
-store.onAccountChange(() => { go('#/home'); });

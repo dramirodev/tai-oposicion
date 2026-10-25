@@ -1,7 +1,7 @@
 import * as store from '../core/store.js';
 import { esc, shuffle, fmtT, pct, dominioCalc, aggregateWeeks, slowList, simHistory, compareSessions, MOTIVOS_FALLO, cargaRepasos, motivosFallo, suertes, velocidad, CONSEJOS_LECTURA } from '../core/logic.js';
 import { META, getIndex, getMeta, now, byIds } from '../core/data.js';
-import { $, app, L, toast, type El } from '../ui.js';
+import { $, app, legacyScope, L, toast, type El } from '../ui.js';
 import { dominioTemas, falladasIds }  from '../core/engine.js';
 import { ORIGEN, TRAMPAS, TIPOS } from '../core/labels.js';
 export function registerStats({ routes, go, trapTest, startRun, startRepaso }: any) {
@@ -133,6 +133,7 @@ async function paintSlow() {
 
 // ───────── estadísticas ─────────
 routes.stats = async function () {
+  const { app, $, screen: routeScreen } = legacyScope();
   const account = store.accountId();
   const idx = await getIndex(); await getMeta();
   if (account !== store.accountId()) return;
