@@ -254,6 +254,10 @@ export function setCfg(k: string, v: unknown): void {
   if (value === undefined) return;
   S.cfg[k] = value; persist(); emit();
 }
+export function replaceCfg(cfg: unknown): void {
+  S.cfg = cleanCfg(cfg);
+  persist(); emit();
+}
 export const rec = (id: string): StatRec | undefined => S.stats[id];
 export const temaDe = (): string | null => {
   // los ids no codifican el tema; se guarda el tema junto al registro en meta (ver main.js)
