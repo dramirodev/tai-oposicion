@@ -1,7 +1,7 @@
 // Control de acceso de la interfaz. Es cosmético: el banco de preguntas es un JSON público; lo que protegen
 // de verdad las reglas de Firestore es la sincronización y la gestión de accesos.
 import { accountId } from '../local/legacy-store.js';
-import { status } from '../../core/application/legacy-sync-state.js';
+import { status } from '../firebase/legacy-sync-state.js';
 import type { AccessLevel } from './types.js';
 export const OWNER = 'dramiro@gmail.com';
 const ACC = () => 'tai.acc:' + (accountId() || 'guest');

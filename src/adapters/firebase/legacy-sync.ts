@@ -12,7 +12,7 @@ import type { AccessLevel, AccessRequest, CardMap, ReportMap, SeenDoc, Session, 
 const enc = (id: string) => id.replace(/\./g, '~');
 const dec = (id: string) => id.replace(/~/g, '.');
 
-import { status, emit } from '../../core/application/legacy-sync-state.js';
+import { status, emit } from './legacy-sync-state.js';
 import { OWNER, rememberAccess } from '../legacy/access.js';
 
 let auth: Auth, db: Firestore, uid: string | null = null, timer: ReturnType<typeof setTimeout> | undefined, cardsT: ReturnType<typeof setTimeout> | undefined, retryT: ReturnType<typeof setTimeout> | undefined, retryN = 0, syncEpoch = 0, unsubs: Unsubscribe[] = [];
