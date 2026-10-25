@@ -8,6 +8,10 @@ import { $, legacyScope, toast, ask, type El } from '../../shared/ui/legacy-dom.
 import { APP_VERSION, APP_BUILD } from '../../app/build-info.js';
 import { isFull, accessLevel, devMode, setDevMode, devRevealed, revealDev } from '../../adapters/legacy/access.js';
 import { notifyAccessChange } from '../../app/access-events.js';
+import { exportAttemptArchive } from '../../core/application/attempts/export-attempt-archive.js';
+import { importAttemptArchive } from '../../core/application/attempts/import-attempt-archive.js';
+import { localAttemptRepository } from '../../adapters/local/attempt-repository.js';
+import { attemptArchiveMapper } from '../../adapters/local/mappers/attempt-archive.js';
 // La previsualización usa los mismos validadores que la importación, sin modificar el almacén.
 export function previewImport(txt: string) {
   if (txt.length > 20e6) throw new Error('Archivo no válido: supera 20 MB');
@@ -24,8 +28,16 @@ export function previewImport(txt: string) {
   }
   preserved += Object.keys(store.getStats()).filter(id => !stats[id]).length;
   const ignored = Object.keys(raw.stats).length - Object.keys(stats).length;
-  const serialized = JSON.stringify({stats,sessions,cards,reports,...(raw.seen ? {seen:store.cleanSeen(raw.seen)} : {}),...(raw.cfg ? {cfg:cleanCfg(raw.cfg)} : {})});
-  return {added,updated,preserved,ignored,serialized,sessions:sessions.length,cards:Object.keys(cards).length,reports:Object.keys(reports).length,settings:!!raw.cfg};
+  let attemptArchive;
+  let invalidAttempts = 0;
+  if (raw.attemptHistory !== undefined) {
+    const mapped = attemptArchiveMapper.toDomain(raw.attemptHistory);
+    if (!mapped.ok) throw new Error(`El historial de intentos de la copia no es válido: ${mapped.reason}`);
+    attemptArchive = mapped.value.archive;
+    invalidAttempts = mapped.value.invalidRecords;
+  }
+  const serialized = JSON.stringify({stats,sessions,cards,reports,...(raw.seen ? {seen:store.cleanSeen(raw.seen)} : {}),...(raw.cfg ? {cfg:cleanCfg(raw.cfg)} : {}),...(attemptArchive ? {attemptHistory:attemptArchiveMapper.toDto(attemptArchive)} : {})});
+  return {added,updated,preserved,ignored,serialized,attemptArchive,invalidAttempts,sessions:sessions.length,cards:Object.keys(cards).length,reports:Object.keys(reports).length,settings:!!raw.cfg};
 }
 const count = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 export function registerSettings({ routes, go, allCards, getNewVersion, checkUpdate, applyUpdate }: any, screen: any) {
@@ -114,7 +126,13 @@ routes.settings = async function () {
       const txt = '#separator:tab\n#html:false\n#tags column:4\n' + cs.map((c: any) => [f(c.q), f(c.a), f(c.ref || ''), f((c.t || '').replace('.', '_') + ' ' + (c.tipo || ''))].join('\t')).join('\n');
       const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([txt], { type: 'text/plain;charset=utf-8' })); a.download = 'tai-tarjetas-anki.txt'; a.click();
     });
-    $('#ex').onclick = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([store.exportAll()], { type: 'application/json' })); a.download = 'tai-progreso.json'; a.click(); };
+    $('#ex').onclick = async () => {
+      const attemptHistory = await exportAttemptArchive(localAttemptRepository, routeAccount || 'guest', Date.now());
+      if (!alive()) return;
+      const backup = JSON.parse(store.exportAll());
+      backup.attemptHistory = attemptArchiveMapper.toDto(attemptHistory);
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(backup)], { type: 'application/json' })); a.download = 'tai-progreso.json'; a.click();
+    };
     $<El>('#im').onchange = async e => {
       const file = (e.target as El).files?.[0], owner = store.accountId();
       if (!file || !alive()) return;
@@ -123,10 +141,14 @@ routes.settings = async function () {
         const txt = await file.text();
         if (!alive() || owner !== store.accountId()) return;
         const p = previewImport(txt);
-        const summary = `${count(p.added, 'pregunta nueva', 'preguntas nuevas')}, ${count(p.updated, 'pregunta actualizada', 'preguntas actualizadas')} y ${count(p.preserved, 'pregunta conservada', 'preguntas conservadas')}. ${count(p.sessions, 'sesión válida', 'sesiones válidas')}, ${count(p.cards, 'tarjeta válida', 'tarjetas válidas')} y ${count(p.reports, 'aviso válido', 'avisos válidos')}. ${count(p.ignored, 'registro de pregunta descartado por no ser válido', 'registros de preguntas descartados por no ser válidos')}.${p.settings ? ' También se importarán los ajustes válidos de la copia.' : ''}`;
+        const summary = `${count(p.added, 'pregunta nueva', 'preguntas nuevas')}, ${count(p.updated, 'pregunta actualizada', 'preguntas actualizadas')} y ${count(p.preserved, 'pregunta conservada', 'preguntas conservadas')}. ${count(p.sessions, 'sesión válida', 'sesiones válidas')}, ${count(p.cards, 'tarjeta válida', 'tarjetas válidas')} y ${count(p.reports, 'aviso válido', 'avisos válidos')}. ${count(p.attemptArchive?.attempts.length || 0, 'intento detallado', 'intentos detallados')}. ${count(p.ignored + p.invalidAttempts, 'registro descartado por no ser válido', 'registros descartados por no ser válidos')}.${p.settings ? ' También se importarán los ajustes válidos de la copia.' : ''}`;
         if (!(await ask(summary + ' ¿Combinar esta copia con tu progreso?', 'Importar copia'))) return;
         if (!alive() || owner !== store.accountId()) return;
         store.importAll(p.serialized);
+        if (p.attemptArchive) {
+          await importAttemptArchive(localAttemptRepository, owner || 'guest', p.attemptArchive);
+          if (!alive() || owner !== store.accountId()) return;
+        }
         importMessage = `Copia combinada: ${summary} Guardada en este dispositivo. ${sync.status.user ? 'Pendiente de sincronizar hasta que la cuenta confirme la sincronización.' : 'Pendiente de sincronizar hasta iniciar sesión con acceso aprobado.'}`;
         draw(); toast('Copia importada; el progreso anterior se conserva.');
       } catch (x: any) { if (alive()) { importMessage = x.message; draw(); toast(x.message); } }

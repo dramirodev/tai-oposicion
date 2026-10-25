@@ -64,3 +64,20 @@ Los destinos concretos se ajustarán al código real, sin introducir versiones p
 | `npm run test:e2e` | OK: 80 pruebas Chromium y WebKit; 17 rutas, modos claro/oscuro, invitado, SW/CSP/offline. |
 
 Las capturas y E2E son emulación Playwright. No acreditan una prueba física de Safari/iPadOS, sincronización real entre dispositivos ni revisión editorial humana.
+
+## Fase 1 — Historial por intento
+
+- El historial detallado vive separado de `tai.v1` en IndexedDB y se particiona por ámbito (cuenta o invitado). El formato de progreso agregado, copias existentes y las claves anteriores no cambian.
+- Cada intento guarda su pregunta y revisión, modalidad, sesión, posición/exposición, estado terminal, respuesta, señales explícitas y eventos idempotentes. Las transiciones de dominio no realizan IO.
+- El motor legado conserva su puntuación y selección. El seguimiento es opcional y se adjunta solo a sesiones nuevas; las sesiones antiguas siguen reanudándose sin eventos retroactivos inventados.
+- El tiempo activo usa marcas monotónicas durante una ejecución y los intervalos visibles/pausados; tras interrupción la calidad se considera parcial cuando no se puede probar el intervalo final.
+- El respaldo de ajustes conserva el objeto anterior e incorpora el bloque opcional `attemptHistory` versionado. La importación fusiona por IDs estables y el progreso antiguo se sigue importando con el mapper anterior.
+- La sincronización Firebase es por UID y con listeners cancelables. Eventos terminales se escriben antes que su proyección; para conflictos `answered`/`revealed` gana determinísticamente el menor ID de evento y se conserva evidencia de ambos eventos. Una cola por intento evita carreras entre creación, evento y proyección.
+- El borrado del historial detallado usa tombstone por ámbito; no borra progreso agregado. Las páginas locales usan cursor opaco y las lecturas de eventos remotos se limitan a la página del intento.
+- Medición sintética reproducible: `npm run measure:attempts` genera 10.000 intentos, 30.000 eventos y 500 sesiones (20 intentos por sesión): 9.541.952 bytes JSON y 514.285 bytes gzip. Es una estimación de formato, no un tamaño observado de cuentas reales.
+
+### Verificación de fase 1
+
+Vitest cubre transiciones, eventos duplicados/conflictivos, mapper ida/vuelta, persistencia IndexedDB, importación/exportación y sincronización Firebase con mocks. Playwright cubre la creación y recuperación local en Chromium/WebKit. `npm run typecheck`, `npm run lint`, `npm run lint:ignore-growth`, `npm test`, `npm run build`, `node scripts/validate_cards.mjs` y `npm run test:e2e` pasan después del cierre de esta fase.
+
+No se ejecutó el emulador de Firestore Rules: el entorno no tiene Java Runtime. Por tanto, las reglas nuevas se revisaron en código pero no se afirma que estén probadas contra el emulador ni contra Firebase real. Tampoco se hizo sincronización entre dispositivos ni una prueba física de Safari/iPadOS.

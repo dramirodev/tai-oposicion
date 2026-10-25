@@ -11,6 +11,24 @@ async function start(page: Page) {
   await page.goto('/#/home'); await expect(page.locator('#quick')).toBeVisible();
   return errors;
 }
+async function savedAttemptHistory(page: Page) {
+  return page.evaluate(() => new Promise<{ attempts: number; sessions: number; events: string[] }>((resolve, reject) => {
+    const request = indexedDB.open('tai-attempts', 2);
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => {
+      const tx = request.result.transaction(['attempts', 'sessions', 'events'], 'readonly');
+      const attempts = tx.objectStore('attempts').getAll();
+      const sessions = tx.objectStore('sessions').getAll();
+      const events = tx.objectStore('events').getAll();
+      tx.oncomplete = () => resolve({
+        attempts: attempts.result.length,
+        sessions: sessions.result.length,
+        events: events.result.map((row: { value: { type: string } }) => row.value.type),
+      });
+      tx.onerror = () => reject(tx.error);
+    };
+  }));
+}
 test('guarda en pagehide y reanuda la sesión y el progreso tras recargar', async ({ page }) => {
   const errors = await start(page);
   await page.locator('#quick').click();
@@ -19,11 +37,13 @@ test('guarda en pagehide y reanuda la sesión y el progreso tras recargar', asyn
   await expect(page.locator('#app h1')).toContainText('pregunta 2');
   const before = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.v1:guest')!).stats);
   expect(Object.keys(before)).toHaveLength(1);
+  await expect.poll(async () => (await savedAttemptHistory(page)).events).toContain('answer');
   await page.reload();
   await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
   await page.locator('.overlay [data-v="1"]').click();
   await expect(page.locator('#app h1')).toContainText('pregunta 2');
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('tai.v1:guest')!).stats)).toEqual(before);
+  expect(await savedAttemptHistory(page)).toMatchObject({ attempts: 10, sessions: 1 });
   await page.locator('#exit').click();
   await page.goto('/#/home');
   await expect(page.locator('#quick')).toBeVisible();

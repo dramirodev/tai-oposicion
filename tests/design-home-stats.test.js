@@ -2,7 +2,7 @@ import 'fake-indexeddb/auto';
 import { beforeEach, afterEach, it, expect, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-vi.mock('../src/adapters/firebase/sync-facade.js', () => ({ status: { user:null,state:'sin sesión',configured:false,reqs:[] }, onStatus:()=>()=>{} }));
+vi.mock('../src/adapters/firebase/sync-facade.js', () => ({ status: { user:null,state:'sin sesión',configured:false,reqs:[] }, setAttemptRepository:()=>{}, onStatus:()=>()=>{} }));
 let routes, store, engine, screen;
 beforeEach(async () => {
   vi.resetModules(); localStorage.clear();

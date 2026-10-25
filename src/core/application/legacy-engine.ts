@@ -15,6 +15,8 @@ import {
 import { selectSpacedReviews } from '../domain/spaced-repetition.js';
 import { calculateTrapRates, selectTrapQuestions } from '../domain/traps.js';
 import type { Index, Question, Session, SessionKind } from '../../adapters/legacy/types.js';
+import type { AttemptIntent } from '../domain/attempts/transitions.js';
+import type { AttemptTracker } from '../ports/AttemptTracker.js';
 
 // ───────── sesión en curso ─────────
 export interface RunCfg {
@@ -26,6 +28,7 @@ export interface Run extends RunCfg {
   since?: number | null; base?: number; tIdx?: number; q0?: number; qT0?: number; gt?: ReturnType<typeof setInterval>;
   review?: number[];
   luck?: Record<number, number>; fast?: Record<number, [number, number]>;
+  attemptScope?: string; attemptSessionId?: string; attemptIds?: string[]; attemptTrackingPaused?: boolean;
 }
 /** Último resultado, para la pantalla de resultados. */
 export interface LastResult { ses: Session & { porTiempo?: boolean }; items: Question[]; ans: (number | undefined)[]; times: (number | undefined)[]; limit: number }
@@ -35,6 +38,13 @@ const subscribers = new Set<() => void>();
 export function subscribe(fn: () => void): () => void {
   subscribers.add(fn);
   return () => { subscribers.delete(fn); };
+}
+let attemptTracker: AttemptTracker | null = null;
+export function setAttemptTracker(tracker: AttemptTracker | null): void { attemptTracker = tracker; }
+export function flushAttemptTracking(): Promise<void> { return attemptTracker?.flush() || Promise.resolve(); }
+function recordAttempt(R: Run, intent: AttemptIntent, index = R.idx): void {
+  const attemptId = R.attemptIds?.[index];
+  if (attemptTracker && R.attemptScope && attemptId) attemptTracker.record(R.attemptScope, attemptId, intent);
 }
 // El puente aún escribe en Run directamente. Observar objetos y arrays permite
 // avisar también de esas mutaciones sin cambiar ni el motor ni sus consumidores.
@@ -77,11 +87,19 @@ export const hasActiveRun = (): boolean => engineState.run !== null;
 const questionAllowed = (question: Question, origins: Set<string>): boolean =>
   isQuestionAllowed(question.o, 'r' in question ? question.r : undefined, origins);
 
-export function clearActiveRun(): void { engineState.run = null; }
+export function clearActiveRun(): void {
+  const run = engineState.run;
+  if (run?.attemptSessionId && run.attemptScope && attemptTracker) {
+    if (run.tIdx === run.idx && run.attemptIds?.[run.idx] && !run.attemptTrackingPaused) recordAttempt(run, { type: 'close' });
+    attemptTracker.closeSession(run.attemptScope, run.attemptSessionId, 'interrupted', now());
+  }
+  engineState.run = null;
+}
 export function clearLastResult(): void { engineState.last = null; }
 export function setQuestionIndex(index: number): boolean {
   const run = engineState.run;
   if (!run || run.paused || !Number.isInteger(index) || index < 0 || index >= run.items.length) return false;
+  if (run.idx !== index && run.tIdx === run.idx) recordAttempt(run, { type: 'leave' });
   run.idx = index;
   return true;
 }
@@ -97,6 +115,7 @@ export function toggleReviewQuestion(): boolean {
 export function setRunPaused(paused: boolean): boolean {
   const run = engineState.run;
   if (!run) return false;
+  if (run.paused !== paused) recordAttempt(run, { type: paused ? 'pause' : 'resume' });
   run.paused = paused;
   return true;
 }
@@ -104,6 +123,7 @@ export function toggleDeferredBlank(): boolean {
   const run = engineState.run;
   if (!run || run.feedback || run.paused) return false;
   run.ans[run.idx] = run.ans[run.idx] === -1 ? undefined : -1;
+  if (run.ans[run.idx] === -1) recordAttempt(run, { type: 'mark-pending' });
   return true;
 }
 export function startCurrentQuestion(t = Date.now()): void {
@@ -112,6 +132,14 @@ export function startCurrentQuestion(t = Date.now()): void {
   run.tIdx = run.idx;
   run.q0 = run.secs;
   run.qT0 = t;
+  if (!run.paused && !run.attemptTrackingPaused) recordAttempt(run, { type: 'open' });
+}
+/** Pauses only the recorded active-time interval; it does not change the study timer. */
+export function setAttemptTrackingVisible(visible: boolean): void {
+  const run = engineState.run;
+  if (!run || run.attemptTrackingPaused === !visible) return;
+  run.attemptTrackingPaused = !visible;
+  if (run.tIdx === run.idx) recordAttempt(run, { type: visible ? 'resume' : 'pause' });
 }
 export function tickCurrentRun(t = Date.now()): void { if (engineState.run) tickRun(engineState.run, t); }
 export const currentSecondsRemaining = (): number => engineState.run ? segundosRestantes(engineState.run) : Infinity;
@@ -128,12 +156,31 @@ export function finishCurrentRun(reason: 'complete' | 'interrupted' | 'timeout' 
 export function createRun(cfg: RunCfg): Run | null {
   const items = filterScoringQuestions(cfg.items, cfg.feedback, question => question.np);
   if (!items.length) return null;
-  return (engineState.run = observable({ ...cfg, items, idx: 0, ans: [], t0: now(), secs: 0, paused: false }));
+  const createdAt = now();
+  const run = { ...cfg, items, idx: 0, ans: [], t0: createdAt, secs: 0, paused: false } as Run;
+  if (attemptTracker && items.every(question => question.i && META[question.i])) {
+    const scope = store.accountId() || 'guest';
+    const tracking = attemptTracker.beginSession(
+      scope,
+      cfg.kind === 'sim' ? 'simulation' : 'practice',
+      createdAt,
+      items.map((question, position) => ({
+        questionId: question.i,
+        contentRevision: '',
+        position,
+        exposure: Math.max(1, (store.rec(question.i)?.[0] || 0) + 1),
+      })),
+    );
+    run.attemptScope = scope;
+    run.attemptSessionId = tracking.session.id;
+    run.attemptIds = tracking.attempts.map(attempt => attempt.id);
+  }
+  return (engineState.run = observable(run));
 }
 
 // La sesión en curso se guarda para sobrevivir al cierre de la app por iOS (solo sesiones del banco, no los supuestos)
 const runKey = () => 'tai.run:' + (store.accountId() || 'guest');
-store.onAccountChange(() => { engineState.run = null; engineState.last = null; });
+store.onAccountChange(() => { clearActiveRun(); engineState.last = null; });
 const closedRuns = new WeakSet<Run>();
 const MAX_EDAD = 2 * 86400000;
 export function clearRun(): void { try { localStorage.removeItem(runKey()); } catch {} }
@@ -141,11 +188,12 @@ export function saveRun(): void {
   const R = engineState.run;
   if (!R || R.supTexto || !R.items.every(q => q.i && META && META[q.i])) return;
   const { kind, feedback, titulo, limit, idx, ans, times, secs, porTiempo, review } = R;
-  try { localStorage.setItem(runKey(), JSON.stringify({ kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: R.items.map(q => q.i), review: review || [], savedAt: Date.now() })); } catch {}
+  try { localStorage.setItem(runKey(), JSON.stringify({ kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: R.items.map(q => q.i), review: review || [], savedAt: Date.now(), ...(R.attemptScope ? { attemptScope: R.attemptScope } : {}), ...(R.attemptSessionId ? { attemptSessionId: R.attemptSessionId } : {}), ...(R.attemptIds ? { attemptIds: R.attemptIds } : {}) })); } catch {}
 }
 interface SavedRun {
   kind: SessionKind; feedback?: boolean; titulo?: string; limit?: number; idx: number; ans?: (number | null)[]; times?: (number | null)[];
   secs?: number; pt?: boolean; review?: number[]; ids: string[]; savedAt?: number;
+  attemptScope?: string; attemptSessionId?: string; attemptIds?: string[];
 }
 export interface PendingRun { saved: SavedRun; items: Question[]; account: string | null }
 /** Sesión guardada que se puede retomar; descarta (y borra) la caducada o incoherente. */
@@ -163,7 +211,15 @@ export async function pendingRun(full: boolean): Promise<PendingRun | null> {
 export function resumeRun({ saved: s, items, account }: PendingRun): Run | null {
   if (account !== store.accountId()) return null;
   const un = <T>(a?: (T | null)[]): (T | undefined)[] => Array.from(a || [], x => x === null ? undefined : x);
-  return (engineState.run = observable({ kind: s.kind, feedback: !!s.feedback, titulo: s.titulo, limit: s.limit || 0, porTiempo: !!s.pt, items, idx: s.idx, ans: un(s.ans), times: un(s.times), t0: now(), secs: s.secs || 0, paused: false, review: (Array.isArray(s.review) ? s.review : []).filter(i => Number.isInteger(i) && i >= 0 && i < items.length) }));
+  const expectedScope = account || 'guest';
+  const hasTracking = s.attemptScope === expectedScope
+    && typeof s.attemptSessionId === 'string'
+    && Array.isArray(s.attemptIds)
+    && s.attemptIds.length === items.length
+    && s.attemptIds.every(id => typeof id === 'string');
+  const run = { kind: s.kind, feedback: !!s.feedback, titulo: s.titulo, limit: s.limit || 0, porTiempo: !!s.pt, items, idx: s.idx, ans: un(s.ans), times: un(s.times), t0: now(), secs: s.secs || 0, paused: false, review: (Array.isArray(s.review) ? s.review : []).filter(i => Number.isInteger(i) && i >= 0 && i < items.length), ...(hasTracking ? { attemptScope: s.attemptScope, attemptSessionId: s.attemptSessionId, attemptIds: s.attemptIds!.slice() } : {}) } as Run;
+  if (run.attemptSessionId && run.attemptScope && run.attemptIds) attemptTracker?.resumeSession(run.attemptScope, run.attemptSessionId, run.attemptIds);
+  return (engineState.run = observable(run));
 }
 
 // ───────── tiempo y respuestas ─────────
@@ -181,6 +237,8 @@ export function answerQuestion(R: Run, q: Question, i: number, minLect: number):
   R.ans[R.idx] = i;
   (R.luck ||= {})[R.idx] = store.rec(q.i)?.[9] || 0;
   (R.fast ||= {})[R.idx] = [Math.round((Date.now() - (R.qT0 ?? Date.now())) / 1000), minLect];
+  if (i === -1) recordAttempt(R, { type: 'mark-pending' });
+  else recordAttempt(R, { type: 'answer', optionIndex: i, outcome: i === q.c ? 'correct' : 'wrong' });
   store.record(q.i, q.t, i === -1 ? 2 : i === q.c ? 1 : 0, now(), i === -1 ? undefined : Math.max(1, R.secs - (R.q0 ?? 0)));
 }
 /** Respuesta en modo examen (sin corrección): se guarda al terminar. */
@@ -188,6 +246,9 @@ export function answerDeferred(R: Run, i: number): void {
   if (engineState.run !== R) return;
   R.ans[R.idx] = i;
   (R.times ||= [])[R.idx] = Math.max(1, R.secs - (R.q0 ?? 0));
+  const q = R.items[R.idx];
+  if (i === -1) recordAttempt(R, { type: 'mark-pending' });
+  else recordAttempt(R, { type: 'answer', optionIndex: i, outcome: i === q.c ? 'correct' : 'wrong' });
 }
 
 /** Cierra la sesión: puntúa, guarda en el progreso y deja el resultado en `engineState.last`. null = no se contestó nada. */
@@ -195,6 +256,10 @@ export function finishRun(R: Run, reason: 'complete' | 'interrupted' | 'timeout'
   if (closedRuns.has(R) || engineState.run !== R) return null;
   closedRuns.add(R);
   clearRun();
+  if (R.attemptSessionId && R.attemptScope && attemptTracker) {
+    if (R.tIdx === R.idx && R.attemptIds?.[R.idx] && !R.attemptTrackingPaused) recordAttempt(R, { type: 'close' });
+    attemptTracker.closeSession(R.attemptScope, R.attemptSessionId, reason === 'interrupted' ? 'interrupted' : 'completed', now());
+  }
   // «por tiempo»: solo cuentan las preguntas que llegaste a contestar (la que estaba abierta al acabar el tiempo no)
   let hechas = R.items.length;
   if (R.porTiempo) { hechas = 0; R.ans.forEach((x, k) => { if (x !== undefined) hechas = k + 1; }); if (!hechas) { engineState.run = null; return null; } }

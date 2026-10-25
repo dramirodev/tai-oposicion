@@ -1,10 +1,20 @@
 // Fachada de la sincronización: el SDK de Firebase se carga bajo demanda (import dinámico) tras el primer pintado.
 import { status, onStatus, emit } from './legacy-sync-state.js';
 import type { AccessRequest } from '../legacy/types.js';
+import type { AttemptRepository } from '../../core/ports/AttemptRepository.js';
 export { status, onStatus };
 type Mod = typeof import('./legacy-sync.js');
 let mod: Mod | null = null, loading: Promise<Mod> | null = null;
-const load = (): Promise<Mod> => (loading ||= import('./legacy-sync.js').then(m => (mod = m), e => { loading = null; status.state = 'sin conexión'; emit(); throw e; }));
+let attemptRepository: AttemptRepository | null = null;
+const load = (): Promise<Mod> => (loading ||= import('./legacy-sync.js').then(m => {
+  mod = m;
+  if (attemptRepository) m.setAttemptRepository(attemptRepository);
+  return m;
+}, e => { loading = null; status.state = 'sin conexión'; emit(); throw e; }));
+export function setAttemptRepository(repository: AttemptRepository): void {
+  attemptRepository = repository;
+  if (mod) mod.setAttemptRepository(repository);
+}
 // Si el módulo ya está cargado se llama de forma síncrona: signInWithPopup necesita ejecutarse dentro del gesto del usuario.
 const call = <R>(f: (m: Mod) => R): R | Promise<R> => (mod ? f(mod) : load().then(f));
 export const init = (m: Parameters<Mod['init']>[0]) => load().then(x => x.init(m));

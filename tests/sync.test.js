@@ -13,6 +13,8 @@ vi.mock('firebase/firestore', () => ({
   initializeFirestore: () => ({}), persistentLocalCache: () => ({}), persistentMultipleTabManager: () => ({}),
   doc: (_db, ...parts) => { if (parts.some(x => typeof x !== 'string')) throw new Error('ruta con uid inválido'); return { path: parts.join('/') }; },
   collection: (_db, ...parts) => ({ path: parts.join('/') }), query: ref => ref, orderBy: () => ({}), limit: () => ({}),
+  documentId: () => '__name__', where: () => ({}), startAfter: () => ({}),
+  getDoc: async () => ({ exists: () => false, data: () => undefined }), getDocs: async () => ({ docs: [] }),
   onSnapshot: (ref, cb) => { boundary.snapshots.push({ ref, cb }); return () => {}; },
   setDoc: async (ref, value) => { boundary.writes.push({ path: ref.path, value }); },
   deleteDoc: async ref => { boundary.writes.push({ path: ref.path, deleted: true }); },
@@ -108,6 +110,23 @@ it('no publica el progreso de la cuenta anterior en la cuenta nueva', async () =
   const stats=boundary.snapshots.filter(x=>x.ref.path==='users/friend1/stats').at(-1);
   stats.cb({forEach:()=>{}});
   expect(boundary.writes.filter(x=>x.path==='users/friend1/stats/T1.01')).toEqual([]);
+});
+it('monta y cancela la sincronización del historial con el ámbito de cada cuenta', async () => {
+  const repository = {
+    subscribe: vi.fn(() => () => {}),
+    getScopePage: async () => ({ attempts: [], nextCursor: null }),
+    getScopeTombstone: async () => undefined,
+  };
+  sync.setAttemptRepository(repository);
+  sync.retry();
+  expect(paths()).toContain('users/user1/attempts');
+  expect(paths()).toContain('users/user1/attemptSessions');
+  const oldAccountListener = boundary.snapshots.find(x => x.ref.path === 'users/user1/attempts');
+  user('user2');
+  oldAccountListener.cb({ docs: [] });
+  expect(repository.subscribe).toHaveBeenCalledWith('user1', expect.any(Function));
+  expect(paths()).toContain('users/user2/attempts');
+  expect(repository.subscribe).toHaveBeenCalledTimes(2);
 });
 it('No lo sé conserva la racha como el blanco que puntúa el resultado', async () => {
   const engine=await import('../src/core/application/legacy-engine.js');

@@ -15,7 +15,7 @@ import { registerHome } from '../features/home/legacy.js';
 import { registerSettings } from '../features/settings/legacy.js';
 import { registerAcceso } from '../features/access/legacy.js';
 import { isFull, isOwner, GUEST_ROUTES } from '../adapters/legacy/access.js';
-import { getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, quickItems, repasoItems, trapTest, falladasIds } from '../core/application/legacy-engine.js';
+import { getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds } from '../core/application/legacy-engine.js';
 import { dominioTemas } from './legacy-topic-mastery.js';
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
@@ -735,8 +735,12 @@ export function bootLegacy(firstPaint = firstLegacyPaint): () => void {
   void (async () => {
     try { navigator.storage?.persist?.(); } catch (e) {}
     await recover(); if (stopped) return;
-    listen(document, 'visibilitychange', () => { if (document.visibilityState === 'hidden') store.flushNow(); });
-    listen(window, 'pagehide', () => { store.flushNow(); });
+    listen(document, 'visibilitychange', () => {
+      const visible = document.visibilityState === 'visible';
+      setAttemptTrackingVisible(visible);
+      if (!visible) { store.flushNow(); void flushAttemptTracking(); }
+    });
+    listen(window, 'pagehide', () => { setAttemptTrackingVisible(false); store.flushNow(); void flushAttemptTracking(); });
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js').then(reg => {
       if (!stopped) offUpdates = watchUpdates(reg);
     }).catch(() => {});
