@@ -2,6 +2,7 @@
 import type { Origin, Question, Session, StatMap, StatRec } from '../adapters/legacy/types.js';
 import { analyzeSimulation, simulationPace } from '../core/domain/simulation-analysis.ts';
 import { countReviewsByDay, selectSpacedReviews } from '../core/domain/spaced-repetition.ts';
+import { calculateTrapRates, selectTrapQuestions } from '../core/domain/traps.ts';
 export { calculateExamScore as nota } from '../core/domain/scoring.ts';
 
 type Rnd = () => number;
@@ -150,27 +151,29 @@ export function compareSessions(a: Session, b: Session) {
 // ── Mis trampas ──
 // trapsOf(id) → lista de ids de trampa de la pregunta. Devuelve las trampas con más fallos (≥ min respuestas).
 export function trapRates(stats: StatMap, trapsOf: (id: string) => (number | string)[] | undefined, min = 5) {
-  const T: Record<string, { k: number; n: number; err: number }> = {};
-  for (const id in stats) {
-    const r = stats[id]; const err = r[0] - r[1];
-    for (const k of trapsOf(id) || []) { const b = T[k] ||= { k: +k, n: 0, err: 0 }; b.n += r[0]; b.err += err; }
-  }
-  return Object.values(T).filter(x => x.n >= min).map(x => ({ ...x, rate: x.err / x.n })).sort((a, b) => b.rate - a.rate || b.n - a.n);
+  const statistics: Record<string, { attempts: number; correct: number }> = {};
+  for (const id in stats) statistics[id] = { attempts: stats[id][0], correct: stats[id][1] };
+  return calculateTrapRates(statistics, trapsOf, min).map(rate => ({
+    k: +rate.trapId,
+    n: rate.responseCount,
+    err: rate.errorCount,
+    rate: rate.errorRate,
+  }));
 }
 // cands: preguntas con `x` (lista de trampas); rec(id) → registro. Prioridad: falladas la última vez, luego nunca vistas, luego el resto;
 // dentro de cada grupo, primero las que reúnen más trampas objetivo.
 export function pickTrampas(cands: Question[], rec: (id: string) => StatRec | undefined, targets: (number | string)[], N: number, rnd: Rnd = Math.random): Question[] {
-  const tg = new Set(targets.map(Number));
-  const score = (q: Question) => (q.x || []).filter(k => tg.has(+k)).length;
-  const tier = (q: Question) => { const r = rec(q.i); return r && r[5] === 0 ? 0 : !r ? 1 : 2; };
-  const g: Question[][] = [[], [], []];
-  for (const q of cands) if (score(q)) g[tier(q)].push(q);
-  const out: Question[] = [];
-  for (const grp of g) {
-    const byScore: Record<number, Question[]> = {}; for (const q of grp) (byScore[score(q)] ||= []).push(q);
-    for (const s of Object.keys(byScore).sort((a, b) => +b - +a)) out.push(...shuffle(byScore[+s], rnd));
-  }
-  return out.slice(0, N);
+  const questions = cands.map(question => ({ id: question.i, trapIds: question.x || [], question }));
+  return selectTrapQuestions(
+    questions,
+    id => {
+      const record = rec(id);
+      return record ? { lastResult: record[5] } : undefined;
+    },
+    targets,
+    N,
+    rnd,
+  ).map(candidate => candidate.question);
 }
 
 // ── Informes de errores del banco ──
