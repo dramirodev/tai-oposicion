@@ -30,6 +30,10 @@ export function findAddedCoverage(current, baseline, files) {
     && !baseline.some(pattern => matches(pattern, file)));
 }
 
+export function chooseBaselineRef(candidates, hasConfig) {
+  return candidates.find(hasConfig);
+}
+
 function trackedFiles(ref) {
   const previous = execFileSync('git', ['ls-tree', '-r', '--name-only', ref], { encoding: 'utf8' });
   const current = execFileSync('git', ['ls-files', '-co', '--exclude-standard'], { encoding: 'utf8' });
@@ -37,7 +41,18 @@ function trackedFiles(ref) {
 }
 
 function main() {
-  const base = process.env.LINT_BASE_REF || 'HEAD^';
+  const candidates = process.env.LINT_BASE_REF
+    ? [process.env.LINT_BASE_REF]
+    : ['HEAD^', 'HEAD^2', 'HEAD~2', 'origin/migracion-react'];
+  const base = chooseBaselineRef(candidates, ref => {
+    try {
+      execFileSync('git', ['cat-file', '-e', `${ref}:eslint.config.mjs`], { stdio: 'ignore' });
+      return true;
+    } catch {
+      return false;
+    }
+  });
+  if (!base) throw new Error(`No se encontró eslint.config.mjs en las referencias: ${candidates.join(', ')}`);
   const previous = execFileSync('git', ['show', `${base}:eslint.config.mjs`], { encoding: 'utf8' });
   const current = readFileSync('eslint.config.mjs', 'utf8');
   const added = findAddedCoverage(readIgnoreList(current), readIgnoreList(previous), trackedFiles(base));

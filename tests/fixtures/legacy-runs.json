@@ -1,0 +1,17 @@
+{
+  "practiceAnswered": {
+    "kind": "test", "feedback": true, "titulo": "Práctica antigua", "limit": 0,
+    "idx": 0, "ans": [0], "times": [], "secs": 25, "pt": false,
+    "ids": ["TAI2024B-P1-01"], "review": [], "savedAt": 1792929600000
+  },
+  "practicePending": {
+    "kind": "test", "feedback": true, "titulo": "Práctica antigua", "limit": 0,
+    "idx": 0, "ans": [], "times": [], "secs": 12, "pt": false,
+    "ids": ["TAI2024B-P1-01"], "review": [], "savedAt": 1792929600000
+  },
+  "simulationInProgress": {
+    "kind": "sim", "feedback": false, "titulo": "Simulacro antiguo", "limit": 90,
+    "idx": 0, "ans": [null], "times": [25], "secs": 25, "pt": true,
+    "ids": ["TAI2024B-P1-01"], "review": [0], "savedAt": 1792929600000
+  }
+}

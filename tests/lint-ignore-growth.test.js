@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { findAddedCoverage, findAddedIgnores, readIgnoreList } from '../scripts/lint-ignore-growth.mjs';
+import { findAddedCoverage, findAddedIgnores, readIgnoreList, chooseBaselineRef } from '../scripts/lint-ignore-growth.mjs';
 
 describe('lint ignore growth guard', () => {
   it('finds only exclusions added after the baseline', () => {
@@ -21,5 +21,9 @@ describe('lint ignore growth guard', () => {
   it('reads ignore entries from the flat config block', () => {
     expect(readIgnoreList("export default [{ ignores: ['dist/**', 'src/legacy/**'] }];"))
       .toEqual(['dist/**', 'src/legacy/**']);
+  });
+
+  it('uses the nearest parent that contains the baseline config after a merge commit', () => {
+    expect(chooseBaselineRef(['HEAD^', 'HEAD^2', 'HEAD~2'], ref => ref === 'HEAD^2')).toBe('HEAD^2');
   });
 });
