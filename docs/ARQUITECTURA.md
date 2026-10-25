@@ -43,3 +43,25 @@ La lista de exclusiones vigente es el bloque `ignores` de `eslint.config.mjs`: `
 3. Añade view model, mapper de presentación, hook y componente en `features/<nombre>`; expórtalo por `index.ts`.
 4. Compón dependencias en `app`. Conserva rutas, claves, formatos, ids y clases CSS.
 5. Prueba reglas con entidades y adaptadores falsos, fronteras de DTO y navegación E2E.
+
+## Actualización: mejoras de estudio (fase 7)
+
+El motor de sesión sigue siendo `src/core/application/legacy-engine.ts`, conectado por el puente de
+`src/app/legacy-router.ts`. Las transiciones de historial por intento son reglas puras en
+`src/core/domain/attempts/transitions.ts`; tiempo activo, marcas, analítica y exportación también tienen
+reglas separadas en ese directorio. La orquestación vive en `core/application/attempts/`; el adaptador
+IndexedDB y sus DTO/mappers están en `adapters/local/`, mientras que `adapters/firebase/attempt-sync.ts`
+sincroniza por ámbito. El modelo agregado `tai.v1` y el modelo detallado de intentos continúan separados.
+
+Las pantallas actuales aún pasan por el router heredado. Ayuda editorial de interfaz vive en
+`features/help/content.ts`; presentación de preguntas, resultados y ajustes conserva los IDs/clases del
+puente. Existen explicaciones marcadas por revisión y estado editorial: que una explicación pase el
+validador de esquema no significa que esté revisada por una persona. La exportación a IA es una descarga
+explícita preparada localmente y no invoca servicios externos.
+
+Evidencia del cierre de integración: `tests/e2e/bridge.spec.ts` cubre práctica con consulta y bloqueo
+persistente, exportación, y simulacro con pregunta pendiente, reanudación, corrección posterior al cierre
+y carga del informe. Vitest cubre los mappers de archivo, sesiones e intentos, la compatibilidad con
+fixtures antiguos, aislamiento por ámbito, cálculo de rachas/repasos y planificación de tarjetas. Esta
+evidencia no sustituye autenticación y sincronización contra Firebase real ni pruebas en Safari/iPadOS
+físicos o revisión editorial humana.

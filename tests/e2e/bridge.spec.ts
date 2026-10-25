@@ -93,6 +93,27 @@ test('la ayuda está disponible sin conexión desde el menú de invitado y conse
   await expect(page.locator('#app #simulacros')).toContainText('no se muestran soluciones');
   expect(errors).toEqual([]);
 });
+test('texto máximo cabe en móvil compacto e iPad emulado', async ({ page }) => {
+  const errors = await start(page);
+  await page.setViewportSize({ width: 320, height: 720 });
+  await page.goto('/#/settings');
+  await page.locator('#fz button[data-v="3"]').click();
+  await page.goto('/#/home');
+  await page.locator('#quick').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+
+  for (const viewport of [{ width: 320, height: 720 }, { width: 1024, height: 1366 }]) {
+    await page.setViewportSize(viewport);
+    const dimensions = await page.evaluate(() => ({
+      viewport: window.innerWidth,
+      document: document.documentElement.scrollWidth,
+      appRight: document.querySelector('#app')?.getBoundingClientRect().right || 0,
+    }));
+    expect(dimensions.document).toBeLessThanOrEqual(dimensions.viewport);
+    expect(dimensions.appRight).toBeLessThanOrEqual(dimensions.viewport);
+  }
+  expect(errors).toEqual([]);
+});
 test('práctica permite volver a pendientes, bloquea respondidas y conserva consulta tras recargar', async ({ page }) => {
   const errors = await start(page);
   await page.locator('#quick').click();
@@ -130,6 +151,75 @@ test('práctica permite volver a pendientes, bloquea respondidas y conserva cons
   await expect(page.locator('.trio div:last-child')).toContainText('9');
   await expect(page.locator('.rv')).toHaveCount(10);
   await expect(page.locator('.rv .tag.warn')).toContainText('Solución consultada · blanco');
+  expect(errors).toEqual([]);
+});
+test('integra ayudas, navegación, bloqueo terminal y exportación del intento', async ({ page }) => {
+  const errors = await start(page);
+  await page.locator('#quick').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  const ids = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.run:guest') || 'null').ids as string[]);
+
+  await page.locator('[data-confidence="betweenTwo"]').click();
+  await page.locator('[data-discard-option="1"]').click();
+  await page.locator('.enun').focus();
+  await page.keyboard.press('ArrowRight');
+  for (let index = 0; index < 8; index++) await page.keyboard.press('Shift+ArrowRight');
+  await page.locator('[data-add-highlight="key"]').click();
+  await expect(page.locator('.enun mark[data-category="key"]')).toHaveCount(1);
+
+  await page.locator('#blank').click();
+  await page.locator('#blank').click();
+  await page.locator('#prev').click();
+  await page.locator('#reveal-solution').click();
+  await expect(page.locator('.opt:disabled')).toHaveCount(4);
+  await page.locator('#prev').click();
+  await page.locator('.opt').first().click();
+  await expect(page.locator('.opt:disabled')).toHaveCount(4);
+  await expect.poll(() => page.evaluate((id) => {
+    const stats = JSON.parse(localStorage.getItem('tai.v1:guest') || '{}').stats || {};
+    return Object.hasOwn(stats, id as string);
+  }, ids[0])).toBe(true);
+
+  await page.locator('.question-map summary').click();
+  await page.locator('[data-jump="3"]').click();
+  await page.locator('#blank').click();
+  await page.locator('#prev').click();
+  await page.locator('#reveal-solution').click();
+  await expect(page.locator('.fb')).toContainText('Solución consultada · cuenta como blanco');
+  await expect.poll(async () => (await savedAttemptHistory(page)).events.filter(type => type === 'reveal')).toHaveLength(2);
+  await page.reload();
+  await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
+  await page.locator('.overlay [data-v="1"]').click();
+  await expect(page.locator('.fb')).toContainText('Solución consultada · cuenta como blanco');
+  await expect(page.locator('.opt:disabled')).toHaveCount(4);
+  await expect.poll(() => page.evaluate((id) => {
+    const stats = JSON.parse(localStorage.getItem('tai.v1:guest') || '{}').stats || {};
+    return Object.hasOwn(stats, id as string);
+  }, ids[1])).toBe(false);
+  await expect.poll(() => page.evaluate((id) => {
+    const stats = JSON.parse(localStorage.getItem('tai.v1:guest') || '{}').stats || {};
+    return Object.hasOwn(stats, id as string);
+  }, ids[3])).toBe(false);
+
+  await page.locator('.question-map summary').click();
+  await page.locator('[data-jump="9"]').click();
+  await page.locator('#next').click();
+  await expect(page.locator('#app h1')).toHaveText('Resultado');
+  await expect(page.locator('#consulted-count')).toContainText('2 soluciones consultadas');
+  await expect(page.locator('.rv .tag.warn')).toHaveCount(2);
+
+  await page.goto('/#/settings');
+  await page.locator('#ai-export-find').click();
+  await expect(page.locator('[data-ai-export-session]')).toHaveCount(1);
+  await page.locator('#ai-export-build').click();
+  await expect(page.locator('.ai-export-preview')).toContainText('1 parte JSON');
+  const [download] = await Promise.all([
+    page.waitForEvent('download'), page.locator('[data-ai-export-part="0"]').click(),
+  ]);
+  const exported = JSON.parse(readFileSync(await download.path(), 'utf8'));
+  expect(exported.attempts).toHaveLength(10);
+  expect(exported.attempts.filter((attempt: { state: string }) => attempt.state === 'revealed')).toHaveLength(2);
+  expect(exported.attempts.filter((attempt: { state: string }) => attempt.state === 'answered')).toHaveLength(1);
   expect(errors).toEqual([]);
 });
 test('las explicaciones draft solo aparecen tras revelar en práctica y están cacheadas offline', async ({ page, context }) => {
@@ -185,6 +275,42 @@ test('el simulacro no presenta explicaciones ni corrección mientras sigue activ
   }
   await expect(page.locator('#app h1')).toHaveText('Resultado');
   await expect(page.locator('#result-strategy-load')).toBeVisible();
+  await page.locator('#result-strategy-load').click();
+  await expect(page.locator('#result-strategy-report')).toContainText('Muestra insuficiente', { timeout: 25_000 });
+  expect(errors).toEqual([]);
+});
+test('el simulacro conserva pendientes al volver y reanudar y corrige solo al finalizar', async ({ page }) => {
+  const errors = await start(page);
+  await page.goto('/#/sim');
+  await page.locator('#n button[data-v="40"]').click();
+  await page.locator('#scope button[data-v="todos"]').click();
+  await page.locator('#go').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  const firstAnswer = await page.locator('.opt').first().getAttribute('data-i');
+  await page.locator('#blank').click();
+  await page.locator('#next').click();
+  await page.locator('.question-map summary').click();
+  await page.locator('[data-jump="0"]').click();
+  await expect(page.locator('.opt.sel')).toHaveCount(0);
+  await expect(page.locator('.fb, .code-explanation')).toHaveCount(0);
+
+  await page.reload();
+  await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
+  await page.locator('.overlay [data-v="1"]').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  await expect(page.locator('.fb, .code-explanation')).toHaveCount(0);
+  await page.locator(`.opt[data-i="${firstAnswer}"]`).click();
+  await expect(page.locator('.opt.sel')).toHaveCount(1);
+  await expect(page.locator('.fb, .code-explanation')).toHaveCount(0);
+  await page.locator('#next').click();
+  for (let index = 1; index < 40; index++) {
+    await page.locator('.opt').first().click();
+    await page.locator('#next').click();
+  }
+  await expect(page.locator('#app h1')).toHaveText('Resultado');
+  await expect(page.locator('.rv')).toHaveCount(40);
+  await page.locator('.rv').first().locator('summary').click();
+  await expect(page.locator('.rv').first()).toContainText('(Respuesta correcta)');
   await page.locator('#result-strategy-load').click();
   await expect(page.locator('#result-strategy-report')).toContainText('Muestra insuficiente', { timeout: 25_000 });
   expect(errors).toEqual([]);

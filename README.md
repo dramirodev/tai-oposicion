@@ -165,8 +165,13 @@ plantilla para ampliar o revisar temas en [docs/PROMPT_GEMINI_FLASHCARDS.md](doc
 - **Lectura atenta:** entrenamiento guiado que prioriza fallos por velocidad y otros errores.
 - **Ayudas de lectura:** modo normal, resaltar palabras clave o resaltar y frenar.
 - **Simulacros:** indicador de ritmo durante la prueba y análisis final de tiempos, blancos y penalización.
+- **Práctica guiada:** permite volver a preguntas pendientes; una respuesta queda bloqueada. «No lo sé» no revela la solución. «Ver solución» cuenta como blanco consultado y bloquea ese intento.
+- **Señales de estudio:** se pueden marcar confianza y opciones descartadas y subrayar texto sin responder accidentalmente. Las explicaciones de código se muestran tras la corrección permitida, nunca durante un simulacro activo.
+- **Historial y análisis:** desde que se activa el registro se conservan intentos y eventos por cuenta/dispositivo; las estadísticas antiguas no reciben eventos inventados. Ajustes permite exportar manualmente manifiesto, sesiones e informe para IA; no se envían datos automáticamente.
 - **Personalización:** tema claro/oscuro/automático, cuatro tamaños de letra y fecha de examen para la cuenta atrás.
 - **Uso sin conexión:** la descarga de Ajustes incluye preguntas, supuestos, metadatos y tarjetas curadas.
+
+La exportación analítica es una copia separada, no sustituye `tai-progreso.json`. Para recuperar datos, no borres los datos del sitio: deja que la app restaure el respaldo local al abrirse; para importar una copia, usa Ajustes → Importar progreso. Las sesiones activas se ofrecen para reanudar al volver a abrir la app. El historial detallado se puede exportar/importar desde Ajustes junto con la copia compatible. Una copia importada se fusiona por identificadores y puede repetirse sin duplicar intentos. Guía técnica: [esquema del historial y recuperación](docs/ESQUEMA_HISTORIAL_INTENTOS.md).
 
 ## Versiones
 
@@ -242,8 +247,14 @@ que Firebase. `npm run deploy` conserva sus validaciones y su despliegue manual 
 
 `npm run test:e2e` ejecuta Chromium y WebKit en 393×852, claro y oscuro, usando el banco real,
 Firebase sin configurar y almacenamiento aislado. Instalar antes: `npx playwright install chromium webkit`.
-Las 68 referencias visuales de la fase 0 se guardan en `tests/e2e/snapshots/`; solo el hash de compilación visible se enmascara. La cobertura e2e completa tiene 80 casos, incluidos reanudación, limpieza del puente y el repintado de la misma ruta.
+Las 68 referencias visuales de la fase 0 se guardan en `tests/e2e/snapshots/`; solo el hash de compilación visible se enmascara. La cobertura E2E actual tiene 98 casos, incluidos reanudación, consulta terminal, exportación y simulacro.
 Las referencias son específicas de plataforma: `npm run test:e2e:ci` reconstruye el commit de fase 0
 indicado en `tests/e2e/baseline-ref.txt` para obtener las referencias del runner y después compara la app
-actual con tolerancia cero. Sin ese fichero (fase 0), crea las referencias ausentes de esa plataforma.
+actual con `maxDiffPixelRatio: 0.001`. Sin ese fichero (fase 0), crea las referencias ausentes de esa plataforma.
 No se autentica, no se escribe en Firestore ni se ejecuta un despliegue durante las pruebas.
+
+La fase 7 añade recorridos E2E integrados de consulta de solución, persistencia al recargar, exportación
+manual y simulacro con reanudación. Las pruebas de recuperación/importación antigua y las reglas de
+repaso y tarjetas están en Vitest. La pantalla con texto máximo se comprueba en viewports emulados
+320×720 y 1024×1366. Chromium y WebKit de Playwright son emulación: no prueban Safari físico,
+iPadOS, sincronización real entre dispositivos ni revisión editorial humana.
