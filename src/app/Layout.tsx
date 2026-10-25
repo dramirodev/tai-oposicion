@@ -4,7 +4,6 @@ import { Outlet, useLocation, useNavigate } from 'react-router';
 import { isFull, GUEST_ROUTES } from '../adapters/legacy/access.js';
 import { state } from '../core/application/legacy-engine.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
-import { bootLegacy } from './legacy-router.js';
 import { subscribeAccessChanges } from './access-events.js';
 const subscribeFull = (fn: () => void) => {
   const offSync = sync.onStatus(fn), offLocal = subscribeAccessChanges(fn);
@@ -35,7 +34,6 @@ export function Layout() {
   const location = useLocation(), navigate = useNavigate();
   const full = useSyncExternalStore(subscribeFull, isFull);
   const lastFull = useRef(full);
-  useEffect(() => bootLegacy(), []);
   useEffect(() => {
     if (lastFull.current === full) return;
     lastFull.current = full;

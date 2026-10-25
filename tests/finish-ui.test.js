@@ -1,13 +1,15 @@
 import 'fake-indexeddb/auto';
-import {it,expect,vi} from 'vitest';
+import {afterEach,it,expect,vi} from 'vitest';
 import {readFileSync} from 'node:fs';
 import path from 'node:path';
 vi.mock('../src/adapters/firebase/sync-facade.js',()=>({status:{user:null,state:'sin sesión',configured:false},init:async()=>{},onStatus:()=>()=>{},login:async()=>{},logout:async()=>{},retry:()=>{}}));
+let unmountApp;
+afterEach(()=>{unmountApp?.();unmountApp=undefined;vi.unstubAllGlobals();});
 it('doble pulsación en Terminar no duplica el intento de examen',async()=>{
  document.documentElement.innerHTML=readFileSync('index.html','utf8');localStorage.clear();
  vi.stubGlobal('matchMedia',()=>({matches:true}));vi.stubGlobal('scrollTo',()=>{});Element.prototype.scrollIntoView=()=>{};
  vi.stubGlobal('fetch',async url=>{try{return {ok:true,json:async()=>JSON.parse(readFileSync(path.join('public',String(url)),'utf8'))};}catch{return {ok:false,json:async()=>null};}});
- await import('../src/app/main');
+ ({unmountApp}=await import('../src/app/main'));
  const waitText=async text=>vi.waitFor(()=>expect(document.querySelector('#app').textContent).toContain(text));
  await waitText('Sesión rápida');location.hash='#/sim';await waitText('Simulacros');
  await vi.waitFor(()=>expect(document.querySelector('#simtabs [data-v="examen"]')).not.toBeNull());

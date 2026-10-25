@@ -1,5 +1,5 @@
 import 'fake-indexeddb/auto';
-import { it, expect, vi } from 'vitest';
+import { afterEach, it, expect, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 
@@ -8,6 +8,8 @@ vi.mock('../src/adapters/firebase/sync-facade.js', () => ({
   status: { user: null, state: 'sin sesión', configured: false },
   init: async () => {}, onStatus: () => () => {}, login: async () => {}, logout: async () => {}, retry: () => {},
 }));
+let unmountApp;
+afterEach(() => { unmountApp?.(); unmountApp = undefined; vi.unstubAllGlobals(); });
 it('navega por las pantallas y conserva una valoración de tarjeta al salir y volver', async () => {
   document.documentElement.innerHTML = readFileSync('index.html', 'utf8');
   localStorage.clear();
@@ -20,7 +22,7 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
       return { ok: true, json: async () => data };
     } catch { return { ok: false, json: async () => null }; }
   });
-  await import('../src/app/main');
+  ({ unmountApp } = await import('../src/app/main'));
   const waitText = async text => vi.waitFor(() => expect(document.querySelector('#app').textContent).toContain(text));
   const navigate = async (route, text) => { location.hash = '#/' + route; await waitText(text); };
   await waitText('Sesión rápida');

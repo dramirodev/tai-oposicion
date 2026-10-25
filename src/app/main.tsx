@@ -1,3 +1,10 @@
 import { createRoot } from 'react-dom/client';
-import { App } from './App.js';
-createRoot(document.getElementById('app')!).render(<App />);
+import { StrictMode } from 'react';
+import { App, initializeApp, shutdownApp } from './App.js';
+initializeApp();
+export const root = createRoot(document.getElementById('app')!);
+root.render(<StrictMode><App /></StrictMode>);
+export function unmountApp(): void {
+  root.unmount();
+  shutdownApp();
+}

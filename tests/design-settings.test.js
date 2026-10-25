@@ -1,7 +1,10 @@
 import 'fake-indexeddb/auto';
-import { beforeEach, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, expect, it, vi } from 'vitest';
+import { mountDialogProvider } from './helpers/mount-dialog-provider.js';
 vi.mock('../src/adapters/firebase/sync-facade.js', () => ({ status: { user: null, state: 'sin sesión', configured: false }, onStatus: () => () => {}, login: vi.fn(), logout: vi.fn(), retry: vi.fn() }));
-beforeEach(() => { vi.resetModules(); localStorage.clear(); document.body.innerHTML = '<main id="app"></main>'; vi.stubGlobal('matchMedia', () => ({matches:false})); });
+let unmountDialogs;
+beforeEach(async () => { vi.resetModules(); localStorage.clear(); document.body.innerHTML = '<main id="app"></main>'; vi.stubGlobal('matchMedia', () => ({matches:false})); unmountDialogs = await mountDialogProvider(); });
+afterEach(() => { unmountDialogs?.(); vi.unstubAllGlobals(); });
 function fakeCaches() {
  const entries = new Map(); const cache = {match: vi.fn(async u => entries.get(String(u))?.clone()), put: vi.fn(async (u,r) => entries.set(String(u),r.clone()))};
  vi.stubGlobal('caches', {open: async () => cache}); return {cache, entries};

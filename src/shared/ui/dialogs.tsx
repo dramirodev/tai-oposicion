@@ -1,6 +1,5 @@
 import { useLayoutEffect, useSyncExternalStore, type ReactNode } from 'react';
-import { createPortal, flushSync } from 'react-dom';
-import { createRoot } from 'react-dom/client';
+import { createPortal } from 'react-dom';
 export interface ToastAction { label: string; fn: () => void }
 type MenuAction = string | (() => void);
 export type MenuGroup = [string, [string, string, string, MenuAction][]];
@@ -9,27 +8,20 @@ interface DialogRequest {
   prev: Element | null; done: (accepted: boolean) => void;
   groups?: MenuGroup[]; current?: string; navigate?: (h: string) => void;
 }
-let nextId = 0, providers = 0;
+let nextId = 0;
 let state: { dialogs: DialogRequest[]; toast: { msg: string; action?: ToastAction; shown: boolean } } = { dialogs: [], toast: { msg: '', shown: false } };
 const subs = new Set<() => void>();
 const subscribe = (fn: () => void) => { subs.add(fn); return () => { subs.delete(fn); }; };
 const snapshot = () => state;
 const emit = () => subs.forEach(fn => fn());
-// También permite usar ui.ts desde una pantalla legacy montada por separado.
-function ensureProvider() {
-  if (providers) return;
-  const host = document.createElement('div'); document.body.append(host);
-  flushSync(() => createRoot(host).render(<DialogProvider />));
-}
 let toastT: ReturnType<typeof setTimeout>;
 export function toast(msg: string, action?: ToastAction): void {
-  ensureProvider(); clearTimeout(toastT);
+  clearTimeout(toastT);
   state = { ...state, toast: { msg, action, shown: true } }; emit();
   toastT = setTimeout(() => { state = { ...state, toast: { ...state.toast, shown: false } }; emit(); }, action ? 20000 : 4500);
 }
 function request(input: Omit<DialogRequest, 'id' | 'done' | 'prev'>, signal?: AbortSignal): Promise<boolean> {
   if (signal?.aborted) return Promise.resolve(false);
-  ensureProvider();
   return new Promise(resolve => {
     const prev = document.activeElement; let settled = false;
     const abort = () => done(false);
@@ -84,10 +76,9 @@ function MenuSection({ title, items, offset, current, select }: { title: string;
 export function DialogProvider({ children }: { children?: ReactNode }) {
   const { dialogs, toast: t } = useSyncExternalStore(subscribe, snapshot);
   useLayoutEffect(() => {
-    providers++;
     const persistError = () => toast('No se pudo guardar el progreso en este dispositivo (¿poco espacio?). Exporta una copia en Ajustes.');
     addEventListener('tai-persist-error', persistError);
-    return () => { providers--; removeEventListener('tai-persist-error', persistError); if (!providers) { clearTimeout(toastT); state.dialogs.forEach(d => d.done(false)); } };
+    return () => removeEventListener('tai-persist-error', persistError);
   }, []);
   const act = () => { if (!t.action) return; const action = t.action; state = { ...state, toast: { msg: 'Actualizando…', shown: t.shown } }; emit(); action.fn(); };
   return <>{children}{createPortal(<><div id="toast" role="status" className={`${t.shown ? 'show' : ''}${t.action ? ' act' : ''}`} onClick={act}>{t.msg}{t.action && <button type="button" onClick={e => { e.stopPropagation(); act(); }}>{t.action.label}</button>}</div>{dialogs.map((d, i) => <Dialog key={d.id} dialog={d} top={i === dialogs.length - 1} />)}</>, document.body)}</>;
