@@ -10,7 +10,16 @@ import { calculateTrapRates, selectTrapQuestions } from '../core/domain/traps.ts
 import { composeWeightedQuestions, estimateQuickQuestionCount, filterScoringQuestions, isQuestionAllowed, pickGuestQuestions, pickQuickQuestions } from '../core/domain/selection.ts';
 import { analyzeTopicMastery, COVERAGE_OBJECTIVE } from '../core/domain/topic-mastery.ts';
 import { selectFlashcards, summarizeFlashcards } from '../core/domain/flashcards.ts';
+import { ERROR_REPORT_REASONS, FAILURE_REASONS, READING_TIPS, UI_THEMES, UI_ZOOMS } from '../shared/presentation/study-labels.ts';
+const TEMAS_UI = UI_THEMES;
+const ZOOMS = UI_ZOOMS;
 export { calculateExamScore as nota } from '../core/domain/scoring.ts';
+export {
+  ERROR_REPORT_REASONS as MOTIVOS,
+  FAILURE_REASONS as MOTIVOS_FALLO,
+  READING_TIPS as CONSEJOS_LECTURA,
+};
+export { UI_THEMES as TEMAS_UI, UI_ZOOMS as ZOOMS };
 
 type Rnd = () => number;
 export function shuffle<T>(a: readonly T[], rnd: Rnd = Math.random): T[] { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const k = Math.floor(rnd() * (i + 1)); [b[i], b[k]] = [b[k], b[i]]; } return b; }
@@ -160,12 +169,8 @@ export function pickTrampas(cands: Question[], rec: (id: string) => StatRec | un
 }
 
 // ── Informes de errores del banco ──
-export const MOTIVOS = ['Respuesta correcta mal marcada', 'Enunciado erróneo o confuso', 'Opciones repetidas o dos correctas', 'La cita del temario no coincide', 'Otro'];
-
 // ───────── comodidad: tema, tamaño, gestos y teclado ─────────
-export const TEMAS_UI = ['auto', 'light', 'dark'];
 export interface UiCfg { theme: string; size: number; lectura: number }
-export const ZOOMS = [1, 1.15, 1.3, 1.5];
 export function normUi(u0: unknown): UiCfg {
   const u: any = u0 && typeof u0 === 'object' ? u0 : {};
   return { theme: TEMAS_UI.includes(u.theme) ? u.theme : 'auto', size: Number.isInteger(u.size) && u.size >= 0 && u.size < ZOOMS.length ? u.size : 0, lectura: [0, 1, 2].includes(u.lectura) ? u.lectura : 0 };
@@ -192,7 +197,7 @@ export function keyAction(e: { key?: string; ctrlKey?: boolean; metaKey?: boolea
 }
 
 // ───────── repaso espaciado: prioridad, motivo del fallo y calendario ─────────
-export const MOTIVOS_FALLO = ['', 'Contenido', 'Trampa', 'Dudaba entre dos', 'Despiste', 'No lo sabía', '', 'Velocidad']; // 6 = acierto por suerte (solo en aciertos); 7 = fallo por leer deprisa o sin terminar
+// 6 = acierto por suerte (solo en aciertos); 7 = fallo por leer deprisa o sin terminar
 // items: [{ i, t, due }]. Las más vencidas primero (hasta n) y mezcladas por tema, sin repetir tema seguido si se puede.
 export function pickRepaso<T extends { t: string; due: number }>(items: T[], n: number): T[] {
   return selectSpacedReviews(items.map(item => ({ topicId: item.t, dueAt: item.due, item })), n).map(review => review.item);
@@ -255,15 +260,6 @@ export function velocidad(stats: StatMap) {
   const ids = Object.keys(stats).filter(id => stats[id][5] === 0 && stats[id][9] === 7);
   return { n: c[7], tot, p: tot ? Math.round(100 * c[7] / tot) : 0, ids };
 }
-export const CONSEJOS_LECTURA = [
-  'Antes de mirar las opciones, di con tus palabras qué te piden (¿la correcta o la incorrecta?).',
-  'Marca negaciones y excepciones: NO, SALVO, EXCEPTO, INCORRECTA, FALSA.',
-  'Subraya cifras, plazos y unidades (días hábiles vs naturales, bits vs bytes).',
-  'Desconfía de los absolutos (siempre, nunca, solo, todos): busca la excepción.',
-  'Lee las cuatro opciones enteras aunque la primera te parezca buena.',
-  'Si «la sabes de golpe», frena: ahí es donde se cuelan los matices.',
-  'No cambies de respuesta sin un motivo concreto en el enunciado.',
-];
 
 // Compatibility view for the legacy UI; the domain model uses complete names.
 export function analisisSimulacro({ correct, ans, times = [], limitSecs, secs }: { correct: number[]; ans: (number | undefined)[]; times?: number[]; limitSecs: number; secs: number }) {
