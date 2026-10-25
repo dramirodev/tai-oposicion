@@ -13,6 +13,7 @@ import { registerCards } from '../features/cards/legacy.js';
 import { registerStats } from '../features/stats/legacy.js';
 import { registerHome } from '../features/home/legacy.js';
 import { registerSettings } from '../features/settings/legacy.js';
+import { registerHelp } from '../features/help/legacy.js';
 import { registerAcceso } from '../features/access/legacy.js';
 import { isFull, isOwner, GUEST_ROUTES } from '../adapters/legacy/access.js';
 import { getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds } from '../core/application/legacy-engine.js';
@@ -65,7 +66,9 @@ export function renderLegacy(host: HTMLElement, pathname: string) {
   const lt = setTimeout(() => { if (active) app.innerHTML = '<p class="sub loading" role="status">Cargando…</p>'; }, 120);
   const ready = (async () => {
     try {
-      await recover(); await getIndex(); await getMeta(); if (!active) return;
+      await recover();
+      if (name !== 'ayuda') { await getIndex(); await getMeta(); }
+      if (!active) return;
       await f(...args); if (!active) return;
       clearTimeout(lt); enter(app); countUp();
       const hd = app.querySelector<El>('h1'); if (hd) hd.tabIndex = -1;
@@ -193,6 +196,7 @@ routes.quiz = async function () {
         : `<button class="btn sec" id="blank">${a === -1 ? '✓ En blanco' : 'Dejar en blanco'}</button>
            <button class="btn" id="next">${R.idx + 1 === R.items.length ? 'Terminar' : 'Siguiente'} →</button>`}
     </div>
+    <p class="sub"><a href="#/ayuda?tema=sesiones">Ayuda sobre controles y estados de pregunta</a></p>
     ${R.paused ? `<div class="overlay" role="dialog" aria-modal="true" aria-labelledby="pt"><div class="card"><h2 id="pt">En pausa</h2><p>El tiempo está detenido.</p><button class="btn" id="resume">Continuar</button></div></div>` : ''}`;
     bind(q);
     if (R.paused) { app.querySelectorAll<El>('.qhead,.sub,.pace,.card.q,.bar2').forEach(el => { if (!el.closest<El>('.overlay')) el.inert = true; }); const rb = $('.overlay #resume'); rb && rb.focus(); }
@@ -216,7 +220,7 @@ routes.quiz = async function () {
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}
       ${sourceHtml(q, VERIFIED_SOURCES)}
       ${q.x?.length ? `<div class="trap">Trampa: ${q.x.map((x: any) => esc(TRAMPAS[x] || x)).join(' · ')}</div>` : ''}
-      ${!ok && a !== -1 && R.feedback ? `<div class="mot" id="mot"><small>¿Por qué fallé?${(() => { const f = R.fast?.[R.idx]; return f && f[0] < f[1] * 0.6 ? ` <b class="r">Respondiste en ${f[0]} s; leerla bien lleva ≈${f[1]} s. ¿Fue velocidad?</b>` : ''; })()}</small>${[5, 7, 1, 2, 3, 4].map(m => `<button class="${store.rec(q.i)?.[9] === m ? 'on' : (m === 7 && R.fast?.[R.idx] && R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? 'sug' : '')}" data-m="${m}">${MOTIVOS_FALLO[m]}</button>`).join('')}<button class="mk" id="mkcard" ${store.rec(q.i)?.[9] === 4 && !store.cardRec('FC-Q-' + q.i) ? 'hidden' : ''}>${store.cardRec('FC-Q-' + q.i) ? '📇 Tarjeta creada ✓' : '📇 Hacer tarjeta'}</button></div>` : ''}
+      ${!ok && a !== -1 && R.feedback ? `<div class="mot" id="mot"><small>¿Por qué fallé?${(() => { const f = R.fast?.[R.idx]; return f && f[0] < f[1] * 0.6 ? ` <b class="r">Respondiste en ${f[0]} s; leerla bien lleva ≈${f[1]} s. ¿Fue velocidad?</b>` : ''; })()}</small>${[5, 7, 1, 2, 3, 4].map(m => `<button class="${store.rec(q.i)?.[9] === m ? 'on' : (m === 7 && R.fast?.[R.idx] && R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? 'sug' : '')}" data-m="${m}">${MOTIVOS_FALLO[m]}</button>`).join('')}<a class="sm" href="#/ayuda?tema=motivos">¿Qué significa cada motivo?</a><button class="mk" id="mkcard" ${store.rec(q.i)?.[9] === 4 && !store.cardRec('FC-Q-' + q.i) ? 'hidden' : ''}>${store.cardRec('FC-Q-' + q.i) ? '📇 Tarjeta creada ✓' : '📇 Hacer tarjeta'}</button></div>` : ''}
       ${ok && a !== -1 && R.feedback ? (() => { const r = store.rec(q.i) || [], en = r[3] === 0 && r[4] > now() + 86400000 * 1.5; return `<div class="mot" id="acc"><small>¿Seguro? (entra en repaso a +2 días)</small>${(() => { const pl = R.luck?.[R.idx]; return pl === 6 ? '<b class="r">🍀 Marcada como suerte: acierto 1/2. Otra vez bien y se quita la etiqueta.</b>' : pl === 8 ? '<b class="r">🍀 ¡Acierto 2/2! Etiqueta de suerte quitada: ya la sabes.</b>' : ''; })()}<button class="${en && r[9] !== 6 && r[9] !== 8 ? 'on' : ''}" data-a="doubt">🤔 Acerté dudando</button><button class="${r[9] === 6 || r[9] === 8 ? 'on' : ''}" data-a="suerte">🍀 Fue suerte</button></div>`; })() : ''}
       <button class="ghost fl" id="flag">${store.rec(q.i)?.[6] ? '★ Dudosa' : '☆ Marcar como dudosa'}</button>
       <div class="repw" id="rep"></div></div>`;
@@ -304,7 +308,7 @@ routes.result = async function () {
   <h1>Resultado</h1>
   ${ses.interrupted ? `<div class="note result-status"><b>Sesión interrumpida</b><p>${ses.a + ses.f} de ${ses.n} preguntas respondidas. La puntuación global mantiene las no contestadas como blancos.</p></div>` : ''}
   <div class="card big">
-    <p class="score-label">Puntuación global</p>
+  <p class="score-label">Puntuación global · <a href="#/ayuda?tema=puntuacion">Cómo se calcula</a></p>
     <div class="score" data-count="${ses.nota}">${ses.nota}<small>/100</small></div>
     <div class="legend">100 × (aciertos − fallos/3) / total de preguntas</div>
     <div class="trio"><div class="g"><b>${ses.a}</b>Aciertos</div><div class="r"><b>${ses.f}</b>Fallos</div><div><b>${ses.b}</b>Blanco</div></div>
@@ -375,6 +379,7 @@ async function openMenu() {
       ['⌂', 'Inicio', 'Resumen y cuenta atrás', '#/home'],
       ...(isOwner() ? [['🔑', 'Accesos', sync.status.reqs.length ? sync.status.reqs.length + ' solicitudes por revisar' : 'Quién puede usar la app', '#/acceso']] : []),
       ['⚙', 'Ajustes', NEWV ? 'Hay una versión nueva' : 'Cuenta, apariencia, copia y versión ' + APP_VERSION, '#/settings'],
+      ['?', 'Ayuda', 'Motivos, práctica, simulacros y guardado', '#/ayuda'],
     ]],
   ];
   await showMenu((isFull() ? G : GUEST_MENU(G)) as MenuGroup[], aqui, go);
@@ -393,7 +398,7 @@ routes.test = async function () {
   const bloques = [['T1', 'Bloque I · Organización del Estado'], ['T2', 'Bloque II · Informática básica'], ['T3', 'Bloque III · Desarrollo'], ['T4', 'Bloque IV · Sistemas y comunicaciones']];
   const draw = () => {
     app.innerHTML = `
-    <h1>Test por tema</h1>
+    <h1>Test por tema</h1><p class="sub"><a href="#/ayuda?tema=sesiones">Ayuda sobre controles del test</a></p>
     <div class="card">
       <h2 class="h3">Terminar por</h2>
       <div class="seg" id="by">${[[0, 'Nº de preguntas'], [1, 'Tiempo']].map(([v, t]) => `<button class="${(cfg.pt ? 1 : 0) === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
@@ -565,7 +570,7 @@ routes.sim = async function () {
     }));
   };
   const shell = () => {
-    app.innerHTML = `<h1>Simulacros</h1><div class="seg tabs" id="simtabs" role="group" aria-label="Tipo de simulacro">${TABS.map(([v, t]) => `<button class="${tab === v ? 'on' : ''}" data-v="${v}" aria-pressed="${tab === v}">${t}</button>`).join('')}</div><div id="simbody"></div>`;
+    app.innerHTML = `<h1>Simulacros</h1><p class="sub"><a href="#/ayuda?tema=simulacros">Ayuda sobre navegación y corrección de simulacros</a></p><div class="seg tabs" id="simtabs" role="group" aria-label="Tipo de simulacro">${TABS.map(([v, t]) => `<button class="${tab === v ? 'on' : ''}" data-v="${v}" aria-pressed="${v === tab}">${t}</button>`).join('')}</div><div id="simbody"></div>`;
     $('#simtabs').onclick = e => { const b = (e.target as El).closest<El>('button'); if (!b || b.dataset.v! === tab) return; tab = b.dataset.v!; store.setCfg('simtab', tab); shell(); $('#simtabs .on').focus({preventScroll:true}); enter($('#simbody') as any); };
     tab === 'completo' ? drawCompleto() : drawLista();
   };
@@ -689,8 +694,8 @@ routes.falladas = async function () {
     }).join('')}</div>`).join('')
       : '<div class="card"><p class="sub">Ninguna pregunta coincide con la búsqueda.</p></div>';
   };
-  if (!qs.length) { app.innerHTML = '<h1>Falladas</h1><div class="card"><p class="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p></div><div class="row"><button class="btn sec" id="home">Inicio</button></div>'; $('#home').onclick = () => go('#/home'); return; }
-  app.innerHTML = `<h1>Falladas</h1>
+  if (!qs.length) { app.innerHTML = '<h1>Falladas</h1><div class="card"><p class="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p><a href="#/ayuda?tema=repaso">Ayuda sobre falladas y repaso</a></div><div class="row"><button class="btn sec" id="home">Inicio</button></div>'; $('#home').onclick = () => go('#/home'); return; }
+  app.innerHTML = `<h1>Falladas · <a href="#/ayuda?tema=repaso">Ayuda</a></h1>
   <p class="sub">Cada pregunta permanece hasta acertarla tres veces seguidas. Un fallo reinicia el contador; dejarla en blanco no cuenta. Marcar el temario no la quita de la lista.</p>
   <p class="sub" id="fcount"></p>
   <div class="card">
@@ -725,6 +730,7 @@ registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas });
 registerHome({ routes, go, saludo, quickSession, startRepaso, openMenu, dominioTemas, falladasIds }, screen);
 registerAcceso({ routes, go }, screen);
 registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate }, screen);
+registerHelp(routes, screen);
 
 // ───────── arranque ─────────
 export function bootLegacy(firstPaint = firstLegacyPaint): () => void {

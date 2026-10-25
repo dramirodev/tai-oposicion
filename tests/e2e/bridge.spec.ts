@@ -77,6 +77,20 @@ test('menú React, foco, banner de red y recorte de navegación para invitados',
   await expect(page.locator('nav a:visible')).toHaveCount(5);
   expect(errors).toEqual([]);
 });
+test('la ayuda está disponible sin conexión desde el menú de invitado y conserva los motivos antiguos', async ({ page, context }) => {
+  const errors = await start(page);
+  await page.goto('/#/settings');
+  await page.locator('#dev button[data-v="0"]').click();
+  await page.goto('/#/home');
+  await context.setOffline(true);
+  await page.locator('#menu').click();
+  await page.locator('#menuov button').filter({ hasText: 'Ayuda' }).click();
+  await expect(page.locator('#app h1')).toHaveText('Ayuda');
+  await expect(page.locator('#motivos')).toContainText('Contenido');
+  await expect(page.locator('#motivos')).toContainText('El tiempo por sí solo no determina este motivo');
+  await expect(page.locator('#app #simulacros')).toContainText('no se muestran soluciones');
+  expect(errors).toEqual([]);
+});
 test('`route()` repinta la misma URL en Relámpago', async ({ page }) => {
   const errors = await start(page);
   await page.goto('/#/relampago');

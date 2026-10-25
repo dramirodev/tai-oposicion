@@ -81,3 +81,12 @@ Las capturas y E2E son emulación Playwright. No acreditan una prueba física de
 Vitest cubre transiciones, eventos duplicados/conflictivos, mapper ida/vuelta, persistencia IndexedDB, importación/exportación y sincronización Firebase con mocks. Playwright cubre la creación y recuperación local en Chromium/WebKit. `npm run typecheck`, `npm run lint`, `npm run lint:ignore-growth`, `npm test`, `npm run build`, `node scripts/validate_cards.mjs` y `npm run test:e2e` pasan después del cierre de esta fase.
 
 No se ejecutó el emulador de Firestore Rules: el entorno no tiene Java Runtime. Por tanto, las reglas nuevas se revisaron en código pero no se afirma que estén probadas contra el emulador ni contra Firebase real. Tampoco se hizo sincronización entre dispositivos ni una prueba física de Safari/iPadOS.
+
+## Fase 2A — Ayuda y motivos de fallo
+
+- Se añadió `#/ayuda`, disponible para invitados y con contenido local; la ruta no precarga el banco y se comprobó sin conexión desde el menú.
+- El contenido cubre sesión, simulacro, puntuación/blancos, guardado/sincronización y repasos. La clasificación de motivo explica significado, ejemplo y cuándo elegir otra categoría.
+- Los seis nombres y códigos históricos (`Contenido`, `Trampa`, `Dudaba entre dos`, `Despiste`, `No lo sabía`, `Velocidad`) permanecen iguales. La guía aclara que velocidad observada no determina por sí sola el motivo. No se deducen motivos automáticamente.
+- Se añadieron accesos contextuales en la respuesta de práctica, controles del test, simulacros, falladas, tarjetas, estadísticas de fallos, puntuación y copias de seguridad.
+- Cobertura automática: prueba unitaria que compara etiquetas contra el catálogo histórico y E2E en Chromium/WebKit para menú de invitado y disponibilidad sin conexión. La calidad editorial del texto y lectores de pantalla físicos requieren revisión humana.
+- Las referencias visuales de 24 capturas se actualizaron intencionalmente para reflejar esos enlaces visibles en resultado, test, simulacro, exámenes, tarjetas y falladas, en ambos temas y motores. No se cambiaron las aserciones funcionales ni los límites de comparación.
