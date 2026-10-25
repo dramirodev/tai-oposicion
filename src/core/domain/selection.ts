@@ -2,6 +2,15 @@ import { hasPendingFailure } from './spaced-repetition.ts';
 
 export type RandomGenerator = () => number;
 
+export function shuffleItems<T>(items: readonly T[], random: RandomGenerator): T[] {
+  const shuffled = items.slice();
+  for (let index = shuffled.length - 1; index > 0; index--) {
+    const swapIndex = Math.floor(random() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+  return shuffled;
+}
+
 export interface SelectionStats {
   attempts: number;
   lastSeenAt: number;
@@ -77,7 +86,7 @@ export function composeWeightedQuestions<T>(
   }
   const result: T[] = [];
   for (const allocation of allocations) result.push(...pools[allocation.topicId]!.slice(0, allocation.count));
-  return shuffle(result, random);
+  return shuffleItems(result, random);
 }
 
 export function estimateQuickQuestionCount(
@@ -125,7 +134,7 @@ export function pickQuickQuestions<T>(
       seen.add(idOf(item));
     }
   }
-  return shuffle(result, random);
+  return shuffleItems(result, random);
 }
 
 export interface GuestQuestionPool<T> {
@@ -142,7 +151,7 @@ export function pickGuestQuestions<T>(
   random: RandomGenerator,
 ): T[] {
   const result: T[] = [];
-  for (const pool of shuffle(pools.filter(item => item.questions.length), random)) {
+  for (const pool of shuffleItems(pools.filter(item => item.questions.length), random)) {
     if (result.length >= count) break;
     const preferences = [
       (question: T) => !isSeen(idOf(question)) && !excluded.has(idOf(question)),
@@ -158,13 +167,4 @@ export function pickGuestQuestions<T>(
     }
   }
   return result;
-}
-
-function shuffle<T>(items: readonly T[], random: RandomGenerator): T[] {
-  const shuffled = items.slice();
-  for (let index = shuffled.length - 1; index > 0; index--) {
-    const swapIndex = Math.floor(random() * (index + 1));
-    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
-  }
-  return shuffled;
 }

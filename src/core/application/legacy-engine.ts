@@ -3,7 +3,17 @@
 import * as store from '../../adapters/local/legacy-store.js';
 import { META, temaOf, getIndex, getMeta, getTema, dueList, byIds, now } from '../../adapters/http/legacy-data.js';
 import { calculateExamScore } from '../domain/scoring.js';
-import { allowed, dominioCalc, pickGuest, pickQuick, pickRepaso, pickTrampas, questionsForSession, quickN, shuffle, trapRates } from '../../legacy/logic.js';
+import {
+  estimateQuickQuestionCount,
+  filterScoringQuestions,
+  isQuestionAllowed,
+  pickGuestQuestions,
+  pickQuickQuestions,
+  shuffleItems,
+} from '../domain/selection.js';
+import { selectSpacedReviews } from '../domain/spaced-repetition.js';
+import { calculateTrapRates, selectTrapQuestions } from '../domain/traps.js';
+import { dominioCalc } from '../../legacy/logic.js';
 import type { Index, Question, Session, SessionKind } from '../../adapters/legacy/types.js';
 
 // ───────── sesión en curso ─────────
@@ -64,6 +74,8 @@ export const getLastResult = (): Readonly<LastResult> | null => engineState.last
 export const getRunKind = (): SessionKind | null => engineState.run?.kind || null;
 export const getLastRunKind = (): SessionKind | null => engineState.last?.ses.kind || null;
 export const hasActiveRun = (): boolean => engineState.run !== null;
+const questionAllowed = (question: Question, origins: Set<string>): boolean =>
+  isQuestionAllowed(question.o, 'r' in question ? question.r : undefined, origins);
 
 export function clearActiveRun(): void { engineState.run = null; }
 export function clearLastResult(): void { engineState.last = null; }
@@ -114,7 +126,7 @@ export function finishCurrentRun(reason: 'complete' | 'interrupted' | 'timeout' 
 
 /** Crea la sesión; devuelve null si no hay preguntas puntuables. No navega: eso lo decide la interfaz. */
 export function createRun(cfg: RunCfg): Run | null {
-  const items = questionsForSession(cfg.items, cfg.feedback);
+  const items = filterScoringQuestions(cfg.items, cfg.feedback, question => question.np);
   if (!items.length) return null;
   return (engineState.run = observable({ ...cfg, items, idx: 0, ans: [], t0: now(), secs: 0, paused: false }));
 }
@@ -145,7 +157,7 @@ export async function pendingRun(full: boolean): Promise<PendingRun | null> {
   if (!Array.isArray(s.ids) || !s.ids.length || Date.now() - (s.savedAt || 0) > MAX_EDAD) { clearRun(); return null; }
   const items = await byIds(s.ids);
   if (account !== store.accountId()) return null;
-  if (items.length !== s.ids.length || questionsForSession(items, !!s.feedback).length !== items.length) { clearRun(); return null; }
+  if (items.length !== s.ids.length || filterScoringQuestions(items, !!s.feedback, question => question.np).length !== items.length) { clearRun(); return null; }
   return { saved: s, items, account };
 }
 export function resumeRun({ saved: s, items, account }: PendingRun): Run | null {
@@ -212,9 +224,16 @@ export const falladasIds = (): string[] => { const st = store.getStats(); return
 const GQ_KEY = 'tai.gq';
 async function quickGuest(idx: Index, N: number, orgs: Set<string>): Promise<Question[]> {
   let last: string[] = []; try { last = JSON.parse(localStorage.getItem(GQ_KEY) || '[]'); } catch {}
-  const temas = shuffle(idx.temas).slice(0, N + 3);
-  const pools = (await Promise.all(temas.map(t => getTema(t.id)))).map((l, k) => ({ t: temas[k].id, qs: questionsForSession(l.filter(q => allowed(q, orgs)), true) }));
-  const items = pickGuest(pools, N, id => !!store.rec(id), new Set(last));
+  const temas = shuffleItems(idx.temas, Math.random).slice(0, N + 3);
+  const pools = (await Promise.all(temas.map(t => getTema(t.id)))).map((questions, index) => ({
+    topicId: temas[index].id,
+    questions: filterScoringQuestions(
+      questions.filter(question => questionAllowed(question, orgs)),
+      true,
+      question => question.np,
+    ),
+  }));
+  const items = pickGuestQuestions(pools, N, question => question.i, id => !!store.rec(id), new Set(last), Math.random);
   try { localStorage.setItem(GQ_KEY, JSON.stringify([...last, ...items.map(q => q.i)].slice(-300))); } catch {}
   return items;
 }
@@ -222,19 +241,24 @@ export interface Seleccion { items: Question[]; titulo: string }
 /** Sesión rápida (~5 min). Invitado: una pregunta de cada tema al azar. Con acceso: repasos vencidos + nuevas de los temas más débiles. */
 export async function quickItems(full: boolean): Promise<Seleccion | { items: []; titulo: '' }> {
   const idx = await getIndex(); await getMeta();
-  const N = quickN(store.getStats());
+  const N = estimateQuickQuestionCount(Object.values(store.getStats()).map(record => ({
+    totalSeconds: record[7],
+    count: record[8],
+  })));
   const orgs = origenes();
   if (!full) return { items: await quickGuest(idx, N, orgs), titulo: 'Sesión rápida · una pregunta por tema' };
-  const due = (await byIds((await dueList()).slice(0, N))).filter(q => allowed(q, orgs));
+  const due = (await byIds((await dueList()).slice(0, N))).filter(question => questionAllowed(question, orgs));
   const seen = new Set(store.getSeen());
   const ord = { r: 0, y: 1, n: 2, g: 3 };
   let temas = dominioTemas(idx).filter(t => !seen.size || seen.has(t.id));
   if (!temas.length) temas = dominioTemas(idx);
-  temas = shuffle(temas); // el orden estable de abajo conserva este azar entre temas empatados: sin datos ya no salen siempre los mismos
+  temas = shuffleItems(temas, Math.random); // el orden estable de abajo conserva este azar entre temas empatados: sin datos ya no salen siempre los mismos
   temas.sort((a, b) => (ord[a.est] - ord[b.est]) || ((b.dias ?? 0) - (a.dias ?? 0)));
   const pools: Question[][] = [];
-  for (const l of await Promise.all(temas.slice(0, 8).map(t => getTema(t.id)))) pools.push(shuffle(l.filter(q => allowed(q, orgs) && !store.rec(q.i))));
-  const items = pickQuick(due, pools, N);
+  for (const questions of await Promise.all(temas.slice(0, 8).map(t => getTema(t.id)))) {
+    pools.push(shuffleItems(questions.filter(question => questionAllowed(question, orgs) && !store.rec(question.i)), Math.random));
+  }
+  const items = pickQuickQuestions(due, pools, N, question => question.i, Math.random);
   const nd = items.filter(q => store.rec(q.i)).length;
   return { items, titulo: `Sesión rápida · ${nd} repasos + ${items.length - nd} nuevas` };
 }
@@ -243,17 +267,32 @@ export async function repasoItems(): Promise<Seleccion> {
   await getMeta(); const st = store.getStats(), t0 = now();
   const cand: { i: string; t: string; due: number }[] = [];
   for (const id in st) { const r = st[id]; if (r[3] >= 0 && r[4] <= t0 && temaOf(id)) cand.push({ i: id, t: temaOf(id)!, due: r[4] }); }
-  const ids = pickRepaso(cand, 30).map(x => x.i);
+  const ids = selectSpacedReviews(cand.map(item => ({ topicId: item.t, dueAt: item.due, item })), 30).map(review => review.item.i);
   return { items: ids.length ? await byIds(ids) : [], titulo: 'Repaso de fallos · más vencidas primero, temas mezclados' };
 }
 /** Test de trampas: preguntas que reúnen más de las trampas objetivo (por defecto, las 3 con más fallos). */
 export async function trapTest(n: number, only?: (number | string)[], temas?: string[]): Promise<{ items: Question[]; targets: (number | string)[] }> {
   await getMeta();
-  const rates = trapRates(store.getStats(), id => META[id]?.[3] || [], 5).filter(r => r.err > 0);
-  const targets = only || rates.slice(0, 3).map(r => r.k);
+  const statistics = store.getStats();
+  const rates = calculateTrapRates(
+    Object.fromEntries(Object.entries(statistics).map(([id, record]) => [id, { attempts: record[0], correct: record[1] }])),
+    id => META[id]?.[3] || [],
+    5,
+  ).filter(rate => rate.errorCount > 0);
+  const targets = only || rates.slice(0, 3).map(rate => +rate.trapId);
   if (!targets.length) return { items: [], targets };
   const tg = new Set(targets.map(Number)), ts = temas && temas.length ? new Set(temas) : null;
   const ids = Object.keys(META).filter(id => id !== '_by' && (!ts || ts.has(META[id][0])) && (META[id][3] || []).some((k: number | string) => tg.has(+k)));
-  const cands = (await byIds(ids)).filter(q => allowed(q, origenes()));
-  return { items: pickTrampas(cands, id => store.rec(id), targets, n), targets };
+  const cands = (await byIds(ids)).filter(question => questionAllowed(question, origenes()));
+  const items = selectTrapQuestions(
+    cands.map(question => ({ id: question.i, trapIds: question.x || [], question })),
+    id => {
+      const record = store.rec(id);
+      return record ? { lastResult: record[5] } : undefined;
+    },
+    targets,
+    n,
+    Math.random,
+  ).map(candidate => candidate.question);
+  return { items, targets };
 }
