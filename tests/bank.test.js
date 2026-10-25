@@ -4,8 +4,8 @@ import { gzipSync } from 'node:zlib';
 import { pack, plan } from '../scripts/publish_bank.mjs';
 
 const remote = vi.hoisted(() => ({ meta: null, files: {}, calls: { meta: 0, file: 0 } }));
-vi.mock('../src/access.js', () => ({ isFull: () => true }));
-vi.mock('../src/sync.js', () => ({
+vi.mock('../src/adapters/legacy/access.js', () => ({ isFull: () => true }));
+vi.mock('../src/adapters/firebase/legacy-sync.js', () => ({
   bankMeta: async () => { remote.calls.meta++; return remote.meta; },
   bankFile: async n => { remote.calls.file++; return remote.files[n] || null; },
 }));
@@ -14,7 +14,7 @@ const publish = (name, obj) => { const p = pack(Buffer.from(JSON.stringify(obj))
 beforeEach(async () => {
   vi.resetModules(); localStorage.clear(); indexedDB = new IDBFactory();
   remote.meta = null; remote.files = {}; remote.calls = { meta: 0, file: 0 };
-  bank = await import('../src/bank.js');
+  bank = await import('../src/adapters/firebase/legacy-bank.js');
 });
 it('desactivado por defecto: devuelve null y no toca Firestore', async () => {
   publish('T1.01', [{ i: 'a' }]);

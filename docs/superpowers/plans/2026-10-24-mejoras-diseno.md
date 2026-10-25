@@ -25,7 +25,7 @@
 
 ## Task 1: Cinco prioridades y utilidades comunes (principal)
 
-Files: src/ui.ts, src/main.ts, src/engine.ts, src/types.ts, public/style.css; tests de regresión.
+Files: src/vistas/ui.ts, src/vistas/main.ts, src/domain/engine.ts, src/core/types.ts, public/style.css; tests de regresión.
 - [x] Añadir pruebas que fallen: estados accesibles, aviso antes de contestar, sesión interrumpida y conteo parcial sin cambiar nota oficial.
 - [x] Reflujo de Inicio: dos columnas móviles y una con texto grande; centralizar estados aria de selectores.
 - [x] Avisos visibles antes de responder; conservar clave histórica y exclusión puntuable.
@@ -35,7 +35,7 @@ Files: src/ui.ts, src/main.ts, src/engine.ts, src/types.ts, public/style.css; te
 
 ## Task 2: Entrenamientos (agente exclusivo)
 
-Files: src/screens/training.ts; tests/design-training.test.js.
+Files: src/vistas/screens/training.ts; tests/design-training.test.js.
 - [x] Probar y corregir Detective: no evaluar etiquetas de opciones mientras se ocultan; instrucciones claras, controles con estado.
 - [x] Lectura: una sola entrada de teclado al grupo de palabras, flechas/Home/End y espacio para seleccionar; alternativa explicada.
 - [x] Avisos de calidad antes de responder en Relámpago y Lectura; mantener progreso, contextos y relojes existentes.
@@ -44,7 +44,7 @@ Files: src/screens/training.ts; tests/design-training.test.js.
 
 ## Task 3: Inicio, temas y estadísticas (agente exclusivo)
 
-Files: src/screens/home.ts, src/screens/stats.ts; tests/design-home-stats.test.js.
+Files: src/vistas/screens/home.ts, src/vistas/screens/stats.ts; tests/design-home-stats.test.js.
 - [x] Inicio: priorizar continuar/repasos/falladas, agrupar entrenamientos y mejorar primer uso/estado de acceso.
 - [x] Fecha: no presentar 2027-06-01 predeterminada como oficial; configurar objetivo explícito.
 - [x] Temas: búsqueda y bloques plegables; explicar preguntas vistas frente a temas estudiados; conservar selección y scroll/foco.
@@ -54,7 +54,7 @@ Files: src/screens/home.ts, src/screens/stats.ts; tests/design-home-stats.test.j
 
 ## Task 4: Ajustes, disponibilidad offline y copias (agente exclusivo)
 
-Files: src/screens/settings.ts; puede crear src/offline.ts y tests/design-settings.test.js.
+Files: src/vistas/screens/settings.ts; puede crear src/infra/offline.ts y tests/design-settings.test.js.
 - [x] Agrupar Cuenta/Lectura/Descargas/Copias; diagnóstico técnico plegable; estados de acceso y siguientes pasos claros.
 - [x] Antes de importar: vista previa de añadidos/conservados y confirmación; después: resumen y estado de sincronización.
 - [x] Proteger importación contra cambio de cuenta mientras se espera confirmación, sin sustituir el almacén.
@@ -64,7 +64,7 @@ Files: src/screens/settings.ts; puede crear src/offline.ts y tests/design-settin
 
 ## Task 5: Completar flujo de práctica (principal)
 
-Files: src/main.ts, src/screens/cards.ts, src/config.ts si precisa validación aditiva; utilidades nuevas.
+Files: src/vistas/main.ts, src/vistas/screens/cards.ts, src/core/config.ts si precisa validación aditiva; utilidades nuevas.
 - [x] Falladas: marca fuera del desplegable, filtros de repasada y racha, actualización inmediata y práctica coherente con filtro.
 - [x] Test: alcance explícito, búsqueda/bloques plegables y resumen junto al inicio.
 - [x] Simulacros: oficiales primero y filtros origen/convocatoria/turno; mapa de respuestas/blancos/revisión, contexto lateral en tableta.

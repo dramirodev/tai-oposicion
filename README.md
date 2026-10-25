@@ -9,22 +9,19 @@ Banco: 15.666 preguntas (oficiales, academia y generadas; cada una muestra su or
 
 Versión **1.1.3**. Banco de **36 temas**, **15.666 preguntas**, **417 preguntas de supuestos** y
 **1.410 tarjetas curadas**. Las tarjetas marcadas `revisar: true` se excluyen del repaso y de la exportación.
-Comprobación local: **132 pruebas en 9 archivos aprobadas**, validación de tarjetas y compilación correctas.
+Comprobación local: **228 pruebas Vitest en 24 archivos aprobadas**, validación de tarjetas y compilación correctas.
 Esto no acredita el último despliegue ni sustituye las pruebas reales de login, sincronización e instalación en iOS.
 
 ## Organización del proyecto
 
-- `src/main.js`: arranque, navegación por rutas hash, motor de preguntas y simulacros.
-- `src/screens/`: pantallas de inicio/temas vistos, tarjetas, entrenamientos, estadísticas y ajustes.
-- `src/data.js`: carga y caché de preguntas, metadatos y selección; `src/ui.js`: avisos, confirmaciones y apariencia.
-- `src/labels.js` y `src/version.js`: etiquetas compartidas y versión de la app.
-- `src/logic.js`: selección de preguntas y tarjetas, notas, estadísticas y análisis de simulacros.
-- `src/store.js`: progreso local, validación, repetición espaciada y copias de seguridad.
-- `src/config.js`: validación por campos de las preferencias, conservadas al recargar y al exportar/importar.
-- `src/sync.js`, `src/syncfacade.js`, `src/syncstate.js`: Firebase, carga bajo demanda y estado de sincronización.
-- `public/`: HTML, CSS, iconos, manifiesto PWA y service worker; `data/` contiene las preguntas y `cards/` las tarjetas.
+- `src/core/application/`: coordinación provisional; reglas puras se están separando del módulo mixto en `src/legacy/logic.ts`.
+- `src/adapters/`: IO local, Firebase, banco HTTP y caché offline; `adapters/legacy/` conserva modelos y acceso previos durante la transición.
+- `src/features/`: módulos legacy de las pantallas que se migrarán por funcionalidad.
+- `src/shared/`: UI común y presentación; `src/app/`: composición React, router y ciclo de vida.
+- `src/legacy/`: lógica aún mixta pendiente de dividir entre dominio y presentación.
+- `index.html`: entrada de Vite. `public/`: CSS, iconos, manifiesto PWA y service worker; `public/data/` y `public/cards/` contienen preguntas y tarjetas.
 - `scripts/`: compilación, validación y comprobación de fuentes de las tarjetas; `tools/`: utilidades auxiliares.
-- `tests/`: pruebas con Vitest; `docs/`: documentación de tarjetas y prompt de generación.
+- `tests/`: Vitest y Playwright; `docs/`: documentación del proyecto.
 - `.github/workflows/deploy.yml`: pruebas, compilación y publicación automática en Firebase.
 
 ## Desarrollo local
@@ -37,8 +34,8 @@ npm test
 npm run build
 ```
 
-La compilación con esbuild genera módulos ES para Safari 15+: `public/app.js`, `public/chunks/`
-y `public/version.json`. Estos archivos están excluidos de Git. Para probar la interfaz después de compilar:
+La compilación con Vite 6 genera módulos ES para Safari 15+ en `dist/assets/`
+y escribe `dist/version.json` y `dist/sw.js` con el SHELL de assets con hash. Estos archivos están excluidos de Git. Para probar la interfaz después de compilar:
 
 ```sh
 python3 -m http.server 4173 --bind 127.0.0.1 --directory public
@@ -95,7 +92,7 @@ Abre [la aplicación local](http://127.0.0.1:4173). Para instalar la PWA fuera d
   Sin configuración, se busca `BANCO_PREGUNTAS` junto a la carpeta del proyecto, los supuestos dentro de ese banco
   y los textos en su subcarpeta `temario_txt`. La salida predeterminada es `public/data` junto al script, independientemente
   del directorio de trabajo; `--out-dir` permite probar en otra carpeta. Las entradas se leen y transforman antes de escribir.
-- App: `npm install && npm run build` (el código está en `src/`, el resultado en `public/app.js` y `public/chunks/`; no se versionan: los genera el CI y, para desplegar a mano, `npm run build`).
+- App: `npm install && npm run build` (el código está en `src/`, el resultado en `dist/`; no se versionan: los genera el CI y, para desplegar a mano, `npm run build`).
 - Avisos: las preguntas de **academia** llevan etiqueta propia porque sus respuestas no son oficiales y pueden contener errores; las oficiales de 2025 con plantilla provisional se marcan «Respuesta provisional».
 
 ## Cabeceras de seguridad (`firebase.json`)
@@ -106,9 +103,9 @@ mensajes «Refused to …»: indican qué dominio hay que añadir a la CSP.
 
 ## Pruebas
 `npm install` y después `npm test` (Vitest, unos 5 s). Cubren:
-- **Lógica pura** (`src/logic.js`): nota, reparto del simulacro, semáforo de dominio, utilidades.
+- **Lógica legacy** (`src/legacy/logic.ts`): nota, reparto del simulacro, semáforo de dominio y utilidades.
 - **Sincronización y caché**: cancelación de escrituras al cerrar sesión, rechazo de listeners antiguos y recuperación de la configuración sin conexión.
-- **Almacén** (`src/store.js`): importación segura, preferencias estructuradas, borrado sincronizado de tarjetas, repaso espaciado (+2, +5, +14, +30, +60 días), fusión con la nube y validación de datos externos (XSS, tipos).
+- **Almacén legacy** (`src/adapters/local/legacy-store.ts`): importación segura, preferencias estructuradas, borrado sincronizado de tarjetas, repaso espaciado (+2, +5, +14, +30, +60 días), fusión con la nube y validación de datos externos (XSS, tipos).
 - **Generador**: rutas externas, variables de entorno, salida y conservación del banco ante entradas ausentes.
 - **Pantallas**: navegación por las rutas principales, cambio de tema y persistencia de una valoración de tarjeta al salir y volver.
 - **Tarjetas**: selección, estadísticas, valoración, persistencia y fusión; `tests/cards.test.js` ejecuta además el validador del banco curado.
@@ -174,7 +171,7 @@ plantilla para ampliar o revisar temas en [docs/PROMPT_GEMINI_FLASHCARDS.md](doc
 ## Versiones
 
 - La versión es la de `package.json` (semver). Para publicar una nueva: `npm version patch|minor|major` (o editar el campo) y hacer push; el CI compila y despliega.
-- `npm run build` (`scripts/build.mjs`) inyecta la versión y el commit en la app y genera `public/version.json` (no se versiona).
+- `npm run build` (`scripts/build.mjs`) inyecta la versión y el commit en la app y genera `dist/version.json` (no se versiona).
 - En Ajustes → «Versión de la app» se ve la versión instalada. La app consulta `version.json` al abrirse y al volver a primer plano; si es distinta, avisa y el botón «Actualizar ahora» guarda lo que haya en curso y recarga.
 - Si cambias el service worker, sube también su `V` en `public/sw.js`.
 
@@ -235,3 +232,18 @@ Por petición posterior se modifica Falladas: la extensión opcional de cada reg
 El detalle de los diez problemas corregidos, la migración del progreso y las comprobaciones está en [docs/REVISION_10_CORRECCIONES.md](docs/REVISION_10_CORRECCIONES.md).
 El progreso, la copia de IndexedDB, la sesión pendiente y el acceso recordado se separan por UID. La copia antigua sin cuenta se conserva y solo se adopta al autenticar al propietario verificado. El invitado dispone de su propio progreso.
 Los fallos de los supuestos también aparecen en Falladas y en el repaso, con el enunciado general y el contexto particular de cada pregunta. Importar una copia con sesión activa solicita subir el progreso y sus datos asociados.
+
+
+### Migración React (fases 0 y 1)
+
+La entrada de Vite es `index.html`; los datos fuente siguen en `public/data` y `public/cards`.
+Firebase y el servidor local sirven `dist/`. `npm start` compila y sirve con la misma CSP global
+que Firebase. `npm run deploy` conserva sus validaciones y su despliegue manual habitual.
+
+`npm run test:e2e` ejecuta Chromium y WebKit en 393×852, claro y oscuro, usando el banco real,
+Firebase sin configurar y almacenamiento aislado. Instalar antes: `npx playwright install chromium webkit`.
+Las 68 referencias visuales de la fase 0 se guardan en `tests/e2e/snapshots/`; solo el hash de compilación visible se enmascara. La cobertura e2e completa tiene 80 casos, incluidos reanudación, limpieza del puente y el repintado de la misma ruta.
+Las referencias son específicas de plataforma: `npm run test:e2e:ci` reconstruye el commit de fase 0
+indicado en `tests/e2e/baseline-ref.txt` para obtener las referencias del runner y después compara la app
+actual con tolerancia cero. Sin ese fichero (fase 0), crea las referencias ausentes de esa plataforma.
+No se autentica, no se escribe en Firestore ni se ejecuta un despliegue durante las pruebas.

@@ -1,5 +1,5 @@
 // Service worker: shell + datos, "stale-while-revalidate" para todo lo del mismo origen.
-const V = 'tai-v69', DATA = 'tai-data'; // el banco descargado vive en su propia caché: un despliegue no lo borra
+const V = 'tai-v73', DATA = 'tai-data'; // el banco descargado vive en su propia caché: un despliegue no lo borra
 const SHELL = ['./', 'index.html', 'app.js', 'style.css', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-512-maskable.png', 'icons/icon-180.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => caches.open(DATA)).then(c => c.addAll(['data/index.json', 'data/meta.json'])).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V && k !== DATA).map(k => caches.delete(k)))).then(() => self.clients.claim())); });

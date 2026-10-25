@@ -1,6 +1,6 @@
 import { it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
-import * as logic from '../src/logic.js';
+import * as logic from '../src/legacy/logic.js';
 const excluded = ['L2018S-S2-R-03', 'L2025A-S1-R-02', 'P2018-S2-03'];
 const sup = JSON.parse(readFileSync('public/data/supuestos.json','utf8'));
 const all = Object.values(sup).flatMap(s => s.q);
