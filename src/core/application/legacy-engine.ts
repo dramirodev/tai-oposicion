@@ -53,6 +53,9 @@ function observable<T extends object>(value: T): T {
   return proxy;
 }
 export const state: { run: Run | null; last: LastResult | null } = observable({ run: null, last: null });
+export const getRunKind = (): SessionKind | null => state.run?.kind || null;
+export const getLastRunKind = (): SessionKind | null => state.last?.ses.kind || null;
+export const hasActiveRun = (): boolean => state.run !== null;
 
 /** Crea la sesión; devuelve null si no hay preguntas puntuables. No navega: eso lo decide la interfaz. */
 export function createRun(cfg: RunCfg): Run | null {

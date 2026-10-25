@@ -2,9 +2,10 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 import { isFull, GUEST_ROUTES } from '../adapters/legacy/access.js';
-import { state } from '../core/application/legacy-engine.js';
+import { hasActiveRun } from '../core/application/legacy-engine.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
 import { subscribeAccessChanges } from './access-events.js';
+import { useActiveSection } from './useActiveSection.js';
 const subscribeFull = (fn: () => void) => {
   const offSync = sync.onStatus(fn), offLocal = subscribeAccessChanges(fn);
   return () => { offSync(); offLocal(); };
@@ -37,10 +38,8 @@ export function Layout() {
   useEffect(() => {
     if (lastFull.current === full) return;
     lastFull.current = full;
-    if (!state.run) void navigate(location.pathname);
+    if (!hasActiveRun()) void navigate(location.pathname);
   }, [full, location.pathname, navigate]);
-  const name = location.pathname.split('/')[1] || 'home';
-  const kind = name === 'quiz' ? state.run?.kind : state.last?.ses.kind;
-  const section = ({ quiz: kind === 'sim' ? 'sim' : kind === 'test' ? 'test' : 'home', result: kind === 'sim' ? 'sim' : kind === 'test' ? 'test' : 'home', sim2: 'sim', examenes: 'sim', errores: 'settings', falladas: 'home', cards: 'home' } as Record<string, string>)[name] || name;
+  const section = useActiveSection(location.pathname);
   return <><Outlet key={location.key} />{createPortal(<><div id="live" className="sr" role="status" aria-live="polite" /><nav aria-label="Principal">{tabs.map(([route, label, icon]) => <a key={route} href={`#/${route}`} data-r={route} className={section === route ? 'on' : ''} aria-current={section === route ? 'page' : undefined} style={{ display: full || GUEST_ROUTES.has(route) ? '' : 'none' }}><i aria-hidden="true"><svg viewBox="0 0 24 24">{icon}</svg></i>{label}</a>)}</nav><NetworkBanner /></>, document.body)}</>;
 }
