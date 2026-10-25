@@ -3,11 +3,11 @@ import { createPortal } from 'react-dom';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 import { isFull, GUEST_ROUTES } from '../adapters/legacy/access.js';
 import { hasActiveRun } from '../core/application/legacy-engine.js';
-import * as sync from '../adapters/firebase/sync-facade.js';
+import { syncGateway } from '../adapters/firebase/legacy-sync-state.js';
 import { subscribeAccessChanges } from './access-events.js';
 import { useActiveSection } from './useActiveSection.js';
 const subscribeFull = (fn: () => void) => {
-  const offSync = sync.onStatus(fn), offLocal = subscribeAccessChanges(fn);
+  const offSync = syncGateway.subscribe(() => fn()), offLocal = subscribeAccessChanges(fn);
   return () => { offSync(); offLocal(); };
 };
 function NetworkBanner() {
