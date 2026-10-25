@@ -28,3 +28,16 @@ it('hace ida y vuelta exacta de tai.v1 generado por store con todos los tipos de
   expect(mapped.value.reports['Q-PROGRESS-1'].state).toBe('abierto');
   expect(JSON.stringify(progressMapper.toDto(mapped.value))).toBe(JSON.stringify(dto));
 });
+
+it('omite un registro corrupto y conserva el resto del progreso con un diagnóstico', () => {
+  store.record('Q-VALID', 'T1.01', 1, 1_800_000_000_000, 5);
+  const dto = JSON.parse(store.exportAll());
+  dto.stats['Q-CORRUPT'] = ['bad'];
+
+  const mapped = progressMapper.toDomain(dto);
+
+  expect(mapped.ok).toBe(true);
+  expect(mapped.value.statistics['Q-VALID']).toMatchObject({ attempts: 1, correct: 1 });
+  expect(mapped.value.statistics['Q-CORRUPT']).toBeUndefined();
+  expect(mapped.warnings).toContain('stats.Q-CORRUPT: Registro estadístico inválido');
+});
