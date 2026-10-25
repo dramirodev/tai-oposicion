@@ -7,7 +7,6 @@ export default tseslint.config(
     'dist/**', 'node_modules/**', 'tests/**', 'public/**', 'scripts/**',
     'src/core/application/legacy-*.ts', 'src/adapters/legacy/types.ts',
     'src/legacy/**', 'src/features/**/legacy.ts',
-    'src/adapters/firebase/legacy-sync.ts',
     'src/app/legacy-router.ts',
   ] },
   ...tseslint.configs.recommended,

@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import type { FirebaseOptions } from 'firebase/app';
 import { initializeAuth, GoogleAuthProvider, signInWithRedirect, signInWithPopup, getRedirectResult, onAuthStateChanged, signOut, indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence, browserPopupRedirectResolver } from 'firebase/auth';
 import {
   initializeFirestore, persistentLocalCache, persistentMultipleTabManager,
@@ -11,6 +12,10 @@ import type { AccessLevel, AccessRequest, CardMap, ReportMap, SeenDoc, Session, 
 
 const enc = (id: string) => id.replace(/\./g, '~');
 const dec = (id: string) => id.replace(/~/g, '.');
+const errorFields = (value: unknown): { code: unknown; message: unknown } => {
+  const fields = value && typeof value === 'object' ? value as Record<string, unknown> : {};
+  return { code: fields.code, message: fields.message };
+};
 
 import { status, emit } from './legacy-sync-state.js';
 import { OWNER, rememberAccess } from '../legacy/access.js';
@@ -18,13 +23,11 @@ import { OWNER, rememberAccess } from '../legacy/access.js';
 let auth: Auth, db: Firestore, uid: string | null = null, timer: ReturnType<typeof setTimeout> | undefined, cardsT: ReturnType<typeof setTimeout> | undefined, retryT: ReturnType<typeof setTimeout> | undefined, retryN = 0, syncEpoch = 0, unsubs: Unsubscribe[] = [];
 let temaOf: (id: string) => string | null = () => null; // id -> tema
 let idsOfTema: (t: string) => string[] = () => [];
-const errMsg = (e: unknown): string => ((e as any)?.code || '') + ' ' + ((e as any)?.message || e);
-
 export async function init(metaFns: { temaOf: (id: string) => string | null; idsOfTema: (t: string) => string[] }): Promise<void> {
   temaOf = metaFns.temaOf; idsOfTema = metaFns.idsOfTema;
-  let firebaseConfig: Record<string, any> = {}, leida = false;
-  try { firebaseConfig = await (await fetch('firebase-config.json', { cache: 'no-cache' })).json(); leida = true; } catch (e: any) {
-    try { firebaseConfig = await (await fetch('firebase-config.json')).json(); leida = true; } catch (e2: any) {}
+  let firebaseConfig: FirebaseOptions = {}, leida = false;
+  try { firebaseConfig = await (await fetch('firebase-config.json', { cache: 'no-cache' })).json() as FirebaseOptions; leida = true; } catch {
+    try { firebaseConfig = await (await fetch('firebase-config.json')).json() as FirebaseOptions; leida = true; } catch {}
   }
   const configured = status.configured = !!firebaseConfig.apiKey && !/PEGA/i.test(firebaseConfig.apiKey);
   status.host = location.host; status.authDomain = firebaseConfig.authDomain || '';
@@ -39,11 +42,11 @@ export async function init(metaFns: { temaOf: (id: string) => string | null; ids
   // Persistencia explícita (IndexedDB y, si no, localStorage): en iOS la sesión debe sobrevivir al cierre de la app.
   auth = initializeAuth(app, { persistence: [indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence], popupRedirectResolver: browserPopupRedirectResolver });
   db = initializeFirestore(app, { localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }), experimentalAutoDetectLongPolling: true }); // Safari/iOS: si el canal en streaming falla, usa long-polling
-  const pend = (() => { try { return localStorage.getItem('tai.redir'); } catch (e: any) { return null; } })();
+  const pend = (() => { try { return localStorage.getItem('tai.redir'); } catch { return null; } })();
   getRedirectResult(auth).then(r => {
-    try { localStorage.removeItem('tai.redir'); } catch (e: any) {}
+    try { localStorage.removeItem('tai.redir'); } catch {}
     if (!r && pend && !auth.currentUser) { status.error = 'El inicio de sesión no terminó en esta ventana. Vuelve a pulsar «Entrar con Google».'; emit(); }
-  }).catch(e => { try { localStorage.removeItem('tai.redir'); } catch (x) {} status.error = (e.code || '') + ' ' + e.message; emit(); });
+  }).catch(e => { try { localStorage.removeItem('tai.redir'); } catch {} const fields = errorFields(e); status.error = (fields.code || '') + ' ' + fields.message; emit(); });
   onAuthStateChanged(auth, (u: User | null) => {
     status.user = u ? { name: u.displayName || u.email || '', email: u.email || '', verified: !!u.emailVerified } : null;
     stopAcc(); stop(); uid = null;
@@ -63,15 +66,16 @@ export async function login(): Promise<void> {
   p.setCustomParameters({ prompt: 'select_account' });
   status.error = ''; status.state = 'abriendo Google…'; emit();
   const t0 = Date.now();
-  const viaRedirect = async () => { try { localStorage.setItem('tai.redir', String(Date.now())); } catch (e: any) {} await signInWithRedirect(auth, p); };
+  const viaRedirect = async () => { try { localStorage.setItem('tai.redir', String(Date.now())); } catch {} await signInWithRedirect(auth, p); };
   try {
     // Ventana emergente primero, también en la app instalada: en iOS la redirección suele volver a otro contexto y se pierde el resultado.
     await signInWithPopup(auth, p, browserPopupRedirectResolver);
-  } catch (e: any) {
+  } catch (e) {
+    const fields = errorFields(e);
     const rapido = Date.now() - t0 < 2500;
-    if (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment' || (e.code === 'auth/popup-closed-by-user' && rapido)) {
-      try { await viaRedirect(); } catch (e2: any) { status.error = (e2.code || '') + ' ' + e2.message; }
-    } else if (e.code !== 'auth/cancelled-popup-request') status.error = (e.code || '') + ' ' + e.message;
+    if (fields.code === 'auth/popup-blocked' || fields.code === 'auth/operation-not-supported-in-this-environment' || (fields.code === 'auth/popup-closed-by-user' && rapido)) {
+      try { await viaRedirect(); } catch (e2) { const redirectError = errorFields(e2); status.error = (redirectError.code || '') + ' ' + redirectError.message; }
+    } else if (fields.code !== 'auth/cancelled-popup-request') status.error = (fields.code || '') + ' ' + fields.message;
   }
   if (!auth.currentUser) status.state = 'sin sesión';
   emit();
@@ -80,9 +84,9 @@ export async function login(): Promise<void> {
 let accUnsubs: Unsubscribe[] = [];
 let accessEpoch = 0;
 const canSync = () => !!uid && (status.access === 'propietario' || status.access === 'aprobado');
-function stopAcc() { accessEpoch++; accUnsubs.forEach(f => { try { f(); } catch (e: any) {} }); accUnsubs = []; }
+function stopAcc() { accessEpoch++; accUnsubs.forEach(f => { try { f(); } catch {} }); accUnsubs = []; }
 function setAccess(l: AccessLevel) { status.access = l; rememberAccess(l); }
-function accErr(e: any) { status.accessErr = (e && e.code) || String(e); emit(); }
+function accErr(error: unknown) { status.accessErr = String(errorFields(error).code || error); emit(); }
 function resolveAccess(u: User) {
   const mine = u.uid, epoch = accessEpoch, vivo = () => uid === mine && epoch === accessEpoch;
   status.accessErr = '';
@@ -116,13 +120,13 @@ function resolveAccess(u: User) {
 }
 export async function requestAccess(): Promise<boolean> {
   const u = auth && auth.currentUser; if (!u || !db) return false;
-  try { await setDoc(doc(db, 'requests', u.uid), { email: u.email, name: u.displayName || u.email, ts: Date.now() }); return true; } catch (e: any) { accErr(e); return false; }
+  try { await setDoc(doc(db, 'requests', u.uid), { email: u.email, name: u.displayName || u.email, ts: Date.now() }); return true; } catch (e) { accErr(e); return false; }
 }
 export async function approve(r: AccessRequest): Promise<boolean> {
-  try { await setDoc(doc(db, 'access', r.uid), { ok: true, email: r.email, name: r.name || r.email, ts: Date.now() }); await deleteDoc(doc(db, 'requests', r.uid)); return true; } catch (e: any) { accErr(e); return false; }
+  try { await setDoc(doc(db, 'access', r.uid), { ok: true, email: r.email, name: r.name || r.email, ts: Date.now() }); await deleteDoc(doc(db, 'requests', r.uid)); return true; } catch (e) { accErr(e); return false; }
 }
-export const reject = async (id: string): Promise<boolean> => { try { await deleteDoc(doc(db, 'requests', id)); return true; } catch (e: any) { accErr(e); return false; } };
-export const revoke = async (id: string): Promise<boolean> => { try { await deleteDoc(doc(db, 'access', id)); return true; } catch (e: any) { accErr(e); return false; } };
+export const reject = async (id: string): Promise<boolean> => { try { await deleteDoc(doc(db, 'requests', id)); return true; } catch (e) { accErr(e); return false; } };
+export const revoke = async (id: string): Promise<boolean> => { try { await deleteDoc(doc(db, 'access', id)); return true; } catch (e) { accErr(e); return false; } };
 export const logout = (): Promise<void> | undefined => auth && signOut(auth);
 export function retry(): void { status.error = ''; retryN = 0; if (uid) { status.state = 'sincronizando…'; emit(); start(); } }
 
@@ -250,17 +254,21 @@ export function pushReports(m: ReportMap): void {
   setDoc(doc(db, 'users', uid, 'cfg', 'reports'), { m, u: Date.now() }, { merge: true }).catch(writeErr);
 }
 
-function writeErr(e: any) { if (e.code !== 'permission-denied' && e.code !== 'unauthenticated') { console.warn('Firestore (escritura):', e.code, e.message); return; } status.error = 'No se pudo guardar en la nube (' + (e.code || e.message) + ')'; emit(); }
+function writeErr(error: unknown) {
+  const { code, message } = errorFields(error);
+  if (code !== 'permission-denied' && code !== 'unauthenticated') { console.warn('Firestore (escritura):', code, message); return; }
+  status.error = 'No se pudo guardar en la nube (' + (code || message) + ')'; emit();
+}
 
 // ───────── banco de preguntas en Firestore (solo lectura; lo publica scripts/publish_bank.mjs) ─────────
 export interface BankMeta { v: number; files: Record<string, string> }
 /** Versión del banco y hash de cada fichero. null si no hay sesión con acceso o no se puede leer. */
 export async function bankMeta(): Promise<BankMeta | null> {
   if (!db || !canSync()) return null;
-  try { const s = await getDoc(doc(db, 'bank', 'meta')); const d = s.exists() ? s.data() as any : null; return d && d.files ? { v: d.v, files: d.files } : null; } catch (e) { return null; }
+  try { const s = await getDoc(doc(db, 'bank', 'meta')); const d = s.exists() ? s.data() : null; return d && d.files ? { v: d.v, files: d.files } as BankMeta : null; } catch { return null; }
 }
 /** Contenido gzip de un fichero del banco. */
 export async function bankFile(name: string): Promise<Uint8Array | null> {
   if (!db || !canSync()) return null;
-  try { const s = await getDoc(doc(db, 'bank', 'f_' + name)); const z = s.exists() ? (s.data() as any).z : null; return z && typeof z.toUint8Array === 'function' ? z.toUint8Array() : null; } catch (e) { return null; }
+  try { const s = await getDoc(doc(db, 'bank', 'f_' + name)); const z = s.exists() ? s.data().z : null; return z && typeof z.toUint8Array === 'function' ? z.toUint8Array() : null; } catch { return null; }
 }

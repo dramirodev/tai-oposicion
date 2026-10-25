@@ -17,3 +17,7 @@ auditoria-temario-*/
 dist/
 test-results/
 playwright-report/
+.vite/
+playwright/.cache/
+.eslintcache
+*.tsbuildinfo
