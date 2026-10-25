@@ -1,6 +1,7 @@
 // Lógica pura (sin DOM ni almacenamiento): se prueba con `npm test`.
 import type { Origin, Question, Session, StatMap, StatRec } from '../adapters/legacy/types.js';
 import { analyzeSimulation, simulationPace } from '../core/domain/simulation-analysis.ts';
+import { countReviewsByDay, selectSpacedReviews } from '../core/domain/spaced-repetition.ts';
 export { calculateExamScore as nota } from '../core/domain/scoring.ts';
 
 type Rnd = () => number;
@@ -206,32 +207,15 @@ export function keyAction(e: { key?: string; ctrlKey?: boolean; metaKey?: boolea
 
 // ───────── repaso espaciado: prioridad, motivo del fallo y calendario ─────────
 export const MOTIVOS_FALLO = ['', 'Contenido', 'Trampa', 'Dudaba entre dos', 'Despiste', 'No lo sabía', '', 'Velocidad']; // 6 = acierto por suerte (solo en aciertos); 7 = fallo por leer deprisa o sin terminar
-const DIA = 86400000;
 // items: [{ i, t, due }]. Las más vencidas primero (hasta n) y mezcladas por tema, sin repetir tema seguido si se puede.
 export function pickRepaso<T extends { t: string; due: number }>(items: T[], n: number): T[] {
-  const top = [...items].sort((a, b) => a.due - b.due).slice(0, n);
-  const by = new Map<string, T[]>();
-  for (const x of top) { if (!by.has(x.t)) by.set(x.t, []); by.get(x.t)!.push(x); }
-  const out: T[] = []; let last: string | null = null;
-  while (out.length < top.length) {
-    const keys = [...by.keys()].filter(k => by.get(k)!.length);
-    keys.sort((a, b) => by.get(b)!.length - by.get(a)!.length);
-    const k = keys.find(x => x !== last) ?? keys[0];
-    out.push(by.get(k)!.shift()!); last = k;
-  }
-  return out;
+  return selectSpacedReviews(items.map(item => ({ topicId: item.t, dueAt: item.due, item })), n).map(review => review.item);
 }
 // Preguntas que vencen cada día: [hoy y atrasadas, +1, …, +(days-1)] (días naturales locales)
 export function cargaRepasos(stats: StatMap, now: number, days = 14): number[] {
-  const ordinal = (t: number) => { const d = new Date(t); return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / DIA; };
-  const d0 = ordinal(now);
-  const out: number[] = new Array(days).fill(0);
-  for (const id in stats) {
-    const r = stats[id]; if (!(r[3] >= 0) || !r[4]) continue;
-    const k = ordinal(r[4]) - d0;
-    if (k < days) out[Math.max(0, k)]++;
-  }
-  return out;
+  const entries = [];
+  for (const id in stats) entries.push({ intervalStep: stats[id][3], dueAt: stats[id][4] });
+  return countReviewsByDay(entries, now, days);
 }
 // Recuento de motivos de la última falta (solo preguntas cuya última respuesta fue un fallo)
 export function motivosFallo(stats: StatMap): number[] {

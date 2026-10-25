@@ -25,11 +25,12 @@ export default tseslint.config(
   {
     files: ['src/core/domain/**/*.{ts,tsx}'],
     rules: {
-      'no-restricted-globals': ['error', 'window', 'document', 'navigator', 'localStorage', 'indexedDB', 'fetch', 'Date'],
+      'no-restricted-globals': ['error', 'window', 'document', 'navigator', 'localStorage', 'indexedDB', 'fetch'],
       'no-restricted-properties': ['error',
         { object: 'Date', property: 'now', message: 'Inyecta el reloj como parámetro.' },
         { object: 'Math', property: 'random', message: 'Inyecta el generador aleatorio como parámetro.' },
       ],
+      'no-restricted-syntax': ['error', { selector: "NewExpression[callee.name='Date'][arguments.length=0]", message: 'Pasa el instante como parámetro.' }],
     },
   },
   {
