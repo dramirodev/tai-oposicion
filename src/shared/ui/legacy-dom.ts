@@ -1,5 +1,3 @@
-import * as store from '../../adapters/local/legacy-store.js';
-import { esc, normUi, ZOOMS } from '../../legacy/logic.js';
 /** Atajo de querySelector. Se asume que el elemento existe (como en el JS original); usa `$<HTMLInputElement>(…)` para campos de formulario. */
 /** Elemento de interfaz con las propiedades de formulario habituales (value, disabled, checked…). */
 export type El = HTMLElement & Pick<HTMLInputElement, 'value' | 'disabled' | 'checked' | 'files' | 'select'>;
@@ -62,24 +60,13 @@ export function focusHeading(root: ParentNode = legacyScope().app): void {
 
 export { toast, ask, notice, type ToastAction } from './dialogs.js';
 // botón ocupado mientras carga: evita dobles pulsaciones y da respuesta inmediata
-export const guard = <A extends unknown[], R>(fn: (...a: A) => R | Promise<R>) => async function (this: any, ...a: A): Promise<R | undefined> {
-  if (this.disabled) return;
-  const h = this.innerHTML; this.disabled = true; this.textContent = 'Cargando…';
-  try { return await fn.apply(this, a); } finally { this.disabled = false; this.innerHTML = h; }
+export const guard = <A extends unknown[], R>(fn: (...a: A) => R | Promise<R>) => async function (this: GlobalEventHandlers, ...a: A): Promise<R | undefined> {
+  const button = this as HTMLButtonElement;
+  if (button.disabled) return;
+  const h = button.innerHTML; button.disabled = true; button.textContent = 'Cargando…';
+  try { return await fn(...a); } finally { button.disabled = false; button.innerHTML = h; }
 };
 // ───────── comodidad: tema y tamaño de letra ─────────
-function applyUi() {
-  const u = normUi(store.getCfg().ui);
-  const r = document.documentElement;
-  if (u.theme === 'auto') r.removeAttribute('data-theme'); else r.setAttribute('data-theme', u.theme);
-  r.style.setProperty('--z', String(ZOOMS[u.size]));
-  r.dataset.textSize = String(u.size);
-  const dark = u.theme === 'dark' || (u.theme === 'auto' && matchMedia('(prefers-color-scheme:dark)').matches);
-  const m = document.querySelector('meta[name=theme-color]'); if (m) (m as HTMLMetaElement).content = dark ? '#0e1424' : '#14213d';
-}
-applyUi();
-store.onChange(applyUi);
-
 // Los selectores mantienen sus estados también después de repintar una pantalla.
 export function selectionStates(root: ParentNode = legacyScope().app): void {
   root.querySelectorAll<HTMLButtonElement>('.seg button').forEach(b => {
