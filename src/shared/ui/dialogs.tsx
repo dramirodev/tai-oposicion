@@ -1,24 +1,9 @@
 import { useLayoutEffect, useSyncExternalStore, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-export interface ToastAction { label: string; fn: () => void }
-type MenuAction = string | (() => void);
-export type MenuGroup = [string, [string, string, string, MenuAction][]];
-interface DialogRequest {
-  id: number; kind: 'ask' | 'notice' | 'menu'; msg: string; title: string; label: string; danger: boolean;
-  prev: Element | null; done: (accepted: boolean) => void;
-  groups?: MenuGroup[]; current?: string; navigate?: (h: string) => void;
-}
-let nextId = 0;
-let state: { dialogs: DialogRequest[]; toast: { msg: string; action?: ToastAction; shown: boolean } } = { dialogs: [], toast: { msg: '', shown: false } };
-const subs = new Set<() => void>();
-const subscribe = (fn: () => void) => { subs.add(fn); return () => { subs.delete(fn); }; };
-const snapshot = () => state;
-const emit = () => subs.forEach(fn => fn());
-let toastT: ReturnType<typeof setTimeout>;
+import { dialogStore, type DialogRequest, type MenuAction, type MenuGroup, type ToastAction } from './dialog-store.js';
+export type { ToastAction, MenuGroup } from './dialog-store.js';
 export function toast(msg: string, action?: ToastAction): void {
-  clearTimeout(toastT);
-  state = { ...state, toast: { msg, action, shown: true } }; emit();
-  toastT = setTimeout(() => { state = { ...state, toast: { ...state.toast, shown: false } }; emit(); }, action ? 20000 : 4500);
+  dialogStore.showToast({ msg, action, shown: true }, action ? 20000 : 4500);
 }
 function request(input: Omit<DialogRequest, 'id' | 'done' | 'prev'>, signal?: AbortSignal): Promise<boolean> {
   if (signal?.aborted) return Promise.resolve(false);
@@ -27,19 +12,19 @@ function request(input: Omit<DialogRequest, 'id' | 'done' | 'prev'>, signal?: Ab
     const abort = () => done(false);
     const done = (ok: boolean) => {
       if (settled) return; settled = true; signal?.removeEventListener('abort', abort);
-      state = { ...state, dialogs: state.dialogs.filter(d => d !== dialog) }; emit();
+      dialogStore.removeDialog(dialog);
       if (prev instanceof HTMLElement && prev.isConnected) prev.focus();
       resolve(ok);
     };
-    const dialog: DialogRequest = { ...input, id: nextId++, done, prev };
+    const dialog: DialogRequest = { ...input, id: dialogStore.nextId(), done, prev };
     signal?.addEventListener('abort', abort, { once: true });
-    state = { ...state, dialogs: [...state.dialogs, dialog] }; emit();
+    dialogStore.addDialog(dialog);
   });
 }
 export const ask = (msg: string, okLabel = 'Aceptar', danger = false, signal?: AbortSignal): Promise<boolean> => request({ kind: 'ask', msg, title: '', label: okLabel, danger }, signal);
 export const notice = async (msg: string, title = '', okLabel = 'Entendido'): Promise<void> => { await request({ kind: 'notice', msg, title, label: okLabel, danger: false }); };
 export const showMenu = async (groups: MenuGroup[], current: string, navigate: (h: string) => void): Promise<void> => {
-  if (state.dialogs.some(d => d.kind === 'menu')) return;
+  if (dialogStore.hasMenu()) return;
   await request({ kind: 'menu', groups, current, navigate, msg: '', title: '', label: '', danger: false });
 };
 function Dialog({ dialog: d, top }: { dialog: DialogRequest; top: boolean }) {
@@ -74,12 +59,12 @@ function MenuSection({ title, items, offset, current, select }: { title: string;
   return <><div className="gtitle">{title}</div><div className="lgroup">{items.map(([icon, name, sub, action], i) => <button key={i} className={`lrow ${action === current ? 'here' : ''}`} data-a={offset + i} aria-current={action === current ? 'page' : undefined} onClick={() => select(action)}><i aria-hidden="true">{icon}</i><span><b>{name}</b><small>{sub}</small></span></button>)}</div></>;
 }
 export function DialogProvider({ children }: { children?: ReactNode }) {
-  const { dialogs, toast: t } = useSyncExternalStore(subscribe, snapshot);
+  const { dialogs, toast: t } = useSyncExternalStore(dialogStore.subscribe, dialogStore.getSnapshot);
   useLayoutEffect(() => {
     const persistError = () => toast('No se pudo guardar el progreso en este dispositivo (¿poco espacio?). Exporta una copia en Ajustes.');
     addEventListener('tai-persist-error', persistError);
     return () => removeEventListener('tai-persist-error', persistError);
   }, []);
-  const act = () => { if (!t.action) return; const action = t.action; state = { ...state, toast: { msg: 'Actualizando…', shown: t.shown } }; emit(); action.fn(); };
+  const act = () => { if (!t.action) return; const action = t.action; dialogStore.setToast({ msg: 'Actualizando…', shown: t.shown }); action.fn(); };
   return <>{children}{createPortal(<><div id="toast" role="status" className={`${t.shown ? 'show' : ''}${t.action ? ' act' : ''}`} onClick={act}>{t.msg}{t.action && <button type="button" onClick={e => { e.stopPropagation(); act(); }}>{t.action.label}</button>}</div>{dialogs.map((d, i) => <Dialog key={d.id} dialog={d} top={i === dialogs.length - 1} />)}</>, document.body)}</>;
 }

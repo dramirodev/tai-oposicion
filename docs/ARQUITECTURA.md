@@ -8,6 +8,8 @@ El prototipo paralelo de sesiones fue retirado en `9540f8e`; el motor de referen
 
 Estas extracciones se comparan con las pruebas heredadas; no cambian selección, puntuación, calendario, serialización ni ritmo. Quedan reglas de dominio en `legacy/logic.ts` y en el adaptador del banco por extraer. El estado `run` ya no se exporta ni se muta desde fuera del motor: se consulta mediante `getSnapshot()` y cambia por acciones públicas. `legacy-router` conserva objetos de sesión de solo lectura para pintar la pantalla. El estado observable de sincronización vive en `adapters/firebase/legacy-sync-state.ts`; `core/application` deja de depender de ese detalle del adaptador, aunque el puente todavía consume la fachada Firebase.
 
+El estado de diálogos y toast está encapsulado en `shared/ui/dialog-store.ts`, con `subscribe()` y `getSnapshot()`; `dialogs.tsx` expone la API de promesas y monta el único proveedor React. No existe otro `createSessionController` ni otra API `startQuickSession`/`finishSession`: las funciones actuales de sesión son parte del motor de referencia y están conectadas al puente.
+
 ## Capas objetivo
 
 - `core/domain`: entidades y reglas deterministas, sin IO, React, DOM, fechas del sistema, DTO ni HTML.
