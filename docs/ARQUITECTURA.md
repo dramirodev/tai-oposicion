@@ -34,7 +34,7 @@ Los DTO se definen en `adapters/*/dto`; los mappers DTO ↔ dominio en `adapters
 
 `npm run lint` usa ESLint flat config, `eslint-plugin-import` (`import/no-restricted-paths`), TypeScript ESLint y `eslint-plugin-react-hooks`. Restringe imports por capa, APIs del navegador, fechas del sistema y `Math.random()` en dominio; prohíbe `dangerouslySetInnerHTML`. Los alias están configurados en TypeScript y Vite: `@core`, `@adapters`, `@features`, `@shared`, `@app`; los imports existentes todavía no se han convertido todos.
 
-La lista de exclusiones vigente es el bloque `ignores` de `eslint.config.mjs`: `src/core/application/legacy-*.ts`; `src/adapters/legacy/**`; `src/legacy/**`; `src/features/**/legacy.ts`; `src/shared/ui/legacy-dom.ts`; `src/adapters/firebase/legacy-sync.ts`; `src/adapters/http/legacy-data.ts`; `src/adapters/local/legacy-store.ts`; `src/adapters/firebase/sync-facade.ts`; `src/app/legacy-router.ts`. Se retiran una a una cuando pasan las reglas. El motor legado aún importa directamente store y banco; `core`, `adapters` y `shared` no están todos fuera de las exclusiones.
+La lista de exclusiones vigente es el bloque `ignores` de `eslint.config.mjs`: `src/core/application/legacy-*.ts`; `src/adapters/legacy/types.ts`; `src/legacy/**`; `src/features/**/legacy.ts`; `src/shared/ui/legacy-dom.ts`; `src/adapters/firebase/legacy-sync.ts`; `src/adapters/http/legacy-data.ts`; `src/adapters/local/legacy-store.ts`; `src/adapters/firebase/sync-facade.ts`; `src/app/legacy-router.ts`. Se retiran una a una cuando pasan las reglas. El motor legado aún importa directamente store y banco; `core`, `adapters` y `shared` no están todos fuera de las exclusiones.
 
 ## Añadir una feature
 

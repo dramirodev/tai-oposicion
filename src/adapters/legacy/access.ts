@@ -6,8 +6,13 @@ import type { AccessLevel } from './types.js';
 export const OWNER = 'dramiro@gmail.com';
 const ACC = () => 'tai.acc:' + (accountId() || 'guest');
 const DEV = 'tai.dev';
-const rd = (k: string): string | null => { try { return localStorage.getItem(k); } catch (e) { return null; } };
-const wr = (k: string, v: string | null): void => { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} };
+const rd = (k: string): string | null => { try { return localStorage.getItem(k); } catch { return null; } };
+const wr = (k: string, v: string | null): void => {
+  try {
+    if (v == null) localStorage.removeItem(k);
+    else localStorage.setItem(k, v);
+  } catch {}
+};
 const local = (): boolean => typeof location !== 'undefined' && ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
 // Modo desarrollador: '1' = acceso completo, '0' = ver como invitado (ni siquiera en localhost), sin valor = automático.
 export const devMode = (): string | null => rd(DEV);
