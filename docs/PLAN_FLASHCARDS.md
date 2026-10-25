@@ -34,18 +34,18 @@ Las tarjetas con `revisar: true` se excluyen del repaso y de la exportación a A
 
 ## Organización técnica
 
-- `src/vistas/main.ts`: arranque, navegación y motor de preguntas legacy.
-- `src/vistas/screens/cards.ts`: carga de curadas y tarjetas de fallo, selección, interfaz de repaso y estado de la sesión.
-- `src/vistas/screens/settings.ts`: descarga offline y exportación a Anki.
-- `src/domain/data.ts`: acceso y selección de datos; `src/vistas/ui.ts`: avisos, confirmaciones y apariencia compartidos.
+- `src/app/legacy-router.ts`: arranque, navegación y motor de preguntas legacy.
+- `src/features/cards/legacy.ts`: carga de curadas y tarjetas de fallo, selección, interfaz de repaso y estado de la sesión.
+- `src/features/settings/legacy.ts`: descarga offline y exportación a Anki.
+- `src/adapters/http/legacy-data.ts`: acceso y selección de datos; `src/shared/ui/legacy-dom.ts`: avisos, confirmaciones y apariencia compartidos.
 - Las pantallas reciben navegación y gestión de limpieza desde el arranque, sin importar el archivo principal.
-- `src/domain/logic.ts`: `pickCards(cards, recs, {n, now, maxNew, seen})`, `cardStats(cards, recs, now)` y `cardFromQuestion(q)`.
-- `src/infra/store.ts`: `S.cards`, validación, `addFallo(qid, now)`, `gradeCard(id, grade, now)`, `removeCard(id)` y `mergeCards(m)`.
+- `src/legacy/logic.ts`: `pickCards(cards, recs, {n, now, maxNew, seen})`, `cardStats(cards, recs, now)` y `cardFromQuestion(q)`.
+- `src/adapters/local/legacy-store.ts`: `S.cards`, validación, `addFallo(qid, now)`, `gradeCard(id, grade, now)`, `removeCard(id)` y `mergeCards(m)`.
 - Registro: `[n, ok, last, box, due, lastGrade]`. La fusión conserva el registro con `last` más reciente. `lastGrade = -1` identifica una marca de borrado, excluida del repaso.
 - Persistencia: `localStorage` (`tai.v1:<uid>` o `tai.v1:guest`; `tai.v1` se conserva como copia anterior), copia IndexedDB y exportación/importación del progreso completo.
-- `src/infra/sync.ts`: escucha y escritura del progreso en `users/{uid}/cfg/cards`, con `{m, u}`; no se usa la colección por tema propuesta en el plan inicial.
+- `src/adapters/firebase/legacy-sync.ts`: escucha y escritura del progreso en `users/{uid}/cfg/cards`, con `{m, u}`; no se usa la colección por tema propuesta en el plan inicial.
 - `firestore.rules`: regla de `cfg/cards`, con uid propietario y correo autorizado verificado.
-- `src/infra/syncfacade.ts` y `src/infra/syncstate.ts`: carga de Firebase bajo demanda y estado compartido.
+- `src/adapters/firebase/sync-facade.ts` y `src/core/application/legacy-sync-state.ts`: carga de Firebase bajo demanda y estado compartido.
 - `public/cards/T*.json` y `index.json`: contenido curado; `public/cards/_muestra.md`: muestra para revisión.
 - `public/sw.js`: caché de `cards/` junto con los datos. La descarga en Ajustes carga también las curadas.
 - esbuild genera módulos ES con partición de código para Safari 15+: `public/app.js` y `public/chunks/`.

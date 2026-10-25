@@ -13,7 +13,7 @@ it('las preguntas reescritas como «versión editorial» vuelven a su contenido 
 });
 it('marcar el temario como repasado no cambia el día de actividad de la pregunta', async () => {
   localStorage.clear();
-  const store = await import('../src/infra/store.js');
+  const store = await import('../src/adapters/local/legacy-store.js');
   const t0 = Date.UTC(2026, 9, 1, 10);
   store.record('AT101-P1-01', 'T1.01', 0, t0);
   store.setReviewed('AT101-P1-01', 'T1.01', true);

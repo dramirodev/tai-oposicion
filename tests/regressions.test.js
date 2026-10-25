@@ -6,7 +6,7 @@ let store, engine, data;
 beforeEach(async () => {
   vi.resetModules(); vi.useFakeTimers(); localStorage.clear();
   vi.stubGlobal('fetch', async url => ({ok:true,json:async()=>JSON.parse(readFileSync(path.join('public',String(url)),'utf8'))}));
-  store=await import('../src/infra/store.js');engine=await import('../src/domain/engine.js');data=await import('../src/domain/data.js');await data.getMeta();
+  store=await import('../src/adapters/local/legacy-store.js');engine=await import('../src/core/application/legacy-engine.js');data=await import('../src/adapters/http/legacy-data.js');await data.getMeta();
 });
 afterEach(()=>{vi.clearAllTimers();vi.useRealTimers();vi.unstubAllGlobals();vi.restoreAllMocks();});
 it('cerrar dos veces la misma sesión no duplica intentos',()=>{

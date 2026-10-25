@@ -7,8 +7,8 @@ beforeEach(async () => {
   vi.stubGlobal('matchMedia', () => ({ matches: true })); vi.stubGlobal('scrollTo', () => {});
   Element.prototype.scrollIntoView = () => {};
   vi.stubGlobal('fetch', async url => ({ ok: true, json: async () => String(url).includes('meta.json') ? { 'TRAIN-1': ['T1.01', 'O', 'I', [1], 2] } : String(url).includes('supuestos') ? {} : [question] }));
-  store = await import('../src/infra/store.js'); routes = {}; screen = {};
-  (await import('../src/vistas/screens/training.js')).registerTraining({ routes, go: () => {}, route: () => {}, pw: () => '' }, screen);
+  store = await import('../src/adapters/local/legacy-store.js'); routes = {}; screen = {};
+  (await import('../src/features/trainers/legacy.js')).registerTraining({ routes, go: () => {}, route: () => {}, pw: () => '' }, screen);
 });
 afterEach(() => { screen.cleanup?.(); vi.useRealTimers(); vi.unstubAllGlobals(); });
 it('Detective muestra las opciones antes de evaluar las trampas aunque la preferencia antigua ocultara opciones', async () => {

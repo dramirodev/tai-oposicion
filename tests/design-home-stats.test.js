@@ -2,17 +2,17 @@ import 'fake-indexeddb/auto';
 import { beforeEach, afterEach, it, expect, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-vi.mock('../src/infra/syncfacade.js', () => ({ status: { user:null,state:'sin sesión',configured:false,reqs:[] }, onStatus:()=>()=>{} }));
+vi.mock('../src/adapters/firebase/sync-facade.js', () => ({ status: { user:null,state:'sin sesión',configured:false,reqs:[] }, onStatus:()=>()=>{} }));
 let routes, store, engine, screen;
 beforeEach(async () => {
   vi.resetModules(); localStorage.clear();
   document.body.innerHTML = '<main id="app"></main>';
   vi.stubGlobal('scrollTo', vi.fn()); vi.stubGlobal('matchMedia',()=>({matches:false}));
   vi.stubGlobal('fetch', async url => ({ ok:true, json:async()=>JSON.parse(readFileSync(path.join('public',String(url)), 'utf8')) }));
-  store = await import('../src/infra/store.js'); engine = await import('../src/domain/engine.js');
+  store = await import('../src/adapters/local/legacy-store.js'); engine = await import('../src/core/application/legacy-engine.js');
   routes={}; screen={};
-  (await import('../src/vistas/screens/home.js')).registerHome({routes,go:vi.fn(),saludo:()=> 'Hola', quickSession:vi.fn(),startRepaso:vi.fn(),openMenu:vi.fn(),dominioTemas:engine.dominioTemas,falladasIds:engine.falladasIds},screen);
-  (await import('../src/vistas/screens/stats.js')).registerStats({routes,go:vi.fn(),trapTest:vi.fn(),startRun:vi.fn()});
+  (await import('../src/features/home/legacy.js')).registerHome({routes,go:vi.fn(),saludo:()=> 'Hola', quickSession:vi.fn(),startRepaso:vi.fn(),openMenu:vi.fn(),dominioTemas:engine.dominioTemas,falladasIds:engine.falladasIds},screen);
+  (await import('../src/features/stats/legacy.js')).registerStats({routes,go:vi.fn(),trapTest:vi.fn(),startRun:vi.fn()});
 });
 afterEach(()=> { screen.cleanup?.(); vi.unstubAllGlobals(); });
 it('prioriza retomar, repasar y falladas, agrupa entrenamientos y no presenta una fecha oficial inventada', async()=> {
@@ -63,7 +63,7 @@ it('buscar y navegar no modifica el progreso y una cuenta nueva no recibe la pan
   await routes.stats();
   document.querySelector('[data-stats-view="sims"]').click();
   expect(store.exportAll()).toBe(before);
-  const data=await import('../src/domain/data.js');
+  const data=await import('../src/adapters/http/legacy-data.js');
   let finish;
   const spy=vi.spyOn(data,'dueList').mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
   document.querySelector('#app').innerHTML='<p>Nueva pantalla</p>';

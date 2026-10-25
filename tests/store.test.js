@@ -2,7 +2,7 @@ import 'fake-indexeddb/auto';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 const D = 86400000;
 let st;
-beforeEach(async () => { localStorage.clear(); vi.resetModules(); st = await import('../src/infra/store.js'); });
+beforeEach(async () => { localStorage.clear(); vi.resetModules(); st = await import('../src/adapters/local/legacy-store.js'); });
 
 describe('repaso espaciado', () => {
   const T0 = 1_800_000_000_000;
@@ -41,7 +41,7 @@ describe('repaso espaciado', () => {
   });
   it('persiste y recarga desde localStorage', async () => {
     st.record('q1', 'T1.01', 1, T0); st.setSeen(['T1.01']);
-    vi.resetModules(); const st2 = await import('../src/infra/store.js');
+    vi.resetModules(); const st2 = await import('../src/adapters/local/legacy-store.js');
     expect(st2.rec('q1')[0]).toBe(1); expect(st2.getSeen()).toEqual(['T1.01']);
   });
 });
@@ -99,7 +99,7 @@ describe('informes de errores del banco', () => {
   });
   it('persiste y viaja en la exportación/importación', async () => {
     st.addReport('q1', 'T1.01', 'Otro', 'n'); const dump = st.exportAll();
-    localStorage.clear(); vi.resetModules(); const s2 = await import('../src/infra/store.js'); expect(s2.getReports()).toEqual({});
+    localStorage.clear(); vi.resetModules(); const s2 = await import('../src/adapters/local/legacy-store.js'); expect(s2.getReports()).toEqual({});
     s2.importAll(dump); expect(s2.getReports().q1.nota).toBe('n');
   });
 });
@@ -157,7 +157,7 @@ describe('validación de datos externos', () => {
   });
   it('un localStorage corrupto no rompe la carga', async () => {
     localStorage.setItem('tai.v1:guest', JSON.stringify({ stats: { x: 'basura', y: [1, 1, 1, -1, 0, 1, 0] }, sessions: 'no', seen: 5 }));
-    vi.resetModules(); const s2 = await import('../src/infra/store.js');
+    vi.resetModules(); const s2 = await import('../src/adapters/local/legacy-store.js');
     expect(Object.keys(s2.getStats())).toEqual(['y']); expect(s2.getSessions()).toEqual([]); expect(s2.getSeen()).toEqual([]);
   });
 });
@@ -166,7 +166,7 @@ describe('copia de seguridad en IndexedDB', () => {
   it('recupera el progreso y los temas vistos si localStorage se pierde', async () => {
     st.record('q1', 'T1.01', 1, 5000, 12); st.setSeen(['T1.01', 'T3.04']); st.addReport('q1', 'T1.01', 'Otro', 'n');
     await st.flushNow();
-    localStorage.clear(); vi.resetModules(); const s2 = await import('../src/infra/store.js');
+    localStorage.clear(); vi.resetModules(); const s2 = await import('../src/adapters/local/legacy-store.js');
     expect(s2.getSeen()).toEqual([]); expect(s2.rec('q1')).toBeUndefined();
     expect(await s2.recover()).toBe(true);
     expect(s2.rec('q1')[0]).toBe(1); expect(s2.getSeen()).toEqual(['T1.01', 'T3.04']); expect(s2.getReports().q1.nota).toBe('n');
@@ -174,7 +174,7 @@ describe('copia de seguridad en IndexedDB', () => {
   });
   it('no pisa datos locales más recientes', async () => {
     st.setSeen(['T1.01']); await st.flushNow();
-    vi.resetModules(); const s2 = await import('../src/infra/store.js');
+    vi.resetModules(); const s2 = await import('../src/adapters/local/legacy-store.js');
     s2.setSeen(['T2.01']); // más reciente que la copia
     await s2.recover(); expect(s2.getSeen()).toEqual(['T2.01']);
   });
@@ -223,14 +223,14 @@ describe('tarjetas (flashcards)', () => {
     expect(st.mergeCards({ 'FC-T1.01-003': [5, 5, T0 + 1, 2, 9, 2] })).toBe(true);
     const txt = st.exportAll(); st.resetAll(); expect(st.cardRec('FC-T1.01-003')).toBeUndefined();
     st.importAll(txt); expect(st.cardRec('FC-T1.01-003')[0]).toBe(5);
-    vi.resetModules(); const st2 = await import('../src/infra/store.js'); expect(st2.cardRec('FC-T1.01-003')[0]).toBe(5);
+    vi.resetModules(); const st2 = await import('../src/adapters/local/legacy-store.js'); expect(st2.cardRec('FC-T1.01-003')[0]).toBe(5);
   });
   it('removeCard borra la tarjeta', () => { st.addFallo('q9', T0); st.removeCard('FC-Q-q9'); expect(st.cardRec('FC-Q-q9')).toBeUndefined(); });
 });
 
 describe('motivo «Velocidad» (7)', () => {
   it('se acepta en fallos, se cuenta aparte y cleanRec lo conserva', async () => {
-    const st = await import('../src/infra/store.js'); const { motivosFallo } = await import('../src/domain/logic.js');
+    const st = await import('../src/adapters/local/legacy-store.js'); const { motivosFallo } = await import('../src/legacy/logic.js');
     expect(st.cleanRec([1, 0, 1, 0, 1, 0, 0, 0, 0, 7])[9]).toBe(7);
     expect(motivosFallo({ a: [1, 0, 0, 0, 0, 0, 0, 0, 0, 7] })[7]).toBe(1);
   });
@@ -242,11 +242,11 @@ describe('auditoría: persistencia y datos externos', () => {
     st.setCfg('test', { sel: ['T1.01'], n: 25, mode: 'falladas', o: ['O', 'G'] });
     st.setCfg('tdet', { 1: [8, 5] });
     await st.flushNow();
-    vi.resetModules(); const next = await import('../src/infra/store.js');
+    vi.resetModules(); const next = await import('../src/adapters/local/legacy-store.js');
     expect(next.getCfg().ui).toEqual({ theme: 'dark', size: 2, lectura: 1 });
     expect(next.getCfg().test.sel).toEqual(['T1.01']);
     expect(next.getCfg().tdet).toEqual({ 1: [8, 5] });
-    localStorage.clear(); vi.resetModules(); const recovered = await import('../src/infra/store.js');
+    localStorage.clear(); vi.resetModules(); const recovered = await import('../src/adapters/local/legacy-store.js');
     await recovered.recover();
     expect(recovered.getCfg().ui).toEqual({ theme: 'dark', size: 2, lectura: 1 });
   });
@@ -270,7 +270,7 @@ describe('auditoría: persistencia y datos externos', () => {
     const text = st.exportAll(); st.resetAll(); st.importAll(text);
     expect(st.getCfg().ui).toEqual({ theme: 'dark', size: 2 });
     localStorage.setItem('tai.v1:guest', '{"stats":{},"cfg":{"ui":{"theme":"dark","__proto__":{"x":1}},"constructor":"x"}}');
-    vi.resetModules(); const next = await import('../src/infra/store.js');
+    vi.resetModules(); const next = await import('../src/adapters/local/legacy-store.js');
     expect(next.getCfg().ui).toEqual({ theme: 'dark' });
     expect(Object.keys(next.getCfg())).toEqual(['ui']);
     expect(Object.getPrototypeOf(next.getCfg().ui)).toBe(Object.prototype);
@@ -303,7 +303,7 @@ describe('auditoría: eliminación sincronizada de tarjetas', () => {
 describe('auditoría: formas de los ajustes importados', () => {
   it('sustituye campos de tipos incorrectos y conserva las preferencias válidas tras recargar', async () => {
     st.importAll('{"stats":{},"cfg":{"test":{"sel":42,"o":42,"n":25},"sim":{"o":42},"evo":{"f":42,"w":999999},"ui":{"theme":"dark"},"tdet":{"1":42}}}');
-    vi.resetModules(); const next = await import('../src/infra/store.js');
+    vi.resetModules(); const next = await import('../src/adapters/local/legacy-store.js');
     expect(next.getCfg().test).toMatchObject({ sel: [], o: ['O', 'A', 'G'], n: 25 });
     expect(next.getCfg().sim.o).toEqual(['O', 'G']);
     expect(next.getCfg().evo).toMatchObject({ f: 'g', w: 12 });
@@ -353,7 +353,7 @@ describe('falladas hasta tres aciertos seguidos y temario repasado', () => {
     expect(st.rec('f3').slice(0,2)).toEqual([1,0]);
     expect(st.pendingFailure(st.rec('f3'))).toBe(true);
     expect(st.takeDirty().has('T1.01')).toBe(true);
-    vi.resetModules(); st = await import('../src/infra/store.js');
+    vi.resetModules(); st = await import('../src/adapters/local/legacy-store.js');
     expect(st.rec('f3')[11]).toBe(1);
     st.setReviewed('f3', 'T1.01', false);
     expect(st.rec('f3')[11]).toBe(0);

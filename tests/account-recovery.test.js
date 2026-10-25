@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest';
-import { createAccountRecovery } from '../src/infra/account-recovery.js';
+import { createAccountRecovery } from '../src/core/application/recover-account.js';
 
 it('memoizes la recuperación actual y vuelve a recuperarla al cambiar de cuenta', async () => {
   let account = 'uno', calls = 0;
