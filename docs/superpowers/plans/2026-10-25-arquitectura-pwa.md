@@ -38,11 +38,11 @@ Definir entidades de dominio estrictas y DTO tipados por adaptador. Crear mapper
 
 **Cierre:** verificar mappers y toda la suite; commit `feat: definir entidades dto y mappers`.
 
-## Etapa 3: puertos y adaptadores
+## Etapa 3: puertos y adaptadores (base verificable)
 
-Definir puertos en términos de entidades. Migrar por submódulos comprobables: almacenamiento local (incluye IndexedDB), reloj, banco HTTP, offline, Firebase Auth/Firestore, y casos de uso de progreso/sesión/acceso. Mover IO y DTO exclusivamente a `adapters`; mantener la API compatible del puente hasta conectarlo a casos de uso. Cada submódulo debe pasar sus pruebas de unidad e integración antes del siguiente; no cambiar el comportamiento.
+Definir puertos en términos de entidades, reglas puras de puntuación/registro, casos de uso de sesión, repositorio local compatible con el store actual y repositorio HTTP que mapea y cachea por tema. Mantener la API compatible del puente hasta conectar todas las pantallas a los casos de uso. Firebase, offline e IndexedDB siguen siendo módulos heredados pendientes de adaptar por separado; esta etapa no cambia su IO ni sus formatos.
 
-**Cierre:** cinco verificaciones globales; commit `refactor: conectar casos de uso y adaptadores`.
+**Cierre:** cinco verificaciones globales más E2E; commit `refactor: conectar casos de uso y adaptadores`.
 
 ## Etapa 4: presentación, límites y documentación
 

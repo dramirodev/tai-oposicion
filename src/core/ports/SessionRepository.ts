@@ -1,0 +1,2 @@
+import type {Session,QuestionStats,CardReview} from '../domain/entities.js';
+export interface SessionRepository { saveSession(session:import('../domain/entities.js').SessionResult):Promise<void>; getActive():Session|null; setActive(session:Session|null):void; getQuestionStats(questionId:string):Promise<QuestionStats|undefined>; saveAnswer(questionId:string,stats:QuestionStats):Promise<void>; saveCardReview(cardId:string,review:CardReview):Promise<void> }
