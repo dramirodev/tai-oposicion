@@ -5,6 +5,11 @@ import { isFull, GUEST_ROUTES } from '../core/access.js';
 import { state } from '../core/engine.js';
 import * as sync from '../core/syncfacade.js';
 import { bootLegacy } from '../main.js';
+import { subscribeAccessChanges } from '../access-events.js';
+const subscribeFull = (fn: () => void) => {
+  const offSync = sync.onStatus(fn), offLocal = subscribeAccessChanges(fn);
+  return () => { offSync(); offLocal(); };
+};
 function NetworkBanner() {
   const [status, setStatus] = useState(navigator.onLine === false ? 'off' : '');
   useEffect(() => {
@@ -28,7 +33,7 @@ const tabs = [
 ] as const;
 export function Layout() {
   const location = useLocation(), navigate = useNavigate();
-  const full = useSyncExternalStore(sync.onStatus, isFull);
+  const full = useSyncExternalStore(subscribeFull, isFull);
   const lastFull = useRef(full);
   useEffect(() => bootLegacy(), []);
   useEffect(() => {

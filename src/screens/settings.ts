@@ -7,6 +7,7 @@ import { cleanCfg } from '../core/config.js';
 import { $, app, legacyScope, toast, ask, type El } from '../ui.js';
 import { APP_VERSION, APP_BUILD } from '../core/version.js';
 import { isFull, accessLevel, devMode, setDevMode, devRevealed, revealDev } from '../core/access.js';
+import { notifyAccessChange } from '../access-events.js';
 // La previsualización usa los mismos validadores que la importación, sin modificar el almacén.
 export function previewImport(txt: string) {
   if (txt.length > 20e6) throw new Error('Archivo no válido: supera 20 MB');
@@ -86,7 +87,7 @@ routes.settings = async function () {
     <p class="sub">Banco: ${idx.n} preguntas + ${idx.nsup} de supuestos.</p>`;
     let taps = 0, tt: any = 0;
     $('#ver').onclick = () => { clearTimeout(tt); tt = setTimeout(() => taps = 0, 1500); if (++taps >= 7 && !devRevealed()) { revealDev(); toast('Modo desarrollador activado'); draw(); } };
-    $('#dev') && ($('#dev').onclick = e => { const b = (e.target as El).closest<El>('button'); if (b) { setDevMode(b.dataset.v! === 'null' ? null : b.dataset.v!); draw(); } });
+    $('#dev') && ($('#dev').onclick = e => { const b = (e.target as El).closest<El>('button'); if (b) { setDevMode(b.dataset.v! === 'null' ? null : b.dataset.v!); notifyAccessChange(); draw(); } });
     $('#req') && ($<El>('#req').onclick = async e => { (e.target as El).disabled = true; (e.target as El).textContent = 'Enviando…'; const sent = await sync.requestAccess(); if (!alive()) return; if (!sent) toast('No se pudo enviar la solicitud. Inténtalo de nuevo.'); draw(); });
     $('#in') && ($('#in').onclick = () => sync.login());
     $('#out') && ($('#out').onclick = () => sync.logout());

@@ -31,12 +31,14 @@ Base: `main` en `b039670`. Rama: `migracion-react`. Solo fases 0 y 1, sin public
   foco de navegación y el proveedor React de toast/ask/notice.
 - El puente crea un contenedor por navegación, conserva el HTML y su cleanup y evita
   que una carga tardía escriba en la pantalla nueva.
+- El recorte de navegación escucha cambios del modo local y de la cuenta. La recuperación
+  de IndexedDB se memoiza por cuenta y vuelve a ejecutarse al cambiarla.
 - Registro/actualización del service worker, flush de progreso, guardado y reanudación
   de sesión, prefetch y sincronización quedan en el arranque del puente.
-- 3 pruebas de diálogos, 1 de aislamiento/cleanup y 6 e2e (Chromium y WebKit) para
+- 3 pruebas de diálogos, 1 de aislamiento/cleanup, 1 de recuperación por cuenta y 6 e2e (Chromium y WebKit) para
   guardar/reanudar progreso, menú, foco, conectividad y rutas de invitado.
 
-Verificado: typecheck; **227 tests**; build; tarjetas (36 temas); **80 e2e**, incluidas
+Verificado: typecheck; **228 tests**; build; tarjetas (36 temas); **80 e2e**, incluidas
 68 comparaciones PNG exactas contra la fase 0. `npm start` compila y sirve la app mediante
 Playwright. La revisión independiente no encontró defectos accionables. No se ejecutó
 `npm run deploy` porque publicaría el sitio.
@@ -48,7 +50,7 @@ Las capturas enmascaran únicamente el hash de compilación de Ajustes.
 
 Fase 0: typecheck; **224 tests** (221 originales + 3 de suscripción); build;
 validación de tarjetas (36 temas); 74 e2e.
-Fase 1: typecheck; **227 tests**; build; validación de tarjetas (36 temas);
+Fase 1: typecheck; **228 tests**; build; validación de tarjetas (36 temas);
 **80 e2e**, incluidas 68 comparaciones PNG exactas contra la fase 0. `npm start`
 compila y sirve la app durante Playwright. `npm run deploy` conserva su comando,
 pero no se ejecutó porque publicaría el sitio.

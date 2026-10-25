@@ -9,7 +9,7 @@ Banco: 15.666 preguntas (oficiales, academia y generadas; cada una muestra su or
 
 Versión **1.1.3**. Banco de **36 temas**, **15.666 preguntas**, **417 preguntas de supuestos** y
 **1.410 tarjetas curadas**. Las tarjetas marcadas `revisar: true` se excluyen del repaso y de la exportación.
-Comprobación local: **227 pruebas Vitest en 23 archivos aprobadas**, validación de tarjetas y compilación correctas.
+Comprobación local: **228 pruebas Vitest en 24 archivos aprobadas**, validación de tarjetas y compilación correctas.
 Esto no acredita el último despliegue ni sustituye las pruebas reales de login, sincronización e instalación en iOS.
 
 ## Organización del proyecto

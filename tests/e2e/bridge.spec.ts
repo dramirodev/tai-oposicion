@@ -46,9 +46,15 @@ test('menú React, foco, banner de red y recorte de navegación para invitados',
   await context.setOffline(true); await expect(page.locator('#net')).toHaveText('Sin conexión · solo lo descargado');
   await context.setOffline(false); await expect(page.locator('#net')).toHaveText('De nuevo en línea');
   await expect(page.locator('#net')).toHaveText('');
-  await page.evaluate(() => { localStorage.setItem('tai.dev', '0'); location.hash = '#/sim'; });
+  await page.goto('/#/settings');
+  await page.locator('#dev button[data-v="0"]').click();
+  await expect(page.locator('nav a:visible')).toHaveCount(2);
+  await page.evaluate(() => { location.hash = '#/sim'; });
   await expect(page).toHaveURL(/#\/home$/);
   await expect(page.locator('nav a:visible')).toHaveCount(2);
+  await page.goto('/#/settings');
+  await page.locator('#dev button[data-v="1"]').click();
+  await expect(page.locator('nav a:visible')).toHaveCount(5);
   expect(errors).toEqual([]);
 });
 test('`route()` repinta la misma URL en Relámpago', async ({ page }) => {

@@ -15,6 +15,7 @@ import { registerSettings } from './screens/settings.js';
 import { registerAcceso } from './screens/acceso.js';
 import { isFull, isOwner, GUEST_ROUTES } from './core/access.js';
 import { state, createRun, clearRun, saveRun, pendingRun, pendingPrompt, resumeRun, tickRun, segundosRestantes, answerQuestion, answerDeferred, finishRun, quickItems, repasoItems, trapTest, dominioTemas, falladasIds } from './core/engine.js';
+import { createAccountRecovery } from './account-recovery.js';
 
 // ───────── router ─────────
 const routes: Record<string, any> = {};
@@ -22,8 +23,7 @@ let navigate: (h: string, refresh?: boolean) => void = h => { location.hash = h;
 export function configureLegacyRouter(fn: (h: string, refresh?: boolean) => void): void { navigate = fn; }
 function go(h: string) { navigate(h); }
 function route() { navigate(location.hash || '#/home', true); }
-let recovery: Promise<boolean> | undefined;
-const recover = () => recovery ||= store.recover();
+const recover = createAccountRecovery(store.accountId, () => store.recover());
 let painted: () => void;
 export const firstLegacyPaint = new Promise<void>(resolve => { painted = resolve; });
 // animaciones: barra de progreso que crece desde el valor anterior, entrada de pantalla y nota que cuenta
