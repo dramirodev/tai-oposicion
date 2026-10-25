@@ -4,11 +4,12 @@ import { questionPriority } from '../../core/domain/selection.js';
 import { loadBank } from '../firebase/legacy-bank.js';
 import { diagnoseQuestionDtos } from './question-diagnostics.js';
 import type { Index, Meta, Question } from '../legacy/types.js';
+interface SupEntry { texto: string; q: Question[] }
 // ───────── datos ─────────
-export let INDEX: Index | undefined, META: Meta, SUP: unknown;
+export let INDEX: Index | undefined, META: Meta, SUP: Record<string, SupEntry> | undefined;
 const supQuestions = new Map<string, Question>();
 const cache = new Map<string, Promise<Question[]>>();
-export async function j<T = any>(url: string): Promise<T> {
+export async function j<T = unknown>(url: string): Promise<T> {
   const m = /^data\/([\w.-]+)\.json$/.exec(url); // el banco puede venir de Firestore; si no, JSON estático
   if (m) { const b = await loadBank<T>(m[1]); if (b !== null) return b; }
   const r = await fetch(url); if (!r.ok) throw new Error(url); return r.json(); }
@@ -31,10 +32,10 @@ export async function getMeta(): Promise<Meta> {
 }
 export const temaOf = (id: string): string | null => META && META[id] ? META[id][0] : supQuestions.get(id)?.t || null;
 export const idsOfTema = (t: string): string[] => [...(META?._by[t] || []), ...[...supQuestions.values()].filter(q => q.t === t).map(q => q.i)];
-export async function getTema(t: string): Promise<Question[]> { if (!cache.has(t)) cache.set(t, j<unknown[]>(`data/${t}.json`).then(rows => { diagnoseQuestionDtos(rows); return rows as Question[]; }).catch(e => { cache.delete(t); throw e; })); return cache.get(t)!; }
-export async function getSup(): Promise<any> {
-  const sup = (SUP ||= await j('data/supuestos.json'));
-  for (const v of Object.values(sup) as { texto: string; q: Question[] }[]) {
+export async function getTema(t: string): Promise<Question[]> { if (!cache.has(t)) cache.set(t, j<Question[]>(`data/${t}.json`).then(rows => { diagnoseQuestionDtos(rows); return rows; }).catch(e => { cache.delete(t); throw e; })); return cache.get(t)!; }
+export async function getSup(): Promise<Record<string, SupEntry>> {
+  const sup = (SUP ||= await j<Record<string, SupEntry>>('data/supuestos.json'));
+  for (const v of Object.values(sup)) {
     for (const q of v.q) supQuestions.set(q.i, { ...q, supTexto: v.texto });
   }
   return sup;
@@ -56,7 +57,7 @@ function prioridad(q: Question, mode: string): number {
   } : undefined;
   return questionPriority(mode, statistics);
 }
-export async function pick({ temas, origins, mode, n }: { temas: string[]; origins: { has(x: any): boolean }; mode: string; n: number }): Promise<Question[]> {
+export async function pick({ temas, origins, mode, n }: { temas: string[]; origins: { has(x: Question['o']): boolean }; mode: string; n: number }): Promise<Question[]> {
   const pool: Question[] = [];
   for (const l of await Promise.all(temas.map(getTema))) for (const q of l) if (allowed(q, origins)) pool.push(q);
   let c: [number, Question][] = shuffle(pool).map(q => [prioridad(q, mode), q]);

@@ -9,9 +9,9 @@ export function registerCards({ routes, go, pw, reportBox, verifiedSources }: an
 let CARDIDX: any; const cardCache = new Map<string, any>(); let CRUN: any = null;
 store.onAccountChange(() => { CRUN = null; });
 async function curatedCards() {
-  if (CARDIDX === undefined) { try { CARDIDX = (await j('cards/index.json')).temas || {}; } catch (e) { return []; } } // sin caché del fallo: se reintenta
+  if (CARDIDX === undefined) { try { CARDIDX = (await j<{ temas?: Record<string, unknown> }>('cards/index.json')).temas || {}; } catch (e) { return []; } } // sin caché del fallo: se reintenta
   const out: any[] = [], ts = Object.keys(CARDIDX);
-  for (const t of ts) if (!cardCache.has(t)) cardCache.set(t, j(`cards/${t}.json`).catch(e => { cardCache.delete(t); return []; }));
+  for (const t of ts) if (!cardCache.has(t)) cardCache.set(t, j<Record<string, unknown>[]>(`cards/${t}.json`).catch(e => { cardCache.delete(t); return []; }));
   const lists = await Promise.all(ts.map(t => cardCache.get(t))); // en paralelo: antes eran peticiones una tras otra
   ts.forEach((t, i) => { for (const c of lists[i]) if (c && c.id && c.q && c.a && !c.revisar) out.push({ ...c, t }); });
   return out;

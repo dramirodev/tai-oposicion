@@ -8,7 +8,7 @@ export default tseslint.config(
     'src/core/application/legacy-*.ts', 'src/adapters/legacy/types.ts',
     'src/legacy/**', 'src/features/**/legacy.ts',
     'src/adapters/firebase/legacy-sync.ts',
-    'src/adapters/http/legacy-data.ts', 'src/adapters/local/legacy-store.ts',
+    'src/adapters/local/legacy-store.ts',
     'src/app/legacy-router.ts',
   ] },
   ...tseslint.configs.recommended,
