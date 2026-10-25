@@ -95,7 +95,7 @@ function paintEvo(idx: any) {
     const lab = `<text x="${Math.min(X(last.i), Wd - R - 2)}" y="${Y(last.v) - 9}" text-anchor="end" class="vl">${last.v}${unit.trim()}</text>`;
     const step = Math.ceil(W.length / 6);
     const xt = W.map((w, i) => i % step === (W.length - 1) % step ? `<text x="${X(i)}" y="${H - 6}" text-anchor="${i === W.length - 1 ? 'end' : 'middle'}" class="gt">${fmtD(w.start)}</text>` : '').join('');
-    const cols = W.map((w, i) => `<rect x="${X(i) - iw / W.length / 2}" y="${T}" width="${iw / W.length}" height="${ih}" class="hit" data-i="${i}" tabindex="0" role="img" aria-label="Semana del ${fmtD(w.start)}: ${w.n ? (c.m === 'tiempo' ? (w.segPreg ?? '—') + ' s por pregunta' : w.acierto + ' % de acierto') : 'sin datos'}"/>`).join('');
+    const cols = W.map((w, i) => `<rect x="${X(i) - iw / W.length / 2}" y="${T}" width="${iw / W.length}" height="${ih}" class="evolution-hit" data-i="${i}" tabindex="0" role="img" aria-label="Semana del ${fmtD(w.start)}: ${w.n ? (c.m === 'tiempo' ? (w.segPreg ?? '—') + ' s por pregunta' : w.acierto + ' % de acierto') : 'sin datos'}"/>`).join('');
     chart = `<div class="evo"><svg viewBox="0 0 ${Wd} ${H}" role="img" aria-label="Evolución semanal">${grid}${line}${dots}${lab}${xt}${cols}</svg><div class="tip" id="tip" hidden></div></div>`;
   }
   const tabla = c.tabla ? `<table class="tb"><caption>Evolución semanal: ${c.m === 'tiempo' ? 'tiempo por pregunta' : 'acierto'}</caption><tr><th scope="col">Semana</th><th>${c.m === 'tiempo' ? 'seg/preg.' : 'Acierto'}</th><th>Resp.</th></tr>${W.filter(w => w.n).map(w => `<tr><td>${fmtD(w.start)}</td><td>${w[key] ?? '—'}</td><td>${esc(String(w.n))}</td></tr>`).join('') || '<tr><td colspan="3">Sin datos</td></tr>'}</table>` : '';
@@ -109,7 +109,7 @@ function paintEvo(idx: any) {
   $<El>('#evw').onchange = e => { c.w = +(e.target as El).value; save(); paintEvo(idx); $('#evw').focus({ preventScroll: true }); };
   $('#evt').onclick = () => { c.tabla = !c.tabla; save(); paintEvo(idx); $('#evt').focus({ preventScroll: true }); };
   const tip = $('#tip');
-  el.querySelectorAll<El>('.hit').forEach(r => {
+  el.querySelectorAll<El>('.evolution-hit').forEach(r => {
     const show = () => { const w = W[+r.dataset.i!]; if (!w.n) { tip.hidden = true; return; } tip.hidden = false; tip.innerHTML = `<b>Semana del ${fmtD(w.start)}</b><br>${c.m === 'tiempo' ? (w.segPreg ?? '—') + ' s/pregunta' : w.acierto + ' % de acierto'}<br>${esc(String(w.n))} respuestas · ${esc(String(w.ses))} sesiones`; tip.style.left = Math.min(Math.max(8, 100 * (+r.dataset.i!) / Math.max(1, W.length - 1)), 70) + '%'; };
     r.onpointerenter = show; r.onpointerdown = show; r.onfocus = show;
   });
@@ -168,7 +168,7 @@ routes.stats = async function () {
   </section>
   <div class="seg stats-sections" role="group" aria-label="Sección de progreso">${[['temas','Temas'],['sims','Simulacros'],['evo','Evolución']].map(([k,v]) => `<button data-stats-view="${k}" aria-controls="stats-${k}" aria-pressed="${k === 'temas'}" class="${k === 'temas' ? 'on' : ''}">${v}</button>`).join('')}</div>
   <section id="stats-temas" aria-label="Progreso por temas">
-  <h2 style="margin-top:6px">Mapa de dominio</h2><div id="mapa"></div>
+  <h2 class="domain-heading">Mapa de dominio</h2><div id="mapa"></div>
   <div id="vel"></div>
   <h2>Carga de repasos</h2><div id="carga"></div>
   <div class="grid"><div class="stat"><b>${n}</b><span>${n === 1 ? 'respuesta' : 'respuestas'}</span></div><div class="stat"><b>${pct(ok, n)}%</b><span>acierto</span></div></div>

@@ -1,0 +1,132 @@
+/* Tokens compartidos. legacy-ui resuelve automático/forzado en data-color-scheme. */
+
+:root {
+  color-scheme: light dark;
+
+  /* superficie y texto */
+  --bg: #f4f5f8;
+  --card: #fff;
+  --ink: #14213d;
+  --mute: #5b6478;
+  --line: #e3e6ee;
+  --brand: #14213d;
+  --on-brand: #fff;
+  --accent: #fca311;
+  --top: #14213d;
+  --sel: #e8eefc;
+  --selb: #3552d6;
+  --onselb: #fff;
+  --cta: #3552d6;
+  --on-cta: #fff;
+  --code-bg: #eceff9;
+  --code-ink: #1b2a6b;
+  --sk: #3552d6;
+  --serif: ui-serif,"New York",Georgia,serif;
+  --mono: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+
+  /* estados */
+  --ok: #1f9d55;
+  --okd: #17803f;
+  --okbg: #e5f6ec;
+  --good-ink: #0f4d2c;
+  --good-line: #9fd7b4;
+  --bad: #d64545;
+  --badd: #c53030;
+  --badbg: #fdeaea;
+  --bad-ink: #7a1a1a;
+  --r-ink: #b42323;
+  --warn: #b7791f;
+  --amber: #e0a21a;
+  --amber-strong: #e08a00;
+  --pill-bg: #fff2d6;
+  --pill-ink: #7a4b00;
+
+  /* etiquetas de origen: G generada, O oficial, A academia */
+  --tg-bg: #e4f5ea;
+  --tg-ink: #17703d;
+  --to-bg: #e6ecff;
+  --to-ink: #2c4bd1;
+  --ta-bg: #fff1da;
+  --ta-ink: #8a5a0b;
+
+  /* héroe de Inicio */
+  --hero-track: rgba(255,255,255,.22);
+  --hero-fill: #fca311;
+
+  /* escala tipográfica */
+  --fs-xs: 12px;
+  --fs-s: 13px;
+  --fs-m: 14px;
+  --fs-b: 15px;
+  --fs-l: 17px;
+  --fs-xl: 19px;
+  --fs-2xl: 22px;
+  --fs-h1: 26px;
+  --fs-stat: 28px;
+
+  /* escala de radios */
+  --r-s: 10px;
+  --r-m: 14px;
+  --r-l: 16px;
+  --r-xl: 20px;
+  --r-pill: 99px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 10px;
+  --space-4: 12px;
+  --space-5: 14px;
+  --space-6: 16px;
+  --space-7: 18px;
+  --r-tile: 18px;
+  --r-cta: 22px;
+  --control-line: #8991a3;
+  --emphasis-ink: var(--pill-ink);
+  --navh: 67px;
+  --sab: env(safe-area-inset-bottom,0px);
+  --sat: env(safe-area-inset-top,0px);
+}
+
+:root[data-color-scheme=dark] {
+  --bg: #0e1424;
+  --card: #18203a;
+  --ink: #eef1f8;
+  --mute: #9aa4bd;
+  --line: #27304d;
+  --brand: #fca311;
+  --on-brand: #14213d;
+  --top: #0e1424;
+  --sel: #1d2a55;
+  --selb: #7d94ff;
+  --onselb: #0e1424;
+  --cta: #27368a;
+  --code-bg: #222c4d;
+  --code-ink: #d6e0ff;
+  --sk: #8aa0ff;
+  --okbg: #12341f;
+  --good-ink: #b8f0cf;
+  --good-line: #2a6b45;
+  --badbg: #3a1a1c;
+  --bad-ink: #ffc9c9;
+  --r-ink: #ff9b9b;
+  --warn: #f0b955;
+  --pill-bg: #4a3510;
+  --pill-ink: #ffd88a;
+  --tg-bg: #16382a;
+  --tg-ink: #86e0ae;
+  --to-bg: #1d2a55;
+  --to-ink: #a9b9ff;
+  --ta-bg: #3b2f14;
+  --ta-ink: #f3c777;
+  --hero-track: rgba(20,33,61,.25);
+  --hero-fill: #14213d;
+  --control-line: #747f9c;
+  --emphasis-ink: #ffb84d;
+}
+
+:root[data-color-scheme=light] {
+  color-scheme: light;
+}
+
+:root[data-color-scheme=dark] {
+  color-scheme: dark;
+}

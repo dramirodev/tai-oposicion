@@ -129,7 +129,7 @@ it('abrir el supuesto de una tarjeta no revela la respuesta y el avance conserva
  document.querySelector('#go').click();await waitText('Mostrar respuesta');
  expect(document.activeElement).toBe(document.querySelector('#app h1'));
  const summary=document.querySelector('#fc details summary');expect(summary).not.toBeNull();summary.click();
- expect(document.querySelector('#show')).not.toBeNull();expect(document.querySelector('.fa')).toBeNull();
- document.querySelector('#show').click();expect(document.activeElement).toBe(document.querySelector('.fa'));
+ expect(document.querySelector('#show')).not.toBeNull();expect(document.querySelector('.card-answer')).toBeNull();
+ document.querySelector('#show').click();expect(document.activeElement).toBe(document.querySelector('.card-answer'));
  document.querySelector('[data-g="2"]').click();expect(document.activeElement).toBe(document.querySelector('#app h1'));
 });

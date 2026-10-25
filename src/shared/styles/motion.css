@@ -1,0 +1,101 @@
+/* ===== animaciones (solo responden a una acción; se apagan con «reducir movimiento») ===== */
+
+@keyframes grow {
+  from {
+    transform: scaleX(var(--progress-from,0));
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes pulseok {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1.025);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%,100% {
+    transform: none;
+  }
+
+  20% {
+    transform: translateX(-6px);
+  }
+
+  40% {
+    transform: translateX(5px);
+  }
+
+  60% {
+    transform: translateX(-3px);
+  }
+
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes flipin {
+  from {
+    transform: perspective(600px) rotateX(-80deg);
+    opacity: 0;
+  }
+
+  to {
+    transform: perspective(600px) rotateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fbin {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.prog div,.hbar i {
+  transform-origin: left center;
+}
+
+.hbar i {
+  animation: grow .7s cubic-bezier(.2,.7,.2,1);
+}
+
+.enter {
+  animation: enter .18s ease-out;
+}
+
+.opt.ok {
+  animation: pulseok .5s ease-out;
+}
+
+.opt.bad {
+  animation: shake .4s ease-in-out;
+}
+
+.fb {
+  animation: fbin .2s ease-out;
+}
+
+.card-answer {
+  transform-origin: top center;
+  animation: flipin .38s cubic-bezier(.2,.7,.2,1);
+}

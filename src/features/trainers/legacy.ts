@@ -99,7 +99,7 @@ routes.trampas = async function () {
       R.res.push({ hit, miss, fa, n: good.size, x: [...good] });
       const correctOption = $('#o' + q.c); correctOption?.classList.add('ok');
       $('#fb').innerHTML = `<div class="fb ${miss || fa ? 'wrong' : 'good'}"><b>${!miss && !fa ? '¡Detectadas todas!' : `Detectaste ${hit} de ${good.size}${fa ? ` y marcaste ${fa} de más` : ''}.`}</b> Respuesta correcta: <b>${L[q.c]}</b>
-        ${[...good].map(k => `<div class="trapx ${sel.has(k) ? 'hit' : 'miss'}"><b>${sel.has(k) ? 'Detectada' : 'No la viste'}: ${esc(TRAMPAS[k] || k)}</b><p>${esc(TRAMPA_EXPL[k] || '')}</p></div>`).join('')}${[...sel].filter(k => !good.has(k)).map(k => `<div class="trapx fa"><b>Falsa alarma: ${esc(TRAMPAS[k] || k)}</b><p>No aplica aquí. ${esc(TRAMPA_EXPL[k] || '')}</p></div>`).join('')}
+        ${[...good].map(k => `<div class="trapx ${sel.has(k) ? 'trap-detected' : 'miss'}"><b>${sel.has(k) ? 'Detectada' : 'No la viste'}: ${esc(TRAMPAS[k] || k)}</b><p>${esc(TRAMPA_EXPL[k] || '')}</p></div>`).join('')}${[...sel].filter(k => !good.has(k)).map(k => `<div class="trapx trap-false-alarm"><b>Falsa alarma: ${esc(TRAMPAS[k] || k)}</b><p>No aplica aquí. ${esc(TRAMPA_EXPL[k] || '')}</p></div>`).join('')}
         ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}
         </div>`;
       $('#chk').textContent = R.k + 1 === R.items.length ? 'Terminar →' : 'Siguiente →'; $('#chk').dataset.done = '1';

@@ -77,7 +77,7 @@ function cardSession() {
   const show = () => {
     if (R !== CRUN || R.rev) return;
     R.rev = true; draw();
-    const answer = $('.fa'), reduced = matchMedia('(prefers-reduced-motion:reduce)').matches;
+    const answer = $('.card-answer'), reduced = matchMedia('(prefers-reduced-motion:reduce)').matches;
     const scroll = () => { if (answer?.isConnected) answer.scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' }); };
     scroll();
     // El giro cambia el rectángulo visible: reajustar cuando alcance su altura final.
@@ -117,7 +117,7 @@ function cardSession() {
       ${questionNotice({ n: c.nota, np: c.np })}
       ${c.supTexto ? `<details class="sup"><summary>Enunciado del supuesto</summary><div class="pre">${esc(c.supTexto)}</div></details>` : ''}${c.cp ? `<div class="ctx pre">${richHtml(c.cp)}</div>` : ''}
       <div class="enun pre">${richHtml(c.q)}</div>
-      ${R.rev ? `<div class="fa" role="region" aria-label="Respuesta de la tarjeta" tabindex="-1"><small>Respuesta</small><div class="pre">${richHtml(c.a)}</div>
+      ${R.rev ? `<div class="card-answer" role="region" aria-label="Respuesta de la tarjeta" tabindex="-1"><small>Respuesta</small><div class="pre">${richHtml(c.a)}</div>
         ${c.nota ? `<div class="cita"><span>Nota</span>${esc(c.nota)}</div>` : ''}
         ${c.ref ? `<div class="cita"><span>Temario</span>${esc(c.ref)}</div>` : ''}
 ${sourceHtml({ source: c.source, u: c.ref }, verifiedSources)}
@@ -132,7 +132,7 @@ ${sourceHtml({ source: c.source, u: c.ref }, verifiedSources)}
     app.querySelectorAll<El>('[data-g]').forEach(b => b.onclick = () => grade(+b.dataset.g!));
     $('#crep') && reportBox({ i: c.id, t: c.t }, $('#crep'));
     $('#quit') && ($('#quit').onclick = () => { store.removeCard(c.id); R.items.splice(R.idx, 1); R.rev = false; draw(); });
-    if (R.rev) $('.fa').focus({preventScroll:true}); else focusHeading();
+    if (R.rev) $('.card-answer').focus({preventScroll:true}); else focusHeading();
   }
   function fin() {
     const rs = R.res, tot = rs[0] + rs[1] + rs[2];

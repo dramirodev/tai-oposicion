@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 import { isFull, GUEST_ROUTES } from '../adapters/legacy/access.js';
 import { hasActiveRun } from '../core/application/legacy-engine.js';
 import { syncGateway } from '../adapters/firebase/legacy-sync-state.js';
 import { subscribeAccessChanges } from './access-events.js';
+import { observeFixedLayout } from '../shared/ui/layout-metrics.js';
 import { useActiveSection } from './useActiveSection.js';
 const subscribeFull = (fn: () => void) => {
   const offSync = syncGateway.subscribe(() => fn()), offLocal = subscribeAccessChanges(fn);
@@ -32,6 +33,7 @@ const tabs = [
   ['settings', 'Ajustes', <><path d="M4 6h8M18 6h2M4 12h2M12 12h8M4 18h10M20 18h0" /><circle cx="15" cy="6" r="2.5" /><circle cx="9" cy="12" r="2.5" /><circle cx="17" cy="18" r="2.5" /></>],
 ] as const;
 export function Layout() {
+  useLayoutEffect(observeFixedLayout, []);
   const location = useLocation(), navigate = useNavigate();
   const full = useSyncExternalStore(subscribeFull, isFull);
   const lastFull = useRef(full);

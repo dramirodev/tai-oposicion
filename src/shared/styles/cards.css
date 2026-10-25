@@ -1,0 +1,49 @@
+/* ===== tarjetas ===== */
+
+.fc {
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.fc .enun {
+  font-size: var(--fs-2xl);
+  margin: 10px 0 18px;
+}
+
+.fh {
+  margin-top: auto;
+  text-align: center;
+  color: var(--mute);
+  font-size: var(--fs-m);
+  padding: 12px 0;
+}
+
+.card-answer {
+  margin-top: 6px;
+  padding: var(--space-5);
+  border-radius: var(--r-m);
+  background: var(--okbg);
+  border: 1.5px solid var(--ok);
+}
+
+.card-answer>small {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-size: var(--fs-xs);
+  color: var(--mute);
+  margin-bottom: 4px;
+}
+
+.card-answer .pre {
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.fgl {
+  text-align: center;
+  margin: var(--space-6) 0 0;
+}

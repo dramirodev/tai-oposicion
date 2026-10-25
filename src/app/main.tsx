@@ -1,3 +1,4 @@
+import '../shared/styles/index.css';
 import './legacy-ui.js';
 import { createRoot } from 'react-dom/client';
 import { StrictMode } from 'react';
