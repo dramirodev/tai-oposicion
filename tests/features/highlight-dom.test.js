@@ -30,6 +30,7 @@ describe('highlight DOM mapping', () => {
   it('keeps canonical text when overlapping marks cross inline formatting', () => {
     const root = document.querySelector('.enun');
     expect(paintTextHighlight(root, 3, 9, 'key', 'first')).toBe(true);
+    expect(root.querySelectorAll('mark[data-mark-id="first"]')).toHaveLength(1);
     expect(paintTextHighlight(root, 6, 12, 'doubt', 'second')).toBe(true);
     expect(canonicalText(root)).toBe('ABCDE FGHI\nJKLM');
     expect(root.querySelectorAll('br')).toHaveLength(1);

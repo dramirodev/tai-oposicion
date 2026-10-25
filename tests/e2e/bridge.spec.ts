@@ -7,6 +7,7 @@ async function start(page: Page) {
   page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
   await page.route('**/firebase-config.json', r => r.fulfill({ json: {} }));
   await page.addInitScript(() => {
+    Math.random = () => 0.5; // selección estable, como en las pruebas de rutas
     if (localStorage.getItem('tai.e2e.seeded')) return;
     localStorage.setItem('tai.e2e.seeded', '1'); localStorage.setItem('tai.dev', '1');
   });
@@ -150,7 +151,7 @@ test('práctica permite volver a pendientes, bloquea respondidas y conserva cons
   await expect(page.locator('#consulted-count')).toContainText('1 solución consultada');
   await expect(page.locator('.trio div:last-child')).toContainText('9');
   await expect(page.locator('.rv')).toHaveCount(10);
-  await expect(page.locator('.rv .tag.warn')).toContainText('Solución consultada · blanco');
+  await expect(page.locator('.rv .tag.warn').getByText('Solución consultada · blanco', { exact: true })).toBeVisible();
   expect(errors).toEqual([]);
 });
 test('integra ayudas, navegación, bloqueo terminal y exportación del intento', async ({ page }) => {

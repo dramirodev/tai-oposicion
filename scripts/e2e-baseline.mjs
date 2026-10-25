@@ -17,8 +17,11 @@ if (!existsSync(refFile)) {
     writeFileSync(join(tmp, 'source.tar'), execFileSync('git', ['archive', ref], { maxBuffer: 100 * 1024 * 1024 }));
     run('tar', ['-xf', 'source.tar'], tmp);
     run('npm', ['ci'], tmp);
-    // Referencia idéntica de versión para los textos técnicos; #ver small se enmascara.
-    run('npm', ['run', 'test:e2e', '--', '--update-snapshots'], tmp);
+    // La referencia solo genera capturas de rutas. Las comprobaciones funcionales
+    // completas corren después contra la versión candidata, donde se mantienen
+    // todos los tests de teclado, subrayado, persistencia y navegación.
+    const routeSnapshotNames = 'home|quiz|result|test|sim|examenes|cards|stats|settings|temario|falladas|errores|lectura|relampago|trampas|acceso';
+    run('npx', ['playwright', 'test', 'tests/e2e/routes.spec.ts', '--grep', routeSnapshotNames, '--update-snapshots'], tmp);
     cpSync(join(tmp, 'tests/e2e/snapshots'), resolve('tests/e2e/snapshots'), { recursive: true });
   } finally { rmSync(tmp, { recursive: true, force: true }); }
 }
