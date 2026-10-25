@@ -8,6 +8,25 @@ export interface ReviewScheduleEntry {
   dueAt?: number;
 }
 
+export interface FailureStreakStats {
+  attempts: number;
+  lastResult?: number;
+  intervalStep?: number;
+  failureStreak?: number;
+}
+
+/** Derive the streak for records from before the explicit streak field existed. */
+export function failureStreak(statistics?: FailureStreakStats): number {
+  if (!statistics) return -1;
+  if (statistics.failureStreak !== undefined) return Math.floor(statistics.failureStreak);
+  return (statistics.attempts > 0 && statistics.lastResult === 0 || (statistics.intervalStep ?? -1) >= 0) ? 0 : -1;
+}
+
+export function hasPendingFailure(statistics?: FailureStreakStats): boolean {
+  const streak = failureStreak(statistics);
+  return streak >= 0 && streak < 3;
+}
+
 /** Select overdue reviews first, interleaving topics whenever possible. */
 export function selectSpacedReviews<T extends SpacedReview>(items: readonly T[], count: number): T[] {
   const top = [...items].sort((a, b) => a.dueAt - b.dueAt).slice(0, count);

@@ -1,4 +1,5 @@
 import { cleanCfg, cleanCfgSetting } from './config.js';
+import { failureStreak as deriveFailureStreak } from '../../core/domain/spaced-repetition.js';
 import type { AppState, CardMap, CardRec, Cfg, Report, ReportMap, ReportState, Res, SeenDoc, Session, StatMap, StatRec } from '../legacy/types.js';
 // Almacén local (local-first) + sincronización con Firestore.
 // Registro por pregunta: [n, ok, last, box, due, lastRes, flag]
@@ -27,8 +28,12 @@ const TEMA_RE = /^T\d\.\d\d$/;
 // El historial antiguo no guarda la racha: las pendientes existentes parten de cero.
 export function failureStreak(r?: StatRec | null): number {
   if (!r) return -1;
-  if (r.length > 10) return Math.floor(num(r[10], -1, 3) ?? -1);
-  return (r[0] > 0 && r[5] === 0 || r[3] >= 0) ? 0 : -1;
+  return deriveFailureStreak({
+    attempts: r[0],
+    lastResult: r[5],
+    intervalStep: r[3],
+    ...(r.length > 10 ? { failureStreak: Math.floor(num(r[10], -1, 3) ?? -1) } : {}),
+  });
 }
 export const pendingFailure = (r?: StatRec | null) => { const n = failureStreak(r); return n >= 0 && n < 3; };
 export function cleanRec(r: unknown): StatRec | null {

@@ -1,3 +1,5 @@
+import { hasPendingFailure } from './spaced-repetition.ts';
+
 export type RandomGenerator = () => number;
 
 export interface SelectionStats {
@@ -11,10 +13,7 @@ export interface SelectionStats {
 
 export function questionPriority(mode: string, statistics?: SelectionStats): number {
   if (mode === 'falladas') {
-    const streak = statistics
-      ? statistics.failureStreak ?? (statistics.attempts > 0 && statistics.lastResult === 0 || (statistics.intervalStep ?? -1) >= 0 ? 0 : -1)
-      : -1;
-    return streak >= 0 && streak < 3 ? 0 : 9;
+    return hasPendingFailure(statistics) ? 0 : 9;
   }
   if (mode === 'dudosas') return statistics?.doubtful ? 0 : 9;
   if (mode === 'nuevas') return !statistics ? 0 : statistics.lastResult === 0 ? 1 : 2;

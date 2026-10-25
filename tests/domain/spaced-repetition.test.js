@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest';
-import { countReviewsByDay, selectSpacedReviews } from '../../src/core/domain/spaced-repetition.js';
+import { countReviewsByDay, failureStreak, hasPendingFailure, selectSpacedReviews } from '../../src/core/domain/spaced-repetition.js';
 
 it('prioriza vencimientos antiguos sin repetir tema seguido si puede', () => {
   const items = [
@@ -8,6 +8,16 @@ it('prioriza vencimientos antiguos sin repetir tema seguido si puede', () => {
     { id: 'a2', topicId: 'a', dueAt: 3 },
   ];
   expect(selectSpacedReviews(items, 3).map(item => item.id)).toEqual(['a1', 'b1', 'a2']);
+});
+
+it('calcula racha heredada y pendiente de fallo a partir de estadísticas tipadas', () => {
+  expect(failureStreak()).toBe(-1);
+  expect(failureStreak({ attempts: 2, lastResult: 0 })).toBe(0);
+  expect(failureStreak({ attempts: 2, lastResult: 1 })).toBe(-1);
+  expect(failureStreak({ attempts: 0, intervalStep: 0 })).toBe(0);
+  expect(failureStreak({ attempts: 4, failureStreak: 2 })).toBe(2);
+  expect(hasPendingFailure({ attempts: 4, failureStreak: 2 })).toBe(true);
+  expect(hasPendingFailure({ attempts: 4, failureStreak: 3 })).toBe(false);
 });
 
 it('cuenta vencidas hoy junto a las próximas fechas naturales locales', () => {
