@@ -29,6 +29,9 @@ jobs:
       - name: Límites de arquitectura y hooks
         run: npm run lint
 
+      - name: Evitar nuevas excepciones de lint
+        run: npm run lint:ignore-growth
+
       - name: Comprobar tipos (si fallan, no se despliega)
         run: npm run typecheck
 

@@ -9,6 +9,7 @@
     "lint": "eslint src",
     "test": "vitest run",
     "test:watch": "vitest",
+    "lint:ignore-growth": "node scripts/lint-ignore-growth.mjs",
     "typecheck": "tsc -p .",
     "deploy": "npm run typecheck && npm test && npm run build && node scripts/validate_cards.mjs && npx --yes firebase-tools@13.35.1 deploy --only hosting,firestore:rules --project tai-oposicion",
     "publish:bank": "node scripts/publish_bank.mjs",
