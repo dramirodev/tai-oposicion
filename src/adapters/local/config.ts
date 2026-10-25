@@ -1,7 +1,7 @@
 // Preferencias externas: límites de tamaño, claves seguras y formas que admiten las pantallas.
 const safeKey = (k: string) => /^[A-Za-z0-9_.-]{1,40}$/.test(k) && !['__proto__', 'constructor', 'prototype'].includes(k);
 const own = (obj: object, key: string) => Object.prototype.hasOwnProperty.call(obj, key);
-const object = (v: unknown): v is Record<string, any> => !!v && typeof v === 'object' && !Array.isArray(v);
+const object = (v: unknown): v is Record<string, unknown> => !!v && typeof v === 'object' && !Array.isArray(v);
 const integer = (lo: number, hi: number) => (v: unknown): boolean => typeof v === 'number' && Number.isInteger(v) && v >= lo && v <= hi;
 const oneOf = (values: readonly unknown[]) => (v: unknown): boolean => values.includes(v);
 const bool = (v: unknown) => typeof v === 'boolean';
@@ -58,7 +58,7 @@ export function cleanCfgSetting(key: string, value: unknown): unknown {
   }
   return v;
 }
-export function cleanCfg(cfg: unknown): Record<string, any> {
+export function cleanCfg(cfg: unknown): Record<string, unknown> {
   if (!object(cfg)) return {};
   const out: Record<string, unknown> = {};
   for (const key of Object.keys(cfg).slice(0, 100)) {
