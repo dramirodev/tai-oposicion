@@ -1,7 +1,7 @@
 import 'fake-indexeddb/auto';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { mountDialogProvider } from './helpers/mount-dialog-provider.js';
-vi.mock('../src/adapters/firebase/sync-facade.js', () => ({ status: { user: null, state: 'sin sesión', configured: false }, onStatus: () => () => {}, login: vi.fn(), logout: vi.fn(), retry: vi.fn() }));
+vi.mock('../src/adapters/firebase/sync-facade.js', () => ({ status: { user: null, state: 'sin sesión', configured: false }, setAttemptRepository: () => {}, onStatus: () => () => {}, login: vi.fn(), logout: vi.fn(), retry: vi.fn() }));
 let unmountDialogs;
 beforeEach(async () => { vi.resetModules(); localStorage.clear(); document.body.innerHTML = '<main id="app"></main>'; vi.stubGlobal('matchMedia', () => ({matches:false})); unmountDialogs = await mountDialogProvider(); });
 afterEach(() => { unmountDialogs?.(); vi.unstubAllGlobals(); });
@@ -56,6 +56,7 @@ it('verifica la descarga completa de banco y tarjetas antes de guardar la fecha'
  const {downloadOffline, inspectOffline} = await import('../src/adapters/offline/cache.js');
  const idx={temas:[{id:'T1.01'}]}; const saved=await downloadOffline(idx);
  expect(saved.complete).toBe(true); expect(saved.completedAt).toBeGreaterThan(0);
+ expect(entries.has('explanations/index.json')).toBe(true);
  expect((await inspectOffline(idx)).completedAt).toBe(saved.completedAt);
  entries.delete('cards/T1.01.json');
  const damaged=await inspectOffline(idx); expect(damaged.complete).toBe(false); expect(damaged.completedAt).toBeNull();

@@ -90,10 +90,18 @@ test.describe('service worker real', () => {
   });
   await page.goto('/#/home');
   await expect(page.locator('#quick')).toBeVisible();
+  expect(await page.evaluate(async () => (await fetch('explanations/index.json')).ok)).toBe(true);
   await context.setOffline(true);
   await page.reload();
   await expect(page.locator('#quick')).toBeVisible();
   await expect(page.locator('#net')).toContainText('Sin conexión');
+  await page.locator('#quick').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  await page.locator('.enun').focus();
+  await page.keyboard.press('ArrowRight'); await page.keyboard.press('Shift+ArrowRight');
+  await expect(page.locator('#highlight-tools')).toBeVisible();
+  await page.locator('[data-add-highlight="key"]').click();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('tai.run:guest') || 'null').highlights[0])).toHaveLength(1);
   expect(errors).toEqual([]);
 });
 

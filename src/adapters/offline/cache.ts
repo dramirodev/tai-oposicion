@@ -3,7 +3,7 @@ const CACHE = 'tai-data', STAMP = 'tai.offline-verified';
 type Index = { temas: { id: string }[] };
 type CardIndex = { temas: Record<string, unknown> };
 export interface OfflineState { complete: boolean; missing: string[]; total: number; completedAt: number | null }
-const baseFiles = (idx: Index) => ['data/index.json', 'data/meta.json', 'data/supuestos.json', 'cards/index.json', ...idx.temas.map(t => `data/${t.id}.json`)];
+const baseFiles = (idx: Index) => ['data/index.json', 'data/meta.json', 'data/supuestos.json', 'cards/index.json', 'explanations/index.json', ...idx.temas.map(t => `data/${t.id}.json`)];
 function isCardIndex(index: unknown): index is CardIndex {
   return !!index && typeof index === 'object' && !Array.isArray(index)
     && 'temas' in index && !!index.temas && typeof index.temas === 'object' && !Array.isArray(index.temas);
@@ -29,6 +29,7 @@ export async function inspectOffline(idx: Index): Promise<OfflineState> {
       const body = await hit.json();
       if (!body || typeof body !== 'object') throw new Error('JSON no válido');
       if (/^(data|cards)\/T\d\.\d\d\.json$/.test(u) && !Array.isArray(body)) throw new Error('Lista no válida');
+      if (u === 'explanations/index.json' && !Array.isArray(body)) throw new Error('Índice de explicaciones no válido');
       if (u === 'data/index.json' && !Array.isArray(body.temas)) throw new Error('Índice no válido');
       if (u === 'cards/index.json' && !validCards) throw new Error('Índice de tarjetas no válido');
     } catch { missing.push(u); }
@@ -50,6 +51,7 @@ export async function downloadOffline(idx: Index, progress: (done: number, total
     const response = await fetch(u, {cache:'reload'});
     if (!response.ok) throw new Error(`No se pudo descargar ${u}. Reintenta cuando tengas conexión.`);
     const body = await response.clone().json(); // rechaza errores HTML con estado 200
+    if (u === 'explanations/index.json' && !Array.isArray(body)) throw new Error('El índice de explicaciones no es una lista válida.');
     if (!alive()) throw new Error('Descarga cancelada.');
     await cache.put(u, response);
     progress(++done,need.length);

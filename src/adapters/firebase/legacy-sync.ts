@@ -7,6 +7,7 @@ import {
 } from 'firebase/firestore';
 import type { Auth, User } from 'firebase/auth';
 import type { Firestore, FirestoreError, QuerySnapshot, DocumentSnapshot, Unsubscribe } from 'firebase/firestore';
+import type { AttemptRepository } from '../../core/ports/AttemptRepository.js';
 import * as store from '../local/legacy-store.js';
 import type { AccessLevel, AccessRequest, CardMap, ReportMap, SeenDoc, Session, StatMap } from '../legacy/types.js';
 
@@ -19,10 +20,13 @@ const errorFields = (value: unknown): { code: unknown; message: unknown } => {
 
 import { status, emit } from './legacy-sync-state.js';
 import { OWNER, rememberAccess } from '../legacy/access.js';
+import { syncAttemptHistory } from './attempt-sync.js';
 
 let auth: Auth, db: Firestore, uid: string | null = null, timer: ReturnType<typeof setTimeout> | undefined, cardsT: ReturnType<typeof setTimeout> | undefined, retryT: ReturnType<typeof setTimeout> | undefined, retryN = 0, syncEpoch = 0, unsubs: Unsubscribe[] = [];
 let temaOf: (id: string) => string | null = () => null; // id -> tema
 let idsOfTema: (t: string) => string[] = () => [];
+let attemptRepository: AttemptRepository | null = null;
+export function setAttemptRepository(repository: AttemptRepository): void { attemptRepository = repository; }
 export async function init(metaFns: { temaOf: (id: string) => string | null; idsOfTema: (t: string) => string[] }): Promise<void> {
   temaOf = metaFns.temaOf; idsOfTema = metaFns.idsOfTema;
   let firebaseConfig: FirebaseOptions = {}, leida = false;
@@ -149,6 +153,7 @@ function start(): void {
   const me: string = uid, sessionUid = uid, epoch = syncEpoch;
   const active = () => uid === sessionUid && epoch === syncEpoch;
   const error = (e: FirestoreError) => { if (active()) listenErr(e); };
+  if (attemptRepository) unsubs.push(syncAttemptHistory({ db, uid: me, repository: attemptRepository, active, onError: error }));
   // estadísticas: un documento por tema
   unsubs.push(onSnapshot(collection(db, 'users', me, 'stats'), snap => {
     if (!active()) return;

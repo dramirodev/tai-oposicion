@@ -13,13 +13,22 @@ import { registerCards } from '../features/cards/legacy.js';
 import { registerStats } from '../features/stats/legacy.js';
 import { registerHome } from '../features/home/legacy.js';
 import { registerSettings } from '../features/settings/legacy.js';
+import { registerHelp } from '../features/help/legacy.js';
 import { registerAcceso } from '../features/access/legacy.js';
 import { isFull, isOwner, GUEST_ROUTES } from '../adapters/legacy/access.js';
-import { getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, quickItems, repasoItems, trapTest, falladasIds } from '../core/application/legacy-engine.js';
+import { getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, revealCurrentSolution, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, setCurrentConfidence, toggleCurrentDiscardedOption, addCurrentHighlight, removeCurrentHighlight } from '../core/application/legacy-engine.js';
 import { dominioTemas } from './legacy-topic-mastery.js';
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
 import type { Origin } from '../core/domain/entities.js';
+import { createHighlight, questionContentRevision, resolveHighlight } from '../core/domain/attempts/highlights.js';
+import { canonicalText, paintTextHighlight, selectedTextAnchor } from './legacy-highlight-dom.js';
+import { findLegacyCodeExplanation } from './explanation-composition.js';
+import { explanationMapper } from '../features/explanations/explanation-mapper.js';
+import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
+import { loadStrategyReportForPeriod } from './strategy-composition.js';
+import { renderStrategyReport } from '../features/stats/strategy-view.js';
+import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './ai-study-export-composition.js';
 
 // ───────── router ─────────
 const routes: Record<string, any> = {};
@@ -65,7 +74,9 @@ export function renderLegacy(host: HTMLElement, pathname: string) {
   const lt = setTimeout(() => { if (active) app.innerHTML = '<p class="sub loading" role="status">Cargando…</p>'; }, 120);
   const ready = (async () => {
     try {
-      await recover(); await getIndex(); await getMeta(); if (!active) return;
+      await recover();
+      if (name !== 'ayuda') { await getIndex(); await getMeta(); }
+      if (!active) return;
       await f(...args); if (!active) return;
       clearTimeout(lt); enter(app); countUp();
       const hd = app.querySelector<El>('h1'); if (hd) hd.tabIndex = -1;
@@ -117,6 +128,29 @@ routes.quiz = async function () {
     }, 500);
   }
   const onKey = (e: any) => {
+    const eventTarget = e.target as El;
+    const textRoot = typeof eventTarget?.closest === 'function'
+      ? eventTarget.closest<El>('.enun, .opt .pre') || eventTarget.closest<El>('.opt')?.querySelector<El>('.pre') || null
+      : null;
+    if (textRoot && !eventTarget.closest('.opt') && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); return; }
+    if (textRoot && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+      const selection = window.getSelection();
+      if (selection && (!selection.anchorNode || !textRoot.contains(selection.anchorNode))) {
+        const walker = document.createTreeWalker(textRoot, NodeFilter.SHOW_TEXT);
+        let first = walker.nextNode();
+        while (first && !first.textContent?.length) first = walker.nextNode();
+        if (first) { const range = document.createRange(); range.setStart(first, 0); range.collapse(true); selection.removeAllRanges(); selection.addRange(range); }
+      }
+      const direction = e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? 'backward' : 'forward';
+      const granularity = e.key === 'ArrowUp' || e.key === 'ArrowDown' ? 'line' : 'character';
+      const modify = (selection as (Selection & { modify?: (alter: string, direction: string, granularity: string) => void }) | null)?.modify;
+      if (selection && modify) {
+        e.preventDefault();
+        modify.call(selection, e.shiftKey ? 'extend' : 'move', direction, granularity);
+        onSelectionChange();
+      }
+      return;
+    }
     // Enter/Espacio deben activar el control enfocado mediante el comportamiento nativo.
     if ((e.key === 'Enter' || e.key === ' ') && (e.target as El).closest?.('button,a,[role="button"]')) return;
     if (/^(INPUT|TEXTAREA|SELECT)$/.test(((e.target as El).tagName || ''))) return;
@@ -138,11 +172,26 @@ routes.quiz = async function () {
     const d = swipeDir(t.clientX - tx[0], t.clientY - tx[1]); tx = null;
     if (d === 'next') { const b = $('#next'); b && b.click(); } else if (d === 'prev') prev();
   };
+  const onSelectionChange = () => {
+    const tools = app.querySelector<HTMLElement>('#highlight-tools');
+    if (!tools || R.paused) return;
+    const anchor = selectedTextAnchor(app);
+    tools.hidden = !anchor;
+    if (anchor) {
+      const remove = app.querySelector<HTMLButtonElement>('[data-remove-highlight]');
+      const mark = (R.highlights?.[R.idx] || []).find(item => item.field === anchor.field
+        && item.start < anchor.end && item.end > anchor.start);
+      if (remove) { remove.hidden = !mark; if (mark) remove.dataset.removeHighlight = mark.id; }
+    }
+  };
   function prev() { if (R.paused || R.idx <= 0) return; setQuestionIndex(R.idx - 1); draw(); focusHeading(); window.scrollTo(0, 0); }
   document.addEventListener('keydown', onKey);
   document.addEventListener('touchstart', onTs, { passive: true });
   document.addEventListener('touchend', onTe, { passive: true });
-  routeScreen.cleanup = () => { endConfirmation?.abort(); clearInterval(tick); clearInterval(gateTimer); document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); };
+  document.addEventListener('selectionchange', onSelectionChange);
+  app.addEventListener('mouseup', onSelectionChange);
+  app.addEventListener('touchend', onSelectionChange);
+  routeScreen.cleanup = () => { endConfirmation?.abort(); clearInterval(tick); clearInterval(gateTimer); document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); document.removeEventListener('selectionchange', onSelectionChange); app.removeEventListener('mouseup', onSelectionChange); app.removeEventListener('touchend', onSelectionChange); };
   draw();
 
   function draw() {
@@ -152,7 +201,13 @@ routes.quiz = async function () {
     const LEC = normUi(store.getCfg().ui).lectura, kw = (t: any) => richHtml(t, !!LEC);
     const q = R.items[R.idx];
     const a = R.ans[R.idx];
-    const reveal = R.feedback && a !== undefined;
+    const state = R.feedback ? (R.studyStates?.[R.idx] || 'unseen') : undefined;
+    const consulted = state === 'revealed';
+    const reveal = R.feedback && (a !== undefined || consulted);
+    const contentRevision = questionContentRevision(q.q, q.a);
+    const confidence = R.confidences?.[R.idx] || null;
+    const discarded = new Set(R.discardedOptions?.[R.idx] || []);
+    const responseLocked = R.feedback ? state === 'answered' || state === 'revealed' : typeof a === 'number' && a >= 0;
     const inSup = !!q.s;
     app.innerHTML = `
     <h1 class="sr">${esc(R.titulo || 'Test')} · pregunta ${R.idx + 1}${R.porTiempo ? '' : ' de ' + R.items.length}</h1>
@@ -164,7 +219,8 @@ routes.quiz = async function () {
     </div>
     ${R.titulo ? `<div class="sub">${esc(R.titulo)}</div>` : ''}
     ${R.limit && R.kind === 'sim' ? '<div class="pace" id="pace"></div>' : ''}
-    ${!R.feedback ? `<details class="question-map"><summary>Mapa de preguntas · ${R.ans.filter(x => x !== undefined && x >= 0).length} ${R.ans.filter(x => x !== undefined && x >= 0).length === 1 ? 'respondida' : 'respondidas'} · ${(R.review || []).length} para revisar</summary><div class="question-grid">${R.items.map((_, k) => { const status = R.ans[k] === undefined ? 'Sin responder' : R.ans[k] === -1 ? 'En blanco' : 'Respondida'; return `<button data-jump="${k}" ${k === R.idx ? 'aria-current="step"' : ''} class="${R.ans[k] !== undefined && R.ans[k] >= 0 ? 'answered' : ''}">${k + 1}<small>${status}${R.review?.includes(k) ? ' · Revisar' : ''}</small></button>`; }).join('')}</div></details><button class="ghost" id="review-question" aria-pressed="${!!R.review?.includes(R.idx)}">${R.review?.includes(R.idx) ? '✓ Marcada para revisar' : 'Marcar para revisar'}</button>` : ''}
+    ${!R.feedback ? `<details class="question-map"><summary>Mapa de preguntas · ${R.ans.filter(x => x !== undefined && x >= 0).length} ${R.ans.filter(x => x !== undefined && x >= 0).length === 1 ? 'respondida' : 'respondidas'} · ${(R.review || []).length} para revisar</summary><div class="question-grid">${R.items.map((_, k) => { const status = R.ans[k] === undefined ? 'Sin responder' : R.ans[k] === -1 ? 'En blanco' : 'Respondida'; return `<button data-jump="${k}" ${k === R.idx ? 'aria-current="step"' : ''} class="${R.ans[k] !== undefined && R.ans[k] >= 0 ? 'answered' : ''}">${k + 1}<small>${status}${R.review?.includes(k) ? ' · Revisar' : ''}</small></button>`; }).join('')}</div></details><button class="ghost" id="review-question" aria-pressed="${!!R.review?.includes(R.idx)}">${R.review?.includes(R.idx) ? '✓ Marcada para revisar' : 'Marcar para revisar'}</button>` : `<details class="question-map"><summary>Mapa de preguntas · ${R.studyStates?.filter(x => x === 'answered').length || 0} respondidas · ${R.studyStates?.filter(x => x === 'pending').length || 0} pendientes · ${R.studyStates?.filter(x => x === 'revealed').length || 0} consultadas</summary><div class="question-grid">${R.items.map((_, k) => { const itemState = R.studyStates?.[k] || 'unseen'; const label = itemState === 'answered' ? 'Respondida' : itemState === 'pending' ? 'Pendiente' : itemState === 'revealed' ? 'Solución consultada' : 'Sin visitar'; return `<button data-jump="${k}" ${k === R.idx ? 'aria-current="step"' : ''} class="${itemState}">${k + 1}<small>${label}</small></button>`; }).join('')}</div></details>`}
+    ${state === 'pending' ? '<p class="note">Si ves la solución, ya no podrás responder esta pregunta en este intento.</p>' : ''}
     <div class="card q ${inSup ? 'with-sup' : ''}">
       <div class="meta">
         <span class="tag">${esc(q.t)} · ${esc(temaName(q.t))}</span>
@@ -177,24 +233,53 @@ routes.quiz = async function () {
       ${inSup ? `<details class="sup scenario-context"><summary>Enunciado del supuesto</summary><div class="pre">${esc(R.supTexto || q.supTexto || '')}</div></details>` : ''}
       ${q.cp ? `<div class="ctx pre">${richHtml(q.cp)}</div>` : ''}
       ${pideNegativa(q.q) ? '<div class="pide">Ojo: te piden la opción INCORRECTA o la excepción</div>' : ''}
-      <div class="enun pre">${kw(q.q)}</div>
+      <div class="enun pre" tabindex="0" aria-label="Enunciado. Usa Mayús y las flechas para seleccionar texto">${kw(q.q)}</div>
+      <div class="study-signals" aria-label="Señales opcionales de estudio">
+        <span class="study-signals-label">¿Cómo lo ves?</span>
+        ${[['sure', 'Seguro'], ['betweenTwo', 'Entre dos'], ['guess', 'Adivino']].map(([value, label]) => `<button type="button" class="signal${confidence === value ? ' on' : ''}" data-confidence="${value}" aria-pressed="${confidence === value}" ${responseLocked ? 'disabled' : ''}>${label}</button>`).join('')}
+      </div>
       <div class="opts">
       ${q.a.map((o, i) => {
         let cl = 'opt';
+        if (discarded.has(i)) cl += ' discarded';
         if (reveal) { if (i === q.c) cl += ' ok'; else if (i === a) cl += ' bad'; cl += ' dis'; }
         else if (a === i) cl += ' sel';
-        return `<button class="${cl}" data-i="${i}" aria-pressed="${a === i}"><b>${L[i]}</b><span class="pre">${kw(o)}</span>${reveal && i === q.c ? '<span class="sr">(respuesta correcta)</span>' : reveal && i === a ? '<span class="sr">(tu respuesta, incorrecta)</span>' : ''}</button>`;
+        return `<div class="option-control"><button class="${cl}" data-i="${i}" aria-pressed="${a === i}" ${reveal ? 'disabled' : ''}><b>${L[i]}</b><span class="pre" tabindex="0" aria-label="Opción ${L[i]}. Usa Mayús y las flechas para seleccionar texto">${kw(o)}</span>${reveal && i === q.c ? '<span class="sr">(respuesta correcta)</span>' : reveal && i === a ? '<span class="sr">(tu respuesta, incorrecta)</span>' : ''}</button><button type="button" class="discard-option${discarded.has(i) ? ' on' : ''}" data-discard-option="${i}" aria-pressed="${discarded.has(i)}" aria-label="${discarded.has(i) ? 'Restaurar' : 'Descartar'} opción ${L[i]}" ${responseLocked ? 'disabled' : ''}>${discarded.has(i) ? 'Restaurar' : 'Descartar'}</button></div>`;
       }).join('')}
       </div>
-      ${reveal ? feedback(q, a) : ''}
+      <div class="highlight-tools" id="highlight-tools" role="group" aria-label="Subrayado opcional" hidden>
+        <span>Texto seleccionado:</span><button type="button" class="signal" data-add-highlight="key">Clave</button>
+        <button type="button" class="signal" data-add-highlight="doubt">Duda</button>
+        <button type="button" class="signal" data-remove-highlight hidden>Quitar marca</button>
+      </div>
+      <p class="sub stale-highlight" id="stale-highlight" hidden>Una marca no coincide con el texto actual y no se ha movido.</p>
+      ${reveal ? feedback(q, a, consulted) : ''}
     </div>
     <div class="bar2">
-      ${R.feedback ? (reveal ? `<button class="btn" id="next">${R.idx + 1 === R.items.length ? 'Terminar' : 'Siguiente'} →</button>` : `<button class="btn sec" id="blank">No lo sé</button>`)
+      ${R.feedback ? `<button class="btn sec" id="prev" ${R.idx === 0 ? 'disabled' : ''}>← Anterior</button>${state === 'unseen' ? '<button class="btn sec" id="blank">No lo sé</button>' : state === 'pending' ? '<span class="tag warn" role="status">Pendiente</span><button class="btn sec" id="reveal-solution">Ver solución</button>' : state === 'revealed' ? '<span class="tag warn" role="status">Solución consultada · blanco</span>' : '<span class="tag" role="status">Respondida</span>'}<button class="btn" id="next">${R.idx + 1 === R.items.length ? 'Terminar' : 'Siguiente'} →</button>`
         : `<button class="btn sec" id="blank">${a === -1 ? '✓ En blanco' : 'Dejar en blanco'}</button>
            <button class="btn" id="next">${R.idx + 1 === R.items.length ? 'Terminar' : 'Siguiente'} →</button>`}
     </div>
+    <p class="sub"><a href="#/ayuda?tema=sesiones">Ayuda sobre controles y estados de pregunta</a></p>
     ${R.paused ? `<div class="overlay" role="dialog" aria-modal="true" aria-labelledby="pt"><div class="card"><h2 id="pt">En pausa</h2><p>El tiempo está detenido.</p><button class="btn" id="resume">Continuar</button></div></div>` : ''}`;
     bind(q);
+    if (reveal && R.feedback) {
+      const run = R, index = R.idx, slot = app.querySelector<HTMLElement>('#code-explanation-slot');
+      if (slot) void findLegacyCodeExplanation(q.i, q.q, q.a).then(result => {
+        if (!slot.isConnected || getCurrentRun() !== run || run.idx !== index) return;
+        if (result.status === 'current') slot.innerHTML = renderCodeExplanation(explanationMapper.toViewModel(result.explanation));
+        else if (result.status === 'outdated') slot.textContent = 'Hay una explicación de una revisión anterior; no se muestra para evitar información desactualizada.';
+      }).catch(() => {});
+    }
+    (R.highlights?.[R.idx] || []).forEach(mark => {
+      const root = mark.field === 'statement' ? app.querySelector('.enun')
+        : app.querySelector(`.opt[data-i="${Number(mark.field.slice(7))}"] .pre`);
+      if (!root) return;
+      const sourceText = root.textContent?.replace(/\u00a0/g, ' ') || '';
+      const resolved = resolveHighlight(mark, sourceText, contentRevision);
+      if (resolved.stale) { const note = $('#stale-highlight'); if (note) note.hidden = false; return; }
+      paintTextHighlight(root, resolved.start, resolved.end, mark.category, mark.id);
+    });
     if (R.paused) { app.querySelectorAll<El>('.qhead,.sub,.pace,.card.q,.bar2').forEach(el => { if (!el.closest<El>('.overlay')) el.inert = true; }); const rb = $('.overlay #resume'); rb && rb.focus(); }
     clearInterval(gateTimer);
     if (LEC === 2 && !reveal && a === undefined && !R.paused) {
@@ -210,16 +295,16 @@ routes.quiz = async function () {
     else if (a !== undefined && !R.paused) { const so = app.querySelector<El>('.opt.sel'); so && so.focus({ preventScroll: true }); }
     // El enunciado permanece en su sitio al revelar: sin saltos automáticos de lectura.
   }
-  function feedback(q: any, a: any) {
+  function feedback(q: any, a: any, wasConsulted = false) {
     const ok = a === q.c;
-    return `<div class="fb ${ok ? 'good' : 'wrong'}"><b>${a === -1 ? 'Sin responder' : ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${!ok && a !== -1 && R.fast?.[R.idx] ? `<div class="fbsub">Marcaste ${L[a]} en ${R.fast[R.idx][0]} s${R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? `; leerla con calma lleva unos ${R.fast[R.idx][1]} s` : ''}.</div>` : ''}
+    return `<div class="fb ${wasConsulted ? 'note' : ok ? 'good' : 'wrong'}"><b>${wasConsulted ? 'Solución consultada · cuenta como blanco' : a === -1 ? 'Sin responder' : ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${!wasConsulted && !ok && a !== -1 && R.fast?.[R.idx] ? `<div class="fbsub">Marcaste ${L[a]} en ${R.fast[R.idx][0]} s${R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? `; leerla con calma lleva unos ${R.fast[R.idx][1]} s` : ''}.</div>` : ''}
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}
       ${sourceHtml(q, VERIFIED_SOURCES)}
       ${q.x?.length ? `<div class="trap">Trampa: ${q.x.map((x: any) => esc(TRAMPAS[x] || x)).join(' · ')}</div>` : ''}
-      ${!ok && a !== -1 && R.feedback ? `<div class="mot" id="mot"><small>¿Por qué fallé?${(() => { const f = R.fast?.[R.idx]; return f && f[0] < f[1] * 0.6 ? ` <b class="r">Respondiste en ${f[0]} s; leerla bien lleva ≈${f[1]} s. ¿Fue velocidad?</b>` : ''; })()}</small>${[5, 7, 1, 2, 3, 4].map(m => `<button class="${store.rec(q.i)?.[9] === m ? 'on' : (m === 7 && R.fast?.[R.idx] && R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? 'sug' : '')}" data-m="${m}">${MOTIVOS_FALLO[m]}</button>`).join('')}<button class="mk" id="mkcard" ${store.rec(q.i)?.[9] === 4 && !store.cardRec('FC-Q-' + q.i) ? 'hidden' : ''}>${store.cardRec('FC-Q-' + q.i) ? '📇 Tarjeta creada ✓' : '📇 Hacer tarjeta'}</button></div>` : ''}
+      ${!wasConsulted && !ok && a !== -1 && R.feedback ? `<div class="mot" id="mot"><small>¿Por qué fallé?${(() => { const f = R.fast?.[R.idx]; return f && f[0] < f[1] * 0.6 ? ` <b class="r">Respondiste en ${f[0]} s; leerla bien lleva ≈${f[1]} s. ¿Fue velocidad?</b>` : ''; })()}</small>${[5, 7, 1, 2, 3, 4].map(m => `<button class="${store.rec(q.i)?.[9] === m ? 'on' : (m === 7 && R.fast?.[R.idx] && R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? 'sug' : '')}" data-m="${m}">${MOTIVOS_FALLO[m]}</button>`).join('')}<a class="sm" href="#/ayuda?tema=motivos">¿Qué significa cada motivo?</a><button class="mk" id="mkcard" ${store.rec(q.i)?.[9] === 4 && !store.cardRec('FC-Q-' + q.i) ? 'hidden' : ''}>${store.cardRec('FC-Q-' + q.i) ? '📇 Tarjeta creada ✓' : '📇 Hacer tarjeta'}</button></div>` : ''}
       ${ok && a !== -1 && R.feedback ? (() => { const r = store.rec(q.i) || [], en = r[3] === 0 && r[4] > now() + 86400000 * 1.5; return `<div class="mot" id="acc"><small>¿Seguro? (entra en repaso a +2 días)</small>${(() => { const pl = R.luck?.[R.idx]; return pl === 6 ? '<b class="r">🍀 Marcada como suerte: acierto 1/2. Otra vez bien y se quita la etiqueta.</b>' : pl === 8 ? '<b class="r">🍀 ¡Acierto 2/2! Etiqueta de suerte quitada: ya la sabes.</b>' : ''; })()}<button class="${en && r[9] !== 6 && r[9] !== 8 ? 'on' : ''}" data-a="doubt">🤔 Acerté dudando</button><button class="${r[9] === 6 || r[9] === 8 ? 'on' : ''}" data-a="suerte">🍀 Fue suerte</button></div>`; })() : ''}
       <button class="ghost fl" id="flag">${store.rec(q.i)?.[6] ? '★ Dudosa' : '☆ Marcar como dudosa'}</button>
-      <div class="repw" id="rep"></div></div>`;
+      <div class="repw" id="rep"></div><div id="code-explanation-slot" aria-live="polite"></div></div>`;
   }
   function bind(q: any) {
     app.querySelectorAll<El>('[data-jump]').forEach(b => b.onclick = () => { if (getCurrentRun() !== R || R.paused) return; setQuestionIndex(+b.dataset.jump!); draw(); focusHeading(); window.scrollTo(0, 0); });
@@ -236,17 +321,64 @@ routes.quiz = async function () {
       else { clearActiveRun(); clearRun(); go('#/home'); }
     };
     $('#pause') && ($('#pause').onclick = () => { setRunPaused(true); draw(); });
+    $('#prev') && ($('#prev').onclick = prev);
     $('#resume') && ($('#resume').onclick = () => { setRunPaused(false); draw(); const pb = $('#pause'); pb && pb.focus(); });
     app.querySelectorAll<El>('.opt').forEach(b => b.onclick = () => {
       if (R.paused) return;
+      const selection = window.getSelection();
+      if (selection && !selection.isCollapsed
+        && (b.contains(selection.anchorNode) || b.contains(selection.focusNode))) return;
       const i = +b.dataset.i!;
       if (R.feedback) { if (R.ans[R.idx] !== undefined) return; answer(q, i); draw(); }
       else { answerCurrentDeferred(i); draw(); }
     });
+    app.querySelectorAll<HTMLButtonElement>('[data-confidence]').forEach(button => button.onclick = () => {
+      const value = button.dataset.confidence;
+      if (value === 'sure' || value === 'betweenTwo' || value === 'guess') {
+        setCurrentConfidence(value);
+        draw();
+      }
+    });
+    app.querySelectorAll<HTMLButtonElement>('[data-discard-option]').forEach(button => button.onclick = () => {
+      toggleCurrentDiscardedOption(Number(button.dataset.discardOption));
+      draw();
+    });
+    const highlightTools = $('#highlight-tools');
+    highlightTools?.addEventListener('mousedown', event => event.preventDefault());
+    highlightTools?.addEventListener('touchstart', event => event.preventDefault(), { passive: false });
+    app.querySelectorAll<HTMLButtonElement>('[data-add-highlight]').forEach(button => button.onclick = () => {
+      const anchor = selectedTextAnchor(app);
+      const category = button.dataset.addHighlight;
+      if (!anchor || (category !== 'key' && category !== 'doubt')) return;
+      const field = anchor.field;
+      const existing = (R.highlights?.[R.idx] || []).find(mark => mark.field === field
+        && mark.start < anchor.end && mark.end > anchor.start);
+      if (existing) return;
+      const state = R.studyStates?.[R.idx];
+      const timing = state === 'revealed' ? 'after-reveal'
+        : typeof R.ans[R.idx] === 'number' && R.ans[R.idx]! >= 0 ? 'after-answer' : 'before-answer';
+      const created = createHighlight({
+        id: globalThis.crypto?.randomUUID?.() || `mark-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        ...anchor,
+        category,
+        contentRevision: questionContentRevision(q.q, q.a),
+        createdAt: Date.now(),
+        timing,
+      });
+      if (created.ok && addCurrentHighlight(created.value)) {
+        window.getSelection()?.removeAllRanges();
+        draw();
+      }
+    });
+    app.querySelectorAll<HTMLButtonElement>('[data-remove-highlight]').forEach(button => button.onclick = () => {
+      const id = button.dataset.removeHighlight;
+      if (id && removeCurrentHighlight(id)) { window.getSelection()?.removeAllRanges(); draw(); }
+    });
     $('#blank') && ($('#blank').onclick = () => {
-      if (R.feedback) { if (R.ans[R.idx] === undefined) { answer(q, -1); draw(); } }
+      if (R.feedback) { if (R.ans[R.idx] === undefined) { answer(q, -1); if (R.idx < R.items.length - 1) setQuestionIndex(R.idx + 1); draw(); if (R.idx > 0) focusHeading(); } }
       else { toggleDeferredBlank(); draw(); }
     });
+    $('#reveal-solution') && ($('#reveal-solution').onclick = () => { if (revealCurrentSolution()) { draw(); focusHeading(); } });
     $('#next') && ($('#next').onclick = () => { if (R.idx === R.items.length - 1) { void finish(); return; } setQuestionIndex(R.idx + 1); draw(); focusHeading(); window.scrollTo(0, 0); });
     $('#mot') && ($('#mot').onclick = e => {
       const b = (e.target as El).closest<El>('button'); if (!b) return;
@@ -298,16 +430,18 @@ routes.result = async function () {
   const { app, $, screen: routeScreen } = legacyScope(screen);
   const lastResult = getLastResult();
   if (!lastResult) return go('#/home');
-  const { ses, items, ans } = lastResult;
+  const { ses, items, ans, studyStates = [], highlights = [], confidences = [], discardedOptions = [] } = lastResult;
   const ng = ses.f;
+  const consultedCount = studyStates.filter(state => state === 'revealed').length;
   app.innerHTML = `
   <h1>Resultado</h1>
   ${ses.interrupted ? `<div class="note result-status"><b>Sesión interrumpida</b><p>${ses.a + ses.f} de ${ses.n} preguntas respondidas. La puntuación global mantiene las no contestadas como blancos.</p></div>` : ''}
   <div class="card big">
-    <p class="score-label">Puntuación global</p>
+  <p class="score-label">Puntuación global · <a href="#/ayuda?tema=puntuacion">Cómo se calcula</a></p>
     <div class="score" data-count="${ses.nota}">${ses.nota}<small>/100</small></div>
     <div class="legend">100 × (aciertos − fallos/3) / total de preguntas</div>
     <div class="trio"><div class="g"><b>${ses.a}</b>Aciertos</div><div class="r"><b>${ses.f}</b>Fallos</div><div><b>${ses.b}</b>Blanco</div></div>
+    ${consultedCount ? `<div class="legend" id="consulted-count">${consultedCount} ${consultedCount === 1 ? 'solución consultada' : 'soluciones consultadas'} · contadas como blanco, sin acierto ni fallo</div>` : ''}
     <div class="legend">${ses.a + ses.f ? pct(ses.a, ses.a + ses.f) + ' % de acierto sobre lo contestado' : 'Sin respuestas evaluables'} · ${fmtT(ses.secs)}</div>
   </div>
   <div class="row">
@@ -316,17 +450,51 @@ routes.result = async function () {
     <button class="btn sec" id="home">Inicio</button>
   </div>
   ${lastResult.limit && !lastResult.ses.porTiempo ? simAnalisis(lastResult) : ''}
+  ${ses.kind === 'sim' && !ses.interrupted ? '<section class="strategy-result"><h2>Analítica de estrategia</h2><p class="sub">Análisis del historial completado; las sesiones incompletas se excluyen y la muestra pequeña no genera recomendación.</p><button class="btn sec" id="result-strategy-load">Calcular informe del último año</button><div id="result-strategy-report" aria-live="polite"></div></section>' : ''}
   <h2>Por tema</h2>
   <div class="card">${Object.entries(ses.temas).sort((a, b) => a[0].localeCompare(b[0])).map(([t, [a, n]]) => `<div class="line"><span>${esc(t)} ${esc(temaName(t))}</span><span>${a}/${n}</span></div>`).join('')}</div>
   <h2>Revisión</h2>
   <div class="card">${items.map((q, k) => {
-    const x = ans[k]; const st = x === undefined || x === -1 ? 'b' : x === q.c ? 'g' : 'r';
-    return `<details class="rv ${st}"><summary><i></i><span class="sr">${st === 'g' ? 'Acierto' : st === 'r' ? 'Fallo' : 'En blanco'}: </span>${esc(q.q.slice(0, 110))}${q.q.length > 110 ? '…' : ''}</summary>
-      ${questionNotice(q)}<div class="pre">${richHtml(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : i === x ? 'bad' : ''}"><b>${L[i]}</b> ${richHtml(o)}${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
-      ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${sourceHtml(q, VERIFIED_SOURCES)}<div class="repw" data-rq="${k}"></div></details>`;
+    const x = ans[k], consulted = studyStates[k] === 'revealed'; const st = consulted || x === undefined || x === -1 ? 'b' : x === q.c ? 'g' : 'r';
+    const label = consulted ? 'Solución consultada · blanco' : st === 'g' ? 'Acierto' : st === 'r' ? 'Fallo' : 'En blanco';
+    return `<details class="rv ${st}"><summary><i></i><span class="sr">${label}: </span>${consulted ? '<span class="tag warn">Solución consultada · blanco</span> ' : ''}${esc(q.q.slice(0, 110))}${q.q.length > 110 ? '…' : ''}</summary>
+      ${questionNotice(q)}<div class="pre review-statement">${richHtml(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : i === x ? 'bad' : ''}" data-answer-index="${i}"><b>${L[i]}</b> <span class="pre review-option-text">${richHtml(o)}</span>${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
+      ${confidences[k] ? `<p class="sub">Confianza antes de responder: ${confidences[k] === 'sure' ? 'Seguro' : confidences[k] === 'betweenTwo' ? 'Entre dos' : 'Adivino'}</p>` : ''}
+      ${discardedOptions[k]?.length ? `<p class="sub">Opciones que descartaste antes de responder: ${discardedOptions[k].map(index => L[index]).join(', ')}</p>` : ''}
+      ${highlights[k]?.length ? '<p class="sub">Tus marcas de este intento:</p>' : ''}
+      ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${sourceHtml(q, VERIFIED_SOURCES)}<div class="code-explanation-slot" data-explanation="${k}" aria-live="polite"></div><div class="repw" data-rq="${k}"></div></details>`;
   }).join('')}</div>`;
+  items.forEach((question, index) => {
+    const explanationSlot = app.querySelector<HTMLElement>(`[data-explanation="${index}"]`);
+    if (!ses.interrupted) void findLegacyCodeExplanation(question.i, question.q, question.a).then(result => {
+      if (!explanationSlot?.isConnected) return;
+      if (result.status === 'current') explanationSlot.innerHTML = renderCodeExplanation(explanationMapper.toViewModel(result.explanation), `result-${index}`);
+      else if (result.status === 'outdated') explanationSlot.textContent = 'Hay una explicación de una revisión anterior; no se muestra para evitar información desactualizada.';
+    }).catch(() => {});
+    const revision = questionContentRevision(question.q, question.a);
+    const panel = app.querySelectorAll<HTMLElement>('.rv')[index];
+    (highlights[index] || []).forEach(mark => {
+      const root = mark.field === 'statement' ? panel.querySelector('.review-statement')
+        : panel.querySelector(`.ro[data-answer-index="${Number(mark.field.slice(7))}"] .review-option-text`);
+      if (!root) return;
+      const resolved = resolveHighlight(mark, canonicalText(root), revision);
+      if (resolved.stale) {
+        const note = document.createElement('p'); note.className = 'sub stale-highlight';
+        note.textContent = 'Una marca no coincide con el texto actual y no se ha movido.'; panel.append(note);
+        return;
+      }
+      paintTextHighlight(root, resolved.start, resolved.end, mark.category, mark.id);
+    });
+  });
   app.querySelectorAll<El>('[data-rq]').forEach(el => reportBox(items[+el.dataset.rq!], el));
   $('#home').onclick = () => go('#/home');
+  $('#result-strategy-load') && ($('#result-strategy-load').onclick = async () => {
+    const output = $('#result-strategy-report'); if (!output) return;
+    output.setAttribute('aria-busy', 'true'); output.textContent = 'Calculando con el historial detallado…';
+    try { output.innerHTML = renderStrategyReport(await loadStrategyReportForPeriod(365)); }
+    catch { if (output.isConnected) output.textContent = 'No se pudo leer el historial detallado. El resultado de esta sesión sigue disponible.'; }
+    finally { if (output.isConnected) output.setAttribute('aria-busy', 'false'); }
+  });
   $('#p2go') && ($('#p2go').onclick = () => go('#/sim2'));
   $('#again') && ($('#again').onclick = async () => startRun({ kind: 'rev', feedback: true, items: shuffle(items.filter((q, k) => ans[k] !== q.c)), titulo: 'Repetición de falladas' }));
 };
@@ -375,6 +543,7 @@ async function openMenu() {
       ['⌂', 'Inicio', 'Resumen y cuenta atrás', '#/home'],
       ...(isOwner() ? [['🔑', 'Accesos', sync.status.reqs.length ? sync.status.reqs.length + ' solicitudes por revisar' : 'Quién puede usar la app', '#/acceso']] : []),
       ['⚙', 'Ajustes', NEWV ? 'Hay una versión nueva' : 'Cuenta, apariencia, copia y versión ' + APP_VERSION, '#/settings'],
+      ['?', 'Ayuda', 'Motivos, práctica, simulacros y guardado', '#/ayuda'],
     ]],
   ];
   await showMenu((isFull() ? G : GUEST_MENU(G)) as MenuGroup[], aqui, go);
@@ -393,7 +562,7 @@ routes.test = async function () {
   const bloques = [['T1', 'Bloque I · Organización del Estado'], ['T2', 'Bloque II · Informática básica'], ['T3', 'Bloque III · Desarrollo'], ['T4', 'Bloque IV · Sistemas y comunicaciones']];
   const draw = () => {
     app.innerHTML = `
-    <h1>Test por tema</h1>
+    <h1>Test por tema</h1><p class="sub"><a href="#/ayuda?tema=sesiones">Ayuda sobre controles del test</a></p>
     <div class="card">
       <h2 class="h3">Terminar por</h2>
       <div class="seg" id="by">${[[0, 'Nº de preguntas'], [1, 'Tiempo']].map(([v, t]) => `<button class="${(cfg.pt ? 1 : 0) === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
@@ -565,7 +734,7 @@ routes.sim = async function () {
     }));
   };
   const shell = () => {
-    app.innerHTML = `<h1>Simulacros</h1><div class="seg tabs" id="simtabs" role="group" aria-label="Tipo de simulacro">${TABS.map(([v, t]) => `<button class="${tab === v ? 'on' : ''}" data-v="${v}" aria-pressed="${tab === v}">${t}</button>`).join('')}</div><div id="simbody"></div>`;
+    app.innerHTML = `<h1>Simulacros</h1><p class="sub"><a href="#/ayuda?tema=simulacros">Ayuda sobre navegación y corrección de simulacros</a></p><div class="seg tabs" id="simtabs" role="group" aria-label="Tipo de simulacro">${TABS.map(([v, t]) => `<button class="${tab === v ? 'on' : ''}" data-v="${v}" aria-pressed="${v === tab}">${t}</button>`).join('')}</div><div id="simbody"></div>`;
     $('#simtabs').onclick = e => { const b = (e.target as El).closest<El>('button'); if (!b || b.dataset.v! === tab) return; tab = b.dataset.v!; store.setCfg('simtab', tab); shell(); $('#simtabs .on').focus({preventScroll:true}); enter($('#simbody') as any); };
     tab === 'completo' ? drawCompleto() : drawLista();
   };
@@ -689,8 +858,8 @@ routes.falladas = async function () {
     }).join('')}</div>`).join('')
       : '<div class="card"><p class="sub">Ninguna pregunta coincide con la búsqueda.</p></div>';
   };
-  if (!qs.length) { app.innerHTML = '<h1>Falladas</h1><div class="card"><p class="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p></div><div class="row"><button class="btn sec" id="home">Inicio</button></div>'; $('#home').onclick = () => go('#/home'); return; }
-  app.innerHTML = `<h1>Falladas</h1>
+  if (!qs.length) { app.innerHTML = '<h1>Falladas</h1><div class="card"><p class="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p><a href="#/ayuda?tema=repaso">Ayuda sobre falladas y repaso</a></div><div class="row"><button class="btn sec" id="home">Inicio</button></div>'; $('#home').onclick = () => go('#/home'); return; }
+  app.innerHTML = `<h1>Falladas · <a href="#/ayuda?tema=repaso">Ayuda</a></h1>
   <p class="sub">Cada pregunta permanece hasta acertarla tres veces seguidas. Un fallo reinicia el contador; dejarla en blanco no cuenta. Marcar el temario no la quita de la lista.</p>
   <p class="sub" id="fcount"></p>
   <div class="card">
@@ -721,10 +890,11 @@ routes.falladas = async function () {
 
 registerTraining({ routes, go, route, pw, verifiedSources: VERIFIED_SOURCES }, screen);
 const { allCards, curatedCards } = registerCards({ routes, go, pw, reportBox, verifiedSources: VERIFIED_SOURCES }, screen);
-registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas });
+registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport: loadStrategyReportForPeriod, renderStrategyReport });
 registerHome({ routes, go, saludo, quickSession, startRepaso, openMenu, dominioTemas, falladasIds }, screen);
 registerAcceso({ routes, go }, screen);
-registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate }, screen);
+registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate, listManualExportSessions, createManualAiExport, deleteManualStudyHistory }, screen);
+registerHelp(routes, screen);
 
 // ───────── arranque ─────────
 export function bootLegacy(firstPaint = firstLegacyPaint): () => void {
@@ -735,8 +905,12 @@ export function bootLegacy(firstPaint = firstLegacyPaint): () => void {
   void (async () => {
     try { navigator.storage?.persist?.(); } catch (e) {}
     await recover(); if (stopped) return;
-    listen(document, 'visibilitychange', () => { if (document.visibilityState === 'hidden') store.flushNow(); });
-    listen(window, 'pagehide', () => { store.flushNow(); });
+    listen(document, 'visibilitychange', () => {
+      const visible = document.visibilityState === 'visible';
+      setAttemptTrackingVisible(visible);
+      if (!visible) { store.flushNow(); void flushAttemptTracking(); }
+    });
+    listen(window, 'pagehide', () => { setAttemptTrackingVisible(false); store.flushNow(); void flushAttemptTracking(); });
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js').then(reg => {
       if (!stopped) offUpdates = watchUpdates(reg);
     }).catch(() => {});

@@ -6,6 +6,7 @@ import path from 'node:path';
 // Solo se sustituye el límite externo (Firebase y HTTP); pantallas, datos y almacén son reales.
 vi.mock('../src/adapters/firebase/sync-facade.js', () => ({
   status: { user: null, state: 'sin sesión', configured: false },
+  setAttemptRepository: () => {},
   init: async () => {}, onStatus: () => () => {}, login: async () => {}, logout: async () => {}, retry: () => {},
 }));
 let unmountApp;

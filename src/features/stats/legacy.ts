@@ -4,7 +4,7 @@ import { META, getIndex, getMeta, now, byIds } from '../../adapters/http/legacy-
 import { $, legacyScope, L, toast, type El } from '../../shared/ui/legacy-dom.js';
 import { falladasIds }  from '../../core/application/legacy-engine.js';
 import { ORIGEN, TRAMPAS, TIPOS } from '../../shared/presentation/labels.js';
-export function registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas }: any) {
+export function registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport, renderStrategyReport }: any) {
 // ───────── mapa de dominio ─────────
 // Estado por tema a partir de: precisión actual (último resultado de cada pregunta vista),
 // cobertura (vistas / banco, con objetivo del 60 %) y frescura (días desde la última vez).
@@ -157,7 +157,7 @@ routes.stats = async function () {
   const diaL = (k: any) => { const d = new Date(now()); d.setDate(d.getDate() + k); return k === 0 ? 'hoy' : ['D', 'L', 'M', 'X', 'J', 'V', 'S'][d.getDay()] + d.getDate(); };
   const cargaHTML = `<div class="card"><div class="cg">${carga.map((v, k) => `<div class="cgc" title="${v} repasos"><small>${v || ''}</small><i class="${k === 0 && v ? 'hoy' : ''}" style="height:${Math.round(60 * v / mx)}px"></i><small>${diaL(k)}</small></div>`).join('')}</div>
     <p class="legend">Preguntas que vencen cada día (hoy incluye las atrasadas). Total en 14 días: ${carga.reduce((a, b) => a + b, 0)}.</p>
-    ${mft ? `<h2 class="h3">Por qué fallas (último fallo)</h2>${[5, 7, 1, 2, 3, 4].map(m => `<div class="line"><span>${MOTIVOS_FALLO[m]}</span><span>${mf[m]} <small>(${pct(mf[m], mft)}%)</small></span></div>`).join('')}` : ''}
+    ${mft ? `<h2 class="h3">Por qué fallas (último fallo) · <a href="#/ayuda?tema=motivos">Ayuda</a></h2>${[5, 7, 1, 2, 3, 4].map(m => `<div class="line"><span>${MOTIVOS_FALLO[m]}</span><span>${mf[m]} <small>(${pct(mf[m], mft)}%)</small></span></div>`).join('')}` : ''}
     ${suertes(st) ? `<div class="line"><span>🍀 Aciertos por suerte (pendientes de repasar)</span><span>${suertes(st)}</span></div>` : ''}</div>`;
   const paintMapa = () => { const dm = dominioTemas(idx); const el = $('#mapa'); el.innerHTML = mapaHTML(dm, store.getCfg().dmord); bindMapa(el, dm, paintMapa); };
   app.innerHTML = `
@@ -179,7 +179,12 @@ routes.stats = async function () {
   ${Object.entries(TI).map(([k, v]) => `<div class="line"><span>${TIPOS[k] || k}</span><span>${pct(v[1], v[0])}% <small>(${v[0]})</small></span></div>`).join('')}</div>
   </section>
   <section id="stats-sims" aria-label="Historial de simulacros" hidden><h2>Simulacros</h2><div id="sims"></div></section>
-  <section id="stats-evo" aria-label="Evolución del estudio" hidden><h2>Evolución</h2><div id="evo"></div><h2>Preguntas lentas</h2><div id="slow"></div></section>
+  <section id="stats-evo" aria-label="Evolución del estudio" hidden><h2>Evolución</h2><div id="evo"></div><h2>Preguntas lentas</h2><div id="slow"></div>
+    <h2>Analítica de estrategia</h2><div class="card"><p>Informe experimental sobre el historial detallado. Solo incluye sesiones completadas. Recomendaciones con al menos 20 respuestas en 3 sesiones; describen asociación observada, no causalidad.</p>
+      <label for="strategy-period">Periodo</label><select id="strategy-period"><option value="30">Últimos 30 días</option><option value="90" selected>Últimos 90 días</option><option value="365">Último año</option></select>
+      <button class="btn" id="strategy-load">Calcular informe</button><div id="strategy-report" aria-live="polite"></div>
+    </div>
+  </section>
   <h2>Últimas sesiones</h2><div class="card">${ses.map(s => `<div class="line"><span>${new Date(s.ts).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })} · ${s.kind === 'sim' ? 'Simulacro' : s.kind === 'rev' ? 'Repaso' : 'Test'} ${esc(String(s.n))}p</span><span>${s.kind === 'sim' ? esc(String(s.nota)) + '/100' : pct(s.a, s.n) + '%'}</span></div>`).join('') || '<p class="sub">Sin sesiones todavía.</p>'}</div>`;
   $('#progress-review').onclick = () => startRepaso ? startRepaso() : go('#/falladas');
   $('#progress-failures').onclick = () => go('#/falladas');
@@ -190,6 +195,18 @@ routes.stats = async function () {
     ['temas', 'sims', 'evo'].forEach(k => { $('#stats-' + k).hidden = k !== view; });
   });
   app.querySelectorAll<El>('[data-trap]').forEach(b => b.onclick = async () => { const r = await trapTest(15, [+b.dataset.trap!]); if (!r.items.length) { toast('No hay preguntas con esa trampa.'); return; } startRun({ kind: 'test', feedback: true, items: r.items, titulo: 'Trampa: ' + (TRAMPAS[b.dataset.trap!] || b.dataset.trap!) }); });
+  $('#strategy-load').onclick = async () => {
+    const output = $('#strategy-report');
+    if (!output || !getStrategyReport || !renderStrategyReport) { if (output) output.textContent = 'El informe detallado no está disponible en esta pantalla.'; return; }
+    const days = Number($('#strategy-period').value), period = [30, 90, 365].includes(days) ? days : 90;
+    output.setAttribute('aria-busy', 'true'); output.textContent = 'Calculando con el historial detallado…';
+    try {
+      const report = await getStrategyReport(period);
+      if (!output.isConnected || account !== store.accountId()) return;
+      output.innerHTML = renderStrategyReport(report);
+    } catch { if (output.isConnected) output.textContent = 'No se pudo leer el historial detallado. El progreso agregado sigue disponible.'; }
+    finally { if (output.isConnected) output.setAttribute('aria-busy', 'false'); }
+  };
   $('#carga').innerHTML = cargaHTML;
   { const v = velocidad(st), lentos = Object.keys(st).filter(id => st[id][8] >= 3 && st[id][7] / st[id][8] < 6).length;
     $('#vel').innerHTML = `<h2>Velocidad de lectura</h2><div class="card">${v.tot ? `<div class="line"><span>Fallos por velocidad</span><span><b>${v.n}</b> de ${v.tot} <small>(${v.p}%)</small></span></div>` : '<p class="sub">Aún no has etiquetado fallos. Al fallar, pulsa «Velocidad» si leíste deprisa.</p>'}

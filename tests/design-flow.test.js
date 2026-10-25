@@ -2,7 +2,7 @@ import 'fake-indexeddb/auto';
 import {beforeAll,beforeEach,afterAll,it,expect,vi} from 'vitest';
 import {readFileSync} from 'node:fs';
 import path from 'node:path';
-vi.mock('../src/adapters/firebase/sync-facade.js',()=>({status:{user:null,state:'sin sesión',configured:false},init:async()=>{},onStatus:()=>()=>{},login:async()=>{},logout:async()=>{},retry:()=>{}}));
+vi.mock('../src/adapters/firebase/sync-facade.js',()=>({status:{user:null,state:'sin sesión',configured:false},setAttemptRepository:()=>{},init:async()=>{},onStatus:()=>()=>{},login:async()=>{},logout:async()=>{},retry:()=>{}}));
 let store,engine;
 const waitText=async text=>vi.waitFor(()=>expect(document.querySelector('#app').textContent).toContain(text));
 const navigate=async (route,text)=>{location.hash='#/'+route;dispatchEvent(new HashChangeEvent('hashchange'));

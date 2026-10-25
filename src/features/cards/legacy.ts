@@ -41,7 +41,7 @@ routes.cards = async function () {
     const reviews = ids.filter(id => !!recs[id]).length;
     app.innerHTML = `
     <h1>Tarjetas de repaso</h1>
-    <div class="sub">Primero intenta recordar la respuesta; después pulsa para verla y valora cómo te fue.</div>
+    <div class="sub">Primero intenta recordar la respuesta; después pulsa para verla y valora cómo te fue. <a href="#/ayuda?tema=repaso">Ayuda sobre el repaso</a></div>
     <div class="grid">
       <div class="stat"><b>${cs.hoy}</b><span>vencen hoy</span></div>
       <div class="stat"><b>${cs.nuevas}</b><span>nuevas</span></div>

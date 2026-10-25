@@ -31,4 +31,4 @@ export function isFull(): boolean {
 }
 export const isOwner = (): boolean => accessLevel() === 'propietario';
 // Rutas que un invitado puede abrir.
-export const GUEST_ROUTES: ReadonlySet<string> = new Set(['home', 'quiz', 'result', 'settings', 'acceso']);
+export const GUEST_ROUTES: ReadonlySet<string> = new Set(['home', 'quiz', 'result', 'settings', 'acceso', 'ayuda']);

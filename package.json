@@ -14,7 +14,8 @@
     "deploy": "npm run typecheck && npm test && npm run build && node scripts/validate_cards.mjs && npx --yes firebase-tools@13.35.1 deploy --only hosting,firestore:rules --project tai-oposicion",
     "publish:bank": "node scripts/publish_bank.mjs",
     "test:e2e": "playwright test",
-    "test:e2e:ci": "node scripts/e2e-baseline.mjs"
+    "test:e2e:ci": "node scripts/e2e-baseline.mjs",
+    "measure:attempts": "node scripts/measure-attempt-volume.mjs"
   },
   "dependencies": {
     "firebase": "^10.14.1",
