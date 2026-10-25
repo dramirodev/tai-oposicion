@@ -174,6 +174,7 @@ export function createRun(cfg: RunCfg): Run | null {
         position,
         exposure: Math.max(1, (store.rec(question.i)?.[0] || 0) + 1),
       })),
+      cfg.limit,
     );
     run.attemptScope = scope;
     run.attemptSessionId = tracking.session.id;
@@ -361,7 +362,7 @@ export function finishRun(R: Run, reason: 'complete' | 'interrupted' | 'timeout'
   clearRun();
   if (R.attemptSessionId && R.attemptScope && attemptTracker) {
     if (R.tIdx === R.idx && R.attemptIds?.[R.idx] && !R.attemptTrackingPaused) recordAttempt(R, { type: 'close' });
-    attemptTracker.closeSession(R.attemptScope, R.attemptSessionId, reason === 'interrupted' ? 'interrupted' : 'completed', now());
+    attemptTracker.closeSession(R.attemptScope, R.attemptSessionId, reason === 'interrupted' ? 'interrupted' : 'completed', now(), R.secs);
   }
   // «por tiempo»: solo cuentan las preguntas que llegaste a contestar (la que estaba abierta al acabar el tiempo no)
   let hechas = R.items.length;

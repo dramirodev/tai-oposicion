@@ -26,6 +26,8 @@ import { canonicalText, paintTextHighlight, selectedTextAnchor } from './legacy-
 import { findLegacyCodeExplanation } from './explanation-composition.js';
 import { explanationMapper } from '../features/explanations/explanation-mapper.js';
 import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
+import { loadStrategyReportForPeriod } from './strategy-composition.js';
+import { renderStrategyReport } from '../features/stats/strategy-view.js';
 
 // ───────── router ─────────
 const routes: Record<string, any> = {};
@@ -126,8 +128,10 @@ routes.quiz = async function () {
   }
   const onKey = (e: any) => {
     const eventTarget = e.target as El;
-    const textRoot = typeof eventTarget?.closest === 'function' ? eventTarget.closest<El>('.enun, .opt .pre') : null;
-    if (textRoot && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); return; }
+    const textRoot = typeof eventTarget?.closest === 'function'
+      ? eventTarget.closest<El>('.enun, .opt .pre') || eventTarget.closest<El>('.opt')?.querySelector<El>('.pre') || null
+      : null;
+    if (textRoot && !eventTarget.closest('.opt') && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); return; }
     if (textRoot && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
       const selection = window.getSelection();
       if (selection && (!selection.anchorNode || !textRoot.contains(selection.anchorNode))) {
@@ -445,6 +449,7 @@ routes.result = async function () {
     <button class="btn sec" id="home">Inicio</button>
   </div>
   ${lastResult.limit && !lastResult.ses.porTiempo ? simAnalisis(lastResult) : ''}
+  ${ses.kind === 'sim' && !ses.interrupted ? '<section class="strategy-result"><h2>Analítica de estrategia</h2><p class="sub">Análisis del historial completado; las sesiones incompletas se excluyen y la muestra pequeña no genera recomendación.</p><button class="btn sec" id="result-strategy-load">Calcular informe del último año</button><div id="result-strategy-report" aria-live="polite"></div></section>' : ''}
   <h2>Por tema</h2>
   <div class="card">${Object.entries(ses.temas).sort((a, b) => a[0].localeCompare(b[0])).map(([t, [a, n]]) => `<div class="line"><span>${esc(t)} ${esc(temaName(t))}</span><span>${a}/${n}</span></div>`).join('')}</div>
   <h2>Revisión</h2>
@@ -482,6 +487,13 @@ routes.result = async function () {
   });
   app.querySelectorAll<El>('[data-rq]').forEach(el => reportBox(items[+el.dataset.rq!], el));
   $('#home').onclick = () => go('#/home');
+  $('#result-strategy-load') && ($('#result-strategy-load').onclick = async () => {
+    const output = $('#result-strategy-report'); if (!output) return;
+    output.setAttribute('aria-busy', 'true'); output.textContent = 'Calculando con el historial detallado…';
+    try { output.innerHTML = renderStrategyReport(await loadStrategyReportForPeriod(365)); }
+    catch { if (output.isConnected) output.textContent = 'No se pudo leer el historial detallado. El resultado de esta sesión sigue disponible.'; }
+    finally { if (output.isConnected) output.setAttribute('aria-busy', 'false'); }
+  });
   $('#p2go') && ($('#p2go').onclick = () => go('#/sim2'));
   $('#again') && ($('#again').onclick = async () => startRun({ kind: 'rev', feedback: true, items: shuffle(items.filter((q, k) => ans[k] !== q.c)), titulo: 'Repetición de falladas' }));
 };
@@ -877,7 +889,7 @@ routes.falladas = async function () {
 
 registerTraining({ routes, go, route, pw, verifiedSources: VERIFIED_SOURCES }, screen);
 const { allCards, curatedCards } = registerCards({ routes, go, pw, reportBox, verifiedSources: VERIFIED_SOURCES }, screen);
-registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas });
+registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport: loadStrategyReportForPeriod, renderStrategyReport });
 registerHome({ routes, go, saludo, quickSession, startRepaso, openMenu, dominioTemas, falladasIds }, screen);
 registerAcceso({ routes, go }, screen);
 registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate }, screen);

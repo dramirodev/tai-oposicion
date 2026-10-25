@@ -15,6 +15,8 @@ export const attemptSessionMapper = {
       mode: session.mode,
       status: session.status,
       startedAt: session.startedAt,
+      ...(session.timeLimitSeconds !== undefined ? { timeLimitSeconds: session.timeLimitSeconds } : {}),
+      ...(session.elapsedSeconds !== undefined ? { elapsedSeconds: session.elapsedSeconds } : {}),
       ...(session.endedAt !== undefined ? { endedAt: session.endedAt } : {}),
       lastSequence: session.lastSequence,
     };
@@ -36,6 +38,8 @@ export const attemptSessionMapper = {
       return { ok: false, reason: 'invalid session sequence or start time' };
     }
     if (value.endedAt !== undefined && !isTime(value.endedAt)) return { ok: false, reason: 'invalid session end time' };
+    if (value.timeLimitSeconds !== undefined && (!isTime(value.timeLimitSeconds) || value.timeLimitSeconds <= 0)) return { ok: false, reason: 'invalid time limit' };
+    if (value.elapsedSeconds !== undefined && !isTime(value.elapsedSeconds)) return { ok: false, reason: 'invalid elapsed time' };
     if (value.status === 'active' && value.endedAt !== undefined) return { ok: false, reason: 'active session cannot have an end time' };
     if (value.status !== 'active' && value.endedAt === undefined) return { ok: false, reason: 'closed session requires an end time' };
     return {
@@ -46,6 +50,8 @@ export const attemptSessionMapper = {
         mode: value.mode,
         status: value.status as QuestionAttemptSession['status'],
         startedAt: value.startedAt,
+        ...(value.timeLimitSeconds !== undefined ? { timeLimitSeconds: value.timeLimitSeconds } : {}),
+        ...(value.elapsedSeconds !== undefined ? { elapsedSeconds: value.elapsedSeconds } : {}),
         ...(value.endedAt !== undefined ? { endedAt: value.endedAt } : {}),
         lastSequence: value.lastSequence,
       },

@@ -18,12 +18,13 @@ export function createAttemptTracker(options: CreateAttemptTrackerOptions): Atte
   };
 
   return {
-    beginSession(scope: string, mode: AttemptMode, startedAt: number, seeds: readonly AttemptSeed[]): AttemptTrackingRef {
+    beginSession(scope: string, mode: AttemptMode, startedAt: number, seeds: readonly AttemptSeed[], timeLimitSeconds?: number): AttemptTrackingRef {
       const session: QuestionAttemptSession = {
         id: options.createId('session'),
         mode,
         status: 'active',
         startedAt,
+        ...(timeLimitSeconds !== undefined && timeLimitSeconds > 0 ? { timeLimitSeconds } : {}),
         lastSequence: 0,
       };
       const attempts: QuestionAttempt[] = seeds.map(seed => ({
@@ -81,7 +82,7 @@ export function createAttemptTracker(options: CreateAttemptTrackerOptions): Atte
       });
     },
 
-    closeSession(scope: string, sessionId: string, status: 'completed' | 'interrupted', endedAt: number): void {
+    closeSession(scope: string, sessionId: string, status: 'completed' | 'interrupted', endedAt: number, elapsedSeconds?: number): void {
       enqueue(async () => {
         const session = await options.repository.getSession(scope, sessionId);
         if (!session || session.status !== 'active') return;
@@ -89,6 +90,7 @@ export function createAttemptTracker(options: CreateAttemptTrackerOptions): Atte
           ...session,
           status,
           endedAt,
+          ...(elapsedSeconds !== undefined ? { elapsedSeconds: Math.max(0, elapsedSeconds) } : {}),
           lastSequence: session.lastSequence + 1,
         });
       });

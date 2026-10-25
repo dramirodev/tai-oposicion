@@ -459,6 +459,10 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),select{border-col
 .code-explanation{margin-top:16px;border-inline-start:4px solid var(--selb)}
 .code-explanation .code-sample,.code-explanation .code-result{max-width:100%;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}
 .code-explanation .explanation-status{line-height:1.6}
+.strategy-result,.strategy-report{margin-top:16px}
+.strategy-segment{padding-block:12px;border-bottom:1px solid var(--line)}
+.strategy-segment:last-child{border-bottom:0}.strategy-segment h4{margin:0 0 6px}
+.strategy-report [aria-busy=true]{opacity:.7}
 @media(min-width:1000px){
  main:has(.with-sup){max-width:1120px}
  .card.q.with-sup{display:flow-root;min-height:300px}

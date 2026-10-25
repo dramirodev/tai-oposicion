@@ -12,6 +12,9 @@ export interface QuestionAttemptSession {
   mode: AttemptMode;
   status: AttemptSessionStatus;
   startedAt: number;
+  /** Optional timer metadata; absent in attempt histories created before this field existed. */
+  timeLimitSeconds?: number;
+  elapsedSeconds?: number;
   endedAt?: number;
   lastSequence: number;
 }

@@ -28,17 +28,17 @@ describe('createAttemptTracker', () => {
     });
     const created = tracker.beginSession('account-1', 'practice', now, [
       { questionId: 'q-1', contentRevision: '', position: 0, exposure: 1 },
-    ]);
+    ], 45);
     const attempt = created.attempts[0];
     tracker.record('account-1', attempt.id, { type: 'open' });
     now += 1000;
     monotonicNow += 1000;
     tracker.record('account-1', attempt.id, { type: 'answer', optionIndex: 2, outcome: 'correct' });
-    tracker.closeSession('account-1', created.session.id, 'completed', now);
+    tracker.closeSession('account-1', created.session.id, 'completed', now, 31);
     await tracker.flush();
 
     expect(await repository.getSession('account-1', created.session.id)).toMatchObject({
-      status: 'completed', endedAt: now, lastSequence: 1,
+      status: 'completed', endedAt: now, lastSequence: 1, timeLimitSeconds: 45, elapsedSeconds: 31,
     });
     expect(await repository.getAttempt('account-1', attempt.id)).toMatchObject({
       state: 'answered', response: 2, outcome: 'correct', lastSequence: 2,

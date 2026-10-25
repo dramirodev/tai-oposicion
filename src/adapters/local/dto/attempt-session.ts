@@ -5,6 +5,8 @@ export interface AttemptSessionDto {
   mode: 'practice' | 'simulation';
   status: 'active' | 'completed' | 'interrupted';
   startedAt: number;
+  timeLimitSeconds?: number;
+  elapsedSeconds?: number;
   endedAt?: number;
   lastSequence: number;
 }

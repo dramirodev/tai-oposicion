@@ -3,7 +3,7 @@ import { beforeEach, afterEach, it, expect, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 vi.mock('../src/adapters/firebase/sync-facade.js', () => ({ status: { user:null,state:'sin sesión',configured:false,reqs:[] }, setAttemptRepository:()=>{}, onStatus:()=>()=>{} }));
-let routes, store, engine, screen;
+let routes, store, engine, screen, strategyFactory, strategyRenderer;
 beforeEach(async () => {
   vi.resetModules(); localStorage.clear();
   document.body.innerHTML = '<main id="app"></main>';
@@ -11,9 +11,11 @@ beforeEach(async () => {
   vi.stubGlobal('fetch', async url => ({ ok:true, json:async()=>JSON.parse(readFileSync(path.join('public',String(url)), 'utf8')) }));
   store = await import('../src/adapters/local/legacy-store.js'); engine = await import('../src/core/application/legacy-engine.js');
   routes={}; screen={};
+  strategyFactory=vi.fn(async period => ({ period }));
+  strategyRenderer=vi.fn(report => `<p>Informe ${report.period}</p>`);
   const { dominioTemas } = await import('../src/app/legacy-topic-mastery.js');
   (await import('../src/features/home/legacy.js')).registerHome({routes,go:vi.fn(),saludo:()=> 'Hola', quickSession:vi.fn(),startRepaso:vi.fn(),openMenu:vi.fn(),dominioTemas,falladasIds:engine.falladasIds},screen);
-  (await import('../src/features/stats/legacy.js')).registerStats({routes,go:vi.fn(),trapTest:vi.fn(),startRun:vi.fn(),dominioTemas});
+  (await import('../src/features/stats/legacy.js')).registerStats({routes,go:vi.fn(),trapTest:vi.fn(),startRun:vi.fn(),dominioTemas,getStrategyReport:strategyFactory,renderStrategyReport:strategyRenderer});
 });
 afterEach(()=> { screen.cleanup?.(); vi.unstubAllGlobals(); });
 it('prioriza retomar, repasar y falladas, agrupa entrenamientos y no presenta una fecha oficial inventada', async()=> {
@@ -53,6 +55,10 @@ it('separa las secciones de progreso sin perder el historial y comunica seleccio
   expect(document.querySelector('#evm [data-v="acierto"]').getAttribute('aria-pressed')).toBe('true');
   expect(document.querySelector('#mapa .dmsum').textContent).toContain('Sin datos');
   expect(document.querySelector('#app').textContent).toContain('Últimas sesiones');
+  document.querySelector('#strategy-period').value='30';
+  document.querySelector('#strategy-load').click();
+  await vi.waitFor(()=>expect(document.querySelector('#strategy-report').textContent).toContain('Informe 30'));
+  expect(strategyFactory).toHaveBeenCalledWith(30);
 });
 it('buscar y navegar no modifica el progreso y una cuenta nueva no recibe la pantalla de la anterior', async()=> {
   store.setSeen(['T1.01']);

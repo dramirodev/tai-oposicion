@@ -1,6 +1,6 @@
 import type { Question } from '../../core/domain/entities.js';
 import type { BankRepository } from '../../core/ports/BankRepository.js';
-import { byIds, getMeta, getTema } from './legacy-data.js';
+import { getMeta, getTema, temaOf } from './legacy-data.js';
 import { questionMapper } from './mappers/question.js';
 
 const topicCache = new Map<string, Promise<Question[]>>();
@@ -44,8 +44,10 @@ async function getTopicQuestions(topicId: string): Promise<Question[]> {
 
 export const httpBankRepository: BankRepository = {
   async getQuestion(questionId) {
-    const [question] = toDomainQuestions(await byIds([questionId]));
-    return question;
+    await getMeta();
+    const topicId = temaOf(questionId);
+    if (!topicId) return undefined;
+    return (await getTopicQuestions(topicId)).find(question => question.id === questionId);
   },
 
   async getQuestions(topicIds) {

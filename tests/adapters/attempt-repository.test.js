@@ -68,6 +68,26 @@ describe('localAttemptRepository', () => {
     expect((await repo.getAttemptsBySession('guest', initial.sessionId, undefined, 1)).attempts).toHaveLength(1);
   });
 
+  it('limita las páginas de intentos y eventos al ámbito y al intento solicitados', async () => {
+    const repo = repository();
+    await repo.createAttempt('guest', makeAttempt('attempt-1'));
+    await repo.createAttempt('guest', makeAttempt('z-other-attempt'));
+    await repo.createAttempt('user-1', makeAttempt('account-attempt'));
+    const guestAttempt = await repo.getAttempt('guest', 'attempt-1');
+    const ownEvent = transition(guestAttempt, { type: 'open', sequence: 1 });
+    await repo.saveTransition('guest', ownEvent.attempt, ownEvent.event);
+    const otherAttempt = await repo.getAttempt('guest', 'z-other-attempt');
+    const otherEvent = transition(otherAttempt, { type: 'open', sequence: 1 });
+    await repo.saveTransition('guest', otherEvent.attempt, otherEvent.event);
+    const otherAccountAttempt = await repo.getAttempt('user-1', 'account-attempt');
+    const otherAccountEvent = transition(otherAccountAttempt, { type: 'open', sequence: 1 });
+    await repo.saveTransition('user-1', otherAccountEvent.attempt, otherAccountEvent.event);
+
+    expect((await repo.getScopePage('guest')).attempts.map(attempt => attempt.id).sort())
+      .toEqual(['attempt-1', 'z-other-attempt']);
+    expect((await repo.getEvents('guest', 'attempt-1')).events.map(event => event.id)).toEqual([ownEvent.event.id]);
+  });
+
   it('hace idempotente la escritura duplicada y conserva un único efecto terminal', async () => {
     const repo = repository();
     const initial = makeAttempt();

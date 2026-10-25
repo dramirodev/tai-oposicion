@@ -177,6 +177,16 @@ test('el simulacro no presenta explicaciones ni corrección mientras sigue activ
   await expect(page.locator('.fb, .code-explanation')).toHaveCount(0);
   await page.locator('.opt').first().click();
   await expect(page.locator('.fb, .code-explanation')).toHaveCount(0);
+  await page.locator('#next').click();
+  for (let index = 1; index < 40; index++) {
+    await page.locator('.opt').first().click();
+    await expect(page.locator('.fb, .code-explanation')).toHaveCount(0);
+    await page.locator('#next').click();
+  }
+  await expect(page.locator('#app h1')).toHaveText('Resultado');
+  await expect(page.locator('#result-strategy-load')).toBeVisible();
+  await page.locator('#result-strategy-load').click();
+  await expect(page.locator('#result-strategy-report')).toContainText('Muestra insuficiente', { timeout: 25_000 });
   expect(errors).toEqual([]);
 });
 test('subrayados y señales son opcionales, no responden y se conservan al reanudar', async ({ page }) => {
@@ -200,7 +210,8 @@ test('subrayados y señales son opcionales, no responden y se conservan al reanu
   await expect.poll(async () => (await savedAttemptHistory(page)).events).toContain('add-highlight');
   await expect(page.locator('.fb')).toHaveCount(0);
   expect(await page.evaluate(() => localStorage.getItem('tai.v1:guest'))).toBe(originalStats);
-  await page.locator('.opt .pre').first().focus();
+  // Opciones son botones; enfocar el texto interior no mueve el foco en Chromium.
+  await page.locator('.opt').first().focus();
   await page.keyboard.press('ArrowRight');
   for (let index = 0; index < 5; index++) await page.keyboard.press('Shift+ArrowRight');
   await expect(page.locator('#highlight-tools')).toBeVisible();

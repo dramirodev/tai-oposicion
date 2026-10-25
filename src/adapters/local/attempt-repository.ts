@@ -329,7 +329,8 @@ export function createLocalAttemptRepository(databaseName = 'tai-attempts'): Att
       const limit = clampPageSize(requestedLimit);
       const after = eventCursorValue(cursor);
       const lower = after ? [scope, attemptId, after.sequence, after.id] : [scope, attemptId, 0, ''];
-      const range = IDBKeyRange.lowerBound(lower, !!after);
+      const upper = [scope, attemptId, Number.MAX_VALUE, '\uffff'];
+      const range = IDBKeyRange.bound(lower, upper, !!after, false);
       const rows = await readRows<StoredEvent>(index, range, limit + 1);
       await done;
       const hasMore = rows.length > limit;
@@ -489,7 +490,8 @@ async function readAttemptPage(
 ): Promise<AttemptPage> {
   const limit = clampPageSize(requestedLimit);
   const lower = cursor ? [...prefix, cursor.createdAt, cursor.id] : [...prefix, 0, ''];
-  const range = IDBKeyRange.lowerBound(lower, !!cursor);
+  const upper = [...prefix, Number.MAX_VALUE, '\uffff'];
+  const range = IDBKeyRange.bound(lower, upper, !!cursor, false);
   const rows = await readRows<StoredAttempt>(index, range, limit + 1);
   const visible = rows.slice(0, limit).map(mapAttempt);
   return {
