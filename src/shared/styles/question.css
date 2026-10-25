@@ -7,8 +7,10 @@
   position: sticky;
   top: calc(var(--sat) / var(--z,1));
   background: var(--bg);
-  padding: 10px 0 8px;
+  padding: 12px 0;
   z-index: 3;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 16px;
 }
 
 .qhead #exit {
@@ -25,7 +27,7 @@
 
 .prog {
   flex: 1;
-  height: 8px;
+  height: 6px;
   border-radius: var(--r-pill);
   background: var(--line);
   overflow: hidden;
@@ -60,10 +62,10 @@
 }
 
 .tag {
-  font-size: var(--fs-s);
-  padding: 4px 10px;
-  border-radius: var(--r-pill);
-  background: var(--line);
+  font-size: var(--fs-xs);
+  padding: 4px 8px;
+  border-radius: var(--r-s);
+  background: var(--surface-soft);
   color: var(--mute);
 }
 
@@ -84,8 +86,9 @@
 
 .q .enun {
   font-size: var(--fs-xl);
-  line-height: 1.45;
-  margin: 6px 0 16px;
+  line-height: 1.65;
+  margin: 8px 0 24px;
+  max-width: var(--reading-width);
 }
 
 .ctx {
@@ -132,30 +135,33 @@ input[type=date] {
 .opt {
   display: flex;
   gap: var(--space-4);
-  align-items: center;
+  align-items: flex-start;
   text-align: left;
   width: 100%;
   font: inherit;
   font-size: var(--fs-l);
-  padding: var(--space-5);
+  padding: 16px;
   border-radius: var(--r-l);
-  border: 1.5px solid var(--line);
+  border: 1px solid var(--control-line);
   background: var(--card);
   color: var(--ink);
   cursor: pointer;
   min-height: 56px;
+  line-height: 1.6;
+  transition: background-color var(--duration-fast),border-color var(--duration-fast);
 }
 
 .opt>b {
   flex: none;
   width: 30px;
   height: 30px;
-  border-radius: 50%;
-  background: var(--line);
+  border-radius: var(--r-s);
+  background: var(--surface-soft);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: var(--fs-m);
+  margin-block-start: 1px;
 }
 
 .opt.sel {
@@ -212,9 +218,9 @@ input[type=date] {
 }
 
 .discard-option {
-  border: 1px solid var(--line);
+  border: 1px solid transparent;
   border-radius: var(--r-m);
-  background: var(--card);
+  background: transparent;
   color: var(--mute);
   font: inherit;
   font-size: var(--fs-s);
@@ -222,6 +228,7 @@ input[type=date] {
   min-width: 68px;
   min-height: 44px;
   cursor: pointer;
+  line-height: 1.4;
 }
 
 .discard-option.on {
@@ -244,24 +251,25 @@ input[type=date] {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 6px;
-  margin: 8px 0 12px;
+  gap: 8px;
+  margin: 0 0 20px;
 }
 
 .study-signals-label {
   font-size: var(--fs-s);
   color: var(--mute);
   margin-right: 3px;
+  flex-basis: 100%;
 }
 
 .signal {
-  border: 1px solid var(--line);
-  border-radius: var(--r-pill);
+  border: 1px solid var(--control-line);
+  border-radius: var(--r-s);
   background: var(--card);
   color: var(--ink);
   font: inherit;
   font-size: var(--fs-s);
-  padding: 7px 11px;
+  padding: 8px 12px;
   min-height: 40px;
   cursor: pointer;
 }
@@ -385,10 +393,11 @@ input[type=date] {
 
 .fb {
   margin-top: 14px;
-  padding: var(--space-5);
+  padding: 20px;
   border-radius: var(--r-l);
   font-size: var(--fs-b);
   border: 1px solid transparent;
+  line-height: 1.65;
 }
 
 .fb.good {
@@ -419,17 +428,17 @@ input[type=date] {
   color: var(--ink);
   border: 1px solid var(--line);
   border-radius: var(--r-l);
-  padding: var(--space-5);
+  padding: 16px;
   font-size: var(--fs-b);
-  line-height: 1.5;
+  line-height: 1.65;
 }
 
 .cita span {
   display: block;
   font-size: var(--fs-xs);
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .06em;
+  text-transform: none;
+  letter-spacing: 0;
   color: var(--mute);
   margin-bottom: 6px;
 }
@@ -492,6 +501,11 @@ input[type=date] {
   background: transparent;
   color: var(--ink);
   cursor: pointer;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+  padding-block: 8px;
 }
 
 .mot button.on {
@@ -604,4 +618,117 @@ ul.tips {
 ul.tips li {
   margin: 4px 0;
   font-size: var(--fs-m);
+}
+
+.question-notice {
+  font-size: var(--fs-b);
+  line-height: 1.5;
+  padding: 12px 14px;
+  margin: 12px 0;
+  background: var(--sel);
+  border-left: 4px solid var(--selb);
+  border-radius: var(--r-s);
+}
+
+.question-notice.warning {
+  background: var(--pill-bg);
+  color: var(--pill-ink);
+  border-color: var(--warn);
+}
+
+.question-notice p {
+  margin: 6px 0 0;
+}
+
+.question-notice b {
+  font-weight: 700;
+}
+
+.source-status {
+  font-size: var(--fs-s);
+  color: var(--mute);
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.source-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  line-height: 1.4;
+  font-size: var(--fs-b);
+  padding: 8px 0;
+}
+
+.question-map {
+  margin: 12px 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r-m);
+  background: var(--surface-soft);
+  padding: 0 12px;
+}
+
+.question-map summary {
+  padding: 14px 0;
+  min-height: 44px;
+  font-size: var(--fs-s);
+  font-weight: 500;
+  cursor: pointer;
+  line-height: 1.6;
+}
+
+.question-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(108px,1fr));
+  gap: var(--space-2);
+  max-height: 40vh;
+  overflow: auto;
+  margin-bottom: 12px;
+}
+
+.question-grid button {
+  font: inherit;
+  font-size: var(--fs-l);
+  min-height: 60px;
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--mute);
+  border-radius: var(--r-s);
+  padding: 8px;
+}
+
+.question-grid button small {
+  display: block;
+  font-size: var(--fs-xs);
+}
+
+.question-grid .answered {
+  background: var(--sel);
+}
+
+.question-grid [aria-current=step] {
+  outline: 3px solid var(--selb);
+  outline-offset: -3px;
+}
+
+#review-question {
+  font-size: var(--fs-b);
+  min-height: 44px;
+  color: var(--selb);
+}
+
+.code-explanation {
+  margin-top: 16px;
+  border-inline-start: 4px solid var(--selb);
+}
+
+.code-explanation .code-sample,.code-explanation .code-result {
+  max-width: 100%;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.code-explanation .explanation-status {
+  line-height: 1.6;
 }

@@ -22,6 +22,14 @@ for (const theme of ['light', 'dark']) {
     }
   });
 
+  test(`los controles de Detective caben con texto máximo · ${theme}`, async ({ page }) => {
+    await prepare(page, theme);
+    await page.setViewportSize({ width: 320, height: 720 });
+    await page.goto('/#/trampas');
+    await expect(page.locator('#chips button').first()).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  });
+
   test(`las opciones y su descarte siguen siendo legibles · ${theme}`, async ({ page }) => {
     await prepare(page, theme);
     await page.setViewportSize({ width: 320, height: 720 });
@@ -79,8 +87,51 @@ test('el tema automático sigue los cambios del sistema sin recargar', async ({ 
   await page.emulateMedia({ colorScheme: 'light' });
   await page.goto('/#/home');
   await expect(page.locator('#quick')).toBeVisible();
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 245, 248)');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(243, 245, 248)');
   await page.emulateMedia({ colorScheme: 'dark' });
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(14, 20, 36)');
-  await expect.poll(() => page.locator('meta[name="theme-color"]').getAttribute('content')).toBe('#0e1424');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(16, 24, 39)');
+  await expect.poll(() => page.locator('meta[name="theme-color"]').getAttribute('content')).toBe('#101827');
+});
+
+test('saltar al contenido conserva la ruta y ofrece un destino de teclado', async ({ page }) => {
+  await prepare(page, 'light', 0);
+  await page.goto('/#/home');
+  await expect(page.locator('#quick')).toBeVisible();
+  const before = page.url();
+  await page.locator('.skip-link').focus();
+  await expect(page.locator('.skip-link')).toBeInViewport();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#app')).toBeFocused();
+  expect(page.url()).toBe(before);
+});
+
+test('Inicio distribuye práctica y repaso en escritorio sin duplicar acciones', async ({ page }) => {
+  await prepare(page, 'light', 0);
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/#/home');
+  await expect(page.locator('#quick')).toHaveCount(1);
+  const primary = await page.locator('.home-primary').boundingBox();
+  const review = await page.locator('.home-review').boundingBox();
+  expect(primary).not.toBeNull(); expect(review).not.toBeNull();
+  expect(Math.abs(primary!.y - review!.y)).toBeLessThan(2);
+  expect(review!.x).toBeGreaterThan(primary!.x + primary!.width);
+  await page.locator('#menu').focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#menu')).toBeFocused();
+});
+
+test('el espaciado de texto conserva el reflujo con una sesión en curso', async ({ page }) => {
+  await prepare(page, 'light', 3);
+  await page.setViewportSize({ width: 393, height: 852 });
+  await page.goto('/#/home');
+  await page.locator('#quick').click();
+  for (const route of ['test', 'settings', 'stats']) {
+    await page.goto('/#/' + route);
+    await expect(page.locator('#app h1')).toBeVisible();
+    await page.addStyleTag({ content: '*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}' });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+  }
+  await expect(page.locator('.chart-scroll')).toBeVisible();
 });

@@ -1,15 +1,17 @@
 /* ===== tarjetas ===== */
 
 .fc {
-  min-height: 260px;
+  min-height: 320px;
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  line-height: 1.65;
 }
 
 .fc .enun {
-  font-size: var(--fs-2xl);
-  margin: 10px 0 18px;
+  font-size: var(--fs-xl);
+  margin: 16px 0 24px;
+  line-height: 1.65;
 }
 
 .fh {
@@ -22,25 +24,26 @@
 
 .card-answer {
   margin-top: 6px;
-  padding: var(--space-5);
+  padding: 20px;
   border-radius: var(--r-m);
   background: var(--okbg);
-  border: 1.5px solid var(--ok);
+  border: 1px solid var(--good-line);
 }
 
 .card-answer>small {
   display: block;
-  text-transform: uppercase;
-  letter-spacing: .06em;
+  text-transform: none;
+  letter-spacing: 0;
   font-size: var(--fs-xs);
-  color: var(--mute);
-  margin-bottom: 4px;
+  color: var(--good-ink);
+  margin-bottom: var(--space-1);
+  font-weight: 600;
 }
 
 .card-answer .pre {
   font-size: var(--fs-xl);
-  font-weight: 600;
-  line-height: 1.35;
+  font-weight: 500;
+  line-height: 1.6;
 }
 
 .fgl {

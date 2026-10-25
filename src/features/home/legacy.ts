@@ -32,25 +32,30 @@ routes.home = async function () {
   const row = (id: any, ico: any, t: any, sub: any, dis?: any) => `<button class="lrow" id="${id}" ${dis ? 'disabled' : ''}><i aria-hidden="true">${ico}</i><span><b>${t}</b><small>${sub}</small></span></button>`;
   const tile = (id: any, k: any, t: any, sub: any, badge?: any) => `<button class="tile" id="${id}"><i aria-hidden="true">${svg(k)}</i>${badge ? `<em class="bdg" aria-label="${badge} ${badge === 1 ? 'pendiente' : 'pendientes'}">${badge}</em>` : ''}<span><b>${t}</b><small>${sub}</small></span></button>`;
   app.innerHTML = `
+  <p class="product-brand" translate="no">TAI <span>Preparación de oposiciones</span></p>
   <div class="hhead"><div><h1 id="hola">${esc(saludo())}</h1>
     <div class="hsub">${dd !== null ? `<b>${dd} ${dd === 1 ? 'día' : 'días'}</b> hasta tu fecha objetivo · <a href="#/settings">Cambiar fecha</a>` : '<a href="#/settings">Configurar fecha objetivo</a>'} · ${seen} de ${idx.n.toLocaleString("es-ES")} preguntas vistas${streak >= 2 ? ` · racha de ${streak} días` : ''}</div></div>
     <button class="iconbtn" id="menu" aria-label="Menú" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
   <div class="hbar" role="img" aria-label="${pct(seen, idx.n)} % de las preguntas vistas"><i style="--progress-from:0;width:${Math.max(2, Math.min(100, pct(seen, idx.n)))}%"></i></div>
+  <div class="home-workspace">
+  <section class="home-primary" aria-labelledby="home-start-title"><h2 class="section-title" id="home-start-title">Tu próxima sesión</h2>
   ${run ? `<button class="cta" id="continue"><span><b>Continuar sesión</b><small>${esc(run.titulo || 'Práctica en curso')} · pregunta ${run.idx + 1} de ${run.items.length}</small></span>${svg('play')}</button>` : ''}
-  ${full ? `<div class="study-priorities">${row('rev', svg('redo'), 'Repasar hoy', due ? `${due} ${due === 1 ? 'pregunta pendiente' : 'preguntas pendientes'}` : 'No hay preguntas pendientes hoy', !due)}${row('falladas', svg('redo'), 'Preguntas falladas', nFall ? `${nFall} ${nFall === 1 ? 'pregunta por afianzar' : 'preguntas por afianzar'} · tres aciertos seguidos` : 'No hay preguntas falladas', !nFall)}</div>` : ''}
-  ${!n ? '<p class="note">Empieza con una sesión rápida; después marca los temas que hayas estudiado y consulta tu progreso.</p>' : ''}
   <button class="cta" id="quick"><span><b class="ctt">Sesión rápida</b><small>${!full ? '5 min · una pregunta de cada tema, distintas cada vez' : `5 min · ${quickN(st)} preguntas: ${due ? 'tus repasos pendientes (' + due + ') y ' : ''}nuevas de tus temas más débiles`}</small></span><i class="play" aria-hidden="true">${svg('play')}</i></button>
   ${full ? `<div class="tiles">
     ${tile('test', 'test', 'Test', 'por tema')}${tile('sim', 'sim', 'Simulacros', 'con tiempo')}${tile('cards', 'card', 'Tarjetas', nCards ? nCards + (nCards === 1 ? ' pendiente' : ' pendientes') : 'repaso', nCards || '')}
-  </div>
-  <details class="training-group"><summary>Entrenamientos</summary><div class="tiles">
+  </div>` : ''}
+  ${!n ? '<p class="note">Empieza con una sesión rápida; después marca los temas que hayas estudiado y consulta tu progreso.</p>' : ''}
+  </section>
+  ${full ? `<section class="home-review" aria-labelledby="home-review-title"><h2 class="section-title" id="home-review-title">Retoma y afianza</h2>
+<div class="study-priorities">${row('rev', svg('redo'), 'Repasar hoy', due ? `${due} ${due === 1 ? 'pregunta pendiente' : 'preguntas pendientes'}` : 'No hay preguntas pendientes hoy', !due)}${row('falladas', svg('redo'), 'Preguntas falladas', nFall ? `${nFall} ${nFall === 1 ? 'pregunta por afianzar' : 'preguntas por afianzar'} · tres aciertos seguidos` : 'No hay preguntas falladas', !nFall)}</div>  <details class="training-group"><summary>Entrenamientos</summary><div class="tiles">
     ${tile('trampas', 'det', 'Detective', 'de trampas')}${tile('lectura', 'lec', 'Lectura', vel.n ? vel.n + ' por velocidad' : 'atenta')}${tile('relam', 'rel', 'Relámpago', 'una pregunta')}
   </div></details>
   <div class="lgroup seg2">
     ${row('mapa', svg('map'), 'Mapa de dominio', (() => { const dm = dominioTemas(idx), c = (k: any) => dm.filter((x: any) => x.est === k).length; return c('r') + c('y') + c('g') ? `${c('r')} por reforzar · ${c('g')} dominados` : 'Aparecerá cuando empieces a contestar'; })())}
     ${row('temario', svg('list'), 'Temas estudiados', store.getSeen().length ? store.getSeen().length + ' de ' + idx.temas.length : 'Marca lo que ya has estudiado')}
   </div>
-` : `<div class="card guest" id="guest"></div>`}
+  </section>` : `<div class="card guest" id="guest"></div>`}
+  </div>
 <div id="syncnote"></div>`;
   // el aviso de cuenta se decide cuando Firebase ya ha arrancado (antes mostraba «no configurado» un instante al abrir)
   const paintNote = () => {

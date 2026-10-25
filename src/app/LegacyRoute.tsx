@@ -52,5 +52,5 @@ export function LegacyRoute() {
     if (!isFull() && !GUEST_ROUTES.has(name)) { void navigate('/home', { replace: true }); return; }
     return acquireVisit(host.current!, `${location.pathname}:${location.key}`, location.pathname);
   }, [location.key, location.pathname, navigate]);
-  return <div ref={host} tabIndex={-1} />;
+  return <div ref={host} tabIndex={-1} data-screen={location.pathname.split('/')[1] || 'home'} />;
 }
