@@ -4,12 +4,12 @@ import { esc, richHtml, shuffle, pct, normUi, hiliteHtml, claveSpans, pideNegati
 import { META, getMeta, temaName, now, pick, dueList, byIds } from '../../adapters/http/legacy-data.js';
 import { $, legacyScope, L, ask, focusHeading, type El } from '../../shared/ui/legacy-dom.js';
 import { TRAMPAS, TRAMPA_EXPL } from '../../shared/presentation/labels.js';
-export function registerTraining({ routes, go, route, pw }: any, screen: any) {
+export function registerTraining({ routes, go, route, pw, verifiedSources }: any, screen: any) {
 let generation = 0;
 let TRUN: any = null, LRUN: any = null;
 store.onAccountChange(() => { generation++; TRUN = null; LRUN = null; screen.cleanup?.(); });
 const recentKey = () => 'tai.lrec:' + (store.accountId() || 'guest');
-const warning = (q: any) => questionNotice(q) + sourceHtml(q);
+const warning = (q: any, verifiedSources: any) => questionNotice(q) + sourceHtml(q, verifiedSources);
 
 // ───────── pregunta relámpago (enlace #/relampago, pensado para avisos) ─────────
 routes.relampago = async function () {
@@ -28,7 +28,7 @@ routes.relampago = async function () {
   const LEC = normUi(store.getCfg().ui).lectura, kw = (x: any) => richHtml(x, !!LEC), t0 = Date.now();
   app.innerHTML = `<h1>⚡ Pregunta relámpago</h1><div class="sub">${why}</div>
   <div class="card q"><div class="meta"><span class="tag">${esc(q.t)} · ${esc(temaName(q.t))}</span></div>
-  ${warning(q)}<div class="enun pre">${kw(q.q)}</div>
+  ${warning(q, verifiedSources)}<div class="enun pre">${kw(q.q)}</div>
   <div class="opts">${q.a.map((o: any, i: number) => `<button class="opt" data-i="${i}"><b>${L[i]}</b><span class="pre">${kw(o)}</span></button>`).join('')}</div><div id="fb"></div></div>
   <div class="bar2" id="bar"><button class="btn sec" id="skip">Ahora no</button></div>`;
   $('#skip').onclick = () => go('#/home');
@@ -75,7 +75,7 @@ routes.trampas = async function () {
     <h1 class="sub">🕵️ Detective de trampas</h1>
     <p class="sm" id="md">Lee el enunciado y todas las opciones: las trampas pueden estar en cualquiera de ellos.</p>
     <div class="card q"><div class="meta"><span class="tag">${esc(q.t)} · ${esc(temaName(q.t))}</span></div>
-      ${warning(q)}${q.cp ? `<div class="ctx pre">${richHtml(q.cp)}</div>` : ''}
+      ${warning(q, verifiedSources)}${q.cp ? `<div class="ctx pre">${richHtml(q.cp)}</div>` : ''}
       <div class="enun pre">${richHtml(q.q, true)}</div>
       <div class="opts">${q.a.map((o: any, i: any) => `<div class="opt dis" id="o${i}"><b>${L[i]}</b><span class="pre">${richHtml(o, true)}</span></div>`).join('')}</div>
       <p><b>¿Qué trampas ves aquí?</b> <small>Marca todas las que apliquen (${good.size === 1 ? 'hay 1' : 'hay varias'} posible${good.size === 1 ? '' : 's'}).</small></p>
@@ -150,7 +150,7 @@ routes.lectura = async function () {
     const q = R.items[R.k], neg = pideNegativa(q.q);
     const head = `<div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog"><div ${pw(100 * R.k / R.items.length)}></div></div><div class="cnt">${R.k + 1}/${R.items.length}</div></div><h1 class="sub">Lectura atenta · paso ${R.step + 1} de 3</h1>`;
     if (R.step === 0) {
-      app.innerHTML = `${head}<div class="card q">${warning(q)}<div class="enun pre">${richHtml(q.q)}</div><p><b>1. ¿Qué te piden?</b> Antes de ver las opciones.</p>
+      app.innerHTML = `${head}<div class="card q">${warning(q, verifiedSources)}<div class="enun pre">${richHtml(q.q)}</div><p><b>1. ¿Qué te piden?</b> Antes de ver las opciones.</p>
         <div class="opts"><button class="opt" data-v="0"><b>✔</b><span>La opción CORRECTA / VERDADERA</span></button><button class="opt" data-v="1"><b>✖</b><span>La INCORRECTA / FALSA / la excepción</span></button></div><div id="fb0"></div></div>`;
       app.querySelectorAll<El>('.opt').forEach(b => b.onclick = () => {
         if (mine !== generation || R !== LRUN || b.disabled) return;
@@ -161,7 +161,7 @@ routes.lectura = async function () {
     } else if (R.step === 1) {
       const toks = words(q.q), spans = claveSpans(q.q); let pos = 0, wi = 0, key = [];
       const html = toks.map((t: any) => { const a = pos; pos += t.length; if (/^\s+$/.test(t) || !t) return esc(t); const id = wi++; const k = spans.some(([x, y]) => a >= x && a < y); if (k) key.push(id); return `<button type="button" class="tk" tabindex="${id === 0 ? 0 : -1}" aria-pressed="false" data-id="${id}" data-k="${k ? 1 : 0}">${esc(t)}</button>`; }).join('');
-      app.innerHTML = `${head}<div class="card q">${warning(q)}<p><b>2. Toca las palabras que cambian el sentido</b> (negaciones, excepciones, absolutos, cifras y plazos).</p><p id="word-help" class="sm">Con teclado: usa las flechas para moverte, Inicio y Fin para ir a los extremos, y Espacio o Intro para marcar. Tabulador sale del grupo.</p><div class="enun pre tks" role="group" aria-label="Palabras del enunciado" aria-describedby="word-help">${html}</div><div id="fb1"></div><div class="bar2"><button class="btn sec" id="none">No contiene</button><button class="btn" id="chk">Continuar</button></div></div>`;
+      app.innerHTML = `${head}<div class="card q">${warning(q, verifiedSources)}<p><b>2. Toca las palabras que cambian el sentido</b> (negaciones, excepciones, absolutos, cifras y plazos).</p><p id="word-help" class="sm">Con teclado: usa las flechas para moverte, Inicio y Fin para ir a los extremos, y Espacio o Intro para marcar. Tabulador sale del grupo.</p><div class="enun pre tks" role="group" aria-label="Palabras del enunciado" aria-describedby="word-help">${html}</div><div id="fb1"></div><div class="bar2"><button class="btn sec" id="none">No contiene</button><button class="btn" id="chk">Continuar</button></div></div>`;
       const wordButtons = [...app.querySelectorAll<El>('.tk')];
       const focusWord = (index: number) => wordButtons.forEach((el, i) => { el.tabIndex = i === index ? 0 : -1; if (i === index) el.focus(); });
       wordButtons.forEach((el, i) => {
@@ -192,7 +192,7 @@ routes.lectura = async function () {
       };
     } else {
       const need = minLectura(q); R.t0 = Date.now();
-      app.innerHTML = `${head}<div class="card q">${warning(q)}<div class="enun pre">${richHtml(q.q, true)}</div><p class="sm"><b>3. Lee las cuatro opciones enteras</b> antes de responder.</p><div class="opts">${q.a.map((o: any, i: any) => `<button class="opt" data-i="${i}" disabled><b>${L[i]}</b><span class="pre">${richHtml(o, true)}</span></button>`).join('')}</div><div class="gate" id="gate"></div><div id="fb2"></div></div>`;
+      app.innerHTML = `${head}<div class="card q">${warning(q, verifiedSources)}<div class="enun pre">${richHtml(q.q, true)}</div><p class="sm"><b>3. Lee las cuatro opciones enteras</b> antes de responder.</p><div class="opts">${q.a.map((o: any, i: any) => `<button class="opt" data-i="${i}" disabled><b>${L[i]}</b><span class="pre">${richHtml(o, true)}</span></button>`).join('')}</div><div class="gate" id="gate"></div><div id="fb2"></div></div>`;
       const upd = () => { if (mine !== generation || R !== LRUN) return clearInterval(gt); const l = Math.ceil(need - (Date.now() - R.t0) / 1000), g = $<El>('#gate'); if (!g) return clearInterval(gt); if (l <= 0) { clearInterval(gt); g.remove(); app.querySelectorAll<El>('.opt').forEach(b => b.disabled = false); } else g.textContent = `Lectura mínima: ${l} s`; };
       upd(); gt = setInterval(upd, 400);
       app.querySelectorAll<El>('.opt').forEach(b => b.onclick = () => {

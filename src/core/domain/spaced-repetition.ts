@@ -63,3 +63,25 @@ export function countReviewsByDay(entries: readonly ReviewScheduleEntry[], now: 
   }
   return counts;
 }
+
+export interface CardReviewScheduleState {
+  attempts: number;
+  intervalStep: number;
+}
+
+export const CARD_REVIEW_INTERVALS_DAYS = [2, 5, 14, 30, 60] as const;
+export const CALENDAR_DAY_MILLISECONDS = 86400000;
+
+/** Predict the next card review date from an explicit grade and clock value. */
+export function previewCardDueAt(
+  review: CardReviewScheduleState | undefined,
+  grade: number,
+  now: number,
+): number {
+  if (grade < 2 || !review || review.attempts === 0 || review.intervalStep < 0) {
+    return now + CARD_REVIEW_INTERVALS_DAYS[0] * CALENDAR_DAY_MILLISECONDS;
+  }
+  const nextStep = review.intervalStep + 1;
+  if (nextStep >= CARD_REVIEW_INTERVALS_DAYS.length) return 0;
+  return now + CARD_REVIEW_INTERVALS_DAYS[nextStep] * CALENDAR_DAY_MILLISECONDS;
+}

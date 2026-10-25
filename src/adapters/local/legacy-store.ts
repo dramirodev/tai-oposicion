@@ -1,5 +1,5 @@
 import { cleanCfg, cleanCfgSetting } from './config.js';
-import { failureStreak as deriveFailureStreak } from '../../core/domain/spaced-repetition.js';
+import { failureStreak as deriveFailureStreak, CARD_REVIEW_INTERVALS_DAYS, CALENDAR_DAY_MILLISECONDS } from '../../core/domain/spaced-repetition.js';
 import type { AppState, CardMap, CardRec, Cfg, Report, ReportMap, ReportState, Res, SeenDoc, Session, StatMap, StatRec } from '../legacy/types.js';
 // Almacén local (local-first) + sincronización con Firestore.
 // Registro por pregunta: [n, ok, last, box, due, lastRes, flag]
@@ -15,8 +15,8 @@ const accountListeners = new Set<() => void>();
 export const onAccountChange = (fn: () => void) => { accountListeners.add(fn); return () => accountListeners.delete(fn); };
 
 export const MAX_SESIONES = 300;
-export const DAY = 86400000;
-export const INTERVALS = [2, 5, 14, 30, 60]; // días
+export const DAY = CALENDAR_DAY_MILLISECONDS;
+export const INTERVALS = CARD_REVIEW_INTERVALS_DAYS; // días
 export const LUCKY_DAYS = 1; // las acertadas «por suerte» vuelven cada día hasta confirmarlas
 
 

@@ -1,4 +1,5 @@
 import { questionNotice, sourceHtml, filterFailures } from '../shared/presentation/legacy-study.js';
+import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
 import * as store from '../adapters/local/legacy-store.js';
 import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, pickGuest, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from '../legacy/logic.js';
@@ -210,7 +211,7 @@ routes.quiz = async function () {
     const ok = a === q.c;
     return `<div class="fb ${ok ? 'good' : 'wrong'}"><b>${a === -1 ? 'Sin responder' : ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${!ok && a !== -1 && R.fast?.[R.idx] ? `<div class="fbsub">Marcaste ${L[a]} en ${R.fast[R.idx][0]} s${R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? `; leerla con calma lleva unos ${R.fast[R.idx][1]} s` : ''}.</div>` : ''}
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}
-      ${sourceHtml(q)}
+      ${sourceHtml(q, VERIFIED_SOURCES)}
       ${q.x?.length ? `<div class="trap">Trampa: ${q.x.map((x: any) => esc(TRAMPAS[x] || x)).join(' · ')}</div>` : ''}
       ${!ok && a !== -1 && R.feedback ? `<div class="mot" id="mot"><small>¿Por qué fallé?${(() => { const f = R.fast?.[R.idx]; return f && f[0] < f[1] * 0.6 ? ` <b class="r">Respondiste en ${f[0]} s; leerla bien lleva ≈${f[1]} s. ¿Fue velocidad?</b>` : ''; })()}</small>${[5, 7, 1, 2, 3, 4].map(m => `<button class="${store.rec(q.i)?.[9] === m ? 'on' : (m === 7 && R.fast?.[R.idx] && R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? 'sug' : '')}" data-m="${m}">${MOTIVOS_FALLO[m]}</button>`).join('')}<button class="mk" id="mkcard" ${store.rec(q.i)?.[9] === 4 && !store.cardRec('FC-Q-' + q.i) ? 'hidden' : ''}>${store.cardRec('FC-Q-' + q.i) ? '📇 Tarjeta creada ✓' : '📇 Hacer tarjeta'}</button></div>` : ''}
       ${ok && a !== -1 && R.feedback ? (() => { const r = store.rec(q.i) || [], en = r[3] === 0 && r[4] > now() + 86400000 * 1.5; return `<div class="mot" id="acc"><small>¿Seguro? (entra en repaso a +2 días)</small>${(() => { const pl = R.luck?.[R.idx]; return pl === 6 ? '<b class="r">🍀 Marcada como suerte: acierto 1/2. Otra vez bien y se quita la etiqueta.</b>' : pl === 8 ? '<b class="r">🍀 ¡Acierto 2/2! Etiqueta de suerte quitada: ya la sabes.</b>' : ''; })()}<button class="${en && r[9] !== 6 && r[9] !== 8 ? 'on' : ''}" data-a="doubt">🤔 Acerté dudando</button><button class="${r[9] === 6 || r[9] === 8 ? 'on' : ''}" data-a="suerte">🍀 Fue suerte</button></div>`; })() : ''}
@@ -319,7 +320,7 @@ routes.result = async function () {
     const x = ans[k]; const st = x === undefined || x === -1 ? 'b' : x === q.c ? 'g' : 'r';
     return `<details class="rv ${st}"><summary><i></i><span class="sr">${st === 'g' ? 'Acierto' : st === 'r' ? 'Fallo' : 'En blanco'}: </span>${esc(q.q.slice(0, 110))}${q.q.length > 110 ? '…' : ''}</summary>
       ${questionNotice(q)}<div class="pre">${richHtml(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : i === x ? 'bad' : ''}"><b>${L[i]}</b> ${richHtml(o)}${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
-      ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${sourceHtml(q)}<div class="repw" data-rq="${k}"></div></details>`;
+      ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${sourceHtml(q, VERIFIED_SOURCES)}<div class="repw" data-rq="${k}"></div></details>`;
   }).join('')}</div>`;
   app.querySelectorAll<El>('[data-rq]').forEach(el => reportBox(items[+el.dataset.rq!], el));
   $('#home').onclick = () => go('#/home');
@@ -658,7 +659,17 @@ routes.falladas = async function () {
   const F = { q: '', t: '', review: '', streak: '' };
   const fd = (ts: any) => new Date(ts).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
   const conteo: Record<string, any> = {}; qs.forEach(q => { conteo[q.t] = (conteo[q.t] || 0) + 1; });
-  const filtra = () => filterFailures(qs, store.getStats(), F);
+  const filtra = () => {
+    const stats = store.getStats();
+    const items = qs.map(q => {
+      const record = stats[q.i];
+      return {
+        value: q, id: q.i, topic: q.t, reviewed: record?.[11] === 1,
+        streak: store.failureStreak(record), searchableText: [q.q, ...q.a, q.u, q.n].join(' '),
+      };
+    });
+    return filterFailures(items, F);
+  };
   const lista = () => {
     const L2 = filtra(), host = $('#flist'); if (!active || !host) return;
     $('#fcount').textContent = L2.length === qs.length ? `${qs.length} ${qs.length === 1 ? 'pregunta' : 'preguntas'}` : `${L2.length} de ${qs.length} ${qs.length === 1 ? 'pregunta' : 'preguntas'}`;
@@ -666,7 +677,7 @@ routes.falladas = async function () {
     host.innerHTML = L2.length ? Object.keys(gr).sort().map(t => `<h2 class="h3">${esc(t)} · ${esc(temaName(t))} <small>(${gr[t].length})</small></h2><div class="card">${gr[t].map((q: any) => {
       const r = store.rec(q.i) || [0, 0, 0];
       return `<article class="failure-item" data-failure="${esc(q.i)}"><div class="failure-state"><label class="chk"><input type="checkbox" data-reviewed="${esc(q.i)}" ${r[11] ? 'checked' : ''}>Repasada en el temario</label><span class="streak-meter" aria-label="${Math.max(0, store.failureStreak(r))} de 3 aciertos seguidos">${Math.max(0, store.failureStreak(r))}/3</span></div><details class="rv f"><summary><i></i><span class="pre">${richHtml(q.q)}<br><small class="sub">Aciertos seguidos: ${Math.max(0, store.failureStreak(r))}/3 · <span data-review-status="${esc(q.i)}">${r[11] ? 'Temario repasado' : 'Pendiente de temario'}</span></small></span></summary>
-      ${questionNotice(q)}${sourceHtml(q)}
+      ${questionNotice(q)}${sourceHtml(q, VERIFIED_SOURCES)}
       ${q.supTexto ? `<details class="sup"><summary>Enunciado del supuesto</summary><div class="pre">${esc(q.supTexto)}</div></details>` : ''}
       ${q.cp ? `<div class="ctx pre">${richHtml(q.cp)}</div>` : ''}
       ${q.a.map((o: any, i: any) => `<div class="ro ${i === q.c ? 'ok' : ''}"><b>${L[i]}</b> ${richHtml(o)}${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
@@ -705,8 +716,8 @@ routes.falladas = async function () {
 };
 
 
-registerTraining({ routes, go, route, pw }, screen);
-const { allCards, curatedCards } = registerCards({ routes, go, pw, reportBox }, screen);
+registerTraining({ routes, go, route, pw, verifiedSources: VERIFIED_SOURCES }, screen);
+const { allCards, curatedCards } = registerCards({ routes, go, pw, reportBox, verifiedSources: VERIFIED_SOURCES }, screen);
 registerStats({ routes, go, trapTest, startRun, startRepaso });
 registerHome({ routes, go, saludo, quickSession, startRepaso, openMenu, dominioTemas, falladasIds }, screen);
 registerAcceso({ routes, go }, screen);

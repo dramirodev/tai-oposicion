@@ -1,9 +1,10 @@
-import { cardNextReview, sourceHtml, questionNotice } from '../../shared/presentation/legacy-study.js';
+import { sourceHtml, questionNotice } from '../../shared/presentation/legacy-study.js';
+import { previewCardDueAt } from '../../core/domain/spaced-repetition.js';
 import * as store from '../../adapters/local/legacy-store.js';
 import { esc, richHtml, pct, swipeDir, pickCards, cardStats, cardFromQuestion } from '../../legacy/logic.js';
 import { j, getIndex, getMeta, byIds, temaName, now } from '../../adapters/http/legacy-data.js';
 import { $, legacyScope, toast, focusHeading, type El } from '../../shared/ui/legacy-dom.js';
-export function registerCards({ routes, go, pw, reportBox }: any, screen: any) {
+export function registerCards({ routes, go, pw, reportBox, verifiedSources }: any, screen: any) {
 // ───────── tarjetas (flashcards) ─────────
 let CARDIDX: any; const cardCache = new Map<string, any>(); let CRUN: any = null;
 store.onAccountChange(() => { CRUN = null; });
@@ -99,7 +100,8 @@ function cardSession() {
   routeScreen.cleanup = () => { document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); };
 
   function reviewLabel(id: string, grade: number): string {
-    const t = now(), next = cardNextReview(store.cardRec(id), grade, t);
+    const t = now(), record = store.cardRec(id);
+    const next = previewCardDueAt(record ? { attempts: record[0], intervalStep: record[3] } : undefined, grade, t);
     if (!next) return 'Dominada';
     const days = Math.round((next - t) / store.DAY);
     return `En ${days} ${days === 1 ? 'día' : 'días'}`;
@@ -118,7 +120,7 @@ function cardSession() {
       ${R.rev ? `<div class="fa" role="region" aria-label="Respuesta de la tarjeta" tabindex="-1"><small>Respuesta</small><div class="pre">${richHtml(c.a)}</div>
         ${c.nota ? `<div class="cita"><span>Nota</span>${esc(c.nota)}</div>` : ''}
         ${c.ref ? `<div class="cita"><span>Temario</span>${esc(c.ref)}</div>` : ''}
-${sourceHtml({ source: c.source, u: c.ref })}
+${sourceHtml({ source: c.source, u: c.ref }, verifiedSources)}
         <div class="repw" id="crep"></div>
         ${c.src === 'fallo' ? '<button class="ghost fl" id="quit">🗑 Quitar esta tarjeta</button>' : ''}</div>` : '<div class="fh">Toca para ver la respuesta</div>'}
     </div>
