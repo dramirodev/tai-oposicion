@@ -144,6 +144,31 @@ describe('localAttemptRepository', () => {
     expect(await repo.getAttempt('guest', 'attempt-1')).toEqual({ ...makeAttempt(), createdAt: 600 });
   });
 
+  it('el borrado por tombstone elimina datos existentes y conserva datos posteriores al instante de borrado', async () => {
+    const repo = repository();
+    const oldSession = { id: 'old-session', mode: 'practice', status: 'active', startedAt: 100, lastSequence: 0 };
+    const newSession = { id: 'new-session', mode: 'practice', status: 'active', startedAt: 600, lastSequence: 0 };
+    const oldAttempt = { ...makeAttempt('old-attempt', oldSession.id), createdAt: 100 };
+    const newAttempt = { ...makeAttempt('new-attempt', newSession.id), createdAt: 600 };
+    await repo.createSession('guest', oldSession);
+    await repo.createSession('guest', newSession);
+    await repo.createAttempt('guest', oldAttempt);
+    await repo.createAttempt('guest', newAttempt);
+    const oldOpen = transition(oldAttempt, { type: 'open', sequence: 1, id: 'old-open-event' });
+    const newOpen = transition(newAttempt, { type: 'open', sequence: 1, id: 'new-open-event' });
+    await repo.saveTransition('guest', oldOpen.attempt, oldOpen.event);
+    await repo.saveTransition('guest', newOpen.attempt, newOpen.event);
+
+    await repo.deleteScope('guest', 500);
+
+    expect(await repo.getSession('guest', oldSession.id)).toBeUndefined();
+    expect(await repo.getAttempt('guest', oldAttempt.id)).toBeUndefined();
+    expect((await repo.getEvents('guest', oldAttempt.id)).events).toEqual([]);
+    expect(await repo.getSession('guest', newSession.id)).toEqual(newSession);
+    expect(await repo.getAttempt('guest', newAttempt.id)).toEqual(newOpen.attempt);
+    expect((await repo.getEvents('guest', newAttempt.id)).events).toEqual([newOpen.event]);
+  });
+
   it('ignora un tombstone remoto antiguo y conserva el alcance ya borrado', async () => {
     const repo = repository();
     await repo.createAttempt('guest', makeAttempt());

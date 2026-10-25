@@ -1,5 +1,6 @@
 import {
   collection,
+  deleteDoc,
   doc,
   documentId,
   getDoc,
@@ -107,14 +108,12 @@ export function syncAttemptHistory(options: FirestoreAttemptSyncOptions): Unsubs
     if (typeof deletedAt !== 'number' || !Number.isFinite(deletedAt)) return;
     void repository.getScopeTombstone(scope).then(current => {
       if (!active() || (current && current.deletedAt >= deletedAt)) return;
-      return repository.getScopePage(scope, undefined, 1).then(page => {
-        if (!active()) return;
-        const newest = page.attempts[0];
-        if (newest && newest.createdAt > deletedAt) return;
-        return repository.deleteScope(scope, deletedAt, 'remote');
-      });
+      return repository.deleteScope(scope, deletedAt, 'remote').then(() => purgeRemoteScope(deletedAt));
     }).catch(onError);
   }, onError));
+  void repository.getScopeTombstone(scope).then(tombstone => {
+    if (tombstone && active() && !closed) return pushTombstone(tombstone.deletedAt);
+  }).catch(fail);
 
   async function pushSession(session: QuestionAttemptSession): Promise<void> {
     if (closed || !active()) return;
@@ -190,11 +189,61 @@ export function syncAttemptHistory(options: FirestoreAttemptSyncOptions): Unsubs
     if (closed || !active()) return;
     const tombstone = await repository.getScopeTombstone(scope);
     if (!tombstone) return;
-    await setDoc(doc(db, ...base, 'cfg', 'attempts'), {
-      schemaVersion: 1,
-      deletedAt: Math.max(deletedAt, tombstone.deletedAt),
-      revision: tombstone.revision,
-    });
+    const ref = doc(db, ...base, 'cfg', 'attempts');
+    const remote = await getDoc(ref);
+    if (closed || !active()) return;
+    const remoteData = remote.exists() ? remote.data() : undefined;
+    const remoteDeletedAt = typeof remoteData?.deletedAt === 'number' && Number.isFinite(remoteData.deletedAt)
+      ? remoteData.deletedAt : 0;
+    const remoteRevision = typeof remoteData?.revision === 'number' && Number.isInteger(remoteData.revision)
+      ? remoteData.revision : 0;
+    const effectiveDeletedAt = Math.max(deletedAt, tombstone.deletedAt, remoteDeletedAt);
+    if (effectiveDeletedAt > tombstone.deletedAt) await repository.deleteScope(scope, effectiveDeletedAt, 'remote');
+    const revision = Math.max(tombstone.revision, remoteRevision);
+    const value = { schemaVersion: 1, deletedAt: effectiveDeletedAt, revision };
+    if (!remote.exists() || stableJson(remoteData) !== stableJson(value)) await setDoc(ref, value);
+    await purgeRemoteScope(effectiveDeletedAt);
+  }
+
+  async function deleteRemoteEvents(attemptId: string): Promise<void> {
+    let cursor: QueryDocumentSnapshot | undefined;
+    while (!closed && active()) {
+      const events = collection(db, ...base, 'attempts', attemptId, 'events');
+      const constraints = [orderBy(documentId()), limit(PAGE_SIZE)];
+      const page = await getDocs(query(events, ...(cursor ? [constraints[0], startAfter(cursor), constraints[1]] : constraints)));
+      if (!active() || closed) return;
+      for (const event of page.docs) {
+        if (!active() || closed) return;
+        if (event.ref) await deleteDoc(event.ref);
+      }
+      if (page.docs.length < PAGE_SIZE) return;
+      cursor = page.docs.at(-1);
+    }
+  }
+
+  async function deleteRemoteCollectionBefore(name: 'attempts' | 'attemptSessions', field: 'createdAt' | 'startedAt', cutoff: number): Promise<void> {
+    let cursor: QueryDocumentSnapshot | undefined;
+    while (!closed && active()) {
+      const documents = collection(db, ...base, name);
+      const constraints = [where(field, '<=', cutoff), orderBy(field), orderBy(documentId()), limit(PAGE_SIZE)];
+      const page = await getDocs(query(documents, ...(cursor
+        ? [constraints[0], constraints[1], constraints[2], startAfter(cursor), constraints[3]]
+        : constraints)));
+      if (!active() || closed) return;
+      for (const document of page.docs) {
+        if (!active() || closed) return;
+        if (name === 'attempts') await deleteRemoteEvents(document.id);
+        if (!active() || closed) return;
+        if (document.ref) await deleteDoc(document.ref);
+      }
+      if (page.docs.length < PAGE_SIZE) return;
+      cursor = page.docs.at(-1);
+    }
+  }
+
+  async function purgeRemoteScope(cutoff: number): Promise<void> {
+    await deleteRemoteCollectionBefore('attempts', 'createdAt', cutoff);
+    await deleteRemoteCollectionBefore('attemptSessions', 'startedAt', cutoff);
   }
 
   async function pushLocalEvents(attemptId: string, fromSequence: number): Promise<void> {

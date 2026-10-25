@@ -463,6 +463,10 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),select{border-col
 .strategy-segment{padding-block:12px;border-bottom:1px solid var(--line)}
 .strategy-segment:last-child{border-bottom:0}.strategy-segment h4{margin:0 0 6px}
 .strategy-report [aria-busy=true]{opacity:.7}
+.ai-export-sessions{display:grid;gap:.35rem;margin:.75rem 0}
+.ai-export-session{display:flex;align-items:flex-start;gap:.5rem;padding:.4rem;border-radius:var(--r-s);background:var(--card)}
+.ai-export-session input,#ai-study-export .seg input{width:auto;margin:0}
+.ai-export-preview{margin-block:1rem}
 @media(min-width:1000px){
  main:has(.with-sup){max-width:1120px}
  .card.q.with-sup{display:flow-root;min-height:300px}

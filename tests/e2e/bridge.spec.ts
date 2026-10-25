@@ -189,6 +189,56 @@ test('el simulacro no presenta explicaciones ni corrección mientras sigue activ
   await expect(page.locator('#result-strategy-report')).toContainText('Muestra insuficiente', { timeout: 25_000 });
   expect(errors).toEqual([]);
 });
+test('exporta sesiones manualmente en partes versionadas y borra el detalle sin tocar el progreso', async ({ page }) => {
+  const errors = await start(page);
+  await page.locator('#quick').click();
+  for (let index = 0; index < 10; index++) {
+    await page.locator('.opt').first().click();
+    await page.locator('#next').click();
+  }
+  await expect(page.locator('#app h1')).toHaveText('Resultado');
+  const progressBefore = await page.evaluate(() => localStorage.getItem('tai.v1:guest'));
+  await page.goto('/#/settings');
+  await page.locator('#ai-export-find').click();
+  await expect(page.locator('[data-ai-export-session]')).toHaveCount(1);
+  await page.locator('#ai-export-build').click();
+  await expect(page.locator('.ai-export-preview')).toContainText('1 parte JSON');
+
+  const [manifestDownload] = await Promise.all([
+    page.waitForEvent('download'), page.locator('#ai-export-download-manifest').click(),
+  ]);
+  expect(manifestDownload.suggestedFilename()).toBe('tai-estudio-manifiesto.json');
+  const manifest = JSON.parse(readFileSync(await manifestDownload.path(), 'utf8'));
+  expect(manifest).toMatchObject({ format: 'tai-study-ai-export', schemaVersion: 1, filters: { sessionCount: 1 } });
+  expect(JSON.stringify(manifest)).not.toMatch(/"(?:uid|email|token|firebaseConfig)"\s*:/i);
+
+  const [partDownload] = await Promise.all([
+    page.waitForEvent('download'), page.locator('[data-ai-export-part="0"]').click(),
+  ]);
+  expect(partDownload.suggestedFilename()).toBe('tai-estudio-parte-001.json');
+  const partText = readFileSync(await partDownload.path(), 'utf8');
+  const part = JSON.parse(partText);
+  expect(part).toMatchObject({ format: 'tai-study-ai-export-part', schemaVersion: 1, sessions: [{ id: 'part-001-session-001' }] });
+  const partBytes = Buffer.byteLength(partText, 'utf8');
+  expect(manifest.manifest.parts[0].sizeBytes).toBe(partBytes);
+  expect(part.attempts).toHaveLength(10);
+  expect(part.attempts[0].questionId).toEqual(expect.any(String));
+  expect(JSON.stringify(part)).not.toContain('guest');
+
+  const [markdownDownload] = await Promise.all([
+    page.waitForEvent('download'), page.locator('#ai-export-download-markdown').click(),
+  ]);
+  const markdown = readFileSync(await markdownDownload.path(), 'utf8');
+  expect(markdown).toContain(`tamaño total de partes: ${partBytes} bytes`);
+
+  await page.locator('#ai-history-delete').click();
+  await expect(page.locator('.overlay')).toContainText('Las estadísticas agregadas');
+  await page.locator('.overlay [data-v="1"]').click();
+  await expect(page.locator('#ai-export-status')).toContainText('Historial detallado borrado');
+  expect(await savedAttemptHistory(page)).toMatchObject({ attempts: 0, sessions: 0, events: [] });
+  expect(await page.evaluate(() => localStorage.getItem('tai.v1:guest'))).toBe(progressBefore);
+  expect(errors).toEqual([]);
+});
 test('subrayados y señales son opcionales, no responden y se conservan al reanudar', async ({ page }) => {
   const errors = await start(page);
   await page.locator('#quick').click();

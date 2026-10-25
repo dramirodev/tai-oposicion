@@ -441,27 +441,54 @@ export function createLocalAttemptRepository(databaseName = 'tai-attempts'): Att
       const connection = await db();
       const tx = connection.transaction(['attempts', 'events', 'sessions', 'tombstones'], 'readwrite');
       const done = transactionDone(tx);
-      const removeScoped = (store: IDBObjectStore) => {
-        const cursor = store.index('scope').openKeyCursor(IDBKeyRange.only(scope));
-        cursor.onsuccess = () => {
-          const current = cursor.result;
-          if (!current) return;
-          store.delete(current.primaryKey);
-          current.continue();
-        };
-      };
       const tombstones = tx.objectStore('tombstones');
       const existing = tombstones.get(scope);
+      let effectiveDeletedAt = deletedAt;
       existing.onsuccess = () => {
         const current = existing.result as StoredTombstone | undefined;
-        if (current && deletedAt <= current.deletedAt) return;
-        tombstones.put({ scope, deletedAt, revision: (current?.revision || 0) + 1 } satisfies StoredTombstone);
-        removeScoped(tx.objectStore('attempts'));
-        removeScoped(tx.objectStore('events'));
-        removeScoped(tx.objectStore('sessions'));
+        effectiveDeletedAt = Math.max(deletedAt, current?.deletedAt || 0);
+        if (!current || deletedAt > current.deletedAt) {
+          tombstones.put({ scope, deletedAt: effectiveDeletedAt, revision: (current?.revision || 0) + 1 } satisfies StoredTombstone);
+        }
+        const removedAttempts = new Set<string>();
+        const retainedAttempts = new Set<string>();
+        const attempts = tx.objectStore('attempts');
+        const attemptCursor = attempts.index('scope').openCursor(IDBKeyRange.only(scope));
+        attemptCursor.onsuccess = () => {
+          const cursor = attemptCursor.result;
+          if (cursor) {
+            const row = cursor.value as StoredAttempt;
+            if (row.createdAt <= effectiveDeletedAt) {
+              removedAttempts.add(row.id);
+              cursor.delete();
+            } else retainedAttempts.add(row.id);
+            cursor.continue();
+            return;
+          }
+          const events = tx.objectStore('events');
+          const eventCursor = events.index('scope').openCursor(IDBKeyRange.only(scope));
+          eventCursor.onsuccess = () => {
+            const currentEvent = eventCursor.result;
+            if (currentEvent) {
+              const row = currentEvent.value as StoredEvent;
+              if (removedAttempts.has(row.attemptId) || (!retainedAttempts.has(row.attemptId) && row.value.at <= effectiveDeletedAt)) currentEvent.delete();
+              currentEvent.continue();
+              return;
+            }
+            const sessions = tx.objectStore('sessions');
+            const sessionCursor = sessions.index('scope').openCursor(IDBKeyRange.only(scope));
+            sessionCursor.onsuccess = () => {
+              const currentSession = sessionCursor.result;
+              if (!currentSession) return;
+              const row = currentSession.value as StoredSession;
+              if (row.startedAt <= effectiveDeletedAt) currentSession.delete();
+              currentSession.continue();
+            };
+          };
+        };
       };
       await done;
-      notify(scope, { source, type: 'scope-deleted', deletedAt });
+      notify(scope, { source, type: 'scope-deleted', deletedAt: effectiveDeletedAt });
     },
   };
 }

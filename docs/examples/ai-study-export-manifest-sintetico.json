@@ -1,0 +1,371 @@
+{
+  "format": "tai-study-ai-export",
+  "schemaVersion": 1,
+  "createdAt": 1700000060000,
+  "filters": {
+    "from": 1699999000000,
+    "to": 1700001000000,
+    "modes": [
+      "practice"
+    ],
+    "sessionCount": 1
+  },
+  "report": {
+    "period": {
+      "from": 1699999000000,
+      "to": 1700001000000
+    },
+    "scoring": {
+      "reward": 1,
+      "penalty": 0.3333333333333333,
+      "blankValue": 0
+    },
+    "completedSessionCount": 1,
+    "excludedSessionCount": 0,
+    "orphanAttemptCount": 0,
+    "overall": {
+      "attempts": 1,
+      "answered": 1,
+      "correct": 1,
+      "wrong": 0,
+      "blankPending": 0,
+      "blankConsulted": 0,
+      "blankUnanswered": 0,
+      "sessionCount": 1,
+      "changedAnswerAttempts": 0,
+      "discardedOptions": 0,
+      "confidence": {
+        "sure": 1,
+        "betweenTwo": 0,
+        "guess": 0,
+        "unset": 0
+      },
+      "highlights": {
+        "beforeAnswer": 0,
+        "afterAnswer": 0,
+        "afterReveal": 0
+      },
+      "activeTime": {
+        "observedMilliseconds": 60000,
+        "completeAttempts": 1,
+        "partialAttempts": 0,
+        "unavailableAttempts": 0,
+        "p50Milliseconds": 60000,
+        "p75Milliseconds": 60000
+      }
+    },
+    "segments": [
+      {
+        "dimension": "mode",
+        "value": "practice",
+        "attempts": 1,
+        "answered": 1,
+        "correct": 1,
+        "wrong": 0,
+        "blankPending": 0,
+        "blankConsulted": 0,
+        "blankUnanswered": 0,
+        "sessionCount": 1,
+        "changedAnswerAttempts": 0,
+        "discardedOptions": 0,
+        "confidence": {
+          "sure": 1,
+          "betweenTwo": 0,
+          "guess": 0,
+          "unset": 0
+        },
+        "highlights": {
+          "beforeAnswer": 0,
+          "afterAnswer": 0,
+          "afterReveal": 0
+        },
+        "activeTime": {
+          "observedMilliseconds": 60000,
+          "completeAttempts": 1,
+          "partialAttempts": 0,
+          "unavailableAttempts": 0,
+          "p50Milliseconds": 60000,
+          "p75Milliseconds": 60000
+        },
+        "observedAccuracy": 1,
+        "expectedValuePerQuestion": null,
+        "recommendation": null,
+        "recommendationSample": {
+          "answeredAttempts": 1,
+          "sessions": 1,
+          "minimumAttempts": 20,
+          "minimumSessions": 3
+        },
+        "timingRecommendation": null,
+        "timingSample": {
+          "timedAttempts": 0,
+          "sessionsWithTimer": 0,
+          "medianSecondsPerBlank": null
+        },
+        "metadataAvailable": true
+      },
+      {
+        "dimension": "exposure",
+        "value": "first-exposure",
+        "attempts": 1,
+        "answered": 1,
+        "correct": 1,
+        "wrong": 0,
+        "blankPending": 0,
+        "blankConsulted": 0,
+        "blankUnanswered": 0,
+        "sessionCount": 1,
+        "changedAnswerAttempts": 0,
+        "discardedOptions": 0,
+        "confidence": {
+          "sure": 1,
+          "betweenTwo": 0,
+          "guess": 0,
+          "unset": 0
+        },
+        "highlights": {
+          "beforeAnswer": 0,
+          "afterAnswer": 0,
+          "afterReveal": 0
+        },
+        "activeTime": {
+          "observedMilliseconds": 60000,
+          "completeAttempts": 1,
+          "partialAttempts": 0,
+          "unavailableAttempts": 0,
+          "p50Milliseconds": 60000,
+          "p75Milliseconds": 60000
+        },
+        "observedAccuracy": 1,
+        "expectedValuePerQuestion": null,
+        "recommendation": null,
+        "recommendationSample": {
+          "answeredAttempts": 1,
+          "sessions": 1,
+          "minimumAttempts": 20,
+          "minimumSessions": 3
+        },
+        "timingRecommendation": null,
+        "timingSample": {
+          "timedAttempts": 0,
+          "sessionsWithTimer": 0,
+          "medianSecondsPerBlank": null
+        },
+        "metadataAvailable": true
+      },
+      {
+        "dimension": "topic",
+        "value": "T1.01",
+        "attempts": 1,
+        "answered": 1,
+        "correct": 1,
+        "wrong": 0,
+        "blankPending": 0,
+        "blankConsulted": 0,
+        "blankUnanswered": 0,
+        "sessionCount": 1,
+        "changedAnswerAttempts": 0,
+        "discardedOptions": 0,
+        "confidence": {
+          "sure": 1,
+          "betweenTwo": 0,
+          "guess": 0,
+          "unset": 0
+        },
+        "highlights": {
+          "beforeAnswer": 0,
+          "afterAnswer": 0,
+          "afterReveal": 0
+        },
+        "activeTime": {
+          "observedMilliseconds": 60000,
+          "completeAttempts": 1,
+          "partialAttempts": 0,
+          "unavailableAttempts": 0,
+          "p50Milliseconds": 60000,
+          "p75Milliseconds": 60000
+        },
+        "observedAccuracy": 1,
+        "expectedValuePerQuestion": null,
+        "recommendation": null,
+        "recommendationSample": {
+          "answeredAttempts": 1,
+          "sessions": 1,
+          "minimumAttempts": 20,
+          "minimumSessions": 3
+        },
+        "timingRecommendation": null,
+        "timingSample": {
+          "timedAttempts": 0,
+          "sessionsWithTimer": 0,
+          "medianSecondsPerBlank": null
+        },
+        "metadataAvailable": true
+      },
+      {
+        "dimension": "origin",
+        "value": "O",
+        "attempts": 1,
+        "answered": 1,
+        "correct": 1,
+        "wrong": 0,
+        "blankPending": 0,
+        "blankConsulted": 0,
+        "blankUnanswered": 0,
+        "sessionCount": 1,
+        "changedAnswerAttempts": 0,
+        "discardedOptions": 0,
+        "confidence": {
+          "sure": 1,
+          "betweenTwo": 0,
+          "guess": 0,
+          "unset": 0
+        },
+        "highlights": {
+          "beforeAnswer": 0,
+          "afterAnswer": 0,
+          "afterReveal": 0
+        },
+        "activeTime": {
+          "observedMilliseconds": 60000,
+          "completeAttempts": 1,
+          "partialAttempts": 0,
+          "unavailableAttempts": 0,
+          "p50Milliseconds": 60000,
+          "p75Milliseconds": 60000
+        },
+        "observedAccuracy": 1,
+        "expectedValuePerQuestion": null,
+        "recommendation": null,
+        "recommendationSample": {
+          "answeredAttempts": 1,
+          "sessions": 1,
+          "minimumAttempts": 20,
+          "minimumSessions": 3
+        },
+        "timingRecommendation": null,
+        "timingSample": {
+          "timedAttempts": 0,
+          "sessionsWithTimer": 0,
+          "medianSecondsPerBlank": null
+        },
+        "metadataAvailable": true
+      },
+      {
+        "dimension": "kind",
+        "value": "concept",
+        "attempts": 1,
+        "answered": 1,
+        "correct": 1,
+        "wrong": 0,
+        "blankPending": 0,
+        "blankConsulted": 0,
+        "blankUnanswered": 0,
+        "sessionCount": 1,
+        "changedAnswerAttempts": 0,
+        "discardedOptions": 0,
+        "confidence": {
+          "sure": 1,
+          "betweenTwo": 0,
+          "guess": 0,
+          "unset": 0
+        },
+        "highlights": {
+          "beforeAnswer": 0,
+          "afterAnswer": 0,
+          "afterReveal": 0
+        },
+        "activeTime": {
+          "observedMilliseconds": 60000,
+          "completeAttempts": 1,
+          "partialAttempts": 0,
+          "unavailableAttempts": 0,
+          "p50Milliseconds": 60000,
+          "p75Milliseconds": 60000
+        },
+        "observedAccuracy": 1,
+        "expectedValuePerQuestion": null,
+        "recommendation": null,
+        "recommendationSample": {
+          "answeredAttempts": 1,
+          "sessions": 1,
+          "minimumAttempts": 20,
+          "minimumSessions": 3
+        },
+        "timingRecommendation": null,
+        "timingSample": {
+          "timedAttempts": 0,
+          "sessionsWithTimer": 0,
+          "medianSecondsPerBlank": null
+        },
+        "metadataAvailable": true
+      },
+      {
+        "dimension": "contentRevision",
+        "value": "current",
+        "attempts": 1,
+        "answered": 1,
+        "correct": 1,
+        "wrong": 0,
+        "blankPending": 0,
+        "blankConsulted": 0,
+        "blankUnanswered": 0,
+        "sessionCount": 1,
+        "changedAnswerAttempts": 0,
+        "discardedOptions": 0,
+        "confidence": {
+          "sure": 1,
+          "betweenTwo": 0,
+          "guess": 0,
+          "unset": 0
+        },
+        "highlights": {
+          "beforeAnswer": 0,
+          "afterAnswer": 0,
+          "afterReveal": 0
+        },
+        "activeTime": {
+          "observedMilliseconds": 60000,
+          "completeAttempts": 1,
+          "partialAttempts": 0,
+          "unavailableAttempts": 0,
+          "p50Milliseconds": 60000,
+          "p75Milliseconds": 60000
+        },
+        "observedAccuracy": 1,
+        "expectedValuePerQuestion": null,
+        "recommendation": null,
+        "recommendationSample": {
+          "answeredAttempts": 1,
+          "sessions": 1,
+          "minimumAttempts": 20,
+          "minimumSessions": 3
+        },
+        "timingRecommendation": null,
+        "timingSample": {
+          "timedAttempts": 0,
+          "sessionsWithTimer": 0,
+          "medianSecondsPerBlank": null
+        },
+        "metadataAvailable": true
+      }
+    ]
+  },
+  "manifest": {
+    "format": "tai-study-ai-export",
+    "schemaVersion": 1,
+    "partCount": 1,
+    "totalSizeBytes": 2373,
+    "parts": [
+      {
+        "fileName": "tai-estudio-parte-001.json",
+        "partNumber": 1,
+        "sessionCount": 1,
+        "attemptCount": 1,
+        "eventCount": 3,
+        "sizeBytes": 2373,
+        "oversized": false
+      }
+    ]
+  }
+}

@@ -1,11 +1,16 @@
 import 'fake-indexeddb/auto';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-const boundary = vi.hoisted(() => ({ snapshots: [], documents: new Map(), writes: [], pages: new Map(), failWrites: false }));
+const boundary = vi.hoisted(() => ({ snapshots: [], documents: new Map(), writes: [], deletes: [], pages: new Map(), failWrites: false, afterDelete: null }));
 vi.mock('firebase/firestore', () => ({
   collection: (_db, ...parts) => ({ path: parts.join('/') }),
   doc: (_db, ...parts) => ({ path: parts.join('/') }),
   documentId: () => '__name__',
+  deleteDoc: async ref => {
+    boundary.deletes.push(ref.path);
+    boundary.documents.delete(ref.path);
+    boundary.afterDelete?.();
+  },
   getDoc: async ref => ({ exists: () => boundary.documents.has(ref.path), data: () => boundary.documents.get(ref.path) }),
   getDocs: async ref => ({ docs: boundary.pages.get(ref.path) || [] }),
   limit: count => ({ type: 'limit', count }),
@@ -36,8 +41,10 @@ describe('syncAttemptHistory', () => {
     boundary.snapshots.length = 0;
     boundary.documents.clear();
     boundary.writes.length = 0;
+    boundary.deletes.length = 0;
     boundary.pages.clear();
     boundary.failWrites = false;
+    boundary.afterDelete = null;
     repo = createLocalAttemptRepository(`attempt-sync-${Date.now()}-${Math.random()}`);
   });
 
@@ -131,6 +138,77 @@ describe('syncAttemptHistory', () => {
     off = syncAttemptHistory({ db: {}, uid: 'user-1', repository: repo, active: () => true, onError: error => errors.push(error) });
     await vi.waitFor(() => expect(boundary.documents.get('users/user-1/attempts/offline-attempt/events/offline-event')?.id).toBe('offline-event'));
     expect(boundary.documents.get('users/user-1/attempts/offline-attempt').response).toBe(1);
+    off();
+  });
+
+  it('borra el historial remoto anterior al tombstone e incluye sus eventos', async () => {
+    const session = { id: 'cloud-session', mode: 'practice', status: 'active', startedAt: 100, lastSequence: 0 };
+    const attempt = {
+      id: 'cloud-attempt', sessionId: session.id, questionId: 'q-cloud', contentRevision: '', mode: 'practice',
+      position: 0, exposure: 1, state: 'unseen', response: null, outcome: null, confidence: null,
+      discardedOptions: [], highlights: [], createdAt: 100, lastSequence: 0, appliedEventIds: [],
+    };
+    const sessionPath = 'users/user-1/attemptSessions/cloud-session';
+    const attemptPath = 'users/user-1/attempts/cloud-attempt';
+    const eventPath = `${attemptPath}/events/cloud-event`;
+    boundary.documents.set(sessionPath, { id: session.id });
+    boundary.documents.set(attemptPath, attemptMapper.toDto(attempt));
+    boundary.documents.set(eventPath, { id: 'cloud-event' });
+    boundary.pages.set('users/user-1/attemptSessions', [{ id: session.id, ref: { path: sessionPath }, data: () => ({ startedAt: 100 }) }]);
+    boundary.pages.set('users/user-1/attempts', [{ id: attempt.id, ref: { path: attemptPath }, data: () => attemptMapper.toDto(attempt) }]);
+    boundary.pages.set(`${attemptPath}/events`, [{ id: 'cloud-event', ref: { path: eventPath } }]);
+
+    const off = syncAttemptHistory({ db: {}, uid: 'user-1', repository: repo, active: () => true, onError: error => { throw error; } });
+    await repo.deleteScope('user-1', 500);
+
+    await vi.waitFor(() => expect(boundary.documents.has(attemptPath)).toBe(false));
+    expect(boundary.documents.has(eventPath)).toBe(false);
+    expect(boundary.documents.has(sessionPath)).toBe(false);
+    expect(boundary.deletes).toEqual(expect.arrayContaining([eventPath, attemptPath, sessionPath]));
+    off();
+  });
+
+  it('reintenta el borrado remoto al reconectar si el tombstone ya existía localmente', async () => {
+    const attempt = {
+      id: 'pending-delete', sessionId: 'old-session', questionId: 'q-old', contentRevision: '', mode: 'practice',
+      position: 0, exposure: 1, state: 'unseen', response: null, outcome: null, confidence: null,
+      discardedOptions: [], highlights: [], createdAt: 100, lastSequence: 0, appliedEventIds: [],
+    };
+    const attemptPath = 'users/user-1/attempts/pending-delete';
+    boundary.documents.set(attemptPath, attemptMapper.toDto(attempt));
+    boundary.pages.set('users/user-1/attempts', [{ ref: { path: attemptPath }, data: () => attemptMapper.toDto(attempt) }]);
+    const errors = [];
+    boundary.failWrites = true;
+    let off = syncAttemptHistory({ db: {}, uid: 'user-1', repository: repo, active: () => true, onError: error => errors.push(error) });
+    await repo.deleteScope('user-1', 500);
+    await vi.waitFor(() => expect(errors.length).toBeGreaterThan(0));
+    expect(boundary.documents.has(attemptPath)).toBe(true);
+    off();
+
+    boundary.failWrites = false;
+    off = syncAttemptHistory({ db: {}, uid: 'user-1', repository: repo, active: () => true, onError: error => { throw error; } });
+
+    await vi.waitFor(() => expect(boundary.documents.has(attemptPath)).toBe(false));
+    off();
+  });
+
+  it('detiene la purga si la cuenta activa cambia durante una página', async () => {
+    let active = true;
+    const attempts = ['first-attempt', 'second-attempt'].map(id => ({
+      id,
+      ref: { path: `users/user-1/attempts/${id}` },
+      data: () => ({ createdAt: 100 }),
+    }));
+    for (const attempt of attempts) boundary.documents.set(attempt.ref.path, attempt.data());
+    boundary.pages.set('users/user-1/attempts', attempts);
+    boundary.afterDelete = () => { active = false; };
+    const off = syncAttemptHistory({ db: {}, uid: 'user-1', repository: repo, active: () => active, onError: error => { throw error; } });
+
+    await repo.deleteScope('user-1', 500);
+    await vi.waitFor(() => expect(boundary.deletes).toHaveLength(1));
+
+    expect(boundary.deletes).toEqual(['users/user-1/attempts/first-attempt']);
+    expect(boundary.documents.has('users/user-1/attempts/second-attempt')).toBe(true);
     off();
   });
 });

@@ -40,12 +40,17 @@ export function previewImport(txt: string) {
   return {added,updated,preserved,ignored,serialized,attemptArchive,invalidAttempts,sessions:sessions.length,cards:Object.keys(cards).length,reports:Object.keys(reports).length,settings:!!raw.cfg};
 }
 const count = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
-export function registerSettings({ routes, go, allCards, getNewVersion, checkUpdate, applyUpdate }: any, screen: any) {
+export function registerSettings({ routes, go, allCards, getNewVersion, checkUpdate, applyUpdate, listManualExportSessions, createManualAiExport, deleteManualStudyHistory }: any, screen: any) {
 // ───────── ajustes ─────────
 routes.settings = async function () {
   const { app, $, screen: routeScreen } = legacyScope(screen);
   let active = true, generation = 0, downloading = false;
   const routeAccount = store.accountId();
+  const exportToday = new Date().toISOString().slice(0, 10);
+  const exportFrom = new Date(Date.now() - 90 * 86400000).toISOString().slice(0, 10);
+  let exportChoices: { id: string; mode: 'practice' | 'simulation'; startedAt: number; endedAt?: number; attemptCount: number }[] | null = null;
+  let exportArtifact: { manifestText: string; markdown: string; partFiles: { fileName: string; content: string }[]; totalBytes: number; manifest: { partCount: number; parts: { fileName: string; sessionCount: number; attemptCount: number; eventCount: number; sizeBytes: number; oversized: boolean }[] } } | null = null;
+  let exportMessage = '';
   const alive = () => active && store.accountId() === routeAccount;
   const offAccount = store.onAccountChange(() => { active = false; generation++; });
   routeScreen.cleanup = () => { active = false; offAccount(); };
@@ -93,6 +98,16 @@ routes.settings = async function () {
     ${full ? `<div class="card"><h2 class="h3">Errores del banco</h2><p>${Object.values(store.getReports()).filter(r => r.st === 'abierto').length} por revisar. Anótalos con «Avisar de error» al contestar y exporta la lista para corregirlos.</p><button class="btn sec" id="errs">Ver errores del banco</button></div>` : ''}
     <div class="card"><h2 class="h3">Uso sin conexión</h2><p id="off" role="status" aria-live="polite">${esc(offlineHtml())}</p><p class="sm">Se comprueban los archivos de preguntas, supuestos y tarjetas guardados en este navegador. El progreso permanece asociado a tu cuenta.</p><button class="btn sec" id="dl">Descargar para uso sin conexión</button></div>
     ${full ? `<div class="card"><h2 class="h3">Tarjetas</h2><p>Exporta las tarjetas curadas (y tus fallos convertidos en tarjeta) a Anki: texto separado por tabuladores, importable con «Archivo → Importar».</p><button class="btn sec" id="anki">Exportar tarjetas a Anki (.txt)</button></div>` : ''}
+    <div class="card" id="ai-study-export"><h2 class="h3">Exportar análisis para IA</h2><p>Prepara archivos locales para revisarlos o compartirlos manualmente. No se envía nada. El JSON puede contener preguntas y soluciones de examen. Las explicaciones incluidas deben estar revisadas.</p>
+      <div class="row"><label>Desde <input type="date" id="ai-export-from" value="${exportFrom}"></label><label>Hasta <input type="date" id="ai-export-to" value="${exportToday}"></label></div>
+      <div class="seg" role="group" aria-label="Modalidades para exportar"><label><input type="checkbox" id="ai-export-practice" checked> Práctica</label><label><input type="checkbox" id="ai-export-simulation" checked> Simulacros</label></div>
+      <button class="btn sec" id="ai-export-find">Buscar sesiones completadas</button>
+      <div id="ai-export-sessions" class="ai-export-sessions" aria-live="polite">${exportChoices === null ? '' : exportChoices.length ? exportChoices.map((choice, index) => `<label class="ai-export-session"><input type="checkbox" data-ai-export-session="${esc(choice.id)}" checked> ${choice.mode === 'simulation' ? 'Simulacro' : 'Práctica'} · ${new Date(choice.startedAt).toLocaleString('es-ES')} · ${count(choice.attemptCount, 'pregunta', 'preguntas')}</label>`).join('') : '<p class="sub">No hay sesiones completadas con esos filtros.</p>'}</div>
+      <button class="btn" id="ai-export-build" ${!exportChoices?.length ? 'disabled' : ''}>Preparar vista previa y archivos</button>
+      <p id="ai-export-status" role="status" aria-live="polite">${esc(exportMessage)}</p>
+      ${exportArtifact ? `<div class="card ai-export-preview"><p>Vista previa: ${count(exportArtifact.manifest.partCount, 'parte JSON', 'partes JSON')} · ${count(exportArtifact.manifest.parts.reduce((sum, part) => sum + part.sessionCount, 0), 'sesión', 'sesiones')} · ${count(exportArtifact.manifest.parts.reduce((sum, part) => sum + part.attemptCount, 0), 'intento', 'intentos')} · ${(exportArtifact.totalBytes / 1024).toLocaleString('es-ES', { maximumFractionDigits: 1 })} KB en total.</p><ul>${exportArtifact.manifest.parts.map(part => `<li>${esc(part.fileName)}: ${part.sessionCount} sesiones, ${part.attemptCount} intentos, ${part.eventCount} eventos · ${part.sizeBytes.toLocaleString('es-ES')} bytes${part.oversized ? ' · supera el tamaño preferido y se conserva completa' : ''}</li>`).join('')}</ul><p>Incluye métricas, tiempos y calidad, estados, confianza, descartes, marcas, contenido disponible de la misma revisión y explicaciones revisadas.</p><button class="btn sec" id="ai-export-download-manifest">Descargar manifiesto JSON</button> <button class="btn sec" id="ai-export-download-markdown">Descargar informe Markdown</button>${exportArtifact.partFiles.map((part, index) => `<button class="btn sec" data-ai-export-part="${index}">Descargar ${esc(part.fileName)}</button>`).join('')}</div>` : ''}
+      <hr><p>El borrado afecta al historial detallado de este ámbito en el dispositivo y crea una marca para que las copias antiguas no lo restauren. Conserva estadísticas agregadas, falladas, sesiones históricas y el progreso de estudio. Las copias ya descargadas no se borran.</p><button class="btn danger" id="ai-history-delete">Borrar historial detallado</button>
+    </div>
     <div class="card"><h2 class="h3">Copias de seguridad</h2><p class="sm">Importar combina los registros válidos con tu progreso actual y conserva los ausentes en la copia. Revisa el resumen antes de confirmar. <a href="#/ayuda?tema=progreso">Ayuda de guardado y sincronización</a></p><p id="importmsg" role="status">${esc(importMessage)}</p><button class="btn sec" id="ex">Exportar progreso</button> <label class="btn sec file">Importar<input type="file" id="im" accept=".json"></label></div>
     <div class="card"><h2 class="h3">Zona delicada</h2><button class="btn danger" id="rs">Borrar progreso de este dispositivo</button></div>
     <details class="card" id="diagnostic"><summary>Diagnóstico técnico</summary><p>Versión: ${esc(APP_BUILD)}</p><p>Dominio: ${esc(s.host || 'no disponible')} · autenticación: ${esc(s.authDomain || 'no disponible')}</p><p>Estado: ${esc(s.state)}</p></details>
@@ -121,6 +136,58 @@ routes.settings = async function () {
     $('#fz').onclick = e => { const b = (e.target as El).closest<El>('button'); if (b) { store.setCfg('ui', { ...normUi(store.getCfg().ui), size: +b.dataset.v! }); draw(); } };
     $<El>('#dl').disabled = downloading;
     $('#dl').onclick = () => download();
+    const exportDates = () => {
+      const fromValue = $<El>('#ai-export-from').value, toValue = $<El>('#ai-export-to').value;
+      if (!/^\d{4}-\d\d-\d\d$/.test(fromValue) || !/^\d{4}-\d\d-\d\d$/.test(toValue)) throw new Error('Elige un periodo válido.');
+      const from = Date.parse(`${fromValue}T00:00:00.000Z`), to = Date.parse(`${toValue}T00:00:00.000Z`) + 86400000;
+      if (to <= from) throw new Error('La fecha «Hasta» debe ser igual o posterior a «Desde».');
+      const modes = [$('#ai-export-practice').checked ? 'practice' : null, $('#ai-export-simulation').checked ? 'simulation' : null].filter(Boolean);
+      if (!modes.length) throw new Error('Selecciona práctica, simulacros o ambos.');
+      return { from, to, modes };
+    };
+    const saveExportFile = (fileName: string, content: string, type: string) => {
+      const url = URL.createObjectURL(new Blob([content], { type }));
+      const anchor = document.createElement('a'); anchor.href = url; anchor.download = fileName; anchor.click();
+      setTimeout(() => URL.revokeObjectURL(url), 30_000);
+    };
+    $('#ai-export-find').onclick = async () => {
+      try {
+        const filters = exportDates();
+        exportMessage = 'Buscando sesiones completadas…'; exportArtifact = null; draw();
+        const choices = await listManualExportSessions(filters.from, filters.to, filters.modes);
+        exportChoices = choices;
+        if (!alive()) return;
+        exportMessage = `${count(choices.length, 'sesión completada', 'sesiones completadas')} disponibles.`; draw();
+      } catch (error) { exportMessage = (error as Error).message; draw(); }
+    };
+    $('#ai-export-build').onclick = async () => {
+      try {
+        const filters = exportDates();
+        const sessionIds = [...app.querySelectorAll<HTMLInputElement>('[data-ai-export-session]:checked')].map(input => input.dataset.aiExportSession!);
+        if (!sessionIds.length) throw new Error('Selecciona al menos una sesión.');
+        exportMessage = 'Preparando archivos…'; draw();
+        exportArtifact = await createManualAiExport({ ...filters, sessionIds });
+        if (!alive()) return;
+        exportMessage = 'Vista previa lista. Los archivos solo se guardan si pulsas cada botón de descarga.'; draw();
+      } catch (error) { exportMessage = (error as Error).message; draw(); }
+    };
+    $('#ai-export-download-manifest') && ($('#ai-export-download-manifest').onclick = () => exportArtifact && saveExportFile('tai-estudio-manifiesto.json', exportArtifact.manifestText, 'application/json;charset=utf-8'));
+    $('#ai-export-download-markdown') && ($('#ai-export-download-markdown').onclick = () => exportArtifact && saveExportFile('tai-estudio-informe.md', exportArtifact.markdown, 'text/markdown;charset=utf-8'));
+    app.querySelectorAll<HTMLButtonElement>('[data-ai-export-part]').forEach(button => button.onclick = () => {
+      const part = exportArtifact?.partFiles[Number(button.dataset.aiExportPart)];
+      if (part) saveExportFile(part.fileName, part.content, 'application/json;charset=utf-8');
+    });
+    $('#ai-history-delete').onclick = async () => {
+      if (!(await ask('Se eliminarán del dispositivo los intentos, eventos y sesiones detalladas de este ámbito. Las estadísticas agregadas y las sesiones históricas permanecen. La marca de borrado se sincronizará con la cuenta cuando haya conexión; las copias descargadas previamente no se borran. ¿Continuar?', 'Borrar historial detallado', true))) return;
+      if (!alive()) return;
+      try {
+        const result = await deleteManualStudyHistory();
+        if (!alive()) return;
+        exportChoices = null; exportArtifact = null;
+        exportMessage = `Historial detallado borrado. ${result.accountSyncPending ? 'La marca de borrado queda pendiente de sincronizar con la cuenta.' : 'Borrado local del ámbito invitado.'}`;
+        draw(); toast('El progreso agregado sigue intacto.');
+      } catch { if (alive()) { exportMessage = 'No se pudo borrar el historial detallado.'; draw(); } }
+    };
     $('#anki') && ($('#anki').onclick = async () => {
       const cs = await allCards(); if (!alive()) return; const f = (t: any) => String(t).replace(/[\t\r\n]+/g, ' ');
       const txt = '#separator:tab\n#html:false\n#tags column:4\n' + cs.map((c: any) => [f(c.q), f(c.a), f(c.ref || ''), f((c.t || '').replace('.', '_') + ' ' + (c.tipo || ''))].join('\t')).join('\n');

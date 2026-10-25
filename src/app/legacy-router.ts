@@ -28,6 +28,7 @@ import { explanationMapper } from '../features/explanations/explanation-mapper.j
 import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
 import { loadStrategyReportForPeriod } from './strategy-composition.js';
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
+import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './ai-study-export-composition.js';
 
 // ───────── router ─────────
 const routes: Record<string, any> = {};
@@ -892,7 +893,7 @@ const { allCards, curatedCards } = registerCards({ routes, go, pw, reportBox, ve
 registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport: loadStrategyReportForPeriod, renderStrategyReport });
 registerHome({ routes, go, saludo, quickSession, startRepaso, openMenu, dominioTemas, falladasIds }, screen);
 registerAcceso({ routes, go }, screen);
-registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate }, screen);
+registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate, listManualExportSessions, createManualAiExport, deleteManualStudyHistory }, screen);
 registerHelp(routes, screen);
 
 // ───────── arranque ─────────
