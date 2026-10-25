@@ -90,6 +90,7 @@ test.describe('service worker real', () => {
   });
   await page.goto('/#/home');
   await expect(page.locator('#quick')).toBeVisible();
+  expect(await page.evaluate(async () => (await fetch('explanations/index.json')).ok)).toBe(true);
   await context.setOffline(true);
   await page.reload();
   await expect(page.locator('#quick')).toBeVisible();

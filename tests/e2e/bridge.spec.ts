@@ -1,4 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
+import { readFileSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
 async function start(page: Page) {
   const errors: string[] = [];
   page.on('pageerror', e => errors.push(e.message));
@@ -128,6 +130,53 @@ test('práctica permite volver a pendientes, bloquea respondidas y conserva cons
   await expect(page.locator('.trio div:last-child')).toContainText('9');
   await expect(page.locator('.rv')).toHaveCount(10);
   await expect(page.locator('.rv .tag.warn')).toContainText('Solución consultada · blanco');
+  expect(errors).toEqual([]);
+});
+test('las explicaciones draft solo aparecen tras revelar en práctica y están cacheadas offline', async ({ page, context }) => {
+  const errors = await start(page);
+  await page.route('**/explanations/index.json', async route => {
+    const questionId = await page.evaluate(() => {
+      const run = JSON.parse(localStorage.getItem('tai.run:guest') || 'null');
+      const questionId = run?.ids?.[run.idx];
+      if (!questionId) throw new Error('No se encontró el identificador de la pregunta del intento');
+      return questionId;
+    });
+    const question = readdirSync(join(process.cwd(), 'public/data')).filter(name => /^T.*\.json$/.test(name))
+      .map(name => JSON.parse(readFileSync(join(process.cwd(), 'public/data', name), 'utf8')) as { i: string; q: string; a: string[] }[])
+      .flat().find(item => item.i === questionId);
+    if (!question) throw new Error(`No se encontró ${questionId} en el banco local`);
+    const content = `${question.q}\u0000${question.a.join('\u0000')}`;
+    let hash = 2166136261;
+    for (let index = 0; index < content.length; index++) { hash ^= content.charCodeAt(index); hash = Math.imul(hash, 16777619); }
+    const row = { i: question.i, rev: `fnv1a-${(hash >>> 0).toString(16).padStart(8, '0')}` };
+    await route.fulfill({ json: [{ ...row, lang: 'Java', status: 'draft', snippet: 'int valor = 1;', result: { kind: 'logic', value: '1' }, steps: [{ title: 'Lectura', detail: 'El ejemplo explica la evaluación.' }], distractors: [], limitation: 'Material de práctica; no se ejecuta.', editorialNote: 'Pendiente de revisión humana.', sources: [{ title: 'JLS', url: 'https://docs.oracle.com/javase/specs/jls/se21/html/' }] }] });
+  });
+  await page.locator('#quick').click();
+  await expect(page.locator('#code-explanation-slot')).toHaveCount(0);
+  await page.locator('#blank').click();
+  await page.locator('#prev').click();
+  await page.locator('#reveal-solution').click();
+  await expect(page.locator('.code-explanation')).toBeVisible();
+  await expect(page.locator('.code-explanation .tag')).toHaveText('Borrador');
+  await page.reload();
+  await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
+  await page.locator('.overlay [data-v="1"]').click();
+  await expect(page.locator('.code-explanation')).toBeVisible();
+  await context.setOffline(true);
+  const cached = await page.evaluate(async () => (await fetch('explanations/index.json')).ok);
+  expect(cached).toBe(true);
+  expect(errors).toEqual([]);
+});
+test('el simulacro no presenta explicaciones ni corrección mientras sigue activo', async ({ page }) => {
+  const errors = await start(page);
+  await page.goto('/#/sim');
+  await page.locator('#n button[data-v="40"]').click();
+  await page.locator('#scope button[data-v="todos"]').click();
+  await page.locator('#go').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  await expect(page.locator('.fb, .code-explanation')).toHaveCount(0);
+  await page.locator('.opt').first().click();
+  await expect(page.locator('.fb, .code-explanation')).toHaveCount(0);
   expect(errors).toEqual([]);
 });
 test('subrayados y señales son opcionales, no responden y se conservan al reanudar', async ({ page }) => {

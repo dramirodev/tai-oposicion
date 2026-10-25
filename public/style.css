@@ -456,6 +456,9 @@ main:has(.action-plan){padding-bottom:calc(230px + var(--sab))}
 input:not([type=checkbox]):not([type=radio]):not([type=range]),select{border-color:var(--control-line)}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]){--control-line:#747f9c}}
 :root[data-theme=dark]{--control-line:#747f9c}
+.code-explanation{margin-top:16px;border-inline-start:4px solid var(--selb)}
+.code-explanation .code-sample,.code-explanation .code-result{max-width:100%;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}
+.code-explanation .explanation-status{line-height:1.6}
 @media(min-width:1000px){
  main:has(.with-sup){max-width:1120px}
  .card.q.with-sup{display:flow-root;min-height:300px}

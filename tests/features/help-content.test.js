@@ -10,7 +10,7 @@ describe('help content', () => {
   });
 
   it('cubre las guías principales de la aplicación', () => {
-    expect(HELP_SECTIONS.map(section => section.id)).toEqual(['sesiones', 'simulacros', 'puntuacion', 'progreso', 'repaso']);
+    expect(HELP_SECTIONS.map(section => section.id)).toEqual(['sesiones', 'simulacros', 'explicaciones', 'puntuacion', 'progreso', 'repaso']);
     expect(HELP_SECTIONS.every(section => section.title && section.body)).toBe(true);
   });
 });

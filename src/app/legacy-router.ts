@@ -23,6 +23,9 @@ import { createAccountRecovery } from '../core/application/recover-account.js';
 import type { Origin } from '../core/domain/entities.js';
 import { createHighlight, questionContentRevision, resolveHighlight } from '../core/domain/attempts/highlights.js';
 import { canonicalText, paintTextHighlight, selectedTextAnchor } from './legacy-highlight-dom.js';
+import { findLegacyCodeExplanation } from './explanation-composition.js';
+import { explanationMapper } from '../features/explanations/explanation-mapper.js';
+import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
 
 // ───────── router ─────────
 const routes: Record<string, any> = {};
@@ -255,6 +258,14 @@ routes.quiz = async function () {
     <p class="sub"><a href="#/ayuda?tema=sesiones">Ayuda sobre controles y estados de pregunta</a></p>
     ${R.paused ? `<div class="overlay" role="dialog" aria-modal="true" aria-labelledby="pt"><div class="card"><h2 id="pt">En pausa</h2><p>El tiempo está detenido.</p><button class="btn" id="resume">Continuar</button></div></div>` : ''}`;
     bind(q);
+    if (reveal && R.feedback) {
+      const run = R, index = R.idx, slot = app.querySelector<HTMLElement>('#code-explanation-slot');
+      if (slot) void findLegacyCodeExplanation(q.i, q.q, q.a).then(result => {
+        if (!slot.isConnected || getCurrentRun() !== run || run.idx !== index) return;
+        if (result.status === 'current') slot.innerHTML = renderCodeExplanation(explanationMapper.toViewModel(result.explanation));
+        else if (result.status === 'outdated') slot.textContent = 'Hay una explicación de una revisión anterior; no se muestra para evitar información desactualizada.';
+      }).catch(() => {});
+    }
     (R.highlights?.[R.idx] || []).forEach(mark => {
       const root = mark.field === 'statement' ? app.querySelector('.enun')
         : app.querySelector(`.opt[data-i="${Number(mark.field.slice(7))}"] .pre`);
@@ -288,7 +299,7 @@ routes.quiz = async function () {
       ${!wasConsulted && !ok && a !== -1 && R.feedback ? `<div class="mot" id="mot"><small>¿Por qué fallé?${(() => { const f = R.fast?.[R.idx]; return f && f[0] < f[1] * 0.6 ? ` <b class="r">Respondiste en ${f[0]} s; leerla bien lleva ≈${f[1]} s. ¿Fue velocidad?</b>` : ''; })()}</small>${[5, 7, 1, 2, 3, 4].map(m => `<button class="${store.rec(q.i)?.[9] === m ? 'on' : (m === 7 && R.fast?.[R.idx] && R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? 'sug' : '')}" data-m="${m}">${MOTIVOS_FALLO[m]}</button>`).join('')}<a class="sm" href="#/ayuda?tema=motivos">¿Qué significa cada motivo?</a><button class="mk" id="mkcard" ${store.rec(q.i)?.[9] === 4 && !store.cardRec('FC-Q-' + q.i) ? 'hidden' : ''}>${store.cardRec('FC-Q-' + q.i) ? '📇 Tarjeta creada ✓' : '📇 Hacer tarjeta'}</button></div>` : ''}
       ${ok && a !== -1 && R.feedback ? (() => { const r = store.rec(q.i) || [], en = r[3] === 0 && r[4] > now() + 86400000 * 1.5; return `<div class="mot" id="acc"><small>¿Seguro? (entra en repaso a +2 días)</small>${(() => { const pl = R.luck?.[R.idx]; return pl === 6 ? '<b class="r">🍀 Marcada como suerte: acierto 1/2. Otra vez bien y se quita la etiqueta.</b>' : pl === 8 ? '<b class="r">🍀 ¡Acierto 2/2! Etiqueta de suerte quitada: ya la sabes.</b>' : ''; })()}<button class="${en && r[9] !== 6 && r[9] !== 8 ? 'on' : ''}" data-a="doubt">🤔 Acerté dudando</button><button class="${r[9] === 6 || r[9] === 8 ? 'on' : ''}" data-a="suerte">🍀 Fue suerte</button></div>`; })() : ''}
       <button class="ghost fl" id="flag">${store.rec(q.i)?.[6] ? '★ Dudosa' : '☆ Marcar como dudosa'}</button>
-      <div class="repw" id="rep"></div></div>`;
+      <div class="repw" id="rep"></div><div id="code-explanation-slot" aria-live="polite"></div></div>`;
   }
   function bind(q: any) {
     app.querySelectorAll<El>('[data-jump]').forEach(b => b.onclick = () => { if (getCurrentRun() !== R || R.paused) return; setQuestionIndex(+b.dataset.jump!); draw(); focusHeading(); window.scrollTo(0, 0); });
@@ -445,9 +456,15 @@ routes.result = async function () {
       ${confidences[k] ? `<p class="sub">Confianza antes de responder: ${confidences[k] === 'sure' ? 'Seguro' : confidences[k] === 'betweenTwo' ? 'Entre dos' : 'Adivino'}</p>` : ''}
       ${discardedOptions[k]?.length ? `<p class="sub">Opciones que descartaste antes de responder: ${discardedOptions[k].map(index => L[index]).join(', ')}</p>` : ''}
       ${highlights[k]?.length ? '<p class="sub">Tus marcas de este intento:</p>' : ''}
-      ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${sourceHtml(q, VERIFIED_SOURCES)}<div class="repw" data-rq="${k}"></div></details>`;
+      ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${sourceHtml(q, VERIFIED_SOURCES)}<div class="code-explanation-slot" data-explanation="${k}" aria-live="polite"></div><div class="repw" data-rq="${k}"></div></details>`;
   }).join('')}</div>`;
   items.forEach((question, index) => {
+    const explanationSlot = app.querySelector<HTMLElement>(`[data-explanation="${index}"]`);
+    if (!ses.interrupted) void findLegacyCodeExplanation(question.i, question.q, question.a).then(result => {
+      if (!explanationSlot?.isConnected) return;
+      if (result.status === 'current') explanationSlot.innerHTML = renderCodeExplanation(explanationMapper.toViewModel(result.explanation), `result-${index}`);
+      else if (result.status === 'outdated') explanationSlot.textContent = 'Hay una explicación de una revisión anterior; no se muestra para evitar información desactualizada.';
+    }).catch(() => {});
     const revision = questionContentRevision(question.q, question.a);
     const panel = app.querySelectorAll<HTMLElement>('.rv')[index];
     (highlights[index] || []).forEach(mark => {
