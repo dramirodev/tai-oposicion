@@ -54,7 +54,7 @@ routes.cards = async function () {
       <div class="bar2 action-plan"><p class="sm" id="card-plan" role="status">${ids.length} ${ids.length === 1 ? 'tarjeta' : 'tarjetas'}: ${reviews} de repaso y ${ids.length - reviews} nuevas.</p><button class="btn" id="go" ${!ids.length ? 'disabled' : ''}>Empezar</button></div>` :
       `<div class="note">Aún no tienes tarjetas. Al fallar una pregunta en un test pulsa <b>«📇 Hacer tarjeta»</b> (si el motivo no es un despiste) y aparecerá aquí.</div>`}`;
     $('#cn') && ($('#cn').onclick = e => { const b = (e.target as El).closest<El>('button'); if (b) { store.setCfg('cardsc', { ...cfg, n: +b.dataset.v! }); cfg.n = +b.dataset.v!; draw(); } });
-    $('#cs') && ($('#cs').onclick = e => { const b = (e.target as El).closest<El>('button'); if (b) { store.setCfg('cardsc', { ...cfg, scope: b.dataset.v! }); cfg.scope = b.dataset.v!; draw(); } });
+    $('#cs') && ($('#cs').onclick = e => { const b = (e.target as El).closest<El>('button'), scope = b?.dataset.v; if (b && (scope === 'vistos' || scope === 'todos')) { store.setCfg('cardsc', { ...cfg, scope }); cfg.scope = scope; draw(); } });
     $('#go') && ($('#go').onclick = () => {
       if (account !== store.accountId()) return;
       if (!ids.length) { toast('No hay tarjetas pendientes ahora mismo. Vuelve cuando venza alguna.'); return; }

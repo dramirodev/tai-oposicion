@@ -18,6 +18,7 @@ import { isFull, isOwner, GUEST_ROUTES } from '../adapters/legacy/access.js';
 import { getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, quickItems, repasoItems, trapTest, dominioTemas, falladasIds } from '../core/application/legacy-engine.js';
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
+import type { Origin } from '../core/domain/entities.js';
 
 // ───────── router ─────────
 const routes: Record<string, any> = {};
@@ -384,7 +385,7 @@ routes.test = async function () {
   const { app, $, screen: routeScreen } = legacyScope(screen);
   const idx = await getIndex(); await getMeta();
   const cfg = store.getCfg().test || { sel: [], n: 15, mode: 'nuevas', o: ['O', 'A', 'G'] };
-  const sel = new Set<string>(cfg.sel), org = new Set(cfg.o);
+  const sel = new Set<string>(cfg.sel || []), org = new Set<Origin>(cfg.o || ['O', 'A', 'G']);
   let allTopics = typeof cfg.all === 'boolean' ? cfg.all : sel.size === 0;
   let themeQuery = ''; const openBlocks = new Set<string>(['T1']);
   const viewAccount = store.accountId();
@@ -401,7 +402,7 @@ routes.test = async function () {
       <div class="seg" id="mode">${[['nuevas', 'Nuevas primero'], ['aleatorio', 'Aleatorio'], ['falladas', 'Falladas'], ['dudosas', 'Dudosas'], ['trampas', 'Mis trampas']].map(([v, t]) => `<button class="${cfg.mode === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
       ${cfg.mode === 'trampas' ? '<p class="sub sm">Saca preguntas de tus 3 trampas con más fallos (mínimo 5 respuestas por trampa): primero las que fallaste, luego las que no has visto.</p>' : ''}
       <h2 class="h3">Origen</h2>
-      <div class="seg multi" id="org">${[['G', 'Generadas'], ['O', 'Oficiales'], ['A', 'Academia']].map(([v, t]) => `<button class="${org.has(v) ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
+      <div class="seg multi" id="org">${([['G', 'Generadas'], ['O', 'Oficiales'], ['A', 'Academia']] as const).map(([v, t]) => `<button class="${org.has(v) ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
     </div>
     <div class="card"><h2 class="h3">Temas <small>(${allTopics ? 'Todo el temario' : sel.size + ' elegidos'})</small></h2>
     <div class="seg" id="test-scope"><button id="test-all" class="${allTopics ? 'on' : ''}">Todo el temario</button><button id="test-custom" class="${!allTopics ? 'on' : ''}">Elegir temas</button></div>
@@ -420,8 +421,8 @@ routes.test = async function () {
     $('#by').onclick = e => { if ((e.target as El).dataset.v!) { cfg.pt = +(e.target as El).dataset.v!; save(); draw(); } };
     $('#n') && ($('#n').onclick = e => { if ((e.target as El).dataset.v!) { cfg.n = +(e.target as El).dataset.v!; save(); draw(); } });
     $('#mins') && ($('#mins').onclick = e => { if ((e.target as El).dataset.v!) { cfg.min = +(e.target as El).dataset.v!; save(); draw(); } });
-    $('#mode').onclick = e => { if ((e.target as El).dataset.v!) { cfg.mode = (e.target as El).dataset.v!; save(); draw(); } };
-    $('#org').onclick = e => { const v = (e.target as El).dataset.v!; if (v) { org.has(v) ? org.delete(v) : org.add(v); if (!org.size) org.add(v); save(); draw(); } };
+    $('#mode').onclick = e => { const v = (e.target as El).dataset.v; if (v && ['nuevas', 'aleatorio', 'falladas', 'dudosas', 'trampas'].includes(v)) { cfg.mode = v as NonNullable<typeof cfg.mode>; save(); draw(); } };
+    $('#org').onclick = e => { const v = (e.target as El).dataset.v; if (v === 'O' || v === 'A' || v === 'G') { org.has(v) ? org.delete(v) : org.add(v); if (!org.size) org.add(v); save(); draw(); } };
     app.querySelectorAll<El>('[data-t]').forEach(c => c.onchange = () => { allTopics = false; c.checked ? sel.add(c.dataset.t!) : sel.delete(c.dataset.t!); save(); draw(); });
     app.querySelectorAll<El>('[data-b]').forEach(b => b.onclick = () => { allTopics = false; const ids = idx.temas.filter(t => t.id.startsWith(b.dataset.b!)).map(t => t.id); const all = ids.every(i => sel.has(i)); ids.forEach(i => all ? sel.delete(i) : sel.add(i)); save(); draw(); });
     $('#useSeen').onclick = () => { const v = store.getSeen(); if (!v.length) { toast('Aún no has marcado temas vistos (pantalla «Temas vistos» en Inicio).'); return; } allTopics = false; sel.clear(); v.forEach(t => sel.add(t)); save(); draw(); };
@@ -429,12 +430,12 @@ routes.test = async function () {
       if (!allTopics && !sel.size) return toast('Elige al menos un tema o selecciona Todo el temario.');
       const temas = allTopics ? idx.temas.map(t => t.id) : [...sel];
       if (cfg.mode === 'trampas') {
-        const r = await trapTest(cfg.pt ? 300 : cfg.n, undefined, sel.size ? ([...sel] as string[]) : undefined);
+        const r = await trapTest(cfg.pt ? 300 : cfg.n || 15, undefined, sel.size ? [...sel] : undefined);
         if (viewAccount !== store.accountId() || !$('#test-summary')) return;
         if (!r.items.length) { toast('Aún no hay datos de trampas: contesta al menos 5 preguntas de alguna trampa y falla alguna.'); return; }
         startRun({ kind: 'test', feedback: true, items: r.items, titulo: 'Mis trampas · ' + r.targets.map(k => TRAMPAS[k] || k).join(', '), ...(cfg.pt ? { limit: cfg.min || 20, porTiempo: true } : {}) }); return;
       }
-      const items = await pick({ temas: temas as string[], origins: org, mode: cfg.mode, n: cfg.pt ? 300 : cfg.n });
+      const items = await pick({ temas, origins: org, mode: cfg.mode || 'nuevas', n: cfg.pt ? 300 : cfg.n || 15 });
       if (viewAccount !== store.accountId() || !$('#test-summary')) return;
       if (!items.length) { toast(cfg.mode === 'falladas' ? 'No tienes falladas en esa selección.' : cfg.mode === 'dudosas' ? 'No tienes preguntas marcadas como dudosas ahí.' : 'No hay preguntas con ese filtro.'); return; }
       startRun({ kind: 'test', feedback: true, items, titulo: (sel.size === 1 ? temaName([...sel][0] as string) : 'Test') + (cfg.pt ? ' · ' + (cfg.min || 20) + ' min' : ''), ...(cfg.pt ? { limit: cfg.min || 20, porTiempo: true } : {}) });
@@ -509,15 +510,15 @@ routes.sim = async function () {
       ${cfg.scope !== 'todos' && !seenN ? '<p class="sub sm">No has marcado ningún tema: se usará todo el temario.</p>' : ''}
       <p class="sub sm"><a href="#/temario">Editar temas vistos</a></p>
       <h2 class="h3">Origen de las preguntas</h2>
-      <div class="seg multi" id="org">${[['G', 'Generadas'], ['O', 'Oficiales'], ['A', 'Academia']].map(([v, t]) => `<button class="${org.has(v) ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
+      <div class="seg multi" id="org">${([['G', 'Generadas'], ['O', 'Oficiales'], ['A', 'Academia']] as const).map(([v, t]) => `<button class="${org.has(v) ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
       <label class="chk"><input type="checkbox" id="p2" ${cfg.parte2 ? 'checked' : ''}> Después, parte 2: elegir 1 de 2 supuestos prácticos (20 preguntas)</label>
     </div>
     <div class="note">Reparto por temas calcado a los exámenes oficiales. Cada fallo resta 1/3 de acierto; en blanco no resta. No hay corrección hasta el final.</div>
     <div class="bar2"><button class="btn" id="go">Empezar simulacro</button></div>`;
     $('#n').onclick = e => { if ((e.target as El).dataset.v!) { cfg.n = +(e.target as El).dataset.v!; if (cfg.n === 40 && cfg.min > 60) cfg.min = 45; if (cfg.n === 80 && cfg.min < 90) cfg.min = 90; save(); drawCompleto(); } };
-    $('#scope').onclick = e => { if ((e.target as El).dataset.v!) { cfg.scope = (e.target as El).dataset.v!; save(); drawCompleto(); } };
+    $('#scope').onclick = e => { const value = (e.target as El).dataset.v; if (value === 'vistos' || value === 'todos') { cfg.scope = value; save(); drawCompleto(); } };
     $('#min').onclick = e => { if ((e.target as El).dataset.v!) { cfg.min = +(e.target as El).dataset.v!; save(); drawCompleto(); } };
-    $('#org').onclick = e => { const v = (e.target as El).dataset.v!; if (v) { org.has(v) ? org.delete(v) : org.add(v); if (!org.size) org.add(v); save(); drawCompleto(); } };
+    $('#org').onclick = e => { const v = (e.target as El).dataset.v; if (v === 'O' || v === 'A' || v === 'G') { org.has(v) ? org.delete(v) : org.add(v); if (!org.size) org.add(v); save(); drawCompleto(); } };
     $<El>('#p2').onchange = e => { cfg.parte2 = (e.target as El).checked; save(); };
     $('#go').onclick = guard(async () => {
       const useSeen = cfg.scope !== 'todos' && seenN;

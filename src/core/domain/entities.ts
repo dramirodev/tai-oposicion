@@ -17,13 +17,19 @@ export interface AccessRequest { uid: string; email: string; name?: string; requ
 export interface ExamConfig { examDate?: string; durationMinutes?: number; questionCount?: number; [setting: string]: string|number|boolean|null|undefined }
 export interface Topic { id: string; name: string }
 export interface Preferences {
+  exam?: string;
   ui?: { theme?: 'auto' | 'light' | 'dark'; size?: number; lectura?: number };
-  test?: { all?: boolean; sel?: string[]; n?: number; mode?: string; o?: ('O' | 'A' | 'G')[]; pt?: number; min?: number };
-  sim?: { n?: number; min?: number; o?: ('O' | 'A' | 'G')[]; parte2?: boolean; scope?: 'vistos' | 'todos' };
+  test?: { all?: boolean; sel?: string[]; n?: number; mode?: 'nuevas' | 'aleatorio' | 'falladas' | 'dudosas' | 'trampas'; o?: Origin[]; pt?: number; min?: number };
+  sim?: { n?: number; min?: number; o?: Origin[]; parte2?: boolean; scope?: 'vistos' | 'todos' };
   cardsc?: { n?: number; scope?: 'vistos' | 'todos' };
   evo?: { m?: 'acierto' | 'tiempo'; f?: string; w?: number; tabla?: boolean };
   simc?: { a?: number; b?: number };
   slow?: { ok?: boolean };
+  simtab?: string;
+  exsel?: string;
+  errf?: string;
+  dmord?: string;
+  tdet?: Record<string, number[]>;
   [key: string]: unknown;
 }
 export interface UserProgress { statistics: Record<string, QuestionStats>; sessions: SessionResult[]; preferences: Preferences; seenTopics: string[]; seenAt: number; reports: Record<string, ErrorReport>; cardReviews: Record<string, CardReview> }

@@ -5,7 +5,7 @@ import tseslint from 'typescript-eslint';
 export default tseslint.config(
   { ignores: [
     'dist/**', 'node_modules/**', 'tests/**', 'public/**', 'scripts/**',
-    'src/core/application/legacy-*.ts', 'src/adapters/legacy/types.ts',
+    'src/core/application/legacy-*.ts',
     'src/legacy/**', 'src/features/**/legacy.ts',
     'src/app/legacy-router.ts',
   ] },

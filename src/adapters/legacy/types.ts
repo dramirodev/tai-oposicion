@@ -1,4 +1,5 @@
 // Tipos compartidos de datos. Los registros viajan como tuplas/arrays porque se guardan así en localStorage y Firestore.
+import type { Preferences } from '../../core/domain/entities.js';
 
 /** Resultado de una respuesta: 1 acierto, 0 fallo, 2 en blanco. */
 export type Res = 0 | 1 | 2;
@@ -30,7 +31,7 @@ export type ReportMap = Record<string, Report>;
 export interface SeenDoc { t: string[]; ts: number }
 
 /** Preferencias guardadas (cada clave tiene su esquema en config.ts). */
-export type Cfg = Record<string, any>;
+export type Cfg = Preferences;
 
 export interface AppState {
   stats: StatMap; sessions: Session[]; cfg: Cfg; seen: SeenDoc; reports: ReportMap; cards: CardMap;
@@ -47,8 +48,8 @@ export interface Question {
 }
 
 /** Entrada de meta.json: [tema, ...datos auxiliares]. */
-export type MetaEntry = [string, ...any[]];
-export interface Meta { [id: string]: any; _by: Record<string, string[]> }
+export type MetaEntry = [string, Origin, string, (number | string)[], number];
+export type Meta = Record<string, MetaEntry> & { _by: Record<string, string[]> };
 export interface TemaInfo { id: string; nombre: string; n: number }
 export interface Index { n: number; nsup: number; temas: TemaInfo[] }
 

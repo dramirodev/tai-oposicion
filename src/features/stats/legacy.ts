@@ -104,7 +104,7 @@ function paintEvo(idx: any) {
     <div class="row"><select id="evf" aria-label="Qué medir en la evolución" ${c.m === 'tiempo' ? 'disabled' : ''}>${opts}</select><select id="evw" aria-label="Número de semanas">${[8, 12, 26].map(v => `<option value="${v}" ${c.w === v ? 'selected' : ''}>${v} semanas</option>`).join('')}</select></div>
     ${chart}
     <p class="legend">${c.m === 'tiempo' ? 'Segundos medios por pregunta en tus sesiones (sin contar pausas).' : 'Porcentaje de aciertos por semana, sobre las preguntas contestadas en esa semana.'} <button class="ghost sm" id="evt" aria-expanded="${!!c.tabla}">${c.tabla ? 'Ocultar tabla' : 'Ver tabla'}</button></p>${tabla}</div>`;
-  $('#evm').onclick = e => { if ((e.target as El).dataset.v!) { c.m = (e.target as El).dataset.v!; save(); paintEvo(idx); $(`#evm [data-v="${c.m}"]`).focus({ preventScroll: true }); } };
+  $('#evm').onclick = e => { const mode = (e.target as El).dataset.v; if (mode === 'acierto' || mode === 'tiempo') { c.m = mode; save(); paintEvo(idx); $(`#evm [data-v="${c.m}"]`).focus({ preventScroll: true }); } };
   $<El>('#evf').onchange = e => { c.f = (e.target as El).value; save(); paintEvo(idx); $('#evf').focus({ preventScroll: true }); };
   $<El>('#evw').onchange = e => { c.w = +(e.target as El).value; save(); paintEvo(idx); $('#evw').focus({ preventScroll: true }); };
   $('#evt').onclick = () => { c.tabla = !c.tabla; save(); paintEvo(idx); $('#evt').focus({ preventScroll: true }); };
