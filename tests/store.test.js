@@ -150,6 +150,10 @@ describe('validación de datos externos', () => {
     expect(Object.keys(c.temas)).toEqual(['T1.01']); expect(c.fails).toEqual(['q1']);
     expect(st.cleanSession({ id: XSS, ts: 1 })).toBeNull(); expect(st.cleanSession(null)).toBeNull();
   });
+  it('cleanSession conserva los contadores finitos tras validarlos', () => {
+    expect(st.cleanSession({ id: 's3', ts: 1, temas: { 'T1.01': [100001, 100002] } }).temas['T1.01'])
+      .toEqual([100001, 100002]);
+  });
   it('importAll rechaza archivos inválidos y limpia los válidos', () => {
     expect(() => st.importAll('no json')).toThrow(); expect(() => st.importAll('{"a":1}')).toThrow();
     st.importAll(JSON.stringify({ stats: { q9: [1, 1, 9, -1, 0, 1, 0], [XSS]: [1, 1, 1, -1, 0, 1, 0] }, sessions: [{ id: 's9', ts: 9, nota: XSS }, 7] }));

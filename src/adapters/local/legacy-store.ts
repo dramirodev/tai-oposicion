@@ -23,7 +23,8 @@ export const LUCKY_DAYS = 1; // las acertadas «por suerte» vuelven cada día h
 // ── Validación de datos externos (localStorage, Firestore, archivos importados) ──
 const num = (v: unknown, lo = 0, hi = 1e13): number | null => (typeof v === 'number' && isFinite(v)) ? Math.min(hi, Math.max(lo, v)) : null;
 const ID_RE = /^(?!__proto__$|constructor$|prototype$)[A-Za-z0-9._\-~]{1,48}$/;
-const dict = <T = any>(): Record<string, T> => Object.create(null);
+const dict = <T = unknown>(): Record<string, T> => Object.create(null);
+const isRecord = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
 const TEMA_RE = /^T\d\.\d\d$/;
 // El historial antiguo no guarda la racha: las pendientes existentes parten de cero.
 export function failureStreak(r?: StatRec | null): number {
@@ -72,19 +73,26 @@ export function cleanCards(map: unknown): CardMap {
   for (const id of Object.keys(map)) { if (!CARD_RE.test(id)) continue; const r = cleanCard((map as Record<string, unknown>)[id]); if (r) { out[id] = r; if (++k >= MAX_CARDS) break; } }
   return out;
 }
-export function cleanSession(s: any): Session | null {
-  if (!s || typeof s !== 'object') return null;
+export function cleanSession(value: unknown): Session | null {
+  if (!isRecord(value)) return null;
+  const s = value;
   const id = typeof s.id === 'string' && ID_RE.test(s.id) ? s.id : null, ts = num(s.ts);
   if (!id || ts === null) return null;
   const temas: Session['temas'] = {};
-  if (s.temas && typeof s.temas === 'object') for (const t in s.temas) {
+  if (isRecord(s.temas)) for (const t in s.temas) {
     const v = s.temas[t];
-    if (TEMA_RE.test(t) && Array.isArray(v) && num(v[0], 0, 1e5) !== null && num(v[1], 0, 1e5) !== null) temas[t] = [v[0], v[1]];
+    const correctRaw = Array.isArray(v) ? v[0] : undefined;
+    const totalRaw = Array.isArray(v) ? v[1] : undefined;
+    const correct = num(correctRaw, 0, 1e5), total = num(totalRaw, 0, 1e5);
+    if (TEMA_RE.test(t) && correct !== null && total !== null && typeof correctRaw === 'number' && typeof totalRaw === 'number') temas[t] = [correctRaw, totalRaw];
   }
   const tipos: Session['tipos'] = {};
-  if (s.tipos && typeof s.tipos === 'object') for (const t in s.tipos) {
+  if (isRecord(s.tipos)) for (const t in s.tipos) {
     const v = s.tipos[t];
-    if (/^[A-Za-z0-9]{1,3}$/.test(t) && Array.isArray(v) && num(v[0], 0, 1e5) !== null && num(v[1], 0, 1e5) !== null) tipos[t] = [v[0], v[1]];
+    const correctRaw = Array.isArray(v) ? v[0] : undefined;
+    const totalRaw = Array.isArray(v) ? v[1] : undefined;
+    const correct = num(correctRaw, 0, 1e5), total = num(totalRaw, 0, 1e5);
+    if (/^[A-Za-z0-9]{1,3}$/.test(t) && correct !== null && total !== null && typeof correctRaw === 'number' && typeof totalRaw === 'number') tipos[t] = [correctRaw, totalRaw];
   }
   return {
     id, ts, kind: (['sim', 'rev', 'test'] as const).find(k => k === s.kind) ?? 'test',
@@ -104,9 +112,10 @@ export function cleanReports(m: unknown): ReportMap {
   const out = dict<Report>();
   if (!m || typeof m !== 'object') return out;
   for (const id of Object.keys(m)) {
-    const r = (m as Record<string, any>)[id]; if (!ID_RE.test(id) || !r || typeof r !== 'object') continue;
+    const r = (m as Record<string, unknown>)[id]; if (!ID_RE.test(id) || !isRecord(r)) continue;
     const ts = num(r.ts); if (ts === null) continue;
-    out[id] = { ts, tema: typeof r.tema === 'string' && TEMA_RE.test(r.tema) ? r.tema : '', motivo: typeof r.motivo === 'string' ? r.motivo.slice(0, 60) : '', nota: typeof r.nota === 'string' ? r.nota.slice(0, 300) : '', st: REP_ST.includes(r.st) ? r.st : 'abierto' };
+    const state = REP_ST.find(candidate => candidate === r.st) || 'abierto';
+    out[id] = { ts, tema: typeof r.tema === 'string' && TEMA_RE.test(r.tema) ? r.tema : '', motivo: typeof r.motivo === 'string' ? r.motivo.slice(0, 60) : '', nota: typeof r.nota === 'string' ? r.nota.slice(0, 300) : '', st: state };
   }
   return out;
 }
@@ -139,7 +148,7 @@ function load(key = stateKey()): AppState {
   try {
     const s = JSON.parse(localStorage.getItem(key) || 'null');
     if (s && s.stats) return { stats: cleanStats(s.stats), sessions: cleanSessions(s.sessions).slice(0, MAX_SESIONES), cfg: cleanCfg(s.cfg), seen: cleanSeen(s.seen), reports: cleanReports(s.reports), cards: cleanCards(s.cards) };
-  } catch (e) {}
+  } catch {}
   return { stats: dict(), sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: dict(), cards: dict() };
 }
 // La copia antigua queda intacta; solo el propietario puede adoptarla.
@@ -147,7 +156,10 @@ export function switchAccount(next: string | null, adoptLegacy = false): void {
   if (account === next) return;
   void flushNow();
   account = next;
-  try { next ? localStorage.setItem('tai.account', next) : localStorage.removeItem('tai.account'); } catch {}
+  try {
+    if (next) localStorage.setItem('tai.account', next);
+    else localStorage.removeItem('tai.account');
+  } catch {}
   const hasLocal = (() => { try { return !!localStorage.getItem(stateKey()); } catch { return false; } })();
   S = load(!hasLocal && adoptLegacy ? LEGACY_KEY : stateKey());
   if (!hasLocal && adoptLegacy && next) {
@@ -158,9 +170,9 @@ export function switchAccount(next: string | null, adoptLegacy = false): void {
 }
 let persistWarned = false;
 function persist() {
-  try { localStorage.setItem(stateKey(), JSON.stringify(S)); } catch (e) {
+  try { localStorage.setItem(stateKey(), JSON.stringify(S)); } catch {
     // sin espacio o sin permiso: avisar una vez (la copia de IndexedDB sigue intentándose)
-    if (!persistWarned) { persistWarned = true; try { dispatchEvent(new Event('tai-persist-error')); } catch (e2) {} }
+    if (!persistWarned) { persistWarned = true; try { dispatchEvent(new Event('tai-persist-error')); } catch {} }
   }
   mirror();
 }
@@ -183,7 +195,7 @@ export async function flushMirror(): Promise<void> {
     const db = await openIdb();
     await new Promise<void>((res, rej) => { const tx = db.transaction('kv', 'readwrite'); tx.objectStore('kv').put(payload, key); tx.oncomplete = () => res(); tx.onerror = () => rej(tx.error); });
     db.close();
-  } catch (e) {}
+  } catch {}
 }
 // Al arrancar: fusiona lo que haya en la copia de IndexedDB (gana siempre lo más reciente). Devuelve true si recuperó algo.
 export async function recover(): Promise<boolean> {
@@ -208,9 +220,9 @@ export async function recover(): Promise<boolean> {
     if (ch) { persist(); emit(); }
     if (legacy) localStorage.removeItem(pendingKey);
     return ch;
-  } catch (e) { return false; }
+  } catch { return false; }
 }
-export function flushNow(): Promise<void> { try { localStorage.setItem(stateKey(), JSON.stringify(S)); } catch (e) {} return flushMirror(); }
+export function flushNow(): Promise<void> { try { localStorage.setItem(stateKey(), JSON.stringify(S)); } catch {} return flushMirror(); }
 export function onChange(fn: () => void): () => void { listeners.add(fn); return () => listeners.delete(fn); }
 export const subscribe: (fn: () => void) => () => void = onChange;
 function emit() { listeners.forEach(f => f()); }
@@ -226,13 +238,14 @@ export function setSeen(arr: Iterable<string>): void {
   persist(); emit();
   if (syncer && syncer.pushSeen) syncer.pushSeen(S.seen);
 }
-export function cleanSeen(r: any): SeenDoc {
-  if (!r || !Array.isArray(r.t)) return { t: [], ts: 0 };
-  return { t: r.t.filter((x: unknown): x is string => typeof x === 'string' && TEMA_RE.test(x)).slice(0, 100), ts: num(r.ts) || 0 };
+export function cleanSeen(value: unknown): SeenDoc {
+  if (!isRecord(value) || !Array.isArray(value.t)) return { t: [], ts: 0 };
+  const topics = value.t;
+  return { t: topics.filter((x: unknown): x is string => typeof x === 'string' && TEMA_RE.test(x)).slice(0, 100), ts: num(value.ts) || 0 };
 }
-export function mergeSeen(r0: any): boolean {
+export function mergeSeen(r0: unknown): boolean {
+  if (!isRecord(r0) || !Array.isArray(r0.t)) return false;
   const r = cleanSeen(r0);
-  if (!r0 || !Array.isArray(r0.t)) return false;
   if (!S.seen || (r.ts || 0) > (S.seen.ts || 0)) { S.seen = { t: r.t, ts: r.ts || 0 }; persist(); emit(); return true; }
   return false;
 }
@@ -242,7 +255,7 @@ export function setCfg(k: string, v: unknown): void {
   S.cfg[k] = value; persist(); emit();
 }
 export const rec = (id: string): StatRec | undefined => S.stats[id];
-export const temaDe = (_id: string): string | null => {
+export const temaDe = (): string | null => {
   // los ids no codifican el tema; se guarda el tema junto al registro en meta (ver main.js)
   return null;
 };
