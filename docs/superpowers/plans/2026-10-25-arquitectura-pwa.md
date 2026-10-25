@@ -24,7 +24,7 @@
 - Preguntas con campos opcionales/null y metadatos editoriales: ida y vuelta sin omisiones.
 - Cambio de cuenta, recuperación asíncrona y sincronización Firebase: aislar progreso entre cuentas.
 - Navegación/hash, CSS global y service worker: conservar las 17 rutas y caché offline.
-- Importación del banco completo: verificar los 39 JSON de tema sin normalización destructiva.
+- Importación del banco completo: verificar los 36 JSON de tema sin normalización destructiva. El inventario raíz tiene 39 JSON en total (36 temas, `index.json`, `meta.json` y `supuestos.json`).
 
 ## Etapa 1: movimientos puros
 
