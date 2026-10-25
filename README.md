@@ -21,7 +21,7 @@ Esto no acredita el último despliegue ni sustituye las pruebas reales de login,
 - `src/legacy/`: lógica aún mixta pendiente de dividir entre dominio y presentación.
 - `index.html`: entrada de Vite. `public/`: CSS, iconos, manifiesto PWA y service worker; `public/data/` y `public/cards/` contienen preguntas y tarjetas.
 - `scripts/`: compilación, validación y comprobación de fuentes de las tarjetas; `tools/`: utilidades auxiliares.
-- `tests/`: Vitest y Playwright; `docs/`: documentación del proyecto.
+- `tests/`: Vitest y Playwright.
 - `.github/workflows/deploy.yml`: pruebas, compilación y publicación automática en Firebase.
 
 ## Desarrollo local
@@ -155,8 +155,7 @@ Incluye las curadas disponibles y los fallos convertidos en tarjeta; no exporta 
 
 Para mantener el banco: `node scripts/validate_cards.mjs` (también se ejecuta dentro de `npm test`).
 La validación estructural no acredita la exactitud del contenido. Las tarjetas `revisar: true` permanecen ocultas
-hasta su revisión. Detalles técnicos y comprobaciones pendientes en [docs/PLAN_FLASHCARDS.md](docs/PLAN_FLASHCARDS.md);
-plantilla para ampliar o revisar temas en [docs/PROMPT_GEMINI_FLASHCARDS.md](docs/PROMPT_GEMINI_FLASHCARDS.md).
+hasta su revisión editorial.
 
 ## Otros entrenamientos y ajustes implementados
 
@@ -171,7 +170,7 @@ plantilla para ampliar o revisar temas en [docs/PROMPT_GEMINI_FLASHCARDS.md](doc
 - **Personalización:** tema claro/oscuro/automático, cuatro tamaños de letra y fecha de examen para la cuenta atrás.
 - **Uso sin conexión:** la descarga de Ajustes incluye preguntas, supuestos, metadatos y tarjetas curadas.
 
-La exportación analítica es una copia separada, no sustituye `tai-progreso.json`. Para recuperar datos, no borres los datos del sitio: deja que la app restaure el respaldo local al abrirse; para importar una copia, usa Ajustes → Importar progreso. Las sesiones activas se ofrecen para reanudar al volver a abrir la app. El historial detallado se puede exportar/importar desde Ajustes junto con la copia compatible. Una copia importada se fusiona por identificadores y puede repetirse sin duplicar intentos. Guía técnica: [esquema del historial y recuperación](docs/ESQUEMA_HISTORIAL_INTENTOS.md).
+La exportación analítica es una copia separada, no sustituye `tai-progreso.json`. Para recuperar datos, no borres los datos del sitio: deja que la app restaure el respaldo local al abrirse; para importar una copia, usa Ajustes → Importar progreso. Las sesiones activas se ofrecen para reanudar al volver a abrir la app. El historial detallado se puede exportar/importar desde Ajustes junto con la copia compatible. Una copia importada se fusiona por identificadores y puede repetirse sin duplicar intentos.
 
 ## Versiones
 
@@ -223,7 +222,7 @@ La auditoría local del 24 de octubre cubre búsqueda inmediata y navegación du
 
 ### Estado de la revisión editorial y de Falladas
 
-Las 13 decisiones editoriales autorizadas se documentan como registro histórico en `public/data/revision-ocr/editorial-13.md`. El código posterior restauró cuatro de las reformulaciones; la revisión descrita en `docs/REVISION_10_CORRECCIONES.md` conserva esos originales, recupera sus advertencias y los excluye de la puntuación. Las tres preguntas históricas están marcadas `np: 1`: se excluyen automáticamente de los simulacros puntuables y se conservan para estudiar con sus advertencias. La definitiva de ingreso libre para Tomcat sigue pendiente.
+Las 13 decisiones editoriales autorizadas se documentan como registro histórico en `public/data/revision-ocr/editorial-13.md`. El código posterior restauró cuatro de las reformulaciones y conserva sus advertencias. Las tres preguntas históricas están marcadas `np: 1`: se excluyen automáticamente de los simulacros puntuables y se conservan para estudiar con sus advertencias. La definitiva de ingreso libre para Tomcat sigue pendiente.
 
 Por petición posterior se modifica Falladas: la extensión opcional de cada registro guarda la racha en la posición 10 (-1 sin fallo pendiente histórico; 0–3 tras fallo) y la marca de temario en la 11 (0/1). La fecha de modificación de la marca se guarda en la posición 12 y se fusiona independientemente de la respuesta, sin alterar el día de actividad. La validación, importación y fusión remota conservan estos campos; los registros antiguos siguen siendo legibles. Versiones antiguas de la aplicación que no conocen la extensión podrían descartarla si reescriben el progreso, por lo que conviene usar la misma versión en todos los dispositivos.
 
@@ -234,7 +233,6 @@ Por petición posterior se modifica Falladas: la extensión opcional de cada reg
 
 ### Correcciones tras la integración del banco remoto (24/10/2026)
 
-El detalle de los diez problemas corregidos, la migración del progreso y las comprobaciones está en [docs/REVISION_10_CORRECCIONES.md](docs/REVISION_10_CORRECCIONES.md).
 El progreso, la copia de IndexedDB, la sesión pendiente y el acceso recordado se separan por UID. La copia antigua sin cuenta se conserva y solo se adopta al autenticar al propietario verificado. El invitado dispone de su propio progreso.
 Los fallos de los supuestos también aparecen en Falladas y en el repaso, con el enunciado general y el contexto particular de cada pregunta. Importar una copia con sesión activa solicita subir el progreso y sus datos asociados.
 

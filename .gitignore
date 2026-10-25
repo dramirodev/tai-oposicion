@@ -1,7 +1,20 @@
-node_modules/
+# Dependencias y salidas generadas localmente
+/node_modules/
+/dist/
+.vite/
 .firebase/
+
+# Informes y artefactos locales de pruebas
+/coverage/
+/test-results/
+/playwright-report/
+/reports/
+playwright/.cache/
+
+# Documentación interna, planes e informes de trabajo; conservar solo en el checkout local
+/docs/
+
 .DS_Store
-coverage/
 *.log
 public/app.js
 public/chunks/
@@ -14,11 +27,5 @@ __pycache__/
 # Informes locales de auditoría del temario
 auditoria-temario-*/
 
-dist/
-test-results/
-playwright-report/
-.vite/
-playwright/.cache/
 .eslintcache
 *.tsbuildinfo
-docs/
