@@ -4,11 +4,14 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin: 4px 0 10px;
+  margin: 8px 0 16px;
+  gap: 16px;
 }
 
 .hhead h1 {
-  margin: 2px 0 0;
+  margin: 6px 0 12px;
+  font: 600 clamp(1.875rem,3vw,2.5rem)/1.15 var(--serif);
+  letter-spacing: -.035em;
 }
 
 .eyebrow {
@@ -78,17 +81,18 @@
 .cta {
   display: flex;
   align-items: center;
-  gap: var(--space-5);
+  gap: 20px;
   width: 100%;
   text-align: left;
   border: 0;
   border-radius: var(--r-cta);
-  padding: var(--space-7);
-  min-height: 92px;
+  padding: 24px;
+  min-height: 124px;
   background: var(--cta);
   color: var(--on-cta);
   font: inherit;
   cursor: pointer;
+  transition: background-color var(--duration-standard);
 }
 
 .cta i {
@@ -111,18 +115,19 @@
 
 .cta small {
   display: block;
-  font-size: var(--fs-m);
-  opacity: .9;
-  margin-top: 3px;
+  font-size: var(--fs-b);
+  opacity: 1;
+  margin-top: 8px;
   color: inherit;
+  line-height: 1.65;
 }
 
 .gtitle {
-  font-size: var(--fs-s);
+  font-size: var(--fs-b);
   font-weight: 600;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-  color: var(--mute);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
   margin: 18px 2px 8px;
 }
 
@@ -138,8 +143,8 @@
   align-items: center;
   gap: var(--space-4);
   width: 100%;
-  min-height: 60px;
-  padding: 10px 14px;
+  min-height: 72px;
+  padding: 14px 16px;
   text-align: left;
   border: 0;
   border-bottom: 1px solid var(--line);
@@ -154,7 +159,9 @@
 }
 
 .lrow:disabled {
-  opacity: .5;
+  opacity: 1;
+  background: var(--surface-soft);
+  color: var(--mute);
 }
 
 .lrow:active {
@@ -166,24 +173,27 @@
   width: 40px;
   height: 40px;
   border-radius: var(--r-m);
-  background: var(--sel);
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   flex: none;
   font-size: var(--fs-xl);
+  color: var(--selb);
 }
 
 .lrow b {
   display: block;
-  font-size: var(--fs-l);
+  font-size: var(--fs-b);
+  font-weight: 600;
 }
 
 .lrow small {
   display: block;
   font-size: var(--fs-s);
   color: var(--mute);
-  margin-top: 1px;
+  margin-top: 4px;
+  line-height: 1.5;
 }
 
 .mini {
@@ -286,6 +296,8 @@
   font-size: var(--fs-m);
   color: var(--mute);
   margin-top: 6px;
+  line-height: 1.6;
+  max-width: 58ch;
 }
 
 .hsub b {
@@ -297,7 +309,7 @@
   border-radius: var(--r-pill);
   background: var(--line);
   overflow: hidden;
-  margin: 0 0 14px;
+  margin: 0 0 28px;
 }
 
 .hbar i {
@@ -307,8 +319,10 @@
 }
 
 .cta .ctt {
-  font-size: var(--fs-2xl);
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 650;
+  font-family: var(--font-ui);
+  letter-spacing: -.025em;
 }
 
 .cta>span {
@@ -316,10 +330,10 @@
 }
 
 .cta i.play {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--r-pill);
-  background: rgba(255,255,255,.2);
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-m);
+  background: rgba(255,255,255,.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -379,18 +393,18 @@
 .tiles {
   display: grid;
   grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: var(--space-3);
-  margin: 12px 0;
+  gap: 12px;
+  margin: 16px 0;
 }
 
 .tile {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: var(--space-4);
-  min-height: 108px;
-  padding: var(--space-4);
+  justify-content: flex-start;
+  gap: 14px;
+  min-height: 112px;
+  padding: 16px;
   text-align: left;
   background: var(--card);
   color: var(--ink);
@@ -398,6 +412,7 @@
   border-radius: var(--r-tile);
   font: inherit;
   cursor: pointer;
+  transition: background-color var(--duration-fast),border-color var(--duration-fast);
 }
 
 .tile:active {
@@ -406,10 +421,10 @@
 
 .tile i {
   font-style: normal;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: var(--sel);
+  width: 32px;
+  height: 32px;
+  border-radius: 0;
+  background: transparent;
   color: var(--selb);
   display: flex;
   align-items: center;
@@ -418,13 +433,16 @@
 
 .tile b {
   display: block;
-  font-size: var(--fs-b);
+  font-size: var(--fs-l);
+  font-weight: 650;
 }
 
 .tile small {
   display: block;
-  font-size: var(--fs-xs);
+  font-size: var(--fs-s);
   color: var(--mute);
+  line-height: 1.5;
+  margin-top: 2px;
 }
 
 .tile .bdg {
@@ -468,8 +486,8 @@
   align-items: center;
   gap: var(--space-4);
   width: 100%;
-  min-height: 56px;
-  padding: 12px 14px;
+  min-height: 68px;
+  padding: 16px;
   text-align: left;
   background: var(--card);
   color: var(--ink);
@@ -482,7 +500,8 @@
 .exrow.on {
   background: var(--sel);
   border: 2px solid var(--selb);
-  padding: 11px 13px;
+  padding: 15px;
+  box-shadow: none;
 }
 
 .exrow>span {
@@ -616,4 +635,187 @@ code.cd b.sk {
   font: inherit;
   font-weight: 700;
   cursor: pointer;
+}
+
+.product-brand {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 8px;
+  font-weight: 750;
+  color: var(--ink);
+}
+
+.product-brand span {
+  font-size: var(--fs-s);
+  font-weight: 400;
+  color: var(--mute);
+}
+
+.section-title {
+  font-size: var(--fs-l);
+  font-weight: 650;
+  margin: 0 0 14px;
+  color: var(--ink);
+}
+
+.home-workspace {
+  display: grid;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.home-primary,.home-review {
+  min-width: 0;
+}
+
+.home-primary>.note {
+  margin-block: 18px 0;
+}
+
+.cta>svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  flex: none;
+}
+
+#continue {
+  margin-bottom: 12px;
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--control-line);
+  min-height: 80px;
+}
+
+.lrow:disabled i {
+  color: var(--mute);
+}
+
+/* En móvil, una tarea a la vez; en escritorio, práctica junto a repaso. */
+
+@media (min-width: 840px) {
+  .home-workspace {
+    grid-template-columns: minmax(0,1.15fr) minmax(0,1fr);
+    gap: 32px;
+  }
+}
+
+:root[data-text-size="2"] .home-workspace,
+:root[data-text-size="3"] .home-workspace {
+  grid-template-columns: 1fr;
+}
+
+.grid>*,.tiles>*,.hhead>div,.cta>span,.lrow>span,.line>span,.opt>span,.tm span,.exrow>span {
+  min-width: 0;
+}
+
+.tile,.cta>span,.lrow>span,.line>span,.opt>span,.tm span,.exrow>span {
+  overflow-wrap: anywhere;
+}
+
+.tile b,.tile small {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+:root[data-text-size="2"] .tiles,:root[data-text-size="3"] .tiles {
+  grid-template-columns: 1fr;
+}
+
+:root[data-text-size="2"] .tile,:root[data-text-size="3"] .tile {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 76px;
+}
+
+:root[data-text-size="2"] .tile .bdg,:root[data-text-size="3"] .tile .bdg {
+  position: static;
+  order: 2;
+}
+
+.study-priorities {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  margin: 0 0 20px;
+}
+
+.study-priorities .lrow {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-l);
+  align-items: flex-start;
+  padding: 14px;
+}
+
+.study-priorities .lrow i {
+  width: 28px;
+  height: 28px;
+  background: none;
+  color: var(--selb);
+}
+
+.study-priorities small {
+  line-height: 1.5;
+}
+
+.training-group {
+  margin: 20px 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-l);
+  padding: 0 16px;
+}
+
+.training-group>summary,.topic-block>summary {
+  cursor: pointer;
+  padding: 16px 4px;
+  font-weight: 600;
+  min-height: 48px;
+}
+
+.training-group .tiles {
+  margin-top: 0;
+}
+
+.training-group .tile {
+  border-radius: var(--r-m);
+}
+
+.home-primary>.tiles {
+  grid-template-columns: 1fr;
+}
+
+.home-primary>.tiles>.tile {
+  flex-direction: row;
+  align-items: center;
+  min-height: 72px;
+  padding: 12px 16px;
+}
+
+@media(min-width:840px) {
+  .home-primary>.tiles {
+    grid-template-columns: repeat(3,minmax(0,1fr));
+  }
+
+  .home-primary>.tiles>.tile {
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 124px;
+    padding: 16px;
+  }
+}
+
+:root[data-text-size="2"] .home-primary>.tiles,:root[data-text-size="3"] .home-primary>.tiles {
+  grid-template-columns: 1fr;
+}
+
+:root[data-text-size="2"] .home-primary>.tiles>.tile,:root[data-text-size="3"] .home-primary>.tiles>.tile {
+  flex-direction: row;
+  min-height: 76px;
 }

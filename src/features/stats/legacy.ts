@@ -15,7 +15,7 @@ function mapaHTML(dm: any, orden: any) {
   const l = dm.slice();
   if (orden === 'frios') l.sort((a: any, b: any) => (ord[a.est] - ord[b.est]) || ((b.dias ?? -1) - (a.dias ?? -1)));
   const c = (k: any) => dm.filter((x: any) => x.est === k).length;
-  return `<div class="dmsum"><span class="dot r"></span>${c('r')} Reforzar <span class="dot y"></span>${c('y')} A vigilar <span class="dot g"></span>${c('g')} Dominado <span class="dot n"></span>${c('n')} Sin datos</div>
+  return `<div class="dmsum">${[['r','Reforzar'],['y','A vigilar'],['g','Dominado'],['n','Sin datos']].map(([state,label]) => `<span class="domain-key"><span class="dot ${state}" aria-hidden="true"></span>${c(state)} ${label}</span>`).join('')}</div>
   <div class="seg" id="dmord"><button class="${orden !== 'frios' ? 'on' : ''}" data-v="tema" aria-pressed="${orden !== 'frios'}">Por tema</button><button class="${orden === 'frios' ? 'on' : ''}" data-v="frios" aria-pressed="${orden === 'frios'}">Más urgentes primero</button></div>
   <div class="dm">${l.map((t: any) => `<button class="dmt ${t.est}" data-dt="${t.id}"><div class="dmh"><span class="dot ${t.est}"></span><b>${t.id}</b><small>${hace(t.dias)}</small></div><div class="dmn">${esc(t.nombre)}</div><div class="dmb"><i style="width:${t.score}%"></i></div><small>${ESTADO[t.est]} · ${esc(t.why)}${t.due ? ' · ' + t.due + ' repasos' : ''}</small></button>`).join('')}</div>
   <p class="legend">Rojo: precisión o cobertura bajas, o más de 30 días sin tocar. Ámbar: va bien pero falta práctica o lleva más de 2 semanas parado. Verde: precisión alta y reciente. La puntuación mezcla tu acierto actual (65 %) y las preguntas vistas respecto al 60 % del banco (35 %). Toca un tema para practicarlo.</p>`;
@@ -59,7 +59,7 @@ function paintSims() {
     const C = compareSessions(P1[ia], P1[ib]);
     cmp = `<div class="row"><select id="sca" aria-label="Intento A">${opt(ia)}</select><select id="scb" aria-label="Intento B">${opt(ib)}</select></div>
       <p class="sm">Nota: <b>${dlt(C.dNota)}</b> · acierto ${dlt(C.dAcierto, ' pts')}${C.dSeg !== null ? ' · ritmo ' + dlt(C.dSeg, ' s/preg.', true) : ''}</p>
-      <table class="tb"><caption>Comparación de los intentos A y B por tema</caption><tr><th scope="col">Tema</th><th>A</th><th>B</th><th>Δ</th></tr>${C.rows.map(r => `<tr><td>${r.t}</td><td>${r.pa ?? '—'}</td><td>${r.pb ?? '—'}</td><td>${r.d === null ? '' : dlt(r.d)}</td></tr>`).join('')}</table>
+      <div class="table-scroll" role="region" aria-label="Tabla de progreso" tabindex="0"><table class="tb"><caption>Comparación de los intentos A y B por tema</caption><tr><th scope="col">Tema</th><th scope="col">A</th><th scope="col">B</th><th scope="col">Δ</th></tr>${C.rows.map(r => `<tr><td>${r.t}</td><td>${r.pa ?? '—'}</td><td>${r.pb ?? '—'}</td><td>${r.d === null ? '' : dlt(r.d)}</td></tr>`).join('')}</table></div>
       <p class="legend">A es el intento de la izquierda y B el de la derecha; Δ en puntos de acierto por tema.</p>`;
   }
   el.innerHTML = `<div class="card">${chart}<p class="legend">Nota de la parte 1 por intento (sobre 100).</p><h2 class="h3">Últimos intentos</h2>${rows}<h2 class="h3">Comparar dos intentos</h2>${cmp}</div>`;
@@ -98,7 +98,7 @@ function paintEvo(idx: any) {
     const cols = W.map((w, i) => `<rect x="${X(i) - iw / W.length / 2}" y="${T}" width="${iw / W.length}" height="${ih}" class="evolution-hit" data-i="${i}" tabindex="0" role="img" aria-label="Semana del ${fmtD(w.start)}: ${w.n ? (c.m === 'tiempo' ? (w.segPreg ?? '—') + ' s por pregunta' : w.acierto + ' % de acierto') : 'sin datos'}"/>`).join('');
     chart = `<div class="evo"><svg viewBox="0 0 ${Wd} ${H}" role="img" aria-label="Evolución semanal">${grid}${line}${dots}${lab}${xt}${cols}</svg><div class="tip" id="tip" hidden></div></div>`;
   }
-  const tabla = c.tabla ? `<table class="tb"><caption>Evolución semanal: ${c.m === 'tiempo' ? 'tiempo por pregunta' : 'acierto'}</caption><tr><th scope="col">Semana</th><th>${c.m === 'tiempo' ? 'seg/preg.' : 'Acierto'}</th><th>Resp.</th></tr>${W.filter(w => w.n).map(w => `<tr><td>${fmtD(w.start)}</td><td>${w[key] ?? '—'}</td><td>${esc(String(w.n))}</td></tr>`).join('') || '<tr><td colspan="3">Sin datos</td></tr>'}</table>` : '';
+  const tabla = c.tabla ? `<div class="table-scroll" role="region" aria-label="Tabla de progreso" tabindex="0"><table class="tb"><caption>Evolución semanal: ${c.m === 'tiempo' ? 'tiempo por pregunta' : 'acierto'}</caption><tr><th scope="col">Semana</th><th scope="col">${c.m === 'tiempo' ? 'seg/preg.' : 'Acierto'}</th><th scope="col">Resp.</th></tr>${W.filter(w => w.n).map(w => `<tr><td>${fmtD(w.start)}</td><td>${w[key] ?? '—'}</td><td>${esc(String(w.n))}</td></tr>`).join('') || '<tr><td colspan="3">Sin datos</td></tr>'}</table></div>` : '';
   el.innerHTML = `<div class="card">
     <div class="seg" id="evm"><button class="${c.m !== 'tiempo' ? 'on' : ''}" data-v="acierto" aria-pressed="${c.m !== 'tiempo'}">Acierto</button><button class="${c.m === 'tiempo' ? 'on' : ''}" data-v="tiempo" aria-pressed="${c.m === 'tiempo'}">Tiempo por pregunta</button></div>
     <div class="row"><select id="evf" aria-label="Qué medir en la evolución" ${c.m === 'tiempo' ? 'disabled' : ''}>${opts}</select><select id="evw" aria-label="Número de semanas">${[8, 12, 26].map(v => `<option value="${v}" ${c.w === v ? 'selected' : ''}>${v} semanas</option>`).join('')}</select></div>
@@ -155,7 +155,7 @@ routes.stats = async function () {
   const ses = store.getSessions().slice(0, 12);
   const carga = cargaRepasos(st, now(), 14), mx = Math.max(1, ...carga), mf = motivosFallo(st), mft = mf.reduce((a, b) => a + b, 0);
   const diaL = (k: any) => { const d = new Date(now()); d.setDate(d.getDate() + k); return k === 0 ? 'hoy' : ['D', 'L', 'M', 'X', 'J', 'V', 'S'][d.getDay()] + d.getDate(); };
-  const cargaHTML = `<div class="card"><div class="cg">${carga.map((v, k) => `<div class="cgc" title="${v} repasos"><small>${v || ''}</small><i class="${k === 0 && v ? 'hoy' : ''}" style="height:${Math.round(60 * v / mx)}px"></i><small>${diaL(k)}</small></div>`).join('')}</div>
+  const cargaHTML = `<div class="card"><div class="chart-scroll" role="region" aria-label="Repasos previstos en los próximos 14 días" tabindex="0"><div class="cg">${carga.map((v, k) => `<div class="cgc" title="${v} repasos"><small>${v || ''}</small><i class="${k === 0 && v ? 'hoy' : ''}" style="height:${Math.round(60 * v / mx)}px"></i><small>${diaL(k)}</small></div>`).join('')}</div></div>
     <p class="legend">Preguntas que vencen cada día (hoy incluye las atrasadas). Total en 14 días: ${carga.reduce((a, b) => a + b, 0)}.</p>
     ${mft ? `<h2 class="h3">Por qué fallas (último fallo) · <a href="#/ayuda?tema=motivos">Ayuda</a></h2>${[5, 7, 1, 2, 3, 4].map(m => `<div class="line"><span>${MOTIVOS_FALLO[m]}</span><span>${mf[m]} <small>(${pct(mf[m], mft)}%)</small></span></div>`).join('')}` : ''}
     ${suertes(st) ? `<div class="line"><span>🍀 Aciertos por suerte (pendientes de repasar)</span><span>${suertes(st)}</span></div>` : ''}</div>`;

@@ -1,5 +1,6 @@
 // Las fuentes del sistema y WebKit varían entre plataformas. CI reconstruye la
-// fase 0 en su propio runner; nunca actualiza referencias desde la app migrada.
+// referencia visual aprobada en su propio runner, independiente del candidato.
+// Un rediseño intencional actualiza baseline-ref.txt tras revisar sus capturas.
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdtempSync, readFileSync, writeFileSync, cpSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -7,7 +8,7 @@ import { join, resolve } from 'node:path';
 const run = (cmd, args, cwd) => execFileSync(cmd, args, { cwd, stdio: 'inherit', env: process.env });
 const refFile = 'tests/e2e/baseline-ref.txt';
 if (!existsSync(refFile)) {
-  // Primera fase: crear la referencia de la app todavía sin React en este SO.
+  // Primera referencia visual de este proyecto y sistema operativo.
   run('npm', ['run', 'test:e2e', '--', '--update-snapshots=missing']);
 } else {
   const ref = readFileSync(refFile, 'utf8').trim();

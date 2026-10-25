@@ -46,3 +46,24 @@ Conservar este orden mientras existan variantes globales. No introducir una laye
 `tests/e2e/css-ui.spec.ts` verifica reflujo, ancho de texto, descarte, contraste de símbolos, falsas alarmas, reserva de acciones y cambios del sistema. El test offline de `routes.spec.ts` comprueba que la URL CSS compilada esté en el shell y que se aplique tras recargar sin red. Validar además todos los recorridos y revisar los cambios intencionales de capturas antes de actualizar la referencia visual.
 
 Las mediciones locales de gzip no son transferencia del hosting ni una prueba de velocidad. La validación en navegadores de escritorio tampoco certifica Safari iOS, dispositivos reales ni conformidad WCAG completa.
+
+## Identidad y criterios del rediseño
+
+La identidad conserva el azul marino TAI (`#14213d`) y el ámbar existente. El azul de acción (`#234a91`) señala la siguiente sesión; las superficies gris azuladas reducen el contraste de grandes bloques. En oscuro, los botones de acción usan azul suave y los colores de error/acierto siguen siendo semánticos. No se descargan fuentes: la tipografía del sistema es la de trabajo y la serifa se reserva al saludo de Inicio.
+
+Inicio prioriza práctica y continuación antes de los estados vacíos. En móvil, los accesos principales forman una lista; en escritorio, práctica y repaso se leen en dos columnas. Los mismos IDs, eventos, rutas y datos siguen presentes. Preguntas, tarjetas, menús, modales, avisos, formularios y tablas comparten radios y escalas sin imponer una única forma a todos los elementos.
+
+Los colores, tamaños, espacios, radios, sombras y tiempos se definen en `tokens.css`. Los breakpoints son contratos documentados, no variables CSS simuladas en media queries:
+
+| Ancho | Intención |
+|---|---|
+| 380 px | Etiquetas de navegación en móvil compacto |
+| 500/520 px | Grupos de estudio y accesos que se apilan |
+| 600 px | Rejillas y controles de pregunta con texto ampliado |
+| 840 px | Dos zonas de Inicio y accesos principales en columnas |
+| 900 px | Navegación inferior contenida y horizontal |
+| 1000 px | Supuesto lateral de la pregunta |
+
+Las preferencias de texto 2/3 mantienen Inicio en una columna. El aviso de sesión permite envolver su acción; las tablas y el gráfico de repasos tienen scroll local y destino de teclado. La hoja responsive contiene únicamente reglas de adaptación y de medios; el estilo base de cada funcionalidad vive en su archivo propietario.
+
+El enlace de salto se renderiza antes de main y lo enfoca sin modificar la URL del router. Las animaciones de sacudida, pulso y giro se retiraron; quedan entradas breves de contenido y progreso con transform, desactivables mediante la preferencia de movimiento reducido. Los estados de respuesta conservan texto, símbolos y etiquetas accesibles.
