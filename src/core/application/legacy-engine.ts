@@ -77,7 +77,8 @@ export function toggleReviewQuestion(): boolean {
   const run = engineState.run;
   if (!run || run.paused) return false;
   const review = new Set(run.review || []);
-  review.has(run.idx) ? review.delete(run.idx) : review.add(run.idx);
+  if (review.has(run.idx)) review.delete(run.idx);
+  else review.add(run.idx);
   run.review = [...review].sort((a, b) => a - b);
   return true;
 }
@@ -123,12 +124,12 @@ const runKey = () => 'tai.run:' + (store.accountId() || 'guest');
 store.onAccountChange(() => { engineState.run = null; engineState.last = null; });
 const closedRuns = new WeakSet<Run>();
 const MAX_EDAD = 2 * 86400000;
-export function clearRun(): void { try { localStorage.removeItem(runKey()); } catch (e) {} }
+export function clearRun(): void { try { localStorage.removeItem(runKey()); } catch {} }
 export function saveRun(): void {
   const R = engineState.run;
   if (!R || R.supTexto || !R.items.every(q => q.i && META && META[q.i])) return;
   const { kind, feedback, titulo, limit, idx, ans, times, secs, porTiempo, review } = R;
-  try { localStorage.setItem(runKey(), JSON.stringify({ kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: R.items.map(q => q.i), review: review || [], savedAt: Date.now() })); } catch (e) {}
+  try { localStorage.setItem(runKey(), JSON.stringify({ kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: R.items.map(q => q.i), review: review || [], savedAt: Date.now() })); } catch {}
 }
 interface SavedRun {
   kind: SessionKind; feedback?: boolean; titulo?: string; limit?: number; idx: number; ans?: (number | null)[]; times?: (number | null)[];
@@ -138,7 +139,7 @@ export interface PendingRun { saved: SavedRun; items: Question[]; account: strin
 /** Sesión guardada que se puede retomar; descarta (y borra) la caducada o incoherente. */
 export async function pendingRun(full: boolean): Promise<PendingRun | null> {
   const account = store.accountId();
-  let s: SavedRun | null = null; try { s = JSON.parse(localStorage.getItem(runKey()) || 'null'); } catch (e) {}
+  let s: SavedRun | null = null; try { s = JSON.parse(localStorage.getItem(runKey()) || 'null'); } catch {}
   if (!s || engineState.run) return null;
   if (!full && s.kind !== 'rev') { clearRun(); return null; }
   if (!Array.isArray(s.ids) || !s.ids.length || Date.now() - (s.savedAt || 0) > MAX_EDAD) { clearRun(); return null; }
@@ -210,11 +211,11 @@ export const falladasIds = (): string[] => { const st = store.getStats(); return
 
 const GQ_KEY = 'tai.gq';
 async function quickGuest(idx: Index, N: number, orgs: Set<string>): Promise<Question[]> {
-  let last: string[] = []; try { last = JSON.parse(localStorage.getItem(GQ_KEY) || '[]'); } catch (e) {}
+  let last: string[] = []; try { last = JSON.parse(localStorage.getItem(GQ_KEY) || '[]'); } catch {}
   const temas = shuffle(idx.temas).slice(0, N + 3);
   const pools = (await Promise.all(temas.map(t => getTema(t.id)))).map((l, k) => ({ t: temas[k].id, qs: questionsForSession(l.filter(q => allowed(q, orgs)), true) }));
   const items = pickGuest(pools, N, id => !!store.rec(id), new Set(last));
-  try { localStorage.setItem(GQ_KEY, JSON.stringify([...last, ...items.map(q => q.i)].slice(-300))); } catch (e) {}
+  try { localStorage.setItem(GQ_KEY, JSON.stringify([...last, ...items.map(q => q.i)].slice(-300))); } catch {}
   return items;
 }
 export interface Seleccion { items: Question[]; titulo: string }
