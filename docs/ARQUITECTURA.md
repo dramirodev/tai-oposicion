@@ -2,9 +2,11 @@
 
 ## Estado real de la migración
 
-La estructura de carpetas ya refleja el destino (`core`, `adapters`, `features`, `shared`, `app`), pero los límites aún no están cerrados. Las pantallas siguen en `features/*/legacy.ts` y `app/legacy-router.ts`. `core/application/legacy-engine.ts` importa el store y el banco heredados. El store, el banco HTTP, Firebase, offline y `legacy-dom` conservan su API compacta actual para que el puente mantenga el comportamiento.
+La estructura de carpetas refleja el destino (`core`, `adapters`, `features`, `shared`, `app`), pero los límites aún no están cerrados. Las pantallas siguen en `features/*/legacy.ts` y `app/legacy-router.ts`. `core/application/legacy-engine.ts` todavía importa directamente el store y el banco heredados y usa `legacy/logic.ts`; por tanto, no es aún un caso de uso aislado por puertos. El store, el banco HTTP, Firebase, offline y `legacy-dom` conservan su API compacta actual para que el puente mantenga el comportamiento.
 
-El prototipo paralelo de sesiones fue retirado en `a35247c`; el motor de referencia sigue siendo `core/application/legacy-engine.ts`, `legacy/logic.ts` y `adapters/local/legacy-store.ts`. Extraer reglas requiere comparar el resultado con sus pruebas actuales sin alterar selección, puntuación, calendario, serialización ni ritmo.
+El prototipo paralelo de sesiones fue retirado en `9540f8e`; el motor de referencia sigue siendo `core/application/legacy-engine.ts`, `legacy/logic.ts` y `adapters/local/legacy-store.ts`. Las reglas puras de selección (`selection.ts`), puntuación (`scoring.ts`), análisis (`simulation-analysis.ts`), repaso espaciado (`spaced-repetition.ts`) y trampas (`traps.ts`) ya se extraen en `core/domain`. `legacy/logic.ts` conserva wrappers para los formatos compactos que consumen el motor y las pantallas heredadas. Formato HTML, escape y tiempo están en `shared/presentation/study-text.ts` y `format.ts`.
+
+Estas extracciones se comparan con las pruebas heredadas; no cambian selección, puntuación, calendario, serialización ni ritmo. Quedan reglas de dominio en `legacy/logic.ts` y en el adaptador del banco por extraer. El estado `run` todavía tiene lectores heredados; la composición React usa suscripciones para determinar la sección activa, pero no se ha completado la encapsulación del motor.
 
 ## Capas objetivo
 
@@ -30,7 +32,7 @@ Los DTO se definen en `adapters/*/dto`; los mappers DTO ↔ dominio en `adapters
 
 `npm run lint` usa ESLint flat config, `eslint-plugin-import` (`import/no-restricted-paths`), TypeScript ESLint y `eslint-plugin-react-hooks`. Restringe imports por capa, APIs del navegador, fechas del sistema y `Math.random()` en dominio; prohíbe `dangerouslySetInnerHTML`. Los alias están configurados en TypeScript y Vite: `@core`, `@adapters`, `@features`, `@shared`, `@app`; los imports existentes todavía no se han convertido todos.
 
-La lista de exclusiones vigente es el bloque `ignores` de `eslint.config.mjs`: `src/core/application/legacy-*.ts`; `src/adapters/legacy/**`; `src/adapters/local/config.ts`; `src/adapters/offline/cache.ts`; `src/legacy/**`; `src/features/**/legacy.ts`; `src/shared/ui/legacy-dom.ts`; `src/adapters/firebase/legacy-sync.ts`; `src/adapters/http/legacy-data.ts`; `src/adapters/local/legacy-store.ts`; `src/adapters/firebase/sync-facade.ts`; `src/shared/presentation/legacy-study.ts`; `src/app/legacy-router.ts`. Se retiran una a una cuando pasan las reglas. El ciclo del motor legado y el estado de sync aún cruza capas.
+La lista de exclusiones vigente es el bloque `ignores` de `eslint.config.mjs`: `src/core/application/legacy-*.ts`; `src/adapters/legacy/**`; `src/adapters/local/config.ts`; `src/adapters/offline/cache.ts`; `src/legacy/**`; `src/features/**/legacy.ts`; `src/shared/ui/legacy-dom.ts`; `src/adapters/firebase/legacy-sync.ts`; `src/adapters/http/legacy-data.ts`; `src/adapters/local/legacy-store.ts`; `src/adapters/firebase/sync-facade.ts`; `src/shared/presentation/legacy-study.ts` (excepción obsoleta pendiente de limpiar); `src/app/legacy-router.ts`. Se retiran una a una cuando pasan las reglas. El ciclo del motor legado y el estado de sync aún cruza capas; `core`, `adapters` y `shared` no están todos fuera de las exclusiones.
 
 ## Añadir una feature
 
