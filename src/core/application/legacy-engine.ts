@@ -3,7 +3,7 @@
 import * as store from '../../adapters/local/legacy-store.js';
 import { META, temaOf, getIndex, getMeta, getTema, dueList, byIds, now } from '../../adapters/http/legacy-data.js';
 import { calculateExamScore } from '../domain/scoring.js';
-import { allowed, dominioCalc, fmtT, pickGuest, pickQuick, pickRepaso, pickTrampas, questionsForSession, quickN, shuffle, trapRates } from '../../legacy/logic.js';
+import { allowed, dominioCalc, pickGuest, pickQuick, pickRepaso, pickTrampas, questionsForSession, quickN, shuffle, trapRates } from '../../legacy/logic.js';
 import type { Index, Question, Session, SessionKind } from '../../adapters/legacy/types.js';
 
 // ───────── sesión en curso ─────────
@@ -146,11 +146,6 @@ export async function pendingRun(full: boolean): Promise<PendingRun | null> {
   if (account !== store.accountId()) return null;
   if (items.length !== s.ids.length || questionsForSession(items, !!s.feedback).length !== items.length) { clearRun(); return null; }
   return { saved: s, items, account };
-}
-/** Texto de la pregunta «¿continuar?» de una sesión pendiente. */
-export function pendingPrompt({ saved: s, items }: PendingRun): string {
-  const n = items.length, i = Math.min(s.idx + 1, n);
-  return `Tienes sin terminar «${s.titulo || 'Test'}» (${s.pt ? 'pregunta ' + i : i + '/' + n}${s.limit ? ', quedan ' + fmtT(Math.max(0, s.limit * 60 - (s.secs || 0))) : ''}). ¿Continuar donde lo dejaste?`;
 }
 export function resumeRun({ saved: s, items, account }: PendingRun): Run | null {
   if (account !== store.accountId()) return null;
