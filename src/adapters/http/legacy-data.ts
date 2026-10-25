@@ -2,6 +2,7 @@ import * as store from '../local/legacy-store.js';
 import { shuffle, allowed } from '../../legacy/logic.js';
 import { questionPriority } from '../../core/domain/selection.js';
 import { loadBank } from '../firebase/legacy-bank.js';
+import { diagnoseQuestionDtos } from './question-diagnostics.js';
 import type { Index, Meta, Question } from '../legacy/types.js';
 // ───────── datos ─────────
 export let INDEX: Index | undefined, META: Meta, SUP: unknown;
@@ -30,7 +31,7 @@ export async function getMeta(): Promise<Meta> {
 }
 export const temaOf = (id: string): string | null => META && META[id] ? META[id][0] : supQuestions.get(id)?.t || null;
 export const idsOfTema = (t: string): string[] => [...(META?._by[t] || []), ...[...supQuestions.values()].filter(q => q.t === t).map(q => q.i)];
-export async function getTema(t: string): Promise<Question[]> { if (!cache.has(t)) cache.set(t, j<Question[]>(`data/${t}.json`).catch(e => { cache.delete(t); throw e; })); return cache.get(t)!; }
+export async function getTema(t: string): Promise<Question[]> { if (!cache.has(t)) cache.set(t, j<unknown[]>(`data/${t}.json`).then(rows => { diagnoseQuestionDtos(rows); return rows as Question[]; }).catch(e => { cache.delete(t); throw e; })); return cache.get(t)!; }
 export async function getSup(): Promise<any> {
   const sup = (SUP ||= await j('data/supuestos.json'));
   for (const v of Object.values(sup) as { texto: string; q: Question[] }[]) {
