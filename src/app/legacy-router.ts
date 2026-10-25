@@ -16,11 +16,13 @@ import { registerSettings } from '../features/settings/legacy.js';
 import { registerHelp } from '../features/help/legacy.js';
 import { registerAcceso } from '../features/access/legacy.js';
 import { isFull, isOwner, GUEST_ROUTES } from '../adapters/legacy/access.js';
-import { getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, revealCurrentSolution, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds } from '../core/application/legacy-engine.js';
+import { getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, revealCurrentSolution, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, setCurrentConfidence, toggleCurrentDiscardedOption, addCurrentHighlight, removeCurrentHighlight } from '../core/application/legacy-engine.js';
 import { dominioTemas } from './legacy-topic-mastery.js';
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
 import type { Origin } from '../core/domain/entities.js';
+import { createHighlight, questionContentRevision, resolveHighlight } from '../core/domain/attempts/highlights.js';
+import { canonicalText, paintTextHighlight, selectedTextAnchor } from './legacy-highlight-dom.js';
 
 // ───────── router ─────────
 const routes: Record<string, any> = {};
@@ -120,6 +122,27 @@ routes.quiz = async function () {
     }, 500);
   }
   const onKey = (e: any) => {
+    const eventTarget = e.target as El;
+    const textRoot = typeof eventTarget?.closest === 'function' ? eventTarget.closest<El>('.enun, .opt .pre') : null;
+    if (textRoot && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); return; }
+    if (textRoot && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+      const selection = window.getSelection();
+      if (selection && (!selection.anchorNode || !textRoot.contains(selection.anchorNode))) {
+        const walker = document.createTreeWalker(textRoot, NodeFilter.SHOW_TEXT);
+        let first = walker.nextNode();
+        while (first && !first.textContent?.length) first = walker.nextNode();
+        if (first) { const range = document.createRange(); range.setStart(first, 0); range.collapse(true); selection.removeAllRanges(); selection.addRange(range); }
+      }
+      const direction = e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? 'backward' : 'forward';
+      const granularity = e.key === 'ArrowUp' || e.key === 'ArrowDown' ? 'line' : 'character';
+      const modify = (selection as (Selection & { modify?: (alter: string, direction: string, granularity: string) => void }) | null)?.modify;
+      if (selection && modify) {
+        e.preventDefault();
+        modify.call(selection, e.shiftKey ? 'extend' : 'move', direction, granularity);
+        onSelectionChange();
+      }
+      return;
+    }
     // Enter/Espacio deben activar el control enfocado mediante el comportamiento nativo.
     if ((e.key === 'Enter' || e.key === ' ') && (e.target as El).closest?.('button,a,[role="button"]')) return;
     if (/^(INPUT|TEXTAREA|SELECT)$/.test(((e.target as El).tagName || ''))) return;
@@ -141,11 +164,26 @@ routes.quiz = async function () {
     const d = swipeDir(t.clientX - tx[0], t.clientY - tx[1]); tx = null;
     if (d === 'next') { const b = $('#next'); b && b.click(); } else if (d === 'prev') prev();
   };
+  const onSelectionChange = () => {
+    const tools = app.querySelector<HTMLElement>('#highlight-tools');
+    if (!tools || R.paused) return;
+    const anchor = selectedTextAnchor(app);
+    tools.hidden = !anchor;
+    if (anchor) {
+      const remove = app.querySelector<HTMLButtonElement>('[data-remove-highlight]');
+      const mark = (R.highlights?.[R.idx] || []).find(item => item.field === anchor.field
+        && item.start < anchor.end && item.end > anchor.start);
+      if (remove) { remove.hidden = !mark; if (mark) remove.dataset.removeHighlight = mark.id; }
+    }
+  };
   function prev() { if (R.paused || R.idx <= 0) return; setQuestionIndex(R.idx - 1); draw(); focusHeading(); window.scrollTo(0, 0); }
   document.addEventListener('keydown', onKey);
   document.addEventListener('touchstart', onTs, { passive: true });
   document.addEventListener('touchend', onTe, { passive: true });
-  routeScreen.cleanup = () => { endConfirmation?.abort(); clearInterval(tick); clearInterval(gateTimer); document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); };
+  document.addEventListener('selectionchange', onSelectionChange);
+  app.addEventListener('mouseup', onSelectionChange);
+  app.addEventListener('touchend', onSelectionChange);
+  routeScreen.cleanup = () => { endConfirmation?.abort(); clearInterval(tick); clearInterval(gateTimer); document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); document.removeEventListener('selectionchange', onSelectionChange); app.removeEventListener('mouseup', onSelectionChange); app.removeEventListener('touchend', onSelectionChange); };
   draw();
 
   function draw() {
@@ -158,6 +196,10 @@ routes.quiz = async function () {
     const state = R.feedback ? (R.studyStates?.[R.idx] || 'unseen') : undefined;
     const consulted = state === 'revealed';
     const reveal = R.feedback && (a !== undefined || consulted);
+    const contentRevision = questionContentRevision(q.q, q.a);
+    const confidence = R.confidences?.[R.idx] || null;
+    const discarded = new Set(R.discardedOptions?.[R.idx] || []);
+    const responseLocked = R.feedback ? state === 'answered' || state === 'revealed' : typeof a === 'number' && a >= 0;
     const inSup = !!q.s;
     app.innerHTML = `
     <h1 class="sr">${esc(R.titulo || 'Test')} · pregunta ${R.idx + 1}${R.porTiempo ? '' : ' de ' + R.items.length}</h1>
@@ -183,15 +225,26 @@ routes.quiz = async function () {
       ${inSup ? `<details class="sup scenario-context"><summary>Enunciado del supuesto</summary><div class="pre">${esc(R.supTexto || q.supTexto || '')}</div></details>` : ''}
       ${q.cp ? `<div class="ctx pre">${richHtml(q.cp)}</div>` : ''}
       ${pideNegativa(q.q) ? '<div class="pide">Ojo: te piden la opción INCORRECTA o la excepción</div>' : ''}
-      <div class="enun pre">${kw(q.q)}</div>
+      <div class="enun pre" tabindex="0" aria-label="Enunciado. Usa Mayús y las flechas para seleccionar texto">${kw(q.q)}</div>
+      <div class="study-signals" aria-label="Señales opcionales de estudio">
+        <span class="study-signals-label">¿Cómo lo ves?</span>
+        ${[['sure', 'Seguro'], ['betweenTwo', 'Entre dos'], ['guess', 'Adivino']].map(([value, label]) => `<button type="button" class="signal${confidence === value ? ' on' : ''}" data-confidence="${value}" aria-pressed="${confidence === value}" ${responseLocked ? 'disabled' : ''}>${label}</button>`).join('')}
+      </div>
       <div class="opts">
       ${q.a.map((o, i) => {
         let cl = 'opt';
+        if (discarded.has(i)) cl += ' discarded';
         if (reveal) { if (i === q.c) cl += ' ok'; else if (i === a) cl += ' bad'; cl += ' dis'; }
         else if (a === i) cl += ' sel';
-        return `<button class="${cl}" data-i="${i}" aria-pressed="${a === i}" ${reveal ? 'disabled' : ''}><b>${L[i]}</b><span class="pre">${kw(o)}</span>${reveal && i === q.c ? '<span class="sr">(respuesta correcta)</span>' : reveal && i === a ? '<span class="sr">(tu respuesta, incorrecta)</span>' : ''}</button>`;
+        return `<div class="option-control"><button class="${cl}" data-i="${i}" aria-pressed="${a === i}" ${reveal ? 'disabled' : ''}><b>${L[i]}</b><span class="pre" tabindex="0" aria-label="Opción ${L[i]}. Usa Mayús y las flechas para seleccionar texto">${kw(o)}</span>${reveal && i === q.c ? '<span class="sr">(respuesta correcta)</span>' : reveal && i === a ? '<span class="sr">(tu respuesta, incorrecta)</span>' : ''}</button><button type="button" class="discard-option${discarded.has(i) ? ' on' : ''}" data-discard-option="${i}" aria-pressed="${discarded.has(i)}" aria-label="${discarded.has(i) ? 'Restaurar' : 'Descartar'} opción ${L[i]}" ${responseLocked ? 'disabled' : ''}>${discarded.has(i) ? 'Restaurar' : 'Descartar'}</button></div>`;
       }).join('')}
       </div>
+      <div class="highlight-tools" id="highlight-tools" role="group" aria-label="Subrayado opcional" hidden>
+        <span>Texto seleccionado:</span><button type="button" class="signal" data-add-highlight="key">Clave</button>
+        <button type="button" class="signal" data-add-highlight="doubt">Duda</button>
+        <button type="button" class="signal" data-remove-highlight hidden>Quitar marca</button>
+      </div>
+      <p class="sub stale-highlight" id="stale-highlight" hidden>Una marca no coincide con el texto actual y no se ha movido.</p>
       ${reveal ? feedback(q, a, consulted) : ''}
     </div>
     <div class="bar2">
@@ -202,6 +255,15 @@ routes.quiz = async function () {
     <p class="sub"><a href="#/ayuda?tema=sesiones">Ayuda sobre controles y estados de pregunta</a></p>
     ${R.paused ? `<div class="overlay" role="dialog" aria-modal="true" aria-labelledby="pt"><div class="card"><h2 id="pt">En pausa</h2><p>El tiempo está detenido.</p><button class="btn" id="resume">Continuar</button></div></div>` : ''}`;
     bind(q);
+    (R.highlights?.[R.idx] || []).forEach(mark => {
+      const root = mark.field === 'statement' ? app.querySelector('.enun')
+        : app.querySelector(`.opt[data-i="${Number(mark.field.slice(7))}"] .pre`);
+      if (!root) return;
+      const sourceText = root.textContent?.replace(/\u00a0/g, ' ') || '';
+      const resolved = resolveHighlight(mark, sourceText, contentRevision);
+      if (resolved.stale) { const note = $('#stale-highlight'); if (note) note.hidden = false; return; }
+      paintTextHighlight(root, resolved.start, resolved.end, mark.category, mark.id);
+    });
     if (R.paused) { app.querySelectorAll<El>('.qhead,.sub,.pace,.card.q,.bar2').forEach(el => { if (!el.closest<El>('.overlay')) el.inert = true; }); const rb = $('.overlay #resume'); rb && rb.focus(); }
     clearInterval(gateTimer);
     if (LEC === 2 && !reveal && a === undefined && !R.paused) {
@@ -247,9 +309,54 @@ routes.quiz = async function () {
     $('#resume') && ($('#resume').onclick = () => { setRunPaused(false); draw(); const pb = $('#pause'); pb && pb.focus(); });
     app.querySelectorAll<El>('.opt').forEach(b => b.onclick = () => {
       if (R.paused) return;
+      const selection = window.getSelection();
+      if (selection && !selection.isCollapsed
+        && (b.contains(selection.anchorNode) || b.contains(selection.focusNode))) return;
       const i = +b.dataset.i!;
       if (R.feedback) { if (R.ans[R.idx] !== undefined) return; answer(q, i); draw(); }
       else { answerCurrentDeferred(i); draw(); }
+    });
+    app.querySelectorAll<HTMLButtonElement>('[data-confidence]').forEach(button => button.onclick = () => {
+      const value = button.dataset.confidence;
+      if (value === 'sure' || value === 'betweenTwo' || value === 'guess') {
+        setCurrentConfidence(value);
+        draw();
+      }
+    });
+    app.querySelectorAll<HTMLButtonElement>('[data-discard-option]').forEach(button => button.onclick = () => {
+      toggleCurrentDiscardedOption(Number(button.dataset.discardOption));
+      draw();
+    });
+    const highlightTools = $('#highlight-tools');
+    highlightTools?.addEventListener('mousedown', event => event.preventDefault());
+    highlightTools?.addEventListener('touchstart', event => event.preventDefault(), { passive: false });
+    app.querySelectorAll<HTMLButtonElement>('[data-add-highlight]').forEach(button => button.onclick = () => {
+      const anchor = selectedTextAnchor(app);
+      const category = button.dataset.addHighlight;
+      if (!anchor || (category !== 'key' && category !== 'doubt')) return;
+      const field = anchor.field;
+      const existing = (R.highlights?.[R.idx] || []).find(mark => mark.field === field
+        && mark.start < anchor.end && mark.end > anchor.start);
+      if (existing) return;
+      const state = R.studyStates?.[R.idx];
+      const timing = state === 'revealed' ? 'after-reveal'
+        : typeof R.ans[R.idx] === 'number' && R.ans[R.idx]! >= 0 ? 'after-answer' : 'before-answer';
+      const created = createHighlight({
+        id: globalThis.crypto?.randomUUID?.() || `mark-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        ...anchor,
+        category,
+        contentRevision: questionContentRevision(q.q, q.a),
+        createdAt: Date.now(),
+        timing,
+      });
+      if (created.ok && addCurrentHighlight(created.value)) {
+        window.getSelection()?.removeAllRanges();
+        draw();
+      }
+    });
+    app.querySelectorAll<HTMLButtonElement>('[data-remove-highlight]').forEach(button => button.onclick = () => {
+      const id = button.dataset.removeHighlight;
+      if (id && removeCurrentHighlight(id)) { window.getSelection()?.removeAllRanges(); draw(); }
     });
     $('#blank') && ($('#blank').onclick = () => {
       if (R.feedback) { if (R.ans[R.idx] === undefined) { answer(q, -1); if (R.idx < R.items.length - 1) setQuestionIndex(R.idx + 1); draw(); if (R.idx > 0) focusHeading(); } }
@@ -307,7 +414,7 @@ routes.result = async function () {
   const { app, $, screen: routeScreen } = legacyScope(screen);
   const lastResult = getLastResult();
   if (!lastResult) return go('#/home');
-  const { ses, items, ans, studyStates = [] } = lastResult;
+  const { ses, items, ans, studyStates = [], highlights = [], confidences = [], discardedOptions = [] } = lastResult;
   const ng = ses.f;
   const consultedCount = studyStates.filter(state => state === 'revealed').length;
   app.innerHTML = `
@@ -334,9 +441,28 @@ routes.result = async function () {
     const x = ans[k], consulted = studyStates[k] === 'revealed'; const st = consulted || x === undefined || x === -1 ? 'b' : x === q.c ? 'g' : 'r';
     const label = consulted ? 'Solución consultada · blanco' : st === 'g' ? 'Acierto' : st === 'r' ? 'Fallo' : 'En blanco';
     return `<details class="rv ${st}"><summary><i></i><span class="sr">${label}: </span>${consulted ? '<span class="tag warn">Solución consultada · blanco</span> ' : ''}${esc(q.q.slice(0, 110))}${q.q.length > 110 ? '…' : ''}</summary>
-      ${questionNotice(q)}<div class="pre">${richHtml(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : i === x ? 'bad' : ''}"><b>${L[i]}</b> ${richHtml(o)}${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
+      ${questionNotice(q)}<div class="pre review-statement">${richHtml(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : i === x ? 'bad' : ''}" data-answer-index="${i}"><b>${L[i]}</b> <span class="pre review-option-text">${richHtml(o)}</span>${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
+      ${confidences[k] ? `<p class="sub">Confianza antes de responder: ${confidences[k] === 'sure' ? 'Seguro' : confidences[k] === 'betweenTwo' ? 'Entre dos' : 'Adivino'}</p>` : ''}
+      ${discardedOptions[k]?.length ? `<p class="sub">Opciones que descartaste antes de responder: ${discardedOptions[k].map(index => L[index]).join(', ')}</p>` : ''}
+      ${highlights[k]?.length ? '<p class="sub">Tus marcas de este intento:</p>' : ''}
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${sourceHtml(q, VERIFIED_SOURCES)}<div class="repw" data-rq="${k}"></div></details>`;
   }).join('')}</div>`;
+  items.forEach((question, index) => {
+    const revision = questionContentRevision(question.q, question.a);
+    const panel = app.querySelectorAll<HTMLElement>('.rv')[index];
+    (highlights[index] || []).forEach(mark => {
+      const root = mark.field === 'statement' ? panel.querySelector('.review-statement')
+        : panel.querySelector(`.ro[data-answer-index="${Number(mark.field.slice(7))}"] .review-option-text`);
+      if (!root) return;
+      const resolved = resolveHighlight(mark, canonicalText(root), revision);
+      if (resolved.stale) {
+        const note = document.createElement('p'); note.className = 'sub stale-highlight';
+        note.textContent = 'Una marca no coincide con el texto actual y no se ha movido.'; panel.append(note);
+        return;
+      }
+      paintTextHighlight(root, resolved.start, resolved.end, mark.category, mark.id);
+    });
+  });
   app.querySelectorAll<El>('[data-rq]').forEach(el => reportBox(items[+el.dataset.rq!], el));
   $('#home').onclick = () => go('#/home');
   $('#p2go') && ($('#p2go').onclick = () => go('#/sim2'));

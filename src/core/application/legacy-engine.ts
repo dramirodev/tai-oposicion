@@ -14,6 +14,8 @@ import {
 } from '../domain/selection.js';
 import { selectSpacedReviews } from '../domain/spaced-repetition.js';
 import { calculateTrapRates, selectTrapQuestions } from '../domain/traps.js';
+import type { Confidence, Highlight } from '../domain/attempts/transitions.js';
+import { questionContentRevision } from '../domain/attempts/highlights.js';
 import type { Index, Question, Session, SessionKind } from '../../adapters/legacy/types.js';
 import type { AttemptIntent } from '../domain/attempts/transitions.js';
 import type { AttemptTracker } from '../ports/AttemptTracker.js';
@@ -26,13 +28,14 @@ export interface RunCfg {
 export interface Run extends RunCfg {
   idx: number; ans: (number | undefined)[]; times?: (number | undefined)[]; t0: number; secs: number; paused: boolean;
   studyStates?: ('unseen' | 'pending' | 'answered' | 'revealed')[];
+  confidences?: Confidence[]; discardedOptions?: number[][]; highlights?: Highlight[][];
   since?: number | null; base?: number; tIdx?: number; q0?: number; qT0?: number; gt?: ReturnType<typeof setInterval>;
   review?: number[];
   luck?: Record<number, number>; fast?: Record<number, [number, number]>;
   attemptScope?: string; attemptSessionId?: string; attemptIds?: string[]; attemptTrackingPaused?: boolean;
 }
 /** Último resultado, para la pantalla de resultados. */
-export interface LastResult { ses: Session & { porTiempo?: boolean }; items: Question[]; ans: (number | undefined)[]; times: (number | undefined)[]; limit: number; studyStates?: ('unseen' | 'pending' | 'answered' | 'revealed')[] }
+export interface LastResult { ses: Session & { porTiempo?: boolean }; items: Question[]; ans: (number | undefined)[]; times: (number | undefined)[]; limit: number; studyStates?: ('unseen' | 'pending' | 'answered' | 'revealed')[]; confidences?: Confidence[]; discardedOptions?: number[][]; highlights?: Highlight[][] }
 
 /** Estado compartido: la sesión en curso y la última terminada. */
 const subscribers = new Set<() => void>();
@@ -158,7 +161,7 @@ export function createRun(cfg: RunCfg): Run | null {
   const items = filterScoringQuestions(cfg.items, cfg.feedback, question => question.np);
   if (!items.length) return null;
   const createdAt = now();
-  const run = { ...cfg, items, idx: 0, ans: [], ...(cfg.feedback ? { studyStates: Array.from({ length: items.length }, () => 'unseen' as const) } : {}), t0: createdAt, secs: 0, paused: false } as Run;
+  const run = { ...cfg, items, idx: 0, ans: [], confidences: Array.from({ length: items.length }, () => null), discardedOptions: items.map(() => []), highlights: items.map(() => []), ...(cfg.feedback ? { studyStates: Array.from({ length: items.length }, () => 'unseen' as const) } : {}), t0: createdAt, secs: 0, paused: false } as Run;
   if (attemptTracker && items.every(question => question.i && META[question.i])) {
     const scope = store.accountId() || 'guest';
     const tracking = attemptTracker.beginSession(
@@ -167,7 +170,7 @@ export function createRun(cfg: RunCfg): Run | null {
       createdAt,
       items.map((question, position) => ({
         questionId: question.i,
-        contentRevision: '',
+        contentRevision: questionContentRevision(question.q, question.a),
         position,
         exposure: Math.max(1, (store.rec(question.i)?.[0] || 0) + 1),
       })),
@@ -189,12 +192,13 @@ export function saveRun(): void {
   const R = engineState.run;
   if (!R || R.supTexto || !R.items.every(q => q.i && META && META[q.i])) return;
   const { kind, feedback, titulo, limit, idx, ans, times, secs, porTiempo, review } = R;
-  try { localStorage.setItem(runKey(), JSON.stringify({ kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: R.items.map(q => q.i), review: review || [], ...(feedback && R.studyStates ? { studyStates: [...R.studyStates] } : {}), savedAt: Date.now(), ...(R.attemptScope ? { attemptScope: R.attemptScope } : {}), ...(R.attemptSessionId ? { attemptSessionId: R.attemptSessionId } : {}), ...(R.attemptIds ? { attemptIds: R.attemptIds } : {}) })); } catch {}
+  try { localStorage.setItem(runKey(), JSON.stringify({ kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: R.items.map(q => q.i), review: review || [], ...(feedback && R.studyStates ? { studyStates: [...R.studyStates] } : {}), confidences: R.confidences || [], discardedOptions: R.discardedOptions || [], highlights: R.highlights || [], savedAt: Date.now(), ...(R.attemptScope ? { attemptScope: R.attemptScope } : {}), ...(R.attemptSessionId ? { attemptSessionId: R.attemptSessionId } : {}), ...(R.attemptIds ? { attemptIds: R.attemptIds } : {}) })); } catch {}
 }
 interface SavedRun {
   kind: SessionKind; feedback?: boolean; titulo?: string; limit?: number; idx: number; ans?: (number | null)[]; times?: (number | null)[];
   secs?: number; pt?: boolean; review?: number[]; ids: string[]; savedAt?: number;
   attemptScope?: string; attemptSessionId?: string; attemptIds?: string[]; studyStates?: ('unseen' | 'pending' | 'answered' | 'revealed')[];
+  confidences?: Confidence[]; discardedOptions?: number[][]; highlights?: Highlight[][];
 }
 export interface PendingRun { saved: SavedRun; items: Question[]; account: string | null }
 /** Sesión guardada que se puede retomar; descarta (y borra) la caducada o incoherente. */
@@ -228,7 +232,19 @@ export function resumeRun({ saved: s, items, account }: PendingRun): Run | null 
     if (typeof answer === 'number') return 'answered';
     return hasValidStates ? s.studyStates![index] : 'unseen';
   }) : undefined;
-  const run = { kind: s.kind, feedback: !!s.feedback, titulo: s.titulo, limit: s.limit || 0, porTiempo: !!s.pt, items, idx: s.idx, ans: answers, times: un(s.times), t0: now(), secs: s.secs || 0, paused: false, review: (Array.isArray(s.review) ? s.review : []).filter(i => Number.isInteger(i) && i >= 0 && i < items.length), ...(states ? { studyStates: states } : {}), ...(hasTracking ? { attemptScope: s.attemptScope, attemptSessionId: s.attemptSessionId, attemptIds: s.attemptIds!.slice() } : {}) } as Run;
+  const confidences: Confidence[] = items.map((_, index) => {
+    const value = s.confidences?.[index];
+    return value === 'sure' || value === 'betweenTwo' || value === 'guess' ? value : null;
+  });
+  const discardedOptions = items.map((question, index) => Array.isArray(s.discardedOptions?.[index])
+    ? [...new Set(s.discardedOptions[index].filter(option => Number.isInteger(option) && option >= 0 && option < question.a.length))]
+    : []);
+  const validHighlight = (mark: Highlight): boolean => Boolean(mark && typeof mark.id === 'string'
+    && (mark.field === 'statement' || /^option:\d+$/.test(mark.field))
+    && Number.isInteger(mark.start) && Number.isInteger(mark.end) && mark.start >= 0 && mark.end > mark.start
+    && typeof mark.text === 'string' && typeof mark.contentRevision === 'string');
+  const highlights = items.map((_, index) => Array.isArray(s.highlights?.[index]) ? s.highlights[index].filter(validHighlight) : []);
+  const run = { kind: s.kind, feedback: !!s.feedback, titulo: s.titulo, limit: s.limit || 0, porTiempo: !!s.pt, items, idx: s.idx, ans: answers, times: un(s.times), t0: now(), secs: s.secs || 0, paused: false, confidences, discardedOptions, highlights, review: (Array.isArray(s.review) ? s.review : []).filter(i => Number.isInteger(i) && i >= 0 && i < items.length), ...(states ? { studyStates: states } : {}), ...(hasTracking ? { attemptScope: s.attemptScope, attemptSessionId: s.attemptSessionId, attemptIds: s.attemptIds!.slice() } : {}) } as Run;
   if (run.attemptSessionId && run.attemptScope && run.attemptIds) attemptTracker?.resumeSession(run.attemptScope, run.attemptSessionId, run.attemptIds);
   return (engineState.run = observable(run));
 }
@@ -278,6 +294,56 @@ export function revealCurrentSolution(): boolean {
   recordAttempt(run, { type: 'reveal' });
   return true;
 }
+export function setCurrentConfidence(value: Exclude<Confidence, null>): boolean {
+  const run = engineState.run;
+  if (!run || run.paused || !['sure', 'betweenTwo', 'guess'].includes(value)) return false;
+  const locked = run.feedback
+    ? ['answered', 'revealed'].includes(run.studyStates?.[run.idx] || 'unseen')
+    : typeof run.ans[run.idx] === 'number' && run.ans[run.idx]! >= 0;
+  if (locked || run.confidences?.[run.idx] === value) return false;
+  run.confidences ||= [];
+  run.confidences[run.idx] = value;
+  recordAttempt(run, { type: 'set-confidence', value });
+  return true;
+}
+export function toggleCurrentDiscardedOption(optionIndex: number): boolean {
+  const run = engineState.run;
+  const question = run?.items[run.idx];
+  if (!run || !question || run.paused || !Number.isInteger(optionIndex) || optionIndex < 0 || optionIndex >= question.a.length) return false;
+  const locked = run.feedback
+    ? ['answered', 'revealed'].includes(run.studyStates?.[run.idx] || 'unseen')
+    : typeof run.ans[run.idx] === 'number' && run.ans[run.idx]! >= 0;
+  if (locked) return false;
+  run.discardedOptions ||= [];
+  const current = run.discardedOptions[run.idx] || [];
+  if (current.includes(optionIndex)) {
+    run.discardedOptions[run.idx] = current.filter(index => index !== optionIndex);
+    recordAttempt(run, { type: 'restore-option', optionIndex });
+  } else {
+    run.discardedOptions[run.idx] = [...current, optionIndex].sort((left, right) => left - right);
+    recordAttempt(run, { type: 'discard-option', optionIndex });
+  }
+  return true;
+}
+export function addCurrentHighlight(highlight: Highlight): boolean {
+  const run = engineState.run;
+  if (!run || run.paused || run.highlights?.[run.idx]?.some(mark => mark.id === highlight.id)) return false;
+  const question = run.items[run.idx];
+  const optionIndex = highlight.field.startsWith('option:') ? Number(highlight.field.slice(7)) : null;
+  if (optionIndex !== null && (!Number.isInteger(optionIndex) || optionIndex < 0 || optionIndex >= question.a.length)) return false;
+  run.highlights ||= run.items.map(() => []);
+  run.highlights[run.idx] = [...(run.highlights[run.idx] || []), highlight];
+  recordAttempt(run, { type: 'add-highlight', highlight });
+  return true;
+}
+export function removeCurrentHighlight(highlightId: string): boolean {
+  const run = engineState.run;
+  const marks = run?.highlights?.[run.idx];
+  if (!run || run.paused || !marks?.some(mark => mark.id === highlightId)) return false;
+  run.highlights![run.idx] = marks.filter(mark => mark.id !== highlightId);
+  recordAttempt(run, { type: 'remove-highlight', highlightId });
+  return true;
+}
 /** Respuesta en modo examen (sin corrección): se guarda al terminar. */
 export function answerDeferred(R: Run, i: number): void {
   if (engineState.run !== R) return;
@@ -314,7 +380,13 @@ export function finishRun(R: Run, reason: 'complete' | 'interrupted' | 'timeout'
   const ses = { id: 's' + now().toString(36), ts: now(), kind: R.kind, n, a: res.a, f: res.f, b: res.b, secs: R.porTiempo ? Math.min(R.secs, (R.limit ?? 0) * 60) : R.secs, nota: calculateExamScore(res.a, res.f, n), temas: porTema, tipos: porTipo, fails, titulo: R.titulo || '', ...(reason === 'interrupted' ? { interrupted: true } : {}), ...(R.porTiempo ? { porTiempo: true } : {}) };
   store.addSession(ses);
   engineState.run = null;
-  return (engineState.last = observable({ ses, items, ans: R.ans, times: R.times || [], limit: R.limit || 0, ...(R.studyStates ? { studyStates: [...R.studyStates] } : {}) }));
+  return (engineState.last = observable({
+    ses, items, ans: [...R.ans], times: [...(R.times || [])], limit: R.limit || 0,
+    ...(R.studyStates ? { studyStates: [...R.studyStates] } : {}),
+    confidences: [...(R.confidences || [])],
+    discardedOptions: (R.discardedOptions || []).map(options => [...options]),
+    highlights: (R.highlights || []).map(marks => marks.map(mark => ({ ...mark }))),
+  }));
 }
 
 // ───────── selección de preguntas ─────────

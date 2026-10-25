@@ -130,6 +130,73 @@ test('práctica permite volver a pendientes, bloquea respondidas y conserva cons
   await expect(page.locator('.rv .tag.warn')).toContainText('Solución consultada · blanco');
   expect(errors).toEqual([]);
 });
+test('subrayados y señales son opcionales, no responden y se conservan al reanudar', async ({ page }) => {
+  const errors = await start(page);
+  await page.locator('#quick').click();
+  const originalStats = await page.evaluate(() => localStorage.getItem('tai.v1:guest'));
+  await page.locator('[data-confidence="betweenTwo"]').click();
+  await page.locator('[data-discard-option="1"]').click();
+  await expect(page.locator('.opt.discarded')).toHaveCount(1);
+  await page.locator('[data-discard-option="1"]').click();
+  await expect(page.locator('.opt.discarded')).toHaveCount(0);
+  await page.locator('[data-discard-option="1"]').click();
+  await expect(page.locator('.opt.discarded')).toHaveCount(1);
+
+  await page.locator('.enun').focus();
+  await page.keyboard.press('ArrowRight');
+  for (let index = 0; index < 12; index++) await page.keyboard.press('Shift+ArrowRight');
+  await expect(page.locator('#highlight-tools')).toBeVisible();
+  await page.locator('[data-add-highlight="key"]').click();
+  await expect(page.locator('.enun mark[data-category="key"]')).toHaveCount(1);
+  await expect.poll(async () => (await savedAttemptHistory(page)).events).toContain('add-highlight');
+  await expect(page.locator('.fb')).toHaveCount(0);
+  expect(await page.evaluate(() => localStorage.getItem('tai.v1:guest'))).toBe(originalStats);
+  await page.locator('.opt .pre').first().focus();
+  await page.keyboard.press('ArrowRight');
+  for (let index = 0; index < 5; index++) await page.keyboard.press('Shift+ArrowRight');
+  await expect(page.locator('#highlight-tools')).toBeVisible();
+  await page.locator('[data-add-highlight="doubt"]').click();
+  await expect(page.locator('.opt .pre mark[data-category="doubt"]')).toHaveCount(1);
+  await expect(page.locator('.fb')).toHaveCount(0);
+
+  await page.reload();
+  await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
+  await page.locator('.overlay [data-v="1"]').click();
+  await expect(page.locator('.enun mark[data-category="key"]')).toHaveCount(1);
+  await expect(page.locator('[data-confidence="betweenTwo"]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('[data-discard-option="1"]')).toHaveAttribute('aria-pressed', 'true');
+  await page.locator('.opt').first().click();
+  await expect(page.locator('[data-confidence]').first()).toBeDisabled();
+  await page.evaluate(() => {
+    const root = document.querySelector('.enun')!;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node = walker.nextNode();
+    while (node && (node.parentElement?.closest('mark') || !node.textContent?.length)) node = walker.nextNode();
+    if (!node) throw new Error('No hay texto disponible para una marca posterior');
+    const range = document.createRange();
+    range.setStart(node, 0); range.setEnd(node, Math.min(5, node.textContent?.length || 0));
+    const selection = window.getSelection()!;
+    selection.removeAllRanges(); selection.addRange(range);
+    document.dispatchEvent(new Event('selectionchange'));
+  });
+  await expect(page.locator('#highlight-tools')).toBeVisible();
+  await page.locator('[data-add-highlight="doubt"]').click();
+  await expect(page.locator('.enun mark[data-category="doubt"]')).toHaveCount(1);
+  await expect.poll(async () => (await savedAttemptHistory(page)).events).toContain('add-highlight');
+  expect(await page.evaluate(() => {
+    const run = JSON.parse(localStorage.getItem('tai.run:guest') || 'null');
+    return { confidence: run.confidences[0], discarded: run.discardedOptions[0], fields: run.highlights[0].map((mark: { field: string }) => mark.field), timings: run.highlights[0].map((mark: { timing: string }) => mark.timing) };
+  })).toEqual({ confidence: 'betweenTwo', discarded: [1], fields: ['statement', 'option:0', 'statement'], timings: ['before-answer', 'before-answer', 'after-answer'] });
+  await page.locator('#exit').click();
+  await expect(page.locator('#askm')).toContainText('¿Salir?');
+  await page.locator('.overlay [data-v="1"]').click();
+  await expect(page.locator('#app h1')).toHaveText('Resultado');
+  await page.locator('.rv').first().locator('summary').click();
+  await expect(page.locator('.rv').first().locator('mark[data-category="key"]')).toHaveCount(1);
+  await expect(page.locator('.rv').first().locator('mark[data-category="doubt"]')).toHaveCount(2);
+  await expect(page.locator('.rv').first()).toContainText('Confianza antes de responder: Entre dos');
+  expect(errors).toEqual([]);
+});
 test('`route()` repinta la misma URL en Relámpago', async ({ page }) => {
   const errors = await start(page);
   await page.goto('/#/relampago');

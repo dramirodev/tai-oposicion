@@ -3,6 +3,7 @@ import 'fake-indexeddb/auto';
 import { readFileSync } from 'node:fs';
 import { createAttemptTracker } from '../../src/core/application/attempts/create-attempt-tracker.js';
 import { createLocalAttemptRepository } from '../../src/adapters/local/attempt-repository.js';
+import { createHighlight } from '../../src/core/domain/attempts/highlights.js';
 
 describe('integración del motor con el historial local', () => {
   let engine;
@@ -114,5 +115,46 @@ describe('integración del motor con el historial local', () => {
     }));
     expect(engine.resumeRun(await engine.pendingRun(true)).studyStates[0]).toBe('revealed');
     engine.clearActiveRun();
+  });
+
+  it('registra y conserva marcas, confianza y descartes por pregunta', async () => {
+    const question = (await data.getTema('T1.01')).find(item => !item.np);
+    const run = engine.createRun({ kind: 'test', feedback: true, items: [question] });
+    engine.startCurrentQuestion();
+    const mark = createHighlight({
+      id: 'highlight-1', field: 'statement', sourceText: question.q, start: 0, end: 8,
+      category: 'key', contentRevision: 'test-revision', createdAt: Date.now(), timing: 'before-answer',
+    });
+    expect(mark.ok).toBe(true);
+    expect(engine.setCurrentConfidence('guess')).toBe(true);
+    expect(engine.toggleCurrentDiscardedOption(1)).toBe(true);
+    expect(engine.addCurrentHighlight(mark.value)).toBe(true);
+    await tracker.flush();
+    const events = await repository.getEvents('guest', run.attemptIds[0]);
+    expect(events.events.map(event => event.type)).toEqual(['open', 'set-confidence', 'discard-option', 'add-highlight']);
+
+    engine.saveRun();
+    engine.setAttemptTracker(null);
+    engine.clearActiveRun();
+    const resumed = engine.resumeRun(await engine.pendingRun(true));
+    expect(resumed.confidences[0]).toBe('guess');
+    expect(resumed.discardedOptions[0]).toEqual([1]);
+    expect(resumed.highlights[0]).toMatchObject([{ id: 'highlight-1', timing: 'before-answer' }]);
+  });
+
+  it('limita confianza y descartes al periodo previo a responder sin cambiar la edición del simulacro', async () => {
+    const question = (await data.getTema('T1.01')).find(item => !item.np);
+    const run = engine.createRun({ kind: 'sim', feedback: false, items: [question] });
+    expect(engine.revealCurrentSolution()).toBe(false);
+    expect(engine.setCurrentConfidence('sure')).toBe(true);
+    expect(engine.toggleCurrentDiscardedOption(0)).toBe(true);
+    engine.answerCurrentDeferred(1);
+    expect(engine.setCurrentConfidence('guess')).toBe(false);
+    expect(engine.toggleCurrentDiscardedOption(0)).toBe(false);
+    engine.answerCurrentDeferred(2); // La edición de respuestas del simulacro se conserva.
+    expect(run.ans[0]).toBe(2);
+    const result = engine.finishRun(run);
+    expect(result.confidences[0]).toBe('sure');
+    expect(result.discardedOptions[0]).toEqual([0]);
   });
 });
