@@ -26,6 +26,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Límites de arquitectura y hooks
+        run: npm run lint
+
       - name: Comprobar tipos (si fallan, no se despliega)
         run: npm run typecheck
 

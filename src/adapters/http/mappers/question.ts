@@ -1,6 +1,6 @@
 import type { MappingResult, Question } from '../../../core/domain/entities.js';
 import type { QuestionDto } from '../dto/question.js';
-const keys: Record<string,string> = { i:'id',t:'topicId',o:'origin',q:'statement',a:'options',c:'correctIndex',k:'kind',x:'traps',d:'difficulty',n:'note',y:'year',u:'citation',np:'nonScoring',cp:'context',supTexto:'assumptionText',s:'assumptionId',p:'provisional',w:'expiresAfter',v:'verificationStatus',f:'family',r:'reserved',z:'topicUncertain' };
+const keys: Record<string,string> = { i:'id',t:'topicId',o:'origin',q:'statement',a:'options',c:'correctIndex',k:'kind',x:'traps',d:'difficulty',n:'note',y:'year',u:'citation',np:'nonScoring',cp:'context',s:'assumptionId',p:'provisional',w:'expiresAfter',v:'verificationStatus',f:'family',r:'reserved',z:'topicUncertain' };
 const reverse = Object.fromEntries(Object.entries(keys).map(([a,b])=>[b,a]));
 export const questionMapper = {
   toDomain(dto: unknown): MappingResult<Question> {
@@ -16,6 +16,6 @@ export const questionMapper = {
   toDto(question: Question): QuestionDto {
     const out:Record<string,unknown>={};
     for(const [k,v] of Object.entries(question)) out[reverse[k]??k]=v;
-    return out as QuestionDto;
+    return out as unknown as QuestionDto;
   }
 };

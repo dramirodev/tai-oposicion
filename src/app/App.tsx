@@ -4,6 +4,7 @@ import { Layout } from './Layout.js';
 import { LegacyRoute } from './LegacyRoute.js';
 import { DialogProvider } from '../shared/ui/dialogs.js';
 const names = ['home', 'quiz', 'result', 'test', 'sim', 'sim2', 'examenes', 'cards', 'stats', 'settings', 'temario', 'falladas', 'errores', 'lectura', 'relampago', 'trampas', 'acceso'];
+let legacyRefreshSeq = 0;
 export const router = createHashRouter([{ element: <Layout />, children: [
   ...names.map(name => ({ path: `${name}/*`, element: <LegacyRoute /> })),
   { path: '*', element: <LegacyRoute /> },
@@ -11,7 +12,7 @@ export const router = createHashRouter([{ element: <Layout />, children: [
 export function App() {
   configureLegacyRouter((h, refresh) => {
     const target = h.startsWith('#') ? h.slice(1) : h;
-    if (refresh) { void router.navigate(target, { state: { legacyRefresh: Date.now() } }); return; }
+    if (refresh) { void router.navigate(target, { state: { legacyRefresh: ++legacyRefreshSeq } }); return; }
     void router.navigate(target);
   });
   return <DialogProvider><RouterProvider router={router} /></DialogProvider>;
