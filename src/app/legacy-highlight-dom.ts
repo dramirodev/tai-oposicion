@@ -56,6 +56,40 @@ function canonicalLength(node: Node): number {
   return [...element.childNodes].reduce((length, child) => length + canonicalLength(child), 0);
 }
 
+function pointBefore(node: Node): { node: Node; offset: number } | null {
+  const parent = node.parentNode;
+  if (!parent) return null;
+  return { node: parent, offset: [...parent.childNodes].findIndex(child => child.isSameNode(node)) };
+}
+
+function pointAfter(node: Node): { node: Node; offset: number } | null {
+  const previous = pointBefore(node);
+  return previous ? { node: previous.node, offset: previous.offset + 1 } : null;
+}
+
+function pointAtOffset(root: Element, target: number, preferPrevious: boolean): { node: Node; offset: number } | null {
+  let currentOffset = 0;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT);
+  let node = walker.nextNode();
+  while (node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const textLength = node.textContent?.length || 0;
+      const endOffset = currentOffset + textLength;
+      const isInsideText = preferPrevious
+        ? target > currentOffset && target <= endOffset
+        : target >= currentOffset && target < endOffset;
+      if (isInsideText) return { node, offset: target - currentOffset };
+      currentOffset = endOffset;
+    } else if ((node as Element).tagName === 'BR') {
+      if (target === currentOffset) return pointBefore(node);
+      if (target === currentOffset + 1) return pointAfter(node);
+      currentOffset++;
+    }
+    node = walker.nextNode();
+  }
+  return target === currentOffset ? { node: root, offset: root.childNodes.length } : null;
+}
+
 export function selectedTextAnchor(host: Element): TextAnchor | null {
   const selection = window.getSelection();
   if (!selection || selection.isCollapsed || !selection.anchorNode || !selection.focusNode) return null;
@@ -87,24 +121,23 @@ export function paintTextHighlight(
   id: string,
   stale = false,
 ): boolean {
-  const { text, spans } = textSpans(root);
+  const { text } = textSpans(root);
   if (!Number.isInteger(start) || !Number.isInteger(end) || start < 0 || end <= start || end > text.length) return false;
-  let painted = false;
-  for (const span of [...spans].reverse()) {
-    const from = Math.max(start, span.start), to = Math.min(end, span.end);
-    if (to <= from) continue;
-    const localStart = from - span.start, localEnd = to - span.start;
-    const tail = span.node.splitText(localEnd);
-    const selected = span.node.splitText(localStart);
-    const mark = document.createElement('mark');
-    mark.className = 'text-highlight';
-    mark.dataset.markId = id;
-    mark.dataset.category = category;
-    if (stale) mark.dataset.stale = 'true';
-    selected.parentNode?.insertBefore(mark, selected);
-    mark.append(selected);
-    void tail;
-    painted = true;
-  }
-  return painted;
+  const startPoint = pointAtOffset(root, start, false);
+  const endPoint = pointAtOffset(root, end, true);
+  if (!startPoint || !endPoint) return false;
+
+  const range = document.createRange();
+  range.setStart(startPoint.node, startPoint.offset);
+  range.setEnd(endPoint.node, endPoint.offset);
+  if (range.collapsed) return false;
+
+  const mark = document.createElement('mark');
+  mark.className = 'text-highlight';
+  mark.dataset.markId = id;
+  mark.dataset.category = category;
+  if (stale) mark.dataset.stale = 'true';
+  mark.append(range.extractContents());
+  range.insertNode(mark);
+  return true;
 }

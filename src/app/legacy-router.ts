@@ -189,9 +189,10 @@ routes.quiz = async function () {
   document.addEventListener('touchstart', onTs, { passive: true });
   document.addEventListener('touchend', onTe, { passive: true });
   document.addEventListener('selectionchange', onSelectionChange);
+  document.addEventListener('keyup', onSelectionChange);
   app.addEventListener('mouseup', onSelectionChange);
   app.addEventListener('touchend', onSelectionChange);
-  routeScreen.cleanup = () => { endConfirmation?.abort(); clearInterval(tick); clearInterval(gateTimer); document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); document.removeEventListener('selectionchange', onSelectionChange); app.removeEventListener('mouseup', onSelectionChange); app.removeEventListener('touchend', onSelectionChange); };
+  routeScreen.cleanup = () => { endConfirmation?.abort(); clearInterval(tick); clearInterval(gateTimer); document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); document.removeEventListener('selectionchange', onSelectionChange); document.removeEventListener('keyup', onSelectionChange); app.removeEventListener('mouseup', onSelectionChange); app.removeEventListener('touchend', onSelectionChange); };
   draw();
 
   function draw() {
