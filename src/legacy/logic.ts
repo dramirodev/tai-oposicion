@@ -9,6 +9,7 @@ import { countReviewsByDay, selectSpacedReviews } from '../core/domain/spaced-re
 import { calculateTrapRates, selectTrapQuestions } from '../core/domain/traps.ts';
 import { composeWeightedQuestions, estimateQuickQuestionCount, filterScoringQuestions, isQuestionAllowed, pickGuestQuestions, pickQuickQuestions } from '../core/domain/selection.ts';
 import { analyzeTopicMastery, COVERAGE_OBJECTIVE } from '../core/domain/topic-mastery.ts';
+import { selectFlashcards, summarizeFlashcards } from '../core/domain/flashcards.ts';
 export { calculateExamScore as nota } from '../core/domain/scoring.ts';
 
 type Rnd = () => number;
@@ -221,31 +222,19 @@ export function suertes(stats: StatMap): number {
 // (máx. maxNew), todo mezclado por tema. seen: Set de temas permitidos para las nuevas (null = todos).
 export interface CardDef { id: string; t: string; [k: string]: any }
 export function pickCards(cards: CardDef[], recs: Record<string, number[]>, { n = 20, now = Date.now(), maxNew = 10, seen = null }: { n?: number; now?: number; maxNew?: number; seen?: Set<string> | null } = {}): string[] {
-  const due: { i: string; t: string; due: number }[] = [], fresh: CardDef[] = [];
-  for (const c of cards) {
-    const r = recs[c.id];
-    if (r) { if (r[3] >= 0 && r[4] <= now) due.push({ i: c.id, t: c.t, due: r[4] }); }
-    else if (!seen || seen.has(c.t)) fresh.push(c);
-  }
-  const out = pickRepaso(due, n).map(x => x.i);
-  const room = Math.min(n - out.length, maxNew);
-  if (room > 0 && fresh.length) {
-    const by = new Map<string, string[]>();
-    for (const c of fresh) { if (!by.has(c.t)) by.set(c.t, []); by.get(c.t)!.push(c.id); }
-    const ts = [...by.keys()].sort(); let k = 0;
-    while (k < room && ts.some(t => by.get(t)!.length)) for (const t of ts) { if (k >= room) break; const x = by.get(t)!.shift(); if (x) { out.push(x); k++; } }
-  }
-  return out;
+  const reviews = Object.fromEntries(Object.entries(recs).map(([id, record]) => [id, {
+    attempts: record[0], known: record[1], lastReviewedAt: record[2], intervalStep: record[3], dueAt: record[4], lastGrade: record[5],
+  }]));
+  return selectFlashcards(cards.map(card => ({ id: card.id, topicId: card.t })), reviews, {
+    count: n, now, maxNew, seenTopics: seen,
+  });
 }
 export function cardStats(cards: CardDef[], recs: Record<string, number[]>, now = Date.now()) {
-  const s = { nuevas: 0, enRepaso: 0, dominadas: 0, hoy: 0 };
-  for (const c of cards) {
-    const r = recs[c.id];
-    if (!r) s.nuevas++;
-    else if (r[3] >= 0) { s.enRepaso++; if (r[4] <= now) s.hoy++; }
-    else if (r[0] > 0) s.dominadas++;
-  }
-  return s;
+  const reviews = Object.fromEntries(Object.entries(recs).map(([id, record]) => [id, {
+    attempts: record[0], known: record[1], lastReviewedAt: record[2], intervalStep: record[3], dueAt: record[4], lastGrade: record[5],
+  }]));
+  const summary = summarizeFlashcards(cards.map(card => ({ id: card.id, topicId: card.t })), reviews, now);
+  return { nuevas: summary.new, enRepaso: summary.inReview, dominadas: summary.mastered, hoy: summary.due };
 }
 // Tarjeta construida desde una pregunta fallada: q = pregunta del banco ({ q, a[], c, n, u, t })
 export function cardFromQuestion(q: Question) {
