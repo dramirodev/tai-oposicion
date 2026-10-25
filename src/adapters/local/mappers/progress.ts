@@ -4,6 +4,7 @@ import { statsMapper } from './stats.js';
 import { sessionMapper } from './session.js';
 import { reportMapper } from './report.js';
 import { cardMapper } from './card.js';
+import { preferencesMapper } from './preferences.js';
 
 type ProgressMappingResult =
   | { ok: true; value: UserProgress; warnings: string[] }
@@ -28,6 +29,8 @@ export const progressMapper = {
       || typeof d.seen.ts !== 'number'
     ) return { ok: false, reason: 'Progreso incompleto' };
 
+    const mappedPreferences = preferencesMapper.toDomain(d.cfg);
+    if (!mappedPreferences.ok) return mappedPreferences;
     const warnings: string[] = [];
     const statistics: Record<string, QuestionStats> = {};
     const reports: Record<string, ErrorReport> = {};
@@ -60,7 +63,7 @@ export const progressMapper = {
       value: {
         statistics,
         sessions,
-        preferences: d.cfg,
+        preferences: mappedPreferences.value,
         seenTopics: d.seen.t,
         seenAt: d.seen.ts,
         reports,
@@ -74,7 +77,7 @@ export const progressMapper = {
     return {
       stats: Object.fromEntries(Object.entries(progress.statistics).map(([id, value]) => [id, statsMapper.toDto(value)])),
       sessions: progress.sessions.map(sessionMapper.toDto),
-      cfg: progress.preferences,
+      cfg: preferencesMapper.toDto(progress.preferences),
       seen: { t: progress.seenTopics, ts: progress.seenAt },
       reports: Object.fromEntries(Object.entries(progress.reports).map(([id, value]) => [id, reportMapper.toDto(value)])),
       cards: Object.fromEntries(Object.entries(progress.cardReviews).map(([id, value]) => [id, cardMapper.toDto(value)])),

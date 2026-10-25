@@ -22,11 +22,11 @@ Estas extracciones se comparan con las pruebas heredadas; no cambian selección,
 
 **DTO:** el banco externo usa `{ i, t, o, q, a, c, ... }`; `tai.v1` guarda arrays posicionales y claves compactas. No se renombra lo que se persiste ni lo que se envía a Firestore.
 
-**Dominio:** `Question` usa `{ id, topicId, origin, statement, options, correctIndex }`; `QuestionStats` usa `attempts`, `correct`, `lastSeenAt` y propiedades nombradas.
+**Dominio:** `Preferences` tipa las secciones `ui`, `test`, `sim`, `cardsc`, `evo`, `simc` y `slow`; el mapper local comprueba los esquemas existentes sin pasar los DTO al dominio. `Question` usa `{ id, topicId, origin, statement, options, correctIndex }`; `QuestionStats` usa `attempts`, `correct`, `lastSeenAt` y propiedades nombradas.
 
 **View model:** la futura `QuestionCardVM` tendrá etiquetas, HTML y estado de opciones listos para pintar. Aún no hay view models conectados al puente.
 
-Los DTO se definen en `adapters/*/dto`; los mappers DTO ↔ dominio en `adapters/*/mappers`; los mappers dominio → view model en `features/<feature>/mappers`. Texto escapado, HTML, fechas y formatos visuales van en `shared/presentation`. Los `toDomain` devuelven resultado explícito y conservan `TODO(zod)` para la fase de esquemas. El mapper del banco devuelve la entidad `Question` junto a metadatos propios del adaptador (orden original de claves y avisos), de forma que la ida y vuelta serializada conserve el orden sin introducir DTO en el dominio; el diagnóstico de banco informa en desarrollo, una vez, de campos desconocidos y preguntas inválidas sin descartarlas del flujo legado. `progressMapper` informa las claves y motivos de registros corruptos y conserva el resto del progreso; su prueba cubre un registro inválido junto a uno válido.
+Los DTO se definen en `adapters/*/dto`; los mappers DTO ↔ dominio en `adapters/*/mappers`; los mappers dominio → view model en `features/<feature>/mappers`. Texto escapado, HTML, fechas y formatos visuales van en `shared/presentation`. Los `toDomain` devuelven resultado explícito y conservan `TODO(zod)` para la fase de esquemas. El mapper del banco devuelve la entidad `Question` junto a metadatos propios del adaptador (orden original de claves y avisos), de forma que la ida y vuelta serializada conserve el orden sin introducir DTO en el dominio; el diagnóstico de banco informa en desarrollo, una vez, de campos desconocidos y preguntas inválidas sin descartarlas del flujo legado. `progressMapper` informa las claves y motivos de registros corruptos y conserva el resto del progreso; su prueba cubre un registro inválido junto a uno válido. `preferencesMapper` valida las preferencias con `adapters/local/config.ts` y conserva los valores válidos.
 
 ## Reglas y excepciones de lint
 
