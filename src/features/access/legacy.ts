@@ -1,6 +1,6 @@
 import * as sync from '../../adapters/firebase/sync-facade.js';
 import { esc } from '../../legacy/logic.js';
-import { $, app, legacyScope, toast, ask, type El } from '../../shared/ui/legacy-dom.js';
+import { $, legacyScope, toast, ask, type El } from '../../shared/ui/legacy-dom.js';
 import { isOwner } from '../../adapters/legacy/access.js';
 // Pantalla del propietario: aprobar o rechazar solicitudes y revocar accesos.
 export function registerAcceso({ routes, go }: any, screen: any) {

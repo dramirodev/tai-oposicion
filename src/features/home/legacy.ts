@@ -2,7 +2,7 @@ import * as sync from '../../adapters/firebase/sync-facade.js';
 import * as store from '../../adapters/local/legacy-store.js';
 import { esc, pct, quickN, velocidad } from '../../legacy/logic.js';
 import { META, getIndex, getMeta, now, dueList } from '../../adapters/http/legacy-data.js';
-import { $, app, legacyScope, guard, toast, type El } from '../../shared/ui/legacy-dom.js';
+import { $, legacyScope, guard, toast, type El } from '../../shared/ui/legacy-dom.js';
 import { state } from '../../core/application/legacy-engine.js';
 import { BLOQUES } from '../../shared/presentation/labels.js';
 import { isFull, accessLevel } from '../../adapters/legacy/access.js';

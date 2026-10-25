@@ -2,7 +2,7 @@ import { cardNextReview, sourceHtml, questionNotice } from '../../shared/present
 import * as store from '../../adapters/local/legacy-store.js';
 import { esc, richHtml, pct, swipeDir, pickCards, cardStats, cardFromQuestion } from '../../legacy/logic.js';
 import { j, getIndex, getMeta, byIds, temaName, now } from '../../adapters/http/legacy-data.js';
-import { $, app, legacyScope, toast, focusHeading, type El } from '../../shared/ui/legacy-dom.js';
+import { $, legacyScope, toast, focusHeading, type El } from '../../shared/ui/legacy-dom.js';
 export function registerCards({ routes, go, pw, reportBox }: any, screen: any) {
 // ───────── tarjetas (flashcards) ─────────
 let CARDIDX: any; const cardCache = new Map<string, any>(); let CRUN: any = null;

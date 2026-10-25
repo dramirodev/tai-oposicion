@@ -3,7 +3,7 @@ import * as sync from '../adapters/firebase/sync-facade.js';
 import * as store from '../adapters/local/legacy-store.js';
 import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, pickGuest, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from '../legacy/logic.js';
 import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds } from '../adapters/http/legacy-data.js';
-import { $, app, legacyScope, bindLegacyHost, L, toast, ask, guard, focusHeading, type El } from '../shared/ui/legacy-dom.js';
+import { $, legacyScope, bindLegacyHost, L, toast, ask, guard, focusHeading, type El } from '../shared/ui/legacy-dom.js';
 import { showMenu, type MenuGroup } from '../shared/ui/dialogs.js';
 import { ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
@@ -30,7 +30,7 @@ export const firstLegacyPaint = new Promise<void>(resolve => { painted = resolve
 const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 let lastP = 0;
 function pw(p: any) { const f = lastP; lastP = p; return `style="--from:${f}%;width:${p}%"`; }
-function enter(el = app) { if (reduceMotion()) return; el.classList.remove('enter'); void el.offsetWidth; el.classList.add('enter'); }
+function enter(el: HTMLElement) { if (reduceMotion()) return; el.classList.remove('enter'); void el.offsetWidth; el.classList.add('enter'); }
 function countUp() {
   document.querySelectorAll<El>('[data-count]').forEach(el => {
     const to = parseFloat(String(el.dataset.count!).replace(',', '.')); if (!isFinite(to) || reduceMotion()) return;

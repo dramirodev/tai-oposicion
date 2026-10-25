@@ -1,7 +1,7 @@
 import * as store from '../../adapters/local/legacy-store.js';
 import { esc, shuffle, fmtT, pct, dominioCalc, aggregateWeeks, slowList, simHistory, compareSessions, MOTIVOS_FALLO, cargaRepasos, motivosFallo, suertes, velocidad, CONSEJOS_LECTURA } from '../../legacy/logic.js';
 import { META, getIndex, getMeta, now, byIds } from '../../adapters/http/legacy-data.js';
-import { $, app, legacyScope, L, toast, type El } from '../../shared/ui/legacy-dom.js';
+import { $, legacyScope, L, toast, type El } from '../../shared/ui/legacy-dom.js';
 import { dominioTemas, falladasIds }  from '../../core/application/legacy-engine.js';
 import { ORIGEN, TRAMPAS, TIPOS } from '../../shared/presentation/labels.js';
 export function registerStats({ routes, go, trapTest, startRun, startRepaso }: any) {

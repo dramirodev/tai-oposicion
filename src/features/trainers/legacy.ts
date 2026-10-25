@@ -2,7 +2,7 @@ import { questionNotice, sourceHtml } from '../../shared/presentation/legacy-stu
 import * as store from '../../adapters/local/legacy-store.js';
 import { esc, richHtml, shuffle, pct, normUi, hiliteHtml, claveSpans, pideNegativa, minLectura, velocidad, CONSEJOS_LECTURA } from '../../legacy/logic.js';
 import { META, getMeta, temaName, now, pick, dueList, byIds } from '../../adapters/http/legacy-data.js';
-import { $, app, legacyScope, L, ask, focusHeading, type El } from '../../shared/ui/legacy-dom.js';
+import { $, legacyScope, L, ask, focusHeading, type El } from '../../shared/ui/legacy-dom.js';
 import { TRAMPAS, TRAMPA_EXPL } from '../../shared/presentation/labels.js';
 export function registerTraining({ routes, go, route, pw }: any, screen: any) {
 let generation = 0;

@@ -4,7 +4,7 @@ import { esc, normUi } from '../../legacy/logic.js';
 import { getIndex } from '../../adapters/http/legacy-data.js';
 import { inspectOffline, downloadOffline, type OfflineState } from '../../adapters/offline/cache.js';
 import { cleanCfg } from '../../adapters/local/config.js';
-import { $, app, legacyScope, toast, ask, type El } from '../../shared/ui/legacy-dom.js';
+import { $, legacyScope, toast, ask, type El } from '../../shared/ui/legacy-dom.js';
 import { APP_VERSION, APP_BUILD } from '../../app/build-info.js';
 import { isFull, accessLevel, devMode, setDevMode, devRevealed, revealDev } from '../../adapters/legacy/access.js';
 import { notifyAccessChange } from '../../app/access-events.js';

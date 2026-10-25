@@ -3,6 +3,7 @@ it('aísla el DOM y la limpieza de una ruta pendiente después de desmontarla', 
   document.body.innerHTML = '<main id="app"></main>';
   vi.stubGlobal('matchMedia', () => ({ matches: true }));
   const ui = await import('../src/shared/ui/legacy-dom.js');
+  expect(ui).not.toHaveProperty('app');
   const old = document.createElement('div'); document.querySelector('#app').append(old);
   const dispose = ui.bindLegacyHost(old);
   const scope = ui.legacyScope(); const off = vi.fn(); scope.screen.cleanup = off;
