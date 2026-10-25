@@ -8,6 +8,7 @@ import { analyzeSimulation, simulationPace } from '../core/domain/simulation-ana
 import { countReviewsByDay, selectSpacedReviews } from '../core/domain/spaced-repetition.ts';
 import { calculateTrapRates, selectTrapQuestions } from '../core/domain/traps.ts';
 import { composeWeightedQuestions, estimateQuickQuestionCount, filterScoringQuestions, isQuestionAllowed, pickGuestQuestions, pickQuickQuestions } from '../core/domain/selection.ts';
+import { analyzeTopicMastery, COVERAGE_OBJECTIVE } from '../core/domain/topic-mastery.ts';
 export { calculateExamScore as nota } from '../core/domain/scoring.ts';
 
 type Rnd = () => number;
@@ -24,29 +25,38 @@ export function composeSim(temas: TemaPeso[], pools: Record<string, Question[]>,
 }
 
 // Mapa de dominio por tema (ver README). rec(id) devuelve el registro [n, ok, last, box, due, lastRes, flag] o undefined.
-export const COV_OBJ = 0.6;
+export const COV_OBJ = COVERAGE_OBJECTIVE;
 export type Est = 'n' | 'r' | 'y' | 'g';
 export function dominioCalc<T extends { id: string; n: number }>(temas: T[], idsOf: (t: string) => string[] | undefined, rec: (id: string) => StatRec | undefined, t0: number) {
-  return temas.map(t => {
-    let seen = 0, okNow = 0, last = 0, due = 0, att = 0;
-    for (const id of idsOf(t.id) || []) {
-      const r = rec(id); if (!r || !r[0]) continue;
-      seen++; att += r[0]; if (r[5] === 1) okNow++; if (r[2] > last) last = r[2];
-      if (r[3] >= 0 && r[4] && r[4] <= t0) due++;
-    }
-    const prec = seen ? okNow / seen : 0;
-    const cob = Math.min(1, seen / Math.max(1, t.n * COV_OBJ));
-    const dias: number | null = last ? Math.floor((t0 - last) / 86400000) : null;
-    const score = Math.round(100 * (0.65 * prec + 0.35 * cob));
-    let est: Est, why: string;
-    if (!seen || att < 5) { est = 'n'; why = seen ? 'Pocas respuestas todavía' : 'Sin empezar'; }
-    else if (score < 50) { est = 'r'; why = prec < 0.5 ? 'Muchos fallos recientes' : 'Cobertura baja'; }
-    else if (dias! > 30) { est = 'r'; why = 'Más de 30 días sin tocar'; }
-    else if (score < 75) { est = 'y'; why = prec < 0.75 ? 'Aún fallas bastante' : 'Te falta ver preguntas'; }
-    else if (dias! > 14) { est = 'y'; why = 'Se está enfriando'; }
-    else { est = 'g'; why = 'Bien y reciente'; }
-    return { ...t, seen, prec: Math.round(100 * prec), cob: Math.round(100 * cob), score, dias, due, est, why };
-  });
+  const reasonText = {
+    'not-started': 'Sin empezar', 'few-responses': 'Pocas respuestas todavía',
+    'recent-failures': 'Muchos fallos recientes', 'low-coverage': 'Cobertura baja',
+    'stale-30-days': 'Más de 30 días sin tocar', 'many-failures': 'Aún fallas bastante',
+    cooling: 'Se está enfriando', recent: 'Bien y reciente',
+  } as const;
+  const statusCode: Record<string, Est> = { new: 'n', red: 'r', yellow: 'y', green: 'g' };
+  return analyzeTopicMastery(
+    temas.map(topic => ({ ...topic, questionCount: topic.n })),
+    idsOf,
+    id => {
+      const record = rec(id);
+      return record ? {
+        attempts: record[0], correct: record[1], lastSeenAt: record[2], intervalStep: record[3],
+        dueAt: record[4], lastResult: record[5],
+      } : undefined;
+    },
+    t0,
+  ).map(({ seen, precision, coverage, score, daysSinceLastSeen, due, status, reason }, index) => ({
+    ...temas[index],
+    seen,
+    prec: precision,
+    cob: coverage,
+    score,
+    dias: daysSinceLastSeen,
+    due,
+    est: statusCode[status],
+    why: reason === 'low-coverage' && status === 'yellow' ? 'Te falta ver preguntas' : reasonText[reason],
+  }));
 }
 
 // ── Evolución por semanas ──
