@@ -5,6 +5,8 @@
 
 @import "./base.css";
 
+@import "./loading.css";
+
 @import "./controls.css";
 
 @import "./question.css";
