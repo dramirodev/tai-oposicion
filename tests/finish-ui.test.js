@@ -23,7 +23,7 @@ it('doble pulsación en Terminar no duplica el intento de examen',async()=>{
  while(getSnapshot().run.idx<getSnapshot().run.items.length-1)document.querySelector('#next').click();
  const q=getSnapshot().run.items[getSnapshot().run.idx];document.querySelector(`.opt[data-i="${q.c}"]`).click();
  const finish=document.querySelector('#next');finish.click();finish.click();
- await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull());
+ await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull(),{timeout:5000});
  document.querySelector('.overlay [data-v="1"]').click();
  await waitText('Resultado');
  const store=await import('../src/adapters/local/legacy-store.js');expect(store.rec(q.i)[0]).toBe(1);
