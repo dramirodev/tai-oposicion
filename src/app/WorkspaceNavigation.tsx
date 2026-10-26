@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
+import { hashPath, hashSegment } from './paths.js';
 
 interface Destination { route: string; label: string; icon: ReactNode }
 const destinations: Destination[] = [
@@ -32,24 +33,24 @@ export function WorkspaceNavigation({ full, owner, section, pathname, navigate }
   const visible = (route: string) => route === 'acceso' ? owner : full || ['home', 'ayuda', 'settings'].includes(route);
   const current = pathname.split('/')[1] || 'home';
   const active = (route: string) => route === current || (['quiz', 'result', 'sim2', 'examenes'].includes(current) && section === route);
-  const link = (destination: Destination) => <a key={destination.route} href={`#/${destination.route}`} className={active(destination.route) ? 'is-active' : ''} aria-current={active(destination.route) ? 'page' : undefined}><NavigationIcon>{destination.icon}</NavigationIcon><span>{destination.label}</span></a>;
+  const link = (destination: Destination) => <a key={destination.route} href={hashSegment(destination.route)} className={active(destination.route) ? 'is-active' : ''} aria-current={active(destination.route) ? 'page' : undefined}><NavigationIcon>{destination.icon}</NavigationIcon><span>{destination.label}</span></a>;
   const openMenu = () => {
-    const menu: MenuGroup[] = [['Inicio', [['', 'Inicio', '', '#/home']]]];
+    const menu: MenuGroup[] = [['Inicio', [['', 'Inicio', '', hashPath('home')]]]];
     for (const [title, routes] of groups) {
-      const items: MenuGroup[1] = destinations.filter(d => (routes as readonly string[]).includes(d.route) && visible(d.route)).map(d => ['', d.label, '', `#/${d.route}`]);
+      const items: MenuGroup[1] = destinations.filter(d => (routes as readonly string[]).includes(d.route) && visible(d.route)).map(d => ['', d.label, '', hashSegment(d.route)]);
       if (items.length) menu.push([title, items]);
     }
-    void showMenu(menu, `#/${current}`, path => navigate(path.slice(1)));
+    void showMenu(menu, hashSegment(current), path => navigate(path.slice(1)));
   };
   return <>
     <aside className="workspace-sidebar" aria-label="Espacio de estudio">
-      <a className="workspace-brand" href="#/home" translate="no"><span className="workspace-mark" aria-hidden="true">TAI</span><span>Oposición<small>Tu espacio de estudio</small></span></a>
+      <a className="workspace-brand" href={hashPath('home')} translate="no"><span className="workspace-mark" aria-hidden="true">TAI</span><span>Oposición<small>Tu espacio de estudio</small></span></a>
       {link(destinations[0])}
       {groups.map(([title, routes]) => {
         const items = destinations.filter(d => (routes as readonly string[]).includes(d.route) && visible(d.route));
         return items.length > 0 && <section key={title} className={title === 'Tu espacio' ? 'workspace-utilities' : undefined} aria-label={title}><h2>{title}</h2>{items.map(link)}</section>;
       })}
     </aside>
-    <header className="workspace-mobile-header"><a href="#/home" className="workspace-mobile-brand" translate="no">TAI <span>Oposición</span></a><button className="workspace-menu" type="button" aria-haspopup="dialog" onClick={openMenu}><NavigationIcon><path d="M4 6h16M4 12h16M4 18h16" /></NavigationIcon>Menú</button></header>
+    <header className="workspace-mobile-header"><a href={hashPath('home')} className="workspace-mobile-brand" translate="no">TAI <span>Oposición</span></a><button className="workspace-menu" type="button" aria-haspopup="dialog" onClick={openMenu}><NavigationIcon><path d="M4 6h16M4 12h16M4 18h16" /></NavigationIcon>Menú</button></header>
   </>;
 }
