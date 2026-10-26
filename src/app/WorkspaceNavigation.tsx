@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { showMenu, type MenuGroup } from '../shared/ui/dialogs.js';
+import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
 
 interface Destination { route: string; label: string; icon: ReactNode }
 const destinations: Destination[] = [
