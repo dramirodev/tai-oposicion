@@ -5,6 +5,7 @@ import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { useActionLifetime } from '../../shared/ui/use-action-lifetime.js';
 import { usePageReady } from '../../shared/ui/use-page-ready.js';
 import { AccessView } from './AccessView.js';
+import { PageLoading } from '../../shared/ui/PageLoading.js';
 export function AccessPage() {
   const { access: services } = useStudyServices();
   const captureLifetime = useActionLifetime(services.accountId);
@@ -25,7 +26,7 @@ export function AccessPage() {
     finally { busy.current.delete(id); if (alive()) setPending(new Set(busy.current)); }
   };
   if (error) return <p role="alert">No se pudo cargar la lista de accesos.</p>;
-  if (!overview) return <p className="sub loading" role="status">Cargando…</p>;
+  if (!overview) return <PageLoading variant="access" />;
   if (!overview.owner) return <Navigate to="/home" replace />;
   return <AccessView
     overview={overview}
