@@ -162,7 +162,7 @@ Validación local en la rama de #38: prueba focalizada 2/2 (Chromium y WebKit), 
 - PR #34, #36 y #38 están integradas en `main`; la propuesta arquitectónica de #38 sigue pendiente de aprobación para iniciar la Etapa B/Zustand.
 - PR #37 se cerró automáticamente al eliminarse la rama base después del merge de #36. GitHub rechazó reabrirla porque su head fue recreado/forzado. Se conservó su diff y se publicó directamente contra `main` en la nueva [PR #41](https://github.com/dramirodev/tai-oposicion/pull/41), rama `feat/lucide-iconography-main`.
 - La integración Recharts está publicada en [PR #40](https://github.com/dramirodev/tai-oposicion/pull/40), rama `feat/recharts-study-visualizations`, base `main`.
-- Se actualizó esta tarea de tests en la rama `refactor/migrate-tests-to-rtl`, basada en `main`. Pendiente abrir la PR al completar la publicación.
+- La migración de tests está publicada en la [PR #42](https://github.com/dramirodev/tai-oposicion/pull/42), rama `refactor/migrate-tests-to-rtl`, basada en `main`.
 
 ### React Testing Library y Jest
 
@@ -177,6 +177,6 @@ Validación local en la rama de #38: prueba focalizada 2/2 (Chromium y WebKit), 
 
 ### Próximo paso
 
-1. Publicar `refactor/migrate-tests-to-rtl` contra `main` y registrar la URL de la PR tras verificar el diff final.
-2. Seguir con el estado de las PR #40 y #41 según las instrucciones del usuario; no esperar las pipelines salvo petición expresa.
+1. La PR #42 está abierta contra `main`; su estado remoto queda pendiente de revisión posterior, sin esperar sus pipelines.
+2. Seguir con el estado de las PR #40 y #41 según las instrucciones del usuario.
 3. Mantener la Etapa B de arquitectura/Zustand pendiente de aprobación explícita. Las pruebas E2E de navegador siguen en Playwright y no se migran a RTL.
