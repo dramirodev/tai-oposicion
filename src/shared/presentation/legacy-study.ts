@@ -1,7 +1,8 @@
 import { escapeHtml } from './format.ts';
+import { missingVisualQuestionIds } from './missing-visual-resources.ts';
 
 interface QuestionSource { url: string; title?: string; page?: number; verified: boolean }
-interface NoticeQuestion { n?: string; np?: number }
+interface NoticeQuestion { i?: string; id?: string; n?: string; np?: number }
 interface SourceQuestion { source?: QuestionSource; i?: string; u?: string }
 export interface FailureFilterItem<T> {
   value: T;
@@ -14,8 +15,14 @@ export interface FailureFilterItem<T> {
 export interface FailureFilters { q: string; t: string; review: string; streak: string }
 
 export function questionNotice(question: NoticeQuestion): string {
-  if (!question.n && question.np !== 1) return '';
-  return `<aside class="question-notice ${question.np === 1 ? 'warning' : ''}" aria-label="Advertencia de la pregunta"><b>${question.np === 1 ? 'Solo estudio · no puntuable' : 'Nota de la pregunta'}</b>${question.n ? `<p>${escapeHtml(question.n)}</p>` : '<p>Se conserva para estudiar; está excluida de los simulacros puntuables.</p>'}</aside>`;
+  const hasMissingVisual = missingVisualQuestionIds.has(question.i || question.id || '');
+  if (!question.n && question.np !== 1 && !hasMissingVisual) return '';
+  const visualNotice = hasMissingVisual
+    ? '<aside class="question-notice warning" aria-label="Material visual pendiente"><b>Esquema o imagen pendiente</b><p>Esta pregunta cita un recurso visual que no está incluido.</p></aside>'
+    : '';
+  const contentNotice = !question.n && question.np !== 1 ? ''
+    : `<aside class="question-notice ${question.np === 1 ? 'warning' : ''}" aria-label="Advertencia de la pregunta"><b>${question.np === 1 ? 'Solo estudio · no puntuable' : 'Nota de la pregunta'}</b>${question.n ? `<p>${escapeHtml(question.n)}</p>` : '<p>Se conserva para estudiar; está excluida de los simulacros puntuables.</p>'}</aside>`;
+  return visualNotice + contentNotice;
 }
 
 export function sourceHtml(

@@ -121,8 +121,11 @@ test('práctica permite volver a pendientes, bloquea respondidas y conserva cons
   await expect(page.locator('.question-map')).toBeVisible();
   await expect(page.locator('#prev')).toBeDisabled();
 
+  await page.evaluate(() => { document.body.style.minHeight = '200vh'; window.scrollTo(0, document.body.scrollHeight); });
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
   await page.locator('#blank').click();
   await expect(page.locator('#app h1')).toContainText('pregunta 2');
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
   await expect(page.locator('.fb')).toHaveCount(0);
   await expect(page.locator('.opt.ok')).toHaveCount(0);
   await page.locator('#blank').click();
