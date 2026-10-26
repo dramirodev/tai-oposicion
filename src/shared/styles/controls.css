@@ -283,7 +283,8 @@ button.ghost.sm {
   line-height: 1.15;
 }
 
-.overlay {
+.overlay,
+.pause-modal {
   position: fixed;
   inset: 0;
   background: rgba(10,20,38,.58);
@@ -294,7 +295,26 @@ button.ghost.sm {
   z-index: 20;
 }
 
-.overlay .card {
+dialog.overlay,
+dialog.pause-modal {
+  border: 0;
+  color: inherit;
+}
+
+dialog.overlay:not([open]),
+dialog.pause-modal:not([open]) {
+  display: none;
+}
+
+dialog.overlay::backdrop,
+dialog.pause-modal::backdrop {
+  background: transparent;
+}
+
+.overlay .card,
+.pause-modal .card {
+  position: relative;
+  z-index: 1;
   max-width: 26.25rem;
   width: 100%;
   text-align: left;
@@ -306,26 +326,31 @@ button.ghost.sm {
   padding: var(--space-8);
 }
 
-.overlay p {
+.overlay p,
+.pause-modal p {
   margin: 0 0 0.25rem;
   line-height: 1.65;
 }
 
-.overlay h2 {
+.overlay h2,
+.pause-modal h2 {
   margin: 0 0 0.5rem;
 }
 
-.overlay .row {
+.overlay .row,
+.pause-modal .row {
   justify-content: center;
   margin-top: 1rem;
   margin-bottom: 0;
 }
 
-.overlay .btn {
+.overlay .btn,
+.pause-modal .btn {
   min-width: 8.125rem;
 }
 
-.overlay>.card>.btn {
+.overlay>.card>.btn,
+.pause-modal>.card>.btn {
   margin-top: 0.75rem;
 }
 
