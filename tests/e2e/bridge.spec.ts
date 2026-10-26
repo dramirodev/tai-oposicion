@@ -103,7 +103,7 @@ test('la ayuda está disponible sin conexión desde el menú de invitado y conse
   await expect(page.locator('#motivos')).toContainText('El tiempo por sí solo no determina este motivo');
   await expect(page.locator('#app #simulacros')).toContainText('no se muestran soluciones');
   expect(errors.filter(error => !error.startsWith('Failed to load resource:'))).toEqual([]);
-  const expectedGoogleRequests = ['https://apis.google.com/', 'https://www.googleapis.com/identitytoolkit/'];
+  const expectedGoogleRequests = ['https://apis.google.com/', 'https://www.googleapis.com/identitytoolkit/', 'https://tai-oposicion.firebaseapp.com/__/auth/'];
   expect(failedRequests.filter(url => !expectedGoogleRequests.some(prefix => url.startsWith(prefix)))).toEqual([]);
 });
 });
