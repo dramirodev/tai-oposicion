@@ -1,7 +1,7 @@
 import { selectFlashcards, summarizeFlashcards } from '../../core/domain/flashcards.js';
 import type { CardReview } from '../../core/domain/entities.js';
 
-interface CardRecord { id: string; t: string; [key: string]: unknown }
+interface CardRecord { id: string; t: string }
 type LegacyCardReviews = Readonly<Record<string, readonly number[]>>;
 
 function mapReviews(reviews: LegacyCardReviews): Record<string, CardReview> {

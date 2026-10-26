@@ -25,30 +25,13 @@ it('un error HTTP no marca una descarga como completa ni escribe una fecha', asy
 });
 it('valida una copia antes de tocar el progreso y conserva los registros locales ausentes', async () => {
  const store = await import('../src/adapters/local/legacy-store.js'); store.record('local','T1.01',0,100);
- const {previewImport} = await import('../src/features/settings/legacy.js');
- expect(() => previewImport('{"stats":[]}')).toThrow('Archivo no válido');
- const p = previewImport(JSON.stringify({stats:{nuevo:[1,1,200],mal:['x']}}));
- expect(p.added).toBe(1); expect(p.preserved).toBe(1); expect(p.ignored).toBe(1);
+ const {studyServices} = await import('../src/app/legacy-router.js');
+ expect(() => studyServices.settings.previewBackup('{"stats":[]}')).toThrow('Archivo no válido');
+ const p = studyServices.settings.previewBackup(JSON.stringify({stats:{nuevo:[1,1,200],mal:['x']}}));
+ expect(p.summary).toContain('1 pregunta nueva'); expect(p.summary).toContain('1 pregunta conservada'); expect(p.summary).toContain('1 registro descartado');
+ const imported = JSON.parse(p.serialized);
+ expect(imported.stats).toHaveProperty('nuevo'); expect(imported.stats).not.toHaveProperty('mal');
  expect(store.rec('nuevo')).toBeUndefined(); expect(store.rec('local')).toBeDefined();
-});
-it('agrupa ajustes y expone el estado de los selectores', async () => {
- fakeCaches(); vi.stubGlobal('fetch', async () => ({ok:true,json:async()=>({n:0,nsup:0,temas:[]})}));
- const {registerSettings} = await import('../src/features/settings/legacy.js'); const routes={}; const screen={};
- registerSettings({routes,go:()=>{},getNewVersion:()=>null},screen); await routes.settings();
- expect(document.querySelector('#th [aria-pressed="true"]')).not.toBeNull();
- expect(document.querySelector('#diagnostic')).not.toBeNull();
- expect(document.querySelector('#off').getAttribute('role')).toBe('status'); screen.cleanup();
-});
-it('no importa en otra cuenta si esta cambia mientras el diálogo está abierto', async () => {
- fakeCaches(); vi.stubGlobal('fetch', async () => ({ok:true,json:async()=>({n:0,nsup:0,temas:[]})}));
- const store = await import('../src/adapters/local/legacy-store.js'); const {registerSettings}= await import('../src/features/settings/legacy.js');
- const routes={}, screen={}; registerSettings({routes,go:()=>{},getNewVersion:()=>null},screen); await routes.settings();
- const input=document.querySelector('#im'); Object.defineProperty(input,'files',{value:[{text:async()=>JSON.stringify({stats:{nuevo:[1,1,200]}})}]});
- input.dispatchEvent(new Event('change',{bubbles:true}));
- await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull());
- store.switchAccount('otra'); document.querySelector('.overlay [data-v="1"]').click();
- await vi.waitFor(()=>expect(document.querySelector('.overlay')).toBeNull());
- expect(store.rec('nuevo')).toBeUndefined(); screen.cleanup();
 });
 it('verifica la descarga completa de banco y tarjetas antes de guardar la fecha', async () => {
  const {entries} = fakeCaches();
@@ -61,26 +44,6 @@ it('verifica la descarga completa de banco y tarjetas antes de guardar la fecha'
  entries.delete('cards/T1.01.json');
  const damaged=await inspectOffline(idx); expect(damaged.complete).toBe(false); expect(damaged.completedAt).toBeNull();
 });
-it('muestra la confirmación y combina una copia conservando el progreso ya existente', async () => {
- fakeCaches(); vi.stubGlobal('fetch', async () => ({ok:true,json:async()=>({n:0,nsup:0,temas:[]})}));
- const store=await import('../src/adapters/local/legacy-store.js'); store.record('local','T1.01',0,100);
- const {registerSettings}=await import('../src/features/settings/legacy.js'); const routes={},screen={};
- registerSettings({routes,go:()=>{},getNewVersion:()=>null},screen); await routes.settings();
- const input=document.querySelector('#im'); Object.defineProperty(input,'files',{value:[{text:async()=>JSON.stringify({stats:{nuevo:[1,1,200]}})}]}); input.dispatchEvent(new Event('change'));
- await vi.waitFor(()=>expect(document.querySelector('.overlay')?.textContent).toContain('1 pregunta nueva'));
- expect(store.rec('nuevo')).toBeUndefined(); document.querySelector('.overlay [data-v="1"]').click();
- await vi.waitFor(()=>expect(document.querySelector('#importmsg').textContent).toContain('Copia combinada'));
- expect(store.rec('nuevo')).toBeDefined(); expect(store.rec('local')).toBeDefined(); screen.cleanup();
-});
-it('no abre ni aplica una copia si cambia la cuenta mientras se lee el archivo', async () => {
- fakeCaches(); vi.stubGlobal('fetch', async () => ({ok:true,json:async()=>({n:0,nsup:0,temas:[]})}));
- const store=await import('../src/adapters/local/legacy-store.js'), {registerSettings}=await import('../src/features/settings/legacy.js'); const routes={},screen={};
- registerSettings({routes,go:()=>{},getNewVersion:()=>null},screen); await routes.settings();
- let release; const input=document.querySelector('#im'); Object.defineProperty(input,'files',{value:[{text:()=>new Promise(resolve=>{release=resolve})}]}); input.dispatchEvent(new Event('change'));
- store.switchAccount('destino'); release(JSON.stringify({stats:{nuevo:[1,1,200]}}));
- await new Promise(resolve=>setTimeout(resolve,5)); expect(document.querySelector('.overlay')).toBeNull(); expect(store.rec('nuevo')).toBeUndefined(); screen.cleanup();
-});
-
 it.each(['<html>Error</html>','{"unfinished":','null'])('rechaza recursos offline dañados: %s',async body=>{
  const {entries}=fakeCaches();
  for(const p of ['data/index.json','data/meta.json','data/supuestos.json','data/T1.01.json','cards/T1.01.json']) entries.set(p,new Response('{}'));

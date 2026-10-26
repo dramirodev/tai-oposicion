@@ -22,11 +22,29 @@ for (const theme of ['light', 'dark']) {
     }
   });
 
+  test(`los filtros de Progreso no salen del viewport en Evolución · ${theme}`, async ({ page }) => {
+    await prepare(page, theme);
+    await page.setViewportSize({ width: 320, height: 720 });
+    await page.goto('/#/stats');
+    await page.getByRole('button', { name: 'Evolución' }).click();
+    await expect(page.getByRole('combobox', { name: 'Qué medir en la evolución' })).toBeVisible();
+    const dimensions = await page.evaluate(() => ({
+      page: document.documentElement.scrollWidth,
+      viewport: innerWidth,
+      selects: [...document.querySelectorAll('.row>label>select')].map(select => {
+        const rect = select.getBoundingClientRect();
+        return { left: rect.left, right: rect.right };
+      }),
+    }));
+    expect(dimensions.page).toBeLessThanOrEqual(dimensions.viewport);
+    expect(dimensions.selects.every(select => select.left >= 0 && select.right <= dimensions.viewport)).toBe(true);
+  });
+
   test(`los controles de Detective caben con texto máximo · ${theme}`, async ({ page }) => {
     await prepare(page, theme);
     await page.setViewportSize({ width: 320, height: 720 });
     await page.goto('/#/trampas');
-    await expect(page.locator('#chips button').first()).toBeVisible();
+    await expect(page.locator('.mot button').first()).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
   });
 
@@ -57,9 +75,9 @@ test('las falsas alarmas conservan su estado de error sin animación de tarjeta'
   await prepare(page);
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/#/trampas');
-  await expect(page.locator('#chips button').first()).toBeVisible();
-  for (const chip of await page.locator('#chips button').all()) await chip.click();
-  await page.locator('#chk').click();
+  await expect(page.locator('.mot button').first()).toBeVisible();
+  for (const chip of await page.locator('.mot button').all()) await chip.click();
+  await page.getByRole('button', { name: 'Comprobar' }).click();
   const falseAlarm = page.locator('.trapx').filter({ hasText: 'Falsa alarma:' }).first();
   await expect(falseAlarm).toBeVisible();
   const styles = await falseAlarm.evaluate(e => ({ animation: getComputedStyle(e).animationName, background: getComputedStyle(e).backgroundColor }));

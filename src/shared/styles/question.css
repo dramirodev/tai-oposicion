@@ -7,15 +7,15 @@
   position: sticky;
   top: calc(var(--sat) / var(--z,1));
   background: var(--bg);
-  padding: 12px 0;
+  padding: 0.75rem 0;
   z-index: 3;
   border-bottom: 1px solid var(--line);
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .qhead #exit {
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
   border-radius: var(--r-m);
   border: 1px solid var(--line);
   background: var(--card);
@@ -27,7 +27,7 @@
 
 .prog {
   flex: 1;
-  height: 6px;
+  height: 0.375rem;
   border-radius: var(--r-pill);
   background: var(--line);
   overflow: hidden;
@@ -43,27 +43,27 @@
   font-size: var(--fs-m);
   font-weight: 600;
   color: var(--mute);
-  min-width: 44px;
+  min-width: 2.75rem;
   text-align: right;
 }
 
 .clock {
   font: 600 var(--fs-b) ui-monospace,Menlo,monospace;
   background: var(--sel);
-  padding: 4px 9px;
+  padding: 0.25rem 0.5625rem;
   border-radius: var(--r-s);
 }
 
 .meta {
   display: flex;
-  gap: 6px;
+  gap: 0.375rem;
   flex-wrap: wrap;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
 }
 
 .tag {
   font-size: var(--fs-xs);
-  padding: 4px 8px;
+  padding: 0.25rem 0.5rem;
   border-radius: var(--r-s);
   background: var(--surface-soft);
   color: var(--mute);
@@ -87,34 +87,34 @@
 .q .enun {
   font-size: var(--fs-xl);
   line-height: 1.65;
-  margin: 8px 0 24px;
+  margin: 0.5rem 0 1.5rem;
   max-width: var(--reading-width);
 }
 
 .ctx {
   background: var(--bg);
   border-radius: var(--r-m);
-  padding: 10px;
+  padding: 0.625rem;
   font-size: var(--fs-b);
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
 }
 
 .sup {
-  margin: 8px 0 12px;
+  margin: 0.5rem 0 0.75rem;
   font-size: var(--fs-b);
   border-radius: var(--r-m);
 }
 
 summary {
-  min-height: 44px;
-  padding: 10px 0;
+  min-height: 2.75rem;
+  padding: 0.625rem 0;
 }
 
 input[type=date] {
-  min-height: 48px;
+  min-height: 3rem;
   max-width: 100%;
   font: inherit;
-  padding: 10px 12px;
+  padding: 0.625rem 0.75rem;
   border: 1.5px solid var(--mute);
   border-radius: var(--r-s);
   background: var(--card);
@@ -140,28 +140,28 @@ input[type=date] {
   width: 100%;
   font: inherit;
   font-size: var(--fs-l);
-  padding: 16px;
+  padding: 1rem;
   border-radius: var(--r-l);
   border: 1px solid var(--control-line);
   background: var(--card);
   color: var(--ink);
   cursor: pointer;
-  min-height: 56px;
+  min-height: 3.5rem;
   line-height: 1.6;
   transition: background-color var(--duration-fast),border-color var(--duration-fast);
 }
 
 .opt>b {
   flex: none;
-  width: 30px;
-  height: 30px;
+  width: 1.875rem;
+  height: 1.875rem;
   border-radius: var(--r-s);
   background: var(--surface-soft);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: var(--fs-m);
-  margin-block-start: 1px;
+  margin-block-start: 0.0625rem;
 }
 
 .opt.sel {
@@ -209,7 +209,7 @@ input[type=date] {
 .option-control {
   display: flex;
   align-items: stretch;
-  gap: 6px;
+  gap: 0.375rem;
 }
 
 .option-control>.opt {
@@ -224,9 +224,9 @@ input[type=date] {
   color: var(--mute);
   font: inherit;
   font-size: var(--fs-s);
-  padding: 8px;
-  min-width: 68px;
-  min-height: 44px;
+  padding: 0.5rem;
+  min-width: 4.25rem;
+  min-height: 2.75rem;
   cursor: pointer;
   line-height: 1.4;
 }
@@ -251,14 +251,14 @@ input[type=date] {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: 0 0 20px;
+  gap: 0.5rem;
+  margin: 0 0 1.25rem;
 }
 
 .study-signals-label {
   font-size: var(--fs-s);
   color: var(--mute);
-  margin-right: 3px;
+  margin-right: 0.1875rem;
   flex-basis: 100%;
 }
 
@@ -269,8 +269,8 @@ input[type=date] {
   color: var(--ink);
   font: inherit;
   font-size: var(--fs-s);
-  padding: 8px 12px;
-  min-height: 40px;
+  padding: 0.5rem 0.75rem;
+  min-height: 2.5rem;
   cursor: pointer;
 }
 
@@ -289,8 +289,8 @@ input[type=date] {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 6px;
-  margin: 12px 0;
+  gap: 0.375rem;
+  margin: 0.75rem 0;
   color: var(--mute);
   font-size: var(--fs-s);
 }
@@ -300,7 +300,7 @@ input[type=date] {
 }
 
 .text-highlight {
-  border-radius: 3px;
+  border-radius: 0.1875rem;
   padding: 0 .04em;
 }
 
@@ -331,7 +331,7 @@ input[type=date] {
 .enun:focus-visible,.opt .pre:focus-visible {
   outline: 2px solid var(--selb);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 0.25rem;
 }
 
 /* acierto/fallo sin depender solo del color */
@@ -359,8 +359,8 @@ input[type=date] {
   color: var(--pill-ink);
   background: var(--pill-bg);
   border-radius: var(--r-pill);
-  padding: 4px 10px;
-  margin: 0 0 8px;
+  padding: 0.25rem 0.625rem;
+  margin: 0 0 0.5rem;
 }
 
 .pace {
@@ -368,8 +368,8 @@ input[type=date] {
   font-size: var(--fs-m);
   font-weight: 600;
   border-radius: var(--r-pill);
-  padding: 6px 12px;
-  margin: 0 0 10px;
+  padding: 0.375rem 0.75rem;
+  margin: 0 0 0.625rem;
   background: var(--sel);
   color: var(--ink);
 }
@@ -392,8 +392,8 @@ input[type=date] {
 /* ===== corrección ===== */
 
 .fb {
-  margin-top: 14px;
-  padding: 20px;
+  margin-top: 0.875rem;
+  padding: 1.25rem;
   border-radius: var(--r-l);
   font-size: var(--fs-b);
   border: 1px solid transparent;
@@ -418,17 +418,17 @@ input[type=date] {
 
 .fbsub {
   font-size: var(--fs-m);
-  margin-top: 4px;
+  margin-top: 0.25rem;
   opacity: .9;
 }
 
 .cita {
-  margin-top: 10px;
+  margin-top: 0.625rem;
   background: var(--card);
   color: var(--ink);
   border: 1px solid var(--line);
   border-radius: var(--r-l);
-  padding: 16px;
+  padding: 1rem;
   font-size: var(--fs-b);
   line-height: 1.65;
 }
@@ -440,43 +440,43 @@ input[type=date] {
   text-transform: none;
   letter-spacing: 0;
   color: var(--mute);
-  margin-bottom: 6px;
+  margin-bottom: 0.375rem;
 }
 
 .cita b.hl {
   color: var(--fg,inherit);
   font-weight: 700;
   background: rgba(255,200,0,.22);
-  border-radius: 3px;
-  padding: 0 2px;
+  border-radius: 0.1875rem;
+  padding: 0 0.125rem;
 }
 
 .trap {
   display: inline-block;
-  margin-top: 8px;
+  margin-top: 0.5rem;
   font-size: var(--fs-s);
   font-weight: 600;
   background: var(--pill-bg);
   color: var(--pill-ink);
   border-radius: var(--r-pill);
-  padding: 4px 10px;
+  padding: 0.25rem 0.625rem;
 }
 
 .fl {
   font-size: var(--fs-m);
-  padding: 8px 0 0;
+  padding: 0.5rem 0 0;
 }
 
 .mot {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 0.375rem;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 0.625rem;
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--r-l);
-  padding: 14px;
+  padding: 0.875rem;
 }
 
 .mot small {
@@ -484,7 +484,7 @@ input[type=date] {
   font-size: var(--fs-m);
   font-weight: 600;
   color: var(--ink);
-  margin-bottom: 2px;
+  margin-bottom: 0.125rem;
 }
 
 .mot b.r {
@@ -494,8 +494,8 @@ input[type=date] {
 .mot button {
   font: inherit;
   font-size: var(--fs-b);
-  min-height: 44px;
-  padding: 0 14px;
+  min-height: 2.75rem;
+  padding: 0 0.875rem;
   border-radius: var(--r-pill);
   border: 1.5px solid var(--line);
   background: transparent;
@@ -505,7 +505,7 @@ input[type=date] {
   max-width: 100%;
   overflow-wrap: anywhere;
   line-height: 1.5;
-  padding-block: 8px;
+  padding-block: 0.5rem;
 }
 
 .mot button.on {
@@ -539,8 +539,8 @@ input[type=date] {
 }
 
 .trapx {
-  margin: 10px 0;
-  padding: 12px 14px;
+  margin: 0.625rem 0;
+  padding: 0.75rem 0.875rem;
   background: var(--card);
   border: 1px solid var(--line);
   border-left: 4px solid var(--amber-strong);
@@ -552,7 +552,7 @@ input[type=date] {
 }
 
 .trapx p {
-  margin: 4px 0 0;
+  margin: 0.25rem 0 0;
   font-size: var(--fs-m);
   line-height: 1.45;
   color: var(--ink);
@@ -573,13 +573,13 @@ input[type=date] {
 mark.kw {
   background: rgba(255,200,0,.28);
   color: inherit;
-  border-radius: 3px;
-  padding: 0 2px;
+  border-radius: 0.1875rem;
+  padding: 0 0.125rem;
 }
 
 .gate {
-  margin: 10px 0;
-  padding: 8px 12px;
+  margin: 0.625rem 0;
+  padding: 0.5rem 0.75rem;
   border-radius: var(--r-s);
   background: rgba(255,200,0,.18);
   font-size: var(--fs-m);
@@ -593,12 +593,12 @@ mark.kw {
   font: inherit;
   text-align: inherit;
   cursor: pointer;
-  padding: 2px 3px;
+  padding: 0.125rem 0.1875rem;
   margin: 0;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   display: inline-block;
-  min-height: 44px;
-  min-width: 44px;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
 }
 
 .tks .tk.on {
@@ -611,20 +611,20 @@ mark.kw {
 }
 
 ul.tips {
-  padding-left: 20px;
-  margin: 8px 0;
+  padding-left: 1.25rem;
+  margin: 0.5rem 0;
 }
 
 ul.tips li {
-  margin: 4px 0;
+  margin: 0.25rem 0;
   font-size: var(--fs-m);
 }
 
 .question-notice {
   font-size: var(--fs-b);
   line-height: 1.5;
-  padding: 12px 14px;
-  margin: 12px 0;
+  padding: 0.75rem 0.875rem;
+  margin: 0.75rem 0;
   background: var(--sel);
   border-left: 4px solid var(--selb);
   border-radius: var(--r-s);
@@ -637,7 +637,7 @@ ul.tips li {
 }
 
 .question-notice p {
-  margin: 6px 0 0;
+  margin: 0.375rem 0 0;
 }
 
 .question-notice b {
@@ -647,30 +647,30 @@ ul.tips li {
 .source-status {
   font-size: var(--fs-s);
   color: var(--mute);
-  margin: 8px 0;
+  margin: 0.5rem 0;
   line-height: 1.5;
 }
 
 .source-link {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
+  min-height: 2.75rem;
   line-height: 1.4;
   font-size: var(--fs-b);
-  padding: 8px 0;
+  padding: 0.5rem 0;
 }
 
 .question-map {
-  margin: 12px 0;
+  margin: 0.75rem 0;
   border: 1px solid var(--line);
   border-radius: var(--r-m);
   background: var(--surface-soft);
-  padding: 0 12px;
+  padding: 0 0.75rem;
 }
 
 .question-map summary {
-  padding: 14px 0;
-  min-height: 44px;
+  padding: 0.875rem 0;
+  min-height: 2.75rem;
   font-size: var(--fs-s);
   font-weight: 500;
   cursor: pointer;
@@ -679,22 +679,22 @@ ul.tips li {
 
 .question-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(108px,1fr));
+  grid-template-columns: repeat(auto-fit,minmax(6.75rem,1fr));
   gap: var(--space-2);
   max-height: 40vh;
   overflow: auto;
-  margin-bottom: 12px;
+  margin-bottom: 0.75rem;
 }
 
 .question-grid button {
   font: inherit;
   font-size: var(--fs-l);
-  min-height: 60px;
+  min-height: 3.75rem;
   background: var(--card);
   color: var(--ink);
   border: 1px solid var(--mute);
   border-radius: var(--r-s);
-  padding: 8px;
+  padding: 0.5rem;
 }
 
 .question-grid button small {
@@ -713,12 +713,12 @@ ul.tips li {
 
 #review-question {
   font-size: var(--fs-b);
-  min-height: 44px;
+  min-height: 2.75rem;
   color: var(--selb);
 }
 
 .code-explanation {
-  margin-top: 16px;
+  margin-top: 1rem;
   border-inline-start: 4px solid var(--selb);
 }
 
@@ -729,6 +729,27 @@ ul.tips li {
   overflow-wrap: anywhere;
 }
 
+.code-explanation .code-sample .shiki,
+.code-explanation .code-result .shiki {
+  display: block;
+  background: var(--code-bg);
+  color: var(--code-ink);
+}
+
+.code-explanation .code-sample .shiki .shiki-token,
+.code-explanation .code-result .shiki .shiki-token {
+  color: var(--shiki-token-light);
+}
+
+:root[data-color-scheme=dark] .code-explanation .code-sample .shiki .shiki-token,
+:root[data-color-scheme=dark] .code-explanation .code-result .shiki .shiki-token {
+  color: var(--shiki-token-dark, var(--shiki-token-light));
+}
+
 .code-explanation .explanation-status {
   line-height: 1.6;
+}
+.inline-feature-icon {
+  margin-inline-end: .35em;
+  vertical-align: -.12em;
 }

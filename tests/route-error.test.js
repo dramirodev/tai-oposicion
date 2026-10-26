@@ -7,7 +7,7 @@ vi.mock('../src/features/home/HomePage.js', () => ({ HomePage: () => React.creat
 const failure = vi.hoisted(() => ({ active: true }));
 vi.mock('../src/app/legacy-router.js', () => ({ configureLegacyRouter: vi.fn(), bootLegacy: () => () => {} }));
 vi.mock('../src/app/Layout.js', () => ({ Layout: () => React.createElement(Outlet) }));
-vi.mock('../src/app/LegacyRoute.js', () => ({ LegacyRoute: () => {
+vi.mock('../src/features/test/TestPage.js', () => ({ TestPage: () => {
   if (failure.active) throw new Error('detalle interno sensible');
   return React.createElement('h1', null, 'Inicio recuperado');
 } }));

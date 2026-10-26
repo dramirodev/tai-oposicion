@@ -9,8 +9,9 @@ export function ReactScreen({ children, home = false, restricted = false }: { ch
   const full = useSyncExternalStore(services.subscribe, () => services.getAccess().full);
   const blocked = restricted && !full;
   const run = services.getActiveStudy();
+  const isQuiz = location.pathname.replace(/\/$/, '') === '/quiz';
   useLayoutEffect(() => {
-    if (blocked) return;
+    if (blocked) { markReady(); return; }
     window.scrollTo(0, 0);
     const heading = root.current?.querySelector('h1');
     if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
@@ -22,7 +23,7 @@ export function ReactScreen({ children, home = false, restricted = false }: { ch
   }, [location.key, blocked]);
   if (blocked) return <Navigate to="/home" replace />;
   return <div ref={root} className="route-transition" tabIndex={-1} data-screen={location.pathname.split('/')[1] || 'home'}>
-    {!home && run && <div className="note run"><b>{run.title}</b> en curso · {Math.min(run.position + 1, run.total)}/{run.total} <Link className="btn" id="resume" to="/quiz">Continuar</Link></div>}
+    {!home && !isQuiz && run && <div className="note run"><b>{run.title}</b> en curso · {Math.min(run.position + 1, run.total)}/{run.total} <Link className="btn" id="resume" to="/quiz">Continuar</Link></div>}
     {children}
   </div>;
 }

@@ -28,14 +28,15 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   const navigate = async (route, text) => { location.hash = '#/' + route; await waitText(text); };
   await waitText('Sesión rápida');
   await navigate('test', 'Test por tema');
-  document.querySelector('#go').click();
+  await vi.waitFor(() => expect(document.querySelector('.bar2 .btn').disabled).toBe(false));
+  document.querySelector('.bar2 .btn').click();
   await waitText('Test · pregunta 1');
   const optionEnter = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
   document.querySelector('.opt').dispatchEvent(optionEnter);
   expect(optionEnter.defaultPrevented).toBe(false);
   document.querySelector('.opt').click();
   document.querySelector('#exit').click();
-  await vi.waitFor(() => expect(document.querySelector('.overlay').textContent).toContain('¿Salir?'));
+  await vi.waitFor(() => expect(document.querySelector('.overlay')?.textContent).toContain('¿Salir?'));
   document.querySelector('.overlay [data-v="1"]').click();
   await waitText('Resultado');
   const store = await import('../src/adapters/local/legacy-store.js');
@@ -68,12 +69,11 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   const filtered = await (await import('../src/adapters/http/legacy-data.js')).pick({temas:[bank[0].t],origins:new Set(['O','G','A']),mode:'falladas',n:100});
   expect(filtered.some(q => q.i === bank[0].i)).toBe(false);
   expect(filtered.some(q => q.i === bank[1].i)).toBe(true);
-  const search = document.querySelector('#fq');
-  search.value = 'termino-inexistente-94721';
+  const search = document.querySelector('#failure-query');
+  Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(search, 'termino-inexistente-94721');
   search.dispatchEvent(new Event('input', { bubbles: true }));
-  document.querySelector('#fgo').click();
-  expect(document.querySelector('#fq')).not.toBeNull();
-  await vi.waitFor(() => expect(document.querySelector('#flist').textContent).toContain('Ninguna pregunta'));
+  expect(document.querySelector('#failure-query')).not.toBeNull();
+  await vi.waitFor(() => expect(document.querySelector('#failure-results').textContent).toContain('Ninguna pregunta'));
   await navigate('sim', 'Simulacros');
   // Una carga de Falladas pendiente no debe reemplazar la ruta de destino.
   const data = await import('../src/adapters/http/legacy-data.js');
@@ -91,13 +91,14 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   delayed.mockRestore();
 
   await navigate('settings', 'Exportar tarjetas a Anki');
-  document.querySelector('#th [data-v="dark"]').click();
+  [...document.querySelectorAll('[aria-label="Tema"] button')].find(button => button.textContent === 'Oscuro').click();
   expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
   await navigate('temario', 'Temas vistos');
   await navigate('cards', 'Tarjetas de repaso');
   document.querySelector('#go').click();
   await waitText('Mostrar respuesta');
   document.querySelector('#show').click();
+  await vi.waitFor(() => expect(document.querySelector('[data-g="2"]')).not.toBeNull());
   const gradeEnter = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
   document.querySelector('[data-g="2"]').dispatchEvent(gradeEnter);
   expect(gradeEnter.defaultPrevented).toBe(false);

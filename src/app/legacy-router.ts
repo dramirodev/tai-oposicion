@@ -1,7 +1,6 @@
 import { saveExportFile } from '../shared/ui/download-file.js';
-import { helpIconLink } from '../shared/ui/help-icon-link.js';
-import type { StudyServices } from '../shared/ui/study-services.js';
-import { questionNotice, sourceHtml, filterFailures } from '../shared/presentation/legacy-study.js';
+import type { SettingsServices, SettingsSnapshot, StudyServices } from '../shared/ui/study-services.js';
+import { questionNotice, sourceHtml } from '../shared/presentation/legacy-study.js';
 import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
 import * as store from '../adapters/local/legacy-store.js';
@@ -17,15 +16,14 @@ import { simulationPace as ritmoSimulacro } from '../core/domain/simulation-anal
 import { swipeDirection, studyKeyAction } from '../shared/ui/study-input.js';
 import { velocidad, quickQuestionCount } from '../features/stats/analytics-mapper.js';
 import { mapSimulationResultToLegacy } from './simulation-result-mapper.js';
-import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds } from '../adapters/http/legacy-data.js';
+import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds, fetchJson } from '../adapters/http/legacy-data.js';
 import { $, legacyScope, bindLegacyHost, L, toast, ask, guard, focusHeading, type El } from '../shared/ui/legacy-dom.js';
 import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
 import { BLOQUES, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
-import { registerTraining } from '../features/trainers/legacy.js';
-import { registerCards } from '../features/cards/legacy.js';
-import { registerStats } from '../features/stats/legacy.js';
-import { registerSettings } from '../features/settings/legacy.js';
+import { createCardsController } from '../features/cards/cards-controller.js';
+import { cardFromFailedQuestion } from '../features/cards/flashcard-mapper.js';
+import type { FailureQuestion, LightningQuestion, ReadingOutcome, ReadingProgress, ReadingPrompt, ReadingWordResult, StudyCard, TrapAnswer, TrapPrompt, TrapRun } from '../shared/ui/study-services.js';
 import { isFull, isOwner, accessLevel, GUEST_ROUTES } from '../adapters/legacy/access.js';
 import { subscribe as subscribeEngine, getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, revealCurrentSolution, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, setCurrentConfidence, toggleCurrentDiscardedOption, addCurrentHighlight, removeCurrentHighlight } from '../core/application/legacy-engine.js';
 import { dominioTemas } from './legacy-topic-mastery.js';
@@ -33,14 +31,28 @@ import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
 import type { Origin } from '../core/domain/entities.js';
 import { createHighlight, questionContentRevision, resolveHighlight } from '../core/domain/attempts/highlights.js';
-import { canonicalText, paintTextHighlight, selectedTextAnchor } from './legacy-highlight-dom.js';
+import { canonicalText, paintTextHighlight, selectedTextAnchor } from '../shared/ui/text-highlights.js';
 import { findLegacyCodeExplanation } from './explanation-composition.js';
 import { explanationMapper } from '../features/explanations/explanation-mapper.js';
 import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
 import { loadQuestionEvolution, loadStrategyReportForPeriod } from './strategy-composition.js';
+import { createStatsServices } from './stats-composition.js';
+import { createQuizServices } from './quiz-composition.js';
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './ai-study-export-composition.js';
+import { inspectOffline, downloadOffline } from '../adapters/offline/cache.js';
+import { devMode, setDevMode, devRevealed, revealDev } from '../adapters/legacy/access.js';
+import { notifyAccessChange } from './access-events.js';
+import { exportAttemptArchive } from '../core/application/attempts/export-attempt-archive.js';
+import { importAttemptArchive } from '../core/application/attempts/import-attempt-archive.js';
+import type { AttemptArchive } from '../core/domain/attempts/archive.js';
+import { localAttemptRepository } from '../adapters/local/attempt-repository.js';
+import { attemptArchiveMapper } from '../adapters/local/mappers/attempt-archive.js';
+import { cleanCfg } from '../adapters/local/config.js';
 import { hashPath } from './paths.js';
+import type { QuestionRecord as Question } from '../core/domain/question-record.js';
+import { readingTokens, mixReadingIds } from '../features/trainers/reading-controller.js';
+import type { TestConfiguration, ScenarioChoice, SimulationConfiguration, SimulationTab, SimulationExam, SimulationExamGroups, ResultServices } from '../shared/ui/study-services.js';
 
 // ───────── router ─────────
 const routes: Record<string, any> = {};
@@ -108,9 +120,10 @@ export function renderLegacy(host: HTMLElement, pathname: string) {
 }
 
 // ───────── motor de preguntas ─────────
-function startRun(cfg: any) {
-  if (!createRun(cfg)) { toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.'); return; }
+function startRun(cfg: any): boolean {
+  if (!createRun(cfg)) { toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.'); return false; }
   go(hashPath('quiz'));
+  return true;
 }
 async function resumeSaved() {
   const p = await pendingRun(isFull());
@@ -120,319 +133,6 @@ async function resumeSaved() {
   if (!accepted) return clearRun();
   if (resumeRun(p)) go(hashPath('quiz'));
 }
-
-routes.quiz = async function () {
-  const { app, $, screen: routeScreen } = legacyScope(screen);
-  const candidate = getCurrentRun();
-  if (!candidate) { go(hashPath('home')); return; }
-  const R = candidate;
-  let tick: any = null, gateTimer: any = null, closing = false, endConfirmation: AbortController | null = null;
-  {
-    // el tiempo sale de la hora real (no de contar ticks): iOS frena los timers con la pantalla bloqueada
-    tick = setInterval(() => {
-      tickCurrentRun();
-      if (!R.limit) return;
-      const left = currentSecondsRemaining();
-      const el = $('#clock'); if (el) el.textContent = fmtT(left);
-      const pc = $('#pace'); if (pc) { const d = ritmoSimulacro(R.idx, R.items.length, R.limit * 60, R.secs), bud = Math.round(R.limit * 60 / R.items.length); pc.className = 'pace ' + (d >= 0 ? 'up' : d > -3 ? 'mid' : 'low'); pc.textContent = `Ritmo: ${d > 0 ? d + ' por delante' : d < 0 ? -d + ' por detrás' : 'al día'} · ${bud} s por pregunta`; }
-      if (left <= 0) { clearInterval(tick); finish('timeout'); }
-    }, 500);
-  }
-  const onKey = (e: any) => {
-    const eventTarget = e.target as El;
-    const textRoot = typeof eventTarget?.closest === 'function'
-      ? eventTarget.closest<El>('.enun, .opt .pre') || eventTarget.closest<El>('.opt')?.querySelector<El>('.pre') || null
-      : null;
-    if (textRoot && !eventTarget.closest('.opt') && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); return; }
-    if (textRoot && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
-      const selection = window.getSelection();
-      if (selection && (!selection.anchorNode || !textRoot.contains(selection.anchorNode))) {
-        const walker = document.createTreeWalker(textRoot, NodeFilter.SHOW_TEXT);
-        let first = walker.nextNode();
-        while (first && !first.textContent?.length) first = walker.nextNode();
-        if (first) { const range = document.createRange(); range.setStart(first, 0); range.collapse(true); selection.removeAllRanges(); selection.addRange(range); }
-      }
-      const direction = e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? 'backward' : 'forward';
-      const granularity = e.key === 'ArrowUp' || e.key === 'ArrowDown' ? 'line' : 'character';
-      const modify = (selection as (Selection & { modify?: (alter: string, direction: string, granularity: string) => void }) | null)?.modify;
-      if (selection && modify) {
-        e.preventDefault();
-        modify.call(selection, e.shiftKey ? 'extend' : 'move', direction, granularity);
-        onSelectionChange();
-      }
-      return;
-    }
-    // Enter/Espacio deben activar el control enfocado mediante el comportamiento nativo.
-    if ((e.key === 'Enter' || e.key === ' ') && (e.target as El).closest?.('button,a,[role="button"]')) return;
-    if (/^(INPUT|TEXTAREA|SELECT)$/.test(((e.target as El).tagName || ''))) return;
-    if (R.paused && e.key === 'Tab') { e.preventDefault(); const rb = $('.overlay #resume'); rb && rb.focus(); return; }
-    if (R.items[R.idx] === undefined) return;
-    const act = studyKeyAction(e, R.items[R.idx].a.length); if (!act) return;
-    e.preventDefault();
-    if (act.type === 'option') { const b = app.querySelector<El>(`.opt[data-i="${act.index}"]`); b && b.click(); }
-    else if (act.type === 'next') { const b = $('#next'); b && b.click(); }
-    else if (act.type === 'previous') prev();
-    else if (act.type === 'blank') { const b = $('#blank'); b && b.click(); }
-    else if (act.type === 'flag') { const b = $('#flag'); b && b.click(); }
-    else if (act.type === 'pause') { const b = R.paused ? $('.overlay #resume') : $('#pause'); b && b.click(); }
-  };
-  let tx: any = null;
-  const onTs = (e: any) => { const t = e.touches[0]; tx = e.touches.length === 1 && t.clientX > 24 && t.clientX < innerWidth - 24 && !(e.target as El).closest<El>('details,input,textarea,button,.opt') ? [t.clientX, t.clientY] : null; };
-  const onTe = (e: any) => {
-    if (!tx) return; const t = e.changedTouches[0];
-    const d = swipeDirection(t.clientX - tx[0], t.clientY - tx[1]); tx = null;
-    if (d === 'next') { const b = $('#next'); b && b.click(); } else if (d === 'prev') prev();
-  };
-  const onSelectionChange = () => {
-    const tools = app.querySelector<HTMLElement>('#highlight-tools');
-    if (!tools || R.paused) return;
-    const anchor = selectedTextAnchor(app);
-    tools.hidden = !anchor;
-    if (anchor) {
-      const remove = app.querySelector<HTMLButtonElement>('[data-remove-highlight]');
-      const mark = (R.highlights?.[R.idx] || []).find(item => item.field === anchor.field
-        && item.start < anchor.end && item.end > anchor.start);
-      if (remove) { remove.hidden = !mark; if (mark) remove.dataset.removeHighlight = mark.id; }
-    }
-  };
-  function prev() { if (R.paused || R.idx <= 0) return; setQuestionIndex(R.idx - 1); draw(); focusHeading(); window.scrollTo(0, 0); }
-  document.addEventListener('keydown', onKey);
-  document.addEventListener('touchstart', onTs, { passive: true });
-  document.addEventListener('touchend', onTe, { passive: true });
-  document.addEventListener('selectionchange', onSelectionChange);
-  document.addEventListener('keyup', onSelectionChange);
-  app.addEventListener('mouseup', onSelectionChange);
-  app.addEventListener('touchend', onSelectionChange);
-  routeScreen.cleanup = () => { endConfirmation?.abort(); clearInterval(tick); clearInterval(gateTimer); document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); document.removeEventListener('selectionchange', onSelectionChange); document.removeEventListener('keyup', onSelectionChange); app.removeEventListener('mouseup', onSelectionChange); app.removeEventListener('touchend', onSelectionChange); };
-  draw();
-
-  function draw() {
-    if (R.idx >= R.items.length) return finish();
-    saveRun();
-    startCurrentQuestion();
-    const LEC = normalizeUiPreferences(store.getCfg().ui).lectura, kw = (t: any) => richHtml(t, !!LEC);
-    const q = R.items[R.idx];
-    const a = R.ans[R.idx];
-    const state = R.feedback ? (R.studyStates?.[R.idx] || 'unseen') : undefined;
-    const consulted = state === 'revealed';
-    const reveal = R.feedback && (a !== undefined || consulted);
-    const contentRevision = questionContentRevision(q.q, q.a);
-    const confidence = R.confidences?.[R.idx] || null;
-    const discarded = new Set(R.discardedOptions?.[R.idx] || []);
-    const responseLocked = R.feedback ? state === 'answered' || state === 'revealed' : typeof a === 'number' && a >= 0;
-    const inSup = !!q.s;
-    app.innerHTML = `
-    <h1 class="sr">${esc(R.titulo || 'Test')} · pregunta ${R.idx + 1}${R.porTiempo ? '' : ' de ' + R.items.length}</h1>
-    <div class="qhead">
-      <button class="ghost" id="exit" aria-label="Salir">✕</button>
-      <div class="prog"><div ${pw(R.porTiempo ? Math.min(100, 100 * R.secs / (R.limit! * 60)) : 100 * R.idx / R.items.length)}></div></div>
-      <div class="cnt">${R.porTiempo ? '#' + (R.idx + 1) : (R.idx + 1) + '/' + R.items.length}</div>
-      ${R.limit ? `<div class="clock" id="clock">${fmtT(R.limit * 60 - R.secs)}</div><button class="ghost" id="pause" aria-label="Pausar">⏸</button>` : ''}
-    </div>
-    <div class="sub study-run-title">${esc(R.titulo || 'Práctica')}${helpIconLink('sesiones', 'Ayuda sobre controles y estados de pregunta')}</div>
-    ${R.limit && R.kind === 'sim' ? '<div class="pace" id="pace"></div>' : ''}
-    ${!R.feedback ? `<details class="question-map"><summary>Mapa de preguntas · ${R.ans.filter(x => x !== undefined && x >= 0).length} ${R.ans.filter(x => x !== undefined && x >= 0).length === 1 ? 'respondida' : 'respondidas'} · ${(R.review || []).length} para revisar</summary><div class="question-grid">${R.items.map((_, k) => { const status = R.ans[k] === undefined ? 'Sin responder' : R.ans[k] === -1 ? 'En blanco' : 'Respondida'; return `<button data-jump="${k}" ${k === R.idx ? 'aria-current="step"' : ''} class="${R.ans[k] !== undefined && R.ans[k] >= 0 ? 'answered' : ''}">${k + 1}<small>${status}${R.review?.includes(k) ? ' · Revisar' : ''}</small></button>`; }).join('')}</div></details><button class="ghost" id="review-question" aria-pressed="${!!R.review?.includes(R.idx)}">${R.review?.includes(R.idx) ? '✓ Marcada para revisar' : 'Marcar para revisar'}</button>` : `<details class="question-map"><summary>Mapa de preguntas · ${R.studyStates?.filter(x => x === 'answered').length || 0} respondidas · ${R.studyStates?.filter(x => x === 'pending').length || 0} pendientes · ${R.studyStates?.filter(x => x === 'revealed').length || 0} consultadas</summary><div class="question-grid">${R.items.map((_, k) => { const itemState = R.studyStates?.[k] || 'unseen'; const label = itemState === 'answered' ? 'Respondida' : itemState === 'pending' ? 'Pendiente' : itemState === 'revealed' ? 'Solución consultada' : 'Sin visitar'; return `<button data-jump="${k}" ${k === R.idx ? 'aria-current="step"' : ''} class="${itemState}">${k + 1}<small>${label}</small></button>`; }).join('')}</div></details>`}
-    ${state === 'pending' ? '<p class="note">Si ves la solución, ya no podrás responder esta pregunta en este intento.</p>' : ''}
-    <div class="card q ${inSup ? 'with-sup' : ''}">
-      <div class="meta">
-        <span class="tag">${esc(q.t)} · ${esc(temaName(q.t))}</span>
-        <span class="tag o${q.o}">${ORIGEN[q.o]}${q.o === 'O' && q.y ? ' · ' + esc(q.y.replace('Ingreso libre ', '').replace('convocatoria ', '')) : ''}</span>
-        ${q.p ? '<span class="tag warn">Respuesta provisional</span>' : ''}
-        ${q.w ? '<span class="tag warn">Puede caducar</span>' : ''}
-        ${q.o === 'G' && q.v ? '<span class="tag">Variante</span>' : ''}
-      </div>
-      ${questionNotice(q)}
-      ${inSup ? `<details class="sup scenario-context"><summary>Enunciado del supuesto</summary><div class="pre">${esc(R.supTexto || q.supTexto || '')}</div></details>` : ''}
-      ${q.cp ? `<div class="ctx pre">${richHtml(q.cp)}</div>` : ''}
-      ${asksForNegativeOption(q.q) ? '<div class="pide">Ojo: te piden la opción INCORRECTA o la excepción</div>' : ''}
-      <div class="enun pre" tabindex="0" aria-label="Enunciado. Usa Mayús y las flechas para seleccionar texto">${kw(q.q)}</div>
-      <div class="study-signals" aria-label="Señales opcionales de estudio">
-        <span class="study-signals-label">¿Cómo lo ves?</span>
-        ${[['sure', 'Seguro'], ['betweenTwo', 'Entre dos'], ['guess', 'Adivino']].map(([value, label]) => `<button type="button" class="signal${confidence === value ? ' on' : ''}" data-confidence="${value}" aria-pressed="${confidence === value}" ${responseLocked ? 'disabled' : ''}>${label}</button>`).join('')}
-      </div>
-      <div class="opts">
-      ${q.a.map((o, i) => {
-        let cl = 'opt';
-        if (discarded.has(i)) cl += ' discarded';
-        if (reveal) { if (i === q.c) cl += ' ok'; else if (i === a) cl += ' bad'; cl += ' dis'; }
-        else if (a === i) cl += ' sel';
-        return `<div class="option-control"><button class="${cl}" data-i="${i}" aria-pressed="${a === i}" ${reveal ? 'disabled' : ''}><b>${L[i]}</b><span class="pre" tabindex="0" aria-label="Opción ${L[i]}. Usa Mayús y las flechas para seleccionar texto">${kw(o)}</span>${reveal && i === q.c ? '<span class="sr">(respuesta correcta)</span>' : reveal && i === a ? '<span class="sr">(tu respuesta, incorrecta)</span>' : ''}</button><button type="button" class="discard-option${discarded.has(i) ? ' on' : ''}" data-discard-option="${i}" aria-pressed="${discarded.has(i)}" aria-label="${discarded.has(i) ? 'Restaurar' : 'Descartar'} opción ${L[i]}" ${responseLocked ? 'disabled' : ''}>${discarded.has(i) ? 'Restaurar' : 'Descartar'}</button></div>`;
-      }).join('')}
-      </div>
-      <div class="highlight-tools" id="highlight-tools" role="group" aria-label="Subrayado opcional" hidden>
-        <span>Texto seleccionado:</span><button type="button" class="signal" data-add-highlight="key">Clave</button>
-        <button type="button" class="signal" data-add-highlight="doubt">Duda</button>
-        <button type="button" class="signal" data-remove-highlight hidden>Quitar marca</button>
-      </div>
-      <p class="sub stale-highlight" id="stale-highlight" hidden>Una marca no coincide con el texto actual y no se ha movido.</p>
-      ${reveal ? feedback(q, a, consulted) : ''}
-    </div>
-    <div class="bar2">
-      ${R.feedback ? `<button class="btn sec" id="prev" ${R.idx === 0 ? 'disabled' : ''}>← Anterior</button>${state === 'unseen' ? '<button class="btn sec" id="blank">No lo sé</button>' : state === 'pending' ? '<span class="tag warn" role="status">Pendiente</span><button class="btn sec" id="reveal-solution">Ver solución</button>' : state === 'revealed' ? '<span class="tag warn" role="status">Solución consultada · blanco</span>' : '<span class="tag" role="status">Respondida</span>'}<button class="btn" id="next">${R.idx + 1 === R.items.length ? 'Terminar' : 'Siguiente'} →</button>`
-        : `<button class="btn sec" id="blank">${a === -1 ? '✓ En blanco' : 'Dejar en blanco'}</button>
-           <button class="btn" id="next">${R.idx + 1 === R.items.length ? 'Terminar' : 'Siguiente'} →</button>`}
-    </div>
-    ${R.paused ? `<div class="overlay" role="dialog" aria-modal="true" aria-labelledby="pt"><div class="card"><h2 id="pt">En pausa</h2><p>El tiempo está detenido.</p><button class="btn" id="resume">Continuar</button></div></div>` : ''}`;
-    bind(q);
-    if (reveal && R.feedback) {
-      const run = R, index = R.idx, slot = app.querySelector<HTMLElement>('#code-explanation-slot');
-      if (slot) void findLegacyCodeExplanation(q.i, q.q, q.a).then(result => {
-        if (!slot.isConnected || getCurrentRun() !== run || run.idx !== index) return;
-        if (result.status === 'current') slot.innerHTML = renderCodeExplanation(explanationMapper.toViewModel(result.explanation));
-        else if (result.status === 'outdated') slot.textContent = 'Hay una explicación de una revisión anterior; no se muestra para evitar información desactualizada.';
-      }).catch(() => {});
-    }
-    (R.highlights?.[R.idx] || []).forEach(mark => {
-      const root = mark.field === 'statement' ? app.querySelector('.enun')
-        : app.querySelector(`.opt[data-i="${Number(mark.field.slice(7))}"] .pre`);
-      if (!root) return;
-      const sourceText = root.textContent?.replace(/\u00a0/g, ' ') || '';
-      const resolved = resolveHighlight(mark, sourceText, contentRevision);
-      if (resolved.stale) { const note = $('#stale-highlight'); if (note) note.hidden = false; return; }
-      paintTextHighlight(root, resolved.start, resolved.end, mark.category, mark.id);
-    });
-    if (R.paused) { app.querySelectorAll<El>('.qhead,.sub,.pace,.card.q,.bar2').forEach(el => { if (!el.closest<El>('.overlay')) el.inert = true; }); const rb = $('.overlay #resume'); rb && rb.focus(); }
-    clearInterval(gateTimer);
-    if (LEC === 2 && !reveal && a === undefined && !R.paused) {
-      const need = minimumReadingSeconds({ context: q.cp, statement: q.q, options: q.a }), left = () => Math.ceil(need - (Date.now() - R.qT0!) / 1000);
-      if (left() > 0) {
-        const opts = app.querySelectorAll<El>('.opt'); opts.forEach(b => b.disabled = true);
-        $('.opts').insertAdjacentHTML('afterend', `<div class="gate" id="gate"></div>`);
-        const upd = () => { const l = left(), g = $<El>('#gate'); if (!g) return clearInterval(gateTimer); if (l <= 0) { clearInterval(gateTimer); g.remove(); app.querySelectorAll<El>('.opt').forEach(b => b.disabled = false); } else g.textContent = `👀 Lee con calma: podrás responder en ${l} s. ¿Qué te piden? ¿Hay NO, SALVO, cifras?`; };
-        upd(); gateTimer = setInterval(upd, 400);
-      }
-    }
-    if (reveal) { const lv = $('#live'); if (lv) lv.textContent = (a === -1 ? 'Sin responder' : a === q.c ? 'Correcto' : 'Incorrecto') + '. Respuesta: ' + L[q.c]; const nx = $('#next'); nx && nx.focus({ preventScroll: true }); }
-    else if (a !== undefined && !R.paused) { const so = app.querySelector<El>('.opt.sel'); so && so.focus({ preventScroll: true }); }
-    // El enunciado permanece en su sitio al revelar: sin saltos automáticos de lectura.
-  }
-  function feedback(q: any, a: any, wasConsulted = false) {
-    const ok = a === q.c;
-    return `<div class="fb ${wasConsulted ? 'note' : ok ? 'good' : 'wrong'}"><b>${wasConsulted ? 'Solución consultada · cuenta como blanco' : a === -1 ? 'Sin responder' : ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${!wasConsulted && !ok && a !== -1 && R.fast?.[R.idx] ? `<div class="fbsub">Marcaste ${L[a]} en ${R.fast[R.idx][0]} s${R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? `; leerla con calma lleva unos ${R.fast[R.idx][1]} s` : ''}.</div>` : ''}
-      ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}
-      ${sourceHtml(q, VERIFIED_SOURCES)}
-      ${q.x?.length ? `<div class="trap">Trampa: ${q.x.map((x: any) => esc(TRAMPAS[x] || x)).join(' · ')}</div>` : ''}
-      ${!wasConsulted && !ok && a !== -1 && R.feedback ? `<div class="mot" id="mot"><small>¿Por qué fallé?${helpIconLink('motivos', 'Ayuda sobre los motivos del fallo')}${(() => { const f = R.fast?.[R.idx]; return f && f[0] < f[1] * 0.6 ? ` <b class="r">Respondiste en ${f[0]} s; leerla bien lleva ≈${f[1]} s. ¿Fue velocidad?</b>` : ''; })()}</small>${[5, 7, 1, 2, 3, 4].map(m => `<button class="${store.rec(q.i)?.[9] === m ? 'on' : (m === 7 && R.fast?.[R.idx] && R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? 'sug' : '')}" data-m="${m}">${MOTIVOS_FALLO[m]}</button>`).join('')}<button class="mk" id="mkcard" ${store.rec(q.i)?.[9] === 4 && !store.cardRec('FC-Q-' + q.i) ? 'hidden' : ''}>${store.cardRec('FC-Q-' + q.i) ? '📇 Tarjeta creada ✓' : '📇 Hacer tarjeta'}</button></div>` : ''}
-      ${ok && a !== -1 && R.feedback ? (() => { const r = store.rec(q.i) || [], en = r[3] === 0 && r[4] > now() + 86400000 * 1.5; return `<div class="mot" id="acc"><small>¿Seguro? (entra en repaso a +2 días)</small>${(() => { const pl = R.luck?.[R.idx]; return pl === 6 ? '<b class="r">🍀 Marcada como suerte: acierto 1/2. Otra vez bien y se quita la etiqueta.</b>' : pl === 8 ? '<b class="r">🍀 ¡Acierto 2/2! Etiqueta de suerte quitada: ya la sabes.</b>' : ''; })()}<button class="${en && r[9] !== 6 && r[9] !== 8 ? 'on' : ''}" data-a="doubt">🤔 Acerté dudando</button><button class="${r[9] === 6 || r[9] === 8 ? 'on' : ''}" data-a="suerte">🍀 Fue suerte</button></div>`; })() : ''}
-      <button class="ghost fl" id="flag">${store.rec(q.i)?.[6] ? '★ Dudosa' : '☆ Marcar como dudosa'}</button>
-      <div class="repw" id="rep"></div><div id="code-explanation-slot" aria-live="polite"></div></div>`;
-  }
-  function bind(q: any) {
-    app.querySelectorAll<El>('[data-jump]').forEach(b => b.onclick = () => { if (getCurrentRun() !== R || R.paused) return; setQuestionIndex(+b.dataset.jump!); draw(); focusHeading(); window.scrollTo(0, 0); });
-    $('#review-question') && ($('#review-question').onclick = () => { if (getCurrentRun() !== R || R.paused) return; toggleReviewQuestion(); draw(); $('#review-question').focus({preventScroll:true}); });
-    $('#exit').onclick = async () => {
-      if (closing || getCurrentRun() !== R) return;
-      closing = true;
-      endConfirmation = new AbortController();
-      const accepted = await ask('¿Salir? Lo respondido se guardará como sesión interrumpida.', 'Salir', false, endConfirmation.signal);
-      endConfirmation = null;
-      closing = false;
-      if (!accepted || getCurrentRun() !== R) return;
-      if (R.ans.some(x => x !== undefined)) finish('interrupted');
-      else { clearActiveRun(); clearRun(); go(hashPath('home')); }
-    };
-    $('#pause') && ($('#pause').onclick = () => { setRunPaused(true); draw(); });
-    $('#prev') && ($('#prev').onclick = prev);
-    $('#resume') && ($('#resume').onclick = () => { setRunPaused(false); draw(); const pb = $('#pause'); pb && pb.focus(); });
-    app.querySelectorAll<El>('.opt').forEach(b => b.onclick = () => {
-      if (R.paused) return;
-      const selection = window.getSelection();
-      if (selection && !selection.isCollapsed
-        && (b.contains(selection.anchorNode) || b.contains(selection.focusNode))) return;
-      const i = +b.dataset.i!;
-      if (R.feedback) { if (R.ans[R.idx] !== undefined) return; answer(q, i); draw(); }
-      else { answerCurrentDeferred(i); draw(); }
-    });
-    app.querySelectorAll<HTMLButtonElement>('[data-confidence]').forEach(button => button.onclick = () => {
-      const value = button.dataset.confidence;
-      if (value === 'sure' || value === 'betweenTwo' || value === 'guess') {
-        setCurrentConfidence(value);
-        draw();
-      }
-    });
-    app.querySelectorAll<HTMLButtonElement>('[data-discard-option]').forEach(button => button.onclick = () => {
-      toggleCurrentDiscardedOption(Number(button.dataset.discardOption));
-      draw();
-    });
-    const highlightTools = $('#highlight-tools');
-    highlightTools?.addEventListener('mousedown', event => event.preventDefault());
-    highlightTools?.addEventListener('touchstart', event => event.preventDefault(), { passive: false });
-    app.querySelectorAll<HTMLButtonElement>('[data-add-highlight]').forEach(button => button.onclick = () => {
-      const anchor = selectedTextAnchor(app);
-      const category = button.dataset.addHighlight;
-      if (!anchor || (category !== 'key' && category !== 'doubt')) return;
-      const field = anchor.field;
-      const existing = (R.highlights?.[R.idx] || []).find(mark => mark.field === field
-        && mark.start < anchor.end && mark.end > anchor.start);
-      if (existing) return;
-      const state = R.studyStates?.[R.idx];
-      const timing = state === 'revealed' ? 'after-reveal'
-        : typeof R.ans[R.idx] === 'number' && R.ans[R.idx]! >= 0 ? 'after-answer' : 'before-answer';
-      const created = createHighlight({
-        id: globalThis.crypto?.randomUUID?.() || `mark-${Date.now()}-${Math.random().toString(36).slice(2)}`,
-        ...anchor,
-        category,
-        contentRevision: questionContentRevision(q.q, q.a),
-        createdAt: Date.now(),
-        timing,
-      });
-      if (created.ok && addCurrentHighlight(created.value)) {
-        window.getSelection()?.removeAllRanges();
-        draw();
-      }
-    });
-    app.querySelectorAll<HTMLButtonElement>('[data-remove-highlight]').forEach(button => button.onclick = () => {
-      const id = button.dataset.removeHighlight;
-      if (id && removeCurrentHighlight(id)) { window.getSelection()?.removeAllRanges(); draw(); }
-    });
-    $('#blank') && ($('#blank').onclick = () => {
-      if (R.feedback) {
-        if (R.ans[R.idx] === undefined) {
-          answer(q, -1);
-          if (R.idx < R.items.length - 1) setQuestionIndex(R.idx + 1);
-          draw();
-          if (R.idx > 0) focusHeading();
-          window.scrollTo(0, 0);
-        }
-      } else {
-        toggleDeferredBlank();
-        draw();
-        window.scrollTo(0, 0);
-      }
-    });
-    $('#reveal-solution') && ($('#reveal-solution').onclick = () => { if (revealCurrentSolution()) { draw(); focusHeading(); } });
-    $('#next') && ($('#next').onclick = () => { if (R.idx === R.items.length - 1) { void finish(); return; } setQuestionIndex(R.idx + 1); draw(); focusHeading(); window.scrollTo(0, 0); });
-    $('#mot') && ($('#mot').onclick = e => {
-      const b = (e.target as El).closest<El>('button'); if (!b) return;
-      const mk = $('#mkcard'), id = 'FC-Q-' + q.i;
-      if (b === mk) { if (store.cardRec(id)) { store.removeCard(id); mk.textContent = '📇 Hacer tarjeta'; } else { store.addFallo(q.i); mk.textContent = '📇 Tarjeta creada ✓'; } return; }
-      store.setMotivo(q.i, q.t, +b.dataset.m!);
-      $('#mot').querySelectorAll<El>('button[data-m]').forEach(x => x.classList.toggle('on', x === b));
-      if (mk) mk.hidden = +b.dataset.m! === 4 && !store.cardRec(id); // el despiste no merece tarjeta
-    });
-    $('#acc') && ($('#acc').onclick = e => { const b = (e.target as El).closest<El>('button'); if (!b) return; if (b.dataset.a! === 'suerte') store.suerte(q.i, q.t); else store.doubt(q.i, q.t); $('#acc').querySelectorAll<El>('button').forEach(x => x.classList.toggle('on', x === b)); });
-    $('#rep') && reportBox(q, $('#rep'));
-    $('#flag') && ($('#flag').onclick = () => { store.toggleFlag(q.i, q.t); $('#flag').textContent = store.rec(q.i)?.[6] ? '★ Dudosa' : '☆ Marcar como dudosa'; });
-  }
-  function answer(q: any, i: any) { answerCurrentQuestion(i, minimumReadingSeconds({ context: q.cp, statement: q.q, options: q.a })); }
-  async function finish(reason: 'complete' | 'interrupted' | 'timeout' = 'complete') {
-    if (getCurrentRun() !== R || closing && reason !== 'timeout') return;
-    if (reason === 'timeout') endConfirmation?.abort();
-    const missing = R.items.filter((_, k) => R.ans[k] === undefined).length;
-    if (reason === 'complete' && !R.feedback && missing) {
-      closing = true;
-      endConfirmation = new AbortController();
-      const accepted = await ask(`Quedan ${missing} preguntas sin responder. ¿Terminar y guardar la sesión como interrumpida?`, 'Terminar', false, endConfirmation.signal);
-      endConfirmation = null;
-      closing = false;
-      if (!accepted || getCurrentRun() !== R) return;
-      reason = 'interrupted';
-    }
-    clearInterval(tick);
-    if (!finishCurrentRun(reason)) { toast('Se acabó el tiempo sin contestar ninguna pregunta.'); return go(hashPath('home')); }
-    go(hashPath('result'));
-  }
-};
 
 function simAnalisis({ ses, items, ans, times, limit }: any) {
   const r = mapSimulationResultToLegacy({ correct: items.map((q: any) => q.c), ans, times, limitSecs: limit * 60, secs: ses.secs });
@@ -448,80 +148,6 @@ function simAnalisis({ ses, items, ans, times, limit }: any) {
   if (r.b > r.n * 0.15) tips.push(`Dejaste ${r.b} en blanco. Con una opción descartada, responder suma de media.`);
   return `<h2>Ritmo y puntos</h2><div class="card">${pts.join('')}${tips.length ? `<ul class="tips">${tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}</div>`;
 }
-routes.result = async function () {
-  const { app, $, screen: routeScreen } = legacyScope(screen);
-  const lastResult = getLastResult();
-  if (!lastResult) return go(hashPath('home'));
-  const { ses, items, ans, studyStates = [], highlights = [], confidences = [], discardedOptions = [] } = lastResult;
-  const ng = ses.f;
-  const consultedCount = studyStates.filter(state => state === 'revealed').length;
-  app.innerHTML = `
-  <h1>Resultado</h1>
-  ${ses.interrupted ? `<div class="note result-status"><b>Sesión interrumpida</b><p>${ses.a + ses.f} de ${ses.n} preguntas respondidas. La puntuación global mantiene las no contestadas como blancos.</p></div>` : ''}
-  <div class="card big">
-  <p class="score-label">Puntuación global${helpIconLink('puntuacion', 'Ayuda sobre cómo se calcula la puntuación')}</p>
-    <div class="score" data-count="${ses.nota}">${ses.nota}<small>/100</small></div>
-    <div class="legend">100 × (aciertos − fallos/3) / total de preguntas</div>
-    <div class="trio"><div class="g"><b>${ses.a}</b>Aciertos</div><div class="r"><b>${ses.f}</b>Fallos</div><div><b>${ses.b}</b>Blanco</div></div>
-    ${consultedCount ? `<div class="legend" id="consulted-count">${consultedCount} ${consultedCount === 1 ? 'solución consultada' : 'soluciones consultadas'} · contadas como blanco, sin acierto ni fallo</div>` : ''}
-    <div class="legend">${ses.a + ses.f ? pct(ses.a, ses.a + ses.f) + ' % de acierto sobre lo contestado' : 'Sin respuestas evaluables'} · ${fmtT(ses.secs)}</div>
-  </div>
-  <div class="row">
-    ${(ses.titulo || '').includes('Parte 1') && SIMCFG?.parte2 ? '<button class="btn" id="p2go">Seguir con la parte 2 (supuesto)</button>' : ''}
-    ${ng ? '<button class="btn" id="again">Repetir las falladas</button>' : ''}
-    <button class="btn sec" id="home">Inicio</button>
-  </div>
-  ${lastResult.limit && !lastResult.ses.porTiempo ? simAnalisis(lastResult) : ''}
-  ${ses.kind === 'sim' && !ses.interrupted ? '<section class="strategy-result"><h2>Analítica de estrategia</h2><p class="sub">Análisis del historial completado; las sesiones incompletas se excluyen y la muestra pequeña no genera recomendación.</p><button class="btn sec" id="result-strategy-load">Calcular informe del último año</button><div id="result-strategy-report" aria-live="polite"></div></section>' : ''}
-  <h2>Por tema</h2>
-  <div class="card">${Object.entries(ses.temas).sort((a, b) => a[0].localeCompare(b[0])).map(([t, [a, n]]) => `<div class="line"><span>${esc(t)} ${esc(temaName(t))}</span><span>${a}/${n}</span></div>`).join('')}</div>
-  <h2>Revisión</h2>
-  <div class="card">${items.map((q, k) => {
-    const x = ans[k], consulted = studyStates[k] === 'revealed'; const st = consulted || x === undefined || x === -1 ? 'b' : x === q.c ? 'g' : 'r';
-    const label = consulted ? 'Solución consultada · blanco' : st === 'g' ? 'Acierto' : st === 'r' ? 'Fallo' : 'En blanco';
-    return `<details class="rv ${st}"><summary><i></i><span class="sr">${label}: </span>${consulted ? '<span class="tag warn">Solución consultada · blanco</span> ' : ''}${esc(q.q.slice(0, 110))}${q.q.length > 110 ? '…' : ''}</summary>
-      ${questionNotice(q)}<div class="pre review-statement">${richHtml(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : i === x ? 'bad' : ''}" data-answer-index="${i}"><b>${L[i]}</b> <span class="pre review-option-text">${richHtml(o)}</span>${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
-      ${confidences[k] ? `<p class="sub">Confianza antes de responder: ${confidences[k] === 'sure' ? 'Seguro' : confidences[k] === 'betweenTwo' ? 'Entre dos' : 'Adivino'}</p>` : ''}
-      ${discardedOptions[k]?.length ? `<p class="sub">Opciones que descartaste antes de responder: ${discardedOptions[k].map(index => L[index]).join(', ')}</p>` : ''}
-      ${highlights[k]?.length ? '<p class="sub">Tus marcas de este intento:</p>' : ''}
-      ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${sourceHtml(q, VERIFIED_SOURCES)}<div class="code-explanation-slot" data-explanation="${k}" aria-live="polite"></div><div class="repw" data-rq="${k}"></div></details>`;
-  }).join('')}</div>`;
-  items.forEach((question, index) => {
-    const explanationSlot = app.querySelector<HTMLElement>(`[data-explanation="${index}"]`);
-    if (!ses.interrupted) void findLegacyCodeExplanation(question.i, question.q, question.a).then(result => {
-      if (!explanationSlot?.isConnected) return;
-      if (result.status === 'current') explanationSlot.innerHTML = renderCodeExplanation(explanationMapper.toViewModel(result.explanation), `result-${index}`);
-      else if (result.status === 'outdated') explanationSlot.textContent = 'Hay una explicación de una revisión anterior; no se muestra para evitar información desactualizada.';
-    }).catch(() => {});
-    const revision = questionContentRevision(question.q, question.a);
-    const panel = app.querySelectorAll<HTMLElement>('.rv')[index];
-    (highlights[index] || []).forEach(mark => {
-      const root = mark.field === 'statement' ? panel.querySelector('.review-statement')
-        : panel.querySelector(`.ro[data-answer-index="${Number(mark.field.slice(7))}"] .review-option-text`);
-      if (!root) return;
-      const resolved = resolveHighlight(mark, canonicalText(root), revision);
-      if (resolved.stale) {
-        const note = document.createElement('p'); note.className = 'sub stale-highlight';
-        note.textContent = 'Una marca no coincide con el texto actual y no se ha movido.'; panel.append(note);
-        return;
-      }
-      paintTextHighlight(root, resolved.start, resolved.end, mark.category, mark.id);
-    });
-  });
-  app.querySelectorAll<El>('[data-rq]').forEach(el => reportBox(items[+el.dataset.rq!], el));
-  $('#home').onclick = () => go(hashPath('home'));
-  $('#result-strategy-load') && ($('#result-strategy-load').onclick = async () => {
-    const output = $('#result-strategy-report'); if (!output) return;
-    output.setAttribute('aria-busy', 'true'); output.textContent = 'Calculando con el historial detallado…';
-    try { output.innerHTML = renderStrategyReport(await loadStrategyReportForPeriod(365)); }
-    catch { if (output.isConnected) output.textContent = 'No se pudo leer el historial detallado. El resultado de esta sesión sigue disponible.'; }
-    finally { if (output.isConnected) output.setAttribute('aria-busy', 'false'); }
-  });
-  $('#p2go') && ($('#p2go').onclick = () => go(hashPath('simulationReview')));
-  $('#again') && ($('#again').onclick = async () => startRun({ kind: 'rev', feedback: true, items: shuffle(items.filter((q, k) => ans[k] !== q.c)), titulo: 'Repetición de falladas' }));
-};
-
-
 // ───────── sesión rápida (~5 min) ─────────
 async function quickSession() {
   const account = store.accountId();
@@ -576,77 +202,6 @@ async function openMenu() {
 }
 
 // ───────── mis trampas ─────────
-// ───────── test por tema ─────────
-routes.test = async function () {
-  const { app, $, screen: routeScreen } = legacyScope(screen);
-  const idx = await getIndex(); await getMeta();
-  const cfg = store.getCfg().test || { sel: [], n: 15, mode: 'nuevas', o: ['O', 'A', 'G'] };
-  const sel = new Set<string>(cfg.sel || []), org = new Set<Origin>(cfg.o || ['O', 'A', 'G']);
-  let allTopics = typeof cfg.all === 'boolean' ? cfg.all : sel.size === 0;
-  let themeQuery = ''; const openBlocks = new Set<string>(['T1']);
-  const viewAccount = store.accountId();
-  const bloques = [['T1', 'Bloque I · Organización del Estado'], ['T2', 'Bloque II · Informática básica'], ['T3', 'Bloque III · Desarrollo'], ['T4', 'Bloque IV · Sistemas y comunicaciones']];
-  const draw = () => {
-    app.innerHTML = `
-    <h1>Test por tema${helpIconLink('sesiones', 'Ayuda sobre los controles del test')}</h1>
-    <div class="card">
-      <h2 class="h3">Terminar por</h2>
-      <div class="seg" id="by">${[[0, 'Nº de preguntas'], [1, 'Tiempo']].map(([v, t]) => `<button class="${(cfg.pt ? 1 : 0) === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
-      ${cfg.pt ? `<div class="seg" id="mins">${[10, 20, 30, 45, 60].map(v => `<button class="${(cfg.min || 20) === v ? 'on' : ''}" data-v="${v}">${v} min</button>`).join('')}</div><p class="sub sm">Van saliendo preguntas hasta que se acaba el tiempo. Solo cuentan las que contestes.</p>`
-      : `<div class="seg" id="n">${[10, 15, 25, 40].map(v => `<button class="${cfg.n === v ? 'on' : ''}" data-v="${v}">${v}</button>`).join('')}</div>`}
-      <h2 class="h3">Qué preguntas</h2>
-      <div class="seg" id="mode">${[['nuevas', 'Nuevas primero'], ['aleatorio', 'Aleatorio'], ['falladas', 'Falladas'], ['dudosas', 'Dudosas'], ['trampas', 'Mis trampas']].map(([v, t]) => `<button class="${cfg.mode === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
-      ${cfg.mode === 'trampas' ? '<p class="sub sm">Saca preguntas de tus 3 trampas con más fallos (mínimo 5 respuestas por trampa): primero las que fallaste, luego las que no has visto.</p>' : ''}
-      <h2 class="h3">Origen</h2>
-      <div class="seg multi" id="org">${([['G', 'Generadas'], ['O', 'Oficiales'], ['A', 'Academia']] as const).map(([v, t]) => `<button class="${org.has(v) ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
-    </div>
-    <div class="card"><h2 class="h3">Temas <small>(${allTopics ? 'Todo el temario' : sel.size + ' elegidos'})</small></h2>
-    <div class="seg" id="test-scope"><button id="test-all" class="${allTopics ? 'on' : ''}">Todo el temario</button><button id="test-custom" class="${!allTopics ? 'on' : ''}">Elegir temas</button></div>
-    <label class="field" for="test-search">Buscar tema</label><input type="search" id="test-search" value="${esc(themeQuery)}" placeholder="Nombre o código del tema">
-    <div class="row"><button class="btn sec" id="useSeen">Usar mis temas vistos (${store.getSeen().length})</button></div>
-    ${bloques.map(([b, nom]) => `<details class="bl topic-block" data-test-block="${b}" ${openBlocks.has(b) || themeQuery ? 'open' : ''}><summary>${nom}</summary><div class="blh"><span>Seleccionar bloque</span><button class="ghost sm" data-b="${b}">todos</button></div>
-      ${idx.temas.filter(t => t.id.startsWith(b)).map(t => `<label class="tm ${sel.has(t.id) ? 'on' : ''}"><input type="checkbox" data-t="${t.id}" ${sel.has(t.id) ? 'checked' : ''}><span><b>${t.id}</b> ${esc(t.nombre)}</span><small>${tstat(t.id, t.n)}</small></label>`).join('')}</details>`).join('')}
-    </div>
-    <div class="bar2 action-plan"><p class="sm" id="test-summary" role="status">${cfg.pt ? (cfg.min || 20) + ' min' : cfg.n + ' preguntas'} · ${allTopics ? 'Todo el temario' : sel.size ? [...sel].map(t => temaName(t)).join(', ') : 'Elige al menos un tema'} · ${[...org].map(o => ORIGEN[o as 'G'|'A'|'O']).join(', ')}</p><button class="btn" id="go" ${!allTopics && !sel.size ? 'disabled' : ''}>Empezar</button></div>`;
-    $('#test-all').onclick = () => { allTopics = true; sel.clear(); save(); draw(); };
-    $('#test-custom').onclick = () => { allTopics = false; save(); draw(); };
-    const applySearch = () => { app.querySelectorAll<El>('.tm').forEach(el => { el.hidden = !fold(el.textContent).includes(fold(themeQuery)); }); app.querySelectorAll<HTMLDetailsElement>('[data-test-block]').forEach(el => { if (themeQuery) el.open = true; el.hidden = !Array.from(el.querySelectorAll<El>('.tm')).some(x => !x.hidden); }); };
-    $('#test-search').oninput = e => { themeQuery = (e.target as El).value; applySearch(); };
-    app.querySelectorAll<HTMLDetailsElement>('[data-test-block]').forEach(el => el.ontoggle = () => { if (!el.isConnected) return; el.open ? openBlocks.add(el.dataset.testBlock!) : openBlocks.delete(el.dataset.testBlock!); });
-    applySearch();
-    $('#by').onclick = e => { if ((e.target as El).dataset.v!) { cfg.pt = +(e.target as El).dataset.v!; save(); draw(); } };
-    $('#n') && ($('#n').onclick = e => { if ((e.target as El).dataset.v!) { cfg.n = +(e.target as El).dataset.v!; save(); draw(); } });
-    $('#mins') && ($('#mins').onclick = e => { if ((e.target as El).dataset.v!) { cfg.min = +(e.target as El).dataset.v!; save(); draw(); } });
-    $('#mode').onclick = e => { const v = (e.target as El).dataset.v; if (v && ['nuevas', 'aleatorio', 'falladas', 'dudosas', 'trampas'].includes(v)) { cfg.mode = v as NonNullable<typeof cfg.mode>; save(); draw(); } };
-    $('#org').onclick = e => { const v = (e.target as El).dataset.v; if (v === 'O' || v === 'A' || v === 'G') { org.has(v) ? org.delete(v) : org.add(v); if (!org.size) org.add(v); save(); draw(); } };
-    app.querySelectorAll<El>('[data-t]').forEach(c => c.onchange = () => { allTopics = false; c.checked ? sel.add(c.dataset.t!) : sel.delete(c.dataset.t!); save(); draw(); });
-    app.querySelectorAll<El>('[data-b]').forEach(b => b.onclick = () => { allTopics = false; const ids = idx.temas.filter(t => t.id.startsWith(b.dataset.b!)).map(t => t.id); const all = ids.every(i => sel.has(i)); ids.forEach(i => all ? sel.delete(i) : sel.add(i)); save(); draw(); });
-    $('#useSeen').onclick = () => { const v = store.getSeen(); if (!v.length) { toast('Aún no has marcado temas vistos (pantalla «Temas vistos» en Inicio).'); return; } allTopics = false; sel.clear(); v.forEach(t => sel.add(t)); save(); draw(); };
-    $('#go').onclick = guard(async () => {
-      if (!allTopics && !sel.size) return toast('Elige al menos un tema o selecciona Todo el temario.');
-      const temas = allTopics ? idx.temas.map(t => t.id) : [...sel];
-      if (cfg.mode === 'trampas') {
-        const r = await trapTest(cfg.pt ? 300 : cfg.n || 15, undefined, sel.size ? [...sel] : undefined);
-        if (viewAccount !== store.accountId() || !$('#test-summary')) return;
-        if (!r.items.length) { toast('Aún no hay datos de trampas: contesta al menos 5 preguntas de alguna trampa y falla alguna.'); return; }
-        startRun({ kind: 'test', feedback: true, items: r.items, titulo: 'Mis trampas · ' + r.targets.map(k => TRAMPAS[k] || k).join(', '), ...(cfg.pt ? { limit: cfg.min || 20, porTiempo: true } : {}) }); return;
-      }
-      const items = await pick({ temas, origins: org, mode: cfg.mode || 'nuevas', n: cfg.pt ? 300 : cfg.n || 15 });
-      if (viewAccount !== store.accountId() || !$('#test-summary')) return;
-      if (!items.length) { toast(cfg.mode === 'falladas' ? 'No tienes falladas en esa selección.' : cfg.mode === 'dudosas' ? 'No tienes preguntas marcadas como dudosas ahí.' : 'No hay preguntas con ese filtro.'); return; }
-      startRun({ kind: 'test', feedback: true, items, titulo: (sel.size === 1 ? temaName([...sel][0] as string) : 'Test') + (cfg.pt ? ' · ' + (cfg.min || 20) + ' min' : ''), ...(cfg.pt ? { limit: cfg.min || 20, porTiempo: true } : {}) });
-    });
-  };
-  function save() { store.setCfg('test', { all: allTopics, sel: [...sel], n: cfg.n, mode: cfg.mode, o: [...org], pt: cfg.pt || 0, min: cfg.min || 20 }); }
-  function tstat(t: any, n: any) {
-    let v = 0, ok = 0, tot = 0;
-    for (const id of META._by[t] || []) { const r = store.rec(id); if (r) { v++; ok += r[1]; tot += r[0]; } }
-    return `${v}/${n}${tot ? ' · ' + pct(ok, tot) + '%' : ''}`;
-  }
-  draw();
-};
-
-
 // ───────── exámenes y simulacros por número ─────────
 const EX_OFICIALES: Record<string, string> = {
   'TAIL2022-P1': 'Ingreso libre 2022 (conv. 2023)', 'TAI2024B-P1': 'Ingreso libre 2023-24 (conv. 2024)', 'L2018-P1': 'Ingreso libre 2018',
@@ -682,91 +237,10 @@ function listaExamenes() {
   for (const t of tests) { const n = vistos[t.tema] = (vistos[t.tema] || 0) + 1; t.nombre = `Test ${t.tema} · ${temaName(t.tema)}${tests.filter(x => x.tema === t.tema).length > 1 ? ' (' + n + ')' : ''}`; }
   return { sims, ofi, tests };
 }
-// «Exámenes» ya no es una pantalla aparte: son las pestañas «Por examen» y «Por tema» de Simulacros
-routes.examenes = async function () {
-  const { app, $, screen: routeScreen } = legacyScope(screen); store.setCfg('simtab', 'examen'); go(hashPath('simulation')); };
-
-// ───────── simulacro ─────────
-routes.sim = async function () {
-  const { app, $, screen: routeScreen } = legacyScope(screen);
-  const idx = await getIndex(); await getMeta();
-  const cfg = Object.assign({ n: 80, min: 90, o: ['O', 'G'], parte2: true, scope: 'vistos' }, store.getCfg().sim || {});
-  const seenN = store.getSeen().length;
-  const simAccount = store.accountId();
-  const org = new Set(cfg.o);
-  const drawCompleto = () => {
-    $('#simbody').innerHTML = `
-    <div class="card">
-      <h2 class="h3">Parte 1 · conocimientos</h2>
-      <div class="seg" id="n">${[40, 80].map(v => `<button class="${cfg.n === v ? 'on' : ''}" data-v="${v}">${v} preguntas</button>`).join('')}</div>
-      <h2 class="h3">Tiempo (minutos)</h2>
-      <div class="seg" id="min">${[45, 60, 90, 120].map(v => `<button class="${cfg.min === v ? 'on' : ''}" data-v="${v}">${v}</button>`).join('')}</div>
-      <h2 class="h3">Temas</h2>
-      <div class="seg" id="scope"><button class="${cfg.scope !== 'todos' ? 'on' : ''}" data-v="vistos">Mis temas vistos (${seenN})</button><button class="${cfg.scope === 'todos' ? 'on' : ''}" data-v="todos">Todo el temario</button></div>
-      ${cfg.scope !== 'todos' && !seenN ? '<p class="sub sm">No has marcado ningún tema: se usará todo el temario.</p>' : ''}
-      <p class="sub sm"><a href="${hashPath('topics')}">Editar temas vistos</a></p>
-      <h2 class="h3">Origen de las preguntas</h2>
-      <div class="seg multi" id="org">${([['G', 'Generadas'], ['O', 'Oficiales'], ['A', 'Academia']] as const).map(([v, t]) => `<button class="${org.has(v) ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
-      <label class="chk"><input type="checkbox" id="p2" ${cfg.parte2 ? 'checked' : ''}> Después, parte 2: elegir 1 de 2 supuestos prácticos (20 preguntas)</label>
-    </div>
-    <div class="note">Reparto por temas calcado a los exámenes oficiales. Cada fallo resta 1/3 de acierto; en blanco no resta. No hay corrección hasta el final.</div>
-    <div class="bar2"><button class="btn" id="go">Empezar simulacro</button></div>`;
-    $('#n').onclick = e => { if ((e.target as El).dataset.v!) { cfg.n = +(e.target as El).dataset.v!; if (cfg.n === 40 && cfg.min > 60) cfg.min = 45; if (cfg.n === 80 && cfg.min < 90) cfg.min = 90; save(); drawCompleto(); } };
-    $('#scope').onclick = e => { const value = (e.target as El).dataset.v; if (value === 'vistos' || value === 'todos') { cfg.scope = value; save(); drawCompleto(); } };
-    $('#min').onclick = e => { if ((e.target as El).dataset.v!) { cfg.min = +(e.target as El).dataset.v!; save(); drawCompleto(); } };
-    $('#org').onclick = e => { const v = (e.target as El).dataset.v; if (v === 'O' || v === 'A' || v === 'G') { org.has(v) ? org.delete(v) : org.add(v); if (!org.size) org.add(v); save(); drawCompleto(); } };
-    $<El>('#p2').onchange = e => { cfg.parte2 = (e.target as El).checked; save(); };
-    $('#go').onclick = guard(async () => {
-      const useSeen = cfg.scope !== 'todos' && seenN;
-      const items = await simParte1(idx, org, cfg.n, useSeen ? new Set(store.getSeen()) : null);
-      if (simAccount !== store.accountId() || !$('#simbody')) return;
-      if (!items.length) { toast('No hay preguntas con esos filtros.'); return; }
-      SIMCFG = { parte2: cfg.parte2, org: [...org], min2: Math.round(cfg.min * 0.45) };
-      startRun({ kind: 'sim', feedback: false, items, limit: cfg.min, titulo: 'Simulacro · Parte 1' });
-    });
-  };
-  function save() { store.setCfg('sim', { n: cfg.n, min: cfg.min, o: [...org], parte2: cfg.parte2, scope: cfg.scope }); }
-  // pestañas: Completo (parte 1 + supuesto) · Por examen (simulacros y oficiales) · Por tema (tests de la academia)
-  const TABS = [['completo', 'Completo'], ['examen', 'Por examen'], ['tema', 'Por tema']];
-  let tab = store.getCfg().simtab; if (!TABS.some(t => t[0] === tab)) tab = 'completo';
-  const L2 = listaExamenes();
-  let exOrigin = 'all', exTurn = 'all', exYear = '';
-  const grupos = (): [string, any[]][] => {
-    if (tab === 'tema') return [['Tests de la academia', L2.tests]];
-    return ([['Exámenes oficiales', L2.ofi], ['Simulacros de la academia', L2.sims]] as [string, any[]][]).map(([title, list]) => [title, list.filter(e =>
-      (exOrigin === 'all' || (exOrigin === 'official' ? L2.ofi : L2.sims).includes(e)) &&
-      (exTurn === 'all' || (exTurn === 'libre' ? e.nombre.startsWith('Ingreso libre') : e.nombre.startsWith('Promoción interna'))) &&
-      (!exYear || e.nombre.includes(exYear)))] as [string, any[]]).filter(([, list]) => list.length);
-  };
-  const nf = (n: any) => (Math.round(n * 10) / 10).toFixed(1).replace('.', ',');
-  const drawLista = () => {
-    const ses = store.getSessions(), todos = grupos().flatMap(g => g[1]);
-    let sel = store.getCfg().exsel; if (!todos.some(x => x.k === sel)) sel = todos[0]?.k;
-    const info = (e: any) => { const h = ses.filter(x => x.titulo === e.nombre); return h.length ? { nota: h[0].nota, n: h.length, mejor: Math.max(...h.map(x => x.nota)) } : null; };
-    const years = [...new Set(L2.ofi.flatMap(e => e.nombre.match(/20\d{2}/g) || []))].sort().reverse();
-    $('#simbody').innerHTML = `${tab === 'examen' ? `<div class="card exam-filters"><label>Origen<select id="ex-origin"><option value="all" ${exOrigin === 'all' ? 'selected' : ''}>Todos</option><option value="official" ${exOrigin === 'official' ? 'selected' : ''}>Oficiales</option><option value="academy" ${exOrigin === 'academy' ? 'selected' : ''}>Academia</option></select></label><label>Turno<select id="ex-turn"><option value="all" ${exTurn === 'all' ? 'selected' : ''}>Todos</option><option value="libre" ${exTurn === 'libre' ? 'selected' : ''}>Ingreso libre</option><option value="promotion" ${exTurn === 'promotion' ? 'selected' : ''}>Promoción interna</option></select></label><label>Año en la referencia<select id="ex-year"><option value="">Todos</option>${years.map(y => `<option value="${y}" ${exYear === y ? 'selected' : ''}>${y}</option>`).join('')}</select></label></div>` : ''}<p class="sub sm">Elige uno y contesta solo sus preguntas. Notas sobre 100; cada fallo resta 1/3.</p>
-      ${grupos().map(([t, l]) => `<h2 class="h3">${esc(t)}</h2><div class="exlist">${l.map((e: any) => { const i = info(e); return `<button class="exrow ${e.k === sel ? 'on' : ''}" data-k="${esc(e.k)}" aria-pressed="${e.k === sel}"><span><b>${esc(e.nombre)}</b><small>${e.ids.length} preguntas${i && i.n > 1 ? ` · ${i.n} intentos · mejor ${nf(i.mejor)}` : ''}</small></span><em class="nt ${i ? (i.nota >= 50 ? 'ok' : 'mid') : ''}">${i ? nf(i.nota) : 'Sin hacer'}</em></button>`; }).join('')}</div>`).join('')}
-      ${!todos.length ? '<p class="note">No hay exámenes con estos filtros. Prueba con otro año o turno.</p>' : ''}
-      <div class="bar2"><button class="btn sec" data-m="est" ${!todos.length ? 'disabled' : ''}>Estudiar</button><button class="btn" data-m="sim">Examen · 90 min</button></div>`;
-    for (const id of ['ex-origin', 'ex-turn', 'ex-year']) { const el = $('#' + id); if (el) el.onchange = () => { if (id === 'ex-origin') exOrigin = el.value; else if (id === 'ex-turn') exTurn = el.value; else exYear = el.value; drawLista(); $('#' + id)?.focus({ preventScroll: true }); }; }
-    $('#simbody').querySelectorAll<El>('.exrow').forEach(b => b.onclick = () => { store.setCfg('exsel', b.dataset.k!); drawLista(); const n = $('#simbody').querySelector<El>('.exrow.on'); n && n.focus({ preventScroll: true }); });
-    $('#simbody').querySelectorAll<El>('button[data-m]').forEach(b => b.onclick = guard(async () => {
-      const ex = todos.find(x => x.k === sel); if (!ex) return;
-      const items = (await byIds(ex.ids)).filter(q => !q.s);
-      if (simAccount !== store.accountId() || !$('#simbody')) return;
-      if (!items.length) { toast('No se pudieron cargar las preguntas.'); return; }
-      if (b.dataset.m! === 'sim') startRun({ kind: 'sim', feedback: false, items, limit: 90, titulo: ex.nombre });
-      else startRun({ kind: 'test', feedback: true, items, titulo: ex.nombre });
-    }));
-  };
-  const shell = () => {
-    app.innerHTML = `<h1>Simulacros${helpIconLink('simulacros', 'Ayuda sobre navegación y corrección de simulacros')}</h1><div class="seg tabs" id="simtabs" role="group" aria-label="Tipo de simulacro">${TABS.map(([v, t]) => `<button class="${tab === v ? 'on' : ''}" data-v="${v}" aria-pressed="${v === tab}">${t}</button>`).join('')}</div><div id="simbody"></div>`;
-    $('#simtabs').onclick = e => { const b = (e.target as El).closest<El>('button'); if (!b || b.dataset.v! === tab) return; tab = b.dataset.v!; store.setCfg('simtab', tab); shell(); $('#simtabs .on').focus({preventScroll:true}); enter($('#simbody') as any); };
-    tab === 'completo' ? drawCompleto() : drawLista();
-  };
-  shell();
-};
 let SIMCFG: any = null;
+let reviewScenarioQuestions = new Map<string, Question[]>();
+let reviewScenarioTexts = new Map<string, string>();
+let reviewScenarioAccount: string | null = null;
 async function simParte1(idx: any, org: any, N: any, only: any) {
   const temas = idx.temas.filter((t: any) => !only || only.has(t.id));
   const pools: Record<string, any> = {};
@@ -775,23 +249,6 @@ async function simParte1(idx: any, org: any, N: any, only: any) {
   return composeWeightedQuestions(temas.map((topic: any) => ({ id: topic.id, weight: topic.w })), pools, N, Math.random);
 }
 // Parte 2 tras la parte 1: ofrece 2 supuestos
-routes.sim2 = async function () {
-  const { app, $, screen: routeScreen } = legacyScope(screen);
-  const sup = await getSup();
-  const ok = (Object.entries(sup) as [string, any][]).filter(([k, v]) => v.q.filter((x: any) => !x.r && x.np !== 1).length >= 18 && /libre/i.test(v.conv || '') && !/2018/.test(v.conv || ''));
-  const two = shuffle(ok).slice(0, 2);
-  app.innerHTML = `<h1>Parte 2 · Supuesto práctico</h1><div class="note">Elige uno de los dos supuestos. Son ejercicios reales de convocatorias anteriores.</div>
-  ${two.map(([k, v], i) => `<div class="card"><h2 class="h3">Supuesto ${i + 1}</h2><div class="pre sm">${esc(v.texto.slice(0, 700))}${v.texto.length > 700 ? '…' : ''}</div><button class="btn" data-k="${k}">Elegir este supuesto</button></div>`).join('')}
-  <button class="btn sec" id="skip">Saltar la parte 2</button>`;
-  app.querySelectorAll<El>('[data-k]').forEach(b => b.onclick = () => {
-    const v = sup[b.dataset.k!];
-    const items = v.q.filter((x: any) => !x.r && x.np !== 1).slice(0, 20);
-    startRun({ kind: 'sim', feedback: false, items, limit: SIMCFG?.min2 || 40, supTexto: v.texto, titulo: 'Simulacro · Parte 2 (supuesto)' });
-  });
-  $('#skip').onclick = () => go(hashPath('home'));
-};
-
-
 // ───────── avisar de error en el banco ─────────
 function reportBox(q: any, host: El) {
   const show = () => {
@@ -813,84 +270,365 @@ function reportBox(q: any, host: El) {
 
 // Las pantallas comparten navegación y limpieza; cada módulo conserva su estado de sesión.
 const screen = { get cleanup() { return legacyScope().screen.cleanup; }, set cleanup(fn) { legacyScope().screen.cleanup = fn; } };
-// ───────── preguntas falladas: buscar por texto o tema y releer el fragmento del temario ─────────
-const fold = (t: any) => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-routes.falladas = async function () {
-  const { app, $, screen: routeScreen } = legacyScope(screen);
-  let active = true, tm: any;
-  routeScreen.cleanup = () => { active = false; clearTimeout(tm); };
+const fold = (text: unknown) => String(text || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+let cardIndex: Record<string, unknown> | undefined;
+const cardCache = new Map<string, Promise<Record<string, unknown>[]>>();
+async function curatedCards(): Promise<StudyCard[]> {
+  if (cardIndex === undefined) { try { cardIndex = (await fetchJson<{ temas?: Record<string, unknown> }>('cards/index.json')).temas || {}; } catch { return []; } }
+  const topicIds = Object.keys(cardIndex);
+  for (const topicId of topicIds) if (!cardCache.has(topicId)) cardCache.set(topicId, fetchJson<Record<string, unknown>[]>(`cards/${topicId}.json`).catch(error => { cardCache.delete(topicId); throw error; }));
+  const lists = await Promise.all(topicIds.map(topicId => cardCache.get(topicId)?.catch(() => []) ?? Promise.resolve([])));
+  return lists.flatMap((items, index) => items.filter(card => card && card.id && card.q && card.a && !card.revisar).map(card => ({ ...card, t: topicIds[index] } as unknown as StudyCard)));
+}
+async function allCards(): Promise<StudyCard[]> {
   await getMeta();
-  if (!active) return;
-  const qs = (await byIds(falladasIds())).sort((a, b) => (store.rec(b.i)?.[2] || 0) - (store.rec(a.i)?.[2] || 0));
-  if (!active) return;
-  const idx = await getIndex();
-  if (!active) return;
-  const F = { q: '', t: '', review: '', streak: '' };
-  const fd = (ts: any) => new Date(ts).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-  const conteo: Record<string, any> = {}; qs.forEach(q => { conteo[q.t] = (conteo[q.t] || 0) + 1; });
-  const filtra = () => {
-    const stats = store.getStats();
-    const items = qs.map(q => {
-      const record = stats[q.i];
-      return {
-        value: q, id: q.i, topic: q.t, reviewed: record?.[11] === 1,
-        streak: store.failureStreak(record), searchableText: [q.q, ...q.a, q.u, q.n].join(' '),
-      };
-    });
-    return filterFailures(items, F);
-  };
-  const lista = () => {
-    const L2 = filtra(), host = $('#flist'); if (!active || !host) return;
-    $('#fcount').textContent = L2.length === qs.length ? `${qs.length} ${qs.length === 1 ? 'pregunta' : 'preguntas'}` : `${L2.length} de ${qs.length} ${qs.length === 1 ? 'pregunta' : 'preguntas'}`;
-    const gr: Record<string, any> = {}; L2.forEach(q => (gr[q.t] ||= []).push(q));
-    host.innerHTML = L2.length ? Object.keys(gr).sort().map(t => `<h2 class="h3">${esc(t)} · ${esc(temaName(t))} <small>(${gr[t].length})</small></h2><div class="card">${gr[t].map((q: any) => {
-      const r = store.rec(q.i) || [0, 0, 0];
-      return `<article class="failure-item" data-failure="${esc(q.i)}"><div class="failure-state"><label class="chk"><input type="checkbox" data-reviewed="${esc(q.i)}" ${r[11] ? 'checked' : ''}>Repasada en el temario</label><span class="streak-meter" aria-label="${Math.max(0, store.failureStreak(r))} de 3 aciertos seguidos">${Math.max(0, store.failureStreak(r))}/3</span></div><details class="rv f"><summary><i></i><span class="pre">${richHtml(q.q)}<br><small class="sub">Aciertos seguidos: ${Math.max(0, store.failureStreak(r))}/3 · <span data-review-status="${esc(q.i)}">${r[11] ? 'Temario repasado' : 'Pendiente de temario'}</span></small></span></summary>
-      ${questionNotice(q)}${sourceHtml(q, VERIFIED_SOURCES)}
-      ${q.supTexto ? `<details class="sup"><summary>Enunciado del supuesto</summary><div class="pre">${esc(q.supTexto)}</div></details>` : ''}
-      ${q.cp ? `<div class="ctx pre">${richHtml(q.cp)}</div>` : ''}
-      ${q.a.map((o: any, i: any) => `<div class="ro ${i === q.c ? 'ok' : ''}"><b>${L[i]}</b> ${richHtml(o)}${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
-      ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : '<p class="sm sub">Esta pregunta no tiene fragmento de temario asociado.</p>'}${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}
-      <p class="sm sub">Última actividad: ${fd(r[2])} · acertada ${r[1]} de ${r[0]} veces${q.y ? ' · ' + esc(q.y) : ''}</p></details></article>`;
-    }).join('')}</div>`).join('')
-      : '<div class="card"><p class="sub">Ninguna pregunta coincide con la búsqueda.</p></div>';
-  };
-  if (!qs.length) { app.innerHTML = `<h1>Falladas${helpIconLink('repaso', 'Ayuda sobre preguntas falladas y repaso')}</h1><div class="card"><p class="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p></div><div class="row"><button class="btn sec" id="home">Inicio</button></div>`; $('#home').onclick = () => go(hashPath('home')); return; }
-  app.innerHTML = `<h1>Falladas${helpIconLink('repaso', 'Ayuda sobre preguntas falladas y repaso')}</h1>
-  <p class="sub">Cada pregunta permanece hasta acertarla tres veces seguidas. Un fallo reinicia el contador; dejarla en blanco no cuenta. Marcar el temario no la quita de la lista.</p>
-  <p class="sub" id="fcount"></p>
-  <div class="card">
-    <label class="sr" for="fq">Buscar en las preguntas falladas</label>
-    <input id="fq" type="search" placeholder="Buscar: palabra, artículo, comando…" autocomplete="off" enterkeyhint="search">
-    <label class="sr" for="ft">Filtrar por tema</label>
-    <select id="ft"><option value="">Todos los temas</option>${idx.temas.filter(t => conteo[t.id]).map(t => `<option value="${esc(t.id)}">${esc(t.id)} · ${esc(t.nombre)} (${conteo[t.id]})</option>`).join('')}</select>
-    <div class="row"><label for="freview">Repaso del temario<select id="freview"><option value="">Todos</option><option value="pending">Pendiente de temario</option><option value="reviewed">Repasada</option></select></label>
-    <label for="fstreak">Aciertos seguidos<select id="fstreak"><option value="">Todas las rachas</option><option value="0">0 de 3</option><option value="1">1 de 3</option><option value="2">2 de 3</option></select></label></div>
-  </div>
-  <div id="flist"></div>
-  <div class="bar2"><button class="btn" id="fgo">Practicar estas</button></div>`;
-  $('#flist').onchange = e => {
-    const input = (e.target as El).closest<El>('[data-reviewed]'); if (!input) return;
-    const q = qs.find(q => q.i === input.dataset.reviewed!); if (!q) return;
-    store.setReviewed(q.i, q.t, input.checked);
-    const status = input.closest<El>('.failure-item')!.querySelector<El>('[data-review-status]');
-    if (status) status.textContent = input.checked ? 'Temario repasado' : 'Pendiente de temario';
-    if (F.review) lista();
-  };
-  $<El>('#fq').oninput = e => { F.q = (e.target as El).value; clearTimeout(tm); tm = setTimeout(lista, 150); };
-  $<El>('#ft').onchange = e => { clearTimeout(tm); F.t = (e.target as El).value; lista(); };
-  for (const [id, key] of [['freview', 'review'], ['fstreak', 'streak']] as const) $('#' + id).onchange = e => { clearTimeout(tm); F[key] = (e.target as El).value; lista(); };
-  $('#fgo').onclick = () => { const L2 = filtra(); if (!L2.length) return toast('No hay preguntas con ese filtro.'); startRun({ kind: 'test', feedback: true, items: shuffle(L2).slice(0, 40), titulo: 'Falladas' + (F.t ? ' · ' + F.t : '') }); };
-  lista();
+  const ids = Object.keys(store.getCards()).filter(id => id.startsWith('FC-Q-')).map(id => id.slice(5));
+  const questions = await byIds(ids);
+  const failures = questions.map(question => ({ ...cardFromFailedQuestion(question), np: question.np, source: question.source || VERIFIED_SOURCES[question.i], supTexto: question.supTexto, cp: question.cp } as StudyCard));
+  return [...await curatedCards(), ...failures];
+}
+const cardsServices = createCardsController({
+  loadAllCards: allCards, loadCuratedCards: curatedCards,
+  readPreferences: () => store.getCfg().cardsc,
+  savePreferences: preferences => store.setCfg('cardsc', preferences),
+  accountId: store.accountId, getCards: store.getCards, getSeen: store.getSeen, getRecord: store.cardRec,
+  now, day: store.DAY, topicName: temaName, grade: store.gradeCard, remove: store.removeCard,
+  getReport: id => store.getReports()[id],
+  saveReport: (card, reason, note) => store.addReport(card.id, card.t, reason, note),
+});
+let settingsIndex: Awaited<ReturnType<typeof getIndex>> | null = null;
+let settingsOffline: SettingsSnapshot['offline'] = null;
+const settingsServices = {
+  accountId: store.accountId,
+  getSnapshot(): SettingsSnapshot {
+    const ui = normalizeUiPreferences(store.getCfg().ui);
+    return {
+      sync: { state: sync.status.state, user: sync.status.user, configured: sync.status.configured, lastSync: sync.status.lastSync, error: sync.status.error, detail: sync.status.detail, host: sync.status.host, authDomain: sync.status.authDomain, accessError: sync.status.accessErr, requests: sync.status.reqs },
+      full: isFull(), level: accessLevel(), devMode: devMode(), devRevealed: devRevealed(), ui: { theme: ui.theme, size: ui.size, lectura: ui.lectura },
+      progress: { questions: Object.keys(store.getStats()).length, topics: store.getSeen().length, sessions: store.getSessions().length, openReports: Object.values(store.getReports()).filter(report => report.st === 'abierto').length },
+      exam: String(store.getCfg().exam || ''), version: APP_VERSION, build: APP_BUILD.split('+')[1] || APP_BUILD, update: NEWV?.version || null,
+      offline: settingsOffline, index: settingsIndex ? { questions: settingsIndex.n, scenarios: settingsIndex.nsup } : null,
+    };
+  },
+  subscribe(listener: () => void) {
+    const offStore = store.onChange(listener), offSync = sync.onStatus(listener);
+    return () => { offStore(); offSync(); };
+  },
+  async load() {
+    settingsIndex = await getIndex();
+    settingsOffline = await inspectOffline(settingsIndex).catch(() => null);
+    notifySettings();
+  },
+  setPreference(key: 'theme' | 'size' | 'lectura', value: string | number) {
+    const current = normalizeUiPreferences(store.getCfg().ui);
+    store.setCfg('ui', { ...current, [key]: key === 'theme' ? value : Number(value) });
+  },
+  setExam(value: string) { if (/^\d{4}-\d\d-\d\d$/.test(value)) store.setCfg('exam', value); },
+  setDevMode(value: string | null) { setDevMode(value); notifyAccessChange(); notifySettings(); },
+  revealDev() { revealDev(); notifySettings(); },
+  async requestAccess() { return await sync.requestAccess(); },
+  async login() { return await sync.login(); },
+  async logout() { return await sync.logout(); },
+  async retrySync() { return await sync.retry(); },
+  async checkUpdate() {
+    const result = await checkUpdate();
+    notifySettings();
+    return result === undefined ? undefined : NEWV?.version || null;
+  },
+  applyUpdate,
+  async downloadOffline(progress: (done: number, total: number) => void, isCurrent: () => boolean) {
+    const index = settingsIndex || await getIndex(); settingsIndex = index;
+    settingsOffline = await downloadOffline(index, progress, isCurrent);
+    notifySettings(); return settingsOffline;
+  },
+  async exportAnki() {
+    const cards = await allCards(), clean = (value: unknown) => String(value).replace(/[\t\r\n]+/g, ' ');
+    return '#separator:tab\n#html:false\n#tags column:4\n' + cards.map(card => [clean(card.q), clean(card.a), clean(card.ref || ''), clean((card.t || '').replace('.', '_') + ' ' + (card.tipo || ''))].join('\t')).join('\n');
+  },
+  async exportBackup() {
+    const account = store.accountId() || 'guest';
+    const archive = await exportAttemptArchive(localAttemptRepository, account, Date.now());
+    const backup = JSON.parse(store.exportAll()); backup.attemptHistory = attemptArchiveMapper.toDto(archive);
+    return JSON.stringify(backup);
+  },
+  previewBackup(text: string) {
+    const preview = previewImport(text), countItems = (amount: number, one: string, many: string) => `${amount} ${amount === 1 ? one : many}`;
+    const summary = `${countItems(preview.added, 'pregunta nueva', 'preguntas nuevas')}, ${countItems(preview.updated, 'pregunta actualizada', 'preguntas actualizadas')} y ${countItems(preview.preserved, 'pregunta conservada', 'preguntas conservadas')}. ${countItems(preview.sessions, 'sesión válida', 'sesiones válidas')}, ${countItems(preview.cards, 'tarjeta válida', 'tarjetas válidas')} y ${countItems(preview.reports, 'aviso válido', 'avisos válidos')}. ${countItems(preview.attemptArchive?.attempts.length || 0, 'intento detallado', 'intentos detallados')}. ${countItems(preview.ignored + preview.invalidAttempts, 'registro descartado por no ser válido', 'registros descartados por no ser válidos')}.${preview.settings ? ' También se importarán los ajustes válidos de la copia.' : ''}`;
+    return { summary, serialized: preview.serialized, attemptArchive: preview.attemptArchive };
+  },
+  async importBackup(serialized: string, attemptArchive?: unknown) {
+    const account = store.accountId();
+    store.importAll(serialized);
+    if (attemptArchive) await importAttemptArchive(localAttemptRepository, account || 'guest', attemptArchive as AttemptArchive);
+    if (store.accountId() !== account) throw new Error('La cuenta cambió durante la importación. Comprueba el progreso antes de continuar.');
+  },
+  resetAll: () => store.resetAll(),
+  findAiSessions: (from: number, to: number, modes: readonly ('practice' | 'simulation')[]) => listManualExportSessions(from, to, [...modes]),
+  buildAiExport: (input: Parameters<SettingsServices['buildAiExport']>[0]) => createManualAiExport({ ...input, modes: [...input.modes], sessionIds: [...input.sessionIds] }),
+  deleteAiHistory: deleteManualStudyHistory,
 };
+// Keep the existing storage sanitizers at the application boundary while Settings is migrated.
+function previewImport(text: string) {
+  if (text.length > 20e6) throw new Error('Archivo no válido: supera 20 MB');
+  let raw: unknown;
+  try { raw = JSON.parse(text); } catch { throw new Error('Archivo no válido: JSON ilegible'); }
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) throw new Error('Archivo no válido');
+  const backup = raw as Record<string, unknown>;
+  if (!backup.stats || typeof backup.stats !== 'object' || Array.isArray(backup.stats)) throw new Error('Archivo no válido');
+  const rawStats = backup.stats as Record<string, unknown>;
+  const stats = store.cleanStats(rawStats), sessions = store.cleanSessions(backup.sessions), cards = store.cleanCards(backup.cards), reports = store.cleanReports(backup.reports);
+  let added = 0, updated = 0, preserved = 0;
+  for (const id of Object.keys(stats)) {
+    const old = store.rec(id);
+    if (!old) added++;
+    else if (store.needsSync(stats[id], old)) updated++;
+    else preserved++;
+  }
+  preserved += Object.keys(store.getStats()).filter(id => !stats[id]).length;
+  const ignored = Object.keys(rawStats).length - Object.keys(stats).length;
+  let attemptArchive: AttemptArchive | undefined;
+  let invalidAttempts = 0;
+  if (backup.attemptHistory !== undefined) {
+    const mapped = attemptArchiveMapper.toDomain(backup.attemptHistory);
+    if (!mapped.ok) throw new Error(`El historial de intentos de la copia no es válido: ${mapped.reason}`);
+    attemptArchive = mapped.value.archive;
+    invalidAttempts = mapped.value.invalidRecords;
+  }
+  const serialized = JSON.stringify({ stats, sessions, cards, reports, ...(backup.seen ? { seen: store.cleanSeen(backup.seen) } : {}), ...(backup.cfg ? { cfg: cleanCfg(backup.cfg) } : {}), ...(attemptArchive ? { attemptHistory: attemptArchiveMapper.toDto(attemptArchive) } : {}) });
+  return { added, updated, preserved, ignored, serialized, attemptArchive, invalidAttempts, sessions: sessions.length, cards: Object.keys(cards).length, reports: Object.keys(reports).length, settings: !!backup.cfg };
+}
+function notifySettings() { settingsListeners.forEach(listener => listener()); }
+const settingsListeners = new Set<() => void>();
+// Reuse the stores' subscriptions and notify route-local consumers after asynchronous settings work.
+const settingsServicesWithSubscription = {
+  ...settingsServices,
+  subscribe(listener: () => void) {
+    settingsListeners.add(listener);
+    const offStore = store.onChange(listener), offSync = sync.onStatus(listener);
+    return () => { settingsListeners.delete(listener); offStore(); offSync(); };
+  },
+};
+const statsServices = createStatsServices({ go, startRun, startRepaso, trapTest });
+const quizServices = createQuizServices(go, hashPath('home'), hashPath('result'));
 
 
-registerTraining({ routes, go, route, pw, verifiedSources: VERIFIED_SOURCES }, screen);
-const { allCards, curatedCards } = registerCards({ routes, go, pw, reportBox, verifiedSources: VERIFIED_SOURCES }, screen);
-registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport: loadStrategyReportForPeriod, renderStrategyReport, loadQuestionEvolution });
 
-
-registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate, listManualExportSessions, createManualAiExport, deleteManualStudyHistory }, screen);
+let failureQuestionCache: Question[] = [];
+function mapFailureQuestion(question: Question): FailureQuestion {
+  return { id: question.i, topicId: question.t, statement: question.q, options: question.a, correctIndex: question.c, citation: question.u, note: question.n, year: question.y, context: question.cp, assumptionText: question.supTexto, traps: question.x, nonScoring: question.np, source: question.source || VERIFIED_SOURCES[question.i] };
+}
+const failuresServices = {
+  async loadQuestions() {
+    await getMeta();
+    failureQuestionCache = (await byIds(falladasIds())).sort((first, second) => (store.rec(second.i)?.[2] || 0) - (store.rec(first.i)?.[2] || 0));
+    return failureQuestionCache.map(mapFailureQuestion);
+  },
+  async loadTopics() { const index = await getIndex(); return index.temas.map(topic => ({ id: topic.id, name: topic.nombre })); },
+  getRecord(id: string) { return store.rec(id); },
+  isReviewed(id: string) { return store.rec(id)?.[11] === 1; },
+  setReviewed(id: string, topicId: string, reviewed: boolean) { store.setReviewed(id, topicId, reviewed); },
+  topicName: temaName,
+  startPractice(ids: readonly string[], title: string) {
+    const byId = new Map(failureQuestionCache.map(question => [question.i, question]));
+    const items = shuffle(ids.map(id => byId.get(id)).filter((question): question is Question => !!question)).slice(0, 40);
+    if (!items.length) return toast('No hay preguntas con ese filtro.');
+    if (!createRun({ kind: 'test', feedback: true, items, titulo: title })) return toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.');
+    go(hashPath('quiz'));
+  },
+};
+const lightningServices = {
+  async loadQuestion(): Promise<LightningQuestion | null> {
+    await getMeta();
+    const questionStats = store.getStats();
+    const lucky = Object.keys(questionStats).filter(id => (questionStats[id][9] === 6 || questionStats[id][9] === 8) && META[id]);
+    const due = await dueList();
+    const failed = Object.keys(questionStats).filter(id => questionStats[id][5] === 0 && META[id]);
+    const pool = [...shuffle(lucky).slice(0, 5), ...due.slice(0, 5), ...shuffle(failed).slice(0, 5)];
+    const candidates = pool.length ? pool : shuffle(Object.keys(META).filter(id => id !== '_by')).slice(0, 10);
+    const question = (await byIds(shuffle(candidates).slice(0, 8))).find(item => !item.s && !item.cp);
+    if (!question) return null;
+    const reason = lucky.includes(question.i) ? '🍀 Marcada como suerte' : due.includes(question.i) ? '⏰ Toca repasarla' : failed.includes(question.i) ? '↩ La fallaste' : '🆕 Nueva';
+    return { ...mapFailureQuestion(question), reason };
+  },
+  record(questionId: string, topicId: string, correct: boolean, seconds: number) { store.record(questionId, topicId, correct ? 1 : 0, now(), seconds); },
+  topicName: temaName,
+};
+let trapRun: TrapRun | null = null;
+let trapOwner: string | null = store.accountId();
+function currentTrapRun(): TrapRun | null {
+  const account = store.accountId();
+  if (trapOwner !== account) { trapRun = null; trapOwner = account; }
+  return trapRun;
+}
+const trapsServices = {
+  getRun: currentTrapRun,
+  async startRun() {
+    const current = currentTrapRun();
+    if (current) return current;
+    await getMeta();
+    const questionStats = store.getStats();
+    const eligible = Object.keys(META).filter(id => id !== '_by' && (META[id][3] || []).length);
+    const failed = eligible.filter(id => questionStats[id]?.[5] === 0);
+    const failedSet = new Set(failed);
+    const rest = eligible.filter(id => !failedSet.has(id));
+    const prioritized = shuffle(failed).slice(0, 4), prioritizedSet = new Set(prioritized);
+    const selectedIds = [...prioritized, ...shuffle(rest).filter(id => !prioritizedSet.has(id)).slice(0, Math.max(0, 40 - prioritized.length))];
+    const questions = (await byIds(selectedIds)).filter(question => !question.s && question.x?.length).slice(0, 8);
+    const allTraps = Object.keys(TRAMPAS).map(Number);
+    const items: TrapPrompt[] = questions.map(question => {
+      const trapIds = [...new Set((question.x || []).map(Number))];
+      const trapSet = new Set(trapIds);
+      const distractors = shuffle(allTraps.filter(id => !trapSet.has(id))).slice(0, Math.max(3, 8 - trapIds.length));
+      return { ...mapFailureQuestion(question), topicName: temaName(question.t), trapIds, choices: shuffle([...trapIds, ...distractors]) };
+    });
+    trapOwner = store.accountId();
+    trapRun = { items, index: 0, results: [] };
+    return trapRun;
+  },
+  evaluate(selected: readonly number[]): TrapAnswer | null {
+    currentTrapRun();
+    const prompt = trapRun?.items[trapRun.index];
+    if (!trapRun || !prompt || trapRun.results.length > trapRun.index) return null;
+    const actual = new Set(prompt.trapIds), picked = new Set(selected);
+    const answer: TrapAnswer = {
+      hits: prompt.trapIds.filter(id => picked.has(id)).length,
+      missed: prompt.trapIds.filter(id => !picked.has(id)).length,
+      falseAlarms: selected.filter(id => !actual.has(id)).length,
+      total: prompt.trapIds.length,
+      correctIds: prompt.trapIds,
+      selectedIds: [...selected],
+    };
+    const stats = { ...(store.getCfg().tdet || {}) } as Record<string, number[]>;
+    for (const id of prompt.trapIds) {
+      const record = stats[id] ? [...stats[id]] : [0, 0];
+      record[0]++;
+      if (picked.has(id)) record[1]++;
+      stats[id] = record;
+    }
+    store.setCfg('tdet', stats);
+    trapRun = { ...trapRun, results: [...trapRun.results, answer] };
+    return answer;
+  },
+  next(): TrapRun | null {
+    currentTrapRun();
+    if (!trapRun || trapRun.results.length <= trapRun.index) return trapRun;
+    if (trapRun.index + 1 >= trapRun.items.length) { trapRun = null; return null; }
+    trapRun = { ...trapRun, index: trapRun.index + 1 };
+    return trapRun;
+  },
+  getWeaknesses() {
+    const records = (store.getCfg().tdet || {}) as Record<string, number[]>;
+    return Object.entries(records).map(([id, [seen, detected]]) => ({ id: Number(id), seen, detected }))
+      .filter(item => item.seen >= 3).sort((first, second) => first.detected / first.seen - second.detected / second.seen).slice(0, 6);
+  },
+  resetRun() { trapRun = null; trapOwner = store.accountId(); },
+};
+let readingOwner: string | null = store.accountId();
+let readingBatch: ReadingPrompt[] | null = null;
+let readingProgress: ReadingProgress | null = null;
+const readingListeners = new Set<() => void>();
+const notifyReading = () => readingListeners.forEach(listener => listener());
+store.onAccountChange(() => { readingOwner = store.accountId(); readingBatch = null; readingProgress = null; notifyReading(); });
+function ensureReadingOwner() {
+  const account = store.accountId();
+  if (readingOwner !== account) { readingBatch = null; readingProgress = null; readingOwner = account; }
+}
+const readingServices = {
+  getProgress: () => { ensureReadingOwner(); return readingProgress; },
+  subscribe(listener: () => void) { readingListeners.add(listener); return () => readingListeners.delete(listener); },
+  async start(): Promise<ReadingProgress | null> {
+    ensureReadingOwner();
+    if (readingProgress) return readingProgress;
+    const owner = store.accountId();
+    let batch = readingBatch;
+    if (batch) { readingProgress = { items: batch, index: 0, step: 0, meaningChoice: null, meaningCorrect: null, selectedWords: [], wordResult: null, selectedAnswer: null, answerCorrect: null, startedAt: 0, outcomes: [], complete: false }; notifyReading(); return readingProgress; }
+    await getMeta();
+    if (owner !== store.accountId()) return null;
+    const questionStats = store.getStats();
+    const fastIds = velocidad(questionStats).ids;
+    let recent: string[] = [];
+    try {
+      const value = JSON.parse(localStorage.getItem('tai.lrec:' + (store.accountId() || 'guest')) || '[]');
+      if (Array.isArray(value)) recent = value.map(String);
+    } catch {}
+    const recentIds = new Set(recent), fastSet = new Set(fastIds);
+    const failedIds = Object.keys(questionStats).filter(id => questionStats[id][5] === 0 && !fastSet.has(id));
+    const failedSet = new Set(failedIds);
+    const rest = Object.keys(META).filter(id => id !== '_by' && META[id] && !fastSet.has(id) && !failedSet.has(id));
+    const ids = mixReadingIds([[fastIds, 3], [failedIds, 2]], rest, 40, recentIds, shuffle);
+    const loaded = await byIds(ids);
+    const available = new Map(loaded.filter(question => !question.s && !question.cp).map(question => [question.i, question]));
+    const questions = shuffle(ids.map(id => available.get(id)).filter((question): question is Question => !!question).slice(0, 8));
+    readingBatch = questions.map(question => ({
+      ...mapFailureQuestion(question),
+      asksForNegative: asksForNegativeOption(question.q),
+      minimumSeconds: minimumReadingSeconds({ context: question.cp, statement: question.q, options: question.a }),
+      tokens: readingTokens(question.q),
+    }));
+    if (owner !== store.accountId()) { readingBatch = null; return null; }
+    readingOwner = store.accountId();
+    batch = readingBatch;
+    readingProgress = { items: batch, index: 0, step: 0, meaningChoice: null, meaningCorrect: null, selectedWords: [], wordResult: null, selectedAnswer: null, answerCorrect: null, startedAt: 0, outcomes: [], complete: false };
+    notifyReading(); return readingProgress;
+  },
+  answerMeaning(choice: 0 | 1) {
+    const progress = this.getProgress(), question = progress?.items[progress.index]; if (!progress || !question || progress.step !== 0) return;
+    const correct = (choice === 1) === question.asksForNegative;
+    readingProgress = { ...progress, meaningChoice: choice, meaningCorrect: correct, selectedWords: [], wordResult: null };
+    notifyReading();
+  },
+  continueMeaning() {
+    const progress = this.getProgress(); if (!progress || progress.step !== 0 || progress.meaningChoice === null) return;
+    readingProgress = { ...progress, step: 1 }; notifyReading();
+  },
+  toggleWord(index: number) {
+    const progress = this.getProgress(); if (!progress || progress.step !== 1 || progress.wordResult) return;
+    const selected = new Set(progress.selectedWords); selected.has(index) ? selected.delete(index) : selected.add(index);
+    readingProgress = { ...progress, selectedWords: [...selected] }; notifyReading();
+  },
+  checkWords(claimedNone = false): ReadingWordResult | null {
+    const progress = this.getProgress(), question = progress?.items[progress.index]; if (!progress || !question || progress.step !== 1 || progress.wordResult) return progress?.wordResult || null;
+    const keyIds = new Set(question.tokens.flatMap((token, index) => token.key ? [index] : []));
+    const selected = new Set(progress.selectedWords);
+    const result: ReadingWordResult = {
+      hit: claimedNone ? 0 : [...selected].filter(index => keyIds.has(index)).length,
+      missed: claimedNone ? keyIds.size : [...keyIds].filter(index => !selected.has(index)).length,
+      extra: claimedNone ? 0 : [...selected].filter(index => !keyIds.has(index)).length,
+      total: keyIds.size,
+      claimedNone,
+    };
+    readingProgress = { ...progress, wordResult: result }; notifyReading(); return result;
+  },
+  showOptions() {
+    const progress = this.getProgress(); if (!progress || progress.step !== 1 || !progress.wordResult) return;
+    readingProgress = { ...progress, step: 2, startedAt: Date.now(), selectedAnswer: null, answerCorrect: null }; notifyReading();
+  },
+  answerOption(index: number): boolean | null {
+    const progress = this.getProgress(), question = progress?.items[progress.index]; if (!progress || !question || progress.step !== 2 || progress.selectedAnswer !== null) return null;
+    if (Date.now() - progress.startedAt < question.minimumSeconds * 1000) return false;
+    const correct = index === question.correctIndex;
+    store.record(question.id, question.topicId, correct ? 1 : 0, now(), Math.max(1, Math.round((Date.now() - progress.startedAt) / 1000)));
+    this.remember(question.id);
+    const marked = progress.wordResult?.claimedNone ? [0, progress.wordResult.total] : [progress.wordResult?.hit || 0, progress.wordResult?.total || 0];
+    const outcome: ReadingOutcome = { correct, meaningCorrect: !!progress.meaningCorrect, marked: marked as [number, number] };
+    readingProgress = { ...progress, selectedAnswer: index, answerCorrect: correct, outcomes: [...progress.outcomes, outcome] }; notifyReading(); return correct;
+  },
+  next() {
+    const progress = this.getProgress(); if (!progress || progress.selectedAnswer === null) return progress;
+    if (progress.index + 1 >= progress.items.length) { readingProgress = { ...progress, complete: true }; notifyReading(); return readingProgress; }
+    readingProgress = { ...progress, index: progress.index + 1, step: 0, meaningChoice: null, meaningCorrect: null, selectedWords: [], wordResult: null, selectedAnswer: null, answerCorrect: null, startedAt: 0 };
+    notifyReading(); return readingProgress;
+  },
+  remember(questionId: string) {
+    try {
+      const key = 'tai.lrec:' + (store.accountId() || 'guest');
+      const value = JSON.parse(localStorage.getItem(key) || '[]');
+      const previous = Array.isArray(value) ? value : [];
+      localStorage.setItem(key, JSON.stringify([String(questionId), ...previous.filter((id: unknown) => String(id) !== String(questionId))].slice(0, 80)));
+    } catch {}
+  },
+  reset() { readingProgress = null; readingBatch = null; readingOwner = store.accountId(); notifyReading(); },
+};
 
 
 // ───────── arranque ─────────
@@ -974,6 +712,150 @@ function watchUpdates(reg: ServiceWorkerRegistration): () => void {
 
 /** Temporary composition only: the React views own rendering and events. */
 export const studyServices: StudyServices = {
+  result: {
+    getSnapshot() {
+      const last = getLastResult(); if (!last) return null;
+      const { ses, items, ans, studyStates = [], highlights = [], confidences = [], discardedOptions = [] } = last;
+      return { score: ses.nota, correct: ses.a, wrong: ses.f, blank: ses.b, consulted: studyStates.filter(state => state === 'revealed').length,
+        accuracy: ses.a + ses.f ? pct(ses.a, ses.a + ses.f) : null, seconds: ses.secs, title: ses.titulo || '', interrupted: !!ses.interrupted, kind: ses.kind,
+        porTiempo: !!ses.porTiempo, analysis: last.limit && !ses.porTiempo ? simAnalisis(last) : '',
+        secondPartAvailable: (ses.titulo || '').includes('Parte 1') && !!SIMCFG?.parte2,
+        topics: Object.entries(ses.temas).sort(([left], [right]) => left.localeCompare(right)).map(([id, [correct, total]]) => ({ id, name: temaName(id), correct, total })),
+        items: items.map((question, index) => {
+          const answer = ans[index], revealed = studyStates[index] === 'revealed';
+          return { id: question.i, topicId: question.t, topicName: temaName(question.t), statement: question.q, options: question.a, correctIndex: question.c,
+            ...(answer !== undefined ? { answer } : {}), outcome: revealed ? 'revealed' : answer === undefined || answer === -1 ? 'blank' : answer === question.c ? 'correct' : 'wrong',
+            notice: questionNotice(question), source: sourceHtml(question, VERIFIED_SOURCES), ...(question.u ? { citation: question.u } : {}), ...(question.n ? { note: question.n } : {}),
+            ...(confidences[index] ? { confidence: confidences[index] } : {}), discardedOptions: discardedOptions[index] || [], highlights: highlights[index] || [],
+            contentRevision: questionContentRevision(question.q, question.a) };
+        }) };
+    },
+    subscribe(listener) { const offEngine = subscribeEngine(listener), offStore = store.onChange(listener); return () => { offEngine(); offStore(); }; },
+    continuePartTwo() { go(hashPath('simulationReview')); },
+    repeatFailures() {
+      const last = getLastResult(); if (!last) return false;
+      return startRun({ kind: 'rev', feedback: true, items: shuffle(last.items.filter((question, index) => last.ans[index] !== question.c)), titulo: 'Repetición de falladas' });
+    },
+    goHome() { go(hashPath('home')); },
+    async loadStrategy() { return renderStrategyReport(await loadStrategyReportForPeriod(365)); },
+    async loadExplanation(item) {
+      const result = await findLegacyCodeExplanation(item.id, item.statement, [...item.options]);
+      if (result.status === 'current') return { status: 'current', content: renderCodeExplanation(explanationMapper.toViewModel(result.explanation)) };
+      return { status: result.status };
+    },
+    getReport(id) { const report = store.getReports()[id]; return report ? { reason: report.motivo, note: report.nota, state: report.st } : undefined; },
+    saveReport(id, topicId, reason, note) { store.addReport(id, topicId, reason, note); },
+  },
+  simulation: {
+    getTab() { const value = store.getCfg().simtab; return value === 'examen' || value === 'tema' ? value : 'completo'; },
+    setTab(tab) { store.setCfg('simtab', tab); },
+    getConfiguration() {
+      const saved = store.getCfg().sim || {};
+      return { count: saved.n === 40 ? 40 : 80, minutes: ([45, 60, 90, 120].includes(saved.min ?? 0) ? saved.min : 90) as SimulationConfiguration['minutes'],
+        scope: saved.scope === 'todos' ? 'todos' : 'vistos', origins: saved.o || ['O', 'G'], includeSecondPart: saved.parte2 !== false };
+    },
+    saveConfiguration(configuration) {
+      store.setCfg('sim', { n: configuration.count, min: configuration.minutes, o: [...configuration.origins], parte2: configuration.includeSecondPart, scope: configuration.scope });
+    },
+    seenTopics: store.getSeen,
+    async loadExamGroups(): Promise<SimulationExamGroups> {
+      await getMeta();
+      const lists = listaExamenes(), sessions = store.getSessions();
+      const map = (entries: { k: string; ids: string[]; nombre: string }[]): SimulationExam[] => entries.map(entry => {
+        const attempts = sessions.filter(session => session.titulo === entry.nombre);
+        return { id: entry.k, name: entry.nombre, questionCount: entry.ids.length, attempts: attempts.length,
+          latest: attempts[0]?.nota ?? null, best: attempts.length ? Math.max(...attempts.map(session => session.nota)) : null };
+      });
+      return { official: map(lists.ofi), academy: map(lists.sims), topicTests: map(lists.tests) };
+    },
+    getSelectedExam() { return store.getCfg().exsel || null; },
+    selectExam(id) { store.setCfg('exsel', id); },
+    async startConfigured(configuration) {
+      const account = store.accountId(), index = await getIndex(); await getMeta();
+      const seen = store.getSeen(), only = configuration.scope !== 'todos' && seen.length ? new Set(seen) : null;
+      const origins = new Set(configuration.origins);
+      const items = await simParte1(index, origins, configuration.count, only);
+      if (account !== store.accountId()) return 'account-changed';
+      if (!items.length) return 'empty';
+      SIMCFG = { parte2: configuration.includeSecondPart, org: [...origins], min2: Math.round(configuration.minutes * 0.45) };
+      return startRun({ kind: 'sim', feedback: false, items, limit: configuration.minutes, titulo: 'Simulacro · Parte 1' }) ? 'started' : 'empty';
+    },
+    async startExam(id, mode) {
+      const account = store.accountId(); await getMeta();
+      const lists = listaExamenes(), selected = [...lists.ofi, ...lists.sims, ...lists.tests].find(exam => exam.k === id);
+      if (!selected) return 'empty';
+      const items = (await byIds(selected.ids)).filter(question => !(question as Question & { s?: unknown }).s);
+      if (account !== store.accountId()) return 'account-changed';
+      if (!items.length) return 'empty';
+      const started = mode === 'exam'
+        ? startRun({ kind: 'sim', feedback: false, items, limit: 90, titulo: selected.nombre })
+        : startRun({ kind: 'test', feedback: true, items, titulo: selected.nombre });
+      return started ? 'started' : 'empty';
+    },
+    openExams() { store.setCfg('simtab', 'examen'); go(hashPath('simulation')); },
+  },
+  simulationReview: {
+    async loadChoices(): Promise<ScenarioChoice[]> {
+      const scenarios = await getSup();
+      const available = (Object.entries(scenarios) as [string, { q: Question[]; texto: string; conv?: string }][])
+        .filter(([, scenario]) => scenario.q.filter(question => !(question as Question & { r?: unknown }).r && question.np !== 1).length >= 18 && /libre/i.test(scenario.conv || '') && !/2018/.test(scenario.conv || ''));
+      const chosen = shuffle(available).slice(0, 2);
+      reviewScenarioQuestions = new Map(chosen.map(([id, scenario]) => [id, scenario.q.filter(question => !(question as Question & { r?: unknown }).r && question.np !== 1).slice(0, 20)]));
+      reviewScenarioTexts = new Map(chosen.map(([id, scenario]) => [id, scenario.texto]));
+      reviewScenarioAccount = store.accountId();
+      return chosen.map(([id, scenario], index) => ({ id, text: scenario.texto.slice(0, 700) + (scenario.texto.length > 700 ? '…' : '') }));
+    },
+    start(id) {
+      const items = reviewScenarioQuestions.get(id);
+      if (!items?.length || reviewScenarioAccount !== store.accountId()) return 'unavailable';
+      const started = startRun({ kind: 'sim', feedback: false, items, limit: SIMCFG?.min2 || 40, supTexto: reviewScenarioTexts.get(id), titulo: 'Simulacro · Parte 2 (supuesto)' });
+      return started ? 'started' : 'unavailable';
+    },
+  },
+  test: {
+    async loadTopics() {
+      const index = await getIndex(); await getMeta();
+      return index.temas.map(topic => {
+        let attempted = 0, correct = 0, answerCount = 0;
+        for (const id of META._by[topic.id] || []) { const record = store.rec(id); if (record) { attempted++; correct += record[1]; answerCount += record[0]; } }
+        return { id: topic.id, name: topic.nombre, total: topic.n, attempted, correct, answerCount };
+      });
+    },
+    getConfiguration() {
+      const saved = store.getCfg().test || {};
+      return { all: typeof saved.all === 'boolean' ? saved.all : !(saved.sel || []).length, selected: saved.sel || [], count: ([10, 15, 25, 40].includes(saved.n ?? 0) ? saved.n : 15) as TestConfiguration['count'],
+        mode: (['nuevas', 'aleatorio', 'falladas', 'dudosas', 'trampas'].includes(saved.mode ?? '') ? saved.mode : 'nuevas') as TestConfiguration['mode'], origins: saved.o || ['O', 'A', 'G'], timed: !!saved.pt,
+        minutes: ([10, 20, 30, 45, 60].includes(saved.min ?? 0) ? saved.min : 20) as TestConfiguration['minutes'] };
+    },
+    saveConfiguration(configuration) {
+      store.setCfg('test', { all: configuration.all, sel: [...configuration.selected], n: configuration.count, mode: configuration.mode,
+        o: [...configuration.origins], pt: configuration.timed ? 1 : 0, min: configuration.minutes });
+    },
+    seenTopics: store.getSeen,
+    async start(configuration) {
+      const account = store.accountId();
+      const selected = [...configuration.selected];
+      const topics = configuration.all ? (await getIndex()).temas.map(topic => topic.id) : selected;
+      if (configuration.mode === 'trampas') {
+        const result = await trapTest(configuration.timed ? 300 : configuration.count, undefined, selected.length ? selected : undefined);
+        if (account !== store.accountId()) return 'account-changed';
+        if (!result.items.length) return 'empty';
+        return startRun({ kind: 'test', feedback: true, items: result.items, titulo: 'Mis trampas · ' + result.targets.map(key => TRAMPAS[key] || key).join(', '), ...(configuration.timed ? { limit: configuration.minutes, porTiempo: true } : {}) }) ? 'started' : 'empty';
+      }
+      const items = await pick({ temas: topics, origins: new Set(configuration.origins), mode: configuration.mode, n: configuration.timed ? 300 : configuration.count });
+      if (account !== store.accountId()) return 'account-changed';
+      if (!items.length) return 'empty';
+      return startRun({ kind: 'test', feedback: true, items, titulo: selected.length === 1 ? temaName(selected[0]) + (configuration.timed ? ` · ${configuration.minutes} min` : '') : 'Test' + (configuration.timed ? ` · ${configuration.minutes} min` : ''), ...(configuration.timed ? { limit: configuration.minutes, porTiempo: true } : {}) }) ? 'started' : 'empty';
+    },
+  },
+  cards: cardsServices,
+  failures: failuresServices,
+  lightning: lightningServices,
+  traps: trapsServices,
+  reading: readingServices,
+  quiz: quizServices,
+  stats: statsServices,
+  settings: settingsServicesWithSubscription,
   errors: {
     getFilter() { return String(store.getCfg().errf || 'abierto'); },
     getReports() { return Object.entries(store.getReports()).map(([id, report]) => ({ id, ts: report.ts, tema: report.tema, motivo: report.motivo, nota: report.nota, state: report.st })); },

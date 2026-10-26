@@ -1,31 +1,25 @@
-import type { ReactNode } from 'react';
+import { CalendarClock, Eye, ListChecks, Map, Play, RotateCcw, ScanSearch, Zap, ClipboardCheck, Layers2, Menu } from 'lucide-react';
 import { Link } from 'react-router';
 import type { AccessOverview, ActiveStudy, HomeBlock, HomeOverview } from '../../shared/ui/study-services.js';
 
-const icons: Record<string, ReactNode> = {
-  test: <><path d="M4 20l4-1 11-11-3-3L5 16z" /><path d="M14 6l3 3" /></>,
-  sim: <><circle cx="12" cy="13" r="7" /><path d="M12 9v4l2.5 2M9.5 3h5" /></>,
-  card: <><rect x="3" y="6" width="18" height="13" rx="3" /><path d="M7 3h10" /></>,
-  det: <><circle cx="11" cy="11" r="6.5" /><path d="M20 20l-4.5-4.5" /></>,
-  lec: <><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></>,
-  rel: <path d="M13 2L4 14h7l-1 8 9-12h-7z" />,
-  map: <><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" /></>,
-  list: <path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01" />,
-  play: <path d="M8 5v14l11-7z" />, redo: <path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4" />,
+const icons = {
+  test: ClipboardCheck, sim: CalendarClock, card: Layers2, det: ScanSearch,
+  lec: Eye, rel: Zap, map: Map, list: ListChecks, play: Play, redo: RotateCcw,
 };
 
-function Icon({ name }: { name: string }) { return <svg viewBox="0 0 24 24" aria-hidden="true">{icons[name]}</svg>; }
-function Tile({ id, icon, title, subtitle, badge, onClick }: { id: string; icon: string; title: string; subtitle: string; badge?: number; onClick(): void }) {
+type HomeIcon = keyof typeof icons;
+function Icon({ name }: { name: HomeIcon }) { const Glyph = icons[name]; return <Glyph size="1.25rem" strokeWidth={1.7} aria-hidden="true" />; }
+function Tile({ id, icon, title, subtitle, badge, onClick }: { id: string; icon: HomeIcon; title: string; subtitle: string; badge?: number; onClick(): void }) {
   return <button className="tile" id={id} onClick={onClick}><i aria-hidden="true"><Icon name={icon} /></i>{!!badge && <em className="bdg" aria-label={`${badge} ${badge === 1 ? 'pendiente' : 'pendientes'}`}>{badge}</em>}<span><b>{title}</b><small>{subtitle}</small></span></button>;
 }
-function Row({ id, icon, title, subtitle, disabled, onClick }: { id: string; icon: string; title: string; subtitle: string; disabled?: boolean; onClick(): void }) {
+function Row({ id, icon, title, subtitle, disabled, onClick }: { id: string; icon: HomeIcon; title: string; subtitle: string; disabled?: boolean; onClick(): void }) {
   return <button className="lrow" id={id} disabled={disabled} onClick={onClick}><i aria-hidden="true"><Icon name={icon} /></i><span><b>{title}</b><small>{subtitle}</small></span></button>;
 }
 
 function HomeHeader({ access, overview, onOpenMenu }: { access: AccessOverview; overview: HomeOverview; onOpenMenu(): void }) {
   return <><p className="product-brand" translate="no">TAI <span>Preparación de oposiciones</span></p>
     <div className="hhead"><div><h1 id="hola">{access.greeting}</h1><div className="hsub">{overview.daysToExam !== null ? <><b>{overview.daysToExam} {overview.daysToExam === 1 ? 'día' : 'días'}</b> hasta tu fecha objetivo</> : <Link to="/settings">Configurar fecha objetivo</Link>} · {overview.seen} de {overview.total.toLocaleString('es-ES')} preguntas vistas{overview.streak >= 2 ? ` · racha de ${overview.streak} días` : ''}</div></div>
-      <button className="iconbtn" id="menu" aria-label="Menú" aria-haspopup="dialog" onClick={onOpenMenu}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg></button></div>
+      <button className="iconbtn" id="menu" aria-label="Menú" aria-haspopup="dialog" onClick={onOpenMenu}><Menu size="1.25rem" strokeWidth={1.7} aria-hidden="true" /></button></div>
   </>;
 }
 

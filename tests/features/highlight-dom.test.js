@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { canonicalText, paintTextHighlight, selectedTextAnchor } from '../../src/app/legacy-highlight-dom.ts';
+import { canonicalText, paintTextHighlight, selectedTextAnchor } from '../../src/shared/ui/text-highlights.ts';
 
 describe('highlight DOM mapping', () => {
   beforeEach(() => { document.body.innerHTML = '<main id="host"><div class="enun">ABCDE <code>FGHI</code><br>JKLM</div><button class="opt" data-i="2"><span class="pre">Opción útil</span></button></main>'; });

@@ -18,15 +18,15 @@
 .legend {
   color: var(--mute);
   font-size: var(--fs-s);
-  margin: 2px 0 10px;
+  margin: 0.125rem 0 0.625rem;
 }
 
 .trio {
   display: flex;
   justify-content: space-around;
-  margin: 12px 0;
-  gap: 16px;
-  padding: 16px;
+  margin: 0.75rem 0;
+  gap: 1rem;
+  padding: 1rem;
   background: var(--surface-soft);
   border-radius: var(--r-m);
 }
@@ -53,7 +53,7 @@
   display: flex;
   justify-content: space-between;
   gap: var(--space-3);
-  padding: 8px 0;
+  padding: 0.5rem 0;
   border-bottom: 1px solid var(--line);
   font-size: var(--fs-b);
 }
@@ -68,7 +68,7 @@
 
 .rv {
   border-bottom: 1px solid var(--line);
-  padding: 8px 0;
+  padding: 0.5rem 0;
   font-size: var(--fs-b);
 }
 
@@ -81,10 +81,10 @@
 
 .rv summary i {
   flex: none;
-  width: 10px;
-  height: 10px;
+  width: 0.625rem;
+  height: 0.625rem;
   border-radius: 50%;
-  margin-top: 7px;
+  margin-top: 0.4375rem;
   background: var(--mute);
 }
 
@@ -97,9 +97,9 @@
 }
 
 .ro {
-  padding: 5px 8px;
+  padding: 0.3125rem 0.5rem;
   border-radius: var(--r-s);
-  margin-top: 4px;
+  margin-top: 0.25rem;
 }
 
 .ro.ok {
@@ -111,7 +111,7 @@
 }
 
 .trow {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .trow small {
@@ -120,21 +120,21 @@
 
 .trow .line {
   border: 0;
-  padding: 4px 0;
+  padding: 0.25rem 0;
 }
 
 .bar {
-  height: 5px;
+  height: 0.3125rem;
   background: var(--line);
-  border-radius: 4px;
+  border-radius: 0.25rem;
   overflow: hidden;
-  margin: 8px 0;
+  margin: 0.5rem 0;
 }
 
 .bar i {
   display: block;
   height: 100%;
-  border-radius: 4px;
+  border-radius: 0.25rem;
 }
 
 .bar i.g {
@@ -153,14 +153,14 @@
   width: 100%;
   border-collapse: collapse;
   font-size: var(--fs-m);
-  margin-top: 8px;
+  margin-top: 0.5rem;
   line-height: 1.6;
   font-variant-numeric: tabular-nums;
 }
 
 .tb th,.tb td {
   text-align: left;
-  padding: 12px 10px;
+  padding: 0.75rem 0.625rem;
   border-bottom: 1px solid var(--line);
   vertical-align: top;
 }
@@ -174,7 +174,7 @@
 }
 
 .sl {
-  padding: 10px 0;
+  padding: 0.625rem 0;
   border-bottom: 1px solid var(--line);
 }
 
@@ -192,8 +192,8 @@
 
 .dot {
   display: inline-block;
-  width: 11px;
-  height: 11px;
+  width: 0.6875rem;
+  height: 0.6875rem;
   border-radius: 50%;
   background: var(--line);
   flex: none;
@@ -222,9 +222,9 @@
   flex-wrap: wrap;
   line-height: 1.8;
   font-size: var(--fs-s);
-  gap: 12px;
+  gap: 0.75rem;
   font-weight: 400;
-  margin: 12px 0 20px;
+  margin: 0.75rem 0 1.25rem;
 }
 
 .dmsum .dot {
@@ -239,7 +239,7 @@
   display: grid;
   grid-template-columns: repeat(2,minmax(0,1fr));
   gap: var(--space-3);
-  margin: 12px 0;
+  margin: 0.75rem 0;
 }
 
 @media(min-width:600px) {
@@ -254,18 +254,15 @@
   color: var(--ink);
   background: var(--card);
   border: 1px solid var(--line);
-  border-left: 5px solid var(--line);
+  border-left: 3px solid var(--line);
   border-radius: var(--r-m);
-  padding: 10px 12px;
+  padding: 1rem;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.5rem;
   min-width: 0;
   overflow-wrap: anywhere;
-  padding: 16px;
-  gap: 8px;
-  border-left-width: 3px;
   transition: background-color var(--duration-fast),border-color var(--duration-fast);
 }
 
@@ -293,7 +290,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 0.375rem;
   min-width: 0;
 }
 
@@ -308,8 +305,8 @@
 }
 
 .dmb {
-  height: 5px;
-  border-radius: 3px;
+  height: 0.3125rem;
+  border-radius: 0.1875rem;
   background: var(--line);
   overflow: hidden;
 }
@@ -329,7 +326,7 @@
 
 .evo {
   position: relative;
-  margin-top: 6px;
+  margin-top: 0.375rem;
 }
 
 .evo svg {
@@ -383,13 +380,13 @@
 .evolution-legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 16px;
-  margin: 10px 0;
+  gap: 0.5rem 1rem;
+  margin: 0.625rem 0;
   font-size: var(--fs-s);
 }
 
-.evolution-key { display: inline-flex; align-items: center; gap: 6px; }
-.evolution-key i { width: 10px; height: 10px; border-radius: 50%; }
+.evolution-key { display: inline-flex; align-items: center; gap: 0.375rem; }
+.evolution-key i { width: 0.625rem; height: 0.625rem; border-radius: 50%; }
 
 .tip {
   max-width: 100%;
@@ -401,7 +398,7 @@
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--r-s);
-  padding: 8px 10px;
+  padding: 0.5rem 0.625rem;
   font-size: var(--fs-s);
   box-shadow: 0 4px 14px rgba(0,0,0,.12);
   pointer-events: none;
@@ -410,9 +407,9 @@
 
 .cg {
   display: flex;
-  gap: 2px;
+  gap: 0.125rem;
   align-items: flex-end;
-  height: 96px;
+  height: 6rem;
 }
 
 .cgc {
@@ -421,7 +418,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 2px;
+  gap: 0.125rem;
   min-width: 0;
 }
 
@@ -437,8 +434,8 @@
   display: block;
   width: 100%;
   background: var(--selb);
-  border-radius: 3px 3px 0 0;
-  min-height: 2px;
+  border-radius: 0.1875rem 0.1875rem 0 0;
+  min-height: 0.125rem;
   opacity: .85;
 }
 
@@ -450,7 +447,7 @@
 /* ===== errores del banco ===== */
 
 .repw {
-  margin-top: 6px;
+  margin-top: 0.375rem;
 }
 
 .rep.ok {
@@ -462,13 +459,13 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  margin-top: 8px;
+  margin-top: 0.5rem;
 }
 
 .repf input {
   font: inherit;
   font-size: var(--fs-b);
-  padding: 10px;
+  padding: 0.625rem;
   border-radius: var(--r-m);
   border: 1.5px solid var(--line);
   background: var(--card);
@@ -476,19 +473,19 @@
 }
 
 .repf .btn {
-  min-height: 42px;
-  padding: 10px 16px;
+  min-height: 2.625rem;
+  padding: 0.625rem 1rem;
   font-size: var(--fs-b);
 }
 
 .domain-heading {
-  margin-top: 6px;
+  margin-top: 0.375rem;
 }
 
 .domain-key {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 0.375rem;
 }
 
 .tb th {
@@ -508,11 +505,11 @@
   display: block;
   width: 100%;
   box-sizing: border-box;
-  min-height: 48px;
-  margin: 0 0 10px;
+  min-height: 3rem;
+  margin: 0 0 0.625rem;
   font: inherit;
   font-size: var(--fs-b);
-  padding: 10px 12px;
+  padding: 0.625rem 0.75rem;
   border-radius: var(--r-m);
   border: 1.5px solid var(--line);
   background: var(--card);
@@ -533,11 +530,11 @@
 }
 
 #flist .rv .ro {
-  margin-top: 6px;
+  margin-top: 0.375rem;
 }
 
 .failure-item {
-  padding: 12px 0;
+  padding: 0.75rem 0;
 }
 
 .failure-item+.failure-item {
@@ -561,7 +558,7 @@
   color: var(--selb);
   border-radius: var(--r-pill);
   font-size: var(--fs-m);
-  padding: 5px 10px;
+  padding: 0.3125rem 0.625rem;
 }
 
 .failure-item .rv {
@@ -569,18 +566,18 @@
 }
 
 .failure-item .rv summary {
-  padding-top: 12px;
+  padding-top: 0.75rem;
 }
 
 #freview,#fstreak {
   display: block;
   width: 100%;
-  margin-top: 6px;
-  min-height: 48px;
+  margin-top: 0.375rem;
+  min-height: 3rem;
 }
 
 .row:has(#freview)>label {
-  flex: 1 1 150px;
+  flex: 1 1 9.375rem;
   font-size: var(--fs-b);
 }
 
@@ -588,33 +585,33 @@
   position: sticky;
   top: calc(var(--sat) / var(--z,1));
   z-index: 3;
-  padding: 10px 0;
+  padding: 0.625rem 0;
   background: var(--bg);
   border-bottom: 1px solid var(--line);
-  margin-bottom: 24px;
+  margin-bottom: 1.5rem;
 }
 
 .score-label {
   font-size: var(--fs-m);
   color: var(--mute);
-  margin: 0 0 8px;
+  margin: 0 0 0.5rem;
 }
 
 .result-status p {
-  margin: 6px 0;
+  margin: 0.375rem 0;
 }
 
 #flist .card {
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 .strategy-result,.strategy-report {
-  margin-top: 16px;
+  margin-top: 1rem;
 }
 
 .strategy-segment {
-  padding-block: 12px;
+  padding-block: 0.75rem;
   border-bottom: 1px solid var(--line);
 }
 
@@ -623,7 +620,7 @@
 }
 
 .strategy-segment h4 {
-  margin: 0 0 6px;
+  margin: 0 0 0.375rem;
 }
 
 .strategy-report [aria-busy=true] {
