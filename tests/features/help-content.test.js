@@ -10,7 +10,11 @@ describe('help content', () => {
   });
 
   it('cubre las guías principales de la aplicación', () => {
-    expect(HELP_SECTIONS.map(section => section.id)).toEqual(['sesiones', 'simulacros', 'explicaciones', 'estrategia', 'puntuacion', 'progreso', 'repaso']);
-    expect(HELP_SECTIONS.every(section => section.title && section.body)).toBe(true);
+    expect(HELP_SECTIONS.map(section => section.id)).toEqual([
+      'acceso', 'inicio', 'sesiones', 'puntuacion', 'simulacros', 'temario', 'repaso', 'tarjetas',
+      'entrenamientos', 'errores', 'progreso', 'evolucion', 'explicaciones', 'material-visual',
+      'estrategia', 'ajustes', 'offline', 'copias',
+    ]);
+    expect(HELP_SECTIONS.every(section => section.title && section.body.length > 0)).toBe(true);
   });
 });
