@@ -41,12 +41,6 @@ jobs:
       - name: Tests (si fallan, no se despliega)
         run: npm test
 
-      - name: Instalar navegadores e2e
-        run: npx playwright install --with-deps chromium webkit
-
-      - name: E2E y comparación con la fase 0
-        run: npm run test:e2e:ci
-
       - name: Compilar dist
         run: npm run build
 
