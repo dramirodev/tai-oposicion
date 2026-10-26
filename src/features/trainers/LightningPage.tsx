@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import { useStudyServices, type LightningQuestion } from '../../shared/ui/study-services.js';
 import { richHtml, hiliteHtml } from '../../shared/presentation/study-text.js';
@@ -11,14 +11,14 @@ export function LightningPage() {
   const [question, setQuestion] = useState<LightningQuestion | null>(null);
   const [loading, setLoading] = useState(true);
   const [answered, setAnswered] = useState<number | null>(null);
-  const [startedAt, setStartedAt] = useState(0);
+  const startedAt = useRef(0);
   const [error, setError] = useState(false);
   const [reload, setReload] = useState(0);
   const next = () => { setLoading(true); setAnswered(null); setError(false); setReload(value => value + 1); };
   useEffect(() => {
     let active = true;
     void lightning.loadQuestion().then(value => {
-      if (active) { setQuestion(value); setStartedAt(Date.now()); setLoading(false); }
+      if (active) { setQuestion(value); startedAt.current = Date.now(); setLoading(false); }
     }).catch(() => { if (active) { setError(true); setLoading(false); } });
     return () => { active = false; };
   }, [lightning, reload]);
@@ -40,7 +40,7 @@ export function LightningPage() {
       <div className="enun pre"><StudyMarkup html={richHtml(question.statement)} /></div>
       <div className="opts">{question.options.map((option, index) => <button key={`${question.id}-${index}`} className={`opt${answered === null ? '' : index === question.correctIndex ? ' ok' : answered === index ? ' bad' : ' dis'}`} disabled={answered !== null} onClick={() => {
         setAnswered(index);
-        lightning.record(question.id, question.topicId, index === question.correctIndex, Math.max(1, Math.round((Date.now() - startedAt) / 1000)));
+        lightning.record(question.id, question.topicId, index === question.correctIndex, Math.max(1, Math.round((Date.now() - startedAt.current) / 1000)));
       }}><b>{'ABCD'[index]}</b><span className="pre"><StudyMarkup html={richHtml(option)} /></span></button>)}</div>
       {answered !== null && <div className={`fb ${correct ? 'good' : 'wrong'}`} role="status"><b>{correct ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>{'ABCD'[question.correctIndex]}</b>
         {question.citation && <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(question.citation, question.options[question.correctIndex])} /></div>}
