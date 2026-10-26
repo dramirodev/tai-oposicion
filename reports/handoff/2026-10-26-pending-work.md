@@ -4,19 +4,23 @@ Fecha: 2026-10-26 (Europe/Madrid)
 
 ## Rama y PR actuales
 
-- Checkout activo: `/tmp/tai-migrate-cards-screen`
-- Rama: `feat/migrate-cards-screen`
-- PR #34: [migrar pantallas restantes y modernizar presentación](https://github.com/dramirodev/tai-oposicion/pull/34), base `main`, abierta. El run `40373734672` terminó fallando únicamente en 68 comparaciones visuales Linux. Baseline actualizado localmente y `npm run test:e2e:ci` pasó en macOS; falta publicar y confirmar el nuevo run de GitHub.
-- HEAD publicado antes de este fix: `3239d0a`. No cambiar al checkout `/Volumes/SSD/develop/PWA_TAI`; está obsoleto para este trabajo.
+- Checkout activo para arquitectura: `/tmp/tai-architecture-audit`
+- Rama activa: `docs/architecture-audit-stack`, actualizada sobre `main` tras integrarse la PR #34.
+- PR #34: [migrar pantallas restantes y modernizar presentación](https://github.com/dramirodev/tai-oposicion/pull/34), integrada en `main` mediante merge commit `095a0e1`.
+- PR #36: abierta contra `main`, actualizada en `2fe3c3b`; nueva validación remota pendiente, no esperada.
+- PR #37: abierta y apilada sobre #36, actualizada en `9da9fcb`; nueva validación remota pendiente, no esperada.
+- PR #38: propuesta de arquitectura, reapuntada a `main` tras el merge de #34.
+- El run anterior `40373734672` falló solo en 68 comparaciones visuales Linux; el baseline quedó actualizado en `32796db` y el flujo completo pasó localmente en macOS.
+- No cambiar al checkout `/Volumes/SSD/develop/PWA_TAI`; está obsoleto para este trabajo.
 - `node_modules` se reinstaló localmente en este checkout para añadir Shiki; no versionarlo.
 
-## Orden de trabajo pendiente (estado al pausar)
+## Orden recomendado de trabajo pendiente
 
-1. **PR #34 — migración React, Shiki y auditoría CSS:** commit `8971436` publicado; fix de referencia visual y handoff listos localmente. `npm run check` pasó (89 archivos, 402 tests), `npm run build` pasó con avisos de chunks grandes conocidos, `npx playwright test --update-snapshots` pasó (154) y `npm run test:e2e:ci` pasó localmente (68 capturas de baseline y 154 E2E). No se esperó al nuevo run de CI.
-2. **Lucide React:** integración parcial incluida en el mismo stack porque sustituye iconos de las rutas React que aporta PR #34. Instalado `lucide-react`; sustituidos SVG de la navegación, Inicio, enlaces de ayuda y Detective. Taste final de Inicio a 1440/768/390: sin overflow, sin errores de consola, una advertencia defendida `below-fold` (3 de 7 bloques en el primer viewport de escritorio; hay contenido operativo real debajo). Falta ampliar la pasada a otras pantallas y decidir los emojis semánticos restantes. No crear una PR contra `main` que dependa de páginas aún no presentes allí.
-3. **Etapa A de arquitectura:** pendiente y sin cambios de producción. El usuario pide prepararla como stack sobre la rama de PR #34; crear una rama de trabajo desde su HEAD publicado, con su futura PR apuntando inicialmente a `feat/migrate-cards-screen`. Tras fusionar #34, actualizar esa rama contra `main` y cambiar la base de la PR a `main`. Etapa B requiere aprobación explícita de la propuesta.
-4. **Recharts:** tarea autorizada previamente, pendiente. Auditar datos y gráficos reales; migrar solo los componentes con una mejora clara, en una PR compatible con el stack de arquitectura.
-5. **Zustand:** queda en Etapa B, después de que el usuario apruebe Etapa A. Usarlo solo para estado compartido de cliente que lo necesite.
+1. **Revisar #36 y #37:** #36 ya apunta a `main`; #37 permanece apilada sobre #36. Corregir fallos reales cuando se reproduzcan; no esperar a que pasen las pipes.
+2. **Recharts:** auditar las gráficas de datos reales en una rama nueva desde `main`; migrar solo las que ganen interacción, accesibilidad o mantenibilidad y medir el tamaño del bundle.
+3. **Arquitectura Etapa A:** propuesta documental completada en la PR #38, ahora contra `main`; esperar aprobación antes de Etapa B.
+4. **Etapa B y Zustand:** solo tras aprobación; empezar por Progreso de solo lectura, extraer límites gradualmente y añadir Zustand solo para estado efímero compartido que lo justifique.
+5. **Después de cerrar las tareas activas:** abrir rama independiente para evaluar migrar tests a React Testing Library y decidir si Jest aporta algo frente a Vitest.
 
 ## Estado de migración
 
@@ -26,14 +30,14 @@ La comprobación de arquitectura actual dio `sin deuda nueva; 64 excepciones pen
 
 `/quiz` conserva respuesta, ayudas, subrayado, confianza, revisión y tiempo; `/result` conserva revisión y estrategia; `/stats` mantiene los datos y métricas existentes. Se eliminó `src/features/stats/legacy.ts` y el renderizador de evolución ya sustituido. Rutas pendientes de migrar: ninguna identificada en la lista actual.
 
-## Trabajo sin commit
+## Cambios publicados en PR #34
 
 - `src/features/failures/FailuresPage.tsx`: añadida marca `data-reviewed` para que las pruebas comprueben persistencia desde la nueva vista React.
 - Migración de Test/Simulacros: `src/features/test/TestPage.tsx`, `src/features/test/test-controller.ts`, `src/features/simulation/SimulationPage.tsx`, `src/features/simulation/SimulationReviewPage.tsx`, `src/app/ExamsRedirect.tsx` y servicios/rutas asociados.
 - Nuevas páginas y composición: `src/features/quiz/QuizPage.tsx`, `src/app/quiz-composition.ts`, `src/features/result/ResultPage.tsx`, `src/features/stats/StatsPage.tsx`, `src/app/stats-composition.ts`.
 - Shiki: `src/shared/ui/StudyCode.tsx`, integración en `StudyMarkup.tsx`, estilos en `home.css` y `question.css`, dependencia en `package.json`/lockfile y prueba en `tests/study-markup.test.js`.
 - Hay además actualizaciones a pruebas unitarias, E2E y snapshots de rutas en Chromium/WebKit y tema claro/oscuro.
-- Los cambios siguen sin commit.
+- La migración, Shiki, pruebas y snapshots están publicados en PR #34. El commit `32796db` añade el baseline aprobado y esta ronda no toca esos cambios.
 
 
 ## Últimas validaciones y fallos observados
@@ -59,7 +63,7 @@ Skills disponibles y localizadas:
 - `/Users/dramiro/.agents/skills/design-taste-frontend/SKILL.md` — leído; para pantallas de aplicación leer `references/app-screens.md` completo y usar inspección visual/loop de capturas.
 - `/Users/dramiro/.agents/skills/web-design-guidelines/SKILL.md` — leído; se obtuvieron las reglas actuales desde `https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md`.
 
-Aún no se ha iniciado la auditoría CSS. Al empezar, inventariar todos los CSS y estilos de componentes; buscar duplicados, especificidad, `!important`, px con conversión deliberada a rem, tokens, responsive 320/375/430/768/1024/1280/1440/1920, zoom, temas claro/oscuro, foco, contraste, objetivos táctiles y `prefers-reduced-motion`. Ejecutar Stylelint si está configurado, ESLint, TypeScript, tests existentes y build. Inspeccionar visualmente todas las rutas con navegador disponible; corregir fallos y repetir el ciclo. No cambiar lógica de negocio, funcionalidades ni identidad visual.
+La auditoría CSS detallada y sus resultados están registrados en la sección “Auditoría CSS (corte 2026-10-26)”. No repetirla desde cero al retomar: validar el árbol actual y atender solo regresiones o puntos explícitamente pendientes.
 
 ## Auditoría CSS (corte 2026-10-26)
 
@@ -87,27 +91,94 @@ Aún no se ha iniciado la auditoría CSS. Al empezar, inventariar todos los CSS 
 
 - El job pasó arquitectura/lint/tipos/tests, build y validación de preguntas; falló solo en `Reconstruir referencia visual y verificar Chromium y WebKit`.
 - `baseline-ref.txt` apuntaba a `448758581b356f6705ea42a4b185e4cd062cf479`, UI anterior a las páginas React y al rediseño. El runner generó desde ese commit referencias Linux y halló 68 capturas distintas en la candidata; no hubo fallos funcionales en la suite (86 casos pasaron).
-- El procedimiento de `scripts/e2e-baseline.mjs` permite actualizar `tests/e2e/baseline-ref.txt` tras aprobar un cambio visual. Se cambia a `3239d0a4876d4418617c227617ed50f9c182c3ef`, el commit de la PR inmediatamente anterior al ajuste de referencia; contiene la UI migrada y estará en `main` tras el merge.
-- `npm run test:e2e:ci` local pasó: 68 capturas regeneradas en Chromium/WebKit, claro/oscuro, y luego 154 E2E. El entorno local es macOS, no Linux; confirmar el nuevo run de GitHub después del push.
+- Commit `32796db` actualiza `tests/e2e/baseline-ref.txt` a `3239d0a4876d4418617c227617ed50f9c182c3ef`, que contiene la UI migrada y será ancestro en `main` tras fusionar #34.
+- `npm run test:e2e:ci` local pasó: 68 capturas regeneradas en Chromium/WebKit, claro/oscuro, y luego 154 E2E. El entorno local es macOS, no Linux; el nuevo run de GitHub todavía está pendiente.
 
-## Nueva tarea de arquitectura tras cerrar las anteriores
+## Propuesta arquitectónica Etapa A
 
 El usuario pidió una auditoría completa del proyecto y definió Etapa A y Etapa B. Tras completar el trabajo actual:
 
-- Crear una rama nueva basada en `main` actualizado.
+- La rama `docs/architecture-audit-stack` se creó sobre PR #34, se rebasó a `main` (`095a0e1`) tras su integración y se publicó en la PR #38 contra `main`.
 - Inspeccionar todo el repositorio antes de modificar código.
 - En Etapa A no cambiar código de producción. Documentar `docs/architecture/audit.md`, `target-architecture.md`, `dependency-rules.md`, `migration-plan.md` y `migration-report.md` con arquitectura real, reglas, diagrama, funcionalidades/casos de uso reales, riesgos y prioridades.
 - Abrir PR contra `main` cuando la propuesta esté concreta. Presentarla al usuario y esperar su aprobación antes de Etapa B.
 - En Etapa B, migración funcional gradual con tests y gates; sin cambiar contratos persistidos, seguridad, rutas públicas, UI o comportamiento sin necesidad.
 
-## Pasos inmediatos al retomar
+## Estado de las PR tras el merge de #34
 
-1. El resultado final de `npx playwright test --update-snapshots` es 154/154 aprobado; la prueba regeneró capturas en claro/oscuro y Chromium/WebKit tras inspección visual de Inicio.
-2. Taste posterior a Lucide: Inicio a 1440/768/390 revisado, overflow y errores de consola 0; el único warning fue `below-fold` explicado. Ampliar a Progreso, Ajustes y pantallas de práctica si se reanuda la tarea de iconos. Eliminar `.taste-skill/` local antes de versionar.
-3. Publicar `tests/e2e/baseline-ref.txt` y este handoff en `feat/migrate-cards-screen`; consultar el nuevo check para confirmar el arreglo. El run previo ya finalizó; no esperar al nuevo CI.
-4. Apilar `docs/architecture-audit-stack` sobre el nuevo HEAD de PR #34 antes de volver a la arquitectura. La propuesta aún no está hecha ni tiene PR. Si #34 sigue abierta, la futura PR stack debe apuntar a `feat/migrate-cards-screen`; tras el merge, actualizarla contra `main` y cambiar la base. Auditoría solo documental, sin cambios de producción; Etapa B espera aprobación.
-5. Auditar e integrar Recharts cuando el usuario reanude, documentando decisiones en este handoff.
-6. En Etapa B, analizar e implementar Zustand solo para estado compartido de cliente que lo necesite, con selectores y pruebas; no trasladar estado local/remoto ni lógica de negocio automáticamente.
+- PR #36 falló en CI porque la aserción del modal de fin de simulacro usaba el timeout por defecto de 1 segundo. Se amplió la espera de ese modal a 5 segundos; `npm run check` pasó con 402/402 tests y la rama se rebasó a `main` en el commit `2fe3c3b`. El nuevo run está pendiente y no se esperó.
+- PR #37 falló en las cuatro capturas de Relámpago: CI reconstruía su referencia con la UI anterior a Lucide. Tras revisar el cambio visual, `baseline-ref.txt` apunta al commit Lucide revisado `dad1ec6`; Playwright enfocado pasó 4/4 entre Chromium/WebKit y claro/oscuro. La rama sigue apilada sobre #36 y el nuevo run está pendiente.
+- PR #38 contiene la auditoría arquitectónica, está rebasada en `main` y queda pendiente de revisión/aprobación de Etapa B.
 ## Nota de continuidad
 
 El observador de `claude-mem` informó que su cuota semanal está agotada: “Claude rejected the request because its weekly usage allowance is exhausted.” No reiniciar el worker. Este documento y el work state `continuar-migracion-shiki-css` conservan la continuidad.
+
+## Actualización de continuidad — estado vigente
+
+Corte 2026-10-26: PR #34 se integró en `main` mediante `095a0e1`. PR #36 ahora apunta a `main`; PR #37 se mantiene apilada en #36. PR #38 es la propuesta arquitectónica contra `main`. Recharts se está trabajando en `/tmp/tai-recharts-audit`, rama `feat/recharts-study-visualizations`, ya creada desde la punta de PR #34; rebasarla a `main` antes de implementar/publicar. La auditoría y cinco documentos de arquitectura están en la PR #38; no hay cambios de producción en esa tarea ni se ha iniciado Zustand.
+
+La inspección confirmó que `legacyPaths` está vacío y las páginas públicas tienen rutas lazy. `App.tsx` todavía consume `studyServices` y arranca `bootLegacy` desde `legacy-router.ts`; `core/application/legacy-engine.ts` sigue dependiendo de tres módulos de adapters/legacy. `npm run check:architecture` volvió a pasar sobre `main` con 64 hallazgos baseline y cero deuda nueva.
+
+Orden propuesto actualizado:
+
+1. Completar auditoría/migración de Recharts en rama propia desde `main`; abrir PR tras validar beneficio real.
+2. Esperar aprobación de la propuesta #38 antes de iniciar Etapa B de arquitectura; empezar con Progreso de solo lectura.
+3. Reducir el contrato global de servicios por feature y evaluar Zustand solo para una rebanada efímera realmente compartida; no mover estado local ni datos persistidos.
+4. Desacoplar `legacy-engine.ts` con puertos/adaptadores probados; luego separar composición/arranque y retirar código HTML legacy tras búsqueda de referencias.
+5. Cerrar mappers/tipos antiguos y añadir control de ciclos. Después de las tareas activas, crear rama aparte para migrar tests a React Testing Library y evaluar Jest.
+
+**Etapa A terminada y publicada en la PR #38 contra `main`**; Etapa B pendiente de aprobación. Archivos de propuesta: `docs/architecture/audit.md`, `target-architecture.md`, `dependency-rules.md`, `migration-plan.md`, `migration-report.md`.
+
+## Estado de continuidad — actualización 2026-10-26, noche
+
+Esta sección reemplaza los estados de PR anteriores que aparecen en el historial del documento:
+
+- PR #34 está integrada en `main` (`095a0e1`).
+- PR #36 también está integrada en `main` (`609dbc8`).
+- La PR #37 quedó cerrada sin merge; GitHub no permite reabrirla porque la rama fue recreada/forzada después de eliminarse su base. La integración Lucide fue republicada directamente contra `main`; el estado final y enlace vigente se registran en la última actualización.
+- PR #38 contiene la propuesta de arquitectura y apunta a `main`; Etapa B permanece pendiente de aprobación explícita.
+- La rama `feat/recharts-study-visualizations` está en `/private/tmp/tai-recharts-audit`, basada en `609dbc8`. La integración está en curso; los gráficos migrados deben quedar cargados de forma diferida dentro de las secciones de estadísticas.
+
+### PR #38 — corrección del fallo E2E
+
+El fallo remoto en `tests/e2e/bridge.spec.ts` ocurría porque la prueba de explicación offline heredaba `serviceWorkers: 'block'`, interceptaba el índice con una respuesta simulada y después desconectaba el navegador. No comprobaba la caché del service worker real y sus dos mensajes de carga fallida hacían fallar la aserción global.
+
+La prueba ahora permite el service worker real, siembra el índice en la Cache Storage instalada, desconecta antes de revelar la explicación y verifica que la explicación y el índice siguen disponibles después de recargar offline. En modo offline solo se toleran fallos de actualización de ese índice y solicitudes externas conocidas de Firebase/Google; otros fallos siguen haciendo fallar la prueba.
+
+Validación local en la rama de #38: prueba focalizada 2/2 (Chromium y WebKit), `npm run check` (402/402 unitarios y arquitectura sin deuda nueva), suite E2E completa 154/154 y `git diff --check`. El build se ejecuta como parte del servidor de E2E. El run remoto anterior falló en el test antiguo; al publicar la corrección, revisar su nuevo resultado si el usuario vuelve a reportar un fallo.
+
+### Siguiente trabajo autorizado
+
+1. Terminar la integración de Recharts en `/private/tmp/tai-recharts-audit`: migrar las gráficas justificadas en `StatsSimulationSection` y `StatsEvolutionSection`, mantener sus importaciones diferidas, verificar datos, responsive, teclado, tema claro/oscuro y estados sin datos; eliminar únicamente el SVG/CSS sustituido.
+2. Ejecutar `npm run check`, `npm run build`, prueba E2E focalizada y suite E2E completa; documentar auditoría, decisiones, dependencias y validación en este handoff.
+3. Publicar una PR separada contra `main`, sin esperar sus pipelines.
+4. Esperar aprobación del usuario para Etapa B arquitectónica/Zustand, conforme a la petición original de Etapa A.
+5. Al cerrar las tareas autorizadas, abrir una rama separada para evaluar React Testing Library y si Jest aporta valor frente a Vitest.
+
+## Estado de continuidad — actualización posterior
+
+### PRs y ramas
+
+- PR #34, #36 y #38 están integradas en `main`; la propuesta arquitectónica de #38 sigue pendiente de aprobación para iniciar la Etapa B/Zustand.
+- PR #37 se cerró automáticamente al eliminarse la rama base después del merge de #36. GitHub rechazó reabrirla porque su head fue recreado/forzado. Se conservó su diff y se publicó directamente contra `main` en la nueva [PR #41](https://github.com/dramirodev/tai-oposicion/pull/41), rama `feat/lucide-iconography-main`.
+- La integración Recharts está publicada en [PR #40](https://github.com/dramirodev/tai-oposicion/pull/40), rama `feat/recharts-study-visualizations`, base `main`.
+- La migración de tests está publicada en la [PR #42](https://github.com/dramirodev/tai-oposicion/pull/42), rama `refactor/migrate-tests-to-rtl`, basada en `main`.
+
+### React Testing Library y Jest
+
+- Se añadieron `@testing-library/react`, `@testing-library/user-event` y `@testing-library/jest-dom` como dependencias de desarrollo. Vitest se mantiene: Jest duplicaría el runner y requeriría adaptar la configuración de Vite y los mocks `vi` sin aportar capacidades necesarias.
+- Se migraron los 15 archivos que montaban componentes/hooks mediante `createRoot` a `render`, `screen`, consultas `within`, eventos RTL y `userEvent` donde corresponde. Se migró también el helper del proveedor de diálogos y se creó `renderApp` para componer `MemoryRouter` y `AppServicesProvider`.
+- `tests/setup.js` configura matchers de `jest-dom` y limpieza RTL; `vitest.config.mjs` lo carga como `setupFiles`.
+- Las pruebas de dominio, adaptadores y el puente legacy que no montan componentes React permanecen como pruebas Vitest. En `tests/app.test.js` se hizo explícita la espera del diálogo antes de comprobar su texto; así se quitó una condición de carrera reproducible al ejecutar la suite completa.
+- Verificación focalizada de los 15 archivos migrados: 37/37 tests.
+- `npm run check`: arquitectura sin deuda nueva (64 excepciones existentes), ESLint, ignore-growth, TypeScript y 402/402 tests en 89 archivos.
+- `npm run build`: correcto. Se mantienen los avisos ya existentes por los bundles `index` (~523 kB) y `legacy-sync` (~549 kB).
+- Revisión estructural: `rg` no encuentra `createRoot` ni `react-dom/client` bajo `tests`.
+
+### Próximo paso
+
+1. La PR #42 está abierta contra `main`; su estado remoto queda pendiente de revisión posterior, sin esperar sus pipelines.
+2. Seguir con el estado de las PR #40 y #41 según las instrucciones del usuario.
+3. Mantener la Etapa B de arquitectura/Zustand pendiente de aprobación explícita. Las pruebas E2E de navegador siguen en Playwright y no se migran a RTL.
+
+Última consulta de checks en GitHub: #40 mostraba fallo en el run `40398611713` y #41 en `40399388302`; no se investigaron en este turno, respetando la preferencia del usuario de que no monitoricemos fallos de PR salvo que los señale. Para #42 aún no aparecía un check en el resumen tras el último push.
