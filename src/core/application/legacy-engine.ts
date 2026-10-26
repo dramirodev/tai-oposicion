@@ -46,9 +46,9 @@ export function subscribe(fn: () => void): () => void {
 let attemptTracker: AttemptTracker | null = null;
 export function setAttemptTracker(tracker: AttemptTracker | null): void { attemptTracker = tracker; }
 export function flushAttemptTracking(): Promise<void> { return attemptTracker?.flush() || Promise.resolve(); }
-function recordAttempt(R: Run, intent: AttemptIntent, index = R.idx): void {
-  const attemptId = R.attemptIds?.[index];
-  if (attemptTracker && R.attemptScope && attemptId) attemptTracker.record(R.attemptScope, attemptId, intent);
+function recordAttempt(run: Run, intent: AttemptIntent, index = run.idx): void {
+  const attemptId = run.attemptIds?.[index];
+  if (attemptTracker && run.attemptScope && attemptId) attemptTracker.record(run.attemptScope, attemptId, intent);
 }
 // El puente aún escribe en Run directamente. Observar objetos y arrays permite
 // avisar también de esas mutaciones sin cambiar ni el motor ni sus consumidores.
@@ -58,13 +58,13 @@ function observable<T extends object>(value: T): T {
   const known = observed.get(value); if (known) return known as T;
   const proxy = new Proxy(value, {
     get(target, key, receiver) {
-      const v = Reflect.get(target, key, receiver);
-      return v && typeof v === 'object' && key !== 'items' && key !== 'gt'
-        && (Array.isArray(v) || Object.getPrototypeOf(v) === Object.prototype) ? observable(v) : v;
+      const value = Reflect.get(target, key, receiver);
+      return value && typeof value === 'object' && key !== 'items' && key !== 'gt'
+        && (Array.isArray(value) || Object.getPrototypeOf(value) === Object.prototype) ? observable(value) : value;
     },
-    set(target, key, v) {
-      const changed = !Object.is(Reflect.get(target, key), v);
-      const ok = Reflect.set(target, key, v);
+    set(target, key, value) {
+      const changed = !Object.is(Reflect.get(target, key), value);
+      const ok = Reflect.set(target, key, value);
       if (ok && changed) subscribers.forEach(fn => fn());
       return ok;
     },
@@ -113,7 +113,7 @@ export function toggleReviewQuestion(): boolean {
   const review = new Set(run.review || []);
   if (review.has(run.idx)) review.delete(run.idx);
   else review.add(run.idx);
-  run.review = [...review].sort((a, b) => a - b);
+  run.review = [...review].sort((leftIndex, rightIndex) => leftIndex - rightIndex);
   return true;
 }
 export function setRunPaused(paused: boolean): boolean {
@@ -130,12 +130,12 @@ export function toggleDeferredBlank(): boolean {
   if (run.ans[run.idx] === -1) recordAttempt(run, { type: 'mark-pending' });
   return true;
 }
-export function startCurrentQuestion(t = Date.now()): void {
+export function startCurrentQuestion(timestamp = Date.now()): void {
   const run = engineState.run;
   if (!run || run.tIdx === run.idx) return;
   run.tIdx = run.idx;
   run.q0 = run.secs;
-  run.qT0 = t;
+  run.qT0 = timestamp;
   if (!run.paused && !run.attemptTrackingPaused) recordAttempt(run, { type: 'open' });
 }
 /** Pauses only the recorded active-time interval; it does not change the study timer. */
@@ -145,7 +145,7 @@ export function setAttemptTrackingVisible(visible: boolean): void {
   run.attemptTrackingPaused = !visible;
   if (run.tIdx === run.idx) recordAttempt(run, { type: visible ? 'resume' : 'pause' });
 }
-export function tickCurrentRun(t = Date.now()): void { if (engineState.run) tickRun(engineState.run, t); }
+export function tickCurrentRun(timestamp = Date.now()): void { if (engineState.run) tickRun(engineState.run, timestamp); }
 export const currentSecondsRemaining = (): number => engineState.run ? segundosRestantes(engineState.run) : Infinity;
 export function answerCurrentQuestion(answer: number, minimumReadingSeconds: number): void {
   const run = engineState.run;
@@ -190,10 +190,10 @@ const closedRuns = new WeakSet<Run>();
 const MAX_EDAD = 2 * 86400000;
 export function clearRun(): void { try { localStorage.removeItem(runKey()); } catch {} }
 export function saveRun(): void {
-  const R = engineState.run;
-  if (!R || R.supTexto || !R.items.every(q => q.i && META && META[q.i])) return;
-  const { kind, feedback, titulo, limit, idx, ans, times, secs, porTiempo, review } = R;
-  try { localStorage.setItem(runKey(), JSON.stringify({ kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: R.items.map(q => q.i), review: review || [], ...(feedback && R.studyStates ? { studyStates: [...R.studyStates] } : {}), confidences: R.confidences || [], discardedOptions: R.discardedOptions || [], highlights: R.highlights || [], savedAt: Date.now(), ...(R.attemptScope ? { attemptScope: R.attemptScope } : {}), ...(R.attemptSessionId ? { attemptSessionId: R.attemptSessionId } : {}), ...(R.attemptIds ? { attemptIds: R.attemptIds } : {}) })); } catch {}
+  const run = engineState.run;
+  if (!run || run.supTexto || !run.items.every(item => item.i && META && META[item.i])) return;
+  const { kind, feedback, titulo, limit, idx, ans, times, secs, porTiempo, review } = run;
+  try { localStorage.setItem(runKey(), JSON.stringify({ kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: run.items.map(item => item.i), review: review || [], ...(feedback && run.studyStates ? { studyStates: [...run.studyStates] } : {}), confidences: run.confidences || [], discardedOptions: run.discardedOptions || [], highlights: run.highlights || [], savedAt: Date.now(), ...(run.attemptScope ? { attemptScope: run.attemptScope } : {}), ...(run.attemptSessionId ? { attemptSessionId: run.attemptSessionId } : {}), ...(run.attemptIds ? { attemptIds: run.attemptIds } : {}) })); } catch {}
 }
 interface SavedRun {
   kind: SessionKind; feedback?: boolean; titulo?: string; limit?: number; idx: number; ans?: (number | null)[]; times?: (number | null)[];
@@ -205,87 +205,87 @@ export interface PendingRun { saved: SavedRun; items: Question[]; account: strin
 /** Sesión guardada que se puede retomar; descarta (y borra) la caducada o incoherente. */
 export async function pendingRun(full: boolean): Promise<PendingRun | null> {
   const account = store.accountId();
-  let s: SavedRun | null = null; try { s = JSON.parse(localStorage.getItem(runKey()) || 'null'); } catch {}
-  if (!s || engineState.run) return null;
-  if (!full && s.kind !== 'rev') { clearRun(); return null; }
-  if (!Array.isArray(s.ids) || !s.ids.length || Date.now() - (s.savedAt || 0) > MAX_EDAD) { clearRun(); return null; }
-  const items = await byIds(s.ids);
+  let savedRun: SavedRun | null = null; try { savedRun = JSON.parse(localStorage.getItem(runKey()) || 'null'); } catch {}
+  if (!savedRun || engineState.run) return null;
+  if (!full && savedRun.kind !== 'rev') { clearRun(); return null; }
+  if (!Array.isArray(savedRun.ids) || !savedRun.ids.length || Date.now() - (savedRun.savedAt || 0) > MAX_EDAD) { clearRun(); return null; }
+  const items = await byIds(savedRun.ids);
   if (account !== store.accountId()) return null;
-  if (items.length !== s.ids.length || filterScoringQuestions(items, !!s.feedback, question => question.np).length !== items.length) { clearRun(); return null; }
-  return { saved: s, items, account };
+  if (items.length !== savedRun.ids.length || filterScoringQuestions(items, !!savedRun.feedback, question => question.np).length !== items.length) { clearRun(); return null; }
+  return { saved: savedRun, items, account };
 }
-export function resumeRun({ saved: s, items, account }: PendingRun): Run | null {
+export function resumeRun({ saved: savedRun, items, account }: PendingRun): Run | null {
   if (account !== store.accountId()) return null;
-  const un = <T>(a?: (T | null)[]): (T | undefined)[] => Array.from(a || [], x => x === null ? undefined : x);
+  const un = <T>(firstValue?: (T | null)[]): (T | undefined)[] => Array.from(firstValue || [], value => value === null ? undefined : value);
   const expectedScope = account || 'guest';
-  const hasTracking = s.attemptScope === expectedScope
-    && typeof s.attemptSessionId === 'string'
-    && Array.isArray(s.attemptIds)
-    && s.attemptIds.length === items.length
-    && s.attemptIds.every(id => typeof id === 'string');
-  const restoredAnswers = un(s.ans);
-  const answers = Array.from({ length: items.length }, (_, index) => restoredAnswers[index]);
+  const hasTracking = savedRun.attemptScope === expectedScope
+    && typeof savedRun.attemptSessionId === 'string'
+    && Array.isArray(savedRun.attemptIds)
+    && savedRun.attemptIds.length === items.length
+    && savedRun.attemptIds.every(id => typeof id === 'string');
+  const restoredAnswers = un(savedRun.ans);
+  const answers = Array.from({ length: items.length }, (ignoredValue, index) => restoredAnswers[index]);
   const validStates = ['unseen', 'pending', 'answered', 'revealed'];
-  const hasValidStates = !!s.feedback && Array.isArray(s.studyStates) && s.studyStates.length === items.length
-    && s.studyStates.every((state, index) => validStates.includes(state) && (answers[index] !== undefined || state !== 'answered'));
-  const states = !!s.feedback ? answers.map((answer, index) => {
+  const hasValidStates = !!savedRun.feedback && Array.isArray(savedRun.studyStates) && savedRun.studyStates.length === items.length
+    && savedRun.studyStates.every((state, index) => validStates.includes(state) && (answers[index] !== undefined || state !== 'answered'));
+  const states = !!savedRun.feedback ? answers.map((answer, index) => {
     if (answer === -1) return 'revealed'; // Historical -1 was shown with its correct answer in the old practice UI.
     if (typeof answer === 'number') return 'answered';
-    return hasValidStates ? s.studyStates![index] : 'unseen';
+    return hasValidStates ? savedRun.studyStates![index] : 'unseen';
   }) : undefined;
-  const confidences: Confidence[] = items.map((_, index) => {
-    const value = s.confidences?.[index];
+  const confidences: Confidence[] = items.map((item, index) => {
+    const value = savedRun.confidences?.[index];
     return value === 'sure' || value === 'betweenTwo' || value === 'guess' ? value : null;
   });
-  const discardedOptions = items.map((question, index) => Array.isArray(s.discardedOptions?.[index])
-    ? [...new Set(s.discardedOptions[index].filter(option => Number.isInteger(option) && option >= 0 && option < question.a.length))]
+  const discardedOptions = items.map((question, index) => Array.isArray(savedRun.discardedOptions?.[index])
+    ? [...new Set(savedRun.discardedOptions[index].filter(option => Number.isInteger(option) && option >= 0 && option < question.a.length))]
     : []);
   const validHighlight = (mark: Highlight): boolean => Boolean(mark && typeof mark.id === 'string'
     && (mark.field === 'statement' || /^option:\d+$/.test(mark.field))
     && Number.isInteger(mark.start) && Number.isInteger(mark.end) && mark.start >= 0 && mark.end > mark.start
     && typeof mark.text === 'string' && typeof mark.contentRevision === 'string');
-  const highlights = items.map((_, index) => Array.isArray(s.highlights?.[index]) ? s.highlights[index].filter(validHighlight) : []);
-  const run = { kind: s.kind, feedback: !!s.feedback, titulo: s.titulo, limit: s.limit || 0, porTiempo: !!s.pt, items, idx: s.idx, ans: answers, times: un(s.times), t0: now(), secs: s.secs || 0, paused: false, confidences, discardedOptions, highlights, review: (Array.isArray(s.review) ? s.review : []).filter(i => Number.isInteger(i) && i >= 0 && i < items.length), ...(states ? { studyStates: states } : {}), ...(hasTracking ? { attemptScope: s.attemptScope, attemptSessionId: s.attemptSessionId, attemptIds: s.attemptIds!.slice() } : {}) } as Run;
+  const highlights = items.map((item, index) => Array.isArray(savedRun.highlights?.[index]) ? savedRun.highlights[index].filter(validHighlight) : []);
+  const run = { kind: savedRun.kind, feedback: !!savedRun.feedback, titulo: savedRun.titulo, limit: savedRun.limit || 0, porTiempo: !!savedRun.pt, items, idx: savedRun.idx, ans: answers, times: un(savedRun.times), t0: now(), secs: savedRun.secs || 0, paused: false, confidences, discardedOptions, highlights, review: (Array.isArray(savedRun.review) ? savedRun.review : []).filter(index => Number.isInteger(index) && index >= 0 && index < items.length), ...(states ? { studyStates: states } : {}), ...(hasTracking ? { attemptScope: savedRun.attemptScope, attemptSessionId: savedRun.attemptSessionId, attemptIds: savedRun.attemptIds!.slice() } : {}) } as Run;
   if (run.attemptSessionId && run.attemptScope && run.attemptIds) attemptTracker?.resumeSession(run.attemptScope, run.attemptSessionId, run.attemptIds);
   return (engineState.run = observable(run));
 }
 
 // ───────── tiempo y respuestas ─────────
 /** El tiempo sale de la hora real (no de contar ticks): iOS frena los timers con la pantalla bloqueada. */
-export function tickRun(R: Run, t = Date.now()): void {
-  if (R.paused) { R.since = null; return; }
-  if (R.since == null) { R.since = t; R.base = R.secs; }
-  R.secs = (R.base ?? 0) + Math.floor((t - R.since) / 1000);
+export function tickRun(run: Run, timestamp = Date.now()): void {
+  if (run.paused) { run.since = null; return; }
+  if (run.since == null) { run.since = timestamp; run.base = run.secs; }
+  run.secs = (run.base ?? 0) + Math.floor((timestamp - run.since) / 1000);
 }
 /** Segundos que quedan; con límite 0 devuelve Infinity. */
-export const segundosRestantes = (R: Run): number => R.limit ? R.limit * 60 - R.secs : Infinity;
+export const segundosRestantes = (run: Run): number => run.limit ? run.limit * 60 - run.secs : Infinity;
 /** Anota en el progreso la respuesta de una pregunta con corrección inmediata (i = -1: «no lo sé»). */
-export function answerQuestion(R: Run, q: Question, i: number, minLect: number): void {
-  if (engineState.run !== R) return;
-  if (!R.feedback) {
-    R.ans[R.idx] = i;
-    (R.luck ||= {})[R.idx] = store.rec(q.i)?.[9] || 0;
-    (R.fast ||= {})[R.idx] = [Math.round((Date.now() - (R.qT0 ?? Date.now())) / 1000), minLect];
-    if (i === -1) recordAttempt(R, { type: 'mark-pending' });
-    else recordAttempt(R, { type: 'answer', optionIndex: i, outcome: i === q.c ? 'correct' : 'wrong' });
-    store.record(q.i, q.t, i === -1 ? 2 : i === q.c ? 1 : 0, now(), i === -1 ? undefined : Math.max(1, R.secs - (R.q0 ?? 0)));
+export function answerQuestion(run: Run, question: Question, index: number, minLect: number): void {
+  if (engineState.run !== run) return;
+  if (!run.feedback) {
+    run.ans[run.idx] = index;
+    (run.luck ||= {})[run.idx] = store.rec(question.i)?.[9] || 0;
+    (run.fast ||= {})[run.idx] = [Math.round((Date.now() - (run.qT0 ?? Date.now())) / 1000), minLect];
+    if (index === -1) recordAttempt(run, { type: 'mark-pending' });
+    else recordAttempt(run, { type: 'answer', optionIndex: index, outcome: index === question.c ? 'correct' : 'wrong' });
+    store.record(question.i, question.t, index === -1 ? 2 : index === question.c ? 1 : 0, now(), index === -1 ? undefined : Math.max(1, run.secs - (run.q0 ?? 0)));
     return;
   }
-  R.studyStates ||= [];
-  const state = R.studyStates[R.idx] || 'unseen';
+  run.studyStates ||= [];
+  const state = run.studyStates[run.idx] || 'unseen';
   if (state === 'answered' || state === 'revealed') return;
-  if (i === -1) {
+  if (index === -1) {
     if (state === 'pending') return;
-    R.studyStates[R.idx] = 'pending';
-    recordAttempt(R, { type: 'mark-pending' });
+    run.studyStates[run.idx] = 'pending';
+    recordAttempt(run, { type: 'mark-pending' });
     return;
   }
-  R.ans[R.idx] = i;
-  R.studyStates[R.idx] = 'answered';
-  (R.luck ||= {})[R.idx] = store.rec(q.i)?.[9] || 0;
-  (R.fast ||= {})[R.idx] = [Math.round((Date.now() - (R.qT0 ?? Date.now())) / 1000), minLect];
-  recordAttempt(R, { type: 'answer', optionIndex: i, outcome: i === q.c ? 'correct' : 'wrong' });
-  store.record(q.i, q.t, i === q.c ? 1 : 0, now(), Math.max(1, R.secs - (R.q0 ?? 0)));
+  run.ans[run.idx] = index;
+  run.studyStates[run.idx] = 'answered';
+  (run.luck ||= {})[run.idx] = store.rec(question.i)?.[9] || 0;
+  (run.fast ||= {})[run.idx] = [Math.round((Date.now() - (run.qT0 ?? Date.now())) / 1000), minLect];
+  recordAttempt(run, { type: 'answer', optionIndex: index, outcome: index === question.c ? 'correct' : 'wrong' });
+  store.record(question.i, question.t, index === question.c ? 1 : 0, now(), Math.max(1, run.secs - (run.q0 ?? 0)));
 }
 /** Reveals only a previously deferred practice question; consultation has no score effect. */
 export function revealCurrentSolution(): boolean {
@@ -346,47 +346,47 @@ export function removeCurrentHighlight(highlightId: string): boolean {
   return true;
 }
 /** Respuesta en modo examen (sin corrección): se guarda al terminar. */
-export function answerDeferred(R: Run, i: number): void {
-  if (engineState.run !== R) return;
-  R.ans[R.idx] = i;
-  (R.times ||= [])[R.idx] = Math.max(1, R.secs - (R.q0 ?? 0));
-  const q = R.items[R.idx];
-  if (i === -1) recordAttempt(R, { type: 'mark-pending' });
-  else recordAttempt(R, { type: 'answer', optionIndex: i, outcome: i === q.c ? 'correct' : 'wrong' });
+export function answerDeferred(run: Run, index: number): void {
+  if (engineState.run !== run) return;
+  run.ans[run.idx] = index;
+  (run.times ||= [])[run.idx] = Math.max(1, run.secs - (run.q0 ?? 0));
+  const question = run.items[run.idx];
+  if (index === -1) recordAttempt(run, { type: 'mark-pending' });
+  else recordAttempt(run, { type: 'answer', optionIndex: index, outcome: index === question.c ? 'correct' : 'wrong' });
 }
 
 /** Cierra la sesión: puntúa, guarda en el progreso y deja el resultado en `engineState.last`. null = no se contestó nada. */
-export function finishRun(R: Run, reason: 'complete' | 'interrupted' | 'timeout' = 'complete'): LastResult | null {
-  if (closedRuns.has(R) || engineState.run !== R) return null;
-  closedRuns.add(R);
+export function finishRun(run: Run, reason: 'complete' | 'interrupted' | 'timeout' = 'complete'): LastResult | null {
+  if (closedRuns.has(run) || engineState.run !== run) return null;
+  closedRuns.add(run);
   clearRun();
-  if (R.attemptSessionId && R.attemptScope && attemptTracker) {
-    if (R.tIdx === R.idx && R.attemptIds?.[R.idx] && !R.attemptTrackingPaused) recordAttempt(R, { type: 'close' });
-    attemptTracker.closeSession(R.attemptScope, R.attemptSessionId, reason === 'interrupted' ? 'interrupted' : 'completed', now(), R.secs);
+  if (run.attemptSessionId && run.attemptScope && attemptTracker) {
+    if (run.tIdx === run.idx && run.attemptIds?.[run.idx] && !run.attemptTrackingPaused) recordAttempt(run, { type: 'close' });
+    attemptTracker.closeSession(run.attemptScope, run.attemptSessionId, reason === 'interrupted' ? 'interrupted' : 'completed', now(), run.secs);
   }
   // «por tiempo»: solo cuentan las preguntas que llegaste a contestar (la que estaba abierta al acabar el tiempo no)
-  let hechas = R.items.length;
-  if (R.porTiempo) { hechas = 0; R.ans.forEach((x, k) => { if (x !== undefined) hechas = k + 1; }); if (!hechas) { engineState.run = null; return null; } }
-  const items = R.items.slice(0, hechas), res = { a: 0, f: 0, b: 0 }, fails: string[] = [];
+  let hechas = run.items.length;
+  if (run.porTiempo) { hechas = 0; run.ans.forEach((numericValue, index) => { if (numericValue !== undefined) hechas = index + 1; }); if (!hechas) { engineState.run = null; return null; } }
+  const items = run.items.slice(0, hechas), res = { a: 0, f: 0, b: 0 }, fails: string[] = [];
   const porTema: Record<string, [number, number]> = {}, porTipo: Record<string, [number, number]> = {};
-  items.forEach((q, k) => {
-    const x = R.ans[k]; const ok = x === q.c;
-    const pt = porTema[q.t] ||= [0, 0]; pt[1]++;
-    const tk: string | undefined = META[q.i]?.[2]; const ptk = tk ? (porTipo[tk] ||= [0, 0]) : null; if (ptk) ptk[1]++;
-    if (x === undefined || x === -1) { res.b++; if (!R.feedback) store.record(q.i, q.t, 2); }
-    else if (ok) { res.a++; pt[0]++; if (ptk) ptk[0]++; if (!R.feedback) store.record(q.i, q.t, 1, now(), R.times?.[k]); }
-    else { res.f++; fails.push(q.i); if (!R.feedback) store.record(q.i, q.t, 0, now(), R.times?.[k]); }
+  items.forEach((item, index) => {
+    const numericValue = run.ans[index]; const ok = numericValue === item.c;
+    const pt = porTema[item.t] ||= [0, 0]; pt[1]++;
+    const tk: string | undefined = META[item.i]?.[2]; const ptk = tk ? (porTipo[tk] ||= [0, 0]) : null; if (ptk) ptk[1]++;
+    if (numericValue === undefined || numericValue === -1) { res.b++; if (!run.feedback) store.record(item.i, item.t, 2); }
+    else if (ok) { res.a++; pt[0]++; if (ptk) ptk[0]++; if (!run.feedback) store.record(item.i, item.t, 1, now(), run.times?.[index]); }
+    else { res.f++; fails.push(item.i); if (!run.feedback) store.record(item.i, item.t, 0, now(), run.times?.[index]); }
   });
-  const n = items.length;
-  const ses = { id: 's' + now().toString(36), ts: now(), kind: R.kind, n, a: res.a, f: res.f, b: res.b, secs: R.porTiempo ? Math.min(R.secs, (R.limit ?? 0) * 60) : R.secs, nota: calculateExamScore(res.a, res.f, n), temas: porTema, tipos: porTipo, fails, titulo: R.titulo || '', ...(reason === 'interrupted' ? { interrupted: true } : {}), ...(R.porTiempo ? { porTiempo: true } : {}) };
+  const itemCount = items.length;
+  const ses = { id: 's' + now().toString(36), ts: now(), kind: run.kind, n: itemCount, a: res.a, f: res.f, b: res.b, secs: run.porTiempo ? Math.min(run.secs, (run.limit ?? 0) * 60) : run.secs, nota: calculateExamScore(res.a, res.f, itemCount), temas: porTema, tipos: porTipo, fails, titulo: run.titulo || '', ...(reason === 'interrupted' ? { interrupted: true } : {}), ...(run.porTiempo ? { porTiempo: true } : {}) };
   store.addSession(ses);
   engineState.run = null;
   return (engineState.last = observable({
-    ses, items, ans: [...R.ans], times: [...(R.times || [])], limit: R.limit || 0,
-    ...(R.studyStates ? { studyStates: [...R.studyStates] } : {}),
-    confidences: [...(R.confidences || [])],
-    discardedOptions: (R.discardedOptions || []).map(options => [...options]),
-    highlights: (R.highlights || []).map(marks => marks.map(mark => ({ ...mark }))),
+    ses, items, ans: [...run.ans], times: [...(run.times || [])], limit: run.limit || 0,
+    ...(run.studyStates ? { studyStates: [...run.studyStates] } : {}),
+    confidences: [...(run.confidences || [])],
+    discardedOptions: (run.discardedOptions || []).map(options => [...options]),
+    highlights: (run.highlights || []).map(marks => marks.map(mark => ({ ...mark }))),
   }));
 }
 
@@ -396,10 +396,10 @@ const origenes = (): Set<string> => new Set(((store.getCfg().test || {}) as { o?
 export const falladasIds = (): string[] => { const st = store.getStats(); return Object.keys(st).filter(id => temaOf(id) && store.pendingFailure(st[id])); };
 
 const GQ_KEY = 'tai.gq';
-async function quickGuest(idx: Index, N: number, orgs: Set<string>): Promise<Question[]> {
+async function quickGuest(idx: Index, numericValue: number, orgs: Set<string>): Promise<Question[]> {
   let last: string[] = []; try { last = JSON.parse(localStorage.getItem(GQ_KEY) || '[]'); } catch {}
-  const temas = shuffleItems(idx.temas, Math.random).slice(0, N + 3);
-  const pools = (await Promise.all(temas.map(t => getTema(t.id)))).map((questions, index) => ({
+  const temas = shuffleItems(idx.temas, Math.random).slice(0, numericValue + 3);
+  const pools = (await Promise.all(temas.map(topic => getTema(topic.id)))).map((questions, index) => ({
     topicId: temas[index].id,
     questions: filterScoringQuestions(
       questions.filter(question => questionAllowed(question, orgs)),
@@ -407,21 +407,21 @@ async function quickGuest(idx: Index, N: number, orgs: Set<string>): Promise<Que
       question => question.np,
     ),
   }));
-  const items = pickGuestQuestions(pools, N, question => question.i, id => !!store.rec(id), new Set(last), Math.random);
-  try { localStorage.setItem(GQ_KEY, JSON.stringify([...last, ...items.map(q => q.i)].slice(-300))); } catch {}
+  const items = pickGuestQuestions(pools, numericValue, question => question.i, id => !!store.rec(id), new Set(last), Math.random);
+  try { localStorage.setItem(GQ_KEY, JSON.stringify([...last, ...items.map(item => item.i)].slice(-300))); } catch {}
   return items;
 }
 export interface Seleccion { items: Question[]; titulo: string }
 /** Sesión rápida (~5 min). Invitado: una pregunta de cada tema al azar. Con acceso: repasos vencidos + nuevas de los temas más débiles. */
 export async function quickItems(full: boolean): Promise<Seleccion | { items: []; titulo: '' }> {
   const idx = await getIndex(); await getMeta();
-  const N = estimateQuickQuestionCount(Object.values(store.getStats()).map(record => ({
+  const numericValue = estimateQuickQuestionCount(Object.values(store.getStats()).map(record => ({
     totalSeconds: record[7],
     count: record[8],
   })));
   const orgs = origenes();
-  if (!full) return { items: await quickGuest(idx, N, orgs), titulo: 'Sesión rápida · una pregunta por tema' };
-  const due = (await byIds((await dueList()).slice(0, N))).filter(question => questionAllowed(question, orgs));
+  if (!full) return { items: await quickGuest(idx, numericValue, orgs), titulo: 'Sesión rápida · una pregunta por tema' };
+  const due = (await byIds((await dueList()).slice(0, numericValue))).filter(question => questionAllowed(question, orgs));
   const seen = new Set(store.getSeen());
   const ord = { r: 0, y: 1, n: 2, g: 3 };
   const statusCode = { new: 'n', red: 'r', yellow: 'y', green: 'g' } as const;
@@ -440,25 +440,25 @@ export async function quickItems(full: boolean): Promise<Seleccion | { items: []
   let temas = topicPriorities.filter(topic => !seen.size || seen.has(topic.id));
   if (!temas.length) temas = topicPriorities;
   temas = shuffleItems(temas, Math.random); // el orden estable de abajo conserva este azar entre temas empatados: sin datos ya no salen siempre los mismos
-  temas.sort((a, b) => (ord[a.est] - ord[b.est]) || ((b.dias ?? 0) - (a.dias ?? 0)));
+  temas.sort((leftTopic, rightTopic) => (ord[leftTopic.est] - ord[rightTopic.est]) || ((rightTopic.dias ?? 0) - (leftTopic.dias ?? 0)));
   const pools: Question[][] = [];
-  for (const questions of await Promise.all(temas.slice(0, 8).map(t => getTema(t.id)))) {
+  for (const questions of await Promise.all(temas.slice(0, 8).map(item => getTema(item.id)))) {
     pools.push(shuffleItems(questions.filter(question => questionAllowed(question, orgs) && !store.rec(question.i)), Math.random));
   }
-  const items = pickQuickQuestions(due, pools, N, question => question.i, Math.random);
-  const nd = items.filter(q => store.rec(q.i)).length;
+  const items = pickQuickQuestions(due, pools, numericValue, question => question.i, Math.random);
+  const nd = items.filter(item => store.rec(item.i)).length;
   return { items, titulo: `Sesión rápida · ${nd} repasos + ${items.length - nd} nuevas` };
 }
 /** Repaso de fallos: las más vencidas primero, temas mezclados. */
 export async function repasoItems(): Promise<Seleccion> {
   await getMeta(); const st = store.getStats(), t0 = now();
   const cand: { i: string; t: string; due: number }[] = [];
-  for (const id in st) { const r = st[id]; if (r[3] >= 0 && r[4] <= t0 && temaOf(id)) cand.push({ i: id, t: temaOf(id)!, due: r[4] }); }
+  for (const id in st) { const statRecord = st[id]; if (statRecord[3] >= 0 && statRecord[4] <= t0 && temaOf(id)) cand.push({ i: id, t: temaOf(id)!, due: statRecord[4] }); }
   const ids = selectSpacedReviews(cand.map(item => ({ topicId: item.t, dueAt: item.due, item })), 30).map(review => review.item.i);
   return { items: ids.length ? await byIds(ids) : [], titulo: 'Repaso de fallos · más vencidas primero, temas mezclados' };
 }
 /** Test de trampas: preguntas que reúnen más de las trampas objetivo (por defecto, las 3 con más fallos). */
-export async function trapTest(n: number, only?: (number | string)[], temas?: string[]): Promise<{ items: Question[]; targets: (number | string)[] }> {
+export async function trapTest(itemCount: number, only?: (number | string)[], temas?: string[]): Promise<{ items: Question[]; targets: (number | string)[] }> {
   await getMeta();
   const statistics = store.getStats();
   const rates = calculateTrapRates(
@@ -469,7 +469,7 @@ export async function trapTest(n: number, only?: (number | string)[], temas?: st
   const targets = only || rates.slice(0, 3).map(rate => +rate.trapId);
   if (!targets.length) return { items: [], targets };
   const tg = new Set(targets.map(Number)), ts = temas && temas.length ? new Set(temas) : null;
-  const ids = Object.keys(META).filter(id => id !== '_by' && (!ts || ts.has(META[id][0])) && (META[id][3] || []).some((k: number | string) => tg.has(+k)));
+  const ids = Object.keys(META).filter(id => id !== '_by' && (!ts || ts.has(META[id][0])) && (META[id][3] || []).some((key: number | string) => tg.has(+key)));
   const cands = (await byIds(ids)).filter(question => questionAllowed(question, origenes()));
   const items = selectTrapQuestions(
     cands.map(question => ({ id: question.i, trapIds: question.x || [], question })),
@@ -478,7 +478,7 @@ export async function trapTest(n: number, only?: (number | string)[], temas?: st
       return record ? { lastResult: record[5] } : undefined;
     },
     targets,
-    n,
+    itemCount,
     Math.random,
   ).map(candidate => candidate.question);
   return { items, targets };

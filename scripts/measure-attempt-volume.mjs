@@ -5,12 +5,12 @@ import { attemptSessionMapper } from '../src/adapters/local/mappers/attempt-sess
 const attemptCount = 10_000;
 const attemptsPerSession = 20;
 const createdAt = 1_800_000_000_000;
-const sessions = Array.from({ length: attemptCount / attemptsPerSession }, (_, index) => attemptSessionMapper.toDto({
-  id: `session-${index}`,
+const sessions = Array.from({ length: attemptCount / attemptsPerSession }, (unusedSessionValue, sessionIndex) => attemptSessionMapper.toDto({
+  id: `session-${sessionIndex}`,
   mode: 'practice',
   status: 'completed',
-  startedAt: createdAt + index * 1_000,
-  endedAt: createdAt + index * 1_000 + 60_000,
+  startedAt: createdAt + sessionIndex * 1_000,
+  endedAt: createdAt + sessionIndex * 1_000 + 60_000,
   lastSequence: 1,
 }));
 const attempts = [];

@@ -47,7 +47,7 @@ export function analyzeSimulation({
     : 0;
   const slowQuestions = timedAnswers
     .slice()
-    .sort((a, b) => b.seconds - a.seconds)
+    .sort((leftItem, rightItem) => rightItem.seconds - leftItem.seconds)
     .slice(0, 3)
     .filter(answer => !secondsPerQuestion || answer.seconds > secondsPerQuestion * 1.5);
   const fastWrongAnswers = timedAnswers.filter(

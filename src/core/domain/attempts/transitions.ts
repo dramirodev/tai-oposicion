@@ -189,7 +189,7 @@ export function applyAttemptAction(attempt: QuestionAttempt, action: AttemptActi
       break;
     case 'discard-option':
       if (attempt.state === 'answered' || attempt.state === 'revealed') return rejected(attempt, 'action-not-available');
-      next = { ...next, discardedOptions: [...new Set([...attempt.discardedOptions, action.optionIndex])].sort((a, b) => a - b) };
+      next = { ...next, discardedOptions: [...new Set([...attempt.discardedOptions, action.optionIndex])].sort((leftOptionIndex, rightOptionIndex) => leftOptionIndex - rightOptionIndex) };
       break;
     case 'restore-option':
       if (attempt.state === 'answered' || attempt.state === 'revealed') return rejected(attempt, 'action-not-available');

@@ -1,7 +1,7 @@
 /** Atajo de querySelector. Se asume que el elemento existe (como en el JS original); usa `$<HTMLInputElement>(…)` para campos de formulario. */
 /** Elemento de interfaz con las propiedades de formulario habituales (value, disabled, checked…). */
 export type El = HTMLElement & Pick<HTMLInputElement, 'value' | 'disabled' | 'checked' | 'files' | 'select'>;
-export const $ = <T extends HTMLElement = El>(s: string, r: ParentNode = document): T => r.querySelector<T>(s)!;
+export const $ = <T extends HTMLElement = El>(text: string, result: ParentNode = document): T => result.querySelector<T>(text)!;
 export interface LegacyScreen { cleanup: (() => void) | null }
 const fallbackScreen: LegacyScreen = { cleanup: null };
 let activeScope: { app: El; screen: LegacyScreen } | null = null;
@@ -11,13 +11,13 @@ function installLegacyBehavior(host: HTMLElement): () => void {
   if (previous) return previous;
   const observer = new MutationObserver(() => selectionStates(host));
   observer.observe(host, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
-  const onClick = (e: Event) => {
-    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('.seg button');
-    const group = b?.parentElement?.id, value = b?.dataset.v;
-    if (!b || !group || value === undefined) return;
+  const onClick = (event: Event) => {
+    const button = (event.target as HTMLElement).closest<HTMLButtonElement>('.seg button');
+    const group = button?.parentElement?.id, value = button?.dataset.v;
+    if (!button || !group || value === undefined) return;
     queueMicrotask(() => {
-      if (b.isConnected || document.activeElement !== document.body) return;
-      const replacement = Array.from(host.querySelectorAll<HTMLButtonElement>('.seg button')).find(x => x.parentElement?.id === group && x.dataset.v === value);
+      if (button.isConnected || document.activeElement !== document.body) return;
+      const replacement = Array.from(host.querySelectorAll<HTMLButtonElement>('.seg button')).find(button => button.parentElement?.id === group && button.dataset.v === value);
       replacement?.focus({ preventScroll: true });
     });
   };
@@ -47,7 +47,7 @@ export function legacyScope(screen: LegacyScreen = fallbackScreen) {
   const host = activeScope?.app || ($('#app') as El);
   installLegacyBehavior(host);
   return { app: host, screen: activeScope?.screen || screen,
-    $: <T extends HTMLElement = El>(s: string, r: ParentNode = host): T => r.querySelector<T>(s)!,
+    $: <T extends HTMLElement = El>(text: string, result: ParentNode = host): T => result.querySelector<T>(text)!,
   };
 }
 export const L = 'ABCD';
@@ -60,16 +60,16 @@ export function focusHeading(root: ParentNode = legacyScope().app): void {
 
 export { toast, ask, notice, type ToastAction } from './dialogs.js';
 // botón ocupado mientras carga: evita dobles pulsaciones y da respuesta inmediata
-export const guard = <A extends unknown[], R>(fn: (...a: A) => R | Promise<R>) => async function (this: GlobalEventHandlers, ...a: A): Promise<R | undefined> {
+export const guard = <A extends unknown[], R>(fn: (...firstValue: A) => R | Promise<R>) => async function (this: GlobalEventHandlers, ...firstValue: A): Promise<R | undefined> {
   const button = this as HTMLButtonElement;
   if (button.disabled) return;
-  const h = button.innerHTML; button.disabled = true; button.textContent = 'Cargando…';
-  try { return await fn(...a); } finally { button.disabled = false; button.innerHTML = h; }
+  const html = button.innerHTML; button.disabled = true; button.textContent = 'Cargando…';
+  try { return await fn(...firstValue); } finally { button.disabled = false; button.innerHTML = html; }
 };
 // ───────── comodidad: tema y tamaño de letra ─────────
 // Los selectores mantienen sus estados también después de repintar una pantalla.
 export function selectionStates(root: ParentNode = legacyScope().app): void {
-  root.querySelectorAll<HTMLButtonElement>('.seg button').forEach(b => {
-    b.setAttribute('aria-pressed', String(b.classList.contains('on')));
+  root.querySelectorAll<HTMLButtonElement>('.seg button').forEach(button => {
+    button.setAttribute('aria-pressed', String(button.classList.contains('on')));
   });
 }
