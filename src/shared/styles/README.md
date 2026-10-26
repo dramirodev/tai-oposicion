@@ -15,6 +15,7 @@ El CSS sigue siendo global porque las pantallas heredadas generan HTML fuera de 
 7. `home.css`: inicio, tiles, menú, exámenes y código.
 8. `motion.css`: efectos de respuesta y entrada.
 9. `responsive.css`: reflujo, variantes de estudio y funcionalidades añadidas.
+10. `workspace.css`: marco React de Precisión y presentación común de pantallas heredadas, aplicado al final mientras exista el puente.
 
 Conservar este orden mientras existan variantes globales. No introducir una layer aislada: las reglas normales sin layer ganarían a esa layer. No purgar clases por búsqueda de literales; hay estados y nombres construidos dinámicamente.
 
@@ -47,23 +48,27 @@ Conservar este orden mientras existan variantes globales. No introducir una laye
 
 Las mediciones locales de gzip no son transferencia del hosting ni una prueba de velocidad. La validación en navegadores de escritorio tampoco certifica Safari iOS, dispositivos reales ni conformidad WCAG completa.
 
-## Identidad y criterios del rediseño
+## Identidad y criterios del rediseño: A · Precisión
 
-La identidad conserva el azul marino TAI (`#14213d`) y el ámbar existente. El azul de acción (`#234a91`) señala la siguiente sesión; las superficies gris azuladas reducen el contraste de grandes bloques. En oscuro, los botones de acción usan azul suave y los colores de error/acierto siguen siendo semánticos. No se descargan fuentes: la tipografía del sistema es la de trabajo y la serifa se reserva al saludo de Inicio.
+Dirección aprobada el 26 de octubre de 2026: marco neutro, acción principal en tinta y azul reservado a datos/foco. Fondo claro `#f5f6f7`, texto `#202326`; fondo oscuro carbón `#111113`, texto `#f1f1f2`. Los estados de acierto/error/pendiente mantienen su significado. No hay degradados ni sombras en paneles en reposo.
 
-Inicio prioriza práctica y continuación antes de los estados vacíos. En móvil, los accesos principales forman una lista; en escritorio, práctica y repaso se leen en dos columnas. Los mismos IDs, eventos, rutas y datos siguen presentes. Preguntas, tarjetas, menús, modales, avisos, formularios y tablas comparten radios y escalas sin imponer una única forma a todos los elementos.
+Geist variable se aloja en `fonts/geist-variable.woff2` con licencia SIL OFL en la misma carpeta. Vite publica la fuente con hash dentro de assets; el generador del shell la incluye automáticamente. No hay fuente externa ni nueva dependencia npm. El monospace queda reservado a código. Las cifras de métricas y tablas son tabulares.
 
-Los colores, tamaños, espacios, radios, sombras y tiempos se definen en `tokens.css`. Los breakpoints son contratos documentados, no variables CSS simuladas en media queries:
+`WorkspaceNavigation` es un componente React: sidebar desde 1100 px, menú móvil reutilizando el proveedor de diálogos y navegación rápida inferior en anchos menores. Inicio conserva su menú contextual. Los destinos siguen siendo las rutas actuales; Accesos depende del rol. La sidebar no usa el elemento nav para no interferir con el contrato de medición `nav[aria-label="Principal"]`. Al ocultarse la navegación inferior su altura medida es cero; la barra de acciones se centra en el espacio restante y compensa el zoom interno. El contenido de preguntas se limita a 860 px, el lienzo general a 1200 px.
+
+Inicio prioriza continuar una sesión cuando existe, ofrece práctica rápida y repaso, agrupa las métricas reales en una franja y resume el dominio por los cuatro bloques del temario. No confunde temas estudiados con preguntas contestadas. Sus IDs y eventos se mantienen. Progreso presenta los temas en filas; Ajustes usa encabezados de sección a la izquierda y controles a la derecha cuando hay espacio. Opciones, tarjetas, diálogos, avisos, formularios y tablas comparten tokens.
+
+`workspace.css` es una capa de presentación transitoria, sin CSS layers: las pantallas todavía generan HTML fuera de React. Mantiene las clases heredadas y concentra las variantes visuales de Precisión; no extraer ni renombrar esos contratos sin revisar los consumidores. Se han consolidado los tokens oscuros y eliminado la entrada animada de pantallas y el degradado obsoleto de la barra de acciones.
 
 | Ancho | Intención |
 |---|---|
-| 380 px | Etiquetas de navegación en móvil compacto |
-| 500/520 px | Grupos de estudio y accesos que se apilan |
-| 600 px | Rejillas y controles de pregunta con texto ampliado |
-| 840 px | Dos zonas de Inicio y accesos principales en columnas |
-| 900 px | Navegación inferior contenida y horizontal |
+| 380 px | Etiquetas de navegación compactas |
+| 520/600 px | Opciones, filas y grupos se apilan |
+| 840 px | Inicio permite práctica junto a repaso |
+| 900 px | Ajustes en dos columnas cuando cabe |
 | 1000 px | Supuesto lateral de la pregunta |
+| 1100 px | Sidebar y navegación inferior oculta |
 
-Las preferencias de texto 2/3 mantienen Inicio en una columna. El aviso de sesión permite envolver su acción; las tablas y el gráfico de repasos tienen scroll local y destino de teclado. La hoja responsive contiene únicamente reglas de adaptación y de medios; el estilo base de cada funcionalidad vive en su archivo propietario.
+El texto ampliado conserva una columna para Inicio y mapa de dominio; no ocultar overflow global para disimular errores de reflujo. Los controles mantienen foco visible y objetivos táctiles de al menos 44 px cuando corresponde. Se conserva el enlace de salto, los avisos aria-live y las preferencias de movimiento reducido.
 
-El enlace de salto se renderiza antes de main y lo enfoca sin modificar la URL del router. Las animaciones de sacudida, pulso y giro se retiraron; quedan entradas breves de contenido y progreso con transform, desactivables mediante la preferencia de movimiento reducido. Los estados de respuesta conservan texto, símbolos y etiquetas accesibles.
+Verificar `typecheck`, `lint`, pruebas unitarias, build, validador de tarjetas y E2E Chromium/WebKit. Revisar cada cambio intencional de capturas antes de actualizar la referencia visual. La prueba offline verifica también que la fuente compilada esté en la caché del shell y disponible después de recargar sin red. Navegadores de escritorio no equivalen a dispositivos reales, lectores de pantalla ni certificación WCAG.

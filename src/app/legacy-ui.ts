@@ -13,7 +13,7 @@ function applyLegacyUi(): void {
   const dark = ui.theme === 'dark' || (ui.theme === 'auto' && systemTheme.matches);
   root.dataset.colorScheme = dark ? 'dark' : 'light';
   const themeColor = document.querySelector<HTMLMetaElement>('meta[name=theme-color]');
-  if (themeColor) themeColor.content = dark ? '#101827' : '#f3f5f8';
+  if (themeColor) themeColor.content = dark ? '#111113' : '#f5f6f7';
 }
 
 applyLegacyUi();

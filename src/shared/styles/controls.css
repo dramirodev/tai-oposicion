@@ -226,8 +226,6 @@ button.ghost.sm {
   display: flex;
   gap: var(--space-3);
   padding: 12px 16px 14px;
-  background: linear-gradient(transparent,var(--bg) 35%);
-  max-width: 760px;
   margin: 0 auto;
   z-index: 6;
   max-height: calc((100vh - var(--navigation-height,calc(var(--navh) + var(--sab))) - 96px) / var(--z,1));
