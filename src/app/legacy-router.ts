@@ -375,8 +375,19 @@ routes.quiz = async function () {
       if (id && removeCurrentHighlight(id)) { window.getSelection()?.removeAllRanges(); draw(); }
     });
     $('#blank') && ($('#blank').onclick = () => {
-      if (R.feedback) { if (R.ans[R.idx] === undefined) { answer(q, -1); if (R.idx < R.items.length - 1) setQuestionIndex(R.idx + 1); draw(); if (R.idx > 0) focusHeading(); } }
-      else { toggleDeferredBlank(); draw(); }
+      if (R.feedback) {
+        if (R.ans[R.idx] === undefined) {
+          answer(q, -1);
+          if (R.idx < R.items.length - 1) setQuestionIndex(R.idx + 1);
+          draw();
+          if (R.idx > 0) focusHeading();
+          window.scrollTo(0, 0);
+        }
+      } else {
+        toggleDeferredBlank();
+        draw();
+        window.scrollTo(0, 0);
+      }
     });
     $('#reveal-solution') && ($('#reveal-solution').onclick = () => { if (revealCurrentSolution()) { draw(); focusHeading(); } });
     $('#next') && ($('#next').onclick = () => { if (R.idx === R.items.length - 1) { void finish(); return; } setQuestionIndex(R.idx + 1); draw(); focusHeading(); window.scrollTo(0, 0); });
