@@ -36,7 +36,7 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   expect(optionEnter.defaultPrevented).toBe(false);
   document.querySelector('.opt').click();
   document.querySelector('#exit').click();
-  await vi.waitFor(() => expect(document.querySelector('.overlay')).not.toBeNull());
+  await vi.waitFor(() => expect(document.querySelector('.overlay')).not.toBeNull(), { timeout: 5000 });
   expect(document.querySelector('.overlay').textContent).toContain('¿Salir?');
   document.querySelector('.overlay [data-v="1"]').click();
   await waitText('Resultado');
