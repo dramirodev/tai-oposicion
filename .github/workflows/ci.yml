@@ -1,0 +1,30 @@
+name: Validar propuesta de cambio
+on:
+  pull_request: {}
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Arquitectura, lint, tipos y pruebas
+        run: npm run check
+        env:
+          LINT_BASE_REF: ${{ github.event.pull_request.base.sha }}
+          ARCHITECTURE_BASE_REF: ${{ github.event.pull_request.base.sha }}
+      - run: npm run build
+      - run: node scripts/validate_cards.mjs
+      - run: npx playwright install --with-deps chromium webkit
+      - name: Reconstruir referencia visual y verificar Chromium y WebKit
+        run: npm run test:e2e:ci

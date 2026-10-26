@@ -15,7 +15,9 @@
     "publish:bank": "node scripts/publish_bank.mjs",
     "test:e2e": "playwright test",
     "test:e2e:ci": "node scripts/e2e-baseline.mjs",
-    "measure:attempts": "node scripts/measure-attempt-volume.mjs"
+    "measure:attempts": "node scripts/measure-attempt-volume.mjs",
+    "check:architecture": "node scripts/check-architecture.mjs",
+    "check": "npm run check:architecture && npm run lint && npm run lint:ignore-growth && npm run typecheck && npm test"
   },
   "dependencies": {
     "firebase": "^10.14.1",
