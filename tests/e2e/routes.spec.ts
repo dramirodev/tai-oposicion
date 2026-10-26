@@ -113,4 +113,20 @@ test.describe('service worker real', () => {
   expect(errors).toEqual([]);
 });
 
+test('Inicio no ofrece cambiar la fecha cuando ya tiene un objetivo', async ({ page }) => {
+  const errors = await setup(page, 'light');
+  await page.goto('/#/home');
+  const summary = page.locator('#app .hsub');
+  await expect(summary.getByRole('link', { name: 'Configurar fecha objetivo' })).toBeVisible();
+
+  await page.goto('/#/settings');
+  await page.locator('#exd').fill('2030-06-10');
+  await page.locator('#exd').dispatchEvent('change');
+  await page.goto('/#/home');
+
+  await expect(summary).toContainText('hasta tu fecha objetivo');
+  await expect(summary.getByRole('link')).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
 });
