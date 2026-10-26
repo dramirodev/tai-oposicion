@@ -1,9 +1,16 @@
 import { questionNotice, sourceHtml } from '../../shared/presentation/legacy-study.js';
 import * as store from '../../adapters/local/legacy-store.js';
-import { esc, richHtml, shuffle, pct, normUi, hiliteHtml, claveSpans, pideNegativa, minLectura, velocidad, CONSEJOS_LECTURA } from '../../legacy/logic.js';
+import { escapeHtml as esc, percentage as pct } from '../../shared/presentation/format.js';
+import { richHtml, hiliteHtml, claveSpans } from '../../shared/presentation/study-text.js';
+import { randomStudyOrder as shuffle } from '../../shared/ui/study-random.js';
+import { normalizeUiPreferences } from '../../shared/presentation/ui-preferences.js';
+import { asksForNegativeOption, minimumReadingSeconds } from '../../core/domain/reading-strategy.js';
+import { velocidad } from '../stats/analytics-mapper.js';
+import { READING_TIPS as CONSEJOS_LECTURA } from '../../shared/presentation/study-labels.js';
 import { META, getMeta, temaName, now, pick, dueList, byIds } from '../../adapters/http/legacy-data.js';
 import { $, legacyScope, L, ask, focusHeading, type El } from '../../shared/ui/legacy-dom.js';
 import { TRAMPAS, TRAMPA_EXPL } from '../../shared/presentation/labels.js';
+import { hashPath } from '../../shared/navigation/paths.js';
 export function registerTraining({ routes, go, route, pw, verifiedSources }: any, screen: any) {
 let generation = 0;
 let TRUN: any = null, LRUN: any = null;
@@ -11,7 +18,7 @@ store.onAccountChange(() => { generation++; TRUN = null; LRUN = null; screen.cle
 const recentKey = () => 'tai.lrec:' + (store.accountId() || 'guest');
 const warning = (q: any, verifiedSources: any) => questionNotice(q) + sourceHtml(q, verifiedSources);
 
-// ───────── pregunta relámpago (enlace #/relampago, pensado para avisos) ─────────
+// ───────── pregunta relámpago (pensada para abrirse desde avisos) ─────────
 routes.relampago = async function () {
   const { app, $, screen: routeScreen } = legacyScope(screen);
   const routeGeneration = generation; await getMeta(); if (routeGeneration !== generation) return; const questionStats = store.getStats();
@@ -25,13 +32,13 @@ routes.relampago = async function () {
   if (routeGeneration !== generation) return;
   if (!q) { app.innerHTML = '<div class="card"><p>No hay pregunta disponible.</p></div>'; return; }
   const why = lucky.includes(q.i) ? '🍀 Marcada como suerte' : due.includes(q.i) ? '⏰ Toca repasarla' : fallos.includes(q.i) ? '↩ La fallaste' : '🆕 Nueva';
-  const LEC = normUi(store.getCfg().ui).lectura, kw = (x: any) => richHtml(x, !!LEC), t0 = Date.now();
+  const LEC = normalizeUiPreferences(store.getCfg().ui).lectura, kw = (x: any) => richHtml(x, !!LEC), t0 = Date.now();
   app.innerHTML = `<h1>⚡ Pregunta relámpago</h1><div class="sub">${why}</div>
   <div class="card q"><div class="meta"><span class="tag">${esc(q.t)} · ${esc(temaName(q.t))}</span></div>
   ${warning(q, verifiedSources)}<div class="enun pre">${kw(q.q)}</div>
   <div class="opts">${q.a.map((o: any, i: number) => `<button class="opt" data-i="${i}"><b>${L[i]}</b><span class="pre">${kw(o)}</span></button>`).join('')}</div><div id="fb"></div></div>
   <div class="bar2" id="bar"><button class="btn sec" id="skip">Ahora no</button></div>`;
-  $('#skip').onclick = () => go('#/home');
+  $('#skip').onclick = () => go(hashPath('home'));
   app.querySelectorAll<El>('.opt').forEach(b => b.onclick = () => {
     if (routeGeneration !== generation || b.disabled) return;
     const i = +b.dataset.i!, ok = i === q.c;
@@ -39,7 +46,7 @@ routes.relampago = async function () {
     app.querySelectorAll<El>('.opt').forEach((x, k) => { x.disabled = true; x.classList.add('dis'); if (k === q.c) x.classList.add('ok'); else if (k === i) x.classList.add('bad'); });
     $('#fb').innerHTML = `<div class="fb ${ok ? 'good' : 'wrong'}"><b>${ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}${q.x?.length ? `<div class="trap">Trampa: ${q.x.map((x: any) => esc(TRAMPAS[x] || x)).join(' · ')}</div>` : ''}</div>`;
     $('#bar').innerHTML = '<button class="btn" id="more">Otra →</button><button class="btn sec" id="home">Inicio</button>';
-    $('#more').onclick = () => route(); $('#home').onclick = () => go('#/home');
+    $('#more').onclick = () => route(); $('#home').onclick = () => go(hashPath('home'));
     $('#more').focus({preventScroll:true});
   });
 };
@@ -84,7 +91,7 @@ routes.trampas = async function () {
       <div class="mot" id="chips">${chips.map((k: any) => `<button aria-pressed="false" data-k="${k}">${esc(TRAMPAS[k])}</button>`).join('')}</div>
       <div id="fb"></div></div>
     <div class="bar2"><button class="btn" id="chk">Comprobar</button></div>`;
-    $('#exit').onclick = async () => { if (await ask('¿Salir del ejercicio?', 'Salir') && routeGeneration === generation) { TRUN = null; go('#/home'); } };
+    $('#exit').onclick = async () => { if (await ask('¿Salir del ejercicio?', 'Salir') && routeGeneration === generation) { TRUN = null; go(hashPath('home')); } };
     $('#chips').onclick = e => { const b = (e.target as El).closest<El>('button'); if (!b || b.disabled) return; const k = +b.dataset.k!; sel.has(k) ? sel.delete(k) : sel.add(k); b.setAttribute('aria-pressed', String(b.classList.toggle('on'))); };
     $('#chk').onclick = () => {
       if (routeGeneration !== generation || R !== TRUN) return;
@@ -117,7 +124,7 @@ routes.trampas = async function () {
     app.innerHTML = `<h1>Detective de trampas</h1><div class="grid"><div class="stat"><b>${hit}/${tot}</b><span>trampas detectadas</span></div><div class="stat"><b>${fa}</b><span>falsas alarmas</span></div></div>
     <div class="card"><h2 class="h3">Las que más se te escapan</h2>${rows.length ? rows.map(([k, v]) => `<div class="line"><span>${esc(TRAMPAS[k] || k)}</span><span>${pct(v[1], v[0])}% <small>(${v[1]}/${v[0]})</small></span></div>`).join('') : '<p class="sub">Aparecerá cuando hayas visto cada trampa ≥3 veces.</p>'}</div>
     <div class="bar2"><button class="btn" id="again">Otra tanda</button><button class="btn sec" id="home">Inicio</button></div>`;
-    TRUN = null; $('#again').onclick = () => route(); $('#home').onclick = () => go('#/home');
+    TRUN = null; $('#again').onclick = () => route(); $('#home').onclick = () => go(hashPath('home'));
     focusHeading();
   }
   draw();
@@ -139,7 +146,7 @@ routes.lectura = async function () {
     if (routeGeneration !== generation) return;
     const ok = ids.map(id => got.get(String(id))).filter(Boolean);
     const items = shuffle(ok.slice(0, 8));
-    if (!items.length) { app.innerHTML = `<h1>Lectura atenta</h1><div class="card"><p>No hay preguntas disponibles ahora mismo. Comprueba la conexión e inténtalo de nuevo.</p></div><div class="bar2"><button class="btn" id="retry">Reintentar</button><button class="btn sec" id="home">Inicio</button></div>`; $('#retry').onclick = () => route(); $('#home').onclick = () => go('#/home'); return; }
+    if (!items.length) { app.innerHTML = `<h1>Lectura atenta</h1><div class="card"><p>No hay preguntas disponibles ahora mismo. Comprueba la conexión e inténtalo de nuevo.</p></div><div class="bar2"><button class="btn" id="retry">Reintentar</button><button class="btn sec" id="home">Inicio</button></div>`; $('#retry').onclick = () => route(); $('#home').onclick = () => go(hashPath('home')); return; }
     LRUN = { items, k: 0, step: 0, res: [], mark: new Set() };
   }
   const R = LRUN; let gt: any = null;
@@ -149,7 +156,7 @@ routes.lectura = async function () {
     clearInterval(gt);
     if (routeGeneration !== generation || R !== LRUN) return;
     if (R.k >= R.items.length) return end();
-    const q = R.items[R.k], neg = pideNegativa(q.q);
+    const q = R.items[R.k], neg = asksForNegativeOption(q.q);
     const head = `<div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog"><div ${pw(100 * R.k / R.items.length)}></div></div><div class="cnt">${R.k + 1}/${R.items.length}</div></div><h1 class="sub">Lectura atenta · paso ${R.step + 1} de 3</h1>`;
     if (R.step === 0) {
       app.innerHTML = `${head}<div class="card q">${warning(q, verifiedSources)}<div class="enun pre">${richHtml(q.q)}</div><p><b>1. ¿Qué te piden?</b> Antes de ver las opciones.</p>
@@ -193,7 +200,7 @@ routes.lectura = async function () {
         $('#chk').textContent = 'Ver opciones →'; $('#chk').dataset.done = '1';
       };
     } else {
-      const need = minLectura(q); R.t0 = Date.now();
+        const need = minimumReadingSeconds({ context: q.cp, statement: q.q, options: q.a }); R.t0 = Date.now();
       app.innerHTML = `${head}<div class="card q">${warning(q, verifiedSources)}<div class="enun pre">${richHtml(q.q, true)}</div><p class="sm"><b>3. Lee las cuatro opciones enteras</b> antes de responder.</p><div class="opts">${q.a.map((o: any, i: any) => `<button class="opt" data-i="${i}" disabled><b>${L[i]}</b><span class="pre">${richHtml(o, true)}</span></button>`).join('')}</div><div class="gate" id="gate"></div><div id="fb2"></div></div>`;
       const upd = () => { if (routeGeneration !== generation || R !== LRUN) return clearInterval(gt); const l = Math.ceil(need - (Date.now() - R.t0) / 1000), g = $<El>('#gate'); if (!g) return clearInterval(gt); if (l <= 0) { clearInterval(gt); g.remove(); app.querySelectorAll<El>('.opt').forEach(b => b.disabled = false); } else g.textContent = `Lectura mínima: ${l} s`; };
       upd(); gt = setInterval(upd, 400);
@@ -209,7 +216,7 @@ routes.lectura = async function () {
         $('#n2').onclick = () => { R.k++; R.step = 0; draw(); window.scrollTo(0, 0); };
       });
     }
-    $('#exit').onclick = async () => { if (await ask('¿Salir del ejercicio?', 'Salir') && routeGeneration === generation) { LRUN = null; go('#/home'); } };
+    $('#exit').onclick = async () => { if (await ask('¿Salir del ejercicio?', 'Salir') && routeGeneration === generation) { LRUN = null; go(hashPath('home')); } };
     focusHeading();
   }
   function end() {
@@ -218,7 +225,7 @@ routes.lectura = async function () {
     app.innerHTML = `<h1>Lectura atenta</h1><div class="grid"><div class="stat"><b>${ok}/${n}</b><span>aciertos</span></div><div class="stat"><b>${pide}/${n}</b><span>«qué piden» bien</span></div><div class="stat"><b>${ms[1] ? pct(ms[0], ms[1]) + '%' : '—'}</b><span>palabras clave</span></div></div>
     <div class="card"><h2 class="h3">Método de 3 pasos</h2><ul class="tips">${CONSEJOS_LECTURA.map(c => `<li>${esc(c)}</li>`).join('')}</ul></div>
     <div class="bar2"><button class="btn" id="again">Otra tanda</button><button class="btn sec" id="home">Inicio</button></div>`;
-    LRUN = null; $('#again').onclick = () => route(); $('#home').onclick = () => go('#/home');
+    LRUN = null; $('#again').onclick = () => route(); $('#home').onclick = () => go(hashPath('home'));
     focusHeading();
   }
   draw();

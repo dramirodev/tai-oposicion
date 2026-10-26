@@ -9,6 +9,7 @@ const HomePage = lazy(() => import('../features/home/HomePage.js').then(module =
 const AccessPage = lazy(() => import('../features/access/AccessPage.js').then(module => ({ default: module.AccessPage })));
 const HelpPage = lazy(() => import('../features/help/HelpPage.js').then(module => ({ default: module.HelpPage })));
 const TopicsPage = lazy(() => import('../features/home/TopicsPage.js').then(module => ({ default: module.TopicsPage })));
+const ErrorsPage = lazy(() => import('../features/errors/ErrorsPage.js').then(module => ({ default: module.ErrorsPage })));
 interface LegacyRuntime {
   bootLegacy: () => () => void;
   configureLegacyRouter: (navigate: (target: string, refresh?: boolean) => void) => void;
@@ -27,6 +28,7 @@ export const router = createHashRouter([{ ErrorBoundary: RouteError, element: <L
   { path: `${routeSegment(paths.access)}/*`, element: screen(<AccessPage />) },
   { path: `${routeSegment(paths.help)}/*`, element: screen(<HelpPage />) },
   { path: `${routeSegment(paths.topics)}/*`, element: screen(<TopicsPage />, { restricted: true }) },
+  { path: `${routeSegment(paths.errors)}/*`, element: screen(<ErrorsPage />, { restricted: true }) },
   ...legacyPaths.map(path => ({ path: `${routeSegment(path)}/*`, element: <LegacyRoute /> })),
   { path: '*', element: screen(<HomePage />, { home: true }) },
 ] }]);

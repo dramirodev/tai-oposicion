@@ -5,7 +5,18 @@ import { questionNotice, sourceHtml, filterFailures } from '../shared/presentati
 import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
 import * as store from '../adapters/local/legacy-store.js';
-import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, pickGuest, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from '../legacy/logic.js';
+import { escapeHtml as esc, formatTime as fmtT, percentage as pct } from '../shared/presentation/format.js';
+import { richHtml, hiliteHtml } from '../shared/presentation/study-text.js';
+import { ERROR_REPORT_REASONS as MOTIVOS, FAILURE_REASONS as MOTIVOS_FALLO } from '../shared/presentation/study-labels.js';
+import { normalizeUiPreferences } from '../shared/presentation/ui-preferences.js';
+import { asksForNegativeOption, minimumReadingSeconds } from '../core/domain/reading-strategy.js';
+import { calculateExamScore as nota } from '../core/domain/scoring.js';
+import { isQuestionAllowed, composeWeightedQuestions } from '../core/domain/selection.js';
+import { randomStudyOrder as shuffle } from '../shared/ui/study-random.js';
+import { simulationPace as ritmoSimulacro } from '../core/domain/simulation-analysis.js';
+import { swipeDirection, studyKeyAction } from '../shared/ui/study-input.js';
+import { velocidad, quickQuestionCount } from '../features/stats/analytics-mapper.js';
+import { mapSimulationResultToLegacy } from './simulation-result-mapper.js';
 import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds } from '../adapters/http/legacy-data.js';
 import { $, legacyScope, bindLegacyHost, L, toast, ask, guard, focusHeading, type El } from '../shared/ui/legacy-dom.js';
 import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
@@ -29,13 +40,14 @@ import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
 import { loadQuestionEvolution, loadStrategyReportForPeriod } from './strategy-composition.js';
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './ai-study-export-composition.js';
+import { hashPath } from './paths.js';
 
 // ───────── router ─────────
 const routes: Record<string, any> = {};
 let navigate: (h: string, refresh?: boolean) => void = h => { location.hash = h; };
 export function configureLegacyRouter(fn: (h: string, refresh?: boolean) => void): void { navigate = fn; }
 function go(h: string) { navigate(h); }
-function route() { navigate(location.hash || '#/home', true); }
+function route() { navigate(location.hash || hashPath('home'), true); }
 const recover = createAccountRecovery(store.accountId, () => store.recover());
 let painted: () => void;
 export const firstLegacyPaint = new Promise<void>(resolve => { painted = resolve; });
@@ -84,7 +96,7 @@ export function renderLegacy(host: HTMLElement, pathname: string) {
       if (currentRun && name !== 'quiz' && name !== 'home') {
         const b = document.createElement('div'); b.className = 'note run';
         b.innerHTML = `<b>${esc(currentRun.titulo || 'Test')}</b> en curso · ${Math.min(currentRun.idx + 1, currentRun.items.length)}/${currentRun.items.length} <button class="btn" id="resume">Continuar</button>`;
-        app.prepend(b); $('#resume').onclick = () => go('#/quiz');
+        app.prepend(b); $('#resume').onclick = () => go(hashPath('quiz'));
       }
     } catch (e) {
       if (!active) return;
@@ -98,7 +110,7 @@ export function renderLegacy(host: HTMLElement, pathname: string) {
 // ───────── motor de preguntas ─────────
 function startRun(cfg: any) {
   if (!createRun(cfg)) { toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.'); return; }
-  go('#/quiz');
+  go(hashPath('quiz'));
 }
 async function resumeSaved() {
   const p = await pendingRun(isFull());
@@ -106,13 +118,13 @@ async function resumeSaved() {
   const accepted = await ask(formatPendingRunPrompt({ title: p.saved.titulo, index: p.saved.idx, itemCount: p.items.length, seconds: p.saved.secs, limitMinutes: p.saved.limit, timeLimited: p.saved.pt }), 'Continuar');
   if (p.account !== store.accountId()) return;
   if (!accepted) return clearRun();
-  if (resumeRun(p)) go('#/quiz');
+  if (resumeRun(p)) go(hashPath('quiz'));
 }
 
 routes.quiz = async function () {
   const { app, $, screen: routeScreen } = legacyScope(screen);
   const candidate = getCurrentRun();
-  if (!candidate) { go('#/home'); return; }
+  if (!candidate) { go(hashPath('home')); return; }
   const R = candidate;
   let tick: any = null, gateTimer: any = null, closing = false, endConfirmation: AbortController | null = null;
   {
@@ -155,20 +167,20 @@ routes.quiz = async function () {
     if (/^(INPUT|TEXTAREA|SELECT)$/.test(((e.target as El).tagName || ''))) return;
     if (R.paused && e.key === 'Tab') { e.preventDefault(); const rb = $('.overlay #resume'); rb && rb.focus(); return; }
     if (R.items[R.idx] === undefined) return;
-    const act = keyAction(e, R.items[R.idx].a.length); if (!act) return;
+    const act = studyKeyAction(e, R.items[R.idx].a.length); if (!act) return;
     e.preventDefault();
-    if (act.t === 'opt') { const b = app.querySelector<El>(`.opt[data-i="${act.i}"]`); b && b.click(); }
-    else if (act.t === 'next') { const b = $('#next'); b && b.click(); }
-    else if (act.t === 'prev') prev();
-    else if (act.t === 'blank') { const b = $('#blank'); b && b.click(); }
-    else if (act.t === 'flag') { const b = $('#flag'); b && b.click(); }
-    else if (act.t === 'pause') { const b = R.paused ? $('.overlay #resume') : $('#pause'); b && b.click(); }
+    if (act.type === 'option') { const b = app.querySelector<El>(`.opt[data-i="${act.index}"]`); b && b.click(); }
+    else if (act.type === 'next') { const b = $('#next'); b && b.click(); }
+    else if (act.type === 'previous') prev();
+    else if (act.type === 'blank') { const b = $('#blank'); b && b.click(); }
+    else if (act.type === 'flag') { const b = $('#flag'); b && b.click(); }
+    else if (act.type === 'pause') { const b = R.paused ? $('.overlay #resume') : $('#pause'); b && b.click(); }
   };
   let tx: any = null;
   const onTs = (e: any) => { const t = e.touches[0]; tx = e.touches.length === 1 && t.clientX > 24 && t.clientX < innerWidth - 24 && !(e.target as El).closest<El>('details,input,textarea,button,.opt') ? [t.clientX, t.clientY] : null; };
   const onTe = (e: any) => {
     if (!tx) return; const t = e.changedTouches[0];
-    const d = swipeDir(t.clientX - tx[0], t.clientY - tx[1]); tx = null;
+    const d = swipeDirection(t.clientX - tx[0], t.clientY - tx[1]); tx = null;
     if (d === 'next') { const b = $('#next'); b && b.click(); } else if (d === 'prev') prev();
   };
   const onSelectionChange = () => {
@@ -198,7 +210,7 @@ routes.quiz = async function () {
     if (R.idx >= R.items.length) return finish();
     saveRun();
     startCurrentQuestion();
-    const LEC = normUi(store.getCfg().ui).lectura, kw = (t: any) => richHtml(t, !!LEC);
+    const LEC = normalizeUiPreferences(store.getCfg().ui).lectura, kw = (t: any) => richHtml(t, !!LEC);
     const q = R.items[R.idx];
     const a = R.ans[R.idx];
     const state = R.feedback ? (R.studyStates?.[R.idx] || 'unseen') : undefined;
@@ -232,7 +244,7 @@ routes.quiz = async function () {
       ${questionNotice(q)}
       ${inSup ? `<details class="sup scenario-context"><summary>Enunciado del supuesto</summary><div class="pre">${esc(R.supTexto || q.supTexto || '')}</div></details>` : ''}
       ${q.cp ? `<div class="ctx pre">${richHtml(q.cp)}</div>` : ''}
-      ${pideNegativa(q.q) ? '<div class="pide">Ojo: te piden la opción INCORRECTA o la excepción</div>' : ''}
+      ${asksForNegativeOption(q.q) ? '<div class="pide">Ojo: te piden la opción INCORRECTA o la excepción</div>' : ''}
       <div class="enun pre" tabindex="0" aria-label="Enunciado. Usa Mayús y las flechas para seleccionar texto">${kw(q.q)}</div>
       <div class="study-signals" aria-label="Señales opcionales de estudio">
         <span class="study-signals-label">¿Cómo lo ves?</span>
@@ -282,7 +294,7 @@ routes.quiz = async function () {
     if (R.paused) { app.querySelectorAll<El>('.qhead,.sub,.pace,.card.q,.bar2').forEach(el => { if (!el.closest<El>('.overlay')) el.inert = true; }); const rb = $('.overlay #resume'); rb && rb.focus(); }
     clearInterval(gateTimer);
     if (LEC === 2 && !reveal && a === undefined && !R.paused) {
-      const need = minLectura(q), left = () => Math.ceil(need - (Date.now() - R.qT0!) / 1000);
+      const need = minimumReadingSeconds({ context: q.cp, statement: q.q, options: q.a }), left = () => Math.ceil(need - (Date.now() - R.qT0!) / 1000);
       if (left() > 0) {
         const opts = app.querySelectorAll<El>('.opt'); opts.forEach(b => b.disabled = true);
         $('.opts').insertAdjacentHTML('afterend', `<div class="gate" id="gate"></div>`);
@@ -317,7 +329,7 @@ routes.quiz = async function () {
       closing = false;
       if (!accepted || getCurrentRun() !== R) return;
       if (R.ans.some(x => x !== undefined)) finish('interrupted');
-      else { clearActiveRun(); clearRun(); go('#/home'); }
+      else { clearActiveRun(); clearRun(); go(hashPath('home')); }
     };
     $('#pause') && ($('#pause').onclick = () => { setRunPaused(true); draw(); });
     $('#prev') && ($('#prev').onclick = prev);
@@ -402,7 +414,7 @@ routes.quiz = async function () {
     $('#rep') && reportBox(q, $('#rep'));
     $('#flag') && ($('#flag').onclick = () => { store.toggleFlag(q.i, q.t); $('#flag').textContent = store.rec(q.i)?.[6] ? '★ Dudosa' : '☆ Marcar como dudosa'; });
   }
-  function answer(q: any, i: any) { answerCurrentQuestion(i, minLectura(q)); }
+  function answer(q: any, i: any) { answerCurrentQuestion(i, minimumReadingSeconds({ context: q.cp, statement: q.q, options: q.a })); }
   async function finish(reason: 'complete' | 'interrupted' | 'timeout' = 'complete') {
     if (getCurrentRun() !== R || closing && reason !== 'timeout') return;
     if (reason === 'timeout') endConfirmation?.abort();
@@ -417,13 +429,13 @@ routes.quiz = async function () {
       reason = 'interrupted';
     }
     clearInterval(tick);
-    if (!finishCurrentRun(reason)) { toast('Se acabó el tiempo sin contestar ninguna pregunta.'); return go('#/home'); }
-    go('#/result');
+    if (!finishCurrentRun(reason)) { toast('Se acabó el tiempo sin contestar ninguna pregunta.'); return go(hashPath('home')); }
+    go(hashPath('result'));
   }
 };
 
 function simAnalisis({ ses, items, ans, times, limit }: any) {
-  const r = analisisSimulacro({ correct: items.map((q: any) => q.c), ans, times, limitSecs: limit * 60, secs: ses.secs });
+  const r = mapSimulationResultToLegacy({ correct: items.map((q: any) => q.c), ans, times, limitSecs: limit * 60, secs: ses.secs });
   const pts = [];
   pts.push(`<div class="line"><span>Nota sin penalización</span><span>${r.sinPenal}</span></div>`);
   pts.push(`<div class="line"><span>Puntos que te restaron los fallos</span><span class="${r.perdidoFallos ? 'r' : ''}">−${r.perdidoFallos}</span></div>`);
@@ -439,7 +451,7 @@ function simAnalisis({ ses, items, ans, times, limit }: any) {
 routes.result = async function () {
   const { app, $, screen: routeScreen } = legacyScope(screen);
   const lastResult = getLastResult();
-  if (!lastResult) return go('#/home');
+  if (!lastResult) return go(hashPath('home'));
   const { ses, items, ans, studyStates = [], highlights = [], confidences = [], discardedOptions = [] } = lastResult;
   const ng = ses.f;
   const consultedCount = studyStates.filter(state => state === 'revealed').length;
@@ -497,7 +509,7 @@ routes.result = async function () {
     });
   });
   app.querySelectorAll<El>('[data-rq]').forEach(el => reportBox(items[+el.dataset.rq!], el));
-  $('#home').onclick = () => go('#/home');
+  $('#home').onclick = () => go(hashPath('home'));
   $('#result-strategy-load') && ($('#result-strategy-load').onclick = async () => {
     const output = $('#result-strategy-report'); if (!output) return;
     output.setAttribute('aria-busy', 'true'); output.textContent = 'Calculando con el historial detallado…';
@@ -505,7 +517,7 @@ routes.result = async function () {
     catch { if (output.isConnected) output.textContent = 'No se pudo leer el historial detallado. El resultado de esta sesión sigue disponible.'; }
     finally { if (output.isConnected) output.setAttribute('aria-busy', 'false'); }
   });
-  $('#p2go') && ($('#p2go').onclick = () => go('#/sim2'));
+  $('#p2go') && ($('#p2go').onclick = () => go(hashPath('simulationReview')));
   $('#again') && ($('#again').onclick = async () => startRun({ kind: 'rev', feedback: true, items: shuffle(items.filter((q, k) => ans[k] !== q.c)), titulo: 'Repetición de falladas' }));
 };
 
@@ -533,31 +545,31 @@ async function openMenu() {
   await getMeta();
   const due = (await dueList()).length, nCards = Object.values(store.getCards()).filter(r => r[3] >= 0 && r[4] <= now()).length;
   const nErr = Object.values(store.getReports()).filter(r => r.st === 'abierto').length, vel = velocidad(store.getStats());
-  const aqui = location.hash || '#/home';
+  const aqui = location.hash || hashPath('home');
   const G = [
     ['Estudiar', [
       ['⚡', 'Sesión rápida', '10 preguntas en unos 5 minutos', () => quickSession()],
       ['↻', 'Repaso de fallos', due ? due + (due === 1 ? ' pregunta toca repasar hoy' : ' preguntas toca repasar hoy') : 'Nada pendiente hoy', () => startRepaso()],
-      ['▭', 'Tarjetas de repaso', nCards ? nCards + (nCards === 1 ? ' tarjeta vence hoy' : ' tarjetas vencen hoy') : 'Repetición espaciada', '#/cards'],
-      ['✎', 'Test por tema', '10–40 preguntas con corrección inmediata', '#/test'],
-      ['⏱', 'Simulacros', 'Completo, por examen o por tema', '#/sim'],
+      ['▭', 'Tarjetas de repaso', nCards ? nCards + (nCards === 1 ? ' tarjeta vence hoy' : ' tarjetas vencen hoy') : 'Repetición espaciada', hashPath('cards')],
+      ['✎', 'Test por tema', '10–40 preguntas con corrección inmediata', hashPath('test')],
+      ['⏱', 'Simulacros', 'Completo, por examen o por tema', hashPath('simulation')],
     ]],
     ['Entrenar un hábito', [
-      ['🔎', 'Detective de trampas', 'Marca qué trampas esconde cada pregunta', '#/trampas'],
-      ['👁', 'Lectura atenta', vel.n ? vel.n + ' fallos por velocidad' : 'Qué piden, palabras clave y respuesta', '#/lectura'],
-      ['⚡', 'Pregunta relámpago', 'Una sola pregunta', '#/relampago'],
+      ['🔎', 'Detective de trampas', 'Marca qué trampas esconde cada pregunta', hashPath('traps')],
+      ['👁', 'Lectura atenta', vel.n ? vel.n + ' fallos por velocidad' : 'Qué piden, palabras clave y respuesta', hashPath('reading')],
+      ['⚡', 'Pregunta relámpago', 'Una sola pregunta', hashPath('lightning')],
     ]],
     ['Seguimiento', [
-      ['▤', 'Progreso', 'Mapa de dominio, simulacros y evolución', '#/stats'],
-      ['☰', 'Temas vistos', store.getSeen().length + ' temas marcados', '#/temario'],
-      ['✗', 'Preguntas falladas', falladasIds().length + ' para buscar y releer', '#/falladas'],
-      ['⚠', 'Errores del banco', nErr ? nErr + ' por revisar' : 'Nada por revisar', '#/errores'],
+      ['▤', 'Progreso', 'Mapa de dominio, simulacros y evolución', hashPath('stats')],
+      ['☰', 'Temas vistos', store.getSeen().length + ' temas marcados', hashPath('topics')],
+      ['✗', 'Preguntas falladas', falladasIds().length + ' para buscar y releer', hashPath('failures')],
+      ['⚠', 'Errores del banco', nErr ? nErr + ' por revisar' : 'Nada por revisar', hashPath('errors')],
     ]],
     ['La app', [
-      ['⌂', 'Inicio', 'Resumen y cuenta atrás', '#/home'],
-      ...(isOwner() ? [['🔑', 'Accesos', sync.status.reqs.length ? sync.status.reqs.length + ' solicitudes por revisar' : 'Quién puede usar la app', '#/acceso']] : []),
-      ['⚙', 'Ajustes', NEWV ? 'Hay una versión nueva' : 'Cuenta, apariencia, copia y versión ' + APP_VERSION, '#/settings'],
-      ['?', 'Ayuda', 'Motivos, práctica, simulacros y guardado', '#/ayuda'],
+      ['⌂', 'Inicio', 'Resumen y cuenta atrás', hashPath('home')],
+      ...(isOwner() ? [['🔑', 'Accesos', sync.status.reqs.length ? sync.status.reqs.length + ' solicitudes por revisar' : 'Quién puede usar la app', hashPath('access')]] : []),
+      ['⚙', 'Ajustes', NEWV ? 'Hay una versión nueva' : 'Cuenta, apariencia, copia y versión ' + APP_VERSION, hashPath('settings')],
+      ['?', 'Ayuda', 'Motivos, práctica, simulacros y guardado', hashPath('help')],
     ]],
   ];
   await showMenu((isFull() ? G : GUEST_MENU(G)) as MenuGroup[], aqui, go);
@@ -672,7 +684,7 @@ function listaExamenes() {
 }
 // «Exámenes» ya no es una pantalla aparte: son las pestañas «Por examen» y «Por tema» de Simulacros
 routes.examenes = async function () {
-  const { app, $, screen: routeScreen } = legacyScope(screen); store.setCfg('simtab', 'examen'); go('#/sim'); };
+  const { app, $, screen: routeScreen } = legacyScope(screen); store.setCfg('simtab', 'examen'); go(hashPath('simulation')); };
 
 // ───────── simulacro ─────────
 routes.sim = async function () {
@@ -692,7 +704,7 @@ routes.sim = async function () {
       <h2 class="h3">Temas</h2>
       <div class="seg" id="scope"><button class="${cfg.scope !== 'todos' ? 'on' : ''}" data-v="vistos">Mis temas vistos (${seenN})</button><button class="${cfg.scope === 'todos' ? 'on' : ''}" data-v="todos">Todo el temario</button></div>
       ${cfg.scope !== 'todos' && !seenN ? '<p class="sub sm">No has marcado ningún tema: se usará todo el temario.</p>' : ''}
-      <p class="sub sm"><a href="#/temario">Editar temas vistos</a></p>
+      <p class="sub sm"><a href="${hashPath('topics')}">Editar temas vistos</a></p>
       <h2 class="h3">Origen de las preguntas</h2>
       <div class="seg multi" id="org">${([['G', 'Generadas'], ['O', 'Oficiales'], ['A', 'Academia']] as const).map(([v, t]) => `<button class="${org.has(v) ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
       <label class="chk"><input type="checkbox" id="p2" ${cfg.parte2 ? 'checked' : ''}> Después, parte 2: elegir 1 de 2 supuestos prácticos (20 preguntas)</label>
@@ -759,8 +771,8 @@ async function simParte1(idx: any, org: any, N: any, only: any) {
   const temas = idx.temas.filter((t: any) => !only || only.has(t.id));
   const pools: Record<string, any> = {};
   const ls = await Promise.all(temas.map((t: any) => getTema(t.id)));
-  temas.forEach((t: any, i: any) => { pools[t.id] = shuffle(ls[i].filter((x: any) => allowed(x, org) && x.np !== 1)).sort((a: any, b: any) => (store.rec(a.i) ? 1 : 0) - (store.rec(b.i) ? 1 : 0)); });
-  return composeSim(temas, pools, N);
+  temas.forEach((t: any, i: any) => { pools[t.id] = shuffle(ls[i].filter((x: any) => isQuestionAllowed(x.o, x.r, org) && x.np !== 1)).sort((a: any, b: any) => (store.rec(a.i) ? 1 : 0) - (store.rec(b.i) ? 1 : 0)); });
+  return composeWeightedQuestions(temas.map((topic: any) => ({ id: topic.id, weight: topic.w })), pools, N, Math.random);
 }
 // Parte 2 tras la parte 1: ofrece 2 supuestos
 routes.sim2 = async function () {
@@ -776,7 +788,7 @@ routes.sim2 = async function () {
     const items = v.q.filter((x: any) => !x.r && x.np !== 1).slice(0, 20);
     startRun({ kind: 'sim', feedback: false, items, limit: SIMCFG?.min2 || 40, supTexto: v.texto, titulo: 'Simulacro · Parte 2 (supuesto)' });
   });
-  $('#skip').onclick = () => go('#/home');
+  $('#skip').onclick = () => go(hashPath('home'));
 };
 
 
@@ -797,35 +809,6 @@ function reportBox(q: any, host: El) {
   };
   show();
 }
-routes.errores = async function () {
-  const { app, $, screen: routeScreen } = legacyScope(screen);
-  const flt = () => (store.getCfg().errf || 'abierto');
-  const draw = async () => {
-    const R = store.getReports(), f = flt();
-    const all = Object.entries(R).filter(([, r]) => r.st !== 'quitado').sort((a, b) => b[1].ts - a[1].ts);
-    const list = all.filter(([, r]) => f === 'todos' || r.st === f);
-    const by = new Map((await byIds(list.filter(([id]) => !id.startsWith('FC-')).map(([id]) => id))).map(q => [q.i, q]));
-    const cby = list.some(([id]) => id.startsWith('FC-')) ? new Map((await allCards()).map(c => [c.id, c])) : new Map();
-    const nOpen = all.filter(([, r]) => r.st === 'abierto').length;
-    app.innerHTML = `<h1>Errores del banco</h1>
-    <p class="sub">${nOpen} por revisar · ${all.length - nOpen} resueltos. Las preguntas que marcas con «Avisar de error» llegan aquí.</p>
-    <div class="seg" id="ef">${[['abierto', 'Por revisar'], ['resuelto', 'Resueltos'], ['todos', 'Todos']].map(([v, t]) => `<button class="${f === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
-    <div class="row"><button class="btn sec" id="exp" ${all.length ? '' : 'disabled'}>Exportar para corregir</button></div>
-    ${list.map(([id, r]) => { const q = by.get(id); return `<div class="card"><div class="meta"><span class="tag">${esc(id)}</span>${q ? `<span class="tag o${q.o}">${ORIGEN[q.o]}</span>` : ''}${cby.has(id) ? '<span class="tag">Tarjeta</span>' : ''}<span class="tag warn">${esc(r.motivo || 'Otro')}</span>${r.st === 'resuelto' ? '<span class="tag oG">Resuelto</span>' : ''}</div>
-      ${r.nota ? `<p class="sm"><b>Nota:</b> ${esc(r.nota)}</p>` : ''}
-      ${cby.has(id) ? (c => `<div class="pre sm">${richHtml(c.q)}</div><div class="ro ok"><b>R</b> ${richHtml(c.a)}</div>${c.ref ? `<div class="cita"><span>Temario</span>${esc(c.ref)}</div>` : ''}`)(cby.get(id)) : q ? `<div class="pre sm">${esc(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : ''}"><b>${L[i]}</b> ${esc(o)}${i === q.c ? ' ✓' : ''}</div>`).join('')}${q.u ? `<div class="cita"><span>Temario</span>${esc(q.u)}</div>` : ''}` : '<p class="sub">La pregunta ya no está en el banco.</p>'}
-      <div class="row"><button class="btn sec" data-st="${r.st === 'resuelto' ? 'abierto' : 'resuelto'}" data-id="${esc(id)}">${r.st === 'resuelto' ? 'Reabrir' : 'Marcar resuelto'}</button><button class="btn sec" data-st="quitado" data-id="${esc(id)}">Quitar</button></div></div>`; }).join('') || '<div class="card"><p class="sub">Nada en esta lista.</p></div>'}`;
-    $('#ef').onclick = e => { if ((e.target as El).dataset.v!) { store.setCfg('errf', (e.target as El).dataset.v!); } };
-    app.querySelectorAll<El>('[data-st]').forEach(b => b.onclick = () => store.setReportState(b.dataset.id!, b.dataset.st! as any));
-    $('#exp').onclick = () => {
-      const out = all.map(([id, r]) => { const q = by.get(id) || null, c = cby.get(id) || null; return { id, tarjeta: c ? { pregunta: c.q, respuesta: c.a, ref: c.ref || null } : undefined, tema: r.tema, estado: r.st, motivo: r.motivo, nota: r.nota, origen: q ? ORIGEN[q.o] : null, enunciado: q?.q, opciones: q?.a, correcta: q ? L[q.c] : null, cita: q?.u || null, trampas: (q?.x || []).map(x => TRAMPAS[x] || x) }; });
-      saveExportFile('errores-banco.json', JSON.stringify({ generado: new Date().toISOString(), errores: out }, null, 1), 'application/json');
-    };
-  };
-  let sig = JSON.stringify(store.getReports()) + (store.getCfg().errf || '');
-  routeScreen.cleanup = store.onChange(() => { const n = JSON.stringify(store.getReports()) + (store.getCfg().errf || ''); if (n !== sig) { sig = n; draw(); } });
-  await draw();
-};
 
 
 // Las pantallas comparten navegación y limpieza; cada módulo conserva su estado de sesión.
@@ -872,7 +855,7 @@ routes.falladas = async function () {
     }).join('')}</div>`).join('')
       : '<div class="card"><p class="sub">Ninguna pregunta coincide con la búsqueda.</p></div>';
   };
-  if (!qs.length) { app.innerHTML = `<h1>Falladas${helpIconLink('repaso', 'Ayuda sobre preguntas falladas y repaso')}</h1><div class="card"><p class="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p></div><div class="row"><button class="btn sec" id="home">Inicio</button></div>`; $('#home').onclick = () => go('#/home'); return; }
+  if (!qs.length) { app.innerHTML = `<h1>Falladas${helpIconLink('repaso', 'Ayuda sobre preguntas falladas y repaso')}</h1><div class="card"><p class="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p></div><div class="row"><button class="btn sec" id="home">Inicio</button></div>`; $('#home').onclick = () => go(hashPath('home')); return; }
   app.innerHTML = `<h1>Falladas${helpIconLink('repaso', 'Ayuda sobre preguntas falladas y repaso')}</h1>
   <p class="sub">Cada pregunta permanece hasta acertarla tres veces seguidas. Un fallo reinicia el contador; dejarla en blanco no cuenta. Marcar el temario no la quita de la lista.</p>
   <p class="sub" id="fcount"></p>
@@ -915,7 +898,7 @@ export function bootLegacy(firstPaint = firstLegacyPaint): () => void {
   const controller = new AbortController(), timers: ReturnType<typeof setTimeout>[] = [];
   let stopped = false, offUpdates: (() => void) | undefined;
   const listen = (target: EventTarget, event: string, fn: () => void) => target.addEventListener(event, fn, { signal: controller.signal });
-  const offAccount = store.onAccountChange(() => go('#/home'));
+  const offAccount = store.onAccountChange(() => go(hashPath('home')));
   void (async () => {
     try { navigator.storage?.persist?.(); } catch (e) {}
     await recover(); if (stopped) return;
@@ -991,6 +974,36 @@ function watchUpdates(reg: ServiceWorkerRegistration): () => void {
 
 /** Temporary composition only: the React views own rendering and events. */
 export const studyServices: StudyServices = {
+  errors: {
+    getFilter() { return String(store.getCfg().errf || 'abierto'); },
+    getReports() { return Object.entries(store.getReports()).map(([id, report]) => ({ id, ts: report.ts, tema: report.tema, motivo: report.motivo, nota: report.nota, state: report.st })); },
+    subscribe: store.onChange,
+    setFilter(filter) { store.setCfg('errf', filter); },
+    async loadContent(ids) {
+      const requestedIds = new Set(ids);
+      const questionIds = ids.filter(id => !id.startsWith('FC-'));
+      const questions = (await byIds(questionIds)).map(question => ({ id: question.i, origin: ORIGEN[question.o], statement: question.q, options: question.a.map((text, index) => ({ label: L[index], text, correct: index === question.c })), reference: question.u, traps: (question.x || []).map(trap => TRAMPAS[trap] || String(trap)) }));
+      const cards = ids.some(id => id.startsWith('FC-')) ? (await allCards()).filter(card => requestedIds.has(card.id)).map(card => ({ id: card.id, question: card.q, answer: card.a, reference: card.ref || null })) : [];
+      return { questions, cards };
+    },
+    setState(id, state) { store.setReportState(id, state); },
+    async exportData() {
+      const reports = Object.entries(store.getReports()).filter(([, report]) => report.st !== 'quitado').sort(([, first], [, second]) => second.ts - first.ts);
+      const ids = reports.map(([id]) => id);
+      const questionIds = ids.filter(id => !id.startsWith('FC-'));
+      const questions = new Map((await byIds(questionIds)).map(question => [question.i, question]));
+      const cards = ids.some(id => id.startsWith('FC-')) ? new Map((await allCards()).map(card => [card.id, card])) : new Map();
+      const errors = reports.map(([id, report]) => {
+        const question = questions.get(id), card = cards.get(id);
+        return { id, tarjeta: card ? { pregunta: card.q, respuesta: card.a, ref: card.ref || null } : undefined,
+          tema: report.tema, estado: report.st, motivo: report.motivo, nota: report.nota,
+          origen: question ? ORIGEN[question.o] : null, enunciado: question?.q, opciones: question?.a,
+          correcta: question ? L[question.c] : null, cita: question?.u || null,
+          trampas: (question?.x || []).map(trap => TRAMPAS[trap] || trap) };
+      });
+      return JSON.stringify({ generado: new Date().toISOString(), errores: errors }, null, 1);
+    },
+  },
   access: {
     accountId: store.accountId, subscribe(listener) { const offSync = sync.onStatus(listener), offStore = store.onChange(listener); return () => { offSync(); offStore(); }; },
     async load() { await recover(); return { owner: isOwner(), error: sync.status.accessErr || undefined, requests: sync.status.reqs, grants: sync.status.grants }; },
@@ -1022,7 +1035,7 @@ export const studyServices: StudyServices = {
             assessed: topics.filter(topic => topic.est !== 'n').length };
         }),
         cardsDue: Object.values(store.getCards()).filter(record => record[3] >= 0 && record[4] <= now()).length,
-        quickCount: quickN(stats), slowCount: velocidad(stats).n, failures: falladasIds().length,
+        quickCount: quickQuestionCount(stats), slowCount: velocidad(stats).n, failures: falladasIds().length,
         studiedTopics: store.getSeen().length, topicCount: index.temas.length,
         assessedTopics: mastery.filter(topic => topic.est !== 'n').length,
         weakTopics: mastery.filter(topic => topic.est === 'r').length,

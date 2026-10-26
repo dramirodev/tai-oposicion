@@ -2,7 +2,8 @@ import { saveExportFile } from '../../shared/ui/download-file.js';
 import { helpIconLink } from '../../shared/ui/help-icon-link.js';
 import * as sync from '../../adapters/firebase/sync-facade.js';
 import * as store from '../../adapters/local/legacy-store.js';
-import { esc, normUi } from '../../legacy/logic.js';
+import { escapeHtml as esc } from '../../shared/presentation/format.js';
+import { normalizeUiPreferences } from '../../shared/presentation/ui-preferences.js';
 import { getIndex } from '../../adapters/http/legacy-data.js';
 import { inspectOffline, downloadOffline, type OfflineState } from '../../adapters/offline/cache.js';
 import { cleanCfg } from '../../adapters/local/config.js';
@@ -14,6 +15,7 @@ import { exportAttemptArchive } from '../../core/application/attempts/export-att
 import { importAttemptArchive } from '../../core/application/attempts/import-attempt-archive.js';
 import { localAttemptRepository } from '../../adapters/local/attempt-repository.js';
 import { attemptArchiveMapper } from '../../adapters/local/mappers/attempt-archive.js';
+import { hashPath } from '../../shared/navigation/paths.js';
 // La previsualización usa los mismos validadores que la importación, sin modificar el almacén.
 export function previewImport(txt: string) {
   if (txt.length > 20e6) throw new Error('Archivo no válido: supera 20 MB');
@@ -68,7 +70,7 @@ routes.settings = async function () {
     generation++;
     const focused = document.activeElement as HTMLElement | null;
     const focusGroup = focused?.closest('.seg')?.id, focusValue = focused?.dataset.v;
-    const syncStatus = sync.status; const ui = normUi(store.getCfg().ui); const full = isFull(), lvl = accessLevel(), dm = devMode();
+    const syncStatus = sync.status; const ui = normalizeUiPreferences(store.getCfg().ui); const full = isFull(), lvl = accessLevel(), dm = devMode();
     app.innerHTML = `
     <h1>Ajustes</h1>
     <div class="card"><h2 class="h3">Cuenta y sincronización</h2>
@@ -121,7 +123,7 @@ routes.settings = async function () {
     item('#in') && (item('#in').onclick = () => sync.login());
     item('#out') && (item('#out').onclick = () => sync.logout());
     item('#retrySync') && (item('#retrySync').onclick = () => sync.retry());
-    item('#errs') && (item('#errs').onclick = () => go('#/errores'));
+    item('#errs') && (item('#errs').onclick = () => go(hashPath('errors')));
     item('#upd').onclick = async () => {
       if (!getNewVersion()) {
         item<El>('#upd').disabled = true; item('#upd').textContent = 'Buscando…';
@@ -133,9 +135,9 @@ routes.settings = async function () {
       if (await ask(`Se recargará la app para pasar a la versión ${getNewVersion().version}. Lo que tengas en curso se guarda.`, 'Actualizar') && alive()) applyUpdate();
     };
     item<El>('#exd').onchange = event => { if (/^\d{4}-\d\d-\d\d$/.test((event.target as El).value)) store.setCfg('exam', (event.target as El).value); };
-    item('#th').onclick = event => { const element = (event.target as El).closest<El>('button'); if (element) { store.setCfg('ui', { ...normUi(store.getCfg().ui), theme: element.dataset.v! }); draw(); } };
-    item('#lec').onclick = event => { const element = (event.target as El).closest<El>('button'); if (element) { store.setCfg('ui', { ...normUi(store.getCfg().ui), lectura: +element.dataset.v! }); draw(); } };
-    item('#fz').onclick = event => { const element = (event.target as El).closest<El>('button'); if (element) { store.setCfg('ui', { ...normUi(store.getCfg().ui), size: +element.dataset.v! }); draw(); } };
+    item('#th').onclick = event => { const element = (event.target as El).closest<El>('button'); if (element) { store.setCfg('ui', { ...normalizeUiPreferences(store.getCfg().ui), theme: element.dataset.v! }); draw(); } };
+    item('#lec').onclick = event => { const element = (event.target as El).closest<El>('button'); if (element) { store.setCfg('ui', { ...normalizeUiPreferences(store.getCfg().ui), lectura: +element.dataset.v! }); draw(); } };
+    item('#fz').onclick = event => { const element = (event.target as El).closest<El>('button'); if (element) { store.setCfg('ui', { ...normalizeUiPreferences(store.getCfg().ui), size: +element.dataset.v! }); draw(); } };
     item<El>('#dl').disabled = downloading;
     item('#dl').onclick = () => download();
     const exportDates = () => {
@@ -223,7 +225,7 @@ routes.settings = async function () {
     }
     item('#rs').onclick = async () => { const owner = store.accountId(); if (await ask('¿Borrar TODO el progreso de este dispositivo? (Si hay sesión iniciada, lo sincronizado en la nube se volverá a descargar.)', 'Borrar todo', true) && alive() && owner === store.accountId()) { store.resetAll(); toast('Borrado'); } };
   };
-  const accesoHtml = (state: any, lvl: any) => lvl === 'propietario' ? `<p><small>Propietario · acceso completo.</small> <a href="#/acceso">Gestionar accesos${state.reqs.length ? ' (' + state.reqs.length + ' pendientes)' : ''}</a></p>`
+  const accesoHtml = (state: any, lvl: any) => lvl === 'propietario' ? `<p><small>Propietario · acceso completo.</small> <a href="${hashPath('access')}">Gestionar accesos${state.reqs.length ? ' (' + state.reqs.length + ' pendientes)' : ''}</a></p>`
     : lvl === 'aprobado' ? '<p><small>Acceso completo aprobado.</small></p>'
     : lvl === 'pendiente' ? '<p><small>Acceso pendiente de aprobación. Puedes continuar con la sesión rápida; la cuenta se actualizará al recibir la aprobación.</small></p>'
     : '<p><small>Acceso limitado: solo la sesión rápida de 5 minutos.</small></p><button class="btn" id="req">Pedir acceso completo</button>';

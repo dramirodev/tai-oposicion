@@ -234,7 +234,7 @@ describe('tarjetas (flashcards)', () => {
 
 describe('motivo «Velocidad» (7)', () => {
   it('se acepta en fallos, se cuenta aparte y cleanRec lo conserva', async () => {
-    const st = await import('../src/adapters/local/legacy-store.js'); const { motivosFallo } = await import('../src/legacy/logic.js');
+    const st = await import('../src/adapters/local/legacy-store.js'); const { motivosFallo } = await import('../src/features/stats/analytics-mapper.js');
     expect(st.cleanRec([1, 0, 1, 0, 1, 0, 0, 0, 0, 7])[9]).toBe(7);
     expect(motivosFallo({ a: [1, 0, 0, 0, 0, 0, 0, 0, 0, 7] })[7]).toBe(1);
   });

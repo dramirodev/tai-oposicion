@@ -1,10 +1,14 @@
 import * as store from '../../adapters/local/legacy-store.js';
-import { esc, shuffle, fmtT, pct, dominioCalc, aggregateWeeks, slowList, simHistory, compareSessions, MOTIVOS_FALLO, cargaRepasos, motivosFallo, suertes, velocidad, CONSEJOS_LECTURA } from '../../legacy/logic.js';
+import { escapeHtml as esc, formatTime as fmtT, percentage as pct } from '../../shared/presentation/format.js';
+import { randomStudyOrder as shuffle } from '../../shared/ui/study-random.js';
+import { FAILURE_REASONS as MOTIVOS_FALLO, READING_TIPS as CONSEJOS_LECTURA } from '../../shared/presentation/study-labels.js';
+import { aggregateWeeks, slowList, simHistory, compareSessions, cargaRepasos, motivosFallo, suertes, velocidad } from './analytics-mapper.js';
 import { META, getIndex, getMeta, now, byIds } from '../../adapters/http/legacy-data.js';
 import { $, legacyScope, L, toast, type El } from '../../shared/ui/legacy-dom.js';
 import { helpIconLink } from '../../shared/ui/help-icon-link.js';
 import { falladasIds }  from '../../core/application/legacy-engine.js';
 import { ORIGEN, TRAMPAS, TIPOS } from '../../shared/presentation/labels.js';
+import { hashPath } from '../../shared/navigation/paths.js';
 import { mountQuestionEvolution } from './question-evolution-view.js';
 export function registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport, renderStrategyReport, loadQuestionEvolution }: any) {
 // ───────── mapa de dominio ─────────
@@ -26,7 +30,7 @@ function bindMapa(root: El, dm: any, redraw: any) {
   root.querySelectorAll<El>('[data-dt]').forEach((b: any) => b.onclick = () => {
     const c = store.getCfg().test || { n: 15, mode: 'nuevas', o: ['O', 'A', 'G'] };
     store.setCfg('test', { sel: [b.dataset.dt!], n: c.n || 15, mode: 'nuevas', o: c.o || ['O', 'A', 'G'] });
-    go('#/test');
+    go(hashPath('test'));
   });
   const o = root.querySelector<El>('#dmord'); if (o) o.onclick = (e: any) => { if ((e.target as El).dataset.v!) { const value = (e.target as El).dataset.v!; store.setCfg('dmord', value); redraw(); root.querySelector<HTMLElement>(`#dmord [data-v="${value}"]`)?.focus({ preventScroll: true }); } };
 }
@@ -188,9 +192,9 @@ routes.stats = async function () {
     </div>
   </section>
   <h2>Últimas sesiones</h2><div class="card">${ses.map(s => `<div class="line"><span>${new Date(s.ts).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })} · ${s.kind === 'sim' ? 'Simulacro' : s.kind === 'rev' ? 'Repaso' : 'Test'} ${esc(String(s.n))}p</span><span>${s.kind === 'sim' ? esc(String(s.nota)) + '/100' : pct(s.a, s.n) + '%'}</span></div>`).join('') || '<p class="sub">Sin sesiones todavía.</p>'}</div>`;
-  $('#progress-review').onclick = () => startRepaso ? startRepaso() : go('#/falladas');
-  $('#progress-failures').onclick = () => go('#/falladas');
-  $('#progress-test').onclick = () => go('#/test');
+  $('#progress-review').onclick = () => startRepaso ? startRepaso() : go(hashPath('failures'));
+  $('#progress-failures').onclick = () => go(hashPath('failures'));
+  $('#progress-test').onclick = () => go(hashPath('test'));
   app.querySelectorAll<El>('[data-stats-view]').forEach(b => b.onclick = () => {
     const view = b.dataset.statsView!;
     app.querySelectorAll<El>('[data-stats-view]').forEach(x => { const active = x === b; x.setAttribute('aria-pressed', String(active)); x.classList.toggle('on', active); });
@@ -215,7 +219,7 @@ routes.stats = async function () {
     ${v.p >= 15 ? '<p class="r"><b>Es un patrón relevante</b>: más de 1 de cada 7 fallos se debe a leer rápido. Prueba el modo «Resaltar + frenar» en Ajustes y el ejercicio de lectura atenta.</p>' : ''}
     <ul class="tips">${CONSEJOS_LECTURA.map(c => `<li>${esc(c)}</li>`).join('')}</ul>
     <button class="btn" id="golec">👀 Entrenar lectura atenta</button></div>`;
-    $('#golec').onclick = () => go('#/lectura'); }
+    $('#golec').onclick = () => go(hashPath('reading')); }
   paintMapa();
   paintSims();
   paintEvo(bankIndex);

@@ -43,7 +43,21 @@ export interface AccessManagementServices {
   confirm(message: string, label: string, danger: boolean): Promise<boolean>;
   notify(message: string): void;
 }
-export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; markReady(): void }
+export interface ErrorReportRecord { id: string; ts: number; tema: string; motivo: string; nota: string; state: 'abierto' | 'resuelto' | 'quitado' }
+export interface ReportedOption { label: string; text: string; correct: boolean }
+export interface ReportedQuestion { id: string; origin?: string; statement: string; options: readonly ReportedOption[]; reference?: string | null; traps: readonly string[] }
+export interface ReportedCard { id: string; question: string; answer: string; reference?: string | null }
+export interface ErrorReportContent { questions: readonly ReportedQuestion[]; cards: readonly ReportedCard[] }
+export interface ErrorServices {
+  getFilter(): string;
+  getReports(): readonly ErrorReportRecord[];
+  subscribe(listener: () => void): () => void;
+  setFilter(filter: string): void;
+  loadContent(ids: readonly string[]): Promise<ErrorReportContent>;
+  setState(id: string, state: ErrorReportRecord['state']): void;
+  exportData(): Promise<string>;
+}
+export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; errors: ErrorServices; markReady(): void }
 const Context = createContext<StudyServices | null>(null);
 export const AppServicesProvider = Context.Provider;
 export function useStudyServices(): StudyServices {
