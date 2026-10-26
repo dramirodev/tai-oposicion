@@ -1,4 +1,5 @@
 import { saveExportFile } from '../shared/ui/download-file.js';
+import { helpIconLink } from '../shared/ui/help-icon-link.js';
 import type { StudyServices } from '../shared/ui/study-services.js';
 import { questionNotice, sourceHtml, filterFailures } from '../shared/presentation/legacy-study.js';
 import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
@@ -25,7 +26,7 @@ import { canonicalText, paintTextHighlight, selectedTextAnchor } from './legacy-
 import { findLegacyCodeExplanation } from './explanation-composition.js';
 import { explanationMapper } from '../features/explanations/explanation-mapper.js';
 import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
-import { loadStrategyReportForPeriod } from './strategy-composition.js';
+import { loadQuestionEvolution, loadStrategyReportForPeriod } from './strategy-composition.js';
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './ai-study-export-composition.js';
 
@@ -216,7 +217,7 @@ routes.quiz = async function () {
       <div class="cnt">${R.porTiempo ? '#' + (R.idx + 1) : (R.idx + 1) + '/' + R.items.length}</div>
       ${R.limit ? `<div class="clock" id="clock">${fmtT(R.limit * 60 - R.secs)}</div><button class="ghost" id="pause" aria-label="Pausar">⏸</button>` : ''}
     </div>
-    ${R.titulo ? `<div class="sub">${esc(R.titulo)}</div>` : ''}
+    <div class="sub study-run-title">${esc(R.titulo || 'Práctica')}${helpIconLink('sesiones', 'Ayuda sobre controles y estados de pregunta')}</div>
     ${R.limit && R.kind === 'sim' ? '<div class="pace" id="pace"></div>' : ''}
     ${!R.feedback ? `<details class="question-map"><summary>Mapa de preguntas · ${R.ans.filter(x => x !== undefined && x >= 0).length} ${R.ans.filter(x => x !== undefined && x >= 0).length === 1 ? 'respondida' : 'respondidas'} · ${(R.review || []).length} para revisar</summary><div class="question-grid">${R.items.map((_, k) => { const status = R.ans[k] === undefined ? 'Sin responder' : R.ans[k] === -1 ? 'En blanco' : 'Respondida'; return `<button data-jump="${k}" ${k === R.idx ? 'aria-current="step"' : ''} class="${R.ans[k] !== undefined && R.ans[k] >= 0 ? 'answered' : ''}">${k + 1}<small>${status}${R.review?.includes(k) ? ' · Revisar' : ''}</small></button>`; }).join('')}</div></details><button class="ghost" id="review-question" aria-pressed="${!!R.review?.includes(R.idx)}">${R.review?.includes(R.idx) ? '✓ Marcada para revisar' : 'Marcar para revisar'}</button>` : `<details class="question-map"><summary>Mapa de preguntas · ${R.studyStates?.filter(x => x === 'answered').length || 0} respondidas · ${R.studyStates?.filter(x => x === 'pending').length || 0} pendientes · ${R.studyStates?.filter(x => x === 'revealed').length || 0} consultadas</summary><div class="question-grid">${R.items.map((_, k) => { const itemState = R.studyStates?.[k] || 'unseen'; const label = itemState === 'answered' ? 'Respondida' : itemState === 'pending' ? 'Pendiente' : itemState === 'revealed' ? 'Solución consultada' : 'Sin visitar'; return `<button data-jump="${k}" ${k === R.idx ? 'aria-current="step"' : ''} class="${itemState}">${k + 1}<small>${label}</small></button>`; }).join('')}</div></details>`}
     ${state === 'pending' ? '<p class="note">Si ves la solución, ya no podrás responder esta pregunta en este intento.</p>' : ''}
@@ -259,7 +260,6 @@ routes.quiz = async function () {
         : `<button class="btn sec" id="blank">${a === -1 ? '✓ En blanco' : 'Dejar en blanco'}</button>
            <button class="btn" id="next">${R.idx + 1 === R.items.length ? 'Terminar' : 'Siguiente'} →</button>`}
     </div>
-    <p class="sub"><a href="#/ayuda?tema=sesiones">Ayuda sobre controles y estados de pregunta</a></p>
     ${R.paused ? `<div class="overlay" role="dialog" aria-modal="true" aria-labelledby="pt"><div class="card"><h2 id="pt">En pausa</h2><p>El tiempo está detenido.</p><button class="btn" id="resume">Continuar</button></div></div>` : ''}`;
     bind(q);
     if (reveal && R.feedback) {
@@ -300,7 +300,7 @@ routes.quiz = async function () {
       ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}
       ${sourceHtml(q, VERIFIED_SOURCES)}
       ${q.x?.length ? `<div class="trap">Trampa: ${q.x.map((x: any) => esc(TRAMPAS[x] || x)).join(' · ')}</div>` : ''}
-      ${!wasConsulted && !ok && a !== -1 && R.feedback ? `<div class="mot" id="mot"><small>¿Por qué fallé?${(() => { const f = R.fast?.[R.idx]; return f && f[0] < f[1] * 0.6 ? ` <b class="r">Respondiste en ${f[0]} s; leerla bien lleva ≈${f[1]} s. ¿Fue velocidad?</b>` : ''; })()}</small>${[5, 7, 1, 2, 3, 4].map(m => `<button class="${store.rec(q.i)?.[9] === m ? 'on' : (m === 7 && R.fast?.[R.idx] && R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? 'sug' : '')}" data-m="${m}">${MOTIVOS_FALLO[m]}</button>`).join('')}<a class="sm" href="#/ayuda?tema=motivos">¿Qué significa cada motivo?</a><button class="mk" id="mkcard" ${store.rec(q.i)?.[9] === 4 && !store.cardRec('FC-Q-' + q.i) ? 'hidden' : ''}>${store.cardRec('FC-Q-' + q.i) ? '📇 Tarjeta creada ✓' : '📇 Hacer tarjeta'}</button></div>` : ''}
+      ${!wasConsulted && !ok && a !== -1 && R.feedback ? `<div class="mot" id="mot"><small>¿Por qué fallé?${helpIconLink('motivos', 'Ayuda sobre los motivos del fallo')}${(() => { const f = R.fast?.[R.idx]; return f && f[0] < f[1] * 0.6 ? ` <b class="r">Respondiste en ${f[0]} s; leerla bien lleva ≈${f[1]} s. ¿Fue velocidad?</b>` : ''; })()}</small>${[5, 7, 1, 2, 3, 4].map(m => `<button class="${store.rec(q.i)?.[9] === m ? 'on' : (m === 7 && R.fast?.[R.idx] && R.fast[R.idx][0] < R.fast[R.idx][1] * 0.6 ? 'sug' : '')}" data-m="${m}">${MOTIVOS_FALLO[m]}</button>`).join('')}<button class="mk" id="mkcard" ${store.rec(q.i)?.[9] === 4 && !store.cardRec('FC-Q-' + q.i) ? 'hidden' : ''}>${store.cardRec('FC-Q-' + q.i) ? '📇 Tarjeta creada ✓' : '📇 Hacer tarjeta'}</button></div>` : ''}
       ${ok && a !== -1 && R.feedback ? (() => { const r = store.rec(q.i) || [], en = r[3] === 0 && r[4] > now() + 86400000 * 1.5; return `<div class="mot" id="acc"><small>¿Seguro? (entra en repaso a +2 días)</small>${(() => { const pl = R.luck?.[R.idx]; return pl === 6 ? '<b class="r">🍀 Marcada como suerte: acierto 1/2. Otra vez bien y se quita la etiqueta.</b>' : pl === 8 ? '<b class="r">🍀 ¡Acierto 2/2! Etiqueta de suerte quitada: ya la sabes.</b>' : ''; })()}<button class="${en && r[9] !== 6 && r[9] !== 8 ? 'on' : ''}" data-a="doubt">🤔 Acerté dudando</button><button class="${r[9] === 6 || r[9] === 8 ? 'on' : ''}" data-a="suerte">🍀 Fue suerte</button></div>`; })() : ''}
       <button class="ghost fl" id="flag">${store.rec(q.i)?.[6] ? '★ Dudosa' : '☆ Marcar como dudosa'}</button>
       <div class="repw" id="rep"></div><div id="code-explanation-slot" aria-live="polite"></div></div>`;
@@ -374,8 +374,19 @@ routes.quiz = async function () {
       if (id && removeCurrentHighlight(id)) { window.getSelection()?.removeAllRanges(); draw(); }
     });
     $('#blank') && ($('#blank').onclick = () => {
-      if (R.feedback) { if (R.ans[R.idx] === undefined) { answer(q, -1); if (R.idx < R.items.length - 1) setQuestionIndex(R.idx + 1); draw(); if (R.idx > 0) focusHeading(); } }
-      else { toggleDeferredBlank(); draw(); }
+      if (R.feedback) {
+        if (R.ans[R.idx] === undefined) {
+          answer(q, -1);
+          if (R.idx < R.items.length - 1) setQuestionIndex(R.idx + 1);
+          draw();
+          if (R.idx > 0) focusHeading();
+          window.scrollTo(0, 0);
+        }
+      } else {
+        toggleDeferredBlank();
+        draw();
+        window.scrollTo(0, 0);
+      }
     });
     $('#reveal-solution') && ($('#reveal-solution').onclick = () => { if (revealCurrentSolution()) { draw(); focusHeading(); } });
     $('#next') && ($('#next').onclick = () => { if (R.idx === R.items.length - 1) { void finish(); return; } setQuestionIndex(R.idx + 1); draw(); focusHeading(); window.scrollTo(0, 0); });
@@ -436,7 +447,7 @@ routes.result = async function () {
   <h1>Resultado</h1>
   ${ses.interrupted ? `<div class="note result-status"><b>Sesión interrumpida</b><p>${ses.a + ses.f} de ${ses.n} preguntas respondidas. La puntuación global mantiene las no contestadas como blancos.</p></div>` : ''}
   <div class="card big">
-  <p class="score-label">Puntuación global · <a href="#/ayuda?tema=puntuacion">Cómo se calcula</a></p>
+  <p class="score-label">Puntuación global${helpIconLink('puntuacion', 'Ayuda sobre cómo se calcula la puntuación')}</p>
     <div class="score" data-count="${ses.nota}">${ses.nota}<small>/100</small></div>
     <div class="legend">100 × (aciertos − fallos/3) / total de preguntas</div>
     <div class="trio"><div class="g"><b>${ses.a}</b>Aciertos</div><div class="r"><b>${ses.f}</b>Fallos</div><div><b>${ses.b}</b>Blanco</div></div>
@@ -565,7 +576,7 @@ routes.test = async function () {
   const bloques = [['T1', 'Bloque I · Organización del Estado'], ['T2', 'Bloque II · Informática básica'], ['T3', 'Bloque III · Desarrollo'], ['T4', 'Bloque IV · Sistemas y comunicaciones']];
   const draw = () => {
     app.innerHTML = `
-    <h1>Test por tema</h1><p class="sub"><a href="#/ayuda?tema=sesiones">Ayuda sobre controles del test</a></p>
+    <h1>Test por tema${helpIconLink('sesiones', 'Ayuda sobre los controles del test')}</h1>
     <div class="card">
       <h2 class="h3">Terminar por</h2>
       <div class="seg" id="by">${[[0, 'Nº de preguntas'], [1, 'Tiempo']].map(([v, t]) => `<button class="${(cfg.pt ? 1 : 0) === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
@@ -737,7 +748,7 @@ routes.sim = async function () {
     }));
   };
   const shell = () => {
-    app.innerHTML = `<h1>Simulacros</h1><p class="sub"><a href="#/ayuda?tema=simulacros">Ayuda sobre navegación y corrección de simulacros</a></p><div class="seg tabs" id="simtabs" role="group" aria-label="Tipo de simulacro">${TABS.map(([v, t]) => `<button class="${tab === v ? 'on' : ''}" data-v="${v}" aria-pressed="${v === tab}">${t}</button>`).join('')}</div><div id="simbody"></div>`;
+    app.innerHTML = `<h1>Simulacros${helpIconLink('simulacros', 'Ayuda sobre navegación y corrección de simulacros')}</h1><div class="seg tabs" id="simtabs" role="group" aria-label="Tipo de simulacro">${TABS.map(([v, t]) => `<button class="${tab === v ? 'on' : ''}" data-v="${v}" aria-pressed="${v === tab}">${t}</button>`).join('')}</div><div id="simbody"></div>`;
     $('#simtabs').onclick = e => { const b = (e.target as El).closest<El>('button'); if (!b || b.dataset.v! === tab) return; tab = b.dataset.v!; store.setCfg('simtab', tab); shell(); $('#simtabs .on').focus({preventScroll:true}); enter($('#simbody') as any); };
     tab === 'completo' ? drawCompleto() : drawLista();
   };
@@ -861,8 +872,8 @@ routes.falladas = async function () {
     }).join('')}</div>`).join('')
       : '<div class="card"><p class="sub">Ninguna pregunta coincide con la búsqueda.</p></div>';
   };
-  if (!qs.length) { app.innerHTML = '<h1>Falladas</h1><div class="card"><p class="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p><a href="#/ayuda?tema=repaso">Ayuda sobre falladas y repaso</a></div><div class="row"><button class="btn sec" id="home">Inicio</button></div>'; $('#home').onclick = () => go('#/home'); return; }
-  app.innerHTML = `<h1>Falladas · <a href="#/ayuda?tema=repaso">Ayuda</a></h1>
+  if (!qs.length) { app.innerHTML = `<h1>Falladas${helpIconLink('repaso', 'Ayuda sobre preguntas falladas y repaso')}</h1><div class="card"><p class="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p></div><div class="row"><button class="btn sec" id="home">Inicio</button></div>`; $('#home').onclick = () => go('#/home'); return; }
+  app.innerHTML = `<h1>Falladas${helpIconLink('repaso', 'Ayuda sobre preguntas falladas y repaso')}</h1>
   <p class="sub">Cada pregunta permanece hasta acertarla tres veces seguidas. Un fallo reinicia el contador; dejarla en blanco no cuenta. Marcar el temario no la quita de la lista.</p>
   <p class="sub" id="fcount"></p>
   <div class="card">
@@ -893,7 +904,7 @@ routes.falladas = async function () {
 
 registerTraining({ routes, go, route, pw, verifiedSources: VERIFIED_SOURCES }, screen);
 const { allCards, curatedCards } = registerCards({ routes, go, pw, reportBox, verifiedSources: VERIFIED_SOURCES }, screen);
-registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport: loadStrategyReportForPeriod, renderStrategyReport });
+registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport: loadStrategyReportForPeriod, renderStrategyReport, loadQuestionEvolution });
 
 
 registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate, listManualExportSessions, createManualAiExport, deleteManualStudyHistory }, screen);
