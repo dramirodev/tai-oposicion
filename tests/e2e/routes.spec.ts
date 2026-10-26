@@ -84,7 +84,12 @@ test.describe('service worker real', () => {
   expect(stylesheet).toBeTruthy(); expect(shell).toContain('/' + stylesheet!.slice(2));
   expect(shell.some(path => /geist-variable.*\.woff2$/.test(path))).toBe(true);
   await page.goto('/#/settings');
+  await expect(page.locator('#off')).not.toContainText('Comprobando archivos guardados…');
+  await expect(page.locator('#dl')).toBeEnabled();
   await page.locator('#dl').click();
+  // draw() disables the button synchronously when it starts; this also detects
+  // a click that raced the legacy screen's asynchronous initialization.
+  await expect(page.locator('#dl')).toBeDisabled();
   await expect(page.locator('#off')).toContainText('disponibles sin conexión', { timeout: 20_000 });
   // La configuración externa de la fixture también debe existir en la caché offline.
   await page.evaluate(async () => {
