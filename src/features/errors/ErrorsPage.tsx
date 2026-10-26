@@ -4,7 +4,6 @@ import { useStudyServices, type ReportedCard, type ReportedQuestion } from '../.
 import { codeSpans, todoCodigo } from '../../shared/presentation/study-text.js';
 import { selectErrorReports } from './errors-controller.js';
 
-const OPTIONS = ['A', 'B', 'C', 'D'];
 const FILTERS = [['abierto', 'Por revisar'], ['resuelto', 'Resueltos'], ['todos', 'Todos']] as const;
 
 function CardText({ value }: { value: string }) {
@@ -72,7 +71,7 @@ export function ErrorsPage() {
         <div className="meta"><span className="tag">{report.id}</span>{question?.origin && <span className="tag">{question.origin}</span>}{card && <span className="tag">Tarjeta</span>}<span className="tag warn">{report.motivo || 'Otro'}</span>{report.state === 'resuelto' && <span className="tag oG">Resuelto</span>}</div>
         {report.nota && <p className="sm"><b>Nota:</b> {report.nota}</p>}
         {card ? <><div className="pre sm"><CardText value={card.question} /></div><div className="ro ok"><b>R</b> <CardText value={card.answer} /></div>{card.reference && <div className="cita"><span>Temario</span>{card.reference}</div>}</>
-          : question ? <><div className="pre sm">{question.statement}</div>{question.options.map((option, index) => <div className={`ro ${index === question.correctIndex ? 'ok' : ''}`} key={index}><b>{OPTIONS[index]}</b> {option}{index === question.correctIndex ? ' ✓' : ''}</div>)}{question.reference && <div className="cita"><span>Temario</span>{question.reference}</div>}</>
+          : question ? <><div className="pre sm">{question.statement}</div>{question.options.map(option => <div className={`ro ${option.correct ? 'ok' : ''}`} key={`${question.id}-${option.label}`}><b>{option.label}</b> {option.text}{option.correct ? ' ✓' : ''}</div>)}{question.reference && <div className="cita"><span>Temario</span>{question.reference}</div>}</>
             : <p className="sub">{loading ? 'Cargando pregunta…' : failedKey === reportKey ? 'No se pudo cargar el contenido del aviso. Comprueba la conexión e inténtalo de nuevo.' : 'La pregunta ya no está en el banco.'}</p>}
         <div className="row"><button className="btn sec" onClick={() => errors.setState(report.id, report.state === 'resuelto' ? 'abierto' : 'resuelto')}>{report.state === 'resuelto' ? 'Reabrir' : 'Marcar resuelto'}</button><button className="btn sec" onClick={() => errors.setState(report.id, 'quitado')}>Quitar</button></div>
       </article>;

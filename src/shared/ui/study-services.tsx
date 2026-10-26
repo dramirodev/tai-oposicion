@@ -44,7 +44,8 @@ export interface AccessManagementServices {
   notify(message: string): void;
 }
 export interface ErrorReportRecord { id: string; ts: number; tema: string; motivo: string; nota: string; state: 'abierto' | 'resuelto' | 'quitado' }
-export interface ReportedQuestion { id: string; origin?: string; statement: string; options: readonly string[]; correctIndex: number; reference?: string | null; traps: readonly string[] }
+export interface ReportedOption { label: string; text: string; correct: boolean }
+export interface ReportedQuestion { id: string; origin?: string; statement: string; options: readonly ReportedOption[]; reference?: string | null; traps: readonly string[] }
 export interface ReportedCard { id: string; question: string; answer: string; reference?: string | null }
 export interface ErrorReportContent { questions: readonly ReportedQuestion[]; cards: readonly ReportedCard[] }
 export interface ErrorServices {
