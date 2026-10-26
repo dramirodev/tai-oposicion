@@ -1,6 +1,6 @@
 import { saveExportFile } from '../shared/ui/download-file.js';
 import { helpIconLink } from '../shared/ui/help-icon-link.js';
-import type { StudyServices } from '../shared/ui/study-services.js';
+import type { SettingsServices, SettingsSnapshot, StudyServices } from '../shared/ui/study-services.js';
 import { questionNotice, sourceHtml } from '../shared/presentation/legacy-study.js';
 import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
@@ -26,7 +26,6 @@ import { createCardsController } from '../features/cards/cards-controller.js';
 import { cardFromFailedQuestion } from '../features/cards/flashcard-mapper.js';
 import type { FailureQuestion, LightningQuestion, ReadingOutcome, ReadingProgress, ReadingPrompt, ReadingWordResult, StudyCard, TrapAnswer, TrapPrompt, TrapRun } from '../shared/ui/study-services.js';
 import { registerStats } from '../features/stats/legacy.js';
-import { registerSettings } from '../features/settings/legacy.js';
 import { isFull, isOwner, accessLevel, GUEST_ROUTES } from '../adapters/legacy/access.js';
 import { subscribe as subscribeEngine, getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, revealCurrentSolution, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, setCurrentConfidence, toggleCurrentDiscardedOption, addCurrentHighlight, removeCurrentHighlight } from '../core/application/legacy-engine.js';
 import { dominioTemas } from './legacy-topic-mastery.js';
@@ -41,8 +40,17 @@ import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
 import { loadQuestionEvolution, loadStrategyReportForPeriod } from './strategy-composition.js';
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './ai-study-export-composition.js';
+import { inspectOffline, downloadOffline } from '../adapters/offline/cache.js';
+import { devMode, setDevMode, devRevealed, revealDev } from '../adapters/legacy/access.js';
+import { notifyAccessChange } from './access-events.js';
+import { exportAttemptArchive } from '../core/application/attempts/export-attempt-archive.js';
+import { importAttemptArchive } from '../core/application/attempts/import-attempt-archive.js';
+import type { AttemptArchive } from '../core/domain/attempts/archive.js';
+import { localAttemptRepository } from '../adapters/local/attempt-repository.js';
+import { attemptArchiveMapper } from '../adapters/local/mappers/attempt-archive.js';
+import { cleanCfg } from '../adapters/local/config.js';
 import { hashPath } from './paths.js';
-import type { Question } from '../adapters/legacy/types.js';
+import type { QuestionRecord as Question } from '../core/domain/question-record.js';
 import { readingTokens, mixReadingIds } from '../features/trainers/reading-controller.js';
 
 // ───────── router ─────────
@@ -842,10 +850,121 @@ const cardsServices = createCardsController({
   getReport: id => store.getReports()[id],
   saveReport: (card, reason, note) => store.addReport(card.id, card.t, reason, note),
 });
+let settingsIndex: Awaited<ReturnType<typeof getIndex>> | null = null;
+let settingsOffline: SettingsSnapshot['offline'] = null;
+const settingsServices = {
+  accountId: store.accountId,
+  getSnapshot(): SettingsSnapshot {
+    const ui = normalizeUiPreferences(store.getCfg().ui);
+    return {
+      sync: { state: sync.status.state, user: sync.status.user, configured: sync.status.configured, lastSync: sync.status.lastSync, error: sync.status.error, detail: sync.status.detail, host: sync.status.host, authDomain: sync.status.authDomain, accessError: sync.status.accessErr, requests: sync.status.reqs },
+      full: isFull(), level: accessLevel(), devMode: devMode(), devRevealed: devRevealed(), ui: { theme: ui.theme, size: ui.size, lectura: ui.lectura },
+      progress: { questions: Object.keys(store.getStats()).length, topics: store.getSeen().length, sessions: store.getSessions().length, openReports: Object.values(store.getReports()).filter(report => report.st === 'abierto').length },
+      exam: String(store.getCfg().exam || ''), version: APP_VERSION, build: APP_BUILD.split('+')[1] || APP_BUILD, update: NEWV?.version || null,
+      offline: settingsOffline, index: settingsIndex ? { questions: settingsIndex.n, scenarios: settingsIndex.nsup } : null,
+    };
+  },
+  subscribe(listener: () => void) {
+    const offStore = store.onChange(listener), offSync = sync.onStatus(listener);
+    return () => { offStore(); offSync(); };
+  },
+  async load() {
+    settingsIndex = await getIndex();
+    settingsOffline = await inspectOffline(settingsIndex).catch(() => null);
+    notifySettings();
+  },
+  setPreference(key: 'theme' | 'size' | 'lectura', value: string | number) {
+    const current = normalizeUiPreferences(store.getCfg().ui);
+    store.setCfg('ui', { ...current, [key]: key === 'theme' ? value : Number(value) });
+  },
+  setExam(value: string) { if (/^\d{4}-\d\d-\d\d$/.test(value)) store.setCfg('exam', value); },
+  setDevMode(value: string | null) { setDevMode(value); notifyAccessChange(); notifySettings(); },
+  revealDev() { revealDev(); notifySettings(); },
+  async requestAccess() { return await sync.requestAccess(); },
+  async login() { return await sync.login(); },
+  async logout() { return await sync.logout(); },
+  async retrySync() { return await sync.retry(); },
+  async checkUpdate() {
+    const result = await checkUpdate();
+    notifySettings();
+    return result === undefined ? undefined : NEWV?.version || null;
+  },
+  applyUpdate,
+  async downloadOffline(progress: (done: number, total: number) => void, isCurrent: () => boolean) {
+    const index = settingsIndex || await getIndex(); settingsIndex = index;
+    settingsOffline = await downloadOffline(index, progress, isCurrent);
+    notifySettings(); return settingsOffline;
+  },
+  async exportAnki() {
+    const cards = await allCards(), clean = (value: unknown) => String(value).replace(/[\t\r\n]+/g, ' ');
+    return '#separator:tab\n#html:false\n#tags column:4\n' + cards.map(card => [clean(card.q), clean(card.a), clean(card.ref || ''), clean((card.t || '').replace('.', '_') + ' ' + (card.tipo || ''))].join('\t')).join('\n');
+  },
+  async exportBackup() {
+    const account = store.accountId() || 'guest';
+    const archive = await exportAttemptArchive(localAttemptRepository, account, Date.now());
+    const backup = JSON.parse(store.exportAll()); backup.attemptHistory = attemptArchiveMapper.toDto(archive);
+    return JSON.stringify(backup);
+  },
+  previewBackup(text: string) {
+    const preview = previewImport(text), countItems = (amount: number, one: string, many: string) => `${amount} ${amount === 1 ? one : many}`;
+    const summary = `${countItems(preview.added, 'pregunta nueva', 'preguntas nuevas')}, ${countItems(preview.updated, 'pregunta actualizada', 'preguntas actualizadas')} y ${countItems(preview.preserved, 'pregunta conservada', 'preguntas conservadas')}. ${countItems(preview.sessions, 'sesión válida', 'sesiones válidas')}, ${countItems(preview.cards, 'tarjeta válida', 'tarjetas válidas')} y ${countItems(preview.reports, 'aviso válido', 'avisos válidos')}. ${countItems(preview.attemptArchive?.attempts.length || 0, 'intento detallado', 'intentos detallados')}. ${countItems(preview.ignored + preview.invalidAttempts, 'registro descartado por no ser válido', 'registros descartados por no ser válidos')}.${preview.settings ? ' También se importarán los ajustes válidos de la copia.' : ''}`;
+    return { summary, serialized: preview.serialized, attemptArchive: preview.attemptArchive };
+  },
+  async importBackup(serialized: string, attemptArchive?: unknown) {
+    const account = store.accountId();
+    store.importAll(serialized);
+    if (attemptArchive) await importAttemptArchive(localAttemptRepository, account || 'guest', attemptArchive as AttemptArchive);
+    if (store.accountId() !== account) throw new Error('La cuenta cambió durante la importación. Comprueba el progreso antes de continuar.');
+  },
+  resetAll: () => store.resetAll(),
+  findAiSessions: (from: number, to: number, modes: readonly ('practice' | 'simulation')[]) => listManualExportSessions(from, to, [...modes]),
+  buildAiExport: (input: Parameters<SettingsServices['buildAiExport']>[0]) => createManualAiExport({ ...input, modes: [...input.modes], sessionIds: [...input.sessionIds] }),
+  deleteAiHistory: deleteManualStudyHistory,
+};
+// Keep the existing storage sanitizers at the application boundary while Settings is migrated.
+function previewImport(text: string) {
+  if (text.length > 20e6) throw new Error('Archivo no válido: supera 20 MB');
+  let raw: unknown;
+  try { raw = JSON.parse(text); } catch { throw new Error('Archivo no válido: JSON ilegible'); }
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) throw new Error('Archivo no válido');
+  const backup = raw as Record<string, unknown>;
+  if (!backup.stats || typeof backup.stats !== 'object' || Array.isArray(backup.stats)) throw new Error('Archivo no válido');
+  const rawStats = backup.stats as Record<string, unknown>;
+  const stats = store.cleanStats(rawStats), sessions = store.cleanSessions(backup.sessions), cards = store.cleanCards(backup.cards), reports = store.cleanReports(backup.reports);
+  let added = 0, updated = 0, preserved = 0;
+  for (const id of Object.keys(stats)) {
+    const old = store.rec(id);
+    if (!old) added++;
+    else if (store.needsSync(stats[id], old)) updated++;
+    else preserved++;
+  }
+  preserved += Object.keys(store.getStats()).filter(id => !stats[id]).length;
+  const ignored = Object.keys(rawStats).length - Object.keys(stats).length;
+  let attemptArchive: AttemptArchive | undefined;
+  let invalidAttempts = 0;
+  if (backup.attemptHistory !== undefined) {
+    const mapped = attemptArchiveMapper.toDomain(backup.attemptHistory);
+    if (!mapped.ok) throw new Error(`El historial de intentos de la copia no es válido: ${mapped.reason}`);
+    attemptArchive = mapped.value.archive;
+    invalidAttempts = mapped.value.invalidRecords;
+  }
+  const serialized = JSON.stringify({ stats, sessions, cards, reports, ...(backup.seen ? { seen: store.cleanSeen(backup.seen) } : {}), ...(backup.cfg ? { cfg: cleanCfg(backup.cfg) } : {}), ...(attemptArchive ? { attemptHistory: attemptArchiveMapper.toDto(attemptArchive) } : {}) });
+  return { added, updated, preserved, ignored, serialized, attemptArchive, invalidAttempts, sessions: sessions.length, cards: Object.keys(cards).length, reports: Object.keys(reports).length, settings: !!backup.cfg };
+}
+function notifySettings() { settingsListeners.forEach(listener => listener()); }
+const settingsListeners = new Set<() => void>();
+// Reuse the stores' subscriptions and notify route-local consumers after asynchronous settings work.
+const settingsServicesWithSubscription = {
+  ...settingsServices,
+  subscribe(listener: () => void) {
+    settingsListeners.add(listener);
+    const offStore = store.onChange(listener), offSync = sync.onStatus(listener);
+    return () => { settingsListeners.delete(listener); offStore(); offSync(); };
+  },
+};
 registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport: loadStrategyReportForPeriod, renderStrategyReport, loadQuestionEvolution });
 
 
-registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate, listManualExportSessions, createManualAiExport, deleteManualStudyHistory }, screen);
 
 let failureQuestionCache: Question[] = [];
 function mapFailureQuestion(question: Question): FailureQuestion {
@@ -1150,6 +1269,7 @@ export const studyServices: StudyServices = {
   lightning: lightningServices,
   traps: trapsServices,
   reading: readingServices,
+  settings: settingsServicesWithSubscription,
   errors: {
     getFilter() { return String(store.getCfg().errf || 'abierto'); },
     getReports() { return Object.entries(store.getReports()).map(([id, report]) => ({ id, ts: report.ts, tema: report.tema, motivo: report.motivo, nota: report.nota, state: report.st })); },

@@ -49,7 +49,6 @@ export const legacyPaths = [
   paths.simulationReview,
   paths.exams,
   paths.stats,
-  paths.settings,
 ] as const;
 
 export function routeSegment(path: string): string {

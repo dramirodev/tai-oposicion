@@ -1,5 +1,6 @@
 // Tipos compartidos de datos. Los registros viajan como tuplas/arrays porque se guardan así en localStorage y Firestore.
 import type { Preferences } from '../../core/domain/entities.js';
+import type { QuestionRecord } from '../../core/domain/question-record.js';
 
 /** Resultado de una respuesta: 1 acierto, 0 fallo, 2 en blanco. */
 export type Res = 0 | 1 | 2;
@@ -39,13 +40,7 @@ export interface AppState {
 
 /** Origen de la pregunta: O oficial, A academia, G generada. */
 export type Origin = 'O' | 'A' | 'G';
-export interface Question {
-  i: string; t: string; o: Origin; q: string; a: string[]; c: number;
-  k?: string; x?: number[]; d?: number; n?: string; y?: string; u?: string; np?: number;
-  /** Contexto previo, supuesto (s), provisional (p), puede caducar (w), variante (v). */
-  source?: { url: string; title?: string; page?: number; verified: boolean };
-  cp?: string; supTexto?: string; s?: unknown; p?: unknown; w?: unknown; v?: unknown;
-}
+export type Question = QuestionRecord;
 
 /** Entrada de meta.json: [tema, ...datos auxiliares]. */
 export type MetaEntry = [string, Origin, string, (number | string)[], number];

@@ -124,7 +124,33 @@ export interface ReadingServices {
   next(): ReadingProgress | null;
   reset(): void;
 }
-export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; cards: CardsServices; errors: ErrorServices; failures: FailureServices; lightning: LightningServices; traps: TrapsServices; reading: ReadingServices; markReady(): void }
+export interface SettingsSnapshot {
+  sync: { state: string; user: { name: string; email: string } | null; configured: boolean; lastSync: number; error: string; detail: string; host: string; authDomain: string; accessError: string; requests: readonly AccessMember[] };
+  full: boolean; level: string; devMode: string | null; devRevealed: boolean; ui: { theme: string; size: number; lectura: number };
+  progress: { questions: number; topics: number; sessions: number; openReports: number }; exam: string; version: string; build: string; update: string | null;
+  offline: { complete: boolean; missing: readonly string[]; total: number; completedAt: number | null } | null; index: { questions: number; scenarios: number } | null;
+}
+export interface SettingsServices {
+  accountId(): string | null;
+  getSnapshot(): SettingsSnapshot;
+  subscribe(listener: () => void): () => void;
+  load(): Promise<void>;
+  setPreference(key: 'theme' | 'size' | 'lectura', value: string | number): void;
+  setExam(value: string): void;
+  setDevMode(value: string | null): void;
+  revealDev(): void;
+  requestAccess(): Promise<boolean>; login(): Promise<unknown>; logout(): Promise<unknown>; retrySync(): Promise<unknown>;
+  checkUpdate(): Promise<string | null | undefined>; applyUpdate(): Promise<void>;
+  downloadOffline(progress: (done: number, total: number) => void, isCurrent: () => boolean): Promise<NonNullable<SettingsSnapshot['offline']>>;
+  exportAnki(): Promise<string>; exportBackup(): Promise<string>;
+  previewBackup(text: string): { summary: string; serialized: string; attemptArchive?: unknown };
+  importBackup(serialized: string, attemptArchive?: unknown): Promise<void>;
+  resetAll(): void;
+  findAiSessions(from: number, to: number, modes: readonly ('practice' | 'simulation')[]): Promise<readonly { id: string; mode: 'practice' | 'simulation'; startedAt: number; attemptCount: number }[]>;
+  buildAiExport(input: { from: number; to: number; modes: readonly ('practice' | 'simulation')[]; sessionIds: readonly string[] }): Promise<unknown>;
+  deleteAiHistory(): Promise<{ accountSyncPending: boolean }>;
+}
+export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; cards: CardsServices; errors: ErrorServices; failures: FailureServices; lightning: LightningServices; traps: TrapsServices; reading: ReadingServices; settings: SettingsServices; markReady(): void }
 const Context = createContext<StudyServices | null>(null);
 export const AppServicesProvider = Context.Provider;
 export function useStudyServices(): StudyServices {
