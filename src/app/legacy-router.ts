@@ -1,3 +1,4 @@
+import type { StudyServices } from '../shared/ui/study-services.js';
 import { questionNotice, sourceHtml, filterFailures } from '../shared/presentation/legacy-study.js';
 import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
@@ -11,12 +12,9 @@ import { APP_VERSION, APP_BUILD } from './build-info.js';
 import { registerTraining } from '../features/trainers/legacy.js';
 import { registerCards } from '../features/cards/legacy.js';
 import { registerStats } from '../features/stats/legacy.js';
-import { registerHome } from '../features/home/legacy.js';
 import { registerSettings } from '../features/settings/legacy.js';
-import { registerHelp } from '../features/help/legacy.js';
-import { registerAcceso } from '../features/access/legacy.js';
-import { isFull, isOwner, GUEST_ROUTES } from '../adapters/legacy/access.js';
-import { getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, revealCurrentSolution, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, setCurrentConfidence, toggleCurrentDiscardedOption, addCurrentHighlight, removeCurrentHighlight } from '../core/application/legacy-engine.js';
+import { isFull, isOwner, accessLevel, GUEST_ROUTES } from '../adapters/legacy/access.js';
+import { subscribe as subscribeEngine, getCurrentRun, getLastResult, clearActiveRun, createRun, clearRun, saveRun, pendingRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, revealCurrentSolution, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, setCurrentConfidence, toggleCurrentDiscardedOption, addCurrentHighlight, removeCurrentHighlight } from '../core/application/legacy-engine.js';
 import { dominioTemas } from './legacy-topic-mastery.js';
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
@@ -503,12 +501,16 @@ routes.result = async function () {
 
 // ───────── sesión rápida (~5 min) ─────────
 async function quickSession() {
+  const account = store.accountId();
   const r = await quickItems(isFull());
+  if (account !== store.accountId()) return;
   if (!r.items.length) { toast(isFull() ? 'No hay preguntas nuevas ni repasos con esos filtros.' : 'No hay preguntas disponibles ahora mismo.'); return; }
   startRun({ kind: 'rev', feedback: true, items: r.items, titulo: r.titulo });
 }
 async function startRepaso() {
+  const account = store.accountId();
   const r = await repasoItems();
+  if (account !== store.accountId()) return;
   if (!r.items.length) { toast('No tienes repasos pendientes hoy.'); return; }
   startRun({ kind: 'rev', feedback: true, ...r });
 }
@@ -892,10 +894,10 @@ routes.falladas = async function () {
 registerTraining({ routes, go, route, pw, verifiedSources: VERIFIED_SOURCES }, screen);
 const { allCards, curatedCards } = registerCards({ routes, go, pw, reportBox, verifiedSources: VERIFIED_SOURCES }, screen);
 registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport: loadStrategyReportForPeriod, renderStrategyReport });
-registerHome({ routes, go, saludo, quickSession, startRepaso, openMenu, dominioTemas, falladasIds }, screen);
-registerAcceso({ routes, go }, screen);
+
+
 registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate, listManualExportSessions, createManualAiExport, deleteManualStudyHistory }, screen);
-registerHelp(routes, screen);
+
 
 // ───────── arranque ─────────
 export function bootLegacy(firstPaint = firstLegacyPaint): () => void {
@@ -972,3 +974,55 @@ function watchUpdates(reg: ServiceWorkerRegistration): () => void {
   reg.addEventListener('updatefound', () => reg.installing && ready(reg.installing), { signal: controller.signal });
   return () => controller.abort();
 }
+
+
+/** Temporary composition only: the React views own rendering and events. */
+export const studyServices: StudyServices = {
+  access: {
+    accountId: store.accountId, subscribe(listener) { const offSync = sync.onStatus(listener), offStore = store.onChange(listener); return () => { offSync(); offStore(); }; },
+    async load() { await recover(); return { owner: isOwner(), error: sync.status.accessErr || undefined, requests: sync.status.reqs, grants: sync.status.grants }; },
+    approve: async member => await sync.approve(member), reject: async uid => await sync.reject(uid), revoke: async uid => await sync.revoke(uid), confirm: ask, notify: toast,
+  },
+  markReady: () => painted(),
+  home: {
+    accountId: store.accountId,
+    getActiveStudy() { const run = getCurrentRun(); return run ? { title: run.titulo || 'Test', position: run.idx, total: run.items.length } : null; },
+    getAccess() { return { full: isFull(), level: accessLevel(), greeting: saludo(), state: sync.status.state, configured: sync.status.configured, signedIn: !!sync.status.user, pendingRequests: sync.status.access === 'propietario' ? sync.status.reqs.length : 0 }; },
+    subscribe(listener) { const offStore = store.onChange(listener), offSync = sync.onStatus(listener), offEngine = subscribeEngine(listener); return () => { offStore(); offSync(); offEngine(); }; },
+    async loadOverview() {
+      await recover(); const index = await getIndex(); await getMeta();
+      const stats = store.getStats(), dates = new Set<string>();
+      let seen = 0, answers = 0;
+      for (const id in stats) { seen++; answers += stats[id][0]; dates.add(new Date(stats[id][2]).toDateString()); }
+      const due = (await dueList()).length;
+      let streak = 0; const day = new Date();
+      if (!dates.has(day.toDateString())) day.setDate(day.getDate() - 1);
+      while (dates.has(day.toDateString())) { streak++; day.setDate(day.getDate() - 1); }
+      const exam = store.getCfg().exam;
+      const daysToExam = exam ? Math.max(0, Math.ceil((+new Date(exam + 'T09:00:00') - Date.now()) / 86400000)) : null;
+      const mastery = dominioTemas(index);
+      return { seen, total: index.n, answers, streak, daysToExam, due,
+        cardsDue: Object.values(store.getCards()).filter(record => record[3] >= 0 && record[4] <= now()).length,
+        quickCount: quickN(stats), slowCount: velocidad(stats).n, failures: falladasIds().length,
+        studiedTopics: store.getSeen().length, topicCount: index.temas.length,
+        assessedTopics: mastery.filter(topic => topic.est !== 'n').length,
+        weakTopics: mastery.filter(topic => topic.est === 'r').length,
+        masteredTopics: mastery.filter(topic => topic.est === 'g').length,
+      };
+    },
+    quickSession, startReview: startRepaso, openMenu,
+    login: sync.login, requestAccess: async () => await sync.requestAccess(), notify: toast,
+  },
+  topics: {
+    accountId: store.accountId, getStudied: store.getSeen,
+    setStudied(ids) { store.setSeen(ids); }, subscribe: store.onChange,
+    async loadTopics() {
+      await recover(); const index = await getIndex(); await getMeta();
+      return index.temas.map(topic => {
+        let answered = 0, correct = 0, total = 0;
+        for (const id of META._by[topic.id] || []) { const record = store.rec(id); if (record) { answered++; correct += record[1]; total += record[0]; } }
+        return { id: topic.id, name: topic.nombre, total: topic.n, answered, accuracy: total ? pct(correct, total) : null };
+      });
+    },
+  },
+};

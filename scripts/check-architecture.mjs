@@ -16,6 +16,13 @@ export function scanArchitecture(rootDirectory) {
   const config = configPath ? ts.readConfigFile(configPath, ts.sys.readFile).config : {};
   const options = ts.parseJsonConfigFileContent(config, ts.sys, root).options;
   const findings = new Map();
+  const dependencyEdges = new Set();
+  function addEdge(file, kind, detail) {
+    const key = JSON.stringify([file, kind, detail]);
+    if (dependencyEdges.has(key)) return;
+    dependencyEdges.add(key);
+    add(file, kind, detail);
+  }
   function add(file, kind, detail) {
     const key = JSON.stringify([file, kind, detail]), old = findings.get(key);
     findings.set(key, { file, kind, detail, count: (old?.count || 0) + 1 });
@@ -28,21 +35,22 @@ export function scanArchitecture(rootDirectory) {
       const resolved = ts.resolveModuleName(specifier, absolute, options, ts.sys).resolvedModule?.resolvedFileName;
       const target = resolved && !resolved.includes('node_modules') ? normalized(relative(root, resolved))
         : specifier.startsWith('.') ? normalized(relative(root, resolve(dirname(absolute), specifier))) : specifier;
-      if (legacy(target)) add(file, 'legacy-import', target);
-      if (layer(file) === 'core' && /^(react(?:-dom|-router)?|firebase|zustand|idb|zod)(\/|$)/.test(specifier)) add(file, 'core-package', specifier);
+      if (legacy(target)) addEdge(file, 'legacy-import', target);
+      if (layer(file) === 'core' && /^(react(?:-dom|-router)?|firebase|zustand|idb|zod)(\/|$)/.test(specifier)) addEdge(file, 'core-package', specifier);
       const forbidden = {
         core: ['adapters', 'app', 'features', 'shared'],
         adapters: ['app', 'features', 'shared'],
         features: ['adapters', 'app'], shared: ['adapters', 'app'],
       };
-      if (target.startsWith('src/') && (forbidden[layer(file)] || []).includes(layer(target))) add(file, 'layer-import', target);
+      if (target.startsWith('src/') && (forbidden[layer(file)] || []).includes(layer(target))) addEdge(file, 'layer-import', target);
       if (target.startsWith('src/') && (/\/(dto|view-models)\//.test(target)) &&
-        (layer(file) !== layer(target) || layer(file) !== 'adapters' && !file.startsWith(dirname(target) + '/'))) add(file, 'representation-import', target);
-      if (layer(file) === 'adapters' && target.startsWith('src/core/application/')) add(file, 'layer-import', target);
+        (layer(file) !== layer(target) || layer(file) !== 'adapters' && !file.startsWith(dirname(target) + '/'))) addEdge(file, 'representation-import', target);
+      if (layer(file) === 'adapters' && target.startsWith('src/core/application/')) addEdge(file, 'layer-import', target);
     }
     function visit(node) {
       if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier && ts.isStringLiteral(node.moduleSpecifier)) dependency(node.moduleSpecifier.text);
-      if (ts.isCallExpression(node) && (node.expression.kind === ts.SyntaxKind.ImportKeyword || ts.isIdentifier(node.expression) && node.expression.text === 'require') && node.arguments[0] && ts.isStringLiteral(node.arguments[0])) dependency(node.arguments[0].text);
+      if (ts.isImportTypeNode(node) && ts.isLiteralTypeNode(node.argument) && ts.isStringLiteralLike(node.argument.literal)) dependency(node.argument.literal.text);
+      if (ts.isCallExpression(node) && (node.expression.kind === ts.SyntaxKind.ImportKeyword || ts.isIdentifier(node.expression) && node.expression.text === 'require') && node.arguments[0] && ts.isStringLiteralLike(node.arguments[0])) dependency(node.arguments[0].text);
       const property = expression => ts.isPropertyAccessExpression(expression) ? expression.name.text
         : ts.isElementAccessExpression(expression) && expression.argumentExpression && ts.isStringLiteral(expression.argumentExpression) ? expression.argumentExpression.text : '';
       if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment && ['innerHTML', 'outerHTML'].includes(property(node.left))) add(file, 'html-write', property(node.left));

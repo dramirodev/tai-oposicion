@@ -16,7 +16,7 @@ afterEach(() => roots.splice(0).forEach(root => rmSync(root, { recursive: true, 
 describe('architecture migration boundaries', () => {
   it('rejects static, reexported, dynamic and aliased infrastructure from core', () => {
     const root = fixture({ 'src/core/domain/rules.ts': "import '@adapters/db'; export * from '../../adapters/db'; const load = () => import('../../adapters/db');", 'src/adapters/db.ts': 'export const db = 1;' });
-    expect(scanArchitecture(root).filter(x => x.kind === 'layer-import').reduce((sum, item) => sum + item.count, 0)).toBe(3);
+    expect(scanArchitecture(root).filter(x => x.kind === 'layer-import').reduce((sum, item) => sum + item.count, 0)).toBe(1);
   });
   it('rejects frameworks and migration packages in the core', () => {
     const root = fixture({ 'src/core/application/actions.ts': "import 'zustand/vanilla'; import 'zod'; import 'idb';" });
@@ -47,3 +47,13 @@ describe('architecture migration boundaries', () => {
     expect(scanArchitecture(root)).toEqual([]);
   });
 });
+  it('rejects type-only imports and constant-template dynamic imports from legacy adapters', () => {
+    const root = fixture({
+      'src/core/domain/types.ts': "export type Leaked = import('../../adapters/db').Db; export type AlsoLeaked = import(`../../adapters/db`).Db;",
+      'src/core/application/load.ts': 'export const load = () => import(`../../adapters/db`);',
+      'src/adapters/db.ts': 'export interface Db {}',
+    });
+    const findings = scanArchitecture(root).filter(item => item.kind === 'layer-import');
+    expect(findings.reduce((sum, item) => sum + item.count, 0)).toBe(2);
+    expect(findings.some(item => item.file.endsWith('load.ts'))).toBe(true);
+  });
