@@ -4,6 +4,7 @@ import { useStudyServices } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { useActionLifetime } from '../../shared/ui/use-action-lifetime.js';
 import { usePageReady } from '../../shared/ui/use-page-ready.js';
+import { PageLoading } from '../../shared/ui/PageLoading.js';
 const date = (timestamp?: number) => timestamp ? new Date(timestamp).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }) : '';
 export function AccessPage() {
   const { access: services } = useStudyServices();
@@ -25,7 +26,7 @@ export function AccessPage() {
     finally { busy.current.delete(id); if (alive()) setPending(new Set(busy.current)); }
   };
   if (error) return <p role="alert">No se pudo cargar la lista de accesos.</p>;
-  if (!overview) return <p className="sub loading" role="status">Cargando…</p>;
+  if (!overview) return <PageLoading variant="access" />;
   if (!overview.owner) return <Navigate to="/home" replace />;
   return <><h1>Accesos</h1><p className="sub">Quien no esté aprobado solo puede hacer la sesión rápida de 5 minutos. Al aprobar, la persona obtiene todas las funciones y su propio historial sincronizado.</p>
     {overview.error && <div className="note">No se pudo leer la lista de accesos ({overview.error}). Comprueba que las reglas de Firestore están publicadas.</div>}

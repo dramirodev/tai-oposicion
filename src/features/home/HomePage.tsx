@@ -5,6 +5,7 @@ import { useStudyServices } from '../../shared/ui/study-services.js';
 import { useActionLifetime } from '../../shared/ui/use-action-lifetime.js';
 import { usePageReady } from '../../shared/ui/use-page-ready.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
+import { PageLoading } from '../../shared/ui/PageLoading.js';
 
 const icons: Record<string, ReactNode> = {
   test: <><path d="M4 20l4-1 11-11-3-3L5 16z" /><path d="M14 6l3 3" /></>,
@@ -55,7 +56,7 @@ export function HomePage() {
     finally { busy.current.delete(id); if (alive()) setPending(new Set(busy.current)); }
   };
   if (error) return <div className="card" role="alert"><h2>No se pudo cargar</h2><p>{navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button className="btn" id="retryRoute" onClick={() => void navigate('/home')}>Reintentar</button></div>;
-  if (!overview) return <p className="sub loading" role="status">Cargando…</p>;
+  if (!overview) return <PageLoading variant="home" />;
   const access = services.getAccess(), run = services.getActiveStudy();
   const go = (route: string) => () => void navigate('/' + route);
   return <>

@@ -70,14 +70,13 @@ export function renderLegacy(host: HTMLElement, pathname: string) {
   let [, name, ...args] = pathname.split('/'); name ||= 'home';
   const f = routes[name] || routes.home;
   lastP = 0; window.scrollTo(0, 0);
-  const lt = setTimeout(() => { if (active) app.innerHTML = '<p class="sub loading" role="status">Cargando…</p>'; }, 120);
   const ready = (async () => {
     try {
       await recover();
       if (name !== 'ayuda') { await getIndex(); await getMeta(); }
       if (!active) return;
       await f(...args); if (!active) return;
-      clearTimeout(lt); enter(app); countUp();
+      enter(app); countUp();
       const hd = app.querySelector<El>('h1'); if (hd) hd.tabIndex = -1;
       (hd || app).focus({ preventScroll: true });
       const currentRun = getCurrentRun();
@@ -90,9 +89,9 @@ export function renderLegacy(host: HTMLElement, pathname: string) {
       if (!active) return;
       app.innerHTML = `<div class="card" role="alert"><h2>No se pudo cargar</h2><p>${navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button class="btn" id="retryRoute">Reintentar</button></div>`;
       $('#retryRoute').onclick = () => route(); console.error(e);
-    } finally { clearTimeout(lt); painted(); }
+    } finally { painted(); }
   })();
-  return { ready, dispose() { active = false; clearTimeout(lt); release(); } };
+  return { ready, dispose() { active = false; release(); } };
 }
 
 // ───────── motor de preguntas ─────────
