@@ -5,7 +5,8 @@ import { $, legacyScope, L, toast, type El } from '../../shared/ui/legacy-dom.js
 import { helpIconLink } from '../../shared/ui/help-icon-link.js';
 import { falladasIds }  from '../../core/application/legacy-engine.js';
 import { ORIGEN, TRAMPAS, TIPOS } from '../../shared/presentation/labels.js';
-export function registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport, renderStrategyReport }: any) {
+import { mountQuestionEvolution } from './question-evolution-view.js';
+export function registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport, renderStrategyReport, loadQuestionEvolution }: any) {
 // ───────── mapa de dominio ─────────
 // Estado por tema a partir de: precisión actual (último resultado de cada pregunta vista),
 // cobertura (vistas / banco, con objetivo del 60 %) y frescura (días desde la última vez).
@@ -180,7 +181,7 @@ routes.stats = async function () {
   ${Object.entries(TI).map(([k, v]) => `<div class="line"><span>${TIPOS[k] || k}</span><span>${pct(v[1], v[0])}% <small>(${v[0]})</small></span></div>`).join('')}</div>
   </section>
   <section id="stats-sims" aria-label="Historial de simulacros" hidden><h2>Simulacros</h2><div id="sims"></div></section>
-  <section id="stats-evo" aria-label="Evolución del estudio" hidden><h2>Evolución</h2><div id="evo"></div><h2>Preguntas lentas</h2><div id="slow"></div>
+  <section id="stats-evo" aria-label="Evolución del estudio" hidden><h2>Evolución</h2><h3>Resultados de preguntas</h3><div id="attempt-evolution"><p class="sub" role="status">Cargando historial detallado…</p></div><div id="evo"></div><h2>Preguntas lentas</h2><div id="slow"></div>
     <h2>Analítica de estrategia</h2><div class="card"><p>Informe experimental sobre el historial detallado. Solo incluye sesiones completadas. Recomendaciones con al menos 20 respuestas en 3 sesiones; describen asociación observada, no causalidad.</p>
       <label for="strategy-period">Periodo</label><select id="strategy-period"><option value="30">Últimos 30 días</option><option value="90" selected>Últimos 90 días</option><option value="365">Último año</option></select>
       <button class="btn" id="strategy-load">Calcular informe</button><div id="strategy-report" aria-live="polite"></div>
@@ -219,6 +220,16 @@ routes.stats = async function () {
   paintSims();
   paintEvo(bankIndex);
   paintSlow();
+  void (async () => {
+    const output = $('#attempt-evolution');
+    if (!output || !loadQuestionEvolution) return;
+    try {
+      const weeks = await loadQuestionEvolution(12);
+      if (output.isConnected && account === store.accountId()) mountQuestionEvolution(output, weeks);
+    } catch {
+      if (output.isConnected && account === store.accountId()) output.textContent = 'No se pudo leer el historial detallado. El resto del progreso sigue disponible.';
+    }
+  })();
 };
 
 

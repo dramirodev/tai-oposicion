@@ -26,7 +26,7 @@ import { canonicalText, paintTextHighlight, selectedTextAnchor } from './legacy-
 import { findLegacyCodeExplanation } from './explanation-composition.js';
 import { explanationMapper } from '../features/explanations/explanation-mapper.js';
 import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
-import { loadStrategyReportForPeriod } from './strategy-composition.js';
+import { loadQuestionEvolution, loadStrategyReportForPeriod } from './strategy-composition.js';
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './ai-study-export-composition.js';
 
@@ -894,7 +894,7 @@ routes.falladas = async function () {
 
 registerTraining({ routes, go, route, pw, verifiedSources: VERIFIED_SOURCES }, screen);
 const { allCards, curatedCards } = registerCards({ routes, go, pw, reportBox, verifiedSources: VERIFIED_SOURCES }, screen);
-registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport: loadStrategyReportForPeriod, renderStrategyReport });
+registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport: loadStrategyReportForPeriod, renderStrategyReport, loadQuestionEvolution });
 
 
 registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate, listManualExportSessions, createManualAiExport, deleteManualStudyHistory }, screen);
