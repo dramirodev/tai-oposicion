@@ -154,3 +154,38 @@ Validación local en la rama de #38: prueba focalizada 2/2 (Chromium y WebKit), 
 3. Publicar una PR separada contra `main`, sin esperar sus pipelines.
 4. Esperar aprobación del usuario para Etapa B arquitectónica/Zustand, conforme a la petición original de Etapa A.
 5. Al cerrar las tareas autorizadas, abrir una rama separada para evaluar React Testing Library y si Jest aporta valor frente a Vitest.
+
+## Integración de Recharts — trabajo en curso
+
+### Auditoría y decisiones
+
+- `src/features/stats/StatsPage.tsx` tenía una línea SVG propia para la nota de simulacros y la evolución semanal de acierto/tiempo.
+- `src/features/stats/StatsEvolutionSection.tsx` tenía otra línea SVG propia para preguntas vistas, acertadas, falladas y “No lo sé”. Son métricas existentes y la migración conserva sus datos y tablas.
+- Migración recomendada y aplicada a esas tres visualizaciones porque Recharts aporta ejes/fechas, tooltips, navegación por teclado y adaptación al contenedor.
+- Los indicadores de dominio, barras de avance y tablas se mantienen: son mejores representaciones para sus datos y no necesitan un gráfico.
+- No había una biblioteca de gráficos anterior ni Tailwind/shadcn. No se introdujo shadcn ni un sistema CSS nuevo; los gráficos usan los tokens CSS ya existentes.
+
+### Arquitectura e implementación
+
+- Añadida dependencia `recharts` 3.10.1.
+- `src/features/stats/StatsCharts.tsx` concentra `StatsTrendChart` y `QuestionEvolutionChart`, con etiquetas y descripciones accesibles, ejes/fechas localizados, tooltips, colores semánticos y animación desactivada.
+- `StatsSimulationSection` y `StatsEvolutionSection` cargan los gráficos con `React.lazy` y `Suspense`; el código se descarga cuando se abre la sección que lo necesita. La tabla semanal y la comparación de intentos siguen proporcionando la misma información sin depender del color.
+- Los estados sin datos y de carga tienen texto explícito. CSS mantiene altura válida para `ResponsiveContainer` y compensa el `zoom` de la aplicación en el tamaño observado.
+- Retiradas las reglas SVG manuales que ya no tenían consumidores (`.evo`, `.gl`, `.gt`, `.ln`, `.pt`, `.vl`, `.evolution-hit` y `.tip`). Actualizada la guía local de estilos.
+- El hook React Doctor reportó `prefer-dynamic-import` en el import interno de Recharts. Se clasifica como falso positivo: los padres cargan `StatsCharts` mediante `React.lazy` y el build emite `StatsCharts` como chunk separado. No se desactivó ni suprimió la regla.
+
+### Validación actual
+
+- `npm run check`: pasó en una ejecución (402/402 tests, lint, TypeScript y arquitectura: 64 hallazgos baseline, cero deuda nueva). En repeticiones posteriores apareció una sola prueba intermitente, alternando entre `design-home-stats.test.js` y `app.test.js`; en ambos casos el mismo test pasa al ejecutarlo aislado. No se cambiaron ni relajaron esas pruebas.
+- `npm run build`: pasó. `StatsCharts` es un chunk de 363.68 kB (107.24 kB gzip), separado de la entrada y cargado al usar estadísticas. Los avisos de tamaño preexistentes de `index` (523.44 kB) y `legacy-sync` (549.49 kB) siguen pendientes.
+- `npx playwright test tests/e2e/stats-charts.spec.ts`: 6/6 Chromium/WebKit; puntuaciones reales, tooltip con teclado, temas claro/oscuro, anchos 320/1440, ausencia de overflow y estado vacío.
+- `npm run test:e2e`: 160/160 Chromium/WebKit en local.
+- La prueba offline heredada de explicaciones fallaba en `main` porque bloqueaba service workers y simulaba su respuesta. La corrección que usa el worker/caché reales ya está integrada con PR #38 (`05a6ac8`), por eso no aparece como diferencia propia de esta rama.
+- Stylelint no está instalado/configurado en el proyecto. La revisión visual se apoyó en Taste y en E2E de navegador; no certifica dispositivos físicos.
+
+### Estado de PR y continuación
+
+- PR #38 se integró en `main` (`05a6ac8`); su validación remota terminó con éxito.
+- La integración Lucide sigue abierta como PR #39 contra `main`.
+- Rama actual de Recharts: `feat/recharts-study-visualizations`, rebasada a `05a6ac8`. Preparar una PR independiente contra `main` tras revisar `git diff --check`, actualizar esta sección con el SHA/URL y no esperar los checks remotos.
+- Etapa B de arquitectura/Zustand sigue pendiente de aprobación expresa. La evaluación de React Testing Library/Jest permanece en una rama posterior, después de cerrar los trabajos activos.
