@@ -6,14 +6,15 @@ import {
   UI_THEMES,
   UI_ZOOMS,
 } from '../src/shared/presentation/study-labels.ts';
-import { MOTIVOS, MOTIVOS_FALLO, CONSEJOS_LECTURA, TEMAS_UI, ZOOMS } from '../src/legacy/logic.ts';
+import { normalizeUiPreferences } from '../src/shared/presentation/ui-preferences.ts';
 
 describe('study presentation labels', () => {
-  it('keeps the legacy labels as aliases of the shared presentation values', () => {
-    expect(MOTIVOS).toEqual(ERROR_REPORT_REASONS);
-    expect(MOTIVOS_FALLO).toEqual(FAILURE_REASONS);
-    expect(CONSEJOS_LECTURA).toEqual(READING_TIPS);
-    expect(TEMAS_UI).toEqual(UI_THEMES);
-    expect(ZOOMS).toEqual(UI_ZOOMS);
+  it('normalizes saved presentation settings against shared labels', () => {
+    expect(ERROR_REPORT_REASONS.length).toBeGreaterThan(3);
+    expect(FAILURE_REASONS).toContain('No lo sabía');
+    expect(READING_TIPS.length).toBeGreaterThan(3);
+    expect(UI_THEMES).toContain('dark');
+    expect(UI_ZOOMS).toHaveLength(4);
+    expect(normalizeUiPreferences(null)).toEqual({ theme: 'auto', size: 0, lectura: 0 });
   });
 });

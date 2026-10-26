@@ -1,7 +1,10 @@
 import { sourceHtml, questionNotice } from '../../shared/presentation/legacy-study.js';
 import { previewCardDueAt } from '../../core/domain/spaced-repetition.js';
 import * as store from '../../adapters/local/legacy-store.js';
-import { esc, richHtml, pct, swipeDir, pickCards, cardStats, cardFromQuestion } from '../../legacy/logic.js';
+import { escapeHtml as esc, percentage as pct } from '../../shared/presentation/format.js';
+import { richHtml } from '../../shared/presentation/study-text.js';
+import { swipeDirection } from '../../shared/ui/study-input.js';
+import { selectLegacyCards as pickCards, summarizeLegacyCards as cardStats, cardFromFailedQuestion as cardFromQuestion } from './flashcard-mapper.js';
 import { fetchJson, getIndex, getMeta, byIds, temaName, now } from '../../adapters/http/legacy-data.js';
 import { $, legacyScope, toast, focusHeading, type El } from '../../shared/ui/legacy-dom.js';
 import { helpIconLink } from '../../shared/ui/help-icon-link.js';
@@ -96,7 +99,7 @@ function cardSession() {
   };
   let tx: any = null;
   const onTs = (e: any) => { const t = e.touches[0]; tx = e.touches.length === 1 && t.clientX > 24 && t.clientX < innerWidth - 24 && !(e.target as El).closest<El>('button,details,input,textarea') ? [t.clientX, t.clientY] : null; };
-  const onTe = (e: any) => { if (!tx) return; const t = e.changedTouches[0]; const d = swipeDir(t.clientX - tx[0], t.clientY - tx[1]); tx = null; if (R.rev && d === 'next') grade(0); else if (R.rev && d === 'prev') grade(2); };
+  const onTe = (e: any) => { if (!tx) return; const t = e.changedTouches[0]; const d = swipeDirection(t.clientX - tx[0], t.clientY - tx[1]); tx = null; if (R.rev && d === 'next') grade(0); else if (R.rev && d === 'prev') grade(2); };
   document.addEventListener('keydown', onKey); document.addEventListener('touchstart', onTs, { passive: true }); document.addEventListener('touchend', onTe, { passive: true });
   routeScreen.cleanup = () => { document.removeEventListener('keydown', onKey); document.removeEventListener('touchstart', onTs); document.removeEventListener('touchend', onTe); };
 

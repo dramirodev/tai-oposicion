@@ -1,6 +1,12 @@
 import { questionNotice, sourceHtml } from '../../shared/presentation/legacy-study.js';
 import * as store from '../../adapters/local/legacy-store.js';
-import { esc, richHtml, shuffle, pct, normUi, hiliteHtml, claveSpans, pideNegativa, minLectura, velocidad, CONSEJOS_LECTURA } from '../../legacy/logic.js';
+import { escapeHtml as esc, percentage as pct } from '../../shared/presentation/format.js';
+import { richHtml, hiliteHtml, claveSpans } from '../../shared/presentation/study-text.js';
+import { randomStudyOrder as shuffle } from '../../shared/ui/study-random.js';
+import { normalizeUiPreferences } from '../../shared/presentation/ui-preferences.js';
+import { asksForNegativeOption, minimumReadingSeconds } from '../../core/domain/reading-strategy.js';
+import { velocidad } from '../stats/analytics-mapper.js';
+import { READING_TIPS as CONSEJOS_LECTURA } from '../../shared/presentation/study-labels.js';
 import { META, getMeta, temaName, now, pick, dueList, byIds } from '../../adapters/http/legacy-data.js';
 import { $, legacyScope, L, ask, focusHeading, type El } from '../../shared/ui/legacy-dom.js';
 import { TRAMPAS, TRAMPA_EXPL } from '../../shared/presentation/labels.js';
@@ -25,7 +31,7 @@ routes.relampago = async function () {
   if (routeGeneration !== generation) return;
   if (!q) { app.innerHTML = '<div class="card"><p>No hay pregunta disponible.</p></div>'; return; }
   const why = lucky.includes(q.i) ? '🍀 Marcada como suerte' : due.includes(q.i) ? '⏰ Toca repasarla' : fallos.includes(q.i) ? '↩ La fallaste' : '🆕 Nueva';
-  const LEC = normUi(store.getCfg().ui).lectura, kw = (x: any) => richHtml(x, !!LEC), t0 = Date.now();
+  const LEC = normalizeUiPreferences(store.getCfg().ui).lectura, kw = (x: any) => richHtml(x, !!LEC), t0 = Date.now();
   app.innerHTML = `<h1>⚡ Pregunta relámpago</h1><div class="sub">${why}</div>
   <div class="card q"><div class="meta"><span class="tag">${esc(q.t)} · ${esc(temaName(q.t))}</span></div>
   ${warning(q, verifiedSources)}<div class="enun pre">${kw(q.q)}</div>
@@ -149,7 +155,7 @@ routes.lectura = async function () {
     clearInterval(gt);
     if (routeGeneration !== generation || R !== LRUN) return;
     if (R.k >= R.items.length) return end();
-    const q = R.items[R.k], neg = pideNegativa(q.q);
+    const q = R.items[R.k], neg = asksForNegativeOption(q.q);
     const head = `<div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog"><div ${pw(100 * R.k / R.items.length)}></div></div><div class="cnt">${R.k + 1}/${R.items.length}</div></div><h1 class="sub">Lectura atenta · paso ${R.step + 1} de 3</h1>`;
     if (R.step === 0) {
       app.innerHTML = `${head}<div class="card q">${warning(q, verifiedSources)}<div class="enun pre">${richHtml(q.q)}</div><p><b>1. ¿Qué te piden?</b> Antes de ver las opciones.</p>
@@ -193,7 +199,7 @@ routes.lectura = async function () {
         $('#chk').textContent = 'Ver opciones →'; $('#chk').dataset.done = '1';
       };
     } else {
-      const need = minLectura(q); R.t0 = Date.now();
+        const need = minimumReadingSeconds({ context: q.cp, statement: q.q, options: q.a }); R.t0 = Date.now();
       app.innerHTML = `${head}<div class="card q">${warning(q, verifiedSources)}<div class="enun pre">${richHtml(q.q, true)}</div><p class="sm"><b>3. Lee las cuatro opciones enteras</b> antes de responder.</p><div class="opts">${q.a.map((o: any, i: any) => `<button class="opt" data-i="${i}" disabled><b>${L[i]}</b><span class="pre">${richHtml(o, true)}</span></button>`).join('')}</div><div class="gate" id="gate"></div><div id="fb2"></div></div>`;
       const upd = () => { if (routeGeneration !== generation || R !== LRUN) return clearInterval(gt); const l = Math.ceil(need - (Date.now() - R.t0) / 1000), g = $<El>('#gate'); if (!g) return clearInterval(gt); if (l <= 0) { clearInterval(gt); g.remove(); app.querySelectorAll<El>('.opt').forEach(b => b.disabled = false); } else g.textContent = `Lectura mínima: ${l} s`; };
       upd(); gt = setInterval(upd, 400);

@@ -5,7 +5,18 @@ import { questionNotice, sourceHtml, filterFailures } from '../shared/presentati
 import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
 import * as store from '../adapters/local/legacy-store.js';
-import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, pickGuest, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from '../legacy/logic.js';
+import { escapeHtml as esc, formatTime as fmtT, percentage as pct } from '../shared/presentation/format.js';
+import { richHtml, hiliteHtml } from '../shared/presentation/study-text.js';
+import { ERROR_REPORT_REASONS as MOTIVOS, FAILURE_REASONS as MOTIVOS_FALLO } from '../shared/presentation/study-labels.js';
+import { normalizeUiPreferences } from '../shared/presentation/ui-preferences.js';
+import { asksForNegativeOption, minimumReadingSeconds } from '../core/domain/reading-strategy.js';
+import { calculateExamScore as nota } from '../core/domain/scoring.js';
+import { isQuestionAllowed, composeWeightedQuestions } from '../core/domain/selection.js';
+import { randomStudyOrder as shuffle } from '../shared/ui/study-random.js';
+import { simulationPace as ritmoSimulacro } from '../core/domain/simulation-analysis.js';
+import { swipeDirection, studyKeyAction } from '../shared/ui/study-input.js';
+import { velocidad, quickQuestionCount } from '../features/stats/analytics-mapper.js';
+import { mapSimulationResultToLegacy } from './simulation-result-mapper.js';
 import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds } from '../adapters/http/legacy-data.js';
 import { $, legacyScope, bindLegacyHost, L, toast, ask, guard, focusHeading, type El } from '../shared/ui/legacy-dom.js';
 import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
@@ -155,20 +166,20 @@ routes.quiz = async function () {
     if (/^(INPUT|TEXTAREA|SELECT)$/.test(((e.target as El).tagName || ''))) return;
     if (R.paused && e.key === 'Tab') { e.preventDefault(); const rb = $('.overlay #resume'); rb && rb.focus(); return; }
     if (R.items[R.idx] === undefined) return;
-    const act = keyAction(e, R.items[R.idx].a.length); if (!act) return;
+    const act = studyKeyAction(e, R.items[R.idx].a.length); if (!act) return;
     e.preventDefault();
-    if (act.t === 'opt') { const b = app.querySelector<El>(`.opt[data-i="${act.i}"]`); b && b.click(); }
-    else if (act.t === 'next') { const b = $('#next'); b && b.click(); }
-    else if (act.t === 'prev') prev();
-    else if (act.t === 'blank') { const b = $('#blank'); b && b.click(); }
-    else if (act.t === 'flag') { const b = $('#flag'); b && b.click(); }
-    else if (act.t === 'pause') { const b = R.paused ? $('.overlay #resume') : $('#pause'); b && b.click(); }
+    if (act.type === 'option') { const b = app.querySelector<El>(`.opt[data-i="${act.index}"]`); b && b.click(); }
+    else if (act.type === 'next') { const b = $('#next'); b && b.click(); }
+    else if (act.type === 'previous') prev();
+    else if (act.type === 'blank') { const b = $('#blank'); b && b.click(); }
+    else if (act.type === 'flag') { const b = $('#flag'); b && b.click(); }
+    else if (act.type === 'pause') { const b = R.paused ? $('.overlay #resume') : $('#pause'); b && b.click(); }
   };
   let tx: any = null;
   const onTs = (e: any) => { const t = e.touches[0]; tx = e.touches.length === 1 && t.clientX > 24 && t.clientX < innerWidth - 24 && !(e.target as El).closest<El>('details,input,textarea,button,.opt') ? [t.clientX, t.clientY] : null; };
   const onTe = (e: any) => {
     if (!tx) return; const t = e.changedTouches[0];
-    const d = swipeDir(t.clientX - tx[0], t.clientY - tx[1]); tx = null;
+    const d = swipeDirection(t.clientX - tx[0], t.clientY - tx[1]); tx = null;
     if (d === 'next') { const b = $('#next'); b && b.click(); } else if (d === 'prev') prev();
   };
   const onSelectionChange = () => {
@@ -198,7 +209,7 @@ routes.quiz = async function () {
     if (R.idx >= R.items.length) return finish();
     saveRun();
     startCurrentQuestion();
-    const LEC = normUi(store.getCfg().ui).lectura, kw = (t: any) => richHtml(t, !!LEC);
+    const LEC = normalizeUiPreferences(store.getCfg().ui).lectura, kw = (t: any) => richHtml(t, !!LEC);
     const q = R.items[R.idx];
     const a = R.ans[R.idx];
     const state = R.feedback ? (R.studyStates?.[R.idx] || 'unseen') : undefined;
@@ -232,7 +243,7 @@ routes.quiz = async function () {
       ${questionNotice(q)}
       ${inSup ? `<details class="sup scenario-context"><summary>Enunciado del supuesto</summary><div class="pre">${esc(R.supTexto || q.supTexto || '')}</div></details>` : ''}
       ${q.cp ? `<div class="ctx pre">${richHtml(q.cp)}</div>` : ''}
-      ${pideNegativa(q.q) ? '<div class="pide">Ojo: te piden la opción INCORRECTA o la excepción</div>' : ''}
+      ${asksForNegativeOption(q.q) ? '<div class="pide">Ojo: te piden la opción INCORRECTA o la excepción</div>' : ''}
       <div class="enun pre" tabindex="0" aria-label="Enunciado. Usa Mayús y las flechas para seleccionar texto">${kw(q.q)}</div>
       <div class="study-signals" aria-label="Señales opcionales de estudio">
         <span class="study-signals-label">¿Cómo lo ves?</span>
@@ -282,7 +293,7 @@ routes.quiz = async function () {
     if (R.paused) { app.querySelectorAll<El>('.qhead,.sub,.pace,.card.q,.bar2').forEach(el => { if (!el.closest<El>('.overlay')) el.inert = true; }); const rb = $('.overlay #resume'); rb && rb.focus(); }
     clearInterval(gateTimer);
     if (LEC === 2 && !reveal && a === undefined && !R.paused) {
-      const need = minLectura(q), left = () => Math.ceil(need - (Date.now() - R.qT0!) / 1000);
+      const need = minimumReadingSeconds({ context: q.cp, statement: q.q, options: q.a }), left = () => Math.ceil(need - (Date.now() - R.qT0!) / 1000);
       if (left() > 0) {
         const opts = app.querySelectorAll<El>('.opt'); opts.forEach(b => b.disabled = true);
         $('.opts').insertAdjacentHTML('afterend', `<div class="gate" id="gate"></div>`);
@@ -402,7 +413,7 @@ routes.quiz = async function () {
     $('#rep') && reportBox(q, $('#rep'));
     $('#flag') && ($('#flag').onclick = () => { store.toggleFlag(q.i, q.t); $('#flag').textContent = store.rec(q.i)?.[6] ? '★ Dudosa' : '☆ Marcar como dudosa'; });
   }
-  function answer(q: any, i: any) { answerCurrentQuestion(i, minLectura(q)); }
+  function answer(q: any, i: any) { answerCurrentQuestion(i, minimumReadingSeconds({ context: q.cp, statement: q.q, options: q.a })); }
   async function finish(reason: 'complete' | 'interrupted' | 'timeout' = 'complete') {
     if (getCurrentRun() !== R || closing && reason !== 'timeout') return;
     if (reason === 'timeout') endConfirmation?.abort();
@@ -423,7 +434,7 @@ routes.quiz = async function () {
 };
 
 function simAnalisis({ ses, items, ans, times, limit }: any) {
-  const r = analisisSimulacro({ correct: items.map((q: any) => q.c), ans, times, limitSecs: limit * 60, secs: ses.secs });
+  const r = mapSimulationResultToLegacy({ correct: items.map((q: any) => q.c), ans, times, limitSecs: limit * 60, secs: ses.secs });
   const pts = [];
   pts.push(`<div class="line"><span>Nota sin penalización</span><span>${r.sinPenal}</span></div>`);
   pts.push(`<div class="line"><span>Puntos que te restaron los fallos</span><span class="${r.perdidoFallos ? 'r' : ''}">−${r.perdidoFallos}</span></div>`);
@@ -759,8 +770,8 @@ async function simParte1(idx: any, org: any, N: any, only: any) {
   const temas = idx.temas.filter((t: any) => !only || only.has(t.id));
   const pools: Record<string, any> = {};
   const ls = await Promise.all(temas.map((t: any) => getTema(t.id)));
-  temas.forEach((t: any, i: any) => { pools[t.id] = shuffle(ls[i].filter((x: any) => allowed(x, org) && x.np !== 1)).sort((a: any, b: any) => (store.rec(a.i) ? 1 : 0) - (store.rec(b.i) ? 1 : 0)); });
-  return composeSim(temas, pools, N);
+  temas.forEach((t: any, i: any) => { pools[t.id] = shuffle(ls[i].filter((x: any) => isQuestionAllowed(x.o, x.r, org) && x.np !== 1)).sort((a: any, b: any) => (store.rec(a.i) ? 1 : 0) - (store.rec(b.i) ? 1 : 0)); });
+  return composeWeightedQuestions(temas.map((topic: any) => ({ id: topic.id, weight: topic.w })), pools, N, Math.random);
 }
 // Parte 2 tras la parte 1: ofrece 2 supuestos
 routes.sim2 = async function () {
@@ -1022,7 +1033,7 @@ export const studyServices: StudyServices = {
             assessed: topics.filter(topic => topic.est !== 'n').length };
         }),
         cardsDue: Object.values(store.getCards()).filter(record => record[3] >= 0 && record[4] <= now()).length,
-        quickCount: quickN(stats), slowCount: velocidad(stats).n, failures: falladasIds().length,
+        quickCount: quickQuestionCount(stats), slowCount: velocidad(stats).n, failures: falladasIds().length,
         studiedTopics: store.getSeen().length, topicCount: index.temas.length,
         assessedTopics: mastery.filter(topic => topic.est !== 'n').length,
         weakTopics: mastery.filter(topic => topic.est === 'r').length,

@@ -1,5 +1,8 @@
 import * as store from '../../adapters/local/legacy-store.js';
-import { esc, shuffle, fmtT, pct, dominioCalc, aggregateWeeks, slowList, simHistory, compareSessions, MOTIVOS_FALLO, cargaRepasos, motivosFallo, suertes, velocidad, CONSEJOS_LECTURA } from '../../legacy/logic.js';
+import { escapeHtml as esc, formatTime as fmtT, percentage as pct } from '../../shared/presentation/format.js';
+import { randomStudyOrder as shuffle } from '../../shared/ui/study-random.js';
+import { FAILURE_REASONS as MOTIVOS_FALLO, READING_TIPS as CONSEJOS_LECTURA } from '../../shared/presentation/study-labels.js';
+import { aggregateWeeks, slowList, simHistory, compareSessions, cargaRepasos, motivosFallo, suertes, velocidad } from './analytics-mapper.js';
 import { META, getIndex, getMeta, now, byIds } from '../../adapters/http/legacy-data.js';
 import { $, legacyScope, L, toast, type El } from '../../shared/ui/legacy-dom.js';
 import { helpIconLink } from '../../shared/ui/help-icon-link.js';
