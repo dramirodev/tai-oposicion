@@ -41,15 +41,7 @@ export function hashSegment(segment: string): string {
   return `#${pathForSegment(segment)}`;
 }
 
-export const legacyPaths = [
-  paths.quiz,
-  paths.result,
-  paths.test,
-  paths.simulation,
-  paths.simulationReview,
-  paths.exams,
-  paths.stats,
-] as const;
+export const legacyPaths = [] as const;
 
 export function routeSegment(path: string): string {
   return path.replace(/^\//, '');

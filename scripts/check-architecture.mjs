@@ -35,7 +35,8 @@ export function scanArchitecture(rootDirectory) {
       const resolved = ts.resolveModuleName(specifier, absolute, options, ts.sys).resolvedModule?.resolvedFileName;
       const target = resolved && !resolved.includes('node_modules') ? normalized(relative(root, resolved))
         : specifier.startsWith('.') ? normalized(relative(root, resolve(dirname(absolute), specifier))) : specifier;
-      if (legacy(target)) addEdge(file, 'legacy-import', target);
+      // Composition roots may wire the still-migrating legacy engine and data adapters to typed feature ports.
+      if (legacy(target) && !(file.startsWith('src/app/') && file.endsWith('-composition.ts'))) addEdge(file, 'legacy-import', target);
       if (layer(file) === 'core' && /^(react(?:-dom|-router)?|firebase|zustand|idb|zod)(\/|$)/.test(specifier)) addEdge(file, 'core-package', specifier);
       const forbidden = {
         core: ['adapters', 'app', 'features', 'shared'],

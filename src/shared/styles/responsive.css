@@ -2,7 +2,7 @@
 
 @media(max-width:380px) {
   nav a {
-    font-size: 11px;
+    font-size: 0.6875rem;
   }
 }
 
@@ -25,29 +25,29 @@
 
 @media(min-width:1000px) {
   main:has(.with-sup) {
-    max-width: 1120px;
+    max-width: 70rem;
   }
 
   .card.q.with-sup {
     display: flow-root;
-    min-height: 300px;
+    min-height: 18.75rem;
   }
 
   .with-sup>.scenario-context {
     float: left;
     width: 38%;
-    margin: 0 22px 20px 0;
+    margin: 0 1.375rem 1.25rem 0;
     position: sticky;
-    top: 80px;
+    top: 5rem;
     max-height: 65vh;
     overflow: auto;
     border: 1px solid var(--line);
-    padding: 12px;
+    padding: 0.75rem;
   }
 
   .with-sup>.scenario-context summary {
     font-weight: 600;
-    min-height: 44px;
+    min-height: 2.75rem;
   }
 
   .with-sup>.opts,.with-sup>.enun {
@@ -60,7 +60,7 @@
 @media(max-width:600px) {
   :root:not([data-text-size="0"]) .qhead:has(.clock) {
     display: grid;
-    grid-template-columns: 48px minmax(0,1fr) 44px;
+    grid-template-columns: 3rem minmax(0,1fr) 2.75rem;
     gap: var(--space-2);
   }
 
@@ -137,7 +137,7 @@
 @media(max-width:600px) {
   :root[data-text-size="2"] .opt,:root[data-text-size="3"] .opt {
     display: grid;
-    grid-template-columns: 30px minmax(0,1fr);
+    grid-template-columns: 1.875rem minmax(0,1fr);
     align-items: start;
   }
 

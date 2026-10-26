@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { CircleHelp } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
 import { ERROR_REPORT_REASONS } from '../../shared/presentation/study-labels.js';
 import { questionNotice, sourceHtml } from '../../shared/presentation/study-content.js';
@@ -207,7 +208,7 @@ export function CardsPage() {
     cards.startSession(plan.cards, plan.ids); refreshSession(value => value + 1);
   };
   return <>
-    <h1>Tarjetas de repaso <Link className="help-icon-link" to="/ayuda?tema=repaso" aria-label="Ayuda sobre el repaso"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" /><path d="M9.5 9a2.5 2.5 0 1 1 3 2.5V14M12 17h.01" /></svg></Link></h1>
+    <h1>Tarjetas de repaso <Link className="help-icon-link" to="/ayuda?tema=repaso" aria-label="Ayuda sobre el repaso"><CircleHelp size="1em" strokeWidth={1.8} aria-hidden="true" focusable="false" /></Link></h1>
     <div className="sub">Primero intenta recordar la respuesta; después pulsa para verla y valora cómo te fue.</div>
     <div className="grid"><div className="stat"><b>{plan.summary.hoy}</b><span>vencen hoy</span></div><div className="stat"><b>{plan.summary.nuevas}</b><span>nuevas</span></div><div className="stat"><b>{plan.summary.enRepaso}</b><span>en repaso</span></div><div className="stat"><b>{plan.summary.dominadas}</b><span>dominadas</span></div></div>
     {plan.cards.length ? <><div className="card"><h2 className="h3">Tarjetas por sesión</h2><div className="seg" id="cn">{([10, 20, 30] as const).map(value => <button key={value} className={preferences.count === value ? 'on' : ''} aria-pressed={preferences.count === value} data-v={value} onClick={() => changePreferences({ ...preferences, count: value })}>{value}</button>)}</div>

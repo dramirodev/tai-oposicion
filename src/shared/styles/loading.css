@@ -1,12 +1,12 @@
 .page-loading {
-  min-block-size: min(58vh, 560px);
-  padding-block: clamp(20px, 4vw, 40px);
+  min-block-size: min(58vh, 35rem);
+  padding-block: clamp(1.25rem, 4vw, 2.5rem);
 }
 
 .page-loading__content {
   display: grid;
-  gap: 16px;
-  max-inline-size: 980px;
+  gap: 1rem;
+  max-inline-size: 61.25rem;
   margin-inline: auto;
 }
 
@@ -18,20 +18,20 @@
   animation: page-loading-shimmer 1.5s ease-in-out infinite;
 }
 
-.page-loading__title { inline-size: min(58%, 340px); block-size: 34px; }
-.page-loading__intro { inline-size: min(82%, 620px); block-size: 18px; }
+.page-loading__title { inline-size: min(58%, 21.25rem); block-size: 2.125rem; }
+.page-loading__intro { inline-size: min(82%, 38.75rem); block-size: 1.125rem; }
 
 .page-loading__rows {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-block-start: 20px;
+  gap: 0.75rem;
+  margin-block-start: 1.25rem;
 }
 
-.page-loading__row { min-block-size: 76px; }
-.page-loading--topics .page-loading__rows { grid-template-columns: 1fr; gap: 8px; }
-.page-loading--topics .page-loading__row { min-block-size: 58px; }
-.page-loading--access .page-loading__row { min-block-size: 110px; }
+.page-loading__row { min-block-size: 4.75rem; }
+.page-loading--topics .page-loading__rows { grid-template-columns: 1fr; gap: 0.5rem; }
+.page-loading--topics .page-loading__row { min-block-size: 3.625rem; }
+.page-loading--access .page-loading__row { min-block-size: 6.875rem; }
 .page-loading--legacy .page-loading__rows { grid-template-columns: 1fr; }
 
 @keyframes page-loading-shimmer {

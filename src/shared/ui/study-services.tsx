@@ -124,6 +124,61 @@ export interface ReadingServices {
   next(): ReadingProgress | null;
   reset(): void;
 }
+export type TestMode = 'nuevas' | 'aleatorio' | 'falladas' | 'dudosas' | 'trampas';
+export interface TestTopic { id: string; name: string; total: number; attempted: number; correct: number; answerCount: number }
+export interface TestConfiguration { all: boolean; selected: readonly string[]; count: 10 | 15 | 25 | 40; mode: TestMode; origins: readonly ('O' | 'A' | 'G')[]; timed: boolean; minutes: 10 | 20 | 30 | 45 | 60 }
+export interface TestServices {
+  loadTopics(): Promise<readonly TestTopic[]>;
+  getConfiguration(): TestConfiguration;
+  saveConfiguration(configuration: TestConfiguration): void;
+  seenTopics(): readonly string[];
+  start(configuration: TestConfiguration): Promise<'started' | 'empty' | 'account-changed'>;
+}
+export interface ScenarioChoice { id: string; text: string }
+export interface SimulationReviewServices { loadChoices(): Promise<readonly ScenarioChoice[]>; start(id: string): 'started' | 'unavailable'; }
+export interface SimulationNavigationServices { openExams(): void }
+export type SimulationTab = 'completo' | 'examen' | 'tema';
+export interface SimulationConfiguration { count: 40 | 80; minutes: 45 | 60 | 90 | 120; scope: 'vistos' | 'todos'; origins: readonly ('O' | 'A' | 'G')[]; includeSecondPart: boolean }
+export interface SimulationExam { id: string; name: string; questionCount: number; attempts: number; latest: number | null; best: number | null }
+export interface SimulationExamGroups { official: readonly SimulationExam[]; academy: readonly SimulationExam[]; topicTests: readonly SimulationExam[] }
+export interface SimulationServices {
+  openExams(): void;
+  getTab(): SimulationTab; setTab(tab: SimulationTab): void;
+  getConfiguration(): SimulationConfiguration; saveConfiguration(configuration: SimulationConfiguration): void;
+  seenTopics(): readonly string[];
+  loadExamGroups(): Promise<SimulationExamGroups>;
+  getSelectedExam(): string | null; selectExam(id: string): void;
+  startConfigured(configuration: SimulationConfiguration): Promise<'started' | 'empty' | 'account-changed'>;
+  startExam(id: string, mode: 'study' | 'exam'): Promise<'started' | 'empty' | 'account-changed'>;
+}
+export interface ResultHighlight { id: string; field: 'statement' | `option:${number}`; start: number; end: number; text: string; before: string; after: string; category: 'key' | 'doubt'; contentRevision: string; createdAt: number; timing: 'before-answer' | 'after-answer' | 'after-reveal'; stale?: boolean }
+export interface ResultItem { id: string; topicId: string; topicName: string; statement: string; options: readonly string[]; correctIndex: number; answer?: number; outcome: 'correct' | 'wrong' | 'blank' | 'revealed'; notice: string; source: string; citation?: string; note?: string; confidence?: 'sure' | 'betweenTwo' | 'guess'; discardedOptions: readonly number[]; highlights: readonly ResultHighlight[]; contentRevision: string }
+export interface ResultSnapshot { score: number; correct: number; wrong: number; blank: number; consulted: number; accuracy: number | null; seconds: number; title: string; interrupted: boolean; kind: 'sim' | 'rev' | 'test'; porTiempo: boolean; analysis: string; secondPartAvailable: boolean; topics: readonly { id: string; name: string; correct: number; total: number }[]; items: readonly ResultItem[] }
+export interface ResultReport { reason: string; note: string; state: ErrorReportRecord['state'] }
+export interface ResultServices {
+  getSnapshot(): ResultSnapshot | null; subscribe(listener: () => void): () => void;
+  continuePartTwo(): void; repeatFailures(): boolean; goHome(): void;
+  loadStrategy(): Promise<string>;
+  loadExplanation(item: Pick<ResultItem, 'id' | 'statement' | 'options'>): Promise<{ status: 'current' | 'outdated' | 'missing'; content?: string }>;
+  getReport(id: string): ResultReport | undefined; saveReport(id: string, topicId: string, reason: string, note: string): void;
+}
+export interface StatsTopic { id: string; name: string; interactions: number; correct: number; seen: number; total: number; accuracy: number }
+export interface StatsDomainTopic { id: string; name: string; accuracy: number; days: number | null; status: 'r' | 'y' | 'g' | 'n'; reason: string; due: number; score: number }
+export interface StatsSnapshot { generatedAt: number; answers: number; correct: number; accuracy: number; failureCount: number; weakTopics: readonly StatsTopic[]; topics: readonly StatsTopic[]; sessions: readonly { id: string; ts: number; kind: string; n: number; a: number; nota: number; secs: number }[]; reviewLoad: readonly number[]; failureReasons: readonly number[]; lucky: number; speed: { count: number; total: number; percent: number }; trapRates: readonly { id: string; label: string; attempts: number; failures: number; rate: number }[]; origins: readonly { label: string; answers: number; accuracy: number }[]; types: readonly { id: string; label: string; answers: number; accuracy: number }[]; domains: readonly StatsDomainTopic[]; simulations: readonly { id: string; ts: number; nota: number; part: string; dNota: number | null; a: number; f: number; b: number; secs: number }[]; slow: readonly { id: string; averageSeconds: number; attempts: number; correct: number; lastOutcome: number | null }[] }
+export interface StatsComparison { scoreDelta: number | null; accuracyDelta: number | null; secondsDelta: number | null; topics: readonly { id: string; first: number | null; second: number | null; delta: number | null }[] }
+export interface StatsWeek { start: number; n: number; ok: number; secs: number; sessions: number; accuracy: number | null; secondsPerQuestion: number | null }
+export interface StatsServices {
+  load(): Promise<StatsSnapshot>; getPreference(key: 'domainOrder' | 'evolution'): Record<string, string | number | boolean>; savePreference(key: 'domainOrder' | 'evolution', value: Record<string, string | number | boolean>): void;
+  compareSimulations(firstId: string, secondId: string): StatsComparison | null;
+  loadWeekly(filter: { topic?: string; type?: string; weeks: number }): readonly StatsWeek[];
+  loadQuestionEvolution(weeks: number): Promise<readonly { start: number; seen: number; correct: number; wrong: number; unknown: number }[]>;
+  loadStrategy(days: number): Promise<string>;
+  practiceTopics(ids?: readonly string[]): void; reviewDue(): void; practiceFailures(): void; practiceTrap(id: string): Promise<'started' | 'empty'>; practiceSlow(onlyCorrect: boolean): Promise<'started' | 'empty'>;
+}
+export interface QuizPrompt { id: string; topicId: string; topicName: string; origin: 'O' | 'A' | 'G'; year?: string; statement: string; options: readonly string[]; correctIndex: number; context?: string; assumptionText?: string; hasAssumption: boolean; notice: string; citation?: string; source: string; traps: readonly string[]; provisional: boolean; mayExpire: boolean; variant: boolean; contentRevision: string }
+export interface QuizSnapshot { title: string; index: number; count: number; seconds: number; timeLimitSeconds: number | null; remainingSeconds: number | null; readingWaitSeconds: number; readingGateUntil: number; feedback: boolean; timed: boolean; paused: boolean; readingMode: number; prompt: QuizPrompt; answer?: number; studyState: 'unseen' | 'pending' | 'answered' | 'revealed'; review: readonly number[]; answers: readonly (number | undefined)[]; studyStates: readonly ('unseen' | 'pending' | 'answered' | 'revealed')[]; confidence?: 'sure' | 'betweenTwo' | 'guess'; discarded: readonly number[]; highlights: readonly ResultHighlight[]; scoreByLuck: number | null; recentAnswer: readonly [number, number] | null; flagged: boolean; failureReason: number | null; report?: ResultReport; cardExists: boolean }
+export type QuizFinishResult = 'finished' | 'cancelled' | 'empty';
+export interface QuizServices { getSnapshot(): QuizSnapshot | null; subscribe(listener: () => void): () => void; startCurrentQuestion(): void; persist(): void; tick(): void; setIndex(index: number): void; answer(index: number): void; toggleReview(): void; setConfidence(value: 'sure' | 'betweenTwo' | 'guess'): void; toggleDiscard(index: number): void; reveal(): boolean; markBlank(): void; toggleBlank(): void; setPaused(paused: boolean): void; finish(reason?: 'complete' | 'interrupted' | 'timeout'): Promise<QuizFinishResult>; exit(): Promise<void>; cancelConfirmation(): void; toggleFlag(): void; setFailureReason(reason: number): void; markDoubt(): void; markLuck(): void; toggleCard(): void; addHighlight(anchor: { field: 'statement' | `option:${number}`; sourceText: string; start: number; end: number }, category: 'key' | 'doubt'): boolean; removeHighlight(id: string): void; saveReport(reason: string, note: string): void; loadExplanation(): Promise<{ status: 'current' | 'outdated' | 'missing'; content?: string }> }
 export interface SettingsSnapshot {
   sync: { state: string; user: { name: string; email: string } | null; configured: boolean; lastSync: number; error: string; detail: string; host: string; authDomain: string; accessError: string; requests: readonly AccessMember[] };
   full: boolean; level: string; devMode: string | null; devRevealed: boolean; ui: { theme: string; size: number; lectura: number };
@@ -150,11 +205,12 @@ export interface SettingsServices {
   buildAiExport(input: { from: number; to: number; modes: readonly ('practice' | 'simulation')[]; sessionIds: readonly string[] }): Promise<unknown>;
   deleteAiHistory(): Promise<{ accountSyncPending: boolean }>;
 }
-export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; cards: CardsServices; errors: ErrorServices; failures: FailureServices; lightning: LightningServices; traps: TrapsServices; reading: ReadingServices; settings: SettingsServices; markReady(): void }
+export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; cards: CardsServices; errors: ErrorServices; failures: FailureServices; lightning: LightningServices; traps: TrapsServices; reading: ReadingServices; test: TestServices; simulation: SimulationServices; simulationReview: SimulationReviewServices; result: ResultServices; quiz: QuizServices; stats: StatsServices; settings: SettingsServices; markReady(): void }
 const Context = createContext<StudyServices | null>(null);
 export const AppServicesProvider = Context.Provider;
+export function useOptionalStudyServices(): StudyServices | null { return useContext(Context); }
 export function useStudyServices(): StudyServices {
-  const services = useContext(Context);
+  const services = useOptionalStudyServices();
   if (!services) throw new Error('Falta AppServicesProvider');
   return services;
 }

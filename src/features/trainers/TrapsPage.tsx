@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { ScanSearch } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { ask } from '../../shared/ui/dialog-actions.js';
 import { richHtml, hiliteHtml } from '../../shared/presentation/study-text.js';
@@ -61,7 +62,7 @@ function TrapQuestion({ run, selected, result, onToggle, onExit, onSubmit, onNex
   const falseAlarms = result ? result.selectedIds.filter(id => !correctIds.has(id)) : [];
   return <>
     <div className="qhead"><button className="ghost" aria-label="Salir" onClick={onExit}>✕</button><div className="prog" role="progressbar" aria-label="Progreso" aria-valuemin={0} aria-valuemax={run.items.length} aria-valuenow={run.index}><div style={{ width: `${100 * run.index / run.items.length}%` }} /></div><div className="cnt">{run.index + 1}/{run.items.length}</div></div>
-    <h1 className="sub">🕵️ Detective de trampas</h1><p className="sm">Lee el enunciado y todas las opciones: las trampas pueden estar en cualquiera de ellos.</p>
+    <h1 className="sub"><ScanSearch className="inline-feature-icon" size="1em" strokeWidth={1.7} aria-hidden="true" /> Detective de trampas</h1><p className="sm">Lee el enunciado y todas las opciones: las trampas pueden estar en cualquiera de ellos.</p>
     <article className="card q"><div className="meta"><span className="tag">{prompt.topicId} · {prompt.topicName}</span></div>
       {notice && <StudyMarkup html={notice} />}{source && <StudyMarkup html={source} />}
       {prompt.context && <div className="ctx pre"><StudyMarkup html={richHtml(prompt.context)} /></div>}

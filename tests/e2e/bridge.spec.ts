@@ -70,13 +70,13 @@ test('menú React, foco, banner de red y recorte de navegación para invitados',
   await context.setOffline(false); await expect(page.locator('#net')).toHaveText('De nuevo en línea');
   await expect(page.locator('#net')).toHaveText('');
   await page.goto('/#/settings');
-  await page.locator('#dev button[data-v="0"]').click();
+  await page.getByRole('group', { name: 'Modo desarrollador' }).getByRole('button', { name: 'Como invitado' }).click();
   await expect(page.locator('nav a:visible')).toHaveCount(2);
   await page.evaluate(() => { location.hash = '#/sim'; });
   await expect(page).toHaveURL(/#\/home$/);
   await expect(page.locator('nav a:visible')).toHaveCount(2);
   await page.goto('/#/settings');
-  await page.locator('#dev button[data-v="1"]').click();
+  await page.getByRole('group', { name: 'Modo desarrollador' }).getByRole('button', { name: 'Completo' }).click();
   await expect(page.locator('nav a:visible')).toHaveCount(5);
   expect(errors).toEqual([]);
 });
@@ -87,7 +87,7 @@ test('la ayuda está disponible sin conexión desde el menú de invitado y conse
   const failedRequests: string[] = [];
   page.on('requestfailed', request => failedRequests.push(`${request.url()} ${request.failure()?.errorText || ''}`));
   await page.goto('/#/settings');
-  await page.locator('#dev button[data-v="0"]').click();
+  await page.getByRole('group', { name: 'Modo desarrollador' }).getByRole('button', { name: 'Como invitado' }).click();
   await page.goto('/#/home');
   await page.evaluate(async () => {
     await navigator.serviceWorker.ready;
@@ -111,7 +111,7 @@ test('texto máximo cabe en móvil compacto e iPad emulado', async ({ page }) =>
   const errors = await start(page);
   await page.setViewportSize({ width: 320, height: 720 });
   await page.goto('/#/settings');
-  await page.locator('#fz button[data-v="3"]').click();
+  await page.getByRole('group', { name: 'Tamaño de letra' }).getByRole('button', { name: 'A+++' }).click();
   await page.goto('/#/home');
   await page.locator('#quick').click();
   await expect(page.locator('#app h1')).toContainText('pregunta 1');
@@ -226,12 +226,12 @@ test('integra ayudas, navegación, bloqueo terminal y exportación del intento',
   await expect(page.locator('.rv .tag.warn')).toHaveCount(2);
 
   await page.goto('/#/settings');
-  await page.locator('#ai-export-find').click();
-  await expect(page.locator('[data-ai-export-session]')).toHaveCount(1);
-  await page.locator('#ai-export-build').click();
+  await page.getByRole('button', { name: 'Buscar sesiones completadas' }).click();
+  await expect(page.locator('.ai-export-session')).toHaveCount(1);
+  await page.getByRole('button', { name: 'Preparar vista previa y archivos' }).click();
   await expect(page.locator('.ai-export-preview')).toContainText('1 parte JSON');
   const [download] = await Promise.all([
-    page.waitForEvent('download'), page.locator('[data-ai-export-part="0"]').click(),
+    page.waitForEvent('download'), page.getByRole('button', { name: 'Descargar tai-estudio-parte-001.json' }).click(),
   ]);
   const exported = JSON.parse(readFileSync(await download.path(), 'utf8'));
   expect(exported.attempts).toHaveLength(10);
@@ -277,9 +277,9 @@ test('las explicaciones draft solo aparecen tras revelar en práctica y están c
 test('el simulacro no presenta explicaciones ni corrección mientras sigue activo', async ({ page }) => {
   const errors = await start(page);
   await page.goto('/#/sim');
-  await page.locator('#n button[data-v="40"]').click();
-  await page.locator('#scope button[data-v="todos"]').click();
-  await page.locator('#go').click();
+  await page.getByRole('group', { name: 'Número de preguntas' }).getByRole('button', { name: '40 preguntas' }).click();
+  await page.getByRole('group', { name: 'Alcance de temas' }).getByRole('button', { name: 'Todo el temario' }).click();
+  await page.getByRole('button', { name: 'Empezar simulacro' }).click();
   await expect(page.locator('#app h1')).toContainText('pregunta 1');
   await expect(page.locator('.fb, .code-explanation')).toHaveCount(0);
   await page.locator('.opt').first().click();
@@ -291,17 +291,17 @@ test('el simulacro no presenta explicaciones ni corrección mientras sigue activ
     await page.locator('#next').click();
   }
   await expect(page.locator('#app h1')).toHaveText('Resultado');
-  await expect(page.locator('#result-strategy-load')).toBeVisible();
-  await page.locator('#result-strategy-load').click();
-  await expect(page.locator('#result-strategy-report')).toContainText('Muestra insuficiente', { timeout: 25_000 });
+  const strategy = page.locator('.strategy-result');
+  await strategy.getByRole('button', { name: 'Calcular informe del último año' }).click();
+  await expect(strategy.locator('[aria-live="polite"]')).toContainText('Muestra insuficiente', { timeout: 25_000 });
   expect(errors).toEqual([]);
 });
 test('el simulacro conserva pendientes al volver y reanudar y corrige solo al finalizar', async ({ page }) => {
   const errors = await start(page);
   await page.goto('/#/sim');
-  await page.locator('#n button[data-v="40"]').click();
-  await page.locator('#scope button[data-v="todos"]').click();
-  await page.locator('#go').click();
+  await page.getByRole('group', { name: 'Número de preguntas' }).getByRole('button', { name: '40 preguntas' }).click();
+  await page.getByRole('group', { name: 'Alcance de temas' }).getByRole('button', { name: 'Todo el temario' }).click();
+  await page.getByRole('button', { name: 'Empezar simulacro' }).click();
   await expect(page.locator('#app h1')).toContainText('pregunta 1');
   const firstAnswer = await page.locator('.opt').first().getAttribute('data-i');
   await page.locator('#blank').click();
@@ -328,8 +328,9 @@ test('el simulacro conserva pendientes al volver y reanudar y corrige solo al fi
   await expect(page.locator('.rv')).toHaveCount(40);
   await page.locator('.rv').first().locator('summary').click();
   await expect(page.locator('.rv').first()).toContainText('(Respuesta correcta)');
-  await page.locator('#result-strategy-load').click();
-  await expect(page.locator('#result-strategy-report')).toContainText('Muestra insuficiente', { timeout: 25_000 });
+  const strategy = page.locator('.strategy-result');
+  await strategy.getByRole('button', { name: 'Calcular informe del último año' }).click();
+  await expect(strategy.locator('[aria-live="polite"]')).toContainText('Muestra insuficiente', { timeout: 25_000 });
   expect(errors).toEqual([]);
 });
 test('exporta sesiones manualmente en partes versionadas y borra el detalle sin tocar el progreso', async ({ page }) => {
@@ -342,13 +343,13 @@ test('exporta sesiones manualmente en partes versionadas y borra el detalle sin 
   await expect(page.locator('#app h1')).toHaveText('Resultado');
   const progressBefore = await page.evaluate(() => localStorage.getItem('tai.v1:guest'));
   await page.goto('/#/settings');
-  await page.locator('#ai-export-find').click();
-  await expect(page.locator('[data-ai-export-session]')).toHaveCount(1);
-  await page.locator('#ai-export-build').click();
+  await page.getByRole('button', { name: 'Buscar sesiones completadas' }).click();
+  await expect(page.locator('.ai-export-session')).toHaveCount(1);
+  await page.getByRole('button', { name: 'Preparar vista previa y archivos' }).click();
   await expect(page.locator('.ai-export-preview')).toContainText('1 parte JSON');
 
   const [manifestDownload] = await Promise.all([
-    page.waitForEvent('download'), page.locator('#ai-export-download-manifest').click(),
+    page.waitForEvent('download'), page.getByRole('button', { name: 'Descargar manifiesto JSON' }).click(),
   ]);
   expect(manifestDownload.suggestedFilename()).toBe('tai-estudio-manifiesto.json');
   const manifest = JSON.parse(readFileSync(await manifestDownload.path(), 'utf8'));
@@ -356,7 +357,7 @@ test('exporta sesiones manualmente en partes versionadas y borra el detalle sin 
   expect(JSON.stringify(manifest)).not.toMatch(/"(?:uid|email|token|firebaseConfig)"\s*:/i);
 
   const [partDownload] = await Promise.all([
-    page.waitForEvent('download'), page.locator('[data-ai-export-part="0"]').click(),
+    page.waitForEvent('download'), page.getByRole('button', { name: 'Descargar tai-estudio-parte-001.json' }).click(),
   ]);
   expect(partDownload.suggestedFilename()).toBe('tai-estudio-parte-001.json');
   const partText = readFileSync(await partDownload.path(), 'utf8');
@@ -369,15 +370,15 @@ test('exporta sesiones manualmente en partes versionadas y borra el detalle sin 
   expect(JSON.stringify(part)).not.toContain('guest');
 
   const [markdownDownload] = await Promise.all([
-    page.waitForEvent('download'), page.locator('#ai-export-download-markdown').click(),
+    page.waitForEvent('download'), page.getByRole('button', { name: 'Descargar informe Markdown' }).click(),
   ]);
   const markdown = readFileSync(await markdownDownload.path(), 'utf8');
   expect(markdown).toContain(`tamaño total de partes: ${partBytes} bytes`);
 
-  await page.locator('#ai-history-delete').click();
+  await page.getByRole('button', { name: 'Borrar historial detallado' }).click();
   await expect(page.locator('.overlay')).toContainText('Las estadísticas agregadas');
   await page.locator('.overlay [data-v="1"]').click();
-  await expect(page.locator('#ai-export-status')).toContainText('Historial detallado borrado');
+  await expect(page.locator('#ai-study-export [role="status"]')).toContainText('Historial detallado borrado');
   expect(await savedAttemptHistory(page)).toMatchObject({ attempts: 0, sessions: 0, events: [] });
   expect(await page.evaluate(() => localStorage.getItem('tai.v1:guest'))).toBe(progressBefore);
   expect(errors).toEqual([]);
@@ -480,14 +481,13 @@ test('el formato de código del enunciado conserva estilo y permite subrayar tex
   await expect.poll(async () => (await savedAttemptHistory(page)).events).toContain('add-highlight');
   expect(errors).toEqual([]);
 });
-test('`route()` repinta la misma URL en Relámpago', async ({ page }) => {
+test('Relámpago permite pasar a otra pregunta después de responder', async ({ page }) => {
   const errors = await start(page);
   await page.goto('/#/relampago');
   await expect(page.locator('#app h1')).toContainText('Pregunta relámpago');
   await page.locator('.opt').first().click();
-  await expect(page.locator('#more')).toBeVisible();
-  await page.locator('#more').click();
-  await expect(page.locator('#fb')).toBeEmpty();
+  await page.getByRole('button', { name: 'Otra →' }).click();
+  await expect(page.locator('.fb')).toHaveCount(0);
   await expect(page.locator('.opt')).toHaveCount(4);
   expect(errors).toEqual([]);
 });

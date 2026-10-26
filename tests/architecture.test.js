@@ -26,6 +26,15 @@ describe('architecture migration boundaries', () => {
     const root = fixture({ 'src/app/new.ts': "import '../old/legacy'; node.innerHTML = 'x'; node.insertAdjacentHTML('beforeend', 'x'); // eslint-disable-next-line\n node['outerHTML'] = 'y';", 'src/old/legacy.ts': '' });
     expect(new Set(scanArchitecture(root).map(x => x.kind))).toEqual(new Set(['legacy-module', 'legacy-import', 'html-write', 'lint-disable']));
   });
+  it('allows legacy dependencies only in app composition roots', () => {
+    const root = fixture({
+      'src/app/stats-composition.ts': "import '../core/application/legacy-engine';",
+      'src/features/stats/page.tsx': "import '../../core/application/legacy-engine';",
+    });
+    const legacyImports = scanArchitecture(root).filter(item => item.kind === 'legacy-import');
+    expect(legacyImports).toHaveLength(1);
+    expect(legacyImports[0].file).toBe('src/features/stats/page.tsx');
+  });
   it('allows only the exact existing debt and detects a second occurrence and moved debt', () => {
     const root = fixture({ 'src/app/view.ts': "node.innerHTML = 'x';" });
     const baseline = scanArchitecture(root).map(item => ({ ...item, reason: 'existing renderer', task: 'phase-1' }));

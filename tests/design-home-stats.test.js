@@ -3,7 +3,7 @@ import { beforeEach, afterEach, it, expect, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 vi.mock('../src/adapters/firebase/sync-facade.js', () => ({ status: { user:null,state:'sin sesión',configured:false,reqs:[] }, setAttemptRepository:()=>{}, onStatus:()=>()=>{}, login:async()=>{}, requestAccess:async()=>true }));
-let routes, store, engine, screen, strategyFactory, strategyRenderer, root, act;
+let routes, store, engine, screen, root, act;
 beforeEach(async () => {
   vi.resetModules(); localStorage.clear();
   document.body.innerHTML = '<main id="app"></main>';
@@ -11,19 +11,16 @@ beforeEach(async () => {
   vi.stubGlobal('fetch', async url => ({ ok:true, json:async()=>JSON.parse(readFileSync(path.join('public',String(url)), 'utf8')) }));
   store = await import('../src/adapters/local/legacy-store.js'); engine = await import('../src/core/application/legacy-engine.js');
   routes={}; screen={};
-  strategyFactory=vi.fn(async period => ({ period }));
-  strategyRenderer=vi.fn(report => `<p>Informe ${report.period}</p>`);
-  const { dominioTemas } = await import('../src/app/legacy-topic-mastery.js');
   const React = await import('react'); act=React.act; globalThis.IS_REACT_ACT_ENVIRONMENT=true;
   const { createRoot } = await import('react-dom/client');
   const { MemoryRouter } = await import('react-router');
   const { AppServicesProvider } = await import('../src/shared/ui/study-services.tsx');
   const { HomePage } = await import('../src/features/home/HomePage.tsx');
   const { TopicsPage } = await import('../src/features/home/TopicsPage.tsx');
+  const { StatsPage } = await import('../src/features/stats/StatsPage.tsx');
   const { studyServices } = await import('../src/app/legacy-router.ts');
   const mount=async Page => { if(root) await act(()=>root.unmount()); root=createRoot(document.querySelector('#app')); await act(async()=>root.render(React.createElement(MemoryRouter,null,React.createElement(AppServicesProvider,{value:studyServices},React.createElement(Page))))); await vi.waitFor(async()=>{await act(async()=>new Promise(resolve=>setTimeout(resolve,0))); if(root) expect(document.querySelector('#app h1')).not.toBeNull();}); };
-  routes.home=()=>mount(HomePage); routes.temario=()=>mount(TopicsPage);
-  (await import('../src/features/stats/legacy.js')).registerStats({routes,go:vi.fn(),trapTest:vi.fn(),startRun:vi.fn(),dominioTemas,getStrategyReport:strategyFactory,renderStrategyReport:strategyRenderer});
+  routes.home=()=>mount(HomePage); routes.temario=()=>mount(TopicsPage); routes.stats=()=>mount(StatsPage);
 });
 afterEach(async()=> { if(root) await act(()=>root.unmount()); root=undefined; screen.cleanup?.(); vi.unstubAllGlobals(); });
 it('prioriza retomar, repasar y falladas, agrupa entrenamientos y no presenta una fecha oficial inventada', async()=> {
@@ -49,24 +46,24 @@ it('busca temas sin perder marcas, bloque abierto ni foco al actualizar progreso
   expect(document.querySelectorAll('[data-t]')).toHaveLength(1);
   expect(document.querySelector('#app').textContent).toContain('preguntas contestadas');
 });
-it('separa las secciones de progreso sin perder el historial y comunica selecciones y leyenda', async()=> {
+it('muestra las secciones de progreso y deja cambiar el detalle de evolución', async()=> {
   await routes.stats();
-  const sims=document.querySelector('[data-stats-view="sims"]'); expect(sims).not.toBeNull();
+  await act(async()=>vi.waitFor(()=>expect(document.querySelector('#stats-summary')).not.toBeNull()));
   expect(document.querySelector('#stats-summary').textContent).toContain('Repasar hoy');
-  sims.click(); expect(sims.getAttribute('aria-pressed')).toBe('true');
-  expect(document.querySelector('#stats-sims').hidden).toBe(false);
-  expect(document.querySelector('#stats-temas').hidden).toBe(true);
-  document.querySelector('[data-stats-view="evo"]').click();
-  document.querySelector('#evt').focus(); document.querySelector('#evt').click();
-  expect(document.activeElement.id).toBe('evt');
-  expect(document.querySelector('#evo table')).not.toBeNull();
-  expect(document.querySelector('#evm [data-v="acierto"]').getAttribute('aria-pressed')).toBe('true');
-  expect(document.querySelector('#mapa .dmsum').textContent).toContain('Sin datos');
+  const sims=[...document.querySelectorAll('[aria-label="Sección de progreso"] button')].find(button=>button.textContent==='Simulacros');
+  await act(()=>sims.click());
+  expect(sims.getAttribute('aria-pressed')).toBe('true');
+  expect(document.querySelector('[aria-label="Historial de simulacros"]')).not.toBeNull();
+  const evolution=[...document.querySelectorAll('[aria-label="Sección de progreso"] button')].find(button=>button.textContent==='Evolución');
+  await act(()=>evolution.click());
+  expect(document.querySelector('[aria-label="Evolución del estudio"]')).not.toBeNull();
+  const mode=[...document.querySelectorAll('.card .seg button')].find(button=>button.textContent==='Tiempo por pregunta');
+  await act(()=>mode.click());
+  expect(mode.getAttribute('aria-pressed')).toBe('true');
+  const weeks=document.querySelector('[aria-label="Número de semanas"]');
+  await act(()=>{ weeks.value='26'; weeks.dispatchEvent(new Event('change',{bubbles:true})); });
+  expect(weeks.value).toBe('26');
   expect(document.querySelector('#app').textContent).toContain('Últimas sesiones');
-  document.querySelector('#strategy-period').value='30';
-  document.querySelector('#strategy-load').click();
-  await vi.waitFor(()=>expect(document.querySelector('#strategy-report').textContent).toContain('Informe 30'));
-  expect(strategyFactory).toHaveBeenCalledWith(30);
 });
 it('buscar y navegar no modifica el progreso y una cuenta nueva no recibe la pantalla de la anterior', async()=> {
   store.setSeen(['T1.01']);
@@ -78,7 +75,7 @@ it('buscar y navegar no modifica el progreso y una cuenta nueva no recibe la pan
   expect(store.getSeen()).toEqual(['T1.01']);
   await act(()=>root.unmount()); root=undefined;
   await routes.stats();
-  document.querySelector('[data-stats-view="sims"]').click();
+  document.querySelector('[aria-label="Sección de progreso"] button:nth-child(2)').click();
   expect(store.exportAll()).toBe(before);
   const data=await import('../src/adapters/http/legacy-data.js');
   let finish;

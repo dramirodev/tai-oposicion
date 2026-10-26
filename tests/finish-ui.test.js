@@ -12,10 +12,12 @@ it('doble pulsación en Terminar no duplica el intento de examen',async()=>{
  ({unmountApp}=await import('../src/app/main'));
  const waitText=async text=>vi.waitFor(()=>expect(document.querySelector('#app').textContent).toContain(text));
  await waitText('Sesión rápida');location.hash='#/sim';await waitText('Simulacros');
- await vi.waitFor(()=>expect(document.querySelector('#simtabs [data-v="examen"]')).not.toBeNull());
- document.querySelector('#simtabs [data-v="examen"]').click();
- document.querySelector('[data-k="L2018-P1"]').click();
- document.querySelector('#simbody [data-m="sim"]').click();
+ await vi.waitFor(()=>expect(document.querySelectorAll('[role="tab"]').length).toBe(3));
+ document.querySelectorAll('[role="tab"]')[1].click();
+ await vi.waitFor(()=>expect(document.querySelector('[data-exam-id="L2018-P1"]')).not.toBeNull());
+ const exam = document.querySelector('[data-exam-id="L2018-P1"]');
+ exam.click();
+ [...document.querySelectorAll('.bar2 button')].find(button=>button.textContent==='Examen · 90 min').click();
  await vi.waitFor(()=>expect(document.querySelector('#next')).not.toBeNull());
  const {getSnapshot}=await import('../src/core/application/legacy-engine.js');
  while(getSnapshot().run.idx<getSnapshot().run.items.length-1)document.querySelector('#next').click();

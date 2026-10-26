@@ -29,8 +29,8 @@ export function ReadingPage() {
   }, [progress?.step, progress?.selectedAnswer, progress?.index]);
 
   const exit = async () => { if (await ask('¿Salir del ejercicio?', 'Salir')) { reading.reset(); navigate('/home'); } };
-  if (loading) return <><h1>Lectura atenta</h1><p className="sub loading" role="status">Preparando preguntas…</p></>;
-  if (error) return <><h1>Lectura atenta</h1><div className="card" role="alert"><p>No se pudieron cargar preguntas disponibles. Comprueba la conexión e inténtalo de nuevo.</p><button className="btn" onClick={() => { reading.reset(); setError(false); setLoading(true); }}>Reintentar</button></div></>;
+  if (loading && !progress) return <><h1>Lectura atenta</h1><p className="sub loading" role="status">Preparando preguntas…</p></>;
+  if (error && !progress) return <><h1>Lectura atenta</h1><div className="card" role="alert"><p>No se pudieron cargar preguntas disponibles. Comprueba la conexión e inténtalo de nuevo.</p><button className="btn" onClick={() => { reading.reset(); setError(false); setLoading(true); }}>Reintentar</button></div></>;
   if (!progress?.items.length) return <><h1>Lectura atenta</h1><div className="card"><p>No hay preguntas disponibles ahora mismo. Comprueba la conexión e inténtalo de nuevo.</p></div><button className="btn" onClick={() => { reading.reset(); setLoading(true); }}>Reintentar</button><button className="btn sec" onClick={() => navigate('/home')}>Inicio</button></>;
   if (progress.complete) return <ReadingSummary progress={progress} onAgain={() => { reading.reset(); setLoading(true); }} onHome={() => navigate('/home')} />;
 

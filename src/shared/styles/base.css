@@ -14,8 +14,8 @@ input[type=checkbox],input[type=radio],input[type=range] {
 }
 
 input[type=checkbox],input[type=radio] {
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   flex-shrink: 0;
 }
 
@@ -30,8 +30,8 @@ input[type=checkbox],input[type=radio] {
 
 html {
   -webkit-text-size-adjust: 100%;
-  scroll-padding-top: calc(var(--sat) + 80px * var(--z,1));
-  scroll-padding-bottom: calc(var(--navigation-height,calc(var(--navh) + var(--sab))) + var(--actions-height,0px) + 24px);
+  scroll-padding-top: calc(var(--sat) + 5rem * var(--z,1));
+  scroll-padding-bottom: calc(var(--navigation-height,calc(var(--navh) + var(--sab))) + var(--actions-height,0) + 1.5rem);
 }
 
 body {
@@ -58,19 +58,19 @@ body::before {
 main {
   max-width: var(--content-width);
   margin: 0 auto;
-  padding: var(--space-6) var(--space-6) calc((var(--navigation-height,calc(var(--navh) + var(--sab))) + var(--actions-height,0px) + 32px) / var(--z,1));
+  padding: var(--space-6) var(--space-6) calc((var(--navigation-height,calc(var(--navh) + var(--sab))) + var(--actions-height,0) + 2rem) / var(--z,1));
   padding-block-start: var(--space-8);
 }
 
 h1 {
   font: 650 var(--fs-h1)/1.2 var(--font-ui);
-  margin: 8px 0 12px;
+  margin: 0.5rem 0 0.75rem;
   letter-spacing: -.035em;
 }
 
 h2 {
   font-size: var(--fs-xl);
-  margin: 28px 0 12px;
+  margin: 1.75rem 0 0.75rem;
   font-weight: 650;
   line-height: 1.35;
 }
@@ -80,7 +80,7 @@ h3,h2.h3 {
   text-transform: none;
   letter-spacing: -.01em;
   color: var(--ink);
-  margin: 16px 0 12px;
+  margin: 1rem 0 0.75rem;
   font-weight: 650;
 }
 
@@ -92,7 +92,7 @@ h1.sub {
   font-size: var(--fs-xl);
   font-weight: 600;
   color: var(--ink);
-  margin: 6px 0 10px;
+  margin: 0.375rem 0 0.625rem;
 }
 
 small {
@@ -102,7 +102,7 @@ small {
 
 .sub {
   color: var(--mute);
-  margin: 0 0 14px;
+  margin: 0 0 0.875rem;
 }
 
 .pre {
@@ -128,8 +128,8 @@ a {
 
 .sr {
   position: absolute;
-  width: 1px;
-  height: 1px;
+  width: 0.0625rem;
+  height: 0.0625rem;
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
@@ -147,7 +147,7 @@ a {
 }
 
 .loading {
-  padding: 40px 20px;
+  padding: 2.5rem 1.25rem;
   min-height: 40vh;
   color: var(--mute);
   font-size: var(--fs-l);
@@ -174,11 +174,11 @@ button {
 
 .skip-link {
   position: fixed;
-  top: 12px;
-  left: 12px;
+  top: 0.75rem;
+  left: 0.75rem;
   z-index: 60;
   transform: translateY(-180%);
-  padding: 12px 18px;
+  padding: 0.75rem 1.125rem;
   background: var(--ink);
   color: var(--card);
   border-radius: var(--r-m);
