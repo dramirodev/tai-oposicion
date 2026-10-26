@@ -6,14 +6,13 @@ Fecha: 2026-10-26 (Europe/Madrid)
 
 - Checkout activo: `/tmp/tai-migrate-cards-screen`
 - Rama: `feat/migrate-cards-screen`
-- PR que se está ampliando: [#34](https://github.com/dramirodev/tai-oposicion/pull/34), contra `main`.
-- Último commit: `36fcd90 docs: add handoff for migration and audit work` (local; los cambios siguientes siguen sin commit/push).
-- La rama está 2 commits por delante del remoto. No cambiar al checkout `/Volumes/SSD/develop/PWA_TAI`; está obsoleto para este trabajo.
+- PR #34: [migrar pantallas restantes y modernizar presentación](https://github.com/dramirodev/tai-oposicion/pull/34), base `main`, abierta. El run `40373734672` terminó fallando únicamente en 68 comparaciones visuales Linux. Baseline actualizado localmente y `npm run test:e2e:ci` pasó en macOS; falta publicar y confirmar el nuevo run de GitHub.
+- HEAD publicado antes de este fix: `3239d0a`. No cambiar al checkout `/Volumes/SSD/develop/PWA_TAI`; está obsoleto para este trabajo.
 - `node_modules` se reinstaló localmente en este checkout para añadir Shiki; no versionarlo.
 
 ## Orden de trabajo pendiente (estado al pausar)
 
-1. **PR #34 — migración React, Shiki y auditoría CSS:** commit `8971436` publicado en `feat/migrate-cards-screen`; PR #34 actualizada con alcance y validación local. `npm run check` pasó (89 archivos, 402 tests), `npm run build` pasó con avisos de chunks grandes ya conocidos y `npx playwright test --update-snapshots` pasó (154 casos) en Chromium/WebKit. No se esperó a CI.
+1. **PR #34 — migración React, Shiki y auditoría CSS:** commit `8971436` publicado; fix de referencia visual y handoff listos localmente. `npm run check` pasó (89 archivos, 402 tests), `npm run build` pasó con avisos de chunks grandes conocidos, `npx playwright test --update-snapshots` pasó (154) y `npm run test:e2e:ci` pasó localmente (68 capturas de baseline y 154 E2E). No se esperó al nuevo run de CI.
 2. **Lucide React:** integración parcial incluida en el mismo stack porque sustituye iconos de las rutas React que aporta PR #34. Instalado `lucide-react`; sustituidos SVG de la navegación, Inicio, enlaces de ayuda y Detective. Taste final de Inicio a 1440/768/390: sin overflow, sin errores de consola, una advertencia defendida `below-fold` (3 de 7 bloques en el primer viewport de escritorio; hay contenido operativo real debajo). Falta ampliar la pasada a otras pantallas y decidir los emojis semánticos restantes. No crear una PR contra `main` que dependa de páginas aún no presentes allí.
 3. **Etapa A de arquitectura:** pendiente y sin cambios de producción. El usuario pide prepararla como stack sobre la rama de PR #34; crear una rama de trabajo desde su HEAD publicado, con su futura PR apuntando inicialmente a `feat/migrate-cards-screen`. Tras fusionar #34, actualizar esa rama contra `main` y cambiar la base de la PR a `main`. Etapa B requiere aprobación explícita de la propuesta.
 4. **Recharts:** tarea autorizada previamente, pendiente. Auditar datos y gráficos reales; migrar solo los componentes con una mejora clara, en una PR compatible con el stack de arquitectura.
@@ -84,6 +83,13 @@ Aún no se ha iniciado la auditoría CSS. Al empezar, inventariar todos los CSS 
 - Último `npm run check`: 89 archivos, 402 tests aprobados. `npm run build`: aprobado; advertencias de tamaño en `index` (~522 kB) y `legacy-sync` (~549 kB). Playwright `--update-snapshots`: 154/154 casos aprobados en Chromium/WebKit; capturas de rutas actualizadas en claro y oscuro.
 - El hook local al crear el commit mostró 17 diagnósticos React Doctor en el área modificada: complejidad de cuatro páginas, `useEffect` con callback cambiante, claves de array por índice, búsquedas de array dentro de un bucle, foco anidado en una opción de Quiz, modal propio y promesas `.then` en manejadores de Stats. `anchor-target-exists` para `#app` parece falso positivo porque `index.html` contiene `<main id="app">`. No se han suprimido ni triageado los demás; al reanudar, confirmar cada uno con el código y resolver los verdaderos positivos antes de cerrar la deuda.
 
+## PR #34 — fallo de referencia visual y corrección
+
+- El job pasó arquitectura/lint/tipos/tests, build y validación de preguntas; falló solo en `Reconstruir referencia visual y verificar Chromium y WebKit`.
+- `baseline-ref.txt` apuntaba a `448758581b356f6705ea42a4b185e4cd062cf479`, UI anterior a las páginas React y al rediseño. El runner generó desde ese commit referencias Linux y halló 68 capturas distintas en la candidata; no hubo fallos funcionales en la suite (86 casos pasaron).
+- El procedimiento de `scripts/e2e-baseline.mjs` permite actualizar `tests/e2e/baseline-ref.txt` tras aprobar un cambio visual. Se cambia a `3239d0a4876d4418617c227617ed50f9c182c3ef`, el commit de la PR inmediatamente anterior al ajuste de referencia; contiene la UI migrada y estará en `main` tras el merge.
+- `npm run test:e2e:ci` local pasó: 68 capturas regeneradas en Chromium/WebKit, claro/oscuro, y luego 154 E2E. El entorno local es macOS, no Linux; confirmar el nuevo run de GitHub después del push.
+
 ## Nueva tarea de arquitectura tras cerrar las anteriores
 
 El usuario pidió una auditoría completa del proyecto y definió Etapa A y Etapa B. Tras completar el trabajo actual:
@@ -98,8 +104,8 @@ El usuario pidió una auditoría completa del proyecto y definió Etapa A y Etap
 
 1. El resultado final de `npx playwright test --update-snapshots` es 154/154 aprobado; la prueba regeneró capturas en claro/oscuro y Chromium/WebKit tras inspección visual de Inicio.
 2. Taste posterior a Lucide: Inicio a 1440/768/390 revisado, overflow y errores de consola 0; el único warning fue `below-fold` explicado. Ampliar a Progreso, Ajustes y pantallas de práctica si se reanuda la tarea de iconos. Eliminar `.taste-skill/` local antes de versionar.
-3. Commit `8971436` y `git push origin feat/migrate-cards-screen` completados; título y descripción de PR #34 actualizados. No fusionar ni esperar CI, según preferencia del usuario.
-4. El usuario pidió pausar y apilar la migración de arquitectura sobre PR #34. Crear la rama local `docs/architecture-audit-stack` desde la punta publicada de #34; cuando se redacte la propuesta documental, publicar una PR cuya base sea `feat/migrate-cards-screen`. Después de fusionar #34, actualizar la rama contra `main` y cambiar la base de la PR a `main`. Auditoría solo documental, sin cambios de producción; Etapa B espera aprobación.
+3. Publicar `tests/e2e/baseline-ref.txt` y este handoff en `feat/migrate-cards-screen`; consultar el nuevo check para confirmar el arreglo. El run previo ya finalizó; no esperar al nuevo CI.
+4. Apilar `docs/architecture-audit-stack` sobre el nuevo HEAD de PR #34 antes de volver a la arquitectura. La propuesta aún no está hecha ni tiene PR. Si #34 sigue abierta, la futura PR stack debe apuntar a `feat/migrate-cards-screen`; tras el merge, actualizarla contra `main` y cambiar la base. Auditoría solo documental, sin cambios de producción; Etapa B espera aprobación.
 5. Auditar e integrar Recharts cuando el usuario reanude, documentando decisiones en este handoff.
 6. En Etapa B, analizar e implementar Zustand solo para estado compartido de cliente que lo necesite, con selectores y pruebas; no trasladar estado local/remoto ni lógica de negocio automáticamente.
 ## Nota de continuidad
