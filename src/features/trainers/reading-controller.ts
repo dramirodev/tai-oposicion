@@ -7,7 +7,7 @@ export function readingTokens(statement: string): ReadingToken[] {
   return statement.split(/(\s+)/).map(text => {
     const start = position;
     position += text.length;
-    return { text, key: !!text.trim() && keySpans.some(([from, to]) => start < to && position > from) };
+    return { text, key: !!text.trim() && keySpans.some(([from, to]) => start < to && position > from), start };
   });
 }
 

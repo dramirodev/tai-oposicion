@@ -106,7 +106,7 @@ export interface TrapAnswer { hits: number; missed: number; falseAlarms: number;
 export interface TrapWeakness { id: number; seen: number; detected: number }
 export interface TrapRun { items: readonly TrapPrompt[]; index: number; results: readonly TrapAnswer[] }
 export interface TrapsServices { getRun(): TrapRun | null; startRun(): Promise<TrapRun>; evaluate(selected: readonly number[]): TrapAnswer | null; next(): TrapRun | null; getWeaknesses(): TrapWeakness[]; resetRun(): void }
-export interface ReadingToken { text: string; key: boolean }
+export interface ReadingToken { text: string; key: boolean; start: number }
 export interface ReadingPrompt extends FailureQuestion { asksForNegative: boolean; minimumSeconds: number; tokens: readonly ReadingToken[] }
 export interface ReadingWordResult { hit: number; missed: number; extra: number; total: number; claimedNone: boolean }
 export interface ReadingOutcome { correct: boolean; meaningCorrect: boolean; marked: [number, number] }

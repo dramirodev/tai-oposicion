@@ -905,12 +905,14 @@ const trapsServices = {
     const failed = eligible.filter(id => questionStats[id]?.[5] === 0);
     const failedSet = new Set(failed);
     const rest = eligible.filter(id => !failedSet.has(id));
-    const prioritized = shuffle(failed).slice(0, 4), selectedIds = [...prioritized, ...shuffle(rest).filter(id => !prioritized.includes(id)).slice(0, Math.max(0, 40 - prioritized.length))];
+    const prioritized = shuffle(failed).slice(0, 4), prioritizedSet = new Set(prioritized);
+    const selectedIds = [...prioritized, ...shuffle(rest).filter(id => !prioritizedSet.has(id)).slice(0, Math.max(0, 40 - prioritized.length))];
     const questions = (await byIds(selectedIds)).filter(question => !question.s && question.x?.length).slice(0, 8);
     const allTraps = Object.keys(TRAMPAS).map(Number);
     const items: TrapPrompt[] = questions.map(question => {
       const trapIds = [...new Set((question.x || []).map(Number))];
-      const distractors = shuffle(allTraps.filter(id => !trapIds.includes(id))).slice(0, Math.max(3, 8 - trapIds.length));
+      const trapSet = new Set(trapIds);
+      const distractors = shuffle(allTraps.filter(id => !trapSet.has(id))).slice(0, Math.max(3, 8 - trapIds.length));
       return { ...mapFailureQuestion(question), topicName: temaName(question.t), trapIds, choices: shuffle([...trapIds, ...distractors]) };
     });
     trapOwner = store.accountId();
