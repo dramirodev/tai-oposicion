@@ -6,17 +6,6 @@ import { StatsEvolutionSection } from './StatsEvolutionSection.js';
 
 type Tab = 'temas' | 'sims' | 'evo';
 const date = (time: number) => new Date(time).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-function LineChart({ values, label, generatedAt }: { values: readonly (number | null)[]; label: string; generatedAt: number }) {
-  const width = 440, height = 180, left = 36, right = 12, top = 12, bottom = 24, plotW = width - left - right, plotH = height - top - bottom;
-  const nums = values.filter((value): value is number => value !== null); const max = Math.max(1, ...nums), min = Math.min(0, ...nums);
-  const x = (index: number) => left + (values.length === 1 ? plotW / 2 : plotW * index / Math.max(1, values.length - 1));
-  const y = (value: number) => top + plotH * (1 - (value - min) / Math.max(1, max - min));
-  const points = values.map((value, index) => value === null ? null : `${x(index)},${y(value)}`).filter(Boolean).join(' ');
-  return <div className="evo"><svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={label}>
-    {[0, .5, 1].map(fraction => { const value = min + (max - min) * fraction; return <g key={fraction}><line x1={left} x2={width - right} y1={y(value)} y2={y(value)} className="gl" /><text x={left - 5} y={y(value) + 4} textAnchor="end" className="gt">{Math.round(value)}</text></g>; })}
-    {nums.length > 1 && <polyline points={points} className="ln" />}{values.map((value, index) => value === null ? null : <circle key={index} cx={x(index)} cy={y(value)} r="3.5" className="pt"><title>{date(generatedAt - (values.length - index - 1) * 7 * 86400000)}: {value}</title></circle>)}
-  </svg></div>;
-}
 export function StatsPage() {
   const { stats } = useStudyServices();
   const [snapshot, setSnapshot] = useState<StatsSnapshot | null>(null);
@@ -52,8 +41,8 @@ export function StatsPage() {
     </section>
     <div className="seg stats-sections" role="group" aria-label="Sección de progreso">{([['temas', 'Temas'], ['sims', 'Simulacros'], ['evo', 'Evolución']] as const).map(([id, label]) => <button key={id} className={tab === id ? 'on' : ''} aria-pressed={tab === id} onClick={() => setTab(id)}>{label}</button>)}</div>
     {tab === 'temas' && <StatsTopicsSection snapshot={snapshot} stats={stats} topics={topics} domainOrder={domainOrder} setDomainOrder={setDomainOrder} formattedDays={formattedDays} setMessage={setMessage} />}
-    {tab === 'sims' && <StatsSimulationSection snapshot={snapshot} visibleSimulations={visibleSimulations} firstSimulation={firstSimulation} secondSimulation={secondSimulation} setFirstSimulation={setFirstSimulation} setSecondSimulation={setSecondSimulation} trend={trend} chart={<LineChart label="Nota por simulacro" values={visibleSimulations.filter(item => item.part === 'p1').map(item => item.nota)} generatedAt={snapshot.generatedAt} />} />}
-    {tab === 'evo' && <StatsEvolutionSection snapshot={snapshot} stats={stats} questionWeeks={questionWeeks} weekly={weekly} evolution={evolution} saveEvolution={saveEvolution} onlyCorrect={slowOnlyCorrect} setOnlyCorrect={setSlowOnlyCorrect} setMessage={setMessage} strategy={strategy} setStrategy={setStrategy} strategyDays={strategyDays} setStrategyDays={setStrategyDays} strategyBusy={strategyBusy} setStrategyBusy={setStrategyBusy} LineChart={LineChart} />}
+    {tab === 'sims' && <StatsSimulationSection snapshot={snapshot} visibleSimulations={visibleSimulations} firstSimulation={firstSimulation} secondSimulation={secondSimulation} setFirstSimulation={setFirstSimulation} setSecondSimulation={setSecondSimulation} trend={trend} />}
+    {tab === 'evo' && <StatsEvolutionSection snapshot={snapshot} stats={stats} questionWeeks={questionWeeks} weekly={weekly} evolution={evolution} saveEvolution={saveEvolution} onlyCorrect={slowOnlyCorrect} setOnlyCorrect={setSlowOnlyCorrect} setMessage={setMessage} strategy={strategy} setStrategy={setStrategy} strategyDays={strategyDays} setStrategyDays={setStrategyDays} strategyBusy={strategyBusy} setStrategyBusy={setStrategyBusy} />}
       <h2>Últimas sesiones</h2><div className="card">{snapshot.sessions.map(session => <div className="line" key={session.id}><span>{date(session.ts)} · {session.kind === 'sim' ? 'Simulacro' : session.kind === 'rev' ? 'Repaso' : 'Test'} {session.n}p</span><span>{session.kind === 'sim' ? `${session.nota}/100` : `${Math.round(100 * session.a / Math.max(1, session.n))}%`}</span></div>)}{!snapshot.sessions.length && <p className="sub">Sin sesiones todavía.</p>}</div>
     {message && <p role="status" className="note">{message}</p>}
   </>;

@@ -24,7 +24,7 @@ Conservar este orden mientras existan variantes globales. No introducir una laye
 - `data-theme` conserva la preferencia explícita. En automático no está presente. `legacy-ui.ts` resuelve la preferencia y los cambios del sistema en `data-color-scheme`; el oscuro se define una sola vez.
 - `--mute` es texto secundario. `--good-ink`, `--bad-ink` y `--r-ink` son texto de resultado; `--ok` y `--bad` se reservan a indicadores, no a texto normal de tablas.
 - Usar `--space-*` para separaciones repetidas y `--r-*` para radios. Los literales de geometría específica (marcadores, SVG, código) no necesitan un token propio.
-- `.card-answer` solo representa respuesta de tarjeta; `.trap-false-alarm` y `.trap-detected` representan evaluación de trampas; `.evolution-hit` es la zona interactiva del gráfico.
+- `.card-answer` solo representa respuesta de tarjeta; `.trap-false-alarm` y `.trap-detected` representan evaluación de trampas; `.stats-chart` reserva el espacio y adapta el SVG de Recharts a tema y ancho disponible.
 - `layout-metrics.ts` observa navegación y barras fijas. Guarda alturas físicas en `--navigation-height` y `--actions-height`; el CSS compensa el zoom interno una sola vez. No introducir reservas por número de botones ni ocultar overflow del body.
 - Los efectos de progreso usan transform, sin animar ancho ni sombras. El ancho final sigue representando el valor real. Respetar siempre la reducción de movimiento.
 
