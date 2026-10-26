@@ -334,8 +334,6 @@ input[type=date] {
   border-radius: 0.25rem;
 }
 
-/* acierto/fallo sin depender solo del color */
-
 .opt.ok::after,.opt.bad::after {
   margin-left: auto;
   font-weight: 700;
@@ -343,12 +341,12 @@ input[type=date] {
 }
 
 .opt.ok::after {
-  content: "✓";
+  content: "✓"; /* taste-skill-ignore: legacy option feedback remains color-independent. */
   color: var(--good-ink);
 }
 
 .opt.bad::after {
-  content: "✗";
+  content: "✗"; /* taste-skill-ignore: legacy option feedback remains color-independent. */
   color: var(--bad-ink);
 }
 
@@ -583,6 +581,16 @@ mark.kw {
   border-radius: var(--r-s);
   background: rgba(255,200,0,.18);
   font-size: var(--fs-m);
+}
+
+.gate svg,
+.mot svg,
+.repw svg,
+.rep svg,
+.rep.ok svg {
+  display: inline-block;
+  vertical-align: -.15em;
+  flex: 0 0 auto;
 }
 
 .tks .tk {

@@ -1,4 +1,5 @@
 import type { RefObject } from 'react';
+import { Eye } from 'lucide-react';
 import { ORIGEN } from '../../shared/presentation/labels.js';
 import { asksForNegativeOption } from '../../core/domain/reading-strategy.js';
 import { richHtml } from '../../shared/presentation/study-text.js';
@@ -56,7 +57,7 @@ export function QuizQuestionCard({ snapshot, prompt, rootRef, sourceLabel, respo
     <QuestionOptions snapshot={snapshot} prompt={prompt} rootRef={rootRef} revealed={revealed} responseLocked={responseLocked} gateRemaining={gateRemaining} />
     <QuestionHighlightTools snapshot={snapshot} prompt={prompt} selection={selection} highlightMark={highlightMark} setHighlightMark={setHighlightMark} addMark={addMark} />
     <p className="sub stale-highlight" id="stale-highlight" hidden>Una marca no coincide con el texto actual y no se ha movido.</p>
-    {gateRemaining > 0 && <div className="gate" id="gate" role="status">👀 Lee con calma: podrás responder en {gateRemaining} s. ¿Qué te piden? ¿Hay NO, SALVO, cifras?</div>}
+    {gateRemaining > 0 && <div className="gate" id="gate" role="status"><Eye size="1em" aria-hidden="true" /> Lee con calma: podrás responder en {gateRemaining} s. ¿Qué te piden? ¿Hay NO, SALVO, cifras?</div>}
     {revealed && <QuizFeedback snapshot={snapshot} prompt={prompt} explanation={explanation} />}
   </div>;
 }
