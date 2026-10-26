@@ -1,11 +1,12 @@
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import { Outlet, useLocation, useNavigate } from 'react-router';
-import { isFull, GUEST_ROUTES } from '../adapters/legacy/access.js';
+import { isFull, isOwner, GUEST_ROUTES } from '../adapters/legacy/access.js';
 import { hasActiveRun } from '../core/application/legacy-engine.js';
 import { syncGateway } from '../adapters/firebase/legacy-sync-state.js';
 import { subscribeAccessChanges } from './access-events.js';
 import { observeFixedLayout } from '../shared/ui/layout-metrics.js';
+import { WorkspaceNavigation } from './WorkspaceNavigation.js';
 import { useActiveSection } from './useActiveSection.js';
 const subscribeFull = (fn: () => void) => {
   const offSync = syncGateway.subscribe(() => fn()), offLocal = subscribeAccessChanges(fn);
@@ -36,6 +37,7 @@ export function Layout() {
   useLayoutEffect(observeFixedLayout, []);
   const location = useLocation(), navigate = useNavigate();
   const full = useSyncExternalStore(subscribeFull, isFull);
+  const owner = useSyncExternalStore(subscribeFull, isOwner);
   const lastFull = useRef(full);
   useEffect(() => {
     if (lastFull.current === full) return;
@@ -43,5 +45,31 @@ export function Layout() {
     if (!hasActiveRun()) void navigate(location.pathname);
   }, [full, location.pathname, navigate]);
   const section = useActiveSection(location.pathname);
-  return <>{createPortal(<a className="skip-link" href="#app" onClick={e => { e.preventDefault(); document.getElementById('app')?.focus(); window.scrollTo(0, 0); }}>Saltar al contenido</a>, document.getElementById('skip-nav') ?? document.body)}<Outlet key={location.key} />{createPortal(<><div id="live" className="sr" role="status" aria-live="polite" /><nav aria-label="Principal">{tabs.map(([route, label, icon]) => <a key={route} href={`#/${route}`} data-r={route} className={section === route ? 'on' : ''} aria-current={section === route ? 'page' : undefined} style={{ display: full || GUEST_ROUTES.has(route) ? '' : 'none' }}><i aria-hidden="true"><svg viewBox="0 0 24 24">{icon}</svg></i>{label}</a>)}</nav><NetworkBanner /></>, document.body)}</>;
+  return <>
+    {createPortal(
+      <a className="skip-link" href="#app" onClick={e => {
+        e.preventDefault();
+        document.getElementById('app')?.focus();
+        window.scrollTo(0, 0);
+      }}>Saltar al contenido</a>,
+      document.getElementById('skip-nav') ?? document.body,
+    )}
+    {createPortal(
+      <WorkspaceNavigation full={full} owner={owner} section={section} pathname={location.pathname}
+        navigate={path => { void navigate(path); }} />,
+      document.getElementById('workspace-shell') ?? document.body,
+    )}
+    <Outlet key={location.key} />
+    {createPortal(<>
+      <div id="live" className="sr" role="status" aria-live="polite" />
+      <nav aria-label="Principal">
+        {tabs.map(([route, label, icon]) => <a key={route} href={`#/${route}`} data-r={route}
+          className={section === route ? 'on' : ''} aria-current={section === route ? 'page' : undefined}
+          style={{ display: full || GUEST_ROUTES.has(route) ? '' : 'none' }}>
+          <i aria-hidden="true"><svg viewBox="0 0 24 24">{icon}</svg></i>{label}
+        </a>)}
+      </nav>
+      <NetworkBanner />
+    </>, document.body)}
+  </>;
 }

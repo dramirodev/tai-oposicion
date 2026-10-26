@@ -26,6 +26,7 @@ routes.home = async function () {
   const vel = velocidad(st);
   const nFall = falladasIds().length;
   const full = isFull();
+  const domainTopics = full ? dominioTemas(idx) : [];
   const run = getCurrentRun();
   const IC: Record<string, string> = { test: '<path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/>', sim: '<circle cx="12" cy="13" r="7"/><path d="M12 9v4l2.5 2M9.5 3h5"/>', card: '<rect x="3" y="6" width="18" height="13" rx="3"/><path d="M7 3h10"/>', det: '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.5-4.5"/>', lec: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>', rel: '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>', map: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/>', list: '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>', play: '<path d="M8 5v14l11-7z"/>', redo: '<path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/>' };
   const svg = (k: any) => `<svg viewBox="0 0 24 24" aria-hidden="true">${IC[k]}</svg>`;
@@ -36,11 +37,11 @@ routes.home = async function () {
   <div class="hhead"><div><h1 id="hola">${esc(saludo())}</h1>
     <div class="hsub">${dd !== null ? `<b>${dd} ${dd === 1 ? 'día' : 'días'}</b> hasta tu fecha objetivo · <a href="#/settings">Cambiar fecha</a>` : '<a href="#/settings">Configurar fecha objetivo</a>'} · ${seen} de ${idx.n.toLocaleString("es-ES")} preguntas vistas${streak >= 2 ? ` · racha de ${streak} días` : ''}</div></div>
     <button class="iconbtn" id="menu" aria-label="Menú" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
-  <div class="hbar" role="img" aria-label="${pct(seen, idx.n)} % de las preguntas vistas"><i style="--progress-from:0;width:${Math.max(2, Math.min(100, pct(seen, idx.n)))}%"></i></div>
+  <p class="home-intro">Tu estudio, con perspectiva. Un paso más en tu preparación.</p>
   <div class="home-workspace">
   <section class="home-primary" aria-labelledby="home-start-title"><h2 class="section-title" id="home-start-title">Tu próxima sesión</h2>
   ${run ? `<button class="cta" id="continue"><span><b>Continuar sesión</b><small>${esc(run.titulo || 'Práctica en curso')} · pregunta ${run.idx + 1} de ${run.items.length}</small></span>${svg('play')}</button>` : ''}
-  <button class="cta" id="quick"><span><b class="ctt">Sesión rápida</b><small>${!full ? '5 min · una pregunta de cada tema, distintas cada vez' : `5 min · ${quickN(st)} preguntas: ${due ? 'tus repasos pendientes (' + due + ') y ' : ''}nuevas de tus temas más débiles`}</small></span><i class="play" aria-hidden="true">${svg('play')}</i></button>
+  <div class="session-launch"><p class="session-heading">${run ? 'También puedes practicar' : 'Un paso más, pregunta a pregunta'}</p><button class="cta ${run ? 'secondary-session' : ''}" id="quick"><span><b class="ctt">Sesión rápida</b><small>${!full ? '5 min · una pregunta de cada tema, distintas cada vez' : `5 min · ${quickN(st)} preguntas: ${due ? 'tus repasos pendientes (' + due + ') y ' : ''}nuevas de tus temas más débiles`}</small></span><i class="play" aria-hidden="true">${svg('play')}</i></button></div>
   ${full ? `<div class="tiles">
     ${tile('test', 'test', 'Test', 'por tema')}${tile('sim', 'sim', 'Simulacros', 'con tiempo')}${tile('cards', 'card', 'Tarjetas', nCards ? nCards + (nCards === 1 ? ' pendiente' : ' pendientes') : 'repaso', nCards || '')}
   </div>` : ''}
@@ -56,6 +57,17 @@ routes.home = async function () {
   </div>
   </section>` : `<div class="card guest" id="guest"></div>`}
   </div>
+  <dl class="home-metrics" aria-label="Tu preparación">
+    <div><dt>Preguntas vistas</dt><dd>${seen.toLocaleString('es-ES')} <small>/ ${idx.n.toLocaleString('es-ES')}</small></dd></div>
+    <div><dt>Temas estudiados</dt><dd>${store.getSeen().length} <small>/ ${idx.temas.length}</small></dd></div>
+    <div><dt>${full ? 'Tarjetas pendientes' : 'Sesiones completadas'}</dt><dd>${full ? nCards : store.getSessions().length}</dd></div>
+  </dl>
+  ${full ? `<section class="home-domain" aria-labelledby="home-domain-title"><div class="home-domain-heading"><h2 class="section-title" id="home-domain-title">Tu mapa de dominio</h2><a href="#/stats">Ver progreso →</a></div><div class="home-blocks">${BLOQUES.map(([code, name]) => {
+    const topics = domainTopics.filter((topic: any) => topic.id.startsWith(code));
+    const mastered = topics.filter((topic: any) => topic.est === 'g').length;
+    const assessed = topics.filter((topic: any) => topic.est !== 'n').length;
+    return `<a class="home-block" href="#/stats"><span>${esc(name)}</span><small>${assessed ? `${mastered} de ${topics.length} dominados` : 'Sin datos · practica para empezar'}</small></a>`;
+  }).join('')}</div></section>` : ''}
 <div id="syncnote"></div>`;
   // el aviso de cuenta se decide cuando Firebase ya ha arrancado (antes mostraba «no configurado» un instante al abrir)
   const paintNote = () => {
