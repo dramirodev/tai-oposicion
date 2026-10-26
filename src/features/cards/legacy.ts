@@ -5,6 +5,7 @@ import { esc, richHtml, pct, swipeDir, pickCards, cardStats, cardFromQuestion } 
 import { fetchJson, getIndex, getMeta, byIds, temaName, now } from '../../adapters/http/legacy-data.js';
 import { $, legacyScope, toast, focusHeading, type El } from '../../shared/ui/legacy-dom.js';
 import { helpIconLink } from '../../shared/ui/help-icon-link.js';
+import { hashPath } from '../../shared/navigation/paths.js';
 export function registerCards({ routes, go, pw, reportBox, verifiedSources }: any, screen: any) {
 // ───────── tarjetas (flashcards) ─────────
 let CARDIDX: any; const cardCache = new Map<string, any>(); let CRUN: any = null;
@@ -69,7 +70,7 @@ routes.cards = async function () {
 
 function cardSession() {
   const { app, $, screen: routeScreen } = legacyScope(screen);
-  const R = CRUN; if (!R) return go('#/cards');
+  const R = CRUN; if (!R) return go(hashPath('cards'));
   const NOMBRE = ['Fallé', 'Dudaba', 'Lo sabía'];
   const grade = (g: any) => {
     if (R !== CRUN || !R.rev) return;
@@ -127,7 +128,7 @@ ${sourceHtml({ source: c.source, u: c.ref }, verifiedSources)}
     </div>
     <div class="bar2">${R.rev ? NOMBRE.map((t, g) => `<button class="btn ${g === 0 ? 'bad' : g === 1 ? 'sec' : ''}" data-g="${g}">${t}<small>${reviewLabel(c.id, g)}</small></button>`).join('') : '<button class="btn" id="show">Mostrar respuesta</button>'}</div>
     ${R.rev ? '<p class="sub fgl">Teclado 1·2·3 · deslizar ← Fallé · → Lo sabía</p>' : ''}`;
-    $('#exit').onclick = () => { CRUN = null; go('#/home'); };
+    $('#exit').onclick = () => { CRUN = null; go(hashPath('home')); };
     $('#show') && ($('#show').onclick = show);
     $('#fc').onclick = e => { if (!R.rev && !(e.target as El).closest<El>('button,a,details,input,select,textarea')) show(); };
     app.querySelectorAll<El>('[data-g]').forEach(b => b.onclick = () => grade(+b.dataset.g!));
@@ -143,7 +144,7 @@ ${sourceHtml({ source: c.source, u: c.ref }, verifiedSources)}
     <div class="grid"><div class="stat"><b>${rs[2]}</b><span>lo sabía</span></div><div class="stat"><b>${rs[1]}</b><span>dudaba</span></div><div class="stat"><b>${rs[0]}</b><span>fallé</span></div><div class="stat"><b>${pct(rs[2], tot)}%</b><span>retención</span></div></div>
     <p class="sub">${rs[0] + rs[1] ? 'Las que fallaste o dudaste vuelven en 2 días.' : '¡Todas recordadas!'}${sig ? ' Próximo repaso: ' + new Date(sig).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short' }) + '.' : ''}</p>
     <button class="btn" id="otra">Otra sesión</button> <button class="btn sec" id="ini">Inicio</button>`;
-    $('#otra').onclick = () => go('#/cards'); $('#ini').onclick = () => go('#/home');
+    $('#otra').onclick = () => go(hashPath('cards')); $('#ini').onclick = () => go(hashPath('home'));
     focusHeading();
   }
   draw();

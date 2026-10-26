@@ -8,6 +8,7 @@ import { subscribeAccessChanges } from './access-events.js';
 import { observeFixedLayout } from '../shared/ui/layout-metrics.js';
 import { WorkspaceNavigation } from './WorkspaceNavigation.js';
 import { useActiveSection } from './useActiveSection.js';
+import { hashSegment } from './paths.js';
 const subscribeFull = (fn: () => void) => {
   const offSync = syncGateway.subscribe(() => fn()), offLocal = subscribeAccessChanges(fn);
   return () => { offSync(); offLocal(); };
@@ -67,7 +68,7 @@ export function Layout() {
     {createPortal(<>
       <div id="live" className="sr" role="status" aria-live="polite" />
       <nav aria-label="Principal">
-        {tabs.map(([route, label, icon]) => <a key={route} href={`#/${route}`} data-r={route}
+        {tabs.map(([route, label, icon]) => <a key={route} href={hashSegment(route)} data-r={route}
           className={section === route ? 'on' : ''} aria-current={section === route ? 'page' : undefined}
           style={{ display: full || GUEST_ROUTES.has(route) ? '' : 'none' }}>
           <i aria-hidden="true"><svg viewBox="0 0 24 24">{icon}</svg></i>{label}
