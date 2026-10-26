@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Check, TriangleAlert } from 'lucide-react';
 import { Link } from 'react-router';
 import { ERROR_REPORT_REASONS } from '../../shared/presentation/study-labels.js';
 import { hiliteHtml, richHtml } from '../../shared/presentation/study-text.js';
@@ -20,8 +21,8 @@ function ReviewReport({ item, index, report }: { item: ResultItem; index: number
   const [editing, setEditing] = useState(false);
   const [reason, setReason] = useState(report?.reason || ERROR_REPORT_REASONS[0]);
   const [note, setNote] = useState(report?.note || '');
-  if (report?.state === 'abierto' && !editing) return <div className="repw"><span className="rep ok">✓ Error anotado <button className="ghost sm" onClick={() => { setReason(report.reason); setNote(report.note); setEditing(true); }}>editar</button></span></div>;
-  if (!editing) return <div className="repw"><button className="ghost fl" onClick={() => setEditing(true)}>⚠ Avisar de error</button></div>;
+  if (report?.state === 'abierto' && !editing) return <div className="repw"><span className="rep ok"><Check size="1em" aria-hidden="true" /> Error anotado <button className="ghost sm" onClick={() => { setReason(report.reason); setNote(report.note); setEditing(true); }}>editar</button></span></div>;
+  if (!editing) return <div className="repw"><button className="ghost fl" onClick={() => setEditing(true)}><TriangleAlert size="1em" aria-hidden="true" /> Avisar de error</button></div>;
   return <div className="repw"><div className="repf"><label className="sr" htmlFor={`report-reason-${index}`}>Motivo del error</label><select id={`report-reason-${index}`} value={reason} onChange={event => setReason(event.target.value)}>{ERROR_REPORT_REASONS.map(value => <option key={value}>{value}</option>)}</select>
     <label className="sr" htmlFor={`report-note-${index}`}>Qué falla (opcional)</label><input id={`report-note-${index}`} maxLength={300} placeholder="Qué falla (opcional)" value={note} onChange={event => setNote(event.target.value)} />
     <div className="row"><button className="btn" onClick={() => { result.saveReport(item.id, item.topicId, reason, note.trim()); setEditing(false); }}>Guardar</button><button className="btn sec" onClick={() => setEditing(false)}>Cancelar</button></div></div></div>;

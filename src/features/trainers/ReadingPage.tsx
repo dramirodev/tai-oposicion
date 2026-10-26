@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent } from 'react';
+import { Check, X } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { ask } from '../../shared/ui/dialog-actions.js';
 import { READING_TIPS } from '../../shared/presentation/study-labels.js';
@@ -37,7 +38,7 @@ export function ReadingPage() {
   const question = progress.items[progress.index];
   const questionCount = progress.items.length;
   return <>
-    <div className="qhead"><button className="ghost" aria-label="Salir" onClick={() => void exit()}>✕</button><div className="prog" role="progressbar" aria-label="Progreso" aria-valuemin={0} aria-valuemax={questionCount} aria-valuenow={progress.index}><div style={{ width: `${100 * progress.index / questionCount}%` }} /></div><div className="cnt">{progress.index + 1}/{questionCount}</div></div>
+    <div className="qhead"><button className="ghost" aria-label="Salir" onClick={() => void exit()}><X size="1.25rem" aria-hidden="true" /></button><div className="prog" role="progressbar" aria-label="Progreso" aria-valuemin={0} aria-valuemax={questionCount} aria-valuenow={progress.index}><div style={{ width: `${100 * progress.index / questionCount}%` }} /></div><div className="cnt">{progress.index + 1}/{questionCount}</div></div>
     <h1 className="sub">Lectura atenta · paso {progress.step + 1} de 3</h1>
     {progress.step === 0 && <MeaningStep question={question} progress={progress} reading={reading} />}
     {progress.step === 1 && <KeywordStep question={question} progress={progress} reading={reading} />}
@@ -53,7 +54,7 @@ function QuestionSources({ question }: { question: ReadingPrompt }) {
 
 function MeaningStep({ question, progress, reading }: { question: ReadingPrompt; progress: ReadingProgress; reading: ReadingServices }) {
   return <article className="card q"><QuestionSources question={question} /><div className="enun pre"><StudyMarkup html={richHtml(question.statement)} /></div><p><b>1. ¿Qué te piden?</b> Antes de ver las opciones.</p>
-    <div className="opts"><button className={`opt${progress.meaningChoice === 0 && progress.meaningCorrect !== null ? progress.meaningCorrect ? ' ok' : ' bad' : ''}`} disabled={progress.meaningChoice !== null} onClick={() => reading.answerMeaning(0)}><b>✔</b><span>La opción CORRECTA / VERDADERA</span></button><button className={`opt${progress.meaningChoice === 1 && progress.meaningCorrect !== null ? progress.meaningCorrect ? ' ok' : ' bad' : ''}`} disabled={progress.meaningChoice !== null} onClick={() => reading.answerMeaning(1)}><b>✖</b><span>La INCORRECTA / FALSA / la excepción</span></button></div>
+    <div className="opts"><button className={`opt${progress.meaningChoice === 0 && progress.meaningCorrect !== null ? progress.meaningCorrect ? ' ok' : ' bad' : ''}`} disabled={progress.meaningChoice !== null} onClick={() => reading.answerMeaning(0)}><b><Check aria-hidden="true" /></b><span>La opción CORRECTA / VERDADERA</span></button><button className={`opt${progress.meaningChoice === 1 && progress.meaningCorrect !== null ? progress.meaningCorrect ? ' ok' : ' bad' : ''}`} disabled={progress.meaningChoice !== null} onClick={() => reading.answerMeaning(1)}><b><X aria-hidden="true" /></b><span>La INCORRECTA / FALSA / la excepción</span></button></div>
     {progress.meaningChoice !== null && <><div className={`fb ${progress.meaningCorrect ? 'good' : 'wrong'}`} role="status"><b>{progress.meaningCorrect ? '¡Bien leído!' : 'Ojo: lo habías leído al revés.'}</b> Te piden la opción <b>{question.asksForNegative ? 'INCORRECTA / excepción' : 'CORRECTA'}</b>.</div><div className="bar2"><button className="btn" onClick={() => reading.continueMeaning()}>Siguiente →</button></div></>}
   </article>;
 }

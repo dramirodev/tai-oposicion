@@ -1,3 +1,4 @@
+import { Check } from 'lucide-react';
 import type { QuizSnapshot } from '../../shared/ui/study-services.js';
 
 export function QuizQuestionMap({ snapshot, onJump }: { snapshot: QuizSnapshot; onJump: (index: number) => void }) {
@@ -48,7 +49,7 @@ export function QuizNavigation({ snapshot, onPrevious, onNext, onBlank, onReveal
 function ReviewQuestionButton({ snapshot, onToggleReview }: { snapshot: QuizSnapshot; onToggleReview: () => void }) {
   const marked = snapshot.review.includes(snapshot.index);
   return <button className="ghost" id="review-question" aria-pressed={marked} onClick={onToggleReview}>
-    {marked ? '✓ Marcada para revisar' : 'Marcar para revisar'}
+    {marked && <Check size="1em" aria-hidden="true" />} {marked ? 'Marcada para revisar' : 'Marcar para revisar'}
   </button>;
 }
 
@@ -62,7 +63,7 @@ function FeedbackAnswerAction({ snapshot, onBlank, onReveal }: { snapshot: QuizS
 function PracticeNavigation({ snapshot, lastQuestion, onNext, onToggleBlank }: { snapshot: QuizSnapshot; lastQuestion: boolean; onNext: () => void; onToggleBlank: () => void }) {
   const blank = snapshot.answer === -1;
   return <>
-    <button className="btn sec" id="blank" disabled={snapshot.paused} onClick={onToggleBlank}>{blank ? '✓ En blanco' : 'Dejar en blanco'}</button>
+    <button className="btn sec" id="blank" disabled={snapshot.paused} onClick={onToggleBlank}>{blank && <Check size="1em" aria-hidden="true" />} {blank ? 'En blanco' : 'Dejar en blanco'}</button>
     <NextQuestionButton paused={snapshot.paused} lastQuestion={lastQuestion} onNext={onNext} />
   </>;
 }

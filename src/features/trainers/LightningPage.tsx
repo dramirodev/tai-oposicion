@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Zap } from 'lucide-react';
 import { Link } from 'react-router';
 import { useStudyServices, type LightningQuestion } from '../../shared/ui/study-services.js';
 import { richHtml, hiliteHtml } from '../../shared/presentation/study-text.js';
@@ -31,7 +32,7 @@ export function LightningPage() {
   const notice = questionNotice({ i: question.id, n: question.note, np: question.nonScoring });
   const source = sourceHtml({ i: question.id, source: question.source, u: question.citation });
   return <>
-    <h1>⚡ Pregunta relámpago</h1>
+    <h1><Zap className="inline-feature-icon" size="1em" strokeWidth={1.7} aria-hidden="true" /> Pregunta relámpago</h1>
     <p className="sub">{question.reason}</p>
     <article className="card q">
       <div className="meta"><span className="tag">{question.topicId} · {lightning.topicName(question.topicId)}</span></div>
