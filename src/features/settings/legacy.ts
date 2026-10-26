@@ -2,7 +2,8 @@ import { saveExportFile } from '../../shared/ui/download-file.js';
 import { helpIconLink } from '../../shared/ui/help-icon-link.js';
 import * as sync from '../../adapters/firebase/sync-facade.js';
 import * as store from '../../adapters/local/legacy-store.js';
-import { esc, normUi } from '../../legacy/logic.js';
+import { escapeHtml as esc } from '../../shared/presentation/format.js';
+import { normalizeUiPreferences } from '../../shared/presentation/ui-preferences.js';
 import { getIndex } from '../../adapters/http/legacy-data.js';
 import { inspectOffline, downloadOffline, type OfflineState } from '../../adapters/offline/cache.js';
 import { cleanCfg } from '../../adapters/local/config.js';
@@ -69,7 +70,7 @@ routes.settings = async function () {
     generation++;
     const focused = document.activeElement as HTMLElement | null;
     const focusGroup = focused?.closest('.seg')?.id, focusValue = focused?.dataset.v;
-    const syncStatus = sync.status; const ui = normUi(store.getCfg().ui); const full = isFull(), lvl = accessLevel(), dm = devMode();
+    const syncStatus = sync.status; const ui = normalizeUiPreferences(store.getCfg().ui); const full = isFull(), lvl = accessLevel(), dm = devMode();
     app.innerHTML = `
     <h1>Ajustes</h1>
     <div class="card"><h2 class="h3">Cuenta y sincronización</h2>
@@ -134,9 +135,9 @@ routes.settings = async function () {
       if (await ask(`Se recargará la app para pasar a la versión ${getNewVersion().version}. Lo que tengas en curso se guarda.`, 'Actualizar') && alive()) applyUpdate();
     };
     item<El>('#exd').onchange = event => { if (/^\d{4}-\d\d-\d\d$/.test((event.target as El).value)) store.setCfg('exam', (event.target as El).value); };
-    item('#th').onclick = event => { const element = (event.target as El).closest<El>('button'); if (element) { store.setCfg('ui', { ...normUi(store.getCfg().ui), theme: element.dataset.v! }); draw(); } };
-    item('#lec').onclick = event => { const element = (event.target as El).closest<El>('button'); if (element) { store.setCfg('ui', { ...normUi(store.getCfg().ui), lectura: +element.dataset.v! }); draw(); } };
-    item('#fz').onclick = event => { const element = (event.target as El).closest<El>('button'); if (element) { store.setCfg('ui', { ...normUi(store.getCfg().ui), size: +element.dataset.v! }); draw(); } };
+    item('#th').onclick = event => { const element = (event.target as El).closest<El>('button'); if (element) { store.setCfg('ui', { ...normalizeUiPreferences(store.getCfg().ui), theme: element.dataset.v! }); draw(); } };
+    item('#lec').onclick = event => { const element = (event.target as El).closest<El>('button'); if (element) { store.setCfg('ui', { ...normalizeUiPreferences(store.getCfg().ui), lectura: +element.dataset.v! }); draw(); } };
+    item('#fz').onclick = event => { const element = (event.target as El).closest<El>('button'); if (element) { store.setCfg('ui', { ...normalizeUiPreferences(store.getCfg().ui), size: +element.dataset.v! }); draw(); } };
     item<El>('#dl').disabled = downloading;
     item('#dl').onclick = () => download();
     const exportDates = () => {

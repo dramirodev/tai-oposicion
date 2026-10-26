@@ -1,5 +1,28 @@
 import { describe, it, expect } from 'vitest';
-import { esc, shuffle, fmtT, pct, nota, allowed, composeSim, dominioCalc, weekStart, aggregateWeeks, slowList, quickN, pickQuick, pickGuest, simHistory, compareSessions, trapRates, pickTrampas, MOTIVOS } from '../src/legacy/logic.js';
+import { escapeHtml as esc, formatTime as fmtT, percentage as pct } from '../src/shared/presentation/format.js';
+import { calculateExamScore as nota } from '../src/core/domain/scoring.js';
+import { composeWeightedQuestions, estimateQuickQuestionCount, isQuestionAllowed, pickGuestQuestions, pickQuickQuestions, shuffleItems } from '../src/core/domain/selection.js';
+import { analyzeTopicMastery } from '../src/core/domain/topic-mastery.js';
+import { startOfStudyWeek as weekStart, aggregateWeeklyStudy, slowestQuestions, buildSimulationHistory, compareStudySessions } from '../src/core/domain/study-analytics.js';
+import { aggregateWeeks, slowList, quickQuestionCount as quickN, simHistory, compareSessions, cargaRepasos, motivosFallo, suertes, velocidad } from '../src/features/stats/analytics-mapper.js';
+import { mapTopicMasteryToLegacy as dominioCalc } from '../src/app/topic-mastery-mapper.js';
+import { selectSpacedReviews, countReviewsByDay } from '../src/core/domain/spaced-repetition.js';
+import { calculateTrapRates, selectTrapQuestions } from '../src/core/domain/traps.js';
+import { ERROR_REPORT_REASONS as MOTIVOS, FAILURE_REASONS as MOTIVOS_FALLO, UI_ZOOMS as ZOOMS } from '../src/shared/presentation/study-labels.js';
+import { normalizeUiPreferences as normUi } from '../src/shared/presentation/ui-preferences.js';
+import { swipeDirection as swipeDir, studyKeyAction as keyAction } from '../src/shared/ui/study-input.js';
+import { selectLegacyCards as pickCards, summarizeLegacyCards as cardStats, cardFromFailedQuestion as cardFromQuestion } from '../src/features/cards/flashcard-mapper.js';
+import { hiliteHtml, claveSpans, claveHtml, richHtml, codeSpans, todoCodigo } from '../src/shared/presentation/study-text.js';
+import { asksForNegativeOption as pideNegativa, minimumReadingSeconds as minLectura } from '../src/core/domain/reading-strategy.js';
+import { analyzeSimulation, simulationPace as ritmoSimulacro } from '../src/core/domain/simulation-analysis.js';
+import { mapSimulationResultToLegacy as analisisSimulacro } from '../src/app/simulation-result-mapper.js';
+
+const shuffle = (items, random = Math.random) => shuffleItems(items, random);
+const composeSim = (topics, pools, count, random = Math.random) => composeWeightedQuestions(topics.map(topic => ({ id: topic.id, weight: topic.w })), pools, count, random);
+const pickQuick = (due, pools, count, random = Math.random) => pickQuickQuestions(due, pools, count, item => item.i, random);
+const pickGuest = (pools, count, isSeen = () => false, excluded = new Set(), random = Math.random) => pickGuestQuestions(pools.map(pool => ({ topicId: pool.t, questions: pool.qs })), count, item => item.i, isSeen, excluded, random);
+const allowed = (question, origins) => isQuestionAllowed(question.o, question.r, origins);
+const pickRepaso = (items, count) => selectSpacedReviews(items.map(item => ({ topicId: item.t, dueAt: item.due, item })), count).map(review => review.item);
 
 describe('nota', () => {
   it('aciertos suman y fallos restan un tercio', () => {
@@ -185,26 +208,29 @@ describe('mis trampas', () => {
   const traps = { a: [1, 2], b: [1], c: [3], d: [3, 4], e: [] };
   const stats = { a: rec(4, 1), b: rec(4, 2), c: rec(5, 5), d: rec(2, 0), e: rec(10, 0) };
   it('ordena las trampas por tasa de fallo y exige un mínimo de respuestas', () => {
-    const r = trapRates(stats, id => traps[id], 5);
-    expect(r.map(x => x.k)).toEqual([1, 3]); // la 2 (4 resp.) y la 4 (2 resp.) quedan fuera por el mínimo
+    const domainStats = Object.fromEntries(Object.entries(stats).map(([id, row]) => [id, { attempts: row[0], correct: row[1] }]));
+    const rates = calculateTrapRates(domainStats, id => traps[id], 5);
+    expect(rates.map(item => item.trapId)).toEqual(['1', '3']); // la 2 (4 resp.) y la 4 (2 resp.) quedan fuera por el mínimo
   });
-  it('tasa y recuentos', () => {
-    const r = trapRates(stats, id => traps[id], 4); expect(r.map(x => x.k)).toEqual([2, 1, 3]);
-    expect(r[1]).toMatchObject({ k: 1, n: 8, err: 5 }); expect(r[1].rate).toBeCloseTo(0.625);
-    expect(trapRates({}, () => [], 1)).toEqual([]);
+  it('devuelve tasa y recuentos con nombres de dominio', () => {
+    const domainStats = Object.fromEntries(Object.entries(stats).map(([id, row]) => [id, { attempts: row[0], correct: row[1] }]));
+    const rates = calculateTrapRates(domainStats, id => traps[id], 4);
+    expect(rates.map(item => item.trapId)).toEqual(['2', '1', '3']);
+    expect(rates[1]).toMatchObject({ trapId: '1', responseCount: 8, errorCount: 5 }); expect(rates[1].errorRate).toBeCloseTo(0.625);
+    expect(calculateTrapRates({}, () => [], 1)).toEqual([]);
   });
   const Q = (i, x) => ({ i, x });
   it('prioriza falladas, luego nuevas, y más trampas objetivo primero', () => {
     const cands = [Q('seen', [1]), Q('failed', [1]), Q('new1', [1]), Q('new2', [1, 2]), Q('otra', [9])];
     const rc = id => ({ seen: [1, 1, 1, -1, 0, 1, 0], failed: [1, 0, 1, 0, 0, 0, 0] })[id];
-    const r = pickTrampas(cands, rc, [1, 2], 10).map(q => q.i);
+    const candidates = cands.map(question => ({ id: question.i, trapIds: question.x, question }));
+    const r = selectTrapQuestions(candidates, id => { const row = rc(id); return row ? { lastResult: row[5] } : undefined; }, [1, 2], 10, () => 0.5).map(item => item.question.i);
     expect(r).toEqual(['failed', 'new2', 'new1', 'seen']); // 'otra' no tiene trampas objetivo
-    expect(pickTrampas(cands, rc, [1, 2], 2)).toHaveLength(2);
+    expect(selectTrapQuestions(candidates, id => { const row = rc(id); return row ? { lastResult: row[5] } : undefined; }, [1, 2], 2, () => 0.5)).toHaveLength(2);
   });
 });
 describe('motivos de error', () => { it('hay una lista cerrada de motivos', () => { expect(MOTIVOS.length).toBeGreaterThan(3); }); });
 
-import { normUi, swipeDir, keyAction, ZOOMS } from '../src/legacy/logic.js';
 describe('comodidad', () => {
   it('normUi sanea valores inválidos', () => {
     expect(normUi(null)).toEqual({ theme: 'auto', size: 0, lectura: 0 });
@@ -220,19 +246,18 @@ describe('comodidad', () => {
     expect(swipeDir(-100, 200)).toBeNull();
   });
   it('keyAction mapea teclas', () => {
-    expect(keyAction({ key: '2' }, 4)).toEqual({ t: 'opt', i: 1 });
+    expect(keyAction({ key: '2' }, 4)).toEqual({ type: 'option', index: 1 });
     expect(keyAction({ key: '5' }, 4)).toBeNull();
-    expect(keyAction({ key: 'c' }, 4)).toEqual({ t: 'opt', i: 2 });
+    expect(keyAction({ key: 'c' }, 4)).toEqual({ type: 'option', index: 2 });
     expect(keyAction({ key: 'd' }, 3)).toBeNull();
-    expect(keyAction({ key: 'Enter' })).toEqual({ t: 'next' });
-    expect(keyAction({ key: 'ArrowLeft' })).toEqual({ t: 'prev' });
-    expect(keyAction({ key: 'b' })).toEqual({ t: 'blank' });
-    expect(keyAction({ key: 'f' })).toEqual({ t: 'flag' });
+    expect(keyAction({ key: 'Enter' })).toEqual({ type: 'next' });
+    expect(keyAction({ key: 'ArrowLeft' })).toEqual({ type: 'previous' });
+    expect(keyAction({ key: 'b' })).toEqual({ type: 'blank' });
+    expect(keyAction({ key: 'f' })).toEqual({ type: 'flag' });
     expect(keyAction({ key: 'a', metaKey: true })).toBeNull();
   });
 });
 
-import { pickRepaso, cargaRepasos, motivosFallo, suertes, MOTIVOS_FALLO } from '../src/legacy/logic.js';
 describe('repaso espaciado: prioridad, calendario y motivos', () => {
   it('pickRepaso: las más vencidas primero y temas mezclados', () => {
     const it = [{ i: 'a1', t: 'A', due: 1 }, { i: 'a2', t: 'A', due: 2 }, { i: 'a3', t: 'A', due: 3 }, { i: 'b1', t: 'B', due: 4 }, { i: 'b2', t: 'B', due: 5 }, { i: 'c1', t: 'C', due: 99 }];
@@ -260,7 +285,6 @@ describe('no lo sabía y suerte', () => {
   });
 });
 
-import { pickCards, cardStats, cardFromQuestion } from '../src/legacy/logic.js';
 describe('tarjetas: selección y estadísticas', () => {
   const D = 86400000, now = 1_800_000_000_000;
   const C = (t, k) => Array.from({ length: k }, (_, i) => ({ id: `FC-${t}-${i}`, t }));
@@ -288,7 +312,6 @@ describe('tarjetas: selección y estadísticas', () => {
   });
 });
 
-import { hiliteHtml, claveSpans, claveHtml, pideNegativa, minLectura, velocidad } from '../src/legacy/logic.js';
 describe('hiliteHtml', () => {
   it('resalta el fragmento que responde', () => {
     const h = hiliteHtml('El Congreso se compone de un mínimo de 300 y un máximo de 400 Diputados elegidos.', 'De un mínimo de 300 y de un máximo de 400.');
@@ -315,8 +338,8 @@ describe('lectura atenta', () => {
     expect(pideNegativa('¿Qué puerto usa SSH?')).toBe(false);
   });
   it('minLectura acotada', () => {
-    expect(minLectura({ q: 'a', a: ['b'] })).toBe(4);
-    expect(minLectura({ q: 'x '.repeat(500), a: [] })).toBe(30);
+    expect(minLectura({ statement: 'a', options: ['b'] })).toBe(4);
+    expect(minLectura({ statement: 'x '.repeat(500), options: [] })).toBe(30);
   });
   it('velocidad cuenta fallos con motivo 7', () => {
     const v = velocidad({ a: [1, 0, 0, 0, 0, 0, 0, 0, 0, 7], b: [1, 0, 0, 0, 0, 0, 0, 0, 0, 1], c: [1, 1, 0, 0, 0, 1, 0, 0, 0, 7] });
@@ -325,8 +348,7 @@ describe('lectura atenta', () => {
 });
 
 describe('analisisSimulacro', () => {
-  it('calcula notas, ritmo y preguntas lentas', async () => {
-    const { analisisSimulacro, ritmoSimulacro } = await import('../src/legacy/logic.js');
+  it('calcula notas, ritmo y preguntas lentas', () => {
     const r = analisisSimulacro({ correct: [0, 1, 2, 3], ans: [0, 2, -1, 3], times: [10, 5, 0, 200], limitSecs: 400, secs: 300 });
     expect(r).toMatchObject({ n: 4, a: 2, f: 1, b: 1, presupuesto: 100, sinPenal: 50, perdidoFallos: 8.3, uso: 75 });
     expect(r.lentas.map(x => x.k)).toEqual([3]);
@@ -337,8 +359,7 @@ describe('analisisSimulacro', () => {
 });
 
 describe('richHtml (código)', () => {
-  it('escapa siempre y marca sentencias SQL, comandos y etiquetas', async () => {
-    const { richHtml, codeSpans } = await import('../src/legacy/logic.js');
+  it('escapa siempre y marca sentencias SQL, comandos y etiquetas', () => {
     const sql = richHtml('¿Qué devuelve SELECT * FROM A WHERE B IS NULL; en SQL?');
     expect(sql).toContain('<code class="cd"><b class="sk">SELECT</b> * <b class="sk">FROM</b>');
     expect(sql).toContain('en SQL?');
@@ -349,14 +370,12 @@ describe('richHtml (código)', () => {
     expect(codeSpans('La Constitución Española de 1978 (CE) regula la Corona.')).toEqual([]);
     expect(codeSpans('Lenguaje C++ y Node.js son conocidos')).toEqual([]);
   });
-  it('combina palabras clave de lectura fuera del código', async () => {
-    const { richHtml } = await import('../src/legacy/logic.js');
+  it('combina palabras clave de lectura fuera del código', () => {
     const h = richHtml('Señale la INCORRECTA sobre SELECT.', true);
     expect(h).toContain('<mark class="kw">INCORRECTA</mark>');
     expect(h).toContain('<code class="cd"><b class="sk">SELECT</b></code>');
   });
-  it('un fragmento de código con identificadores sueltos queda en un solo bloque', async () => {
-    const { richHtml } = await import('../src/legacy/logic.js');
+  it('un fragmento de código con identificadores sueltos queda en un solo bloque', () => {
     const h = richHtml('siguiente código: a=10,b; b=a++;');
     expect(h).toContain('<code class="cd">a=10,b; b=a++;</code>');
     expect(richHtml('a=10, b=10')).toBe('<code class="cd">a=10, b=10</code>');
@@ -364,8 +383,7 @@ describe('richHtml (código)', () => {
 });
 
 describe('richHtml: opciones que son todo código', () => {
-  it('pinta la opción entera como un único bloque y deja el punto final fuera (o lo quita si es un bloque)', async () => {
-    const { richHtml } = await import('../src/legacy/logic.js');
+  it('pinta la opción entera como un único bloque y deja el punto final fuera (o lo quita si es un bloque)', () => {
     const strip = h => h.replace(/<b class="sk">|<\/b>/g, '');
     expect(strip(richHtml('GRANT.'))).toBe('<code class="cd">GRANT</code>.');
     expect(strip(richHtml('/sbin.'))).toBe('<code class="cd">/sbin</code>.');
@@ -373,8 +391,7 @@ describe('richHtml: opciones que son todo código', () => {
     expect(strip(richHtml('MODIFY TABLE P ADD COLUMN (sexo VARCHAR2(10))'))).toBe('<code class="cd blk">MODIFY TABLE P ADD COLUMN (sexo VARCHAR2(10))</code>');
     expect(richHtml('for (int i=0; i<12; i++) x[i];')).toMatch(/^<code class="cd blk">for \(int i=0; i&lt;12; i\+\+\) x\[i\];<\/code>$/);
   });
-  it('no convierte en código la prosa', async () => {
-    const { richHtml, todoCodigo } = await import('../src/legacy/logic.js');
+  it('no convierte en código la prosa', () => {
     for (const t of ['La dirección de memoria de b.', 'I Plan 2012-2014; II Plan 2014-2016.', 'Solo obligatorio <html>.', 'BYOD', 'HTTP, FTP (puerto 21)', 'Permite ejecutar SELECT SYSDATE FROM DUAL.'])
       expect(todoCodigo(t)).toBe(false);
     // SELECT sin FROM dentro de una frase no es una sentencia
