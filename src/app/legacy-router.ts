@@ -970,9 +970,10 @@ export const studyServices: StudyServices = {
     subscribe: store.onChange,
     setFilter(filter) { store.setCfg('errf', filter); },
     async loadContent(ids) {
+      const requestedIds = new Set(ids);
       const questionIds = ids.filter(id => !id.startsWith('FC-'));
       const questions = (await byIds(questionIds)).map(question => ({ id: question.i, origin: ORIGEN[question.o], statement: question.q, options: question.a.map((text, index) => ({ label: L[index], text, correct: index === question.c })), reference: question.u, traps: (question.x || []).map(trap => TRAMPAS[trap] || String(trap)) }));
-      const cards = ids.some(id => id.startsWith('FC-')) ? (await allCards()).filter(card => ids.includes(card.id)).map(card => ({ id: card.id, question: card.q, answer: card.a, reference: card.ref || null })) : [];
+      const cards = ids.some(id => id.startsWith('FC-')) ? (await allCards()).filter(card => requestedIds.has(card.id)).map(card => ({ id: card.id, question: card.q, answer: card.a, reference: card.ref || null })) : [];
       return { questions, cards };
     },
     setState(id, state) { store.setReportState(id, state); },
