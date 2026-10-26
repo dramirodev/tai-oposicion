@@ -1,0 +1,21 @@
+import { test, expect } from '@playwright/test';
+test('pulsar da feedback sin animar botones deshabilitados ni reducir movimiento', async ({ page }) => {
+  await page.route('**/firebase-config.json', route => route.fulfill({ json: {} }));
+  await page.addInitScript(() => localStorage.setItem('tai.dev','1'));
+  await page.goto('/#/home');
+  const button = page.locator('#quick');
+  await expect(button).toBeVisible();
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await button.hover(); await page.mouse.down();
+  await expect.poll(() => button.evaluate(el => getComputedStyle(el).transform)).not.toBe('none');
+  await page.mouse.move(1,1); await page.mouse.up();
+  await button.evaluate(el => (el as HTMLButtonElement).disabled = true);
+  await button.hover({force:true}); await page.mouse.down();
+  await expect.poll(() => button.evaluate(el => getComputedStyle(el).transform)).toBe('none');
+  await page.mouse.up();
+  await button.evaluate(el => (el as HTMLButtonElement).disabled = false);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await button.hover(); await page.mouse.down();
+  await expect.poll(() => button.evaluate(el => getComputedStyle(el).transform)).toBe('none');
+  await page.mouse.move(1,1); await page.mouse.up();
+});
