@@ -17,19 +17,19 @@ export const progressMapper = {
   toDomain(dto: unknown): ProgressMappingResult {
     // TODO(zod): validate ProgressDto before mapping.
     if (!isRecord(dto)) return { ok: false, reason: 'Progreso inválido' };
-    const d = dto;
-    if (Object.keys(d).some((key) => !['stats', 'sessions', 'cfg', 'seen', 'reports', 'cards'].includes(key))) {
+    const data = dto;
+    if (Object.keys(data).some((key) => !['stats', 'sessions', 'cfg', 'seen', 'reports', 'cards'].includes(key))) {
       return { ok: false, reason: 'Campo de progreso desconocido' };
     }
     if (
-      !isRecord(d.stats) || !Array.isArray(d.sessions) || !isRecord(d.cfg)
-      || !isRecord(d.seen) || !isRecord(d.reports) || !isRecord(d.cards)
-      || Object.keys(d.seen).some((key) => !['t', 'ts'].includes(key))
-      || !Array.isArray(d.seen.t) || !d.seen.t.every((topic) => typeof topic === 'string')
-      || typeof d.seen.ts !== 'number'
+      !isRecord(data.stats) || !Array.isArray(data.sessions) || !isRecord(data.cfg)
+      || !isRecord(data.seen) || !isRecord(data.reports) || !isRecord(data.cards)
+      || Object.keys(data.seen).some((key) => !['t', 'ts'].includes(key))
+      || !Array.isArray(data.seen.t) || !data.seen.t.every((topic) => typeof topic === 'string')
+      || typeof data.seen.ts !== 'number'
     ) return { ok: false, reason: 'Progreso incompleto' };
 
-    const mappedPreferences = preferencesMapper.toDomain(d.cfg);
+    const mappedPreferences = preferencesMapper.toDomain(data.cfg);
     if (!mappedPreferences.ok) return mappedPreferences;
     const warnings: string[] = [];
     const statistics: Record<string, QuestionStats> = {};
@@ -37,22 +37,22 @@ export const progressMapper = {
     const cardReviews: Record<string, CardReview> = {};
     const sessions: SessionResult[] = [];
 
-    for (const [id, raw] of Object.entries(d.stats)) {
+    for (const [id, raw] of Object.entries(data.stats)) {
       const mapped = statsMapper.toDomain(raw);
       if (mapped.ok) statistics[id] = mapped.value;
       else warnings.push(`stats.${id}: ${mapped.reason}`);
     }
-    d.sessions.forEach((raw, index) => {
+    data.sessions.forEach((raw, index) => {
       const mapped = sessionMapper.toDomain(raw);
       if (mapped.ok) sessions.push(mapped.value);
       else warnings.push(`sessions[${index}]: ${mapped.reason}`);
     });
-    for (const [id, raw] of Object.entries(d.reports)) {
+    for (const [id, raw] of Object.entries(data.reports)) {
       const mapped = reportMapper.toDomain(id, raw);
       if (mapped.ok) reports[id] = mapped.value;
       else warnings.push(`reports.${id}: ${mapped.reason}`);
     }
-    for (const [id, raw] of Object.entries(d.cards)) {
+    for (const [id, raw] of Object.entries(data.cards)) {
       const mapped = cardMapper.toDomain(raw);
       if (mapped.ok) cardReviews[id] = mapped.value;
       else warnings.push(`cards.${id}: ${mapped.reason}`);
@@ -64,8 +64,8 @@ export const progressMapper = {
         statistics,
         sessions,
         preferences: mappedPreferences.value,
-        seenTopics: d.seen.t,
-        seenAt: d.seen.ts,
+        seenTopics: data.seen.t,
+        seenAt: data.seen.ts,
         reports,
         cardReviews,
       },

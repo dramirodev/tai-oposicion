@@ -14,13 +14,13 @@ export const status: SyncStatus = {
   user: null, state: 'iniciando', lastSync: 0, error: '', detail: '', configured: false, host: '', authDomain: '',
   access: '', requested: false, reqs: [], grants: [], accessErr: '',
 };
-const subs = new Set<(s: SyncStatus) => void>();
-export const onStatus = (fn: (s: SyncStatus) => void): (() => void) => { subs.add(fn); return () => { subs.delete(fn); }; };
+const subs = new Set<(syncStatus: SyncStatus) => void>();
+export const onStatus = (fn: (syncStatus: SyncStatus) => void): (() => void) => { subs.add(fn); return () => { subs.delete(fn); }; };
 let domainSnapshot: SyncStatusSnapshot | undefined;
 export const getSnapshot = (): SyncStatusSnapshot => domainSnapshot || (domainSnapshot = syncStatusMapper.toDomain(status));
 export const subscribe = (fn: (snapshot: SyncStatusSnapshot) => void): (() => void) => onStatus(() => fn(getSnapshot()));
 export const syncGateway: SyncGateway = { getSnapshot, subscribe };
 export const emit = (): void => {
   domainSnapshot = syncStatusMapper.toDomain(status);
-  subs.forEach(f => f(status));
+  subs.forEach(callback => callback(status));
 };

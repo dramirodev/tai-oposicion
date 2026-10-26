@@ -23,8 +23,8 @@ export const router = createHashRouter([{ element: <AppServicesProvider value={s
 ] }]);
 export function initializeApp(): void {
   if (stopLegacy) return;
-  configureLegacyRouter((h, refresh) => {
-    const target = h.startsWith('#') ? h.slice(1) : h;
+  configureLegacyRouter((html, refresh) => {
+    const target = html.startsWith('#') ? html.slice(1) : html;
     if (refresh) { void router.navigate(target, { state: { legacyRefresh: ++legacyRefreshSeq } }); return; }
     void router.navigate(target);
   });

@@ -24,10 +24,10 @@ import { syncAttemptHistory } from './attempt-sync.js';
 
 let auth: Auth, db: Firestore, uid: string | null = null, timer: ReturnType<typeof setTimeout> | undefined, cardsT: ReturnType<typeof setTimeout> | undefined, retryT: ReturnType<typeof setTimeout> | undefined, retryN = 0, syncEpoch = 0, unsubs: Unsubscribe[] = [];
 let temaOf: (id: string) => string | null = () => null; // id -> tema
-let idsOfTema: (t: string) => string[] = () => [];
+let idsOfTema: (text: string) => string[] = () => [];
 let attemptRepository: AttemptRepository | null = null;
 export function setAttemptRepository(repository: AttemptRepository): void { attemptRepository = repository; }
-export async function init(metaFns: { temaOf: (id: string) => string | null; idsOfTema: (t: string) => string[] }): Promise<void> {
+export async function init(metaFns: { temaOf: (id: string) => string | null; idsOfTema: (text: string) => string[] }): Promise<void> {
   temaOf = metaFns.temaOf; idsOfTema = metaFns.idsOfTema;
   let firebaseConfig: FirebaseOptions = {}, leida = false;
   try { firebaseConfig = await (await fetch('firebase-config.json', { cache: 'no-cache' })).json() as FirebaseOptions; leida = true; } catch {
@@ -47,35 +47,35 @@ export async function init(metaFns: { temaOf: (id: string) => string | null; ids
   auth = initializeAuth(app, { persistence: [indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence], popupRedirectResolver: browserPopupRedirectResolver });
   db = initializeFirestore(app, { localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }), experimentalAutoDetectLongPolling: true }); // Safari/iOS: si el canal en streaming falla, usa long-polling
   const pend = (() => { try { return localStorage.getItem('tai.redir'); } catch { return null; } })();
-  getRedirectResult(auth).then(r => {
+  getRedirectResult(auth).then(result => {
     try { localStorage.removeItem('tai.redir'); } catch {}
-    if (!r && pend && !auth.currentUser) { status.error = 'El inicio de sesión no terminó en esta ventana. Vuelve a pulsar «Entrar con Google».'; emit(); }
-  }).catch(e => { try { localStorage.removeItem('tai.redir'); } catch {} const fields = errorFields(e); status.error = (fields.code || '') + ' ' + fields.message; emit(); });
-  onAuthStateChanged(auth, (u: User | null) => {
-    status.user = u ? { name: u.displayName || u.email || '', email: u.email || '', verified: !!u.emailVerified } : null;
+    if (!result && pend && !auth.currentUser) { status.error = 'El inicio de sesión no terminó en esta ventana. Vuelve a pulsar «Entrar con Google».'; emit(); }
+  }).catch(event => { try { localStorage.removeItem('tai.redir'); } catch {} const fields = errorFields(event); status.error = (fields.code || '') + ' ' + fields.message; emit(); });
+  onAuthStateChanged(auth, (event: User | null) => {
+    status.user = event ? { name: event.displayName || event.email || '', email: event.email || '', verified: !!event.emailVerified } : null;
     stopAcc(); stop(); uid = null;
     status.requested = false; status.reqs = []; status.grants = []; status.access = 'invitado';
-    store.switchAccount(u?.uid || null, !!u && u.email === OWNER && u.emailVerified);
-    if (u) { uid = u.uid; resolveAccess(u); }
+    store.switchAccount(event?.uid || null, !!event && event.email === OWNER && event.emailVerified);
+    if (event) { uid = event.uid; resolveAccess(event); }
     else { uid = null; stop(); status.requested = false; status.reqs = []; status.grants = []; setAccess('invitado'); status.state = 'sin sesión'; emit(); }
     const epoch = accessEpoch;
-    void store.recover().then(ch => { if (ch && epoch === accessEpoch && uid === (u?.uid || null)) pushImport(); });
+    void store.recover().then(ch => { if (ch && epoch === accessEpoch && uid === (event?.uid || null)) pushImport(); });
   });
   store.setSyncer({ schedule, pushSession, pushSeen, pushReports, pushCards, pushImport });
 }
 
 export async function login(): Promise<void> {
   if (!status.configured) return;
-  const p = new GoogleAuthProvider();
-  p.setCustomParameters({ prompt: 'select_account' });
+  const priorValue = new GoogleAuthProvider();
+  priorValue.setCustomParameters({ prompt: 'select_account' });
   status.error = ''; status.state = 'abriendo Google…'; emit();
   const t0 = Date.now();
-  const viaRedirect = async () => { try { localStorage.setItem('tai.redir', String(Date.now())); } catch {} await signInWithRedirect(auth, p); };
+  const viaRedirect = async () => { try { localStorage.setItem('tai.redir', String(Date.now())); } catch {} await signInWithRedirect(auth, priorValue); };
   try {
     // Ventana emergente primero, también en la app instalada: en iOS la redirección suele volver a otro contexto y se pierde el resultado.
-    await signInWithPopup(auth, p, browserPopupRedirectResolver);
-  } catch (e) {
-    const fields = errorFields(e);
+    await signInWithPopup(auth, priorValue, browserPopupRedirectResolver);
+  } catch (error) {
+    const fields = errorFields(error);
     const rapido = Date.now() - t0 < 2500;
     if (fields.code === 'auth/popup-blocked' || fields.code === 'auth/operation-not-supported-in-this-environment' || (fields.code === 'auth/popup-closed-by-user' && rapido)) {
       try { await viaRedirect(); } catch (e2) { const redirectError = errorFields(e2); status.error = (redirectError.code || '') + ' ' + redirectError.message; }
@@ -88,25 +88,25 @@ export async function login(): Promise<void> {
 let accUnsubs: Unsubscribe[] = [];
 let accessEpoch = 0;
 const canSync = () => !!uid && (status.access === 'propietario' || status.access === 'aprobado');
-function stopAcc() { accessEpoch++; accUnsubs.forEach(f => { try { f(); } catch {} }); accUnsubs = []; }
-function setAccess(l: AccessLevel) { status.access = l; rememberAccess(l); }
+function stopAcc() { accessEpoch++; accUnsubs.forEach(callback => { try { callback(); } catch {} }); accUnsubs = []; }
+function setAccess(entry: AccessLevel) { status.access = entry; rememberAccess(entry); }
 function accErr(error: unknown) { status.accessErr = String(errorFields(error).code || error); emit(); }
-function resolveAccess(u: User) {
-  const mine = u.uid, epoch = accessEpoch, vivo = () => uid === mine && epoch === accessEpoch;
+function resolveAccess(url: User) {
+  const mine = url.uid, epoch = accessEpoch, vivo = () => uid === mine && epoch === accessEpoch;
   status.accessErr = '';
-  if (u.email === OWNER && u.emailVerified) {
+  if (url.email === OWNER && url.emailVerified) {
     setAccess('propietario'); status.state = 'sincronizando…'; emit(); start();
-    const lista = (campo: 'reqs' | 'grants', ord: (a: AccessRequest, b: AccessRequest) => number) => (snap: QuerySnapshot) => { if (!vivo()) return; const l: AccessRequest[] = []; snap.forEach(d => l.push({ uid: d.id, ...(d.data() as Omit<AccessRequest, 'uid'>) })); l.sort(ord); status[campo] = l; emit(); };
-    accUnsubs.push(onSnapshot(collection(db, 'requests'), lista('reqs', (a, b) => (b.ts || 0) - (a.ts || 0)), accErr));
-    accUnsubs.push(onSnapshot(collection(db, 'access'), lista('grants', (a, b) => String(a.email).localeCompare(String(b.email))), accErr));
+    const lista = (campo: 'reqs' | 'grants', ord: (accessRequest: AccessRequest, accessRequestItem: AccessRequest) => number) => (snap: QuerySnapshot) => { if (!vivo()) return; const accessRequest: AccessRequest[] = []; snap.forEach(data => accessRequest.push({ uid: data.id, ...(data.data() as Omit<AccessRequest, 'uid'>) })); accessRequest.sort(ord); status[campo] = accessRequest; emit(); };
+    accUnsubs.push(onSnapshot(collection(db, 'requests'), lista('reqs', (accessRequest, accessRequestItem) => (accessRequestItem.ts || 0) - (accessRequest.ts || 0)), accErr));
+    accUnsubs.push(onSnapshot(collection(db, 'access'), lista('grants', (accessRequest, accessRequestItem) => String(accessRequest.email).localeCompare(String(accessRequestItem.email))), accErr));
     return;
   }
   status.reqs = []; status.grants = []; status.state = 'sesión iniciada';
   if (status.access === 'propietario') setAccess('invitado'); // otra cuenta en el mismo dispositivo
   emit();
-  accUnsubs.push(onSnapshot(doc(db, 'access', mine), (d: DocumentSnapshot) => {
+  accUnsubs.push(onSnapshot(doc(db, 'access', mine), (data: DocumentSnapshot) => {
     if (!vivo()) return;
-    if (d.exists() && (d.data() || {}).ok === true) {
+    if (data.exists() && (data.data() || {}).ok === true) {
       if (status.access !== 'aprobado') { setAccess('aprobado'); status.state = 'sincronizando…'; start(); }
     } else {
       const era = status.access === 'aprobado';
@@ -115,32 +115,32 @@ function resolveAccess(u: User) {
     }
     emit();
   }, accErr));
-  accUnsubs.push(onSnapshot(doc(db, 'requests', mine), (d: DocumentSnapshot) => {
+  accUnsubs.push(onSnapshot(doc(db, 'requests', mine), (data: DocumentSnapshot) => {
     if (!vivo()) return;
-    status.requested = d.exists();
+    status.requested = data.exists();
     if (status.access !== 'aprobado') setAccess(status.requested ? 'pendiente' : 'invitado');
     emit();
   }, accErr));
 }
 export async function requestAccess(): Promise<boolean> {
-  const u = auth && auth.currentUser; if (!u || !db) return false;
-  try { await setDoc(doc(db, 'requests', u.uid), { email: u.email, name: u.displayName || u.email, ts: Date.now() }); return true; } catch (e) { accErr(e); return false; }
+  const url = auth && auth.currentUser; if (!url || !db) return false;
+  try { await setDoc(doc(db, 'requests', url.uid), { email: url.email, name: url.displayName || url.email, ts: Date.now() }); return true; } catch (error) { accErr(error); return false; }
 }
-export async function approve(r: AccessRequest): Promise<boolean> {
-  try { await setDoc(doc(db, 'access', r.uid), { ok: true, email: r.email, name: r.name || r.email, ts: Date.now() }); await deleteDoc(doc(db, 'requests', r.uid)); return true; } catch (e) { accErr(e); return false; }
+export async function approve(accessRequest: AccessRequest): Promise<boolean> {
+  try { await setDoc(doc(db, 'access', accessRequest.uid), { ok: true, email: accessRequest.email, name: accessRequest.name || accessRequest.email, ts: Date.now() }); await deleteDoc(doc(db, 'requests', accessRequest.uid)); return true; } catch (error) { accErr(error); return false; }
 }
-export const reject = async (id: string): Promise<boolean> => { try { await deleteDoc(doc(db, 'requests', id)); return true; } catch (e) { accErr(e); return false; } };
-export const revoke = async (id: string): Promise<boolean> => { try { await deleteDoc(doc(db, 'access', id)); return true; } catch (e) { accErr(e); return false; } };
+export const reject = async (id: string): Promise<boolean> => { try { await deleteDoc(doc(db, 'requests', id)); return true; } catch (error) { accErr(error); return false; } };
+export const revoke = async (id: string): Promise<boolean> => { try { await deleteDoc(doc(db, 'access', id)); return true; } catch (error) { accErr(error); return false; } };
 export const logout = (): Promise<void> | undefined => auth && signOut(auth);
 export function retry(): void { status.error = ''; retryN = 0; if (uid) { status.state = 'sincronizando…'; emit(); start(); } }
 
 // Errores transitorios (red, servidor ocupado): no son un fallo real; se reintenta la suscripción con espera creciente.
 // Un listener de Firestore que falla queda cancelado para siempre, así que sin reintento la sincronización moría hasta volver a entrar.
-function listenErr(e: FirestoreError) {
-  if (e.code !== 'permission-denied' && e.code !== 'unauthenticated') {
-    status.state = 'reconectando…'; status.detail = (e.code || '') + ' ' + (e.message || ''); console.warn('Firestore:', e.code, e.message); emit();
+function listenErr(event: FirestoreError) {
+  if (event.code !== 'permission-denied' && event.code !== 'unauthenticated') {
+    status.state = 'reconectando…'; status.detail = (event.code || '') + ' ' + (event.message || ''); console.warn('Firestore:', event.code, event.message); emit();
     clearTimeout(retryT); retryT = setTimeout(() => { if (uid) start(); }, Math.min(60000, 3000 * 2 ** retryN++));
-  } else { status.error = e.message; status.state = 'error'; emit(); }
+  } else { status.error = event.message; status.state = 'error'; emit(); }
 }
 function ok(): void { retryN = 0; status.error = ''; status.detail = ''; status.lastSync = Date.now(); status.state = 'sincronizado'; emit(); }
 function revive(): void { if (uid && (status.state === 'error' || status.state === 'reconectando…')) { retryN = 0; start(); } }
@@ -152,15 +152,15 @@ function start(): void {
   if (!canSync() || !uid) return;
   const me: string = uid, sessionUid = uid, epoch = syncEpoch;
   const active = () => uid === sessionUid && epoch === syncEpoch;
-  const error = (e: FirestoreError) => { if (active()) listenErr(e); };
+  const error = (event: FirestoreError) => { if (active()) listenErr(event); };
   if (attemptRepository) unsubs.push(syncAttemptHistory({ db, uid: me, repository: attemptRepository, active, onError: error }));
   // estadísticas: un documento por tema
   unsubs.push(onSnapshot(collection(db, 'users', me, 'stats'), snap => {
     if (!active()) return;
     const map: StatMap = Object.create(null);
-    snap.forEach(d => {
-      const m = (d.data() || {}).m || {};
-      for (const k of Object.keys(m)) map[dec(k)] = m[k];
+    snap.forEach(data => {
+      const metadata = (data.data() || {}).m || {};
+      for (const key of Object.keys(metadata)) map[dec(key)] = metadata[key];
     });
     store.mergeRemote(map);
     ok();
@@ -169,35 +169,35 @@ function start(): void {
   }, error));
   unsubs.push(onSnapshot(query(collection(db, 'users', me, 'sessions'), orderBy('ts', 'desc'), limit(300)), snap => {
     if (!active()) return;
-    const l: unknown[] = []; snap.forEach(d => l.push(d.data()));
-    store.mergeSessions(l);
-    const remoteIds = new Set(l.map(s => (s as Session).id));
-    for (const s of store.getSessions()) if (!remoteIds.has(s.id)) pushSession(s);
+    const entry: unknown[] = []; snap.forEach(data => entry.push(data.data()));
+    store.mergeSessions(entry);
+    const remoteIds = new Set(entry.map(state => (state as Session).id));
+    for (const session of store.getSessions()) if (!remoteIds.has(session.id)) pushSession(session);
   }, error));
-  unsubs.push(onSnapshot(doc(db, 'users', me, 'cfg', 'seen'), d => {
+  unsubs.push(onSnapshot(doc(db, 'users', me, 'cfg', 'seen'), data => {
     if (!active()) return;
-    if (d.exists()) store.mergeSeen(d.data());
-    const loc = store.getSeenDoc(), rem = d.exists() ? d.data() : null;
+    if (data.exists()) store.mergeSeen(data.data());
+    const loc = store.getSeenDoc(), rem = data.exists() ? data.data() : null;
     if (loc.ts && (!rem || loc.ts > (rem.ts || 0))) pushSeen(loc);
   }, error));
-  unsubs.push(onSnapshot(doc(db, 'users', me, 'cfg', 'reports'), d => {
+  unsubs.push(onSnapshot(doc(db, 'users', me, 'cfg', 'reports'), data => {
     if (!active()) return;
-    if (d.exists()) store.mergeReports((d.data() || {}).m);
-    const loc = store.getReports(), rem = d.exists() ? ((d.data() || {}).m || {}) : {};
-    if (Object.keys(loc).some(k => !rem[k] || loc[k].ts > rem[k].ts)) pushReports(loc);
+    if (data.exists()) store.mergeReports((data.data() || {}).m);
+    const loc = store.getReports(), rem = data.exists() ? ((data.data() || {}).m || {}) : {};
+    if (Object.keys(loc).some(key => !rem[key] || loc[key].ts > rem[key].ts)) pushReports(loc);
   }, error));
-  unsubs.push(onSnapshot(doc(db, 'users', me, 'cfg', 'cards'), d => {
+  unsubs.push(onSnapshot(doc(db, 'users', me, 'cfg', 'cards'), data => {
     if (!active()) return;
-    const rem = d.exists() ? ((d.data() || {}).m || {}) : {};
-    if (d.exists()) store.mergeCards(rem);
+    const rem = data.exists() ? ((data.data() || {}).m || {}) : {};
+    if (data.exists()) store.mergeCards(rem);
     const loc = store.getCardsDoc();
-    if (Object.keys(loc).some(k => !rem[k] || loc[k][2] > rem[k][2])) pushCards(loc);
+    if (Object.keys(loc).some(key => !rem[key] || loc[key][2] > rem[key][2])) pushCards(loc);
   }, error));
 }
-export function pushCards(m: CardMap): void {
+export function pushCards(metadata: CardMap): void {
   if (!canSync() || !uid) return;
   clearTimeout(cardsT);
-  const targetUid: string = uid, payload = store.cleanCards(m);
+  const targetUid: string = uid, payload = store.cleanCards(metadata);
   cardsT = setTimeout(() => {
     if (uid !== targetUid) return;
     setDoc(doc(db, 'users', targetUid, 'cfg', 'cards'), { m: payload, u: Date.now() }, { merge: true }).catch(writeErr);
@@ -207,7 +207,7 @@ function stop(): void {
   syncEpoch++;
   clearTimeout(timer); clearTimeout(cardsT); clearTimeout(retryT);
   timer = cardsT = retryT = undefined;
-  unsubs.forEach(u => u()); unsubs = [];
+  unsubs.forEach(url => url()); unsubs = [];
 }
 
 function pushAll(remote: StatMap): void {
@@ -215,16 +215,16 @@ function pushAll(remote: StatMap): void {
   const local = store.getStats();
   const byTema: Record<string, StatMap> = {};
   for (const id in local) {
-    const r = remote[id];
-    if (store.needsSync(local[id], r)) { const t = temaOf(id); if (t) (byTema[t] ||= {})[enc(id)] = local[id]; }
+    const statRecord = remote[id];
+    if (store.needsSync(local[id], statRecord)) { const text = temaOf(id); if (text) (byTema[text] ||= {})[enc(id)] = local[id]; }
   }
-  for (const t in byTema) setDoc(doc(db, 'users', me, 'stats', t), { m: byTema[t], u: Date.now() }, { merge: true }).catch(writeErr);
+  for (const textValue in byTema) setDoc(doc(db, 'users', me, 'stats', textValue), { m: byTema[textValue], u: Date.now() }, { merge: true }).catch(writeErr);
 }
 
 function pushImport(): void {
   if (!canSync()) return;
   pushAll({});
-  for (const s of store.getSessions()) pushSession(s);
+  for (const session of store.getSessions()) pushSession(session);
   pushSeen(store.getSeenDoc()); pushReports(store.getReports()); pushCards(store.getCardsDoc());
 }
 
@@ -235,28 +235,28 @@ export function schedule(): void {
 }
 function flush(): void {
   if (!canSync() || !uid) return;
-  const d = store.takeDirty(); const stats = store.getStats();
-  for (const t of d) {
-    const m: StatMap = {};
-    for (const id of idsOfTema(t)) if (stats[id]) m[enc(id)] = stats[id];
-    setDoc(doc(db, 'users', uid, 'stats', t), { m, u: Date.now() }, { merge: true })
+  const data = store.takeDirty(); const stats = store.getStats();
+  for (const text of data) {
+    const statistics: StatMap = {};
+    for (const id of idsOfTema(text)) if (stats[id]) statistics[enc(id)] = stats[id];
+    setDoc(doc(db, 'users', uid, 'stats', text), { m: statistics, u: Date.now() }, { merge: true })
       .then(ok)
       .catch(writeErr);
   }
 }
-export function pushSession(s: Session): void {
+export function pushSession(session: Session): void {
   if (!canSync() || !uid) return;
-  setDoc(doc(db, 'users', uid, 'sessions', s.id), s).catch(writeErr);
+  setDoc(doc(db, 'users', uid, 'sessions', session.id), session).catch(writeErr);
 }
 
-export function pushSeen(d: SeenDoc): void {
+export function pushSeen(data: SeenDoc): void {
   if (!canSync() || !uid) return;
-  setDoc(doc(db, 'users', uid, 'cfg', 'seen'), { t: d.t, ts: d.ts }).catch(writeErr);
+  setDoc(doc(db, 'users', uid, 'cfg', 'seen'), { t: data.t, ts: data.ts }).catch(writeErr);
 }
 
-export function pushReports(m: ReportMap): void {
+export function pushReports(metadata: ReportMap): void {
   if (!canSync() || !uid) return;
-  setDoc(doc(db, 'users', uid, 'cfg', 'reports'), { m, u: Date.now() }, { merge: true }).catch(writeErr);
+  setDoc(doc(db, 'users', uid, 'cfg', 'reports'), { m: metadata, u: Date.now() }, { merge: true }).catch(writeErr);
 }
 
 function writeErr(error: unknown) {
@@ -270,10 +270,10 @@ export interface BankMeta { v: number; files: Record<string, string> }
 /** Versión del banco y hash de cada fichero. null si no hay sesión con acceso o no se puede leer. */
 export async function bankMeta(): Promise<BankMeta | null> {
   if (!db || !canSync()) return null;
-  try { const s = await getDoc(doc(db, 'bank', 'meta')); const d = s.exists() ? s.data() : null; return d && d.files ? { v: d.v, files: d.files } as BankMeta : null; } catch { return null; }
+  try { const state = await getDoc(doc(db, 'bank', 'meta')); const data = state.exists() ? state.data() : null; return data && data.files ? { v: data.v, files: data.files } as BankMeta : null; } catch { return null; }
 }
 /** Contenido gzip de un fichero del banco. */
 export async function bankFile(name: string): Promise<Uint8Array | null> {
   if (!db || !canSync()) return null;
-  try { const s = await getDoc(doc(db, 'bank', 'f_' + name)); const z = s.exists() ? s.data().z : null; return z && typeof z.toUint8Array === 'function' ? z.toUint8Array() : null; } catch { return null; }
+  try { const state = await getDoc(doc(db, 'bank', 'f_' + name)); const bytes = state.exists() ? state.data().z : null; return bytes && typeof bytes.toUint8Array === 'function' ? bytes.toUint8Array() : null; } catch { return null; }
 }

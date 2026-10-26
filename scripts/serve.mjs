@@ -5,7 +5,7 @@ import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const headers = Object.fromEntries(JSON.parse(await readFile(new URL('../firebase.json', import.meta.url), 'utf8')).hosting.headers.find(h => h.source === '**').headers.map(h => [h.key, h.value]));
+const headers = Object.fromEntries(JSON.parse(await readFile(new URL('../firebase.json', import.meta.url), 'utf8')).hosting.headers.find(headerConfig => headerConfig.source === '**').headers.map(header => [header.key, header.value]));
 const root = resolve(fileURLToPath(new URL('../dist', import.meta.url)));
 const port = Number(process.env.PORT) || 4173, host = process.env.HOST || '127.0.0.1';
 const TIPOS = {
@@ -15,12 +15,12 @@ const TIPOS = {
 };
 createServer(async (req, res) => {
   try {
-    let p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
-    if (p.endsWith('/')) p += 'index.html';
-    const file = normalize(join(root, p));
+    let requestPath = decodeURIComponent(new URL(req.url, 'http://x').pathname);
+    if (requestPath.endsWith('/')) requestPath += 'index.html';
+    const file = normalize(join(root, requestPath));
     if (file !== root && !file.startsWith(root + sep)) { res.writeHead(403).end('Prohibido'); return; }
     if (!(await stat(file)).isFile()) throw new Error('no es fichero');
     res.writeHead(200, { ...headers, 'Content-Type': TIPOS[extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-cache' });
     res.end(await readFile(file));
-  } catch (e) { res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }).end('No encontrado'); }
+  } catch (error) { res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }).end('No encontrado'); }
 }).listen(port, host, () => console.log(`Servidor local: http://${host}:${port}`));

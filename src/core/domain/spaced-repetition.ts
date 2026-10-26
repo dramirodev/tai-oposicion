@@ -29,7 +29,7 @@ export function hasPendingFailure(statistics?: FailureStreakStats): boolean {
 
 /** Select overdue reviews first, interleaving topics whenever possible. */
 export function selectSpacedReviews<T extends SpacedReview>(items: readonly T[], count: number): T[] {
-  const top = [...items].sort((a, b) => a.dueAt - b.dueAt).slice(0, count);
+  const top = [...items].sort((leftReviewEntry, rightReviewEntry) => leftReviewEntry.dueAt - rightReviewEntry.dueAt).slice(0, count);
   const byTopic = new Map<string, T[]>();
   for (const item of top) {
     if (!byTopic.has(item.topicId)) byTopic.set(item.topicId, []);
@@ -39,7 +39,7 @@ export function selectSpacedReviews<T extends SpacedReview>(items: readonly T[],
   let lastTopic: string | null = null;
   while (selected.length < top.length) {
     const topics = [...byTopic.keys()].filter(topic => byTopic.get(topic)!.length);
-    topics.sort((a, b) => byTopic.get(b)!.length - byTopic.get(a)!.length);
+    topics.sort((leftTopic, rightTopic) => byTopic.get(rightTopic)!.length - byTopic.get(leftTopic)!.length);
     const topic = topics.find(candidate => candidate !== lastTopic) ?? topics[0];
     selected.push(byTopic.get(topic)!.shift()!);
     lastTopic = topic;

@@ -16,41 +16,41 @@ const base = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/
 export function pack(buf) { return { h: createHash('sha1').update(buf).digest('hex').slice(0, 16), z: gzipSync(buf, { level: 9 }) }; }
 /** Qué ficheros hay que subir o borrar según los hashes remotos. */
 export function plan(local, remote) {
-  const up = Object.keys(local).filter(n => remote[n] !== local[n]);
-  const del = Object.keys(remote).filter(n => !(n in local));
+  const up = Object.keys(local).filter(name => remote[name] !== local[name]);
+  const del = Object.keys(remote).filter(name => !(name in local));
   return { up, del };
 }
 export const loadLocal = (dir = join(root, 'public', 'data')) =>
-  Object.fromEntries(readdirSync(dir).filter(f => f.endsWith('.json')).sort().map(f => [f.slice(0, -5), pack(readFileSync(join(dir, f)))]));
+  Object.fromEntries(readdirSync(dir).filter(textValue => textValue.endsWith('.json')).sort().map(textValue => [textValue.slice(0, -5), pack(readFileSync(join(dir, textValue)))]));
 
 async function api(method, path, token, body) {
-  const r = await fetch(base + path, { method, headers: { authorization: 'Bearer ' + token, 'content-type': 'application/json' }, body: body && JSON.stringify(body) });
-  if (r.status === 404 && method === 'GET') return null;
-  if (!r.ok) throw new Error(`${method} ${path}: ${r.status} ${(await r.text()).slice(0, 200)}`);
-  return r.json();
+  const response = await fetch(base + path, { method, headers: { authorization: 'Bearer ' + token, 'content-type': 'application/json' }, body: body && JSON.stringify(body) });
+  if (response.status === 404 && method === 'GET') return null;
+  if (!response.ok) throw new Error(`${method} ${path}: ${response.status} ${(await response.text()).slice(0, 200)}`);
+  return response.json();
 }
 async function main() {
   const token = process.env.ACCESS_TOKEN, dry = process.argv.includes('--dry');
   if (!token && !dry) { console.error('Falta ACCESS_TOKEN (gcloud auth print-access-token).'); process.exit(1); }
-  const local = loadLocal(), hashes = Object.fromEntries(Object.entries(local).map(([n, p]) => [n, p.h]));
-  let remote = {}, v = 0;
+  const local = loadLocal(), hashes = Object.fromEntries(Object.entries(local).map(([name, priorValue]) => [name, priorValue.h]));
+  let remote = {}, remoteVersion = 0;
   if (token) {
-    const m = await api('GET', '/meta', token);
-    if (m) { v = +(m.fields.v?.integerValue || 0); for (const [n, x] of Object.entries(m.fields.files?.mapValue?.fields || {})) remote[n] = x.stringValue; }
+    const metadata = await api('GET', '/meta', token);
+    if (metadata) { remoteVersion = +(metadata.fields.v?.integerValue || 0); for (const [name, hashField] of Object.entries(metadata.fields.files?.mapValue?.fields || {})) remote[name] = hashField.stringValue; }
   }
   const { up, del } = plan(hashes, remote);
-  const kb = up.reduce((a, n) => a + local[n].z.length, 0) / 1024;
+  const kb = up.reduce((compressedBytes, fileName) => compressedBytes + local[fileName].z.length, 0) / 1024;
   console.log(`${Object.keys(local).length} ficheros · a subir ${up.length} (${kb.toFixed(0)} KB comprimidos) · a borrar ${del.length}${dry ? ' · (simulación)' : ''}`);
-  for (const n of up) { const z = local[n].z; if (z.length > 900_000) throw new Error(`${n} comprimido ocupa ${z.length} B: no cabe en un documento`); }
+  for (const nameItem of up) { const bytes = local[nameItem].z; if (bytes.length > 900_000) throw new Error(`${nameItem} comprimido ocupa ${bytes.length} B: no cabe en un documento`); }
   if (dry || (!up.length && !del.length)) return;
-  for (const n of up) {
-    await api('PATCH', '/f_' + n, token, { fields: { n: { stringValue: n }, h: { stringValue: local[n].h }, z: { bytesValue: local[n].z.toString('base64') } } });
-    console.log('  subido', n);
+  for (const nameEntry of up) {
+    await api('PATCH', '/f_' + nameEntry, token, { fields: { n: { stringValue: nameEntry }, h: { stringValue: local[nameEntry].h }, z: { bytesValue: local[nameEntry].z.toString('base64') } } });
+    console.log('  subido', nameEntry);
   }
-  for (const n of del) { await api('DELETE', '/f_' + n, token); console.log('  borrado', n); }
+  for (const nameValue of del) { await api('DELETE', '/f_' + nameValue, token); console.log('  borrado', nameValue); }
   // meta al final: los clientes no ven hashes nuevos hasta que los ficheros ya están subidos
-  await api('PATCH', '/meta', token, { fields: { v: { integerValue: String(v + 1) }, ts: { integerValue: String(Date.now()) },
-    files: { mapValue: { fields: Object.fromEntries(Object.entries(hashes).map(([n, h]) => [n, { stringValue: h }])) } } } });
-  console.log('meta v' + (v + 1) + ' publicada');
+  await api('PATCH', '/meta', token, { fields: { v: { integerValue: String(remoteVersion + 1) }, ts: { integerValue: String(Date.now()) },
+    files: { mapValue: { fields: Object.fromEntries(Object.entries(hashes).map(([name, hash]) => [name, { stringValue: hash }])) } } } });
+  console.log('meta v' + (remoteVersion + 1) + ' publicada');
 }
-if (process.argv[1] === fileURLToPath(import.meta.url)) main().catch(e => { console.error(e.message); process.exit(1); });
+if (process.argv[1] === fileURLToPath(import.meta.url)) main().catch(error => { console.error(error.message); process.exit(1); });
