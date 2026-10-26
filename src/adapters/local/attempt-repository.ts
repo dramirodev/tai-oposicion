@@ -1,3 +1,4 @@
+import { openDB, unwrap, wrap } from 'idb';
 import type { AttemptEvent, QuestionAttempt, QuestionAttemptSession } from '../../core/domain/attempts/transitions.js';
 import type {
   AppendAttemptEventResult,
@@ -115,45 +116,40 @@ function sessionRow(scope: string, value: QuestionAttemptSession): StoredSession
 
 function openDatabase(name: string): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open(name, 2);
-    request.onupgradeneeded = () => {
-      const db = request.result;
-      if (!db.objectStoreNames.contains('attempts')) {
-        const attempts = db.createObjectStore('attempts', { keyPath: 'key' });
-        attempts.createIndex('scope', 'scope');
-        attempts.createIndex('scopeSessionCreated', ['scope', 'sessionId', 'createdAt', 'id']);
-        attempts.createIndex('scopeCreated', ['scope', 'createdAt', 'id']);
-      }
-      if (!db.objectStoreNames.contains('events')) {
-        const events = db.createObjectStore('events', { keyPath: 'key' });
-        events.createIndex('scope', 'scope');
-        events.createIndex('scopeAttemptSequence', ['scope', 'attemptId', 'sequence', 'id']);
-      }
-      if (!db.objectStoreNames.contains('sessions')) {
-        const sessions = db.createObjectStore('sessions', { keyPath: 'key' });
-        sessions.createIndex('scope', 'scope');
-      }
-      if (!db.objectStoreNames.contains('tombstones')) db.createObjectStore('tombstones', { keyPath: 'scope' });
-    };
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error || new Error('No se pudo abrir el historial de intentos'));
-    request.onblocked = () => reject(new Error('El historial de intentos está bloqueado por otra pestaña'));
+    let blocked = false;
+    void openDB(name, 2, {
+      upgrade: db => {
+        if (!db.objectStoreNames.contains('attempts')) {
+          const attempts = db.createObjectStore('attempts', { keyPath: 'key' });
+          attempts.createIndex('scope', 'scope');
+          attempts.createIndex('scopeSessionCreated', ['scope', 'sessionId', 'createdAt', 'id']);
+          attempts.createIndex('scopeCreated', ['scope', 'createdAt', 'id']);
+        }
+        if (!db.objectStoreNames.contains('events')) {
+          const events = db.createObjectStore('events', { keyPath: 'key' });
+          events.createIndex('scope', 'scope');
+          events.createIndex('scopeAttemptSequence', ['scope', 'attemptId', 'sequence', 'id']);
+        }
+        if (!db.objectStoreNames.contains('sessions')) {
+          const sessions = db.createObjectStore('sessions', { keyPath: 'key' });
+          sessions.createIndex('scope', 'scope');
+        }
+        if (!db.objectStoreNames.contains('tombstones')) db.createObjectStore('tombstones', { keyPath: 'scope' });
+      },
+      blocked: () => {
+        blocked = true;
+        reject(new Error('El historial de intentos está bloqueado por otra pestaña'));
+      },
+    }).then(database => { if (!blocked) resolve(unwrap(database)); }, reject);
   });
 }
 
 function transactionDone(transaction: IDBTransaction): Promise<void> {
-  return new Promise((resolve, reject) => {
-    transaction.oncomplete = () => resolve();
-    transaction.onerror = () => reject(transaction.error || new Error('Falló la transacción del historial'));
-    transaction.onabort = () => reject(transaction.error || new Error('Se canceló la transacción del historial'));
-  });
+  return wrap(transaction).done;
 }
 
 function requestValue<Value>(request: IDBRequest<Value>): Promise<Value> {
-  return new Promise((resolve, reject) => {
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error || new Error('Falló la lectura del historial'));
-  });
+  return wrap(request);
 }
 
 function mapAttempt(row: StoredAttempt): QuestionAttempt {
