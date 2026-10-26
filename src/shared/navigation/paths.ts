@@ -52,7 +52,6 @@ export const legacyPaths = [
   paths.stats,
   paths.settings,
   paths.failures,
-  paths.errors,
   paths.reading,
   paths.lightning,
   paths.traps,

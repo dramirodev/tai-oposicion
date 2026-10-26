@@ -799,35 +799,6 @@ function reportBox(q: any, host: El) {
   };
   show();
 }
-routes.errores = async function () {
-  const { app, $, screen: routeScreen } = legacyScope(screen);
-  const flt = () => (store.getCfg().errf || 'abierto');
-  const draw = async () => {
-    const R = store.getReports(), f = flt();
-    const all = Object.entries(R).filter(([, r]) => r.st !== 'quitado').sort((a, b) => b[1].ts - a[1].ts);
-    const list = all.filter(([, r]) => f === 'todos' || r.st === f);
-    const by = new Map((await byIds(list.filter(([id]) => !id.startsWith('FC-')).map(([id]) => id))).map(q => [q.i, q]));
-    const cby = list.some(([id]) => id.startsWith('FC-')) ? new Map((await allCards()).map(c => [c.id, c])) : new Map();
-    const nOpen = all.filter(([, r]) => r.st === 'abierto').length;
-    app.innerHTML = `<h1>Errores del banco</h1>
-    <p class="sub">${nOpen} por revisar · ${all.length - nOpen} resueltos. Las preguntas que marcas con «Avisar de error» llegan aquí.</p>
-    <div class="seg" id="ef">${[['abierto', 'Por revisar'], ['resuelto', 'Resueltos'], ['todos', 'Todos']].map(([v, t]) => `<button class="${f === v ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
-    <div class="row"><button class="btn sec" id="exp" ${all.length ? '' : 'disabled'}>Exportar para corregir</button></div>
-    ${list.map(([id, r]) => { const q = by.get(id); return `<div class="card"><div class="meta"><span class="tag">${esc(id)}</span>${q ? `<span class="tag o${q.o}">${ORIGEN[q.o]}</span>` : ''}${cby.has(id) ? '<span class="tag">Tarjeta</span>' : ''}<span class="tag warn">${esc(r.motivo || 'Otro')}</span>${r.st === 'resuelto' ? '<span class="tag oG">Resuelto</span>' : ''}</div>
-      ${r.nota ? `<p class="sm"><b>Nota:</b> ${esc(r.nota)}</p>` : ''}
-      ${cby.has(id) ? (c => `<div class="pre sm">${richHtml(c.q)}</div><div class="ro ok"><b>R</b> ${richHtml(c.a)}</div>${c.ref ? `<div class="cita"><span>Temario</span>${esc(c.ref)}</div>` : ''}`)(cby.get(id)) : q ? `<div class="pre sm">${esc(q.q)}</div>${q.a.map((o, i) => `<div class="ro ${i === q.c ? 'ok' : ''}"><b>${L[i]}</b> ${esc(o)}${i === q.c ? ' ✓' : ''}</div>`).join('')}${q.u ? `<div class="cita"><span>Temario</span>${esc(q.u)}</div>` : ''}` : '<p class="sub">La pregunta ya no está en el banco.</p>'}
-      <div class="row"><button class="btn sec" data-st="${r.st === 'resuelto' ? 'abierto' : 'resuelto'}" data-id="${esc(id)}">${r.st === 'resuelto' ? 'Reabrir' : 'Marcar resuelto'}</button><button class="btn sec" data-st="quitado" data-id="${esc(id)}">Quitar</button></div></div>`; }).join('') || '<div class="card"><p class="sub">Nada en esta lista.</p></div>'}`;
-    $('#ef').onclick = e => { if ((e.target as El).dataset.v!) { store.setCfg('errf', (e.target as El).dataset.v!); } };
-    app.querySelectorAll<El>('[data-st]').forEach(b => b.onclick = () => store.setReportState(b.dataset.id!, b.dataset.st! as any));
-    $('#exp').onclick = () => {
-      const out = all.map(([id, r]) => { const q = by.get(id) || null, c = cby.get(id) || null; return { id, tarjeta: c ? { pregunta: c.q, respuesta: c.a, ref: c.ref || null } : undefined, tema: r.tema, estado: r.st, motivo: r.motivo, nota: r.nota, origen: q ? ORIGEN[q.o] : null, enunciado: q?.q, opciones: q?.a, correcta: q ? L[q.c] : null, cita: q?.u || null, trampas: (q?.x || []).map(x => TRAMPAS[x] || x) }; });
-      saveExportFile('errores-banco.json', JSON.stringify({ generado: new Date().toISOString(), errores: out }, null, 1), 'application/json');
-    };
-  };
-  let sig = JSON.stringify(store.getReports()) + (store.getCfg().errf || '');
-  routeScreen.cleanup = store.onChange(() => { const n = JSON.stringify(store.getReports()) + (store.getCfg().errf || ''); if (n !== sig) { sig = n; draw(); } });
-  await draw();
-};
 
 
 // Las pantallas comparten navegación y limpieza; cada módulo conserva su estado de sesión.
@@ -993,6 +964,35 @@ function watchUpdates(reg: ServiceWorkerRegistration): () => void {
 
 /** Temporary composition only: the React views own rendering and events. */
 export const studyServices: StudyServices = {
+  errors: {
+    getFilter() { return String(store.getCfg().errf || 'abierto'); },
+    getReports() { return Object.entries(store.getReports()).map(([id, report]) => ({ id, ts: report.ts, tema: report.tema, motivo: report.motivo, nota: report.nota, state: report.st })); },
+    subscribe: store.onChange,
+    setFilter(filter) { store.setCfg('errf', filter); },
+    async loadContent(ids) {
+      const questionIds = ids.filter(id => !id.startsWith('FC-'));
+      const questions = (await byIds(questionIds)).map(question => ({ id: question.i, origin: ORIGEN[question.o], statement: question.q, options: question.a, correctIndex: question.c, reference: question.u, traps: (question.x || []).map(trap => TRAMPAS[trap] || String(trap)) }));
+      const cards = ids.some(id => id.startsWith('FC-')) ? (await allCards()).filter(card => ids.includes(card.id)).map(card => ({ id: card.id, question: card.q, answer: card.a, reference: card.ref || null })) : [];
+      return { questions, cards };
+    },
+    setState(id, state) { store.setReportState(id, state); },
+    async exportData() {
+      const reports = Object.entries(store.getReports()).filter(([, report]) => report.st !== 'quitado').sort(([, first], [, second]) => second.ts - first.ts);
+      const ids = reports.map(([id]) => id);
+      const questionIds = ids.filter(id => !id.startsWith('FC-'));
+      const questions = new Map((await byIds(questionIds)).map(question => [question.i, question]));
+      const cards = ids.some(id => id.startsWith('FC-')) ? new Map((await allCards()).map(card => [card.id, card])) : new Map();
+      const errors = reports.map(([id, report]) => {
+        const question = questions.get(id), card = cards.get(id);
+        return { id, tarjeta: card ? { pregunta: card.q, respuesta: card.a, ref: card.ref || null } : undefined,
+          tema: report.tema, estado: report.st, motivo: report.motivo, nota: report.nota,
+          origen: question ? ORIGEN[question.o] : null, enunciado: question?.q, opciones: question?.a,
+          correcta: question ? L[question.c] : null, cita: question?.u || null,
+          trampas: (question?.x || []).map(trap => TRAMPAS[trap] || trap) };
+      });
+      return JSON.stringify({ generado: new Date().toISOString(), errores: errors }, null, 1);
+    },
+  },
   access: {
     accountId: store.accountId, subscribe(listener) { const offSync = sync.onStatus(listener), offStore = store.onChange(listener); return () => { offSync(); offStore(); }; },
     async load() { await recover(); return { owner: isOwner(), error: sync.status.accessErr || undefined, requests: sync.status.reqs, grants: sync.status.grants }; },
