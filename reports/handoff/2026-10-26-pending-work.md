@@ -111,3 +111,19 @@ El usuario pidió una auditoría completa del proyecto y definió Etapa A y Etap
 ## Nota de continuidad
 
 El observador de `claude-mem` informó que su cuota semanal está agotada: “Claude rejected the request because its weekly usage allowance is exhausted.” No reiniciar el worker. Este documento y el work state `continuar-migracion-shiki-css` conservan la continuidad.
+
+## Actualización de continuidad — arquitectura Etapa A
+
+Corte 2026-10-26: se completó el análisis documental en `/tmp/tai-architecture-audit`, rama `docs/architecture-audit-stack`, todavía apilada sobre `feat/migrate-cards-screen` (`32796db`). Las PR #34, #36 y #37 permanecen abiertas; #36 está apilada en #34 y #37 en #36. La auditoría y los cinco documentos de `docs/architecture/` ya están preparados en la rama; no hay cambios de producción ni se ha iniciado Zustand.
+
+La inspección confirmó que `legacyPaths` está vacío y las páginas públicas tienen rutas lazy. `App.tsx` todavía consume `studyServices` y arranca `bootLegacy` desde `legacy-router.ts`; `core/application/legacy-engine.ts` sigue dependiendo de tres módulos de adapters/legacy. `npm run check:architecture` pasó con 64 hallazgos baseline y cero deuda nueva. Estos documentos deben revisarse contra `main` actualizado después del merge de #34 antes de implementar.
+
+Orden propuesto actualizado:
+
+1. Publicar y revisar la PR documental de arquitectura apilada sobre #34; esperar aprobación explícita antes de Etapa B.
+2. Una vez integrada #34, reorientar el stack a `main`, reconciliar la propuesta y empezar con un slice de Progreso/estadísticas de solo lectura.
+3. Reducir el contrato global de servicios por feature y evaluar Zustand solo para una rebanada efímera realmente compartida; no mover estado local ni datos persistidos.
+4. Desacoplar `legacy-engine.ts` con puertos/adaptadores probados; luego separar composición/arranque y retirar código HTML legacy tras búsqueda de referencias.
+5. Cerrar mappers/tipos antiguos, añadir control de ciclos y repetir las validaciones; realizar las tareas independientes de Recharts/Lucide según sus PRs y el handoff UI.
+
+**Etapa A terminada en código y documentos; falta publicar la PR de propuesta. Etapa B pendiente de aprobación.** Archivos de propuesta: `docs/architecture/audit.md`, `target-architecture.md`, `dependency-rules.md`, `migration-plan.md`, `migration-report.md`.
