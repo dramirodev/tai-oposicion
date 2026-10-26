@@ -98,6 +98,7 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   document.querySelector('#go').click();
   await waitText('Mostrar respuesta');
   document.querySelector('#show').click();
+  await vi.waitFor(() => expect(document.querySelector('[data-g="2"]')).not.toBeNull());
   const gradeEnter = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
   document.querySelector('[data-g="2"]').dispatchEvent(gradeEnter);
   expect(gradeEnter.defaultPrevented).toBe(false);

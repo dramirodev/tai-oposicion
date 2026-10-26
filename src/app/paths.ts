@@ -27,7 +27,6 @@ export const legacyPaths = [
   paths.simulation,
   paths.simulationReview,
   paths.exams,
-  paths.cards,
   paths.stats,
   paths.settings,
   paths.failures,

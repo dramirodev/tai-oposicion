@@ -17,13 +17,15 @@ import { simulationPace as ritmoSimulacro } from '../core/domain/simulation-anal
 import { swipeDirection, studyKeyAction } from '../shared/ui/study-input.js';
 import { velocidad, quickQuestionCount } from '../features/stats/analytics-mapper.js';
 import { mapSimulationResultToLegacy } from './simulation-result-mapper.js';
-import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds } from '../adapters/http/legacy-data.js';
+import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds, fetchJson } from '../adapters/http/legacy-data.js';
 import { $, legacyScope, bindLegacyHost, L, toast, ask, guard, focusHeading, type El } from '../shared/ui/legacy-dom.js';
 import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
 import { BLOQUES, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
 import { registerTraining } from '../features/trainers/legacy.js';
-import { registerCards } from '../features/cards/legacy.js';
+import { createCardsController } from '../features/cards/cards-controller.js';
+import { cardFromFailedQuestion } from '../features/cards/flashcard-mapper.js';
+import type { StudyCard } from '../shared/ui/study-services.js';
 import { registerStats } from '../features/stats/legacy.js';
 import { registerSettings } from '../features/settings/legacy.js';
 import { isFull, isOwner, accessLevel, GUEST_ROUTES } from '../adapters/legacy/access.js';
@@ -913,8 +915,32 @@ routes.falladas = async function () {
 };
 
 
+let cardIndex: Record<string, unknown> | undefined;
+const cardCache = new Map<string, Promise<Record<string, unknown>[]>>();
+async function curatedCards(): Promise<StudyCard[]> {
+  if (cardIndex === undefined) { try { cardIndex = (await fetchJson<{ temas?: Record<string, unknown> }>('cards/index.json')).temas || {}; } catch { return []; } }
+  const topicIds = Object.keys(cardIndex);
+  for (const topicId of topicIds) if (!cardCache.has(topicId)) cardCache.set(topicId, fetchJson<Record<string, unknown>[]>(`cards/${topicId}.json`).catch(error => { cardCache.delete(topicId); throw error; }));
+  const lists = await Promise.all(topicIds.map(topicId => cardCache.get(topicId)?.catch(() => []) ?? Promise.resolve([])));
+  return lists.flatMap((items, index) => items.filter(card => card && card.id && card.q && card.a && !card.revisar).map(card => ({ ...card, t: topicIds[index] } as unknown as StudyCard)));
+}
+async function allCards(): Promise<StudyCard[]> {
+  await getMeta();
+  const ids = Object.keys(store.getCards()).filter(id => id.startsWith('FC-Q-')).map(id => id.slice(5));
+  const questions = await byIds(ids);
+  const failures = questions.map(question => ({ ...cardFromFailedQuestion(question), np: question.np, source: question.source || VERIFIED_SOURCES[question.i], supTexto: question.supTexto, cp: question.cp } as StudyCard));
+  return [...await curatedCards(), ...failures];
+}
+const cardsServices = createCardsController({
+  loadAllCards: allCards, loadCuratedCards: curatedCards,
+  readPreferences: () => store.getCfg().cardsc,
+  savePreferences: preferences => store.setCfg('cardsc', preferences),
+  accountId: store.accountId, getCards: store.getCards, getSeen: store.getSeen, getRecord: store.cardRec,
+  now, day: store.DAY, topicName: temaName, grade: store.gradeCard, remove: store.removeCard,
+  getReport: id => store.getReports()[id],
+  saveReport: (card, reason, note) => store.addReport(card.id, card.t, reason, note),
+});
 registerTraining({ routes, go, route, pw, verifiedSources: VERIFIED_SOURCES }, screen);
-const { allCards, curatedCards } = registerCards({ routes, go, pw, reportBox, verifiedSources: VERIFIED_SOURCES }, screen);
 registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport: loadStrategyReportForPeriod, renderStrategyReport, loadQuestionEvolution });
 
 
@@ -1002,6 +1028,7 @@ function watchUpdates(reg: ServiceWorkerRegistration): () => void {
 
 /** Temporary composition only: the React views own rendering and events. */
 export const studyServices: StudyServices = {
+  cards: cardsServices,
   access: {
     accountId: store.accountId, subscribe(listener) { const offSync = sync.onStatus(listener), offStore = store.onChange(listener); return () => { offSync(); offStore(); }; },
     async load() { await recover(); return { owner: isOwner(), error: sync.status.accessErr || undefined, requests: sync.status.reqs, grants: sync.status.grants }; },

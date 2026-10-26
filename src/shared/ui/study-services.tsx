@@ -32,6 +32,38 @@ export interface TopicServices {
   accountId(): string | null;
   subscribe(listener: () => void): () => void;
 }
+export interface StudyCard {
+  id: string; t: string; q: string; a: string; nota?: string; ref?: string; tipo?: string; src?: string;
+  np?: number; source?: { url: string; title?: string; page?: number; verified: boolean }; supTexto?: string; cp?: string; caduca?: boolean;
+}
+export interface CardPreferences { scope: 'vistos' | 'todos'; count: 10 | 20 | 30 }
+export interface CardsPlan {
+  cards: StudyCard[];
+  summary: { nuevas: number; enRepaso: number; dominadas: number; hoy: number };
+  ids: string[];
+  reviews: number;
+}
+export interface ActiveCardsSession {
+  account: string | null; items: StudyCard[]; index: number; revealed: boolean; results: [number, number, number];
+}
+export interface CardsServices {
+  loadPlan(preferences: CardPreferences): Promise<CardsPlan>;
+  loadAllCards(): Promise<StudyCard[]>;
+  loadCuratedCards(): Promise<StudyCard[]>;
+  getPreferences(): CardPreferences;
+  savePreferences(preferences: CardPreferences): void;
+  getSession(): ActiveCardsSession | null;
+  startSession(cards: readonly StudyCard[], ids: readonly string[]): ActiveCardsSession;
+  reveal(): boolean;
+  grade(value: number): ActiveCardsSession | null;
+  removeFailureCard(): ActiveCardsSession | null;
+  clearSession(): void;
+  nextDueDates(): number[];
+  reviewLabel(cardId: string, grade: number): string;
+  topicName(topicId: string): string;
+  getReport(cardId: string): { motivo: string; nota: string; st: string } | undefined;
+  saveReport(card: Pick<StudyCard, 'id' | 't'>, reason: string, note: string): void;
+}
 export interface AccessMember { uid: string; email: string; name?: string; ts?: number }
 export interface AccessManagementServices {
   accountId(): string | null;
@@ -43,7 +75,7 @@ export interface AccessManagementServices {
   confirm(message: string, label: string, danger: boolean): Promise<boolean>;
   notify(message: string): void;
 }
-export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; markReady(): void }
+export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; cards: CardsServices; markReady(): void }
 const Context = createContext<StudyServices | null>(null);
 export const AppServicesProvider = Context.Provider;
 export function useStudyServices(): StudyServices {

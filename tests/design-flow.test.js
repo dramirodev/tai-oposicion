@@ -81,6 +81,7 @@ it('anticipa el número efectivo de tarjetas y su próximo repaso sin valorarlas
  await navigate('cards','Tarjetas de repaso');
  await vi.waitFor(()=>expect(document.querySelector('#card-plan')?.textContent).toContain('11 tarjetas'));
  const before=JSON.stringify(store.getCards());document.querySelector('#go').click();await waitText('Mostrar respuesta');document.querySelector('#show').click();
+ await vi.waitFor(()=>expect(document.querySelector('[data-g="0"]')).not.toBeNull());
  expect(document.querySelector('[data-g="0"]').textContent).toContain('2 días');
  expect(JSON.stringify(store.getCards())).toBe(before);
  document.querySelector('#exit').click();await waitText('Sesión rápida');
@@ -130,6 +131,6 @@ it('abrir el supuesto de una tarjeta no revela la respuesta y el avance conserva
  expect(document.activeElement).toBe(document.querySelector('#app h1'));
  const summary=document.querySelector('#fc details summary');expect(summary).not.toBeNull();summary.click();
  expect(document.querySelector('#show')).not.toBeNull();expect(document.querySelector('.card-answer')).toBeNull();
- document.querySelector('#show').click();expect(document.activeElement).toBe(document.querySelector('.card-answer'));
- document.querySelector('[data-g="2"]').click();expect(document.activeElement).toBe(document.querySelector('#app h1'));
+ document.querySelector('#show').click();await vi.waitFor(()=>expect(document.querySelector('.card-answer')).not.toBeNull());expect(document.activeElement).toBe(document.querySelector('.card-answer'));
+ document.querySelector('[data-g="2"]').click();await vi.waitFor(()=>expect(document.activeElement).toBe(document.querySelector('#app h1')));
 });
