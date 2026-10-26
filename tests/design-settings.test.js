@@ -90,3 +90,21 @@ it.each(['<html>Error</html>','{"unfinished":','null'])('rechaza recursos offlin
  const state=await inspectOffline({temas:[{id:'T1.01'}]});
  expect(state.complete).toBe(false);expect(state.missing).toContain('data/T1.01.json');expect(state.completedAt).toBeNull();
 });
+
+it('limita a cuatro las lecturas offline y conserva el orden de los archivos ausentes', async () => {
+ const {cache} = fakeCaches();
+ let active = 0, maximum = 0;
+ cache.match.mockImplementation(async u => {
+   if (u === 'cards/index.json') return new Response(JSON.stringify({temas:{'T1.01':1}}));
+   active++; maximum = Math.max(maximum, active);
+   await new Promise(resolve => setTimeout(resolve, u === 'data/index.json' ? 15 : 1));
+   active--;
+   return undefined;
+ });
+ const {inspectOffline} = await import('../src/adapters/offline/cache.js');
+ const state = await inspectOffline({temas:[{id:'T1.01'}]});
+ expect(maximum).toBe(4);
+ expect(active).toBe(0);
+ expect(state.missing).toEqual(['data/index.json','data/meta.json','data/supuestos.json','explanations/index.json','data/T1.01.json','cards/T1.01.json']);
+ expect(state.complete).toBe(false);
+});

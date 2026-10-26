@@ -21,24 +21,31 @@ export async function inspectOffline(bankIndex: Index): Promise<OfflineState> {
   const cardIndexResponse = await offlineCache.match('cards/index.json', {ignoreSearch:true});
   let validCards = false;
   if (cardIndexResponse?.ok) { try { requiredFiles.push(...getCardFiles(await cardIndexResponse.json())); validCards = true; } catch {} }
-  const missing: string[] = [];
-  for (const filePath of requiredFiles) {
-    const cachedResponse = await offlineCache.match(filePath, {ignoreSearch:true});
-    try {
-      if (!cachedResponse?.ok) throw new Error('Archivo no disponible');
-      const responseBody = await cachedResponse.json();
-      if (!responseBody || typeof responseBody !== 'object') throw new Error('JSON no válido');
-      if (/^(data|cards)\/T\d\.\d\d\.json$/.test(filePath) && !Array.isArray(responseBody)) throw new Error('Lista no válida');
-      if (filePath === 'explanations/index.json' && !Array.isArray(responseBody)) throw new Error('Índice de explicaciones no válido');
-      if (filePath === 'data/index.json' && !Array.isArray(responseBody.temas)) throw new Error('Índice no válido');
-      if (filePath === 'cards/index.json' && !validCards) throw new Error('Índice de tarjetas no válido');
-    } catch { missing.push(filePath); }
-  }
+  const unavailable = new Set<string>();
+  let next = 0;
+  // Limit concurrent responseBody reads so inspecting the full bank does not spike memory.
+  const inspect = async () => {
+    while (next < requiredFiles.length) {
+      const filePath = requiredFiles[next++];
+      const cachedResponse = await offlineCache.match(filePath, {ignoreSearch:true});
+      try {
+        if (!cachedResponse?.ok) throw new Error('Archivo no disponible');
+        const responseBody = await cachedResponse.json();
+        if (!responseBody || typeof responseBody !== 'object') throw new Error('JSON no válido');
+        if (/^(data|cards)\/T\d\.\d\d\.json$/.test(filePath) && !Array.isArray(responseBody)) throw new Error('Lista no válida');
+        if (filePath === 'explanations/index.json' && !Array.isArray(responseBody)) throw new Error('Índice de explicaciones no válido');
+        if (filePath === 'data/index.json' && !Array.isArray(responseBody.temas)) throw new Error('Índice no válido');
+        if (filePath === 'cards/index.json' && !validCards) throw new Error('Índice de tarjetas no válido');
+      } catch { unavailable.add(filePath); }
+    }
+  };
+  await Promise.all(Array.from({length: Math.min(4, requiredFiles.length)}, inspect));
+  const missing = requiredFiles.filter(filePath => unavailable.has(filePath));
   const complete = missing.length === 0 && validCards;
   let completedAt: number | null = null;
   try {
-    const savedVerification = JSON.parse(localStorage.getItem(OFFLINE_VERIFICATION_KEY) || 'null');
-    if (complete && savedVerification?.signature === requiredFiles.join('|') && Number.isFinite(savedVerification.at)) completedAt = savedVerification.at;
+    const saved = JSON.parse(localStorage.getItem(OFFLINE_VERIFICATION_KEY) || 'null');
+    if (complete && saved?.signature === requiredFiles.join('|') && Number.isFinite(saved.at)) completedAt = saved.at;
   } catch {}
   return {complete,missing,total:requiredFiles.length,completedAt};
 }

@@ -2,7 +2,7 @@ import { createAttemptTracker } from '../core/application/attempts/create-attemp
 import { setAttemptTracker } from '../core/application/legacy-engine.js';
 import { localAttemptRepository } from '../adapters/local/attempt-repository.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
-import { toast } from '../shared/ui/dialogs.js';
+import { toast } from '../shared/ui/dialog-actions.js';
 
 let initialized = false;
 let idCounter = 0;

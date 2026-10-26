@@ -1,3 +1,4 @@
+import { saveExportFile } from '../../shared/ui/download-file.js';
 import * as sync from '../../adapters/firebase/sync-facade.js';
 import * as store from '../../adapters/local/legacy-store.js';
 import { esc, normUi } from '../../legacy/logic.js';
@@ -145,11 +146,6 @@ routes.settings = async function () {
       if (!modes.length) throw new Error('Selecciona práctica, simulacros o ambos.');
       return { from, to, modes };
     };
-    const saveExportFile = (fileName: string, content: string, type: string) => {
-      const url = URL.createObjectURL(new Blob([content], { type }));
-      const anchor = document.createElement('a'); anchor.href = url; anchor.download = fileName; anchor.click();
-      setTimeout(() => URL.revokeObjectURL(url), 30_000);
-    };
     item('#ai-export-find').onclick = async () => {
       try {
         const filters = exportDates();
@@ -191,14 +187,14 @@ routes.settings = async function () {
     item('#anki') && (item('#anki').onclick = async () => {
       const cs = await allCards(); if (!alive()) return; const callback = (item: any) => String(item).replace(/[\t\r\n]+/g, ' ');
       const txt = '#separator:tab\n#html:false\n#tags column:4\n' + cs.map((question: any) => [callback(question.q), callback(question.a), callback(question.ref || ''), callback((question.t || '').replace('.', '_') + ' ' + (question.tipo || ''))].join('\t')).join('\n');
-      const firstValue = document.createElement('a'); firstValue.href = URL.createObjectURL(new Blob([txt], { type: 'text/plain;charset=utf-8' })); firstValue.download = 'tai-tarjetas-anki.txt'; firstValue.click();
+      saveExportFile('tai-tarjetas-anki.txt', txt, 'text/plain;charset=utf-8');
     });
     item('#ex').onclick = async () => {
       const attemptHistory = await exportAttemptArchive(localAttemptRepository, routeAccount || 'guest', Date.now());
       if (!alive()) return;
       const backup = JSON.parse(store.exportAll());
       backup.attemptHistory = attemptArchiveMapper.toDto(attemptHistory);
-      const firstValue = document.createElement('a'); firstValue.href = URL.createObjectURL(new Blob([JSON.stringify(backup)], { type: 'application/json' })); firstValue.download = 'tai-progreso.json'; firstValue.click();
+      saveExportFile('tai-progreso.json', JSON.stringify(backup), 'application/json');
     };
     item<El>('#im').onchange = async event => {
       const file = (event.target as El).files?.[0], owner = store.accountId();

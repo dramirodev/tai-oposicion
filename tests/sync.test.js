@@ -24,7 +24,7 @@ const user = (uid, email = 'dramiro@gmail.com') => { const u = { uid, email, dis
 beforeEach(async () => {
   vi.resetModules(); vi.useFakeTimers(); localStorage.clear();
   boundary.writes.length = 0; boundary.snapshots.length = 0; boundary.auth.currentUser = null;
-  vi.stubGlobal('fetch', async () => ({ json: async () => ({ apiKey: 'test', authDomain: 'localhost' }) }));
+  vi.stubGlobal('fetch', async () => ({ ok: true, json: async () => ({ apiKey: 'test', authDomain: 'localhost' }) }));
   store = await import('../src/adapters/local/legacy-store.js'); sync = await import('../src/adapters/firebase/legacy-sync.js');
   await sync.init({ temaOf: () => 'T1.01', idsOfTema: () => [] }); user('user1');
 });
@@ -161,4 +161,28 @@ it('una marca de temario local se publica aunque la respuesta remota sea posteri
  listener.cb({forEach:f=>f({data:()=>({m:{'q-mark':[2,1,2000,0,5000,1,0,0,0,0,1,0]}})})});
  expect(store.rec('q-mark')[0]).toBe(2);
  expect(boundary.writes.find(x=>x.path==='users/user1/stats/T1.01').value.m['q-mark'][11]).toBe(1);
+});
+
+it('rechaza cuerpos de error HTTP de configuración antes de interpretarlos', async () => {
+  const json = vi.fn(async () => ({ apiKey: 'error-body' }));
+  const fetch = vi.fn(async () => ({ ok: false, status: 503, json }));
+  vi.stubGlobal('fetch', fetch);
+  await sync.init({ temaOf: () => null, idsOfTema: () => [] });
+  const { status } = await import('../src/adapters/firebase/legacy-sync-state.js');
+  expect(fetch).toHaveBeenCalledTimes(2);
+  expect(json).not.toHaveBeenCalled();
+  expect(status.configured).toBe(false);
+  expect(status.state).toBe('sin conexión');
+});
+it('conserva el segundo intento si falla la primera petición de configuración', async () => {
+  const errorJson = vi.fn();
+  const fetch = vi.fn()
+    .mockResolvedValueOnce({ ok: false, status: 404, json: errorJson })
+    .mockResolvedValueOnce({ ok: true, json: async () => ({ apiKey: 'test', authDomain: 'localhost' }) });
+  vi.stubGlobal('fetch', fetch);
+  await sync.init({ temaOf: () => null, idsOfTema: () => [] });
+  const { status } = await import('../src/adapters/firebase/legacy-sync-state.js');
+  expect(fetch).toHaveBeenCalledTimes(2);
+  expect(errorJson).not.toHaveBeenCalled();
+  expect(status.configured).toBe(true);
 });

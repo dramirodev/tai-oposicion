@@ -15,11 +15,15 @@ function NetworkBanner() {
   const [status, setStatus] = useState(navigator.onLine === false ? 'off' : '');
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
-    const off = () => { clearTimeout(timer); setStatus('off'); };
-    const on = () => { clearTimeout(timer); setStatus(current => {
-      if (current !== 'off') return current;
-      timer = setTimeout(() => setStatus(''), 3000); return 'on';
-    }); };
+    let offline = navigator.onLine === false;
+    const off = () => { offline = true; clearTimeout(timer); setStatus('off'); };
+    const on = () => {
+      if (!offline) return;
+      offline = false;
+      clearTimeout(timer);
+      setStatus('on');
+      timer = setTimeout(() => setStatus(''), 3000);
+    };
     addEventListener('offline', off); addEventListener('online', on);
     return () => { clearTimeout(timer); removeEventListener('offline', off); removeEventListener('online', on); };
   }, []);
