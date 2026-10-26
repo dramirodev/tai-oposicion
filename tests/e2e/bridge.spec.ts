@@ -80,11 +80,21 @@ test('menú React, foco, banner de red y recorte de navegación para invitados',
   await expect(page.locator('nav a:visible')).toHaveCount(5);
   expect(errors).toEqual([]);
 });
+test.describe('pantalla lazy con el service worker real', () => {
+test.use({ serviceWorkers: 'allow' });
 test('la ayuda está disponible sin conexión desde el menú de invitado y conserva los motivos antiguos', async ({ page, context }) => {
   const errors = await start(page);
+  const failedRequests: string[] = [];
+  page.on('requestfailed', request => failedRequests.push(`${request.url()} ${request.failure()?.errorText || ''}`));
   await page.goto('/#/settings');
   await page.locator('#dev button[data-v="0"]').click();
   await page.goto('/#/home');
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+    if (!navigator.serviceWorker.controller) {
+      await new Promise<void>(resolve => navigator.serviceWorker.addEventListener('controllerchange', () => resolve(), { once: true }));
+    }
+  });
   await context.setOffline(true);
   await page.locator('#menu').click();
   await page.locator('#menuov button').filter({ hasText: 'Ayuda' }).click();
@@ -92,7 +102,9 @@ test('la ayuda está disponible sin conexión desde el menú de invitado y conse
   await expect(page.locator('#motivos')).toContainText('Contenido');
   await expect(page.locator('#motivos')).toContainText('El tiempo por sí solo no determina este motivo');
   await expect(page.locator('#app #simulacros')).toContainText('no se muestran soluciones');
-  expect(errors).toEqual([]);
+  expect(errors.filter(error => !error.startsWith('Failed to load resource:'))).toEqual([]);
+  expect(failedRequests.filter(url => !url.startsWith('https://apis.google.com/'))).toEqual([]);
+});
 });
 test('texto máximo cabe en móvil compacto e iPad emulado', async ({ page }) => {
   const errors = await start(page);
