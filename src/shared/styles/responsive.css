@@ -151,3 +151,19 @@
     justify-self: end;
   }
 }
+
+/* Pointer-only hints avoid sticky hover on touchscreens; focus remains visible. */
+@media (hover: hover) and (pointer: fine) {
+  nav a:not([aria-current="page"]):hover,
+  .workspace-navigation a:not([aria-current="page"]):hover,
+  label.tm:not(.on):hover {
+    background-color: var(--sel);
+    color: var(--ink);
+  }
+  summary:hover { color: var(--selb); }
+  #app a[href]:not([class]):hover {
+    text-decoration-thickness: 2px;
+    text-underline-offset: .2em;
+  }
+  :is(input,select,textarea):not(:disabled):hover { border-color: var(--selb); }
+}
