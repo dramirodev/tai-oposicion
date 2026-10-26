@@ -380,6 +380,17 @@
   outline: none;
 }
 
+.evolution-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 10px 0;
+  font-size: var(--fs-s);
+}
+
+.evolution-key { display: inline-flex; align-items: center; gap: 6px; }
+.evolution-key i { width: 10px; height: 10px; border-radius: 50%; }
+
 .tip {
   max-width: 100%;
   white-space: normal;

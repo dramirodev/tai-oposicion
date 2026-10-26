@@ -3,6 +3,7 @@ import { localAttemptRepository } from '../adapters/local/attempt-repository.js'
 import * as store from '../adapters/local/legacy-store.js';
 import { getStrategyReport } from '../core/application/attempts/get-strategy-report.js';
 import { flushAttemptTracking } from '../core/application/legacy-engine.js';
+import { getQuestionEvolution } from '../core/application/attempts/get-question-evolution.js';
 
 export async function loadStrategyReport(from: number, to: number) {
   await flushAttemptTracking();
@@ -23,4 +24,14 @@ export async function loadStrategyReport(from: number, to: number) {
 export function loadStrategyReportForPeriod(days: number) {
   const to = Date.now();
   return loadStrategyReport(to - days * 86400000, to + 1);
+}
+
+export async function loadQuestionEvolution(weeks: number) {
+  await flushAttemptTracking();
+  return getQuestionEvolution({
+    repository: localAttemptRepository,
+    scope: store.accountId() || 'guest',
+    weeks,
+    now: Date.now(),
+  });
 }
