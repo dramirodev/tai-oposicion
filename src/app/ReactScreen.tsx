@@ -1,4 +1,5 @@
-import { useLayoutEffect, useRef, useSyncExternalStore, type ReactNode } from 'react';
+import { observeScrollSections } from '../shared/ui/scroll-sections.js';
+import { useEffect, useLayoutEffect, useRef, useSyncExternalStore, type ReactNode } from 'react';
 import { useLocation, Link, Navigate } from 'react-router';
 import { useStudyServices } from '../shared/ui/study-services.js';
 export function ReactScreen({ children, home = false, restricted = false }: { children: ReactNode; home?: boolean; restricted?: boolean }) {
@@ -15,6 +16,10 @@ export function ReactScreen({ children, home = false, restricted = false }: { ch
     if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
     if (heading) markReady();
   }, [location.key, markReady, blocked]);
+  useEffect(() => {
+    if (blocked || !root.current) return;
+    return observeScrollSections(root.current);
+  }, [location.key, blocked]);
   if (blocked) return <Navigate to="/home" replace />;
   return <div ref={root} tabIndex={-1} data-screen={location.pathname.split('/')[1] || 'home'}>
     {!home && run && <div className="note run"><b>{run.title}</b> en curso · {Math.min(run.position + 1, run.total)}/{run.total} <Link className="btn" id="resume" to="/quiz">Continuar</Link></div>}

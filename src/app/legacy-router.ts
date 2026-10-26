@@ -7,7 +7,7 @@ import * as store from '../adapters/local/legacy-store.js';
 import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, pickGuest, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from '../legacy/logic.js';
 import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds } from '../adapters/http/legacy-data.js';
 import { $, legacyScope, bindLegacyHost, L, toast, ask, guard, focusHeading, type El } from '../shared/ui/legacy-dom.js';
-import { showMenu, type MenuGroup } from '../shared/ui/dialogs.js';
+import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
 import { BLOQUES, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
 import { registerTraining } from '../features/trainers/legacy.js';
