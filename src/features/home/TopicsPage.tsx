@@ -6,6 +6,7 @@ import { usePageReady } from '../../shared/ui/use-page-ready.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { TopicsView } from './TopicsView.js';
 import { filterTopics, toggleTopicSelection } from './topics-controller.js';
+import { PageLoading } from '../../shared/ui/PageLoading.js';
 export function TopicsPage() {
   const { topics: services } = useStudyServices(), navigate = useNavigate();
   const resource = useMemo(() => ({ accountId: services.accountId, subscribe: services.subscribe, load: () => services.loadTopics() }), [services]);
@@ -14,7 +15,7 @@ export function TopicsPage() {
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState<ReadonlySet<string>>(() => new Set(BLOQUES.map(([block]) => block)));
   if (error) return <div className="card" role="alert"><h2>No se pudo cargar</h2><p>No se pudo cargar el temario. Inténtalo de nuevo.</p><button className="btn" id="retryRoute" onClick={() => void navigate('/temario')}>Reintentar</button></div>;
-  if (!topics) return <p className="sub loading" role="status">Cargando…</p>;
+  if (!topics) return <PageLoading variant="topics" />;
   const selected = new Set(services.getStudied());
   const visible = filterTopics(topics, query);
   const toggle = (ids: string[]) => {

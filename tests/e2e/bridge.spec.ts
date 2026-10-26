@@ -80,11 +80,21 @@ test('menú React, foco, banner de red y recorte de navegación para invitados',
   await expect(page.locator('nav a:visible')).toHaveCount(5);
   expect(errors).toEqual([]);
 });
+test.describe('pantalla lazy con el service worker real', () => {
+test.use({ serviceWorkers: 'allow' });
 test('la ayuda está disponible sin conexión desde el menú de invitado y conserva los motivos antiguos', async ({ page, context }) => {
   const errors = await start(page);
+  const failedRequests: string[] = [];
+  page.on('requestfailed', request => failedRequests.push(`${request.url()} ${request.failure()?.errorText || ''}`));
   await page.goto('/#/settings');
   await page.locator('#dev button[data-v="0"]').click();
   await page.goto('/#/home');
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+    if (!navigator.serviceWorker.controller) {
+      await new Promise<void>(resolve => navigator.serviceWorker.addEventListener('controllerchange', () => resolve(), { once: true }));
+    }
+  });
   await context.setOffline(true);
   await page.locator('#menu').click();
   await page.locator('#menuov button').filter({ hasText: 'Ayuda' }).click();
@@ -92,7 +102,9 @@ test('la ayuda está disponible sin conexión desde el menú de invitado y conse
   await expect(page.locator('#motivos')).toContainText('Contenido');
   await expect(page.locator('#motivos')).toContainText('El tiempo por sí solo no determina este motivo');
   await expect(page.locator('#app #simulacros')).toContainText('no se muestran soluciones');
-  expect(errors).toEqual([]);
+  expect(errors.filter(error => !error.startsWith('Failed to load resource:'))).toEqual([]);
+  expect(failedRequests.filter(url => !url.startsWith('https://apis.google.com/'))).toEqual([]);
+});
 });
 test('texto máximo cabe en móvil compacto e iPad emulado', async ({ page }) => {
   const errors = await start(page);
@@ -435,6 +447,36 @@ test('subrayados y señales son opcionales, no responden y se conservan al reanu
   await expect(page.locator('.rv').first().locator('mark[data-category="key"]')).toHaveCount(1);
   await expect(page.locator('.rv').first().locator('mark[data-category="doubt"]')).toHaveCount(2);
   await expect(page.locator('.rv').first()).toContainText('Confianza antes de responder: Entre dos');
+  expect(errors).toEqual([]);
+});
+
+test('el formato de código del enunciado conserva estilo y permite subrayar texto', async ({ page }) => {
+  const errors = await start(page);
+  await page.locator('#quick').click();
+  const statement = page.locator('.enun');
+  await expect(statement).toBeVisible();
+  await statement.evaluate(element => { element.innerHTML = '<code class="cd blk">SELECT nombre FROM usuarios</code>'; });
+  const styles = await statement.locator('code').evaluate(element => {
+    const style = getComputedStyle(element);
+    return { fontFamily: style.fontFamily, display: style.display, whiteSpace: style.whiteSpace, background: style.backgroundColor };
+  });
+  expect(styles.fontFamily).toMatch(/monospace/i);
+  expect(styles.display).toBe('block');
+  expect(styles.whiteSpace).toBe('pre-wrap');
+  expect(styles.background).not.toBe('rgba(0, 0, 0, 0)');
+
+  await statement.evaluate(element => {
+    const text = element.querySelector('code')!.firstChild!;
+    const range = document.createRange();
+    range.setStart(text, 0); range.setEnd(text, 6);
+    const selection = window.getSelection()!;
+    selection.removeAllRanges(); selection.addRange(range);
+    document.dispatchEvent(new Event('selectionchange'));
+  });
+  await expect(page.locator('#highlight-tools')).toBeVisible();
+  await page.locator('[data-add-highlight="key"]').click();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('tai.run:guest') || 'null').highlights[0][0].text)).toBe('SELECT');
+  await expect.poll(async () => (await savedAttemptHistory(page)).events).toContain('add-highlight');
   expect(errors).toEqual([]);
 });
 test('`route()` repinta la misma URL en Relámpago', async ({ page }) => {

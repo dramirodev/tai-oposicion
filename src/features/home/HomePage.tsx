@@ -6,6 +6,7 @@ import { usePageReady } from '../../shared/ui/use-page-ready.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { HomeView } from './HomeView.js';
 import { createHomeController } from './home-controller.js';
+import { PageLoading } from '../../shared/ui/PageLoading.js';
 
 export function HomePage() {
   const { home: services } = useStudyServices();
@@ -18,7 +19,7 @@ export function HomePage() {
   const navigate = useNavigate();
   const runAction = (id: string, action: () => Promise<unknown>) => { void controller.runAction(id, action); };
   if (error) return <div className="card" role="alert"><h2>No se pudo cargar</h2><p>{navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button className="btn" id="retryRoute" onClick={() => void navigate('/home')}>Reintentar</button></div>;
-  if (!overview) return <p className="sub loading" role="status">Cargando…</p>;
+  if (!overview) return <PageLoading variant="home" />;
 
   return <HomeView
     overview={overview}
