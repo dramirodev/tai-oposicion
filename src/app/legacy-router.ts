@@ -29,13 +29,14 @@ import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
 import { loadQuestionEvolution, loadStrategyReportForPeriod } from './strategy-composition.js';
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './ai-study-export-composition.js';
+import { hashPath } from './paths.js';
 
 // ───────── router ─────────
 const routes: Record<string, any> = {};
 let navigate: (h: string, refresh?: boolean) => void = h => { location.hash = h; };
 export function configureLegacyRouter(fn: (h: string, refresh?: boolean) => void): void { navigate = fn; }
 function go(h: string) { navigate(h); }
-function route() { navigate(location.hash || '#/home', true); }
+function route() { navigate(location.hash || hashPath('home'), true); }
 const recover = createAccountRecovery(store.accountId, () => store.recover());
 let painted: () => void;
 export const firstLegacyPaint = new Promise<void>(resolve => { painted = resolve; });
@@ -85,7 +86,7 @@ export function renderLegacy(host: HTMLElement, pathname: string) {
       if (currentRun && name !== 'quiz' && name !== 'home') {
         const b = document.createElement('div'); b.className = 'note run';
         b.innerHTML = `<b>${esc(currentRun.titulo || 'Test')}</b> en curso · ${Math.min(currentRun.idx + 1, currentRun.items.length)}/${currentRun.items.length} <button class="btn" id="resume">Continuar</button>`;
-        app.prepend(b); $('#resume').onclick = () => go('#/quiz');
+        app.prepend(b); $('#resume').onclick = () => go(hashPath('quiz'));
       }
     } catch (e) {
       if (!active) return;
@@ -99,7 +100,7 @@ export function renderLegacy(host: HTMLElement, pathname: string) {
 // ───────── motor de preguntas ─────────
 function startRun(cfg: any) {
   if (!createRun(cfg)) { toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.'); return; }
-  go('#/quiz');
+  go(hashPath('quiz'));
 }
 async function resumeSaved() {
   const p = await pendingRun(isFull());
@@ -107,13 +108,13 @@ async function resumeSaved() {
   const accepted = await ask(formatPendingRunPrompt({ title: p.saved.titulo, index: p.saved.idx, itemCount: p.items.length, seconds: p.saved.secs, limitMinutes: p.saved.limit, timeLimited: p.saved.pt }), 'Continuar');
   if (p.account !== store.accountId()) return;
   if (!accepted) return clearRun();
-  if (resumeRun(p)) go('#/quiz');
+  if (resumeRun(p)) go(hashPath('quiz'));
 }
 
 routes.quiz = async function () {
   const { app, $, screen: routeScreen } = legacyScope(screen);
   const candidate = getCurrentRun();
-  if (!candidate) { go('#/home'); return; }
+  if (!candidate) { go(hashPath('home')); return; }
   const R = candidate;
   let tick: any = null, gateTimer: any = null, closing = false, endConfirmation: AbortController | null = null;
   {
@@ -318,7 +319,7 @@ routes.quiz = async function () {
       closing = false;
       if (!accepted || getCurrentRun() !== R) return;
       if (R.ans.some(x => x !== undefined)) finish('interrupted');
-      else { clearActiveRun(); clearRun(); go('#/home'); }
+      else { clearActiveRun(); clearRun(); go(hashPath('home')); }
     };
     $('#pause') && ($('#pause').onclick = () => { setRunPaused(true); draw(); });
     $('#prev') && ($('#prev').onclick = prev);
@@ -418,8 +419,8 @@ routes.quiz = async function () {
       reason = 'interrupted';
     }
     clearInterval(tick);
-    if (!finishCurrentRun(reason)) { toast('Se acabó el tiempo sin contestar ninguna pregunta.'); return go('#/home'); }
-    go('#/result');
+    if (!finishCurrentRun(reason)) { toast('Se acabó el tiempo sin contestar ninguna pregunta.'); return go(hashPath('home')); }
+    go(hashPath('result'));
   }
 };
 
@@ -440,7 +441,7 @@ function simAnalisis({ ses, items, ans, times, limit }: any) {
 routes.result = async function () {
   const { app, $, screen: routeScreen } = legacyScope(screen);
   const lastResult = getLastResult();
-  if (!lastResult) return go('#/home');
+  if (!lastResult) return go(hashPath('home'));
   const { ses, items, ans, studyStates = [], highlights = [], confidences = [], discardedOptions = [] } = lastResult;
   const ng = ses.f;
   const consultedCount = studyStates.filter(state => state === 'revealed').length;
@@ -498,7 +499,7 @@ routes.result = async function () {
     });
   });
   app.querySelectorAll<El>('[data-rq]').forEach(el => reportBox(items[+el.dataset.rq!], el));
-  $('#home').onclick = () => go('#/home');
+  $('#home').onclick = () => go(hashPath('home'));
   $('#result-strategy-load') && ($('#result-strategy-load').onclick = async () => {
     const output = $('#result-strategy-report'); if (!output) return;
     output.setAttribute('aria-busy', 'true'); output.textContent = 'Calculando con el historial detallado…';
@@ -506,7 +507,7 @@ routes.result = async function () {
     catch { if (output.isConnected) output.textContent = 'No se pudo leer el historial detallado. El resultado de esta sesión sigue disponible.'; }
     finally { if (output.isConnected) output.setAttribute('aria-busy', 'false'); }
   });
-  $('#p2go') && ($('#p2go').onclick = () => go('#/sim2'));
+  $('#p2go') && ($('#p2go').onclick = () => go(hashPath('simulationReview')));
   $('#again') && ($('#again').onclick = async () => startRun({ kind: 'rev', feedback: true, items: shuffle(items.filter((q, k) => ans[k] !== q.c)), titulo: 'Repetición de falladas' }));
 };
 
@@ -534,31 +535,31 @@ async function openMenu() {
   await getMeta();
   const due = (await dueList()).length, nCards = Object.values(store.getCards()).filter(r => r[3] >= 0 && r[4] <= now()).length;
   const nErr = Object.values(store.getReports()).filter(r => r.st === 'abierto').length, vel = velocidad(store.getStats());
-  const aqui = location.hash || '#/home';
+  const aqui = location.hash || hashPath('home');
   const G = [
     ['Estudiar', [
       ['⚡', 'Sesión rápida', '10 preguntas en unos 5 minutos', () => quickSession()],
       ['↻', 'Repaso de fallos', due ? due + (due === 1 ? ' pregunta toca repasar hoy' : ' preguntas toca repasar hoy') : 'Nada pendiente hoy', () => startRepaso()],
-      ['▭', 'Tarjetas de repaso', nCards ? nCards + (nCards === 1 ? ' tarjeta vence hoy' : ' tarjetas vencen hoy') : 'Repetición espaciada', '#/cards'],
-      ['✎', 'Test por tema', '10–40 preguntas con corrección inmediata', '#/test'],
-      ['⏱', 'Simulacros', 'Completo, por examen o por tema', '#/sim'],
+      ['▭', 'Tarjetas de repaso', nCards ? nCards + (nCards === 1 ? ' tarjeta vence hoy' : ' tarjetas vencen hoy') : 'Repetición espaciada', hashPath('cards')],
+      ['✎', 'Test por tema', '10–40 preguntas con corrección inmediata', hashPath('test')],
+      ['⏱', 'Simulacros', 'Completo, por examen o por tema', hashPath('simulation')],
     ]],
     ['Entrenar un hábito', [
-      ['🔎', 'Detective de trampas', 'Marca qué trampas esconde cada pregunta', '#/trampas'],
-      ['👁', 'Lectura atenta', vel.n ? vel.n + ' fallos por velocidad' : 'Qué piden, palabras clave y respuesta', '#/lectura'],
-      ['⚡', 'Pregunta relámpago', 'Una sola pregunta', '#/relampago'],
+      ['🔎', 'Detective de trampas', 'Marca qué trampas esconde cada pregunta', hashPath('traps')],
+      ['👁', 'Lectura atenta', vel.n ? vel.n + ' fallos por velocidad' : 'Qué piden, palabras clave y respuesta', hashPath('reading')],
+      ['⚡', 'Pregunta relámpago', 'Una sola pregunta', hashPath('lightning')],
     ]],
     ['Seguimiento', [
-      ['▤', 'Progreso', 'Mapa de dominio, simulacros y evolución', '#/stats'],
-      ['☰', 'Temas vistos', store.getSeen().length + ' temas marcados', '#/temario'],
-      ['✗', 'Preguntas falladas', falladasIds().length + ' para buscar y releer', '#/falladas'],
-      ['⚠', 'Errores del banco', nErr ? nErr + ' por revisar' : 'Nada por revisar', '#/errores'],
+      ['▤', 'Progreso', 'Mapa de dominio, simulacros y evolución', hashPath('stats')],
+      ['☰', 'Temas vistos', store.getSeen().length + ' temas marcados', hashPath('topics')],
+      ['✗', 'Preguntas falladas', falladasIds().length + ' para buscar y releer', hashPath('failures')],
+      ['⚠', 'Errores del banco', nErr ? nErr + ' por revisar' : 'Nada por revisar', hashPath('errors')],
     ]],
     ['La app', [
-      ['⌂', 'Inicio', 'Resumen y cuenta atrás', '#/home'],
-      ...(isOwner() ? [['🔑', 'Accesos', sync.status.reqs.length ? sync.status.reqs.length + ' solicitudes por revisar' : 'Quién puede usar la app', '#/acceso']] : []),
-      ['⚙', 'Ajustes', NEWV ? 'Hay una versión nueva' : 'Cuenta, apariencia, copia y versión ' + APP_VERSION, '#/settings'],
-      ['?', 'Ayuda', 'Motivos, práctica, simulacros y guardado', '#/ayuda'],
+      ['⌂', 'Inicio', 'Resumen y cuenta atrás', hashPath('home')],
+      ...(isOwner() ? [['🔑', 'Accesos', sync.status.reqs.length ? sync.status.reqs.length + ' solicitudes por revisar' : 'Quién puede usar la app', hashPath('access')]] : []),
+      ['⚙', 'Ajustes', NEWV ? 'Hay una versión nueva' : 'Cuenta, apariencia, copia y versión ' + APP_VERSION, hashPath('settings')],
+      ['?', 'Ayuda', 'Motivos, práctica, simulacros y guardado', hashPath('help')],
     ]],
   ];
   await showMenu((isFull() ? G : GUEST_MENU(G)) as MenuGroup[], aqui, go);
@@ -673,7 +674,7 @@ function listaExamenes() {
 }
 // «Exámenes» ya no es una pantalla aparte: son las pestañas «Por examen» y «Por tema» de Simulacros
 routes.examenes = async function () {
-  const { app, $, screen: routeScreen } = legacyScope(screen); store.setCfg('simtab', 'examen'); go('#/sim'); };
+  const { app, $, screen: routeScreen } = legacyScope(screen); store.setCfg('simtab', 'examen'); go(hashPath('simulation')); };
 
 // ───────── simulacro ─────────
 routes.sim = async function () {
@@ -693,7 +694,7 @@ routes.sim = async function () {
       <h2 class="h3">Temas</h2>
       <div class="seg" id="scope"><button class="${cfg.scope !== 'todos' ? 'on' : ''}" data-v="vistos">Mis temas vistos (${seenN})</button><button class="${cfg.scope === 'todos' ? 'on' : ''}" data-v="todos">Todo el temario</button></div>
       ${cfg.scope !== 'todos' && !seenN ? '<p class="sub sm">No has marcado ningún tema: se usará todo el temario.</p>' : ''}
-      <p class="sub sm"><a href="#/temario">Editar temas vistos</a></p>
+      <p class="sub sm"><a href="${hashPath('topics')}">Editar temas vistos</a></p>
       <h2 class="h3">Origen de las preguntas</h2>
       <div class="seg multi" id="org">${([['G', 'Generadas'], ['O', 'Oficiales'], ['A', 'Academia']] as const).map(([v, t]) => `<button class="${org.has(v) ? 'on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
       <label class="chk"><input type="checkbox" id="p2" ${cfg.parte2 ? 'checked' : ''}> Después, parte 2: elegir 1 de 2 supuestos prácticos (20 preguntas)</label>
@@ -777,7 +778,7 @@ routes.sim2 = async function () {
     const items = v.q.filter((x: any) => !x.r && x.np !== 1).slice(0, 20);
     startRun({ kind: 'sim', feedback: false, items, limit: SIMCFG?.min2 || 40, supTexto: v.texto, titulo: 'Simulacro · Parte 2 (supuesto)' });
   });
-  $('#skip').onclick = () => go('#/home');
+  $('#skip').onclick = () => go(hashPath('home'));
 };
 
 
@@ -873,7 +874,7 @@ routes.falladas = async function () {
     }).join('')}</div>`).join('')
       : '<div class="card"><p class="sub">Ninguna pregunta coincide con la búsqueda.</p></div>';
   };
-  if (!qs.length) { app.innerHTML = `<h1>Falladas${helpIconLink('repaso', 'Ayuda sobre preguntas falladas y repaso')}</h1><div class="card"><p class="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p></div><div class="row"><button class="btn sec" id="home">Inicio</button></div>`; $('#home').onclick = () => go('#/home'); return; }
+  if (!qs.length) { app.innerHTML = `<h1>Falladas${helpIconLink('repaso', 'Ayuda sobre preguntas falladas y repaso')}</h1><div class="card"><p class="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p></div><div class="row"><button class="btn sec" id="home">Inicio</button></div>`; $('#home').onclick = () => go(hashPath('home')); return; }
   app.innerHTML = `<h1>Falladas${helpIconLink('repaso', 'Ayuda sobre preguntas falladas y repaso')}</h1>
   <p class="sub">Cada pregunta permanece hasta acertarla tres veces seguidas. Un fallo reinicia el contador; dejarla en blanco no cuenta. Marcar el temario no la quita de la lista.</p>
   <p class="sub" id="fcount"></p>
@@ -916,7 +917,7 @@ export function bootLegacy(firstPaint = firstLegacyPaint): () => void {
   const controller = new AbortController(), timers: ReturnType<typeof setTimeout>[] = [];
   let stopped = false, offUpdates: (() => void) | undefined;
   const listen = (target: EventTarget, event: string, fn: () => void) => target.addEventListener(event, fn, { signal: controller.signal });
-  const offAccount = store.onAccountChange(() => go('#/home'));
+  const offAccount = store.onAccountChange(() => go(hashPath('home')));
   void (async () => {
     try { navigator.storage?.persist?.(); } catch (e) {}
     await recover(); if (stopped) return;

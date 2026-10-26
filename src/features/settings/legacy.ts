@@ -14,6 +14,7 @@ import { exportAttemptArchive } from '../../core/application/attempts/export-att
 import { importAttemptArchive } from '../../core/application/attempts/import-attempt-archive.js';
 import { localAttemptRepository } from '../../adapters/local/attempt-repository.js';
 import { attemptArchiveMapper } from '../../adapters/local/mappers/attempt-archive.js';
+import { hashPath } from '../../shared/navigation/paths.js';
 // La previsualización usa los mismos validadores que la importación, sin modificar el almacén.
 export function previewImport(txt: string) {
   if (txt.length > 20e6) throw new Error('Archivo no válido: supera 20 MB');
@@ -121,7 +122,7 @@ routes.settings = async function () {
     item('#in') && (item('#in').onclick = () => sync.login());
     item('#out') && (item('#out').onclick = () => sync.logout());
     item('#retrySync') && (item('#retrySync').onclick = () => sync.retry());
-    item('#errs') && (item('#errs').onclick = () => go('#/errores'));
+    item('#errs') && (item('#errs').onclick = () => go(hashPath('errors')));
     item('#upd').onclick = async () => {
       if (!getNewVersion()) {
         item<El>('#upd').disabled = true; item('#upd').textContent = 'Buscando…';
@@ -223,7 +224,7 @@ routes.settings = async function () {
     }
     item('#rs').onclick = async () => { const owner = store.accountId(); if (await ask('¿Borrar TODO el progreso de este dispositivo? (Si hay sesión iniciada, lo sincronizado en la nube se volverá a descargar.)', 'Borrar todo', true) && alive() && owner === store.accountId()) { store.resetAll(); toast('Borrado'); } };
   };
-  const accesoHtml = (state: any, lvl: any) => lvl === 'propietario' ? `<p><small>Propietario · acceso completo.</small> <a href="#/acceso">Gestionar accesos${state.reqs.length ? ' (' + state.reqs.length + ' pendientes)' : ''}</a></p>`
+  const accesoHtml = (state: any, lvl: any) => lvl === 'propietario' ? `<p><small>Propietario · acceso completo.</small> <a href="${hashPath('access')}">Gestionar accesos${state.reqs.length ? ' (' + state.reqs.length + ' pendientes)' : ''}</a></p>`
     : lvl === 'aprobado' ? '<p><small>Acceso completo aprobado.</small></p>'
     : lvl === 'pendiente' ? '<p><small>Acceso pendiente de aprobación. Puedes continuar con la sesión rápida; la cuenta se actualizará al recibir la aprobación.</small></p>'
     : '<p><small>Acceso limitado: solo la sesión rápida de 5 minutos.</small></p><button class="btn" id="req">Pedir acceso completo</button>';
