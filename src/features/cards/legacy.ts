@@ -4,6 +4,7 @@ import * as store from '../../adapters/local/legacy-store.js';
 import { esc, richHtml, pct, swipeDir, pickCards, cardStats, cardFromQuestion } from '../../legacy/logic.js';
 import { fetchJson, getIndex, getMeta, byIds, temaName, now } from '../../adapters/http/legacy-data.js';
 import { $, legacyScope, toast, focusHeading, type El } from '../../shared/ui/legacy-dom.js';
+import { helpIconLink } from '../../shared/ui/help-icon-link.js';
 export function registerCards({ routes, go, pw, reportBox, verifiedSources }: any, screen: any) {
 // ───────── tarjetas (flashcards) ─────────
 let CARDIDX: any; const cardCache = new Map<string, any>(); let CRUN: any = null;
@@ -40,8 +41,8 @@ routes.cards = async function () {
     const ids = pickCards(cards, recs, { n: cfg.n, now: now(), maxNew: 10, seen: cfg.scope === 'vistos' && seen.size ? seen : null });
     const reviews = ids.filter(id => !!recs[id]).length;
     app.innerHTML = `
-    <h1>Tarjetas de repaso</h1>
-    <div class="sub">Primero intenta recordar la respuesta; después pulsa para verla y valora cómo te fue. <a href="#/ayuda?tema=repaso">Ayuda sobre el repaso</a></div>
+    <h1>Tarjetas de repaso${helpIconLink('repaso', 'Ayuda sobre el repaso')}</h1>
+    <div class="sub">Primero intenta recordar la respuesta; después pulsa para verla y valora cómo te fue.</div>
     <div class="grid">
       <div class="stat"><b>${cs.hoy}</b><span>vencen hoy</span></div>
       <div class="stat"><b>${cs.nuevas}</b><span>nuevas</span></div>

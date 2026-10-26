@@ -2,9 +2,11 @@ import * as store from '../../adapters/local/legacy-store.js';
 import { esc, shuffle, fmtT, pct, dominioCalc, aggregateWeeks, slowList, simHistory, compareSessions, MOTIVOS_FALLO, cargaRepasos, motivosFallo, suertes, velocidad, CONSEJOS_LECTURA } from '../../legacy/logic.js';
 import { META, getIndex, getMeta, now, byIds } from '../../adapters/http/legacy-data.js';
 import { $, legacyScope, L, toast, type El } from '../../shared/ui/legacy-dom.js';
+import { helpIconLink } from '../../shared/ui/help-icon-link.js';
 import { falladasIds }  from '../../core/application/legacy-engine.js';
 import { ORIGEN, TRAMPAS, TIPOS } from '../../shared/presentation/labels.js';
-export function registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport, renderStrategyReport }: any) {
+import { mountQuestionEvolution } from './question-evolution-view.js';
+export function registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport, renderStrategyReport, loadQuestionEvolution }: any) {
 // ───────── mapa de dominio ─────────
 // Estado por tema a partir de: precisión actual (último resultado de cada pregunta vista),
 // cobertura (vistas / banco, con objetivo del 60 %) y frescura (días desde la última vez).
@@ -157,7 +159,7 @@ routes.stats = async function () {
   const diaL = (k: any) => { const d = new Date(now()); d.setDate(d.getDate() + k); return k === 0 ? 'hoy' : ['D', 'L', 'M', 'X', 'J', 'V', 'S'][d.getDay()] + d.getDate(); };
   const cargaHTML = `<div class="card"><div class="chart-scroll" role="region" aria-label="Repasos previstos en los próximos 14 días" tabindex="0"><div class="cg">${carga.map((v, k) => `<div class="cgc" title="${v} repasos"><small>${v || ''}</small><i class="${k === 0 && v ? 'hoy' : ''}" style="height:${Math.round(60 * v / mx)}px"></i><small>${diaL(k)}</small></div>`).join('')}</div></div>
     <p class="legend">Preguntas que vencen cada día (hoy incluye las atrasadas). Total en 14 días: ${carga.reduce((a, b) => a + b, 0)}.</p>
-    ${mft ? `<h2 class="h3">Por qué fallas (último fallo) · <a href="#/ayuda?tema=motivos">Ayuda</a></h2>${[5, 7, 1, 2, 3, 4].map(m => `<div class="line"><span>${MOTIVOS_FALLO[m]}</span><span>${mf[m]} <small>(${pct(mf[m], mft)}%)</small></span></div>`).join('')}` : ''}
+    ${mft ? `<h2 class="h3">Por qué fallas (último fallo)${helpIconLink('motivos', 'Ayuda sobre los motivos del fallo')}</h2>${[5, 7, 1, 2, 3, 4].map(m => `<div class="line"><span>${MOTIVOS_FALLO[m]}</span><span>${mf[m]} <small>(${pct(mf[m], mft)}%)</small></span></div>`).join('')}` : ''}
     ${suertes(questionStats) ? `<div class="line"><span>🍀 Aciertos por suerte (pendientes de repasar)</span><span>${suertes(questionStats)}</span></div>` : ''}</div>`;
   const paintMapa = () => { const dm = dominioTemas(bankIndex); const el = $('#mapa'); el.innerHTML = mapaHTML(dm, store.getCfg().dmord); bindMapa(el, dm, paintMapa); };
   app.innerHTML = `
@@ -179,7 +181,7 @@ routes.stats = async function () {
   ${Object.entries(TI).map(([k, v]) => `<div class="line"><span>${TIPOS[k] || k}</span><span>${pct(v[1], v[0])}% <small>(${v[0]})</small></span></div>`).join('')}</div>
   </section>
   <section id="stats-sims" aria-label="Historial de simulacros" hidden><h2>Simulacros</h2><div id="sims"></div></section>
-  <section id="stats-evo" aria-label="Evolución del estudio" hidden><h2>Evolución</h2><div id="evo"></div><h2>Preguntas lentas</h2><div id="slow"></div>
+  <section id="stats-evo" aria-label="Evolución del estudio" hidden><h2>Evolución</h2><h3>Resultados de preguntas</h3><div id="attempt-evolution"><p class="sub" role="status">Cargando historial detallado…</p></div><div id="evo"></div><h2>Preguntas lentas</h2><div id="slow"></div>
     <h2>Analítica de estrategia</h2><div class="card"><p>Informe experimental sobre el historial detallado. Solo incluye sesiones completadas. Recomendaciones con al menos 20 respuestas en 3 sesiones; describen asociación observada, no causalidad.</p>
       <label for="strategy-period">Periodo</label><select id="strategy-period"><option value="30">Últimos 30 días</option><option value="90" selected>Últimos 90 días</option><option value="365">Último año</option></select>
       <button class="btn" id="strategy-load">Calcular informe</button><div id="strategy-report" aria-live="polite"></div>
@@ -218,6 +220,16 @@ routes.stats = async function () {
   paintSims();
   paintEvo(bankIndex);
   paintSlow();
+  void (async () => {
+    const output = $('#attempt-evolution');
+    if (!output || !loadQuestionEvolution) return;
+    try {
+      const weeks = await loadQuestionEvolution(12);
+      if (output.isConnected && account === store.accountId()) mountQuestionEvolution(output, weeks);
+    } catch {
+      if (output.isConnected && account === store.accountId()) output.textContent = 'No se pudo leer el historial detallado. El resto del progreso sigue disponible.';
+    }
+  })();
 };
 
 

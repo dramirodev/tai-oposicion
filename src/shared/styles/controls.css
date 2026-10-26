@@ -205,6 +205,43 @@ button.ghost.sm {
   cursor: pointer;
 }
 
+.help-icon-link {
+  display: inline-flex;
+  width: 1.5em;
+  height: 1.5em;
+  min-width: 24px;
+  min-height: 24px;
+  align-items: center;
+  justify-content: center;
+  margin-inline-start: .25em;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--mute);
+  line-height: 1;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.help-icon-link svg {
+  width: 68%;
+  height: 68%;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.help-icon-link:hover {
+  background: var(--surface-hover);
+  color: var(--accent);
+}
+
+.help-icon-link:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
 .row {
   display: flex;
   gap: var(--space-4);
@@ -693,4 +730,19 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),select {
 
 [data-screen=settings] .card>.btn,[data-screen=settings] .card>.file {
   margin-block: 4px;
+}
+
+/* Feedback under the hand; transforms do not move neighbouring controls. */
+@media (prefers-reduced-motion: no-preference) {
+  :is(.btn,.ghost,.iconbtn,.cta,.tile,.lrow,.big-btn,.seg button):not(:disabled):not([aria-disabled="true"]) {
+    transition: transform 120ms ease-out,background-color var(--duration-fast),color var(--duration-fast),border-color var(--duration-fast);
+  }
+  :is(.btn,.ghost,.iconbtn,.cta,.tile,.lrow,.big-btn,.seg button):not(:disabled):not([aria-disabled="true"]):active {
+    transform: translateY(1px) scale(.985);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.btn,.ghost,.iconbtn,.cta,.tile,.lrow,.big-btn,.seg button):active {
+    transform: none;
+  }
 }
