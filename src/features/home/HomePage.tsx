@@ -1,10 +1,11 @@
-import { useMemo, useRef, useState, type ReactNode } from 'react';
+import { useMemo, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router';
 import type { HomeOverview, HomeBlock } from '../../shared/ui/study-services.js';
 import { useStudyServices } from '../../shared/ui/study-services.js';
 import { useActionLifetime } from '../../shared/ui/use-action-lifetime.js';
 import { usePageReady } from '../../shared/ui/use-page-ready.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
+import { createHomeController } from './home-controller.js';
 
 const icons: Record<string, ReactNode> = {
   test: <><path d="M4 20l4-1 11-11-3-3L5 16z" /><path d="M14 6l3 3" /></>,
@@ -42,18 +43,13 @@ function HomeDomain({ blocks, full }: { blocks: HomeBlock[]; full: boolean }) {
 export function HomePage() {
   const { home: services } = useStudyServices();
   const captureLifetime = useActionLifetime(services.accountId);
+  const [controller] = useState(() => createHomeController(captureLifetime, services.notify));
+  const pending = useSyncExternalStore(controller.subscribe, controller.getPending, controller.getPending);
   const resource = useMemo(() => ({ accountId: services.accountId, subscribe: services.subscribe, load: () => services.loadOverview() }), [services]);
   const { value: overview, error } = useAccountResource(resource);
   usePageReady(!!overview || !!error);
   const navigate = useNavigate();
-  const busy = useRef(new Set<string>()), [pending, setPending] = useState<ReadonlySet<string>>(new Set());
-  const runAction = async (id: string, action: () => Promise<unknown>) => {
-    if (busy.current.has(id)) return;
-    const alive = captureLifetime();
-    busy.current.add(id); setPending(new Set(busy.current));
-    try { await action(); } catch { if (alive()) services.notify('No se pudo completar la acción. Inténtalo de nuevo.'); }
-    finally { busy.current.delete(id); if (alive()) setPending(new Set(busy.current)); }
-  };
+  const runAction = (id: string, action: () => Promise<unknown>) => { void controller.runAction(id, action); };
   if (error) return <div className="card" role="alert"><h2>No se pudo cargar</h2><p>{navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button className="btn" id="retryRoute" onClick={() => void navigate('/home')}>Reintentar</button></div>;
   if (!overview) return <p className="sub loading" role="status">Cargando…</p>;
   const access = services.getAccess(), run = services.getActiveStudy();
