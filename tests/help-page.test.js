@@ -12,6 +12,9 @@ it('renders the offline guide and every historical failure category as React con
   await act(() => root.render(createElement(MemoryRouter, {initialEntries:['/ayuda?tema=repaso']}, createElement(HelpPage))));
   expect(host.querySelector('h1').textContent).toBe('Ayuda');
   for (const topic of FAILURE_HELP) expect(host.querySelector(`#${topic.id}`).textContent).toContain(topic.chooseInstead);
-  for (const section of HELP_SECTIONS) expect(host.querySelector(`#${section.id}`).textContent).toContain(section.body);
-  expect(host.textContent).toContain('No muestran soluciones ni recomendaciones');
+  for (const section of HELP_SECTIONS) {
+    const rendered = host.querySelector(`#${section.id}`).textContent;
+    for (const paragraph of section.body) expect(rendered).toContain(paragraph);
+  }
+  expect(host.textContent).toContain('no se muestran soluciones');
 });

@@ -84,7 +84,12 @@ test.describe('service worker real', () => {
   expect(stylesheet).toBeTruthy(); expect(shell).toContain('/' + stylesheet!.slice(2));
   expect(shell.some(path => /geist-variable.*\.woff2$/.test(path))).toBe(true);
   await page.goto('/#/settings');
+  await expect(page.locator('#off')).not.toContainText('Comprobando archivos guardados…');
+  await expect(page.locator('#dl')).toBeEnabled();
   await page.locator('#dl').click();
+  // draw() disables the button synchronously when it starts; this also detects
+  // a click that raced the legacy screen's asynchronous initialization.
+  await expect(page.locator('#dl')).toBeDisabled();
   await expect(page.locator('#off')).toContainText('disponibles sin conexión', { timeout: 20_000 });
   // La configuración externa de la fixture también debe existir en la caché offline.
   await page.evaluate(async () => {
@@ -110,6 +115,22 @@ test.describe('service worker real', () => {
   await expect(page.locator('#highlight-tools')).toBeVisible();
   await page.locator('[data-add-highlight="key"]').click();
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('tai.run:guest') || 'null').highlights[0])).toHaveLength(1);
+  expect(errors).toEqual([]);
+});
+
+test('Inicio no ofrece cambiar la fecha cuando ya tiene un objetivo', async ({ page }) => {
+  const errors = await setup(page, 'light');
+  await page.goto('/#/home');
+  const summary = page.locator('#app .hsub');
+  await expect(summary.getByRole('link', { name: 'Configurar fecha objetivo' })).toBeVisible();
+
+  await page.goto('/#/settings');
+  await page.locator('#exd').fill('2030-06-10');
+  await page.locator('#exd').dispatchEvent('change');
+  await page.goto('/#/home');
+
+  await expect(summary).toContainText('hasta tu fecha objetivo');
+  await expect(summary.getByRole('link')).toHaveCount(0);
   expect(errors).toEqual([]);
 });
 
