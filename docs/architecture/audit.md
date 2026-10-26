@@ -1,6 +1,6 @@
 # Auditoría arquitectónica de TAI
 
-Fecha de corte: 2026-10-26. Rama analizada: `docs/architecture-audit-stack`, basada en `feat/migrate-cards-screen` (`32796db`). Esta auditoría describe el código de esa punta; antes de iniciar la Etapa B se debe actualizar la rama al `main` resultante del merge de la PR #34 y repetir las comprobaciones.
+Fecha de corte: 2026-10-26. Rama analizada: `docs/architecture-audit-stack`, actualizada sobre `main` en `095a0e1` después del merge de PR #34. La auditoría describe ese código y debe revalidarse si `main` cambia antes de Etapa B.
 
 ## Resumen
 
