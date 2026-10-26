@@ -50,9 +50,7 @@ export const legacyPaths = [
   paths.exams,
   paths.stats,
   paths.settings,
-  paths.failures,
   paths.reading,
-  paths.lightning,
   paths.traps,
 ] as const;
 

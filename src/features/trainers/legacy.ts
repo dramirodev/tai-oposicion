@@ -18,39 +18,6 @@ store.onAccountChange(() => { generation++; TRUN = null; LRUN = null; screen.cle
 const recentKey = () => 'tai.lrec:' + (store.accountId() || 'guest');
 const warning = (q: any, verifiedSources: any) => questionNotice(q) + sourceHtml(q, verifiedSources);
 
-// ───────── pregunta relámpago (pensada para abrirse desde avisos) ─────────
-routes.relampago = async function () {
-  const { app, $, screen: routeScreen } = legacyScope(screen);
-  const routeGeneration = generation; await getMeta(); if (routeGeneration !== generation) return; const questionStats = store.getStats();
-  const lucky = Object.keys(questionStats).filter(id => (questionStats[id][9] === 6 || questionStats[id][9] === 8) && META[id]);
-  const due = await dueList(); if (routeGeneration !== generation) return;
-  const fallos = Object.keys(questionStats).filter(id => questionStats[id][5] === 0 && META[id]);
-  const pool = [...shuffle(lucky).slice(0, 5), ...due.slice(0, 5), ...shuffle(fallos).slice(0, 5)];
-  const cand = pool.length ? pool : shuffle(Object.keys(META).filter(k => k !== '_by')).slice(0, 10);
-  let q: any = null;
-  for (const q0 of await byIds(shuffle(cand).slice(0, 8))) if (!q0.s && !q0.cp) { q = q0; break; }
-  if (routeGeneration !== generation) return;
-  if (!q) { app.innerHTML = '<div class="card"><p>No hay pregunta disponible.</p></div>'; return; }
-  const why = lucky.includes(q.i) ? '🍀 Marcada como suerte' : due.includes(q.i) ? '⏰ Toca repasarla' : fallos.includes(q.i) ? '↩ La fallaste' : '🆕 Nueva';
-  const LEC = normalizeUiPreferences(store.getCfg().ui).lectura, kw = (x: any) => richHtml(x, !!LEC), t0 = Date.now();
-  app.innerHTML = `<h1>⚡ Pregunta relámpago</h1><div class="sub">${why}</div>
-  <div class="card q"><div class="meta"><span class="tag">${esc(q.t)} · ${esc(temaName(q.t))}</span></div>
-  ${warning(q, verifiedSources)}<div class="enun pre">${kw(q.q)}</div>
-  <div class="opts">${q.a.map((o: any, i: number) => `<button class="opt" data-i="${i}"><b>${L[i]}</b><span class="pre">${kw(o)}</span></button>`).join('')}</div><div id="fb"></div></div>
-  <div class="bar2" id="bar"><button class="btn sec" id="skip">Ahora no</button></div>`;
-  $('#skip').onclick = () => go(hashPath('home'));
-  app.querySelectorAll<El>('.opt').forEach(b => b.onclick = () => {
-    if (routeGeneration !== generation || b.disabled) return;
-    const i = +b.dataset.i!, ok = i === q.c;
-    store.record(q.i, q.t, ok ? 1 : 0, now(), Math.max(1, Math.round((Date.now() - t0) / 1000)));
-    app.querySelectorAll<El>('.opt').forEach((x, k) => { x.disabled = true; x.classList.add('dis'); if (k === q.c) x.classList.add('ok'); else if (k === i) x.classList.add('bad'); });
-    $('#fb').innerHTML = `<div class="fb ${ok ? 'good' : 'wrong'}"><b>${ok ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>${L[q.c]}</b>${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : ''}${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}${q.x?.length ? `<div class="trap">Trampa: ${q.x.map((x: any) => esc(TRAMPAS[x] || x)).join(' · ')}</div>` : ''}</div>`;
-    $('#bar').innerHTML = '<button class="btn" id="more">Otra →</button><button class="btn sec" id="home">Inicio</button>';
-    $('#more').onclick = () => route(); $('#home').onclick = () => go(hashPath('home'));
-    $('#more').focus({preventScroll:true});
-  });
-};
-
 // mezcla aleatoria: cada grupo aporta hasta k ids prioritarios y el resto rellena hasta n; las ids de `rec` solo se usan si faltan
 const mezclaIds = (grupos: any, resto: any, n = 40, rec = new Set()) => {
   const fresh = (a: any) => [...shuffle(a.filter((id: any) => !rec.has(String(id)))), ...shuffle(a.filter((id: any) => rec.has(String(id))))];

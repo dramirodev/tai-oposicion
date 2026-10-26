@@ -1,7 +1,7 @@
 import { saveExportFile } from '../shared/ui/download-file.js';
 import { helpIconLink } from '../shared/ui/help-icon-link.js';
 import type { StudyServices } from '../shared/ui/study-services.js';
-import { questionNotice, sourceHtml, filterFailures } from '../shared/presentation/legacy-study.js';
+import { questionNotice, sourceHtml } from '../shared/presentation/legacy-study.js';
 import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
 import * as store from '../adapters/local/legacy-store.js';
@@ -25,7 +25,7 @@ import { APP_VERSION, APP_BUILD } from './build-info.js';
 import { registerTraining } from '../features/trainers/legacy.js';
 import { createCardsController } from '../features/cards/cards-controller.js';
 import { cardFromFailedQuestion } from '../features/cards/flashcard-mapper.js';
-import type { StudyCard } from '../shared/ui/study-services.js';
+import type { FailureQuestion, LightningQuestion, StudyCard } from '../shared/ui/study-services.js';
 import { registerStats } from '../features/stats/legacy.js';
 import { registerSettings } from '../features/settings/legacy.js';
 import { isFull, isOwner, accessLevel, GUEST_ROUTES } from '../adapters/legacy/access.js';
@@ -43,6 +43,7 @@ import { loadQuestionEvolution, loadStrategyReportForPeriod } from './strategy-c
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './ai-study-export-composition.js';
 import { hashPath } from './paths.js';
+import type { Question } from '../adapters/legacy/types.js';
 
 // ───────── router ─────────
 const routes: Record<string, any> = {};
@@ -815,78 +816,7 @@ function reportBox(q: any, host: El) {
 
 // Las pantallas comparten navegación y limpieza; cada módulo conserva su estado de sesión.
 const screen = { get cleanup() { return legacyScope().screen.cleanup; }, set cleanup(fn) { legacyScope().screen.cleanup = fn; } };
-// ───────── preguntas falladas: buscar por texto o tema y releer el fragmento del temario ─────────
-const fold = (t: any) => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-routes.falladas = async function () {
-  const { app, $, screen: routeScreen } = legacyScope(screen);
-  let active = true, tm: any;
-  routeScreen.cleanup = () => { active = false; clearTimeout(tm); };
-  await getMeta();
-  if (!active) return;
-  const qs = (await byIds(falladasIds())).sort((a, b) => (store.rec(b.i)?.[2] || 0) - (store.rec(a.i)?.[2] || 0));
-  if (!active) return;
-  const idx = await getIndex();
-  if (!active) return;
-  const F = { q: '', t: '', review: '', streak: '' };
-  const fd = (ts: any) => new Date(ts).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-  const conteo: Record<string, any> = {}; qs.forEach(q => { conteo[q.t] = (conteo[q.t] || 0) + 1; });
-  const filtra = () => {
-    const stats = store.getStats();
-    const items = qs.map(q => {
-      const record = stats[q.i];
-      return {
-        value: q, id: q.i, topic: q.t, reviewed: record?.[11] === 1,
-        streak: store.failureStreak(record), searchableText: [q.q, ...q.a, q.u, q.n].join(' '),
-      };
-    });
-    return filterFailures(items, F);
-  };
-  const lista = () => {
-    const L2 = filtra(), host = $('#flist'); if (!active || !host) return;
-    $('#fcount').textContent = L2.length === qs.length ? `${qs.length} ${qs.length === 1 ? 'pregunta' : 'preguntas'}` : `${L2.length} de ${qs.length} ${qs.length === 1 ? 'pregunta' : 'preguntas'}`;
-    const gr: Record<string, any> = {}; L2.forEach(q => (gr[q.t] ||= []).push(q));
-    host.innerHTML = L2.length ? Object.keys(gr).sort().map(t => `<h2 class="h3">${esc(t)} · ${esc(temaName(t))} <small>(${gr[t].length})</small></h2><div class="card">${gr[t].map((q: any) => {
-      const r = store.rec(q.i) || [0, 0, 0];
-      return `<article class="failure-item" data-failure="${esc(q.i)}"><div class="failure-state"><label class="chk"><input type="checkbox" data-reviewed="${esc(q.i)}" ${r[11] ? 'checked' : ''}>Repasada en el temario</label><span class="streak-meter" aria-label="${Math.max(0, store.failureStreak(r))} de 3 aciertos seguidos">${Math.max(0, store.failureStreak(r))}/3</span></div><details class="rv f"><summary><i></i><span class="pre">${richHtml(q.q)}<br><small class="sub">Aciertos seguidos: ${Math.max(0, store.failureStreak(r))}/3 · <span data-review-status="${esc(q.i)}">${r[11] ? 'Temario repasado' : 'Pendiente de temario'}</span></small></span></summary>
-      ${questionNotice(q)}${sourceHtml(q, VERIFIED_SOURCES)}
-      ${q.supTexto ? `<details class="sup"><summary>Enunciado del supuesto</summary><div class="pre">${esc(q.supTexto)}</div></details>` : ''}
-      ${q.cp ? `<div class="ctx pre">${richHtml(q.cp)}</div>` : ''}
-      ${q.a.map((o: any, i: any) => `<div class="ro ${i === q.c ? 'ok' : ''}"><b>${L[i]}</b> ${richHtml(o)}${i === q.c ? ' <span class="sr">(Respuesta correcta)</span>' : ''}</div>`).join('')}
-      ${q.u ? `<div class="cita"><span>Temario</span>${hiliteHtml(q.u, q.a[q.c])}</div>` : '<p class="sm sub">Esta pregunta no tiene fragmento de temario asociado.</p>'}${q.n ? `<div class="cita"><span>Nota</span>${esc(q.n)}</div>` : ''}
-      <p class="sm sub">Última actividad: ${fd(r[2])} · acertada ${r[1]} de ${r[0]} veces${q.y ? ' · ' + esc(q.y) : ''}</p></details></article>`;
-    }).join('')}</div>`).join('')
-      : '<div class="card"><p class="sub">Ninguna pregunta coincide con la búsqueda.</p></div>';
-  };
-  if (!qs.length) { app.innerHTML = `<h1>Falladas${helpIconLink('repaso', 'Ayuda sobre preguntas falladas y repaso')}</h1><div class="card"><p class="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p></div><div class="row"><button class="btn sec" id="home">Inicio</button></div>`; $('#home').onclick = () => go(hashPath('home')); return; }
-  app.innerHTML = `<h1>Falladas${helpIconLink('repaso', 'Ayuda sobre preguntas falladas y repaso')}</h1>
-  <p class="sub">Cada pregunta permanece hasta acertarla tres veces seguidas. Un fallo reinicia el contador; dejarla en blanco no cuenta. Marcar el temario no la quita de la lista.</p>
-  <p class="sub" id="fcount"></p>
-  <div class="card">
-    <label class="sr" for="fq">Buscar en las preguntas falladas</label>
-    <input id="fq" type="search" placeholder="Buscar: palabra, artículo, comando…" autocomplete="off" enterkeyhint="search">
-    <label class="sr" for="ft">Filtrar por tema</label>
-    <select id="ft"><option value="">Todos los temas</option>${idx.temas.filter(t => conteo[t.id]).map(t => `<option value="${esc(t.id)}">${esc(t.id)} · ${esc(t.nombre)} (${conteo[t.id]})</option>`).join('')}</select>
-    <div class="row"><label for="freview">Repaso del temario<select id="freview"><option value="">Todos</option><option value="pending">Pendiente de temario</option><option value="reviewed">Repasada</option></select></label>
-    <label for="fstreak">Aciertos seguidos<select id="fstreak"><option value="">Todas las rachas</option><option value="0">0 de 3</option><option value="1">1 de 3</option><option value="2">2 de 3</option></select></label></div>
-  </div>
-  <div id="flist"></div>
-  <div class="bar2"><button class="btn" id="fgo">Practicar estas</button></div>`;
-  $('#flist').onchange = e => {
-    const input = (e.target as El).closest<El>('[data-reviewed]'); if (!input) return;
-    const q = qs.find(q => q.i === input.dataset.reviewed!); if (!q) return;
-    store.setReviewed(q.i, q.t, input.checked);
-    const status = input.closest<El>('.failure-item')!.querySelector<El>('[data-review-status]');
-    if (status) status.textContent = input.checked ? 'Temario repasado' : 'Pendiente de temario';
-    if (F.review) lista();
-  };
-  $<El>('#fq').oninput = e => { F.q = (e.target as El).value; clearTimeout(tm); tm = setTimeout(lista, 150); };
-  $<El>('#ft').onchange = e => { clearTimeout(tm); F.t = (e.target as El).value; lista(); };
-  for (const [id, key] of [['freview', 'review'], ['fstreak', 'streak']] as const) $('#' + id).onchange = e => { clearTimeout(tm); F[key] = (e.target as El).value; lista(); };
-  $('#fgo').onclick = () => { const L2 = filtra(); if (!L2.length) return toast('No hay preguntas con ese filtro.'); startRun({ kind: 'test', feedback: true, items: shuffle(L2).slice(0, 40), titulo: 'Falladas' + (F.t ? ' · ' + F.t : '') }); };
-  lista();
-};
-
-
+const fold = (text: unknown) => String(text || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 let cardIndex: Record<string, unknown> | undefined;
 const cardCache = new Map<string, Promise<Record<string, unknown>[]>>();
 async function curatedCards(): Promise<StudyCard[]> {
@@ -917,6 +847,47 @@ registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getSt
 
 
 registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate, listManualExportSessions, createManualAiExport, deleteManualStudyHistory }, screen);
+
+let failureQuestionCache: Question[] = [];
+function mapFailureQuestion(question: Question): FailureQuestion {
+  return { id: question.i, topicId: question.t, statement: question.q, options: question.a, correctIndex: question.c, citation: question.u, note: question.n, year: question.y, context: question.cp, assumptionText: question.supTexto, traps: question.x, nonScoring: question.np, source: question.source || VERIFIED_SOURCES[question.i] };
+}
+const failuresServices = {
+  async loadQuestions() {
+    await getMeta();
+    failureQuestionCache = (await byIds(falladasIds())).sort((first, second) => (store.rec(second.i)?.[2] || 0) - (store.rec(first.i)?.[2] || 0));
+    return failureQuestionCache.map(mapFailureQuestion);
+  },
+  async loadTopics() { const index = await getIndex(); return index.temas.map(topic => ({ id: topic.id, name: topic.nombre })); },
+  getRecord(id: string) { return store.rec(id); },
+  isReviewed(id: string) { return store.rec(id)?.[11] === 1; },
+  setReviewed(id: string, topicId: string, reviewed: boolean) { store.setReviewed(id, topicId, reviewed); },
+  topicName: temaName,
+  startPractice(ids: readonly string[], title: string) {
+    const byId = new Map(failureQuestionCache.map(question => [question.i, question]));
+    const items = shuffle(ids.map(id => byId.get(id)).filter((question): question is Question => !!question)).slice(0, 40);
+    if (!items.length) return toast('No hay preguntas con ese filtro.');
+    if (!createRun({ kind: 'test', feedback: true, items, titulo: title })) return toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.');
+    go(hashPath('quiz'));
+  },
+};
+const lightningServices = {
+  async loadQuestion(): Promise<LightningQuestion | null> {
+    await getMeta();
+    const questionStats = store.getStats();
+    const lucky = Object.keys(questionStats).filter(id => (questionStats[id][9] === 6 || questionStats[id][9] === 8) && META[id]);
+    const due = await dueList();
+    const failed = Object.keys(questionStats).filter(id => questionStats[id][5] === 0 && META[id]);
+    const pool = [...shuffle(lucky).slice(0, 5), ...due.slice(0, 5), ...shuffle(failed).slice(0, 5)];
+    const candidates = pool.length ? pool : shuffle(Object.keys(META).filter(id => id !== '_by')).slice(0, 10);
+    const question = (await byIds(shuffle(candidates).slice(0, 8))).find(item => !item.s && !item.cp);
+    if (!question) return null;
+    const reason = lucky.includes(question.i) ? '🍀 Marcada como suerte' : due.includes(question.i) ? '⏰ Toca repasarla' : failed.includes(question.i) ? '↩ La fallaste' : '🆕 Nueva';
+    return { ...mapFailureQuestion(question), reason };
+  },
+  record(questionId: string, topicId: string, correct: boolean, seconds: number) { store.record(questionId, topicId, correct ? 1 : 0, now(), seconds); },
+  topicName: temaName,
+};
 
 
 // ───────── arranque ─────────
@@ -1001,6 +972,8 @@ function watchUpdates(reg: ServiceWorkerRegistration): () => void {
 /** Temporary composition only: the React views own rendering and events. */
 export const studyServices: StudyServices = {
   cards: cardsServices,
+  failures: failuresServices,
+  lightning: lightningServices,
   errors: {
     getFilter() { return String(store.getCfg().errf || 'abierto'); },
     getReports() { return Object.entries(store.getReports()).map(([id, report]) => ({ id, ts: report.ts, tema: report.tema, motivo: report.motivo, nota: report.nota, state: report.st })); },

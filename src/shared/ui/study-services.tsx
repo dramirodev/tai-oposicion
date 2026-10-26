@@ -89,7 +89,19 @@ export interface ErrorServices {
   setState(id: string, state: ErrorReportRecord['state']): void;
   exportData(): Promise<string>;
 }
-export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; cards: CardsServices; errors: ErrorServices; markReady(): void }
+export interface FailureQuestion { id: string; topicId: string; statement: string; options: readonly string[]; correctIndex: number; citation?: string; note?: string; year?: string; context?: string; assumptionText?: string; traps?: readonly number[]; nonScoring?: number; source?: { url: string; title?: string; page?: number; verified: boolean } }
+export interface FailureServices {
+  loadQuestions(): Promise<FailureQuestion[]>;
+  loadTopics(): Promise<readonly { id: string; name: string }[]>;
+  getRecord(id: string): readonly number[] | undefined;
+  isReviewed(id: string): boolean;
+  setReviewed(id: string, topicId: string, reviewed: boolean): void;
+  topicName(id: string): string;
+  startPractice(ids: readonly string[], title: string): void;
+}
+export interface LightningQuestion extends FailureQuestion { reason: string }
+export interface LightningServices { loadQuestion(): Promise<LightningQuestion | null>; record(questionId: string, topicId: string, correct: boolean, seconds: number): void; topicName(id: string): string }
+export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; cards: CardsServices; errors: ErrorServices; failures: FailureServices; lightning: LightningServices; markReady(): void }
 const Context = createContext<StudyServices | null>(null);
 export const AppServicesProvider = Context.Provider;
 export function useStudyServices(): StudyServices {
