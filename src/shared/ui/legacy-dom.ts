@@ -58,7 +58,7 @@ export function focusHeading(root: ParentNode = legacyScope().app): void {
   if (heading) { heading.tabIndex = -1; heading.focus({preventScroll:true}); }
 }
 
-export { toast, ask, notice, type ToastAction } from './dialogs.js';
+export { toast, ask, notice, type ToastAction } from './dialog-actions.js';
 // botón ocupado mientras carga: evita dobles pulsaciones y da respuesta inmediata
 export const guard = <A extends unknown[], R>(fn: (...firstValue: A) => R | Promise<R>) => async function (this: GlobalEventHandlers, ...firstValue: A): Promise<R | undefined> {
   const button = this as HTMLButtonElement;

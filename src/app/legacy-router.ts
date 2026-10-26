@@ -1,3 +1,4 @@
+import { saveExportFile } from '../shared/ui/download-file.js';
 import type { StudyServices } from '../shared/ui/study-services.js';
 import { questionNotice, sourceHtml, filterFailures } from '../shared/presentation/legacy-study.js';
 import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
@@ -808,7 +809,7 @@ routes.errores = async function () {
     app.querySelectorAll<El>('[data-st]').forEach(b => b.onclick = () => store.setReportState(b.dataset.id!, b.dataset.st! as any));
     $('#exp').onclick = () => {
       const out = all.map(([id, r]) => { const q = by.get(id) || null, c = cby.get(id) || null; return { id, tarjeta: c ? { pregunta: c.q, respuesta: c.a, ref: c.ref || null } : undefined, tema: r.tema, estado: r.st, motivo: r.motivo, nota: r.nota, origen: q ? ORIGEN[q.o] : null, enunciado: q?.q, opciones: q?.a, correcta: q ? L[q.c] : null, cita: q?.u || null, trampas: (q?.x || []).map(x => TRAMPAS[x] || x) }; });
-      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify({ generado: new Date().toISOString(), errores: out }, null, 1)], { type: 'application/json' })); a.download = 'errores-banco.json'; a.click();
+      saveExportFile('errores-banco.json', JSON.stringify({ generado: new Date().toISOString(), errores: out }, null, 1), 'application/json');
     };
   };
   let sig = JSON.stringify(store.getReports()) + (store.getCfg().errf || '');
@@ -935,9 +936,9 @@ async function prefetchBanco() {
   if ((navigator as any).connection?.saveData || navigator.onLine === false || !window.caches) return;
   try {
     const idx = await getIndex(), c = await caches.open('tai-data');
-    const falta: any[] = [];
-    for (const t of idx.temas) { const u = `data/${t.id}.json`; if (!(await c.match(u))) falta.push(u); }
-    const w = async () => { for (let u; (u = falta.shift());) { try { await (await fetch(u)).arrayBuffer(); } catch (e) { return; } } };
+    const cached = await Promise.all(idx.temas.map(t => c.match(`data/${t.id}.json`)));
+    const falta = idx.temas.filter((_, index) => !cached[index]).map(t => `data/${t.id}.json`);
+    const w = async () => { for (let u; (u = falta.shift());) { try { const response = await fetch(u); if (!response.ok) return; await response.arrayBuffer(); } catch (e) { return; } } };
     await Promise.all([w(), w()]);
   } catch (e) {}
 }
@@ -946,7 +947,9 @@ async function prefetchBanco() {
 let NEWV: any = null; // versión nueva detectada en el servidor (objeto de version.json)
 async function checkUpdate() {
   try {
-    const v = await (await fetch('version.json', { cache: 'no-store' })).json();
+    const response = await fetch('version.json', { cache: 'no-store' });
+    if (!response.ok) return undefined;
+    const v = await response.json();
     NEWV = v && v.build && v.build !== APP_BUILD ? v : null;
   } catch (e) { return undefined; } // sin red: no sabemos
   return NEWV;

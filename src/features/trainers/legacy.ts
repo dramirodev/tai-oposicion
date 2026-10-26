@@ -58,7 +58,9 @@ routes.trampas = async function () {
   if (!TRUN) {
     const questionStats = store.getStats();
     const ids = Object.keys(META).filter(id => id !== '_by' && (META[id][3] || []).length);
-    const fail = ids.filter(id => questionStats[id] && questionStats[id][5] === 0), rest = ids.filter(id => !fail.includes(id));
+    const fail = ids.filter(id => questionStats[id] && questionStats[id][5] === 0);
+    const failedIds = new Set(fail);
+    const rest = ids.filter(id => !failedIds.has(id));
     const items = (await byIds(mezclaIds([[fail, 4]], rest))).filter(q => !q.s && q.x?.length).slice(0, 8);
     if (routeGeneration !== generation) return;
     TRUN = { items, k: 0, res: [] };

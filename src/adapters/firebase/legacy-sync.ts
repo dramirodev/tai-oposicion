@@ -30,8 +30,13 @@ export function setAttemptRepository(repository: AttemptRepository): void { atte
 export async function init(metaFns: { temaOf: (id: string) => string | null; idsOfTema: (text: string) => string[] }): Promise<void> {
   temaOf = metaFns.temaOf; idsOfTema = metaFns.idsOfTema;
   let firebaseConfig: FirebaseOptions = {}, leida = false;
-  try { firebaseConfig = await (await fetch('firebase-config.json', { cache: 'no-cache' })).json() as FirebaseOptions; leida = true; } catch {
-    try { firebaseConfig = await (await fetch('firebase-config.json')).json() as FirebaseOptions; leida = true; } catch {}
+  const readConfig = async (options?: RequestInit): Promise<FirebaseOptions> => {
+    const response = await fetch('firebase-config.json', options);
+    if (!response.ok) throw new Error(`No se pudo cargar la configuración (${response.status}).`);
+    return response.json() as Promise<FirebaseOptions>;
+  };
+  try { firebaseConfig = await readConfig({ cache: 'no-cache' }); leida = true; } catch {
+    try { firebaseConfig = await readConfig(); leida = true; } catch {}
   }
   const configured = status.configured = !!firebaseConfig.apiKey && !/PEGA/i.test(firebaseConfig.apiKey);
   status.host = location.host; status.authDomain = firebaseConfig.authDomain || '';
