@@ -180,3 +180,5 @@ Validación local en la rama de #38: prueba focalizada 2/2 (Chromium y WebKit), 
 1. La PR #42 está abierta contra `main`; su estado remoto queda pendiente de revisión posterior, sin esperar sus pipelines.
 2. Seguir con el estado de las PR #40 y #41 según las instrucciones del usuario.
 3. Mantener la Etapa B de arquitectura/Zustand pendiente de aprobación explícita. Las pruebas E2E de navegador siguen en Playwright y no se migran a RTL.
+
+Última consulta de checks en GitHub: #40 mostraba fallo en el run `40398611713` y #41 en `40399388302`; no se investigaron en este turno, respetando la preferencia del usuario de que no monitoricemos fallos de PR salvo que los señale. Para #42 aún no aparecía un check en el resumen tras el último push.
