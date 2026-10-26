@@ -15,22 +15,50 @@ function useResultSnapshot() {
   return snapshot;
 }
 
-function ReviewItem({ item, index, report, interrupted }: { item: ResultItem; index: number; report: ResultReport | undefined; interrupted: boolean }) {
+function ReviewReport({ item, index, report }: { item: ResultItem; index: number; report: ResultReport | undefined }) {
   const { result } = useStudyServices();
   const [editing, setEditing] = useState(false);
   const [reason, setReason] = useState(report?.reason || ERROR_REPORT_REASONS[0]);
   const [note, setNote] = useState(report?.note || '');
+  if (report?.state === 'abierto' && !editing) return <div className="repw"><span className="rep ok">✓ Error anotado <button className="ghost sm" onClick={() => { setReason(report.reason); setNote(report.note); setEditing(true); }}>editar</button></span></div>;
+  if (!editing) return <div className="repw"><button className="ghost fl" onClick={() => setEditing(true)}>⚠ Avisar de error</button></div>;
+  return <div className="repw"><div className="repf"><label className="sr" htmlFor={`report-reason-${index}`}>Motivo del error</label><select id={`report-reason-${index}`} value={reason} onChange={event => setReason(event.target.value)}>{ERROR_REPORT_REASONS.map(value => <option key={value}>{value}</option>)}</select>
+    <label className="sr" htmlFor={`report-note-${index}`}>Qué falla (opcional)</label><input id={`report-note-${index}`} maxLength={300} placeholder="Qué falla (opcional)" value={note} onChange={event => setNote(event.target.value)} />
+    <div className="row"><button className="btn" onClick={() => { result.saveReport(item.id, item.topicId, reason, note.trim()); setEditing(false); }}>Guardar</button><button className="btn sec" onClick={() => setEditing(false)}>Cancelar</button></div></div></div>;
+}
+
+const outcomePresentation = {
+  correct: { style: 'g', label: 'Acierto' },
+  wrong: { style: 'r', label: 'Fallo' },
+  blank: { style: 'b', label: 'En blanco' },
+  revealed: { style: 'b', label: 'Solución consultada · blanco' },
+} as const;
+
+function ReviewDetails({ item, explanation }: { item: ResultItem; explanation: string }) {
+  return <>
+    {item.notice && <StudyMarkup html={item.notice} />}
+    <div className="pre review-statement"><StudyMarkup html={richHtml(item.statement)} /></div>
+    {item.options.map((option, optionIndex) => <div className={`ro ${optionIndex === item.correctIndex ? 'ok' : optionIndex === item.answer ? 'bad' : ''}`} data-answer-index={optionIndex} key={`${item.id}-${optionIndex}`}><b>{'ABCD'[optionIndex]}</b> <span className="pre review-option-text"><StudyMarkup html={richHtml(option)} /></span>{optionIndex === item.correctIndex && <> <span className="sr">(Respuesta correcta)</span></>}</div>)}
+    {item.confidence && <p className="sub">Confianza antes de responder: {item.confidence === 'sure' ? 'Seguro' : item.confidence === 'betweenTwo' ? 'Entre dos' : 'Adivino'}</p>}
+    {item.discardedOptions.length > 0 && <p className="sub">Opciones que descartaste antes de responder: {item.discardedOptions.map(option => 'ABCD'[option]).join(', ')}</p>}
+    {item.highlights.length > 0 && <p className="sub">Tus marcas de este intento:</p>}
+    {item.citation && <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(item.citation, item.options[item.correctIndex])} /></div>}
+    {item.source && <StudyMarkup html={item.source} />}
+    {explanation && <div className="code-explanation-slot" aria-live="polite"><StudyMarkup html={explanation} /></div>}
+  </>;
+}
+
+function ReviewItem({ item, index, report, interrupted }: { item: ResultItem; index: number; report: ResultReport | undefined; interrupted: boolean }) {
+  const { result } = useStudyServices();
   const [explanation, setExplanation] = useState('');
-  const outcome = item.outcome;
-  const style = outcome === 'correct' ? 'g' : outcome === 'wrong' ? 'r' : 'b';
-  const label = outcome === 'correct' ? 'Acierto' : outcome === 'wrong' ? 'Fallo' : outcome === 'revealed' ? 'Solución consultada · blanco' : 'En blanco';
+  const { style, label } = outcomePresentation[item.outcome];
 
   useEffect(() => {
-    if (outcome === 'revealed' || interrupted) return;
+    if (item.outcome === 'revealed' || interrupted) return;
     let active = true;
     void result.loadExplanation(item).then(value => { if (active && value.status === 'current') setExplanation(value.content || ''); if (active && value.status === 'outdated') setExplanation('Hay una explicación de una revisión anterior; no se muestra para evitar información desactualizada.'); }).catch(() => {});
     return () => { active = false; };
-  }, [interrupted, item, outcome, result]);
+  }, [interrupted, item, item.outcome, result]);
 
   useEffect(() => {
     const panel = document.querySelector<HTMLElement>(`[data-review="${index}"]`);
@@ -52,23 +80,9 @@ function ReviewItem({ item, index, report, interrupted }: { item: ResultItem; in
     }
   }, [index, item]);
 
-  return <details className={`rv ${style}`} data-review={index}><summary><i /><span className="sr">{label}: </span>{outcome === 'revealed' && <span className="tag warn">Solución consultada · blanco</span>} {item.statement.slice(0, 110)}{item.statement.length > 110 ? '…' : ''}</summary>
-    {item.notice && <StudyMarkup html={item.notice} />}
-    <div className="pre review-statement"><StudyMarkup html={richHtml(item.statement)} /></div>
-    {item.options.map((option, optionIndex) => <div className={`ro ${optionIndex === item.correctIndex ? 'ok' : optionIndex === item.answer ? 'bad' : ''}`} data-answer-index={optionIndex} key={`${item.id}-${optionIndex}`}><b>{'ABCD'[optionIndex]}</b> <span className="pre review-option-text"><StudyMarkup html={richHtml(option)} /></span>{optionIndex === item.correctIndex && <> <span className="sr">(Respuesta correcta)</span></>}</div>)}
-    {item.confidence && <p className="sub">Confianza antes de responder: {item.confidence === 'sure' ? 'Seguro' : item.confidence === 'betweenTwo' ? 'Entre dos' : 'Adivino'}</p>}
-    {item.discardedOptions.length > 0 && <p className="sub">Opciones que descartaste antes de responder: {item.discardedOptions.map(option => 'ABCD'[option]).join(', ')}</p>}
-    {item.highlights.length > 0 && <p className="sub">Tus marcas de este intento:</p>}
-    {item.citation && <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(item.citation, item.options[item.correctIndex])} /></div>}
-    {item.source && <StudyMarkup html={item.source} />}
-    {explanation && <div className="code-explanation-slot" aria-live="polite"><StudyMarkup html={explanation} /></div>}
-    <div className="repw">
-      {report?.state === 'abierto' && !editing ? <span className="rep ok">✓ Error anotado <button className="ghost sm" onClick={() => { setReason(report.reason); setNote(report.note); setEditing(true); }}>editar</button></span>
-        : !editing ? <button className="ghost fl" onClick={() => setEditing(true)}>⚠ Avisar de error</button>
-          : <div className="repf"><label className="sr" htmlFor={`report-reason-${index}`}>Motivo del error</label><select id={`report-reason-${index}`} value={reason} onChange={event => setReason(event.target.value)}>{ERROR_REPORT_REASONS.map(value => <option key={value}>{value}</option>)}</select>
-            <label className="sr" htmlFor={`report-note-${index}`}>Qué falla (opcional)</label><input id={`report-note-${index}`} maxLength={300} placeholder="Qué falla (opcional)" value={note} onChange={event => setNote(event.target.value)} />
-            <div className="row"><button className="btn" onClick={() => { result.saveReport(item.id, item.topicId, reason, note.trim()); setEditing(false); }}>Guardar</button><button className="btn sec" onClick={() => setEditing(false)}>Cancelar</button></div></div>}
-    </div>
+  return <details className={`rv ${style}`} data-review={index}><summary><i /><span className="sr">{label}: </span>{item.outcome === 'revealed' && <span className="tag warn">Solución consultada · blanco</span>} {item.statement.slice(0, 110)}{item.statement.length > 110 ? '…' : ''}</summary>
+    <ReviewDetails item={item} explanation={explanation} />
+    <ReviewReport item={item} index={index} report={report} />
   </details>;
 }
 
@@ -91,6 +105,6 @@ export function ResultPage() {
     {snapshot.analysis && <StudyMarkup html={snapshot.analysis} />}
     {snapshot.kind === 'sim' && !snapshot.interrupted && <section className="strategy-result"><h2>Analítica de estrategia</h2><p className="sub">Análisis del historial completado; las sesiones incompletas se excluyen y la muestra pequeña no genera recomendación.</p><button className="btn sec" disabled={strategyLoading} onClick={() => { setStrategyLoading(true); void result.loadStrategy().then(setStrategy).catch(() => setStrategy('No se pudo leer el historial detallado. El resultado de esta sesión sigue disponible.')).finally(() => setStrategyLoading(false)); }}>{strategyLoading ? 'Calculando…' : 'Calcular informe del último año'}</button>{strategy && <div aria-live="polite"><StudyMarkup html={strategy} /></div>}</section>}
     <h2>Por tema</h2><div className="card">{snapshot.topics.map(topic => <div className="line" key={topic.id}><span>{topic.id} {topic.name}</span><span>{topic.correct}/{topic.total}</span></div>)}</div>
-    <h2>Revisión</h2><div className="card">{snapshot.items.map((item, index) => <ReviewItem key={`${item.id}-${index}`} item={item} index={index} report={result.getReport(item.id)} interrupted={snapshot.interrupted} />)}</div>
+    <h2>Revisión</h2><div className="card">{snapshot.items.map((item, index) => <ReviewItem key={item.id} item={item} index={index} report={result.getReport(item.id)} interrupted={snapshot.interrupted} />)}</div>
   </>;
 }
