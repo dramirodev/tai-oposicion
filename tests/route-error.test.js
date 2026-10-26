@@ -1,6 +1,7 @@
 import { expect, it, vi } from 'vitest';
 import React, { act } from 'react';
-import { createRoot } from 'react-dom/client';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { RouterProvider, Outlet } from 'react-router';
 vi.mock('../src/app/ReactScreen.js', () => ({ ReactScreen: ({children}) => children }));
 vi.mock('../src/features/home/HomePage.js', () => ({ HomePage: () => React.createElement('h1', null, 'Inicio recuperado') }));
@@ -15,23 +16,20 @@ it('el router real muestra recuperación sin exponer detalles y permite volver a
   location.hash = '#/test';
   const errors = vi.spyOn(console, 'error').mockImplementation(() => {});
   const { router } = await import('../src/app/route-runtime.js');
-  const host = document.createElement('div'); document.body.append(host);
-  const root = createRoot(host);
+  const user = userEvent.setup();
+  let view;
   try {
-    await act(async () => {
-      root.render(React.createElement(RouterProvider, { router }));
-    });
-    expect(host.querySelector('[role="alert"]')).not.toBeNull();
-    expect(host.textContent).toContain('No se pudo mostrar esta pantalla');
-    expect(host.textContent).not.toContain('detalle interno sensible');
+    view = render(React.createElement(RouterProvider, { router }));
+    expect(await screen.findByRole('alert')).toBeInTheDocument();
+    expect(screen.getByRole('alert').textContent).toContain('No se pudo mostrar esta pantalla');
+    expect(screen.queryByText('detalle interno sensible')).not.toBeInTheDocument();
     await act(async () => {
       failure.active = false;
-      host.querySelector('a').click();
     });
-    expect(host.textContent).toContain('Inicio recuperado');
+    await user.click(screen.getByRole('link'));
+    expect(await screen.findByRole('heading', { name: 'Inicio recuperado' })).toBeInTheDocument();
   } finally {
-    await act(async () => root.unmount());
-    host.remove();
+    view?.unmount();
     router.dispose();
     errors.mockRestore();
   }

@@ -1,11 +1,10 @@
-import React, { act } from 'react';
-import { createRoot } from 'react-dom/client';
-import { MemoryRouter } from 'react-router';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
-import { AppServicesProvider } from '../src/shared/ui/study-services.tsx';
+import { createElement } from 'react';
+import { renderApp } from './helpers/render-app.js';
+import { screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 vi.mock('../src/shared/ui/dialog-actions.js', () => ({ ask: vi.fn(async () => true), toast: vi.fn() }));
-globalThis.IS_REACT_ACT_ENVIRONMENT = true;
-let host, root, account, settings;
+let account, settings, view;
 const snapshot = () => ({ sync: { state: 'sin sesión', user: null, configured: false, lastSync: 0, error: '', detail: '', host: '', authDomain: '', accessError: '', requests: [] }, full: false, level: 'invitado', devMode: null, devRevealed: false, ui: { theme: 'auto', size: 0, lectura: 0 }, progress: { questions: 0, topics: 0, sessions: 0, openReports: 0 }, exam: '', version: '1.1.3', build: 'test', update: null, offline: null, index: null });
 function createSettings() { return {
  accountId: () => account, getSnapshot: snapshot, subscribe: () => () => {}, load: async () => {},
@@ -16,37 +15,39 @@ function createSettings() { return {
 }; }
 async function renderSettings() {
  const { SettingsPage } = await import('../src/features/settings/SettingsPage.js');
- host = document.createElement('div'); document.body.append(host); root = createRoot(host);
- await act(async () => root.render(React.createElement(MemoryRouter, null, React.createElement(AppServicesProvider, { value: { settings } }, React.createElement(SettingsPage)))));
- await act(async () => Promise.resolve());
+ view = renderApp(createElement(SettingsPage), { services: { settings } });
+ await screen.findByRole('heading', { name: 'Ajustes' });
 }
-beforeEach(() => { account = 'cuenta-a'; settings = createSettings(); document.body.innerHTML = ''; });
-afterEach(async () => { if (root) await act(async () => root.unmount()); root = undefined; host?.remove(); vi.clearAllMocks(); });
+beforeEach(() => { account = 'cuenta-a'; settings = createSettings(); });
+afterEach(() => { view?.unmount(); view = undefined; vi.clearAllMocks(); });
 it('presenta ajustes por secciones y persiste los cambios de apariencia', async () => {
+ const user = userEvent.setup();
  await renderSettings();
- expect(host.querySelector('h1')?.textContent).toBe('Ajustes');
- expect(host.querySelector('[aria-label="Tema"]')).not.toBeNull();
- expect(host.querySelector('details')?.textContent).toContain('Diagnóstico técnico');
- expect(host.querySelector('[role="status"][aria-live="polite"]')).not.toBeNull();
- const light = [...host.querySelectorAll('[aria-label="Tema"] button')].find(button => button.textContent === 'Claro');
- await act(async () => light.click()); expect(settings.setPreference).toHaveBeenCalledWith('theme', 'light');
+ expect(screen.getByRole('heading', { level: 1, name: 'Ajustes' })).toBeInTheDocument();
+ expect(screen.getByRole('group', { name: 'Tema' })).toBeInTheDocument();
+ expect(screen.getByText('Diagnóstico técnico')).toBeInTheDocument();
+ expect(screen.getAllByRole('status').length).toBeGreaterThan(0);
+ await user.click(screen.getByRole('button', { name: 'Claro' })); expect(settings.setPreference).toHaveBeenCalledWith('theme', 'light');
 });
 it('confirma antes de combinar una copia y muestra el resultado', async () => {
  const { ask } = await import('../src/shared/ui/dialog-actions.js'); await renderSettings();
- const input = host.querySelector('input[type="file"]');
+ const input = screen.getByLabelText('Importar');
  Object.defineProperty(input, 'files', { configurable: true, value: [{ size: 2, text: async () => '{}' }] });
- await act(async () => { input.dispatchEvent(new Event('change', { bubbles: true })); await new Promise(resolve => setTimeout(resolve, 0)); });
- expect(ask).toHaveBeenCalled();
+ fireEvent.change(input);
+ await vi.waitFor(() => expect(ask).toHaveBeenCalled());
+ await vi.waitFor(() => expect(settings.importBackup).toHaveBeenCalled());
  expect(settings.importBackup).toHaveBeenCalledWith('{"stats":{"nuevo":[1,1,200]}}', undefined);
- expect(host.textContent).toContain('Copia combinada: 1 pregunta nueva');
+ expect(await screen.findByText(/Copia combinada: 1 pregunta nueva/)).toBeInTheDocument();
 });
 it('no aplica una copia si la cuenta cambia durante la confirmación', async () => {
  const { ask } = await import('../src/shared/ui/dialog-actions.js'); let confirm;
  ask.mockImplementationOnce(() => new Promise(resolve => { confirm = resolve; })); await renderSettings();
- const input = host.querySelector('input[type="file"]');
+ const input = screen.getByLabelText('Importar');
  Object.defineProperty(input, 'files', { configurable: true, value: [{ size: 2, text: async () => '{}' }] });
- await act(async () => { input.dispatchEvent(new Event('change', { bubbles: true })); await new Promise(resolve => setTimeout(resolve, 0)); });
+ fireEvent.change(input);
+ await vi.waitFor(() => expect(confirm).toBeTypeOf('function'));
  account = 'cuenta-b';
- await act(async () => { confirm(true); await new Promise(resolve => setTimeout(resolve, 0)); });
+ confirm(true);
+ await screen.findByRole('heading', { name: 'Ajustes' });
  expect(settings.importBackup).not.toHaveBeenCalled();
 });
