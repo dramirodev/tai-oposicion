@@ -135,7 +135,7 @@ Esta sección reemplaza los estados de PR anteriores que aparecen en el historia
 
 - PR #34 está integrada en `main` (`095a0e1`).
 - PR #36 también está integrada en `main` (`609dbc8`).
-- La PR #37 quedó cerrada sin merge; GitHub no permitió reabrirla tras recrear/rebasar su rama. La misma integración de Lucide se volvió a publicar contra `main` como PR #39: https://github.com/dramirodev/tai-oposicion/pull/39.
+- La PR #37 quedó cerrada sin merge; GitHub no permite reabrirla porque la rama fue recreada/forzada después de eliminarse su base. La integración Lucide fue republicada directamente contra `main`; el estado final y enlace vigente se registran en la última actualización.
 - PR #38 contiene la propuesta de arquitectura y apunta a `main`; Etapa B permanece pendiente de aprobación explícita.
 - La rama `feat/recharts-study-visualizations` está en `/private/tmp/tai-recharts-audit`, basada en `609dbc8`. La integración está en curso; los gráficos migrados deben quedar cargados de forma diferida dentro de las secciones de estadísticas.
 
@@ -154,3 +154,29 @@ Validación local en la rama de #38: prueba focalizada 2/2 (Chromium y WebKit), 
 3. Publicar una PR separada contra `main`, sin esperar sus pipelines.
 4. Esperar aprobación del usuario para Etapa B arquitectónica/Zustand, conforme a la petición original de Etapa A.
 5. Al cerrar las tareas autorizadas, abrir una rama separada para evaluar React Testing Library y si Jest aporta valor frente a Vitest.
+
+## Estado de continuidad — actualización posterior
+
+### PRs y ramas
+
+- PR #34, #36 y #38 están integradas en `main`; la propuesta arquitectónica de #38 sigue pendiente de aprobación para iniciar la Etapa B/Zustand.
+- PR #37 se cerró automáticamente al eliminarse la rama base después del merge de #36. GitHub rechazó reabrirla porque su head fue recreado/forzado. Se conservó su diff y se publicó directamente contra `main` en la nueva [PR #41](https://github.com/dramirodev/tai-oposicion/pull/41), rama `feat/lucide-iconography-main`.
+- La integración Recharts está publicada en [PR #40](https://github.com/dramirodev/tai-oposicion/pull/40), rama `feat/recharts-study-visualizations`, base `main`.
+- Se actualizó esta tarea de tests en la rama `refactor/migrate-tests-to-rtl`, basada en `main`. Pendiente abrir la PR al completar la publicación.
+
+### React Testing Library y Jest
+
+- Se añadieron `@testing-library/react`, `@testing-library/user-event` y `@testing-library/jest-dom` como dependencias de desarrollo. Vitest se mantiene: Jest duplicaría el runner y requeriría adaptar la configuración de Vite y los mocks `vi` sin aportar capacidades necesarias.
+- Se migraron los 15 archivos que montaban componentes/hooks mediante `createRoot` a `render`, `screen`, consultas `within`, eventos RTL y `userEvent` donde corresponde. Se migró también el helper del proveedor de diálogos y se creó `renderApp` para componer `MemoryRouter` y `AppServicesProvider`.
+- `tests/setup.js` configura matchers de `jest-dom` y limpieza RTL; `vitest.config.mjs` lo carga como `setupFiles`.
+- Las pruebas de dominio, adaptadores y el puente legacy que no montan componentes React permanecen como pruebas Vitest. En `tests/app.test.js` se hizo explícita la espera del diálogo antes de comprobar su texto; así se quitó una condición de carrera reproducible al ejecutar la suite completa.
+- Verificación focalizada de los 15 archivos migrados: 37/37 tests.
+- `npm run check`: arquitectura sin deuda nueva (64 excepciones existentes), ESLint, ignore-growth, TypeScript y 402/402 tests en 89 archivos.
+- `npm run build`: correcto. Se mantienen los avisos ya existentes por los bundles `index` (~523 kB) y `legacy-sync` (~549 kB).
+- Revisión estructural: `rg` no encuentra `createRoot` ni `react-dom/client` bajo `tests`.
+
+### Próximo paso
+
+1. Publicar `refactor/migrate-tests-to-rtl` contra `main` y registrar la URL de la PR tras verificar el diff final.
+2. Seguir con el estado de las PR #40 y #41 según las instrucciones del usuario; no esperar las pipelines salvo petición expresa.
+3. Mantener la Etapa B de arquitectura/Zustand pendiente de aprobación explícita. Las pruebas E2E de navegador siguen en Playwright y no se migran a RTL.
