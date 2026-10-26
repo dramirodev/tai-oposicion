@@ -35,7 +35,7 @@ export default tseslint.config(
     rules: { 'no-restricted-imports': ['error', { patterns: [
       { group: ['**/adapters/**', '**/app/**', '**/features/**', '**/shared/**'], message: 'core solo puede depender de core/domain, core/application y core/ports.' },
       { group: ['**/dto/**', '**/view-models/**'], message: 'Los DTO y view models no cruzan al core.' },
-      { group: ['react', 'react/**', 'firebase', 'firebase/**'], message: 'core no depende de frameworks ni SDK externos.' },
+      { group: ['react', 'react/**', 'firebase', 'firebase/**', 'zustand', 'zustand/**', 'idb', 'idb/**', 'zod', 'zod/**'], message: 'core no depende de frameworks ni SDK externos.' },
     ] }] },
   },
   {

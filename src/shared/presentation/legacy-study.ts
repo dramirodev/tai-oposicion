@@ -13,16 +13,16 @@ export interface FailureFilterItem<T> {
 }
 export interface FailureFilters { q: string; t: string; review: string; streak: string }
 
-export function questionNotice(q: NoticeQuestion): string {
-  if (!q.n && q.np !== 1) return '';
-  return `<aside class="question-notice ${q.np === 1 ? 'warning' : ''}" aria-label="Advertencia de la pregunta"><b>${q.np === 1 ? 'Solo estudio · no puntuable' : 'Nota de la pregunta'}</b>${q.n ? `<p>${escapeHtml(q.n)}</p>` : '<p>Se conserva para estudiar; está excluida de los simulacros puntuables.</p>'}</aside>`;
+export function questionNotice(question: NoticeQuestion): string {
+  if (!question.n && question.np !== 1) return '';
+  return `<aside class="question-notice ${question.np === 1 ? 'warning' : ''}" aria-label="Advertencia de la pregunta"><b>${question.np === 1 ? 'Solo estudio · no puntuable' : 'Nota de la pregunta'}</b>${question.n ? `<p>${escapeHtml(question.n)}</p>` : '<p>Se conserva para estudiar; está excluida de los simulacros puntuables.</p>'}</aside>`;
 }
 
 export function sourceHtml(
-  q: SourceQuestion,
+  question: SourceQuestion,
   verifiedSources: Readonly<Record<string, QuestionSource>> = {},
 ): string {
-  const source = q.source || (q.i ? verifiedSources[q.i] : undefined);
+  const source = question.source || (question.i ? verifiedSources[question.i] : undefined);
   if (source?.verified) {
     try {
       const url = new URL(source.url);
@@ -32,7 +32,7 @@ export function sourceHtml(
       }
     } catch {}
   }
-  return q.u ? '<p class="source-status">Cita del temario disponible, sin enlace verificado al PDF.</p>' : '';
+  return question.u ? '<p class="source-status">Cita del temario disponible, sin enlace verificado al PDF.</p>' : '';
 }
 
 const fold = (value: string) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();

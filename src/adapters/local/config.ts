@@ -1,14 +1,14 @@
 // Preferencias externas: límites de tamaño, claves seguras y formas que admiten las pantallas.
-const safeKey = (k: string) => /^[A-Za-z0-9_.-]{1,40}$/.test(k) && !['__proto__', 'constructor', 'prototype'].includes(k);
+const safeKey = (key: string) => /^[A-Za-z0-9_.-]{1,40}$/.test(key) && !['__proto__', 'constructor', 'prototype'].includes(key);
 const own = (obj: object, key: string) => Object.prototype.hasOwnProperty.call(obj, key);
-const object = (v: unknown): v is Record<string, unknown> => !!v && typeof v === 'object' && !Array.isArray(v);
-const integer = (lo: number, hi: number) => (v: unknown): boolean => typeof v === 'number' && Number.isInteger(v) && v >= lo && v <= hi;
-const oneOf = (values: readonly unknown[]) => (v: unknown): boolean => values.includes(v);
-const bool = (v: unknown) => typeof v === 'boolean';
-const temas = (v: unknown) => Array.isArray(v) && v.every(x => typeof x === 'string' && /^T\d\.\d\d$/.test(x));
-const origins = (v: unknown) => Array.isArray(v) && v.every(x => ['O', 'A', 'G'].includes(x));
+const object = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
+const integer = (lo: number, hi: number) => (value: unknown): boolean => typeof value === 'number' && Number.isInteger(value) && value >= lo && value <= hi;
+const oneOf = (values: readonly unknown[]) => (value: unknown): boolean => values.includes(value);
+const bool = (value: unknown) => typeof value === 'boolean';
+const temas = (value: unknown) => Array.isArray(value) && value.every(value => typeof value === 'string' && /^T\d\.\d\d$/.test(value));
+const origins = (value: unknown) => Array.isArray(value) && value.every(value => ['O', 'A', 'G'].includes(value));
 const scope = oneOf(['vistos', 'todos']);
-type Check = (v: unknown) => boolean;
+type Check = (value: unknown) => boolean;
 const schemas: Record<string, { defaults: Record<string, unknown>; fields: Record<string, Check> }> = {
   ui: { defaults: {}, fields: { theme: oneOf(['auto', 'light', 'dark']), size: integer(0, 3), lectura: integer(0, 2) } },
   test: { defaults: { sel: [], n: 15, mode: 'nuevas', o: ['O', 'A', 'G'] }, fields: {
@@ -19,44 +19,44 @@ const schemas: Record<string, { defaults: Record<string, unknown>; fields: Recor
   } },
   cardsc: { defaults: { n: 20, scope: 'vistos' }, fields: { n: oneOf([10, 20, 30]), scope } },
   evo: { defaults: { m: 'acierto', f: 'g', w: 12, tabla: false }, fields: {
-    m: oneOf(['acierto', 'tiempo']), f: (v: unknown) => typeof v === 'string' && /^(g|t:T\d\.\d\d|k:[DICK])$/.test(v), w: oneOf([8, 12, 26]), tabla: bool,
+    m: oneOf(['acierto', 'tiempo']), f: (value: unknown) => typeof value === 'string' && /^(g|t:T\d\.\d\d|k:[DICK])$/.test(value), w: oneOf([8, 12, 26]), tabla: bool,
   } },
   simc: { defaults: {}, fields: { a: integer(0, 299), b: integer(0, 299) } },
   slow: { defaults: {}, fields: { ok: bool } },
 };
-function cleanValue(v: unknown, depth = 0): unknown {
-  if (v === null || typeof v === 'boolean') return v;
-  if (typeof v === 'string') return v.slice(0, 200);
-  if (typeof v === 'number') return Number.isFinite(v) ? v : undefined;
-  if (!object(v) && !Array.isArray(v) || depth >= 5) return undefined;
-  if (Array.isArray(v)) return v.slice(0, 300).map(x => cleanValue(x, depth + 1)).filter(x => x !== undefined);
+function cleanValue(itemValue: unknown, depth = 0): unknown {
+  if (itemValue === null || typeof itemValue === 'boolean') return itemValue;
+  if (typeof itemValue === 'string') return itemValue.slice(0, 200);
+  if (typeof itemValue === 'number') return Number.isFinite(itemValue) ? itemValue : undefined;
+  if (!object(itemValue) && !Array.isArray(itemValue) || depth >= 5) return undefined;
+  if (Array.isArray(itemValue)) return itemValue.slice(0, 300).map(value => cleanValue(value, depth + 1)).filter(value => value !== undefined);
   const out: Record<string, unknown> = {};
-  for (const k of Object.keys(v).slice(0, 100)) {
-    if (!safeKey(k)) continue;
-    const value = cleanValue(v[k], depth + 1);
-    if (value !== undefined) out[k] = value;
+  for (const key of Object.keys(itemValue).slice(0, 100)) {
+    if (!safeKey(key)) continue;
+    const value = cleanValue(itemValue[key], depth + 1);
+    if (value !== undefined) out[key] = value;
   }
   return out;
 }
 export function cleanCfgSetting(key: string, value: unknown): unknown {
   if (!safeKey(key)) return undefined;
-  const v = cleanValue(value);
+  const itemValue = cleanValue(value);
   const schema = own(schemas, key) ? schemas[key] : null;
   if (schema) {
-    if (!object(v)) return undefined;
+    if (!object(itemValue)) return undefined;
     const out: Record<string, unknown> = JSON.parse(JSON.stringify(schema.defaults));
-    for (const [field, check] of Object.entries(schema.fields)) if (own(v, field) && check(v[field])) out[field] = v[field];
+    for (const [field, check] of Object.entries(schema.fields)) if (own(itemValue, field) && check(itemValue[field])) out[field] = itemValue[field];
     return out;
   }
   if (key === 'tdet') {
-    if (!object(v)) return undefined;
+    if (!object(itemValue)) return undefined;
     const out: Record<string, number[]> = {};
-    for (const [k, pair] of Object.entries(v)) {
-      if (/^(?:[1-9]|1[0-4])$/.test(k) && Array.isArray(pair) && pair.length === 2 && pair.every(integer(0, 1e6))) out[k] = [pair[0], Math.min(pair[0], pair[1])];
+    for (const [objectKey, pair] of Object.entries(itemValue)) {
+      if (/^(?:[1-9]|1[0-4])$/.test(objectKey) && Array.isArray(pair) && pair.length === 2 && pair.every(integer(0, 1e6))) out[objectKey] = [pair[0], Math.min(pair[0], pair[1])];
     }
     return out;
   }
-  return v;
+  return itemValue;
 }
 export function cleanCfg(cfg: unknown): Record<string, unknown> {
   if (!object(cfg)) return {};

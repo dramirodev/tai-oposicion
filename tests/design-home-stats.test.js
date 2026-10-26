@@ -2,8 +2,8 @@ import 'fake-indexeddb/auto';
 import { beforeEach, afterEach, it, expect, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-vi.mock('../src/adapters/firebase/sync-facade.js', () => ({ status: { user:null,state:'sin sesión',configured:false,reqs:[] }, setAttemptRepository:()=>{}, onStatus:()=>()=>{} }));
-let routes, store, engine, screen, strategyFactory, strategyRenderer;
+vi.mock('../src/adapters/firebase/sync-facade.js', () => ({ status: { user:null,state:'sin sesión',configured:false,reqs:[] }, setAttemptRepository:()=>{}, onStatus:()=>()=>{}, login:async()=>{}, requestAccess:async()=>true }));
+let routes, store, engine, screen, strategyFactory, strategyRenderer, root, act;
 beforeEach(async () => {
   vi.resetModules(); localStorage.clear();
   document.body.innerHTML = '<main id="app"></main>';
@@ -14,10 +14,18 @@ beforeEach(async () => {
   strategyFactory=vi.fn(async period => ({ period }));
   strategyRenderer=vi.fn(report => `<p>Informe ${report.period}</p>`);
   const { dominioTemas } = await import('../src/app/legacy-topic-mastery.js');
-  (await import('../src/features/home/legacy.js')).registerHome({routes,go:vi.fn(),saludo:()=> 'Hola', quickSession:vi.fn(),startRepaso:vi.fn(),openMenu:vi.fn(),dominioTemas,falladasIds:engine.falladasIds},screen);
+  const React = await import('react'); act=React.act; globalThis.IS_REACT_ACT_ENVIRONMENT=true;
+  const { createRoot } = await import('react-dom/client');
+  const { MemoryRouter } = await import('react-router');
+  const { AppServicesProvider } = await import('../src/shared/ui/study-services.tsx');
+  const { HomePage } = await import('../src/features/home/HomePage.tsx');
+  const { TopicsPage } = await import('../src/features/home/TopicsPage.tsx');
+  const { studyServices } = await import('../src/app/legacy-router.ts');
+  const mount=async Page => { if(root) await act(()=>root.unmount()); root=createRoot(document.querySelector('#app')); await act(async()=>root.render(React.createElement(MemoryRouter,null,React.createElement(AppServicesProvider,{value:studyServices},React.createElement(Page))))); await vi.waitFor(async()=>{await act(async()=>new Promise(resolve=>setTimeout(resolve,0))); if(root) expect(document.querySelector('#app h1')).not.toBeNull();}); };
+  routes.home=()=>mount(HomePage); routes.temario=()=>mount(TopicsPage);
   (await import('../src/features/stats/legacy.js')).registerStats({routes,go:vi.fn(),trapTest:vi.fn(),startRun:vi.fn(),dominioTemas,getStrategyReport:strategyFactory,renderStrategyReport:strategyRenderer});
 });
-afterEach(()=> { screen.cleanup?.(); vi.unstubAllGlobals(); });
+afterEach(async()=> { if(root) await act(()=>root.unmount()); root=undefined; screen.cleanup?.(); vi.unstubAllGlobals(); });
 it('prioriza retomar, repasar y falladas, agrupa entrenamientos y no presenta una fecha oficial inventada', async()=> {
   const question=JSON.parse(readFileSync('public/data/T1.01.json','utf8'))[0];
   engine.createRun({kind:'test',feedback:true,items:[question]});
@@ -31,9 +39,9 @@ it('prioriza retomar, repasar y falladas, agrupa entrenamientos y no presenta un
 it('busca temas sin perder marcas, bloque abierto ni foco al actualizar progreso', async()=> {
   await routes.temario();
   const search=document.querySelector('#topic-search'); expect(search).not.toBeNull();
-  search.value='T1.01'; search.dispatchEvent(new Event('input',{bubbles:true}));
+  await act(()=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(search,'T1.01'); search.dispatchEvent(new Event('input',{bubbles:true}));});
   const check=document.querySelector('[data-t="T1.01"]');
-  check.closest('details').open=true; check.focus(); check.click();
+  await act(async()=>{check.closest('details').open=true; check.focus(); check.click();});
   expect(store.getSeen()).toContain('T1.01');
   expect(document.querySelector('#topic-search').value).toBe('T1.01');
   expect(document.activeElement.dataset.t).toBe('T1.01');
@@ -65,19 +73,30 @@ it('buscar y navegar no modifica el progreso y una cuenta nueva no recibe la pan
   const before=store.exportAll();
   await routes.temario();
   const search=document.querySelector('#topic-search');
-  search.value='ningun-tema-9472'; search.dispatchEvent(new Event('input'));
+  await act(()=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(search,'ningun-tema-9472'); search.dispatchEvent(new Event('input',{bubbles:true}));});
   expect(document.querySelectorAll('[data-t]')).toHaveLength(0);
   expect(store.getSeen()).toEqual(['T1.01']);
+  await act(()=>root.unmount()); root=undefined;
   await routes.stats();
   document.querySelector('[data-stats-view="sims"]').click();
   expect(store.exportAll()).toBe(before);
   const data=await import('../src/adapters/http/legacy-data.js');
   let finish;
   const spy=vi.spyOn(data,'dueList').mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
-  document.querySelector('#app').innerHTML='<p>Nueva pantalla</p>';
   const pending=routes.home();
   await vi.waitFor(()=>expect(finish).toBeTypeOf('function'));
-  store.switchAccount('otra-cuenta'); finish([]); await pending;
+  await act(()=>root.unmount()); root=undefined;
+  document.querySelector('#app').textContent='Nueva pantalla';
+  await act(async()=>{store.switchAccount('otra-cuenta'); finish([]); await pending;});
   expect(document.querySelector('#app').textContent).toBe('Nueva pantalla');
   spy.mockRestore();
+});
+it('una sesión rápida pendiente no se inicia en otra cuenta', async()=> {
+  const { studyServices }=await import('../src/app/legacy-router.ts');
+  const question=JSON.parse(readFileSync('public/data/T1.01.json','utf8'))[0];
+  let finish;
+  vi.spyOn(engine,'quickItems').mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
+  const pending=studyServices.home.quickSession();
+  store.switchAccount('otra-cuenta');finish({items:[question],titulo:'Sesión rápida'});await pending;
+  expect(engine.getCurrentRun()).toBeNull();
 });

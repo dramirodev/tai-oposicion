@@ -12,7 +12,7 @@ export interface DialogRequest {
   done: (accepted: boolean) => void;
   groups?: MenuGroup[];
   current?: string;
-  navigate?: (h: string) => void;
+  navigate?: (html: string) => void;
 }
 export interface DialogSnapshot {
   dialogs: DialogRequest[];

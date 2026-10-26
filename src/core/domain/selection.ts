@@ -72,7 +72,7 @@ export function composeWeightedQuestions<T>(
     allocation.remainder = allocation.exact - Math.floor(allocation.exact);
   });
   let remaining = targetCount - allocations.reduce((sum, allocation) => sum + allocation.count, 0);
-  for (const allocation of allocations.slice().sort((a, b) => b.remainder - a.remainder)) {
+  for (const allocation of allocations.slice().sort((leftItem, rightItem) => rightItem.remainder - leftItem.remainder)) {
     if (remaining > 0 && allocation.count < pools[allocation.topicId]!.length) {
       allocation.count++;
       remaining--;

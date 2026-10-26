@@ -1,0 +1,22 @@
+import { afterEach, expect, it } from 'vitest';
+import { createElement, act } from 'react';
+import { createRoot } from 'react-dom/client';
+import { MemoryRouter } from 'react-router';
+import { AppServicesProvider } from '../src/shared/ui/study-services.tsx';
+import { TopicsPage } from '../src/features/home/TopicsPage.tsx';
+let root;
+afterEach(async () => { if(root) await act(() => root.unmount()); document.body.replaceChildren(); });
+it('marks only filtered topics in a block without losing input focus', async () => {
+  globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+  let studied=[];const listeners=new Set();
+  const topics={accountId:()=>null,getStudied:()=>studied,subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn);},setStudied:ids=>{studied=[...ids];listeners.forEach(fn=>fn());},loadTopics:async()=>[{id:'T1.01',name:'Redes',total:10,answered:0,accuracy:null},{id:'T1.02',name:'Constitución',total:10,answered:0,accuracy:null}]};
+  const host=document.createElement('div');document.body.append(host);root=createRoot(host);
+  await act(async()=>root.render(createElement(MemoryRouter,null,createElement(AppServicesProvider,{value:{topics}},createElement(TopicsPage)))));
+  const input=host.querySelector('#topic-search');input.focus();
+  await act(()=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(input,'redes');input.dispatchEvent(new Event('input',{bubbles:true}));});
+  expect(host.querySelectorAll('[data-t]')).toHaveLength(1);
+  expect(document.activeElement).toBe(input);
+  await act(async()=>host.querySelector('[data-b]').click());
+  expect(studied).toEqual(['T1.01']);
+  expect(host.querySelector('#topic-search')).toBe(input);
+});

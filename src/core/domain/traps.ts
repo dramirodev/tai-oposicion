@@ -28,7 +28,7 @@ export function calculateTrapRates(
   return Object.values(totals)
     .filter(total => total.responseCount >= minimumResponses)
     .map(total => ({ ...total, errorRate: total.errorCount / total.responseCount }))
-    .sort((a, b) => b.errorRate - a.errorRate || b.responseCount - a.responseCount);
+    .sort((leftItem, rightItem) => rightItem.errorRate - leftItem.errorRate || rightItem.responseCount - leftItem.responseCount);
 }
 
 function shuffleWith<T>(items: readonly T[], random: () => number): T[] {
@@ -61,7 +61,7 @@ export function selectTrapQuestions<T extends { id: string; trapIds: (string | n
   for (const group of groups) {
     const byScore: Record<number, T[]> = {};
     for (const question of group) (byScore[score(question)] ||= []).push(question);
-    for (const scoreKey of Object.keys(byScore).sort((a, b) => +b - +a)) {
+    for (const scoreKey of Object.keys(byScore).sort((leftItem, rightItem) => +rightItem - +leftItem)) {
       selected.push(...shuffleWith(byScore[+scoreKey], random));
     }
   }

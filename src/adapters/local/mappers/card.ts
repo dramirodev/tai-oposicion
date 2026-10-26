@@ -2,6 +2,6 @@ import type {MappingResult,CardReview} from '../../../core/domain/entities.js';
 import type {CardRecordDto} from '../dto/progress.js';
 export const cardMapper={toDomain(dto:unknown):MappingResult<CardReview>{
  // TODO(zod): validate CardRecordDto before mapping.
- if(!Array.isArray(dto)||dto.length<5||dto.length>6||dto.some(x=>typeof x!=='number'||!Number.isFinite(x)))return{ok:false,reason:'Registro de tarjeta inválido'};
- const a=dto as number[],v:CardReview={attempts:a[0],known:a[1],lastReviewedAt:a[2],intervalStep:a[3],dueAt:a[4]}; if(a.length===6)v.lastGrade=a[5]; return{ok:true,value:v};
-},toDto(v:CardReview):CardRecordDto{const a=[v.attempts,v.known,v.lastReviewedAt,v.intervalStep,v.dueAt];if(v.lastGrade!==undefined)a.push(v.lastGrade);return a;}};
+ if(!Array.isArray(dto)||dto.length<5||dto.length>6||dto.some(value=>typeof value!=='number'||!Number.isFinite(value)))return{ok:false,reason:'Registro de tarjeta inválido'};
+ const numericValue=dto as number[],cardReview:CardReview={attempts:numericValue[0],known:numericValue[1],lastReviewedAt:numericValue[2],intervalStep:numericValue[3],dueAt:numericValue[4]}; if(numericValue.length===6)cardReview.lastGrade=numericValue[5]; return{ok:true,value:cardReview};
+},toDto(cardReview:CardReview):CardRecordDto{const numericValue=[cardReview.attempts,cardReview.known,cardReview.lastReviewedAt,cardReview.intervalStep,cardReview.dueAt];if(cardReview.lastGrade!==undefined)numericValue.push(cardReview.lastGrade);return numericValue;}};

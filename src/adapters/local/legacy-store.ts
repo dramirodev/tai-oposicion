@@ -21,135 +21,137 @@ export const LUCKY_DAYS = 1; // las acertadas «por suerte» vuelven cada día h
 
 
 // ── Validación de datos externos (localStorage, Firestore, archivos importados) ──
-const num = (v: unknown, lo = 0, hi = 1e13): number | null => (typeof v === 'number' && isFinite(v)) ? Math.min(hi, Math.max(lo, v)) : null;
+const boundedNumber = (value: unknown, lo = 0, hi = 1e13): number | null => (typeof value === 'number' && isFinite(value)) ? Math.min(hi, Math.max(lo, value)) : null;
 const ID_RE = /^(?!__proto__$|constructor$|prototype$)[A-Za-z0-9._\-~]{1,48}$/;
-const dict = <T = unknown>(): Record<string, T> => Object.create(null);
-const isRecord = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
-const TEMA_RE = /^T\d\.\d\d$/;
+const createDictionary = <T = unknown>(): Record<string, T> => Object.create(null);
+const isObjectRecord = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
+const TOPIC_ID_PATTERN = /^T\d\.\d\d$/;
 // El historial antiguo no guarda la racha: las pendientes existentes parten de cero.
-export function failureStreak(r?: StatRec | null): number {
-  if (!r) return -1;
+export function failureStreak(statRecord?: StatRec | null): number {
+  if (!statRecord) return -1;
   return deriveFailureStreak({
-    attempts: r[0],
-    lastResult: r[5],
-    intervalStep: r[3],
-    ...(r.length > 10 ? { failureStreak: Math.floor(num(r[10], -1, 3) ?? -1) } : {}),
+    attempts: statRecord[0],
+    lastResult: statRecord[5],
+    intervalStep: statRecord[3],
+    ...(statRecord.length > 10 ? { failureStreak: Math.floor(boundedNumber(statRecord[10], -1, 3) ?? -1) } : {}),
   });
 }
-export const pendingFailure = (r?: StatRec | null) => { const n = failureStreak(r); return n >= 0 && n < 3; };
-export function cleanRec(r: unknown): StatRec | null {
-  if (!Array.isArray(r) || r.length < 3) return null;
-  const n = num(r[0], 0, 1e6), ok = num(r[1], 0, 1e6), last = num(r[2]);
-  if (n === null || ok === null || last === null) return null;
-  const box = num(r[3], -1, 4), due = num(r[4]), lr = num(r[5], 0, 2), fl = num(r[6], 0, 1);
-  const mo = num(r[9], 0, 8) || 0, ts = num(r[7], 0, 1e7) || 0, tn = Math.min(num(r[8], 0, 1e6) || 0, n); // segundos acumulados y nº de respuestas cronometradas
-  const out = [n, Math.min(ok, n), last, box === null ? -1 : Math.floor(box), due || 0, lr === null ? 0 : Math.floor(lr), fl ? 1 : 0, tn ? ts : 0, tn, Math.floor(mo)];
-  if (r.length > 10) out.push(Math.floor(num(r[10], -1, 3) ?? failureStreak(out)), r[11] === 1 ? 1 : 0);
-  if (r.length > 12) out.push(num(r[12]) || 0);
-  else if (r[11] === 1) out.push(last);
-  return out;
+export const pendingFailure = (statRecord?: StatRec | null) => { const count = failureStreak(statRecord); return count >= 0 && count < 3; };
+export function cleanRec(result: unknown): StatRec | null {
+  if (!Array.isArray(result) || result.length < 3) return null;
+  const attempts = boundedNumber(result[0], 0, 1e6), correctAnswers = boundedNumber(result[1], 0, 1e6), lastSeenAt = boundedNumber(result[2]);
+  if (attempts === null || correctAnswers === null || lastSeenAt === null) return null;
+  const intervalStep = boundedNumber(result[3], -1, 4), dueAt = boundedNumber(result[4]), lastResult = boundedNumber(result[5], 0, 2), doubtful = boundedNumber(result[6], 0, 1);
+  const failureReason = boundedNumber(result[9], 0, 8) || 0;
+  const totalTimedSeconds = boundedNumber(result[7], 0, 1e7) || 0;
+  const timedAnswerCount = Math.min(boundedNumber(result[8], 0, 1e6) || 0, attempts);
+  const cleanedRecord = [attempts, Math.min(correctAnswers, attempts), lastSeenAt, intervalStep === null ? -1 : Math.floor(intervalStep), dueAt || 0, lastResult === null ? 0 : Math.floor(lastResult), doubtful ? 1 : 0, timedAnswerCount ? totalTimedSeconds : 0, timedAnswerCount, Math.floor(failureReason)];
+  if (result.length > 10) cleanedRecord.push(Math.floor(boundedNumber(result[10], -1, 3) ?? failureStreak(cleanedRecord)), result[11] === 1 ? 1 : 0);
+  if (result.length > 12) cleanedRecord.push(boundedNumber(result[12]) || 0);
+  else if (result[11] === 1) cleanedRecord.push(lastSeenAt);
+  return cleanedRecord;
 }
 export function cleanStats(map: unknown): StatMap {
-  const out = dict<StatRec>();
+  const out = createDictionary<StatRec>();
   if (!map || typeof map !== 'object') return out;
-  for (const id of Object.keys(map)) { if (!ID_RE.test(id)) continue; const r = cleanRec((map as Record<string, unknown>)[id]); if (r) out[id] = r; }
+  for (const id of Object.keys(map)) { if (!ID_RE.test(id)) continue; const statRecord = cleanRec((map as Record<string, unknown>)[id]); if (statRecord) out[id] = statRecord; }
   return out;
 }
 // ── Tarjetas (flashcards): { idTarjeta: [n, ok, last, box, due, lastGrade] } ──
 // n=veces repasada, ok=veces «lo sabía», box=-1 dominada (0..4 en repaso), due=próximo repaso, lastGrade=0 fallé/1 dudaba/2 lo sabía
 export const CARD_RE = /^FC-[A-Za-z0-9._~-]{1,60}$/;
 export const MAX_CARDS = 8000; // ≈70 B por tarjeta: queda por debajo del límite de 1 MB por documento de Firestore
-export function cleanCard(r: unknown): CardRec | null {
-  if (!Array.isArray(r) || r.length < 5) return null;
-  const n = num(r[0], 0, 1e6), ok = num(r[1], 0, 1e6), last = num(r[2]);
-  if (n === null || ok === null || last === null) return null;
-  if (r[5] === -1) return [0, 0, last, -1, 0, -1]; // marca de borrado sincronizada
-  const box = num(r[3], -1, 4), due = num(r[4]), lg = num(r[5], 0, 2);
-  return [n, Math.min(ok, n), last, box === null ? -1 : Math.floor(box), due || 0, lg === null ? 0 : Math.floor(lg)];
+export function cleanCard(result: unknown): CardRec | null {
+  if (!Array.isArray(result) || result.length < 5) return null;
+  const reviewCount = boundedNumber(result[0], 0, 1e6), knownCount = boundedNumber(result[1], 0, 1e6), updatedAt = boundedNumber(result[2]);
+  if (reviewCount === null || knownCount === null || updatedAt === null) return null;
+  if (result[5] === -1) return [0, 0, updatedAt, -1, 0, -1]; // marca de borrado sincronizada
+  const intervalStep = boundedNumber(result[3], -1, 4), dueAt = boundedNumber(result[4]), lastGrade = boundedNumber(result[5], 0, 2);
+  return [reviewCount, Math.min(knownCount, reviewCount), updatedAt, intervalStep === null ? -1 : Math.floor(intervalStep), dueAt || 0, lastGrade === null ? 0 : Math.floor(lastGrade)];
 }
 export function cleanCards(map: unknown): CardMap {
-  const out = dict<CardRec>(); let k = 0;
+  const out = createDictionary<CardRec>(); let keyIndex = 0;
   if (!map || typeof map !== 'object') return out;
-  for (const id of Object.keys(map)) { if (!CARD_RE.test(id)) continue; const r = cleanCard((map as Record<string, unknown>)[id]); if (r) { out[id] = r; if (++k >= MAX_CARDS) break; } }
+  for (const id of Object.keys(map)) { if (!CARD_RE.test(id)) continue; const result = cleanCard((map as Record<string, unknown>)[id]); if (result) { out[id] = result; if (++keyIndex >= MAX_CARDS) break; } }
   return out;
 }
 export function cleanSession(value: unknown): Session | null {
-  if (!isRecord(value)) return null;
-  const s = value;
-  const id = typeof s.id === 'string' && ID_RE.test(s.id) ? s.id : null, ts = num(s.ts);
-  if (!id || ts === null) return null;
+  if (!isObjectRecord(value)) return null;
+  const sessionData = value;
+  const sessionId = typeof sessionData.id === 'string' && ID_RE.test(sessionData.id) ? sessionData.id : null, timestamp = boundedNumber(sessionData.ts);
+  if (!sessionId || timestamp === null) return null;
   const temas: Session['temas'] = {};
-  if (isRecord(s.temas)) for (const t in s.temas) {
-    const v = s.temas[t];
-    const correctRaw = Array.isArray(v) ? v[0] : undefined;
-    const totalRaw = Array.isArray(v) ? v[1] : undefined;
-    const correct = num(correctRaw, 0, 1e5), total = num(totalRaw, 0, 1e5);
-    if (TEMA_RE.test(t) && correct !== null && total !== null && typeof correctRaw === 'number' && typeof totalRaw === 'number') temas[t] = [correctRaw, totalRaw];
+  if (isObjectRecord(sessionData.temas)) for (const topicId in sessionData.temas) {
+    const topicCounts = sessionData.temas[topicId];
+    const correctRaw = Array.isArray(topicCounts) ? topicCounts[0] : undefined;
+    const totalRaw = Array.isArray(topicCounts) ? topicCounts[1] : undefined;
+    const correct = boundedNumber(correctRaw, 0, 1e5), total = boundedNumber(totalRaw, 0, 1e5);
+    if (TOPIC_ID_PATTERN.test(topicId) && correct !== null && total !== null && typeof correctRaw === 'number' && typeof totalRaw === 'number') temas[topicId] = [correctRaw, totalRaw];
   }
   const tipos: Session['tipos'] = {};
-  if (isRecord(s.tipos)) for (const t in s.tipos) {
-    const v = s.tipos[t];
-    const correctRaw = Array.isArray(v) ? v[0] : undefined;
-    const totalRaw = Array.isArray(v) ? v[1] : undefined;
-    const correct = num(correctRaw, 0, 1e5), total = num(totalRaw, 0, 1e5);
-    if (/^[A-Za-z0-9]{1,3}$/.test(t) && correct !== null && total !== null && typeof correctRaw === 'number' && typeof totalRaw === 'number') tipos[t] = [correctRaw, totalRaw];
+  if (isObjectRecord(sessionData.tipos)) for (const questionType in sessionData.tipos) {
+    const typeCounts = sessionData.tipos[questionType];
+    const correctRaw = Array.isArray(typeCounts) ? typeCounts[0] : undefined;
+    const totalRaw = Array.isArray(typeCounts) ? typeCounts[1] : undefined;
+    const correct = boundedNumber(correctRaw, 0, 1e5), total = boundedNumber(totalRaw, 0, 1e5);
+    if (/^[A-Za-z0-9]{1,3}$/.test(questionType) && correct !== null && total !== null && typeof correctRaw === 'number' && typeof totalRaw === 'number') tipos[questionType] = [correctRaw, totalRaw];
   }
   return {
-    id, ts, kind: (['sim', 'rev', 'test'] as const).find(k => k === s.kind) ?? 'test',
-    n: num(s.n, 0, 1e4) ?? 0, a: num(s.a, 0, 1e4) ?? 0, f: num(s.f, 0, 1e4) ?? 0, b: num(s.b, 0, 1e4) ?? 0,
-    secs: num(s.secs, 0, 1e6) ?? 0, nota: num(s.nota, -100, 100) ?? 0, temas, tipos,
-    fails: Array.isArray(s.fails) ? s.fails.filter((x: unknown): x is string => typeof x === 'string' && ID_RE.test(x)).slice(0, 500) : [],
-    titulo: typeof s.titulo === 'string' ? s.titulo.slice(0, 80) : '',
-    ...(s.interrupted === true ? { interrupted: true } : {}),
-    ...(s.porTiempo === true ? { porTiempo: true } : {})
+    id: sessionId, ts: timestamp, kind: (['sim', 'rev', 'test'] as const).find(key => key === sessionData.kind) ?? 'test',
+    n: boundedNumber(sessionData.n, 0, 1e4) ?? 0, a: boundedNumber(sessionData.a, 0, 1e4) ?? 0, f: boundedNumber(sessionData.f, 0, 1e4) ?? 0, b: boundedNumber(sessionData.b, 0, 1e4) ?? 0,
+    secs: boundedNumber(sessionData.secs, 0, 1e6) ?? 0, nota: boundedNumber(sessionData.nota, -100, 100) ?? 0, temas, tipos,
+    fails: Array.isArray(sessionData.fails) ? sessionData.fails.filter((value: unknown): value is string => typeof value === 'string' && ID_RE.test(value)).slice(0, 500) : [],
+    titulo: typeof sessionData.titulo === 'string' ? sessionData.titulo.slice(0, 80) : '',
+    ...(sessionData.interrupted === true ? { interrupted: true } : {}),
+    ...(sessionData.porTiempo === true ? { porTiempo: true } : {})
   };
 }
-export function cleanSessions(l: unknown): Session[] { return (Array.isArray(l) ? l : []).map(cleanSession).filter((x): x is Session => !!x); }
+export function cleanSessions(value: unknown): Session[] { return (Array.isArray(value) ? value : []).map(cleanSession).filter((sessionRecord): sessionRecord is Session => !!sessionRecord); }
 
 // ── Informes de errores del banco: { idPregunta: {ts, tema, motivo, nota, st} } ──
 const REP_ST: ReportState[] = ['abierto', 'resuelto', 'quitado'];
-export function cleanReports(m: unknown): ReportMap {
-  const out = dict<Report>();
-  if (!m || typeof m !== 'object') return out;
-  for (const id of Object.keys(m)) {
-    const r = (m as Record<string, unknown>)[id]; if (!ID_RE.test(id) || !isRecord(r)) continue;
-    const ts = num(r.ts); if (ts === null) continue;
-    const state = REP_ST.find(candidate => candidate === r.st) || 'abierto';
-    out[id] = { ts, tema: typeof r.tema === 'string' && TEMA_RE.test(r.tema) ? r.tema : '', motivo: typeof r.motivo === 'string' ? r.motivo.slice(0, 60) : '', nota: typeof r.nota === 'string' ? r.nota.slice(0, 300) : '', st: state };
+export function cleanReports(metadata: unknown): ReportMap {
+  const out = createDictionary<Report>();
+  if (!metadata || typeof metadata !== 'object') return out;
+  for (const id of Object.keys(metadata)) {
+    const result = (metadata as Record<string, unknown>)[id]; if (!ID_RE.test(id) || !isObjectRecord(result)) continue;
+    const ts = boundedNumber(result.ts); if (ts === null) continue;
+    const state = REP_ST.find(candidate => candidate === result.st) || 'abierto';
+    out[id] = { ts, tema: typeof result.tema === 'string' && TOPIC_ID_PATTERN.test(result.tema) ? result.tema : '', motivo: typeof result.motivo === 'string' ? result.motivo.slice(0, 60) : '', nota: typeof result.nota === 'string' ? result.nota.slice(0, 300) : '', st: state };
   }
   return out;
 }
-export const getReports = (): ReportMap => S.reports || {};
+export const getReports = (): ReportMap => appState.reports || {};
 export function addReport(id: string, tema: string, motivo: string, nota = ''): void {
-  S.reports = S.reports || dict();
-  S.reports[id] = cleanReports({ [id]: { ts: Date.now(), tema, motivo, nota, st: 'abierto' } })[id];
-  persist(); emit(); if (syncer && syncer.pushReports) syncer.pushReports(S.reports);
+  appState.reports = appState.reports || createDictionary();
+  appState.reports[id] = cleanReports({ [id]: { ts: Date.now(), tema, motivo, nota, st: 'abierto' } })[id];
+  persist(); emit(); if (syncer && syncer.pushReports) syncer.pushReports(appState.reports);
 }
 export function setReportState(id: string, st: ReportState): void {
-  const r = (S.reports || {})[id]; if (!r || !REP_ST.includes(st)) return;
-  S.reports[id] = { ...r, st, ts: Date.now() };
-  persist(); emit(); if (syncer && syncer.pushReports) syncer.pushReports(S.reports);
+  const result = (appState.reports || {})[id]; if (!result || !REP_ST.includes(st)) return;
+  appState.reports[id] = { ...result, st, ts: Date.now() };
+  persist(); emit(); if (syncer && syncer.pushReports) syncer.pushReports(appState.reports);
 }
 export function mergeReports(m0: unknown): boolean {
-  const m = cleanReports(m0); S.reports = S.reports || dict(); let ch = false;
-  for (const id of Object.keys(m)) if (!S.reports[id] || m[id].ts > S.reports[id].ts) { S.reports[id] = m[id]; ch = true; }
-  if (ch) { persist(); emit(); }
-  return ch;
+  const incomingReports = cleanReports(m0); appState.reports = appState.reports || createDictionary(); let changed = false;
+  for (const questionId of Object.keys(incomingReports)) if (!appState.reports[questionId] || incomingReports[questionId].ts > appState.reports[questionId].ts) { appState.reports[questionId] = incomingReports[questionId]; changed = true; }
+  if (changed) { persist(); emit(); }
+  return changed;
 }
 
 
-export interface Syncer { schedule(): void; pushSession?(s: Session): void; pushSeen?(d: SeenDoc): void; pushReports?(m: ReportMap): void; pushCards?(m: CardMap): void; pushImport?(): void }
-let S: AppState = load();
+export interface Syncer { schedule(): void; pushSession?(sessionRecord: Session): void; pushSeen?(seenDocument: SeenDoc): void; pushReports?(reports: ReportMap): void; pushCards?(cards: CardMap): void; pushImport?(): void }
+let appState: AppState = load();
 const listeners = new Set<() => void>();
 let dirty = new Set<string>();
 let syncer: Syncer | null = null;
 
 function load(key = stateKey()): AppState {
   try {
-    const s = JSON.parse(localStorage.getItem(key) || 'null');
-    if (s && s.stats) return { stats: cleanStats(s.stats), sessions: cleanSessions(s.sessions).slice(0, MAX_SESIONES), cfg: cleanCfg(s.cfg), seen: cleanSeen(s.seen), reports: cleanReports(s.reports), cards: cleanCards(s.cards) };
+    const parsedData = JSON.parse(localStorage.getItem(key) || 'null');
+    if (parsedData && parsedData.stats) return { stats: cleanStats(parsedData.stats), sessions: cleanSessions(parsedData.sessions).slice(0, MAX_SESIONES), cfg: cleanCfg(parsedData.cfg), seen: cleanSeen(parsedData.seen), reports: cleanReports(parsedData.reports), cards: cleanCards(parsedData.cards) };
   } catch {}
-  return { stats: dict(), sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: dict(), cards: dict() };
+  return { stats: createDictionary(), sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: createDictionary(), cards: createDictionary() };
 }
 // La copia antigua queda intacta; solo el propietario puede adoptarla.
 export function switchAccount(next: string | null, adoptLegacy = false): void {
@@ -161,7 +163,7 @@ export function switchAccount(next: string | null, adoptLegacy = false): void {
     else localStorage.removeItem('tai.account');
   } catch {}
   const hasLocal = (() => { try { return !!localStorage.getItem(stateKey()); } catch { return false; } })();
-  S = load(!hasLocal && adoptLegacy ? LEGACY_KEY : stateKey());
+  appState = load(!hasLocal && adoptLegacy ? LEGACY_KEY : stateKey());
   if (!hasLocal && adoptLegacy && next) {
     try { localStorage.setItem('tai.legacy-pending:' + next, '1'); } catch {}
   }
@@ -170,7 +172,7 @@ export function switchAccount(next: string | null, adoptLegacy = false): void {
 }
 let persistWarned = false;
 function persist() {
-  try { localStorage.setItem(stateKey(), JSON.stringify(S)); } catch {
+  try { localStorage.setItem(stateKey(), JSON.stringify(appState)); } catch {
     // sin espacio o sin permiso: avisar una vez (la copia de IndexedDB sigue intentándose)
     if (!persistWarned) { persistWarned = true; try { dispatchEvent(new Event('tai-persist-error')); } catch {} }
   }
@@ -182,16 +184,16 @@ let mirrorTimer: ReturnType<typeof setTimeout> | undefined;
 function openIdb(): Promise<IDBDatabase> {
   return new Promise((res, rej) => {
     if (typeof indexedDB === 'undefined') return rej(new Error('sin indexedDB'));
-    const r = indexedDB.open(IDB, 1);
-    r.onupgradeneeded = () => r.result.createObjectStore('kv');
-    r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
+    const request = indexedDB.open(IDB, 1);
+    request.onupgradeneeded = () => request.result.createObjectStore('kv');
+    request.onsuccess = () => res(request.result); request.onerror = () => rej(request.error);
   });
 }
 function mirror() { clearTimeout(mirrorTimer); mirrorTimer = setTimeout(flushMirror, 150); }
 export async function flushMirror(): Promise<void> {
   clearTimeout(mirrorTimer);
   try {
-    const key = mirrorKey(), payload = JSON.stringify(S);
+    const key = mirrorKey(), payload = JSON.stringify(appState);
     const db = await openIdb();
     await new Promise<void>((res, rej) => { const tx = db.transaction('kv', 'readwrite'); tx.objectStore('kv').put(payload, key); tx.oncomplete = () => res(); tx.onerror = () => rej(tx.error); });
     db.close();
@@ -204,154 +206,154 @@ export async function recover(): Promise<boolean> {
     const db = await openIdb();
     const pendingKey = 'tai.legacy-pending:' + account;
     const legacy = account && localStorage.getItem(pendingKey) === '1';
-    const copies = await Promise.all([key, ...(legacy ? ['state'] : [])].map(k => new Promise<string | null | undefined>(res => {
-      const r = db.transaction('kv').objectStore('kv').get(k);
-      r.onsuccess = () => res(r.result as string | undefined); r.onerror = () => res(null);
+    const copies = await Promise.all([key, ...(legacy ? ['state'] : [])].map(key => new Promise<string | null | undefined>(res => {
+      const request = db.transaction('kv').objectStore('kv').get(key);
+      request.onsuccess = () => res(request.result as string | undefined); request.onerror = () => res(null);
     })));
     db.close();
     if (key !== mirrorKey()) return false;
-    let ch = false;
+    let recoveredProgress = false;
     for (const txt of copies) {
       if (!txt) continue;
-      const o = JSON.parse(txt); if (!o || typeof o !== 'object') continue;
-      ch = mergeRemote(o.stats) || ch; ch = mergeSessions(o.sessions) || ch; ch = mergeSeen(o.seen) || ch; ch = mergeReports(o.reports) || ch; ch = mergeCards(o.cards) || ch;
-      if (o.cfg && typeof o.cfg === 'object') { const c = cleanCfg(o.cfg); for (const k in c) if (!(k in S.cfg)) { S.cfg[k] = c[k]; ch = true; } }
+      const parsedData = JSON.parse(txt); if (!parsedData || typeof parsedData !== 'object') continue;
+      recoveredProgress = mergeRemote(parsedData.stats) || recoveredProgress; recoveredProgress = mergeSessions(parsedData.sessions) || recoveredProgress; recoveredProgress = mergeSeen(parsedData.seen) || recoveredProgress; recoveredProgress = mergeReports(parsedData.reports) || recoveredProgress; recoveredProgress = mergeCards(parsedData.cards) || recoveredProgress;
+      if (parsedData.cfg && typeof parsedData.cfg === 'object') { const cleanedConfig = cleanCfg(parsedData.cfg); for (const configKey in cleanedConfig) if (!(configKey in appState.cfg)) { appState.cfg[configKey] = cleanedConfig[configKey]; recoveredProgress = true; } }
     }
-    if (ch) { persist(); emit(); }
+    if (recoveredProgress) { persist(); emit(); }
     if (legacy) localStorage.removeItem(pendingKey);
-    return ch;
+    return recoveredProgress;
   } catch { return false; }
 }
-export function flushNow(): Promise<void> { try { localStorage.setItem(stateKey(), JSON.stringify(S)); } catch {} return flushMirror(); }
+export function flushNow(): Promise<void> { try { localStorage.setItem(stateKey(), JSON.stringify(appState)); } catch {} return flushMirror(); }
 export function onChange(fn: () => void): () => void { listeners.add(fn); return () => listeners.delete(fn); }
 export const subscribe: (fn: () => void) => () => void = onChange;
-function emit() { listeners.forEach(f => f()); }
+function emit() { listeners.forEach(listener => listener()); }
 
-export const getStats = (): StatMap => S.stats;
-export const getSessions = (): Session[] => S.sessions;
-export const getCfg = (): Cfg => S.cfg;
+export const getStats = (): StatMap => appState.stats;
+export const getSessions = (): Session[] => appState.sessions;
+export const getCfg = (): Cfg => appState.cfg;
 // Temas vistos (se sincroniza como un único documento; gana el cambio más reciente)
-export const getSeen = (): string[] => (S.seen && S.seen.t) || [];
-export const getSeenDoc = (): SeenDoc => S.seen || { t: [], ts: 0 };
+export const getSeen = (): string[] => (appState.seen && appState.seen.t) || [];
+export const getSeenDoc = (): SeenDoc => appState.seen || { t: [], ts: 0 };
 export function setSeen(arr: Iterable<string>): void {
-  S.seen = { t: [...arr].sort(), ts: Date.now() };
+  appState.seen = { t: [...arr].sort(), ts: Date.now() };
   persist(); emit();
-  if (syncer && syncer.pushSeen) syncer.pushSeen(S.seen);
+  if (syncer && syncer.pushSeen) syncer.pushSeen(appState.seen);
 }
 export function cleanSeen(value: unknown): SeenDoc {
-  if (!isRecord(value) || !Array.isArray(value.t)) return { t: [], ts: 0 };
+  if (!isObjectRecord(value) || !Array.isArray(value.t)) return { t: [], ts: 0 };
   const topics = value.t;
-  return { t: topics.filter((x: unknown): x is string => typeof x === 'string' && TEMA_RE.test(x)).slice(0, 100), ts: num(value.ts) || 0 };
+  return { t: topics.filter((topic: unknown): topic is string => typeof topic === 'string' && TOPIC_ID_PATTERN.test(topic)).slice(0, 100), ts: boundedNumber(value.ts) || 0 };
 }
 export function mergeSeen(r0: unknown): boolean {
-  if (!isRecord(r0) || !Array.isArray(r0.t)) return false;
-  const r = cleanSeen(r0);
-  if (!S.seen || (r.ts || 0) > (S.seen.ts || 0)) { S.seen = { t: r.t, ts: r.ts || 0 }; persist(); emit(); return true; }
+  if (!isObjectRecord(r0) || !Array.isArray(r0.t)) return false;
+  const result = cleanSeen(r0);
+  if (!appState.seen || (result.ts || 0) > (appState.seen.ts || 0)) { appState.seen = { t: result.t, ts: result.ts || 0 }; persist(); emit(); return true; }
   return false;
 }
-export function setCfg(k: string, v: unknown): void {
-  const value = cleanCfgSetting(k, v);
+export function setCfg(key: string, itemValue: unknown): void {
+  const value = cleanCfgSetting(key, itemValue);
   if (value === undefined) return;
-  S.cfg[k] = value; persist(); emit();
+  appState.cfg[key] = value; persist(); emit();
 }
 export function replaceCfg(cfg: unknown): void {
-  S.cfg = cleanCfg(cfg);
+  appState.cfg = cleanCfg(cfg);
   persist(); emit();
 }
-export const rec = (id: string): StatRec | undefined => S.stats[id];
+export const rec = (id: string): StatRec | undefined => appState.stats[id];
 export const temaDe = (): string | null => {
   // los ids no codifican el tema; se guarda el tema junto al registro en meta (ver main.js)
   return null;
 };
 
-export function setSyncer(s: Syncer | null): void { syncer = s; }
-export function takeDirty() { const d = dirty; dirty = new Set(); return d; }
+export function setSyncer(state: Syncer | null): void { syncer = state; }
+export function takeDirty() { const data = dirty; dirty = new Set(); return data; }
 export function markDirty(tema: string): void { dirty.add(tema); }
 
 // Aplica un resultado: res = 1 acierto, 0 fallo, 2 blanco
 // secs (opcional): segundos que tardó en contestar; se acumulan para detectar preguntas lentas
 export function record(id: string, tema: string, res: Res, now = Date.now(), secs?: number): void {
-  const r = S.stats[id] || [0, 0, 0, -1, 0, 0, 0, 0, 0, 0];
-  const streak = failureStreak(r);
-  while (r.length < 12) r.push(0);
-  r[10] = res === 0 ? 0 : res === 1 && streak >= 0 ? Math.min(3, streak + 1) : streak;
-  if (typeof secs === 'number' && secs > 0 && res !== 2) { r[7] += Math.min(120, secs); r[8] += 1; }
-  r[0] += 1;
-  if (res === 1) r[1] += 1;
-  r[2] = now; r[5] = res;
-  const luck = r[9]; // 6 = acierto «por suerte» pendiente (0/2 confirmaciones) · 8 = 1/2
-  r[9] = 0; // el motivo se anota tras cada fallo
-  if (luck && res === 2) r[9] = luck; // dejar en blanco no confirma ni quita la marca
-  if (res === 0) { r[3] = 0; r[4] = now + INTERVALS[0] * DAY; }
-  else if (res === 1 && luck === 6) { r[9] = 8; r[3] = 0; r[4] = now + LUCKY_DAYS * DAY; } // una vez más bien y se quita la marca
-  else if (res === 1 && r[3] >= 0) {
-    if (r[3] + 1 >= INTERVALS.length) { r[3] = -1; r[4] = 0; }
-    else { r[3] += 1; r[4] = now + INTERVALS[r[3]] * DAY; }
+  const statRecord = appState.stats[id] || [0, 0, 0, -1, 0, 0, 0, 0, 0, 0];
+  const streak = failureStreak(statRecord);
+  while (statRecord.length < 12) statRecord.push(0);
+  statRecord[10] = res === 0 ? 0 : res === 1 && streak >= 0 ? Math.min(3, streak + 1) : streak;
+  if (typeof secs === 'number' && secs > 0 && res !== 2) { statRecord[7] += Math.min(120, secs); statRecord[8] += 1; }
+  statRecord[0] += 1;
+  if (res === 1) statRecord[1] += 1;
+  statRecord[2] = now; statRecord[5] = res;
+  const luck = statRecord[9]; // 6 = acierto «por suerte» pendiente (0/2 confirmaciones) · 8 = 1/2
+  statRecord[9] = 0; // el motivo se anota tras cada fallo
+  if (luck && res === 2) statRecord[9] = luck; // dejar en blanco no confirma ni quita la marca
+  if (res === 0) { statRecord[3] = 0; statRecord[4] = now + INTERVALS[0] * DAY; }
+  else if (res === 1 && luck === 6) { statRecord[9] = 8; statRecord[3] = 0; statRecord[4] = now + LUCKY_DAYS * DAY; } // una vez más bien y se quita la marca
+  else if (res === 1 && statRecord[3] >= 0) {
+    if (statRecord[3] + 1 >= INTERVALS.length) { statRecord[3] = -1; statRecord[4] = 0; }
+    else { statRecord[3] += 1; statRecord[4] = now + INTERVALS[statRecord[3]] * DAY; }
   }
-  S.stats[id] = r;
+  appState.stats[id] = statRecord;
   dirty.add(tema);
   persist(); emit();
   if (syncer) syncer.schedule();
 }
 // «Acerté dudando»: el acierto ya está registrado; la pregunta entra (o vuelve) a la cola a +2 días.
 export function doubt(id: string, tema: string, now = Date.now()): void {
-  const r = S.stats[id]; if (!r) return;
-  r[3] = 0; r[4] = now + INTERVALS[0] * DAY;
+  const statRecord = appState.stats[id]; if (!statRecord) return;
+  statRecord[3] = 0; statRecord[4] = now + INTERVALS[0] * DAY;
   dirty.add(tema); persist(); emit();
   if (syncer) syncer.schedule();
 }
 // Motivo del último fallo: 1 contenido, 2 trampa, 3 duda entre dos, 4 despiste (saca la pregunta de la cola), 5 no lo sabía
-export function setMotivo(id: string, tema: string, m: number, now = Date.now()): void {
-  const r = S.stats[id]; if (!r || r[5] !== 0 || !(m >= 1 && m <= 5 || m === 7)) return;
-  while (r.length < 10) r.push(0);
-  r[9] = m; r[2] = now;
-  if (m === 4) { r[3] = -1; r[4] = 0; }
+export function setMotivo(id: string, tema: string, reasonCode: number, now = Date.now()): void {
+  const statRecord = appState.stats[id]; if (!statRecord || statRecord[5] !== 0 || !(reasonCode >= 1 && reasonCode <= 5 || reasonCode === 7)) return;
+  while (statRecord.length < 10) statRecord.push(0);
+  statRecord[9] = reasonCode; statRecord[2] = now;
+  if (reasonCode === 4) { statRecord[3] = -1; statRecord[4] = 0; }
   dirty.add(tema); persist(); emit();
   if (syncer) syncer.schedule();
 }
 // «Fue suerte»: acierto sin saberlo; entra (o vuelve) a la cola a +1 día y debe acertarse 2 veces seguidas para quitar la marca y queda anotado (r[9] = 6)
 export function suerte(id: string, tema: string, now = Date.now()): void {
-  const r = S.stats[id]; if (!r || r[5] !== 1) return;
-  while (r.length < 10) r.push(0);
-  r[9] = 6; r[3] = 0; r[4] = now + LUCKY_DAYS * DAY; r[2] = now;
+  const statRecord = appState.stats[id]; if (!statRecord || statRecord[5] !== 1) return;
+  while (statRecord.length < 10) statRecord.push(0);
+  statRecord[9] = 6; statRecord[3] = 0; statRecord[4] = now + LUCKY_DAYS * DAY; statRecord[2] = now;
   dirty.add(tema); persist(); emit();
   if (syncer) syncer.schedule();
 }
 export function toggleFlag(id: string, tema: string): number {
-  const r = S.stats[id] || [0, 0, Date.now(), -1, 0, 0, 0, 0, 0];
-  r[6] = r[6] ? 0 : 1; r[2] = Date.now();
-  S.stats[id] = r; dirty.add(tema); persist(); emit();
+  const statRecord = appState.stats[id] || [0, 0, Date.now(), -1, 0, 0, 0, 0, 0];
+  statRecord[6] = statRecord[6] ? 0 : 1; statRecord[2] = Date.now();
+  appState.stats[id] = statRecord; dirty.add(tema); persist(); emit();
   if (syncer) syncer.schedule();
-  return r[6];
+  return statRecord[6];
 }
 // Marca independiente de respuestas y del calendario; viaja en el mismo registro sincronizado.
 export function setReviewed(id: string, tema: string, value: boolean): void {
-  const r = S.stats[id]; if (!r || typeof value !== 'boolean') return;
-  const streak = failureStreak(r);
-  while (r.length < 12) r.push(0);
-  r[10] = streak; r[11] = value ? 1 : 0;
-  r[12] = Math.max(Date.now(), reviewClock(r) + 1); // reloj independiente: no cambia el día de estudio
+  const statRecord = appState.stats[id]; if (!statRecord || typeof value !== 'boolean') return;
+  const streak = failureStreak(statRecord);
+  while (statRecord.length < 12) statRecord.push(0);
+  statRecord[10] = streak; statRecord[11] = value ? 1 : 0;
+  statRecord[12] = Math.max(Date.now(), reviewClock(statRecord) + 1); // reloj independiente: no cambia el día de estudio
   dirty.add(tema); persist(); emit();
   if (syncer) syncer.schedule();
 }
-export function addSession(s: Session): void {
-  S.sessions.unshift(s);
-  S.sessions = S.sessions.slice(0, MAX_SESIONES);
+export function addSession(newSession: Session): void {
+  appState.sessions.unshift(newSession);
+  appState.sessions = appState.sessions.slice(0, MAX_SESIONES);
   persist(); emit();
-  if (syncer?.pushSession) syncer.pushSession(s);
+  if (syncer?.pushSession) syncer.pushSession(newSession);
 }
 // [12] fecha de cambio de la marca de temario; independiente del resultado [2].
-export const reviewClock = (r?: StatRec) => r ? (r[12] ?? (r[11] === 1 ? r[2] : 0)) : 0;
+export const reviewClock = (statRecord?: StatRec) => statRecord ? (statRecord[12] ?? (statRecord[11] === 1 ? statRecord[2] : 0)) : 0;
 export const needsSync = (local: StatRec, remote?: StatRec) => !remote || local[2] > remote[2] || reviewClock(local) > reviewClock(remote);
 // Mezcla registros remotos (gana el más reciente por pregunta). Devuelve true si cambió algo local.
 export function mergeRemote(map0: unknown): boolean {
   const map = cleanStats(map0);
   let changed = false;
   for (const id of Object.keys(map)) {
-    const a = S.stats[id], b = map[id];
-    if (!a) { S.stats[id] = b; changed = true; continue; }
-    const base = b[2] > a[2] ? b : a;
-    const review = reviewClock(b) > reviewClock(a) ? b : a;
+    const statRecord = appState.stats[id], statRecordItem = map[id];
+    if (!statRecord) { appState.stats[id] = statRecordItem; changed = true; continue; }
+    const base = statRecordItem[2] > statRecord[2] ? statRecordItem : statRecord;
+    const review = reviewClock(statRecordItem) > reviewClock(statRecord) ? statRecordItem : statRecord;
     const merged = base.slice();
     if (base.length > 10 || review.length > 10) {
       const streak = failureStreak(base);
@@ -360,72 +362,72 @@ export function mergeRemote(map0: unknown): boolean {
       merged[11] = review[11] === 1 ? 1 : 0;
       if (reviewClock(review)) merged[12] = reviewClock(review);
     }
-    if (JSON.stringify(a) !== JSON.stringify(merged)) { S.stats[id] = merged; changed = true; }
+    if (JSON.stringify(statRecord) !== JSON.stringify(merged)) { appState.stats[id] = merged; changed = true; }
   }
   if (changed) { persist(); emit(); }
   return changed;
 }
 export function mergeSessions(list0: unknown): boolean {
   const list = cleanSessions(list0);
-  const have = new Set(S.sessions.map(s => s.id));
-  let ch = false;
-  for (const s of list) if (!have.has(s.id)) { S.sessions.push(s); have.add(s.id); ch = true; }
-  if (ch) { S.sessions.sort((a, b) => b.ts - a.ts); S.sessions = S.sessions.slice(0, MAX_SESIONES); persist(); emit(); }
-  return ch;
+  const have = new Set(appState.sessions.map(storedSession => storedSession.id));
+  let changed = false;
+  for (const incomingSession of list) if (!have.has(incomingSession.id)) { appState.sessions.push(incomingSession); have.add(incomingSession.id); changed = true; }
+  if (changed) { appState.sessions.sort((leftSession, rightSession) => rightSession.ts - leftSession.ts); appState.sessions = appState.sessions.slice(0, MAX_SESIONES); persist(); emit(); }
+  return changed;
 }
 // ── API de tarjetas ──
-const deletedCard = (r?: CardRec) => r?.[5] === -1;
+const deletedCard = (result?: CardRec) => result?.[5] === -1;
 // El documento completo incluye borrados para evitar que otra copia resucite una tarjeta.
-export const getCardsDoc = (): CardMap => S.cards || (S.cards = dict());
-export const getCards = (): CardMap => Object.fromEntries(Object.entries(getCardsDoc()).filter(([, r]) => !deletedCard(r)));
-export const cardRec = (id: string): CardRec | undefined => { const r = getCardsDoc()[id]; return deletedCard(r) ? undefined : r; };
+export const getCardsDoc = (): CardMap => appState.cards || (appState.cards = createDictionary());
+export const getCards = (): CardMap => Object.fromEntries(Object.entries(getCardsDoc()).filter(([, result]) => !deletedCard(result)));
+export const cardRec = (id: string): CardRec | undefined => { const result = getCardsDoc()[id]; return deletedCard(result) ? undefined : result; };
 export function mergeCards(m0: unknown): boolean {
-  const m = cleanCards(m0); S.cards = S.cards || dict(); let ch = false;
-  for (const id of Object.keys(m)) { const a = S.cards[id], b = m[id]; if (!a || b[2] > a[2]) { S.cards[id] = b; ch = true; } }
-  if (ch) { persist(); emit(); }
-  return ch;
+  const incomingCards = cleanCards(m0); appState.cards = appState.cards || createDictionary(); let changed = false;
+  for (const cardId of Object.keys(incomingCards)) { const storedCard = appState.cards[cardId], incomingCard = incomingCards[cardId]; if (!storedCard || incomingCard[2] > storedCard[2]) { appState.cards[cardId] = incomingCard; changed = true; } }
+  if (changed) { persist(); emit(); }
+  return changed;
 }
 // Crea la tarjeta de un fallo (vence hoy). Si ya existe, no la toca. Devuelve true si la creó.
 export function addFallo(qid: string, now = Date.now()): boolean {
   const id = 'FC-Q-' + qid; if (!CARD_RE.test(id)) return false;
-  S.cards = S.cards || dict(); if (cardRec(id)) return false;
-  if (Object.keys(S.cards).length >= MAX_CARDS) return false;
-  S.cards[id] = [0, 0, Math.max(now, (S.cards[id]?.[2] || 0) + 1), 0, now, 0];
-  persist(); emit(); if (syncer && syncer.pushCards) syncer.pushCards(S.cards); return true;
+  appState.cards = appState.cards || createDictionary(); if (cardRec(id)) return false;
+  if (Object.keys(appState.cards).length >= MAX_CARDS) return false;
+  appState.cards[id] = [0, 0, Math.max(now, (appState.cards[id]?.[2] || 0) + 1), 0, now, 0];
+  persist(); emit(); if (syncer && syncer.pushCards) syncer.pushCards(appState.cards); return true;
 }
 export function removeCard(id: string): void {
-  const r = cardRec(id); if (!r) return;
-  S.cards[id] = [0, 0, Math.max(Date.now(), r[2] + 1), -1, 0, -1];
-  persist(); emit(); if (syncer && syncer.pushCards) syncer.pushCards(S.cards);
+  const result = cardRec(id); if (!result) return;
+  appState.cards[id] = [0, 0, Math.max(Date.now(), result[2] + 1), -1, 0, -1];
+  persist(); emit(); if (syncer && syncer.pushCards) syncer.pushCards(appState.cards);
 }
 // Valora una tarjeta: 0 fallé · 1 dudaba (cuentan como fallo: vuelve a +2 días) · 2 lo sabía (sube de caja)
 export function gradeCard(id: string, grade: number, now = Date.now()): CardRec | null {
   if (!CARD_RE.test(id) || ![0, 1, 2].includes(grade)) return null;
-  S.cards = S.cards || dict();
-  const r = cardRec(id) || [0, 0, now, -1, 0, 0];
-  const nueva = r[0] === 0;
-  r[0] += 1; r[2] = Math.max(now, (S.cards[id]?.[2] || 0) + 1); r[5] = grade;
-  if (grade < 2) { r[3] = 0; r[4] = now + INTERVALS[0] * DAY; }
+  appState.cards = appState.cards || createDictionary();
+  const cardRecord = cardRec(id) || [0, 0, now, -1, 0, 0];
+  const isFirstReview = cardRecord[0] === 0;
+  cardRecord[0] += 1; cardRecord[2] = Math.max(now, (appState.cards[id]?.[2] || 0) + 1); cardRecord[5] = grade;
+  if (grade < 2) { cardRecord[3] = 0; cardRecord[4] = now + INTERVALS[0] * DAY; }
   else {
-    r[1] += 1;
-    if (nueva || r[3] < 0) { r[3] = 0; r[4] = now + INTERVALS[0] * DAY; }
-    else if (r[3] + 1 >= INTERVALS.length) { r[3] = -1; r[4] = 0; }
-    else { r[3] += 1; r[4] = now + INTERVALS[r[3]] * DAY; }
+    cardRecord[1] += 1;
+    if (isFirstReview || cardRecord[3] < 0) { cardRecord[3] = 0; cardRecord[4] = now + INTERVALS[0] * DAY; }
+    else if (cardRecord[3] + 1 >= INTERVALS.length) { cardRecord[3] = -1; cardRecord[4] = 0; }
+    else { cardRecord[3] += 1; cardRecord[4] = now + INTERVALS[cardRecord[3]] * DAY; }
   }
-  S.cards[id] = r; persist(); emit(); if (syncer && syncer.pushCards) syncer.pushCards(S.cards);
-  return r;
+  appState.cards[id] = cardRecord; persist(); emit(); if (syncer && syncer.pushCards) syncer.pushCards(appState.cards);
+  return cardRecord;
 }
-export function exportAll(): string { return JSON.stringify(S); }
+export function exportAll(): string { return JSON.stringify(appState); }
 export function importAll(txt: unknown): void {
   if (typeof txt !== 'string' || txt.length > 20e6) throw new Error('Archivo no válido');
-  const o = JSON.parse(txt);
-  if (!o || typeof o !== 'object' || !o.stats || typeof o.stats !== 'object') throw new Error('Archivo no válido');
-  mergeRemote(o.stats);
-  mergeSessions(o.sessions || []);
-  if (o.seen) mergeSeen(o.seen);
-  if (o.reports) mergeReports(o.reports);
-  if (o.cards) mergeCards(o.cards);
-  if (o.cfg) { S.cfg = { ...S.cfg, ...cleanCfg(o.cfg) }; persist(); emit(); }
+  const parsedData = JSON.parse(txt);
+  if (!parsedData || typeof parsedData !== 'object' || !parsedData.stats || typeof parsedData.stats !== 'object') throw new Error('Archivo no válido');
+  mergeRemote(parsedData.stats);
+  mergeSessions(parsedData.sessions || []);
+  if (parsedData.seen) mergeSeen(parsedData.seen);
+  if (parsedData.reports) mergeReports(parsedData.reports);
+  if (parsedData.cards) mergeCards(parsedData.cards);
+  if (parsedData.cfg) { appState.cfg = { ...appState.cfg, ...cleanCfg(parsedData.cfg) }; persist(); emit(); }
   syncer?.pushImport?.();
 }
-export function resetAll(): void { S = { stats: dict(), sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: dict(), cards: dict() }; persist(); emit(); }
+export function resetAll(): void { appState = { stats: createDictionary(), sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: createDictionary(), cards: createDictionary() }; persist(); emit(); }

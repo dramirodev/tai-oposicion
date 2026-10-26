@@ -2,16 +2,16 @@ import { sourceHtml, questionNotice } from '../../shared/presentation/legacy-stu
 import { previewCardDueAt } from '../../core/domain/spaced-repetition.js';
 import * as store from '../../adapters/local/legacy-store.js';
 import { esc, richHtml, pct, swipeDir, pickCards, cardStats, cardFromQuestion } from '../../legacy/logic.js';
-import { j, getIndex, getMeta, byIds, temaName, now } from '../../adapters/http/legacy-data.js';
+import { fetchJson, getIndex, getMeta, byIds, temaName, now } from '../../adapters/http/legacy-data.js';
 import { $, legacyScope, toast, focusHeading, type El } from '../../shared/ui/legacy-dom.js';
 export function registerCards({ routes, go, pw, reportBox, verifiedSources }: any, screen: any) {
 // ───────── tarjetas (flashcards) ─────────
 let CARDIDX: any; const cardCache = new Map<string, any>(); let CRUN: any = null;
 store.onAccountChange(() => { CRUN = null; });
 async function curatedCards() {
-  if (CARDIDX === undefined) { try { CARDIDX = (await j<{ temas?: Record<string, unknown> }>('cards/index.json')).temas || {}; } catch (e) { return []; } } // sin caché del fallo: se reintenta
+  if (CARDIDX === undefined) { try { CARDIDX = (await fetchJson<{ temas?: Record<string, unknown> }>('cards/index.json')).temas || {}; } catch (e) { return []; } } // sin caché del fallo: se reintenta
   const out: any[] = [], ts = Object.keys(CARDIDX);
-  for (const t of ts) if (!cardCache.has(t)) cardCache.set(t, j<Record<string, unknown>[]>(`cards/${t}.json`).catch(e => { cardCache.delete(t); return []; }));
+  for (const t of ts) if (!cardCache.has(t)) cardCache.set(t, fetchJson<Record<string, unknown>[]>(`cards/${t}.json`).catch(e => { cardCache.delete(t); return []; }));
   const lists = await Promise.all(ts.map(t => cardCache.get(t))); // en paralelo: antes eran peticiones una tras otra
   ts.forEach((t, i) => { for (const c of lists[i]) if (c && c.id && c.q && c.a && !c.revisar) out.push({ ...c, t }); });
   return out;

@@ -14,15 +14,15 @@ const warning = (q: any, verifiedSources: any) => questionNotice(q) + sourceHtml
 // ───────── pregunta relámpago (enlace #/relampago, pensado para avisos) ─────────
 routes.relampago = async function () {
   const { app, $, screen: routeScreen } = legacyScope(screen);
-  const mine = generation; await getMeta(); if (mine !== generation) return; const st = store.getStats();
-  const lucky = Object.keys(st).filter(id => (st[id][9] === 6 || st[id][9] === 8) && META[id]);
-  const due = await dueList(); if (mine !== generation) return;
-  const fallos = Object.keys(st).filter(id => st[id][5] === 0 && META[id]);
+  const routeGeneration = generation; await getMeta(); if (routeGeneration !== generation) return; const questionStats = store.getStats();
+  const lucky = Object.keys(questionStats).filter(id => (questionStats[id][9] === 6 || questionStats[id][9] === 8) && META[id]);
+  const due = await dueList(); if (routeGeneration !== generation) return;
+  const fallos = Object.keys(questionStats).filter(id => questionStats[id][5] === 0 && META[id]);
   const pool = [...shuffle(lucky).slice(0, 5), ...due.slice(0, 5), ...shuffle(fallos).slice(0, 5)];
   const cand = pool.length ? pool : shuffle(Object.keys(META).filter(k => k !== '_by')).slice(0, 10);
   let q: any = null;
   for (const q0 of await byIds(shuffle(cand).slice(0, 8))) if (!q0.s && !q0.cp) { q = q0; break; }
-  if (mine !== generation) return;
+  if (routeGeneration !== generation) return;
   if (!q) { app.innerHTML = '<div class="card"><p>No hay pregunta disponible.</p></div>'; return; }
   const why = lucky.includes(q.i) ? '🍀 Marcada como suerte' : due.includes(q.i) ? '⏰ Toca repasarla' : fallos.includes(q.i) ? '↩ La fallaste' : '🆕 Nueva';
   const LEC = normUi(store.getCfg().ui).lectura, kw = (x: any) => richHtml(x, !!LEC), t0 = Date.now();
@@ -33,7 +33,7 @@ routes.relampago = async function () {
   <div class="bar2" id="bar"><button class="btn sec" id="skip">Ahora no</button></div>`;
   $('#skip').onclick = () => go('#/home');
   app.querySelectorAll<El>('.opt').forEach(b => b.onclick = () => {
-    if (mine !== generation || b.disabled) return;
+    if (routeGeneration !== generation || b.disabled) return;
     const i = +b.dataset.i!, ok = i === q.c;
     store.record(q.i, q.t, ok ? 1 : 0, now(), Math.max(1, Math.round((Date.now() - t0) / 1000)));
     app.querySelectorAll<El>('.opt').forEach((x, k) => { x.disabled = true; x.classList.add('dis'); if (k === q.c) x.classList.add('ok'); else if (k === i) x.classList.add('bad'); });
@@ -54,18 +54,18 @@ const mezclaIds = (grupos: any, resto: any, n = 40, rec = new Set()) => {
 // ───────── detective de trampas: ejercicio ─────────
 routes.trampas = async function () {
   const { app, $, screen: routeScreen } = legacyScope(screen);
-  const mine = generation; await getMeta(); if (mine !== generation) return;
+  const routeGeneration = generation; await getMeta(); if (routeGeneration !== generation) return;
   if (!TRUN) {
-    const st = store.getStats();
+    const questionStats = store.getStats();
     const ids = Object.keys(META).filter(id => id !== '_by' && (META[id][3] || []).length);
-    const fail = ids.filter(id => st[id] && st[id][5] === 0), rest = ids.filter(id => !fail.includes(id));
+    const fail = ids.filter(id => questionStats[id] && questionStats[id][5] === 0), rest = ids.filter(id => !fail.includes(id));
     const items = (await byIds(mezclaIds([[fail, 4]], rest))).filter(q => !q.s && q.x?.length).slice(0, 8);
-    if (mine !== generation) return;
+    if (routeGeneration !== generation) return;
     TRUN = { items, k: 0, res: [] };
   }
   const R = TRUN; const ALL = Object.keys(TRAMPAS).map(Number);
   function draw() {
-    if (mine !== generation || R !== TRUN) return;
+    if (routeGeneration !== generation || R !== TRUN) return;
     if (R.k >= R.items.length) return end();
     // Las etiquetas del banco también describen opciones: siempre deben verse al evaluar.
     const q = R.items[R.k], good = new Set<any>((q.x as any[]).map(Number));
@@ -82,10 +82,10 @@ routes.trampas = async function () {
       <div class="mot" id="chips">${chips.map((k: any) => `<button aria-pressed="false" data-k="${k}">${esc(TRAMPAS[k])}</button>`).join('')}</div>
       <div id="fb"></div></div>
     <div class="bar2"><button class="btn" id="chk">Comprobar</button></div>`;
-    $('#exit').onclick = async () => { if (await ask('¿Salir del ejercicio?', 'Salir') && mine === generation) { TRUN = null; go('#/home'); } };
+    $('#exit').onclick = async () => { if (await ask('¿Salir del ejercicio?', 'Salir') && routeGeneration === generation) { TRUN = null; go('#/home'); } };
     $('#chips').onclick = e => { const b = (e.target as El).closest<El>('button'); if (!b || b.disabled) return; const k = +b.dataset.k!; sel.has(k) ? sel.delete(k) : sel.add(k); b.setAttribute('aria-pressed', String(b.classList.toggle('on'))); };
     $('#chk').onclick = () => {
-      if (mine !== generation || R !== TRUN) return;
+      if (routeGeneration !== generation || R !== TRUN) return;
       if ($('#chk').dataset.done!) { R.k++; draw(); window.scrollTo(0, 0); return; }
       let hit = 0, fa = 0, miss = 0; const td = { ...(store.getCfg().tdet || {}) };
       app.querySelectorAll<El>('#chips button').forEach(b => {
@@ -124,17 +124,17 @@ routes.trampas = async function () {
 // ───────── lectura atenta: ejercicio ─────────
 routes.lectura = async function () {
   const { app, $, screen: routeScreen } = legacyScope(screen);
-  const mine = generation; await getMeta(); if (mine !== generation) return; const st = store.getStats();
+  const routeGeneration = generation; await getMeta(); if (routeGeneration !== generation) return; const questionStats = store.getStats();
   if (!LRUN) {
-    const vel = velocidad(st).ids;
+    const vel = velocidad(questionStats).ids;
     let recent: any[] = []; try { const r = JSON.parse(localStorage.getItem(recentKey()) || '[]'); if (Array.isArray(r)) recent = r.map(String); } catch { }
     const rec = new Set(recent), velS = new Set(vel);
-    const fallos = Object.keys(st).filter(id => st[id][5] === 0 && !velS.has(id));
+    const fallos = Object.keys(questionStats).filter(id => questionStats[id][5] === 0 && !velS.has(id));
     const fS = new Set(fallos);
     const rest = Object.keys(META).filter(k => k !== '_by' && META[k] && !velS.has(k) && !fS.has(k));
     const ids = mezclaIds([[vel, 3], [fallos, 2]], rest, 40, rec);
     const got = new Map((await byIds(ids)).filter(q => !q.s && !q.cp).map(q => [String(q.i), q]));
-    if (mine !== generation) return;
+    if (routeGeneration !== generation) return;
     const ok = ids.map(id => got.get(String(id))).filter(Boolean);
     const items = shuffle(ok.slice(0, 8));
     if (!items.length) { app.innerHTML = `<h1>Lectura atenta</h1><div class="card"><p>No hay preguntas disponibles ahora mismo. Comprueba la conexión e inténtalo de nuevo.</p></div><div class="bar2"><button class="btn" id="retry">Reintentar</button><button class="btn sec" id="home">Inicio</button></div>`; $('#retry').onclick = () => route(); $('#home').onclick = () => go('#/home'); return; }
@@ -145,7 +145,7 @@ routes.lectura = async function () {
   const words = (t: any) => t.split(/(\s+)/);
   function draw() {
     clearInterval(gt);
-    if (mine !== generation || R !== LRUN) return;
+    if (routeGeneration !== generation || R !== LRUN) return;
     if (R.k >= R.items.length) return end();
     const q = R.items[R.k], neg = pideNegativa(q.q);
     const head = `<div class="qhead"><button class="ghost" id="exit" aria-label="Salir">✕</button><div class="prog"><div ${pw(100 * R.k / R.items.length)}></div></div><div class="cnt">${R.k + 1}/${R.items.length}</div></div><h1 class="sub">Lectura atenta · paso ${R.step + 1} de 3</h1>`;
@@ -153,7 +153,7 @@ routes.lectura = async function () {
       app.innerHTML = `${head}<div class="card q">${warning(q, verifiedSources)}<div class="enun pre">${richHtml(q.q)}</div><p><b>1. ¿Qué te piden?</b> Antes de ver las opciones.</p>
         <div class="opts"><button class="opt" data-v="0"><b>✔</b><span>La opción CORRECTA / VERDADERA</span></button><button class="opt" data-v="1"><b>✖</b><span>La INCORRECTA / FALSA / la excepción</span></button></div><div id="fb0"></div></div>`;
       app.querySelectorAll<El>('.opt').forEach(b => b.onclick = () => {
-        if (mine !== generation || R !== LRUN || b.disabled) return;
+        if (routeGeneration !== generation || R !== LRUN || b.disabled) return;
         const ok = (+b.dataset.v! === 1) === neg; R.pideOk = ok; b.classList.add(ok ? 'ok' : 'bad'); if (!ok) app.querySelectorAll<El>('.opt').forEach(x => { if (x !== b) x.classList.add('ok'); });
         $('#fb0').innerHTML = `<div class="fb ${ok ? 'good' : 'wrong'}"><b>${ok ? '¡Bien leído!' : 'Ojo: lo habías leído al revés.'}</b> Te piden la opción <b>${neg ? 'INCORRECTA / excepción' : 'CORRECTA'}</b>.</div><div class="bar2"><button class="btn" id="n0">Siguiente →</button></div>`;
         app.querySelectorAll<El>('.opt').forEach(x => x.disabled = true); $('#n0').focus({preventScroll:true}); $('#n0').onclick = () => { R.step = 1; R.mark = new Set(); draw(); };
@@ -165,17 +165,17 @@ routes.lectura = async function () {
       const wordButtons = [...app.querySelectorAll<El>('.tk')];
       const focusWord = (index: number) => wordButtons.forEach((el, i) => { el.tabIndex = i === index ? 0 : -1; if (i === index) el.focus(); });
       wordButtons.forEach((el, i) => {
-        el.onclick = () => { if (mine !== generation || R !== LRUN || $('#chk').dataset.done) return; focusWord(i); el.setAttribute('aria-pressed', String(el.classList.toggle('on'))); };
+        el.onclick = () => { if (routeGeneration !== generation || R !== LRUN || $('#chk').dataset.done) return; focusWord(i); el.setAttribute('aria-pressed', String(el.classList.toggle('on'))); };
         el.onkeydown = e => {
-          if (mine !== generation || R !== LRUN) return;
+          if (routeGeneration !== generation || R !== LRUN) return;
           const offset = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
           if (offset || e.key === 'Home' || e.key === 'End') { e.preventDefault(); focusWord(e.key === 'Home' ? 0 : e.key === 'End' ? wordButtons.length - 1 : (i + offset + wordButtons.length) % wordButtons.length); }
           else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); el.click(); }
         };
       });
-      $('#none').onclick = () => { if (mine !== generation || R !== LRUN) return; app.querySelectorAll<El>('.tk.on').forEach(el => { el.classList.remove('on'); el.setAttribute('aria-pressed', 'false'); }); $('#chk').dataset.claim = 'none'; $('#chk').click(); $('#chk').focus({preventScroll:true}); };
+      $('#none').onclick = () => { if (routeGeneration !== generation || R !== LRUN) return; app.querySelectorAll<El>('.tk.on').forEach(el => { el.classList.remove('on'); el.setAttribute('aria-pressed', 'false'); }); $('#chk').dataset.claim = 'none'; $('#chk').click(); $('#chk').focus({preventScroll:true}); };
       $('#chk').onclick = () => {
-        if (mine !== generation || R !== LRUN) return;
+        if (routeGeneration !== generation || R !== LRUN) return;
         if ($('#chk').dataset.done!) { R.step = 2; draw(); return; }
         const claimNone = $('#chk').dataset.claim! === 'none'; $('#none').remove();
         let hit = 0, miss = 0, extra = 0;
@@ -193,10 +193,10 @@ routes.lectura = async function () {
     } else {
       const need = minLectura(q); R.t0 = Date.now();
       app.innerHTML = `${head}<div class="card q">${warning(q, verifiedSources)}<div class="enun pre">${richHtml(q.q, true)}</div><p class="sm"><b>3. Lee las cuatro opciones enteras</b> antes de responder.</p><div class="opts">${q.a.map((o: any, i: any) => `<button class="opt" data-i="${i}" disabled><b>${L[i]}</b><span class="pre">${richHtml(o, true)}</span></button>`).join('')}</div><div class="gate" id="gate"></div><div id="fb2"></div></div>`;
-      const upd = () => { if (mine !== generation || R !== LRUN) return clearInterval(gt); const l = Math.ceil(need - (Date.now() - R.t0) / 1000), g = $<El>('#gate'); if (!g) return clearInterval(gt); if (l <= 0) { clearInterval(gt); g.remove(); app.querySelectorAll<El>('.opt').forEach(b => b.disabled = false); } else g.textContent = `Lectura mínima: ${l} s`; };
+      const upd = () => { if (routeGeneration !== generation || R !== LRUN) return clearInterval(gt); const l = Math.ceil(need - (Date.now() - R.t0) / 1000), g = $<El>('#gate'); if (!g) return clearInterval(gt); if (l <= 0) { clearInterval(gt); g.remove(); app.querySelectorAll<El>('.opt').forEach(b => b.disabled = false); } else g.textContent = `Lectura mínima: ${l} s`; };
       upd(); gt = setInterval(upd, 400);
       app.querySelectorAll<El>('.opt').forEach(b => b.onclick = () => {
-        if (mine !== generation || R !== LRUN || b.disabled) return;
+        if (routeGeneration !== generation || R !== LRUN || b.disabled) return;
         const i = +b.dataset.i!, ok = i === q.c, secs = Math.max(1, Math.round((Date.now() - R.t0) / 1000));
         store.record(q.i, q.t, ok ? 1 : 0, now(), secs);
         try { let r = JSON.parse(localStorage.getItem(recentKey()) || '[]'); if (!Array.isArray(r)) r = []; localStorage.setItem(recentKey(), JSON.stringify([String(q.i), ...r.filter((x: any) => String(x) !== String(q.i))].slice(0, 80))); } catch { }
@@ -207,7 +207,7 @@ routes.lectura = async function () {
         $('#n2').onclick = () => { R.k++; R.step = 0; draw(); window.scrollTo(0, 0); };
       });
     }
-    $('#exit').onclick = async () => { if (await ask('¿Salir del ejercicio?', 'Salir') && mine === generation) { LRUN = null; go('#/home'); } };
+    $('#exit').onclick = async () => { if (await ask('¿Salir del ejercicio?', 'Salir') && routeGeneration === generation) { LRUN = null; go('#/home'); } };
     focusHeading();
   }
   function end() {

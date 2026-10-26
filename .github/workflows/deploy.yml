@@ -26,6 +26,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Evitar nueva deuda de arquitectura
+        run: npm run check:architecture
+
       - name: Límites de arquitectura y hooks
         run: npm run lint
 

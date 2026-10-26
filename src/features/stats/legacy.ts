@@ -68,14 +68,14 @@ function paintSims() {
 }
 
 // ───────── evolución y preguntas lentas ─────────
-function paintEvo(idx: any) {
+function paintEvo(bankIndex: any) {
   const el = $('#evo'); if (!el) return;
   const c = Object.assign({ m: 'acierto', f: 'g', w: 12, tabla: false }, store.getCfg().evo || {});
   const save = () => store.setCfg('evo', c);
   const tipos = Object.keys(TIPOS);
   const opts = `<option value="g" ${c.f === 'g' ? 'selected' : ''}>Todo el temario</option>
     <optgroup label="Por tipo de pregunta">${tipos.map(k => `<option value="k:${k}" ${c.f === 'k:' + k ? 'selected' : ''}>${esc(TIPOS[k])}</option>`).join('')}</optgroup>
-    <optgroup label="Por tema">${idx.temas.map((t: any) => `<option value="t:${t.id}" ${c.f === 't:' + t.id ? 'selected' : ''}>${t.id} ${esc(t.nombre)}</option>`).join('')}</optgroup>`;
+    <optgroup label="Por tema">${bankIndex.temas.map((t: any) => `<option value="t:${t.id}" ${c.f === 't:' + t.id ? 'selected' : ''}>${t.id} ${esc(t.nombre)}</option>`).join('')}</optgroup>`;
   const filt = c.m === 'tiempo' || c.f === 'g' ? {} : c.f.startsWith('t:') ? { tema: c.f.slice(2) } : { tipo: c.f.slice(2) };
   const W = aggregateWeeks(store.getSessions(), { ...filt, weeks: c.w });
   const key = c.m === 'tiempo' ? 'segPreg' : 'acierto';
@@ -104,10 +104,10 @@ function paintEvo(idx: any) {
     <div class="row"><select id="evf" aria-label="Qué medir en la evolución" ${c.m === 'tiempo' ? 'disabled' : ''}>${opts}</select><select id="evw" aria-label="Número de semanas">${[8, 12, 26].map(v => `<option value="${v}" ${c.w === v ? 'selected' : ''}>${v} semanas</option>`).join('')}</select></div>
     ${chart}
     <p class="legend">${c.m === 'tiempo' ? 'Segundos medios por pregunta en tus sesiones (sin contar pausas).' : 'Porcentaje de aciertos por semana, sobre las preguntas contestadas en esa semana.'} <button class="ghost sm" id="evt" aria-expanded="${!!c.tabla}">${c.tabla ? 'Ocultar tabla' : 'Ver tabla'}</button></p>${tabla}</div>`;
-  $('#evm').onclick = e => { const mode = (e.target as El).dataset.v; if (mode === 'acierto' || mode === 'tiempo') { c.m = mode; save(); paintEvo(idx); $(`#evm [data-v="${c.m}"]`).focus({ preventScroll: true }); } };
-  $<El>('#evf').onchange = e => { c.f = (e.target as El).value; save(); paintEvo(idx); $('#evf').focus({ preventScroll: true }); };
-  $<El>('#evw').onchange = e => { c.w = +(e.target as El).value; save(); paintEvo(idx); $('#evw').focus({ preventScroll: true }); };
-  $('#evt').onclick = () => { c.tabla = !c.tabla; save(); paintEvo(idx); $('#evt').focus({ preventScroll: true }); };
+  $('#evm').onclick = e => { const mode = (e.target as El).dataset.v; if (mode === 'acierto' || mode === 'tiempo') { c.m = mode; save(); paintEvo(bankIndex); $(`#evm [data-v="${c.m}"]`).focus({ preventScroll: true }); } };
+  $<El>('#evf').onchange = e => { c.f = (e.target as El).value; save(); paintEvo(bankIndex); $('#evf').focus({ preventScroll: true }); };
+  $<El>('#evw').onchange = e => { c.w = +(e.target as El).value; save(); paintEvo(bankIndex); $('#evw').focus({ preventScroll: true }); };
+  $('#evt').onclick = () => { c.tabla = !c.tabla; save(); paintEvo(bankIndex); $('#evt').focus({ preventScroll: true }); };
   const tip = $('#tip');
   el.querySelectorAll<El>('.evolution-hit').forEach(r => {
     const show = () => { const w = W[+r.dataset.i!]; if (!w.n) { tip.hidden = true; return; } tip.hidden = false; tip.innerHTML = `<b>Semana del ${fmtD(w.start)}</b><br>${c.m === 'tiempo' ? (w.segPreg ?? '—') + ' s/pregunta' : w.acierto + ' % de acierto'}<br>${esc(String(w.n))} respuestas · ${esc(String(w.ses))} sesiones`; tip.style.left = Math.min(Math.max(8, 100 * (+r.dataset.i!) / Math.max(1, W.length - 1)), 70) + '%'; };
@@ -135,13 +135,13 @@ async function paintSlow() {
 routes.stats = async function () {
   const { app, $, screen: routeScreen } = legacyScope();
   const account = store.accountId();
-  const idx = await getIndex(); await getMeta();
+  const bankIndex = await getIndex(); await getMeta();
   if (account !== store.accountId()) return;
-  const st = store.getStats();
+  const questionStats = store.getStats();
   const T: Record<string, number[]> = {}, TR: Record<string, number[]> = {}, OR: Record<string, number[]> = {}, TI: Record<string, number[]> = {};
   let n = 0, ok = 0;
-  for (const id in st) {
-    const r = st[id], m = META[id]; if (!m) continue;
+  for (const id in questionStats) {
+    const r = questionStats[id], m = META[id]; if (!m) continue;
     n += r[0]; ok += r[1];
     const err = r[0] - r[1];
     const a = T[m[0]] ||= [0, 0, 0]; a[0] += r[0]; a[1] += r[1]; a[2]++;
@@ -150,16 +150,16 @@ routes.stats = async function () {
     for (const x of m[3]) { const b = TR[x] ||= [0, 0]; b[0] += r[0]; b[1] += err; }
   }
   const bar = (v: any, w = 100) => `<div class="bar"><i style="width:${v}%" class="${v >= 75 ? 'g' : v >= 50 ? 'y' : 'r'}"></i></div>`;
-  const temas = idx.temas.map(t => { const a = T[t.id] || [0, 0, 0]; return { ...t, int: a[0], ok: a[1], seen: a[2], p: pct(a[1], a[0]) }; });
+  const temas = bankIndex.temas.map(t => { const a = T[t.id] || [0, 0, 0]; return { ...t, int: a[0], ok: a[1], seen: a[2], p: pct(a[1], a[0]) }; });
   const weak = temas.filter(t => t.int >= 8).sort((a, b) => a.p - b.p).slice(0, 5);
   const ses = store.getSessions().slice(0, 12);
-  const carga = cargaRepasos(st, now(), 14), mx = Math.max(1, ...carga), mf = motivosFallo(st), mft = mf.reduce((a, b) => a + b, 0);
+  const carga = cargaRepasos(questionStats, now(), 14), mx = Math.max(1, ...carga), mf = motivosFallo(questionStats), mft = mf.reduce((a, b) => a + b, 0);
   const diaL = (k: any) => { const d = new Date(now()); d.setDate(d.getDate() + k); return k === 0 ? 'hoy' : ['D', 'L', 'M', 'X', 'J', 'V', 'S'][d.getDay()] + d.getDate(); };
   const cargaHTML = `<div class="card"><div class="chart-scroll" role="region" aria-label="Repasos previstos en los próximos 14 días" tabindex="0"><div class="cg">${carga.map((v, k) => `<div class="cgc" title="${v} repasos"><small>${v || ''}</small><i class="${k === 0 && v ? 'hoy' : ''}" style="height:${Math.round(60 * v / mx)}px"></i><small>${diaL(k)}</small></div>`).join('')}</div></div>
     <p class="legend">Preguntas que vencen cada día (hoy incluye las atrasadas). Total en 14 días: ${carga.reduce((a, b) => a + b, 0)}.</p>
     ${mft ? `<h2 class="h3">Por qué fallas (último fallo) · <a href="#/ayuda?tema=motivos">Ayuda</a></h2>${[5, 7, 1, 2, 3, 4].map(m => `<div class="line"><span>${MOTIVOS_FALLO[m]}</span><span>${mf[m]} <small>(${pct(mf[m], mft)}%)</small></span></div>`).join('')}` : ''}
-    ${suertes(st) ? `<div class="line"><span>🍀 Aciertos por suerte (pendientes de repasar)</span><span>${suertes(st)}</span></div>` : ''}</div>`;
-  const paintMapa = () => { const dm = dominioTemas(idx); const el = $('#mapa'); el.innerHTML = mapaHTML(dm, store.getCfg().dmord); bindMapa(el, dm, paintMapa); };
+    ${suertes(questionStats) ? `<div class="line"><span>🍀 Aciertos por suerte (pendientes de repasar)</span><span>${suertes(questionStats)}</span></div>` : ''}</div>`;
+  const paintMapa = () => { const dm = dominioTemas(bankIndex); const el = $('#mapa'); el.innerHTML = mapaHTML(dm, store.getCfg().dmord); bindMapa(el, dm, paintMapa); };
   app.innerHTML = `
   <h1>Progreso</h1>
   <section id="stats-summary" class="card" aria-label="Resumen de estudio"><h2 class="h3">Tu siguiente paso</h2>
@@ -208,7 +208,7 @@ routes.stats = async function () {
     finally { if (output.isConnected) output.setAttribute('aria-busy', 'false'); }
   };
   $('#carga').innerHTML = cargaHTML;
-  { const v = velocidad(st), lentos = Object.keys(st).filter(id => st[id][8] >= 3 && st[id][7] / st[id][8] < 6).length;
+  { const v = velocidad(questionStats), lentos = Object.keys(questionStats).filter(id => questionStats[id][8] >= 3 && questionStats[id][7] / questionStats[id][8] < 6).length;
     $('#vel').innerHTML = `<h2>Velocidad de lectura</h2><div class="card">${v.tot ? `<div class="line"><span>Fallos por velocidad</span><span><b>${v.n}</b> de ${v.tot} <small>(${v.p}%)</small></span></div>` : '<p class="sub">Aún no has etiquetado fallos. Al fallar, pulsa «Velocidad» si leíste deprisa.</p>'}
     ${v.p >= 15 ? '<p class="r"><b>Es un patrón relevante</b>: más de 1 de cada 7 fallos se debe a leer rápido. Prueba el modo «Resaltar + frenar» en Ajustes y el ejercicio de lectura atenta.</p>' : ''}
     <ul class="tips">${CONSEJOS_LECTURA.map(c => `<li>${esc(c)}</li>`).join('')}</ul>
@@ -216,7 +216,7 @@ routes.stats = async function () {
     $('#golec').onclick = () => go('#/lectura'); }
   paintMapa();
   paintSims();
-  paintEvo(idx);
+  paintEvo(bankIndex);
   paintSlow();
 };
 

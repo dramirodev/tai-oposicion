@@ -256,3 +256,27 @@ manual y simulacro con reanudación. Las pruebas de recuperación/importación a
 repaso y tarjetas están en Vitest. La pantalla con texto máximo se comprueba en viewports emulados
 320×720 y 1024×1366. Chromium y WebKit de Playwright son emulación: no prueban Safari físico,
 iPadOS, sincronización real entre dispositivos ni revisión editorial humana.
+
+## Modernización y límites de arquitectura
+
+La migración conserva URL hash, datos guardados, funcionamiento offline y reglas
+ de estudio. Cada pantalla o responsabilidad nueva debe reemplazar su versión
+anterior, retirar sus consumidores y reducir las excepciones correspondientes.
+No se consideran migraciones los cambios de nombre que mantienen el mismo puente.
+
+- `core/domain` contiene reglas puras; `core/application` usa puertos. El core
+  no importa DOM, adaptadores, React, Firebase, Zustand, idb ni Zod.
+- `app` compone servicios. Las features reciben casos de uso por interfaces y
+  no importan adaptadores ni la composición. Los DTO quedan en adaptadores.
+- El estado de UI en memoria no sustituye la persistencia, el aislamiento de
+  cuentas ni las reglas de sincronización. Los cambios deben ser explícitos.
+- El código nuevo usa componentes React y eventos declarativos. El acceso DOM
+  especializado necesita una responsabilidad acotada y limpieza al desmontar.
+- `scripts/architecture-baseline.json` inventaría deuda existente, con ruta,
+  responsabilidad y recuento. Se reduce al migrar; no se amplía para aceptar
+  código nuevo. `npm run check:architecture` comprueba el grafo y escrituras HTML.
+
+Antes de cada commit ejecutar `npm run check`. Al cerrar una fase ejecutar también
+`npm run build`, `node scripts/validate_cards.mjs` y `npm run test:e2e:ci`.
+Las PR ejecutan estas comprobaciones sin secretos ni despliegues. Las capturas
+solo se cambian por cambios visuales revisados, nunca para ocultar regresiones.
