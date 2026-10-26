@@ -1,6 +1,8 @@
 import { createContext, useContext } from 'react';
 export interface ActiveStudy { title: string; position: number; total: number }
+export interface HomeBlock { name: string; total: number; mastered: number; assessed: number }
 export interface HomeOverview {
+  completedSessions: number; blocks: HomeBlock[];
   seen: number; total: number; answers: number; streak: number; daysToExam: number | null;
   due: number; cardsDue: number; quickCount: number; slowCount: number; failures: number;
   studiedTopics: number; topicCount: number; assessedTopics: number; weakTopics: number; masteredTopics: number;

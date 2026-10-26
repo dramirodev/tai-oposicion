@@ -82,6 +82,7 @@ test.describe('service worker real', () => {
   expect(entry).toBeTruthy(); expect(shell).toContain('/' + entry!.slice(2));
   const stylesheet = html.match(/href="(\.\/assets\/[^"]+\.css)"/)?.[1];
   expect(stylesheet).toBeTruthy(); expect(shell).toContain('/' + stylesheet!.slice(2));
+  expect(shell.some(path => /geist-variable.*\.woff2$/.test(path))).toBe(true);
   await page.goto('/#/settings');
   await page.locator('#dl').click();
   await expect(page.locator('#off')).toContainText('disponibles sin conexión', { timeout: 20_000 });
@@ -97,9 +98,11 @@ test.describe('service worker real', () => {
   await page.reload();
   await expect(page.locator('#quick')).toBeVisible();
   await expect(page.locator('#net')).toContainText('Sin conexión');
+  await page.evaluate(() => document.fonts.ready);
+  expect(await page.evaluate(() => document.fonts.check('16px Geist'))).toBe(true);
   // La hoja compilada debe llegar de la caché, no solo el HTML/JS.
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(243, 245, 248)');
-  await expect(page.locator('#quick')).toHaveCSS('background-color', 'rgb(35, 74, 145)');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(245, 246, 247)');
+  await expect(page.locator('#quick')).toHaveCSS('background-color', 'rgb(32, 35, 38)');
   await page.locator('#quick').click();
   await expect(page.locator('#app h1')).toContainText('pregunta 1');
   await page.locator('.enun').focus();

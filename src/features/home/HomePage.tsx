@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState, type ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router';
+import type { HomeOverview, HomeBlock } from '../../shared/ui/study-services.js';
 import { useStudyServices } from '../../shared/ui/study-services.js';
 import { useActionLifetime } from '../../shared/ui/use-action-lifetime.js';
 import { usePageReady } from '../../shared/ui/use-page-ready.js';
@@ -23,6 +24,21 @@ function Tile({ id, icon, title, subtitle, badge, onClick }: { id: string; icon:
 function Row({ id, icon, title, subtitle, disabled, onClick }: { id: string; icon: string; title: string; subtitle: string; disabled?: boolean; onClick(): void }) {
   return <button className="lrow" id={id} disabled={disabled} onClick={onClick}><i aria-hidden="true"><Icon name={icon} /></i><span><b>{title}</b><small>{subtitle}</small></span></button>;
 }
+function HomeMetrics({ overview, full }: { overview: HomeOverview; full: boolean }) {
+  return (
+    <dl className="home-metrics" aria-label="Tu preparación">
+      <div><dt>Preguntas vistas</dt><dd>{overview.seen.toLocaleString('es-ES')} <small>/ {overview.total.toLocaleString('es-ES')}</small></dd></div>
+      <div><dt>Temas estudiados</dt><dd>{overview.studiedTopics} <small>/ {overview.topicCount}</small></dd></div>
+      <div><dt>{full ? 'Tarjetas pendientes' : 'Sesiones completadas'}</dt><dd>{full ? overview.cardsDue : overview.completedSessions}</dd></div>
+    </dl>
+  );
+}
+function HomeDomain({ blocks, full }: { blocks: HomeBlock[]; full: boolean }) {
+  if (!full) return null;
+  return (
+    <section className="home-domain" aria-labelledby="home-domain-title"><div className="home-domain-heading"><h2 className="section-title" id="home-domain-title">Tu mapa de dominio</h2><Link to="/stats">Ver progreso →</Link></div><div className="home-blocks">{blocks.map(block => <Link className="home-block" to="/stats" key={block.name}><span>{block.name}</span><small>{block.assessed ? `${block.mastered} de ${block.total} dominados` : 'Sin datos · practica para empezar'}</small></Link>)}</div></section>
+  );
+}
 export function HomePage() {
   const { home: services } = useStudyServices();
   const captureLifetime = useActionLifetime(services.accountId);
@@ -41,16 +57,15 @@ export function HomePage() {
   if (error) return <div className="card" role="alert"><h2>No se pudo cargar</h2><p>{navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button className="btn" id="retryRoute" onClick={() => void navigate('/home')}>Reintentar</button></div>;
   if (!overview) return <p className="sub loading" role="status">Cargando…</p>;
   const access = services.getAccess(), run = services.getActiveStudy();
-  const percent = overview.total ? Math.round(100 * overview.seen / overview.total) : 0;
   const go = (route: string) => () => void navigate('/' + route);
   return <>
     <p className="product-brand" translate="no">TAI <span>Preparación de oposiciones</span></p>
     <div className="hhead"><div><h1 id="hola">{access.greeting}</h1><div className="hsub">{overview.daysToExam !== null ? <><b>{overview.daysToExam} {overview.daysToExam === 1 ? 'día' : 'días'}</b> hasta tu fecha objetivo · <Link to="/settings">Cambiar fecha</Link></> : <Link to="/settings">Configurar fecha objetivo</Link>} · {overview.seen} de {overview.total.toLocaleString('es-ES')} preguntas vistas{overview.streak >= 2 ? ` · racha de ${overview.streak} días` : ''}</div></div>
       <button className="iconbtn" id="menu" aria-label="Menú" aria-haspopup="dialog" onClick={services.openMenu}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg></button></div>
-    <div className="hbar" role="img" aria-label={`${percent} % de las preguntas vistas`}><i style={{ '--progress-from': 0, width: `${Math.max(2, Math.min(100, percent))}%` } as React.CSSProperties} /></div>
+    <p className="home-intro">Tu estudio, con perspectiva. Un paso más en tu preparación.</p>
     <div className="home-workspace"><section className="home-primary" aria-labelledby="home-start-title"><h2 className="section-title" id="home-start-title">Tu próxima sesión</h2>
       {run && <button className="cta" id="continue" onClick={go('quiz')}><span><b>Continuar sesión</b><small>{run.title} · pregunta {run.position + 1} de {run.total}</small></span><Icon name="play" /></button>}
-      <button className="cta" id="quick" disabled={pending.has('quick')} onClick={() => void runAction('quick', services.quickSession)}>{pending.has('quick') ? 'Cargando…' : <><span><b className="ctt">Sesión rápida</b><small>{!access.full ? '5 min · una pregunta de cada tema, distintas cada vez' : `5 min · ${overview.quickCount} preguntas: ${overview.due ? 'tus repasos pendientes (' + overview.due + ') y ' : ''}nuevas de tus temas más débiles`}</small></span><i className="play" aria-hidden="true"><Icon name="play" /></i></>}</button>
+      <div className="session-launch"><p className="session-heading">{run ? 'También puedes practicar' : 'Un paso más, pregunta a pregunta'}</p><button className={`cta ${run ? 'secondary-session' : ''}`} id="quick" disabled={pending.has('quick')} onClick={() => void runAction('quick', services.quickSession)}>{pending.has('quick') ? 'Cargando…' : <><span><b className="ctt">Sesión rápida</b><small>{!access.full ? '5 min · una pregunta de cada tema, distintas cada vez' : `5 min · ${overview.quickCount} preguntas: ${overview.due ? 'tus repasos pendientes (' + overview.due + ') y ' : ''}nuevas de tus temas más débiles`}</small></span><i className="play" aria-hidden="true"><Icon name="play" /></i></>}</button></div>
       {access.full && <div className="tiles"><Tile id="test" icon="test" title="Test" subtitle="por tema" onClick={go('test')} /><Tile id="sim" icon="sim" title="Simulacros" subtitle="con tiempo" onClick={go('sim')} /><Tile id="cards" icon="card" title="Tarjetas" subtitle={overview.cardsDue ? `${overview.cardsDue} ${overview.cardsDue === 1 ? 'pendiente' : 'pendientes'}` : 'repaso'} badge={overview.cardsDue} onClick={go('cards')} /></div>}
       {!overview.answers && <p className="note">Empieza con una sesión rápida; después marca los temas que hayas estudiado y consulta tu progreso.</p>}
     </section>
@@ -60,6 +75,8 @@ export function HomePage() {
     </section> : <div className="card guest" id="guest"><h2 className="h3">{!access.signedIn ? 'Sesión sin iniciar' : access.level === 'pendiente' ? 'Acceso pendiente' : 'Solicita acceso completo'}</h2><p>Sin acceso completo solo puedes hacer la sesión rápida de 5 minutos. El resto (test por tema, simulacros, tarjetas, estadísticas…) lo desbloquea el propietario de la app.</p>
       {!access.signedIn ? (access.configured || access.state === 'iniciando' || access.state === 'comprobando sesión…' ? <button className="btn" id="gin" onClick={() => void runAction('login', services.login)}>Entrar con Google</button> : null) : access.level === 'pendiente' ? <p><b>Solicitud enviada.</b> Cuando se apruebe se desbloqueará todo; esta pantalla se actualiza sola.</p> : <button className="btn" id="greq" disabled={pending.has('request')} onClick={() => void runAction('request', async () => { if (!await services.requestAccess()) services.notify('No se pudo enviar la solicitud. Inténtalo de nuevo.'); })}>{pending.has('request') ? 'Enviando…' : 'Pedir acceso completo'}</button>}
     </div>}</div>
+    <HomeMetrics overview={overview} full={access.full} />
+    <HomeDomain blocks={overview.blocks} full={access.full} />
     <div id="syncnote">{access.pendingRequests ? <div className="note"><Link to="/acceso">{access.pendingRequests} {access.pendingRequests === 1 ? 'persona pide' : 'personas piden'} acceso a la app</Link></div> : !access.full ? null : access.state === 'sin sesión' ? <div className="note">Inicia sesión en <Link to="/settings">Ajustes</Link> para sincronizar iPhone e iPad.</div> : access.state === 'sin configurar' ? <div className="note">Firebase aún no está configurado: el progreso se guarda solo en este dispositivo.</div> : null}</div>
   </>;
 }

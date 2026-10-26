@@ -1,3 +1,12 @@
+/* Geist by Vercel, SIL Open Font License; bundled by Vite and cached with the shell. */
+@font-face {
+  font-family: "Geist";
+  src: url("./fonts/geist-variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 /* ===== base ===== */
 
 input[type=checkbox],input[type=radio],input[type=range] {

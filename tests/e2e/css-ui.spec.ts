@@ -87,10 +87,10 @@ test('el tema automático sigue los cambios del sistema sin recargar', async ({ 
   await page.emulateMedia({ colorScheme: 'light' });
   await page.goto('/#/home');
   await expect(page.locator('#quick')).toBeVisible();
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(243, 245, 248)');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(245, 246, 247)');
   await page.emulateMedia({ colorScheme: 'dark' });
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(16, 24, 39)');
-  await expect.poll(() => page.locator('meta[name="theme-color"]').getAttribute('content')).toBe('#101827');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(17, 17, 19)');
+  await expect.poll(() => page.locator('meta[name="theme-color"]').getAttribute('content')).toBe('#111113');
 });
 
 test('saltar al contenido conserva la ruta y ofrece un destino de teclado', async ({ page }) => {
@@ -134,4 +134,39 @@ test('el espaciado de texto conserva el reflujo con una sesión en curso', async
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
   }
   await expect(page.locator('.chart-scroll')).toBeVisible();
+});
+
+test('la sidebar conserva los destinos y el área de estudio al ampliar texto', async ({ page }) => {
+  await prepare(page, 'dark', 3);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/#/home');
+  const sidebar = page.locator('.workspace-sidebar');
+  await expect(sidebar).toBeVisible();
+  await expect(page.locator('nav[aria-label="Principal"]')).toBeHidden();
+  await sidebar.getByRole('link', { name: 'Test por tema', exact: true }).click();
+  await expect(page.locator('#app h1')).toHaveText('Test por tema');
+  await expect(sidebar.getByRole('link', { name: 'Test por tema', exact: true })).toHaveAttribute('aria-current', 'page');
+  await sidebar.getByRole('link', { name: 'Inicio', exact: true }).click();
+  await page.locator('#quick').click();
+  await expect(page.locator('.opt').first()).toBeVisible();
+  await expect.poll(() => page.evaluate(() => {
+    const sidebar = document.querySelector('.workspace-sidebar')!.getBoundingClientRect();
+    const bar = document.querySelector('.bar2')!.getBoundingClientRect();
+    return bar.left - sidebar.right;
+  })).toBeGreaterThanOrEqual(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(1440);
+});
+
+test('el menú móvil permite navegar por teclado y devuelve el foco al cerrar', async ({ page }) => {
+  await prepare(page, 'light', 0);
+  await page.goto('/#/test');
+  await expect(page.locator('.workspace-sidebar')).toBeHidden();
+  const menu = page.locator('.workspace-menu');
+  await menu.focus(); await page.keyboard.press('Enter');
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(menu).toBeFocused();
+  await menu.click();
+  await page.locator('#menuov').getByRole('button', { name: 'Ayuda', exact: true }).click();
+  await expect(page.locator('#app h1')).toHaveText('Ayuda');
 });

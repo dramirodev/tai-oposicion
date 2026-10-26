@@ -7,8 +7,8 @@ import * as store from '../adapters/local/legacy-store.js';
 import { esc, richHtml, shuffle, fmtT, pct, nota, allowed, questionsForSession, composeSim, quickN, pickQuick, pickGuest, trapRates, pickTrampas, MOTIVOS, MOTIVOS_FALLO, pickRepaso, normUi, swipeDir, keyAction, hiliteHtml, pideNegativa, minLectura, velocidad, analisisSimulacro, ritmoSimulacro } from '../legacy/logic.js';
 import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds } from '../adapters/http/legacy-data.js';
 import { $, legacyScope, bindLegacyHost, L, toast, ask, guard, focusHeading, type El } from '../shared/ui/legacy-dom.js';
-import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
-import { ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
+import { showMenu, type MenuGroup } from '../shared/ui/dialogs.js';
+import { BLOQUES, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
 import { registerTraining } from '../features/trainers/legacy.js';
 import { registerCards } from '../features/cards/legacy.js';
@@ -1005,6 +1005,12 @@ export const studyServices: StudyServices = {
       const daysToExam = exam ? Math.max(0, Math.ceil((+new Date(exam + 'T09:00:00') - Date.now()) / 86400000)) : null;
       const mastery = dominioTemas(index);
       return { seen, total: index.n, answers, streak, daysToExam, due,
+        completedSessions: store.getSessions().length,
+        blocks: BLOQUES.map(([code, name]) => {
+          const topics = mastery.filter(topic => topic.id.startsWith(code));
+          return { name, total: topics.length, mastered: topics.filter(topic => topic.est === 'g').length,
+            assessed: topics.filter(topic => topic.est !== 'n').length };
+        }),
         cardsDue: Object.values(store.getCards()).filter(record => record[3] >= 0 && record[4] <= now()).length,
         quickCount: quickN(stats), slowCount: velocidad(stats).n, failures: falladasIds().length,
         studiedTopics: store.getSeen().length, topicCount: index.temas.length,
