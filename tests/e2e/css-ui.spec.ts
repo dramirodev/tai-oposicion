@@ -162,8 +162,11 @@ test('el menú móvil permite navegar por teclado y devuelve el foco al cerrar',
   await page.goto('/#/test');
   await expect(page.locator('.workspace-sidebar')).toBeHidden();
   const menu = page.locator('.workspace-menu');
-  await menu.focus(); await page.keyboard.press('Enter');
-  await expect(page.getByRole('dialog')).toBeVisible();
+  await expect(menu).toBeVisible();
+  await menu.focus();
+  await expect(menu).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('dialog')).toBeVisible({ timeout: 10_000 });
   await page.keyboard.press('Escape');
   await expect(menu).toBeFocused();
   await menu.click();

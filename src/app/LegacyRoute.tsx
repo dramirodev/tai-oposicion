@@ -62,7 +62,4 @@ export function LegacyRoute() {
     {readyKey !== routeKey && <PageLoading variant="legacy" />}
     <div ref={host} className="route-transition" tabIndex={-1} data-screen={location.pathname.split('/')[1] || 'home'} />
   </>;
-    return acquireVisit(host.current!, `${location.pathname}:${location.key}`, location.pathname);
-  }, [location.key, location.pathname, navigate]);
-  return <div ref={host} className="route-transition" tabIndex={-1} data-screen={location.pathname.split('/')[1] || 'home'} />;
 }
