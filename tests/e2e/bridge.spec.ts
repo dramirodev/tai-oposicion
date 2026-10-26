@@ -269,10 +269,12 @@ test('las explicaciones draft solo aparecen tras revelar en práctica y están c
   await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
   await page.locator('.overlay [data-v="1"]').click();
   await expect(page.locator('.code-explanation')).toBeVisible();
+  expect(errors).toEqual([]); // Antes de desconectar, la aplicación no debe registrar errores.
   await context.setOffline(true);
   const cached = await page.evaluate(async () => (await fetch('explanations/index.json')).ok);
   expect(cached).toBe(true);
-  expect(errors).toEqual([]);
+  // WebKit puede informar fallos de recursos de red al cortar la conexión; el fetch cacheado debe seguir funcionando.
+  expect(errors.filter(error => !error.startsWith('Failed to load resource: WebKit encountered an internal error'))).toEqual([]);
 });
 test('el simulacro no presenta explicaciones ni corrección mientras sigue activo', async ({ page }) => {
   const errors = await start(page);
