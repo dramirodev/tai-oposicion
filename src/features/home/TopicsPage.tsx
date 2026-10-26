@@ -4,7 +4,7 @@ import { BLOQUES } from '../../shared/presentation/labels.js';
 import { useStudyServices } from '../../shared/ui/study-services.js';
 import { usePageReady } from '../../shared/ui/use-page-ready.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
-const normalize = (value: string) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+import { filterTopics, toggleTopicSelection } from './topics-controller.js';
 export function TopicsPage() {
   const { topics: services } = useStudyServices(), navigate = useNavigate();
   const resource = useMemo(() => ({ accountId: services.accountId, subscribe: services.subscribe, load: () => services.loadTopics() }), [services]);
@@ -15,10 +15,9 @@ export function TopicsPage() {
   if (error) return <div className="card" role="alert"><h2>No se pudo cargar</h2><p>No se pudo cargar el temario. Inténtalo de nuevo.</p><button className="btn" id="retryRoute" onClick={() => void navigate('/temario')}>Reintentar</button></div>;
   if (!topics) return <p className="sub loading" role="status">Cargando…</p>;
   const selected = new Set(services.getStudied());
-  const visible = topics.filter(topic => normalize(topic.id + ' ' + topic.name).includes(normalize(query.trim())));
+  const visible = filterTopics(topics, query);
   const toggle = (ids: string[]) => {
-    const current = new Set(services.getStudied()), remove = ids.every(id => current.has(id));
-    ids.forEach(id => remove ? current.delete(id) : current.add(id)); services.setStudied([...current]);
+    services.setStudied(toggleTopicSelection(services.getStudied(), ids));
   };
   return <><h1>Temas vistos</h1><p className="sub">Marca los temas que ya has estudiado. Tus marcas seleccionan el temario disponible en simulacros y en «mis temas vistos». Las preguntas contestadas se cuentan aparte: contestar una pregunta no marca el tema como estudiado.</p>
     <div className="selection-summary" role="status">{selected.size} de {topics.length} temas estudiados · {visible.length} {visible.length === 1 ? 'resultado' : 'resultados'}</div>
