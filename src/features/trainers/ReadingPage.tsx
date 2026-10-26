@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router';
 import { ask } from '../../shared/ui/dialog-actions.js';
 import { READING_TIPS } from '../../shared/presentation/study-labels.js';
@@ -59,6 +59,13 @@ function MeaningStep({ question, progress, reading }: { question: ReadingPrompt;
 }
 
 function KeywordStep({ question, progress, reading }: { question: ReadingPrompt; progress: ReadingProgress; reading: ReadingServices }) {
+  return <article className="card q"><QuestionSources question={question} /><p><b>2. Toca las palabras que cambian el sentido</b> (negaciones, excepciones, absolutos, cifras y plazos).</p><p id="word-help" className="sm">Con teclado: usa las flechas para moverte, Inicio y Fin para ir a los extremos, y Espacio o Intro para marcar. Tabulador sale del grupo.</p>
+    <WordSelector question={question} progress={progress} reading={reading} />
+    {progress.wordResult ? <><WordFeedback result={progress.wordResult} /><div className="bar2"><button className="btn" onClick={() => reading.showOptions()}>Ver opciones →</button></div></> : <div className="bar2"><button className="btn sec" onClick={() => reading.checkWords(true)}>No contiene</button><button className="btn" onClick={() => reading.checkWords()}>Continuar</button></div>}
+  </article>;
+}
+
+function WordSelector({ question, progress, reading }: { question: ReadingPrompt; progress: ReadingProgress; reading: ReadingServices }) {
   const wordRefs = useRef(new Map<number, HTMLButtonElement>());
   const selectedWords = new Set(progress.selectedWords);
   const tokenIndices = question.tokens.flatMap((token, index) => token.text.trim() ? [index] : []);
@@ -66,16 +73,27 @@ function KeywordStep({ question, progress, reading }: { question: ReadingPrompt;
   const tokenIndexesByPosition = new Map(tokenIndices.map((index, position) => [position, index]));
   const firstTokenIndex = tokenIndices[0];
   const lastTokenIndex = tokenIndices[tokenIndices.length - 1];
-  return <article className="card q"><QuestionSources question={question} /><p><b>2. Toca las palabras que cambian el sentido</b> (negaciones, excepciones, absolutos, cifras y plazos).</p><p id="word-help" className="sm">Con teclado: usa las flechas para moverte, Inicio y Fin para ir a los extremos, y Espacio o Intro para marcar. Tabulador sale del grupo.</p>
-    <div className="enun pre tks" role="group" aria-label="Palabras del enunciado" aria-describedby="word-help">{question.tokens.map((token, index) => token.text.trim() ? <button key={`${question.id}-${token.start}`} type="button" className={`tk${selectedWords.has(index) ? ' on' : ''}${progress.wordResult && token.key ? ' key' : ''}`} tabIndex={index === firstTokenIndex ? 0 : -1} aria-pressed={selectedWords.has(index)} ref={element => { if (element) wordRefs.current.set(index, element); else wordRefs.current.delete(index); }} onClick={() => { if (!progress.wordResult) reading.toggleWord(index); }} onKeyDown={event => {
-      const currentPosition = tokenPositions.get(index) ?? 0;
-      const offset = event.key === 'ArrowRight' || event.key === 'ArrowDown' ? 1 : event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 0;
-      if (offset || event.key === 'Home' || event.key === 'End') { event.preventDefault(); const target = event.key === 'Home' ? firstTokenIndex : event.key === 'End' ? lastTokenIndex : tokenIndexesByPosition.get((currentPosition + offset + tokenIndices.length) % tokenIndices.length); if (target !== undefined) wordRefs.current.get(target)?.focus(); }
-      else if ((event.key === ' ' || event.key === 'Enter') && !progress.wordResult) { event.preventDefault(); reading.toggleWord(index); }
-    }}>{token.text}</button> : token.text)}</div>
-    {progress.wordResult && <><div className={`fb ${progress.wordResult.missed ? 'wrong' : 'good'}`} role="status">{progress.wordResult.claimedNone ? progress.wordResult.total === 0 ? <><b>Correcto:</b> no hay palabras clave destacables. Lo importante es entender bien qué pide.</> : <><b>Ojo:</b> sí había {progress.wordResult.total} palabra{progress.wordResult.total === 1 ? '' : 's'} clave (resaltada{progress.wordResult.total === 1 ? '' : 's'}). Mira qué cambia el sentido.</> : progress.wordResult.total ? <>Detectaste <b>{progress.wordResult.hit}</b> de <b>{progress.wordResult.total}</b> palabras clave{progress.wordResult.missed ? ' (las que faltaban están resaltadas)' : ''}.{progress.wordResult.extra ? ` Marcaste ${progress.wordResult.extra} que no eran clave.` : ''}</> : 'Esta pregunta no tiene palabras clave destacables: lo importante es entender bien qué pide.'}</div><div className="bar2"><button className="btn" onClick={() => reading.showOptions()}>Ver opciones →</button></div></>}
-    {!progress.wordResult && <div className="bar2"><button className="btn sec" onClick={() => reading.checkWords(true)}>No contiene</button><button className="btn" onClick={() => reading.checkWords()}>Continuar</button></div>}
-  </article>;
+  const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const currentPosition = tokenPositions.get(index) ?? 0;
+    const offset = event.key === 'ArrowRight' || event.key === 'ArrowDown' ? 1 : event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 0;
+    if (offset || event.key === 'Home' || event.key === 'End') {
+      event.preventDefault();
+      const position = (currentPosition + offset + tokenIndices.length) % tokenIndices.length;
+      const target = event.key === 'Home' ? firstTokenIndex : event.key === 'End' ? lastTokenIndex : tokenIndexesByPosition.get(position);
+      if (target !== undefined) wordRefs.current.get(target)?.focus();
+    } else if ((event.key === ' ' || event.key === 'Enter') && !progress.wordResult) {
+      event.preventDefault(); reading.toggleWord(index);
+    }
+  };
+  return <div className="enun pre tks" role="group" aria-label="Palabras del enunciado" aria-describedby="word-help">{question.tokens.map((token, index) => token.text.trim() ? <button key={`${question.id}-${token.start}`} type="button" className={`tk${selectedWords.has(index) ? ' on' : ''}${progress.wordResult && token.key ? ' key' : ''}`} tabIndex={index === firstTokenIndex ? 0 : -1} aria-pressed={selectedWords.has(index)} ref={element => { if (element) wordRefs.current.set(index, element); else wordRefs.current.delete(index); }} onClick={() => { if (!progress.wordResult) reading.toggleWord(index); }} onKeyDown={event => onKeyDown(event, index)}>{token.text}</button> : token.text)}</div>;
+}
+
+function WordFeedback({ result }: { result: NonNullable<ReadingProgress['wordResult']> }) {
+  let message = <>Esta pregunta no tiene palabras clave destacables: lo importante es entender bien qué pide.</>;
+  if (result.claimedNone && result.total === 0) message = <><b>Correcto:</b> no hay palabras clave destacables. Lo importante es entender bien qué pide.</>;
+  else if (result.claimedNone) message = <><b>Ojo:</b> sí había {result.total} palabra{result.total === 1 ? '' : 's'} clave (resaltada{result.total === 1 ? '' : 's'}). Mira qué cambia el sentido.</>;
+  else if (result.total) message = <>Detectaste <b>{result.hit}</b> de <b>{result.total}</b> palabras clave{result.missed ? ' (las que faltaban están resaltadas)' : ''}.{result.extra ? ` Marcaste ${result.extra} que no eran clave.` : ''}</>;
+  return <div className={`fb ${result.missed ? 'wrong' : 'good'}`} role="status">{message}</div>;
 }
 
 function OptionsStep({ question, progress, reading, clock, questionCount }: { question: ReadingPrompt; progress: ReadingProgress; reading: ReadingServices; clock: number; questionCount: number }) {

@@ -76,8 +76,16 @@ function TrapQuestion({ run, selected, result, onToggle, onExit, onSubmit, onNex
 }
 
 function TrapChoice({ id, selected, correct, revealed, wasSelected, onToggle }: { id: number; selected: boolean; correct: boolean; revealed: boolean; wasSelected: boolean; onToggle(id: number): void }) {
-  const className = revealed ? correct ? wasSelected ? 'ok' : 'sug' : wasSelected ? 'bad' : '' : selected ? 'on' : '';
-  const label = revealed ? correct ? `${wasSelected ? '✔ Detectada: ' : '○ No la viste: '}${TRAMPAS[id]}` : wasSelected ? `✖ Falsa alarma: ${TRAMPAS[id]}` : TRAMPAS[id] : TRAMPAS[id];
+  const trapLabel = TRAMPAS[id] || String(id);
+  let className = selected ? 'on' : '';
+  let label = trapLabel;
+  if (revealed && correct) {
+    className = wasSelected ? 'ok' : 'sug';
+    label = `${wasSelected ? '✔ Detectada: ' : '○ No la viste: '}${trapLabel}`;
+  } else if (revealed && wasSelected) {
+    className = 'bad';
+    label = `✖ Falsa alarma: ${trapLabel}`;
+  } else if (revealed) className = '';
   return <button className={className} aria-pressed={selected} disabled={revealed} onClick={() => onToggle(id)}>{label}</button>;
 }
 
