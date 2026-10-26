@@ -187,5 +187,5 @@ Validación local en la rama de #38: prueba focalizada 2/2 (Chromium y WebKit), 
 
 - PR #38 se integró en `main` (`05a6ac8`); su validación remota terminó con éxito.
 - La integración Lucide sigue abierta como PR #39 contra `main`.
-- Rama actual de Recharts: `feat/recharts-study-visualizations`, rebasada a `05a6ac8`. Preparar una PR independiente contra `main` tras revisar `git diff --check`, actualizar esta sección con el SHA/URL y no esperar los checks remotos.
+- Rama Recharts: `feat/recharts-study-visualizations`, rebasada a `main` en `05a6ac8`. PR #40 abierta contra `main`: https://github.com/dramirodev/tai-oposicion/pull/40; cabeza `a244960`. No se esperaron los checks remotos.
 - Etapa B de arquitectura/Zustand sigue pendiente de aprobación expresa. La evaluación de React Testing Library/Jest permanece en una rama posterior, después de cerrar los trabajos activos.
