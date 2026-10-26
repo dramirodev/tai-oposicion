@@ -128,3 +128,29 @@ Orden propuesto actualizado:
 5. Cerrar mappers/tipos antiguos y añadir control de ciclos. Después de las tareas activas, crear rama aparte para migrar tests a React Testing Library y evaluar Jest.
 
 **Etapa A terminada y publicada en la PR #38 contra `main`**; Etapa B pendiente de aprobación. Archivos de propuesta: `docs/architecture/audit.md`, `target-architecture.md`, `dependency-rules.md`, `migration-plan.md`, `migration-report.md`.
+
+## Estado de continuidad — actualización 2026-10-26, noche
+
+Esta sección reemplaza los estados de PR anteriores que aparecen en el historial del documento:
+
+- PR #34 está integrada en `main` (`095a0e1`).
+- PR #36 también está integrada en `main` (`609dbc8`).
+- La PR #37 quedó cerrada sin merge; GitHub no permitió reabrirla tras recrear/rebasar su rama. La misma integración de Lucide se volvió a publicar contra `main` como PR #39: https://github.com/dramirodev/tai-oposicion/pull/39.
+- PR #38 contiene la propuesta de arquitectura y apunta a `main`; Etapa B permanece pendiente de aprobación explícita.
+- La rama `feat/recharts-study-visualizations` está en `/private/tmp/tai-recharts-audit`, basada en `609dbc8`. La integración está en curso; los gráficos migrados deben quedar cargados de forma diferida dentro de las secciones de estadísticas.
+
+### PR #38 — corrección del fallo E2E
+
+El fallo remoto en `tests/e2e/bridge.spec.ts` ocurría porque la prueba de explicación offline heredaba `serviceWorkers: 'block'`, interceptaba el índice con una respuesta simulada y después desconectaba el navegador. No comprobaba la caché del service worker real y sus dos mensajes de carga fallida hacían fallar la aserción global.
+
+La prueba ahora permite el service worker real, siembra el índice en la Cache Storage instalada, desconecta antes de revelar la explicación y verifica que la explicación y el índice siguen disponibles después de recargar offline. En modo offline solo se toleran fallos de actualización de ese índice y solicitudes externas conocidas de Firebase/Google; otros fallos siguen haciendo fallar la prueba.
+
+Validación local en la rama de #38: prueba focalizada 2/2 (Chromium y WebKit), `npm run check` (402/402 unitarios y arquitectura sin deuda nueva), suite E2E completa 154/154 y `git diff --check`. El build se ejecuta como parte del servidor de E2E. El run remoto anterior falló en el test antiguo; al publicar la corrección, revisar su nuevo resultado si el usuario vuelve a reportar un fallo.
+
+### Siguiente trabajo autorizado
+
+1. Terminar la integración de Recharts en `/private/tmp/tai-recharts-audit`: migrar las gráficas justificadas en `StatsSimulationSection` y `StatsEvolutionSection`, mantener sus importaciones diferidas, verificar datos, responsive, teclado, tema claro/oscuro y estados sin datos; eliminar únicamente el SVG/CSS sustituido.
+2. Ejecutar `npm run check`, `npm run build`, prueba E2E focalizada y suite E2E completa; documentar auditoría, decisiones, dependencias y validación en este handoff.
+3. Publicar una PR separada contra `main`, sin esperar sus pipelines.
+4. Esperar aprobación del usuario para Etapa B arquitectónica/Zustand, conforme a la petición original de Etapa A.
+5. Al cerrar las tareas autorizadas, abrir una rama separada para evaluar React Testing Library y si Jest aporta valor frente a Vitest.

@@ -239,14 +239,28 @@ test('integra ayudas, navegación, bloqueo terminal y exportación del intento',
   expect(exported.attempts.filter((attempt: { state: string }) => attempt.state === 'answered')).toHaveLength(1);
   expect(errors).toEqual([]);
 });
-test('las explicaciones draft solo aparecen tras revelar en práctica y están cacheadas offline', async ({ page, context }) => {
-  const errors = await start(page);
-  await page.route('**/explanations/index.json', async route => {
+test.describe('explicaciones offline con el service worker real', () => {
+  test.use({ serviceWorkers: 'allow' });
+
+  test('las explicaciones draft solo aparecen tras revelar en práctica y están cacheadas offline', async ({ page, context }) => {
+    const errors = await start(page);
+    const failedRequests: string[] = [];
+    page.on('requestfailed', request => failedRequests.push(request.url()));
+    await page.evaluate(async () => {
+      await navigator.serviceWorker.ready;
+      if (!navigator.serviceWorker.controller) {
+        await new Promise<void>(resolve => navigator.serviceWorker.addEventListener('controllerchange', () => resolve(), { once: true }));
+      }
+    });
+
+    await page.locator('#quick').click();
+    await expect(page.locator('#app h1')).toContainText('pregunta 1');
+    await expect(page.locator('#code-explanation-slot')).toHaveCount(0);
     const questionId = await page.evaluate(() => {
       const run = JSON.parse(localStorage.getItem('tai.run:guest') || 'null');
-      const questionId = run?.ids?.[run.idx];
-      if (!questionId) throw new Error('No se encontró el identificador de la pregunta del intento');
-      return questionId;
+      const id = run?.ids?.[run.idx];
+      if (!id) throw new Error('No se encontró el identificador de la pregunta del intento');
+      return id as string;
     });
     const question = readdirSync(join(process.cwd(), 'public/data')).filter(name => /^T.*\.json$/.test(name))
       .map(name => JSON.parse(readFileSync(join(process.cwd(), 'public/data', name), 'utf8')) as { i: string; q: string; a: string[] }[])
@@ -255,24 +269,38 @@ test('las explicaciones draft solo aparecen tras revelar en práctica y están c
     const content = `${question.q}\u0000${question.a.join('\u0000')}`;
     let hash = 2166136261;
     for (let index = 0; index < content.length; index++) { hash ^= content.charCodeAt(index); hash = Math.imul(hash, 16777619); }
-    const row = { i: question.i, rev: `fnv1a-${(hash >>> 0).toString(16).padStart(8, '0')}` };
-    await route.fulfill({ json: [{ ...row, lang: 'Java', status: 'draft', snippet: 'int valor = 1;', result: { kind: 'logic', value: '1' }, steps: [{ title: 'Lectura', detail: 'El ejemplo explica la evaluación.' }], distractors: [], limitation: 'Material de práctica; no se ejecuta.', editorialNote: 'Pendiente de revisión humana.', sources: [{ title: 'JLS', url: 'https://docs.oracle.com/javase/specs/jls/se21/html/' }] }] });
+    const explanation = { i: question.i, rev: `fnv1a-${(hash >>> 0).toString(16).padStart(8, '0')}`, lang: 'Java', status: 'draft', snippet: 'int valor = 1;', result: { kind: 'logic', value: '1' }, steps: [{ title: 'Lectura', detail: 'El ejemplo explica la evaluación.' }], distractors: [], limitation: 'Material de práctica; no se ejecuta.', editorialNote: 'Pendiente de revisión humana.', sources: [{ title: 'JLS', url: 'https://docs.oracle.com/javase/specs/jls/se21/html/' }] };
+    await page.evaluate(async index => {
+      const url = new URL('explanations/index.json', location.href);
+      const cachesWithIndex = await Promise.all((await caches.keys()).map(async name => {
+        const cache = await caches.open(name);
+        return (await cache.match(url)) ? cache : undefined;
+      }));
+      const cache = cachesWithIndex.find(Boolean);
+      if (!cache) throw new Error('El índice de explicaciones no está en la caché del service worker');
+      await cache.put(url, new Response(JSON.stringify(index), { headers: { 'Content-Type': 'application/json' } }));
+    }, [explanation]);
+    await context.setOffline(true);
+
+    await page.locator('#blank').click();
+    await page.locator('#prev').click();
+    await page.locator('#reveal-solution').click();
+    await expect(page.locator('.code-explanation')).toBeVisible();
+    await expect(page.locator('.code-explanation .tag')).toHaveText('Borrador');
+    await page.reload();
+    await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
+    await page.locator('.overlay [data-v="1"]').click();
+    await expect(page.locator('.code-explanation')).toBeVisible();
+    const cached = await page.evaluate(async () => {
+      const response = await fetch('explanations/index.json');
+      return { ok: response.ok, index: await response.json() as { i: string }[] };
+    });
+    expect(cached.ok).toBe(true);
+    expect(cached.index.map(row => row.i)).toContain(question.i);
+    expect(errors.filter(error => !error.startsWith('Failed to load resource:'))).toEqual([]);
+    const allowedOfflineRequests = ['https://apis.google.com/', 'https://www.googleapis.com/identitytoolkit/', 'https://tai-oposicion.firebaseapp.com/__/auth/'];
+    expect(failedRequests.filter(url => !allowedOfflineRequests.some(prefix => url.startsWith(prefix)) && !url.endsWith('/explanations/index.json'))).toEqual([]);
   });
-  await page.locator('#quick').click();
-  await expect(page.locator('#code-explanation-slot')).toHaveCount(0);
-  await page.locator('#blank').click();
-  await page.locator('#prev').click();
-  await page.locator('#reveal-solution').click();
-  await expect(page.locator('.code-explanation')).toBeVisible();
-  await expect(page.locator('.code-explanation .tag')).toHaveText('Borrador');
-  await page.reload();
-  await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
-  await page.locator('.overlay [data-v="1"]').click();
-  await expect(page.locator('.code-explanation')).toBeVisible();
-  await context.setOffline(true);
-  const cached = await page.evaluate(async () => (await fetch('explanations/index.json')).ok);
-  expect(cached).toBe(true);
-  expect(errors).toEqual([]);
 });
 test('el simulacro no presenta explicaciones ni corrección mientras sigue activo', async ({ page }) => {
   const errors = await start(page);
