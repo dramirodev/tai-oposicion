@@ -694,3 +694,18 @@ input:not([type=checkbox]):not([type=radio]):not([type=range]),select {
 [data-screen=settings] .card>.btn,[data-screen=settings] .card>.file {
   margin-block: 4px;
 }
+
+/* Feedback under the hand; transforms do not move neighbouring controls. */
+@media (prefers-reduced-motion: no-preference) {
+  :is(.btn,.ghost,.iconbtn,.cta,.tile,.lrow,.big-btn,.seg button):not(:disabled):not([aria-disabled="true"]) {
+    transition: transform 120ms ease-out,background-color var(--duration-fast),color var(--duration-fast),border-color var(--duration-fast);
+  }
+  :is(.btn,.ghost,.iconbtn,.cta,.tile,.lrow,.big-btn,.seg button):not(:disabled):not([aria-disabled="true"]):active {
+    transform: translateY(1px) scale(.985);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.btn,.ghost,.iconbtn,.cta,.tile,.lrow,.big-btn,.seg button):active {
+    transform: none;
+  }
+}
