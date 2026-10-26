@@ -13,6 +13,8 @@ const CardsPage = lazy(() => import('../features/cards/CardsPage.js').then(modul
 const ErrorsPage = lazy(() => import('../features/errors/ErrorsPage.js').then(module => ({ default: module.ErrorsPage })));
 const FailuresPage = lazy(() => import('../features/failures/FailuresPage.js').then(module => ({ default: module.FailuresPage })));
 const LightningPage = lazy(() => import('../features/trainers/LightningPage.js').then(module => ({ default: module.LightningPage })));
+const TrapsPage = lazy(() => import('../features/trainers/TrapsPage.js').then(module => ({ default: module.TrapsPage })));
+const ReadingPage = lazy(() => import('../features/trainers/ReadingPage.js').then(module => ({ default: module.ReadingPage })));
 interface LegacyRuntime {
   bootLegacy: () => () => void;
   configureLegacyRouter: (navigate: (target: string, refresh?: boolean) => void) => void;
@@ -35,6 +37,8 @@ export const router = createHashRouter([{ ErrorBoundary: RouteError, element: <L
   { path: `${routeSegment(paths.errors)}/*`, element: screen(<ErrorsPage />, { restricted: true }) },
   { path: `${routeSegment(paths.failures)}/*`, element: screen(<FailuresPage />, { restricted: true }) },
   { path: `${routeSegment(paths.lightning)}/*`, element: screen(<LightningPage />, { restricted: true }) },
+  { path: `${routeSegment(paths.traps)}/*`, element: screen(<TrapsPage />, { restricted: true }) },
+  { path: `${routeSegment(paths.reading)}/*`, element: screen(<ReadingPage />, { restricted: true }) },
   ...legacyPaths.map(path => ({ path: `${routeSegment(path)}/*`, element: <LegacyRoute /> })),
   { path: '*', element: screen(<HomePage />, { home: true }) },
 ] }]);

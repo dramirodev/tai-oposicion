@@ -50,8 +50,6 @@ export const legacyPaths = [
   paths.exams,
   paths.stats,
   paths.settings,
-  paths.reading,
-  paths.traps,
 ] as const;
 
 export function routeSegment(path: string): string {

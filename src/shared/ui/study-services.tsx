@@ -101,7 +101,30 @@ export interface FailureServices {
 }
 export interface LightningQuestion extends FailureQuestion { reason: string }
 export interface LightningServices { loadQuestion(): Promise<LightningQuestion | null>; record(questionId: string, topicId: string, correct: boolean, seconds: number): void; topicName(id: string): string }
-export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; cards: CardsServices; errors: ErrorServices; failures: FailureServices; lightning: LightningServices; markReady(): void }
+export interface TrapPrompt extends FailureQuestion { topicName: string; trapIds: readonly number[]; choices: readonly number[] }
+export interface TrapAnswer { hits: number; missed: number; falseAlarms: number; total: number; correctIds: readonly number[]; selectedIds: readonly number[] }
+export interface TrapWeakness { id: number; seen: number; detected: number }
+export interface TrapRun { items: readonly TrapPrompt[]; index: number; results: readonly TrapAnswer[] }
+export interface TrapsServices { getRun(): TrapRun | null; startRun(): Promise<TrapRun>; evaluate(selected: readonly number[]): TrapAnswer | null; next(): TrapRun | null; getWeaknesses(): TrapWeakness[]; resetRun(): void }
+export interface ReadingToken { text: string; key: boolean }
+export interface ReadingPrompt extends FailureQuestion { asksForNegative: boolean; minimumSeconds: number; tokens: readonly ReadingToken[] }
+export interface ReadingWordResult { hit: number; missed: number; extra: number; total: number; claimedNone: boolean }
+export interface ReadingOutcome { correct: boolean; meaningCorrect: boolean; marked: [number, number] }
+export interface ReadingProgress { items: readonly ReadingPrompt[]; index: number; step: 0 | 1 | 2; meaningChoice: 0 | 1 | null; meaningCorrect: boolean | null; selectedWords: readonly number[]; wordResult: ReadingWordResult | null; selectedAnswer: number | null; answerCorrect: boolean | null; startedAt: number; outcomes: readonly ReadingOutcome[]; complete: boolean }
+export interface ReadingServices {
+  getProgress(): ReadingProgress | null;
+  subscribe(listener: () => void): () => void;
+  start(): Promise<ReadingProgress | null>;
+  answerMeaning(choice: 0 | 1): void;
+  continueMeaning(): void;
+  toggleWord(index: number): void;
+  checkWords(claimedNone?: boolean): ReadingWordResult | null;
+  showOptions(): void;
+  answerOption(index: number): boolean | null;
+  next(): ReadingProgress | null;
+  reset(): void;
+}
+export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; cards: CardsServices; errors: ErrorServices; failures: FailureServices; lightning: LightningServices; traps: TrapsServices; reading: ReadingServices; markReady(): void }
 const Context = createContext<StudyServices | null>(null);
 export const AppServicesProvider = Context.Provider;
 export function useStudyServices(): StudyServices {

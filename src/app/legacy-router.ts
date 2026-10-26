@@ -22,10 +22,9 @@ import { $, legacyScope, bindLegacyHost, L, toast, ask, guard, focusHeading, typ
 import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
 import { BLOQUES, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
-import { registerTraining } from '../features/trainers/legacy.js';
 import { createCardsController } from '../features/cards/cards-controller.js';
 import { cardFromFailedQuestion } from '../features/cards/flashcard-mapper.js';
-import type { FailureQuestion, LightningQuestion, StudyCard } from '../shared/ui/study-services.js';
+import type { FailureQuestion, LightningQuestion, ReadingOutcome, ReadingProgress, ReadingPrompt, ReadingWordResult, StudyCard, TrapAnswer, TrapPrompt, TrapRun } from '../shared/ui/study-services.js';
 import { registerStats } from '../features/stats/legacy.js';
 import { registerSettings } from '../features/settings/legacy.js';
 import { isFull, isOwner, accessLevel, GUEST_ROUTES } from '../adapters/legacy/access.js';
@@ -44,6 +43,7 @@ import { renderStrategyReport } from '../features/stats/strategy-view.js';
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './ai-study-export-composition.js';
 import { hashPath } from './paths.js';
 import type { Question } from '../adapters/legacy/types.js';
+import { readingTokens, mixReadingIds } from '../features/trainers/reading-controller.js';
 
 // ───────── router ─────────
 const routes: Record<string, any> = {};
@@ -842,7 +842,6 @@ const cardsServices = createCardsController({
   getReport: id => store.getReports()[id],
   saveReport: (card, reason, note) => store.addReport(card.id, card.t, reason, note),
 });
-registerTraining({ routes, go, route, pw, verifiedSources: VERIFIED_SOURCES }, screen);
 registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport: loadStrategyReportForPeriod, renderStrategyReport, loadQuestionEvolution });
 
 
@@ -887,6 +886,179 @@ const lightningServices = {
   },
   record(questionId: string, topicId: string, correct: boolean, seconds: number) { store.record(questionId, topicId, correct ? 1 : 0, now(), seconds); },
   topicName: temaName,
+};
+let trapRun: TrapRun | null = null;
+let trapOwner: string | null = store.accountId();
+function currentTrapRun(): TrapRun | null {
+  const account = store.accountId();
+  if (trapOwner !== account) { trapRun = null; trapOwner = account; }
+  return trapRun;
+}
+const trapsServices = {
+  getRun: currentTrapRun,
+  async startRun() {
+    const current = currentTrapRun();
+    if (current) return current;
+    await getMeta();
+    const questionStats = store.getStats();
+    const eligible = Object.keys(META).filter(id => id !== '_by' && (META[id][3] || []).length);
+    const failed = eligible.filter(id => questionStats[id]?.[5] === 0);
+    const failedSet = new Set(failed);
+    const rest = eligible.filter(id => !failedSet.has(id));
+    const prioritized = shuffle(failed).slice(0, 4), selectedIds = [...prioritized, ...shuffle(rest).filter(id => !prioritized.includes(id)).slice(0, Math.max(0, 40 - prioritized.length))];
+    const questions = (await byIds(selectedIds)).filter(question => !question.s && question.x?.length).slice(0, 8);
+    const allTraps = Object.keys(TRAMPAS).map(Number);
+    const items: TrapPrompt[] = questions.map(question => {
+      const trapIds = [...new Set((question.x || []).map(Number))];
+      const distractors = shuffle(allTraps.filter(id => !trapIds.includes(id))).slice(0, Math.max(3, 8 - trapIds.length));
+      return { ...mapFailureQuestion(question), topicName: temaName(question.t), trapIds, choices: shuffle([...trapIds, ...distractors]) };
+    });
+    trapOwner = store.accountId();
+    trapRun = { items, index: 0, results: [] };
+    return trapRun;
+  },
+  evaluate(selected: readonly number[]): TrapAnswer | null {
+    currentTrapRun();
+    const prompt = trapRun?.items[trapRun.index];
+    if (!trapRun || !prompt || trapRun.results.length > trapRun.index) return null;
+    const actual = new Set(prompt.trapIds), picked = new Set(selected);
+    const answer: TrapAnswer = {
+      hits: prompt.trapIds.filter(id => picked.has(id)).length,
+      missed: prompt.trapIds.filter(id => !picked.has(id)).length,
+      falseAlarms: selected.filter(id => !actual.has(id)).length,
+      total: prompt.trapIds.length,
+      correctIds: prompt.trapIds,
+      selectedIds: [...selected],
+    };
+    const stats = { ...(store.getCfg().tdet || {}) } as Record<string, number[]>;
+    for (const id of prompt.trapIds) {
+      const record = stats[id] ? [...stats[id]] : [0, 0];
+      record[0]++;
+      if (picked.has(id)) record[1]++;
+      stats[id] = record;
+    }
+    store.setCfg('tdet', stats);
+    trapRun = { ...trapRun, results: [...trapRun.results, answer] };
+    return answer;
+  },
+  next(): TrapRun | null {
+    currentTrapRun();
+    if (!trapRun || trapRun.results.length <= trapRun.index) return trapRun;
+    if (trapRun.index + 1 >= trapRun.items.length) { trapRun = null; return null; }
+    trapRun = { ...trapRun, index: trapRun.index + 1 };
+    return trapRun;
+  },
+  getWeaknesses() {
+    const records = (store.getCfg().tdet || {}) as Record<string, number[]>;
+    return Object.entries(records).map(([id, [seen, detected]]) => ({ id: Number(id), seen, detected }))
+      .filter(item => item.seen >= 3).sort((first, second) => first.detected / first.seen - second.detected / second.seen).slice(0, 6);
+  },
+  resetRun() { trapRun = null; trapOwner = store.accountId(); },
+};
+let readingOwner: string | null = store.accountId();
+let readingBatch: ReadingPrompt[] | null = null;
+let readingProgress: ReadingProgress | null = null;
+const readingListeners = new Set<() => void>();
+const notifyReading = () => readingListeners.forEach(listener => listener());
+store.onAccountChange(() => { readingOwner = store.accountId(); readingBatch = null; readingProgress = null; notifyReading(); });
+function ensureReadingOwner() {
+  const account = store.accountId();
+  if (readingOwner !== account) { readingBatch = null; readingProgress = null; readingOwner = account; }
+}
+const readingServices = {
+  getProgress: () => { ensureReadingOwner(); return readingProgress; },
+  subscribe(listener: () => void) { readingListeners.add(listener); return () => readingListeners.delete(listener); },
+  async start(): Promise<ReadingProgress | null> {
+    ensureReadingOwner();
+    if (readingProgress) return readingProgress;
+    const owner = store.accountId();
+    let batch = readingBatch;
+    if (batch) { readingProgress = { items: batch, index: 0, step: 0, meaningChoice: null, meaningCorrect: null, selectedWords: [], wordResult: null, selectedAnswer: null, answerCorrect: null, startedAt: 0, outcomes: [], complete: false }; notifyReading(); return readingProgress; }
+    await getMeta();
+    if (owner !== store.accountId()) return null;
+    const questionStats = store.getStats();
+    const fastIds = velocidad(questionStats).ids;
+    let recent: string[] = [];
+    try {
+      const value = JSON.parse(localStorage.getItem('tai.lrec:' + (store.accountId() || 'guest')) || '[]');
+      if (Array.isArray(value)) recent = value.map(String);
+    } catch {}
+    const recentIds = new Set(recent), fastSet = new Set(fastIds);
+    const failedIds = Object.keys(questionStats).filter(id => questionStats[id][5] === 0 && !fastSet.has(id));
+    const failedSet = new Set(failedIds);
+    const rest = Object.keys(META).filter(id => id !== '_by' && META[id] && !fastSet.has(id) && !failedSet.has(id));
+    const ids = mixReadingIds([[fastIds, 3], [failedIds, 2]], rest, 40, recentIds, shuffle);
+    const available = new Map((await byIds(ids)).filter(question => !question.s && !question.cp).map(question => [question.i, question]));
+    const questions = shuffle(ids.map(id => available.get(id)).filter((question): question is Question => !!question).slice(0, 8));
+    readingBatch = questions.map(question => ({
+      ...mapFailureQuestion(question),
+      asksForNegative: asksForNegativeOption(question.q),
+      minimumSeconds: minimumReadingSeconds({ context: question.cp, statement: question.q, options: question.a }),
+      tokens: readingTokens(question.q),
+    }));
+    if (owner !== store.accountId()) { readingBatch = null; return null; }
+    readingOwner = store.accountId();
+    batch = readingBatch;
+    readingProgress = { items: batch, index: 0, step: 0, meaningChoice: null, meaningCorrect: null, selectedWords: [], wordResult: null, selectedAnswer: null, answerCorrect: null, startedAt: 0, outcomes: [], complete: false };
+    notifyReading(); return readingProgress;
+  },
+  answerMeaning(choice: 0 | 1) {
+    const progress = this.getProgress(), question = progress?.items[progress.index]; if (!progress || !question || progress.step !== 0) return;
+    const correct = (choice === 1) === question.asksForNegative;
+    readingProgress = { ...progress, meaningChoice: choice, meaningCorrect: correct, selectedWords: [], wordResult: null };
+    notifyReading();
+  },
+  continueMeaning() {
+    const progress = this.getProgress(); if (!progress || progress.step !== 0 || progress.meaningChoice === null) return;
+    readingProgress = { ...progress, step: 1 }; notifyReading();
+  },
+  toggleWord(index: number) {
+    const progress = this.getProgress(); if (!progress || progress.step !== 1 || progress.wordResult) return;
+    const selected = new Set(progress.selectedWords); selected.has(index) ? selected.delete(index) : selected.add(index);
+    readingProgress = { ...progress, selectedWords: [...selected] }; notifyReading();
+  },
+  checkWords(claimedNone = false): ReadingWordResult | null {
+    const progress = this.getProgress(), question = progress?.items[progress.index]; if (!progress || !question || progress.step !== 1 || progress.wordResult) return progress?.wordResult || null;
+    const keyIds = new Set(question.tokens.flatMap((token, index) => token.key ? [index] : []));
+    const selected = new Set(progress.selectedWords);
+    const result: ReadingWordResult = {
+      hit: claimedNone ? 0 : [...selected].filter(index => keyIds.has(index)).length,
+      missed: claimedNone ? keyIds.size : [...keyIds].filter(index => !selected.has(index)).length,
+      extra: claimedNone ? 0 : [...selected].filter(index => !keyIds.has(index)).length,
+      total: keyIds.size,
+      claimedNone,
+    };
+    readingProgress = { ...progress, wordResult: result }; notifyReading(); return result;
+  },
+  showOptions() {
+    const progress = this.getProgress(); if (!progress || progress.step !== 1 || !progress.wordResult) return;
+    readingProgress = { ...progress, step: 2, startedAt: Date.now(), selectedAnswer: null, answerCorrect: null }; notifyReading();
+  },
+  answerOption(index: number): boolean | null {
+    const progress = this.getProgress(), question = progress?.items[progress.index]; if (!progress || !question || progress.step !== 2 || progress.selectedAnswer !== null) return null;
+    if (Date.now() - progress.startedAt < question.minimumSeconds * 1000) return false;
+    const correct = index === question.correctIndex;
+    store.record(question.id, question.topicId, correct ? 1 : 0, now(), Math.max(1, Math.round((Date.now() - progress.startedAt) / 1000)));
+    this.remember(question.id);
+    const marked = progress.wordResult?.claimedNone ? [0, progress.wordResult.total] : [progress.wordResult?.hit || 0, progress.wordResult?.total || 0];
+    const outcome: ReadingOutcome = { correct, meaningCorrect: !!progress.meaningCorrect, marked: marked as [number, number] };
+    readingProgress = { ...progress, selectedAnswer: index, answerCorrect: correct, outcomes: [...progress.outcomes, outcome] }; notifyReading(); return correct;
+  },
+  next() {
+    const progress = this.getProgress(); if (!progress || progress.selectedAnswer === null) return progress;
+    if (progress.index + 1 >= progress.items.length) { readingProgress = { ...progress, complete: true }; notifyReading(); return readingProgress; }
+    readingProgress = { ...progress, index: progress.index + 1, step: 0, meaningChoice: null, meaningCorrect: null, selectedWords: [], wordResult: null, selectedAnswer: null, answerCorrect: null, startedAt: 0 };
+    notifyReading(); return readingProgress;
+  },
+  remember(questionId: string) {
+    try {
+      const key = 'tai.lrec:' + (store.accountId() || 'guest');
+      const value = JSON.parse(localStorage.getItem(key) || '[]');
+      const previous = Array.isArray(value) ? value : [];
+      localStorage.setItem(key, JSON.stringify([String(questionId), ...previous.filter((id: unknown) => String(id) !== String(questionId))].slice(0, 80)));
+    } catch {}
+  },
+  reset() { readingProgress = null; readingBatch = null; readingOwner = store.accountId(); notifyReading(); },
 };
 
 
@@ -974,6 +1146,8 @@ export const studyServices: StudyServices = {
   cards: cardsServices,
   failures: failuresServices,
   lightning: lightningServices,
+  traps: trapsServices,
+  reading: readingServices,
   errors: {
     getFilter() { return String(store.getCfg().errf || 'abierto'); },
     getReports() { return Object.entries(store.getReports()).map(([id, report]) => ({ id, ts: report.ts, tema: report.tema, motivo: report.motivo, nota: report.nota, state: report.st })); },
