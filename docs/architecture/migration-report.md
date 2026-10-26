@@ -2,7 +2,7 @@
 
 ## Estado
 
-**Etapa A (auditoría y propuesta): completa en esta rama.** No se modificó código de producción. **Etapa B: pendiente de aprobación del usuario.**
+**Etapa A (auditoría y propuesta): completa y publicada en la PR #38**, apilada sobre la rama de la PR #34. No se modificó código de producción. **Etapa B: pendiente de aprobación del usuario.**
 
 La propuesta preserva las capas ya existentes y prioriza extraer un slice estadístico de solo lectura antes de atacar la sesión de estudio y la sincronización, por su menor riesgo de datos. Propone evaluar Zustand con un único estado efímero compartido y conservar `useState` para lo local; la biblioteca no está instalada en el checkout auditado y no debe añadirse en Etapa A.
 
@@ -10,6 +10,7 @@ La propuesta preserva las capas ya existentes y prioriza extraer un slice estad�
 
 - Añadidos `audit.md`, `target-architecture.md`, `dependency-rules.md`, `migration-plan.md` y este informe.
 - Actualizado el handoff del proyecto con estado, evidencia y siguiente paso.
+- PR #38 abierta contra `feat/migrate-cards-screen`; debe retargetearse a `main` después del merge de #34.
 - Sin cambios en páginas, lógica de negocio, reglas Firebase, esquema persistido, dependencias, tests de producción ni configuración.
 
 ## Evidencia y validación

@@ -126,4 +126,4 @@ Orden propuesto actualizado:
 4. Desacoplar `legacy-engine.ts` con puertos/adaptadores probados; luego separar composición/arranque y retirar código HTML legacy tras búsqueda de referencias.
 5. Cerrar mappers/tipos antiguos, añadir control de ciclos y repetir las validaciones; realizar las tareas independientes de Recharts/Lucide según sus PRs y el handoff UI.
 
-**Etapa A terminada en código y documentos; falta publicar la PR de propuesta. Etapa B pendiente de aprobación.** Archivos de propuesta: `docs/architecture/audit.md`, `target-architecture.md`, `dependency-rules.md`, `migration-plan.md`, `migration-report.md`.
+**Etapa A terminada y publicada en la PR #38** (base `feat/migrate-cards-screen`); tras el merge de #34, retargetear la propuesta a `main`. Etapa B pendiente de aprobación. Archivos de propuesta: `docs/architecture/audit.md`, `target-architecture.md`, `dependency-rules.md`, `migration-plan.md`, `migration-report.md`.
