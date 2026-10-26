@@ -161,6 +161,8 @@ test('el menú móvil permite navegar por teclado y devuelve el foco al cerrar',
   await prepare(page, 'light', 0);
   await page.goto('/#/test');
   await expect(page.locator('.workspace-sidebar')).toBeHidden();
+  // La pantalla legacy enfoca el título al terminar su carga asíncrona.
+  await expect(page.locator('#app h1')).toBeFocused();
   const menu = page.locator('.workspace-menu');
   await expect(menu).toBeVisible();
   await menu.focus();
