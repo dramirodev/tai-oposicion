@@ -26,7 +26,7 @@ import { canonicalText, paintTextHighlight, selectedTextAnchor } from './legacy-
 import { findLegacyCodeExplanation } from './explanation-composition.js';
 import { explanationMapper } from '../features/explanations/explanation-mapper.js';
 import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
-import { loadStrategyReportForPeriod } from './strategy-composition.js';
+import { loadQuestionEvolution, loadStrategyReportForPeriod } from './strategy-composition.js';
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './ai-study-export-composition.js';
 import { hashPath } from './paths.js';
@@ -376,8 +376,19 @@ routes.quiz = async function () {
       if (id && removeCurrentHighlight(id)) { window.getSelection()?.removeAllRanges(); draw(); }
     });
     $('#blank') && ($('#blank').onclick = () => {
-      if (R.feedback) { if (R.ans[R.idx] === undefined) { answer(q, -1); if (R.idx < R.items.length - 1) setQuestionIndex(R.idx + 1); draw(); if (R.idx > 0) focusHeading(); } }
-      else { toggleDeferredBlank(); draw(); }
+      if (R.feedback) {
+        if (R.ans[R.idx] === undefined) {
+          answer(q, -1);
+          if (R.idx < R.items.length - 1) setQuestionIndex(R.idx + 1);
+          draw();
+          if (R.idx > 0) focusHeading();
+          window.scrollTo(0, 0);
+        }
+      } else {
+        toggleDeferredBlank();
+        draw();
+        window.scrollTo(0, 0);
+      }
     });
     $('#reveal-solution') && ($('#reveal-solution').onclick = () => { if (revealCurrentSolution()) { draw(); focusHeading(); } });
     $('#next') && ($('#next').onclick = () => { if (R.idx === R.items.length - 1) { void finish(); return; } setQuestionIndex(R.idx + 1); draw(); focusHeading(); window.scrollTo(0, 0); });
@@ -895,7 +906,7 @@ routes.falladas = async function () {
 
 registerTraining({ routes, go, route, pw, verifiedSources: VERIFIED_SOURCES }, screen);
 const { allCards, curatedCards } = registerCards({ routes, go, pw, reportBox, verifiedSources: VERIFIED_SOURCES }, screen);
-registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport: loadStrategyReportForPeriod, renderStrategyReport });
+registerStats({ routes, go, trapTest, startRun, startRepaso, dominioTemas, getStrategyReport: loadStrategyReportForPeriod, renderStrategyReport, loadQuestionEvolution });
 
 
 registerSettings({ routes, go, allCards, curatedCards, getNewVersion: () => NEWV, checkUpdate, applyUpdate, listManualExportSessions, createManualAiExport, deleteManualStudyHistory }, screen);
