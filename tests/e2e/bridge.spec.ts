@@ -449,6 +449,36 @@ test('subrayados y señales son opcionales, no responden y se conservan al reanu
   await expect(page.locator('.rv').first()).toContainText('Confianza antes de responder: Entre dos');
   expect(errors).toEqual([]);
 });
+
+test('el formato de código del enunciado conserva estilo y permite subrayar texto', async ({ page }) => {
+  const errors = await start(page);
+  await page.locator('#quick').click();
+  const statement = page.locator('.enun');
+  await expect(statement).toBeVisible();
+  await statement.evaluate(element => { element.innerHTML = '<code class="cd blk">SELECT nombre FROM usuarios</code>'; });
+  const styles = await statement.locator('code').evaluate(element => {
+    const style = getComputedStyle(element);
+    return { fontFamily: style.fontFamily, display: style.display, whiteSpace: style.whiteSpace, background: style.backgroundColor };
+  });
+  expect(styles.fontFamily).toMatch(/monospace/i);
+  expect(styles.display).toBe('block');
+  expect(styles.whiteSpace).toBe('pre-wrap');
+  expect(styles.background).not.toBe('rgba(0, 0, 0, 0)');
+
+  await statement.evaluate(element => {
+    const text = element.querySelector('code')!.firstChild!;
+    const range = document.createRange();
+    range.setStart(text, 0); range.setEnd(text, 6);
+    const selection = window.getSelection()!;
+    selection.removeAllRanges(); selection.addRange(range);
+    document.dispatchEvent(new Event('selectionchange'));
+  });
+  await expect(page.locator('#highlight-tools')).toBeVisible();
+  await page.locator('[data-add-highlight="key"]').click();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('tai.run:guest') || 'null').highlights[0][0].text)).toBe('SELECT');
+  await expect.poll(async () => (await savedAttemptHistory(page)).events).toContain('add-highlight');
+  expect(errors).toEqual([]);
+});
 test('`route()` repinta la misma URL en Relámpago', async ({ page }) => {
   const errors = await start(page);
   await page.goto('/#/relampago');
