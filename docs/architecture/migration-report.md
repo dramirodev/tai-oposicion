@@ -43,6 +43,14 @@ La propuesta preserva las capas ya existentes y prioriza extraer un slice estad�
 - Validación del slice original: arquitectura sin deuda nueva, lint, ignore-growth, TypeScript, 405/405 pruebas, build y E2E de diálogo/menú/táctil 34/34. La versión reapuntada se volverá a validar antes de actualizar su PR.
 
 El siguiente trabajo en curso desacopla únicamente la lectura/validación de una sesión guardada. No extrae un puerto global para todo `legacy-engine` y conserva el formato `tai.run:<cuenta>`.
+
+## Actualización — 2026-10-27, mappers del banco
+
+- El arranque global fue extraído en la PR #53, abierta contra `main`; estado `MERGEABLE` y check remoto en curso al último sondeo. Su comportamiento se verificó con 413 tests, build y 104 E2E.
+- El siguiente slice identifica una duplicación de mapeo real entre diagnóstico y repository HTTP. El mapper y los avisos se consolidan en `question-diagnostics.ts`; el repository HTTP usa el mismo helper y sigue entregando entidades internas a sus consumidores.
+- No se cambia el DTO, orden de campos, contenido del banco ni persistencia. Se mantiene el modo diagnóstico de desarrollo, y en producción el camino legado no ejecuta trabajo de diagnóstico.
+- Validaciones actuales de este slice: 9/9 tests focalizados, `npm run check` 414/414, build y E2E de estadísticas **6/6** Chromium/WebKit.
+- Siguiente orden: revisar guardas de ciclos/imports y determinar qué excepciones baseline se pueden retirar con seguridad; primero contrastar el estado vigente del checker, sin ampliar dependencias ni mover toda la arquitectura automáticamente.
 ## Etapa B — avance 2026-10-27
 
 La instrucción actual del usuario autoriza continuar la implementación de las tareas pendientes. Este primer incremento aborda el agregado de rendimiento por tema:

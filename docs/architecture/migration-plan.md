@@ -10,7 +10,7 @@ Complejidad relativa: **baja** (cambio localizado y bajo riesgo), **media** (var
 | 3 | Delimitar estado efímero compartido y evaluar Zustand en una sola rebanada | Baja/media | Implementado y fusionado mediante PR #45 para diálogos/toasts, con selectores y sin persistencia. |
 | 4 | Desacoplar `core/application/legacy-engine.ts` de persistencia/datos legacy | Alta | PR #50 separa la lectura y validación de sesión guardada en un caso de uso con dominio y adaptador local; conserva el contrato `tai.run:<cuenta>`. |
 | 5 | Extraer composición/arranque de `legacy-router.ts` y retirar renderer muerto | Alta | Primer slice en PR #47: renderer HTML sin rutas activas retirado y bootstrap renombrado a servicios de aplicación. La extracción adicional del arranque de service worker/sync sigue pendiente. |
-| 6 | Encapsular DTO y modelos legacy en mappers/adapters | Media/alta | UI/dominio reciben modelos internos; adapters conservan lectura compatible de datos antiguos. Contratos externos sin cambios. |
+| 6 | Encapsular DTO y modelos legacy en mappers/adapters | Media/alta | En curso: diagnóstico y repository HTTP comparten una transformación DTO→dominio para evitar reglas de mapeo y avisos duplicados; la convivencia con el acceso legacy sigue siendo gradual. |
 | 7 | Cierre de guardas y limpieza validada | Media | No new architecture debt, chequeo de ciclos, lint, typecheck, tests, build y E2E de rutas críticas. Retirar únicamente código sustituido sin referencias. |
 
 ### Estado de ejecución — actualización 2026-10-27
@@ -43,3 +43,11 @@ Complejidad relativa: **baja** (cambio localizado y bajo riesgo), **media** (var
 - **Puntuación:** casos de uso nuevos deben delegar en reglas existentes y mantener ejemplos históricos de test/simulacro.
 - **Scope:** un PR por vertical slice; no mezclar cambios visuales o dependencias que no sean necesarias.
 - **Cambios concurrentes en documentación:** mantener los estados comprobados al actualizar el handoff y resolver conflictos sin descartar el registro de otras tareas.
+
+## Orden 5 y 6 — actualización 2026-10-27
+
+- Orden 5 completado en PR #53 (`refactor/app-bootstrap-boundary`), contra `main`: extrae la coordinación de arranque a `src/app/app-bootstrap.ts`. Validación local 413/413, build y E2E 104/104 en Chromium/WebKit. El check remoto seguía en curso al último sondeo.
+- Orden 6, slice de preguntas HTTP en esta rama: `legacy-data.ts` diagnostica DTOs mediante `questionMapper`; `bank-repository.ts` volvía a convertir esos mismos registros y mantenía sus propios conjuntos de avisos. El repository sí tiene consumidores en exportación y estrategia.
+- `question-diagnostics.ts` ahora ofrece `mapQuestionDtos`, que centraliza validación, transformación al modelo interno y avisos deduplicados; `bank-repository.ts` reutiliza el helper. `diagnoseQuestionDtos` conserva su función de diagnóstico-only y no mapea en producción.
+- Validación focal del slice: mapper, diagnóstico y repository **9/9**. Suite completa **414/414**, build correcta; E2E de estadísticas **6/6** Chromium/WebKit.
+- No se migran todos los tipos legacy ni se alteran registros persistidos o contratos del banco.
