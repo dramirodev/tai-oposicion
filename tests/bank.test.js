@@ -5,7 +5,7 @@ import { pack, plan } from '../scripts/publish_bank.mjs';
 
 const remote = vi.hoisted(() => ({ meta: null, files: {}, calls: { meta: 0, file: 0 } }));
 vi.mock('../src/adapters/legacy/access.js', () => ({ isFull: () => true }));
-vi.mock('../src/adapters/firebase/legacy-sync.js', () => ({
+vi.mock('../src/adapters/firebase/study-bank-source.js', () => ({
   bankMeta: async () => { remote.calls.meta++; return remote.meta; },
   bankFile: async n => { remote.calls.file++; return remote.files[n] || null; },
 }));
@@ -27,6 +27,18 @@ it('descarga y descomprime el fichero; la segunda vez sale de la copia local', a
   expect(remote.calls.file).toBe(1);
   expect(await bank.loadBank('T1.01')).toEqual([{ i: 'a', q: 'ñandú' }]);
   expect(remote.calls.file).toBe(1);
+});
+it('conserva la base de caché publicada y su almacén al usar idb', async () => {
+  localStorage.setItem('tai.bank', 'fs'); publish('T1.01', [{ i: 'a' }]);
+  await bank.loadBank('T1.01');
+  const request = indexedDB.open('tai-bank');
+  const database = await new Promise((resolve, reject) => {
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+  expect(database.version).toBe(1);
+  expect([...database.objectStoreNames]).toEqual(['f']);
+  database.close();
 });
 it('con copia local responde al instante y se actualiza detrás si cambia el hash', async () => {
   localStorage.setItem('tai.bank', 'fs'); publish('T1.01', [{ i: 'viejo' }]);

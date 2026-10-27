@@ -3,7 +3,7 @@ import type { FirebaseOptions } from 'firebase/app';
 import { initializeAuth, GoogleAuthProvider, signInWithRedirect, signInWithPopup, getRedirectResult, onAuthStateChanged, signOut, indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence, browserPopupRedirectResolver } from 'firebase/auth';
 import {
   initializeFirestore, persistentLocalCache, persistentMultipleTabManager,
-  doc, getDoc, setDoc, deleteDoc, onSnapshot, collection, query, orderBy, limit
+  doc, setDoc, deleteDoc, onSnapshot, collection, query, orderBy, limit
 } from 'firebase/firestore';
 import type { Auth, User } from 'firebase/auth';
 import type { Firestore, FirestoreError, QuerySnapshot, DocumentSnapshot, Unsubscribe } from 'firebase/firestore';
@@ -21,6 +21,7 @@ const errorFields = (value: unknown): { code: unknown; message: unknown } => {
 import { status, emit } from './legacy-sync-state.js';
 import { OWNER, rememberAccess } from '../legacy/access.js';
 import { syncAttemptHistory } from './attempt-sync.js';
+import { configureStudyBankSource } from './study-bank-source.js';
 
 let auth: Auth, db: Firestore, uid: string | null = null, timer: ReturnType<typeof setTimeout> | undefined, cardsT: ReturnType<typeof setTimeout> | undefined, retryT: ReturnType<typeof setTimeout> | undefined, retryN = 0, syncEpoch = 0, unsubs: Unsubscribe[] = [];
 let temaOf: (id: string) => string | null = () => null; // id -> tema
@@ -54,6 +55,7 @@ export async function init(metaFns: { temaOf: (id: string) => string | null; ids
   // Persistencia explícita (IndexedDB y, si no, localStorage): en iOS la sesión debe sobrevivir al cierre de la app.
   auth = initializeAuth(app, { persistence: [indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence], popupRedirectResolver: browserPopupRedirectResolver });
   db = initializeFirestore(app, { localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }), experimentalAutoDetectLongPolling: true }); // Safari/iOS: si el canal en streaming falla, usa long-polling
+  configureStudyBankSource(db, canSync);
   const pend = (() => { try { return localStorage.getItem('tai.redir'); } catch { return null; } })();
   getRedirectResult(auth).then(result => {
     try { localStorage.removeItem('tai.redir'); } catch {}
@@ -278,17 +280,4 @@ function writeErr(error: unknown) {
   const { code, message } = errorFields(error);
   if (code !== 'permission-denied' && code !== 'unauthenticated') { console.warn('Firestore (escritura):', code, message); return; }
   status.error = 'No se pudo guardar en la nube (' + (code || message) + ')'; emit();
-}
-
-// ───────── banco de preguntas en Firestore (solo lectura; lo publica scripts/publish_bank.mjs) ─────────
-export interface BankMeta { v: number; files: Record<string, string> }
-/** Versión del banco y hash de cada fichero. null si no hay sesión con acceso o no se puede leer. */
-export async function bankMeta(): Promise<BankMeta | null> {
-  if (!db || !canSync()) return null;
-  try { const state = await getDoc(doc(db, 'bank', 'meta')); const data = state.exists() ? state.data() : null; return data && data.files ? { v: data.v, files: data.files } as BankMeta : null; } catch { return null; }
-}
-/** Contenido gzip de un fichero del banco. */
-export async function bankFile(name: string): Promise<Uint8Array | null> {
-  if (!db || !canSync()) return null;
-  try { const state = await getDoc(doc(db, 'bank', 'f_' + name)); const bytes = state.exists() ? state.data().z : null; return bytes && typeof bytes.toUint8Array === 'function' ? bytes.toUint8Array() : null; } catch { return null; }
 }
