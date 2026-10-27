@@ -1,13 +1,11 @@
 import { createHashRouter } from 'react-router';
 import { Layout } from './Layout.js';
-import { LegacyRoute } from './LegacyRoute.js';
 import { RouteError } from './RouteError.js';
 import { lazy, Suspense, useLayoutEffect, type ReactNode } from 'react';
 import { useLocation } from 'react-router';
 import { ReactScreen } from './ReactScreen.js';
 import { ExamsRedirect } from './ExamsRedirect.js';
-import { legacyPaths, paths, routeSegment } from './paths.js';
-import { useOptionalStudyServices } from '../shared/ui/study-services.js';
+import { paths, routeSegment } from './paths.js';
 const HomePage = lazy(() => import('../features/home/HomePage.js').then(module => ({ default: module.HomePage })));
 const AccessPage = lazy(() => import('../features/access/AccessPage.js').then(module => ({ default: module.AccessPage })));
 const HelpPage = lazy(() => import('../features/help/HelpPage.js').then(module => ({ default: module.HelpPage })));
@@ -25,23 +23,23 @@ const SimulationPage = lazy(() => import('../features/simulation/SimulationPage.
 const ResultPage = lazy(() => import('../features/result/ResultPage.js').then(module => ({ default: module.ResultPage })));
 const StatsPage = lazy(() => import('../features/stats/StatsPage.js').then(module => ({ default: module.StatsPage })));
 const QuizPage = lazy(() => import('../features/quiz/QuizPage.js').then(module => ({ default: module.QuizPage })));
-interface LegacyRuntime {
-  bootLegacy: () => () => void;
-  configureLegacyRouter: (navigate: (target: string, refresh?: boolean) => void) => void;
+interface AppRuntime {
+  bootAppServices: () => () => void;
+  configureAppNavigation: (navigate: (target: string, refresh?: boolean) => void) => void;
+  markReady: () => void;
 }
-let legacyRuntime: LegacyRuntime;
-export function configureRuntime(runtime: LegacyRuntime): void { legacyRuntime = runtime; }
+let appRuntime: AppRuntime;
+export function configureRuntime(runtime: AppRuntime): void { appRuntime = runtime; }
 let legacyRefreshSeq = 0;
-let stopLegacy: (() => void) | undefined;
+let stopAppServices: (() => void) | undefined;
 const loading = <p className="sub loading" role="status">Cargando…</p>;
 function FocusAfterLoad({ children }: { children: ReactNode }) {
   const location = useLocation();
-  const services = useOptionalStudyServices();
   useLayoutEffect(() => {
     const heading = document.querySelector<HTMLElement>('.route-transition h1');
     if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
-    services?.markReady();
-  }, [location.key, services]);
+    appRuntime?.markReady();
+  }, [location.key]);
   return <>{children}</>;
 }
 const screen = (element: React.ReactNode, options?: { home?: boolean; restricted?: boolean }) => (
@@ -67,19 +65,18 @@ export const router = createHashRouter([{ ErrorBoundary: RouteError, element: <L
   { path: `${routeSegment(paths.stats)}/*`, element: screen(<StatsPage />, { restricted: true }) },
   { path: `${routeSegment(paths.quiz)}/*`, element: screen(<QuizPage />) },
   { path: `${routeSegment(paths.exams)}/*`, element: screen(<ExamsRedirect />) },
-  ...legacyPaths.map(path => ({ path: `${routeSegment(path)}/*`, element: <LegacyRoute /> })),
   { path: '*', element: screen(<HomePage />, { home: true }) },
 ] }]);
 export function initializeApp(): void {
-  if (stopLegacy) return;
-  legacyRuntime.configureLegacyRouter((html, refresh) => {
+  if (stopAppServices) return;
+  appRuntime.configureAppNavigation((html, refresh) => {
     const target = html.startsWith('#') ? html.slice(1) : html;
     if (refresh) { void router.navigate(target, { state: { legacyRefresh: ++legacyRefreshSeq } }); return; }
     void router.navigate(target);
   });
-  stopLegacy = legacyRuntime.bootLegacy();
+  stopAppServices = appRuntime.bootAppServices();
 }
 export function shutdownApp(): void {
-  stopLegacy?.();
-  stopLegacy = undefined;
+  stopAppServices?.();
+  stopAppServices = undefined;
 }
