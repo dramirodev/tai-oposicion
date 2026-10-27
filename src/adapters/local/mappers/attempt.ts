@@ -1,12 +1,8 @@
 import type { AttemptEvent, Highlight, QuestionAttempt } from '../../../core/domain/attempts/transitions.js';
 import type { MappingResult } from '../../../core/domain/entities.js';
 import type { AttemptEventDto, HighlightDto, QuestionAttemptDto } from '../dto/attempt.js';
+import { attemptEventSchema, highlightSchema, questionAttemptSchema } from '../schemas/attempt.js';
 
-type Fields = Record<string, unknown>;
-const isFields = (value: unknown): value is Fields => !!value && typeof value === 'object' && !Array.isArray(value);
-const isText = (value: unknown): value is string => typeof value === 'string';
-const isIndex = (value: unknown): value is number => Number.isSafeInteger(value) && Number(value) >= 0;
-const isTimestamp = (value: unknown): value is number => Number.isFinite(value) && Number(value) >= 0;
 const failure = <Value>(reason: string): MappingResult<Value> => ({ ok: false, reason });
 
 function highlightToDto(highlight: Highlight): HighlightDto {
@@ -27,37 +23,33 @@ function highlightToDto(highlight: Highlight): HighlightDto {
 }
 
 function highlightToDomain(value: unknown): MappingResult<Highlight> {
-  // TODO(zod): replace the handwritten boundary checks with the shared Zod schema in phase 6.
-  if (!isFields(value)) return failure('highlight must be an object');
-  const validField = value.field === 'statement' || (typeof value.field === 'string' && /^option:\d+$/.test(value.field));
-  if (!isText(value.id) || !validField || !isIndex(value.start) || !isIndex(value.end) || value.end <= value.start) {
-    return failure('invalid highlight anchor');
+  const parsed = highlightSchema.safeParse(value);
+  if (!parsed.success) {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return failure('highlight must be an object');
+    const path = String(parsed.error.issues[0]?.path[0]);
+    const reason = path === 'text' || path === 'before' || path === 'after' || path === 'contentRevision'
+      ? 'invalid highlight text or revision'
+      : path === 'category' || path === 'createdAt' ? 'invalid highlight metadata'
+        : path === 'timing' ? 'invalid highlight timing'
+          : path === 'stale' ? 'invalid highlight stale flag' : 'invalid highlight anchor';
+    return failure(reason);
   }
-  if (!isText(value.text) || !isText(value.before) || !isText(value.after) || !isText(value.contentRevision)) {
-    return failure('invalid highlight text or revision');
-  }
-  if (!isTimestamp(value.createdAt) || (value.category !== 'key' && value.category !== 'doubt')) {
-    return failure('invalid highlight metadata');
-  }
-  if (!['before-answer', 'after-answer', 'after-reveal'].includes(String(value.timing))) {
-    return failure('invalid highlight timing');
-  }
-  if (value.stale !== undefined && typeof value.stale !== 'boolean') return failure('invalid highlight stale flag');
+  const highlight = parsed.data;
   return {
     ok: true,
     value: {
-      id: value.id,
-      field: value.field as Highlight['field'],
-      start: value.start,
-      end: value.end,
-      text: value.text,
-      before: value.before,
-      after: value.after,
-      category: value.category,
-      contentRevision: value.contentRevision,
-      createdAt: value.createdAt,
-      timing: value.timing as Highlight['timing'],
-      ...(value.stale !== undefined ? { stale: value.stale } : {}),
+      id: highlight.id,
+      field: highlight.field as Highlight['field'],
+      start: highlight.start,
+      end: highlight.end,
+      text: highlight.text,
+      before: highlight.before,
+      after: highlight.after,
+      category: highlight.category,
+      contentRevision: highlight.contentRevision,
+      createdAt: highlight.createdAt,
+      timing: highlight.timing,
+      ...(highlight.stale !== undefined ? { stale: highlight.stale } : {}),
     },
   };
 }
@@ -88,59 +80,50 @@ export const attemptMapper = {
   },
 
   toDomain(value: unknown): MappingResult<QuestionAttempt> {
-    // TODO(zod): replace the handwritten boundary checks with the shared Zod schema in phase 6.
-    if (!isFields(value)) return failure('attempt must be an object');
-    if (value.schemaVersion !== 1) return failure('unsupported attempt schema version');
-    if (!isText(value.id) || !isText(value.sessionId) || !isText(value.questionId) || !isText(value.contentRevision)) {
-      return failure('invalid attempt identifiers');
+    const parsed = questionAttemptSchema.safeParse(value);
+    if (!parsed.success) {
+      if (!value || typeof value !== 'object' || Array.isArray(value)) return failure('attempt must be an object');
+      const issue = parsed.error.issues[0];
+      const field = String(issue?.path[0]);
+      if (field === 'highlights' && Array.isArray((value as Record<string, unknown>).highlights)) {
+        for (const raw of (value as Record<string, unknown>).highlights as unknown[]) {
+          const mapped = highlightToDomain(raw);
+          if (!mapped.ok) return failure(`invalid attempt highlight: ${mapped.reason}`);
+        }
+      }
+      const reason = issue?.code === 'invalid_value' && field === 'schemaVersion' ? 'unsupported attempt schema version'
+        : ({ id: 'invalid attempt identifiers', sessionId: 'invalid attempt identifiers', questionId: 'invalid attempt identifiers', contentRevision: 'invalid attempt identifiers', mode: 'invalid attempt mode',
+          position: 'invalid attempt counters or time', exposure: 'invalid attempt counters or time', createdAt: 'invalid attempt counters or time', lastSequence: 'invalid attempt counters or time', state: 'invalid attempt state', response: 'invalid attempt response', outcome: 'invalid attempt outcome', terminalEventId: 'invalid terminal event id', confidence: 'invalid attempt confidence', discardedOptions: 'invalid discarded options', highlights: 'invalid attempt highlights', appliedEventIds: 'invalid applied event ids', completedAt: 'invalid attempt completion time' } as Record<string, string>)[field] ?? 'invalid attempt highlights';
+      return failure(reason);
     }
-    if (value.mode !== 'practice' && value.mode !== 'simulation') return failure('invalid attempt mode');
-    if (!isIndex(value.position) || !isIndex(value.exposure) || !isTimestamp(value.createdAt) || !isIndex(value.lastSequence)) {
-      return failure('invalid attempt counters or time');
-    }
-    if (!['unseen', 'pending', 'answered', 'revealed'].includes(String(value.state))) return failure('invalid attempt state');
-    if (value.response !== null && !isIndex(value.response)) return failure('invalid attempt response');
-    if (value.outcome !== null && value.outcome !== 'correct' && value.outcome !== 'wrong') return failure('invalid attempt outcome');
-    if (value.terminalEventId !== undefined && !isText(value.terminalEventId)) return failure('invalid terminal event id');
-    let confidence: QuestionAttempt['confidence'];
-    switch (value.confidence) {
-      case null: confidence = null; break;
-      case 'sure': confidence = 'sure'; break;
-      case 'betweenTwo': confidence = 'betweenTwo'; break;
-      case 'guess': confidence = 'guess'; break;
-      default: return failure('invalid attempt confidence');
-    }
-    if (!Array.isArray(value.discardedOptions) || !value.discardedOptions.every(isIndex)) return failure('invalid discarded options');
-    if (!Array.isArray(value.highlights)) return failure('invalid attempt highlights');
+    const attempt = parsed.data;
     const highlights: Highlight[] = [];
-    for (const raw of value.highlights) {
+    for (const raw of attempt.highlights) {
       const mapped = highlightToDomain(raw);
       if (!mapped.ok) return failure(`invalid attempt highlight: ${mapped.reason}`);
       highlights.push(mapped.value);
     }
-    if (!Array.isArray(value.appliedEventIds) || !value.appliedEventIds.every(isText)) return failure('invalid applied event ids');
-    if (value.completedAt !== undefined && !isTimestamp(value.completedAt)) return failure('invalid attempt completion time');
     return {
       ok: true,
       value: {
-        id: value.id,
-        sessionId: value.sessionId,
-        questionId: value.questionId,
-        contentRevision: value.contentRevision,
-        mode: value.mode,
-        position: value.position,
-        exposure: value.exposure,
-        state: value.state as QuestionAttempt['state'],
-        response: value.response,
-        outcome: value.outcome,
-        ...(value.terminalEventId !== undefined ? { terminalEventId: value.terminalEventId } : {}),
-        confidence,
-        discardedOptions: [...value.discardedOptions],
+        id: attempt.id,
+        sessionId: attempt.sessionId,
+        questionId: attempt.questionId,
+        contentRevision: attempt.contentRevision,
+        mode: attempt.mode,
+        position: attempt.position,
+        exposure: attempt.exposure,
+        state: attempt.state,
+        response: attempt.response,
+        outcome: attempt.outcome,
+        ...(attempt.terminalEventId !== undefined ? { terminalEventId: attempt.terminalEventId } : {}),
+        confidence: attempt.confidence,
+        discardedOptions: [...attempt.discardedOptions],
         highlights,
-        createdAt: value.createdAt,
-        ...(value.completedAt !== undefined ? { completedAt: value.completedAt } : {}),
-        lastSequence: value.lastSequence,
-        appliedEventIds: [...value.appliedEventIds],
+        createdAt: attempt.createdAt,
+        ...(attempt.completedAt !== undefined ? { completedAt: attempt.completedAt } : {}),
+        lastSequence: attempt.lastSequence,
+        appliedEventIds: [...attempt.appliedEventIds],
       },
     };
   },
@@ -159,53 +142,65 @@ export const attemptMapper = {
   },
 
   eventToDomain(value: unknown): MappingResult<AttemptEvent> {
-    // TODO(zod): replace the handwritten boundary checks with the shared Zod schema in phase 6.
-    if (!isFields(value) || !isFields(value.payload)) return failure('event and payload must be objects');
-    if (value.schemaVersion !== 1) return failure('unsupported event schema version');
-    if (!isText(value.id) || !isText(value.attemptId) || !isIndex(value.sequence) || !isTimestamp(value.at)) {
-      return failure('invalid event identifiers, sequence, or time');
+    const parsed = attemptEventSchema.safeParse(value);
+    if (!parsed.success) {
+      if (!value || typeof value !== 'object' || Array.isArray(value) || !('payload' in value)
+        || !value.payload || typeof value.payload !== 'object' || Array.isArray(value.payload)) {
+        return failure('event and payload must be objects');
+      }
+      const issue = parsed.error.issues[0];
+      const path = issue?.path.map(String) ?? [];
+      const eventType = (value as Record<string, unknown>).type;
+      const reason = path[0] === 'schemaVersion' ? 'unsupported event schema version'
+        : path[0] === 'monotonicAt' ? 'invalid monotonic time'
+          : ['id', 'attemptId', 'sequence', 'at'].includes(path[0] ?? '') ? 'invalid event identifiers, sequence, or time'
+            : path[0] === 'type' ? 'unknown attempt event type'
+              : path[0] === 'payload' && eventType === 'answer' ? 'invalid answer payload'
+                : path[0] === 'payload' && eventType === 'set-confidence' ? 'invalid confidence payload'
+                  : path[0] === 'payload' && (eventType === 'discard-option' || eventType === 'restore-option') ? 'invalid option payload'
+                    : path[0] === 'payload' && eventType === 'remove-highlight' ? 'invalid highlight id'
+                      : path[0] === 'payload' && eventType === 'add-highlight' ? (() => {
+                        const raw = (value as Record<string, unknown>).payload as Record<string, unknown>;
+                        const mapped = highlightToDomain(raw.highlight);
+                        return mapped.ok ? 'invalid highlight event: invalid highlight anchor' : `invalid highlight event: ${mapped.reason}`;
+                      })()
+                        : 'invalid event identifiers, sequence, or time';
+      return failure(reason);
     }
-    if (value.monotonicAt !== undefined && !isTimestamp(value.monotonicAt)) return failure('invalid monotonic time');
-    const payload = value.payload;
+    const record = parsed.data;
     let domainPayload: AttemptEvent['payload'];
-    switch (value.type) {
+    switch (record.type) {
       case 'open': case 'leave': case 'mark-pending': case 'reveal': case 'pause': case 'resume': case 'close':
         domainPayload = {};
         break;
       case 'answer':
-        if (!isIndex(payload.optionIndex) || (payload.outcome !== 'correct' && payload.outcome !== 'wrong')) return failure('invalid answer payload');
-        domainPayload = { optionIndex: payload.optionIndex, outcome: payload.outcome };
+        domainPayload = { optionIndex: record.payload.optionIndex, outcome: record.payload.outcome };
         break;
       case 'set-confidence':
-        if (payload.value !== 'sure' && payload.value !== 'betweenTwo' && payload.value !== 'guess') return failure('invalid confidence payload');
-        domainPayload = { value: payload.value };
+        domainPayload = { value: record.payload.value };
         break;
       case 'discard-option': case 'restore-option':
-        if (!isIndex(payload.optionIndex)) return failure('invalid option payload');
-        domainPayload = { optionIndex: payload.optionIndex };
+        domainPayload = { optionIndex: record.payload.optionIndex };
         break;
       case 'add-highlight': {
-        const mapped = highlightToDomain(payload.highlight);
+        const mapped = highlightToDomain(record.payload.highlight);
         if (!mapped.ok) return failure(`invalid highlight event: ${mapped.reason}`);
         domainPayload = { highlight: mapped.value };
         break;
       }
       case 'remove-highlight':
-        if (!isText(payload.highlightId)) return failure('invalid highlight id');
-        domainPayload = { highlightId: payload.highlightId };
+        domainPayload = { highlightId: record.payload.highlightId };
         break;
-      default:
-        return failure('unknown attempt event type');
     }
     return {
       ok: true,
       value: {
-        id: value.id,
-        attemptId: value.attemptId,
-        sequence: value.sequence,
-        type: value.type as AttemptEvent['type'],
-        at: value.at,
-        ...(value.monotonicAt !== undefined ? { monotonicAt: value.monotonicAt } : {}),
+        id: record.id,
+        attemptId: record.attemptId,
+        sequence: record.sequence,
+        type: record.type,
+        at: record.at,
+        ...(record.monotonicAt !== undefined ? { monotonicAt: record.monotonicAt } : {}),
         payload: domainPayload,
       },
     };
