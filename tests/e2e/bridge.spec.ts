@@ -53,6 +53,35 @@ test('guarda en pagehide y reanuda la sesión y el progreso tras recargar', asyn
   await expect(page.locator('.overlay')).toHaveCount(0); // cleanup aborta la confirmación pendiente
   expect(errors).toEqual([]);
 });
+test('el mirror local cierra su conexión cuando otra pestaña actualiza la base', async ({ page }) => {
+  await start(page);
+  await page.locator('#quick').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  await page.locator('.opt').first().click();
+  await page.locator('#next').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 2');
+
+  await expect.poll(() => page.evaluate(() => new Promise<string | null>((resolve, reject) => {
+    const request = indexedDB.open('tai-mirror', 1);
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => {
+      const db = request.result;
+      const tx = db.transaction('kv', 'readonly');
+      const value = tx.objectStore('kv').get('state:guest');
+      tx.oncomplete = () => { db.close(); resolve(value.result as string | null); };
+      tx.onerror = () => { db.close(); reject(tx.error); };
+    };
+  }))).not.toBeNull();
+
+  const version = await page.evaluate(() => new Promise<number>((resolve, reject) => {
+    const request = indexedDB.open('tai-mirror', 2);
+    request.onblocked = () => reject(new Error('la conexión del mirror bloqueó la actualización'));
+    request.onerror = () => reject(request.error);
+    request.onupgradeneeded = () => request.result.createObjectStore('migration-probe');
+    request.onsuccess = () => { const db = request.result; db.close(); resolve(db.version); };
+  }));
+  expect(version).toBe(2);
+});
 test('menú React, foco, banner de red y recorte de navegación para invitados', async ({ page, context }) => {
   const errors = await start(page);
   // Abrir por teclado: Safari no conserva el foco del botón al pulsarlo con el puntero.
