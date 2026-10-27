@@ -1,5 +1,6 @@
-import type { CardReview, ErrorReport, MappingResult, Preferences, SessionResult } from '../../core/domain/entities.js';
+import type { CardReview, ErrorReport, MappingResult, Preferences, QuestionStats, SessionResult } from '../../core/domain/entities.js';
 import type { ProgressRepository } from '../../core/ports/ProgressRepository.js';
+import type { StudyProgressGateway } from '../../core/ports/StudyProgressGateway.js';
 import * as store from './legacy-store.js';
 import { cardMapper } from './mappers/card.js';
 import { preferencesMapper } from './mappers/preferences.js';
@@ -34,6 +35,35 @@ function mapList<Value>(
   });
   return mapped;
 }
+
+function mapStatistics(record: unknown): QuestionStats | undefined {
+  const result = statsMapper.toDomain(record);
+  return result.ok ? result.value : undefined;
+}
+
+/** Synchronous typed API needed by the study engine while a question is active. */
+export const localStudyProgressGateway: StudyProgressGateway = {
+  accountId: store.accountId,
+  onAccountChange: store.onAccountChange,
+  getQuestionStats: questionId => mapStatistics(store.rec(questionId)),
+  getAllQuestionStats() {
+    const statistics: Record<string, QuestionStats> = {};
+    for (const [questionId, record] of Object.entries(store.getStats())) {
+      const mapped = mapStatistics(record);
+      if (mapped) statistics[questionId] = mapped;
+    }
+    return statistics;
+  },
+  getPreferences() {
+    const result = preferencesMapper.toDomain(store.getCfg());
+    return result.ok ? result.value : {};
+  },
+  getSeenTopics: store.getSeen,
+  recordAnswer: store.record,
+  addSession(session: SessionResult) {
+    store.addSession(sessionMapper.toDto(session));
+  },
+};
 
 export const localProgressRepository: ProgressRepository = {
   async getStats() {
