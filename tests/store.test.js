@@ -242,6 +242,8 @@ describe('motivo «Velocidad» (7)', () => {
 
 describe('auditoría: persistencia y datos externos', () => {
   it('conserva ajustes estructurados al recargar y recuperar la copia local', async () => {
+    const testAccount = `structured-config-test-${Date.now()}`;
+    st.switchAccount(testAccount);
     st.setCfg('ui', { theme: 'dark', size: 2, lectura: 1 });
     st.setCfg('test', { sel: ['T1.01'], n: 25, mode: 'falladas', o: ['O', 'G'] });
     st.setCfg('tdet', { 1: [8, 5] });
@@ -250,7 +252,7 @@ describe('auditoría: persistencia y datos externos', () => {
     expect(next.getCfg().ui).toEqual({ theme: 'dark', size: 2, lectura: 1 });
     expect(next.getCfg().test.sel).toEqual(['T1.01']);
     expect(next.getCfg().tdet).toEqual({ 1: [8, 5] });
-    localStorage.clear(); vi.resetModules(); const recovered = await import('../src/adapters/local/legacy-store.js');
+    localStorage.clear(); localStorage.setItem('tai.account', testAccount); vi.resetModules(); const recovered = await import('../src/adapters/local/legacy-store.js');
     await recovered.recover();
     expect(recovered.getCfg().ui).toEqual({ theme: 'dark', size: 2, lectura: 1 });
   });
