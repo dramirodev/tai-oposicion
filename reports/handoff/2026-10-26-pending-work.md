@@ -277,3 +277,13 @@ Siguiente paso: comprobar la mergeabilidad de #45; luego aplanar #46 y #47 sobre
 - `.gitignore` ya contiene `/docs/` y `/reports/`. Se mantienen los archivos que ya están versionados; esas reglas ignoran contenido nuevo en esas carpetas.
 - **Nueva tarea de publicación:** después de que cada PR llegue a `main`, actualizar el checkout desde el `main` remoto y ejecutar instalación reproducible, comprobaciones y build de producción en esa rama. Crear un tag anotado, único y apuntado al commit de `main` solo cuando compile y pasen las comprobaciones. No reutilizar tags ni cambiar `package.json` sin una decisión explícita sobre la numeración de versiones.
 - El checkout principal permanece desactualizado y contiene un cambio local ajeno en `tests/design-training.test.js`; no tocarlo.
+
+## Siguiente slice — mappers del banco HTTP (2026-10-27)
+
+- Rama nueva directa desde `origin/main` `5a28985`: `refactor/question-bank-dto-boundary`, worktree `/private/tmp/tai-question-bank-boundary`.
+- Se confirmó que `httpBankRepository` tiene consumidores reales en estrategia y exportación. `question-diagnostics.ts` y `bank-repository.ts` tenían bucles paralelos de mapping y conjuntos de avisos distintos.
+- Se centralizó el mapping DTO→entidad en `mapQuestionDtos`; diagnósticos de campos desconocidos/registros inválidos comparten deduplicación. `diagnoseQuestionDtos` mantiene el modo de diagnóstico y retorna pronto en producción.
+- No se tocaron el formato de preguntas, DTOs, almacenamiento ni consumidores legacy.
+- Validación: pruebas focales mapper/diagnóstico/repository **9/9**; `npm run check` (arquitectura baseline 62, lint, ignore-growth, TypeScript, Vitest **414/414**), build y Playwright `stats-charts.spec.ts` **6/6** Chromium/WebKit.
+- Documentación de arquitectura actualizada en `docs/architecture/migration-plan.md` y `migration-report.md`.
+- Siguiente: abrir PR contra `main`; después revisar el checker de ciclos/imports y completar la lista de excepciones arquitectónicas eliminables con seguridad, sin mover todo mecánicamente.
