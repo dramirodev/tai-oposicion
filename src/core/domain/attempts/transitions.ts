@@ -118,28 +118,70 @@ function rejected(attempt: QuestionAttempt, reason: RejectionReason): AttemptTra
   return { accepted: false, attempt, event: null, progressEffect: 'none', reason };
 }
 
+type PayloadMapper<Type extends AttemptAction['type']> = (action: Extract<AttemptAction, { type: Type }>) => AttemptActionPayload;
+type PayloadMappers = { [Type in AttemptAction['type']]: PayloadMapper<Type> };
+const payloadMappers: PayloadMappers = {
+  open: () => ({}), leave: () => ({}), 'mark-pending': () => ({}), reveal: () => ({}),
+  pause: () => ({}), resume: () => ({}), close: () => ({}),
+  answer: action => ({ optionIndex: action.optionIndex, outcome: action.outcome }),
+  'set-confidence': action => ({ value: action.value }),
+  'discard-option': action => ({ optionIndex: action.optionIndex }),
+  'restore-option': action => ({ optionIndex: action.optionIndex }),
+  'add-highlight': action => ({ highlight: action.highlight }),
+  'remove-highlight': action => ({ highlightId: action.highlightId }),
+};
+
 function payloadOf(action: AttemptAction): AttemptActionPayload {
-  switch (action.type) {
-    case 'open':
-    case 'leave':
-    case 'pause':
-    case 'resume':
-    case 'mark-pending':
-    case 'reveal':
-    case 'close':
-      return {};
-    case 'answer':
-      return { optionIndex: action.optionIndex, outcome: action.outcome };
-    case 'set-confidence':
-      return { value: action.value };
-    case 'discard-option':
-    case 'restore-option':
-      return { optionIndex: action.optionIndex };
-    case 'add-highlight':
-      return { highlight: action.highlight };
-    case 'remove-highlight':
-      return { highlightId: action.highlightId };
-  }
+  // TypeScript widens the lookup to a union of handler signatures; the shared key and action discriminator match.
+  const mapper = payloadMappers[action.type] as (action: AttemptAction) => AttemptActionPayload;
+  return mapper(action);
+}
+
+type ActionApplication = { attempt: QuestionAttempt; progressEffect: ProgressEffect } | { reason: RejectionReason };
+type ActionHandler<Type extends AttemptAction['type']> = (
+  attempt: QuestionAttempt,
+  next: QuestionAttempt,
+  action: Extract<AttemptAction, { type: Type }>,
+) => ActionApplication;
+type ActionHandlers = { [Type in AttemptAction['type']]: ActionHandler<Type> };
+
+const acceptedAction = (attempt: QuestionAttempt, progressEffect: ProgressEffect = 'none'): ActionApplication => ({ attempt, progressEffect });
+const rejectedAction = (reason: RejectionReason): ActionApplication => ({ reason });
+
+const actionHandlers: ActionHandlers = {
+  open: (_attempt, next) => acceptedAction(next),
+  leave: (_attempt, next) => acceptedAction(next),
+  pause: (_attempt, next) => acceptedAction(next),
+  resume: (_attempt, next) => acceptedAction(next),
+  'mark-pending': (attempt, next) => attempt.state === 'revealed' || (attempt.state === 'answered' && attempt.mode === 'practice')
+    ? rejectedAction('action-not-available')
+    : acceptedAction({ ...next, state: 'pending', response: null, outcome: null }),
+  answer: (attempt, next, action) => attempt.state === 'revealed' || (attempt.state === 'answered' && attempt.mode === 'practice')
+    ? rejectedAction('practice-answer-locked')
+    : acceptedAction({ ...next, state: 'answered', response: action.optionIndex, outcome: action.outcome, terminalEventId: action.id },
+      attempt.mode === 'practice' ? 'record-practice-answer' : 'defer-to-session-finish'),
+  reveal: (attempt, next, action) => attempt.mode !== 'practice' || attempt.state !== 'pending'
+    ? rejectedAction('solution-not-available')
+    : acceptedAction({ ...next, state: 'revealed', response: null, outcome: null, terminalEventId: action.id }),
+  'set-confidence': (attempt, next, action) => attempt.state === 'answered' || attempt.state === 'revealed'
+    ? rejectedAction('action-not-available')
+    : acceptedAction({ ...next, confidence: action.value }),
+  'discard-option': (attempt, next, action) => attempt.state === 'answered' || attempt.state === 'revealed'
+    ? rejectedAction('action-not-available')
+    : acceptedAction({ ...next, discardedOptions: [...new Set([...attempt.discardedOptions, action.optionIndex])].sort((leftOptionIndex, rightOptionIndex) => leftOptionIndex - rightOptionIndex) }),
+  'restore-option': (attempt, next, action) => attempt.state === 'answered' || attempt.state === 'revealed'
+    ? rejectedAction('action-not-available')
+    : acceptedAction({ ...next, discardedOptions: attempt.discardedOptions.filter(index => index !== action.optionIndex) }),
+  'add-highlight': (attempt, next, action) => attempt.highlights.some(highlight => highlight.id === action.highlight.id)
+    ? rejectedAction('duplicate-event')
+    : acceptedAction({ ...next, highlights: [...attempt.highlights, action.highlight] }),
+  'remove-highlight': (attempt, next, action) => acceptedAction({ ...next, highlights: attempt.highlights.filter(highlight => highlight.id !== action.highlightId) }),
+  close: (_attempt, next, action) => acceptedAction({ ...next, completedAt: action.at }),
+};
+
+function applyAction(attempt: QuestionAttempt, next: QuestionAttempt, action: AttemptAction): ActionApplication {
+  const handler = actionHandlers[action.type] as ActionHandler<AttemptAction['type']>;
+  return handler(attempt, next, action);
 }
 
 /** Applies an attempt event without IO or clock access. Callers supply its stable id, sequence, and timestamp. */
@@ -153,59 +195,9 @@ export function applyAttemptAction(attempt: QuestionAttempt, action: AttemptActi
     lastSequence: action.sequence,
     appliedEventIds: [...attempt.appliedEventIds, action.id].slice(-RECENT_EVENT_ID_WINDOW),
   };
-  let progressEffect: ProgressEffect = 'none';
-
-  switch (action.type) {
-    case 'open':
-    case 'leave':
-    case 'pause':
-    case 'resume':
-      break;
-    case 'mark-pending':
-      if (attempt.state === 'revealed' || (attempt.state === 'answered' && attempt.mode === 'practice')) {
-        return rejected(attempt, 'action-not-available');
-      }
-      next = { ...next, state: 'pending', response: null, outcome: null };
-      break;
-    case 'answer':
-      if (attempt.state === 'revealed') return rejected(attempt, 'practice-answer-locked');
-      if (attempt.state === 'answered' && attempt.mode === 'practice') {
-        return rejected(attempt, 'practice-answer-locked');
-      }
-      next = { ...next, state: 'answered', response: action.optionIndex, outcome: action.outcome };
-      next = { ...next, terminalEventId: action.id };
-      progressEffect = attempt.mode === 'practice' ? 'record-practice-answer' : 'defer-to-session-finish';
-      break;
-    case 'reveal':
-      if (attempt.mode !== 'practice' || attempt.state !== 'pending') {
-        return rejected(attempt, 'solution-not-available');
-      }
-      next = { ...next, state: 'revealed', response: null, outcome: null };
-      next = { ...next, terminalEventId: action.id };
-      break;
-    case 'set-confidence':
-      if (attempt.state === 'answered' || attempt.state === 'revealed') return rejected(attempt, 'action-not-available');
-      next = { ...next, confidence: action.value };
-      break;
-    case 'discard-option':
-      if (attempt.state === 'answered' || attempt.state === 'revealed') return rejected(attempt, 'action-not-available');
-      next = { ...next, discardedOptions: [...new Set([...attempt.discardedOptions, action.optionIndex])].sort((leftOptionIndex, rightOptionIndex) => leftOptionIndex - rightOptionIndex) };
-      break;
-    case 'restore-option':
-      if (attempt.state === 'answered' || attempt.state === 'revealed') return rejected(attempt, 'action-not-available');
-      next = { ...next, discardedOptions: attempt.discardedOptions.filter(index => index !== action.optionIndex) };
-      break;
-    case 'add-highlight':
-      if (attempt.highlights.some(highlight => highlight.id === action.highlight.id)) return rejected(attempt, 'duplicate-event');
-      next = { ...next, highlights: [...attempt.highlights, action.highlight] };
-      break;
-    case 'remove-highlight':
-      next = { ...next, highlights: attempt.highlights.filter(highlight => highlight.id !== action.highlightId) };
-      break;
-    case 'close':
-      next = { ...next, completedAt: action.at };
-      break;
-  }
+  const result = applyAction(attempt, next, action);
+  if ('reason' in result) return rejected(attempt, result.reason);
+  next = result.attempt;
 
   const event: AttemptEvent = {
     id: action.id,
@@ -216,5 +208,5 @@ export function applyAttemptAction(attempt: QuestionAttempt, action: AttemptActi
     ...(action.monotonicAt !== undefined ? { monotonicAt: action.monotonicAt } : {}),
     payload: payloadOf(action),
   };
-  return { accepted: true, attempt: next, event, progressEffect };
+  return { accepted: true, attempt: next, event, progressEffect: result.progressEffect };
 }

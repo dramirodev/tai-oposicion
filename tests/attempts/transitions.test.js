@@ -94,6 +94,27 @@ describe('transiciones de intentos', () => {
     expect(repeated.reason).toBe('closed-attempt');
   });
 
+  it('permite marcar confianza y opciones descartadas antes de responder', () => {
+    const confident = applyAttemptAction(attempt(), { ...action('set-confidence'), value: 'guess' });
+    const discarded = applyAttemptAction(confident.attempt, { ...action('discard-option', 2), optionIndex: 3 });
+    const repeated = applyAttemptAction(discarded.attempt, { ...action('discard-option', 3), optionIndex: 3 });
+    const restored = applyAttemptAction(repeated.attempt, { ...action('restore-option', 4), optionIndex: 3 });
+    expect(confident.attempt.confidence).toBe('guess');
+    expect(discarded.attempt.discardedOptions).toEqual([3]);
+    expect(repeated.attempt.discardedOptions).toEqual([3]);
+    expect(restored.attempt.discardedOptions).toEqual([]);
+  });
+
+  it('añade y elimina resaltados sin duplicar sus identificadores', () => {
+    const highlight = { id: 'mark-1', field: 'statement', start: 0, end: 4, text: 'texto', before: '', after: '', category: 'key', contentRevision: 'rev-1', createdAt: 100, timing: 'before-answer' };
+    const added = applyAttemptAction(attempt(), { ...action('add-highlight'), highlight });
+    const duplicate = applyAttemptAction(added.attempt, { ...action('add-highlight', 2), highlight });
+    const removed = applyAttemptAction(added.attempt, { ...action('remove-highlight', 2), highlightId: 'mark-1' });
+    expect(added.attempt.highlights).toEqual([highlight]);
+    expect(duplicate).toMatchObject({ accepted: false, reason: 'duplicate-event', progressEffect: 'none' });
+    expect(removed.attempt.highlights).toEqual([]);
+  });
+
   it('acota los ids redundantes recientes; el repositorio conserva el log completo', () => {
     let current = attempt();
     for (let sequence = 1; sequence <= 300; sequence++) {
