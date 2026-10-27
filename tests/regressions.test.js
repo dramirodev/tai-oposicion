@@ -37,6 +37,13 @@ it('adopta la copia antigua solo en el propietario y mantiene su copia original'
  store.switchAccount('owner',true);expect(store.rec('legacy')[0]).toBe(1);
  expect(localStorage.getItem('tai.v1')).toBe(legacy);
 });
+it('trata un snapshot local vacío como ausente al adoptar la copia antigua',()=>{
+ const legacy=JSON.stringify({stats:{legacy:[1,0,1000,0,2000,0,0]},sessions:[]});
+ localStorage.setItem('tai.v1',legacy);
+ localStorage.setItem('tai.v1:owner','');
+ store.switchAccount('owner',true);
+ expect(store.rec('legacy')?.[0]).toBe(1);
+});
 it('recupera la copia antigua de IndexedDB solo para el propietario',async()=>{
  vi.useRealTimers();
  const db=await new Promise(resolve=>{const req=indexedDB.open('tai-mirror',1);req.onupgradeneeded=()=>req.result.createObjectStore('kv');req.onsuccess=()=>resolve(req.result);});

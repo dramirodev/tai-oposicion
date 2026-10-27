@@ -1,16 +1,55 @@
 import { cleanCfg, cleanCfgSetting } from './config.js';
-import { failureStreak as deriveFailureStreak, CARD_REVIEW_INTERVALS_DAYS, CALENDAR_DAY_MILLISECONDS } from '../../core/domain/spaced-repetition.js';
-import type { AppState, CardMap, CardRec, Cfg, Report, ReportMap, ReportState, Res, SeenDoc, Session, StatMap, StatRec } from '../legacy/types.js';
-import { openLegacyMirrorDatabase } from './database.js';
+import { CARD_REVIEW_INTERVALS_DAYS, CALENDAR_DAY_MILLISECONDS } from '../../core/domain/spaced-repetition.js';
+import type { AppState, CardMap, CardRec, Cfg, ReportMap, ReportState, Res, SeenDoc, Session, StatMap, StatRec } from '../legacy/types.js';
+import {
+  clearPendingLegacyAdoption,
+  hasPendingLegacyAdoption,
+  hasProgressSnapshot,
+  markLegacyProgressForAdoption,
+  mirrorStorageKey,
+  progressStorageKey,
+  readActiveAccount,
+  readMirroredProgress,
+  readProgressSnapshot,
+  unscopedProgressStorageKey,
+  writeActiveAccount,
+  writeMirroredProgress,
+  writeProgressSnapshot,
+} from './progress-snapshot-storage.js';
+import {
+  CARD_RE,
+  MAX_CARDS,
+  REPORT_STATES,
+  cleanCards,
+  cleanReports,
+  cleanSeen,
+  cleanSessions,
+  cleanStats,
+  failureStreak,
+} from './mappers/stored-progress.js';
+export {
+  CARD_RE,
+  MAX_CARDS,
+  REPORT_STATES,
+  cleanCard,
+  cleanCards,
+  cleanRec,
+  cleanReports,
+  cleanSeen,
+  cleanSession,
+  cleanSessions,
+  cleanStats,
+  failureStreak,
+  pendingFailure,
+} from './mappers/stored-progress.js';
 // Almacén local (local-first) + sincronización con Firestore.
 // Registro por pregunta: [n, ok, last, box, due, lastRes, flag]
 //   n=intentos, ok=aciertos, last=timestamp ms, box=-1 fuera del repaso (0..3 en repaso),
 //   due=timestamp ms del próximo repaso, lastRes=1/0/2(blanco), flag=1 dudosa
 // Extensión opcional: [10]=racha tras fallo (-1 nunca/ya fuera del historial antiguo, 0..3); [11]=temario repasado (0/1); [12]=fecha del cambio de marca.
-const LEGACY_KEY = 'tai.v1';
-let account: string | null = (() => { try { return localStorage.getItem('tai.account'); } catch { return null; } })();
-const stateKey = () => account ? LEGACY_KEY + ':' + account : LEGACY_KEY + ':guest';
-const mirrorKey = () => account ? 'state:' + account : 'state:guest';
+let account: string | null = readActiveAccount();
+const stateKey = () => progressStorageKey(account);
+const mirrorKey = () => mirrorStorageKey(account);
 export const accountId = () => account;
 const accountListeners = new Set<() => void>();
 export const onAccountChange = (fn: () => void) => { accountListeners.add(fn); return () => accountListeners.delete(fn); };
@@ -21,107 +60,8 @@ export const INTERVALS = CARD_REVIEW_INTERVALS_DAYS; // días
 export const LUCKY_DAYS = 1; // las acertadas «por suerte» vuelven cada día hasta confirmarlas
 
 
-// ── Validación de datos externos (localStorage, Firestore, archivos importados) ──
-const boundedNumber = (value: unknown, lo = 0, hi = 1e13): number | null => (typeof value === 'number' && isFinite(value)) ? Math.min(hi, Math.max(lo, value)) : null;
-const ID_RE = /^(?!__proto__$|constructor$|prototype$)[A-Za-z0-9._\-~]{1,48}$/;
 const createDictionary = <T = unknown>(): Record<string, T> => Object.create(null);
 const isObjectRecord = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
-const TOPIC_ID_PATTERN = /^T\d\.\d\d$/;
-// El historial antiguo no guarda la racha: las pendientes existentes parten de cero.
-export function failureStreak(statRecord?: StatRec | null): number {
-  if (!statRecord) return -1;
-  return deriveFailureStreak({
-    attempts: statRecord[0],
-    lastResult: statRecord[5],
-    intervalStep: statRecord[3],
-    ...(statRecord.length > 10 ? { failureStreak: Math.floor(boundedNumber(statRecord[10], -1, 3) ?? -1) } : {}),
-  });
-}
-export const pendingFailure = (statRecord?: StatRec | null) => { const count = failureStreak(statRecord); return count >= 0 && count < 3; };
-export function cleanRec(result: unknown): StatRec | null {
-  if (!Array.isArray(result) || result.length < 3) return null;
-  const attempts = boundedNumber(result[0], 0, 1e6), correctAnswers = boundedNumber(result[1], 0, 1e6), lastSeenAt = boundedNumber(result[2]);
-  if (attempts === null || correctAnswers === null || lastSeenAt === null) return null;
-  const intervalStep = boundedNumber(result[3], -1, 4), dueAt = boundedNumber(result[4]), lastResult = boundedNumber(result[5], 0, 2), doubtful = boundedNumber(result[6], 0, 1);
-  const failureReason = boundedNumber(result[9], 0, 8) || 0;
-  const totalTimedSeconds = boundedNumber(result[7], 0, 1e7) || 0;
-  const timedAnswerCount = Math.min(boundedNumber(result[8], 0, 1e6) || 0, attempts);
-  const cleanedRecord = [attempts, Math.min(correctAnswers, attempts), lastSeenAt, intervalStep === null ? -1 : Math.floor(intervalStep), dueAt || 0, lastResult === null ? 0 : Math.floor(lastResult), doubtful ? 1 : 0, timedAnswerCount ? totalTimedSeconds : 0, timedAnswerCount, Math.floor(failureReason)];
-  if (result.length > 10) cleanedRecord.push(Math.floor(boundedNumber(result[10], -1, 3) ?? failureStreak(cleanedRecord)), result[11] === 1 ? 1 : 0);
-  if (result.length > 12) cleanedRecord.push(boundedNumber(result[12]) || 0);
-  else if (result[11] === 1) cleanedRecord.push(lastSeenAt);
-  return cleanedRecord;
-}
-export function cleanStats(map: unknown): StatMap {
-  const out = createDictionary<StatRec>();
-  if (!map || typeof map !== 'object') return out;
-  for (const id of Object.keys(map)) { if (!ID_RE.test(id)) continue; const statRecord = cleanRec((map as Record<string, unknown>)[id]); if (statRecord) out[id] = statRecord; }
-  return out;
-}
-// ── Tarjetas (flashcards): { idTarjeta: [n, ok, last, box, due, lastGrade] } ──
-// n=veces repasada, ok=veces «lo sabía», box=-1 dominada (0..4 en repaso), due=próximo repaso, lastGrade=0 fallé/1 dudaba/2 lo sabía
-export const CARD_RE = /^FC-[A-Za-z0-9._~-]{1,60}$/;
-export const MAX_CARDS = 8000; // ≈70 B por tarjeta: queda por debajo del límite de 1 MB por documento de Firestore
-export function cleanCard(result: unknown): CardRec | null {
-  if (!Array.isArray(result) || result.length < 5) return null;
-  const reviewCount = boundedNumber(result[0], 0, 1e6), knownCount = boundedNumber(result[1], 0, 1e6), updatedAt = boundedNumber(result[2]);
-  if (reviewCount === null || knownCount === null || updatedAt === null) return null;
-  if (result[5] === -1) return [0, 0, updatedAt, -1, 0, -1]; // marca de borrado sincronizada
-  const intervalStep = boundedNumber(result[3], -1, 4), dueAt = boundedNumber(result[4]), lastGrade = boundedNumber(result[5], 0, 2);
-  return [reviewCount, Math.min(knownCount, reviewCount), updatedAt, intervalStep === null ? -1 : Math.floor(intervalStep), dueAt || 0, lastGrade === null ? 0 : Math.floor(lastGrade)];
-}
-export function cleanCards(map: unknown): CardMap {
-  const out = createDictionary<CardRec>(); let keyIndex = 0;
-  if (!map || typeof map !== 'object') return out;
-  for (const id of Object.keys(map)) { if (!CARD_RE.test(id)) continue; const result = cleanCard((map as Record<string, unknown>)[id]); if (result) { out[id] = result; if (++keyIndex >= MAX_CARDS) break; } }
-  return out;
-}
-export function cleanSession(value: unknown): Session | null {
-  if (!isObjectRecord(value)) return null;
-  const sessionData = value;
-  const sessionId = typeof sessionData.id === 'string' && ID_RE.test(sessionData.id) ? sessionData.id : null, timestamp = boundedNumber(sessionData.ts);
-  if (!sessionId || timestamp === null) return null;
-  const temas: Session['temas'] = {};
-  if (isObjectRecord(sessionData.temas)) for (const topicId in sessionData.temas) {
-    const topicCounts = sessionData.temas[topicId];
-    const correctRaw = Array.isArray(topicCounts) ? topicCounts[0] : undefined;
-    const totalRaw = Array.isArray(topicCounts) ? topicCounts[1] : undefined;
-    const correct = boundedNumber(correctRaw, 0, 1e5), total = boundedNumber(totalRaw, 0, 1e5);
-    if (TOPIC_ID_PATTERN.test(topicId) && correct !== null && total !== null && typeof correctRaw === 'number' && typeof totalRaw === 'number') temas[topicId] = [correctRaw, totalRaw];
-  }
-  const tipos: Session['tipos'] = {};
-  if (isObjectRecord(sessionData.tipos)) for (const questionType in sessionData.tipos) {
-    const typeCounts = sessionData.tipos[questionType];
-    const correctRaw = Array.isArray(typeCounts) ? typeCounts[0] : undefined;
-    const totalRaw = Array.isArray(typeCounts) ? typeCounts[1] : undefined;
-    const correct = boundedNumber(correctRaw, 0, 1e5), total = boundedNumber(totalRaw, 0, 1e5);
-    if (/^[A-Za-z0-9]{1,3}$/.test(questionType) && correct !== null && total !== null && typeof correctRaw === 'number' && typeof totalRaw === 'number') tipos[questionType] = [correctRaw, totalRaw];
-  }
-  return {
-    id: sessionId, ts: timestamp, kind: (['sim', 'rev', 'test'] as const).find(key => key === sessionData.kind) ?? 'test',
-    n: boundedNumber(sessionData.n, 0, 1e4) ?? 0, a: boundedNumber(sessionData.a, 0, 1e4) ?? 0, f: boundedNumber(sessionData.f, 0, 1e4) ?? 0, b: boundedNumber(sessionData.b, 0, 1e4) ?? 0,
-    secs: boundedNumber(sessionData.secs, 0, 1e6) ?? 0, nota: boundedNumber(sessionData.nota, -100, 100) ?? 0, temas, tipos,
-    fails: Array.isArray(sessionData.fails) ? sessionData.fails.filter((value: unknown): value is string => typeof value === 'string' && ID_RE.test(value)).slice(0, 500) : [],
-    titulo: typeof sessionData.titulo === 'string' ? sessionData.titulo.slice(0, 80) : '',
-    ...(sessionData.interrupted === true ? { interrupted: true } : {}),
-    ...(sessionData.porTiempo === true ? { porTiempo: true } : {})
-  };
-}
-export function cleanSessions(value: unknown): Session[] { return (Array.isArray(value) ? value : []).map(cleanSession).filter((sessionRecord): sessionRecord is Session => !!sessionRecord); }
-
-// ── Informes de errores del banco: { idPregunta: {ts, tema, motivo, nota, st} } ──
-const REP_ST: ReportState[] = ['abierto', 'resuelto', 'quitado'];
-export function cleanReports(metadata: unknown): ReportMap {
-  const out = createDictionary<Report>();
-  if (!metadata || typeof metadata !== 'object') return out;
-  for (const id of Object.keys(metadata)) {
-    const result = (metadata as Record<string, unknown>)[id]; if (!ID_RE.test(id) || !isObjectRecord(result)) continue;
-    const ts = boundedNumber(result.ts); if (ts === null) continue;
-    const state = REP_ST.find(candidate => candidate === result.st) || 'abierto';
-    out[id] = { ts, tema: typeof result.tema === 'string' && TOPIC_ID_PATTERN.test(result.tema) ? result.tema : '', motivo: typeof result.motivo === 'string' ? result.motivo.slice(0, 60) : '', nota: typeof result.nota === 'string' ? result.nota.slice(0, 300) : '', st: state };
-  }
-  return out;
-}
 export const getReports = (): ReportMap => appState.reports || {};
 export function addReport(id: string, tema: string, motivo: string, nota = ''): void {
   appState.reports = appState.reports || createDictionary();
@@ -129,7 +69,7 @@ export function addReport(id: string, tema: string, motivo: string, nota = ''): 
   persist(); emit(); if (syncer && syncer.pushReports) syncer.pushReports(appState.reports);
 }
 export function setReportState(id: string, st: ReportState): void {
-  const result = (appState.reports || {})[id]; if (!result || !REP_ST.includes(st)) return;
+  const result = (appState.reports || {})[id]; if (!result || !REPORT_STATES.includes(st)) return;
   appState.reports[id] = { ...result, st, ts: Date.now() };
   persist(); emit(); if (syncer && syncer.pushReports) syncer.pushReports(appState.reports);
 }
@@ -149,7 +89,7 @@ let syncer: Syncer | null = null;
 
 function load(key = stateKey()): AppState {
   try {
-    const parsedData = JSON.parse(localStorage.getItem(key) || 'null');
+    const parsedData = readProgressSnapshot(key) as Partial<AppState> | null;
     if (parsedData && parsedData.stats) return { stats: cleanStats(parsedData.stats), sessions: cleanSessions(parsedData.sessions).slice(0, MAX_SESIONES), cfg: cleanCfg(parsedData.cfg), seen: cleanSeen(parsedData.seen), reports: cleanReports(parsedData.reports), cards: cleanCards(parsedData.cards) };
   } catch {}
   return { stats: createDictionary(), sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: createDictionary(), cards: createDictionary() };
@@ -159,21 +99,18 @@ export function switchAccount(next: string | null, adoptLegacy = false): void {
   if (account === next) return;
   void flushNow();
   account = next;
-  try {
-    if (next) localStorage.setItem('tai.account', next);
-    else localStorage.removeItem('tai.account');
-  } catch {}
-  const hasLocal = (() => { try { return !!localStorage.getItem(stateKey()); } catch { return false; } })();
-  appState = load(!hasLocal && adoptLegacy ? LEGACY_KEY : stateKey());
+  writeActiveAccount(next);
+  const hasLocal = hasProgressSnapshot(stateKey());
+  appState = load(!hasLocal && adoptLegacy ? unscopedProgressStorageKey() : stateKey());
   if (!hasLocal && adoptLegacy && next) {
-    try { localStorage.setItem('tai.legacy-pending:' + next, '1'); } catch {}
+    markLegacyProgressForAdoption(next);
   }
   dirty.clear(); persist();
   accountListeners.forEach(fn => fn()); emit();
 }
 let persistWarned = false;
 function persist() {
-  try { localStorage.setItem(stateKey(), JSON.stringify(appState)); } catch {
+  if (!writeProgressSnapshot(stateKey(), appState)) {
     // sin espacio o sin permiso: avisar una vez (la copia de IndexedDB sigue intentándose)
     if (!persistWarned) { persistWarned = true; try { dispatchEvent(new Event('tai-persist-error')); } catch {} }
   }
@@ -185,20 +122,15 @@ function mirror() { clearTimeout(mirrorTimer); mirrorTimer = setTimeout(flushMir
 export async function flushMirror(): Promise<void> {
   clearTimeout(mirrorTimer);
   try {
-    const key = mirrorKey(), payload = JSON.stringify(appState);
-    const db = await openLegacyMirrorDatabase();
-    const tx = db.transaction('kv', 'readwrite');
-    await Promise.all([tx.store.put(payload, key), tx.done]);
+    await writeMirroredProgress(mirrorKey(), appState);
   } catch {}
 }
 // Al arrancar: fusiona lo que haya en la copia de IndexedDB (gana siempre lo más reciente). Devuelve true si recuperó algo.
 export async function recover(): Promise<boolean> {
   try {
     const key = mirrorKey();
-    const db = await openLegacyMirrorDatabase();
-    const pendingKey = 'tai.legacy-pending:' + account;
-    const legacy = account && localStorage.getItem(pendingKey) === '1';
-    const copies = await Promise.all([key, ...(legacy ? ['state'] : [])].map(copyKey => db.get('kv', copyKey).catch(() => undefined)));
+    const legacy = hasPendingLegacyAdoption(account);
+    const copies = await readMirroredProgress([key, ...(legacy ? ['state'] : [])]);
     if (key !== mirrorKey()) return false;
     let recoveredProgress = false;
     for (const txt of copies) {
@@ -208,11 +140,11 @@ export async function recover(): Promise<boolean> {
       if (parsedData.cfg && typeof parsedData.cfg === 'object') { const cleanedConfig = cleanCfg(parsedData.cfg); for (const configKey in cleanedConfig) if (!(configKey in appState.cfg)) { appState.cfg[configKey] = cleanedConfig[configKey]; recoveredProgress = true; } }
     }
     if (recoveredProgress) { persist(); emit(); }
-    if (legacy) localStorage.removeItem(pendingKey);
+    if (legacy) clearPendingLegacyAdoption(account);
     return recoveredProgress;
   } catch { return false; }
 }
-export function flushNow(): Promise<void> { try { localStorage.setItem(stateKey(), JSON.stringify(appState)); } catch {} return flushMirror(); }
+export function flushNow(): Promise<void> { writeProgressSnapshot(stateKey(), appState); return flushMirror(); }
 export function onChange(fn: () => void): () => void { listeners.add(fn); return () => listeners.delete(fn); }
 export const subscribe: (fn: () => void) => () => void = onChange;
 function emit() { listeners.forEach(listener => listener()); }
@@ -227,11 +159,6 @@ export function setSeen(arr: Iterable<string>): void {
   appState.seen = { t: [...arr].sort(), ts: Date.now() };
   persist(); emit();
   if (syncer && syncer.pushSeen) syncer.pushSeen(appState.seen);
-}
-export function cleanSeen(value: unknown): SeenDoc {
-  if (!isObjectRecord(value) || !Array.isArray(value.t)) return { t: [], ts: 0 };
-  const topics = value.t;
-  return { t: topics.filter((topic: unknown): topic is string => typeof topic === 'string' && TOPIC_ID_PATTERN.test(topic)).slice(0, 100), ts: boundedNumber(value.ts) || 0 };
 }
 export function mergeSeen(r0: unknown): boolean {
   if (!isObjectRecord(r0) || !Array.isArray(r0.t)) return false;
