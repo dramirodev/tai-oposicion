@@ -2,11 +2,11 @@ import 'fake-indexeddb/auto';
 import { beforeEach, afterEach, it, expect, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-let store, engine, data;
+let store, engine, data, recovery;
 beforeEach(async () => {
   vi.resetModules(); vi.useFakeTimers(); localStorage.clear();
   vi.stubGlobal('fetch', async url => ({ok:true,json:async()=>JSON.parse(readFileSync(path.join('public',String(url)),'utf8'))}));
-  store=await import('../src/adapters/local/legacy-store.js');engine=await import('../src/core/application/legacy-engine.js');data=await import('../src/adapters/http/legacy-data.js');await data.getMeta();
+  store=await import('../src/adapters/local/legacy-store.js');engine=await import('../src/core/application/legacy-engine.js');data=await import('../src/adapters/http/legacy-data.js');recovery=await import('../src/app/pending-run-composition.js');await data.getMeta();
 });
 afterEach(()=>{vi.clearAllTimers();vi.useRealTimers();vi.unstubAllGlobals();vi.restoreAllMocks();});
 it('cerrar dos veces la misma sesión no duplica intentos',()=>{
@@ -61,7 +61,7 @@ it('no reanuda ni registra una respuesta de una sesión de otra cuenta',async()=
  store.switchAccount('owner-session');
  const [q]=await data.getTema('T1.01');
  const run=engine.createRun({kind:'test',feedback:true,items:[q]});engine.saveRun();engine.clearActiveRun();
- const pending=await engine.pendingRun(true);expect(pending).not.toBeNull();
+ const pending=await recovery.pendingRun(true);expect(pending).not.toBeNull();
  store.switchAccount('friend-session');
  expect(engine.resumeRun(pending)).toBeNull();
  engine.answerQuestion(run,q,q.c,0);expect(store.rec(q.i)).toBeUndefined();

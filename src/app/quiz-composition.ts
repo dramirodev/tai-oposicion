@@ -1,5 +1,6 @@
 import * as store from '../adapters/local/legacy-store.js';
-import { getCurrentRun, subscribe as subscribeEngine, startCurrentQuestion, saveRun, tickCurrentRun, currentSecondsRemaining, setQuestionIndex, answerCurrentQuestion, answerDeferred, toggleReviewQuestion, setCurrentConfidence, toggleCurrentDiscardedOption, revealCurrentSolution, toggleDeferredBlank, setRunPaused, finishCurrentRun, clearActiveRun, clearRun, addCurrentHighlight, removeCurrentHighlight } from '../core/application/legacy-engine.js';
+import { getCurrentRun, subscribe as subscribeEngine, startCurrentQuestion, tickCurrentRun, currentSecondsRemaining, setQuestionIndex, answerCurrentQuestion, answerDeferred, toggleReviewQuestion, setCurrentConfidence, toggleCurrentDiscardedOption, revealCurrentSolution, toggleDeferredBlank, setRunPaused, finishCurrentRun, clearActiveRun, addCurrentHighlight, removeCurrentHighlight } from '../core/application/legacy-engine.js';
+import { clearRun, saveRun } from './pending-run-composition.js';
 import { createHighlight, questionContentRevision } from '../core/domain/attempts/highlights.js';
 import { minimumReadingSeconds } from '../core/domain/reading-strategy.js';
 import { normalizeUiPreferences } from '../shared/presentation/ui-preferences.js';
