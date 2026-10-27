@@ -27,7 +27,7 @@ export default defineConfig({
       const shell = ['./', 'index.html', 'manifest.webmanifest',
         'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-512-maskable.png', 'icons/icon-180.png', 'explanations/index.json', ...assets];
       writeFileSync('dist/sw.js', source.replace(/const SHELL = .*;/, `const SHELL = ${JSON.stringify(shell)};`));
-      writeFileSync('dist/version.json', JSON.stringify({ version, build: buildId, date: new Date().toISOString() }) + '\n');
+      writeFileSync('dist/version.json', JSON.stringify({ version: buildId, build: buildId, date: new Date().toISOString() }) + '\n');
     },
   }],
   define: { __APP_VERSION__: JSON.stringify(version), __APP_BUILD__: JSON.stringify(buildId) },
