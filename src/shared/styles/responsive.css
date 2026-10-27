@@ -100,6 +100,42 @@
 /* La rejilla estrecha usa una opción completa y una acción secundaria separada. */
 
 @media(max-width:600px) {
+  .strategy-controls {
+    grid-template-columns: minmax(0,1fr);
+  }
+
+  .strategy-controls .btn {
+    width: 100%;
+  }
+
+  .overlay.menu-dialog {
+    padding: max(0.75rem,var(--sat)) 0.75rem max(0.75rem,var(--sab));
+  }
+
+  .overlay.menu-dialog .card.menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100dvh - max(0.75rem,var(--sat)) - max(0.75rem,var(--sab)));
+    max-height: none;
+    min-height: 0;
+    overflow: hidden;
+    padding-bottom: 0;
+  }
+
+  .menuhead {
+    position: static;
+    flex: none;
+  }
+
+  .menu-content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: max(1.125rem,var(--sab));
+  }
+
   .option-control {
     flex-direction: column;
   }

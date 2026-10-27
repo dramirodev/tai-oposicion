@@ -1,0 +1,51 @@
+import { expect, test } from '@playwright/test';
+
+async function prepareOwner(page: import('@playwright/test').Page) {
+  await page.route('**/firebase-config.json', route => route.fulfill({ json: {} }));
+  await page.addInitScript(() => {
+    localStorage.setItem('tai.dev', '1');
+    localStorage.setItem('tai.acc:guest', 'propietario');
+    localStorage.setItem('tai.v1:guest', JSON.stringify({
+      stats: {}, sessions: [], cfg: { ui: { theme: 'light', size: 1 } }, seen: { t: [], ts: 0 }, cards: {}, reports: {},
+    }));
+  });
+}
+
+test('los controles del informe de estrategia se alinean en móvil', async ({ page }) => {
+  await prepareOwner(page);
+  await page.setViewportSize({ width: 320, height: 640 });
+  await page.goto('/#/stats');
+  await page.getByRole('button', { name: 'Evolución' }).click();
+
+  const period = page.locator('#strategy-period');
+  const action = page.getByRole('button', { name: 'Calcular informe' });
+  await expect(period).toBeVisible();
+  await expect(action).toBeVisible();
+  const alignment = await page.evaluate(() => {
+    const select = document.querySelector('#strategy-period')!.getBoundingClientRect();
+    const button = [...document.querySelectorAll('button')].find(element => element.textContent?.trim() === 'Calcular informe')!.getBoundingClientRect();
+    return { selectLeft: select.left, selectRight: select.right, buttonLeft: button.left, buttonRight: button.right };
+  });
+  expect(Math.abs(alignment.selectLeft - alignment.buttonLeft)).toBeLessThanOrEqual(1);
+  expect(Math.abs(alignment.selectRight - alignment.buttonRight)).toBeLessThanOrEqual(1);
+});
+
+test('el menú móvil mantiene su panel dentro del viewport y permite llegar a todas las opciones', async ({ page }) => {
+  await prepareOwner(page);
+  await page.setViewportSize({ width: 320, height: 640 });
+  await page.goto('/#/home');
+  await page.locator('#menu').click();
+
+  const panel = page.locator('#menuov .card.menu');
+  await expect(panel).toBeVisible();
+  const bounds = await panel.boundingBox();
+  expect(bounds).not.toBeNull();
+  expect(bounds!.y).toBeGreaterThanOrEqual(0);
+  expect(bounds!.y + bounds!.height).toBeLessThanOrEqual(640);
+  expect(bounds!.height).toBeGreaterThan(560);
+
+  const lastAction = page.locator('#menuov .lrow').last();
+  await lastAction.scrollIntoViewIfNeeded();
+  await expect(lastAction).toBeInViewport();
+  expect(await page.locator('#menuov .menu-content').evaluate(element => element.scrollTop)).toBeGreaterThan(0);
+});
