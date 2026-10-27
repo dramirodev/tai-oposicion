@@ -1,0 +1,74 @@
+import { z } from 'zod';
+
+const index = z.number().int().min(0).max(Number.MAX_SAFE_INTEGER);
+const timestamp = z.number().finite().nonnegative();
+const mode = z.enum(['practice', 'simulation']);
+const outcome = z.enum(['correct', 'wrong']);
+const confidence = z.enum(['sure', 'betweenTwo', 'guess']).nullable();
+
+export const highlightSchema = z.object({
+  id: z.string(),
+  field: z.string().refine((field) => field === 'statement' || /^option:\d+$/.test(field)),
+  start: index,
+  end: index,
+  text: z.string(),
+  before: z.string(),
+  after: z.string(),
+  category: z.enum(['key', 'doubt']),
+  contentRevision: z.string(),
+  createdAt: timestamp,
+  timing: z.enum(['before-answer', 'after-answer', 'after-reveal']),
+  stale: z.boolean().optional(),
+}).superRefine((highlight, context) => {
+  if (highlight.end <= highlight.start) {
+    context.addIssue({ code: 'custom', path: ['end'], message: 'invalid highlight anchor' });
+  }
+});
+
+export const questionAttemptSchema = z.object({
+  schemaVersion: z.literal(1),
+  id: z.string(),
+  sessionId: z.string(),
+  questionId: z.string(),
+  contentRevision: z.string(),
+  mode,
+  position: index,
+  exposure: index,
+  state: z.enum(['unseen', 'pending', 'answered', 'revealed']),
+  response: index.nullable(),
+  outcome: outcome.nullable(),
+  terminalEventId: z.string().optional(),
+  confidence,
+  discardedOptions: z.array(index),
+  highlights: z.array(highlightSchema),
+  createdAt: timestamp,
+  completedAt: timestamp.optional(),
+  lastSequence: index,
+  appliedEventIds: z.array(z.string()),
+});
+
+const empty = z.object({});
+const answerPayload = z.object({ optionIndex: index, outcome });
+const confidencePayload = z.object({ value: z.enum(['sure', 'betweenTwo', 'guess']) });
+const optionPayload = z.object({ optionIndex: index });
+const addHighlightPayload = z.object({ highlight: highlightSchema });
+const removeHighlightPayload = z.object({ highlightId: z.string() });
+
+const event = <Type extends string, Payload extends z.ZodType>(type: Type, payload: Payload) => z.object({
+  schemaVersion: z.literal(1),
+  id: z.string(),
+  attemptId: z.string(),
+  sequence: index,
+  type: z.literal(type),
+  at: timestamp,
+  monotonicAt: timestamp.optional(),
+  payload,
+});
+
+export const attemptEventSchema = z.discriminatedUnion('type', [
+  event('open', empty), event('leave', empty), event('mark-pending', empty), event('reveal', empty),
+  event('pause', empty), event('resume', empty), event('close', empty),
+  event('answer', answerPayload), event('set-confidence', confidencePayload),
+  event('discard-option', optionPayload), event('restore-option', optionPayload),
+  event('add-highlight', addHighlightPayload), event('remove-highlight', removeHighlightPayload),
+]);

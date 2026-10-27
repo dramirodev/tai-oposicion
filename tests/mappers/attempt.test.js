@@ -33,8 +33,16 @@ describe('attemptMapper', () => {
   });
 
   it('returns an explicit mapping failure for invalid state and event payloads', () => {
-    expect(attemptMapper.toDomain({ ...attempt, state: 'unknown' })).toMatchObject({ ok: false });
-    expect(attemptMapper.eventToDomain({ id: 'e', attemptId: 'a', sequence: 1, type: 'answer', at: 10, payload: {} }))
-      .toMatchObject({ ok: false });
+    expect(attemptMapper.toDomain({ schemaVersion: 1, ...attempt, state: 'unknown' }))
+      .toEqual({ ok: false, reason: 'invalid attempt state' });
+    expect(attemptMapper.eventToDomain({ schemaVersion: 1, id: 'e', attemptId: 'a', sequence: 1, type: 'answer', at: 10, payload: {} }))
+      .toEqual({ ok: false, reason: 'invalid answer payload' });
+  });
+
+  it('keeps nested highlight errors explicit and strips fields outside the persistence contract', () => {
+    expect(attemptMapper.toDomain({ schemaVersion: 1, ...attempt, highlights: [{ ...highlight, end: 2 }] }))
+      .toEqual({ ok: false, reason: 'invalid attempt highlight: invalid highlight anchor' });
+    expect(attemptMapper.toDomain({ schemaVersion: 1, ...attempt, storageNote: 'ignored' }))
+      .toEqual({ ok: true, value: attempt });
   });
 });
