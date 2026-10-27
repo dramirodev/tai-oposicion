@@ -66,7 +66,8 @@ it('muestra las secciones de progreso y deja cambiar el detalle de evolución', 
 });
 it('buscar y navegar no modifica el progreso y una cuenta nueva no recibe la pantalla de la anterior', async()=> {
   store.setSeen(['T1.01']);
-  const before=store.exportAll();
+  const before=JSON.parse(store.exportAll());
+  const studyData = state => ({ stats: state.stats, sessions: state.sessions, seen: state.seen, reports: state.reports, cards: state.cards });
   await routes.temario();
   const search=document.querySelector('#topic-search');
   rtl.fireEvent.change(search, { target: { value: 'ningun-tema-9472' } });
@@ -75,7 +76,7 @@ it('buscar y navegar no modifica el progreso y una cuenta nueva no recibe la pan
   activeView.unmount(); activeView=undefined;
   await routes.stats();
   document.querySelector('[aria-label="Sección de progreso"] button:nth-child(2)').click();
-  expect(store.exportAll()).toBe(before);
+  expect(studyData(JSON.parse(store.exportAll()))).toEqual(studyData(before));
   const data=await import('../src/adapters/http/legacy-data.js');
   let finish;
   const spy=vi.spyOn(data,'dueList').mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));

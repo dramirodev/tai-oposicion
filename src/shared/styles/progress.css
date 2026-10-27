@@ -324,40 +324,37 @@
 
 /* ===== evolución y carga ===== */
 
-.evo {
-  position: relative;
-  margin-top: 0.375rem;
-}
-
-.evo svg {
+.stats-chart {
   width: 100%;
-  height: auto;
-  display: block;
-  touch-action: manipulation;
+  height: 12.5rem;
+  min-width: 0;
+  margin-block: var(--space-3);
 }
 
-.gl {
-  stroke: var(--line);
-  stroke-width: 1;
+.stats-chart .recharts-responsive-container {
+  /* ResizeObserver includes #app's zoom in the measured width; neutralize its second application. */
+  zoom: calc(1 / var(--z, 1));
 }
 
-.gt {
+.stats-chart--evolution {
+  height: 14rem;
+}
+
+.stats-chart .recharts-cartesian-axis-tick text {
   fill: var(--mute);
   font-size: var(--fs-xs);
 }
 
-.ln {
-  fill: none;
-  stroke: var(--selb);
-  stroke-width: 2;
-  stroke-linejoin: round;
-  stroke-linecap: round;
+.chart-empty {
+  display: grid;
+  min-height: 5rem;
+  place-items: center;
+  text-align: center;
 }
 
-.pt {
-  fill: var(--selb);
-  stroke: var(--card);
-  stroke-width: 2;
+.chart-loading {
+  width: 100%;
+  min-height: 12.5rem;
 }
 
 .vl {
@@ -377,6 +374,13 @@
   outline: none;
 }
 
+@media (max-width: 30rem) {
+  .stats-chart { height: 11rem; }
+  .stats-chart--evolution { height: 12rem; }
+  .chart-loading { min-height: 11rem; }
+}
+}
+
 .evolution-legend {
   display: flex;
   flex-wrap: wrap;
@@ -387,23 +391,6 @@
 
 .evolution-key { display: inline-flex; align-items: center; gap: 0.375rem; }
 .evolution-key i { width: 0.625rem; height: 0.625rem; border-radius: 50%; }
-
-.tip {
-  max-width: 100%;
-  white-space: normal;
-  overflow-wrap: anywhere;
-  position: absolute;
-  top: 0;
-  transform: translateX(-10%);
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--r-s);
-  padding: 0.5rem 0.625rem;
-  font-size: var(--fs-s);
-  box-shadow: 0 4px 14px rgba(0,0,0,.12);
-  pointer-events: none;
-  z-index: 2;
-}
 
 .cg {
   display: flex;

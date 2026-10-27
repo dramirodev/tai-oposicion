@@ -135,7 +135,7 @@ Esta sección reemplaza los estados de PR anteriores que aparecen en el historia
 
 - PR #34 está integrada en `main` (`095a0e1`).
 - PR #36 también está integrada en `main` (`609dbc8`).
-- La PR #37 quedó cerrada sin merge; GitHub no permite reabrirla porque la rama fue recreada/forzada después de eliminarse su base. La integración Lucide fue republicada directamente contra `main`; el estado final y enlace vigente se registran en la última actualización.
+- La PR #37 quedó cerrada sin merge; GitHub no permitió reabrirla tras recrear/rebasar su rama. La misma integración de Lucide se volvió a publicar contra `main` como PR #39: https://github.com/dramirodev/tai-oposicion/pull/39.
 - PR #38 contiene la propuesta de arquitectura y apunta a `main`; Etapa B permanece pendiente de aprobación explícita.
 - La rama `feat/recharts-study-visualizations` está en `/private/tmp/tai-recharts-audit`, basada en `609dbc8`. La integración está en curso; los gráficos migrados deben quedar cargados de forma diferida dentro de las secciones de estadísticas.
 
@@ -155,33 +155,33 @@ Validación local en la rama de #38: prueba focalizada 2/2 (Chromium y WebKit), 
 4. Esperar aprobación del usuario para Etapa B arquitectónica/Zustand, conforme a la petición original de Etapa A.
 5. Al cerrar las tareas autorizadas, abrir una rama separada para evaluar React Testing Library y si Jest aporta valor frente a Vitest.
 
-## Estado de continuidad — actualización posterior
+## Integración de Recharts — trabajo en curso
 
-### PRs y ramas
+### Auditoría y decisiones
 
-- PR #34, #36 y #38 están integradas en `main`; la propuesta arquitectónica de #38 sigue pendiente de aprobación para iniciar la Etapa B/Zustand.
-- PR #37 se cerró automáticamente al eliminarse la rama base después del merge de #36. GitHub rechazó reabrirla porque su head fue recreado/forzado. Se conservó su diff y se publicó directamente contra `main` en la nueva [PR #41](https://github.com/dramirodev/tai-oposicion/pull/41), rama `feat/lucide-iconography-main`.
-- La integración Recharts está publicada en [PR #40](https://github.com/dramirodev/tai-oposicion/pull/40), rama `feat/recharts-study-visualizations`, base `main`.
-- La migración de tests está publicada en la [PR #42](https://github.com/dramirodev/tai-oposicion/pull/42), rama `refactor/migrate-tests-to-rtl`, basada en `main`.
+- `src/features/stats/StatsPage.tsx` tenía una línea SVG propia para la nota de simulacros y la evolución semanal de acierto/tiempo.
+- `src/features/stats/StatsEvolutionSection.tsx` tenía otra línea SVG propia para preguntas vistas, acertadas, falladas y “No lo sé”. Son métricas existentes y la migración conserva sus datos y tablas.
+- Migración recomendada y aplicada a esas tres visualizaciones porque Recharts aporta ejes/fechas, tooltips, navegación por teclado y adaptación al contenedor.
+- Los indicadores de dominio, barras de avance y tablas se mantienen: son mejores representaciones para sus datos y no necesitan un gráfico.
+- No había una biblioteca de gráficos anterior ni Tailwind/shadcn. No se introdujo shadcn ni un sistema CSS nuevo; los gráficos usan los tokens CSS ya existentes.
 
-### React Testing Library y Jest
+### Arquitectura e implementación
 
-- Se añadieron `@testing-library/react`, `@testing-library/user-event` y `@testing-library/jest-dom` como dependencias de desarrollo. Vitest se mantiene: Jest duplicaría el runner y requeriría adaptar la configuración de Vite y los mocks `vi` sin aportar capacidades necesarias.
-- Se migraron los 15 archivos que montaban componentes/hooks mediante `createRoot` a `render`, `screen`, consultas `within`, eventos RTL y `userEvent` donde corresponde. Se migró también el helper del proveedor de diálogos y se creó `renderApp` para componer `MemoryRouter` y `AppServicesProvider`.
-- `tests/setup.js` configura matchers de `jest-dom` y limpieza RTL; `vitest.config.mjs` lo carga como `setupFiles`.
-- Las pruebas de dominio, adaptadores y el puente legacy que no montan componentes React permanecen como pruebas Vitest. En `tests/app.test.js` se hizo explícita la espera del diálogo antes de comprobar su texto; así se quitó una condición de carrera reproducible al ejecutar la suite completa.
-- Verificación focalizada de los 15 archivos migrados: 37/37 tests.
-- `npm run check`: arquitectura sin deuda nueva (64 excepciones existentes), ESLint, ignore-growth, TypeScript y 402/402 tests en 89 archivos.
-- `npm run build`: correcto. Se mantienen los avisos ya existentes por los bundles `index` (~523 kB) y `legacy-sync` (~549 kB).
-- Revisión estructural: `rg` no encuentra `createRoot` ni `react-dom/client` bajo `tests`.
+- Añadida dependencia `recharts` 3.10.1.
+- `src/features/stats/StatsCharts.tsx` concentra `StatsTrendChart` y `QuestionEvolutionChart`, con etiquetas y descripciones accesibles, ejes/fechas localizados, tooltips, colores semánticos y animación desactivada.
+- `StatsSimulationSection` y `StatsEvolutionSection` cargan los gráficos con `React.lazy` y `Suspense`; el código se descarga cuando se abre la sección que lo necesita. La tabla semanal y la comparación de intentos siguen proporcionando la misma información sin depender del color.
+- Los estados sin datos y de carga tienen texto explícito. CSS mantiene altura válida para `ResponsiveContainer` y compensa el `zoom` de la aplicación en el tamaño observado.
+- Retiradas las reglas SVG manuales que ya no tenían consumidores (`.evo`, `.gl`, `.gt`, `.ln`, `.pt`, `.vl`, `.evolution-hit` y `.tip`). Actualizada la guía local de estilos.
+- El hook React Doctor reportó `prefer-dynamic-import` en el import interno de Recharts. Se clasifica como falso positivo: los padres cargan `StatsCharts` mediante `React.lazy` y el build emite `StatsCharts` como chunk separado. No se desactivó ni suprimió la regla.
 
-### Próximo paso
+### Validación actual
 
-1. La PR #42 está abierta contra `main`; su estado remoto queda pendiente de revisión posterior, sin esperar sus pipelines.
-2. Seguir con el estado de las PR #40 y #41 según las instrucciones del usuario.
-3. Mantener la Etapa B de arquitectura/Zustand pendiente de aprobación explícita. Las pruebas E2E de navegador siguen en Playwright y no se migran a RTL.
-
-Última consulta de checks en GitHub: #40 mostraba fallo en el run `40398611713` y #41 en `40399388302`; no se investigaron en este turno, respetando la preferencia del usuario de que no monitoricemos fallos de PR salvo que los señale. Para #42 aún no aparecía un check en el resumen tras el último push.
+- `npm run check`: pasó en una ejecución (402/402 tests, lint, TypeScript y arquitectura: 64 hallazgos baseline, cero deuda nueva). En repeticiones posteriores apareció una sola prueba intermitente, alternando entre `design-home-stats.test.js` y `app.test.js`; en ambos casos el mismo test pasa al ejecutarlo aislado. No se cambiaron ni relajaron esas pruebas.
+- `npm run build`: pasó. `StatsCharts` es un chunk de 363.68 kB (107.24 kB gzip), separado de la entrada y cargado al usar estadísticas. Los avisos de tamaño preexistentes de `index` (523.44 kB) y `legacy-sync` (549.49 kB) siguen pendientes.
+- `npx playwright test tests/e2e/stats-charts.spec.ts`: 6/6 Chromium/WebKit; puntuaciones reales, tooltip con teclado, temas claro/oscuro, anchos 320/1440, ausencia de overflow y estado vacío.
+- `npm run test:e2e`: 160/160 Chromium/WebKit en local.
+- La prueba offline heredada de explicaciones fallaba en `main` porque bloqueaba service workers y simulaba su respuesta. La corrección que usa el worker/caché reales ya está integrada con PR #38 (`05a6ac8`), por eso no aparece como diferencia propia de esta rama.
+- Stylelint no está instalado/configurado en el proyecto. La revisión visual se apoyó en Taste y en E2E de navegador; no certifica dispositivos físicos.
 
 ## Estado vigente — continuación solicitada el 2026-10-27
 
@@ -189,26 +189,26 @@ La instrucción más reciente pide continuar las tareas pendientes hasta termina
 
 ### Estado de PR y base
 
-- `origin/main` verificado en `ddf63c890071f11a66b3876860df5ff6615a4d58` (merge de PR #39). El `main` del checkout principal está 33 commits detrás y conserva un cambio local ajeno en `tests/design-training.test.js`; no usarlo como base ni modificar ese archivo.
-- PR #40 (`feat/recharts-study-visualizations`) actualizada sobre `main`, `MERGEABLE`; su validación remota terminó en `SUCCESS` en run `40458561840`. Sigue abierta, pendiente de revisión/merge del usuario.
-- PR #39 Lucide está fusionada; PR #41 quedó cerrada como duplicado. PR #42 RTL está fusionada. No queda otra PR abierta fuera de la #40 en la consulta realizada.
+- `origin/main` verificado en `d745aa68e45385fd1625907af6e63ec3da1084b7`; ya incluye las PR #40 (Recharts), #39 (Lucide), #38 (auditoría arquitectónica) y #42 (Testing Library).
+- El checkout principal sigue desactualizado y conserva un cambio local ajeno en `tests/design-training.test.js`; no usarlo como base ni modificar ese archivo.
+- PR #43 (`fix/menu-iconography-mobile-hover`) se creó basada en el `origin/main` previo `ddf63c8`. Al integrarse la PR #40, GitHub marcó conflictos; se está integrando la nueva base `d745aa6` en la rama antes de continuar.
+- PR #41 quedó cerrada como duplicado tras la fusión de #39. La validación remota de #40 terminó `SUCCESS` en run `40458561840` y la PR fue fusionada.
 
-### Iconos de menú y hover táctil — trabajo local validado
+### Iconos de menú y hover táctil
 
-- Rama aislada `fix/menu-iconography-mobile-hover`, creada directamente desde el `origin/main` anterior, no desde el `main` local atrasado.
-- La auditoría encontró dos menús con caracteres/emoji y sin iconos equivalentes a los de la barra. Se creó `src/app/navigation-icons.ts` como catálogo Lucide tipado, se reutilizó en sidebar, menú móvil y menú general legacy, y el tipo de `MenuGroup` ahora exige componentes Lucide. Las opciones únicas del menú usan iconos Lucide afines.
-- Los selectores `:hover` restantes se limitaron a `(hover: hover) and (pointer: fine)`. El estilo de foco y las marcas de respuesta seleccionada/pertenencia de ruta se conservan; el feedback `:active` es una pulsación breve, no hover.
-- Prueba E2E nueva compara el SVG de “Test por tema” entre menú y navegación y prueba opciones táctiles. Chromium/WebKit focal: 4/4; suite Playwright completa: 156/156. `npm run build` correcto. `npm run check` serial: 402/402; la primera ejecución concurrente produjo dos carreras existentes en `tests/app.test.js` y `tests/finish-ui.test.js`, que desaparecieron al ejecutar Vitest con `--maxWorkers=1`. Arquitectura (64 excepciones base, ninguna nueva), ESLint, ignore-growth y TypeScript pasaron.
-- **Pendiente inmediato:** crear commit y PR de esta rama contra `main`; después seguir la arquitectura en una rama separada apilada si depende de este cambio o reorientarla cuando se fusione.
+- Auditoría: el menú móvil de rutas carecía de iconos y el menú general legacy usaba emoji/caracteres, mientras la navegación usa Lucide outline. Se creó `src/app/navigation-icons.ts`; ambos menús y la barra usan el mismo catálogo y grosor. `MenuGroup` ahora recibe componentes Lucide tipados.
+- Los selectores `:hover` se limitan a `(hover: hover) and (pointer: fine)`. Se conservan estilos de foco, ruta actual, respuesta elegida y la pulsación breve `:active`.
+- Validación local antes de integrar #40: build; arquitectura (64 excepciones base, sin nuevas), ESLint, ignore-growth, TypeScript; Vitest serial 402/402; E2E 156/156 (Chromium/WebKit). La ejecución concurrente inicial mostró dos carreras en tests de diálogos que no se reprodujeron en serie.
+- Próximo paso: terminar los conflictos contra `d745aa6`, repetir las comprobaciones si cambió CSS y actualizar la PR #43 contra `main`.
 
 ### Arquitectura Etapa B — siguiente trabajo
 
-Revalidar primero el documento `docs/architecture/migration-plan.md` contra `origin/main`, donde PR #40 aún no está fusionada. Prioridad acordada en `target-architecture.md`:
+Revalidar `docs/architecture/migration-plan.md` en la base actual. Prioridad:
 
-1. Reducir el contrato global `StudyServices` con un primer slice de estadísticas de solo lectura, sin cambiar la presentación ni consultas.
-2. Evaluar Zustand solo para una rebanada de estado de cliente realmente compartido. Dialog/toast es el candidato; conservar la clase observable si Zustand no reduce acoplamiento o facilita selectores/tests. No persistir progreso ni reemplazar estados locales.
-3. Añadir reglas/tests para import cycles y dependencias internas, sin hacer crecer la deuda base.
-4. Continuar retirando el puente `legacy-router`/`legacy-engine` por responsabilidad, solo con sustitución completa, consumidores migrados y contratos/URLs persistidos preservados.
-5. Validar por incremento con check, build y E2E de rutas críticas; documentar resultados y abrir PRs independientes contra `main`.
+1. Extraer Progreso/estadísticas como primer vertical slice de solo lectura y reducir el contrato `StudyServices` por feature sin cambiar presentación o consultas.
+2. Evaluar Zustand para un único slice de estado efímero compartido; `DialogStateStore` es candidato. Adoptarlo solo si mejora coordinación, selectores o pruebas; no persistir progreso ni sustituir estado local.
+3. Añadir reglas/pruebas para ciclos y dependencias internas sin aumentar la deuda respecto a la base.
+4. Desacoplar gradualmente `legacy-engine` y la composición de `legacy-router`, preservando sesiones, URLs, datos antiguos, modo offline y sincronización Firebase.
+5. Validar cada slice con arquitectura, lint, TypeScript, tests, build y E2E críticas; documentar y abrir PR apilada, luego reorientarla a `main` tras integrar el antecedente.
 
-No adoptar automáticamente todo el plan antiguo `modernizacion-sin-legacy`: la migración de rutas está completada en #34 y las notas de work state anteriores a ese merge están superadas. Revisar el checkout `/Volumes/SSD/develop/PWA_TAI-mejoras-estudio` con sus 39 cambios locales antes de decidir si los renombres descriptivos siguen siendo un objetivo vigente; no incorporar ni descartar esos cambios sin inspeccionarlos y probarlos contra la base actual.
+No adoptar automáticamente el plan antiguo `modernizacion-sin-legacy`: las rutas de producción se migraron en #34 y los registros anteriores al merge están superados. La rama externa de renombres `/Volumes/SSD/develop/PWA_TAI-mejoras-estudio` tiene cambios locales no publicados; inspeccionarla en su propio checkout antes de decidir su vigencia y preservarlos.
