@@ -1,5 +1,6 @@
 import 'fake-indexeddb/auto';
 import {beforeAll,beforeEach,afterAll,it,expect,vi} from 'vitest';
+import {act} from '@testing-library/react';
 import {readFileSync} from 'node:fs';
 import path from 'node:path';
 vi.mock('../src/adapters/firebase/sync-facade.js',()=>({status:{user:null,state:'sin sesión',configured:false,authResolved:true},setAttemptRepository:()=>{},init:async()=>{},onStatus:()=>()=>{},login:async()=>{},logout:async()=>{},retry:()=>{}}));
@@ -106,7 +107,8 @@ it.each(['finish','exit'])('el vencimiento cierra una sola vez y retira la confi
  vi.useFakeTimers({toFake:['setInterval','clearInterval']});
  try {
   const run=engine.createRun({kind:'sim',feedback:false,items:qs,limit:1});await navigate('quiz','pregunta 1');
-  document.querySelector('.opt[data-i="0"]').click();document.querySelector('[data-jump="2"]').click();document.querySelector(action === 'exit' ? '#exit' : '#next').click();
+  document.querySelector('.opt[data-i="0"]').click();document.querySelector('[data-jump="2"]').click();
+  await act(async()=>{document.querySelector(action === 'exit' ? '#exit' : '#next').click();});
   await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull());
   run.secs=60;await vi.advanceTimersByTimeAsync(1000);
   await vi.waitFor(()=>expect(engine.getSnapshot().run).toBeNull());expect(document.querySelector('.overlay')).toBeNull();
