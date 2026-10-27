@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
-const numericValue = z.custom<number>((value) => typeof value === 'number');
+const numericValue = z.unknown().refine((value): value is number => typeof value === 'number');
 
 /** Deliberately mirrors the permissive legacy record contract at the storage boundary. */
-export const sessionRecordSchema = z.object({
+export const sessionRecordSchema = z.strictObject({
   id: z.string(),
   ts: numericValue,
   kind: z.string(),
@@ -19,4 +19,4 @@ export const sessionRecordSchema = z.object({
   titulo: z.string(),
   interrupted: z.unknown().optional(),
   porTiempo: z.unknown().optional(),
-}).strict();
+});
