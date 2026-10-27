@@ -1,4 +1,4 @@
-import { openDB, unwrap, wrap } from 'idb';
+import { openDB, unwrap, wrap, type IDBPDatabase } from 'idb';
 import type { AttemptEvent, QuestionAttempt, QuestionAttemptSession } from '../../core/domain/attempts/transitions.js';
 import type {
   AppendAttemptEventResult,
@@ -114,10 +114,11 @@ function sessionRow(scope: string, value: QuestionAttemptSession): StoredSession
   };
 }
 
-function openDatabase(name: string): Promise<IDBDatabase> {
+function openDatabase(name: string, onConnectionInvalidated: () => void): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     let blocked = false;
-    void openDB(name, 2, {
+    let connection: IDBPDatabase | undefined;
+    const opening = openDB(name, 2, {
       upgrade: db => {
         if (!db.objectStoreNames.contains('attempts')) {
           const attempts = db.createObjectStore('attempts', { keyPath: 'key' });
@@ -138,9 +139,19 @@ function openDatabase(name: string): Promise<IDBDatabase> {
       },
       blocked: () => {
         blocked = true;
+        onConnectionInvalidated();
         reject(new Error('El historial de intentos está bloqueado por otra pestaña'));
       },
-    }).then(database => { if (!blocked) resolve(unwrap(database)); }, reject);
+      blocking: () => {
+        onConnectionInvalidated();
+        connection?.close();
+      },
+      terminated: () => { connection = undefined; onConnectionInvalidated(); },
+    });
+    opening.then(database => {
+      if (blocked) database.close();
+      else { connection = database; resolve(unwrap(database)); }
+    }, reject);
   });
 }
 
@@ -169,7 +180,7 @@ function isTerminal(event: AttemptEvent): boolean { return event.type === 'answe
 export function createLocalAttemptRepository(databaseName = 'tai-attempts'): AttemptRepository {
   let database: Promise<IDBDatabase> | undefined;
   const listeners = new Map<string, Set<(change: AttemptRepositoryChange) => void>>();
-  const db = () => (database ||= openDatabase(databaseName));
+  const db = () => (database ||= openDatabase(databaseName, () => { database = undefined; }));
   const notify = (scope: string, change: AttemptRepositoryChange) => listeners.get(scope)?.forEach(listener => listener(change));
 
   return {

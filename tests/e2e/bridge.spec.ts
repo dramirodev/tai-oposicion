@@ -82,6 +82,28 @@ test('el mirror local cierra su conexión cuando otra pestaña actualiza la base
   }));
   expect(version).toBe(2);
 });
+test('el historial de intentos libera su conexión ante una actualización desde otra pestaña', async ({ page, context }) => {
+  await start(page);
+  await page.locator('#quick').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  await expect.poll(() => page.evaluate(async () => (await indexedDB.databases()).some(database => database.name === 'tai-attempts'))).toBe(true);
+  await page.locator('#exit').click();
+  await page.goto('/#/home');
+  await expect(page.locator('#quick')).toBeVisible();
+  const otherTab = await context.newPage();
+  await start(otherTab);
+
+  const result = await otherTab.evaluate(() => new Promise<{ version: number; wasBlocked: boolean }>(resolve => {
+    const request = indexedDB.open('tai-attempts', 3);
+    let wasBlocked = false;
+    const timeout = window.setTimeout(() => resolve({ version: 0, wasBlocked }), 3000);
+    request.onblocked = () => { wasBlocked = true; };
+    request.onerror = () => { window.clearTimeout(timeout); resolve({ version: 0, wasBlocked }); };
+    request.onupgradeneeded = () => request.result.createObjectStore('migration-probe');
+    request.onsuccess = () => { const db = request.result; db.close(); window.clearTimeout(timeout); resolve({ version: db.version, wasBlocked }); };
+  }));
+  expect(result).toEqual({ version: 3, wasBlocked: false });
+});
 test('menú React, foco, banner de red y recorte de navegación para invitados', async ({ page, context }) => {
   const errors = await start(page);
   // Abrir por teclado: Safari no conserva el foco del botón al pulsarlo con el puntero.
