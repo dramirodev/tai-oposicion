@@ -92,12 +92,10 @@ export interface ErrorServices {
   setState(id: string, state: ErrorReportRecord['state']): void;
   exportData(): Promise<string>;
 }
-export interface FailureQuestion { id: string; topicId: string; statement: string; options: readonly string[]; correctIndex: number; citation?: string; note?: string; year?: string; context?: string; assumptionText?: string; traps?: readonly number[]; nonScoring?: number; source?: { url: string; title?: string; page?: number; verified: boolean } }
+export interface FailureQuestion { id: string; topicId: string; statement: string; options: readonly string[]; correctIndex: number; citation?: string; note?: string; year?: string; context?: string; assumptionText?: string; traps?: readonly number[]; nonScoring?: number; source?: { url: string; title?: string; page?: number; verified: boolean }; progress?: { attempts: number; correct: number; lastSeenAt: number; failureStreak: number; syllabusReviewed: boolean } }
 export interface FailureServices {
   loadQuestions(): Promise<FailureQuestion[]>;
   loadTopics(): Promise<readonly { id: string; name: string }[]>;
-  getRecord(id: string): readonly number[] | undefined;
-  isReviewed(id: string): boolean;
   setReviewed(id: string, topicId: string, reviewed: boolean): void;
   topicName(id: string): string;
   startPractice(ids: readonly string[], title: string): void;

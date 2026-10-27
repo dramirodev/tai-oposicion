@@ -1,17 +1,18 @@
 import type { QuestionRecord } from '../../../core/domain/question-record.js';
+import type { QuestionStats } from '../../../core/domain/entities.js';
+import type { ProgressRepository } from '../../../core/ports/ProgressRepository.js';
 import type { FailureQuestion, FailureServices } from '../../../shared/ui/study-services.js';
 import { toFailureQuestionView, type QuestionSourceFallbacks } from '../../mappers/study-question-view-mapper.js';
 
 interface TopicIndex { temas: readonly { id: string; nombre: string }[] }
 
 export interface FailuresCompositionDependencies {
+  accountId(): string | null;
+  progressRepository: Pick<ProgressRepository, 'getStats'>;
   loadQuestionMetadata(): Promise<unknown>;
   loadQuestionIndex(): Promise<TopicIndex>;
   loadQuestionsById(ids: string[]): Promise<QuestionRecord[]>;
   failedQuestionIds(): string[];
-  lastAttemptAt(id: string): number | undefined;
-  readRecord(id: string): readonly number[] | undefined;
-  isReviewed(id: string): boolean;
   setReviewed(id: string, topicId: string, reviewed: boolean): void;
   topicName(id: string): string;
   sourceFallbacks: QuestionSourceFallbacks;
@@ -27,17 +28,32 @@ export function createFailuresComposition(dependencies: FailuresCompositionDepen
 
   return {
     async loadQuestions(): Promise<FailureQuestion[]> {
+      const account = dependencies.accountId();
       await dependencies.loadQuestionMetadata();
-      cachedQuestions = (await dependencies.loadQuestionsById(dependencies.failedQuestionIds()))
-        .sort((first, second) => (dependencies.lastAttemptAt(second.i) || 0) - (dependencies.lastAttemptAt(first.i) || 0));
-      return cachedQuestions.map(question => toFailureQuestionView(question, dependencies.sourceFallbacks));
+      const [statistics, questions] = await Promise.all([
+        dependencies.progressRepository.getStats(),
+        dependencies.loadQuestionsById(dependencies.failedQuestionIds()),
+      ]);
+      if (account !== dependencies.accountId()) return [];
+      cachedQuestions = questions.sort((first, second) => (statistics[second.i]?.lastSeenAt || 0) - (statistics[first.i]?.lastSeenAt || 0));
+      return cachedQuestions.map(question => {
+        const progress: QuestionStats | undefined = statistics[question.i];
+        return {
+          ...toFailureQuestionView(question, dependencies.sourceFallbacks),
+          progress: progress ? {
+            attempts: progress.attempts,
+            correct: progress.correct,
+            lastSeenAt: progress.lastSeenAt,
+            failureStreak: progress.failureStreak ?? 0,
+            syllabusReviewed: progress.syllabusReviewed ?? false,
+          } : undefined,
+        };
+      });
     },
     async loadTopics() {
       const index = await dependencies.loadQuestionIndex();
       return index.temas.map(topic => ({ id: topic.id, name: topic.nombre }));
     },
-    getRecord: dependencies.readRecord,
-    isReviewed: dependencies.isReviewed,
     setReviewed: dependencies.setReviewed,
     topicName: dependencies.topicName,
     startPractice(ids, title) {

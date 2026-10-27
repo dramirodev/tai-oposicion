@@ -6,14 +6,14 @@ function question(id, topicId = 'T1.01') {
 }
 
 function setup(overrides = {}) {
+  let account = 'account-a';
   const dependencies = {
+    accountId: () => account,
+    progressRepository: { getStats: vi.fn(async () => ({ old: { attempts: 2, correct: 0, lastSeenAt: 10, failureStreak: 1 }, new: { attempts: 3, correct: 1, lastSeenAt: 20, failureStreak: 2, syllabusReviewed: true } })) },
     loadQuestionMetadata: vi.fn(async () => {}),
     loadQuestionIndex: vi.fn(async () => ({ temas: [{ id: 'T1.01', nombre: 'Tema 1' }] })),
     loadQuestionsById: vi.fn(async () => [question('old'), question('new')]),
     failedQuestionIds: vi.fn(() => ['old', 'new']),
-    lastAttemptAt: id => ({ old: 10, new: 20 })[id],
-    readRecord: vi.fn(() => [1]),
-    isReviewed: vi.fn(() => false),
     setReviewed: vi.fn(),
     topicName: vi.fn(id => `Tema ${id}`),
     sourceFallbacks: {},
@@ -23,7 +23,7 @@ function setup(overrides = {}) {
     navigateToQuiz: vi.fn(),
     ...overrides,
   };
-  return { dependencies, services: createFailuresComposition(dependencies) };
+  return { dependencies, setAccount: value => { account = value; }, services: createFailuresComposition(dependencies) };
 }
 
 describe('failures composition', () => {
@@ -36,6 +36,7 @@ describe('failures composition', () => {
     expect(dependencies.loadQuestionsById).toHaveBeenCalledWith(['old', 'new']);
     expect(result.map(item => item.id)).toEqual(['new', 'old']);
     expect(result[0]).toMatchObject({ topicId: 'T1.01', statement: 'Pregunta new', options: ['A', 'B'] });
+    expect(result[0].progress).toEqual({ attempts: 3, correct: 1, lastSeenAt: 20, failureStreak: 2, syllabusReviewed: true });
   });
 
   it('uses only cached selected questions and navigates after practice starts', async () => {
@@ -60,5 +61,15 @@ describe('failures composition', () => {
     unscorable.services.startPractice(['old'], 'Filtrado');
     expect(unscorable.dependencies.notify).toHaveBeenCalledWith('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.');
     expect(unscorable.dependencies.navigateToQuiz).not.toHaveBeenCalled();
+  });
+
+  it('does not return questions loaded for a different active account', async () => {
+    let releaseStats;
+    const pendingStats = new Promise(resolve => { releaseStats = resolve; });
+    const { setAccount, services } = setup({ progressRepository: { getStats: () => pendingStats } });
+    const result = services.loadQuestions();
+    setAccount('account-b');
+    releaseStats({ old: { attempts: 1, correct: 0, lastSeenAt: 1 } });
+    await expect(result).resolves.toEqual([]);
   });
 });

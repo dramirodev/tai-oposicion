@@ -238,6 +238,17 @@ const cardsComposition = createCardsComposition({
 const { services: cardsServices, loadAllCards: allCards } = cardsComposition;
 let settingsIndex: Awaited<ReturnType<typeof getIndex>> | null = null;
 let settingsOffline: SettingsSnapshot['offline'] = null;
+let settingsProgressQuestionCount = 0;
+let settingsProgressRead = 0;
+async function refreshSettingsProgressQuestionCount(): Promise<void> {
+  const request = ++settingsProgressRead, account = store.accountId();
+  try {
+    const statistics = await localProgressRepository.getStats();
+    if (request !== settingsProgressRead || account !== store.accountId()) return;
+    const count = Object.keys(statistics).length;
+    if (count !== settingsProgressQuestionCount) { settingsProgressQuestionCount = count; notifySettings(); }
+  } catch { /* Progress summary is optional; the settings page remains usable. */ }
+}
 const settingsServices = {
   accountId: store.accountId,
   getSnapshot(): SettingsSnapshot {
@@ -245,7 +256,7 @@ const settingsServices = {
     return {
       sync: { state: sync.status.state, user: sync.status.user, configured: sync.status.configured, lastSync: sync.status.lastSync, error: sync.status.error, detail: sync.status.detail, host: sync.status.host, authDomain: sync.status.authDomain, accessError: sync.status.accessErr, requests: sync.status.reqs },
       full: isFull(), level: accessLevel(), devMode: devMode(), devRevealed: devRevealed(), ui: { theme: ui.theme, size: ui.size, lectura: ui.lectura },
-      progress: { questions: Object.keys(store.getStats()).length, topics: store.getSeen().length, sessions: store.getSessions().length, openReports: Object.values(store.getReports()).filter(report => report.st === 'abierto').length },
+      progress: { questions: settingsProgressQuestionCount, topics: store.getSeen().length, sessions: store.getSessions().length, openReports: Object.values(store.getReports()).filter(report => report.st === 'abierto').length },
       exam: String(store.getCfg().exam || ''), version: APP_VERSION, build: APP_BUILD.split('+')[1] || APP_BUILD, update: appUpdates.getAvailableUpdate()?.version || null,
       offline: settingsOffline, index: settingsIndex ? { questions: settingsIndex.n, scenarios: settingsIndex.nsup } : null,
     };
@@ -257,6 +268,7 @@ const settingsServices = {
   async load() {
     settingsIndex = await getIndex();
     settingsOffline = await inspectOffline(settingsIndex).catch(() => null);
+    await refreshSettingsProgressQuestionCount();
     notifySettings();
   },
   setPreference(key: 'theme' | 'size' | 'lectura', value: string | number) {
@@ -323,7 +335,8 @@ const settingsServicesWithSubscription = {
   ...settingsServices,
   subscribe(listener: () => void) {
     settingsListeners.add(listener);
-    const offStore = store.onChange(listener), offSync = sync.onStatus(listener);
+    const onStoreChange = () => { listener(); void refreshSettingsProgressQuestionCount(); };
+    const offStore = store.onChange(onStoreChange), offSync = sync.onStatus(listener);
     return () => { settingsListeners.delete(listener); offStore(); offSync(); };
   },
 };
@@ -333,13 +346,12 @@ const quizServices = createQuizServices(go, hashPath('home'), hashPath('result')
 
 
 const failuresServices = createFailuresComposition({
+  accountId: store.accountId,
+  progressRepository: localProgressRepository,
   loadQuestionMetadata: getMeta,
   loadQuestionIndex: getIndex,
   loadQuestionsById: ids => byIds(ids),
   failedQuestionIds: falladasIds,
-  lastAttemptAt: id => store.rec(id)?.[2],
-  readRecord: id => store.rec(id),
-  isReviewed: id => store.rec(id)?.[11] === 1,
   setReviewed: (id, topicId, reviewed) => store.setReviewed(id, topicId, reviewed),
   topicName: temaName,
   sourceFallbacks: VERIFIED_SOURCES,

@@ -40,7 +40,7 @@ export function FailuresPage() {
     }).catch(() => { if (active) { setLoadError(true); setLoaded(true); } });
     return () => { active = false; };
   }, [failures, reload]);
-  const selected = useMemo(() => selectFailures(questions, filter, failures.getRecord), [questions, filter, failures]);
+  const selected = useMemo(() => selectFailures(questions, filter), [questions, filter]);
   const byTopic = useMemo(() => new Map(questions.reduce((entries, question) => entries.set(question.topicId, (entries.get(question.topicId) || 0) + 1), new Map<string, number>())), [questions]);
 
   if (!loaded) return <PageLoading variant="legacy" />;
@@ -62,8 +62,8 @@ export function FailuresPage() {
     {selected.length ? <div id="failure-results">{[...new Set(selected.map(question => question.topicId))].sort().map(topicId => {
       const group = selected.filter(question => question.topicId === topicId);
       return <section key={topicId}><h2 className="h3">{topicId} · {failures.topicName(topicId)} <small>({group.length})</small></h2><div className="card">{group.map(question => {
-        const record = failures.getRecord(question.id) || [0, 0, 0], streak = Math.max(0, record[10] || 0), reviewed = failures.isReviewed(question.id);
-        return <article className="failure-item" key={question.id}><div className="failure-state"><label className="chk"><input type="checkbox" data-reviewed={question.id} checked={reviewed} onChange={event => { failures.setReviewed(question.id, question.topicId, event.target.checked); setQuestions(current => [...current]); }} />Repasada en el temario</label><span className="streak-meter" aria-label={`${streak} de 3 aciertos seguidos`}>{streak}/3</span></div><FailureDetails question={question} streak={streak} reviewed={reviewed} /><p className="sm sub">Última actividad: {dateLabel(record[2])} · acertada {record[1] || 0} de {record[0] || 0} veces{question.year ? ` · ${question.year}` : ''}</p></article>;
+        const progress = question.progress, streak = Math.max(0, progress?.failureStreak ?? 0), reviewed = progress?.syllabusReviewed ?? false;
+        return <article className="failure-item" key={question.id}><div className="failure-state"><label className="chk"><input type="checkbox" data-reviewed={question.id} checked={reviewed} onChange={event => { const checked = event.target.checked; failures.setReviewed(question.id, question.topicId, checked); setQuestions(current => current.map(item => item.id === question.id ? { ...item, progress: { attempts: item.progress?.attempts ?? 0, correct: item.progress?.correct ?? 0, lastSeenAt: item.progress?.lastSeenAt ?? 0, failureStreak: item.progress?.failureStreak ?? 0, syllabusReviewed: checked } } : item)); }} />Repasada en el temario</label><span className="streak-meter" aria-label={`${streak} de 3 aciertos seguidos`}>{streak}/3</span></div><FailureDetails question={question} streak={streak} reviewed={reviewed} /><p className="sm sub">Última actividad: {dateLabel(progress?.lastSeenAt ?? 0)} · acertada {progress?.correct ?? 0} de {progress?.attempts ?? 0} veces{question.year ? ` · ${question.year}` : ''}</p></article>;
       })}</div></section>;
     })}</div> : <div className="card" id="failure-results"><p className="sub">Ninguna pregunta coincide con la búsqueda.</p></div>}
     <div className="bar2"><button className="btn" onClick={() => failures.startPractice(selected.map(question => question.id), `Falladas${filter.topicId ? ` · ${filter.topicId}` : ''}`)} disabled={!selected.length}>Practicar estas</button><Link className="btn sec" to="/home">Inicio</Link></div>
