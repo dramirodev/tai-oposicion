@@ -5,7 +5,7 @@ import { composeWeightedQuestions, estimateQuickQuestionCount, isQuestionAllowed
 import { analyzeTopicMastery } from '../src/core/domain/topic-mastery.js';
 import { startOfStudyWeek as weekStart, aggregateWeeklyStudy, slowestQuestions, buildSimulationHistory, compareStudySessions } from '../src/core/domain/study-analytics.js';
 import { aggregateWeeks, slowList, quickQuestionCount as quickN, simHistory, compareSessions, cargaRepasos, motivosFallo, suertes, velocidad } from '../src/features/stats/analytics-mapper.js';
-import { mapTopicMasteryToLegacy as dominioCalc } from '../src/app/topic-mastery-mapper.js';
+import { mapTopicMasteryToLegacy as dominioCalc } from '../src/app/mappers/topic-mastery-mapper.js';
 import { selectSpacedReviews, countReviewsByDay } from '../src/core/domain/spaced-repetition.js';
 import { calculateTrapRates, selectTrapQuestions } from '../src/core/domain/traps.js';
 import { ERROR_REPORT_REASONS as MOTIVOS, FAILURE_REASONS as MOTIVOS_FALLO, UI_ZOOMS as ZOOMS } from '../src/shared/presentation/study-labels.js';

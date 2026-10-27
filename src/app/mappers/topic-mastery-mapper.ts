@@ -1,4 +1,4 @@
-import { analyzeTopicMastery } from '../core/domain/topic-mastery.js';
+import { analyzeTopicMastery } from '../../core/domain/topic-mastery.js';
 
 interface TopicForDisplay { id: string; n: number }
 type LegacyQuestionStatistics = readonly number[];

@@ -70,7 +70,7 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   await navigate('falladas', 'Practicar estas');
   expect(document.querySelector(reviewedSelector)).toBeNull();
   // El selector del test por tema usa el mismo criterio que el listado.
-  const filtered = await (await import('../src/app/study-engine-composition.js')).selectQuestionsForTopics({topics:[bank[0].t],origins:new Set(['O','G','A']),mode:'falladas',count:100});
+  const filtered = await (await import('../src/app/composition/study/study-engine-composition.js')).selectQuestionsForTopics({topics:[bank[0].t],origins:new Set(['O','G','A']),mode:'falladas',count:100});
   expect(filtered.some(q => q.i === bank[0].i)).toBe(false);
   expect(filtered.some(q => q.i === bank[1].i)).toBe(true);
   const search = document.querySelector('#failure-query');

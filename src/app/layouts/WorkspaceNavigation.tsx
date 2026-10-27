@@ -1,7 +1,7 @@
 import { BookText, type LucideIcon } from 'lucide-react';
-import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
-import { hashPath, hashSegment } from './paths.js';
-import { navigationIcons } from './navigation-icons.js';
+import { showMenu, type MenuGroup } from '../../shared/ui/dialog-actions.js';
+import { hashPath, hashSegment } from '../router/paths.js';
+import { navigationIcons } from '../navigation-icons.js';
 
 interface Destination { route: string; label: string; icon: LucideIcon }
 const destinations: Destination[] = [

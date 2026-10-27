@@ -28,7 +28,7 @@ describe('architecture migration boundaries', () => {
   });
   it('allows legacy dependencies only in app composition roots', () => {
     const root = fixture({
-      'src/app/stats-composition.ts': "import '../core/application/legacy-engine';",
+      'src/app/composition/stats/stats-composition.ts': "import '../../../core/application/legacy-engine';",
       'src/features/stats/page.tsx': "import '../../core/application/legacy-engine';",
     });
     const legacyImports = scanArchitecture(root).filter(item => item.kind === 'legacy-import');

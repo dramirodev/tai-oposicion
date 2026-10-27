@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { createReadingComposition } from '../src/app/reading-composition.js';
+import { createReadingComposition } from '../src/app/composition/trainers/reading-composition.js';
 
 const question = (id, overrides = {}) => ({
   i: id, t: 'T1.01', o: 'A', q: '¿Cuál NO corresponde a la opción correcta?', a: ['No', 'Sí'], c: 1,

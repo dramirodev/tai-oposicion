@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { createTrapsComposition } from '../src/app/traps-composition.js';
+import { createTrapsComposition } from '../src/app/composition/trainers/traps-composition.js';
 
 function question(id, traps = [1]) {
   return { i: id, t: 'T1.01', o: 'G', q: `Pregunta ${id}`, a: ['A', 'B'], c: 0, x: traps };

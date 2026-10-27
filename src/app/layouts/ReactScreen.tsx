@@ -1,7 +1,7 @@
-import { observeScrollSections } from '../shared/ui/scroll-sections.js';
+import { observeScrollSections } from '../../shared/ui/scroll-sections.js';
 import { useEffect, useLayoutEffect, useRef, useSyncExternalStore, type ReactNode } from 'react';
 import { useLocation, Link, Navigate } from 'react-router';
-import { useStudyService } from '../shared/ui/study-services.js';
+import { useStudyService } from '../../shared/ui/study-services.js';
 export function ReactScreen({ children, home = false, restricted = false }: { children: ReactNode; home?: boolean; restricted?: boolean }) {
   const root = useRef<HTMLDivElement>(null);
   const services = useStudyService('home');

@@ -1,7 +1,7 @@
-import type { QuestionRecord } from '../core/domain/question-record.js';
-import { evaluateTrapAnswer, recordTrapDetections } from '../core/domain/traps.js';
-import type { TrapAnswer, TrapPrompt, TrapRun, TrapWeakness, TrapsServices } from '../shared/ui/study-services.js';
-import { toFailureQuestionView, type QuestionSourceFallbacks } from './study-question-view-mapper.js';
+import type { QuestionRecord } from '../../../core/domain/question-record.js';
+import { evaluateTrapAnswer, recordTrapDetections } from '../../../core/domain/traps.js';
+import type { TrapAnswer, TrapPrompt, TrapRun, TrapWeakness, TrapsServices } from '../../../shared/ui/study-services.js';
+import { toFailureQuestionView, type QuestionSourceFallbacks } from '../../mappers/study-question-view-mapper.js';
 
 export interface TrapsCompositionDependencies {
   accountId(): string | null;

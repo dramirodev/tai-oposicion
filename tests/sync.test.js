@@ -129,7 +129,7 @@ it('monta y cancela la sincronización del historial con el ámbito de cada cuen
   expect(repository.subscribe).toHaveBeenCalledTimes(2);
 });
 it('No lo sé conserva la racha como el blanco que puntúa el resultado', async () => {
-  const engine=await import('../src/app/study-engine-composition.js');
+  const engine=await import('../src/app/composition/study/study-engine-composition.js');
   const q={i:'f-review',t:'T1.01',o:'G',q:'Prueba',a:['A','B','C','D'],c:0,k:'D',x:[],d:1};
   store.record(q.i,q.t,0,1000);store.record(q.i,q.t,1,2000);store.record(q.i,q.t,1,3000);
   const run=engine.createRun({kind:'test',feedback:true,items:[q]});
@@ -146,7 +146,7 @@ it('importar con listeners activos publica los registros nuevos', async () => {
 });
 
 it('restaura el progreso propio al volver a una cuenta y descarta sus sesiones en pantalla', async()=>{
- const engine=await import('../src/app/study-engine-composition.js');
+ const engine=await import('../src/app/composition/study/study-engine-composition.js');
  store.record('owner-question','T1.01',0,1000);
  engine.createRun({kind:'test',feedback:true,items:[{i:'owner-question',t:'T1.01',q:'x',a:['a','b','c','d'],c:0}]});
  user('friend','friend@example.test'); snap('access/friend',{ok:true});

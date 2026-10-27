@@ -1,5 +1,5 @@
-import type { QuestionRecord } from '../core/domain/question-record.js';
-import type { FailureQuestion } from '../shared/ui/study-services.js';
+import type { QuestionRecord } from '../../core/domain/question-record.js';
+import type { FailureQuestion } from '../../shared/ui/study-services.js';
 
 export type QuestionSourceFallbacks = Readonly<Record<string, FailureQuestion['source']>>;
 

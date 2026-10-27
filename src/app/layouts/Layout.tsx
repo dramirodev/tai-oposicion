@@ -2,10 +2,10 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { Activity, CalendarClock, ClipboardCheck, House, Settings2 } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { Outlet, useLocation, useNavigate } from 'react-router';
-import { observeFixedLayout } from '../shared/ui/layout-metrics.js';
+import { observeFixedLayout } from '../../shared/ui/layout-metrics.js';
 import { WorkspaceNavigation } from './WorkspaceNavigation.js';
 import { useActiveSection } from './useActiveSection.js';
-import { hashSegment } from './paths.js';
+import { hashSegment } from '../router/paths.js';
 import { isGuestNavigationRoute, useLayoutAccess } from './layout-composition.js';
 function NetworkBanner() {
   const [status, setStatus] = useState(navigator.onLine === false ? 'off' : '');

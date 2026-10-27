@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { createLightningComposition } from '../src/app/lightning-composition.js';
+import { createLightningComposition } from '../src/app/composition/trainers/lightning-composition.js';
 
 function question(id, extra = {}) {
   return { i: id, t: 'T1.01', o: 'G', q: `Pregunta ${id}`, a: ['A', 'B'], c: 0, ...extra };

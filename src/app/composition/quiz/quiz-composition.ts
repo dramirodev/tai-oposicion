@@ -1,18 +1,18 @@
-import * as store from '../adapters/local/legacy-store.js';
-import { getCurrentRun, subscribe as subscribeEngine, startCurrentQuestion, tickCurrentRun, currentSecondsRemaining, setQuestionIndex, answerCurrentQuestion, answerDeferred, toggleReviewQuestion, setCurrentConfidence, toggleCurrentDiscardedOption, revealCurrentSolution, toggleDeferredBlank, setRunPaused, finishCurrentRun, clearActiveRun, addCurrentHighlight, removeCurrentHighlight } from './study-engine-composition.js';
-import { clearRun, saveRun } from './pending-run-composition.js';
-import { createHighlight, questionContentRevision } from '../core/domain/attempts/highlights.js';
-import { minimumReadingSeconds } from '../core/domain/reading-strategy.js';
-import { normalizeUiPreferences } from '../shared/presentation/ui-preferences.js';
-import { questionNotice, sourceHtml } from '../shared/presentation/legacy-study.js';
-import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
-import { temaName } from '../adapters/http/legacy-data.js';
-import { ask } from '../shared/ui/dialog-actions.js';
-import { toast } from '../shared/ui/legacy-dom.js';
-import { findLegacyCodeExplanation } from './explanation-composition.js';
-import { explanationMapper } from '../features/explanations/explanation-mapper.js';
-import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
-import type { QuizServices } from '../shared/ui/study-services.js';
+import * as store from '../../../adapters/local/legacy-store.js';
+import { getCurrentRun, subscribe as subscribeEngine, startCurrentQuestion, tickCurrentRun, currentSecondsRemaining, setQuestionIndex, answerCurrentQuestion, answerDeferred, toggleReviewQuestion, setCurrentConfidence, toggleCurrentDiscardedOption, revealCurrentSolution, toggleDeferredBlank, setRunPaused, finishCurrentRun, clearActiveRun, addCurrentHighlight, removeCurrentHighlight } from '../study/study-engine-composition.js';
+import { clearRun, saveRun } from '../study/pending-run-composition.js';
+import { createHighlight, questionContentRevision } from '../../../core/domain/attempts/highlights.js';
+import { minimumReadingSeconds } from '../../../core/domain/reading-strategy.js';
+import { normalizeUiPreferences } from '../../../shared/presentation/ui-preferences.js';
+import { questionNotice, sourceHtml } from '../../../shared/presentation/legacy-study.js';
+import { VERIFIED_SOURCES } from '../../../adapters/http/verified-sources.js';
+import { temaName } from '../../../adapters/http/legacy-data.js';
+import { ask } from '../../../shared/ui/dialog-actions.js';
+import { toast } from '../../../shared/ui/legacy-dom.js';
+import { findLegacyCodeExplanation } from '../explanations/explanation-composition.js';
+import { explanationMapper } from '../../../features/explanations/explanation-mapper.js';
+import { renderCodeExplanation } from '../../../features/explanations/legacy-view.js';
+import type { QuizServices } from '../../../shared/ui/study-services.js';
 
 export function createQuizServices(go: (path: string) => void, homePath: string, resultPath: string): QuizServices {
   let closing = false;

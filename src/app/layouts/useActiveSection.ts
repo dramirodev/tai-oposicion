@@ -1,5 +1,5 @@
 import { useStore } from 'zustand';
-import { sessionStateStore } from './session-state-store.js';
+import { sessionStateStore } from '../session-state-store.js';
 
 export function useActiveSection(pathname: string): string {
   const runKind = useStore(sessionStateStore, snapshot => snapshot.run?.kind || null);

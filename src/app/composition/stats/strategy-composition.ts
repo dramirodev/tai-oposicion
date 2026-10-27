@@ -1,9 +1,9 @@
-import { httpBankRepository } from '../adapters/http/bank-repository.js';
-import { localAttemptRepository } from '../adapters/local/attempt-repository.js';
-import * as store from '../adapters/local/legacy-store.js';
-import { getStrategyReport } from '../core/application/attempts/get-strategy-report.js';
-import { flushAttemptTracking } from './study-engine-composition.js';
-import { getQuestionEvolution } from '../core/application/attempts/get-question-evolution.js';
+import { httpBankRepository } from '../../../adapters/http/bank-repository.js';
+import { localAttemptRepository } from '../../../adapters/local/attempt-repository.js';
+import * as store from '../../../adapters/local/legacy-store.js';
+import { getStrategyReport } from '../../../core/application/attempts/get-strategy-report.js';
+import { flushAttemptTracking } from '../study/study-engine-composition.js';
+import { getQuestionEvolution } from '../../../core/application/attempts/get-question-evolution.js';
 
 export async function loadStrategyReport(from: number, to: number) {
   await flushAttemptTracking();

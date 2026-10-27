@@ -1,21 +1,21 @@
-import * as store from '../adapters/local/legacy-store.js';
-import { localProgressRepository } from '../adapters/local/progress-repository.js';
-import { META, getIndex, getMeta, now, byIds } from '../adapters/http/legacy-data.js';
-import { dominioTemas } from './topic-mastery-composition.js';
-import { aggregateWeeks, simHistory, compareSessions } from '../features/stats/analytics-mapper.js';
-import { ORIGEN, TRAMPAS, TIPOS } from '../shared/presentation/labels.js';
-import { percentage } from '../shared/presentation/format.js';
-import { falladasIds } from './study-engine-composition.js';
+import * as store from '../../../adapters/local/legacy-store.js';
+import { localProgressRepository } from '../../../adapters/local/progress-repository.js';
+import { META, getIndex, getMeta, now, byIds } from '../../../adapters/http/legacy-data.js';
+import { dominioTemas } from '../topics/topic-mastery-composition.js';
+import { aggregateWeeks, simHistory, compareSessions } from '../../../features/stats/analytics-mapper.js';
+import { ORIGEN, TRAMPAS, TIPOS } from '../../../shared/presentation/labels.js';
+import { percentage } from '../../../shared/presentation/format.js';
+import { falladasIds } from '../study/study-engine-composition.js';
 import { loadQuestionEvolution, loadStrategyReportForPeriod } from './strategy-composition.js';
-import { renderStrategyReport } from '../features/stats/strategy-view.js';
-import type { StatsServices } from '../shared/ui/study-services.js';
-import type { StatsSnapshot } from '../core/application/stats/statistics-model.js';
-import type { QuestionRecord } from '../core/domain/question-record.js';
-import type { RunCfg } from './study-engine-composition.js';
-import { hashPath } from '../shared/navigation/paths.js';
-import { getProgressStatistics } from '../core/application/stats/get-progress-statistics.js';
-import { slowestQuestions } from '../core/domain/study-analytics.js';
-import type { MetaEntry } from '../adapters/legacy/types.js';
+import { renderStrategyReport } from '../../../features/stats/strategy-view.js';
+import type { StatsServices } from '../../../shared/ui/study-services.js';
+import type { StatsSnapshot } from '../../../core/application/stats/statistics-model.js';
+import type { QuestionRecord } from '../../../core/domain/question-record.js';
+import type { RunCfg } from '../study/study-engine-composition.js';
+import { hashPath } from '../../../shared/navigation/paths.js';
+import { getProgressStatistics } from '../../../core/application/stats/get-progress-statistics.js';
+import { slowestQuestions } from '../../../core/domain/study-analytics.js';
+import type { MetaEntry } from '../../../adapters/legacy/types.js';
 
 interface StatsActions { go(path: string): void; startRun(run: RunCfg): boolean; startRepaso(): void; trapTest(count: number, traps: number[]): Promise<{ items: QuestionRecord[] }>; }
 

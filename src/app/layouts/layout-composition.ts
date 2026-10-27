@@ -1,9 +1,9 @@
 import { useEffect, useRef, useSyncExternalStore } from 'react';
 import type { NavigateFunction } from 'react-router';
-import { isFull, isOwner, GUEST_ROUTES } from '../adapters/legacy/access.js';
-import { syncGateway } from '../adapters/firebase/legacy-sync-state.js';
-import { hasActiveRun } from './study-engine-composition.js';
-import { subscribeAccessChanges } from './access-events.js';
+import { isFull, isOwner, GUEST_ROUTES } from '../../adapters/legacy/access.js';
+import { syncGateway } from '../../adapters/firebase/legacy-sync-state.js';
+import { hasActiveRun } from '../composition/study/study-engine-composition.js';
+import { subscribeAccessChanges } from '../access-events.js';
 
 const subscribe = (notify: () => void) => {
   const stopSync = syncGateway.subscribe(notify);

@@ -1,6 +1,6 @@
-import type { QuestionRecord } from '../core/domain/question-record.js';
-import type { LightningQuestion, LightningServices } from '../shared/ui/study-services.js';
-import { toFailureQuestionView, type QuestionSourceFallbacks } from './study-question-view-mapper.js';
+import type { QuestionRecord } from '../../../core/domain/question-record.js';
+import type { LightningQuestion, LightningServices } from '../../../shared/ui/study-services.js';
+import { toFailureQuestionView, type QuestionSourceFallbacks } from '../../mappers/study-question-view-mapper.js';
 
 export interface LightningCompositionDependencies {
   loadQuestionMetadata(): Promise<unknown>;

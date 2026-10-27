@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { createFailuresComposition } from '../src/app/failures-composition.js';
+import { createFailuresComposition } from '../src/app/composition/failures/failures-composition.js';
 
 function question(id, topicId = 'T1.01') {
   return { i: id, t: topicId, o: 'G', q: `Pregunta ${id}`, a: ['A', 'B'], c: 0 };

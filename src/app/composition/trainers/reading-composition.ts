@@ -1,7 +1,7 @@
-import { evaluateReadingWords, minimumReadingSeconds, asksForNegativeOption } from '../core/domain/reading-strategy.js';
-import type { QuestionRecord } from '../core/domain/question-record.js';
-import type { ReadingOutcome, ReadingProgress, ReadingPrompt, ReadingServices, ReadingToken, ReadingWordResult } from '../shared/ui/study-services.js';
-import { toFailureQuestionView, type QuestionSourceFallbacks } from './study-question-view-mapper.js';
+import { evaluateReadingWords, minimumReadingSeconds, asksForNegativeOption } from '../../../core/domain/reading-strategy.js';
+import type { QuestionRecord } from '../../../core/domain/question-record.js';
+import type { ReadingOutcome, ReadingProgress, ReadingPrompt, ReadingServices, ReadingToken, ReadingWordResult } from '../../../shared/ui/study-services.js';
+import { toFailureQuestionView, type QuestionSourceFallbacks } from '../../mappers/study-question-view-mapper.js';
 
 export interface ReadingCompositionDependencies {
   accountId(): string | null;

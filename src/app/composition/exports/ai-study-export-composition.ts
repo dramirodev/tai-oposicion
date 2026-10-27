@@ -1,14 +1,14 @@
-import { httpBankRepository } from '../adapters/http/bank-repository.js';
-import { httpExplanationRepository } from '../adapters/http/explanation-repository.js';
-import { localAttemptRepository } from '../adapters/local/attempt-repository.js';
-import { aiStudyExportMapper } from '../adapters/local/mappers/ai-study-export.js';
-import * as store from '../adapters/local/legacy-store.js';
-import * as sync from '../adapters/firebase/sync-facade.js';
-import { deleteDetailedStudyHistory } from '../core/application/attempts/delete-detailed-study-history.js';
-import { listAiStudyExportSessions, prepareAiStudyExport } from '../core/application/attempts/prepare-ai-study-export.js';
-import type { AttemptMode } from '../core/domain/attempts/transitions.js';
-import { flushAttemptTracking } from './study-engine-composition.js';
-import { renderAiStudyExportMarkdown } from '../shared/presentation/ai-study-export-markdown.js';
+import { httpBankRepository } from '../../../adapters/http/bank-repository.js';
+import { httpExplanationRepository } from '../../../adapters/http/explanation-repository.js';
+import { localAttemptRepository } from '../../../adapters/local/attempt-repository.js';
+import { aiStudyExportMapper } from '../../../adapters/local/mappers/ai-study-export.js';
+import * as store from '../../../adapters/local/legacy-store.js';
+import * as sync from '../../../adapters/firebase/sync-facade.js';
+import { deleteDetailedStudyHistory } from '../../../core/application/attempts/delete-detailed-study-history.js';
+import { listAiStudyExportSessions, prepareAiStudyExport } from '../../../core/application/attempts/prepare-ai-study-export.js';
+import type { AttemptMode } from '../../../core/domain/attempts/transitions.js';
+import { flushAttemptTracking } from '../study/study-engine-composition.js';
+import { renderAiStudyExportMarkdown } from '../../../shared/presentation/ai-study-export-markdown.js';
 
 const PREFERRED_PART_BYTES = 500_000;
 const byteLength = (content: string): number => new TextEncoder().encode(content).byteLength;

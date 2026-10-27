@@ -1,6 +1,6 @@
-import type { QuestionRecord } from '../core/domain/question-record.js';
-import type { FailureQuestion, FailureServices } from '../shared/ui/study-services.js';
-import { toFailureQuestionView, type QuestionSourceFallbacks } from './study-question-view-mapper.js';
+import type { QuestionRecord } from '../../../core/domain/question-record.js';
+import type { FailureQuestion, FailureServices } from '../../../shared/ui/study-services.js';
+import { toFailureQuestionView, type QuestionSourceFallbacks } from '../../mappers/study-question-view-mapper.js';
 
 interface TopicIndex { temas: readonly { id: string; nombre: string }[] }
 

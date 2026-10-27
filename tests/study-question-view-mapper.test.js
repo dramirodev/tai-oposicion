@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { toFailureQuestionView } from '../src/app/study-question-view-mapper.js';
+import { toFailureQuestionView } from '../src/app/mappers/study-question-view-mapper.js';
 
 describe('toFailureQuestionView', () => {
   it('maps only the available bank fields to the view model', () => {
