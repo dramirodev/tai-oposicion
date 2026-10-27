@@ -1,6 +1,8 @@
+import type { LucideIcon } from 'lucide-react';
+
 export interface ToastAction { label: string; fn: () => void }
 export type MenuAction = string | (() => void);
-export type MenuGroup = [string, [string, string, string, MenuAction][]];
+export type MenuGroup = [string, [LucideIcon, string, string, MenuAction][]];
 export interface DialogRequest {
   id: number;
   kind: 'ask' | 'notice' | 'menu';

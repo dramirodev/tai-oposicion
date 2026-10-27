@@ -357,6 +357,23 @@
   min-height: 12.5rem;
 }
 
+.vl {
+  fill: var(--ink);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+
+.evolution-hit {
+  fill: transparent;
+  cursor: pointer;
+}
+
+.evolution-hit:focus {
+  fill: var(--sel);
+  opacity: .5;
+  outline: none;
+}
+
 @media (max-width: 30rem) {
   .stats-chart { height: 11rem; }
   .stats-chart--evolution { height: 12rem; }

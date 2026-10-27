@@ -874,7 +874,6 @@ code.cd b.sk {
 .home-domain-heading a { min-height: 2.75rem; display: inline-flex; align-items: center; font-size: var(--fs-s); }
 .home-blocks { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 1.75rem; }
 .home-block { display: flex; flex-direction: column; justify-content: center; gap: 0.5rem; padding: 1.125rem 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; font-size: var(--fs-m); }
-.home-block:hover { color: var(--selb); }
 .home-block small { font-size: var(--fs-s); }
 #syncnote .note { border: 0; border-radius: 0; border-top: 1px solid var(--line); background: transparent; color: var(--mute); padding: 0.75rem 0; margin: 0; font-size: var(--fs-s); }
 .product-brand { display: none; }

@@ -50,6 +50,7 @@ import { localAttemptRepository } from '../adapters/local/attempt-repository.js'
 import { attemptArchiveMapper } from '../adapters/local/mappers/attempt-archive.js';
 import { cleanCfg } from '../adapters/local/config.js';
 import { hashPath } from './paths.js';
+import { menuActionIcons, navigationIcons } from './navigation-icons.js';
 import type { QuestionRecord as Question } from '../core/domain/question-record.js';
 import { readingTokens, mixReadingIds } from '../features/trainers/reading-controller.js';
 import type { TestConfiguration, ScenarioChoice, SimulationConfiguration, SimulationTab, SimulationExam, SimulationExamGroups, ResultServices } from '../shared/ui/study-services.js';
@@ -174,28 +175,28 @@ async function openMenu() {
   const aqui = location.hash || hashPath('home');
   const G = [
     ['Estudiar', [
-      ['⚡', 'Sesión rápida', '10 preguntas en unos 5 minutos', () => quickSession()],
-      ['↻', 'Repaso de fallos', due ? due + (due === 1 ? ' pregunta toca repasar hoy' : ' preguntas toca repasar hoy') : 'Nada pendiente hoy', () => startRepaso()],
-      ['▭', 'Tarjetas de repaso', nCards ? nCards + (nCards === 1 ? ' tarjeta vence hoy' : ' tarjetas vencen hoy') : 'Repetición espaciada', hashPath('cards')],
-      ['✎', 'Test por tema', '10–40 preguntas con corrección inmediata', hashPath('test')],
-      ['⏱', 'Simulacros', 'Completo, por examen o por tema', hashPath('simulation')],
+      [menuActionIcons.quick, 'Sesión rápida', '10 preguntas en unos 5 minutos', () => quickSession()],
+      [menuActionIcons.review, 'Repaso de fallos', due ? due + (due === 1 ? ' pregunta toca repasar hoy' : ' preguntas toca repasar hoy') : 'Nada pendiente hoy', () => startRepaso()],
+      [navigationIcons.cards, 'Tarjetas de repaso', nCards ? nCards + (nCards === 1 ? ' tarjeta vence hoy' : ' tarjetas vencen hoy') : 'Repetición espaciada', hashPath('cards')],
+      [navigationIcons.test, 'Test por tema', '10–40 preguntas con corrección inmediata', hashPath('test')],
+      [navigationIcons.sim, 'Simulacros', 'Completo, por examen o por tema', hashPath('simulation')],
     ]],
     ['Entrenar un hábito', [
-      ['🔎', 'Detective de trampas', 'Marca qué trampas esconde cada pregunta', hashPath('traps')],
-      ['👁', 'Lectura atenta', vel.n ? vel.n + ' fallos por velocidad' : 'Qué piden, palabras clave y respuesta', hashPath('reading')],
-      ['⚡', 'Pregunta relámpago', 'Una sola pregunta', hashPath('lightning')],
+      [navigationIcons.traps, 'Detective de trampas', 'Marca qué trampas esconde cada pregunta', hashPath('traps')],
+      [navigationIcons.reading, 'Lectura atenta', vel.n ? vel.n + ' fallos por velocidad' : 'Qué piden, palabras clave y respuesta', hashPath('reading')],
+      [navigationIcons.lightning, 'Pregunta relámpago', 'Una sola pregunta', hashPath('lightning')],
     ]],
     ['Seguimiento', [
-      ['▤', 'Progreso', 'Mapa de dominio, simulacros y evolución', hashPath('stats')],
-      ['☰', 'Temas vistos', store.getSeen().length + ' temas marcados', hashPath('topics')],
-      ['✗', 'Preguntas falladas', falladasIds().length + ' para buscar y releer', hashPath('failures')],
-      ['⚠', 'Errores del banco', nErr ? nErr + ' por revisar' : 'Nada por revisar', hashPath('errors')],
+      [navigationIcons.stats, 'Progreso', 'Mapa de dominio, simulacros y evolución', hashPath('stats')],
+      [navigationIcons.topics, 'Temas vistos', store.getSeen().length + ' temas marcados', hashPath('topics')],
+      [navigationIcons.failures, 'Preguntas falladas', falladasIds().length + ' para buscar y releer', hashPath('failures')],
+      [menuActionIcons.errors, 'Errores del banco', nErr ? nErr + ' por revisar' : 'Nada por revisar', hashPath('errors')],
     ]],
     ['La app', [
-      ['⌂', 'Inicio', 'Resumen y cuenta atrás', hashPath('home')],
-      ...(isOwner() ? [['🔑', 'Accesos', sync.status.reqs.length ? sync.status.reqs.length + ' solicitudes por revisar' : 'Quién puede usar la app', hashPath('access')]] : []),
-      ['⚙', 'Ajustes', NEWV ? 'Hay una versión nueva' : 'Cuenta, apariencia, copia y versión ' + APP_VERSION, hashPath('settings')],
-      ['?', 'Ayuda', 'Motivos, práctica, simulacros y guardado', hashPath('help')],
+      [navigationIcons.home, 'Inicio', 'Resumen y cuenta atrás', hashPath('home')],
+      ...(isOwner() ? [[navigationIcons.access, 'Accesos', sync.status.reqs.length ? sync.status.reqs.length + ' solicitudes por revisar' : 'Quién puede usar la app', hashPath('access')]] : []),
+      [navigationIcons.settings, 'Ajustes', NEWV ? 'Hay una versión nueva' : 'Cuenta, apariencia, copia y versión ' + APP_VERSION, hashPath('settings')],
+      [navigationIcons.help, 'Ayuda', 'Motivos, práctica, simulacros y guardado', hashPath('help')],
     ]],
   ];
   await showMenu((isFull() ? G : GUEST_MENU(G)) as MenuGroup[], aqui, go);

@@ -183,9 +183,33 @@ Validación local en la rama de #38: prueba focalizada 2/2 (Chromium y WebKit), 
 - La prueba offline heredada de explicaciones fallaba en `main` porque bloqueaba service workers y simulaba su respuesta. La corrección que usa el worker/caché reales ya está integrada con PR #38 (`05a6ac8`), por eso no aparece como diferencia propia de esta rama.
 - Stylelint no está instalado/configurado en el proyecto. La revisión visual se apoyó en Taste y en E2E de navegador; no certifica dispositivos físicos.
 
-### Estado de PR y continuación
+## Estado vigente — continuación solicitada el 2026-10-27
 
-- PR #38 se integró en `main` (`05a6ac8`); su validación remota terminó con éxito.
-- La integración Lucide sigue abierta como PR #39 contra `main`.
-- Rama Recharts: `feat/recharts-study-visualizations`, rebasada a `main` en `05a6ac8`. PR #40 abierta contra `main`: https://github.com/dramirodev/tai-oposicion/pull/40; cabeza `a244960`. No se esperaron los checks remotos.
-- Etapa B de arquitectura/Zustand sigue pendiente de aprobación expresa. La evaluación de React Testing Library/Jest permanece en una rama posterior, después de cerrar los trabajos activos.
+La instrucción más reciente pide continuar las tareas pendientes hasta terminarlas. Esta autorización retoma la Etapa B arquitectónica/Zustand que la solicitud original había dejado detrás de aprobación. Mantener entregas separadas y no fusionar ni desplegar sin instrucción explícita.
+
+### Estado de PR y base
+
+- `origin/main` verificado en `d745aa68e45385fd1625907af6e63ec3da1084b7`; ya incluye las PR #40 (Recharts), #39 (Lucide), #38 (auditoría arquitectónica) y #42 (Testing Library).
+- El checkout principal sigue desactualizado y conserva un cambio local ajeno en `tests/design-training.test.js`; no usarlo como base ni modificar ese archivo.
+- PR #43 (`fix/menu-iconography-mobile-hover`) se creó basada en el `origin/main` previo `ddf63c8`. Al integrarse la PR #40 hubo conflictos en este handoff y `progress.css`; se integró `d745aa6` y GitHub vuelve a marcar la rama como `MERGEABLE`.
+- PR #41 quedó cerrada como duplicado tras la fusión de #39. La validación remota de #40 terminó `SUCCESS` en run `40458561840` y la PR fue fusionada.
+
+### Iconos de menú y hover táctil
+
+- Auditoría: el menú móvil de rutas carecía de iconos y el menú general legacy usaba emoji/caracteres, mientras la navegación usa Lucide outline. Se creó `src/app/navigation-icons.ts`; ambos menús y la barra usan el mismo catálogo y grosor. `MenuGroup` ahora recibe componentes Lucide tipados.
+- Los selectores `:hover` se limitan a `(hover: hover) and (pointer: fine)`. Se conservan estilos de foco, ruta actual, respuesta elegida y la pulsación breve `:active`.
+- Validación local antes de integrar #40: build; arquitectura (64 excepciones base, sin nuevas), ESLint, ignore-growth, TypeScript; Vitest serial 402/402; E2E 156/156 (Chromium/WebKit). La ejecución concurrente inicial mostró dos carreras en tests de diálogos que no se reprodujeron en serie.
+- Tras el merge de #40: `npm ci` añadió 567 paquetes sin vulnerabilidades; build correcto. E2E focalizada CSS/menú/gráficas 40/40 Chromium/WebKit; la suite completa 156/156 había pasado antes del merge de #40. El check serial posterior tuvo una carrera en `tests/app.test.js` (401/402); ejecutar ese archivo aislado pasó 1/1. La prueba no se modificó porque no se reprodujo aislada y no está relacionada con estos cambios.
+- Próximo paso: publicar la resolución de la base y verificar el nuevo estado de PR #43; después continuar la arquitectura apilada sobre la última punta de #43.
+
+### Arquitectura Etapa B — siguiente trabajo
+
+Revalidar `docs/architecture/migration-plan.md` en la base actual. Prioridad:
+
+1. Extraer Progreso/estadísticas como primer vertical slice de solo lectura y reducir el contrato `StudyServices` por feature sin cambiar presentación o consultas.
+2. Evaluar Zustand para un único slice de estado efímero compartido; `DialogStateStore` es candidato. Adoptarlo solo si mejora coordinación, selectores o pruebas; no persistir progreso ni sustituir estado local.
+3. Añadir reglas/pruebas para ciclos y dependencias internas sin aumentar la deuda respecto a la base.
+4. Desacoplar gradualmente `legacy-engine` y la composición de `legacy-router`, preservando sesiones, URLs, datos antiguos, modo offline y sincronización Firebase.
+5. Validar cada slice con arquitectura, lint, TypeScript, tests, build y E2E críticas; documentar y abrir PR apilada, luego reorientarla a `main` tras integrar el antecedente.
+
+No adoptar automáticamente el plan antiguo `modernizacion-sin-legacy`: las rutas de producción se migraron en #34 y los registros anteriores al merge están superados. La rama externa de renombres `/Volumes/SSD/develop/PWA_TAI-mejoras-estudio` tiene cambios locales no publicados; inspeccionarla en su propio checkout antes de decidir su vigencia y preservarlos.

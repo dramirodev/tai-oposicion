@@ -175,7 +175,7 @@ test('la sidebar conserva los destinos y el área de estudio al ampliar texto', 
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(1440);
 });
 
-test('el menú móvil permite navegar por teclado y devuelve el foco al cerrar', async ({ page }) => {
+test('el menú móvil conserva la iconografía de navegación y funciona con teclado', async ({ page }) => {
   await prepare(page, 'light', 0);
   await page.goto('/#/test');
   await expect(page.locator('.workspace-sidebar')).toBeHidden();
@@ -190,6 +190,31 @@ test('el menú móvil permite navegar por teclado y devuelve el foco al cerrar',
   await page.keyboard.press('Escape');
   await expect(menu).toBeFocused();
   await menu.click();
+  const menuTestIcon = page.locator('#menuov .lrow').filter({ hasText: 'Test por tema' }).locator('svg');
+  const navigationTestIcon = page.locator('.workspace-sidebar a[href="#/test"] svg');
+  await expect(menuTestIcon).toBeVisible();
+  expect(await menuTestIcon.evaluate(icon => icon.innerHTML)).toBe(await navigationTestIcon.evaluate(icon => icon.innerHTML));
+  await expect(menuTestIcon).toHaveAttribute('stroke-width', '1.7');
   await page.locator('#menuov').getByRole('button', { name: 'Ayuda', exact: true }).click();
   await expect(page.locator('#app h1')).toHaveText('Ayuda');
+});
+
+test('la práctica táctil no aplica estilos hover persistentes a opciones', async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  try {
+    const page = await context.newPage();
+    await prepare(page, 'light', 0);
+    await page.goto('/#/home');
+    await page.locator('#quick').tap();
+    const options = page.locator('.opt');
+    await expect(options.first()).toBeVisible();
+    expect(await page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches)).toBe(false);
+    const untouched = options.nth(3);
+    const initialBackground = await untouched.evaluate(option => getComputedStyle(option).backgroundColor);
+    await options.first().tap();
+    await expect(options.first()).toHaveAttribute('aria-pressed', 'true');
+    expect(await untouched.evaluate(option => getComputedStyle(option).backgroundColor)).toBe(initialBackground);
+  } finally {
+    await context.close();
+  }
 });

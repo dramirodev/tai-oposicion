@@ -232,11 +232,6 @@ button.ghost.sm {
   stroke-width: 1.8;
 }
 
-.help-icon-link:hover {
-  background: var(--surface-hover);
-  color: var(--accent);
-}
-
 .help-icon-link:focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 3px;

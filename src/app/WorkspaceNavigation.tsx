@@ -1,22 +1,23 @@
-import { Activity, BookText, CalendarClock, CircleHelp, ClipboardCheck, Eye, House, KeyRound, Layers2, ListChecks, ScanSearch, Settings2, Zap, type LucideIcon } from 'lucide-react';
+import { BookText, type LucideIcon } from 'lucide-react';
 import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
 import { hashPath, hashSegment } from './paths.js';
+import { navigationIcons } from './navigation-icons.js';
 
 interface Destination { route: string; label: string; icon: LucideIcon }
 const destinations: Destination[] = [
-  { route: 'home', label: 'Inicio', icon: House },
-  { route: 'test', label: 'Test por tema', icon: ClipboardCheck },
-  { route: 'sim', label: 'Simulacros', icon: CalendarClock },
-  { route: 'cards', label: 'Tarjetas', icon: Layers2 },
-  { route: 'falladas', label: 'Preguntas falladas', icon: Activity },
-  { route: 'lectura', label: 'Lectura atenta', icon: Eye },
-  { route: 'trampas', label: 'Detective de trampas', icon: ScanSearch },
-  { route: 'relampago', label: 'Relámpago', icon: Zap },
-  { route: 'temario', label: 'Temas estudiados', icon: ListChecks },
-  { route: 'stats', label: 'Progreso', icon: Activity },
-  { route: 'ayuda', label: 'Ayuda', icon: CircleHelp },
-  { route: 'settings', label: 'Ajustes', icon: Settings2 },
-  { route: 'acceso', label: 'Accesos', icon: KeyRound },
+  { route: 'home', label: 'Inicio', icon: navigationIcons.home },
+  { route: 'test', label: 'Test por tema', icon: navigationIcons.test },
+  { route: 'sim', label: 'Simulacros', icon: navigationIcons.sim },
+  { route: 'cards', label: 'Tarjetas', icon: navigationIcons.cards },
+  { route: 'falladas', label: 'Preguntas falladas', icon: navigationIcons.failures },
+  { route: 'lectura', label: 'Lectura atenta', icon: navigationIcons.reading },
+  { route: 'trampas', label: 'Detective de trampas', icon: navigationIcons.traps },
+  { route: 'relampago', label: 'Relámpago', icon: navigationIcons.lightning },
+  { route: 'temario', label: 'Temas estudiados', icon: navigationIcons.topics },
+  { route: 'stats', label: 'Progreso', icon: navigationIcons.stats },
+  { route: 'ayuda', label: 'Ayuda', icon: navigationIcons.help },
+  { route: 'settings', label: 'Ajustes', icon: navigationIcons.settings },
+  { route: 'acceso', label: 'Accesos', icon: navigationIcons.access },
 ];
 const groups = [
   ['Practicar', ['test', 'sim', 'cards']],
@@ -32,9 +33,9 @@ export function WorkspaceNavigation({ full, owner, section, pathname, navigate }
   const active = (route: string) => route === current || (['quiz', 'result', 'sim2', 'examenes'].includes(current) && section === route);
   const link = (destination: Destination) => { const Icon = destination.icon; return <a key={destination.route} href={hashSegment(destination.route)} className={active(destination.route) ? 'is-active' : ''} aria-current={active(destination.route) ? 'page' : undefined}><Icon size="1.125rem" strokeWidth={1.7} aria-hidden="true" /><span>{destination.label}</span></a>; };
   const openMenu = () => {
-    const menu: MenuGroup[] = [['Inicio', [['', 'Inicio', '', hashPath('home')]]]];
+    const menu: MenuGroup[] = [['Inicio', [[navigationIcons.home, 'Inicio', '', hashPath('home')]]]];
     for (const [title, routes] of groups) {
-      const items: MenuGroup[1] = destinations.filter(d => (routes as readonly string[]).includes(d.route) && visible(d.route)).map(d => ['', d.label, '', hashSegment(d.route)]);
+      const items: MenuGroup[1] = destinations.filter(d => (routes as readonly string[]).includes(d.route) && visible(d.route)).map(d => [d.icon, d.label, '', hashSegment(d.route)]);
       if (items.length) menu.push([title, items]);
     }
     void showMenu(menu, hashSegment(current), path => navigate(path.slice(1)));

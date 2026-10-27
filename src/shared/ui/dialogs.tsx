@@ -18,7 +18,7 @@ function Dialog({ dialog: data, top }: { dialog: DialogRequest; top: boolean }) 
     </div></div></NativeDialog>;
 }
 function MenuSection({ title, items, offset, current, select }: { title: string; items: MenuGroup[1]; offset: number; current?: string; select: (firstValue: MenuAction) => void }) {
-  return <><div className="gtitle">{title}</div><div className="lgroup">{items.map(([icon, name, sub, action], index) => <button key={typeof action === 'string' ? action : name} className={`lrow ${action === current ? 'here' : ''}`} data-a={offset + index} aria-current={action === current ? 'page' : undefined} onClick={() => select(action)}><i aria-hidden="true">{icon}</i><span><b>{name}</b><small>{sub}</small></span></button>)}</div></>;
+  return <><div className="gtitle">{title}</div><div className="lgroup">{items.map(([Icon, name, sub, action], index) => <button key={typeof action === 'string' ? action : name} className={`lrow ${action === current ? 'here' : ''}`} data-a={offset + index} aria-current={action === current ? 'page' : undefined} onClick={() => select(action)}><i aria-hidden="true"><Icon size="1.125rem" strokeWidth={1.7} /></i><span><b>{name}</b><small>{sub}</small></span></button>)}</div></>;
 }
 export function DialogProvider({ children }: { children?: ReactNode }) {
   const { dialogs, toast: item } = useSyncExternalStore(dialogStore.subscribe, dialogStore.getSnapshot);
