@@ -23,9 +23,6 @@ import { $, L, toast, ask } from '../shared/ui/legacy-dom.js';
 import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
 import { BLOQUES, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
-import { createCardsController } from '../features/cards/cards-controller.js';
-import { cardFromFailedQuestion } from '../features/cards/flashcard-mapper.js';
-import type { StudyCard } from '../shared/ui/study-services.js';
 import { isFull, isOwner, accessLevel, GUEST_ROUTES } from '../adapters/legacy/access.js';
 import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, clearActiveRun, createRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, revealCurrentSolution, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, dueQuestionIds, selectQuestionsForTopics, selectWeightedSimulationQuestions, setCurrentConfidence, toggleCurrentDiscardedOption, addCurrentHighlight, removeCurrentHighlight } from './composition/study/study-engine-composition.js';
 import { sessionStatePort } from './session-state-store.js';
@@ -59,6 +56,8 @@ import { cleanCfg } from '../adapters/local/config.js';
 import { hashPath } from './router/paths.js';
 import { menuActionIcons, navigationIcons } from './navigation-icons.js';
 import { bootAppServices as startAppBootstrap } from './app-bootstrap.js';
+import { createAppUpdateController } from './composition/updates/app-update-controller.js';
+import { createCardsComposition } from './composition/cards/cards-composition.js';
 import type { QuestionRecord as Question } from '../core/domain/question-record.js';
 import { createReadingComposition } from './composition/trainers/reading-composition.js';
 import { readingTokens, mixReadingIds } from '../features/trainers/reading-controller.js';
@@ -69,6 +68,14 @@ configureSessionStateStore(sessionStatePort);
 let navigate: (h: string, refresh?: boolean) => void = h => { location.hash = h; };
 export function configureAppNavigation(fn: (h: string, refresh?: boolean) => void): void { navigate = fn; }
 function go(h: string) { navigate(h); }
+const appUpdates = createAppUpdateController({
+  currentBuild: APP_BUILD,
+  saveRun,
+  flushProgress: () => store.flushNow(),
+  getRegistration: () => navigator.serviceWorker?.getRegistration(),
+  reload: () => location.reload(),
+  onUpdateReady: () => toast('Hay una versión nueva.', { label: 'Actualizar', fn: () => appUpdates.applyUpdate() }),
+});
 const recover = createAccountRecovery(store.accountId, () => store.recover());
 let routeReady: () => void;
 const firstReactRouteReady = new Promise<void>(resolve => { routeReady = resolve; });
@@ -153,7 +160,7 @@ async function openMenu() {
     ['La app', [
       [navigationIcons.home, 'Inicio', 'Resumen y cuenta atrás', hashPath('home')],
       ...(isOwner() ? [[navigationIcons.access, 'Accesos', sync.status.reqs.length ? sync.status.reqs.length + ' solicitudes por revisar' : 'Quién puede usar la app', hashPath('access')]] : []),
-      [navigationIcons.settings, 'Ajustes', NEWV ? 'Hay una versión nueva' : 'Cuenta, apariencia, copia y versión ' + APP_VERSION, hashPath('settings')],
+      [navigationIcons.settings, 'Ajustes', appUpdates.getAvailableUpdate() ? 'Hay una versión nueva' : 'Cuenta, apariencia, copia y versión ' + APP_VERSION, hashPath('settings')],
       [navigationIcons.help, 'Ayuda', 'Motivos, práctica, simulacros y guardado', hashPath('help')],
     ]],
   ];
@@ -206,25 +213,12 @@ async function simParte1(idx: any, org: any, N: any, only: any) {
 }
 // Parte 2 tras la parte 1: ofrece 2 supuestos
 // Las pantallas comparten navegación y limpieza; cada módulo conserva su estado de sesión.
-const fold = (text: unknown) => String(text || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-let cardIndex: Record<string, unknown> | undefined;
-const cardCache = new Map<string, Promise<Record<string, unknown>[]>>();
-async function curatedCards(): Promise<StudyCard[]> {
-  if (cardIndex === undefined) { try { cardIndex = (await fetchJson<{ temas?: Record<string, unknown> }>('cards/index.json')).temas || {}; } catch { return []; } }
-  const topicIds = Object.keys(cardIndex);
-  for (const topicId of topicIds) if (!cardCache.has(topicId)) cardCache.set(topicId, fetchJson<Record<string, unknown>[]>(`cards/${topicId}.json`).catch(error => { cardCache.delete(topicId); throw error; }));
-  const lists = await Promise.all(topicIds.map(topicId => cardCache.get(topicId)?.catch(() => []) ?? Promise.resolve([])));
-  return lists.flatMap((items, index) => items.filter(card => card && card.id && card.q && card.a && !card.revisar).map(card => ({ ...card, t: topicIds[index] } as unknown as StudyCard)));
-}
-async function allCards(): Promise<StudyCard[]> {
-  await getMeta();
-  const ids = Object.keys(store.getCards()).filter(id => id.startsWith('FC-Q-')).map(id => id.slice(5));
-  const questions = await byIds(ids);
-  const failures = questions.map(question => ({ ...cardFromFailedQuestion(question), np: question.np, source: question.source || VERIFIED_SOURCES[question.i], supTexto: question.supTexto, cp: question.cp } as StudyCard));
-  return [...await curatedCards(), ...failures];
-}
-const cardsServices = createCardsController({
-  loadAllCards: allCards, loadCuratedCards: curatedCards,
+const cardsComposition = createCardsComposition({
+  loadQuestionMetadata: getMeta,
+  failedCardQuestionIds: () => Object.keys(store.getCards()).filter(id => id.startsWith('FC-Q-')).map(id => id.slice(5)),
+  loadQuestionsById: ids => byIds(ids),
+  loadJson: fetchJson,
+  verifiedSources: VERIFIED_SOURCES,
   readPreferences: () => store.getCfg().cardsc,
   savePreferences: preferences => store.setCfg('cardsc', preferences),
   accountId: store.accountId, getCards: store.getCards, getSeen: store.getSeen, getRecord: store.cardRec,
@@ -232,6 +226,7 @@ const cardsServices = createCardsController({
   getReport: id => store.getReports()[id],
   saveReport: (card, reason, note) => store.addReport(card.id, card.t, reason, note),
 });
+const { services: cardsServices, loadAllCards: allCards } = cardsComposition;
 let settingsIndex: Awaited<ReturnType<typeof getIndex>> | null = null;
 let settingsOffline: SettingsSnapshot['offline'] = null;
 const settingsServices = {
@@ -242,7 +237,7 @@ const settingsServices = {
       sync: { state: sync.status.state, user: sync.status.user, configured: sync.status.configured, lastSync: sync.status.lastSync, error: sync.status.error, detail: sync.status.detail, host: sync.status.host, authDomain: sync.status.authDomain, accessError: sync.status.accessErr, requests: sync.status.reqs },
       full: isFull(), level: accessLevel(), devMode: devMode(), devRevealed: devRevealed(), ui: { theme: ui.theme, size: ui.size, lectura: ui.lectura },
       progress: { questions: Object.keys(store.getStats()).length, topics: store.getSeen().length, sessions: store.getSessions().length, openReports: Object.values(store.getReports()).filter(report => report.st === 'abierto').length },
-      exam: String(store.getCfg().exam || ''), version: APP_VERSION, build: APP_BUILD.split('+')[1] || APP_BUILD, update: NEWV?.version || null,
+      exam: String(store.getCfg().exam || ''), version: APP_VERSION, build: APP_BUILD.split('+')[1] || APP_BUILD, update: appUpdates.getAvailableUpdate()?.version || null,
       offline: settingsOffline, index: settingsIndex ? { questions: settingsIndex.n, scenarios: settingsIndex.nsup } : null,
     };
   },
@@ -267,11 +262,11 @@ const settingsServices = {
   async logout() { return await sync.logout(); },
   async retrySync() { return await sync.retry(); },
   async checkUpdate() {
-    const result = await checkUpdate();
+    const result = await appUpdates.checkUpdate();
     notifySettings();
-    return result === undefined ? undefined : NEWV?.version || null;
+    return result === undefined ? undefined : result?.version || null;
   },
-  applyUpdate,
+  applyUpdate: appUpdates.applyUpdate,
   async downloadOffline(progress: (done: number, total: number) => void, isCurrent: () => boolean) {
     const index = settingsIndex || await getIndex(); settingsIndex = index;
     settingsOffline = await downloadOffline(index, progress, isCurrent);
@@ -401,10 +396,10 @@ export function bootAppServices(): () => void {
     routeReady: firstReactRouteReady,
     resumeSaved: () => resumeSaved().catch(() => {}),
     prefetchBank: prefetchBanco,
-    watchUpdates,
-    checkUpdate,
-    announceUpdate: version => toast(`Hay una versión nueva (${version}).`, { label: 'Actualizar', fn: applyUpdate }),
-    applyUpdate,
+    watchUpdates: appUpdates.watchUpdates,
+    checkUpdate: appUpdates.checkUpdate,
+    announceUpdate: version => toast(`Hay una versión nueva (${version}).`, { label: 'Actualizar', fn: () => appUpdates.applyUpdate() }),
+    applyUpdate: appUpdates.applyUpdate,
     loadMetadataAndInitializeSync: async () => {
       try { await getMeta(); } catch (error) { console.error(error); }
       try { await sync.init({ temaOf, idsOfTema }); } catch (error) { console.error(error); }
@@ -423,42 +418,6 @@ async function prefetchBanco() {
     await Promise.all([w(), w()]);
   } catch (e) {}
 }
-
-// ───────── versión y actualización ─────────
-let NEWV: any = null; // versión nueva detectada en el servidor (objeto de version.json)
-async function checkUpdate() {
-  try {
-    const response = await fetch('version.json', { cache: 'no-store' });
-    if (!response.ok) return undefined;
-    const v = await response.json();
-    NEWV = v && v.build && v.build !== APP_BUILD ? v : null;
-  } catch (e) { return undefined; } // sin red: no sabemos
-  return NEWV;
-}
-async function applyUpdate() {
-  saveRun(); // si hay un test en curso, se retoma al volver
-  try { await store.flushNow(); } catch (e) {}
-  try {
-    const reg = await navigator.serviceWorker?.getRegistration();
-    if (reg) {
-      await reg.update(); reg.waiting?.postMessage('skip');
-      const w = reg.installing || reg.waiting;
-      // esperar (máx. 6 s) a que el service worker nuevo termine de instalarse antes de recargar
-      if (w && w.state !== 'activated') await new Promise<void>(ok => { const t = setTimeout(ok, 6000); w.addEventListener('statechange', () => { if (w.state === 'activated' || w.state === 'redundant') { clearTimeout(t); ok(); } }); });
-    }
-  } catch (e) {}
-  location.reload();
-}
-
-// aviso de nueva versión del service worker
-function watchUpdates(reg: ServiceWorkerRegistration): () => void {
-  const controller = new AbortController();
-  const ready = (w: ServiceWorker) => w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) toast('Hay una versión nueva.', { label: 'Actualizar', fn: applyUpdate }); }, { signal: controller.signal });
-  if (reg.installing) ready(reg.installing);
-  reg.addEventListener('updatefound', () => reg.installing && ready(reg.installing), { signal: controller.signal });
-  return () => controller.abort();
-}
-
 
 /** Temporary composition only: the React views own rendering and events. */
 export const studyServices: StudyServices = {
