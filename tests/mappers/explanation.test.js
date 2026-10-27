@@ -43,6 +43,24 @@ describe('explanationMapper', () => {
     expect(explanationMapper.toDomain(dto)).toEqual({ ok: false, reason: 'invalid-source-url' });
   });
 
+  it('preserves diagnostics for invalid editorial fields and content sections', () => {
+    const invalidStatus = structuredClone(validDto);
+    invalidStatus.status = 'published';
+    expect(explanationMapper.toDomain(invalidStatus)).toEqual({ ok: false, reason: 'invalid-editorial-status' });
+
+    const invalidResult = structuredClone(validDto);
+    invalidResult.result.value = 3;
+    expect(explanationMapper.toDomain(invalidResult)).toEqual({ ok: false, reason: 'invalid-result' });
+
+    const invalidStep = structuredClone(validDto);
+    invalidStep.steps[0].detail = '';
+    expect(explanationMapper.toDomain(invalidStep)).toEqual({ ok: false, reason: 'invalid-step' });
+
+    const invalidCollection = structuredClone(validDto);
+    invalidCollection.steps = null;
+    expect(explanationMapper.toDomain(invalidCollection)).toEqual({ ok: false, reason: 'invalid-collections' });
+  });
+
   it('keeps untrusted code as data for the presentation mapper to escape', () => {
     const dto = structuredClone(validDto);
     dto.snippet = '<script>alert(1)</script>';
