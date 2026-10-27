@@ -39,13 +39,18 @@ export const pendingFailure = (statRecord?: StatRec | null): boolean => {
   return count >= 0 && count < 3;
 };
 
-export function cleanRec(result: unknown): StatRec | null {
-  if (!Array.isArray(result) || result.length < 3) return null;
-  const attempts = boundedNumber(result[0], 0, 1e6);
-  const correctAnswers = boundedNumber(result[1], 0, 1e6);
-  const lastSeenAt = boundedNumber(result[2]);
-  if (attempts === null || correctAnswers === null || lastSeenAt === null) return null;
+function appendStatExtensions(cleanedRecord: number[], source: unknown[], lastSeenAt: number): void {
+  if (source.length > 10) {
+    cleanedRecord.push(
+      Math.floor(boundedNumber(source[10], -1, 3) ?? failureStreak(cleanedRecord)),
+      source[11] === 1 ? 1 : 0,
+    );
+  }
+  if (source.length > 12) cleanedRecord.push(boundedNumber(source[12]) || 0);
+  else if (source[11] === 1) cleanedRecord.push(lastSeenAt);
+}
 
+function buildStatRecord(result: unknown[], attempts: number, correctAnswers: number, lastSeenAt: number): StatRec {
   const intervalStep = boundedNumber(result[3], -1, 4);
   const dueAt = boundedNumber(result[4]);
   const lastResult = boundedNumber(result[5], 0, 2);
@@ -65,15 +70,17 @@ export function cleanRec(result: unknown): StatRec | null {
     timedAnswerCount,
     Math.floor(failureReason),
   ];
-  if (result.length > 10) {
-    cleanedRecord.push(
-      Math.floor(boundedNumber(result[10], -1, 3) ?? failureStreak(cleanedRecord)),
-      result[11] === 1 ? 1 : 0,
-    );
-  }
-  if (result.length > 12) cleanedRecord.push(boundedNumber(result[12]) || 0);
-  else if (result[11] === 1) cleanedRecord.push(lastSeenAt);
+  appendStatExtensions(cleanedRecord, result, lastSeenAt);
   return cleanedRecord;
+}
+
+export function cleanRec(result: unknown): StatRec | null {
+  if (!Array.isArray(result) || result.length < 3) return null;
+  const attempts = boundedNumber(result[0], 0, 1e6);
+  const correctAnswers = boundedNumber(result[1], 0, 1e6);
+  const lastSeenAt = boundedNumber(result[2]);
+  if (attempts === null || correctAnswers === null || lastSeenAt === null) return null;
+  return buildStatRecord(result, attempts, correctAnswers, lastSeenAt);
 }
 
 export function cleanStats(map: unknown): StatMap {
