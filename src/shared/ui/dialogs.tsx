@@ -1,4 +1,5 @@
-import { useLayoutEffect, useSyncExternalStore, type ReactNode } from 'react';
+import { useLayoutEffect, type ReactNode } from 'react';
+import { useStore } from 'zustand';
 import { createPortal } from 'react-dom';
 import { dialogStore, type DialogRequest, type MenuAction, type MenuGroup } from './dialog-store.js';
 import { toast } from './dialog-actions.js';
@@ -21,12 +22,21 @@ function MenuSection({ title, items, offset, current, select }: { title: string;
   return <><div className="gtitle">{title}</div><div className="lgroup">{items.map(([Icon, name, sub, action], index) => <button key={typeof action === 'string' ? action : name} className={`lrow ${action === current ? 'here' : ''}`} data-a={offset + index} aria-current={action === current ? 'page' : undefined} onClick={() => select(action)}><i aria-hidden="true"><Icon size="1.125rem" strokeWidth={1.7} /></i><span><b>{name}</b><small>{sub}</small></span></button>)}</div></>;
 }
 export function DialogProvider({ children }: { children?: ReactNode }) {
-  const { dialogs, toast: item } = useSyncExternalStore(dialogStore.subscribe, dialogStore.getSnapshot);
   useLayoutEffect(() => {
     const persistError = () => toast('No se pudo guardar el progreso en este dispositivo (¿poco espacio?). Exporta una copia en Ajustes.');
     addEventListener('tai-persist-error', persistError);
     return () => removeEventListener('tai-persist-error', persistError);
   }, []);
-  const act = () => { if (!item.action) return; const action = item.action; dialogStore.setToast({ msg: 'Actualizando…', shown: item.shown }); action.fn(); };
-  return <>{children}{createPortal(<><div id="toast" role="status" className={`${item.shown ? 'show' : ''}${item.action ? ' act' : ''}`}>{item.msg}{item.action && <button type="button" onClick={act}>{item.action.label}</button>}</div>{dialogs.map((data, index) => <Dialog key={data.id} dialog={data} top={index === dialogs.length - 1} />)}</>, document.body)}</>;
+  return <>{children}{createPortal(<><ToastView /><DialogStack /></>, document.body)}</>;
+}
+
+function ToastView() {
+  const item = useStore(dialogStore, state => state.toast);
+  const act = () => { if (!item.action) return; const action = item.action; dialogStore.getState().setToast({ msg: 'Actualizando…', shown: item.shown }); action.fn(); };
+  return <div id="toast" role="status" className={`${item.shown ? 'show' : ''}${item.action ? ' act' : ''}`}>{item.msg}{item.action && <button type="button" onClick={act}>{item.action.label}</button>}</div>;
+}
+
+function DialogStack() {
+  const dialogs = useStore(dialogStore, state => state.dialogs);
+  return <>{dialogs.map((data, index) => <Dialog key={data.id} dialog={data} top={index === dialogs.length - 1} />)}</>;
 }
