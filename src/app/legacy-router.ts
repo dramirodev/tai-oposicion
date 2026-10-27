@@ -6,9 +6,9 @@ import * as sync from '../adapters/firebase/sync-facade.js';
 import * as store from '../adapters/local/legacy-store.js';
 import { localGuestQuestionHistoryRepository } from '../adapters/local/guest-question-history.js';
 import { localReadingQuestionHistoryRepository } from '../adapters/local/reading-question-history.js';
-import { escapeHtml as esc, percentage as pct } from '../shared/presentation/format.js';
+import { percentage as pct } from '../shared/presentation/format.js';
 import { richHtml, hiliteHtml } from '../shared/presentation/study-text.js';
-import { ERROR_REPORT_REASONS as MOTIVOS, FAILURE_REASONS as MOTIVOS_FALLO } from '../shared/presentation/study-labels.js';
+import { FAILURE_REASONS as MOTIVOS_FALLO } from '../shared/presentation/study-labels.js';
 import { normalizeUiPreferences } from '../shared/presentation/ui-preferences.js';
 import { asksForNegativeOption, evaluateReadingWords, minimumReadingSeconds } from '../core/domain/reading-strategy.js';
 import { calculateExamScore as nota } from '../core/domain/scoring.js';
@@ -21,7 +21,7 @@ import { analyzeSimulation } from '../core/domain/simulation-analysis.js';
 import { renderSimulationAnalysisView } from '../features/simulation/simulation-analysis-view.js';
 import { previewBackupImport } from '../core/application/settings/backup-preview.js';
 import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, byIds, fetchJson } from '../adapters/http/legacy-data.js';
-import { $, L, toast, ask, type El } from '../shared/ui/legacy-dom.js';
+import { $, L, toast, ask } from '../shared/ui/legacy-dom.js';
 import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
 import { BLOQUES, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
@@ -204,25 +204,6 @@ async function simParte1(idx: any, org: any, N: any, only: any) {
   return selectWeightedSimulationQuestions(temas.map((topic: any) => ({ id: topic.id, weight: topic.w })), org, N);
 }
 // Parte 2 tras la parte 1: ofrece 2 supuestos
-// ───────── avisar de error en el banco ─────────
-function reportBox(q: any, host: El) {
-  const show = () => {
-    const r = store.getReports()[q.i];
-    host.innerHTML = r && r.st === 'abierto' ? `<span class="rep ok">✓ Error anotado <button class="ghost sm" data-rep>editar</button></span>` : `<button class="ghost fl" data-rep>⚠ Avisar de error</button>`;
-    host.querySelector<El>('[data-rep]')!.onclick = form;
-  };
-  const form = () => {
-    const r = store.getReports()[q.i];
-    host.innerHTML = `<div class="repf"><select data-m aria-label="Motivo del error">${MOTIVOS.map(m => `<option ${r && r.motivo === m ? 'selected' : ''}>${esc(m)}</option>`).join('')}</select>
-      <input data-n aria-label="Qué falla" maxlength="300" placeholder="Qué falla (opcional)" value="${esc(r?.nota || '')}">
-      <div class="row"><button class="btn" data-s>Guardar</button><button class="btn sec" data-c>Cancelar</button></div></div>`;
-    host.querySelector<El>('[data-s]')!.onclick = () => { store.addReport(q.i, q.t, host.querySelector<El>('[data-m]')!.value, host.querySelector<El>('[data-n]')!.value.trim()); show(); };
-    host.querySelector<El>('[data-c]')!.onclick = show;
-  };
-  show();
-}
-
-
 // Las pantallas comparten navegación y limpieza; cada módulo conserva su estado de sesión.
 const fold = (text: unknown) => String(text || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 let cardIndex: Record<string, unknown> | undefined;
