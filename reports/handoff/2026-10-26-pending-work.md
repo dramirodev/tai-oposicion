@@ -292,6 +292,7 @@ Siguiente paso: comprobar la mergeabilidad de #45; luego aplanar #46 y #47 sobre
 
 - #51 se integró tras pasar CI; el nuevo `main` es `75e9ecb`.
 - #53 volvió a quedar `CONFLICTING` después de integrar #54/#57. Se resolvieron los conflictos de documentación conservando la documentación actualizada de `main`; no hubo nuevo conflicto de código. Se mantuvo el bootstrap extraído y el comportamiento que intenta Sync aunque falle la carga de metadatos. Rebase validado localmente y pendiente de publicar.
+- El primer CI de #53 había fallado por la espera intermitente del diálogo final en `finish-ui.test.js`; la prueba se sincronizó con `act` y verifica el texto esperado. Tras el rebase, `npm run check` pasa con 414/414 y E2E de rutas/puente totalizan 104/104.
 - #54 y #57 están fusionadas; ambos checks fueron SUCCESS. #55 pasó CI (SUCCESS). #56 pasó CI (SUCCESS). #58 sigue con CI en curso; todos se comprobaron con base `main`.
 - PR #57 crea tags `v<package.version>+<sha-corto>` después de que compile, valide y despliegue `main`, con permiso `contents: write` solo en su job de tagging. La versión de producto no se incrementa automáticamente.
 - Próximo slice independiente: renombrar `legacy-topic-mastery.ts` como composición de tema y actualizar consumidores; el análisis encontró imports en `legacy-router.ts` y `stats-composition.ts`. Se mantiene en una rama separada directa desde `main` y no se toca el estado ajeno del checkout principal.
