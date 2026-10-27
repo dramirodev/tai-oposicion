@@ -49,7 +49,7 @@ export function createQuizServices(go: (path: string) => void, homePath: string,
         closing = true; endConfirmation = new AbortController();
         const accepted = await ask(`Quedan ${missing} preguntas sin responder. ¿Terminar y guardar la sesión como interrumpida?`, 'Terminar', false, endConfirmation.signal);
         endConfirmation = null; closing = false;
-        if (!accepted || getCurrentRun() !== run) return 'cancelled';
+        if (!accepted || getCurrentRun()?.sessionKey !== run.sessionKey) return 'cancelled';
         reason = 'interrupted';
       }
       if (!finishCurrentRun(reason)) { toast('Se acabó el tiempo sin contestar ninguna pregunta.'); go(homePath); return 'empty'; }
@@ -60,7 +60,7 @@ export function createQuizServices(go: (path: string) => void, homePath: string,
       closing = true; endConfirmation = new AbortController();
       const accepted = await ask('¿Salir? Lo respondido se guardará como sesión interrumpida.', 'Salir', false, endConfirmation.signal);
       endConfirmation = null; closing = false;
-      if (!accepted || getCurrentRun() !== run) return;
+      if (!accepted || getCurrentRun()?.sessionKey !== run.sessionKey) return;
       if (run.ans.some(value => value !== undefined)) { await this.finish('interrupted'); }
       else { clearActiveRun(); clearRun(); go(homePath); }
     },

@@ -121,6 +121,7 @@ export function paintTextHighlight(
   id: string,
   stale = false,
 ): boolean {
+  if ([...root.querySelectorAll('mark[data-mark-id]')].some(mark => mark.getAttribute('data-mark-id') === id)) return true;
   const { text } = textSpans(root);
   if (!Number.isInteger(start) || !Number.isInteger(end) || start < 0 || end <= start || end > text.length) return false;
   const startPoint = pointAtOffset(root, start, false);
