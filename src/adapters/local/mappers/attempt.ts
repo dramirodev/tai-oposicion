@@ -4,6 +4,69 @@ import type { AttemptEventDto, HighlightDto, QuestionAttemptDto } from '../dto/a
 import { attemptEventSchema, highlightSchema, questionAttemptSchema } from '../schemas/attempt.js';
 
 const failure = <Value>(reason: string): MappingResult<Value> => ({ ok: false, reason });
+type ParsedAttemptEvent = ReturnType<typeof attemptEventSchema.parse>;
+
+const eventPayloadErrors: Record<string, string> = {
+  answer: 'invalid answer payload',
+  'set-confidence': 'invalid confidence payload',
+  'discard-option': 'invalid option payload',
+  'restore-option': 'invalid option payload',
+  'remove-highlight': 'invalid highlight id',
+};
+
+function invalidEventReason(value: Record<string, unknown>, path: string[]): string {
+  const field = path[0];
+  if (field === 'schemaVersion') return 'unsupported event schema version';
+  if (field === 'monotonicAt') return 'invalid monotonic time';
+  if (['id', 'attemptId', 'sequence', 'at'].includes(field ?? '')) return 'invalid event identifiers, sequence, or time';
+  if (field === 'type') return 'unknown attempt event type';
+  if (field !== 'payload') return 'invalid event identifiers, sequence, or time';
+
+  const eventType = value.type;
+  if (eventType === 'add-highlight') {
+    const payload = value.payload as Record<string, unknown>;
+    const mapped = highlightToDomain(payload.highlight);
+    return mapped.ok ? 'invalid highlight event: invalid highlight anchor' : `invalid highlight event: ${mapped.reason}`;
+  }
+  return eventPayloadErrors[String(eventType)] ?? 'invalid event identifiers, sequence, or time';
+}
+
+function invalidEventMapping(value: unknown, path: string[]): MappingResult<AttemptEvent> {
+  if (!value || typeof value !== 'object' || Array.isArray(value) || !('payload' in value)
+    || !value.payload || typeof value.payload !== 'object' || Array.isArray(value.payload)) {
+    return failure('event and payload must be objects');
+  }
+  return failure(invalidEventReason(value as Record<string, unknown>, path));
+}
+
+type EventPayloadMappers = {
+  [Type in ParsedAttemptEvent['type']]: (event: Extract<ParsedAttemptEvent, { type: Type }>) => MappingResult<AttemptEvent['payload']>;
+};
+
+const eventPayloadMappers: EventPayloadMappers = {
+  open: () => ({ ok: true, value: {} }),
+  leave: () => ({ ok: true, value: {} }),
+  'mark-pending': () => ({ ok: true, value: {} }),
+  reveal: () => ({ ok: true, value: {} }),
+  pause: () => ({ ok: true, value: {} }),
+  resume: () => ({ ok: true, value: {} }),
+  close: () => ({ ok: true, value: {} }),
+  answer: event => ({ ok: true, value: { optionIndex: event.payload.optionIndex, outcome: event.payload.outcome } }),
+  'set-confidence': event => ({ ok: true, value: { value: event.payload.value } }),
+  'discard-option': event => ({ ok: true, value: { optionIndex: event.payload.optionIndex } }),
+  'restore-option': event => ({ ok: true, value: { optionIndex: event.payload.optionIndex } }),
+  'add-highlight': event => {
+    const mapped = highlightToDomain(event.payload.highlight);
+    return mapped.ok ? { ok: true, value: { highlight: mapped.value } } : failure(`invalid highlight event: ${mapped.reason}`);
+  },
+  'remove-highlight': event => ({ ok: true, value: { highlightId: event.payload.highlightId } }),
+};
+
+function mapEventPayload(record: ParsedAttemptEvent): MappingResult<AttemptEvent['payload']> {
+  // TypeScript widens the lookup to a union of handler signatures; the shared key and record discriminator match.
+  const mapper = eventPayloadMappers[record.type] as (event: ParsedAttemptEvent) => MappingResult<AttemptEvent['payload']>;
+  return mapper(record);
+}
 
 function highlightToDto(highlight: Highlight): HighlightDto {
   return {
@@ -143,55 +206,10 @@ export const attemptMapper = {
 
   eventToDomain(value: unknown): MappingResult<AttemptEvent> {
     const parsed = attemptEventSchema.safeParse(value);
-    if (!parsed.success) {
-      if (!value || typeof value !== 'object' || Array.isArray(value) || !('payload' in value)
-        || !value.payload || typeof value.payload !== 'object' || Array.isArray(value.payload)) {
-        return failure('event and payload must be objects');
-      }
-      const issue = parsed.error.issues[0];
-      const path = issue?.path.map(String) ?? [];
-      const eventType = (value as Record<string, unknown>).type;
-      const reason = path[0] === 'schemaVersion' ? 'unsupported event schema version'
-        : path[0] === 'monotonicAt' ? 'invalid monotonic time'
-          : ['id', 'attemptId', 'sequence', 'at'].includes(path[0] ?? '') ? 'invalid event identifiers, sequence, or time'
-            : path[0] === 'type' ? 'unknown attempt event type'
-              : path[0] === 'payload' && eventType === 'answer' ? 'invalid answer payload'
-                : path[0] === 'payload' && eventType === 'set-confidence' ? 'invalid confidence payload'
-                  : path[0] === 'payload' && (eventType === 'discard-option' || eventType === 'restore-option') ? 'invalid option payload'
-                    : path[0] === 'payload' && eventType === 'remove-highlight' ? 'invalid highlight id'
-                      : path[0] === 'payload' && eventType === 'add-highlight' ? (() => {
-                        const raw = (value as Record<string, unknown>).payload as Record<string, unknown>;
-                        const mapped = highlightToDomain(raw.highlight);
-                        return mapped.ok ? 'invalid highlight event: invalid highlight anchor' : `invalid highlight event: ${mapped.reason}`;
-                      })()
-                        : 'invalid event identifiers, sequence, or time';
-      return failure(reason);
-    }
+    if (!parsed.success) return invalidEventMapping(value, parsed.error.issues[0]?.path.map(String) ?? []);
     const record = parsed.data;
-    let domainPayload: AttemptEvent['payload'];
-    switch (record.type) {
-      case 'open': case 'leave': case 'mark-pending': case 'reveal': case 'pause': case 'resume': case 'close':
-        domainPayload = {};
-        break;
-      case 'answer':
-        domainPayload = { optionIndex: record.payload.optionIndex, outcome: record.payload.outcome };
-        break;
-      case 'set-confidence':
-        domainPayload = { value: record.payload.value };
-        break;
-      case 'discard-option': case 'restore-option':
-        domainPayload = { optionIndex: record.payload.optionIndex };
-        break;
-      case 'add-highlight': {
-        const mapped = highlightToDomain(record.payload.highlight);
-        if (!mapped.ok) return failure(`invalid highlight event: ${mapped.reason}`);
-        domainPayload = { highlight: mapped.value };
-        break;
-      }
-      case 'remove-highlight':
-        domainPayload = { highlightId: record.payload.highlightId };
-        break;
-    }
+    const mappedPayload = mapEventPayload(record);
+    if (!mappedPayload.ok) return mappedPayload;
     return {
       ok: true,
       value: {
@@ -201,7 +219,7 @@ export const attemptMapper = {
         type: record.type,
         at: record.at,
         ...(record.monotonicAt !== undefined ? { monotonicAt: record.monotonicAt } : {}),
-        payload: domainPayload,
+        payload: mappedPayload.value,
       },
     };
   },
