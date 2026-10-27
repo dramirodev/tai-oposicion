@@ -1,7 +1,8 @@
 import { Link } from 'react-router';
 import { Clover } from 'lucide-react';
 import { FAILURE_REASONS } from '../../shared/presentation/study-labels.js';
-import type { StatsDomainTopic, StatsServices, StatsSnapshot } from '../../shared/ui/study-services.js';
+import type { StatsServices } from '../../shared/ui/study-services.js';
+import type { StatsDomainTopic, StatsSnapshot } from '../../core/application/stats/statistics-model.js';
 
 const date = (time: number) => new Date(time).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
 
