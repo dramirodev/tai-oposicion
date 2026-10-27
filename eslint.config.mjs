@@ -67,6 +67,7 @@ export default tseslint.config(
     plugins: { import: importPlugin, 'react-hooks': reactHooks },
     settings: { 'import/resolver': { typescript: { project: './tsconfig.json' } } },
     rules: {
+      'import/no-cycle': ['error', { ignoreExternal: true }],
       'import/no-restricted-paths': ['error', { zones: [
         ...['./src/core/**'].flatMap(target => ['adapters', 'app', 'features', 'shared'].map(layer => ({ target, from: `./src/${layer}/**`, message: 'core solo depende hacia dentro.' }))),
         ...['./src/adapters/**'].flatMap(target => ['app', 'features', 'shared'].map(layer => ({ target, from: `./src/${layer}/**`, message: 'Los adaptadores no dependen de capas exteriores.' }))),
