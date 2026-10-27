@@ -51,3 +51,9 @@ Complejidad relativa: **baja** (cambio localizado y bajo riesgo), **media** (var
 - `question-diagnostics.ts` ahora ofrece `mapQuestionDtos`, que centraliza validación, transformación al modelo interno y avisos deduplicados; `bank-repository.ts` reutiliza el helper. `diagnoseQuestionDtos` conserva su función de diagnóstico-only y no mapea en producción.
 - Validación focal del slice: mapper, diagnóstico y repository **9/9**. Suite completa **414/414**, build correcta; E2E de estadísticas **6/6** Chromium/WebKit.
 - No se migran todos los tipos legacy ni se alteran registros persistidos o contratos del banco.
+
+## Rebase de bootstrap sobre main — 2026-10-27
+
+- PR #53 se rebasó sobre `main` `75e9ecb`, que ya contiene #51, #54 y #57. La resolución mantuvo la extracción a `app-bootstrap.ts` y preservó la inicialización de Sync incluso si falla la carga de metadatos, igual que el comportamiento previo.
+- Validación tras resolver: arquitectura sin deuda nueva (62 excepciones), ESLint, ignore-growth, TypeScript, Vitest **414/414**, build y rutas **76/76** más puente/service worker **28/28** en Chromium/WebKit.
+- La rama actualizada está pendiente de publicación y de un nuevo check remoto.

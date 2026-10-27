@@ -287,3 +287,11 @@ Siguiente paso: comprobar la mergeabilidad de #45; luego aplanar #46 y #47 sobre
 - Validación: pruebas focales mapper/diagnóstico/repository **9/9**; `npm run check` (arquitectura baseline 62, lint, ignore-growth, TypeScript, Vitest **414/414**), build y Playwright `stats-charts.spec.ts` **6/6** Chromium/WebKit.
 - Documentación de arquitectura actualizada en `docs/architecture/migration-plan.md` y `migration-report.md`.
 - Siguiente: abrir PR contra `main`; después revisar el checker de ciclos/imports y completar la lista de excepciones arquitectónicas eliminables con seguridad, sin mover todo mecánicamente.
+
+## Continuación verificada — 2026-10-27, sondeo periódico
+
+- #51 se integró tras pasar CI; el nuevo `main` es `75e9ecb`.
+- #53 volvió a quedar `CONFLICTING` después de integrar #54/#57. Se resolvieron los conflictos de documentación conservando la documentación actualizada de `main`; no hubo nuevo conflicto de código. Se mantuvo el bootstrap extraído y el comportamiento que intenta Sync aunque falle la carga de metadatos. Rebase validado localmente y pendiente de publicar.
+- #54 y #57 están fusionadas; ambos checks fueron SUCCESS. #55 pasó CI (SUCCESS). #56 pasó CI (SUCCESS). #58 sigue con CI en curso; todos se comprobaron con base `main`.
+- PR #57 crea tags `v<package.version>+<sha-corto>` después de que compile, valide y despliegue `main`, con permiso `contents: write` solo en su job de tagging. La versión de producto no se incrementa automáticamente.
+- Próximo slice independiente: renombrar `legacy-topic-mastery.ts` como composición de tema y actualizar consumidores; el análisis encontró imports en `legacy-router.ts` y `stats-composition.ts`. Se mantiene en una rama separada directa desde `main` y no se toca el estado ajeno del checkout principal.
