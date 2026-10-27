@@ -1,3 +1,4 @@
+import { Pause, X } from 'lucide-react';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 import { NativeDialog } from '../../shared/ui/NativeDialog.js';
 import type { RefObject } from 'react';
@@ -12,12 +13,12 @@ export function QuizSessionHeader({ snapshot, pace, headingRef, onExit, onPause 
   return <>
     <h1 ref={headingRef} className="sr">{snapshot.title} · pregunta {snapshot.index + 1}{snapshot.timed ? '' : ` de ${snapshot.count}`}</h1>
     <div className="qhead">
-      <button className="ghost" id="exit" aria-label="Salir" onClick={onExit}>✕</button>
+      <button className="ghost" id="exit" aria-label="Salir" onClick={onExit}><X size="1.25rem" aria-hidden="true" /></button>
       <div className="prog"><div style={{ width: `${progress}%` }} /></div>
       <div className="cnt">{snapshot.timed ? `#${snapshot.index + 1}` : `${snapshot.index + 1}/${snapshot.count}`}</div>
       {snapshot.timeLimitSeconds !== null && <>
         <div className="clock" id="clock">{formatTime(snapshot.remainingSeconds)}</div>
-        <button className="ghost" id="pause" aria-label="Pausar" onClick={onPause}>⏸</button>
+        <button className="ghost" id="pause" aria-label="Pausar" onClick={onPause}><Pause size="1.25rem" aria-hidden="true" /></button>
       </>}
     </div>
     <div className="sub study-run-title">{snapshot.title} <HelpIconLink topic="sesiones" label="Ayuda sobre controles y estados de pregunta" /></div>
