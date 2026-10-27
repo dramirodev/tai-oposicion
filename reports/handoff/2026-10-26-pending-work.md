@@ -271,4 +271,5 @@ Siguiente paso: comprobar la mergeabilidad de #45; luego aplanar #46 y #47 sobre
 - PR #46 se está reaplicando como cambio independiente directamente sobre `main`; su versión anterior dependía de #45 y tenía conflictos al cambiar la base.
 - PR #47 apunta directamente a `main`; GitHub la marcó mergeable con la validación remota pendiente en la última consulta.
 - `.gitignore` ya contiene `/docs/` y `/reports/`. Se mantienen los archivos que ya están versionados; esas reglas ignoran contenido nuevo en esas carpetas.
+- **Nueva tarea de publicación:** después de que cada PR llegue a `main`, actualizar el checkout desde el `main` remoto y ejecutar instalación reproducible, comprobaciones y build de producción en esa rama. Crear un tag anotado, único y apuntado al commit de `main` solo cuando compile y pasen las comprobaciones. No reutilizar tags ni cambiar `package.json` sin una decisión explícita sobre la numeración de versiones.
 - El checkout principal permanece desactualizado y contiene un cambio local ajeno en `tests/design-training.test.js`; no tocarlo.
