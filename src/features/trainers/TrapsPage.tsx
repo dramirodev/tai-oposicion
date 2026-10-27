@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ScanSearch } from 'lucide-react';
+import { Check, Circle, CircleX, ScanSearch, X } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { ask } from '../../shared/ui/dialog-actions.js';
 import { richHtml, hiliteHtml } from '../../shared/presentation/study-text.js';
@@ -61,7 +61,7 @@ function TrapQuestion({ run, selected, result, onToggle, onExit, onSubmit, onNex
   const resultSelectedIds = new Set(result?.selectedIds || []);
   const falseAlarms = result ? result.selectedIds.filter(id => !correctIds.has(id)) : [];
   return <>
-    <div className="qhead"><button className="ghost" aria-label="Salir" onClick={onExit}>✕</button><div className="prog" role="progressbar" aria-label="Progreso" aria-valuemin={0} aria-valuemax={run.items.length} aria-valuenow={run.index}><div style={{ width: `${100 * run.index / run.items.length}%` }} /></div><div className="cnt">{run.index + 1}/{run.items.length}</div></div>
+    <div className="qhead"><button className="ghost" aria-label="Salir" onClick={onExit}><X size="1.25rem" aria-hidden="true" /></button><div className="prog" role="progressbar" aria-label="Progreso" aria-valuemin={0} aria-valuemax={run.items.length} aria-valuenow={run.index}><div style={{ width: `${100 * run.index / run.items.length}%` }} /></div><div className="cnt">{run.index + 1}/{run.items.length}</div></div>
     <h1 className="sub"><ScanSearch className="inline-feature-icon" size="1em" strokeWidth={1.7} aria-hidden="true" /> Detective de trampas</h1><p className="sm">Lee el enunciado y todas las opciones: las trampas pueden estar en cualquiera de ellos.</p>
     <article className="card q"><div className="meta"><span className="tag">{prompt.topicId} · {prompt.topicName}</span></div>
       {notice && <StudyMarkup html={notice} />}{source && <StudyMarkup html={source} />}
@@ -82,12 +82,12 @@ function TrapChoice({ id, selected, correct, revealed, wasSelected, onToggle }: 
   let label = trapLabel;
   if (revealed && correct) {
     className = wasSelected ? 'ok' : 'sug';
-    label = `${wasSelected ? '✔ Detectada: ' : '○ No la viste: '}${trapLabel}`;
+    label = `${wasSelected ? 'Detectada: ' : 'No la viste: '}${trapLabel}`;
   } else if (revealed && wasSelected) {
     className = 'bad';
-    label = `✖ Falsa alarma: ${trapLabel}`;
+    label = `Falsa alarma: ${trapLabel}`;
   } else if (revealed) className = '';
-  return <button className={className} aria-pressed={selected} disabled={revealed} onClick={() => onToggle(id)}>{label}</button>;
+  return <button className={className} aria-pressed={selected} disabled={revealed} onClick={() => onToggle(id)}>{revealed && correct ? wasSelected ? <Check size="1em" aria-hidden="true" /> : <Circle size="1em" aria-hidden="true" /> : revealed && wasSelected ? <CircleX size="1em" aria-hidden="true" /> : null}{label}</button>;
 }
 
 function TrapFeedback({ prompt, result, selectedIds, falseAlarms }: { prompt: TrapRun['items'][number]; result: TrapAnswer; selectedIds: ReadonlySet<number>; falseAlarms: readonly number[] }) {

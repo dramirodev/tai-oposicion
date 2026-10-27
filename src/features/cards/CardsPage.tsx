@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { CircleHelp } from 'lucide-react';
+import { Check, CircleHelp, Trash2, TriangleAlert, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
 import { ERROR_REPORT_REASONS } from '../../shared/presentation/study-labels.js';
 import { questionNotice, sourceHtml } from '../../shared/presentation/study-content.js';
@@ -23,8 +23,8 @@ function CardReport({ card, services }: { card: StudyCard; services: CardsServic
   const [saved, setSaved] = useState(initial?.st === 'abierto');
   const save = () => { services.saveReport(card, reason, note.trim()); setSaved(true); setEditing(false); };
   if (!editing) return saved
-    ? <span className="rep ok">✓ Error anotado <button className="ghost sm" data-rep onClick={() => setEditing(true)}>editar</button></span>
-    : <button className="ghost fl" data-rep onClick={() => setEditing(true)}>⚠ Avisar de error</button>;
+    ? <span className="rep ok"><Check size="1em" aria-hidden="true" /> Error anotado <button className="ghost sm" data-rep onClick={() => setEditing(true)}>editar</button></span>
+    : <button className="ghost fl" data-rep onClick={() => setEditing(true)}><TriangleAlert size="1em" aria-hidden="true" /> Avisar de error</button>;
   return <div className="repf">
     <select aria-label="Motivo del error" value={reason} onChange={event => setReason(event.target.value)}>
       {reasons.map(item => <option key={item}>{item}</option>)}
@@ -97,7 +97,7 @@ function ActiveCardSession({ services, session, card, answerRef, headingRef, onE
   const percent = Math.round(100 * session.index / total);
   return <>
     <h1 className="sr" ref={headingRef} tabIndex={-1}>Tarjetas · tarjeta {session.index + 1} de {total}</h1>
-    <div className="qhead"><button className="ghost" id="exit" aria-label="Salir" onClick={onExit}>✕</button><div className="prog" role="progressbar" aria-label="Progreso" aria-valuemin={0} aria-valuemax={total} aria-valuenow={session.index}><div style={{ width: `${percent}%` }} /></div><div className="cnt">{session.index + 1}/{total}</div></div>
+    <div className="qhead"><button className="ghost" id="exit" aria-label="Salir" onClick={onExit}><X size="1.25rem" aria-hidden="true" /></button><div className="prog" role="progressbar" aria-label="Progreso" aria-valuemin={0} aria-valuemax={total} aria-valuenow={session.index}><div style={{ width: `${percent}%` }} /></div><div className="cnt">{session.index + 1}/{total}</div></div>
     <div className="card q fc" id="fc" role="group" aria-label="Pregunta de la tarjeta" tabIndex={0} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
       onClick={event => { if (!session.revealed && !(event.target as HTMLElement).closest('button,a,details,input,select,textarea')) show(); }}
       onKeyDown={event => { if (!session.revealed && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); show(); } }}>
@@ -111,7 +111,7 @@ function ActiveCardSession({ services, session, card, answerRef, headingRef, onE
         {card.ref && <div className="cita"><span>Temario</span>{card.ref}</div>}
         {source && <StudyMarkup html={source} />}
         <div className="repw" id="crep"><CardReport card={card} services={services} /></div>
-        {card.src === 'fallo' && <button className="ghost fl" id="quit" onClick={event => { event.stopPropagation(); services.removeFailureCard(); refresh(value => value + 1); }}>🗑 Quitar esta tarjeta</button>}
+        {card.src === 'fallo' && <button className="ghost fl" id="quit" onClick={event => { event.stopPropagation(); services.removeFailureCard(); refresh(value => value + 1); }}><Trash2 size="1em" aria-hidden="true" /> Quitar esta tarjeta</button>}
       </div> : <div className="fh">Toca para ver la respuesta</div>}
     </div>
     <div className="bar2">{session.revealed ? gradeLabels.map((label, gradeValue) => <button key={label} className={`btn ${gradeValue === 0 ? 'bad' : gradeValue === 1 ? 'sec' : ''}`} data-g={gradeValue} onClick={() => grade(gradeValue)}>{label}<small>{services.reviewLabel(card.id, gradeValue)}</small></button>) : <button className="btn" id="show" onClick={show}>Mostrar respuesta</button>}</div>
@@ -214,6 +214,6 @@ export function CardsPage() {
     {plan.cards.length ? <><div className="card"><h2 className="h3">Tarjetas por sesión</h2><div className="seg" id="cn">{([10, 20, 30] as const).map(value => <button key={value} className={preferences.count === value ? 'on' : ''} aria-pressed={preferences.count === value} data-v={value} onClick={() => changePreferences({ ...preferences, count: value })}>{value}</button>)}</div>
       <h2 className="h3">Tarjetas nuevas de</h2><div className="seg" id="cs">{([['vistos', 'Mis temas vistos'], ['todos', 'Todos los temas']] as const).map(([value, label]) => <button key={value} className={preferences.scope === value ? 'on' : ''} aria-pressed={preferences.scope === value} data-v={value} onClick={() => changePreferences({ ...preferences, scope: value })}>{label}</button>)}</div>
       <p className="sm"><small>Las vencidas salen primero, mezcladas por tema. Como máximo 10 nuevas por sesión.</small></p></div>
-      <div className="bar2 action-plan"><p className="sm" id="card-plan" role="status">{plan.ids.length} {plan.ids.length === 1 ? 'tarjeta' : 'tarjetas'}: {plan.reviews} de repaso y {plan.ids.length - plan.reviews} nuevas.</p><button className="btn" id="go" disabled={!plan.ids.length} onClick={begin}>Empezar</button></div></> : <div className="note">Aún no tienes tarjetas. Al fallar una pregunta en un test pulsa <b>«📇 Hacer tarjeta»</b> (si el motivo no es un despiste) y aparecerá aquí.</div>}
+      <div className="bar2 action-plan"><p className="sm" id="card-plan" role="status">{plan.ids.length} {plan.ids.length === 1 ? 'tarjeta' : 'tarjetas'}: {plan.reviews} de repaso y {plan.ids.length - plan.reviews} nuevas.</p><button className="btn" id="go" disabled={!plan.ids.length} onClick={begin}>Empezar</button></div></> : <div className="note">Aún no tienes tarjetas. Al fallar una pregunta en un test pulsa <b>«Hacer tarjeta»</b> (si el motivo no es un despiste) y aparecerá aquí.</div>}
   </>;
 }

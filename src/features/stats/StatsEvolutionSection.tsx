@@ -1,3 +1,4 @@
+import { Check, X } from 'lucide-react';
 import { lazy, Suspense } from 'react';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
 import type { StatsSnapshot, StatsServices, StatsWeek } from '../../shared/ui/study-services.js';
@@ -31,7 +32,7 @@ function SlowQuestions({ snapshot, stats, onlyCorrect, setOnlyCorrect, setMessag
     try { const result = await stats.practiceSlow(onlyCorrect); if (result === 'empty') setMessage('Aún no hay tiempos guardados para practicar.'); }
     catch { setMessage('No se pudieron preparar las preguntas lentas.'); }
   };
-  return <><h2>Preguntas lentas</h2><div className="card"><div className="seg"><button className={!onlyCorrect ? 'on' : ''} aria-pressed={!onlyCorrect} onClick={() => setOnlyCorrect(false)}>Todas</button><button className={onlyCorrect ? 'on' : ''} aria-pressed={onlyCorrect} onClick={() => setOnlyCorrect(true)}>Las que aciertas</button></div><p className="legend">Las que más tardas en contestar. Si las aciertas pero tardas mucho, probablemente aún no las dominas.</p>{questions.map(item => <div className="sl" key={item.id}><div className="slh"><b>{Math.round(item.averageSeconds)} s</b><small>{item.correct}/{item.attempts} aciertos{item.lastOutcome === 1 ? ' · última ✓' : item.lastOutcome === 0 ? ' · última ✗' : ''}</small></div><div className="sm">{item.id}</div></div>)}<div className="row"><button className="btn" onClick={() => { void practice(); }}>Practicar estas preguntas</button></div></div></>;
+  return <><h2>Preguntas lentas</h2><div className="card"><div className="seg"><button className={!onlyCorrect ? 'on' : ''} aria-pressed={!onlyCorrect} onClick={() => setOnlyCorrect(false)}>Todas</button><button className={onlyCorrect ? 'on' : ''} aria-pressed={onlyCorrect} onClick={() => setOnlyCorrect(true)}>Las que aciertas</button></div><p className="legend">Las que más tardas en contestar. Si las aciertas pero tardas mucho, probablemente aún no las dominas.</p>{questions.map(item => <div className="sl" key={item.id}><div className="slh"><b>{Math.round(item.averageSeconds)} s</b><small>{item.correct}/{item.attempts} aciertos{item.lastOutcome === 1 ? <> · última <Check size="1em" aria-hidden="true" /></> : item.lastOutcome === 0 ? <> · última <X size="1em" aria-hidden="true" /></> : ''}</small></div><div className="sm">{item.id}</div></div>)}<div className="row"><button className="btn" onClick={() => { void practice(); }}>Practicar estas preguntas</button></div></div></>;
 }
 
 function StrategyAnalysis({ stats, strategy, setStrategy, days, setDays, busy, setBusy }: { stats: StatsServices; strategy: string; setStrategy: (value: string) => void; days: number; setDays: (value: number) => void; busy: boolean; setBusy: (value: boolean) => void }) {
