@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useStudyServices } from '../../shared/ui/study-services.js';
+import { useStudyService } from '../../shared/ui/study-services.js';
 import type { StatsSnapshot, StatsWeek } from '../../core/application/stats/statistics-model.js';
 import { StatsTopicsSection } from './StatsTopicsSection.js';
 import { StatsSimulationSection } from './StatsSimulationSection.js';
@@ -8,7 +8,7 @@ import { StatsEvolutionSection } from './StatsEvolutionSection.js';
 type Tab = 'temas' | 'sims' | 'evo';
 const date = (time: number) => new Date(time).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
 export function StatsPage() {
-  const { stats } = useStudyServices();
+  const stats = useStudyService('stats');
   const [snapshot, setSnapshot] = useState<StatsSnapshot | null>(null);
   const [error, setError] = useState('');
   const [tab, setTab] = useState<Tab>('temas');

@@ -42,6 +42,8 @@ flowchart LR
 
 La flecha de `adapters` hacia `ports` representa implementación del contrato: los puertos se declaran hacia dentro en `core`. `app` es el único punto que conoce simultáneamente UI, casos de uso y adaptadores. `shared` no debe alojar casos de uso, estado específico de feature ni acceso a persistencia.
 
+Cada pantalla solicita su capacidad con `useStudyService('feature')`; el agregado tipado completo queda en la composición de `app` y no se expone a páginas. Esto mantiene un único montaje de dependencias y estrecha los tipos que puede usar cada consumidor.
+
 ## Estado
 
 - **Estado local de pantalla:** `useState` para formularios, filtros, pestañas, diálogos privados y estados de carga de una página.

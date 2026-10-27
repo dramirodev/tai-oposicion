@@ -5,7 +5,7 @@ import { questionNotice, sourceHtml } from '../../shared/presentation/study-cont
 import { TRAMPAS } from '../../shared/presentation/labels.js';
 import { richHtml, hiliteHtml } from '../../shared/presentation/study-text.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
-import { useStudyServices, type FailureQuestion } from '../../shared/ui/study-services.js';
+import { useStudyService, type FailureQuestion } from '../../shared/ui/study-services.js';
 import { selectFailures, type FailureFilter } from './failures-controller.js';
 
 const EMPTY_FILTER: FailureFilter = { query: '', topicId: '', syllabus: '', streak: '' };
@@ -25,7 +25,7 @@ function FailureDetails({ question, streak, reviewed }: { question: FailureQuest
 }
 
 export function FailuresPage() {
-  const { failures } = useStudyServices();
+  const failures = useStudyService('failures');
   const [questions, setQuestions] = useState<FailureQuestion[]>([]);
   const [topics, setTopics] = useState<readonly { id: string; name: string }[]>([]);
   const [filter, setFilter] = useState(EMPTY_FILTER);

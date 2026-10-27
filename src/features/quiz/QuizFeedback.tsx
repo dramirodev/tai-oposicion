@@ -5,7 +5,7 @@ import { FAILURE_REASONS } from '../../shared/presentation/study-labels.js';
 import { hiliteHtml } from '../../shared/presentation/study-text.js';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
-import { useStudyServices, type QuizPrompt, type QuizSnapshot } from '../../shared/ui/study-services.js';
+import { useStudyService, type QuizPrompt, type QuizSnapshot } from '../../shared/ui/study-services.js';
 
 function FeedbackMessage({ snapshot, prompt }: { snapshot: QuizSnapshot; prompt: QuizPrompt }) {
   const message = snapshot.studyState === 'revealed' ? 'Solución consultada · cuenta como blanco'
@@ -22,7 +22,7 @@ function FeedbackMessage({ snapshot, prompt }: { snapshot: QuizSnapshot; prompt:
 }
 
 function FailedAnswerActions({ snapshot, prompt }: { snapshot: QuizSnapshot; prompt: QuizPrompt }) {
-  const { quiz } = useStudyServices();
+  const quiz = useStudyService('quiz');
   const quick = snapshot.recentAnswer && snapshot.recentAnswer[0] < snapshot.recentAnswer[1] * 0.6;
   if (snapshot.studyState === 'revealed' || snapshot.answer === prompt.correctIndex || snapshot.answer === -1) return null;
   return <div className="mot"><small>¿Por qué fallé? <HelpIconLink topic="motivos" label="Ayuda sobre los motivos del fallo" />{quick && snapshot.recentAnswer && <b className="r">Respondiste en {snapshot.recentAnswer[0]} s; leerla bien lleva ≈{snapshot.recentAnswer[1]} s. ¿Fue velocidad?</b>}</small>
@@ -32,7 +32,7 @@ function FailedAnswerActions({ snapshot, prompt }: { snapshot: QuizSnapshot; pro
 }
 
 function CorrectAnswerActions({ snapshot }: { snapshot: QuizSnapshot }) {
-  const { quiz } = useStudyServices();
+  const quiz = useStudyService('quiz');
   if (snapshot.studyState === 'revealed' || snapshot.answer !== snapshot.prompt.correctIndex) return null;
   const lucky = snapshot.scoreByLuck === 6 || snapshot.scoreByLuck === 8;
   return <div className="mot"><small>¿Seguro? (entra en repaso a +2 días)</small>
@@ -43,7 +43,7 @@ function CorrectAnswerActions({ snapshot }: { snapshot: QuizSnapshot }) {
 }
 
 function QuizReport({ snapshot }: { snapshot: QuizSnapshot }) {
-  const { quiz } = useStudyServices();
+  const quiz = useStudyService('quiz');
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState(snapshot.report?.reason || 'Respuesta correcta mal marcada');
   const [note, setNote] = useState(snapshot.report?.note || '');
@@ -55,7 +55,7 @@ function QuizReport({ snapshot }: { snapshot: QuizSnapshot }) {
 }
 
 export function QuizFeedback({ snapshot, prompt, explanation }: { snapshot: QuizSnapshot; prompt: QuizPrompt; explanation: string }) {
-  const { quiz } = useStudyServices();
+  const quiz = useStudyService('quiz');
   const kind = snapshot.studyState === 'revealed' ? 'note' : snapshot.answer === prompt.correctIndex ? 'good' : 'wrong';
   return <div className={`fb ${kind}`} role="status">
     <FeedbackMessage snapshot={snapshot} prompt={prompt} />

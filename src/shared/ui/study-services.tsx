@@ -206,9 +206,13 @@ export interface SettingsServices {
 export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; cards: CardsServices; errors: ErrorServices; failures: FailureServices; lightning: LightningServices; traps: TrapsServices; reading: ReadingServices; test: TestServices; simulation: SimulationServices; simulationReview: SimulationReviewServices; result: ResultServices; quiz: QuizServices; stats: StatsServices; settings: SettingsServices; markReady(): void }
 const Context = createContext<StudyServices | null>(null);
 export const AppServicesProvider = Context.Provider;
-export function useOptionalStudyServices(): StudyServices | null { return useContext(Context); }
-export function useStudyServices(): StudyServices {
+function useOptionalStudyServices(): StudyServices | null { return useContext(Context); }
+export function useStudyService<K extends keyof StudyServices>(key: K): StudyServices[K] {
   const services = useOptionalStudyServices();
   if (!services) throw new Error('Falta AppServicesProvider');
-  return services;
+  return services[key];
+}
+export function useOptionalStudyService<K extends keyof StudyServices>(key: K): StudyServices[K] | null {
+  const services = useOptionalStudyServices();
+  return services?.[key] ?? null;
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { Check } from 'lucide-react';
 import { saveExportFile } from '../../shared/ui/download-file.js';
-import { useStudyServices, type ReportedCard, type ReportedQuestion } from '../../shared/ui/study-services.js';
+import { useStudyService, type ReportedCard, type ReportedQuestion } from '../../shared/ui/study-services.js';
 import { codeSpans, todoCodigo } from '../../shared/presentation/study-text.js';
 import { selectErrorReports } from './errors-controller.js';
 
@@ -27,7 +27,7 @@ function CardText({ value }: { value: string }) {
 }
 
 export function ErrorsPage() {
-  const { errors } = useStudyServices();
+  const errors = useStudyService('errors');
   const [, setRevision] = useState(0);
   const [content, setContent] = useState<{ questions: Map<string, ReportedQuestion>; cards: Map<string, ReportedCard> }>({ questions: new Map(), cards: new Map() });
   const [loadedKey, setLoadedKey] = useState<string | null>(null);

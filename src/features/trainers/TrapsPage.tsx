@@ -6,10 +6,10 @@ import { richHtml, hiliteHtml } from '../../shared/presentation/study-text.js';
 import { questionNotice, sourceHtml } from '../../shared/presentation/study-content.js';
 import { TRAMPAS, TRAMPA_EXPL } from '../../shared/presentation/labels.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
-import { useStudyServices, type TrapAnswer, type TrapRun } from '../../shared/ui/study-services.js';
+import { useStudyService, type TrapAnswer, type TrapRun, type TrapsServices } from '../../shared/ui/study-services.js';
 
 export function TrapsPage() {
-  const { traps } = useStudyServices();
+  const traps = useStudyService('traps');
   const navigate = useNavigate();
   const [run, setRun] = useState<TrapRun | null>(() => traps.getRun());
   const [loading, setLoading] = useState(!run);
@@ -98,7 +98,7 @@ function TrapFeedback({ prompt, result, selectedIds, falseAlarms }: { prompt: Tr
   </div>;
 }
 
-function TrapSummary({ run, traps, onAgain, onHome }: { run: TrapRun; traps: ReturnType<typeof useStudyServices>['traps']; onAgain(): void; onHome(): void }) {
+function TrapSummary({ run, traps, onAgain, onHome }: { run: TrapRun; traps: TrapsServices; onAgain(): void; onHome(): void }) {
   const total = run.results.reduce((sum, item) => sum + item.total, 0);
   const hits = run.results.reduce((sum, item) => sum + item.hits, 0);
   const falseAlarms = run.results.reduce((sum, item) => sum + item.falseAlarms, 0);

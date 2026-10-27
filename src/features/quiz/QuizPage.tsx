@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
-import { useStudyServices } from '../../shared/ui/study-services.js';
+import { useStudyService } from '../../shared/ui/study-services.js';
 import { QuizQuestionCard } from './QuizQuestionCard.js';
 import { QuizNavigation, QuizQuestionMap } from './QuizProgressNavigation.js';
 import { QuizPauseDialog, QuizSessionHeader } from './QuizSessionHeader.js';
@@ -11,14 +11,14 @@ import { quizIsRevealed, quizPageState } from './quiz-page-state.js';
 import { useQuizPageEffects } from './useQuizPageEffects.js';
 
 function useQuizSnapshot() {
-  const { quiz } = useStudyServices();
+  const quiz = useStudyService('quiz');
   const [snapshot, setSnapshot] = useState(() => quiz.getSnapshot());
   useEffect(() => quiz.subscribe(() => setSnapshot(quiz.getSnapshot())), [quiz]);
   return snapshot;
 }
 
 export function QuizPage() {
-  const { quiz } = useStudyServices();
+  const quiz = useStudyService('quiz');
   const snapshot = useQuizSnapshot();
   const root = useRef<HTMLDivElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);

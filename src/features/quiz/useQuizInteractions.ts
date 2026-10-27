@@ -2,7 +2,7 @@ import { useEffect, useEffectEvent, useRef, useState, type RefObject } from 'rea
 import { resolveHighlight } from '../../core/domain/attempts/highlights.js';
 import { canonicalText, paintTextHighlight, selectedTextAnchor } from '../../shared/ui/text-highlights.js';
 import { studyKeyAction, swipeDirection } from '../../shared/ui/study-input.js';
-import { useStudyServices, type QuizPrompt, type QuizSnapshot } from '../../shared/ui/study-services.js';
+import { useStudyService, type QuizPrompt, type QuizSnapshot } from '../../shared/ui/study-services.js';
 
 type HighlightMark = { questionId: string; id: string | null };
 
@@ -14,7 +14,7 @@ export function useQuizInteractions({ root, snapshot, prompt, moveNext, movePrev
   movePrevious: () => void;
   markBlank: () => void;
 }) {
-  const { quiz } = useStudyServices();
+  const quiz = useStudyService('quiz');
   const [selection, setSelection] = useState(false);
   const [highlightMark, setHighlightMark] = useState<HighlightMark>({ questionId: '', id: null });
   const touchStart = useRef<{ x: number; y: number } | null>(null);

@@ -4,13 +4,13 @@ import { ORIGEN } from '../../shared/presentation/labels.js';
 import { asksForNegativeOption } from '../../core/domain/reading-strategy.js';
 import { richHtml } from '../../shared/presentation/study-text.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
-import { useStudyServices, type QuizPrompt, type QuizSnapshot } from '../../shared/ui/study-services.js';
+import { useStudyService, type QuizPrompt, type QuizSnapshot } from '../../shared/ui/study-services.js';
 import { QuizFeedback } from './QuizFeedback.js';
 
 type HighlightMark = { questionId: string; id: string | null };
 
 function QuestionPrompt({ snapshot, prompt, sourceLabel, responseLocked }: { snapshot: QuizSnapshot; prompt: QuizPrompt; sourceLabel: string; responseLocked: boolean }) {
-  const { quiz } = useStudyServices();
+  const quiz = useStudyService('quiz');
   const confidenceLabels = { sure: 'Seguro', betweenTwo: 'Entre dos', guess: 'Adivino' };
   return <>
     <div className="meta"><span className="tag">{prompt.topicId} · {prompt.topicName}</span><span className={`tag o${prompt.origin}`}>{ORIGEN[prompt.origin]}{sourceLabel}</span>{prompt.provisional && <span className="tag warn">Respuesta provisional</span>}{prompt.mayExpire && <span className="tag warn">Puede caducar</span>}{prompt.variant && <span className="tag">Variante</span>}</div>
@@ -24,7 +24,7 @@ function QuestionPrompt({ snapshot, prompt, sourceLabel, responseLocked }: { sna
 }
 
 function QuestionOptions({ snapshot, prompt, rootRef, revealed, responseLocked, gateRemaining }: { snapshot: QuizSnapshot; prompt: QuizPrompt; rootRef: RefObject<HTMLDivElement | null>; revealed: boolean; responseLocked: boolean; gateRemaining: number }) {
-  const { quiz } = useStudyServices();
+  const quiz = useStudyService('quiz');
   const discardedOptions = new Set(snapshot.discarded);
   return <div className="opts">{prompt.options.map((option, index) => {
     const selected = snapshot.answer === index;
@@ -43,7 +43,7 @@ function QuestionOptions({ snapshot, prompt, rootRef, revealed, responseLocked, 
 }
 
 function QuestionHighlightTools({ snapshot, prompt, selection, highlightMark, setHighlightMark, addMark }: { snapshot: QuizSnapshot; prompt: QuizPrompt; selection: boolean; highlightMark: HighlightMark; setHighlightMark: (mark: HighlightMark) => void; addMark: (category: 'key' | 'doubt') => void }) {
-  const { quiz } = useStudyServices();
+  const quiz = useStudyService('quiz');
   return <div className="highlight-tools" id="highlight-tools" role="group" aria-label="Subrayado opcional" hidden={!selection || snapshot.paused}><span>Texto seleccionado:</span><button type="button" className="signal" data-add-highlight="key" onMouseDown={event => event.preventDefault()} onClick={() => addMark('key')}>Clave</button><button type="button" className="signal" data-add-highlight="doubt" onMouseDown={event => event.preventDefault()} onClick={() => addMark('doubt')}>Duda</button>{highlightMark.questionId === prompt.id && highlightMark.id && <button type="button" className="signal" data-remove-highlight onClick={() => { quiz.removeHighlight(highlightMark.id!); setHighlightMark({ questionId: prompt.id, id: null }); }}>Quitar marca</button>}</div>;
 }
 

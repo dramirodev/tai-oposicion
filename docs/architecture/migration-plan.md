@@ -5,26 +5,24 @@ Complejidad relativa: **baja** (cambio localizado y bajo riesgo), **media** (var
 | Orden | Trabajo | Complejidad | Resultado y validación |
 |---:|---|---:|---|
 | 0 | Alinear rama con `main` tras integrar PR #34 y revalidar este diagnóstico | Baja | Confirmar que el inventario sigue vigente; no cambiar contratos. |
-| 1 | Extraer Progreso/estadísticas como primer vertical slice de solo lectura | Media | Implementado; PR #49 lleva el slice a `main` después de que #44 se fusionara accidentalmente en la rama de iconografía. |
-| 2 | Reducir contrato global `StudyServices` por feature sin mover estado persistido | Media | Implementado en PR #46; cada pantalla pide solo los servicios que usa. PR en proceso de quedar dirigida a `main`. |
-| 3 | Delimitar estado efímero compartido y evaluar Zustand en una sola rebanada | Baja/media | Implementado en PR #45 para diálogos/toasts; store vanilla, selectores y pruebas, sin persistencia. |
-| 4 | Desacoplar `core/application/legacy-engine.ts` de persistencia/datos legacy | Alta | Declarar puertos mínimos para banco, progreso, reloj/sesión según necesidad; conectar adaptadores en `app`; tests con fakes; preservar selección, respuesta, pausa, reanudación y resultados. |
+| 1 | Extraer Progreso/estadísticas como primer vertical slice de solo lectura | Media | Implementado y fusionado mediante PR #49; la agregación de rendimiento por tema queda en una función pura tipada. |
+| 2 | Reducir contrato global `StudyServices` por feature sin mover estado persistido | Media | Implementado en esta PR #46; cada pantalla solicita solo los servicios que consume y la composición mantiene el agregado. |
+| 3 | Delimitar estado efímero compartido y evaluar Zustand en una sola rebanada | Baja/media | Implementado y fusionado mediante PR #45 para diálogos/toasts, con selectores y sin persistencia. |
+| 4 | Desacoplar `core/application/legacy-engine.ts` de persistencia/datos legacy | Alta | PR #50 separa la lectura y validación de sesión guardada en un caso de uso con dominio y adaptador local; conserva el contrato `tai.run:<cuenta>`. |
 | 5 | Extraer composición/arranque de `legacy-router.ts` y retirar renderer muerto | Alta | Primer slice en PR #47: renderer HTML sin rutas activas retirado y bootstrap renombrado a servicios de aplicación. La extracción adicional del arranque de service worker/sync sigue pendiente. |
 | 6 | Encapsular DTO y modelos legacy en mappers/adapters | Media/alta | UI/dominio reciben modelos internos; adapters conservan lectura compatible de datos antiguos. Contratos externos sin cambios. |
 | 7 | Cierre de guardas y limpieza validada | Media | No new architecture debt, chequeo de ciclos, lint, typecheck, tests, build y E2E de rutas críticas. Retirar únicamente código sustituido sin referencias. |
 
 ### Estado de ejecución — actualización 2026-10-27
 
-- Base comprobada: `origin/main` `7e2cd29`, que contiene la PR #43 de iconografía y hover táctil.
-- PR #44 fue fusionada por error en `fix/menu-iconography-mobile-hover`; sus cambios de estadísticas no llegaron a `main`. La rama de reemplazo `feat/architecture-stats-main` / PR #49 apunta directamente a `main`.
-- PR #45 (Zustand), #46 (servicios por feature) y #47 (retirada del renderer inactivo) están siendo rebasadas como cambios independientes contra `main`.
-- Orden 4: en curso la extracción acotada de recuperación de sesión guardada; mantiene formato, almacenamiento por cuenta, expiración, acceso y comprobación de sesión tras la consulta.
-- Órdenes 5 (bootstrap restante), 6 (DTO/mappers) y 7 (guardas finales) siguen pendientes después de este slice.
-- Orden 0: revalidado en `origin/main` `d745aa6`, que incluye la PR #40. La PR de iconografía #43 sigue abierta; los slices siguientes se apilan sobre ella para mantener una base reproducible.
-- Orden 1: en curso en la rama `feat/architecture-stats-slice`. Se movieron modelos de respuesta del dashboard a `core/application/stats`, se extrajo la agregación de rendimiento por tema a una función pura tipada y se añadieron pruebas para umbral, orden, totales y ausencia de datos. La lectura de Firebase/almacén local sigue en la composición existente: no se añadió un puerto adicional sin una frontera de IO distinta que lo justificara. UI, persistencia y contratos externos no cambian.
-- Orden 2: pendiente; `StudyServices` todavía concentra servicios por feature.
-- Orden 3: pendiente; Zustand sigue sin instalarse. Context7 consultó la documentación de `/pmndrs/zustand` v5.0.12, que documenta el store vanilla y `useStore` con selector; candidato a evaluar: diálogos/toasts efímeros.
-- Órdenes 4–7: pendientes; no se han tocado el motor, el router ni los DTO de persistencia.
+- Base comprobada: `origin/main` `4c70512`, con las PR #43, #45, #47, #48 y #49 integradas.
+- PR #44 se fusionó accidentalmente en la rama de iconografía; su reemplazo #49 incorporó el slice de estadísticas a `main`.
+- PR #45 (Zustand para estado efímero de diálogos/toasts) está integrada en `main`.
+- Orden 2: esta PR #46 aísla los servicios usados por cada pantalla; su rama se está rebasando de nuevo sobre `main` tras la integración de #47.
+- Orden 4: PR #50 contiene la extracción acotada de recuperación de sesión guardada, basada directamente en `main`; `npm run check` pasó 409/409, el build pasó y el E2E de reanudación pasó 2/2 en Chromium/WebKit.
+- Orden 5: PR #47 retiró el renderer React legacy sin reemplazar el arranque todavía necesario; está integrada en `main`.
+- Órdenes 6 (DTO/mappers) y 7 (guardas finales/ciclos) siguen pendientes, después de revisar las fronteras activas y no como limpieza mecánica.
+- Nueva tarea de producto pendiente: loading accesible en Inicio mientras se resuelven los datos necesarios y Firebase Auth; mostrar después la vista adecuada a una sesión confirmada o a invitado. Ver detalle y casos de validación en el handoff.
 
 ## Procedimiento por slice
 

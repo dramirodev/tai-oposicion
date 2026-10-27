@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { useStudyServices, type ScenarioChoice } from '../../shared/ui/study-services.js';
+import { useStudyService, type ScenarioChoice } from '../../shared/ui/study-services.js';
 
 export function SimulationReviewPage() {
-  const { simulationReview } = useStudyServices();
+  const simulationReview = useStudyService('simulationReview');
   const navigate = useNavigate();
   const [choices, setChoices] = useState<readonly ScenarioChoice[]>([]);
   const [loading, setLoading] = useState(true);

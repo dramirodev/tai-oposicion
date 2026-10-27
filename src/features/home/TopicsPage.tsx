@@ -1,14 +1,14 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { BLOQUES } from '../../shared/presentation/labels.js';
-import { useStudyServices } from '../../shared/ui/study-services.js';
+import { useStudyService } from '../../shared/ui/study-services.js';
 import { usePageReady } from '../../shared/ui/use-page-ready.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { TopicsView } from './TopicsView.js';
 import { filterTopics, toggleTopicSelection } from './topics-controller.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
 export function TopicsPage() {
-  const { topics: services } = useStudyServices(), navigate = useNavigate();
+  const services = useStudyService('topics'), navigate = useNavigate();
   const resource = useMemo(() => ({ accountId: services.accountId, subscribe: services.subscribe, load: () => services.loadTopics() }), [services]);
   const { value: topics, error } = useAccountResource(resource);
   usePageReady(!!topics || !!error);

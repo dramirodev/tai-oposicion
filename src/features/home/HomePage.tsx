@@ -1,6 +1,6 @@
 import { useMemo, useState, useSyncExternalStore } from 'react';
 import { useNavigate } from 'react-router';
-import { useStudyServices } from '../../shared/ui/study-services.js';
+import { useStudyService } from '../../shared/ui/study-services.js';
 import { useActionLifetime } from '../../shared/ui/use-action-lifetime.js';
 import { usePageReady } from '../../shared/ui/use-page-ready.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
@@ -9,7 +9,7 @@ import { createHomeController } from './home-controller.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
 
 export function HomePage() {
-  const { home: services } = useStudyServices();
+  const services = useStudyService('home');
   const captureLifetime = useActionLifetime(services.accountId);
   const [controller] = useState(() => createHomeController(captureLifetime, services.notify));
   const pending = useSyncExternalStore(controller.subscribe, controller.getPending, controller.getPending);

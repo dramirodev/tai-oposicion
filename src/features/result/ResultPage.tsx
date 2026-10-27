@@ -7,17 +7,17 @@ import { resolveHighlight } from '../../core/domain/attempts/highlights.js';
 import { canonicalText, paintTextHighlight } from '../../shared/ui/text-highlights.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
-import { useStudyServices, type ResultItem, type ResultReport } from '../../shared/ui/study-services.js';
+import { useStudyService, type ResultItem, type ResultReport } from '../../shared/ui/study-services.js';
 
 function useResultSnapshot() {
-  const { result } = useStudyServices();
+  const result = useStudyService('result');
   const [snapshot, setSnapshot] = useState(() => result.getSnapshot());
   useEffect(() => result.subscribe(() => setSnapshot(result.getSnapshot())), [result]);
   return snapshot;
 }
 
 function ReviewReport({ item, index, report }: { item: ResultItem; index: number; report: ResultReport | undefined }) {
-  const { result } = useStudyServices();
+  const result = useStudyService('result');
   const [editing, setEditing] = useState(false);
   const [reason, setReason] = useState(report?.reason || ERROR_REPORT_REASONS[0]);
   const [note, setNote] = useState(report?.note || '');
@@ -50,7 +50,7 @@ function ReviewDetails({ item, explanation }: { item: ResultItem; explanation: s
 }
 
 function ReviewItem({ item, index, report, interrupted }: { item: ResultItem; index: number; report: ResultReport | undefined; interrupted: boolean }) {
-  const { result } = useStudyServices();
+  const result = useStudyService('result');
   const [explanation, setExplanation] = useState('');
   const { style, label } = outcomePresentation[item.outcome];
 
@@ -88,7 +88,7 @@ function ReviewItem({ item, index, report, interrupted }: { item: ResultItem; in
 }
 
 export function ResultPage() {
-  const { result } = useStudyServices();
+  const result = useStudyService('result');
   const snapshot = useResultSnapshot();
   const [strategy, setStrategy] = useState('');
   const [strategyLoading, setStrategyLoading] = useState(false);

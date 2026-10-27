@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router';
-import { useStudyServices, type SimulationConfiguration, type SimulationExam, type SimulationTab } from '../../shared/ui/study-services.js';
+import { useStudyService, type SimulationConfiguration, type SimulationExam, type SimulationTab } from '../../shared/ui/study-services.js';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 
 const tabs: readonly [SimulationTab, string][] = [['completo', 'Completo'], ['examen', 'Por examen'], ['tema', 'Por tema']];
@@ -61,7 +61,7 @@ function ExamBrowser({ tab, loading, starting, filteredGroups, visibleSelection,
 }
 
 export function SimulationPage() {
-  const { simulation } = useStudyServices();
+  const simulation = useStudyService('simulation');
   const [tab, setTab] = useState(() => simulation.getTab());
   const [configuration, setConfiguration] = useState(() => simulation.getConfiguration());
   const [groups, setGroups] = useState<SimulationGroups | null>(null);

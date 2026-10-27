@@ -260,3 +260,17 @@ Esta sección sustituye los estados de PR anteriores que quedaron obsoletos:
 - Mantener intacto `tests/design-training.test.js` sin confirmar del checkout principal.
 
 Siguiente paso: comprobar la mergeabilidad de #45; luego aplanar #46 y #47 sobre `main`, revisar sus diffs y validar antes de actualizarlas. Publicar después la recuperación de sesión como una PR independiente contra `main` y continuar el bootstrap restante, DTO/mappers y guardas de ciclos.
+
+## Nueva tarea — carga inicial de Inicio (2026-10-27)
+
+**PENDIENTE, implementación en PR independiente.** Mostrar un loading accesible en Inicio hasta que terminen las cargas de datos que necesita y se resuelva el estado de Firebase Auth. Después, presentar la variante adecuada a una sesión confirmada o a un usuario invitado. No enseñar datos parciales ni asumir autenticación durante la espera. Antes de implementar, identificar fuentes de datos y estados de carga actuales; preservar acceso invitado, uso offline y contenido. Validar carga lenta, fallo de lectura, sesión autenticada, usuario sin sesión y cambios de ruta durante la carga.
+
+## Continuación de arquitectura — estado comprobado 2026-10-27
+
+- PR #45 se integró en `main` (`7d4a5bc`).
+- PR #46 volvió a entrar en conflicto al integrarse #47. Su rama se ha rebasado ahora sobre el `main` actualizado (`4c70512`); el conflicto local en `route-runtime.tsx` se resolvió conservando el nuevo runtime de #47 y la selección de servicios de #46. Validación local sobre esta base: `npm run check` 408/408, build y E2E de rutas 76/76. Pendiente publicar el head nuevo y confirmar el estado remoto.
+- PR #47 ya está integrada en `main` (`4c70512`).
+- PR #50 separa la recuperación de sesión guardada, apunta directamente a `main` y tiene validación local completa: 409/409 tests, build y E2E de reanudación 2/2. Validación remota aún pendiente.
+- `.gitignore` ya contiene `/docs/` y `/reports/`. Se mantienen los archivos que ya están versionados; esas reglas ignoran contenido nuevo en esas carpetas.
+- **Nueva tarea de publicación:** después de que cada PR llegue a `main`, actualizar el checkout desde el `main` remoto y ejecutar instalación reproducible, comprobaciones y build de producción en esa rama. Crear un tag anotado, único y apuntado al commit de `main` solo cuando compile y pasen las comprobaciones. No reutilizar tags ni cambiar `package.json` sin una decisión explícita sobre la numeración de versiones.
+- El checkout principal permanece desactualizado y contiene un cambio local ajeno en `tests/design-training.test.js`; no tocarlo.
