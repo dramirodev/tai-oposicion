@@ -7,6 +7,7 @@ import { richHtml, hiliteHtml } from '../../shared/presentation/study-text.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
 import { useStudyService, type FailureQuestion } from '../../shared/ui/study-services.js';
 import { selectFailures, type FailureFilter } from './failures-controller.js';
+import { PageLoading } from '../../shared/ui/PageLoading.js';
 
 const EMPTY_FILTER: FailureFilter = { query: '', topicId: '', syllabus: '', streak: '' };
 const dateLabel = (timestamp: number) => new Date(timestamp).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
@@ -42,7 +43,7 @@ export function FailuresPage() {
   const selected = useMemo(() => selectFailures(questions, filter, failures.getRecord), [questions, filter, failures]);
   const byTopic = useMemo(() => new Map(questions.reduce((entries, question) => entries.set(question.topicId, (entries.get(question.topicId) || 0) + 1), new Map<string, number>())), [questions]);
 
-  if (!loaded) return <><h1>Falladas <HelpIconLink topic="repaso" label="Ayuda sobre preguntas falladas y repaso" /></h1><p className="sub loading" role="status">Cargando preguntas falladas…</p></>;
+  if (!loaded) return <PageLoading variant="legacy" />;
   if (loadError) return <><h1>Falladas <HelpIconLink topic="repaso" label="Ayuda sobre preguntas falladas y repaso" /></h1><div className="card" role="alert"><p>No se pudieron cargar las preguntas. Comprueba la conexión e inténtalo de nuevo.</p><button className="btn" onClick={() => { setLoaded(false); setLoadError(false); setReload(value => value + 1); }}>Reintentar</button></div></>;
   if (!questions.length) return <><h1>Falladas <HelpIconLink topic="repaso" label="Ayuda sobre preguntas falladas y repaso" /></h1><div className="card"><p className="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p></div></>;
 

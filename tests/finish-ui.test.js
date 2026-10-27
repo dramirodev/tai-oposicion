@@ -23,8 +23,13 @@ it('doble pulsación en Terminar no duplica el intento de examen',async()=>{
  const {getSnapshot}=await import('../src/app/study-engine-composition.js');
  const lastIndex=getSnapshot().run.items.length-1;
  document.querySelector(`[data-jump="${lastIndex}"]`).click();
- await vi.waitFor(()=>expect(getSnapshot().run.idx).toBe(lastIndex));
+ await vi.waitFor(()=>{
+  expect(getSnapshot().run.idx).toBe(lastIndex);
+  expect(document.querySelector(`[data-jump="${lastIndex}"]`)?.getAttribute('aria-current')).toBe('step');
+  expect(document.querySelector('#next')?.textContent).toContain('Terminar');
+ });
  const q=getSnapshot().run.items[getSnapshot().run.idx];document.querySelector(`.opt[data-i="${q.c}"]`).click();
+ await vi.waitFor(()=>expect(document.querySelector(`[data-jump="${lastIndex}"]`)?.classList.contains('answered')).toBe(true));
  const finish=document.querySelector('#next');await act(async()=>{finish.click();finish.click();});
  await Promise.resolve();
  await vi.waitFor(()=>{

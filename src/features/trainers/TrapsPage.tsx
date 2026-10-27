@@ -7,6 +7,7 @@ import { questionNotice, sourceHtml } from '../../shared/presentation/study-cont
 import { TRAMPAS, TRAMPA_EXPL } from '../../shared/presentation/labels.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
 import { useStudyService, type TrapAnswer, type TrapRun, type TrapsServices } from '../../shared/ui/study-services.js';
+import { PageLoading } from '../../shared/ui/PageLoading.js';
 
 export function TrapsPage() {
   const traps = useStudyService('traps');
@@ -27,7 +28,7 @@ export function TrapsPage() {
   }, [complete, run, traps]);
 
   const exit = async () => { if (await ask('¿Salir del ejercicio?', 'Salir')) { traps.resetRun(); navigate('/home'); } };
-  if (loading) return <><h1>Detective de trampas</h1><p className="sub loading" role="status">Preparando preguntas…</p></>;
+  if (loading) return <PageLoading variant="study" />;
   if (error) return <><h1>Detective de trampas</h1><div className="card" role="alert"><p>No se pudo cargar el ejercicio. Comprueba la conexión e inténtalo de nuevo.</p><button className="btn" onClick={() => { setError(false); setLoading(true); setRun(null); }}>Reintentar</button></div></>;
   if (complete && completedRun) return <TrapSummary run={completedRun} traps={traps} onAgain={() => { traps.resetRun(); setComplete(false); setCompletedRun(null); setLoading(true); setRun(null); }} onHome={() => navigate('/home')} />;
   if (!run?.items.length) return <><h1>Detective de trampas</h1><div className="card"><p>No hay preguntas disponibles para este ejercicio.</p></div><button className="btn sec" onClick={() => navigate('/home')}>Inicio</button></>;

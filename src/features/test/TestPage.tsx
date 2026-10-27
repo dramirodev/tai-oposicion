@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useStudyService, type TestConfiguration, type TestTopic } from '../../shared/ui/study-services.js';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 import { topicsForTest, toggleTestTopics, updateTestConfiguration } from './test-controller.js';
+import { PageLoading } from '../../shared/ui/PageLoading.js';
 
 const blocks = [
   ['T1', 'Bloque I · Organización del Estado'], ['T2', 'Bloque II · Informática básica'],
@@ -80,7 +81,7 @@ export function TestPage() {
         const ids = test.seenTopics(); if (!ids.length) { setMessage('Aún no has marcado temas vistos (pantalla «Temas vistos» en Inicio).'); return; }
         update({ all: false, selected: ids });
       }}>Usar mis temas vistos ({test.seenTopics().length})</button></div>
-      {loading ? <p className="sub loading" role="status">Cargando temas…</p> : blocks.map(([prefix, title]) => {
+      {loading ? <PageLoading variant="content" /> : blocks.map(([prefix, title]) => {
         const entries = visibleTopics.filter(topic => topic.id.startsWith(prefix));
         if (!entries.length) return null;
         const ids = entries.map(topic => topic.id);

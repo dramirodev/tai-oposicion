@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router';
 import { useStudyService, type SimulationConfiguration, type SimulationExam, type SimulationTab } from '../../shared/ui/study-services.js';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
+import { PageLoading } from '../../shared/ui/PageLoading.js';
 
 const tabs: readonly [SimulationTab, string][] = [['completo', 'Completo'], ['examen', 'Por examen'], ['tema', 'Por tema']];
 const origins = [['G', 'Generadas'], ['O', 'Oficiales'], ['A', 'Academia']] as const;
@@ -50,7 +51,7 @@ function ExamBrowser({ tab, loading, starting, filteredGroups, visibleSelection,
       <label>Año en la referencia<select aria-label="Año en la referencia" value={yearFilter} onChange={event => setYearFilter(event.target.value)}><option value="">Todos</option>{years.map(year => <option key={year} value={year}>{year}</option>)}</select></label>
     </section>}
     <p className="sub sm">Elige uno y contesta solo sus preguntas. Notas sobre 100; cada fallo resta 1/3.</p>
-    {loading && <p className="sub loading" role="status">Cargando exámenes…</p>}
+    {loading && <PageLoading variant="content" />}
     {!loading && filteredGroups.map(group => <section key={group.title}><h2 className="h3">{group.title}</h2><div className="exlist">{group.exams.map(exam => <button key={exam.id} data-exam-id={exam.id} className={`exrow ${exam.id === visibleSelection ? 'on' : ''}`} aria-pressed={exam.id === visibleSelection} onClick={() => onSelect(exam.id)}>
       <span><b>{exam.name}</b><small>{exam.questionCount} preguntas{exam.attempts > 1 ? ` · ${exam.attempts} intentos · mejor ${exam.best?.toFixed(1).replace('.', ',')}` : ''}</small></span>
       <em className={`nt ${exam.latest === null ? '' : exam.latest >= 50 ? 'ok' : 'mid'}`}>{exam.latest === null ? 'Sin hacer' : exam.latest.toFixed(1).replace('.', ',')}</em>

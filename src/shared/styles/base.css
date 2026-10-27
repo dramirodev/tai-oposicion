@@ -146,13 +146,6 @@ a {
   outline-offset: 3px;
 }
 
-.loading {
-  padding: 2.5rem 1.25rem;
-  min-height: 40vh;
-  color: var(--mute);
-  font-size: var(--fs-l);
-}
-
 @media(prefers-reduced-motion:reduce) {
   * {
     transition: none!important;
@@ -191,12 +184,4 @@ button {
 
 [hidden] {
   display: none!important;
-}
-
-.loading[role=status] {
-  min-height: 0;
-  margin-block: var(--space-8);
-  border-inline-start: 3px solid var(--selb);
-  border-radius: var(--r-s);
-  background: var(--card);
 }

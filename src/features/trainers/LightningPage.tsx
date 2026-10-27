@@ -6,6 +6,7 @@ import { richHtml, hiliteHtml } from '../../shared/presentation/study-text.js';
 import { questionNotice, sourceHtml } from '../../shared/presentation/study-content.js';
 import { TRAMPAS } from '../../shared/presentation/labels.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
+import { PageLoading } from '../../shared/ui/PageLoading.js';
 
 export function LightningPage() {
   const lightning = useStudyService('lightning');
@@ -24,7 +25,7 @@ export function LightningPage() {
     return () => { active = false; };
   }, [lightning, reload]);
 
-  if (loading) return <><h1>Pregunta relámpago</h1><p className="sub loading" role="status">Buscando una pregunta…</p></>;
+  if (loading) return <PageLoading variant="study" />;
   if (error) return <><h1>Pregunta relámpago</h1><div className="card" role="alert"><p>No se pudo cargar una pregunta. Comprueba la conexión e inténtalo de nuevo.</p><button className="btn" onClick={next}>Reintentar</button></div></>;
   if (!question) return <><h1>Pregunta relámpago</h1><div className="card"><p>No hay pregunta disponible.</p></div><Link className="btn sec" to="/home">Inicio</Link></>;
 

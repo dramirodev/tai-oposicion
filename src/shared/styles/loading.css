@@ -29,6 +29,13 @@
 }
 
 .page-loading__row { min-block-size: 4.75rem; }
+.page-loading--content { min-block-size: 0; padding: 0; }
+.page-loading--content .page-loading__rows { grid-template-columns: 1fr; margin-block-start: 0; }
+.page-loading--content .page-loading__row { min-block-size: 5.5rem; }
+.page-loading--study .page-loading__rows { grid-template-columns: 1fr; }
+.page-loading--chart { min-block-size: 0; padding: 0; }
+.page-loading--chart .page-loading__rows { grid-template-columns: 1fr; margin-block-start: 0; }
+.page-loading__rows--chart .page-loading__row { min-block-size: 11rem; }
 .page-loading--topics .page-loading__rows { grid-template-columns: 1fr; gap: 0.5rem; }
 .page-loading--topics .page-loading__row { min-block-size: 3.625rem; }
 .page-loading--access .page-loading__row { min-block-size: 6.875rem; }

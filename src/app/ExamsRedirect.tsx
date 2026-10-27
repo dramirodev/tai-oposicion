@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useStudyService } from '../shared/ui/study-services.js';
+import { PageLoading } from '../shared/ui/PageLoading.js';
 
 export function ExamsRedirect() {
   const simulation = useStudyService('simulation');
   useEffect(() => simulation.openExams(), [simulation]);
-  return <p className="sub loading" role="status">Abriendo simulacros por examen…</p>;
+  return <PageLoading variant="content" />;
 }

@@ -352,11 +352,6 @@
   text-align: center;
 }
 
-.chart-loading {
-  width: 100%;
-  min-height: 12.5rem;
-}
-
 .vl {
   fill: var(--ink);
   font-size: var(--fs-xs);
@@ -377,7 +372,6 @@
 @media (max-width: 30rem) {
   .stats-chart { height: 11rem; }
   .stats-chart--evolution { height: 12rem; }
-  .chart-loading { min-height: 11rem; }
 }
 
 .evolution-legend {

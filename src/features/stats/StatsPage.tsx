@@ -4,6 +4,7 @@ import type { StatsSnapshot, StatsWeek } from '../../core/application/stats/stat
 import { StatsTopicsSection } from './StatsTopicsSection.js';
 import { StatsSimulationSection } from './StatsSimulationSection.js';
 import { StatsEvolutionSection } from './StatsEvolutionSection.js';
+import { PageLoading } from '../../shared/ui/PageLoading.js';
 
 type Tab = 'temas' | 'sims' | 'evo';
 const date = (time: number) => new Date(time).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
@@ -27,7 +28,7 @@ export function StatsPage() {
   useEffect(() => { let active = true; void stats.loadQuestionEvolution(12).then(value => { if (active) setQuestionWeeks(value); }).catch(() => { if (active) setMessage('No se pudo leer el historial detallado. El resto del progreso sigue disponible.'); }); return () => { active = false; }; }, [stats]);
   useEffect(() => { const filter = String(evolution.filter || 'g'); const weeks = Number(evolution.weeks || 12); void Promise.resolve(stats.loadWeekly({ weeks, ...(filter.startsWith('t:') ? { topic: filter.slice(2) } : filter.startsWith('k:') ? { type: filter.slice(2) } : {}) })).then(setWeekly); }, [evolution, stats]);
   if (error) return <><h1>Progreso</h1><p className="note" role="alert">{error}</p><button className="btn" onClick={() => { setError(''); void stats.load().then(setSnapshot).catch(() => setError('No se pudo cargar el progreso. Inténtalo de nuevo.')); }}>Reintentar</button></>;
-  if (!snapshot) return <><h1>Progreso</h1><p className="sub loading" role="status">Cargando progreso…</p></>;
+  if (!snapshot) return <PageLoading variant="legacy" />;
   const rank: Record<string, number> = { r: 0, y: 1, g: 2, n: 3 };
   const topics = domainOrder === 'frios' ? [...snapshot.domains].sort((a, b) => rank[a.status] - rank[b.status] || (b.days ?? -1) - (a.days ?? -1)) : snapshot.domains;
   const saveEvolution = (next: Record<string, string | number | boolean>) => { const updated = { ...evolution, ...next }; setEvolution(updated); stats.savePreference('evolution', updated); };

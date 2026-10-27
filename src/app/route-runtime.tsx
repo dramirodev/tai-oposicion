@@ -6,6 +6,7 @@ import { useLocation } from 'react-router';
 import { ReactScreen } from './ReactScreen.js';
 import { ExamsRedirect } from './ExamsRedirect.js';
 import { paths, routeSegment } from './paths.js';
+import { PageLoading } from '../shared/ui/PageLoading.js';
 const HomePage = lazy(() => import('../features/home/HomePage.js').then(module => ({ default: module.HomePage })));
 const AccessPage = lazy(() => import('../features/access/AccessPage.js').then(module => ({ default: module.AccessPage })));
 const HelpPage = lazy(() => import('../features/help/HelpPage.js').then(module => ({ default: module.HelpPage })));
@@ -32,7 +33,7 @@ let appRuntime: AppRuntime;
 export function configureRuntime(runtime: AppRuntime): void { appRuntime = runtime; }
 let legacyRefreshSeq = 0;
 let stopAppServices: (() => void) | undefined;
-const loading = <p className="sub loading" role="status">Cargando…</p>;
+const loading = <PageLoading variant="legacy" />;
 function FocusAfterLoad({ children }: { children: ReactNode }) {
   const location = useLocation();
   useLayoutEffect(() => {
