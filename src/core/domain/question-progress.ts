@@ -7,28 +7,29 @@ import {
 
 const LUCKY_REVIEW_DAYS = 1;
 
-/** Applies one study answer to a question's progress without performing persistence. */
-export function recordQuestionAnswer(
-  current: QuestionStats | undefined,
-  result: AnswerResult,
-  timestamp: number,
-  seconds?: number,
-): QuestionStats {
-  const statistics: QuestionStats = current
-    ? { ...current }
-    : {
-        attempts: 0,
-        correct: 0,
-        lastSeenAt: 0,
-        intervalStep: -1,
-        dueAt: 0,
-        lastResult: 0,
-        doubtful: false,
-        secondsStudied: 0,
-        timedAnswers: 0,
-        errorReason: 0,
-        syllabusReviewed: false,
-      };
+function newQuestionStats(): QuestionStats {
+  return {
+    attempts: 0,
+    correct: 0,
+    lastSeenAt: 0,
+    intervalStep: -1,
+    dueAt: 0,
+    lastResult: 0,
+    doubtful: false,
+    secondsStudied: 0,
+    timedAnswers: 0,
+    errorReason: 0,
+    syllabusReviewed: false,
+  };
+}
+
+function updateAnswerTiming(statistics: QuestionStats, result: AnswerResult, seconds?: number): void {
+  if (typeof seconds !== 'number' || seconds <= 0 || result === 2) return;
+  statistics.secondsStudied = (statistics.secondsStudied ?? 0) + Math.min(120, seconds);
+  statistics.timedAnswers = (statistics.timedAnswers ?? 0) + 1;
+}
+
+function updateAnswerSummary(statistics: QuestionStats, result: AnswerResult, timestamp: number, seconds?: number): number {
   const streak = failureStreak(statistics);
   statistics.failureStreak = result === 0
     ? 0
@@ -36,10 +37,7 @@ export function recordQuestionAnswer(
       ? Math.min(3, streak + 1)
       : streak;
 
-  if (typeof seconds === 'number' && seconds > 0 && result !== 2) {
-    statistics.secondsStudied = (statistics.secondsStudied ?? 0) + Math.min(120, seconds);
-    statistics.timedAnswers = (statistics.timedAnswers ?? 0) + 1;
-  }
+  updateAnswerTiming(statistics, result, seconds);
 
   statistics.attempts += 1;
   if (result === 1) statistics.correct += 1;
@@ -50,6 +48,10 @@ export function recordQuestionAnswer(
   const luck = statistics.errorReason ?? 0;
   statistics.errorReason = 0;
   if (luck && result === 2) statistics.errorReason = luck;
+  return luck;
+}
+
+function updateReviewSchedule(statistics: QuestionStats, result: AnswerResult, timestamp: number, luck: number): void {
   if (result === 0) {
     statistics.intervalStep = 0;
     statistics.dueAt = timestamp + CARD_REVIEW_INTERVALS_DAYS[0] * CALENDAR_DAY_MILLISECONDS;
@@ -67,6 +69,18 @@ export function recordQuestionAnswer(
       statistics.dueAt = timestamp + CARD_REVIEW_INTERVALS_DAYS[nextStep] * CALENDAR_DAY_MILLISECONDS;
     }
   }
+}
+
+/** Applies one study answer to a question's progress without performing persistence. */
+export function recordQuestionAnswer(
+  current: QuestionStats | undefined,
+  result: AnswerResult,
+  timestamp: number,
+  seconds?: number,
+): QuestionStats {
+  const statistics = current ? { ...current } : newQuestionStats();
+  const luck = updateAnswerSummary(statistics, result, timestamp, seconds);
+  updateReviewSchedule(statistics, result, timestamp, luck);
   return statistics;
 }
 

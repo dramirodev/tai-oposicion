@@ -22,10 +22,15 @@ it('registra el primer fallo y programa el primer repaso', () => {
 it('conserva los datos al no saber la respuesta y suma tiempo solo a respuestas puntuadas', () => {
   const markedLucky = { attempts: 2, correct: 1, lastSeenAt: 500, intervalStep: 0, dueAt: 1_000, lastResult: 1, errorReason: 6, secondsStudied: 10, timedAnswers: 1 };
   const blank = recordQuestionAnswer(markedLucky, 2, 2_000, 30);
-  expect(blank).toMatchObject({ attempts: 3, correct: 1, errorReason: 6, secondsStudied: 10, timedAnswers: 1, lastResult: 2 });
+  expect(blank).toMatchObject({ attempts: 3, correct: 1, errorReason: 6, secondsStudied: 10, timedAnswers: 1, lastResult: 2, intervalStep: 0, dueAt: 1_000 });
 
   const correct = recordQuestionAnswer(blank, 1, 3_000, 125);
   expect(correct).toMatchObject({ attempts: 4, correct: 2, errorReason: 8, intervalStep: 0, dueAt: 3_000 + 86_400_000, secondsStudied: 130, timedAnswers: 2 });
+});
+
+it('retira del repaso una pregunta al completar el último intervalo', () => {
+  const current = { attempts: 5, correct: 5, lastSeenAt: 10, intervalStep: 4, dueAt: 20, lastResult: 1 };
+  expect(recordQuestionAnswer(current, 1, 30)).toMatchObject({ intervalStep: -1, dueAt: 0, lastResult: 1 });
 });
 
 it('mantiene marcas y campos opcionales al actualizar una estadística', () => {
