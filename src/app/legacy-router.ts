@@ -12,7 +12,6 @@ import { FAILURE_REASONS as MOTIVOS_FALLO } from '../shared/presentation/study-l
 import { normalizeUiPreferences } from '../shared/presentation/ui-preferences.js';
 import { asksForNegativeOption, evaluateReadingWords, minimumReadingSeconds } from '../core/domain/reading-strategy.js';
 import { calculateExamScore as nota } from '../core/domain/scoring.js';
-import { evaluateTrapAnswer, recordTrapDetections } from '../core/domain/traps.js';
 import { randomStudyOrder as shuffle } from '../shared/ui/study-random.js';
 import { swipeDirection, studyKeyAction } from '../shared/ui/study-input.js';
 import { velocidad, quickQuestionCount } from '../features/stats/analytics-mapper.js';
@@ -27,7 +26,7 @@ import { BLOQUES, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
 import { createCardsController } from '../features/cards/cards-controller.js';
 import { cardFromFailedQuestion } from '../features/cards/flashcard-mapper.js';
-import type { LightningQuestion, ReadingOutcome, ReadingProgress, ReadingPrompt, ReadingWordResult, StudyCard, TrapAnswer, TrapPrompt, TrapRun } from '../shared/ui/study-services.js';
+import type { ReadingOutcome, ReadingProgress, ReadingPrompt, ReadingWordResult, StudyCard } from '../shared/ui/study-services.js';
 import { isFull, isOwner, accessLevel, GUEST_ROUTES } from '../adapters/legacy/access.js';
 import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, clearActiveRun, createRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, revealCurrentSolution, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, dueQuestionIds, selectQuestionsForTopics, selectWeightedSimulationQuestions, setCurrentConfidence, toggleCurrentDiscardedOption, addCurrentHighlight, removeCurrentHighlight } from './study-engine-composition.js';
 import { sessionStatePort } from './session-state-store.js';
@@ -45,6 +44,7 @@ import { loadQuestionEvolution, loadStrategyReportForPeriod } from './strategy-c
 import { createStatsServices } from './stats-composition.js';
 import { createFailuresComposition } from './failures-composition.js';
 import { createLightningComposition } from './lightning-composition.js';
+import { createTrapsComposition } from './traps-composition.js';
 import { createQuizServices } from './quiz-composition.js';
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './ai-study-export-composition.js';
@@ -356,62 +356,19 @@ const lightningServices = createLightningComposition({
   recordAnswer: (questionId, topicId, correct, seconds) => store.record(questionId, topicId, correct ? 1 : 0, now(), seconds),
   topicName: temaName,
 });
-let trapRun: TrapRun | null = null;
-let trapOwner: string | null = store.accountId();
-function currentTrapRun(): TrapRun | null {
-  const account = store.accountId();
-  if (trapOwner !== account) { trapRun = null; trapOwner = account; }
-  return trapRun;
-}
-const trapsServices = {
-  getRun: currentTrapRun,
-  async startRun() {
-    const current = currentTrapRun();
-    if (current) return current;
-    await getMeta();
-    const questionStats = store.getStats();
-    const eligible = Object.keys(META).filter(id => id !== '_by' && (META[id][3] || []).length);
-    const failed = eligible.filter(id => questionStats[id]?.[5] === 0);
-    const failedSet = new Set(failed);
-    const rest = eligible.filter(id => !failedSet.has(id));
-    const prioritized = shuffle(failed).slice(0, 4), prioritizedSet = new Set(prioritized);
-    const selectedIds = [...prioritized, ...shuffle(rest).filter(id => !prioritizedSet.has(id)).slice(0, Math.max(0, 40 - prioritized.length))];
-    const questions = (await byIds(selectedIds)).filter(question => !question.s && question.x?.length).slice(0, 8);
-    const allTraps = Object.keys(TRAMPAS).map(Number);
-    const items: TrapPrompt[] = questions.map(question => {
-      const trapIds = [...new Set((question.x || []).map(Number))];
-      const trapSet = new Set(trapIds);
-      const distractors = shuffle(allTraps.filter(id => !trapSet.has(id))).slice(0, Math.max(3, 8 - trapIds.length));
-      return { ...toFailureQuestionView(question, VERIFIED_SOURCES), topicName: temaName(question.t), trapIds, choices: shuffle([...trapIds, ...distractors]) };
-    });
-    trapOwner = store.accountId();
-    trapRun = { items, index: 0, results: [] };
-    return trapRun;
-  },
-  evaluate(selected: readonly number[]): TrapAnswer | null {
-    currentTrapRun();
-    const prompt = trapRun?.items[trapRun.index];
-    if (!trapRun || !prompt || trapRun.results.length > trapRun.index) return null;
-    const answer = evaluateTrapAnswer(prompt.trapIds, selected);
-    const stats = recordTrapDetections((store.getCfg().tdet || {}) as Record<string, [number, number]>, prompt.trapIds, selected);
-    store.setCfg('tdet', stats);
-    trapRun = { ...trapRun, results: [...trapRun.results, answer] };
-    return answer;
-  },
-  next(): TrapRun | null {
-    currentTrapRun();
-    if (!trapRun || trapRun.results.length <= trapRun.index) return trapRun;
-    if (trapRun.index + 1 >= trapRun.items.length) { trapRun = null; return null; }
-    trapRun = { ...trapRun, index: trapRun.index + 1 };
-    return trapRun;
-  },
-  getWeaknesses() {
-    const records = (store.getCfg().tdet || {}) as Record<string, number[]>;
-    return Object.entries(records).map(([id, [seen, detected]]) => ({ id: Number(id), seen, detected }))
-      .filter(item => item.seen >= 3).sort((first, second) => first.detected / first.seen - second.detected / second.seen).slice(0, 6);
-  },
-  resetRun() { trapRun = null; trapOwner = store.accountId(); },
-};
+const trapsServices = createTrapsComposition({
+  accountId: store.accountId,
+  loadQuestionMetadata: getMeta,
+  readQuestionStats: () => store.getStats(),
+  eligibleQuestionIds: () => Object.keys(META).filter(id => id !== '_by' && (META[id][3] || []).length > 0),
+  loadQuestionsById: ids => byIds(ids),
+  trapIds: Object.keys(TRAMPAS).map(Number),
+  shuffle,
+  sourceFallbacks: VERIFIED_SOURCES,
+  topicName: temaName,
+  readDetectionStats: () => (store.getCfg().tdet || {}) as unknown as Record<string, readonly [number, number]>,
+  writeDetectionStats: stats => store.setCfg('tdet', stats),
+});
 let readingOwner: string | null = store.accountId();
 let readingBatch: ReadingPrompt[] | null = null;
 let readingProgress: ReadingProgress | null = null;
