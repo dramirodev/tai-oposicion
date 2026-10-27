@@ -6,6 +6,9 @@ on:
     branches: [main]
   workflow_dispatch: {}
 
+permissions:
+  contents: read
+
 concurrency:
   group: deploy
   cancel-in-progress: false
@@ -61,3 +64,31 @@ jobs:
       # Si aún no se lo has dado, no rompe el hosting, pero deja un aviso visible en la ejecución.
       - name: Desplegar reglas de Firestore
         run: npx --yes firebase-tools@13.35.1 deploy --only firestore:rules --project tai-oposicion --non-interactive || echo "::warning title=Reglas de Firestore::NO se han desplegado; revisa el rol Firebase Rules Admin de la cuenta de servicio" 
+
+  tag:
+    name: Etiquetar build validado
+    if: github.ref == 'refs/heads/main'
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Crear tag único de versión y commit
+        env:
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          version=$(node -p "require('./package.json').version")
+          tag="v${version}+${COMMIT_SHA:0:7}"
+          if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null 2>&1; then
+            echo "El tag $tag ya existe; no se vuelve a crear."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$tag" "$COMMIT_SHA" -m "TAI $tag"
+          git push origin "refs/tags/$tag"
