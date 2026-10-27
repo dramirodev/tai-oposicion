@@ -198,45 +198,116 @@ export interface PendingRunStorage {
 let pendingRunStorage: PendingRunStorage | null = null;
 export function setPendingRunStorage(storage: PendingRunStorage | null): void { pendingRunStorage = storage; }
 export function clearRun(): void { pendingRunStorage?.clear(progress().accountId()); }
+function canPersistRun(run: Run, metadata: ReturnType<StudyQuestionCatalog['getMetadataSnapshot']>): boolean {
+  return !run.supTexto && run.items.every(item => !!item.i && !!metadata?.[item.i]);
+}
+
+function savedRunSnapshot(run: Run): SavedRunSnapshot {
+  const { kind, feedback, titulo, limit, idx, ans, times, secs, porTiempo, review } = run;
+  return {
+    kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo,
+    ids: run.items.map(item => item.i), review: review || [],
+    ...(feedback && run.studyStates ? { studyStates: [...run.studyStates] } : {}),
+    confidences: run.confidences || [], discardedOptions: run.discardedOptions || [], highlights: run.highlights || [],
+    savedAt: Date.now(),
+    ...(run.attemptScope ? { attemptScope: run.attemptScope } : {}),
+    ...(run.attemptSessionId ? { attemptSessionId: run.attemptSessionId } : {}),
+    ...(run.attemptIds ? { attemptIds: run.attemptIds } : {}),
+  };
+}
+
 export function saveRun(): void {
   const run = getSnapshot().run;
+  if (!run) return;
   const metadata = catalog().getMetadataSnapshot();
-  if (!run || run.supTexto || !run.items.every(item => item.i && metadata?.[item.i])) return;
-  const { kind, feedback, titulo, limit, idx, ans, times, secs, porTiempo, review } = run;
-  pendingRunStorage?.write(progress().accountId(), { kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: run.items.map(item => item.i), review: review || [], ...(feedback && run.studyStates ? { studyStates: [...run.studyStates] } : {}), confidences: run.confidences || [], discardedOptions: run.discardedOptions || [], highlights: run.highlights || [], savedAt: Date.now(), ...(run.attemptScope ? { attemptScope: run.attemptScope } : {}), ...(run.attemptSessionId ? { attemptSessionId: run.attemptSessionId } : {}), ...(run.attemptIds ? { attemptIds: run.attemptIds } : {}) });
+  if (!canPersistRun(run, metadata)) return;
+  pendingRunStorage?.write(progress().accountId(), savedRunSnapshot(run));
 }
-export function resumeRun({ saved: savedRun, items, account }: PendingRun): Run | null {
-  if (account !== progress().accountId()) return null;
-  const un = <T>(firstValue?: (T | null)[]): (T | undefined)[] => Array.from(firstValue || [], value => value === null ? undefined : value);
-  const expectedScope = account || 'guest';
-  const hasTracking = savedRun.attemptScope === expectedScope
-    && typeof savedRun.attemptSessionId === 'string'
-    && Array.isArray(savedRun.attemptIds)
-    && savedRun.attemptIds.length === items.length
-    && savedRun.attemptIds.every(id => typeof id === 'string');
-  const restoredAnswers = un(savedRun.ans);
-  const answers = Array.from({ length: items.length }, (ignoredValue, index) => restoredAnswers[index]);
+
+function restoreOptionalValues<Value>(values?: (Value | null)[]): (Value | undefined)[] {
+  return Array.from(values || [], value => value === null ? undefined : value);
+}
+
+function hasValidAttemptTracking(saved: SavedRunSnapshot, itemCount: number, account: string | null): boolean {
+  return saved.attemptScope === (account || 'guest')
+    && typeof saved.attemptSessionId === 'string'
+    && Array.isArray(saved.attemptIds)
+    && saved.attemptIds.length === itemCount
+    && saved.attemptIds.every(id => typeof id === 'string');
+}
+
+function restoreStudyStates(saved: SavedRunSnapshot, answers: Run['ans'], itemCount: number): Run['studyStates'] | undefined {
+  if (!saved.feedback) return undefined;
   const validStates = ['unseen', 'pending', 'answered', 'revealed'];
-  const hasValidStates = !!savedRun.feedback && Array.isArray(savedRun.studyStates) && savedRun.studyStates.length === items.length
-    && savedRun.studyStates.every((state, index) => validStates.includes(state) && (answers[index] !== undefined || state !== 'answered'));
-  const states = !!savedRun.feedback ? answers.map((answer, index) => {
+  const hasValidStates = Array.isArray(saved.studyStates) && saved.studyStates.length === itemCount
+    && saved.studyStates.every((state, index) => validStates.includes(state) && (answers[index] !== undefined || state !== 'answered'));
+  return answers.map((answer, index) => {
     if (answer === -1) return 'revealed'; // Historical -1 was shown with its correct answer in the old practice UI.
     if (typeof answer === 'number') return 'answered';
-    return hasValidStates ? savedRun.studyStates![index] : 'unseen';
-  }) : undefined;
-  const confidences: Confidence[] = items.map((item, index) => {
-    const value = savedRun.confidences?.[index];
+    return hasValidStates ? saved.studyStates![index] : 'unseen';
+  });
+}
+
+function restoreConfidences(saved: SavedRunSnapshot, items: QuestionRecord[]): Confidence[] {
+  return items.map((_item, index) => {
+    const value = saved.confidences?.[index];
     return value === 'sure' || value === 'betweenTwo' || value === 'guess' ? value : null;
   });
-  const discardedOptions = items.map((question, index) => Array.isArray(savedRun.discardedOptions?.[index])
-    ? [...new Set(savedRun.discardedOptions[index].filter(option => Number.isInteger(option) && option >= 0 && option < question.a.length))]
+}
+
+function restoreDiscardedOptions(saved: SavedRunSnapshot, items: QuestionRecord[]): number[][] {
+  return items.map((question, index) => Array.isArray(saved.discardedOptions?.[index])
+    ? [...new Set(saved.discardedOptions[index].filter(option => Number.isInteger(option) && option >= 0 && option < question.a.length))]
     : []);
-  const validHighlight = (mark: Highlight): boolean => Boolean(mark && typeof mark.id === 'string'
+}
+
+function isValidHighlight(mark: Highlight): boolean {
+  return Boolean(mark && typeof mark.id === 'string'
     && (mark.field === 'statement' || /^option:\d+$/.test(mark.field))
     && Number.isInteger(mark.start) && Number.isInteger(mark.end) && mark.start >= 0 && mark.end > mark.start
     && typeof mark.text === 'string' && typeof mark.contentRevision === 'string');
-  const highlights = items.map((item, index) => Array.isArray(savedRun.highlights?.[index]) ? savedRun.highlights[index].filter(validHighlight) : []);
-  const run = { kind: savedRun.kind, sessionKey: nextSessionKey++, feedback: !!savedRun.feedback, titulo: savedRun.titulo, limit: savedRun.limit || 0, porTiempo: !!savedRun.pt, items, idx: savedRun.idx, ans: answers, times: un(savedRun.times), t0: catalog().now(), secs: savedRun.secs || 0, paused: false, confidences, discardedOptions, highlights, review: (Array.isArray(savedRun.review) ? savedRun.review : []).filter(index => Number.isInteger(index) && index >= 0 && index < items.length), ...(states ? { studyStates: states } : {}), ...(hasTracking ? { attemptScope: savedRun.attemptScope, attemptSessionId: savedRun.attemptSessionId, attemptIds: savedRun.attemptIds!.slice() } : {}) } as Run;
+}
+
+function restoreHighlights(saved: SavedRunSnapshot, items: QuestionRecord[]): Highlight[][] {
+  return items.map((_item, index) => Array.isArray(saved.highlights?.[index]) ? saved.highlights[index].filter(isValidHighlight) : []);
+}
+
+function restoreReview(saved: SavedRunSnapshot, itemCount: number): number[] {
+  return (Array.isArray(saved.review) ? saved.review : []).filter(index => Number.isInteger(index) && index >= 0 && index < itemCount);
+}
+
+function createResumedRun(saved: SavedRunSnapshot, items: QuestionRecord[], answers: Run['ans'], account: string | null): Run {
+  const hasTracking = hasValidAttemptTracking(saved, items.length, account);
+  const states = restoreStudyStates(saved, answers, items.length);
+  const run: Run = {
+    kind: saved.kind,
+    sessionKey: nextSessionKey++,
+    feedback: !!saved.feedback,
+    titulo: saved.titulo,
+    limit: saved.limit || 0,
+    porTiempo: !!saved.pt,
+    items,
+    idx: saved.idx,
+    ans: answers,
+    times: restoreOptionalValues(saved.times),
+    t0: catalog().now(),
+    secs: saved.secs || 0,
+    paused: false,
+    confidences: restoreConfidences(saved, items),
+    discardedOptions: restoreDiscardedOptions(saved, items),
+    highlights: restoreHighlights(saved, items),
+    review: restoreReview(saved, items.length),
+    ...(states ? { studyStates: states } : {}),
+    ...(hasTracking ? { attemptScope: saved.attemptScope, attemptSessionId: saved.attemptSessionId, attemptIds: saved.attemptIds!.slice() } : {}),
+  };
+  return run;
+}
+
+export function resumeRun({ saved: savedRun, items, account }: PendingRun): Run | null {
+  if (account !== progress().accountId()) return null;
+  const restoredAnswers = restoreOptionalValues(savedRun.ans);
+  const answers = Array.from({ length: items.length }, (_value, index) => restoredAnswers[index]);
+  const run = createResumedRun(savedRun, items, answers, account);
   if (run.attemptSessionId && run.attemptScope && run.attemptIds) attemptTracker?.resumeSession(run.attemptScope, run.attemptSessionId, run.attemptIds);
   sessionStateStore.setState({ run });
   return run;
@@ -254,33 +325,44 @@ export function tickRun(run: Run, timestamp = Date.now()): Run {
 /** Segundos que quedan; con límite 0 devuelve Infinity. */
 export const segundosRestantes = (run: Run): number => run.limit ? run.limit * 60 - run.secs : Infinity;
 /** Anota en el progreso la respuesta de una pregunta con corrección inmediata (i = -1: «no lo sé»). */
+function saveUncorrectedAnswer(run: Run, question: Question, index: number, minimumReadingSeconds: number): void {
+  run.ans[run.idx] = index;
+  (run.luck ||= {})[run.idx] = progress().getQuestionStats(question.i)?.errorReason || 0;
+  (run.fast ||= {})[run.idx] = [Math.round((Date.now() - (run.qT0 ?? Date.now())) / 1000), minimumReadingSeconds];
+  if (index === -1) recordAttempt(run, { type: 'mark-pending' });
+  else recordAttempt(run, { type: 'answer', optionIndex: index, outcome: index === question.c ? 'correct' : 'wrong' });
+  progress().recordAnswer(question.i, question.t, index === -1 ? 2 : index === question.c ? 1 : 0, catalog().now(), index === -1 ? undefined : Math.max(1, run.secs - (run.q0 ?? 0)));
+}
+
+function savePendingStudyAnswer(run: Run): void {
+  run.studyStates ||= [];
+  run.studyStates[run.idx] = 'pending';
+  recordAttempt(run, { type: 'mark-pending' });
+}
+
+function saveCorrectedStudyAnswer(run: Run, question: Question, index: number, minimumReadingSeconds: number): void {
+  run.ans[run.idx] = index;
+  run.studyStates ||= [];
+  run.studyStates[run.idx] = 'answered';
+  (run.luck ||= {})[run.idx] = progress().getQuestionStats(question.i)?.errorReason || 0;
+  (run.fast ||= {})[run.idx] = [Math.round((Date.now() - (run.qT0 ?? Date.now())) / 1000), minimumReadingSeconds];
+  recordAttempt(run, { type: 'answer', optionIndex: index, outcome: index === question.c ? 'correct' : 'wrong' });
+  progress().recordAnswer(question.i, question.t, index === question.c ? 1 : 0, catalog().now(), Math.max(1, run.secs - (run.q0 ?? 0)));
+}
+
+function canAnswerStudyQuestion(run: Run, index: number): boolean {
+  const state = run.studyStates?.[run.idx] || 'unseen';
+  return !run.feedback || !(['answered', 'revealed'].includes(state) || index === -1 && state === 'pending');
+}
+
 export function answerQuestion(run: Run, question: Question, index: number, minLect: number): void {
   const activeRun = getSnapshot().run;
   if (!activeRun || activeRun.sessionKey !== run.sessionKey) return;
-  const currentState = activeRun.studyStates?.[activeRun.idx] || 'unseen';
-  if (activeRun.feedback && (currentState === 'answered' || currentState === 'revealed' || index === -1 && currentState === 'pending')) return;
+  if (!canAnswerStudyQuestion(activeRun, index)) return;
   updateActiveRun(nextRun => {
-    if (!nextRun.feedback) {
-      nextRun.ans[nextRun.idx] = index;
-      (nextRun.luck ||= {})[nextRun.idx] = progress().getQuestionStats(question.i)?.errorReason || 0;
-      (nextRun.fast ||= {})[nextRun.idx] = [Math.round((Date.now() - (nextRun.qT0 ?? Date.now())) / 1000), minLect];
-      if (index === -1) recordAttempt(nextRun, { type: 'mark-pending' });
-      else recordAttempt(nextRun, { type: 'answer', optionIndex: index, outcome: index === question.c ? 'correct' : 'wrong' });
-      progress().recordAnswer(question.i, question.t, index === -1 ? 2 : index === question.c ? 1 : 0, catalog().now(), index === -1 ? undefined : Math.max(1, nextRun.secs - (nextRun.q0 ?? 0)));
-      return;
-    }
-    nextRun.studyStates ||= [];
-    if (index === -1) {
-      nextRun.studyStates[nextRun.idx] = 'pending';
-      recordAttempt(nextRun, { type: 'mark-pending' });
-      return;
-    }
-    nextRun.ans[nextRun.idx] = index;
-    nextRun.studyStates[nextRun.idx] = 'answered';
-    (nextRun.luck ||= {})[nextRun.idx] = progress().getQuestionStats(question.i)?.errorReason || 0;
-    (nextRun.fast ||= {})[nextRun.idx] = [Math.round((Date.now() - (nextRun.qT0 ?? Date.now())) / 1000), minLect];
-    recordAttempt(nextRun, { type: 'answer', optionIndex: index, outcome: index === question.c ? 'correct' : 'wrong' });
-    progress().recordAnswer(question.i, question.t, index === question.c ? 1 : 0, catalog().now(), Math.max(1, nextRun.secs - (nextRun.q0 ?? 0)));
+    if (!nextRun.feedback) saveUncorrectedAnswer(nextRun, question, index, minLect);
+    else if (index === -1) savePendingStudyAnswer(nextRun);
+    else saveCorrectedStudyAnswer(nextRun, question, index, minLect);
   }, activeRun.sessionKey);
 }
 /** Reveals only a previously deferred practice question; consultation has no score effect. */
@@ -305,20 +387,20 @@ export function setCurrentConfidence(value: Exclude<Confidence, null>): boolean 
 export function toggleCurrentDiscardedOption(optionIndex: number): boolean {
   const run = getSnapshot().run;
   const question = run?.items[run.idx];
-  if (!run || !question || run.paused || !Number.isInteger(optionIndex) || optionIndex < 0 || optionIndex >= question.a.length) return false;
-  const locked = run.feedback
-    ? ['answered', 'revealed'].includes(run.studyStates?.[run.idx] || 'unseen')
-    : typeof run.ans[run.idx] === 'number' && run.ans[run.idx]! >= 0;
-  if (locked) return false;
+  if (!run || !question || !canToggleDiscardedOption(run, question, optionIndex)) return false;
   const current = run.discardedOptions?.[run.idx] || [];
-  if (current.includes(optionIndex)) {
-    updateActiveRun(nextRun => { nextRun.discardedOptions ||= []; nextRun.discardedOptions[nextRun.idx] = current.filter(index => index !== optionIndex); }, run.sessionKey);
-    recordAttempt(run, { type: 'restore-option', optionIndex });
-  } else {
-    updateActiveRun(nextRun => { nextRun.discardedOptions ||= []; nextRun.discardedOptions[nextRun.idx] = [...current, optionIndex].sort((left, right) => left - right); }, run.sessionKey);
-    recordAttempt(run, { type: 'discard-option', optionIndex });
-  }
+  const restoring = current.includes(optionIndex);
+  const discarded = restoring ? current.filter(index => index !== optionIndex) : [...current, optionIndex].sort((left, right) => left - right);
+  updateActiveRun(nextRun => { nextRun.discardedOptions ||= []; nextRun.discardedOptions[nextRun.idx] = discarded; }, run.sessionKey);
+  recordAttempt(run, { type: restoring ? 'restore-option' : 'discard-option', optionIndex });
   return true;
+}
+
+function canToggleDiscardedOption(run: Run, question: Question, optionIndex: number): boolean {
+  if (run.paused || !Number.isInteger(optionIndex) || optionIndex < 0 || optionIndex >= question.a.length) return false;
+  const state = run.studyStates?.[run.idx] || 'unseen';
+  if (run.feedback) return !['answered', 'revealed'].includes(state);
+  return !(typeof run.ans[run.idx] === 'number' && run.ans[run.idx]! >= 0);
 }
 export function addCurrentHighlight(highlight: Highlight): boolean {
   const run = getSnapshot().run;

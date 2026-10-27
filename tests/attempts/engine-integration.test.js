@@ -200,4 +200,21 @@ describe('integración del motor con el historial local', () => {
     expect(result.confidences[0]).toBe('sure');
     expect(result.discardedOptions[0]).toEqual([0]);
   });
+
+  it('mantiene los descartes ordenados y los bloquea tras responder una pregunta de práctica', async () => {
+    const question = (await data.getTema('T1.01')).find(item => !item.np);
+    const run = engine.createRun({ kind: 'test', feedback: true, items: [question] });
+
+    expect(engine.toggleCurrentDiscardedOption(-1)).toBe(false);
+    expect(engine.toggleCurrentDiscardedOption(question.a.length)).toBe(false);
+    expect(engine.toggleCurrentDiscardedOption(2)).toBe(true);
+    expect(engine.toggleCurrentDiscardedOption(1)).toBe(true);
+    expect(engine.getCurrentRun().discardedOptions[0]).toEqual([1, 2]);
+    expect(engine.toggleCurrentDiscardedOption(2)).toBe(true);
+    expect(engine.getCurrentRun().discardedOptions[0]).toEqual([1]);
+
+    engine.answerQuestion(run, question, question.c, 0);
+    expect(engine.toggleCurrentDiscardedOption(0)).toBe(false);
+    expect(engine.getCurrentRun().discardedOptions[0]).toEqual([1]);
+  });
 });
