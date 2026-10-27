@@ -3,14 +3,11 @@ import type { MappingResult } from '../../../core/domain/entities.js';
 import type { AttemptArchiveDto } from '../dto/attempt-archive.js';
 import { attemptMapper } from './attempt.js';
 import { attemptSessionMapper } from './attempt-session.js';
+import { attemptArchiveSchema } from '../schemas/attempt-archive.js';
 
 export interface AttemptArchiveMapping {
   archive: AttemptArchive;
   invalidRecords: number;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return !!value && typeof value === 'object' && !Array.isArray(value);
 }
 
 export const attemptArchiveMapper = {
@@ -25,30 +22,30 @@ export const attemptArchiveMapper = {
   },
 
   toDomain(value: unknown): MappingResult<AttemptArchiveMapping> {
-    // TODO(zod): validate attempt archive boundaries with the shared schema in phase 6.
-    if (!isRecord(value) || value.schemaVersion !== 1 || typeof value.createdAt !== 'number'
-      || !Number.isFinite(value.createdAt) || value.createdAt < 0
-      || !Array.isArray(value.sessions) || !Array.isArray(value.attempts) || !Array.isArray(value.events)) {
+    const parsed = attemptArchiveSchema.safeParse(value);
+    if (!parsed.success) {
+      const issue = parsed.error.issues[0];
+      if (issue?.code === 'too_big') {
+        return { ok: false, reason: 'la copia de intentos supera el máximo de registros' };
+      }
       return { ok: false, reason: 'copia de intentos inválida o versión no compatible' };
     }
-    if (value.sessions.length > 100_000 || value.attempts.length > 100_000 || value.events.length > 1_000_000) {
-      return { ok: false, reason: 'la copia de intentos supera el máximo de registros' };
-    }
+    const archiveRecord = parsed.data;
     const sessions = [];
     const attempts = [];
     const events = [];
     let invalidRecords = 0;
-    for (const raw of value.sessions) {
+    for (const raw of archiveRecord.sessions) {
       const result = attemptSessionMapper.toDomain(raw);
       if (result.ok) sessions.push(result.value);
       else invalidRecords++;
     }
-    for (const raw of value.attempts) {
+    for (const raw of archiveRecord.attempts) {
       const result = attemptMapper.toDomain(raw);
       if (result.ok) attempts.push(result.value);
       else invalidRecords++;
     }
-    for (const raw of value.events) {
+    for (const raw of archiveRecord.events) {
       const result = attemptMapper.eventToDomain(raw);
       if (result.ok) events.push(result.value);
       else invalidRecords++;
@@ -56,7 +53,7 @@ export const attemptArchiveMapper = {
     return {
       ok: true,
       value: {
-        archive: { createdAt: value.createdAt, sessions, attempts, events },
+        archive: { createdAt: archiveRecord.createdAt, sessions, attempts, events },
         invalidRecords,
       },
     };
