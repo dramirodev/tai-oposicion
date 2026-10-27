@@ -351,56 +351,123 @@ export function answerDeferred(run: Run, index: number): void {
   }, activeRun.sessionKey);
 }
 
+type SessionTotals = { correct: number; wrong: number; blank: number };
+type SessionBreakdown = {
+  results: SessionTotals;
+  failures: string[];
+  topics: Record<string, [number, number]>;
+  types: Record<string, [number, number]>;
+};
+
+function completedItemCount(run: Run): number {
+  if (!run.porTiempo) return run.items.length;
+  let completed = 0;
+  run.ans.forEach((answer, index) => { if (answer !== undefined) completed = index + 1; });
+  return completed;
+}
+
+function recordProgressAnswer(run: Run, item: QuestionRecord, index: number, result: 0 | 1 | 2): void {
+  if (run.feedback) return;
+  if (result === 2) progress().recordAnswer(item.i, item.t, result);
+  else progress().recordAnswer(item.i, item.t, result, catalog().now(), run.times?.[index]);
+}
+
+function applyAnswerResult(run: Run, item: QuestionRecord, index: number, totals: SessionBreakdown, topic: [number, number], type: [number, number] | null): void {
+  const answer = run.ans[index];
+  if (answer === undefined || answer === -1) {
+    totals.results.blank++;
+    recordProgressAnswer(run, item, index, 2);
+    return;
+  }
+  if (answer === item.c) {
+    totals.results.correct++;
+    topic[0]++;
+    if (type) type[0]++;
+    recordProgressAnswer(run, item, index, 1);
+    return;
+  }
+  totals.results.wrong++;
+  totals.failures.push(item.i);
+  recordProgressAnswer(run, item, index, 0);
+}
+
+function addAnswerToTotals(run: Run, item: QuestionRecord, index: number, totals: SessionBreakdown): void {
+  const topic = totals.topics[item.t] ||= [0, 0];
+  topic[1]++;
+  const questionType = catalog().getMetadataSnapshot()?.[item.i]?.[2];
+  const type = questionType ? (totals.types[questionType] ||= [0, 0]) : null;
+  if (type) type[1]++;
+  applyAnswerResult(run, item, index, totals, topic, type);
+}
+
+function summarizeSession(run: Run, items: QuestionRecord[]): SessionBreakdown {
+  const totals: SessionBreakdown = {
+    results: { correct: 0, wrong: 0, blank: 0 },
+    failures: [],
+    topics: {},
+    types: {},
+  };
+  items.forEach((item, index) => addAnswerToTotals(run, item, index, totals));
+  return totals;
+}
+
+function closeAttemptSession(run: Run, reason: 'complete' | 'interrupted' | 'timeout'): void {
+  if (!run.attemptSessionId || !run.attemptScope || !attemptTracker) return;
+  if (run.tIdx === run.idx && run.attemptIds?.[run.idx] && !run.attemptTrackingPaused) recordAttempt(run, { type: 'close' });
+  attemptTracker.closeSession(run.attemptScope, run.attemptSessionId, reason === 'interrupted' ? 'interrupted' : 'completed', catalog().now(), run.secs);
+}
+
+function completedSessionRecords(run: Run, reason: 'complete' | 'interrupted' | 'timeout', items: QuestionRecord[], totals: SessionBreakdown, completedAt: number): {
+  session: SessionResult; legacySession: LastResult['ses']
+} {
+  const itemCount = items.length;
+  const id = 's' + completedAt.toString(36);
+  const { correct, wrong, blank } = totals.results;
+  const score = calculateExamScore(correct, wrong, itemCount);
+  const durationSeconds = run.porTiempo ? Math.min(run.secs, (run.limit ?? 0) * 60) : run.secs;
+  const session: SessionResult = {
+    id, completedAt, kind: run.kind, questionCount: itemCount, correctCount: correct, wrongCount: wrong,
+    blankCount: blank, durationSeconds, score, topicResults: totals.topics, typeResults: totals.types,
+    failedQuestionIds: totals.failures, title: run.titulo || '',
+    ...(reason === 'interrupted' ? { interrupted: true } : {}),
+    ...(run.porTiempo ? { timeLimited: true } : {}),
+  };
+  const legacySession: LastResult['ses'] = {
+    id, ts: completedAt, kind: run.kind, n: itemCount, a: correct, f: wrong, b: blank,
+    secs: durationSeconds, nota: score, temas: totals.topics, tipos: totals.types, fails: totals.failures, titulo: run.titulo || '',
+    ...(reason === 'interrupted' ? { interrupted: true } : {}),
+    ...(run.porTiempo ? { porTiempo: true } : {}),
+  };
+  return { session, legacySession };
+}
+
+function lastResult(run: Run, items: QuestionRecord[], session: LastResult['ses']): LastResult {
+  return {
+    ses: session, items, ans: [...run.ans], times: [...(run.times || [])], limit: run.limit || 0,
+    ...(run.studyStates ? { studyStates: [...run.studyStates] } : {}),
+    confidences: [...(run.confidences || [])],
+    discardedOptions: (run.discardedOptions || []).map(options => [...options]),
+    highlights: (run.highlights || []).map(marks => marks.map(mark => ({ ...mark }))),
+  };
+}
+
 /** Cierra la sesión: puntúa, guarda en el progreso y publica el resultado. null = no se contestó nada. */
 export function finishRun(run: Run, reason: 'complete' | 'interrupted' | 'timeout' = 'complete'): LastResult | null {
   const activeRun = getSnapshot().run;
   if (!activeRun || activeRun.sessionKey !== run.sessionKey) return null;
   run = activeRun as Run;
   clearRun();
-  if (run.attemptSessionId && run.attemptScope && attemptTracker) {
-    if (run.tIdx === run.idx && run.attemptIds?.[run.idx] && !run.attemptTrackingPaused) recordAttempt(run, { type: 'close' });
-    attemptTracker.closeSession(run.attemptScope, run.attemptSessionId, reason === 'interrupted' ? 'interrupted' : 'completed', catalog().now(), run.secs);
-  }
+  closeAttemptSession(run, reason);
   // «por tiempo»: solo cuentan las preguntas que llegaste a contestar (la que estaba abierta al acabar el tiempo no)
-  let hechas = run.items.length;
-  if (run.porTiempo) { hechas = 0; run.ans.forEach((numericValue, index) => { if (numericValue !== undefined) hechas = index + 1; }); if (!hechas) { sessionStateStore.setState({ run: null }); return null; } }
-  const items = run.items.slice(0, hechas), res = { a: 0, f: 0, b: 0 }, fails: string[] = [];
-  const porTema: Record<string, [number, number]> = {}, porTipo: Record<string, [number, number]> = {};
-  items.forEach((item, index) => {
-    const numericValue = run.ans[index]; const ok = numericValue === item.c;
-    const pt = porTema[item.t] ||= [0, 0]; pt[1]++;
-    const tk: string | undefined = catalog().getMetadataSnapshot()?.[item.i]?.[2]; const ptk = tk ? (porTipo[tk] ||= [0, 0]) : null; if (ptk) ptk[1]++;
-    if (numericValue === undefined || numericValue === -1) { res.b++; if (!run.feedback) progress().recordAnswer(item.i, item.t, 2); }
-    else if (ok) { res.a++; pt[0]++; if (ptk) ptk[0]++; if (!run.feedback) progress().recordAnswer(item.i, item.t, 1, catalog().now(), run.times?.[index]); }
-    else { res.f++; fails.push(item.i); if (!run.feedback) progress().recordAnswer(item.i, item.t, 0, catalog().now(), run.times?.[index]); }
-  });
-  const itemCount = items.length;
+  const completed = completedItemCount(run);
+  if (!completed) { sessionStateStore.setState({ run: null }); return null; }
+  const items = run.items.slice(0, completed);
+  const totals = summarizeSession(run, items);
   const completedAt = catalog().now();
-  const id = 's' + completedAt.toString(36);
-  const score = calculateExamScore(res.a, res.f, itemCount);
-  const durationSeconds = run.porTiempo ? Math.min(run.secs, (run.limit ?? 0) * 60) : run.secs;
-  const session: SessionResult = {
-    id, completedAt, kind: run.kind, questionCount: itemCount, correctCount: res.a, wrongCount: res.f,
-    blankCount: res.b, durationSeconds, score, topicResults: porTema, typeResults: porTipo,
-    failedQuestionIds: fails, title: run.titulo || '',
-    ...(reason === 'interrupted' ? { interrupted: true } : {}),
-    ...(run.porTiempo ? { timeLimited: true } : {}),
-  };
-  const ses: LastResult['ses'] = {
-    id, ts: completedAt, kind: run.kind, n: itemCount, a: res.a, f: res.f, b: res.b,
-    secs: durationSeconds, nota: score, temas: porTema, tipos: porTipo, fails, titulo: run.titulo || '',
-    ...(reason === 'interrupted' ? { interrupted: true } : {}),
-    ...(run.porTiempo ? { porTiempo: true } : {}),
-  };
+  const { session, legacySession } = completedSessionRecords(run, reason, items, totals, completedAt);
   progress().addSession(session);
   sessionStateStore.setState({ run: null });
-  const result: LastResult = {
-    ses, items, ans: [...run.ans], times: [...(run.times || [])], limit: run.limit || 0,
-    ...(run.studyStates ? { studyStates: [...run.studyStates] } : {}),
-    confidences: [...(run.confidences || [])],
-    discardedOptions: (run.discardedOptions || []).map(options => [...options]),
-    highlights: (run.highlights || []).map(marks => marks.map(mark => ({ ...mark }))),
-  };
+  const result = lastResult(run, items, legacySession);
   sessionStateStore.setState({ last: result });
   return result;
 }
