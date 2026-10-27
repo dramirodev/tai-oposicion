@@ -13,6 +13,26 @@ type QuestionDtoField = keyof QuestionDto;
 const knownFields = new Set<string>([
   'i', 't', 'o', 'q', 'a', 'c', 'k', 'x', 'd', 'n', 'y', 'u', 'np', 'source', 'cp', 's', 'p', 'r', 'v', 'w', 'z', 'f',
 ]);
+const toDtoField: Record<QuestionDtoField, (question: Question) => Partial<QuestionDto>> = {
+  i: question => ({ i: question.id }), t: question => ({ t: question.topicId }), o: question => ({ o: question.origin }),
+  q: question => ({ q: question.statement }), a: question => ({ a: question.options }), c: question => ({ c: question.correctIndex }),
+  k: question => question.kind !== undefined ? { k: question.kind } : {},
+  x: question => question.traps !== undefined ? { x: question.traps } : {},
+  d: question => question.difficulty !== undefined ? { d: question.difficulty } : {},
+  n: question => question.note !== undefined ? { n: question.note } : {},
+  y: question => question.year !== undefined ? { y: question.year } : {},
+  u: question => question.citation !== undefined ? { u: question.citation } : {},
+  np: question => question.nonScoring !== undefined ? { np: question.nonScoring } : {},
+  source: question => question.source !== undefined ? { source: question.source } : {},
+  cp: question => question.context !== undefined ? { cp: question.context } : {},
+  s: question => question.assumptionId !== undefined ? { s: question.assumptionId } : {},
+  p: question => question.provisional !== undefined ? { p: question.provisional } : {},
+  r: question => question.reserved !== undefined ? { r: question.reserved } : {},
+  v: question => question.verificationStatus !== undefined ? { v: question.verificationStatus } : {},
+  w: question => question.expiresAfter !== undefined ? { w: question.expiresAfter } : {},
+  z: question => question.topicUncertain !== undefined ? { z: question.topicUncertain } : {},
+  f: question => question.family !== undefined ? { f: question.family } : {},
+};
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -20,6 +40,28 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function isMappedQuestion(value: MappedQuestion | Question): value is MappedQuestion {
   return 'question' in value && 'fieldOrder' in value;
+}
+
+function mapQuestionDescriptors(data: QuestionDto, question: Question): void {
+  if (data.k !== undefined) question.kind = data.k;
+  if (data.x !== undefined) question.traps = data.x;
+  if (data.d !== undefined) question.difficulty = data.d;
+  if (data.n !== undefined) question.note = data.n;
+  if (data.y !== undefined) question.year = data.y;
+  if (data.u !== undefined) question.citation = data.u;
+  if (data.np !== undefined) question.nonScoring = data.np;
+  if (data.source !== undefined) question.source = data.source;
+  if (data.cp !== undefined) question.context = data.cp;
+}
+
+function mapQuestionProvenance(data: QuestionDto, question: Question): void {
+  if (data.s !== undefined) question.assumptionId = data.s;
+  if (data.p !== undefined) question.provisional = data.p;
+  if (data.w !== undefined) question.expiresAfter = data.w;
+  if (data.v !== undefined) question.verificationStatus = data.v;
+  if (data.f !== undefined) question.family = data.f;
+  if (data.r !== undefined) question.reserved = data.r;
+  if (data.z !== undefined) question.topicUncertain = data.z;
 }
 
 export const questionMapper = {
@@ -38,22 +80,8 @@ export const questionMapper = {
       options: data.a,
       correctIndex: data.c,
     };
-    if (data.k !== undefined) question.kind = data.k;
-    if (data.x !== undefined) question.traps = data.x;
-    if (data.d !== undefined) question.difficulty = data.d;
-    if (data.n !== undefined) question.note = data.n;
-    if (data.y !== undefined) question.year = data.y;
-    if (data.u !== undefined) question.citation = data.u;
-    if (data.np !== undefined) question.nonScoring = data.np;
-    if (data.source !== undefined) question.source = data.source;
-    if (data.cp !== undefined) question.context = data.cp;
-    if (data.s !== undefined) question.assumptionId = data.s;
-    if (data.p !== undefined) question.provisional = data.p;
-    if (data.w !== undefined) question.expiresAfter = data.w;
-    if (data.v !== undefined) question.verificationStatus = data.v;
-    if (data.f !== undefined) question.family = data.f;
-    if (data.r !== undefined) question.reserved = data.r;
-    if (data.z !== undefined) question.topicUncertain = data.z;
+    mapQuestionDescriptors(data, question);
+    mapQuestionProvenance(data, question);
 
     return {
       ok: true,
@@ -72,32 +100,7 @@ export const questionMapper = {
     const fields: QuestionDtoField[] = mapped?.fieldOrder.filter((field): field is QuestionDtoField => knownFields.has(field))
       || ['i', 't', 'o', 'q', 'a', 'c', 'k', 'x', 'd', 'n', 'y', 'u', 'np', 'source', 'cp', 's', 'p', 'r', 'v', 'w', 'z', 'f'];
     const dto: Partial<QuestionDto> = {};
-    for (const field of fields) {
-      switch (field) {
-        case 'i': dto.i = question.id; break;
-        case 't': dto.t = question.topicId; break;
-        case 'o': dto.o = question.origin; break;
-        case 'q': dto.q = question.statement; break;
-        case 'a': dto.a = question.options; break;
-        case 'c': dto.c = question.correctIndex; break;
-        case 'k': if (question.kind !== undefined) dto.k = question.kind; break;
-        case 'x': if (question.traps !== undefined) dto.x = question.traps; break;
-        case 'd': if (question.difficulty !== undefined) dto.d = question.difficulty; break;
-        case 'n': if (question.note !== undefined) dto.n = question.note; break;
-        case 'y': if (question.year !== undefined) dto.y = question.year; break;
-        case 'u': if (question.citation !== undefined) dto.u = question.citation; break;
-        case 'np': if (question.nonScoring !== undefined) dto.np = question.nonScoring; break;
-        case 'source': if (question.source !== undefined) dto.source = question.source; break;
-        case 'cp': if (question.context !== undefined) dto.cp = question.context; break;
-        case 's': if (question.assumptionId !== undefined) dto.s = question.assumptionId; break;
-        case 'p': if (question.provisional !== undefined) dto.p = question.provisional; break;
-        case 'r': if (question.reserved !== undefined) dto.r = question.reserved; break;
-        case 'v': if (question.verificationStatus !== undefined) dto.v = question.verificationStatus; break;
-        case 'w': if (question.expiresAfter !== undefined) dto.w = question.expiresAfter; break;
-        case 'z': if (question.topicUncertain !== undefined) dto.z = question.topicUncertain; break;
-        case 'f': if (question.family !== undefined) dto.f = question.family; break;
-      }
-    }
+    for (const field of fields) Object.assign(dto, toDtoField[field](question));
     return dto as QuestionDto;
   },
 };

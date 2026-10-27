@@ -130,6 +130,23 @@ export async function flushMirror(): Promise<void> {
     await writeMirroredProgress(mirrorKey(), appState);
   } catch {}
 }
+function mergeMirroredCopy(text: string): boolean {
+  const parsedData = JSON.parse(text);
+  if (!parsedData || typeof parsedData !== 'object') return false;
+  let recovered = mergeRemote(parsedData.stats);
+  recovered = mergeSessions(parsedData.sessions) || recovered;
+  recovered = mergeSeen(parsedData.seen) || recovered;
+  recovered = mergeReports(parsedData.reports) || recovered;
+  recovered = mergeCards(parsedData.cards) || recovered;
+  if (parsedData.cfg && typeof parsedData.cfg === 'object') {
+    const cleanedConfig = cleanCfg(parsedData.cfg);
+    for (const configKey in cleanedConfig) {
+      if (!(configKey in appState.cfg)) { appState.cfg[configKey] = cleanedConfig[configKey]; recovered = true; }
+    }
+  }
+  return recovered;
+}
+
 // Al arrancar: fusiona lo que haya en la copia de IndexedDB (gana siempre lo más reciente). Devuelve true si recuperó algo.
 export async function recover(): Promise<boolean> {
   try {
@@ -138,12 +155,7 @@ export async function recover(): Promise<boolean> {
     const copies = await readMirroredProgress([key, ...(legacy ? ['state'] : [])]);
     if (key !== mirrorKey()) return false;
     let recoveredProgress = false;
-    for (const txt of copies) {
-      if (!txt) continue;
-      const parsedData = JSON.parse(txt); if (!parsedData || typeof parsedData !== 'object') continue;
-      recoveredProgress = mergeRemote(parsedData.stats) || recoveredProgress; recoveredProgress = mergeSessions(parsedData.sessions) || recoveredProgress; recoveredProgress = mergeSeen(parsedData.seen) || recoveredProgress; recoveredProgress = mergeReports(parsedData.reports) || recoveredProgress; recoveredProgress = mergeCards(parsedData.cards) || recoveredProgress;
-      if (parsedData.cfg && typeof parsedData.cfg === 'object') { const cleanedConfig = cleanCfg(parsedData.cfg); for (const configKey in cleanedConfig) if (!(configKey in appState.cfg)) { appState.cfg[configKey] = cleanedConfig[configKey]; recoveredProgress = true; } }
-    }
+    for (const text of copies) if (text) recoveredProgress = mergeMirroredCopy(text) || recoveredProgress;
     if (recoveredProgress) { persist(); emit(); }
     if (legacy) clearPendingLegacyAdoption(account);
     return recoveredProgress;
@@ -329,10 +341,14 @@ export function gradeCard(id: string, grade: number, now = Date.now()): CardRec 
   return cardRecord;
 }
 export function exportAll(): string { return JSON.stringify(appState); }
-export function importAll(txt: unknown): void {
+function parseImportedProgress(txt: unknown): Record<string, unknown> {
   if (typeof txt !== 'string' || txt.length > 20e6) throw new Error('Archivo no válido');
   const parsedData = JSON.parse(txt);
   if (!parsedData || typeof parsedData !== 'object' || !parsedData.stats || typeof parsedData.stats !== 'object') throw new Error('Archivo no válido');
+  return parsedData;
+}
+export function importAll(txt: unknown): void {
+  const parsedData = parseImportedProgress(txt);
   mergeRemote(parsedData.stats);
   mergeSessions(parsedData.sessions || []);
   if (parsedData.seen) mergeSeen(parsedData.seen);

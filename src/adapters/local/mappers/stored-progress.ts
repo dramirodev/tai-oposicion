@@ -125,39 +125,29 @@ export function cleanCards(map: unknown): CardMap {
   return result;
 }
 
+function cleanBreakdown(value: unknown, isValidKey: (key: string) => boolean): Session['temas'] {
+  const result = createDictionary<[number, number]>();
+  if (!isRecord(value)) return result;
+  for (const [key, counts] of Object.entries(value)) {
+    if (!Array.isArray(counts)) continue;
+    const correct = boundedNumber(counts[0], 0, 1e5);
+    const total = boundedNumber(counts[1], 0, 1e5);
+    if (isValidKey(key) && correct !== null && total !== null
+      && typeof counts[0] === 'number' && typeof counts[1] === 'number') {
+      result[key] = [counts[0], counts[1]];
+    }
+  }
+  return result;
+}
+
 export function cleanSession(value: unknown): Session | null {
   if (!isRecord(value)) return null;
   const sessionId = typeof value.id === 'string' && ID_PATTERN.test(value.id) ? value.id : null;
   const timestamp = boundedNumber(value.ts);
   if (!sessionId || timestamp === null) return null;
 
-  const topics: Session['temas'] = {};
-  if (isRecord(value.temas)) {
-    for (const [topicId, topicCounts] of Object.entries(value.temas)) {
-      const correctRaw = Array.isArray(topicCounts) ? topicCounts[0] : undefined;
-      const totalRaw = Array.isArray(topicCounts) ? topicCounts[1] : undefined;
-      const correct = boundedNumber(correctRaw, 0, 1e5);
-      const total = boundedNumber(totalRaw, 0, 1e5);
-      if (TOPIC_ID_PATTERN.test(topicId) && correct !== null && total !== null
-        && typeof correctRaw === 'number' && typeof totalRaw === 'number') {
-        topics[topicId] = [correctRaw, totalRaw];
-      }
-    }
-  }
-
-  const types: Session['tipos'] = {};
-  if (isRecord(value.tipos)) {
-    for (const [questionType, typeCounts] of Object.entries(value.tipos)) {
-      const correctRaw = Array.isArray(typeCounts) ? typeCounts[0] : undefined;
-      const totalRaw = Array.isArray(typeCounts) ? typeCounts[1] : undefined;
-      const correct = boundedNumber(correctRaw, 0, 1e5);
-      const total = boundedNumber(totalRaw, 0, 1e5);
-      if (/^[A-Za-z0-9]{1,3}$/.test(questionType) && correct !== null && total !== null
-        && typeof correctRaw === 'number' && typeof totalRaw === 'number') {
-        types[questionType] = [correctRaw, totalRaw];
-      }
-    }
-  }
+  const topics = cleanBreakdown(value.temas, topicId => TOPIC_ID_PATTERN.test(topicId));
+  const types = cleanBreakdown(value.tipos, questionType => /^[A-Za-z0-9]{1,3}$/.test(questionType));
 
   return {
     id: sessionId,
