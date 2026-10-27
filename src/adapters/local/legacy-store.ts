@@ -1,6 +1,7 @@
 import { cleanCfg, cleanCfgSetting } from './config.js';
 import { failureStreak as deriveFailureStreak, CARD_REVIEW_INTERVALS_DAYS, CALENDAR_DAY_MILLISECONDS } from '../../core/domain/spaced-repetition.js';
 import type { AppState, CardMap, CardRec, Cfg, Report, ReportMap, ReportState, Res, SeenDoc, Session, StatMap, StatRec } from '../legacy/types.js';
+import { openLegacyMirrorDatabase } from './database.js';
 // Almacén local (local-first) + sincronización con Firestore.
 // Registro por pregunta: [n, ok, last, box, due, lastRes, flag]
 //   n=intentos, ok=aciertos, last=timestamp ms, box=-1 fuera del repaso (0..3 en repaso),
@@ -179,38 +180,25 @@ function persist() {
   mirror();
 }
 // Copia de seguridad en IndexedDB: en iOS, localStorage puede perder las últimas escrituras si se cierra la app enseguida.
-const IDB = 'tai-mirror';
 let mirrorTimer: ReturnType<typeof setTimeout> | undefined;
-function openIdb(): Promise<IDBDatabase> {
-  return new Promise((res, rej) => {
-    if (typeof indexedDB === 'undefined') return rej(new Error('sin indexedDB'));
-    const request = indexedDB.open(IDB, 1);
-    request.onupgradeneeded = () => request.result.createObjectStore('kv');
-    request.onsuccess = () => res(request.result); request.onerror = () => rej(request.error);
-  });
-}
 function mirror() { clearTimeout(mirrorTimer); mirrorTimer = setTimeout(flushMirror, 150); }
 export async function flushMirror(): Promise<void> {
   clearTimeout(mirrorTimer);
   try {
     const key = mirrorKey(), payload = JSON.stringify(appState);
-    const db = await openIdb();
-    await new Promise<void>((res, rej) => { const tx = db.transaction('kv', 'readwrite'); tx.objectStore('kv').put(payload, key); tx.oncomplete = () => res(); tx.onerror = () => rej(tx.error); });
-    db.close();
+    const db = await openLegacyMirrorDatabase();
+    const tx = db.transaction('kv', 'readwrite');
+    await Promise.all([tx.store.put(payload, key), tx.done]);
   } catch {}
 }
 // Al arrancar: fusiona lo que haya en la copia de IndexedDB (gana siempre lo más reciente). Devuelve true si recuperó algo.
 export async function recover(): Promise<boolean> {
   try {
     const key = mirrorKey();
-    const db = await openIdb();
+    const db = await openLegacyMirrorDatabase();
     const pendingKey = 'tai.legacy-pending:' + account;
     const legacy = account && localStorage.getItem(pendingKey) === '1';
-    const copies = await Promise.all([key, ...(legacy ? ['state'] : [])].map(key => new Promise<string | null | undefined>(res => {
-      const request = db.transaction('kv').objectStore('kv').get(key);
-      request.onsuccess = () => res(request.result as string | undefined); request.onerror = () => res(null);
-    })));
-    db.close();
+    const copies = await Promise.all([key, ...(legacy ? ['state'] : [])].map(copyKey => db.get('kv', copyKey).catch(() => undefined)));
     if (key !== mirrorKey()) return false;
     let recoveredProgress = false;
     for (const txt of copies) {
