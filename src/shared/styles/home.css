@@ -837,6 +837,7 @@
   .home-metrics dd { font-size: 1.5rem; }
   .home-metrics dd small { display: block; margin-top: 0.25rem; }
   .home-blocks { grid-template-columns: 1fr; }
+  .home-primary>.tiles>.tile .bdg { display: none; }
 }
 :root[data-text-size="2"] .home-metrics,:root[data-text-size="3"] .home-metrics { grid-template-columns: 1fr; gap: 1rem; }
 :root[data-text-size="2"] .home-metrics>div,:root[data-text-size="3"] .home-metrics>div { border: 0; padding: 0; }

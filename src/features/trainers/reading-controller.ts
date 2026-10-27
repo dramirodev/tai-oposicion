@@ -11,7 +11,7 @@ export function readingTokens(statement: string): ReadingToken[] {
   });
 }
 
-export function mixReadingIds(groups: readonly (readonly [readonly string[], number])[], rest: readonly string[], count = 40, recent = new Set<string>(), randomize: (items: readonly string[]) => string[] = items => [...items]): string[] {
+export function mixReadingIds(groups: readonly (readonly [readonly string[], number])[], rest: readonly string[], count = 40, recent: ReadonlySet<string> = new Set<string>(), randomize: (items: readonly string[]) => string[] = items => [...items]): string[] {
   const prioritizeRecentLast = (ids: readonly string[]) => [
     ...randomize(ids.filter(id => !recent.has(String(id)))),
     ...randomize(ids.filter(id => recent.has(String(id)))),

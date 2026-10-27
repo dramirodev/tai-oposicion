@@ -34,7 +34,9 @@ export function buildQuestionEvolution(archive: AttemptArchive, weeks: number, n
     week.seen++;
     if (attempt.outcome === 'correct') week.correct++;
     else if (attempt.outcome === 'wrong') week.wrong++;
-    else if (attempt.state === 'pending') week.unknown++;
+    // Revealing the solution changes `pending` to `revealed`, but the user
+    // still marked the question as unknown and it must remain in the count.
+    else if (attempt.state === 'pending' || attempt.state === 'revealed') week.unknown++;
   }
   return result;
 }

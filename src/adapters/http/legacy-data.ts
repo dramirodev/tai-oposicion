@@ -6,36 +6,43 @@ interface SupEntry { texto: string; q: Question[] }
 export let INDEX: Index | undefined, META: Meta, SUP: Record<string, SupEntry> | undefined;
 const supQuestions = new Map<string, Question>();
 const cache = new Map<string, Promise<Question[]>>();
+let supLoading: Promise<Record<string, SupEntry>> | undefined;
 export async function fetchJson<T = unknown>(url: string): Promise<T> {
   const dataFileMatch = /^data\/([\w.-]+)\.json$/.exec(url); // el banco puede venir de Firestore; si no, JSON estático
   if (dataFileMatch) { const remoteBankData = await loadBank<T>(dataFileMatch[1]); if (remoteBankData !== null) return remoteBankData; }
   const response = await fetch(url); if (!response.ok) throw new Error(url); return response.json(); }
 export async function getIndex(): Promise<Index> { return (INDEX ||= await fetchJson<Index>('data/index.json')); }
 let metaLoading: Promise<Meta> | undefined;
-export async function getMeta(): Promise<Meta> {
-  if (META && SUP) return META;
+export async function getMetaIndex(): Promise<Meta> {
+  if (META) return META;
   if (!metaLoading) metaLoading = (async () => {
-    if (!META) {
-      const meta = await fetchJson<Meta>('data/meta.json');
-      const by: Record<string, string[]> = {};
-      for (const id in meta) (by[meta[id][0]] ||= []).push(id);
-      meta._by = by; META = meta;
-    }
-    // Sin supuestos descargados, el banco por temas sigue disponible sin conexión.
-    try { await getSup(); } catch {}
-    return META;
+    const meta = await fetchJson<Meta>('data/meta.json');
+    const by: Record<string, string[]> = {};
+    for (const id in meta) (by[meta[id][0]] ||= []).push(id);
+    meta._by = by; META = meta;
+    return meta;
   })().finally(() => { metaLoading = undefined; });
   return metaLoading;
+}
+export async function getMeta(): Promise<Meta> {
+  const meta = await getMetaIndex();
+  // Supuestos are only needed by question loading; metadata-only screens need not wait for them.
+  try { await getSup(); } catch {}
+  return meta;
 }
 export const temaOf = (questionId: string): string | null => META && META[questionId] ? META[questionId][0] : supQuestions.get(questionId)?.t || null;
 export const idsOfTema = (topicId: string): string[] => [...(META?._by[topicId] || []), ...[...supQuestions.values()].filter(question => question.t === topicId).map(question => question.i)];
 export async function getTema(topicId: string): Promise<Question[]> { if (!cache.has(topicId)) cache.set(topicId, fetchJson<Question[]>(`data/${topicId}.json`).then(questionRows => { diagnoseQuestionDtos(questionRows); return questionRows; }).catch(error => { cache.delete(topicId); throw error; })); return cache.get(topicId)!; }
 export async function getSup(): Promise<Record<string, SupEntry>> {
-  const sup = (SUP ||= await fetchJson<Record<string, SupEntry>>('data/supuestos.json'));
-  for (const scenario of Object.values(sup)) {
-    for (const question of scenario.q) supQuestions.set(question.i, { ...question, supTexto: scenario.texto });
-  }
-  return sup;
+  if (SUP) return SUP;
+  if (!supLoading) supLoading = fetchJson<Record<string, SupEntry>>('data/supuestos.json').then(sup => {
+    SUP = sup;
+    for (const scenario of Object.values(sup)) {
+      for (const question of scenario.q) supQuestions.set(question.i, { ...question, supTexto: scenario.texto });
+    }
+    return sup;
+  }).finally(() => { supLoading = undefined; });
+  return supLoading;
 }
 export const temaName = (topicId: string): string => (INDEX?.temas.find(topic => topic.id === topicId)?.nombre) || topicId;
 

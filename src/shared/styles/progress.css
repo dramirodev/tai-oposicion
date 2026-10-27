@@ -322,6 +322,34 @@
   line-height: 1.5;
 }
 
+.mobile-progress-disclosure {
+  margin-block: 1rem;
+}
+
+.mobile-progress-disclosure > summary {
+  min-height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font-size: var(--fs-l);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+.mobile-progress-disclosure > summary::-webkit-details-marker { display: none; }
+.mobile-progress-disclosure > summary::after { content: '+'; color: var(--mute); font-size: var(--fs-xl); font-weight: 400; }
+.mobile-progress-disclosure[open] > summary::after { content: '−'; }
+.mobile-progress-disclosure > summary:focus-visible { outline: 2px solid var(--selb); outline-offset: 2px; }
+
+@media (min-width: 40.01rem) {
+  .mobile-progress-disclosure > summary { display: none; }
+}
+
 /* ===== evolución y carga ===== */
 
 .stats-chart {

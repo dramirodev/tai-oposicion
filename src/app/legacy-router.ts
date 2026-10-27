@@ -10,7 +10,6 @@ import { percentage as pct } from '../shared/presentation/format.js';
 import { richHtml, hiliteHtml } from '../shared/presentation/study-text.js';
 import { FAILURE_REASONS as MOTIVOS_FALLO } from '../shared/presentation/study-labels.js';
 import { normalizeUiPreferences } from '../shared/presentation/ui-preferences.js';
-import { asksForNegativeOption, evaluateReadingWords, minimumReadingSeconds } from '../core/domain/reading-strategy.js';
 import { calculateExamScore as nota } from '../core/domain/scoring.js';
 import { randomStudyOrder as shuffle } from '../shared/ui/study-random.js';
 import { swipeDirection, studyKeyAction } from '../shared/ui/study-input.js';
@@ -19,14 +18,14 @@ import { calculateStudyStreak } from '../core/domain/study-analytics.js';
 import { analyzeSimulation } from '../core/domain/simulation-analysis.js';
 import { renderSimulationAnalysisView } from '../features/simulation/simulation-analysis-view.js';
 import { previewBackupImport } from '../core/application/settings/backup-preview.js';
-import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, byIds, fetchJson } from '../adapters/http/legacy-data.js';
+import { META, getIndex, getMeta, getMetaIndex, temaOf, idsOfTema, getTema, getSup, temaName, now, byIds, fetchJson } from '../adapters/http/legacy-data.js';
 import { $, L, toast, ask } from '../shared/ui/legacy-dom.js';
 import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
 import { BLOQUES, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
 import { createCardsController } from '../features/cards/cards-controller.js';
 import { cardFromFailedQuestion } from '../features/cards/flashcard-mapper.js';
-import type { ReadingOutcome, ReadingProgress, ReadingPrompt, ReadingWordResult, StudyCard } from '../shared/ui/study-services.js';
+import type { StudyCard } from '../shared/ui/study-services.js';
 import { isFull, isOwner, accessLevel, GUEST_ROUTES } from '../adapters/legacy/access.js';
 import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, clearActiveRun, createRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, revealCurrentSolution, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, dueQuestionIds, selectQuestionsForTopics, selectWeightedSimulationQuestions, setCurrentConfidence, toggleCurrentDiscardedOption, addCurrentHighlight, removeCurrentHighlight } from './study-engine-composition.js';
 import { sessionStatePort } from './session-state-store.js';
@@ -61,7 +60,7 @@ import { hashPath } from './paths.js';
 import { menuActionIcons, navigationIcons } from './navigation-icons.js';
 import { bootAppServices as startAppBootstrap } from './app-bootstrap.js';
 import type { QuestionRecord as Question } from '../core/domain/question-record.js';
-import { toFailureQuestionView } from './study-question-view-mapper.js';
+import { createReadingComposition } from './reading-composition.js';
 import { readingTokens, mixReadingIds } from '../features/trainers/reading-controller.js';
 import type { TestConfiguration, ScenarioChoice, SimulationConfiguration, SimulationTab, SimulationExam, SimulationExamGroups, ResultServices } from '../shared/ui/study-services.js';
 
@@ -369,95 +368,24 @@ const trapsServices = createTrapsComposition({
   readDetectionStats: () => (store.getCfg().tdet || {}) as unknown as Record<string, readonly [number, number]>,
   writeDetectionStats: stats => store.setCfg('tdet', stats),
 });
-let readingOwner: string | null = store.accountId();
-let readingBatch: ReadingPrompt[] | null = null;
-let readingProgress: ReadingProgress | null = null;
-const readingListeners = new Set<() => void>();
-const notifyReading = () => readingListeners.forEach(listener => listener());
-store.onAccountChange(() => { readingOwner = store.accountId(); readingBatch = null; readingProgress = null; notifyReading(); });
-function ensureReadingOwner() {
-  const account = store.accountId();
-  if (readingOwner !== account) { readingBatch = null; readingProgress = null; readingOwner = account; }
-}
-const readingServices = {
-  getProgress: () => { ensureReadingOwner(); return readingProgress; },
-  subscribe(listener: () => void) { readingListeners.add(listener); return () => readingListeners.delete(listener); },
-  async start(): Promise<ReadingProgress | null> {
-    ensureReadingOwner();
-    if (readingProgress) return readingProgress;
-    const owner = store.accountId();
-    let batch = readingBatch;
-    if (batch) { readingProgress = { items: batch, index: 0, step: 0, meaningChoice: null, meaningCorrect: null, selectedWords: [], wordResult: null, selectedAnswer: null, answerCorrect: null, startedAt: 0, outcomes: [], complete: false }; notifyReading(); return readingProgress; }
-    await getMeta();
-    if (owner !== store.accountId()) return null;
-    const questionStats = store.getStats();
-    const fastIds = velocidad(questionStats).ids;
-    const recent = localReadingQuestionHistoryRepository.readRecentQuestionIds(owner);
-    const recentIds = new Set(recent), fastSet = new Set(fastIds);
-    const failedIds = Object.keys(questionStats).filter(id => questionStats[id][5] === 0 && !fastSet.has(id));
-    const failedSet = new Set(failedIds);
-    const rest = Object.keys(META).filter(id => id !== '_by' && META[id] && !fastSet.has(id) && !failedSet.has(id));
-    const ids = mixReadingIds([[fastIds, 3], [failedIds, 2]], rest, 40, recentIds, shuffle);
-    const loaded = await byIds(ids);
-    const available = new Map(loaded.filter(question => !question.s && !question.cp).map(question => [question.i, question]));
-    const questions = shuffle(ids.map(id => available.get(id)).filter((question): question is Question => !!question).slice(0, 8));
-    readingBatch = questions.map(question => ({
-      ...toFailureQuestionView(question, VERIFIED_SOURCES),
-      asksForNegative: asksForNegativeOption(question.q),
-      minimumSeconds: minimumReadingSeconds({ context: question.cp, statement: question.q, options: question.a }),
-      tokens: readingTokens(question.q),
-    }));
-    if (owner !== store.accountId()) { readingBatch = null; return null; }
-    readingOwner = store.accountId();
-    batch = readingBatch;
-    readingProgress = { items: batch, index: 0, step: 0, meaningChoice: null, meaningCorrect: null, selectedWords: [], wordResult: null, selectedAnswer: null, answerCorrect: null, startedAt: 0, outcomes: [], complete: false };
-    notifyReading(); return readingProgress;
-  },
-  answerMeaning(choice: 0 | 1) {
-    const progress = this.getProgress(), question = progress?.items[progress.index]; if (!progress || !question || progress.step !== 0) return;
-    const correct = (choice === 1) === question.asksForNegative;
-    readingProgress = { ...progress, meaningChoice: choice, meaningCorrect: correct, selectedWords: [], wordResult: null };
-    notifyReading();
-  },
-  continueMeaning() {
-    const progress = this.getProgress(); if (!progress || progress.step !== 0 || progress.meaningChoice === null) return;
-    readingProgress = { ...progress, step: 1 }; notifyReading();
-  },
-  toggleWord(index: number) {
-    const progress = this.getProgress(); if (!progress || progress.step !== 1 || progress.wordResult) return;
-    const selected = new Set(progress.selectedWords); selected.has(index) ? selected.delete(index) : selected.add(index);
-    readingProgress = { ...progress, selectedWords: [...selected] }; notifyReading();
-  },
-  checkWords(claimedNone = false): ReadingWordResult | null {
-    const progress = this.getProgress(), question = progress?.items[progress.index]; if (!progress || !question || progress.step !== 1 || progress.wordResult) return progress?.wordResult || null;
-    const result: ReadingWordResult = evaluateReadingWords(question.tokens, progress.selectedWords, claimedNone);
-    readingProgress = { ...progress, wordResult: result }; notifyReading(); return result;
-  },
-  showOptions() {
-    const progress = this.getProgress(); if (!progress || progress.step !== 1 || !progress.wordResult) return;
-    readingProgress = { ...progress, step: 2, startedAt: Date.now(), selectedAnswer: null, answerCorrect: null }; notifyReading();
-  },
-  answerOption(index: number): boolean | null {
-    const progress = this.getProgress(), question = progress?.items[progress.index]; if (!progress || !question || progress.step !== 2 || progress.selectedAnswer !== null) return null;
-    if (Date.now() - progress.startedAt < question.minimumSeconds * 1000) return false;
-    const correct = index === question.correctIndex;
-    store.record(question.id, question.topicId, correct ? 1 : 0, now(), Math.max(1, Math.round((Date.now() - progress.startedAt) / 1000)));
-    this.remember(question.id);
-    const marked = progress.wordResult?.claimedNone ? [0, progress.wordResult.total] : [progress.wordResult?.hit || 0, progress.wordResult?.total || 0];
-    const outcome: ReadingOutcome = { correct, meaningCorrect: !!progress.meaningCorrect, marked: marked as [number, number] };
-    readingProgress = { ...progress, selectedAnswer: index, answerCorrect: correct, outcomes: [...progress.outcomes, outcome] }; notifyReading(); return correct;
-  },
-  next() {
-    const progress = this.getProgress(); if (!progress || progress.selectedAnswer === null) return progress;
-    if (progress.index + 1 >= progress.items.length) { readingProgress = { ...progress, complete: true }; notifyReading(); return readingProgress; }
-    readingProgress = { ...progress, index: progress.index + 1, step: 0, meaningChoice: null, meaningCorrect: null, selectedWords: [], wordResult: null, selectedAnswer: null, answerCorrect: null, startedAt: 0 };
-    notifyReading(); return readingProgress;
-  },
-  remember(questionId: string) {
-    localReadingQuestionHistoryRepository.rememberQuestion(store.accountId(), questionId);
-  },
-  reset() { readingProgress = null; readingBatch = null; readingOwner = store.accountId(); notifyReading(); },
-};
+const readingServices = createReadingComposition({
+  accountId: store.accountId,
+  onAccountChange: store.onAccountChange,
+  loadQuestionMetadata: getMeta,
+  readQuestionStats: () => store.getStats(),
+  fastQuestionIds: stats => velocidad(stats).ids,
+  recentQuestionIds: accountId => localReadingQuestionHistoryRepository.readRecentQuestionIds(accountId),
+  rememberQuestion: (accountId, questionId) => localReadingQuestionHistoryRepository.rememberQuestion(accountId, questionId),
+  availableQuestionIds: () => Object.keys(META).filter(id => id !== '_by' && !!META[id]),
+  loadQuestionsById: ids => byIds(ids),
+  mixQuestionIds: mixReadingIds,
+  shuffle,
+  tokenize: readingTokens,
+  sourceFallbacks: VERIFIED_SOURCES,
+  recordAnswer: (questionId, topicId, correct, timestamp, seconds) => store.record(questionId, topicId, correct ? 1 : 0, timestamp, seconds),
+  now,
+  currentTime: Date.now,
+});
 
 
 // ───────── arranque ─────────
@@ -581,7 +509,7 @@ export const studyServices: StudyServices = {
     },
     seenTopics: store.getSeen,
     async loadExamGroups(): Promise<SimulationExamGroups> {
-      await getMeta();
+      await getMetaIndex();
       const lists = listaExamenes(), sessions = store.getSessions();
       const map = (entries: { k: string; ids: string[]; nombre: string }[]): SimulationExam[] => entries.map(entry => {
         const attempts = sessions.filter(session => session.titulo === entry.nombre);

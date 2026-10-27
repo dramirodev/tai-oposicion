@@ -78,7 +78,15 @@ export function SimulationPage() {
   useEffect(() => {
     if (tab === 'completo' || groups) return;
     let active = true;
-    void simulation.loadExamGroups().then(value => { if (active) setGroups(value); }).catch(() => { if (active) setMessage('No se pudieron cargar los exámenes. Comprueba la conexión e inténtalo de nuevo.'); }).finally(() => { if (active) setLoading(false); });
+    void simulation.loadExamGroups().then(value => {
+      if (!active) return;
+      setGroups(value);
+      setLoading(false);
+    }).catch(() => {
+      if (!active) return;
+      setMessage('No se pudieron cargar los exámenes. Comprueba la conexión e inténtalo de nuevo.');
+      setLoading(false);
+    });
     return () => { active = false; };
   }, [groups, simulation, tab]);
 

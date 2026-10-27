@@ -30,6 +30,33 @@ test('los controles del informe de estrategia se alinean en móvil', async ({ pa
   expect(Math.abs(alignment.selectRight - alignment.buttonRight)).toBeLessThanOrEqual(1);
 });
 
+test('las cifras secundarias del inicio no duplican el contador de tarjetas en móvil', async ({ page }) => {
+  await prepareOwner(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.addInitScript(() => {
+    localStorage.setItem('tai.v1:guest', JSON.stringify({
+      stats: {}, sessions: [], cfg: { ui: { theme: 'light', size: 1 } }, seen: { t: [], ts: 0 },
+      cards: Object.fromEntries(Array.from({ length: 14 }, (_, index) => [`FC-card-${index}`, [0, 0, 1, 0, 0, 0]])), reports: {},
+    }));
+  });
+  await page.goto('/#/home');
+  const tile = page.locator('#cards');
+  await expect(tile).toContainText('14 pendientes');
+  await expect(tile.locator('.bdg')).toBeHidden();
+});
+
+test('los apartados largos de Progreso empiezan plegados en móvil y se pueden abrir', async ({ page }) => {
+  await prepareOwner(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/#/stats');
+  const map = page.locator('.mobile-progress-disclosure').filter({ has: page.getByText('Mapa de dominio', { exact: true }) }).first();
+  await expect(map.locator('summary')).toBeVisible();
+  await expect(map).toHaveJSProperty('open', false);
+  await map.locator('summary').click();
+  await expect(map).toHaveJSProperty('open', true);
+  await expect(map.locator('.dm')).toBeVisible();
+});
+
 test('el índice de Ayuda no se superpone al título ni adopta la barra inferior', async ({ page }) => {
   await prepareOwner(page);
   await page.setViewportSize({ width: 390, height: 844 });

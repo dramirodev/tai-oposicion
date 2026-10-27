@@ -59,6 +59,14 @@ for (const theme of ['light', 'dark']) {
   });
 }
 
+test('simulacros por tema deja el skeleton y muestra los tests disponibles', async ({ page }) => {
+  await setup(page, 'light');
+  await page.goto('/#/sim');
+  await page.getByRole('tab', { name: 'Por tema' }).click();
+  await expect(page.locator('[data-exam-id^="AT"]')).not.toHaveCount(0, { timeout: 20_000 });
+  await expect(page.locator('.page-loading')).toHaveCount(0);
+});
+
 test.describe('service worker real', () => {
  test.use({ serviceWorkers: 'allow' });
  test('shell de Vite, CSP y arranque sin conexión', async ({ page, context }) => {

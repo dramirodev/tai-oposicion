@@ -3,6 +3,7 @@ import { Clover } from 'lucide-react';
 import { FAILURE_REASONS } from '../../shared/presentation/study-labels.js';
 import type { StatsServices } from '../../shared/ui/study-services.js';
 import type { StatsDomainTopic, StatsSnapshot } from '../../core/application/stats/statistics-model.js';
+import { MobileDisclosure } from './MobileDisclosure.js';
 
 const date = (time: number) => new Date(time).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
 
@@ -45,5 +46,9 @@ export function StatsTopicsSection({ snapshot, stats, topics, domainOrder, setDo
   snapshot: StatsSnapshot; stats: StatsServices; topics: readonly StatsDomainTopic[]; domainOrder: string;
   setDomainOrder: (value: string) => void; formattedDays: (days: number | null) => string; setMessage: (message: string) => void;
 }) {
-  return <section aria-label="Progreso por temas"><DomainMap snapshot={snapshot} stats={stats} topics={topics} domainOrder={domainOrder} setDomainOrder={setDomainOrder} formattedDays={formattedDays} /><ReadingAndReviewInsights snapshot={snapshot} /><TopicPerformance snapshot={snapshot} stats={stats} setMessage={setMessage} /></section>;
+  return <section aria-label="Progreso por temas">
+    <MobileDisclosure title="Mapa de dominio"><DomainMap snapshot={snapshot} stats={stats} topics={topics} domainOrder={domainOrder} setDomainOrder={setDomainOrder} formattedDays={formattedDays} /></MobileDisclosure>
+    <MobileDisclosure title="Lectura y carga de repasos"><ReadingAndReviewInsights snapshot={snapshot} /></MobileDisclosure>
+    <MobileDisclosure title="Rendimiento por tema"><TopicPerformance snapshot={snapshot} stats={stats} setMessage={setMessage} /></MobileDisclosure>
+  </section>;
 }
