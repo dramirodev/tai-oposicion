@@ -41,3 +41,12 @@ it('omite un registro corrupto y conserva el resto del progreso con un diagnóst
   expect(mapped.value.statistics['Q-CORRUPT']).toBeUndefined();
   expect(mapped.warnings).toContain('stats.Q-CORRUPT: Registro estadístico inválido');
 });
+
+it('mantiene los motivos de error de la envoltura de progreso', () => {
+  const valid = JSON.parse(store.exportAll());
+  expect(progressMapper.toDomain(null)).toEqual({ ok: false, reason: 'Progreso inválido' });
+  expect(progressMapper.toDomain({ ...valid, extra: true }))
+    .toEqual({ ok: false, reason: 'Campo de progreso desconocido' });
+  expect(progressMapper.toDomain({ ...valid, seen: { ...valid.seen, extra: true } }))
+    .toEqual({ ok: false, reason: 'Progreso incompleto' });
+});
