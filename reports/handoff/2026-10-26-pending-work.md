@@ -191,7 +191,7 @@ La instrucción más reciente pide continuar las tareas pendientes hasta termina
 
 - `origin/main` verificado en `d745aa68e45385fd1625907af6e63ec3da1084b7`; ya incluye las PR #40 (Recharts), #39 (Lucide), #38 (auditoría arquitectónica) y #42 (Testing Library).
 - El checkout principal sigue desactualizado y conserva un cambio local ajeno en `tests/design-training.test.js`; no usarlo como base ni modificar ese archivo.
-- PR #43 (`fix/menu-iconography-mobile-hover`) se creó basada en el `origin/main` previo `ddf63c8`. Al integrarse la PR #40 hubo conflictos en este handoff y `progress.css`; se integró `d745aa6` y GitHub vuelve a marcar la rama como `MERGEABLE`.
+- PR #43 (`fix/menu-iconography-mobile-hover`) se creó basada en el `origin/main` previo `ddf63c8`. Al integrarse la PR #40 hubo conflictos en este handoff y `progress.css`; se integró `d745aa6` y GitHub volvió a marcar la rama como `MERGEABLE`. El check fallido previo (run `40462333327`) contenía una llave CSS sobrante ya retirada; el nuevo run del head `46ca6be` estaba en cola en la última consulta.
 - PR #41 quedó cerrada como duplicado tras la fusión de #39. La validación remota de #40 terminó `SUCCESS` en run `40458561840` y la PR fue fusionada.
 
 ### Iconos de menú y hover táctil
@@ -202,14 +202,15 @@ La instrucción más reciente pide continuar las tareas pendientes hasta termina
 - Tras el merge de #40: `npm ci` añadió 567 paquetes sin vulnerabilidades; build correcto. E2E focalizada CSS/menú/gráficas 40/40 Chromium/WebKit; la suite completa 156/156 había pasado antes del merge de #40. El check serial posterior tuvo una carrera en `tests/app.test.js` (401/402); ejecutar ese archivo aislado pasó 1/1. La prueba no se modificó porque no se reprodujo aislada y no está relacionada con estos cambios.
 - Próximo paso: publicar la resolución de la base y verificar el nuevo estado de PR #43; después continuar la arquitectura apilada sobre la última punta de #43.
 
-### Arquitectura Etapa B — siguiente trabajo
+### Arquitectura Etapa B — progreso y pendientes
 
-Revalidar `docs/architecture/migration-plan.md` en la base actual. Prioridad:
+La rama `feat/architecture-stats-slice` parte del head de PR #43 (`46ca6be`) y ya contiene un primer slice local:
 
-1. Extraer Progreso/estadísticas como primer vertical slice de solo lectura y reducir el contrato `StudyServices` por feature sin cambiar presentación o consultas.
-2. Evaluar Zustand para un único slice de estado efímero compartido; `DialogStateStore` es candidato. Adoptarlo solo si mejora coordinación, selectores o pruebas; no persistir progreso ni sustituir estado local.
-3. Añadir reglas/pruebas para ciclos y dependencias internas sin aumentar la deuda respecto a la base.
-4. Desacoplar gradualmente `legacy-engine` y la composición de `legacy-router`, preservando sesiones, URLs, datos antiguos, modo offline y sincronización Firebase.
-5. Validar cada slice con arquitectura, lint, TypeScript, tests, build y E2E críticas; documentar y abrir PR apilada, luego reorientarla a `main` tras integrar el antecedente.
+- Movidos los modelos de respuesta de estadísticas a `src/core/application/stats/statistics-model.ts` y sus imports de composición/UI actualizados.
+- Extraída `summarizeTopicProgress` a `core/application` con transformación tipada; se conserva el umbral de 8 respuestas, el orden ascendente de rendimiento y el límite de 5 temas. Nueva suite de 2 casos.
+- Validación: `npm run check:architecture`, ESLint, ignore-growth, TypeScript; Vitest serial **404/404**; build; Playwright de Progreso/gráficas **10/10** Chromium/WebKit.
+- Todavía no hay un puerto separado para esos valores: hoy se leen en la composición y se pasan normalizados a la función pura; revisar el límite de lectura antes de extraer interfaz.
+- Siguiente: finalizar commit y PR de este slice apilada sobre #43; luego un slice separado para Zustand. Context7 documenta `/pmndrs/zustand` v5.0.12 con store vanilla y `useStore` selectivo. Migrar solo diálogos/toasts si reduce notificaciones/renderizados; conservar pruebas de teclado, foco y cierre.
+- Siguen pendientes: reducir `StudyServices` por feature; eliminar dependencias de adapters de `legacy-engine`; separar bootstrap/composición de `legacy-router`; encapsular DTOs legacy; incorporar comprobación de ciclos y terminar gates de arquitectura.
 
 No adoptar automáticamente el plan antiguo `modernizacion-sin-legacy`: las rutas de producción se migraron en #34 y los registros anteriores al merge están superados. La rama externa de renombres `/Volumes/SSD/develop/PWA_TAI-mejoras-estudio` tiene cambios locales no publicados; inspeccionarla en su propio checkout antes de decidir su vigencia y preservarlos.

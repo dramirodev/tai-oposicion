@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import type { StatsComparison, StatsSnapshot } from '../../shared/ui/study-services.js';
+import type { StatsComparison, StatsSnapshot } from '../../core/application/stats/statistics-model.js';
 
 const StatsTrendChart = lazy(() => import('./StatsCharts.js').then(module => ({ default: module.StatsTrendChart })));
 
