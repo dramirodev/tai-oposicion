@@ -182,3 +182,33 @@ Validación local en la rama de #38: prueba focalizada 2/2 (Chromium y WebKit), 
 3. Mantener la Etapa B de arquitectura/Zustand pendiente de aprobación explícita. Las pruebas E2E de navegador siguen en Playwright y no se migran a RTL.
 
 Última consulta de checks en GitHub: #40 mostraba fallo en el run `40398611713` y #41 en `40399388302`; no se investigaron en este turno, respetando la preferencia del usuario de que no monitoricemos fallos de PR salvo que los señale. Para #42 aún no aparecía un check en el resumen tras el último push.
+
+## Estado vigente — continuación solicitada el 2026-10-27
+
+La instrucción más reciente pide continuar las tareas pendientes hasta terminarlas. Esta autorización retoma la Etapa B arquitectónica/Zustand que la solicitud original había dejado detrás de aprobación. Mantener entregas separadas y no fusionar ni desplegar sin instrucción explícita.
+
+### Estado de PR y base
+
+- `origin/main` verificado en `ddf63c890071f11a66b3876860df5ff6615a4d58` (merge de PR #39). El `main` del checkout principal está 33 commits detrás y conserva un cambio local ajeno en `tests/design-training.test.js`; no usarlo como base ni modificar ese archivo.
+- PR #40 (`feat/recharts-study-visualizations`) actualizada sobre `main`, `MERGEABLE`; su validación remota terminó en `SUCCESS` en run `40458561840`. Sigue abierta, pendiente de revisión/merge del usuario.
+- PR #39 Lucide está fusionada; PR #41 quedó cerrada como duplicado. PR #42 RTL está fusionada. No queda otra PR abierta fuera de la #40 en la consulta realizada.
+
+### Iconos de menú y hover táctil — trabajo local validado
+
+- Rama aislada `fix/menu-iconography-mobile-hover`, creada directamente desde el `origin/main` anterior, no desde el `main` local atrasado.
+- La auditoría encontró dos menús con caracteres/emoji y sin iconos equivalentes a los de la barra. Se creó `src/app/navigation-icons.ts` como catálogo Lucide tipado, se reutilizó en sidebar, menú móvil y menú general legacy, y el tipo de `MenuGroup` ahora exige componentes Lucide. Las opciones únicas del menú usan iconos Lucide afines.
+- Los selectores `:hover` restantes se limitaron a `(hover: hover) and (pointer: fine)`. El estilo de foco y las marcas de respuesta seleccionada/pertenencia de ruta se conservan; el feedback `:active` es una pulsación breve, no hover.
+- Prueba E2E nueva compara el SVG de “Test por tema” entre menú y navegación y prueba opciones táctiles. Chromium/WebKit focal: 4/4; suite Playwright completa: 156/156. `npm run build` correcto. `npm run check` serial: 402/402; la primera ejecución concurrente produjo dos carreras existentes en `tests/app.test.js` y `tests/finish-ui.test.js`, que desaparecieron al ejecutar Vitest con `--maxWorkers=1`. Arquitectura (64 excepciones base, ninguna nueva), ESLint, ignore-growth y TypeScript pasaron.
+- **Pendiente inmediato:** crear commit y PR de esta rama contra `main`; después seguir la arquitectura en una rama separada apilada si depende de este cambio o reorientarla cuando se fusione.
+
+### Arquitectura Etapa B — siguiente trabajo
+
+Revalidar primero el documento `docs/architecture/migration-plan.md` contra `origin/main`, donde PR #40 aún no está fusionada. Prioridad acordada en `target-architecture.md`:
+
+1. Reducir el contrato global `StudyServices` con un primer slice de estadísticas de solo lectura, sin cambiar la presentación ni consultas.
+2. Evaluar Zustand solo para una rebanada de estado de cliente realmente compartido. Dialog/toast es el candidato; conservar la clase observable si Zustand no reduce acoplamiento o facilita selectores/tests. No persistir progreso ni reemplazar estados locales.
+3. Añadir reglas/tests para import cycles y dependencias internas, sin hacer crecer la deuda base.
+4. Continuar retirando el puente `legacy-router`/`legacy-engine` por responsabilidad, solo con sustitución completa, consumidores migrados y contratos/URLs persistidos preservados.
+5. Validar por incremento con check, build y E2E de rutas críticas; documentar resultados y abrir PRs independientes contra `main`.
+
+No adoptar automáticamente todo el plan antiguo `modernizacion-sin-legacy`: la migración de rutas está completada en #34 y las notas de work state anteriores a ese merge están superadas. Revisar el checkout `/Volumes/SSD/develop/PWA_TAI-mejoras-estudio` con sus 39 cambios locales antes de decidir si los renombres descriptivos siguen siendo un objetivo vigente; no incorporar ni descartar esos cambios sin inspeccionarlos y probarlos contra la base actual.

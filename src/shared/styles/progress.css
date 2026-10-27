@@ -371,7 +371,7 @@
   cursor: pointer;
 }
 
-.evolution-hit:hover,.evolution-hit:focus {
+.evolution-hit:focus {
   fill: var(--sel);
   opacity: .5;
   outline: none;

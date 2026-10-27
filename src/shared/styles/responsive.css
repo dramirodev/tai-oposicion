@@ -114,6 +114,13 @@
 }
 
 @media(hover:hover) and (pointer:fine) {
+  .workspace-sidebar a:hover { color: var(--ink); background: var(--surface-hover); }
+  .workspace-sidebar .workspace-brand:hover { background: none; }
+  .dmt:hover { background: var(--surface-hover); }
+  .home-block:hover { color: var(--selb); }
+  .help-icon-link:hover { background: var(--surface-hover); color: var(--accent); }
+  .evolution-hit:hover { fill: var(--sel); opacity: .5; }
+
   .btn:hover:not(:disabled) {
     filter: brightness(.92);
   }
