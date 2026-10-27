@@ -44,6 +44,7 @@ import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
 import { loadQuestionEvolution, loadStrategyReportForPeriod } from './strategy-composition.js';
 import { createStatsServices } from './stats-composition.js';
 import { createFailuresComposition } from './failures-composition.js';
+import { createLightningComposition } from './lightning-composition.js';
 import { createQuizServices } from './quiz-composition.js';
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './ai-study-export-composition.js';
@@ -344,23 +345,17 @@ const failuresServices = createFailuresComposition({
   notify: toast,
   navigateToQuiz: () => go(hashPath('quiz')),
 });
-const lightningServices = {
-  async loadQuestion(): Promise<LightningQuestion | null> {
-    await getMeta();
-    const questionStats = store.getStats();
-    const lucky = Object.keys(questionStats).filter(id => (questionStats[id][9] === 6 || questionStats[id][9] === 8) && META[id]);
-    const due = await dueQuestionIds();
-    const failed = Object.keys(questionStats).filter(id => questionStats[id][5] === 0 && META[id]);
-    const pool = [...shuffle(lucky).slice(0, 5), ...due.slice(0, 5), ...shuffle(failed).slice(0, 5)];
-    const candidates = pool.length ? pool : shuffle(Object.keys(META).filter(id => id !== '_by')).slice(0, 10);
-    const question = (await byIds(shuffle(candidates).slice(0, 8))).find(item => !item.s && !item.cp);
-    if (!question) return null;
-    const reason = lucky.includes(question.i) ? '🍀 Marcada como suerte' : due.includes(question.i) ? '⏰ Toca repasarla' : failed.includes(question.i) ? '↩ La fallaste' : '🆕 Nueva';
-    return { ...toFailureQuestionView(question, VERIFIED_SOURCES), reason };
-  },
-  record(questionId: string, topicId: string, correct: boolean, seconds: number) { store.record(questionId, topicId, correct ? 1 : 0, now(), seconds); },
+const lightningServices = createLightningComposition({
+  loadQuestionMetadata: getMeta,
+  readQuestionStats: () => store.getStats(),
+  loadDueQuestionIds: dueQuestionIds,
+  knownQuestionIds: () => Object.keys(META).filter(id => id !== '_by'),
+  shuffle,
+  loadQuestionsById: ids => byIds(ids),
+  sourceFallbacks: VERIFIED_SOURCES,
+  recordAnswer: (questionId, topicId, correct, seconds) => store.record(questionId, topicId, correct ? 1 : 0, now(), seconds),
   topicName: temaName,
-};
+});
 let trapRun: TrapRun | null = null;
 let trapOwner: string | null = store.accountId();
 function currentTrapRun(): TrapRun | null {
