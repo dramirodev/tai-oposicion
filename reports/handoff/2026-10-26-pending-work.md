@@ -268,8 +268,8 @@ Siguiente paso: comprobar la mergeabilidad de #45; luego aplanar #46 y #47 sobre
 ## Continuación de arquitectura — estado comprobado 2026-10-27
 
 - PR #45 se integró en `main` (`7d4a5bc`).
-- PR #46 se rebasó como cambio independiente directamente sobre `main`; GitHub la marca `MERGEABLE` y la validación está pendiente.
-- PR #47 apunta directamente a `main`; GitHub la marca `CLEAN` y su validación terminó en verde.
+- PR #46 volvió a entrar en conflicto al integrarse #47. Su rama se ha rebasado ahora sobre el `main` actualizado (`4c70512`); el conflicto local en `route-runtime.tsx` se resolvió conservando el nuevo runtime de #47 y la selección de servicios de #46. Validación local sobre esta base: `npm run check` 408/408, build y E2E de rutas 76/76. Pendiente publicar el head nuevo y confirmar el estado remoto.
+- PR #47 ya está integrada en `main` (`4c70512`).
 - PR #50 separa la recuperación de sesión guardada, apunta directamente a `main` y tiene validación local completa: 409/409 tests, build y E2E de reanudación 2/2. Validación remota aún pendiente.
 - `.gitignore` ya contiene `/docs/` y `/reports/`. Se mantienen los archivos que ya están versionados; esas reglas ignoran contenido nuevo en esas carpetas.
 - **Nueva tarea de publicación:** después de que cada PR llegue a `main`, actualizar el checkout desde el `main` remoto y ejecutar instalación reproducible, comprobaciones y build de producción en esa rama. Crear un tag anotado, único y apuntado al commit de `main` solo cuando compile y pasen las comprobaciones. No reutilizar tags ni cambiar `package.json` sin una decisión explícita sobre la numeración de versiones.
