@@ -58,7 +58,7 @@ test('menú React, foco, banner de red y recorte de navegación para invitados',
   // Abrir por teclado: Safari no conserva el foco del botón al pulsarlo con el puntero.
   await page.locator('#menu').focus();
   await page.keyboard.press('Enter');
-  await expect(page.locator('#menux')).toBeFocused();
+  await expect(page.locator('#menuov .menuhead h2')).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(page.locator('#menu')).toBeFocused();
   await page.locator('#menu').click();
