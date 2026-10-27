@@ -17,7 +17,7 @@ import { swipeDirection, studyKeyAction } from '../shared/ui/study-input.js';
 import { velocidad, quickQuestionCount } from '../features/stats/analytics-mapper.js';
 import { mapSimulationResultToLegacy } from './simulation-result-mapper.js';
 import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds, fetchJson } from '../adapters/http/legacy-data.js';
-import { $, legacyScope, bindLegacyHost, L, toast, ask, guard, focusHeading, type El } from '../shared/ui/legacy-dom.js';
+import { $, L, toast, ask, type El } from '../shared/ui/legacy-dom.js';
 import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
 import { BLOQUES, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
@@ -56,28 +56,12 @@ import { readingTokens, mixReadingIds } from '../features/trainers/reading-contr
 import type { TestConfiguration, ScenarioChoice, SimulationConfiguration, SimulationTab, SimulationExam, SimulationExamGroups, ResultServices } from '../shared/ui/study-services.js';
 
 // ───────── router ─────────
-const routes: Record<string, any> = {};
 let navigate: (h: string, refresh?: boolean) => void = h => { location.hash = h; };
-export function configureLegacyRouter(fn: (h: string, refresh?: boolean) => void): void { navigate = fn; }
+export function configureAppNavigation(fn: (h: string, refresh?: boolean) => void): void { navigate = fn; }
 function go(h: string) { navigate(h); }
-function route() { navigate(location.hash || hashPath('home'), true); }
 const recover = createAccountRecovery(store.accountId, () => store.recover());
-let painted: () => void;
-export const firstLegacyPaint = new Promise<void>(resolve => { painted = resolve; });
-// animaciones: barra de progreso que transforma su relleno desde el valor anterior, entrada de pantalla y nota que cuenta
-const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
-let lastP = 0;
-function pw(p: any) { const f = lastP; lastP = p; return `style="--progress-from:${p > 0 ? f / p : 0};width:${p}%"`; }
-function enter(el: HTMLElement) { if (reduceMotion()) return; el.classList.remove('enter'); void el.offsetWidth; el.classList.add('enter'); }
-function countUp() {
-  document.querySelectorAll<El>('[data-count]').forEach(el => {
-    const to = parseFloat(String(el.dataset.count!).replace(',', '.')); if (!isFinite(to) || reduceMotion()) return;
-    const dec = (String(el.dataset.count!).split(/[.,]/)[1] || '').length, tn = el.firstChild; if (!tn || tn.nodeType !== 3) return;
-    const t0 = performance.now(), D = 900;
-    const step = (t: any) => { const k = Math.min(1, (t - t0) / D), v = to * (1 - Math.pow(1 - k, 3)); tn.nodeValue = v.toFixed(dec); if (k < 1 && tn.isConnected) requestAnimationFrame(step); else tn.nodeValue = String(el.dataset.count!); };
-    requestAnimationFrame(step);
-  });
-}
+let routeReady: () => void;
+const firstReactRouteReady = new Promise<void>(resolve => { routeReady = resolve; });
 // saludo con el nombre de la cuenta de Google (se recuerda en el dispositivo; sin cuenta, solo «Hola»)
 function saludo() {
   const u = sync.status.user; let n = '';
@@ -88,38 +72,6 @@ function saludo() {
   } catch (e) {}
   return n ? `Hola, ${n}` : 'Hola';
 }
-/** React es dueño del contenedor; el HTML legacy solo escribe dentro de él. */
-export function renderLegacy(host: HTMLElement, pathname: string) {
-  const release = bindLegacyHost(host);
-  const { app, $ } = legacyScope();
-  let active = true;
-  let [, name, ...args] = pathname.split('/'); name ||= 'home';
-  const f = routes[name] || routes.home;
-  lastP = 0; window.scrollTo(0, 0);
-  const ready = (async () => {
-    try {
-      await recover();
-      if (name !== 'ayuda') { await getIndex(); await getMeta(); }
-      if (!active) return;
-      await f(...args); if (!active) return;
-      enter(app); countUp();
-      const hd = app.querySelector<El>('h1'); if (hd) hd.tabIndex = -1;
-      (hd || app).focus({ preventScroll: true });
-      const currentRun = getCurrentRun();
-      if (currentRun && name !== 'quiz' && name !== 'home') {
-        const b = document.createElement('div'); b.className = 'note run';
-        b.innerHTML = `<b>${esc(currentRun.titulo || 'Test')}</b> en curso · ${Math.min(currentRun.idx + 1, currentRun.items.length)}/${currentRun.items.length} <button class="btn" id="resume">Continuar</button>`;
-        app.prepend(b); $('#resume').onclick = () => go(hashPath('quiz'));
-      }
-    } catch (e) {
-      if (!active) return;
-      app.innerHTML = `<div class="card" role="alert"><h2>No se pudo cargar</h2><p>${navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button class="btn" id="retryRoute">Reintentar</button></div>`;
-      $('#retryRoute').onclick = () => route(); console.error(e);
-    } finally { painted(); }
-  })();
-  return { ready, dispose() { active = false; release(); } };
-}
-
 // ───────── motor de preguntas ─────────
 function startRun(cfg: any): boolean {
   if (!createRun(cfg)) { toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.'); return false; }
@@ -270,7 +222,6 @@ function reportBox(q: any, host: El) {
 
 
 // Las pantallas comparten navegación y limpieza; cada módulo conserva su estado de sesión.
-const screen = { get cleanup() { return legacyScope().screen.cleanup; }, set cleanup(fn) { legacyScope().screen.cleanup = fn; } };
 const fold = (text: unknown) => String(text || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 let cardIndex: Record<string, unknown> | undefined;
 const cardCache = new Map<string, Promise<Record<string, unknown>[]>>();
@@ -633,7 +584,7 @@ const readingServices = {
 
 
 // ───────── arranque ─────────
-export function bootLegacy(firstPaint = firstLegacyPaint): () => void {
+export function bootAppServices(): () => void {
   const controller = new AbortController(), timers: ReturnType<typeof setTimeout>[] = [];
   let stopped = false, offUpdates: (() => void) | undefined;
   const listen = (target: EventTarget, event: string, fn: () => void) => target.addEventListener(event, fn, { signal: controller.signal });
@@ -650,7 +601,7 @@ export function bootLegacy(firstPaint = firstLegacyPaint): () => void {
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js').then(reg => {
       if (!stopped) offUpdates = watchUpdates(reg);
     }).catch(() => {});
-    await firstPaint; if (stopped) return;
+    await firstReactRouteReady; if (stopped) return;
     listen(window, 'pagehide', saveRun);
     listen(document, 'visibilitychange', () => { if (document.visibilityState === 'hidden') saveRun(); });
     resumeSaved().catch(() => {});
@@ -892,7 +843,7 @@ export const studyServices: StudyServices = {
     async load() { await recover(); return { owner: isOwner(), error: sync.status.accessErr || undefined, requests: sync.status.reqs, grants: sync.status.grants }; },
     approve: async member => await sync.approve(member), reject: async uid => await sync.reject(uid), revoke: async uid => await sync.revoke(uid), confirm: ask, notify: toast,
   },
-  markReady: () => painted(),
+  markReady: () => routeReady(),
   home: {
     accountId: store.accountId,
     getActiveStudy() { const run = getCurrentRun(); return run ? { title: run.titulo || 'Test', position: run.idx, total: run.items.length } : null; },

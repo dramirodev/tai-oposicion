@@ -9,7 +9,7 @@ Complejidad relativa: **baja** (cambio localizado y bajo riesgo), **media** (var
 | 2 | Reducir contrato global `StudyServices` por feature sin mover estado persistido | Media | Implementado en PR #46; cada pantalla pide solo los servicios que usa. PR en proceso de quedar dirigida a `main`. |
 | 3 | Delimitar estado efímero compartido y evaluar Zustand en una sola rebanada | Baja/media | Implementado en PR #45 para diálogos/toasts; store vanilla, selectores y pruebas, sin persistencia. |
 | 4 | Desacoplar `core/application/legacy-engine.ts` de persistencia/datos legacy | Alta | Declarar puertos mínimos para banco, progreso, reloj/sesión según necesidad; conectar adaptadores en `app`; tests con fakes; preservar selección, respuesta, pausa, reanudación y resultados. |
-| 5 | Extraer composición/arranque de `legacy-router.ts` y retirar renderer muerto | Alta | Separar composición por feature, bootstrap/service worker/sync, controladores de flujo y representación; buscar referencias antes de retirar cualquier export/render. Probar cada ruta React y deep link. |
+| 5 | Extraer composición/arranque de `legacy-router.ts` y retirar renderer muerto | Alta | Primer slice en PR #47: renderer HTML sin rutas activas retirado y bootstrap renombrado a servicios de aplicación. La extracción adicional del arranque de service worker/sync sigue pendiente. |
 | 6 | Encapsular DTO y modelos legacy en mappers/adapters | Media/alta | UI/dominio reciben modelos internos; adapters conservan lectura compatible de datos antiguos. Contratos externos sin cambios. |
 | 7 | Cierre de guardas y limpieza validada | Media | No new architecture debt, chequeo de ciclos, lint, typecheck, tests, build y E2E de rutas críticas. Retirar únicamente código sustituido sin referencias. |
 
