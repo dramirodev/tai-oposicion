@@ -1,10 +1,20 @@
 import type { QuestionAttemptSession } from '../../../core/domain/attempts/transitions.js';
 import type { MappingResult } from '../../../core/domain/entities.js';
 import type { AttemptSessionDto } from '../dto/attempt-session.js';
+import { attemptSessionSchema } from '../schemas/attempt-session.js';
 
-const isRecord = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
-const isString = (value: unknown): value is string => typeof value === 'string';
-const isTime = (value: unknown): value is number => typeof value === 'number' && Number.isFinite(value) && value >= 0;
+const failureReasonByPath: Record<string, string> = {
+  schemaVersion: 'unsupported session schema version',
+  id: 'invalid session identifiers',
+  sourceSessionId: 'invalid session identifiers',
+  mode: 'invalid session mode',
+  status: 'invalid session status',
+  startedAt: 'invalid session sequence or start time',
+  lastSequence: 'invalid session sequence or start time',
+  endedAt: 'invalid session end time',
+  timeLimitSeconds: 'invalid time limit',
+  elapsedSeconds: 'invalid elapsed time',
+};
 
 export const attemptSessionMapper = {
   toDto(session: QuestionAttemptSession): AttemptSessionDto {
@@ -23,37 +33,30 @@ export const attemptSessionMapper = {
   },
 
   toDomain(value: unknown): MappingResult<QuestionAttemptSession> {
-    // TODO(zod): replace handwritten checks with the shared schema in phase 6.
-    if (!isRecord(value)) return { ok: false, reason: 'session must be an object' };
-    if (value.schemaVersion !== 1) return { ok: false, reason: 'unsupported session schema version' };
-    if (!isString(value.id) || (value.sourceSessionId !== undefined && !isString(value.sourceSessionId))) {
-      return { ok: false, reason: 'invalid session identifiers' };
+    const parsed = attemptSessionSchema.safeParse(value);
+    if (!parsed.success) {
+      if (!value || typeof value !== 'object' || Array.isArray(value)) {
+        return { ok: false, reason: 'session must be an object' };
+      }
+      const issue = parsed.error.issues[0];
+      const reason = issue?.code === 'custom'
+        ? issue.message
+        : failureReasonByPath[String(issue?.path[0])] ?? 'session must be an object';
+      return { ok: false, reason };
     }
-    if (value.mode !== 'practice' && value.mode !== 'simulation') return { ok: false, reason: 'invalid session mode' };
-    if (!['active', 'completed', 'interrupted'].includes(String(value.status))) return { ok: false, reason: 'invalid session status' };
-    if (!isTime(value.startedAt)
-      || typeof value.lastSequence !== 'number'
-      || !Number.isSafeInteger(value.lastSequence)
-      || value.lastSequence < 0) {
-      return { ok: false, reason: 'invalid session sequence or start time' };
-    }
-    if (value.endedAt !== undefined && !isTime(value.endedAt)) return { ok: false, reason: 'invalid session end time' };
-    if (value.timeLimitSeconds !== undefined && (!isTime(value.timeLimitSeconds) || value.timeLimitSeconds <= 0)) return { ok: false, reason: 'invalid time limit' };
-    if (value.elapsedSeconds !== undefined && !isTime(value.elapsedSeconds)) return { ok: false, reason: 'invalid elapsed time' };
-    if (value.status === 'active' && value.endedAt !== undefined) return { ok: false, reason: 'active session cannot have an end time' };
-    if (value.status !== 'active' && value.endedAt === undefined) return { ok: false, reason: 'closed session requires an end time' };
+    const session = parsed.data;
     return {
       ok: true,
       value: {
-        id: value.id,
-        ...(value.sourceSessionId !== undefined ? { sourceSessionId: value.sourceSessionId } : {}),
-        mode: value.mode,
-        status: value.status as QuestionAttemptSession['status'],
-        startedAt: value.startedAt,
-        ...(value.timeLimitSeconds !== undefined ? { timeLimitSeconds: value.timeLimitSeconds } : {}),
-        ...(value.elapsedSeconds !== undefined ? { elapsedSeconds: value.elapsedSeconds } : {}),
-        ...(value.endedAt !== undefined ? { endedAt: value.endedAt } : {}),
-        lastSequence: value.lastSequence,
+        id: session.id,
+        ...(session.sourceSessionId !== undefined ? { sourceSessionId: session.sourceSessionId } : {}),
+        mode: session.mode,
+        status: session.status,
+        startedAt: session.startedAt,
+        ...(session.timeLimitSeconds !== undefined ? { timeLimitSeconds: session.timeLimitSeconds } : {}),
+        ...(session.elapsedSeconds !== undefined ? { elapsedSeconds: session.elapsedSeconds } : {}),
+        ...(session.endedAt !== undefined ? { endedAt: session.endedAt } : {}),
+        lastSequence: session.lastSequence,
       },
     };
   },

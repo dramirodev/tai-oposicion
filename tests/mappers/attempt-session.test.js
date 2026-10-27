@@ -24,4 +24,14 @@ describe('attemptSessionMapper', () => {
     expect(attemptSessionMapper.toDomain({ schemaVersion: 1, ...session, status: 'unknown' })).toMatchObject({ ok: false });
     expect(attemptSessionMapper.toDomain({ schemaVersion: 2, ...session })).toMatchObject({ ok: false });
   });
+
+  it('keeps the existing validation reasons and ignores unrelated persisted fields', () => {
+    expect(attemptSessionMapper.toDomain(null)).toEqual({ ok: false, reason: 'session must be an object' });
+    expect(attemptSessionMapper.toDomain({ schemaVersion: 1, ...session, lastSequence: 1.5 }))
+      .toEqual({ ok: false, reason: 'invalid session sequence or start time' });
+    expect(attemptSessionMapper.toDomain({ schemaVersion: 1, ...session, status: 'active' }))
+      .toEqual({ ok: false, reason: 'active session cannot have an end time' });
+    expect(attemptSessionMapper.toDomain({ schemaVersion: 1, ...session, legacyNote: 'keep compatibility' }))
+      .toEqual({ ok: true, value: session });
+  });
 });
