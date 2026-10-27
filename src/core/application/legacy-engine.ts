@@ -19,6 +19,8 @@ import { questionContentRevision } from '../domain/attempts/highlights.js';
 import type { Index, Question, Session, SessionKind } from '../../adapters/legacy/types.js';
 import type { AttemptIntent } from '../domain/attempts/transitions.js';
 import type { AttemptTracker } from '../ports/AttemptTracker.js';
+import type { PendingRun } from './runs/pending-run.js';
+import type { SavedRunSnapshot } from '../domain/pending-run.js';
 
 // ───────── sesión en curso ─────────
 export interface RunCfg {
@@ -184,35 +186,20 @@ export function createRun(cfg: RunCfg): Run | null {
 }
 
 // La sesión en curso se guarda para sobrevivir al cierre de la app por iOS (solo sesiones del banco, no los supuestos)
-const runKey = () => 'tai.run:' + (store.accountId() || 'guest');
 store.onAccountChange(() => { clearActiveRun(); engineState.last = null; });
 const closedRuns = new WeakSet<Run>();
-const MAX_EDAD = 2 * 86400000;
-export function clearRun(): void { try { localStorage.removeItem(runKey()); } catch {} }
+export interface PendingRunStorage {
+  write(account: string | null, snapshot: SavedRunSnapshot): void;
+  clear(account: string | null): void;
+}
+let pendingRunStorage: PendingRunStorage | null = null;
+export function setPendingRunStorage(storage: PendingRunStorage | null): void { pendingRunStorage = storage; }
+export function clearRun(): void { pendingRunStorage?.clear(store.accountId()); }
 export function saveRun(): void {
   const run = engineState.run;
   if (!run || run.supTexto || !run.items.every(item => item.i && META && META[item.i])) return;
   const { kind, feedback, titulo, limit, idx, ans, times, secs, porTiempo, review } = run;
-  try { localStorage.setItem(runKey(), JSON.stringify({ kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: run.items.map(item => item.i), review: review || [], ...(feedback && run.studyStates ? { studyStates: [...run.studyStates] } : {}), confidences: run.confidences || [], discardedOptions: run.discardedOptions || [], highlights: run.highlights || [], savedAt: Date.now(), ...(run.attemptScope ? { attemptScope: run.attemptScope } : {}), ...(run.attemptSessionId ? { attemptSessionId: run.attemptSessionId } : {}), ...(run.attemptIds ? { attemptIds: run.attemptIds } : {}) })); } catch {}
-}
-interface SavedRun {
-  kind: SessionKind; feedback?: boolean; titulo?: string; limit?: number; idx: number; ans?: (number | null)[]; times?: (number | null)[];
-  secs?: number; pt?: boolean; review?: number[]; ids: string[]; savedAt?: number;
-  attemptScope?: string; attemptSessionId?: string; attemptIds?: string[]; studyStates?: ('unseen' | 'pending' | 'answered' | 'revealed')[];
-  confidences?: Confidence[]; discardedOptions?: number[][]; highlights?: Highlight[][];
-}
-export interface PendingRun { saved: SavedRun; items: Question[]; account: string | null }
-/** Sesión guardada que se puede retomar; descarta (y borra) la caducada o incoherente. */
-export async function pendingRun(full: boolean): Promise<PendingRun | null> {
-  const account = store.accountId();
-  let savedRun: SavedRun | null = null; try { savedRun = JSON.parse(localStorage.getItem(runKey()) || 'null'); } catch {}
-  if (!savedRun || engineState.run) return null;
-  if (!full && savedRun.kind !== 'rev') { clearRun(); return null; }
-  if (!Array.isArray(savedRun.ids) || !savedRun.ids.length || Date.now() - (savedRun.savedAt || 0) > MAX_EDAD) { clearRun(); return null; }
-  const items = await byIds(savedRun.ids);
-  if (account !== store.accountId()) return null;
-  if (items.length !== savedRun.ids.length || filterScoringQuestions(items, !!savedRun.feedback, question => question.np).length !== items.length) { clearRun(); return null; }
-  return { saved: savedRun, items, account };
+  pendingRunStorage?.write(store.accountId(), { kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: run.items.map(item => item.i), review: review || [], ...(feedback && run.studyStates ? { studyStates: [...run.studyStates] } : {}), confidences: run.confidences || [], discardedOptions: run.discardedOptions || [], highlights: run.highlights || [], savedAt: Date.now(), ...(run.attemptScope ? { attemptScope: run.attemptScope } : {}), ...(run.attemptSessionId ? { attemptSessionId: run.attemptSessionId } : {}), ...(run.attemptIds ? { attemptIds: run.attemptIds } : {}) });
 }
 export function resumeRun({ saved: savedRun, items, account }: PendingRun): Run | null {
   if (account !== store.accountId()) return null;

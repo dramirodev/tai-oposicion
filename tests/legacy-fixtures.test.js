@@ -7,6 +7,7 @@ const runsFixture = JSON.parse(readFileSync('tests/fixtures/legacy-runs.json', '
 let store;
 let engine;
 let data;
+let recovery;
 
 beforeEach(async () => {
   vi.resetModules();
@@ -20,6 +21,7 @@ beforeEach(async () => {
   store = await import('../src/adapters/local/legacy-store.js');
   engine = await import('../src/core/application/legacy-engine.js');
   data = await import('../src/adapters/http/legacy-data.js');
+  recovery = await import('../src/app/pending-run-composition.js');
   await data.getMeta();
 });
 
@@ -53,7 +55,7 @@ describe('fixtures de compatibilidad anteriores al historial por intento', () =>
     const saved = runsFixture[key];
     localStorage.setItem('tai.run:guest', JSON.stringify(saved));
 
-    const pending = await engine.pendingRun(true);
+    const pending = await recovery.pendingRun(true);
     expect(pending).not.toBeNull();
     const run = engine.resumeRun(pending);
 

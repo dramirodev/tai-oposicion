@@ -11,6 +11,7 @@ describe('integración del motor con el historial local', () => {
   let data;
   let tracker;
   let repository;
+  let recovery;
   let serial;
 
   beforeEach(async () => {
@@ -22,6 +23,7 @@ describe('integración del motor con el historial local', () => {
     engine = await import('../../src/core/application/legacy-engine.js');
     store = await import('../../src/adapters/local/legacy-store.js');
     data = await import('../../src/adapters/http/legacy-data.js');
+    recovery = await import('../../src/app/pending-run-composition.js');
     await data.getMeta();
     serial = 0;
     repository = createLocalAttemptRepository(`attempt-engine-${Date.now()}-${Math.random()}`);
@@ -64,7 +66,7 @@ describe('integración del motor con el historial local', () => {
       kind: 'sim', idx: 0, ids: [question.i], savedAt: Date.now(), ans: [],
     };
     localStorage.setItem(`tai.run:${store.accountId() || 'guest'}`, JSON.stringify(saved));
-    const pending = await engine.pendingRun(true);
+    const pending = await recovery.pendingRun(true);
     const resumed = engine.resumeRun(pending);
     expect(resumed.attemptSessionId).toBeUndefined();
     await tracker.flush();
@@ -94,14 +96,14 @@ describe('integración del motor con el historial local', () => {
     engine.answerQuestion(run, question, -1, 0);
     engine.saveRun();
     engine.clearActiveRun();
-    const pending = await engine.pendingRun(true);
+    const pending = await recovery.pendingRun(true);
     const resumed = engine.resumeRun(pending);
     expect(resumed.studyStates[0]).toBe('pending');
 
     expect(engine.revealCurrentSolution()).toBe(true);
     engine.saveRun();
     engine.clearActiveRun();
-    const afterReveal = engine.resumeRun(await engine.pendingRun(true));
+    const afterReveal = engine.resumeRun(await recovery.pendingRun(true));
     expect(afterReveal.studyStates[0]).toBe('revealed');
     expect(afterReveal.ans[0]).toBeUndefined();
     engine.answerQuestion(afterReveal, question, question.c, 0);
@@ -113,7 +115,7 @@ describe('integración del motor con el historial local', () => {
     localStorage.setItem(`tai.run:${store.accountId() || 'guest'}`, JSON.stringify({
       kind: 'test', feedback: true, idx: 0, ids: [question.i], savedAt: Date.now(), ans: [-1],
     }));
-    expect(engine.resumeRun(await engine.pendingRun(true)).studyStates[0]).toBe('revealed');
+    expect(engine.resumeRun(await recovery.pendingRun(true)).studyStates[0]).toBe('revealed');
     engine.clearActiveRun();
   });
 
@@ -136,7 +138,7 @@ describe('integración del motor con el historial local', () => {
     engine.saveRun();
     engine.setAttemptTracker(null);
     engine.clearActiveRun();
-    const resumed = engine.resumeRun(await engine.pendingRun(true));
+    const resumed = engine.resumeRun(await recovery.pendingRun(true));
     expect(resumed.confidences[0]).toBe('guess');
     expect(resumed.discardedOptions[0]).toEqual([1]);
     expect(resumed.highlights[0]).toMatchObject([{ id: 'highlight-1', timing: 'before-answer' }]);
