@@ -1,7 +1,7 @@
 import { expect, it, vi } from 'vitest';
-import { act, createElement } from 'react';
+import { createElement } from 'react';
 import { renderApp } from './helpers/render-app.js';
-import { screen } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { HomePage } from '../src/features/home/HomePage.tsx';
 it('keeps guest quick-session actions single-flight and hides restricted training', async () => {

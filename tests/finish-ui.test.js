@@ -2,7 +2,7 @@ import 'fake-indexeddb/auto';
 import {afterEach,it,expect,vi} from 'vitest';
 import {readFileSync} from 'node:fs';
 import path from 'node:path';
-vi.mock('../src/adapters/firebase/sync-facade.js',()=>({status:{user:null,state:'sin sesión',configured:false},setAttemptRepository:()=>{},init:async()=>{},onStatus:()=>()=>{},login:async()=>{},logout:async()=>{},retry:()=>{}}));
+vi.mock('../src/adapters/firebase/sync-facade.js',()=>({status:{user:null,state:'sin sesión',configured:false,authResolved:true},setAttemptRepository:()=>{},init:async()=>{},onStatus:()=>()=>{},login:async()=>{},logout:async()=>{},retry:()=>{}}));
 let unmountApp;
 afterEach(()=>{unmountApp?.();unmountApp=undefined;vi.unstubAllGlobals();});
 it('doble pulsación en Terminar no duplica el intento de examen',async()=>{
