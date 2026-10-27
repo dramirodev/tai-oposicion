@@ -9,10 +9,11 @@ import { loadQuestionEvolution, loadStrategyReportForPeriod } from './strategy-c
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
 import type { StatsServices } from '../shared/ui/study-services.js';
 import type { StatsSnapshot } from '../core/application/stats/statistics-model.js';
-import { summarizeTopicProgress, type TopicPerformanceRecord } from '../core/application/stats/summarize-topic-progress.js';
+import { summarizeTopicProgress } from '../core/application/stats/summarize-topic-progress.js';
 import type { QuestionRecord } from '../core/domain/question-record.js';
 import type { RunCfg } from '../core/application/legacy-engine.js';
 import { hashPath } from '../shared/navigation/paths.js';
+import { aggregateQuestionPerformance } from '../core/application/stats/aggregate-question-performance.js';
 
 interface StatsActions { go(path: string): void; startRun(run: RunCfg): boolean; startRepaso(): void; trapTest(count: number, traps: number[]): Promise<{ items: QuestionRecord[] }>; }
 
@@ -23,24 +24,19 @@ export function createStatsServices(actions: StatsActions): StatsServices {
       const index = await getIndex(); await getMeta();
       if (account !== store.accountId()) throw new Error('La cuenta cambió mientras se cargaban las estadísticas.');
       const stats = store.getStats();
-      const questionProgress: TopicPerformanceRecord[] = [], traps: Record<string, number[]> = {}, origins: Record<string, number[]> = {}, types: Record<string, number[]> = {};
-      for (const id in stats) {
-        const record = stats[id], meta = META[id]; if (!meta) continue;
-        const failures = record[0] - record[1];
-        questionProgress.push({ topicId: meta[0], attempts: record[0], correct: record[1], seen: 1 });
-        const origin = origins[meta[1]] ||= [0, 0]; origin[0] += record[0]; origin[1] += record[1];
-        if (meta[2]) { const type = types[meta[2]] ||= [0, 0]; type[0] += record[0]; type[1] += record[1]; }
-        for (const trap of meta[3]) { const row = traps[trap] ||= [0, 0]; row[0] += record[0]; row[1] += failures; }
-      }
-      const topicProgress = summarizeTopicProgress(questionProgress, index.temas.map(topic => ({ id: topic.id, name: topic.nombre, total: topic.n })));
+      const performance = aggregateQuestionPerformance(Object.entries(stats).flatMap(([id, record]) => {
+        const meta = META[id];
+        return meta ? [{ topicId: meta[0], attempts: record[0], correct: record[1], origin: meta[1], type: meta[2], traps: meta[3] }] : [];
+      }));
+      const topicProgress = summarizeTopicProgress(performance.topicProgress, index.temas.map(topic => ({ id: topic.id, name: topic.nombre, total: topic.n })));
       const sessions = store.getSessions().slice(0, 12);
       const reviewLoad = cargaRepasos(stats, now(), 14), failureReasons = motivosFallo(stats), speed = velocidad(stats);
       const domains = dominioTemas(index).map(topic => ({ id: topic.id, name: topic.nombre, accuracy: topic.prec, days: topic.dias, status: topic.est as StatsSnapshot['domains'][number]['status'], reason: topic.why, due: topic.due, score: topic.score }));
       const simulations = simHistory(store.getSessions()).map(session => ({ id: session.id, ts: session.ts, nota: session.nota, part: session.part, dNota: session.dNota, a: session.a, f: session.f, b: session.b, secs: session.secs }));
       return { generatedAt: now(), ...topicProgress, failureCount: falladasIds().length, sessions, reviewLoad, failureReasons, lucky: suertes(stats), speed: { count: speed.n, total: speed.tot, percent: speed.p },
-        trapRates: Object.entries(traps).filter(([, row]) => row[0] >= 5).map(([id, row]) => ({ id, label: TRAMPAS[id] || id, attempts: row[0], failures: row[1], rate: percentage(row[1], row[0]) })).sort((a, b) => b.rate - a.rate),
-        origins: Object.entries(origins).map(([id, row]) => ({ label: ORIGEN[id] || id, answers: row[0], accuracy: percentage(row[1], row[0]) })),
-        types: Object.entries(types).map(([id, row]) => ({ id, label: TIPOS[id] || id, answers: row[0], accuracy: percentage(row[1], row[0]) })), domains,
+        trapRates: Object.entries(performance.traps).filter(([, row]) => row[0] >= 5).map(([id, row]) => ({ id, label: TRAMPAS[id] || id, attempts: row[0], failures: row[1], rate: percentage(row[1], row[0]) })).sort((a, b) => b.rate - a.rate),
+        origins: Object.entries(performance.origins).map(([id, row]) => ({ label: ORIGEN[id] || id, answers: row[0], accuracy: percentage(row[1], row[0]) })),
+        types: Object.entries(performance.types).map(([id, row]) => ({ id, label: TIPOS[id] || id, answers: row[0], accuracy: percentage(row[1], row[0]) })), domains,
         simulations, slow: slowList(stats, { limit: 15 }).map(item => ({ id: item.id, averageSeconds: item.avg, attempts: item.n, correct: item.ok, lastOutcome: item.last })) };
     },
     getPreference(key) {
