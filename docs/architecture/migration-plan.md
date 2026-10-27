@@ -15,16 +15,14 @@ Complejidad relativa: **baja** (cambio localizado y bajo riesgo), **media** (var
 
 ### Estado de ejecución — actualización 2026-10-27
 
-- Base comprobada: `origin/main` `7e2cd29`, que contiene la PR #43 de iconografía y hover táctil.
-- PR #44 fue fusionada por error en `fix/menu-iconography-mobile-hover`; sus cambios de estadísticas no llegaron a `main`. La rama de reemplazo `feat/architecture-stats-main` / PR #49 apunta directamente a `main`.
-- PR #45 (Zustand), #46 (servicios por feature) y #47 (retirada del renderer inactivo) están siendo rebasadas como cambios independientes contra `main`.
-- Orden 4: en curso la extracción acotada de recuperación de sesión guardada; mantiene formato, almacenamiento por cuenta, expiración, acceso y comprobación de sesión tras la consulta.
-- Órdenes 5 (bootstrap restante), 6 (DTO/mappers) y 7 (guardas finales) siguen pendientes después de este slice.
-- Orden 0: revalidado en `origin/main` `d745aa6`, que incluye la PR #40. La PR de iconografía #43 sigue abierta; los slices siguientes se apilan sobre ella para mantener una base reproducible.
-- Orden 1: en curso en la rama `feat/architecture-stats-slice`. Se movieron modelos de respuesta del dashboard a `core/application/stats`, se extrajo la agregación de rendimiento por tema a una función pura tipada y se añadieron pruebas para umbral, orden, totales y ausencia de datos. La lectura de Firebase/almacén local sigue en la composición existente: no se añadió un puerto adicional sin una frontera de IO distinta que lo justificara. UI, persistencia y contratos externos no cambian.
-- Orden 2: pendiente; `StudyServices` todavía concentra servicios por feature.
-- Orden 3: pendiente; Zustand sigue sin instalarse. Context7 consultó la documentación de `/pmndrs/zustand` v5.0.12, que documenta el store vanilla y `useStore` con selector; candidato a evaluar: diálogos/toasts efímeros.
-- Órdenes 4–7: pendientes; no se han tocado el motor, el router ni los DTO de persistencia.
+- Base comprobada: `origin/main` `7d4a5bc`, con las PR #43, #45, #48 y #49 integradas.
+- PR #44 se fusionó accidentalmente en la rama de iconografía; su reemplazo #49 incorporó el slice de estadísticas a `main`.
+- PR #45 (Zustand para estado efímero de diálogos/toasts) está integrada en `main`.
+- Orden 2: esta PR #46 aísla los servicios usados por cada pantalla; su rama se rebasó sobre `main` para quitar la dependencia de #45.
+- Orden 4: pendiente publicar la extracción acotada de recuperación de sesión guardada. La implementación local conserva el formato `tai.run:<cuenta>`, el almacenamiento por cuenta y la validación de sesión; hay que rebasarla y revalidarla contra el `main` actual.
+- Orden 5: PR #47 retira el renderer React legacy sin reemplazar el arranque todavía necesario; apunta directamente a `main` y espera validación remota.
+- Órdenes 6 (DTO/mappers) y 7 (guardas finales/ciclos) siguen pendientes, después de revisar las fronteras activas y no como limpieza mecánica.
+- Nueva tarea de producto pendiente: loading accesible en Inicio mientras se resuelven los datos necesarios y Firebase Auth; mostrar después la vista adecuada a una sesión confirmada o a invitado. Ver detalle y casos de validación en el handoff.
 
 ## Procedimiento por slice
 

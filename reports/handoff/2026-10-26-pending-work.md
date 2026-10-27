@@ -260,3 +260,15 @@ Esta sección sustituye los estados de PR anteriores que quedaron obsoletos:
 - Mantener intacto `tests/design-training.test.js` sin confirmar del checkout principal.
 
 Siguiente paso: comprobar la mergeabilidad de #45; luego aplanar #46 y #47 sobre `main`, revisar sus diffs y validar antes de actualizarlas. Publicar después la recuperación de sesión como una PR independiente contra `main` y continuar el bootstrap restante, DTO/mappers y guardas de ciclos.
+
+## Nueva tarea — carga inicial de Inicio (2026-10-27)
+
+**PENDIENTE, implementación en PR independiente.** Mostrar un loading accesible en Inicio hasta que terminen las cargas de datos que necesita y se resuelva el estado de Firebase Auth. Después, presentar la variante adecuada a una sesión confirmada o a un usuario invitado. No enseñar datos parciales ni asumir autenticación durante la espera. Antes de implementar, identificar fuentes de datos y estados de carga actuales; preservar acceso invitado, uso offline y contenido. Validar carga lenta, fallo de lectura, sesión autenticada, usuario sin sesión y cambios de ruta durante la carga.
+
+## Continuación de arquitectura — estado comprobado 2026-10-27
+
+- PR #45 se integró en `main` (`7d4a5bc`).
+- PR #46 se está reaplicando como cambio independiente directamente sobre `main`; su versión anterior dependía de #45 y tenía conflictos al cambiar la base.
+- PR #47 apunta directamente a `main`; GitHub la marcó mergeable con la validación remota pendiente en la última consulta.
+- `.gitignore` ya contiene `/docs/` y `/reports/`. Se mantienen los archivos que ya están versionados; esas reglas ignoran contenido nuevo en esas carpetas.
+- El checkout principal permanece desactualizado y contiene un cambio local ajeno en `tests/design-training.test.js`; no tocarlo.
