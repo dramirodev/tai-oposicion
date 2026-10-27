@@ -2,7 +2,7 @@ import * as store from '../adapters/local/legacy-store.js';
 import { clearPendingRun, readPendingRun, writePendingRun } from '../adapters/local/pending-run-storage.js';
 import { byIds } from '../adapters/http/legacy-data.js';
 import { loadPendingRun } from '../core/application/runs/pending-run.js';
-import { clearRun, hasActiveRun, saveRun, setPendingRunStorage } from '../core/application/legacy-engine.js';
+import { clearRun, hasActiveRun, saveRun, setPendingRunStorage } from './study-engine-composition.js';
 
 setPendingRunStorage({ write: writePendingRun, clear: clearPendingRun });
 

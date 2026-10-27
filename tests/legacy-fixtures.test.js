@@ -19,7 +19,7 @@ beforeEach(async () => {
     json: async () => JSON.parse(readFileSync(`public/${url}`, 'utf8')),
   }));
   store = await import('../src/adapters/local/legacy-store.js');
-  engine = await import('../src/core/application/legacy-engine.js');
+  engine = await import('../src/app/study-engine-composition.js');
   data = await import('../src/adapters/http/legacy-data.js');
   recovery = await import('../src/app/pending-run-composition.js');
   await data.getMeta();

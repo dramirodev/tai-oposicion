@@ -9,7 +9,7 @@ beforeEach(async () => {
   document.body.innerHTML = '<main id="app"></main>';
   vi.stubGlobal('scrollTo', vi.fn()); vi.stubGlobal('matchMedia',()=>({matches:false}));
   vi.stubGlobal('fetch', async url => ({ ok:true, json:async()=>JSON.parse(readFileSync(path.join('public',String(url)), 'utf8')) }));
-  store = await import('../src/adapters/local/legacy-store.js'); engine = await import('../src/core/application/legacy-engine.js');
+  store = await import('../src/adapters/local/legacy-store.js'); engine = await import('../src/app/study-engine-composition.js');
   routes={};
   const React = await import('react'); rtl = await import('@testing-library/react');
   const { MemoryRouter } = await import('react-router');
@@ -77,9 +77,9 @@ it('buscar y navegar no modifica el progreso y una cuenta nueva no recibe la pan
   await routes.stats();
   document.querySelector('[aria-label="Sección de progreso"] button:nth-child(2)').click();
   expect(studyData(JSON.parse(store.exportAll()))).toEqual(studyData(before));
-  const data=await import('../src/adapters/http/legacy-data.js');
+  const data=await import('../src/app/study-engine-composition.js');
   let finish;
-  const spy=vi.spyOn(data,'dueList').mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
+  const spy=vi.spyOn(data,'dueQuestionIds').mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));
   const pending=routes.home({ waitForReady: false });
   await vi.waitFor(()=>expect(finish).toBeTypeOf('function'));
   activeView.unmount(); activeView=undefined;

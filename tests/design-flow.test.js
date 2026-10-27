@@ -11,7 +11,7 @@ beforeAll(async()=>{
  document.documentElement.innerHTML=readFileSync('index.html','utf8');localStorage.clear();
  vi.stubGlobal('matchMedia',()=>({matches:true}));vi.stubGlobal('scrollTo',()=>{});Element.prototype.scrollIntoView=()=>{};
  vi.stubGlobal('fetch',async url=>{try{return {ok:true,json:async()=>JSON.parse(readFileSync(path.join('public',String(url)),'utf8'))};}catch{return {ok:false,json:async()=>null};}});
- await import('../src/app/main');router=(await import('../src/app/route-runtime.js')).router;store=await import('../src/adapters/local/legacy-store.js');engine=await import('../src/core/application/legacy-engine.js');recovery=await import('../src/app/pending-run-composition.js');await waitText('Sesión rápida');
+ await import('../src/app/main');router=(await import('../src/app/route-runtime.js')).router;store=await import('../src/adapters/local/legacy-store.js');engine=await import('../src/app/study-engine-composition.js');recovery=await import('../src/app/pending-run-composition.js');await waitText('Sesión rápida');
 });
 beforeEach(async()=>{store.resetAll();engine.clearActiveRun();engine.clearLastResult();await navigate('home','Sesión rápida');});
 afterAll(()=>{vi.unstubAllGlobals();});

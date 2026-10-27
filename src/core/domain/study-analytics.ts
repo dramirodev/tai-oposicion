@@ -23,6 +23,20 @@ export interface WeeklyStudySummary {
   secondsPerQuestion: number | null;
 }
 
+/** Counts consecutive local calendar days with at least one recorded answer. */
+export function calculateStudyStreak(answerTimestamps: readonly number[], now: number): number {
+  const studiedDays = new Set(answerTimestamps.map(timestamp => new Date(timestamp).toDateString()));
+  const day = new Date(now);
+  if (!studiedDays.has(day.toDateString())) day.setDate(day.getDate() - 1);
+
+  let streak = 0;
+  while (studiedDays.has(day.toDateString())) {
+    streak++;
+    day.setDate(day.getDate() - 1);
+  }
+  return streak;
+}
+
 /** Monday at local midnight for the week containing the supplied timestamp. */
 export function startOfStudyWeek(timestamp: number): number {
   const date = new Date(timestamp);

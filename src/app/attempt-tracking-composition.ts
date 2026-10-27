@@ -1,5 +1,5 @@
 import { createAttemptTracker } from '../core/application/attempts/create-attempt-tracker.js';
-import { setAttemptTracker } from '../core/application/legacy-engine.js';
+import { setAttemptTracker } from './study-engine-composition.js';
 import { localAttemptRepository } from '../adapters/local/attempt-repository.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
 import { toast } from '../shared/ui/dialog-actions.js';

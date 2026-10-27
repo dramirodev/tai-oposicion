@@ -1,5 +1,11 @@
 import { cleanCfg, cleanCfgSetting } from './config.js';
 import { CARD_REVIEW_INTERVALS_DAYS, CALENDAR_DAY_MILLISECONDS } from '../../core/domain/spaced-repetition.js';
+import { markLuckyQuestion, markQuestionSyllabusReviewed, recordQuestionAnswer, recordQuestionFailureReason, scheduleDoubtfulQuestion } from '../../core/domain/question-progress.js';
+import { gradeCardReview } from '../../core/domain/card-review.js';
+import { mergeQuestionProgress, questionProgressNeedsSync } from '../../core/domain/progress-merge.js';
+import { mergeSessionHistory, MAX_SESSION_HISTORY } from '../../core/domain/session-history.js';
+import { statsMapper } from './mappers/stats.js';
+import { cardMapper } from './mappers/card.js';
 import type { AppState, CardMap, CardRec, Cfg, ReportMap, ReportState, Res, SeenDoc, Session, StatMap, StatRec } from '../legacy/types.js';
 import {
   clearPendingLegacyAdoption,
@@ -25,7 +31,6 @@ import {
   cleanSeen,
   cleanSessions,
   cleanStats,
-  failureStreak,
 } from './mappers/stored-progress.js';
 export {
   CARD_RE,
@@ -54,7 +59,7 @@ export const accountId = () => account;
 const accountListeners = new Set<() => void>();
 export const onAccountChange = (fn: () => void) => { accountListeners.add(fn); return () => accountListeners.delete(fn); };
 
-export const MAX_SESIONES = 300;
+export const MAX_SESIONES = MAX_SESSION_HISTORY;
 export const DAY = CALENDAR_DAY_MILLISECONDS;
 export const INTERVALS = CARD_REVIEW_INTERVALS_DAYS; // días
 export const LUCKY_DAYS = 1; // las acertadas «por suerte» vuelven cada día hasta confirmarlas
@@ -188,23 +193,12 @@ export function markDirty(tema: string): void { dirty.add(tema); }
 // Aplica un resultado: res = 1 acierto, 0 fallo, 2 blanco
 // secs (opcional): segundos que tardó en contestar; se acumulan para detectar preguntas lentas
 export function record(id: string, tema: string, res: Res, now = Date.now(), secs?: number): void {
-  const statRecord = appState.stats[id] || [0, 0, 0, -1, 0, 0, 0, 0, 0, 0];
-  const streak = failureStreak(statRecord);
+  const persistedRecord = appState.stats[id];
+  const mapped = persistedRecord ? statsMapper.toDomain(persistedRecord) : null;
+  const statistics = recordQuestionAnswer(mapped?.ok ? mapped.value : undefined, res, now, secs);
+  const statRecord = statsMapper.toDto(statistics);
+  // Keep the historic 12-slot tuple expected by sync clients and old records.
   while (statRecord.length < 12) statRecord.push(0);
-  statRecord[10] = res === 0 ? 0 : res === 1 && streak >= 0 ? Math.min(3, streak + 1) : streak;
-  if (typeof secs === 'number' && secs > 0 && res !== 2) { statRecord[7] += Math.min(120, secs); statRecord[8] += 1; }
-  statRecord[0] += 1;
-  if (res === 1) statRecord[1] += 1;
-  statRecord[2] = now; statRecord[5] = res;
-  const luck = statRecord[9]; // 6 = acierto «por suerte» pendiente (0/2 confirmaciones) · 8 = 1/2
-  statRecord[9] = 0; // el motivo se anota tras cada fallo
-  if (luck && res === 2) statRecord[9] = luck; // dejar en blanco no confirma ni quita la marca
-  if (res === 0) { statRecord[3] = 0; statRecord[4] = now + INTERVALS[0] * DAY; }
-  else if (res === 1 && luck === 6) { statRecord[9] = 8; statRecord[3] = 0; statRecord[4] = now + LUCKY_DAYS * DAY; } // una vez más bien y se quita la marca
-  else if (res === 1 && statRecord[3] >= 0) {
-    if (statRecord[3] + 1 >= INTERVALS.length) { statRecord[3] = -1; statRecord[4] = 0; }
-    else { statRecord[3] += 1; statRecord[4] = now + INTERVALS[statRecord[3]] * DAY; }
-  }
   appState.stats[id] = statRecord;
   dirty.add(tema);
   persist(); emit();
@@ -213,24 +207,33 @@ export function record(id: string, tema: string, res: Res, now = Date.now(), sec
 // «Acerté dudando»: el acierto ya está registrado; la pregunta entra (o vuelve) a la cola a +2 días.
 export function doubt(id: string, tema: string, now = Date.now()): void {
   const statRecord = appState.stats[id]; if (!statRecord) return;
-  statRecord[3] = 0; statRecord[4] = now + INTERVALS[0] * DAY;
+  const mapped = statsMapper.toDomain(statRecord);
+  if (!mapped.ok) return;
+  const updated = scheduleDoubtfulQuestion(mapped.value, now);
+  if (!updated) return;
+  appState.stats[id] = statsMapper.toDto(updated);
   dirty.add(tema); persist(); emit();
   if (syncer) syncer.schedule();
 }
 // Motivo del último fallo: 1 contenido, 2 trampa, 3 duda entre dos, 4 despiste (saca la pregunta de la cola), 5 no lo sabía
 export function setMotivo(id: string, tema: string, reasonCode: number, now = Date.now()): void {
-  const statRecord = appState.stats[id]; if (!statRecord || statRecord[5] !== 0 || !(reasonCode >= 1 && reasonCode <= 5 || reasonCode === 7)) return;
-  while (statRecord.length < 10) statRecord.push(0);
-  statRecord[9] = reasonCode; statRecord[2] = now;
-  if (reasonCode === 4) { statRecord[3] = -1; statRecord[4] = 0; }
+  const statRecord = appState.stats[id]; if (!statRecord) return;
+  const mapped = statsMapper.toDomain(statRecord);
+  if (!mapped.ok) return;
+  const updated = recordQuestionFailureReason(mapped.value, reasonCode, now);
+  if (!updated) return;
+  appState.stats[id] = statsMapper.toDto(updated);
   dirty.add(tema); persist(); emit();
   if (syncer) syncer.schedule();
 }
 // «Fue suerte»: acierto sin saberlo; entra (o vuelve) a la cola a +1 día y debe acertarse 2 veces seguidas para quitar la marca y queda anotado (r[9] = 6)
 export function suerte(id: string, tema: string, now = Date.now()): void {
-  const statRecord = appState.stats[id]; if (!statRecord || statRecord[5] !== 1) return;
-  while (statRecord.length < 10) statRecord.push(0);
-  statRecord[9] = 6; statRecord[3] = 0; statRecord[4] = now + LUCKY_DAYS * DAY; statRecord[2] = now;
+  const statRecord = appState.stats[id]; if (!statRecord) return;
+  const mapped = statsMapper.toDomain(statRecord);
+  if (!mapped.ok) return;
+  const updated = markLuckyQuestion(mapped.value, now);
+  if (!updated) return;
+  appState.stats[id] = statsMapper.toDto(updated);
   dirty.add(tema); persist(); emit();
   if (syncer) syncer.schedule();
 }
@@ -244,10 +247,11 @@ export function toggleFlag(id: string, tema: string): number {
 // Marca independiente de respuestas y del calendario; viaja en el mismo registro sincronizado.
 export function setReviewed(id: string, tema: string, value: boolean): void {
   const statRecord = appState.stats[id]; if (!statRecord || typeof value !== 'boolean') return;
-  const streak = failureStreak(statRecord);
-  while (statRecord.length < 12) statRecord.push(0);
-  statRecord[10] = streak; statRecord[11] = value ? 1 : 0;
-  statRecord[12] = Math.max(Date.now(), reviewClock(statRecord) + 1); // reloj independiente: no cambia el día de estudio
+  const mapped = statsMapper.toDomain(statRecord);
+  if (!mapped.ok) return;
+  const updated = markQuestionSyllabusReviewed(mapped.value, value, Date.now());
+  if (!updated) return;
+  appState.stats[id] = statsMapper.toDto(updated); // reloj independiente: no cambia el día de estudio
   dirty.add(tema); persist(); emit();
   if (syncer) syncer.schedule();
 }
@@ -259,7 +263,14 @@ export function addSession(newSession: Session): void {
 }
 // [12] fecha de cambio de la marca de temario; independiente del resultado [2].
 export const reviewClock = (statRecord?: StatRec) => statRecord ? (statRecord[12] ?? (statRecord[11] === 1 ? statRecord[2] : 0)) : 0;
-export const needsSync = (local: StatRec, remote?: StatRec) => !remote || local[2] > remote[2] || reviewClock(local) > reviewClock(remote);
+export const needsSync = (local: StatRec, remote?: StatRec) => {
+  const localProgress = statsMapper.toDomain(local);
+  if (!remote) return true;
+  const remoteProgress = statsMapper.toDomain(remote);
+  return localProgress.ok && remoteProgress.ok
+    ? questionProgressNeedsSync(localProgress.value, remoteProgress.value)
+    : local[2] > remote[2] || reviewClock(local) > reviewClock(remote);
+};
 // Mezcla registros remotos (gana el más reciente por pregunta). Devuelve true si cambió algo local.
 export function mergeRemote(map0: unknown): boolean {
   const map = cleanStats(map0);
@@ -267,16 +278,9 @@ export function mergeRemote(map0: unknown): boolean {
   for (const id of Object.keys(map)) {
     const statRecord = appState.stats[id], statRecordItem = map[id];
     if (!statRecord) { appState.stats[id] = statRecordItem; changed = true; continue; }
-    const base = statRecordItem[2] > statRecord[2] ? statRecordItem : statRecord;
-    const review = reviewClock(statRecordItem) > reviewClock(statRecord) ? statRecordItem : statRecord;
-    const merged = base.slice();
-    if (base.length > 10 || review.length > 10) {
-      const streak = failureStreak(base);
-      while (merged.length < 12) merged.push(0);
-      merged[10] = streak;
-      merged[11] = review[11] === 1 ? 1 : 0;
-      if (reviewClock(review)) merged[12] = reviewClock(review);
-    }
+    const currentProgress = statsMapper.toDomain(statRecord), incomingProgress = statsMapper.toDomain(statRecordItem);
+    if (!currentProgress.ok || !incomingProgress.ok) continue;
+    const merged = statsMapper.toDto(mergeQuestionProgress(currentProgress.value, incomingProgress.value));
     if (JSON.stringify(statRecord) !== JSON.stringify(merged)) { appState.stats[id] = merged; changed = true; }
   }
   if (changed) { persist(); emit(); }
@@ -284,11 +288,9 @@ export function mergeRemote(map0: unknown): boolean {
 }
 export function mergeSessions(list0: unknown): boolean {
   const list = cleanSessions(list0);
-  const have = new Set(appState.sessions.map(storedSession => storedSession.id));
-  let changed = false;
-  for (const incomingSession of list) if (!have.has(incomingSession.id)) { appState.sessions.push(incomingSession); have.add(incomingSession.id); changed = true; }
-  if (changed) { appState.sessions.sort((leftSession, rightSession) => rightSession.ts - leftSession.ts); appState.sessions = appState.sessions.slice(0, MAX_SESIONES); persist(); emit(); }
-  return changed;
+  const merged = mergeSessionHistory(appState.sessions, list, MAX_SESIONES);
+  if (merged.changed) { appState.sessions = [...merged.sessions]; persist(); emit(); }
+  return merged.changed;
 }
 // ── API de tarjetas ──
 const deletedCard = (result?: CardRec) => result?.[5] === -1;
@@ -319,16 +321,10 @@ export function removeCard(id: string): void {
 export function gradeCard(id: string, grade: number, now = Date.now()): CardRec | null {
   if (!CARD_RE.test(id) || ![0, 1, 2].includes(grade)) return null;
   appState.cards = appState.cards || createDictionary();
-  const cardRecord = cardRec(id) || [0, 0, now, -1, 0, 0];
-  const isFirstReview = cardRecord[0] === 0;
-  cardRecord[0] += 1; cardRecord[2] = Math.max(now, (appState.cards[id]?.[2] || 0) + 1); cardRecord[5] = grade;
-  if (grade < 2) { cardRecord[3] = 0; cardRecord[4] = now + INTERVALS[0] * DAY; }
-  else {
-    cardRecord[1] += 1;
-    if (isFirstReview || cardRecord[3] < 0) { cardRecord[3] = 0; cardRecord[4] = now + INTERVALS[0] * DAY; }
-    else if (cardRecord[3] + 1 >= INTERVALS.length) { cardRecord[3] = -1; cardRecord[4] = 0; }
-    else { cardRecord[3] += 1; cardRecord[4] = now + INTERVALS[cardRecord[3]] * DAY; }
-  }
+  const current = cardRec(id);
+  const mapped = current ? cardMapper.toDomain(current) : null;
+  const graded = gradeCardReview(mapped?.ok ? mapped.value : undefined, grade as 0 | 1 | 2, now, appState.cards[id]?.[2] || 0);
+  const cardRecord = cardMapper.toDto(graded);
   appState.cards[id] = cardRecord; persist(); emit(); if (syncer && syncer.pushCards) syncer.pushCards(appState.cards);
   return cardRecord;
 }

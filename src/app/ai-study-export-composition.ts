@@ -7,7 +7,7 @@ import * as sync from '../adapters/firebase/sync-facade.js';
 import { deleteDetailedStudyHistory } from '../core/application/attempts/delete-detailed-study-history.js';
 import { listAiStudyExportSessions, prepareAiStudyExport } from '../core/application/attempts/prepare-ai-study-export.js';
 import type { AttemptMode } from '../core/domain/attempts/transitions.js';
-import { flushAttemptTracking } from '../core/application/legacy-engine.js';
+import { flushAttemptTracking } from './study-engine-composition.js';
 import { renderAiStudyExportMarkdown } from '../shared/presentation/ai-study-export-markdown.js';
 
 const PREFERRED_PART_BYTES = 500_000;

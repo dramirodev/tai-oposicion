@@ -5,28 +5,31 @@ import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
 import * as store from '../adapters/local/legacy-store.js';
 import { localGuestQuestionHistoryRepository } from '../adapters/local/guest-question-history.js';
-import { escapeHtml as esc, formatTime as fmtT, percentage as pct } from '../shared/presentation/format.js';
+import { localReadingQuestionHistoryRepository } from '../adapters/local/reading-question-history.js';
+import { escapeHtml as esc, percentage as pct } from '../shared/presentation/format.js';
 import { richHtml, hiliteHtml } from '../shared/presentation/study-text.js';
 import { ERROR_REPORT_REASONS as MOTIVOS, FAILURE_REASONS as MOTIVOS_FALLO } from '../shared/presentation/study-labels.js';
 import { normalizeUiPreferences } from '../shared/presentation/ui-preferences.js';
-import { asksForNegativeOption, minimumReadingSeconds } from '../core/domain/reading-strategy.js';
+import { asksForNegativeOption, evaluateReadingWords, minimumReadingSeconds } from '../core/domain/reading-strategy.js';
 import { calculateExamScore as nota } from '../core/domain/scoring.js';
-import { isQuestionAllowed, composeWeightedQuestions } from '../core/domain/selection.js';
+import { evaluateTrapAnswer, recordTrapDetections } from '../core/domain/traps.js';
 import { randomStudyOrder as shuffle } from '../shared/ui/study-random.js';
-import { simulationPace as ritmoSimulacro } from '../core/domain/simulation-analysis.js';
 import { swipeDirection, studyKeyAction } from '../shared/ui/study-input.js';
 import { velocidad, quickQuestionCount } from '../features/stats/analytics-mapper.js';
-import { mapSimulationResultToLegacy } from './simulation-result-mapper.js';
-import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, pick, dueList, byIds, fetchJson } from '../adapters/http/legacy-data.js';
+import { calculateStudyStreak } from '../core/domain/study-analytics.js';
+import { analyzeSimulation } from '../core/domain/simulation-analysis.js';
+import { renderSimulationAnalysisView } from '../features/simulation/simulation-analysis-view.js';
+import { previewBackupImport } from '../core/application/settings/backup-preview.js';
+import { META, getIndex, getMeta, temaOf, idsOfTema, getTema, getSup, temaName, now, byIds, fetchJson } from '../adapters/http/legacy-data.js';
 import { $, L, toast, ask, type El } from '../shared/ui/legacy-dom.js';
 import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
 import { BLOQUES, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
 import { createCardsController } from '../features/cards/cards-controller.js';
 import { cardFromFailedQuestion } from '../features/cards/flashcard-mapper.js';
-import type { FailureQuestion, LightningQuestion, ReadingOutcome, ReadingProgress, ReadingPrompt, ReadingWordResult, StudyCard, TrapAnswer, TrapPrompt, TrapRun } from '../shared/ui/study-services.js';
+import type { LightningQuestion, ReadingOutcome, ReadingProgress, ReadingPrompt, ReadingWordResult, StudyCard, TrapAnswer, TrapPrompt, TrapRun } from '../shared/ui/study-services.js';
 import { isFull, isOwner, accessLevel, GUEST_ROUTES } from '../adapters/legacy/access.js';
-import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, clearActiveRun, createRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, revealCurrentSolution, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, setCurrentConfidence, toggleCurrentDiscardedOption, addCurrentHighlight, removeCurrentHighlight } from '../core/application/legacy-engine.js';
+import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, clearActiveRun, createRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, revealCurrentSolution, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, dueQuestionIds, selectQuestionsForTopics, selectWeightedSimulationQuestions, setCurrentConfidence, toggleCurrentDiscardedOption, addCurrentHighlight, removeCurrentHighlight } from './study-engine-composition.js';
 import { sessionStatePort } from './session-state-store.js';
 import { clearRun, pendingRun, saveRun } from './pending-run-composition.js';
 import { dominioTemas } from './topic-mastery-composition.js';
@@ -56,6 +59,7 @@ import { hashPath } from './paths.js';
 import { menuActionIcons, navigationIcons } from './navigation-icons.js';
 import { bootAppServices as startAppBootstrap } from './app-bootstrap.js';
 import type { QuestionRecord as Question } from '../core/domain/question-record.js';
+import { toFailureQuestionView } from './study-question-view-mapper.js';
 import { readingTokens, mixReadingIds } from '../features/trainers/reading-controller.js';
 import type { TestConfiguration, ScenarioChoice, SimulationConfiguration, SimulationTab, SimulationExam, SimulationExamGroups, ResultServices } from '../shared/ui/study-services.js';
 
@@ -92,19 +96,15 @@ async function resumeSaved() {
   if (resumeRun(p)) go(hashPath('quiz'));
 }
 
-function simAnalisis({ ses, items, ans, times, limit }: any) {
-  const r = mapSimulationResultToLegacy({ correct: items.map((q: any) => q.c), ans, times, limitSecs: limit * 60, secs: ses.secs });
-  const pts = [];
-  pts.push(`<div class="line"><span>Nota sin penalización</span><span>${r.sinPenal}</span></div>`);
-  pts.push(`<div class="line"><span>Puntos que te restaron los fallos</span><span class="${r.perdidoFallos ? 'r' : ''}">−${r.perdidoFallos}</span></div>`);
-  pts.push(`<div class="line"><span>Tiempo usado</span><span>${fmtT(ses.secs)} de ${fmtT(limit * 60)} (${r.uso} %)</span></div>`);
-  pts.push(`<div class="line"><span>Tiempo medio por pregunta</span><span>${r.media} s <small>(presupuesto ${r.presupuesto} s)</small></span></div>`);
-  const tips = [];
-  if (r.lentas.length) tips.push(`Te atascaste en ${r.lentas.map(x => `la ${x.k + 1} (${x.t} s${x.ok ? '' : ', fallada'})`).join(', ')}. Si pasan de ${Math.round(r.presupuesto * 1.5)} s, déjalas para el final.`);
-  if (r.rapidasFalladas >= 2) tips.push(`Fallaste ${r.rapidasFalladas} preguntas respondiendo muy deprisa: probable lectura rápida. Aplica el método de 3 pasos.`);
-  if (r.f > 0) tips.push('Cada fallo resta 1/3: si puedes descartar al menos una opción, merece la pena responder; si no, déjala en blanco.');
-  if (r.b > r.n * 0.15) tips.push(`Dejaste ${r.b} en blanco. Con una opción descartada, responder suma de media.`);
-  return `<h2>Ritmo y puntos</h2><div class="card">${pts.join('')}${tips.length ? `<ul class="tips">${tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}</div>`;
+function simAnalisis({ ses, items, ans, times, limit }: {
+  ses: { secs: number };
+  items: readonly Pick<Question, 'c'>[];
+  ans: (number | undefined)[];
+  times?: (number | undefined)[];
+  limit: number;
+}) {
+  const analysis = analyzeSimulation({ correct: items.map(question => question.c), answers: ans, times, limitSeconds: limit * 60, elapsedSeconds: ses.secs });
+  return renderSimulationAnalysisView(analysis, ses.secs, limit * 60);
 }
 // ───────── sesión rápida (~5 min) ─────────
 async function quickSession() {
@@ -127,7 +127,7 @@ const GUEST_MENU = (G: any) => [['Estudiar', [G[0][1][0]]], G[3]];
 async function openMenu() {
   if ($('#menuov')) return;
   await getMeta();
-  const due = (await dueList()).length, nCards = Object.values(store.getCards()).filter(r => r[3] >= 0 && r[4] <= now()).length;
+  const due = (await dueQuestionIds()).length, nCards = Object.values(store.getCards()).filter(r => r[3] >= 0 && r[4] <= now()).length;
   const nErr = Object.values(store.getReports()).filter(r => r.st === 'abierto').length, vel = velocidad(store.getStats());
   const aqui = location.hash || hashPath('home');
   const G = [
@@ -201,10 +201,7 @@ let reviewScenarioTexts = new Map<string, string>();
 let reviewScenarioAccount: string | null = null;
 async function simParte1(idx: any, org: any, N: any, only: any) {
   const temas = idx.temas.filter((t: any) => !only || only.has(t.id));
-  const pools: Record<string, any> = {};
-  const ls = await Promise.all(temas.map((t: any) => getTema(t.id)));
-  temas.forEach((t: any, i: any) => { pools[t.id] = shuffle(ls[i].filter((x: any) => isQuestionAllowed(x.o, x.r, org) && x.np !== 1)).sort((a: any, b: any) => (store.rec(a.i) ? 1 : 0) - (store.rec(b.i) ? 1 : 0)); });
-  return composeWeightedQuestions(temas.map((topic: any) => ({ id: topic.id, weight: topic.w })), pools, N, Math.random);
+  return selectWeightedSimulationQuestions(temas.map((topic: any) => ({ id: topic.id, weight: topic.w })), org, N);
 }
 // Parte 2 tras la parte 1: ofrece 2 supuestos
 // ───────── avisar de error en el banco ─────────
@@ -309,9 +306,18 @@ const settingsServices = {
     return JSON.stringify(backup);
   },
   previewBackup(text: string) {
-    const preview = previewImport(text), countItems = (amount: number, one: string, many: string) => `${amount} ${amount === 1 ? one : many}`;
-    const summary = `${countItems(preview.added, 'pregunta nueva', 'preguntas nuevas')}, ${countItems(preview.updated, 'pregunta actualizada', 'preguntas actualizadas')} y ${countItems(preview.preserved, 'pregunta conservada', 'preguntas conservadas')}. ${countItems(preview.sessions, 'sesión válida', 'sesiones válidas')}, ${countItems(preview.cards, 'tarjeta válida', 'tarjetas válidas')} y ${countItems(preview.reports, 'aviso válido', 'avisos válidos')}. ${countItems(preview.attemptArchive?.attempts.length || 0, 'intento detallado', 'intentos detallados')}. ${countItems(preview.ignored + preview.invalidAttempts, 'registro descartado por no ser válido', 'registros descartados por no ser válidos')}.${preview.settings ? ' También se importarán los ajustes válidos de la copia.' : ''}`;
-    return { summary, serialized: preview.serialized, attemptArchive: preview.attemptArchive };
+    return previewBackupImport(text, {
+      cleanStats: store.cleanStats,
+      cleanSessions: store.cleanSessions,
+      cleanCards: store.cleanCards,
+      cleanReports: store.cleanReports,
+      cleanSeen: store.cleanSeen,
+      cleanConfig: cleanCfg,
+      getStats: store.getStats,
+      getQuestionStats: store.rec,
+      needsSync: store.needsSync,
+      attemptArchive: attemptArchiveMapper,
+    });
   },
   async importBackup(serialized: string, attemptArchive?: unknown) {
     const account = store.accountId();
@@ -324,36 +330,6 @@ const settingsServices = {
   buildAiExport: (input: Parameters<SettingsServices['buildAiExport']>[0]) => createManualAiExport({ ...input, modes: [...input.modes], sessionIds: [...input.sessionIds] }),
   deleteAiHistory: deleteManualStudyHistory,
 };
-// Keep the existing storage sanitizers at the application boundary while Settings is migrated.
-function previewImport(text: string) {
-  if (text.length > 20e6) throw new Error('Archivo no válido: supera 20 MB');
-  let raw: unknown;
-  try { raw = JSON.parse(text); } catch { throw new Error('Archivo no válido: JSON ilegible'); }
-  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) throw new Error('Archivo no válido');
-  const backup = raw as Record<string, unknown>;
-  if (!backup.stats || typeof backup.stats !== 'object' || Array.isArray(backup.stats)) throw new Error('Archivo no válido');
-  const rawStats = backup.stats as Record<string, unknown>;
-  const stats = store.cleanStats(rawStats), sessions = store.cleanSessions(backup.sessions), cards = store.cleanCards(backup.cards), reports = store.cleanReports(backup.reports);
-  let added = 0, updated = 0, preserved = 0;
-  for (const id of Object.keys(stats)) {
-    const old = store.rec(id);
-    if (!old) added++;
-    else if (store.needsSync(stats[id], old)) updated++;
-    else preserved++;
-  }
-  preserved += Object.keys(store.getStats()).filter(id => !stats[id]).length;
-  const ignored = Object.keys(rawStats).length - Object.keys(stats).length;
-  let attemptArchive: AttemptArchive | undefined;
-  let invalidAttempts = 0;
-  if (backup.attemptHistory !== undefined) {
-    const mapped = attemptArchiveMapper.toDomain(backup.attemptHistory);
-    if (!mapped.ok) throw new Error(`El historial de intentos de la copia no es válido: ${mapped.reason}`);
-    attemptArchive = mapped.value.archive;
-    invalidAttempts = mapped.value.invalidRecords;
-  }
-  const serialized = JSON.stringify({ stats, sessions, cards, reports, ...(backup.seen ? { seen: store.cleanSeen(backup.seen) } : {}), ...(backup.cfg ? { cfg: cleanCfg(backup.cfg) } : {}), ...(attemptArchive ? { attemptHistory: attemptArchiveMapper.toDto(attemptArchive) } : {}) });
-  return { added, updated, preserved, ignored, serialized, attemptArchive, invalidAttempts, sessions: sessions.length, cards: Object.keys(cards).length, reports: Object.keys(reports).length, settings: !!backup.cfg };
-}
 function notifySettings() { settingsListeners.forEach(listener => listener()); }
 const settingsListeners = new Set<() => void>();
 // Reuse the stores' subscriptions and notify route-local consumers after asynchronous settings work.
@@ -371,14 +347,11 @@ const quizServices = createQuizServices(go, hashPath('home'), hashPath('result')
 
 
 let failureQuestionCache: Question[] = [];
-function mapFailureQuestion(question: Question): FailureQuestion {
-  return { id: question.i, topicId: question.t, statement: question.q, options: question.a, correctIndex: question.c, citation: question.u, note: question.n, year: question.y, context: question.cp, assumptionText: question.supTexto, traps: question.x, nonScoring: question.np, source: question.source || VERIFIED_SOURCES[question.i] };
-}
 const failuresServices = {
   async loadQuestions() {
     await getMeta();
     failureQuestionCache = (await byIds(falladasIds())).sort((first, second) => (store.rec(second.i)?.[2] || 0) - (store.rec(first.i)?.[2] || 0));
-    return failureQuestionCache.map(mapFailureQuestion);
+    return failureQuestionCache.map(question => toFailureQuestionView(question, VERIFIED_SOURCES));
   },
   async loadTopics() { const index = await getIndex(); return index.temas.map(topic => ({ id: topic.id, name: topic.nombre })); },
   getRecord(id: string) { return store.rec(id); },
@@ -398,14 +371,14 @@ const lightningServices = {
     await getMeta();
     const questionStats = store.getStats();
     const lucky = Object.keys(questionStats).filter(id => (questionStats[id][9] === 6 || questionStats[id][9] === 8) && META[id]);
-    const due = await dueList();
+    const due = await dueQuestionIds();
     const failed = Object.keys(questionStats).filter(id => questionStats[id][5] === 0 && META[id]);
     const pool = [...shuffle(lucky).slice(0, 5), ...due.slice(0, 5), ...shuffle(failed).slice(0, 5)];
     const candidates = pool.length ? pool : shuffle(Object.keys(META).filter(id => id !== '_by')).slice(0, 10);
     const question = (await byIds(shuffle(candidates).slice(0, 8))).find(item => !item.s && !item.cp);
     if (!question) return null;
     const reason = lucky.includes(question.i) ? '🍀 Marcada como suerte' : due.includes(question.i) ? '⏰ Toca repasarla' : failed.includes(question.i) ? '↩ La fallaste' : '🆕 Nueva';
-    return { ...mapFailureQuestion(question), reason };
+    return { ...toFailureQuestionView(question, VERIFIED_SOURCES), reason };
   },
   record(questionId: string, topicId: string, correct: boolean, seconds: number) { store.record(questionId, topicId, correct ? 1 : 0, now(), seconds); },
   topicName: temaName,
@@ -436,7 +409,7 @@ const trapsServices = {
       const trapIds = [...new Set((question.x || []).map(Number))];
       const trapSet = new Set(trapIds);
       const distractors = shuffle(allTraps.filter(id => !trapSet.has(id))).slice(0, Math.max(3, 8 - trapIds.length));
-      return { ...mapFailureQuestion(question), topicName: temaName(question.t), trapIds, choices: shuffle([...trapIds, ...distractors]) };
+      return { ...toFailureQuestionView(question, VERIFIED_SOURCES), topicName: temaName(question.t), trapIds, choices: shuffle([...trapIds, ...distractors]) };
     });
     trapOwner = store.accountId();
     trapRun = { items, index: 0, results: [] };
@@ -446,22 +419,8 @@ const trapsServices = {
     currentTrapRun();
     const prompt = trapRun?.items[trapRun.index];
     if (!trapRun || !prompt || trapRun.results.length > trapRun.index) return null;
-    const actual = new Set(prompt.trapIds), picked = new Set(selected);
-    const answer: TrapAnswer = {
-      hits: prompt.trapIds.filter(id => picked.has(id)).length,
-      missed: prompt.trapIds.filter(id => !picked.has(id)).length,
-      falseAlarms: selected.filter(id => !actual.has(id)).length,
-      total: prompt.trapIds.length,
-      correctIds: prompt.trapIds,
-      selectedIds: [...selected],
-    };
-    const stats = { ...(store.getCfg().tdet || {}) } as Record<string, number[]>;
-    for (const id of prompt.trapIds) {
-      const record = stats[id] ? [...stats[id]] : [0, 0];
-      record[0]++;
-      if (picked.has(id)) record[1]++;
-      stats[id] = record;
-    }
+    const answer = evaluateTrapAnswer(prompt.trapIds, selected);
+    const stats = recordTrapDetections((store.getCfg().tdet || {}) as Record<string, [number, number]>, prompt.trapIds, selected);
     store.setCfg('tdet', stats);
     trapRun = { ...trapRun, results: [...trapRun.results, answer] };
     return answer;
@@ -503,11 +462,7 @@ const readingServices = {
     if (owner !== store.accountId()) return null;
     const questionStats = store.getStats();
     const fastIds = velocidad(questionStats).ids;
-    let recent: string[] = [];
-    try {
-      const value = JSON.parse(localStorage.getItem('tai.lrec:' + (store.accountId() || 'guest')) || '[]');
-      if (Array.isArray(value)) recent = value.map(String);
-    } catch {}
+    const recent = localReadingQuestionHistoryRepository.readRecentQuestionIds(owner);
     const recentIds = new Set(recent), fastSet = new Set(fastIds);
     const failedIds = Object.keys(questionStats).filter(id => questionStats[id][5] === 0 && !fastSet.has(id));
     const failedSet = new Set(failedIds);
@@ -517,7 +472,7 @@ const readingServices = {
     const available = new Map(loaded.filter(question => !question.s && !question.cp).map(question => [question.i, question]));
     const questions = shuffle(ids.map(id => available.get(id)).filter((question): question is Question => !!question).slice(0, 8));
     readingBatch = questions.map(question => ({
-      ...mapFailureQuestion(question),
+      ...toFailureQuestionView(question, VERIFIED_SOURCES),
       asksForNegative: asksForNegativeOption(question.q),
       minimumSeconds: minimumReadingSeconds({ context: question.cp, statement: question.q, options: question.a }),
       tokens: readingTokens(question.q),
@@ -545,15 +500,7 @@ const readingServices = {
   },
   checkWords(claimedNone = false): ReadingWordResult | null {
     const progress = this.getProgress(), question = progress?.items[progress.index]; if (!progress || !question || progress.step !== 1 || progress.wordResult) return progress?.wordResult || null;
-    const keyIds = new Set(question.tokens.flatMap((token, index) => token.key ? [index] : []));
-    const selected = new Set(progress.selectedWords);
-    const result: ReadingWordResult = {
-      hit: claimedNone ? 0 : [...selected].filter(index => keyIds.has(index)).length,
-      missed: claimedNone ? keyIds.size : [...keyIds].filter(index => !selected.has(index)).length,
-      extra: claimedNone ? 0 : [...selected].filter(index => !keyIds.has(index)).length,
-      total: keyIds.size,
-      claimedNone,
-    };
+    const result: ReadingWordResult = evaluateReadingWords(question.tokens, progress.selectedWords, claimedNone);
     readingProgress = { ...progress, wordResult: result }; notifyReading(); return result;
   },
   showOptions() {
@@ -577,12 +524,7 @@ const readingServices = {
     notifyReading(); return readingProgress;
   },
   remember(questionId: string) {
-    try {
-      const key = 'tai.lrec:' + (store.accountId() || 'guest');
-      const value = JSON.parse(localStorage.getItem(key) || '[]');
-      const previous = Array.isArray(value) ? value : [];
-      localStorage.setItem(key, JSON.stringify([String(questionId), ...previous.filter((id: unknown) => String(id) !== String(questionId))].slice(0, 80)));
-    } catch {}
+    localReadingQuestionHistoryRepository.rememberQuestion(store.accountId(), questionId);
   },
   reset() { readingProgress = null; readingBatch = null; readingOwner = store.accountId(); notifyReading(); },
 };
@@ -792,7 +734,7 @@ export const studyServices: StudyServices = {
         if (!result.items.length) return 'empty';
         return startRun({ kind: 'test', feedback: true, items: result.items, titulo: 'Mis trampas · ' + result.targets.map(key => TRAMPAS[key] || key).join(', '), ...(configuration.timed ? { limit: configuration.minutes, porTiempo: true } : {}) }) ? 'started' : 'empty';
       }
-      const items = await pick({ temas: topics, origins: new Set(configuration.origins), mode: configuration.mode, n: configuration.timed ? 300 : configuration.count });
+      const items = await selectQuestionsForTopics({ topics, origins: new Set(configuration.origins), mode: configuration.mode, count: configuration.timed ? 300 : configuration.count });
       if (account !== store.accountId()) return 'account-changed';
       if (!items.length) return 'empty';
       return startRun({ kind: 'test', feedback: true, items, titulo: selected.length === 1 ? temaName(selected[0]) + (configuration.timed ? ` · ${configuration.minutes} min` : '') : 'Test' + (configuration.timed ? ` · ${configuration.minutes} min` : ''), ...(configuration.timed ? { limit: configuration.minutes, porTiempo: true } : {}) }) ? 'started' : 'empty';
@@ -850,13 +792,11 @@ export const studyServices: StudyServices = {
     subscribe(listener) { const offStore = store.onChange(listener), offSync = sync.onStatus(listener), offEngine = subscribeEngine(listener); return () => { offStore(); offSync(); offEngine(); }; },
     async loadOverview() {
       await recover(); const index = await getIndex(); await getMeta();
-      const stats = store.getStats(), dates = new Set<string>();
+      const stats = store.getStats(), answerTimestamps: number[] = [];
       let seen = 0, answers = 0;
-      for (const id in stats) { seen++; answers += stats[id][0]; dates.add(new Date(stats[id][2]).toDateString()); }
-      const due = (await dueList()).length;
-      let streak = 0; const day = new Date();
-      if (!dates.has(day.toDateString())) day.setDate(day.getDate() - 1);
-      while (dates.has(day.toDateString())) { streak++; day.setDate(day.getDate() - 1); }
+      for (const id in stats) { seen++; answers += stats[id][0]; answerTimestamps.push(stats[id][2]); }
+      const due = (await dueQuestionIds()).length;
+      const streak = calculateStudyStreak(answerTimestamps, Date.now());
       const exam = store.getCfg().exam;
       const daysToExam = exam ? Math.max(0, Math.ceil((+new Date(exam + 'T09:00:00') - Date.now()) / 86400000)) : null;
       const mastery = dominioTemas(index);

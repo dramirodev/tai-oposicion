@@ -20,7 +20,7 @@ describe('integración del motor con el historial local', () => {
       json: async () => JSON.parse(readFileSync(`public/${url}`, 'utf8')),
     }));
     localStorage.clear();
-    engine = await import('../../src/core/application/legacy-engine.js');
+    engine = await import('../../src/app/study-engine-composition.js');
     store = await import('../../src/adapters/local/legacy-store.js');
     data = await import('../../src/adapters/http/legacy-data.js');
     recovery = await import('../../src/app/pending-run-composition.js');

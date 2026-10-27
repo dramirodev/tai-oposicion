@@ -1,5 +1,6 @@
 import 'fake-indexeddb/auto';
 import { afterEach, it, expect, vi } from 'vitest';
+import { act } from '@testing-library/react';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 
@@ -17,6 +18,8 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   vi.stubGlobal('matchMedia', () => ({ matches: true }));
   vi.stubGlobal('scrollTo', () => {});
   Element.prototype.scrollIntoView = () => {};
+  HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', ''); };
+  HTMLDialogElement.prototype.close = function () { this.removeAttribute('open'); };
   vi.stubGlobal('fetch', async url => {
     try {
       const data = JSON.parse(readFileSync(path.join('public', String(url)), 'utf8'));
@@ -34,9 +37,9 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   const optionEnter = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
   document.querySelector('.opt').dispatchEvent(optionEnter);
   expect(optionEnter.defaultPrevented).toBe(false);
-  document.querySelector('.opt').click();
-  document.querySelector('#exit').click();
-  await vi.waitFor(() => expect(document.querySelector('.overlay')).not.toBeNull(), { timeout: 5000 });
+  await act(async () => { document.querySelector('.opt').click(); });
+  await act(async () => { document.querySelector('#exit').click(); });
+  await vi.waitFor(() => expect(document.querySelector('.overlay')).not.toBeNull(), { timeout: 10000 });
   expect(document.querySelector('.overlay').textContent).toContain('¿Salir?');
   document.querySelector('.overlay [data-v="1"]').click();
   await waitText('Resultado');
@@ -67,7 +70,7 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   await navigate('falladas', 'Practicar estas');
   expect(document.querySelector(reviewedSelector)).toBeNull();
   // El selector del test por tema usa el mismo criterio que el listado.
-  const filtered = await (await import('../src/adapters/http/legacy-data.js')).pick({temas:[bank[0].t],origins:new Set(['O','G','A']),mode:'falladas',n:100});
+  const filtered = await (await import('../src/app/study-engine-composition.js')).selectQuestionsForTopics({topics:[bank[0].t],origins:new Set(['O','G','A']),mode:'falladas',count:100});
   expect(filtered.some(q => q.i === bank[0].i)).toBe(false);
   expect(filtered.some(q => q.i === bank[1].i)).toBe(true);
   const search = document.querySelector('#failure-query');

@@ -20,10 +20,13 @@ it('doble pulsación en Terminar no duplica el intento de examen',async()=>{
  exam.click();
  [...document.querySelectorAll('.bar2 button')].find(button=>button.textContent==='Examen · 90 min').click();
  await vi.waitFor(()=>expect(document.querySelector('#next')).not.toBeNull());
- const {getSnapshot}=await import('../src/core/application/legacy-engine.js');
- while(getSnapshot().run.idx<getSnapshot().run.items.length-1)document.querySelector('#next').click();
+ const {getSnapshot}=await import('../src/app/study-engine-composition.js');
+ const lastIndex=getSnapshot().run.items.length-1;
+ document.querySelector(`[data-jump="${lastIndex}"]`).click();
+ await vi.waitFor(()=>expect(getSnapshot().run.idx).toBe(lastIndex));
  const q=getSnapshot().run.items[getSnapshot().run.idx];document.querySelector(`.opt[data-i="${q.c}"]`).click();
  const finish=document.querySelector('#next');await act(async()=>{finish.click();finish.click();});
+ await Promise.resolve();
  await vi.waitFor(()=>{
   const overlay=document.querySelector('.overlay');
   expect(overlay).not.toBeNull();

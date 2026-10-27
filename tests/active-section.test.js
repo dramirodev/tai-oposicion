@@ -7,7 +7,7 @@ import path from 'node:path';
 it('actualiza la pestaña activa desde la suscripción del motor', async () => {
   vi.resetModules();
   vi.stubGlobal('fetch', async url => ({ ok: true, json: async () => JSON.parse(readFileSync(path.join('public', String(url)), 'utf8')) }));
-  const engine = await import('../src/core/application/legacy-engine.js');
+  const engine = await import('../src/app/study-engine-composition.js');
   const sessionState = await import('../src/app/session-state-store.js');
   engine.configureSessionStateStore(sessionState.sessionStatePort);
   await (await import('../src/adapters/http/legacy-data.js')).getMeta();

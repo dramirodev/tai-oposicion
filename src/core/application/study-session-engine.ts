@@ -1,30 +1,40 @@
 // Motor de preguntas: estado de la sesión en curso, guardado y reanudación, registro de respuestas, cierre con nota
 // y selección de preguntas (sesión rápida, repaso, trampas). Sin DOM: la interfaz solo pinta y llama a estas funciones.
-import * as store from '../../adapters/local/legacy-store.js';
-import { META, temaOf, getIndex, getMeta, getTema, dueList, byIds, now } from '../../adapters/http/legacy-data.js';
 import { calculateExamScore } from '../domain/scoring.js';
-import { analyzeTopicMastery } from '../domain/topic-mastery.js';
-import {
-  estimateQuickQuestionCount,
-  filterScoringQuestions,
-  isQuestionAllowed,
-  pickGuestQuestions,
-  pickQuickQuestions,
-  shuffleItems,
-} from '../domain/selection.js';
-import { selectSpacedReviews } from '../domain/spaced-repetition.js';
-import { calculateTrapRates, selectTrapQuestions } from '../domain/traps.js';
+import { filterScoringQuestions } from '../domain/selection.js';
 import type { Confidence, Highlight } from '../domain/attempts/transitions.js';
 import { questionContentRevision } from '../domain/attempts/highlights.js';
-import type { SessionKind } from '../domain/entities.js';
+import type { SessionKind, SessionResult } from '../domain/entities.js';
+import type { QuestionRecord } from '../domain/question-record.js';
 import type { EngineSnapshot, LastResult, Run, RunCfg } from './session-model.js';
 export type { EngineSnapshot, LastResult, Run, RunCfg } from './session-model.js';
-import type { Index, Question } from '../../adapters/legacy/types.js';
 import type { AttemptIntent } from '../domain/attempts/transitions.js';
 import type { AttemptTracker } from '../ports/AttemptTracker.js';
-import type { GuestQuestionHistoryRepository } from '../ports/GuestQuestionHistoryRepository.js';
+import type { StudyProgressGateway } from '../ports/StudyProgressGateway.js';
+import type { StudyQuestionCatalog } from '../ports/StudyQuestionCatalog.js';
 import type { PendingRun } from './runs/pending-run.js';
 import type { SavedRunSnapshot } from '../domain/pending-run.js';
+
+type Question = QuestionRecord;
+export interface StudyEngineDependencies { progress: StudyProgressGateway; catalog: StudyQuestionCatalog }
+let dependencies: StudyEngineDependencies | null = null;
+let stopListeningToAccount: (() => void) | undefined;
+function getDependencies(): StudyEngineDependencies {
+  if (!dependencies) throw new Error('El motor de estudio todavía no se ha configurado.');
+  return dependencies;
+}
+const progress = (): StudyProgressGateway => getDependencies().progress;
+const catalog = (): StudyQuestionCatalog => getDependencies().catalog;
+
+export function configureStudyEngine(deps: StudyEngineDependencies): void {
+  if (getSnapshot().run) throw new Error('No se puede cambiar el catálogo durante una sesión activa.');
+  stopListeningToAccount?.();
+  dependencies = deps;
+  stopListeningToAccount = deps.progress.onAccountChange(() => {
+    clearActiveRun();
+    if (getSnapshot().last) sessionStateStore.setState({ last: null });
+  });
+}
 import type { SessionStateStore } from '../ports/SessionStateStore.js';
 
 /** Estado compartido: la sesión en curso y la última terminada. */
@@ -80,15 +90,12 @@ function updateActiveRun(update: (run: Run) => void, expectedSessionKey?: number
   sessionStateStore.setState({ run: nextRun });
   return nextRun;
 }
-const questionAllowed = (question: Question, origins: Set<string>): boolean =>
-  isQuestionAllowed(question.o, 'r' in question ? question.r : undefined, origins);
-
 export function clearActiveRun(): void {
   const run = getSnapshot().run;
   if (!run) return;
   if (run?.attemptSessionId && run.attemptScope && attemptTracker) {
     if (run.tIdx === run.idx && run.attemptIds?.[run.idx] && !run.attemptTrackingPaused) recordAttempt(run, { type: 'close' });
-    attemptTracker.closeSession(run.attemptScope, run.attemptSessionId, 'interrupted', now());
+    attemptTracker.closeSession(run.attemptScope, run.attemptSessionId, 'interrupted', catalog().now());
   }
   sessionStateStore.setState({ run: null });
 }
@@ -159,10 +166,11 @@ export function finishCurrentRun(reason: 'complete' | 'interrupted' | 'timeout' 
 export function createRun(cfg: RunCfg): Run | null {
   const items = filterScoringQuestions(cfg.items, cfg.feedback, question => question.np);
   if (!items.length) return null;
-  const createdAt = now();
+  const createdAt = catalog().now();
+  const metadata = catalog().getMetadataSnapshot();
   const run = { ...cfg, sessionKey: nextSessionKey++, items, idx: 0, ans: [], confidences: Array.from({ length: items.length }, () => null), discardedOptions: items.map(() => []), highlights: items.map(() => []), ...(cfg.feedback ? { studyStates: Array.from({ length: items.length }, () => 'unseen' as const) } : {}), t0: createdAt, secs: 0, paused: false } as Run;
-  if (attemptTracker && items.every(question => question.i && META[question.i])) {
-    const scope = store.accountId() || 'guest';
+  if (attemptTracker && items.every(question => question.i && metadata?.[question.i])) {
+    const scope = progress().accountId() || 'guest';
     const tracking = attemptTracker.beginSession(
       scope,
       cfg.kind === 'sim' ? 'simulation' : 'practice',
@@ -171,7 +179,7 @@ export function createRun(cfg: RunCfg): Run | null {
         questionId: question.i,
         contentRevision: questionContentRevision(question.q, question.a),
         position,
-        exposure: Math.max(1, (store.rec(question.i)?.[0] || 0) + 1),
+        exposure: Math.max(1, (progress().getQuestionStats(question.i)?.attempts || 0) + 1),
       })),
       cfg.limit,
     );
@@ -183,23 +191,22 @@ export function createRun(cfg: RunCfg): Run | null {
   return run;
 }
 
-// La sesión en curso se guarda para sobrevivir al cierre de la app por iOS (solo sesiones del banco, no los supuestos)
-store.onAccountChange(() => { clearActiveRun(); if (getSnapshot().last) sessionStateStore.setState({ last: null }); });
 export interface PendingRunStorage {
   write(account: string | null, snapshot: SavedRunSnapshot): void;
   clear(account: string | null): void;
 }
 let pendingRunStorage: PendingRunStorage | null = null;
 export function setPendingRunStorage(storage: PendingRunStorage | null): void { pendingRunStorage = storage; }
-export function clearRun(): void { pendingRunStorage?.clear(store.accountId()); }
+export function clearRun(): void { pendingRunStorage?.clear(progress().accountId()); }
 export function saveRun(): void {
   const run = getSnapshot().run;
-  if (!run || run.supTexto || !run.items.every(item => item.i && META && META[item.i])) return;
+  const metadata = catalog().getMetadataSnapshot();
+  if (!run || run.supTexto || !run.items.every(item => item.i && metadata?.[item.i])) return;
   const { kind, feedback, titulo, limit, idx, ans, times, secs, porTiempo, review } = run;
-  pendingRunStorage?.write(store.accountId(), { kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: run.items.map(item => item.i), review: review || [], ...(feedback && run.studyStates ? { studyStates: [...run.studyStates] } : {}), confidences: run.confidences || [], discardedOptions: run.discardedOptions || [], highlights: run.highlights || [], savedAt: Date.now(), ...(run.attemptScope ? { attemptScope: run.attemptScope } : {}), ...(run.attemptSessionId ? { attemptSessionId: run.attemptSessionId } : {}), ...(run.attemptIds ? { attemptIds: run.attemptIds } : {}) });
+  pendingRunStorage?.write(progress().accountId(), { kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo, ids: run.items.map(item => item.i), review: review || [], ...(feedback && run.studyStates ? { studyStates: [...run.studyStates] } : {}), confidences: run.confidences || [], discardedOptions: run.discardedOptions || [], highlights: run.highlights || [], savedAt: Date.now(), ...(run.attemptScope ? { attemptScope: run.attemptScope } : {}), ...(run.attemptSessionId ? { attemptSessionId: run.attemptSessionId } : {}), ...(run.attemptIds ? { attemptIds: run.attemptIds } : {}) });
 }
 export function resumeRun({ saved: savedRun, items, account }: PendingRun): Run | null {
-  if (account !== store.accountId()) return null;
+  if (account !== progress().accountId()) return null;
   const un = <T>(firstValue?: (T | null)[]): (T | undefined)[] => Array.from(firstValue || [], value => value === null ? undefined : value);
   const expectedScope = account || 'guest';
   const hasTracking = savedRun.attemptScope === expectedScope
@@ -229,7 +236,7 @@ export function resumeRun({ saved: savedRun, items, account }: PendingRun): Run 
     && Number.isInteger(mark.start) && Number.isInteger(mark.end) && mark.start >= 0 && mark.end > mark.start
     && typeof mark.text === 'string' && typeof mark.contentRevision === 'string');
   const highlights = items.map((item, index) => Array.isArray(savedRun.highlights?.[index]) ? savedRun.highlights[index].filter(validHighlight) : []);
-  const run = { kind: savedRun.kind, sessionKey: nextSessionKey++, feedback: !!savedRun.feedback, titulo: savedRun.titulo, limit: savedRun.limit || 0, porTiempo: !!savedRun.pt, items, idx: savedRun.idx, ans: answers, times: un(savedRun.times), t0: now(), secs: savedRun.secs || 0, paused: false, confidences, discardedOptions, highlights, review: (Array.isArray(savedRun.review) ? savedRun.review : []).filter(index => Number.isInteger(index) && index >= 0 && index < items.length), ...(states ? { studyStates: states } : {}), ...(hasTracking ? { attemptScope: savedRun.attemptScope, attemptSessionId: savedRun.attemptSessionId, attemptIds: savedRun.attemptIds!.slice() } : {}) } as Run;
+  const run = { kind: savedRun.kind, sessionKey: nextSessionKey++, feedback: !!savedRun.feedback, titulo: savedRun.titulo, limit: savedRun.limit || 0, porTiempo: !!savedRun.pt, items, idx: savedRun.idx, ans: answers, times: un(savedRun.times), t0: catalog().now(), secs: savedRun.secs || 0, paused: false, confidences, discardedOptions, highlights, review: (Array.isArray(savedRun.review) ? savedRun.review : []).filter(index => Number.isInteger(index) && index >= 0 && index < items.length), ...(states ? { studyStates: states } : {}), ...(hasTracking ? { attemptScope: savedRun.attemptScope, attemptSessionId: savedRun.attemptSessionId, attemptIds: savedRun.attemptIds!.slice() } : {}) } as Run;
   if (run.attemptSessionId && run.attemptScope && run.attemptIds) attemptTracker?.resumeSession(run.attemptScope, run.attemptSessionId, run.attemptIds);
   sessionStateStore.setState({ run });
   return run;
@@ -255,11 +262,11 @@ export function answerQuestion(run: Run, question: Question, index: number, minL
   updateActiveRun(nextRun => {
     if (!nextRun.feedback) {
       nextRun.ans[nextRun.idx] = index;
-      (nextRun.luck ||= {})[nextRun.idx] = store.rec(question.i)?.[9] || 0;
+      (nextRun.luck ||= {})[nextRun.idx] = progress().getQuestionStats(question.i)?.errorReason || 0;
       (nextRun.fast ||= {})[nextRun.idx] = [Math.round((Date.now() - (nextRun.qT0 ?? Date.now())) / 1000), minLect];
       if (index === -1) recordAttempt(nextRun, { type: 'mark-pending' });
       else recordAttempt(nextRun, { type: 'answer', optionIndex: index, outcome: index === question.c ? 'correct' : 'wrong' });
-      store.record(question.i, question.t, index === -1 ? 2 : index === question.c ? 1 : 0, now(), index === -1 ? undefined : Math.max(1, nextRun.secs - (nextRun.q0 ?? 0)));
+      progress().recordAnswer(question.i, question.t, index === -1 ? 2 : index === question.c ? 1 : 0, catalog().now(), index === -1 ? undefined : Math.max(1, nextRun.secs - (nextRun.q0 ?? 0)));
       return;
     }
     nextRun.studyStates ||= [];
@@ -270,10 +277,10 @@ export function answerQuestion(run: Run, question: Question, index: number, minL
     }
     nextRun.ans[nextRun.idx] = index;
     nextRun.studyStates[nextRun.idx] = 'answered';
-    (nextRun.luck ||= {})[nextRun.idx] = store.rec(question.i)?.[9] || 0;
+    (nextRun.luck ||= {})[nextRun.idx] = progress().getQuestionStats(question.i)?.errorReason || 0;
     (nextRun.fast ||= {})[nextRun.idx] = [Math.round((Date.now() - (nextRun.qT0 ?? Date.now())) / 1000), minLect];
     recordAttempt(nextRun, { type: 'answer', optionIndex: index, outcome: index === question.c ? 'correct' : 'wrong' });
-    store.record(question.i, question.t, index === question.c ? 1 : 0, now(), Math.max(1, nextRun.secs - (nextRun.q0 ?? 0)));
+    progress().recordAnswer(question.i, question.t, index === question.c ? 1 : 0, catalog().now(), Math.max(1, nextRun.secs - (nextRun.q0 ?? 0)));
   }, activeRun.sessionKey);
 }
 /** Reveals only a previously deferred practice question; consultation has no score effect. */
@@ -352,7 +359,7 @@ export function finishRun(run: Run, reason: 'complete' | 'interrupted' | 'timeou
   clearRun();
   if (run.attemptSessionId && run.attemptScope && attemptTracker) {
     if (run.tIdx === run.idx && run.attemptIds?.[run.idx] && !run.attemptTrackingPaused) recordAttempt(run, { type: 'close' });
-    attemptTracker.closeSession(run.attemptScope, run.attemptSessionId, reason === 'interrupted' ? 'interrupted' : 'completed', now(), run.secs);
+    attemptTracker.closeSession(run.attemptScope, run.attemptSessionId, reason === 'interrupted' ? 'interrupted' : 'completed', catalog().now(), run.secs);
   }
   // «por tiempo»: solo cuentan las preguntas que llegaste a contestar (la que estaba abierta al acabar el tiempo no)
   let hechas = run.items.length;
@@ -362,14 +369,30 @@ export function finishRun(run: Run, reason: 'complete' | 'interrupted' | 'timeou
   items.forEach((item, index) => {
     const numericValue = run.ans[index]; const ok = numericValue === item.c;
     const pt = porTema[item.t] ||= [0, 0]; pt[1]++;
-    const tk: string | undefined = META[item.i]?.[2]; const ptk = tk ? (porTipo[tk] ||= [0, 0]) : null; if (ptk) ptk[1]++;
-    if (numericValue === undefined || numericValue === -1) { res.b++; if (!run.feedback) store.record(item.i, item.t, 2); }
-    else if (ok) { res.a++; pt[0]++; if (ptk) ptk[0]++; if (!run.feedback) store.record(item.i, item.t, 1, now(), run.times?.[index]); }
-    else { res.f++; fails.push(item.i); if (!run.feedback) store.record(item.i, item.t, 0, now(), run.times?.[index]); }
+    const tk: string | undefined = catalog().getMetadataSnapshot()?.[item.i]?.[2]; const ptk = tk ? (porTipo[tk] ||= [0, 0]) : null; if (ptk) ptk[1]++;
+    if (numericValue === undefined || numericValue === -1) { res.b++; if (!run.feedback) progress().recordAnswer(item.i, item.t, 2); }
+    else if (ok) { res.a++; pt[0]++; if (ptk) ptk[0]++; if (!run.feedback) progress().recordAnswer(item.i, item.t, 1, catalog().now(), run.times?.[index]); }
+    else { res.f++; fails.push(item.i); if (!run.feedback) progress().recordAnswer(item.i, item.t, 0, catalog().now(), run.times?.[index]); }
   });
   const itemCount = items.length;
-  const ses = { id: 's' + now().toString(36), ts: now(), kind: run.kind, n: itemCount, a: res.a, f: res.f, b: res.b, secs: run.porTiempo ? Math.min(run.secs, (run.limit ?? 0) * 60) : run.secs, nota: calculateExamScore(res.a, res.f, itemCount), temas: porTema, tipos: porTipo, fails, titulo: run.titulo || '', ...(reason === 'interrupted' ? { interrupted: true } : {}), ...(run.porTiempo ? { porTiempo: true } : {}) };
-  store.addSession(ses);
+  const completedAt = catalog().now();
+  const id = 's' + completedAt.toString(36);
+  const score = calculateExamScore(res.a, res.f, itemCount);
+  const durationSeconds = run.porTiempo ? Math.min(run.secs, (run.limit ?? 0) * 60) : run.secs;
+  const session: SessionResult = {
+    id, completedAt, kind: run.kind, questionCount: itemCount, correctCount: res.a, wrongCount: res.f,
+    blankCount: res.b, durationSeconds, score, topicResults: porTema, typeResults: porTipo,
+    failedQuestionIds: fails, title: run.titulo || '',
+    ...(reason === 'interrupted' ? { interrupted: true } : {}),
+    ...(run.porTiempo ? { timeLimited: true } : {}),
+  };
+  const ses: LastResult['ses'] = {
+    id, ts: completedAt, kind: run.kind, n: itemCount, a: res.a, f: res.f, b: res.b,
+    secs: durationSeconds, nota: score, temas: porTema, tipos: porTipo, fails, titulo: run.titulo || '',
+    ...(reason === 'interrupted' ? { interrupted: true } : {}),
+    ...(run.porTiempo ? { porTiempo: true } : {}),
+  };
+  progress().addSession(session);
   sessionStateStore.setState({ run: null });
   const result: LastResult = {
     ses, items, ans: [...run.ans], times: [...(run.times || [])], limit: run.limit || 0,
@@ -380,101 +403,4 @@ export function finishRun(run: Run, reason: 'complete' | 'interrupted' | 'timeou
   };
   sessionStateStore.setState({ last: result });
   return result;
-}
-
-// ───────── selección de preguntas ─────────
-const origenes = (): Set<string> => new Set(((store.getCfg().test || {}) as { o?: string[] }).o || ['O', 'A', 'G']);
-/** Ids de preguntas con un fallo pendiente de superar. */
-export const falladasIds = (): string[] => { const st = store.getStats(); return Object.keys(st).filter(id => temaOf(id) && store.pendingFailure(st[id])); };
-
-const emptyGuestQuestionHistory: GuestQuestionHistoryRepository = {
-  readRecentQuestionIds: () => [],
-  saveRecentQuestionIds: () => {},
-};
-async function quickGuest(idx: Index, numericValue: number, orgs: Set<string>, history: GuestQuestionHistoryRepository): Promise<Question[]> {
-  const last = history.readRecentQuestionIds();
-  const temas = shuffleItems(idx.temas, Math.random).slice(0, numericValue + 3);
-  const pools = (await Promise.all(temas.map(topic => getTema(topic.id)))).map((questions, index) => ({
-    topicId: temas[index].id,
-    questions: filterScoringQuestions(
-      questions.filter(question => questionAllowed(question, orgs)),
-      true,
-      question => question.np,
-    ),
-  }));
-  const items = pickGuestQuestions(pools, numericValue, question => question.i, id => !!store.rec(id), new Set(last), Math.random);
-  history.saveRecentQuestionIds([...last, ...items.map(item => item.i)].slice(-300));
-  return items;
-}
-export interface Seleccion { items: Question[]; titulo: string }
-/** Sesión rápida (~5 min). Invitado: una pregunta de cada tema al azar. Con acceso: repasos vencidos + nuevas de los temas más débiles. */
-export async function quickItems(full: boolean, history: GuestQuestionHistoryRepository = emptyGuestQuestionHistory): Promise<Seleccion | { items: []; titulo: '' }> {
-  const idx = await getIndex(); await getMeta();
-  const numericValue = estimateQuickQuestionCount(Object.values(store.getStats()).map(record => ({
-    totalSeconds: record[7],
-    count: record[8],
-  })));
-  const orgs = origenes();
-  if (!full) return { items: await quickGuest(idx, numericValue, orgs, history), titulo: 'Sesión rápida · una pregunta por tema' };
-  const due = (await byIds((await dueList()).slice(0, numericValue))).filter(question => questionAllowed(question, orgs));
-  const seen = new Set(store.getSeen());
-  const ord = { r: 0, y: 1, n: 2, g: 3 };
-  const statusCode = { new: 'n', red: 'r', yellow: 'y', green: 'g' } as const;
-  const topicPriorities = analyzeTopicMastery(
-    idx.temas.map(topic => ({ ...topic, questionCount: topic.n })),
-    topicId => META._by[topicId],
-    questionId => {
-      const record = store.rec(questionId);
-      return record ? {
-        attempts: record[0], correct: record[1], lastSeenAt: record[2], intervalStep: record[3],
-        dueAt: record[4], lastResult: record[5],
-      } : undefined;
-    },
-    now(),
-  ).map(result => ({ id: result.topic.id, est: statusCode[result.status], dias: result.daysSinceLastSeen }));
-  let temas = topicPriorities.filter(topic => !seen.size || seen.has(topic.id));
-  if (!temas.length) temas = topicPriorities;
-  temas = shuffleItems(temas, Math.random); // el orden estable de abajo conserva este azar entre temas empatados: sin datos ya no salen siempre los mismos
-  temas.sort((leftTopic, rightTopic) => (ord[leftTopic.est] - ord[rightTopic.est]) || ((rightTopic.dias ?? 0) - (leftTopic.dias ?? 0)));
-  const pools: Question[][] = [];
-  for (const questions of await Promise.all(temas.slice(0, 8).map(item => getTema(item.id)))) {
-    pools.push(shuffleItems(questions.filter(question => questionAllowed(question, orgs) && !store.rec(question.i)), Math.random));
-  }
-  const items = pickQuickQuestions(due, pools, numericValue, question => question.i, Math.random);
-  const nd = items.filter(item => store.rec(item.i)).length;
-  return { items, titulo: `Sesión rápida · ${nd} repasos + ${items.length - nd} nuevas` };
-}
-/** Repaso de fallos: las más vencidas primero, temas mezclados. */
-export async function repasoItems(): Promise<Seleccion> {
-  await getMeta(); const st = store.getStats(), t0 = now();
-  const cand: { i: string; t: string; due: number }[] = [];
-  for (const id in st) { const statRecord = st[id]; if (statRecord[3] >= 0 && statRecord[4] <= t0 && temaOf(id)) cand.push({ i: id, t: temaOf(id)!, due: statRecord[4] }); }
-  const ids = selectSpacedReviews(cand.map(item => ({ topicId: item.t, dueAt: item.due, item })), 30).map(review => review.item.i);
-  return { items: ids.length ? await byIds(ids) : [], titulo: 'Repaso de fallos · más vencidas primero, temas mezclados' };
-}
-/** Test de trampas: preguntas que reúnen más de las trampas objetivo (por defecto, las 3 con más fallos). */
-export async function trapTest(itemCount: number, only?: (number | string)[], temas?: string[]): Promise<{ items: Question[]; targets: (number | string)[] }> {
-  await getMeta();
-  const statistics = store.getStats();
-  const rates = calculateTrapRates(
-    Object.fromEntries(Object.entries(statistics).map(([id, record]) => [id, { attempts: record[0], correct: record[1] }])),
-    id => META[id]?.[3] || [],
-    5,
-  ).filter(rate => rate.errorCount > 0);
-  const targets = only || rates.slice(0, 3).map(rate => +rate.trapId);
-  if (!targets.length) return { items: [], targets };
-  const tg = new Set(targets.map(Number)), ts = temas && temas.length ? new Set(temas) : null;
-  const ids = Object.keys(META).filter(id => id !== '_by' && (!ts || ts.has(META[id][0])) && (META[id][3] || []).some((key: number | string) => tg.has(+key)));
-  const cands = (await byIds(ids)).filter(question => questionAllowed(question, origenes()));
-  const items = selectTrapQuestions(
-    cands.map(question => ({ id: question.i, trapIds: question.x || [], question })),
-    id => {
-      const record = store.rec(id);
-      return record ? { lastResult: record[5] } : undefined;
-    },
-    targets,
-    itemCount,
-    Math.random,
-  ).map(candidate => candidate.question);
-  return { items, targets };
 }

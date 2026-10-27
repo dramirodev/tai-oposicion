@@ -10,3 +10,28 @@ export function minimumReadingSeconds(question: { context?: string; statement: s
   const words = text.split(/\s+/).filter(Boolean).length;
   return Math.max(4, Math.min(30, Math.round(words / 3.3)));
 }
+
+export interface ReadingWordEvaluation {
+  hit: number;
+  missed: number;
+  extra: number;
+  total: number;
+  claimedNone: boolean;
+}
+
+/** Scores selected key words without changing the user's selection. */
+export function evaluateReadingWords(
+  tokens: readonly { key: boolean }[],
+  selectedIndices: readonly number[],
+  claimedNone = false,
+): ReadingWordEvaluation {
+  const keyIndices = new Set(tokens.flatMap((token, index) => token.key ? [index] : []));
+  const selected = new Set(selectedIndices);
+  return {
+    hit: claimedNone ? 0 : [...selected].filter(index => keyIndices.has(index)).length,
+    missed: claimedNone ? keyIndices.size : [...keyIndices].filter(index => !selected.has(index)).length,
+    extra: claimedNone ? 0 : [...selected].filter(index => !keyIndices.has(index)).length,
+    total: keyIndices.size,
+    claimedNone,
+  };
+}

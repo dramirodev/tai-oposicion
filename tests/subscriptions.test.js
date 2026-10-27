@@ -5,7 +5,7 @@ let store, engine;
 beforeEach(async () => {
   localStorage.clear(); vi.resetModules();
   vi.stubGlobal('fetch', async url => ({ ok: true, json: async () => JSON.parse(readFileSync('public/' + url, 'utf8')) }));
-  store = await import('../src/adapters/local/legacy-store.js'); engine = await import('../src/core/application/legacy-engine.js');
+  store = await import('../src/adapters/local/legacy-store.js'); engine = await import('../src/app/study-engine-composition.js');
   await (await import('../src/adapters/http/legacy-data.js')).getMeta();
 });
 it('store avisa después de persistir y permite cancelar la suscripción', () => {

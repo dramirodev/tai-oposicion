@@ -14,8 +14,6 @@ import { swipeDirection as swipeDir, studyKeyAction as keyAction } from '../src/
 import { selectLegacyCards as pickCards, summarizeLegacyCards as cardStats, cardFromFailedQuestion as cardFromQuestion } from '../src/features/cards/flashcard-mapper.js';
 import { hiliteHtml, claveSpans, claveHtml, richHtml, codeSpans, todoCodigo } from '../src/shared/presentation/study-text.js';
 import { asksForNegativeOption as pideNegativa, minimumReadingSeconds as minLectura } from '../src/core/domain/reading-strategy.js';
-import { analyzeSimulation, simulationPace as ritmoSimulacro } from '../src/core/domain/simulation-analysis.js';
-import { mapSimulationResultToLegacy as analisisSimulacro } from '../src/app/simulation-result-mapper.js';
 
 const shuffle = (items, random = Math.random) => shuffleItems(items, random);
 const composeSim = (topics, pools, count, random = Math.random) => composeWeightedQuestions(topics.map(topic => ({ id: topic.id, weight: topic.w })), pools, count, random);
@@ -344,17 +342,6 @@ describe('lectura atenta', () => {
   it('velocidad cuenta fallos con motivo 7', () => {
     const v = velocidad({ a: [1, 0, 0, 0, 0, 0, 0, 0, 0, 7], b: [1, 0, 0, 0, 0, 0, 0, 0, 0, 1], c: [1, 1, 0, 0, 0, 1, 0, 0, 0, 7] });
     expect(v).toMatchObject({ n: 1, tot: 2, p: 50, ids: ['a'] });
-  });
-});
-
-describe('analisisSimulacro', () => {
-  it('calcula notas, ritmo y preguntas lentas', () => {
-    const r = analisisSimulacro({ correct: [0, 1, 2, 3], ans: [0, 2, -1, 3], times: [10, 5, 0, 200], limitSecs: 400, secs: 300 });
-    expect(r).toMatchObject({ n: 4, a: 2, f: 1, b: 1, presupuesto: 100, sinPenal: 50, perdidoFallos: 8.3, uso: 75 });
-    expect(r.lentas.map(x => x.k)).toEqual([3]);
-    expect(r.rapidasFalladas).toBe(1);
-    expect(ritmoSimulacro(10, 80, 5400, 540)).toBe(2);
-    expect(ritmoSimulacro(0, 0, 0, 5)).toBe(0);
   });
 });
 

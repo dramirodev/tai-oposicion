@@ -1,5 +1,3 @@
-import * as store from '../local/legacy-store.js';
-import { isQuestionAllowed, questionPriority, shuffleItems } from '../../core/domain/selection.js';
 import { loadBank } from '../firebase/legacy-bank.js';
 import { diagnoseQuestionDtos } from './question-diagnostics.js';
 import type { Index, Meta, Question } from '../legacy/types.js';
@@ -43,35 +41,6 @@ export const temaName = (topicId: string): string => (INDEX?.temas.find(topic =>
 
 export const now = (): number => Date.now();
 
-// ───────── selección de preguntas ─────────
-function prioridad(question: Question, mode: string): number {
-  const record = store.rec(question.i);
-  const statistics = record ? {
-    attempts: record[0],
-    lastSeenAt: record[2],
-    lastResult: record[5],
-    intervalStep: record[3],
-    doubtful: record[6] === 1,
-    ...(record.length > 10 ? { failureStreak: record[10] } : {}),
-  } : undefined;
-  return questionPriority(mode, statistics);
-}
-export async function pick({ temas, origins, mode, n: questionCount }: { temas: string[]; origins: { has(origin: Question['o']): boolean }; mode: string; n: number }): Promise<Question[]> {
-  const pool: Question[] = [];
-  for (const topicQuestions of await Promise.all(temas.map(getTema))) for (const question of topicQuestions) if (isQuestionAllowed(question.o, (question as Question & { r?: unknown }).r, origins)) pool.push(question);
-  let prioritizedQuestions: [number, Question][] = shuffleItems(pool, Math.random).map(question => [prioridad(question, mode), question]);
-  if (mode === 'falladas' || mode === 'dudosas') prioritizedQuestions = prioritizedQuestions.filter(([priority]) => priority === 0);
-  else if (mode === 'nuevas') prioritizedQuestions.sort((leftQuestion, rightQuestion) => leftQuestion[0] - rightQuestion[0] || (store.rec(leftQuestion[1].i)?.[2] || 0) - (store.rec(rightQuestion[1].i)?.[2] || 0));
-  return prioritizedQuestions.slice(0, questionCount).map(([, question]) => question);
-}
-export async function dueList(temasFilter?: Set<string>): Promise<string[]> {
-  await getMeta();
-  const currentTimestamp = now(), dueQuestions: [number, string][] = [];
-  const questionStats = store.getStats();
-  for (const questionId in questionStats) { const statRecord = questionStats[questionId]; if (statRecord[3] >= 0 && statRecord[4] <= currentTimestamp && temaOf(questionId) && (!temasFilter || temasFilter.has(temaOf(questionId)!))) dueQuestions.push([statRecord[4], questionId]); }
-  dueQuestions.sort((earlierDue, laterDue) => earlierDue[0] - laterDue[0]);
-  return dueQuestions.map(([, questionId]) => questionId);
-}
 export async function byIds(ids: string[]): Promise<Question[]> {
   await getMeta();
   const requiredTopics = new Set(ids.map(questionId => META[questionId]?.[0]).filter(Boolean));

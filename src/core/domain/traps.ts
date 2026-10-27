@@ -9,6 +9,49 @@ export interface TrapRate {
   errorRate: number;
 }
 
+export interface TrapAnswerEvaluation {
+  hits: number;
+  missed: number;
+  falseAlarms: number;
+  total: number;
+  correctIds: number[];
+  selectedIds: number[];
+}
+
+/** Scores one trap question without changing the selected answers or persistence. */
+export function evaluateTrapAnswer(
+  correctIds: readonly number[],
+  selectedIds: readonly number[],
+): TrapAnswerEvaluation {
+  const correct = new Set(correctIds);
+  const selected = new Set(selectedIds);
+  return {
+    hits: correctIds.filter(id => selected.has(id)).length,
+    missed: correctIds.filter(id => !selected.has(id)).length,
+    falseAlarms: selectedIds.filter(id => !correct.has(id)).length,
+    total: correctIds.length,
+    correctIds: [...correctIds],
+    selectedIds: [...selected],
+  };
+}
+
+/** Adds one response to the historic [shown, detected] counters per trap. */
+export function recordTrapDetections(
+  previous: Readonly<Record<string, readonly [number, number]>>,
+  correctIds: readonly number[],
+  selectedIds: readonly number[],
+): Record<string, [number, number]> {
+  const selected = new Set(selectedIds);
+  const next = Object.fromEntries(Object.entries(previous).map(([id, counts]) => [id, [...counts] as [number, number]]));
+  for (const id of correctIds) {
+    const counts = next[id] || [0, 0];
+    counts[0]++;
+    if (selected.has(id)) counts[1]++;
+    next[id] = counts;
+  }
+  return next;
+}
+
 export function calculateTrapRates(
   statistics: Record<string, { attempts: number; correct: number }>,
   trapIdsForQuestion: (questionId: string) => (number | string)[] | undefined,
