@@ -14,7 +14,7 @@ function setup(overrides = {}) {
     setAccount: value => { account = value; },
     onAccountChange: vi.fn(() => () => {}),
     loadQuestionMetadata: vi.fn(async () => {}),
-    readQuestionStats: vi.fn(() => ({ failed: [0, 0, 0, 0, 0, 0] })),
+    readQuestionStats: vi.fn(async () => ({ failed: { attempts: 1, correct: 0, lastSeenAt: 1, lastResult: 0 } })),
     fastQuestionIds: vi.fn(() => ['fast']),
     recentQuestionIds: vi.fn(() => ['normal']),
     rememberQuestion: vi.fn(),

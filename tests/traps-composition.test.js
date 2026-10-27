@@ -12,7 +12,7 @@ function setup(overrides = {}) {
     accountId: () => account,
     setAccount: value => { account = value; },
     loadQuestionMetadata: vi.fn(async () => {}),
-    readQuestionStats: vi.fn(() => ({ failed: [0, 0, 0, 0, 0, 0] })),
+    readQuestionStats: vi.fn(async () => ({ failed: { attempts: 1, correct: 0, lastSeenAt: 1, lastResult: 0 } })),
     eligibleQuestionIds: vi.fn(() => ['failed', 'plain', 'no-traps', 'scenario']),
     loadQuestionsById: vi.fn(async ids => ids.map(id => id === 'scenario' ? question(id, [2]) : question(id, id === 'no-traps' ? [] : [1]))),
     trapIds: [1, 2, 3, 4, 5, 6, 7, 8],
@@ -61,7 +61,7 @@ describe('traps composition', () => {
   });
 
   it('scores each prompt once, stores trap counts and advances the run', async () => {
-    const { dependencies, services } = setup({ eligibleQuestionIds: () => ['first', 'second'], readQuestionStats: () => ({}), loadQuestionsById: vi.fn(async ids => ids.map(id => question(id, [1]))) });
+    const { dependencies, services } = setup({ eligibleQuestionIds: () => ['first', 'second'], readQuestionStats: async () => ({}), loadQuestionsById: vi.fn(async ids => ids.map(id => question(id, [1]))) });
     const run = await services.startRun();
     expect(run.items).toHaveLength(2);
 

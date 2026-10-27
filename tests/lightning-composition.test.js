@@ -8,7 +8,7 @@ function question(id, extra = {}) {
 function setup(overrides = {}) {
   const dependencies = {
     loadQuestionMetadata: vi.fn(async () => {}),
-    readQuestionStats: vi.fn(() => ({ due: [0, 0, 0, 0, 0, 1], failed: [0, 0, 0, 0, 0, 0] })),
+    readQuestionStats: vi.fn(async () => ({ due: { attempts: 1, correct: 1, lastSeenAt: 1 }, failed: { attempts: 1, correct: 0, lastSeenAt: 1, lastResult: 0 } })),
     loadDueQuestionIds: vi.fn(async () => ['due']),
     knownQuestionIds: vi.fn(() => ['due', 'failed', 'fresh']),
     shuffle: items => [...items],
@@ -36,7 +36,7 @@ describe('lightning composition', () => {
   it('skips questions that are assumptions or context-only prompts', async () => {
     const { services } = setup({
       loadDueQuestionIds: vi.fn(async () => []),
-      readQuestionStats: vi.fn(() => ({})),
+      readQuestionStats: vi.fn(async () => ({})),
       knownQuestionIds: vi.fn(() => ['scenario', 'context', 'plain']),
       loadQuestionsById: vi.fn(async () => [question('scenario', { s: true }), question('context', { cp: 'Contexto' }), question('plain')]),
     });

@@ -1,5 +1,6 @@
 import { evaluateReadingWords, minimumReadingSeconds, asksForNegativeOption } from '../../../core/domain/reading-strategy.js';
 import type { QuestionRecord } from '../../../core/domain/question-record.js';
+import type { QuestionStats } from '../../../core/domain/entities.js';
 import type { ReadingOutcome, ReadingProgress, ReadingPrompt, ReadingServices, ReadingToken, ReadingWordResult } from '../../../shared/ui/study-services.js';
 import { toFailureQuestionView, type QuestionSourceFallbacks } from '../../mappers/study-question-view-mapper.js';
 
@@ -7,8 +8,8 @@ export interface ReadingCompositionDependencies {
   accountId(): string | null;
   onAccountChange(listener: () => void): () => void;
   loadQuestionMetadata(): Promise<unknown>;
-  readQuestionStats(): Readonly<Record<string, readonly number[]>>;
-  fastQuestionIds(stats: Readonly<Record<string, readonly number[]>>): readonly string[];
+  readQuestionStats(): Promise<Readonly<Record<string, QuestionStats>>>;
+  fastQuestionIds(stats: Readonly<Record<string, QuestionStats>>): readonly string[];
   recentQuestionIds(accountId: string | null): readonly string[];
   rememberQuestion(accountId: string | null, questionId: string): void;
   availableQuestionIds(): readonly string[];
@@ -57,11 +58,11 @@ export function createReadingComposition(dependencies: ReadingCompositionDepende
       if (batch) { progress = createProgress(batch); notify(); return progress; }
       await dependencies.loadQuestionMetadata();
       if (requestOwner !== dependencies.accountId()) return null;
-      const stats = dependencies.readQuestionStats();
+      const stats = await dependencies.readQuestionStats();
       const fastIds = dependencies.fastQuestionIds(stats);
       const recentIds = new Set(dependencies.recentQuestionIds(requestOwner));
       const fastSet = new Set(fastIds);
-      const failedIds = Object.keys(stats).filter(id => stats[id][5] === 0 && !fastSet.has(id));
+      const failedIds = Object.keys(stats).filter(id => stats[id].lastResult === 0 && !fastSet.has(id));
       const failedSet = new Set(failedIds);
       const rest = dependencies.availableQuestionIds().filter(id => !fastSet.has(id) && !failedSet.has(id));
       const ids = dependencies.mixQuestionIds([[fastIds, 3], [failedIds, 2]], rest, 40, recentIds, dependencies.shuffle);

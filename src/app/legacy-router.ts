@@ -14,8 +14,8 @@ import { normalizeUiPreferences } from '../shared/presentation/ui-preferences.js
 import { calculateExamScore as nota } from '../core/domain/scoring.js';
 import { randomStudyOrder as shuffle } from '../shared/ui/study-random.js';
 import { swipeDirection, studyKeyAction } from '../shared/ui/study-input.js';
-import { velocidad, quickQuestionCount } from '../features/stats/analytics-mapper.js';
 import { calculateStudyStreak } from '../core/domain/study-analytics.js';
+import { summarizeReadingSpeedFailures } from '../core/domain/question-performance.js';
 import { analyzeSimulation } from '../core/domain/simulation-analysis.js';
 import { renderSimulationAnalysisView } from '../features/simulation/simulation-analysis-view.js';
 import { previewBackupImport } from '../core/application/settings/backup-preview.js';
@@ -29,9 +29,10 @@ import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun
 import { sessionStatePort } from './session-state-store.js';
 import { clearRun, pendingRun, saveRun } from './composition/study/pending-run-composition.js';
 import { createTopicMasteryComposition } from './composition/topics/topic-mastery-composition.js';
+import { createTopicProgressComposition } from './composition/topics/topic-progress-composition.js';
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
-import type { Origin } from '../core/domain/entities.js';
+import type { Origin, QuestionStats } from '../core/domain/entities.js';
 import { createHighlight, questionContentRevision, resolveHighlight } from '../core/domain/attempts/highlights.js';
 import { canonicalText, paintTextHighlight, selectedTextAnchor } from '../shared/ui/text-highlights.js';
 import { findLegacyCodeExplanation } from './composition/explanations/explanation-composition.js';
@@ -59,6 +60,7 @@ import { menuActionIcons, navigationIcons } from './navigation-icons.js';
 import { bootAppServices as startAppBootstrap } from './app-bootstrap.js';
 import { createAppUpdateController } from './composition/updates/app-update-controller.js';
 import { createCardsComposition } from './composition/cards/cards-composition.js';
+import { getHomeProgressSummary } from '../core/application/stats/get-home-progress-summary.js';
 import type { QuestionRecord as Question } from '../core/domain/question-record.js';
 import { createReadingComposition } from './composition/trainers/reading-composition.js';
 import { readingTokens, mixReadingIds } from '../features/trainers/reading-controller.js';
@@ -79,6 +81,7 @@ const appUpdates = createAppUpdateController({
 });
 const recover = createAccountRecovery(store.accountId, () => store.recover());
 const dominioTemas = createTopicMasteryComposition({ progressRepository: localProgressRepository, accountId: store.accountId, questionIdsForTopic: topicId => META._by[topicId], now });
+const progressPorTema = createTopicProgressComposition({ progressRepository: localProgressRepository, accountId: store.accountId, questionIdsForTopic: topicId => META._by[topicId] });
 let routeReady: () => void;
 const firstReactRouteReady = new Promise<void>(resolve => { routeReady = resolve; });
 // saludo con el nombre de la cuenta de Google (se recuerda en el dispositivo; sin cuenta, solo «Hola»)
@@ -136,9 +139,13 @@ async function startRepaso() {
 const GUEST_MENU = (G: any) => [['Estudiar', [G[0][1][0]]], G[3]];
 async function openMenu() {
   if ($('#menuov')) return;
+  const account = store.accountId();
   await getMeta();
   const due = (await dueQuestionIds()).length, nCards = Object.values(store.getCards()).filter(r => r[3] >= 0 && r[4] <= now()).length;
-  const nErr = Object.values(store.getReports()).filter(r => r.st === 'abierto').length, vel = velocidad(store.getStats());
+  const statistics = await localProgressRepository.getStats().catch((): Readonly<Record<string, QuestionStats>> => ({}));
+  if (account !== store.accountId()) return;
+  const speed = summarizeReadingSpeedFailures(Object.entries(statistics).map(([id, record]) => ({ id, lastOutcome: record.lastResult ?? -1, lastReasonCode: record.errorReason })));
+  const nErr = Object.values(store.getReports()).filter(r => r.st === 'abierto').length;
   const aqui = location.hash || hashPath('home');
   const G = [
     ['Estudiar', [
@@ -150,7 +157,7 @@ async function openMenu() {
     ]],
     ['Entrenar un hábito', [
       [navigationIcons.traps, 'Detective de trampas', 'Marca qué trampas esconde cada pregunta', hashPath('traps')],
-      [navigationIcons.reading, 'Lectura atenta', vel.n ? vel.n + ' fallos por velocidad' : 'Qué piden, palabras clave y respuesta', hashPath('reading')],
+      [navigationIcons.reading, 'Lectura atenta', speed.count ? speed.count + ' fallos por velocidad' : 'Qué piden, palabras clave y respuesta', hashPath('reading')],
       [navigationIcons.lightning, 'Pregunta relámpago', 'Una sola pregunta', hashPath('lightning')],
     ]],
     ['Seguimiento', [
@@ -343,7 +350,7 @@ const failuresServices = createFailuresComposition({
 });
 const lightningServices = createLightningComposition({
   loadQuestionMetadata: getMeta,
-  readQuestionStats: () => store.getStats(),
+  readQuestionStats: () => localProgressRepository.getStats(),
   loadDueQuestionIds: dueQuestionIds,
   knownQuestionIds: () => Object.keys(META).filter(id => id !== '_by'),
   shuffle,
@@ -355,7 +362,7 @@ const lightningServices = createLightningComposition({
 const trapsServices = createTrapsComposition({
   accountId: store.accountId,
   loadQuestionMetadata: getMeta,
-  readQuestionStats: () => store.getStats(),
+  readQuestionStats: () => localProgressRepository.getStats(),
   eligibleQuestionIds: () => Object.keys(META).filter(id => id !== '_by' && (META[id][3] || []).length > 0),
   loadQuestionsById: ids => byIds(ids),
   trapIds: Object.keys(TRAMPAS).map(Number),
@@ -369,8 +376,8 @@ const readingServices = createReadingComposition({
   accountId: store.accountId,
   onAccountChange: store.onAccountChange,
   loadQuestionMetadata: getMeta,
-  readQuestionStats: () => store.getStats(),
-  fastQuestionIds: stats => velocidad(stats).ids,
+  readQuestionStats: () => localProgressRepository.getStats(),
+  fastQuestionIds: stats => summarizeReadingSpeedFailures(Object.entries(stats).map(([id, record]) => ({ id, lastOutcome: record.lastResult ?? -1, lastReasonCode: record.errorReason }))).questionIds,
   recentQuestionIds: accountId => localReadingQuestionHistoryRepository.readRecentQuestionIds(accountId),
   rememberQuestion: (accountId, questionId) => localReadingQuestionHistoryRepository.rememberQuestion(accountId, questionId),
   availableQuestionIds: () => Object.keys(META).filter(id => id !== '_by' && !!META[id]),
@@ -526,11 +533,8 @@ export const studyServices: StudyServices = {
   test: {
     async loadTopics() {
       const index = await getIndex(); await getMeta();
-      return index.temas.map(topic => {
-        let attempted = 0, correct = 0, answerCount = 0;
-        for (const id of META._by[topic.id] || []) { const record = store.rec(id); if (record) { attempted++; correct += record[1]; answerCount += record[0]; } }
-        return { id: topic.id, name: topic.nombre, total: topic.n, attempted, correct, answerCount };
-      });
+      const summaries = await progressPorTema(index.temas.map(topic => ({ id: topic.id, name: topic.nombre, total: topic.n })));
+      return summaries.map(({ id, name, total, attempted, correct, answerCount }) => ({ id, name, total, attempted, correct, answerCount }));
     },
     getConfiguration() {
       const saved = store.getCfg().test || {};
@@ -610,16 +614,15 @@ export const studyServices: StudyServices = {
     getAccess() { return { full: isFull(), level: accessLevel(), greeting: saludo(), state: sync.status.state, configured: sync.status.configured, signedIn: !!sync.status.user, pendingRequests: sync.status.access === 'propietario' ? sync.status.reqs.length : 0 }; },
     subscribe(listener) { const offStore = store.onChange(listener), offSync = sync.onStatus(listener), offEngine = subscribeEngine(listener); return () => { offStore(); offSync(); offEngine(); }; },
     async loadOverview() {
-      await recover(); const index = await getIndex(); await getMeta();
-      const stats = store.getStats(), answerTimestamps: number[] = [];
-      let seen = 0, answers = 0;
-      for (const id in stats) { seen++; answers += stats[id][0]; answerTimestamps.push(stats[id][2]); }
+      await recover(); const account = store.accountId(); const index = await getIndex(); await getMeta();
+      const progress = await getHomeProgressSummary(localProgressRepository);
+      if (account !== store.accountId()) throw new Error('La cuenta cambió mientras se cargaba el resumen de inicio.');
       const due = (await dueQuestionIds()).length;
-      const streak = calculateStudyStreak(answerTimestamps, Date.now());
+      const streak = calculateStudyStreak(progress.answerTimestamps, Date.now());
       const exam = store.getCfg().exam;
       const daysToExam = exam ? Math.max(0, Math.ceil((+new Date(exam + 'T09:00:00') - Date.now()) / 86400000)) : null;
       const mastery = await dominioTemas(index);
-      return { seen, total: index.n, answers, streak, daysToExam, due,
+      return { seen: progress.seen, total: index.n, answers: progress.answers, streak, daysToExam, due,
         completedSessions: store.getSessions().length,
         blocks: BLOQUES.map(([code, name]) => {
           const topics = mastery.filter(topic => topic.id.startsWith(code));
@@ -627,7 +630,7 @@ export const studyServices: StudyServices = {
             assessed: topics.filter(topic => topic.est !== 'n').length };
         }),
         cardsDue: Object.values(store.getCards()).filter(record => record[3] >= 0 && record[4] <= now()).length,
-        quickCount: quickQuestionCount(stats), slowCount: velocidad(stats).n, failures: falladasIds().length,
+        quickCount: progress.quickCount, slowCount: progress.slowCount, failures: falladasIds().length,
         studiedTopics: store.getSeen().length, topicCount: index.temas.length,
         assessedTopics: mastery.filter(topic => topic.est !== 'n').length,
         weakTopics: mastery.filter(topic => topic.est === 'r').length,
@@ -642,11 +645,8 @@ export const studyServices: StudyServices = {
     setStudied(ids) { store.setSeen(ids); }, subscribe: store.onChange,
     async loadTopics() {
       await recover(); const index = await getIndex(); await getMeta();
-      return index.temas.map(topic => {
-        let answered = 0, correct = 0, total = 0;
-        for (const id of META._by[topic.id] || []) { const record = store.rec(id); if (record) { answered++; correct += record[1]; total += record[0]; } }
-        return { id: topic.id, name: topic.nombre, total: topic.n, answered, accuracy: total ? pct(correct, total) : null };
-      });
+      const summaries = await progressPorTema(index.temas.map(topic => ({ id: topic.id, name: topic.nombre, total: topic.n })));
+      return summaries.map(({ id, name, total, answered, accuracy }) => ({ id, name, total, answered, accuracy }));
     },
   },
 };

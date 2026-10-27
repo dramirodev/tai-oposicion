@@ -1,4 +1,5 @@
 import type { QuestionRecord } from '../../../core/domain/question-record.js';
+import type { QuestionStats } from '../../../core/domain/entities.js';
 import { evaluateTrapAnswer, recordTrapDetections } from '../../../core/domain/traps.js';
 import type { TrapAnswer, TrapPrompt, TrapRun, TrapWeakness, TrapsServices } from '../../../shared/ui/study-services.js';
 import { toFailureQuestionView, type QuestionSourceFallbacks } from '../../mappers/study-question-view-mapper.js';
@@ -6,7 +7,7 @@ import { toFailureQuestionView, type QuestionSourceFallbacks } from '../../mappe
 export interface TrapsCompositionDependencies {
   accountId(): string | null;
   loadQuestionMetadata(): Promise<unknown>;
-  readQuestionStats(): Readonly<Record<string, readonly number[]>>;
+  readQuestionStats(): Promise<Readonly<Record<string, QuestionStats>>>;
   eligibleQuestionIds(): readonly string[];
   loadQuestionsById(ids: string[]): Promise<QuestionRecord[]>;
   trapIds: readonly number[];
@@ -39,9 +40,9 @@ export function createTrapsComposition(dependencies: TrapsCompositionDependencie
       await dependencies.loadQuestionMetadata();
       if (requestOwner !== dependencies.accountId()) return emptyRun();
 
-      const stats = dependencies.readQuestionStats();
+      const stats = await dependencies.readQuestionStats();
       const eligible = dependencies.eligibleQuestionIds();
-      const failed = eligible.filter(id => stats[id]?.[5] === 0);
+      const failed = eligible.filter(id => stats[id]?.lastResult === 0);
       const failedSet = new Set(failed);
       const rest = eligible.filter(id => !failedSet.has(id));
       const prioritized = dependencies.shuffle(failed).slice(0, 4);
