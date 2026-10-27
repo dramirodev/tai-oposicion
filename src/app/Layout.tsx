@@ -1,19 +1,12 @@
-import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { Activity, CalendarClock, ClipboardCheck, House, Settings2 } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { Outlet, useLocation, useNavigate } from 'react-router';
-import { isFull, isOwner, GUEST_ROUTES } from '../adapters/legacy/access.js';
-import { hasActiveRun } from '../core/application/legacy-engine.js';
-import { syncGateway } from '../adapters/firebase/legacy-sync-state.js';
-import { subscribeAccessChanges } from './access-events.js';
 import { observeFixedLayout } from '../shared/ui/layout-metrics.js';
 import { WorkspaceNavigation } from './WorkspaceNavigation.js';
 import { useActiveSection } from './useActiveSection.js';
 import { hashSegment } from './paths.js';
-const subscribeFull = (fn: () => void) => {
-  const offSync = syncGateway.subscribe(() => fn()), offLocal = subscribeAccessChanges(fn);
-  return () => { offSync(); offLocal(); };
-};
+import { isGuestNavigationRoute, useLayoutAccess } from './layout-composition.js';
 function NetworkBanner() {
   const [status, setStatus] = useState(navigator.onLine === false ? 'off' : '');
   useEffect(() => {
@@ -42,14 +35,7 @@ const tabs = [
 export function Layout() {
   useLayoutEffect(observeFixedLayout, []);
   const location = useLocation(), navigate = useNavigate();
-  const full = useSyncExternalStore(subscribeFull, isFull);
-  const owner = useSyncExternalStore(subscribeFull, isOwner);
-  const lastFull = useRef(full);
-  useEffect(() => {
-    if (lastFull.current === full) return;
-    lastFull.current = full;
-    if (!hasActiveRun()) void navigate(location.pathname);
-  }, [full, location.pathname, navigate]);
+  const { full, owner } = useLayoutAccess(location.pathname, navigate);
   const section = useActiveSection(location.pathname);
   return <>
     {createPortal(
@@ -71,7 +57,7 @@ export function Layout() {
       <nav aria-label="Principal">
         {tabs.map(([route, label, Icon]) => <a key={route} href={hashSegment(route)} data-r={route}
           className={section === route ? 'on' : ''} aria-current={section === route ? 'page' : undefined}
-          style={{ display: full || GUEST_ROUTES.has(route) ? '' : 'none' }}>
+          style={{ display: full || isGuestNavigationRoute(route) ? '' : 'none' }}>
           <i aria-hidden="true"><Icon size="1.125rem" strokeWidth={1.7} /></i>{label}
         </a>)}
       </nav>
