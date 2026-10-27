@@ -174,7 +174,11 @@ La exportación analítica es una copia separada, no sustituye `tai-progreso.jso
 
 ## Versiones
 
-- La versión es la de `package.json` (semver). Para publicar una nueva: `npm version patch|minor|major` (o editar el campo) y hacer push; el CI compila y despliega.
+- La versión es la de `package.json` y sigue semver. Para preparar el siguiente número, usa uno de estos comandos en una rama:
+  - `npm run version:patch` para correcciones compatibles (por ejemplo, `1.1.3` → `1.1.4`).
+  - `npm run version:minor` para añadir funcionalidad compatible (por ejemplo, `1.1.3` → `1.2.0`).
+  - `npm run version:major` para cambios incompatibles que requieran adaptación (por ejemplo, `1.1.3` → `2.0.0`).
+- Cada comando actualiza `package.json` y `package-lock.json`, pero no crea commits ni tags. Incluye ambos cambios en una PR a `main`; después de integrarla, el CI valida y publica la app y crea el tag de esa compilación.
 - `npm run build` (`scripts/build.mjs`) inyecta la versión y el commit en la app y genera `dist/version.json` (no se versiona).
 - En Ajustes → «Versión de la app» se ve la versión instalada. La app consulta `version.json` al abrirse y al volver a primer plano; si es distinta, avisa y el botón «Actualizar ahora» guarda lo que haya en curso y recarga.
 - Si cambias el service worker, sube también su `V` en `public/sw.js`.
