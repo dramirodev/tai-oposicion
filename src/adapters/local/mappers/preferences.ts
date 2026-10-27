@@ -3,7 +3,8 @@ import { cleanCfg } from '../config.js';
 
 export const preferencesMapper = {
   toDomain(dto: unknown): MappingResult<Preferences> {
-    // TODO(zod): validate Preferences with the config schemas.
+    // cleanCfg is the canonical schema-aware normalizer; duplicating its per-setting rules in Zod
+    // would create two authorities and could change legacy defaults or sanitization behavior.
     if (!dto || typeof dto !== 'object' || Array.isArray(dto)) {
       return { ok: false, reason: 'Preferencias inválidas' };
     }
