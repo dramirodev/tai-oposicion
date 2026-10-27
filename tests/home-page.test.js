@@ -51,7 +51,8 @@ it('keeps the home loading until its data and authentication status are resolved
     loadOverview: () => new Promise(resolve => { finishOverview = resolve; }),
     quickSession: async () => {},
   }};
-  renderApp(createElement(HomePage), { services });
+  const rendered = renderApp(createElement(HomePage), { services });
+  rendered.container.id = 'app';
   await screen.findByText('Cargando el inicio…');
   await act(async () => finishOverview({ completedSessions:0, blocks:[], seen:0, total:100, answers:0, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0, studiedTopics:0, topicCount:36, weakTopics:0, masteredTopics:0 }));
   expect(screen.getByText('Cargando el inicio…')).toBeInTheDocument();
@@ -59,5 +60,6 @@ it('keeps the home loading until its data and authentication status are resolved
   authResolved = true;
   listeners.forEach(listener => listener());
   expect(await screen.findByRole('heading', { name: 'Hola' })).toBeInTheDocument();
+  expect(document.activeElement).toBe(screen.getByRole('heading', { name: 'Hola' }));
   expect(screen.getByRole('heading', { name: 'Sesión sin iniciar' })).toBeInTheDocument();
 });

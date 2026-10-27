@@ -263,7 +263,10 @@ Siguiente paso: comprobar la mergeabilidad de #45; luego aplanar #46 y #47 sobre
 
 ## Nueva tarea — carga inicial de Inicio (2026-10-27)
 
-**PENDIENTE, implementación en PR independiente.** Mostrar un loading accesible en Inicio hasta que terminen las cargas de datos que necesita y se resuelva el estado de Firebase Auth. Después, presentar la variante adecuada a una sesión confirmada o a un usuario invitado. No enseñar datos parciales ni asumir autenticación durante la espera. Antes de implementar, identificar fuentes de datos y estados de carga actuales; preservar acceso invitado, uso offline y contenido. Validar carga lenta, fallo de lectura, sesión autenticada, usuario sin sesión y cambios de ruta durante la carga.
+**IMPLEMENTADO EN PR #51, validación remota con una corrección nueva en curso.** Inicio mantiene un loading hasta que se cargan los datos y Firebase Auth resuelve; después presenta la vista de usuario o invitado. El primer check de CI reveló que, si el overview terminaba antes que Auth, `usePageReady` intentaba enfocar mientras el loading seguía montado. Se condicionó a `authResolved && (overview || error)`, y se añadió una aserción de foco al test de carga.
+
+- PR #51: https://github.com/dramirodev/tai-oposicion/pull/51, base `main`, mergeable. Su check `40472313907` falló en E2E `react-pages.spec.ts` (Chromium y WebKit): el título de Inicio no recibía foco tras la carga asíncrona.
+- La rama `feat/home-auth-loading` contiene el arreglo de foco. Validación local: test de Inicio 3/3, `npm run check` 413/413, build y E2E de Inicio 2/2 Chromium/WebKit. Actualizar la PR y volver a consultar su check sin esperar.
 
 ## Continuación de arquitectura — estado comprobado 2026-10-27
 

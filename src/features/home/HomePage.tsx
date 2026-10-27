@@ -16,7 +16,7 @@ export function HomePage() {
   const pending = useSyncExternalStore(controller.subscribe, controller.getPending, controller.getPending);
   const resource = useMemo(() => ({ accountId: services.accountId, subscribe: services.subscribe, load: () => services.loadOverview() }), [services]);
   const { value: overview, error } = useAccountResource(resource);
-  usePageReady(!!overview || !!error);
+  usePageReady(authResolved && (!!overview || !!error));
   const navigate = useNavigate();
   const runAction = (id: string, action: () => Promise<unknown>) => { void controller.runAction(id, action); };
   if (!authResolved || (!overview && !error)) return <PageLoading variant="home" />;
