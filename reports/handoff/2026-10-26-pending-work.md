@@ -216,3 +216,47 @@ La rama `feat/architecture-stats-slice` parte del head de PR #43 (`46ca6be`) y y
 - Siguen pendientes: reducir `StudyServices` por feature; eliminar dependencias de adapters de `legacy-engine`; separar bootstrap/composición de `legacy-router`; encapsular DTOs legacy; incorporar comprobación de ciclos y terminar gates de arquitectura.
 
 No adoptar automáticamente el plan antiguo `modernizacion-sin-legacy`: las rutas de producción se migraron en #34 y los registros anteriores al merge están superados. La rama externa de renombres `/Volumes/SSD/develop/PWA_TAI-mejoras-estudio` tiene cambios locales no publicados; inspeccionarla en su propio checkout antes de decidir su vigencia y preservarlos.
+
+## Continuación — Zustand y siguiente slice arquitectónico (2026-10-27)
+
+### Zustand: COMPLETADO LOCALMENTE, PR PENDIENTE DE PUBLICAR
+
+- Rama `/private/tmp/tai-architecture-zustand-store`, `feat/architecture-zustand-dialog-store`, basada en la punta de PR #44 para conservar la cadena de cambios. La PR #44 está abierta y apilada sobre #43; no afirmar que sea parte de `main` hasta que ambas se fusionen.
+- Dependencia añadida: `zustand` `^5.0.12` (lockfile v5.0.16; store vanilla documentado con Context7 `/pmndrs/zustand`).
+- `src/shared/ui/dialog-store.ts`: sustituido el emisor manual `DialogStateStore` por `createStore` vanilla de Zustand. La API que usa código no React se mantiene mediante `getState()`.
+- `src/shared/ui/dialogs.tsx`: componentes `ToastView` y `DialogStack` leen `toast` y `dialogs` con selectores `useStore` separados para que un cambio en uno no vuelva a dibujar el otro. El temporizador, IDs, control de un menú, promesas de respuesta y retorno del foco permanecen.
+- Alcance limitado: solo estado temporal de UI; ninguna persistencia, progreso, sesión o dato de dominio se mueve a Zustand.
+- `tests/dialog-store.test.js`: actualización de slices, altas y bajas de diálogos, estado de menú y caducidad del toast.
+- Validaciones: `npm ci` (567 paquetes, 0 vulnerabilidades); arquitectura sin deuda nueva (64 excepciones baseline); ESLint; TypeScript; Vitest completo **405/405**; build correcto; E2E `tests/e2e/css-ui.spec.ts` **34/34** (Chromium/WebKit, incluye menú por teclado e interacción táctil). Build mantiene advertencias de chunks grandes `index` y `legacy-sync`.
+- El primer intento de validar antes de instalar Zustand falló porque el manifiesto del worktree aún no contenía la dependencia; se corrigió instalándola y se repitieron satisfactoriamente todas las comprobaciones.
+
+### Estado remoto de PRs anteriores
+
+- PR #43 (iconos y hover táctil): abierta, base `main`, `MERGEABLE`; su check más reciente observado estaba `CANCELLED` (run `40462698638`), causa desconocida. El arreglo pasó las validaciones locales descritas en las secciones anteriores.
+- PR #44 (slice Stats): abierta, base #43, `MERGEABLE`; check `40463179194` estaba `IN_PROGRESS` al validar este handoff.
+- Crear PR #45 desde la rama actual sobre #44. Si #43/#44 se integran primero, reapuntar la PR y rama a `main`, resolver conflictos del handoff y reejecutar validaciones. No esperar a que el CI finalice, pero reconsultar el estado y corregir fallos reproducibles.
+
+### Siguientes tareas de arquitectura — PENDIENTES
+
+1. Reducir el contrato global de `StudyServices` por feature, empezando por la frontera de menor riesgo. Inventariar proveedores y consumidores; mover solo servicios con consumidores identificados; preservar hooks/API o migrarlos todos de forma atómica. Evitar una jerarquía de contextos que aumente complejidad.
+2. Evaluar imports y dependencias de `core/application/legacy-engine.ts`; aislar únicamente una operación de persistencia/IO concreta en puerto/adaptador con pruebas de regresión. No cambiar reglas de estudio, eventos ni contratos.
+3. Separar en `legacy-router.ts` composición, bootstrap y representación que aún sean necesarias; buscar referencias antes de borrar exports. Las páginas ya usan React Router, así que no rehacer rutas.
+4. Revisar DTO/modelos legacy y centralizar mappers solo donde haya transformaciones duplicadas o una frontera externa real.
+5. Añadir comprobación de ciclos y ejecutar gates globales. Retirar código solo con referencias y comportamiento verificados.
+
+La próxima continuación debe empezar publicando #45 y leyendo el estado vivo de #43/#44; después, trabajar el punto 1 en otra rama/PR y seguir el orden. No tocar el cambio ajeno `tests/design-training.test.js` del checkout principal.
+
+## Corrección de estado — 2026-10-27
+
+Esta sección sustituye los estados de PR anteriores que quedaron obsoletos:
+
+- `origin/main` está en `7e2cd29` e incluye PR #43, que ya está fusionada.
+- PR #44 se fusionó accidentalmente en la rama `fix/menu-iconography-mobile-hover`; no se integró en `main`. PR #49 vuelve a publicar el cambio estadístico directamente contra `main`.
+- PR #45 (Zustand) ya está rebasada localmente sobre `main` (`723b9bb`) y su base remota se cambió a `main`. Confirmar que GitHub refresca la mergeabilidad tras el cambio de base.
+- PR #46 y #47 siguen abiertas y todavía necesitan ramas aplanadas y base `main`.
+- PR #48 corrige el azul de los iconos del menú. Rama `fix/menu-icon-color`, directamente desde `main`; validación de color 4/4 (Chromium/WebKit, claro/oscuro), `npm run check` 402/402 y build correctos. Check remoto pendiente en la última consulta.
+- Recuperación de sesión guardada: cambios locales en `/private/tmp/tai-architecture-run-recovery-port`, todavía basados en la antigua punta de #47. Extrae un caso de uso, su formato de dominio y el adaptador local; valida 39/39 pruebas focalizadas, `npm run check` 409/409, build y reanudación E2E 2/2. Antes de abrir PR hay que rebasar únicamente ese cambio contra `main`.
+- En el worktree de #45, arquitectura, ESLint, ignore-growth y TypeScript pasan; build y `tests/e2e/css-ui.spec.ts` pasan (34/34). La suite Vitest falló de forma intermitente en `tests/app.test.js` durante el flujo de salida del test; ejecutada sola pasa. No se modificó esa prueba.
+- Mantener intacto `tests/design-training.test.js` sin confirmar del checkout principal.
+
+Siguiente paso: comprobar la mergeabilidad de #45; luego aplanar #46 y #47 sobre `main`, revisar sus diffs y validar antes de actualizarlas. Publicar después la recuperación de sesión como una PR independiente contra `main` y continuar el bootstrap restante, DTO/mappers y guardas de ciclos.

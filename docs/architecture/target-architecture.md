@@ -46,7 +46,7 @@ La flecha de `adapters` hacia `ports` representa implementación del contrato: l
 
 - **Estado local de pantalla:** `useState` para formularios, filtros, pestañas, diálogos privados y estados de carga de una página.
 - **Estado de negocio/persistencia:** repositorios y casos de uso; las pantallas reciben snapshots ya preparados. No duplicar esto en Zustand.
-- **Estado compartido de cliente:** evaluar Zustand solo para estado efímero observado por varias áreas y que hoy requiera coordinación real. La propuesta inicial es probar el estado de diálogos/toasts o el indicador de sesión activa, no ambos automáticamente; migrar una sola rebanada, con selectores y tests. Si el store observable actual resulta más claro y no hay lecturas selectivas con coste, no añadir Zustand.
+- **Estado compartido de cliente:** Zustand se utiliza solo para el estado efímero compartido de diálogos/toasts, con store vanilla y selectores React. No persistir automáticamente el store ni trasladar estado de negocio. Mantener estado local en `useState` cuando alcance.
 - No persistir automáticamente el store de Zustand ni guardar progreso en él. IndexedDB/local store y Firebase mantienen sus contratos actuales.
 
 ## Casos de uso y modelos

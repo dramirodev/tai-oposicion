@@ -1,3 +1,4 @@
+import { createStore } from 'zustand/vanilla';
 import type { LucideIcon } from 'lucide-react';
 
 export interface ToastAction { label: string; fn: () => void }
@@ -21,49 +22,43 @@ export interface DialogSnapshot {
   toast: { msg: string; action?: ToastAction; shown: boolean };
 }
 
-/** Observable UI-only state shared by the dialog API and its single React provider. */
-export class DialogStateStore {
-  private nextDialogId = 0;
-  private toastTimer: ReturnType<typeof setTimeout> | undefined;
-  private state: DialogSnapshot = { dialogs: [], toast: { msg: '', shown: false } };
-  private readonly listeners = new Set<() => void>();
-
-  getSnapshot = (): DialogSnapshot => this.state;
-
-  subscribe = (listener: () => void): (() => void) => {
-    this.listeners.add(listener);
-    return () => this.listeners.delete(listener);
-  };
-
-  nextId(): number { return this.nextDialogId++; }
-
-  setToast(toast: DialogSnapshot['toast']): void {
-    this.state = { ...this.state, toast };
-    this.emit();
-  }
-
-  showToast(toast: DialogSnapshot['toast'], duration: number): void {
-    if (this.toastTimer) clearTimeout(this.toastTimer);
-    this.setToast(toast);
-    this.toastTimer = setTimeout(() => {
-      this.setToast({ ...this.state.toast, shown: false });
-      this.toastTimer = undefined;
-    }, duration);
-  }
-
-  addDialog(dialog: DialogRequest): void {
-    this.state = { ...this.state, dialogs: [...this.state.dialogs, dialog] };
-    this.emit();
-  }
-
-  removeDialog(dialog: DialogRequest): void {
-    this.state = { ...this.state, dialogs: this.state.dialogs.filter(item => item !== dialog) };
-    this.emit();
-  }
-
-  hasMenu(): boolean { return this.state.dialogs.some(dialog => dialog.kind === 'menu'); }
-
-  private emit(): void { this.listeners.forEach(listener => listener()); }
+interface DialogStoreState extends DialogSnapshot {
+  nextDialogId: number;
+  nextId: () => number;
+  setToast: (toast: DialogSnapshot['toast']) => void;
+  showToast: (toast: DialogSnapshot['toast'], duration: number) => void;
+  addDialog: (dialog: DialogRequest) => void;
+  removeDialog: (dialog: DialogRequest) => void;
+  hasMenu: () => boolean;
 }
 
-export const dialogStore = new DialogStateStore();
+/** Ephemeral UI state; deliberately separate from study progress and persistence. */
+export function createDialogStore() {
+  let toastTimer: ReturnType<typeof setTimeout> | undefined;
+
+  return createStore<DialogStoreState>()((set, get) => ({
+    dialogs: [],
+    toast: { msg: '', shown: false },
+    nextDialogId: 0,
+    nextId: () => {
+      const id = get().nextDialogId;
+      set({ nextDialogId: id + 1 });
+      return id;
+    },
+    setToast: toast => set({ toast }),
+    showToast: (toast, duration) => {
+      if (toastTimer) clearTimeout(toastTimer);
+      get().setToast(toast);
+      toastTimer = setTimeout(() => {
+        const current = get().toast;
+        get().setToast({ ...current, shown: false });
+        toastTimer = undefined;
+      }, duration);
+    },
+    addDialog: dialog => set(state => ({ dialogs: [...state.dialogs, dialog] })),
+    removeDialog: dialog => set(state => ({ dialogs: state.dialogs.filter(item => item !== dialog) })),
+    hasMenu: () => get().dialogs.some(dialog => dialog.kind === 'menu'),
+  }));
+}
+
+export const dialogStore = createDialogStore();

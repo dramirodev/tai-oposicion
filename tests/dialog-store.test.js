@@ -1,29 +1,45 @@
-import { describe, expect, it, vi } from 'vitest';
-import { DialogStateStore } from '../src/shared/ui/dialog-store.js';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { createDialogStore } from '../src/shared/ui/dialog-store.js';
 
-describe('DialogStateStore', () => {
-  it('publishes immutable snapshots after toast state changes', () => {
-    const store = new DialogStateStore();
-    const listener = vi.fn();
-    const before = store.getSnapshot();
-    const unsubscribe = store.subscribe(listener);
+describe('dialog Zustand store', () => {
+  afterEach(() => vi.useRealTimers());
 
-    store.setToast({ msg: 'Guardado', shown: true });
+  it('updates toast state without replacing the dialogs slice', () => {
+    const store = createDialogStore();
+    const dialogsBefore = store.getState().dialogs;
 
-    expect(listener).toHaveBeenCalledTimes(1);
-    expect(store.getSnapshot()).not.toBe(before);
-    expect(store.getSnapshot().toast).toEqual({ msg: 'Guardado', shown: true });
-    unsubscribe();
+    store.getState().setToast({ msg: 'Guardado', shown: true });
+
+    expect(store.getState().toast).toEqual({ msg: 'Guardado', shown: true });
+    expect(store.getState().dialogs).toBe(dialogsBefore);
   });
 
-  it('adds and removes dialog requests through published snapshots', () => {
-    const store = new DialogStateStore();
+  it('adds and removes dialog requests while preserving toast state', () => {
+    const store = createDialogStore();
     const done = vi.fn();
-    const dialog = { id: store.nextId(), kind: 'ask', msg: '¿Continuar?', title: '', label: 'Sí', danger: false, prev: null, done };
+    const dialog = { id: store.getState().nextId(), kind: 'ask', msg: '¿Continuar?', title: '', label: 'Sí', danger: false, prev: null, done };
+    store.getState().setToast({ msg: 'Guardado', shown: true });
 
-    store.addDialog(dialog);
-    expect(store.getSnapshot().dialogs).toEqual([dialog]);
-    store.removeDialog(dialog);
-    expect(store.getSnapshot().dialogs).toEqual([]);
+    store.getState().addDialog(dialog);
+    expect(store.getState().dialogs).toEqual([dialog]);
+    expect(store.getState().hasMenu()).toBe(false);
+    store.getState().removeDialog(dialog);
+
+    expect(store.getState().dialogs).toEqual([]);
+    expect(store.getState().toast).toEqual({ msg: 'Guardado', shown: true });
+  });
+
+  it('only permits one open menu and hides a toast after its duration', () => {
+    vi.useFakeTimers();
+    const store = createDialogStore();
+    const dialog = { id: 0, kind: 'menu', msg: '', title: '', label: '', danger: false, prev: null, done: vi.fn() };
+
+    store.getState().addDialog(dialog);
+    expect(store.getState().hasMenu()).toBe(true);
+    store.getState().showToast({ msg: 'Listo', shown: true }, 1000);
+    vi.advanceTimersByTime(1000);
+
+    expect(store.getState().toast.shown).toBe(false);
+    expect(store.getState().hasMenu()).toBe(true);
   });
 });

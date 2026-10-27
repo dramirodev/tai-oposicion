@@ -34,6 +34,15 @@ La propuesta preserva las capas ya existentes y prioriza extraer un slice estad�
 2. Tras integrar la PR #34, reapuntar esta rama a `main` y repetir `npm run check:architecture` y el inventario.
 3. Con aprobación, iniciar el slice de Progreso/estadísticas en una rama de implementación apilada, con tests y compatibilidad; no comenzar moviendo el motor de estudio.
 
+## Etapa B — estado actualizado 2026-10-27
+
+- PR #44 se fusionó por error en la rama de iconografía, no en `main`. PR #49 reaplica únicamente el slice de estadísticas contra `main`.
+- PR #45 contiene el cambio de Zustand para diálogos y avisos. Los datos siguen siendo efímeros; la persistencia, los contratos de sesión y el comportamiento de foco/teclado no cambian.
+- Este slice conserva `DialogStateStore` como puerta de entrada estable para llamadas imperativas y usa el store vanilla de Zustand con suscripciones selectivas en React.
+- Las PR #45–#47 se están preparando como ramas independientes con base `main`, a petición del usuario.
+- Validación del slice original: arquitectura sin deuda nueva, lint, ignore-growth, TypeScript, 405/405 pruebas, build y E2E de diálogo/menú/táctil 34/34. La versión reapuntada se volverá a validar antes de actualizar su PR.
+
+El siguiente trabajo en curso desacopla únicamente la lectura/validación de una sesión guardada. No extrae un puerto global para todo `legacy-engine` y conserva el formato `tai.run:<cuenta>`.
 ## Etapa B — avance 2026-10-27
 
 La instrucción actual del usuario autoriza continuar la implementación de las tareas pendientes. Este primer incremento aborda el agregado de rendimiento por tema:
