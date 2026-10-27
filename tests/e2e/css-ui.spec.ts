@@ -199,6 +199,37 @@ test('el menú móvil conserva la iconografía de navegación y funciona con tec
   await expect(page.locator('#app h1')).toHaveText('Ayuda');
 });
 
+for (const theme of ['light', 'dark']) {
+  test(`los iconos del menú usan los colores de navegación · ${theme}`, async ({ page }) => {
+    await prepare(page, theme, 0);
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/#/home');
+    await page.locator('#menu').click();
+    const menu = page.locator('#menuov');
+    await expect(menu).toBeVisible();
+
+    const menuIconColors = await menu.evaluate(dialog => {
+      const iconColor = (label: string) => {
+        const row = [...dialog.querySelectorAll<HTMLButtonElement>('.lrow')]
+          .find(candidate => candidate.querySelector('b')?.textContent === label);
+        return row ? getComputedStyle(row.querySelector('svg')!).color : null;
+      };
+      return { active: iconColor('Inicio'), inactive: iconColor('Test por tema') };
+    });
+    const navigationIconColors = await page.locator('.workspace-sidebar').evaluate(sidebar => {
+      const active = sidebar.querySelector<HTMLAnchorElement>('a[aria-current="page"] svg');
+      const inactive = [...sidebar.querySelectorAll<HTMLAnchorElement>('a')]
+        .find(link => link.textContent?.includes('Test por tema'))?.querySelector('svg');
+      return {
+        active: active ? getComputedStyle(active).color : null,
+        inactive: inactive ? getComputedStyle(inactive).color : null,
+      };
+    });
+
+    expect(menuIconColors).toEqual(navigationIconColors);
+  });
+}
+
 test('la práctica táctil no aplica estilos hover persistentes a opciones', async ({ browser }) => {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   try {
