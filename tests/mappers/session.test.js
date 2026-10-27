@@ -12,3 +12,9 @@ it('mapea la sesión persistida a resultado y vuelve al DTO sin alterar datos', 
 it('devuelve error explícito si la sesión carece de campos obligatorios', () => {
   expect(sessionMapper.toDomain({ id: 's1' })).toMatchObject({ ok: false, reason: expect.any(String) });
 });
+
+it('conserva el rechazo de campos desconocidos y el contrato permisivo de datos históricos', () => {
+  const dto = { id: 's1', ts: 1, kind: 'tipo-antiguo', n: 1, a: 0, f: 1, b: 0, secs: 10, nota: 0, temas: [], tipos: {}, fails: [3], titulo: 'Sesión', porTiempo: 'legacy' };
+  expect(sessionMapper.toDomain({ ...dto, extra: true })).toEqual({ ok: false, reason: 'Campo de sesión desconocido' });
+  expect(sessionMapper.toDomain(dto)).toMatchObject({ ok: true, value: { kind: 'tipo-antiguo', failedQuestionIds: [3], timeLimited: 'legacy' } });
+});
