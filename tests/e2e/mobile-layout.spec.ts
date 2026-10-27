@@ -30,6 +30,23 @@ test('los controles del informe de estrategia se alinean en móvil', async ({ pa
   expect(Math.abs(alignment.selectRight - alignment.buttonRight)).toBeLessThanOrEqual(1);
 });
 
+test('el índice de Ayuda no se superpone al título ni adopta la barra inferior', async ({ page }) => {
+  await prepareOwner(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/#/ayuda');
+
+  const heading = page.getByRole('heading', { name: 'Ayuda', exact: true, level: 1 });
+  const contents = page.getByRole('navigation', { name: 'Contenido de ayuda' });
+  await expect(heading).toBeVisible();
+  await expect(contents).toBeVisible();
+  expect(await contents.evaluate(element => getComputedStyle(element).position)).toBe('static');
+  expect(await heading.evaluate(element => {
+    const bounds = element.getBoundingClientRect();
+    const topElement = document.elementFromPoint(bounds.left + 2, bounds.top + 2);
+    return topElement === element || element.contains(topElement);
+  })).toBe(true);
+});
+
 test('el menú móvil mantiene su panel dentro del viewport y permite llegar a todas las opciones', async ({ page }) => {
   await prepareOwner(page);
   await page.setViewportSize({ width: 320, height: 640 });

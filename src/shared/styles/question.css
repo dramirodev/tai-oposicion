@@ -730,30 +730,6 @@ ul.tips li {
   border-inline-start: 4px solid var(--selb);
 }
 
-.code-explanation .code-sample,.code-explanation .code-result {
-  max-width: 100%;
-  overflow: auto;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-
-.code-explanation .code-sample .shiki,
-.code-explanation .code-result .shiki {
-  display: block;
-  background: var(--code-bg);
-  color: var(--code-ink);
-}
-
-.code-explanation .code-sample .shiki .shiki-token,
-.code-explanation .code-result .shiki .shiki-token {
-  color: var(--shiki-token-light);
-}
-
-:root[data-color-scheme=dark] .code-explanation .code-sample .shiki .shiki-token,
-:root[data-color-scheme=dark] .code-explanation .code-result .shiki .shiki-token {
-  color: var(--shiki-token-dark, var(--shiki-token-light));
-}
-
 .code-explanation .explanation-status {
   line-height: 1.6;
 }

@@ -16,3 +16,16 @@ it('resalta bloques largos de código sin sustituir su contenido', async () => {
   await vi.waitFor(() => expect(container.querySelector('code.shiki .shiki-token')).toBeInTheDocument(), { timeout: 10000 });
   expect(container.querySelector('code').textContent).toContain('SELECT nombre FROM usuarios;');
 });
+
+it('resalta código inline real en enunciados y opciones de respuesta', async () => {
+  const question = 'Se ejecuta chmod 640 fichero.txt.';
+  const option = 'chmod 764 fichero.txt';
+  const { container } = render(React.createElement(StudyMarkup, {
+    html: `<p class="question">${question.replace('chmod 640 fichero.txt', '<code class="cd">chmod 640 fichero.txt</code>')}</p><button><span class="answer"><code class="cd">${option}</code></span></button>`,
+  }));
+
+  await vi.waitFor(() => expect(container.querySelectorAll('code.cd.shiki .shiki-token').length).toBeGreaterThanOrEqual(2), { timeout: 10000 });
+  expect(container.querySelector('.question code')?.textContent).toBe('chmod 640 fichero.txt');
+  expect(container.querySelector('.answer code')?.textContent).toBe(option);
+  expect(container.querySelectorAll('code.cd.shiki').length).toBe(2);
+});
