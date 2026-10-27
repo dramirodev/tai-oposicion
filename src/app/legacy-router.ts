@@ -4,6 +4,7 @@ import { questionNotice, sourceHtml } from '../shared/presentation/legacy-study.
 import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
 import * as store from '../adapters/local/legacy-store.js';
+import { localGuestQuestionHistoryRepository } from '../adapters/local/guest-question-history.js';
 import { escapeHtml as esc, formatTime as fmtT, percentage as pct } from '../shared/presentation/format.js';
 import { richHtml, hiliteHtml } from '../shared/presentation/study-text.js';
 import { ERROR_REPORT_REASONS as MOTIVOS, FAILURE_REASONS as MOTIVOS_FALLO } from '../shared/presentation/study-labels.js';
@@ -106,7 +107,7 @@ function simAnalisis({ ses, items, ans, times, limit }: any) {
 // ───────── sesión rápida (~5 min) ─────────
 async function quickSession() {
   const account = store.accountId();
-  const r = await quickItems(isFull());
+  const r = await quickItems(isFull(), localGuestQuestionHistoryRepository);
   if (account !== store.accountId()) return;
   if (!r.items.length) { toast(isFull() ? 'No hay preguntas nuevas ni repasos con esos filtros.' : 'No hay preguntas disponibles ahora mismo.'); return; }
   startRun({ kind: 'rev', feedback: true, items: r.items, titulo: r.titulo });

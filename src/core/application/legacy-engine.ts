@@ -19,6 +19,7 @@ import { questionContentRevision } from '../domain/attempts/highlights.js';
 import type { Index, Question, Session, SessionKind } from '../../adapters/legacy/types.js';
 import type { AttemptIntent } from '../domain/attempts/transitions.js';
 import type { AttemptTracker } from '../ports/AttemptTracker.js';
+import type { GuestQuestionHistoryRepository } from '../ports/GuestQuestionHistoryRepository.js';
 import type { PendingRun } from './runs/pending-run.js';
 import type { SavedRunSnapshot } from '../domain/pending-run.js';
 
@@ -382,9 +383,12 @@ const origenes = (): Set<string> => new Set(((store.getCfg().test || {}) as { o?
 /** Ids de preguntas con un fallo pendiente de superar. */
 export const falladasIds = (): string[] => { const st = store.getStats(); return Object.keys(st).filter(id => temaOf(id) && store.pendingFailure(st[id])); };
 
-const GQ_KEY = 'tai.gq';
-async function quickGuest(idx: Index, numericValue: number, orgs: Set<string>): Promise<Question[]> {
-  let last: string[] = []; try { last = JSON.parse(localStorage.getItem(GQ_KEY) || '[]'); } catch {}
+const emptyGuestQuestionHistory: GuestQuestionHistoryRepository = {
+  readRecentQuestionIds: () => [],
+  saveRecentQuestionIds: () => {},
+};
+async function quickGuest(idx: Index, numericValue: number, orgs: Set<string>, history: GuestQuestionHistoryRepository): Promise<Question[]> {
+  const last = history.readRecentQuestionIds();
   const temas = shuffleItems(idx.temas, Math.random).slice(0, numericValue + 3);
   const pools = (await Promise.all(temas.map(topic => getTema(topic.id)))).map((questions, index) => ({
     topicId: temas[index].id,
@@ -395,19 +399,19 @@ async function quickGuest(idx: Index, numericValue: number, orgs: Set<string>): 
     ),
   }));
   const items = pickGuestQuestions(pools, numericValue, question => question.i, id => !!store.rec(id), new Set(last), Math.random);
-  try { localStorage.setItem(GQ_KEY, JSON.stringify([...last, ...items.map(item => item.i)].slice(-300))); } catch {}
+  history.saveRecentQuestionIds([...last, ...items.map(item => item.i)].slice(-300));
   return items;
 }
 export interface Seleccion { items: Question[]; titulo: string }
 /** Sesión rápida (~5 min). Invitado: una pregunta de cada tema al azar. Con acceso: repasos vencidos + nuevas de los temas más débiles. */
-export async function quickItems(full: boolean): Promise<Seleccion | { items: []; titulo: '' }> {
+export async function quickItems(full: boolean, history: GuestQuestionHistoryRepository = emptyGuestQuestionHistory): Promise<Seleccion | { items: []; titulo: '' }> {
   const idx = await getIndex(); await getMeta();
   const numericValue = estimateQuickQuestionCount(Object.values(store.getStats()).map(record => ({
     totalSeconds: record[7],
     count: record[8],
   })));
   const orgs = origenes();
-  if (!full) return { items: await quickGuest(idx, numericValue, orgs), titulo: 'Sesión rápida · una pregunta por tema' };
+  if (!full) return { items: await quickGuest(idx, numericValue, orgs, history), titulo: 'Sesión rápida · una pregunta por tema' };
   const due = (await byIds((await dueList()).slice(0, numericValue))).filter(question => questionAllowed(question, orgs));
   const seen = new Set(store.getSeen());
   const ord = { r: 0, y: 1, n: 2, g: 3 };

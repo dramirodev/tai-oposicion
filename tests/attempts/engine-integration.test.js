@@ -74,6 +74,15 @@ describe('integración del motor con el historial local', () => {
     engine.clearActiveRun();
   });
 
+  it('usa el puerto inyectado para consultar y actualizar el historial del invitado', async () => {
+    const history = { readRecentQuestionIds: vi.fn(() => []), saveRecentQuestionIds: vi.fn() };
+    const result = await engine.quickItems(false, history);
+
+    expect(history.readRecentQuestionIds).toHaveBeenCalledOnce();
+    expect(history.saveRecentQuestionIds).toHaveBeenCalledOnce();
+    expect(history.saveRecentQuestionIds).toHaveBeenCalledWith(result.items.map(question => question.i));
+  });
+
   it('deja No lo sé pendiente, permite contestar al volver y bloquea el primer resultado', async () => {
     const question = (await data.getTema('T1.01')).find(item => !item.np);
     const run = engine.createRun({ kind: 'test', feedback: true, items: [question] });
