@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useStudyServices, type TestConfiguration, type TestTopic } from '../../shared/ui/study-services.js';
+import { useStudyService, type TestConfiguration, type TestTopic } from '../../shared/ui/study-services.js';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 import { topicsForTest, toggleTestTopics, updateTestConfiguration } from './test-controller.js';
 
@@ -9,7 +9,7 @@ const blocks = [
 ] as const;
 
 export function TestPage() {
-  const { test } = useStudyServices();
+  const test = useStudyService('test');
   const [configuration, setConfiguration] = useState(() => test.getConfiguration());
   const [topics, setTopics] = useState<readonly TestTopic[]>([]);
   const [query, setQuery] = useState('');

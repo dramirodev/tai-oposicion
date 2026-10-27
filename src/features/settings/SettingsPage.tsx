@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { ask, toast } from '../../shared/ui/dialog-actions.js';
 import { saveExportFile } from '../../shared/ui/download-file.js';
-import { useStudyServices, type SettingsServices, type SettingsSnapshot } from '../../shared/ui/study-services.js';
+import { useStudyService, type SettingsServices, type SettingsSnapshot } from '../../shared/ui/study-services.js';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 
 interface AiExport {
@@ -14,7 +14,7 @@ const count = (amount: number, singular: string, plural: string) => `${amount} $
 const localDate = (value: Date) => `${value.getFullYear()}-${String(value.getMonth() + 1).padStart(2, '0')}-${String(value.getDate()).padStart(2, '0')}`;
 
 export function SettingsPage() {
-  const { settings } = useStudyServices();
+  const settings = useStudyService('settings');
   const snapshot = useSettingsSnapshot(settings);
   const navigate = useNavigate();
   return <>

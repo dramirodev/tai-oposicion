@@ -7,10 +7,10 @@ import { questionNotice, sourceHtml } from '../../shared/presentation/study-cont
 import { richHtml, hiliteHtml } from '../../shared/presentation/study-text.js';
 import { percentage } from '../../shared/presentation/format.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
-import { useStudyServices, type ReadingProgress, type ReadingPrompt, type ReadingServices } from '../../shared/ui/study-services.js';
+import { useStudyService, type ReadingProgress, type ReadingPrompt, type ReadingServices } from '../../shared/ui/study-services.js';
 
 export function ReadingPage() {
-  const { reading } = useStudyServices();
+  const reading = useStudyService('reading');
   const navigate = useNavigate();
   const progress = useSyncExternalStore(reading.subscribe, reading.getProgress, reading.getProgress);
   const [loading, setLoading] = useState(!progress);

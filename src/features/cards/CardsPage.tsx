@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router';
 import { ERROR_REPORT_REASONS } from '../../shared/presentation/study-labels.js';
 import { questionNotice, sourceHtml } from '../../shared/presentation/study-content.js';
 import { richHtml } from '../../shared/presentation/study-text.js';
-import { useStudyServices, type CardsServices, type CardPreferences, type CardsPlan, type StudyCard } from '../../shared/ui/study-services.js';
+import { useStudyService, type CardsServices, type CardPreferences, type CardsPlan, type StudyCard } from '../../shared/ui/study-services.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
 
@@ -181,7 +181,8 @@ function getNextDueDate(services: CardsServices): Date | null {
 
 export function CardsPage() {
   const navigate = useNavigate();
-  const { home, cards } = useStudyServices();
+  const home = useStudyService('home');
+  const cards = useStudyService('cards');
   const initialPreferences = useMemo(() => cards.getPreferences(), [cards]);
   const [preferences, setPreferences] = useState<CardPreferences>(initialPreferences);
   const [plan, setPlan] = useState<CardsPlan | null>(null);

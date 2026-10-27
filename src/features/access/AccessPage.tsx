@@ -1,6 +1,6 @@
 import { useMemo, useState, useSyncExternalStore } from 'react';
 import { Navigate } from 'react-router';
-import { useStudyServices } from '../../shared/ui/study-services.js';
+import { useStudyService } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { useActionLifetime } from '../../shared/ui/use-action-lifetime.js';
 import { usePageReady } from '../../shared/ui/use-page-ready.js';
@@ -8,7 +8,7 @@ import { AccessView } from './AccessView.js';
 import { createAccessController } from './access-controller.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
 export function AccessPage() {
-  const { access: services } = useStudyServices();
+  const services = useStudyService('access');
   const captureLifetime = useActionLifetime(services.accountId);
   const [controller] = useState(() => createAccessController(services, captureLifetime));
   const pending = useSyncExternalStore(controller.subscribe, controller.getPending, controller.getPending);

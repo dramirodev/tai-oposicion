@@ -1,8 +1,8 @@
 import { useLayoutEffect } from 'react';
-import { useStudyServices } from './study-services.js';
+import { useStudyService } from './study-services.js';
 /** Called only once content is ready, so async screens receive keyboard focus. */
 export function usePageReady(ready: boolean) {
-  const { markReady } = useStudyServices();
+  const markReady = useStudyService('markReady');
   useLayoutEffect(() => {
     if (!ready) return;
     const heading = document.querySelector<HTMLElement>('#app h1');

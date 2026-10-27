@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Zap } from 'lucide-react';
 import { Link } from 'react-router';
-import { useStudyServices, type LightningQuestion } from '../../shared/ui/study-services.js';
+import { useStudyService, type LightningQuestion } from '../../shared/ui/study-services.js';
 import { richHtml, hiliteHtml } from '../../shared/presentation/study-text.js';
 import { questionNotice, sourceHtml } from '../../shared/presentation/study-content.js';
 import { TRAMPAS } from '../../shared/presentation/labels.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
 
 export function LightningPage() {
-  const { lightning } = useStudyServices();
+  const lightning = useStudyService('lightning');
   const [question, setQuestion] = useState<LightningQuestion | null>(null);
   const [loading, setLoading] = useState(true);
   const [answered, setAnswered] = useState<number | null>(null);
