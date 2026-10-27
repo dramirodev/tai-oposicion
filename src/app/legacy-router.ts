@@ -52,6 +52,7 @@ import { attemptArchiveMapper } from '../adapters/local/mappers/attempt-archive.
 import { cleanCfg } from '../adapters/local/config.js';
 import { hashPath } from './paths.js';
 import { menuActionIcons, navigationIcons } from './navigation-icons.js';
+import { bootAppServices as startAppBootstrap } from './app-bootstrap.js';
 import type { QuestionRecord as Question } from '../core/domain/question-record.js';
 import { readingTokens, mixReadingIds } from '../features/trainers/reading-controller.js';
 import type { TestConfiguration, ScenarioChoice, SimulationConfiguration, SimulationTab, SimulationExam, SimulationExamGroups, ResultServices } from '../shared/ui/study-services.js';
@@ -586,34 +587,26 @@ const readingServices = {
 
 // ───────── arranque ─────────
 export function bootAppServices(): () => void {
-  const controller = new AbortController(), timers: ReturnType<typeof setTimeout>[] = [];
-  let stopped = false, offUpdates: (() => void) | undefined;
-  const listen = (target: EventTarget, event: string, fn: () => void) => target.addEventListener(event, fn, { signal: controller.signal });
-  const offAccount = store.onAccountChange(() => go(hashPath('home')));
-  void (async () => {
-    try { navigator.storage?.persist?.(); } catch (e) {}
-    await recover(); if (stopped) return;
-    listen(document, 'visibilitychange', () => {
-      const visible = document.visibilityState === 'visible';
-      setAttemptTrackingVisible(visible);
-      if (!visible) { store.flushNow(); void flushAttemptTracking(); }
-    });
-    listen(window, 'pagehide', () => { setAttemptTrackingVisible(false); store.flushNow(); void flushAttemptTracking(); });
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js').then(reg => {
-      if (!stopped) offUpdates = watchUpdates(reg);
-    }).catch(() => {});
-    await firstReactRouteReady; if (stopped) return;
-    listen(window, 'pagehide', saveRun);
-    listen(document, 'visibilitychange', () => { if (document.visibilityState === 'hidden') saveRun(); });
-    resumeSaved().catch(() => {});
-    timers.push(setTimeout(prefetchBanco, 4000));
-    const aviso = async () => { const n = await checkUpdate(); if (n && !stopped) toast(`Hay una versión nueva (${n.version}).`, { label: 'Actualizar', fn: applyUpdate }); };
-    timers.push(setTimeout(aviso, 6000));
-    listen(document, 'visibilitychange', () => { if (document.visibilityState === 'visible') void aviso(); });
-    try { await getMeta(); } catch (e) { console.error(e); }
-    if (!stopped) { try { await sync.init({ temaOf, idsOfTema }); } catch (e) { console.error(e); } }
-  })();
-  return () => { stopped = true; controller.abort(); timers.forEach(clearTimeout); offAccount(); offUpdates?.(); };
+  return startAppBootstrap({
+    onAccountChange: store.onAccountChange,
+    goHome: () => go(hashPath('home')),
+    recover,
+    setAttemptTrackingVisible,
+    flushStore: () => { store.flushNow(); },
+    flushAttemptTracking,
+    saveRun,
+    routeReady: firstReactRouteReady,
+    resumeSaved: () => resumeSaved().catch(() => {}),
+    prefetchBank: prefetchBanco,
+    watchUpdates,
+    checkUpdate,
+    announceUpdate: version => toast(`Hay una versión nueva (${version}).`, { label: 'Actualizar', fn: applyUpdate }),
+    applyUpdate,
+    loadMetadataAndInitializeSync: async () => {
+      try { await getMeta(); } catch (error) { console.error(error); }
+      try { await sync.init({ temaOf, idsOfTema }); } catch (error) { console.error(error); }
+    },
+  });
 }
 
 // Descarga el banco en segundo plano (2 a la vez) para que Test, Simulacro y Repaso arranquen sin esperar a la red

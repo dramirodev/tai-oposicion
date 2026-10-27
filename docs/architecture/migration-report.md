@@ -6,6 +6,12 @@
 
 La propuesta preserva las capas ya existentes y prioriza extraer un slice estadístico de solo lectura antes de atacar la sesión de estudio y la sincronización, por su menor riesgo de datos. Propone evaluar Zustand con un único estado efímero compartido y conservar `useState` para lo local; la biblioteca no está instalada en el checkout auditado y no debe añadirse en Etapa A.
 
+## Actualización de implementación — 2026-10-27
+
+- #53 (bootstrap) se mantiene como slice de la Etapa B, rebased sobre `main` `75e9ecb` tras el merge de #51, #54 y #57. La extracción respeta los errores separados de metadatos y Sync.
+- Validación local tras el rebase: checks completos **414/414**, build correcta, E2E de rutas **76/76** y puente **28/28** en Chromium/WebKit. Nueva ejecución remota pendiente.
+- #54 (mapper de DTO HTTP) y #57 (tag de build desplegado) se integraron en `main`; #56, #58 siguen en revisión al corte actual.
+
 ## Cambios hechos en Etapa A
 
 - Añadidos `audit.md`, `target-architecture.md`, `dependency-rules.md`, `migration-plan.md` y este informe.
