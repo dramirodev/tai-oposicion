@@ -17,7 +17,10 @@
     "test:e2e:ci": "node scripts/e2e-baseline.mjs",
     "measure:attempts": "node scripts/measure-attempt-volume.mjs",
     "check:architecture": "node scripts/check-architecture.mjs",
-    "check": "npm run check:architecture && npm run lint && npm run lint:ignore-growth && npm run typecheck && npm test"
+    "check": "npm run check:architecture && npm run lint && npm run lint:ignore-growth && npm run typecheck && npm test",
+    "version:patch": "npm version patch --no-git-tag-version",
+    "version:minor": "npm version minor --no-git-tag-version",
+    "version:major": "npm version major --no-git-tag-version"
   },
   "dependencies": {
     "firebase": "^10.14.1",
