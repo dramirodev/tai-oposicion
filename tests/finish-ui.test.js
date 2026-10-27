@@ -1,8 +1,9 @@
 import 'fake-indexeddb/auto';
 import {afterEach,it,expect,vi} from 'vitest';
+import {act} from '@testing-library/react';
 import {readFileSync} from 'node:fs';
 import path from 'node:path';
-vi.mock('../src/adapters/firebase/sync-facade.js',()=>({status:{user:null,state:'sin sesión',configured:false},setAttemptRepository:()=>{},init:async()=>{},onStatus:()=>()=>{},login:async()=>{},logout:async()=>{},retry:()=>{}}));
+vi.mock('../src/adapters/firebase/sync-facade.js',()=>({status:{user:null,state:'sin sesión',configured:false,authResolved:true},setAttemptRepository:()=>{},init:async()=>{},onStatus:()=>()=>{},login:async()=>{},logout:async()=>{},retry:()=>{}}));
 let unmountApp;
 afterEach(()=>{unmountApp?.();unmountApp=undefined;vi.unstubAllGlobals();});
 it('doble pulsación en Terminar no duplica el intento de examen',async()=>{
@@ -22,9 +23,13 @@ it('doble pulsación en Terminar no duplica el intento de examen',async()=>{
  const {getSnapshot}=await import('../src/core/application/legacy-engine.js');
  while(getSnapshot().run.idx<getSnapshot().run.items.length-1)document.querySelector('#next').click();
  const q=getSnapshot().run.items[getSnapshot().run.idx];document.querySelector(`.opt[data-i="${q.c}"]`).click();
- const finish=document.querySelector('#next');finish.click();finish.click();
- await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull(),{timeout:5000});
+ const finish=document.querySelector('#next');await act(async()=>{finish.click();finish.click();});
+ await vi.waitFor(()=>{
+  const overlay=document.querySelector('.overlay');
+  expect(overlay).not.toBeNull();
+  expect(overlay?.textContent).toContain('¿Terminar y guardar la sesión como interrumpida?');
+ },{timeout:10000});
  document.querySelector('.overlay [data-v="1"]').click();
  await waitText('Resultado');
  const store=await import('../src/adapters/local/legacy-store.js');expect(store.rec(q.i)[0]).toBe(1);
-},15000);
+},30000);

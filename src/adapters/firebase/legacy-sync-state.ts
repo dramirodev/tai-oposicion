@@ -6,12 +6,12 @@ import type { SyncGateway, SyncStatusSnapshot } from '../../core/ports/SyncGatew
 
 export interface SyncUser { name: string; email: string; verified?: boolean }
 export interface SyncStatus {
-  user: SyncUser | null; state: string; lastSync: number; error: string; detail: string; configured: boolean; host: string; authDomain: string;
+  user: SyncUser | null; state: string; authResolved: boolean; lastSync: number; error: string; detail: string; configured: boolean; host: string; authDomain: string;
   /** '' = sin resolver todavía. */
   access: AccessLevel | ''; requested: boolean; reqs: AccessRequest[]; grants: AccessRequest[]; accessErr: string;
 }
 export const status: SyncStatus = {
-  user: null, state: 'iniciando', lastSync: 0, error: '', detail: '', configured: false, host: '', authDomain: '',
+  user: null, state: 'iniciando', authResolved: false, lastSync: 0, error: '', detail: '', configured: false, host: '', authDomain: '',
   access: '', requested: false, reqs: [], grants: [], accessErr: '',
 };
 const subs = new Set<(syncStatus: SyncStatus) => void>();

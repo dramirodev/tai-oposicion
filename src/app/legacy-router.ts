@@ -610,7 +610,8 @@ export function bootAppServices(): () => void {
     const aviso = async () => { const n = await checkUpdate(); if (n && !stopped) toast(`Hay una versión nueva (${n.version}).`, { label: 'Actualizar', fn: applyUpdate }); };
     timers.push(setTimeout(aviso, 6000));
     listen(document, 'visibilitychange', () => { if (document.visibilityState === 'visible') void aviso(); });
-    try { await getMeta(); if (!stopped) await sync.init({ temaOf, idsOfTema }); } catch (e) { console.error(e); }
+    try { await getMeta(); } catch (e) { console.error(e); }
+    if (!stopped) { try { await sync.init({ temaOf, idsOfTema }); } catch (e) { console.error(e); } }
   })();
   return () => { stopped = true; controller.abort(); timers.forEach(clearTimeout); offAccount(); offUpdates?.(); };
 }
@@ -847,6 +848,7 @@ export const studyServices: StudyServices = {
   markReady: () => routeReady(),
   home: {
     accountId: store.accountId,
+    authResolved() { return sync.status.authResolved; },
     getActiveStudy() { const run = getCurrentRun(); return run ? { title: run.titulo || 'Test', position: run.idx, total: run.items.length } : null; },
     getAccess() { return { full: isFull(), level: accessLevel(), greeting: saludo(), state: sync.status.state, configured: sync.status.configured, signedIn: !!sync.status.user, pendingRequests: sync.status.access === 'propietario' ? sync.status.reqs.length : 0 }; },
     subscribe(listener) { const offStore = store.onChange(listener), offSync = sync.onStatus(listener), offEngine = subscribeEngine(listener); return () => { offStore(); offSync(); offEngine(); }; },

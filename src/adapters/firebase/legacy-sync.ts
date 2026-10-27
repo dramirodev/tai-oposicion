@@ -29,6 +29,7 @@ let attemptRepository: AttemptRepository | null = null;
 export function setAttemptRepository(repository: AttemptRepository): void { attemptRepository = repository; }
 export async function init(metaFns: { temaOf: (id: string) => string | null; idsOfTema: (text: string) => string[] }): Promise<void> {
   temaOf = metaFns.temaOf; idsOfTema = metaFns.idsOfTema;
+  status.authResolved = false;
   let firebaseConfig: FirebaseOptions = {}, leida = false;
   const readConfig = async (options?: RequestInit): Promise<FirebaseOptions> => {
     const response = await fetch('firebase-config.json', options);
@@ -41,12 +42,14 @@ export async function init(metaFns: { temaOf: (id: string) => string | null; ids
   const configured = status.configured = !!firebaseConfig.apiKey && !/PEGA/i.test(firebaseConfig.apiKey);
   status.host = location.host; status.authDomain = firebaseConfig.authDomain || '';
   // «sin configurar» solo si el fichero se leyó y no trae clave; si no se pudo leer (sin red) no es un problema de configuración
-  if (!configured) { status.state = leida ? 'sin configurar' : 'sin conexión'; emit(); return; }
+  if (!configured) { status.authResolved = true; status.state = leida ? 'sin configurar' : 'sin conexión'; emit(); return; }
   // Un único origen: el almacenamiento local (progreso, temas vistos) es distinto en cada dominio.
   if (firebaseConfig.authDomain && location.hostname !== firebaseConfig.authDomain && /\.web\.app$/.test(location.hostname)) {
     location.replace('https://' + firebaseConfig.authDomain + location.pathname + location.search + location.hash); return;
   }
+  status.authResolved = false;
   status.state = 'comprobando sesión…'; emit();
+  try {
   const app = initializeApp(firebaseConfig);
   // Persistencia explícita (IndexedDB y, si no, localStorage): en iOS la sesión debe sobrevivir al cierre de la app.
   auth = initializeAuth(app, { persistence: [indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence], popupRedirectResolver: browserPopupRedirectResolver });
@@ -57,6 +60,7 @@ export async function init(metaFns: { temaOf: (id: string) => string | null; ids
     if (!result && pend && !auth.currentUser) { status.error = 'El inicio de sesión no terminó en esta ventana. Vuelve a pulsar «Entrar con Google».'; emit(); }
   }).catch(event => { try { localStorage.removeItem('tai.redir'); } catch {} const fields = errorFields(event); status.error = (fields.code || '') + ' ' + fields.message; emit(); });
   onAuthStateChanged(auth, (event: User | null) => {
+    status.authResolved = true;
     status.user = event ? { name: event.displayName || event.email || '', email: event.email || '', verified: !!event.emailVerified } : null;
     stopAcc(); stop(); uid = null;
     status.requested = false; status.reqs = []; status.grants = []; status.access = 'invitado';
@@ -67,6 +71,12 @@ export async function init(metaFns: { temaOf: (id: string) => string | null; ids
     void store.recover().then(ch => { if (ch && epoch === accessEpoch && uid === (event?.uid || null)) pushImport(); });
   });
   store.setSyncer({ schedule, pushSession, pushSeen, pushReports, pushCards, pushImport });
+  } catch (error) {
+    status.error = String(error instanceof Error ? error.message : error);
+    status.state = 'error';
+    status.authResolved = true;
+    emit();
+  }
 }
 
 export async function login(): Promise<void> {

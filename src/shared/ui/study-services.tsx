@@ -16,6 +16,7 @@ export interface AccessOverview {
 export interface HomeServices {
   loadOverview(): Promise<HomeOverview>;
   accountId(): string | null;
+  authResolved(): boolean;
   getAccess(): AccessOverview;
   getActiveStudy(): ActiveStudy | null;
   subscribe(listener: () => void): () => void;
