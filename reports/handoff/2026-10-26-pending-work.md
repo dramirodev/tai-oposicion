@@ -191,7 +191,7 @@ La instrucción más reciente pide continuar las tareas pendientes hasta termina
 
 - `origin/main` verificado en `d745aa68e45385fd1625907af6e63ec3da1084b7`; ya incluye las PR #40 (Recharts), #39 (Lucide), #38 (auditoría arquitectónica) y #42 (Testing Library).
 - El checkout principal sigue desactualizado y conserva un cambio local ajeno en `tests/design-training.test.js`; no usarlo como base ni modificar ese archivo.
-- PR #43 (`fix/menu-iconography-mobile-hover`) se creó basada en el `origin/main` previo `ddf63c8`. Al integrarse la PR #40, GitHub marcó conflictos; se está integrando la nueva base `d745aa6` en la rama antes de continuar.
+- PR #43 (`fix/menu-iconography-mobile-hover`) se creó basada en el `origin/main` previo `ddf63c8`. Al integrarse la PR #40 hubo conflictos en este handoff y `progress.css`; se integró `d745aa6` y GitHub vuelve a marcar la rama como `MERGEABLE`.
 - PR #41 quedó cerrada como duplicado tras la fusión de #39. La validación remota de #40 terminó `SUCCESS` en run `40458561840` y la PR fue fusionada.
 
 ### Iconos de menú y hover táctil
@@ -199,7 +199,8 @@ La instrucción más reciente pide continuar las tareas pendientes hasta termina
 - Auditoría: el menú móvil de rutas carecía de iconos y el menú general legacy usaba emoji/caracteres, mientras la navegación usa Lucide outline. Se creó `src/app/navigation-icons.ts`; ambos menús y la barra usan el mismo catálogo y grosor. `MenuGroup` ahora recibe componentes Lucide tipados.
 - Los selectores `:hover` se limitan a `(hover: hover) and (pointer: fine)`. Se conservan estilos de foco, ruta actual, respuesta elegida y la pulsación breve `:active`.
 - Validación local antes de integrar #40: build; arquitectura (64 excepciones base, sin nuevas), ESLint, ignore-growth, TypeScript; Vitest serial 402/402; E2E 156/156 (Chromium/WebKit). La ejecución concurrente inicial mostró dos carreras en tests de diálogos que no se reprodujeron en serie.
-- Próximo paso: terminar los conflictos contra `d745aa6`, repetir las comprobaciones si cambió CSS y actualizar la PR #43 contra `main`.
+- Tras el merge de #40: `npm ci` añadió 567 paquetes sin vulnerabilidades; build correcto. E2E focalizada CSS/menú/gráficas 40/40 Chromium/WebKit; la suite completa 156/156 había pasado antes del merge de #40. El check serial posterior tuvo una carrera en `tests/app.test.js` (401/402); ejecutar ese archivo aislado pasó 1/1. La prueba no se modificó porque no se reprodujo aislada y no está relacionada con estos cambios.
+- Próximo paso: publicar la resolución de la base y verificar el nuevo estado de PR #43; después continuar la arquitectura apilada sobre la última punta de #43.
 
 ### Arquitectura Etapa B — siguiente trabajo
 

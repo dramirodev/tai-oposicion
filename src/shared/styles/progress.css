@@ -379,7 +379,6 @@
   .stats-chart--evolution { height: 12rem; }
   .chart-loading { min-height: 11rem; }
 }
-}
 
 .evolution-legend {
   display: flex;
