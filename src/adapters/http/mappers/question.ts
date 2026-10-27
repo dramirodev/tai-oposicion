@@ -1,5 +1,6 @@
 import type { MappingResult, Question } from '../../../core/domain/entities.js';
 import type { QuestionDto } from '../dto/question.js';
+import { questionDtoSchema } from '../schemas/question.js';
 
 export interface MappedQuestion {
   question: Question;
@@ -17,77 +18,42 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
 
-function validSource(value: unknown): value is NonNullable<QuestionDto['source']> {
-  if (!isRecord(value)) return false;
-  return typeof value.url === 'string'
-    && (value.title === undefined || typeof value.title === 'string')
-    && (value.page === undefined || typeof value.page === 'number')
-    && typeof value.verified === 'boolean';
-}
-
-function isInteger(value: unknown): value is number {
-  return typeof value === 'number' && Number.isInteger(value);
-}
-
-function validOptionalFields(dto: Record<string, unknown>): boolean {
-  return (dto.k === undefined || typeof dto.k === 'string')
-    && (dto.x === undefined || (Array.isArray(dto.x) && dto.x.every((value) => typeof value === 'number')))
-    && (dto.d === undefined || dto.d === null || typeof dto.d === 'number')
-    && (dto.n === undefined || typeof dto.n === 'string')
-    && (dto.y === undefined || typeof dto.y === 'string')
-    && (dto.u === undefined || typeof dto.u === 'string')
-    && (dto.np === undefined || typeof dto.np === 'number')
-    && (dto.source === undefined || validSource(dto.source))
-    && (dto.cp === undefined || typeof dto.cp === 'string')
-    && (dto.s === undefined || typeof dto.s === 'string')
-    && (dto.p === undefined || typeof dto.p === 'number')
-    && (dto.r === undefined || typeof dto.r === 'number')
-    && (dto.v === undefined || typeof dto.v === 'number')
-    && (dto.w === undefined || typeof dto.w === 'number')
-    && (dto.z === undefined || typeof dto.z === 'number')
-    && (dto.f === undefined || typeof dto.f === 'string');
-}
-
 function isMappedQuestion(value: MappedQuestion | Question): value is MappedQuestion {
   return 'question' in value && 'fieldOrder' in value;
 }
 
 export const questionMapper = {
   toDomain(dto: unknown): QuestionMappingResult {
-    // TODO(zod): validate QuestionDto before mapping.
     if (!isRecord(dto)) return { ok: false, reason: 'Pregunta no es un objeto' };
-    if (
-      typeof dto.i !== 'string' || typeof dto.t !== 'string'
-      || (dto.o !== 'O' && dto.o !== 'A' && dto.o !== 'G')
-      || typeof dto.q !== 'string'
-      || !Array.isArray(dto.a) || !dto.a.every((option) => typeof option === 'string')
-      || !isInteger(dto.c) || dto.c < 0 || dto.c >= dto.a.length || !validOptionalFields(dto)
-    ) return { ok: false, reason: 'Pregunta incompleta o inválida' };
+    const parsed = questionDtoSchema.safeParse(dto);
+    if (!parsed.success) return { ok: false, reason: 'Pregunta incompleta o inválida' };
+    const data = parsed.data;
+    if (data.c < 0 || data.c >= data.a.length) return { ok: false, reason: 'Pregunta incompleta o inválida' };
 
     const question: Question = {
-      id: dto.i,
-      topicId: dto.t,
-      origin: dto.o,
-      statement: dto.q,
-      options: dto.a,
-      correctIndex: dto.c,
+      id: data.i,
+      topicId: data.t,
+      origin: data.o,
+      statement: data.q,
+      options: data.a,
+      correctIndex: data.c,
     };
-    if (typeof dto.k === 'string') question.kind = dto.k;
-    if (Array.isArray(dto.x)) question.traps = dto.x;
-    if (dto.d === null || typeof dto.d === 'number') question.difficulty = dto.d;
-    if (typeof dto.n === 'string') question.note = dto.n;
-    if (typeof dto.y === 'string') question.year = dto.y;
-    if (typeof dto.u === 'string') question.citation = dto.u;
-    if (typeof dto.np === 'number') question.nonScoring = dto.np;
-    if (dto.source !== undefined && validSource(dto.source)) question.source = dto.source;
-    if (typeof dto.cp === 'string') question.context = dto.cp;
-    if (typeof dto.s === 'string') question.assumptionId = dto.s;
-    if (typeof dto.p === 'number') question.provisional = dto.p;
-    if (typeof dto.w === 'number') question.expiresAfter = dto.w;
-    if (typeof dto.v === 'number') question.verificationStatus = dto.v;
-    if (typeof dto.f === 'string') question.family = dto.f;
-    if (typeof dto.r === 'number') question.reserved = dto.r;
-    if (typeof dto.z === 'number') question.topicUncertain = dto.z;
+    if (data.k !== undefined) question.kind = data.k;
+    if (data.x !== undefined) question.traps = data.x;
+    if (data.d !== undefined) question.difficulty = data.d;
+    if (data.n !== undefined) question.note = data.n;
+    if (data.y !== undefined) question.year = data.y;
+    if (data.u !== undefined) question.citation = data.u;
+    if (data.np !== undefined) question.nonScoring = data.np;
+    if (data.source !== undefined) question.source = data.source;
+    if (data.cp !== undefined) question.context = data.cp;
+    if (data.s !== undefined) question.assumptionId = data.s;
+    if (data.p !== undefined) question.provisional = data.p;
+    if (data.w !== undefined) question.expiresAfter = data.w;
+    if (data.v !== undefined) question.verificationStatus = data.v;
+    if (data.f !== undefined) question.family = data.f;
+    if (data.r !== undefined) question.reserved = data.r;
+    if (data.z !== undefined) question.topicUncertain = data.z;
 
     return {
       ok: true,

@@ -5,29 +5,23 @@ import { sessionMapper } from './session.js';
 import { reportMapper } from './report.js';
 import { cardMapper } from './card.js';
 import { preferencesMapper } from './preferences.js';
+import { progressEnvelopeSchema } from '../schemas/progress.js';
 
 type ProgressMappingResult =
   | { ok: true; value: UserProgress; warnings: string[] }
   | { ok: false; reason: string };
 
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  !!value && typeof value === 'object' && !Array.isArray(value);
-
 export const progressMapper = {
   toDomain(dto: unknown): ProgressMappingResult {
-    // TODO(zod): validate ProgressDto before mapping.
-    if (!isRecord(dto)) return { ok: false, reason: 'Progreso inválido' };
-    const data = dto;
-    if (Object.keys(data).some((key) => !['stats', 'sessions', 'cfg', 'seen', 'reports', 'cards'].includes(key))) {
+    const parsed = progressEnvelopeSchema.safeParse(dto);
+    if (!parsed.success) {
+      if (!dto || typeof dto !== 'object' || Array.isArray(dto)) return { ok: false, reason: 'Progreso inválido' };
+      if (parsed.error.issues.some((issue) => issue.code === 'unrecognized_keys' && issue.path.length === 0)) {
       return { ok: false, reason: 'Campo de progreso desconocido' };
+      }
+      return { ok: false, reason: 'Progreso incompleto' };
     }
-    if (
-      !isRecord(data.stats) || !Array.isArray(data.sessions) || !isRecord(data.cfg)
-      || !isRecord(data.seen) || !isRecord(data.reports) || !isRecord(data.cards)
-      || Object.keys(data.seen).some((key) => !['t', 'ts'].includes(key))
-      || !Array.isArray(data.seen.t) || !data.seen.t.every((topic) => typeof topic === 'string')
-      || typeof data.seen.ts !== 'number'
-    ) return { ok: false, reason: 'Progreso incompleto' };
+    const data = parsed.data;
 
     const mappedPreferences = preferencesMapper.toDomain(data.cfg);
     if (!mappedPreferences.ok) return mappedPreferences;

@@ -1,10 +1,10 @@
 import type { MappingResult, QuestionStats } from '../../../core/domain/entities.js';
 import type { StatRecordDto } from '../dto/progress.js';
+import { statRecordSchema } from '../schemas/progress-records.js';
 export const statsMapper={
  toDomain(dto:unknown):MappingResult<QuestionStats>{
-  // TODO(zod): validate StatRecordDto before mapping.
-  if(!Array.isArray(dto)||dto.length<3||dto.some(value=>typeof value!=='number'||!Number.isFinite(value)))return{ok:false,reason:'Registro estadístico inválido'};
-  const numericValue=dto as number[], questionStats:QuestionStats={attempts:numericValue[0],correct:numericValue[1],lastSeenAt:numericValue[2]};
+  const parsed=statRecordSchema.safeParse(dto); if(!parsed.success)return{ok:false,reason:'Registro estadístico inválido'};
+  const numericValue=parsed.data, questionStats:QuestionStats={attempts:numericValue[0],correct:numericValue[1],lastSeenAt:numericValue[2]};
   if(numericValue.length>3)questionStats.intervalStep=numericValue[3]; if(numericValue.length>4)questionStats.dueAt=numericValue[4]; if(numericValue.length>5)questionStats.lastResult=numericValue[5] as 0|1|2; if(numericValue.length>6)questionStats.doubtful=numericValue[6]===1;
   if(numericValue.length>7)questionStats.secondsStudied=numericValue[7]; if(numericValue.length>8)questionStats.timedAnswers=numericValue[8]; if(numericValue.length>9)questionStats.errorReason=numericValue[9]; if(numericValue.length>10)questionStats.failureStreak=numericValue[10]; if(numericValue.length>11)questionStats.syllabusReviewed=numericValue[11]===1; if(numericValue.length>12)questionStats.syllabusReviewedAt=numericValue[12];
   return{ok:true,value:questionStats};

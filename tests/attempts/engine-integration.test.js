@@ -39,6 +39,7 @@ describe('integración del motor con el historial local', () => {
 
   afterEach(() => {
     engine?.setAttemptTracker(null);
+    store?.switchAccount(null);
     vi.unstubAllGlobals();
     localStorage.clear();
   });
@@ -58,6 +59,37 @@ describe('integración del motor con el historial local', () => {
     expect(attempt).toMatchObject({ state: 'answered', response: question.c, outcome: 'correct' });
     expect(events.events.map(event => event.type)).toEqual(['open', 'answer', 'close']);
     expect(store.rec(question.i)[0]).toBe(1);
+  });
+
+  it('mantiene las escrituras de A en A al cambiar a B mientras A sigue guardando', async () => {
+    const question = (await data.getTema('T1.01')).find(item => !item.np);
+    store.switchAccount('account-a');
+    let releaseA;
+    const pendingA = new Promise(resolve => { releaseA = resolve; });
+    const createSession = repository.createSession.bind(repository);
+    vi.spyOn(repository, 'createSession').mockImplementation(async (scope, ...args) => {
+      if (scope === 'account-a') await pendingA;
+      return createSession(scope, ...args);
+    });
+
+    const runA = engine.createRun({ kind: 'test', feedback: true, items: [question] });
+    engine.startCurrentQuestion();
+    engine.answerQuestion(runA, question, question.c, 0);
+    await vi.waitFor(() => expect(repository.createSession).toHaveBeenCalledWith('account-a', expect.any(Object)));
+
+    store.switchAccount('account-b');
+    const runB = engine.createRun({ kind: 'test', feedback: true, items: [question] });
+    engine.startCurrentQuestion();
+    engine.answerQuestion(runB, question, question.c, 0);
+    releaseA();
+    await tracker.flush();
+
+    expect(await repository.getSession('account-a', runA.attemptSessionId)).toMatchObject({ status: 'interrupted' });
+    expect(await repository.getAttempt('account-a', runA.attemptIds[0])).toMatchObject({ state: 'answered', outcome: 'correct' });
+    expect(await repository.getSession('account-b', runB.attemptSessionId)).toMatchObject({ status: 'active' });
+    expect(await repository.getAttempt('account-b', runB.attemptIds[0])).toMatchObject({ state: 'answered', outcome: 'correct' });
+    expect(await repository.getAttempt('account-b', runA.attemptIds[0])).toBeUndefined();
+    expect(await repository.getAttempt('account-a', runB.attemptIds[0])).toBeUndefined();
   });
 
   it('reanuda un guardado antiguo sin metadatos de intento ni crear historial retroactivo', async () => {
