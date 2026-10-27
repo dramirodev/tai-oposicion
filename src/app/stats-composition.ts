@@ -1,6 +1,6 @@
 import * as store from '../adapters/local/legacy-store.js';
 import { META, getIndex, getMeta, now, byIds } from '../adapters/http/legacy-data.js';
-import { dominioTemas } from './legacy-topic-mastery.js';
+import { dominioTemas } from './topic-mastery-composition.js';
 import { aggregateWeeks, slowList, simHistory, compareSessions, cargaRepasos, motivosFallo, suertes, velocidad } from '../features/stats/analytics-mapper.js';
 import { ORIGEN, TRAMPAS, TIPOS } from '../shared/presentation/labels.js';
 import { percentage } from '../shared/presentation/format.js';
