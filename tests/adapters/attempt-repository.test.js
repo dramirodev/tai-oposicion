@@ -2,9 +2,10 @@ import 'fake-indexeddb/auto';
 import { describe, expect, it, vi } from 'vitest';
 import { createLocalAttemptRepository } from '../../src/adapters/local/attempt-repository.js';
 import { applyAttemptAction } from '../../src/core/domain/attempts/transitions.js';
+import { attemptMapper } from '../../src/adapters/local/mappers/attempt.js';
 
 let databaseNumber = 0;
-const repository = () => createLocalAttemptRepository(`attempt-test-${Date.now()}-${databaseNumber++}`);
+const repository = (name = `attempt-test-${Date.now()}-${databaseNumber++}`) => createLocalAttemptRepository(name);
 const makeAttempt = (id = 'attempt-1', sessionId = 'session-1') => ({
   id, sessionId, questionId: 'q-1', contentRevision: 'rev-1', mode: 'practice', position: 0, exposure: 1,
   state: 'unseen', response: null, outcome: null, confidence: null, discardedOptions: [], highlights: [],
@@ -16,6 +17,58 @@ const transition = (attempt, intent) => applyAttemptAction(attempt, {
 });
 
 describe('localAttemptRepository', () => {
+  it('lee datos ya existentes en el esquema v2 publicado', async () => {
+    const databaseName = `attempt-legacy-${Date.now()}-${databaseNumber++}`;
+    const existing = makeAttempt();
+    const request = indexedDB.open(databaseName, 2);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      const attempts = db.createObjectStore('attempts', { keyPath: 'key' });
+      attempts.createIndex('scope', 'scope');
+      attempts.createIndex('scopeSessionCreated', ['scope', 'sessionId', 'createdAt', 'id']);
+      attempts.createIndex('scopeCreated', ['scope', 'createdAt', 'id']);
+      const events = db.createObjectStore('events', { keyPath: 'key' });
+      events.createIndex('scope', 'scope');
+      events.createIndex('scopeAttemptSequence', ['scope', 'attemptId', 'sequence', 'id']);
+      const sessions = db.createObjectStore('sessions', { keyPath: 'key' });
+      sessions.createIndex('scope', 'scope');
+      db.createObjectStore('tombstones', { keyPath: 'scope' });
+      attempts.add({ key: ['guest', existing.id], scope: 'guest', id: existing.id, sessionId: existing.sessionId, createdAt: existing.createdAt, lastSequence: existing.lastSequence, value: attemptMapper.toDto(existing) });
+    };
+    const database = await new Promise((resolve, reject) => {
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+    database.close();
+
+    const repo = createLocalAttemptRepository(databaseName);
+    expect(await repo.getAttempt('guest', existing.id)).toEqual(existing);
+  });
+
+  it('aborta toda la página si un evento existente no se puede mapear', async () => {
+    const databaseName = `attempt-corrupt-${Date.now()}-${databaseNumber++}`;
+    const repo = repository(databaseName);
+    const parent = makeAttempt('parent-attempt');
+    await repo.createAttempt('guest', parent);
+    const connection = await new Promise((resolve, reject) => {
+      const request = indexedDB.open(databaseName, 2);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+    const seed = connection.transaction('events', 'readwrite');
+    seed.objectStore('events').add({
+      key: ['guest', 'corrupt-event'], scope: 'guest', id: 'corrupt-event', attemptId: parent.id, sequence: 1,
+      value: { schemaVersion: 1, id: 'corrupt-event', attemptId: parent.id, sequence: 1, type: 'unknown-event', at: 200, payload: {} },
+    });
+    await new Promise((resolve, reject) => { seed.oncomplete = resolve; seed.onerror = () => reject(seed.error); });
+    connection.close();
+    const imported = makeAttempt('second-attempt');
+    const collidingEvent = transition(parent, { type: 'open', sequence: 1, id: 'valid-event' }).event;
+
+    await expect(repo.importPage('guest', 100, [imported], [collidingEvent])).rejects.toThrow();
+    expect(await repo.getAttempt('guest', imported.id)).toBeUndefined();
+  });
+
   it('aísla ámbitos de cuenta y persiste los intentos mediante el mapper', async () => {
     const repo = repository();
     await repo.createAttempt('guest', makeAttempt());
