@@ -1,4 +1,6 @@
 import { createContext, useContext } from 'react';
+import type { StatsComparison, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
+export type { StatsComparison, StatsDomainTopic, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 export interface ActiveStudy { title: string; position: number; total: number }
 export interface HomeBlock { name: string; total: number; mastered: number; assessed: number }
 export interface HomeOverview {
@@ -162,11 +164,7 @@ export interface ResultServices {
   loadExplanation(item: Pick<ResultItem, 'id' | 'statement' | 'options'>): Promise<{ status: 'current' | 'outdated' | 'missing'; content?: string }>;
   getReport(id: string): ResultReport | undefined; saveReport(id: string, topicId: string, reason: string, note: string): void;
 }
-export interface StatsTopic { id: string; name: string; interactions: number; correct: number; seen: number; total: number; accuracy: number }
-export interface StatsDomainTopic { id: string; name: string; accuracy: number; days: number | null; status: 'r' | 'y' | 'g' | 'n'; reason: string; due: number; score: number }
-export interface StatsSnapshot { generatedAt: number; answers: number; correct: number; accuracy: number; failureCount: number; weakTopics: readonly StatsTopic[]; topics: readonly StatsTopic[]; sessions: readonly { id: string; ts: number; kind: string; n: number; a: number; nota: number; secs: number }[]; reviewLoad: readonly number[]; failureReasons: readonly number[]; lucky: number; speed: { count: number; total: number; percent: number }; trapRates: readonly { id: string; label: string; attempts: number; failures: number; rate: number }[]; origins: readonly { label: string; answers: number; accuracy: number }[]; types: readonly { id: string; label: string; answers: number; accuracy: number }[]; domains: readonly StatsDomainTopic[]; simulations: readonly { id: string; ts: number; nota: number; part: string; dNota: number | null; a: number; f: number; b: number; secs: number }[]; slow: readonly { id: string; averageSeconds: number; attempts: number; correct: number; lastOutcome: number | null }[] }
-export interface StatsComparison { scoreDelta: number | null; accuracyDelta: number | null; secondsDelta: number | null; topics: readonly { id: string; first: number | null; second: number | null; delta: number | null }[] }
-export interface StatsWeek { start: number; n: number; ok: number; secs: number; sessions: number; accuracy: number | null; secondsPerQuestion: number | null }
+export type StatsTopic = TopicProgress;
 export interface StatsServices {
   load(): Promise<StatsSnapshot>; getPreference(key: 'domainOrder' | 'evolution'): Record<string, string | number | boolean>; savePreference(key: 'domainOrder' | 'evolution', value: Record<string, string | number | boolean>): void;
   compareSimulations(firstId: string, secondId: string): StatsComparison | null;
