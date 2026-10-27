@@ -1,9 +1,9 @@
-import { useSyncExternalStore } from 'react';
-import { getLastRunKind, getRunKind, subscribe } from '../core/application/legacy-engine.js';
+import { useStore } from 'zustand';
+import { sessionStateStore } from './session-state-store.js';
 
 export function useActiveSection(pathname: string): string {
-  const runKind = useSyncExternalStore(subscribe, getRunKind, getRunKind);
-  const lastKind = useSyncExternalStore(subscribe, getLastRunKind, getLastRunKind);
+  const runKind = useStore(sessionStateStore, snapshot => snapshot.run?.kind || null);
+  const lastKind = useStore(sessionStateStore, snapshot => snapshot.last?.ses.kind || null);
   const name = pathname.split('/')[1] || 'home';
   const kind = name === 'quiz' ? runKind : lastKind;
   const practiceSection = kind === 'rev' ? '' : kind === 'sim' ? 'sim' : kind === 'test' ? 'test' : 'home';

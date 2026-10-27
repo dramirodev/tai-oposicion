@@ -37,4 +37,12 @@ describe('highlight DOM mapping', () => {
     expect(root.querySelector('[data-mark-id="first"]')).not.toBeNull();
     expect(root.querySelector('[data-mark-id="second"]')).not.toBeNull();
   });
+
+  it('does not wrap a saved highlight twice when the same snapshot is rendered again', () => {
+    const root = document.querySelector('.enun');
+    expect(paintTextHighlight(root, 1, 4, 'key', 'saved-mark')).toBe(true);
+    expect(paintTextHighlight(root, 1, 4, 'key', 'saved-mark')).toBe(true);
+    expect(root.querySelectorAll('mark[data-mark-id="saved-mark"]')).toHaveLength(1);
+    expect(canonicalText(root)).toBe('ABCDE FGHI\nJKLM');
+  });
 });
