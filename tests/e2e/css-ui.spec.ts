@@ -10,6 +10,80 @@ async function prepare(page: Page, theme = 'dark', size = 3) {
 }
 
 for (const theme of ['light', 'dark']) {
+  test(`los bloques de código conservan formato y tema mientras cargan · ${theme}`, async ({ page }) => {
+    await prepare(page, theme, 0);
+    await page.setViewportSize({ width: 320, height: 720 });
+    await page.goto('/#/ayuda');
+    await page.evaluate(() => {
+      const sample = document.createElement('pre');
+      sample.className = 'code-sample';
+      const code = document.createElement('code');
+      code.className = 'cd blk shiki';
+      const token = document.createElement('span');
+      token.className = 'shiki-token';
+      token.style.setProperty('--shiki-token-light', 'rgb(20, 30, 40)');
+      token.style.setProperty('--shiki-token-dark', 'rgb(240, 220, 200)');
+      token.textContent = 'SELECT nombre FROM usuarios;';
+      code.append(token);
+      sample.append(code);
+      const explanation = document.createElement('section');
+      explanation.className = 'card code-explanation';
+      explanation.append(sample);
+      document.querySelector('#app')?.append(explanation);
+    });
+
+    const styles = await page.locator('.code-explanation .code-sample > code').evaluate(code => {
+      const style = getComputedStyle(code);
+      const token = getComputedStyle(code.querySelector('.shiki-token')!);
+      return { display: style.display, family: style.fontFamily, whiteSpace: style.whiteSpace, background: style.backgroundColor, token: token.color };
+    });
+    expect(styles.display).toBe('block');
+    expect(styles.family).toMatch(/monospace/i);
+    expect(styles.whiteSpace).toBe('pre-wrap');
+    expect(styles.background).not.toBe('rgba(0, 0, 0, 0)');
+    expect(styles.token).toBe(theme === 'dark' ? 'rgb(240, 220, 200)' : 'rgb(20, 30, 40)');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  });
+
+  test(`los fragmentos inline de enunciados y respuestas aplican los colores Shiki · ${theme}`, async ({ page }) => {
+    await prepare(page, theme, 0);
+    await page.setViewportSize({ width: 320, height: 720 });
+    await page.goto('/#/ayuda');
+    await page.evaluate(() => {
+      const token = document.createElement('span');
+      token.className = 'shiki-token';
+      token.style.setProperty('--shiki-token-light', 'rgb(20, 30, 40)');
+      token.style.setProperty('--shiki-token-dark', 'rgb(240, 220, 200)');
+      token.textContent = 'chmod';
+
+      const code = document.createElement('code');
+      code.className = 'cd shiki';
+      code.append(token);
+
+      const statement = document.createElement('div');
+      statement.className = 'enun';
+      statement.append('Enunciado: ', code.cloneNode(true));
+
+      const answer = document.createElement('button');
+      answer.className = 'opt';
+      const answerText = document.createElement('span');
+      answerText.className = 'pre';
+      answerText.append(code);
+      answer.append(answerText);
+
+      const fixture = document.createElement('section');
+      fixture.setAttribute('aria-label', 'Fragmentos de código de pregunta y respuesta');
+      fixture.append(statement, answer);
+      document.querySelector('#app')?.append(fixture);
+    });
+
+    const colors = await page.locator('[aria-label="Fragmentos de código de pregunta y respuesta"] .shiki-token').evaluateAll(tokens =>
+      tokens.map(token => getComputedStyle(token).color));
+    const expected = theme === 'dark' ? 'rgb(240, 220, 200)' : 'rgb(20, 30, 40)';
+    expect(colors).toEqual([expected, expected]);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  });
+
   test(`Progreso conserva el reflujo con texto máximo · ${theme}`, async ({ page }) => {
     await prepare(page, theme);
     await page.setViewportSize({ width: 320, height: 720 });

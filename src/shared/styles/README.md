@@ -10,12 +10,13 @@ El CSS sigue siendo global porque las pantallas heredadas generan HTML fuera de 
 2. `base.css`: elementos, texto, foco y preferencias de movimiento.
 3. `controls.css`: superficies, botones, diálogos, navegación y formularios.
 4. `question.css`: preguntas, opciones, selección y corrección.
-5. `progress.css`: resultados, mapa de dominio, gráficos e historial.
-6. `cards.css`: tarjeta y respuesta de repaso.
-7. `home.css`: inicio, tiles, menú, exámenes y código.
-8. `motion.css`: efectos de respuesta y entrada.
-9. `responsive.css`: reflujo, variantes de estudio y funcionalidades añadidas.
-10. `workspace.css`: marco React de Precisión y presentación común de pantallas heredadas, aplicado al final mientras exista el puente.
+5. `code.css`: código inline y bloques de preguntas, respuestas y explicaciones; tokens de Shiki por tema.
+6. `progress.css`: resultados, mapa de dominio, gráficos e historial.
+7. `cards.css`: tarjeta y respuesta de repaso.
+8. `home.css`: inicio, tiles, menú y exámenes.
+9. `motion.css`: efectos de respuesta y entrada.
+10. `responsive.css`: reflujo, variantes de estudio y funcionalidades añadidas.
+11. `workspace.css`: marco React de Precisión y presentación común de pantallas heredadas, aplicado al final mientras exista el puente.
 
 Conservar este orden mientras existan variantes globales. No introducir una layer aislada: las reglas normales sin layer ganarían a esa layer. No purgar clases por búsqueda de literales; hay estados y nombres construidos dinámicamente.
 
