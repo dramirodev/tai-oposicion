@@ -108,6 +108,11 @@ it.each(['finish','exit'])('el vencimiento cierra una sola vez y retira la confi
  try {
   const run=engine.createRun({kind:'sim',feedback:false,items:qs,limit:1});await navigate('quiz','pregunta 1');
   document.querySelector('.opt[data-i="0"]').click();document.querySelector('[data-jump="2"]').click();
+  await vi.waitFor(()=>{
+   expect(engine.getSnapshot().run.idx).toBe(2);
+   expect(document.querySelector('[data-jump="2"]')?.getAttribute('aria-current')).toBe('step');
+   if(action==='finish')expect(document.querySelector('#next')?.textContent).toContain('Terminar');
+  });
   await act(async()=>{document.querySelector(action === 'exit' ? '#exit' : '#next').click();});
   await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull());
   engine.tickCurrentRun(Date.now() + 60000);engine.tickCurrentRun(Date.now() + 120000);await vi.advanceTimersByTimeAsync(1000);
