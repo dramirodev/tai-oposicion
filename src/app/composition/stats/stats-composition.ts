@@ -1,7 +1,7 @@
 import * as store from '../../../adapters/local/legacy-store.js';
 import { localProgressRepository } from '../../../adapters/local/progress-repository.js';
 import { META, getIndex, getMeta, now, byIds } from '../../../adapters/http/legacy-data.js';
-import { dominioTemas } from '../topics/topic-mastery-composition.js';
+import { createTopicMasteryComposition } from '../topics/topic-mastery-composition.js';
 import { aggregateWeeks, simHistory, compareSessions } from '../../../features/stats/analytics-mapper.js';
 import { ORIGEN, TRAMPAS, TIPOS } from '../../../shared/presentation/labels.js';
 import { percentage } from '../../../shared/presentation/format.js';
@@ -20,6 +20,7 @@ import type { MetaEntry } from '../../../adapters/legacy/types.js';
 interface StatsActions { go(path: string): void; startRun(run: RunCfg): boolean; startRepaso(): void; trapTest(count: number, traps: number[]): Promise<{ items: QuestionRecord[] }>; }
 
 export function createStatsServices(actions: StatsActions): StatsServices {
+  const dominioTemas = createTopicMasteryComposition({ progressRepository: localProgressRepository, accountId: store.accountId, questionIdsForTopic: topicId => META._by[topicId], now });
   return {
     async load(): Promise<StatsSnapshot> {
       const account = store.accountId();
@@ -34,7 +35,7 @@ export function createStatsServices(actions: StatsActions): StatsServices {
       if (account !== store.accountId()) throw new Error('La cuenta cambió mientras se cargaban las estadísticas.');
       const sessions = store.getSessions().slice(0, 12);
       const speed = progress.speed;
-      const domains = dominioTemas(index).map(topic => ({ id: topic.id, name: topic.nombre, accuracy: topic.prec, days: topic.dias, status: topic.est as StatsSnapshot['domains'][number]['status'], reason: topic.why, due: topic.due, score: topic.score }));
+      const domains = (await dominioTemas(index)).map(topic => ({ id: topic.id, name: topic.nombre, accuracy: topic.prec, days: topic.dias, status: topic.est as StatsSnapshot['domains'][number]['status'], reason: topic.why, due: topic.due, score: topic.score }));
       const simulations = simHistory(store.getSessions()).map(session => ({ id: session.id, ts: session.ts, nota: session.nota, part: session.part, dNota: session.dNota, a: session.a, f: session.f, b: session.b, secs: session.secs }));
       return { generatedAt: now(), answers: progress.answers, correct: progress.correct, accuracy: progress.accuracy, topics: progress.topics, weakTopics: progress.weakTopics, failureCount: falladasIds().length, sessions, reviewLoad: progress.reviewLoad, failureReasons: progress.failureReasons, lucky: progress.lucky, speed: { count: speed.count, total: speed.total, percent: speed.percent },
         trapRates: Object.entries(progress.traps).filter(([, row]) => row[0] >= 5).map(([id, row]) => ({ id, label: TRAMPAS[id] || id, attempts: row[0], failures: row[1], rate: percentage(row[1], row[0]) })).sort((a, b) => b.rate - a.rate),

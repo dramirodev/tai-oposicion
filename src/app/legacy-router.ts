@@ -4,6 +4,7 @@ import { questionNotice, sourceHtml } from '../shared/presentation/legacy-study.
 import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
 import * as store from '../adapters/local/legacy-store.js';
+import { localProgressRepository } from '../adapters/local/progress-repository.js';
 import { localGuestQuestionHistoryRepository } from '../adapters/local/guest-question-history.js';
 import { localReadingQuestionHistoryRepository } from '../adapters/local/reading-question-history.js';
 import { percentage as pct } from '../shared/presentation/format.js';
@@ -27,7 +28,7 @@ import { isFull, isOwner, accessLevel, GUEST_ROUTES } from '../adapters/legacy/a
 import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, clearActiveRun, createRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, revealCurrentSolution, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, dueQuestionIds, selectQuestionsForTopics, selectWeightedSimulationQuestions, setCurrentConfidence, toggleCurrentDiscardedOption, addCurrentHighlight, removeCurrentHighlight } from './composition/study/study-engine-composition.js';
 import { sessionStatePort } from './session-state-store.js';
 import { clearRun, pendingRun, saveRun } from './composition/study/pending-run-composition.js';
-import { dominioTemas } from './composition/topics/topic-mastery-composition.js';
+import { createTopicMasteryComposition } from './composition/topics/topic-mastery-composition.js';
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
 import type { Origin } from '../core/domain/entities.js';
@@ -77,6 +78,7 @@ const appUpdates = createAppUpdateController({
   onUpdateReady: () => toast('Hay una versión nueva.', { label: 'Actualizar', fn: () => appUpdates.applyUpdate() }),
 });
 const recover = createAccountRecovery(store.accountId, () => store.recover());
+const dominioTemas = createTopicMasteryComposition({ progressRepository: localProgressRepository, accountId: store.accountId, questionIdsForTopic: topicId => META._by[topicId], now });
 let routeReady: () => void;
 const firstReactRouteReady = new Promise<void>(resolve => { routeReady = resolve; });
 // saludo con el nombre de la cuenta de Google (se recuerda en el dispositivo; sin cuenta, solo «Hola»)
@@ -616,7 +618,7 @@ export const studyServices: StudyServices = {
       const streak = calculateStudyStreak(answerTimestamps, Date.now());
       const exam = store.getCfg().exam;
       const daysToExam = exam ? Math.max(0, Math.ceil((+new Date(exam + 'T09:00:00') - Date.now()) / 86400000)) : null;
-      const mastery = dominioTemas(index);
+      const mastery = await dominioTemas(index);
       return { seen, total: index.n, answers, streak, daysToExam, due,
         completedSessions: store.getSessions().length,
         blocks: BLOQUES.map(([code, name]) => {

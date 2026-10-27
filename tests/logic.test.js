@@ -6,6 +6,7 @@ import { analyzeTopicMastery } from '../src/core/domain/topic-mastery.js';
 import { startOfStudyWeek as weekStart, aggregateWeeklyStudy, slowestQuestions, buildSimulationHistory, compareStudySessions } from '../src/core/domain/study-analytics.js';
 import { aggregateWeeks, slowList, quickQuestionCount as quickN, simHistory, compareSessions, cargaRepasos, motivosFallo, suertes, velocidad } from '../src/features/stats/analytics-mapper.js';
 import { mapTopicMasteryToLegacy as dominioCalc } from '../src/app/mappers/topic-mastery-mapper.js';
+import { createTopicMasteryComposition } from '../src/app/composition/topics/topic-mastery-composition.js';
 import { selectSpacedReviews, countReviewsByDay } from '../src/core/domain/spaced-repetition.js';
 import { calculateTrapRates, selectTrapQuestions } from '../src/core/domain/traps.js';
 import { ERROR_REPORT_REASONS as MOTIVOS, FAILURE_REASONS as MOTIVOS_FALLO, UI_ZOOMS as ZOOMS } from '../src/shared/presentation/study-labels.js';
@@ -89,7 +90,7 @@ describe('dominioCalc (semáforo)', () => {
   const D = 86400000, T0 = 1_800_000_000_000;
   const mkRec = (n, okFrac, days, extra = {}) => {
     const ids = Array.from({ length: n }, (_, i) => 'q' + i);
-    const recs = Object.fromEntries(ids.map((id, i) => [id, [2, i < n * okFrac ? 2 : 0, T0 - days * D, -1, 0, i < n * okFrac ? 1 : 0, 0]]));
+    const recs = Object.fromEntries(ids.map((id, i) => [id, { attempts: 2, correct: i < n * okFrac ? 2 : 0, lastSeenAt: T0 - days * D, intervalStep: -1, dueAt: 0, lastResult: i < n * okFrac ? 1 : 0 }]));
     return { ids, rec: id => recs[id], ...extra };
   };
   const run = (n, okFrac, days, total = 20) => { const { ids, rec } = mkRec(n, okFrac, days); return dominioCalc([{ id: 'X', n: total }], () => ids, rec, T0)[0]; };
@@ -102,9 +103,34 @@ describe('dominioCalc (semáforo)', () => {
   it('ámbar: buen acierto pero faltan preguntas por ver', () => { const r = run(6, 1, 1, 200); expect(r.est).toBe('y'); expect(r.why).toMatch(/falta ver/); });
   it('rojo por cobertura baja con acierto medio', () => { const r = run(10, 0.6, 1, 500); expect(r.est).toBe('r'); expect(r.why).toMatch(/Cobertura/); });
   it('cuenta repasos vencidos y días', () => {
-    const rec = id => [2, 0, T0 - 3 * D, 0, T0 - 1, 0, 0];
+    const rec = () => ({ attempts: 2, correct: 0, lastSeenAt: T0 - 3 * D, intervalStep: 0, dueAt: T0 - 1, lastResult: 0 });
     const r = dominioCalc([{ id: 'X', n: 10 }], () => ['a', 'b', 'c'], rec, T0)[0];
     expect(r.due).toBe(3); expect(r.dias).toBe(3);
+  });
+});
+
+describe('composición de dominio por tema', () => {
+  const T0 = 1_800_000_000_000;
+  const index = { n: 1, nsup: 0, temas: [{ id: 'X', nombre: 'Tema X', n: 10 }] };
+  it('obtiene estadísticas del repositorio de progreso y las convierte al modelo de pantalla', async () => {
+    let calls = 0;
+    const getStats = async () => { calls++; return { q1: { attempts: 6, correct: 6, lastSeenAt: T0 - 86400000, intervalStep: 1, dueAt: T0 + 86400000, lastResult: 1 } }; };
+    const dominioTemas = createTopicMasteryComposition({ progressRepository: { getStats }, accountId: () => 'guest', questionIdsForTopic: () => ['q1'], now: () => T0 });
+    const [topic] = await dominioTemas(index);
+    expect(calls).toBe(1);
+    expect(topic.seen).toBe(1);
+    expect(topic.est).toBe('y');
+  });
+
+  it('descarta la carga si cambia la cuenta mientras se leen las estadísticas', async () => {
+    let activeAccount = 'first';
+    let finishRead;
+    const getStats = () => new Promise(resolve => { finishRead = resolve; });
+    const dominioTemas = createTopicMasteryComposition({ progressRepository: { getStats }, accountId: () => activeAccount, questionIdsForTopic: () => ['q1'], now: () => T0 });
+    const result = dominioTemas(index);
+    activeAccount = 'second';
+    finishRead({ q1: { attempts: 6, correct: 6, lastSeenAt: T0, intervalStep: 1, dueAt: 0 } });
+    await expect(result).rejects.toThrow('La cuenta cambió mientras se cargaba el dominio por temas.');
   });
 });
 
