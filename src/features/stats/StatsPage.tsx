@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useStudyServices, type StatsSnapshot, type StatsWeek } from '../../shared/ui/study-services.js';
+import { useStudyServices } from '../../shared/ui/study-services.js';
+import type { StatsSnapshot, StatsWeek } from '../../core/application/stats/statistics-model.js';
 import { StatsTopicsSection } from './StatsTopicsSection.js';
 import { StatsSimulationSection } from './StatsSimulationSection.js';
 import { StatsEvolutionSection } from './StatsEvolutionSection.js';

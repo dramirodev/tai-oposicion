@@ -13,6 +13,14 @@ Complejidad relativa: **baja** (cambio localizado y bajo riesgo), **media** (var
 | 6 | Encapsular DTO y modelos legacy en mappers/adapters | Media/alta | UI/dominio reciben modelos internos; adapters conservan lectura compatible de datos antiguos. Contratos externos sin cambios. |
 | 7 | Cierre de guardas y limpieza validada | Media | No new architecture debt, chequeo de ciclos, lint, typecheck, tests, build y E2E de rutas críticas. Retirar únicamente código sustituido sin referencias. |
 
+### Estado de ejecución — actualización 2026-10-27
+
+- Orden 0: revalidado en `origin/main` `d745aa6`, que incluye la PR #40. La PR de iconografía #43 sigue abierta; los slices siguientes se apilan sobre ella para mantener una base reproducible.
+- Orden 1: en curso en la rama `feat/architecture-stats-slice`. Se movieron modelos de respuesta del dashboard a `core/application/stats`, se extrajo la agregación de rendimiento por tema a una función pura tipada y se añadieron pruebas para umbral, orden, totales y ausencia de datos. La lectura de Firebase/almacén local sigue en la composición existente: no se añadió un puerto adicional sin una frontera de IO distinta que lo justificara. UI, persistencia y contratos externos no cambian.
+- Orden 2: pendiente; `StudyServices` todavía concentra servicios por feature.
+- Orden 3: pendiente; Zustand sigue sin instalarse. Context7 consultó la documentación de `/pmndrs/zustand` v5.0.12, que documenta el store vanilla y `useStore` con selector; candidato a evaluar: diálogos/toasts efímeros.
+- Órdenes 4–7: pendientes; no se han tocado el motor, el router ni los DTO de persistencia.
+
 ## Procedimiento por slice
 
 1. Reconfirmar el comportamiento actual y el estado de `main`.
