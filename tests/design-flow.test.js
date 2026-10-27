@@ -75,7 +75,7 @@ it('el mapa distingue respuestas y revisión y conserva las respuestas al saltar
  document.querySelector(`.opt[data-i="${qs[0].c}"]`).click();
  const review=document.querySelector('#review-question');expect(review).not.toBeNull();review.click();
  document.querySelector('[data-jump="1"]').click();
- expect(run.ans[0]).toBe(qs[0].c);expect(run.idx).toBe(1);expect(run.review).toEqual([0]);
+ expect(engine.getCurrentRun().ans[0]).toBe(qs[0].c);expect(engine.getCurrentRun().idx).toBe(1);expect(engine.getCurrentRun().review).toEqual([0]);
  await vi.waitFor(()=>{const first=document.querySelector('[data-jump="0"]');expect(first.textContent).toContain('Revisar');expect(first.textContent).toContain('Respondida');});
  engine.saveRun();engine.clearActiveRun();const pending=await recovery.pendingRun(true);engine.resumeRun(pending);
  expect(engine.getSnapshot().run.review).toEqual([0]);expect(engine.getSnapshot().run.ans[0]).toBe(qs[0].c);
@@ -95,9 +95,9 @@ it('confirma el cierre desde el mapa si quedan preguntas sin responder',async()=
  const run=engine.createRun({kind:'sim',feedback:false,items:qs});await navigate('quiz','pregunta 1');
  document.querySelector('[data-jump="2"]').click();document.querySelector(`.opt[data-i="${qs[2].c}"]`).click();document.querySelector('#next').click();
  await vi.waitFor(()=>expect(document.querySelector('.overlay')?.textContent).toContain('sin responder'));
- document.querySelector('.overlay [data-v="0"]').click();expect(engine.getSnapshot().run).toBe(run);await Promise.resolve();
- expect(run.idx).toBe(2);
- document.querySelector('.opt[data-i="0"]').click();await vi.waitFor(()=>expect(run.ans[2]).toBe(0));expect(run.ans[3]).toBeUndefined();
+ document.querySelector('.overlay [data-v="0"]').click();expect(engine.getSnapshot().run.sessionKey).toBe(run.sessionKey);await Promise.resolve();
+ expect(engine.getSnapshot().run.idx).toBe(2);
+ document.querySelector('.opt[data-i="0"]').click();await vi.waitFor(()=>expect(engine.getSnapshot().run.ans[2]).toBe(0));expect(engine.getSnapshot().run.ans[3]).toBeUndefined();
  document.querySelector('#next').click();await vi.waitFor(()=>expect(document.querySelector('.overlay')?.textContent).toContain('sin responder'));document.querySelector('.overlay [data-v="1"]').click();
  await waitText('Sesión interrumpida');expect(store.getSessions()[0].interrupted).toBe(true);
 });
@@ -110,7 +110,7 @@ it.each(['finish','exit'])('el vencimiento cierra una sola vez y retira la confi
   document.querySelector('.opt[data-i="0"]').click();document.querySelector('[data-jump="2"]').click();
   await act(async()=>{document.querySelector(action === 'exit' ? '#exit' : '#next').click();});
   await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull());
-  run.secs=60;await vi.advanceTimersByTimeAsync(1000);
+  engine.tickCurrentRun(Date.now() + 60000);engine.tickCurrentRun(Date.now() + 120000);await vi.advanceTimersByTimeAsync(1000);
   await vi.waitFor(()=>expect(engine.getSnapshot().run).toBeNull());expect(document.querySelector('.overlay')).toBeNull();
   expect(store.getSessions()).toHaveLength(1);
  } finally {vi.useRealTimers();}

@@ -120,14 +120,14 @@ describe('integración del motor con el historial local', () => {
     const run = engine.createRun({ kind: 'test', feedback: true, items: [question] });
     engine.startCurrentQuestion();
     engine.answerQuestion(run, question, -1, 0);
-    expect(run.ans[0]).toBeUndefined();
-    expect(run.studyStates[0]).toBe('pending');
+    expect(engine.getCurrentRun().ans[0]).toBeUndefined();
+    expect(engine.getCurrentRun().studyStates[0]).toBe('pending');
     expect(store.rec(question.i)).toBeUndefined();
 
     engine.answerQuestion(run, question, question.c, 0);
     engine.answerQuestion(run, question, (question.c + 1) % question.a.length, 0);
-    expect(run.ans[0]).toBe(question.c);
-    expect(run.studyStates[0]).toBe('answered');
+    expect(engine.getCurrentRun().ans[0]).toBe(question.c);
+    expect(engine.getCurrentRun().studyStates[0]).toBe('answered');
     expect(store.rec(question.i)[0]).toBe(1);
   });
 
@@ -145,7 +145,7 @@ describe('integración del motor con el historial local', () => {
     engine.saveRun();
     engine.clearActiveRun();
     const afterReveal = engine.resumeRun(await recovery.pendingRun(true));
-    expect(afterReveal.studyStates[0]).toBe('revealed');
+    expect(engine.getCurrentRun().studyStates[0]).toBe('revealed');
     expect(afterReveal.ans[0]).toBeUndefined();
     engine.answerQuestion(afterReveal, question, question.c, 0);
     expect(afterReveal.studyStates[0]).toBe('revealed');
@@ -195,7 +195,7 @@ describe('integración del motor con el historial local', () => {
     expect(engine.setCurrentConfidence('guess')).toBe(false);
     expect(engine.toggleCurrentDiscardedOption(0)).toBe(false);
     engine.answerCurrentDeferred(2); // La edición de respuestas del simulacro se conserva.
-    expect(run.ans[0]).toBe(2);
+    expect(engine.getCurrentRun().ans[0]).toBe(2);
     const result = engine.finishRun(run);
     expect(result.confidences[0]).toBe('sure');
     expect(result.discardedOptions[0]).toEqual([0]);

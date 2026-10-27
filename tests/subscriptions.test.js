@@ -37,6 +37,19 @@ it('engine notifica creación, respuestas, reloj, navegación, revisión, pausa 
   off(); const before = seen.length; engine.clearLastResult();
   expect(seen).toHaveLength(before);
 });
+it('cada actualización conserva el snapshot anterior de la sesión', () => {
+  const qs = JSON.parse(readFileSync('public/data/T1.01.json', 'utf8')).slice(0, 1);
+  engine.createRun({ kind: 'sim', feedback: false, items: qs });
+  const previous = engine.getSnapshot(), previousRun = previous.run, previousAnswers = previousRun.ans;
+
+  engine.answerCurrentDeferred(qs[0].c);
+
+  expect(previous.run).toBe(previousRun);
+  expect(previousAnswers[0]).toBeUndefined();
+  expect(engine.getSnapshot()).not.toBe(previous);
+  expect(engine.getCurrentRun().ans[0]).toBe(qs[0].c);
+  engine.clearActiveRun();
+});
 it('engine avisa del cambio de cuenta y mantiene la identidad de la sesión', () => {
   const qs = JSON.parse(readFileSync('public/data/T1.01.json', 'utf8')).slice(0, 1);
   const run = engine.createRun({ kind: 'test', feedback: true, items: qs });
