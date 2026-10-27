@@ -10,7 +10,14 @@ const load = (): Promise<Mod> => (loading ||= import('./legacy-sync.js').then(me
   mod = metadata;
   if (attemptRepository) metadata.setAttemptRepository(attemptRepository);
   return metadata;
-}, event => { loading = null; status.state = 'sin conexión'; emit(); throw event; }));
+}, event => {
+  loading = null;
+  status.state = 'sin conexión';
+  status.error = 'No se pudo cargar el servicio de autenticación.';
+  status.authResolved = true;
+  emit();
+  throw event;
+}));
 export function setAttemptRepository(repository: AttemptRepository): void {
   attemptRepository = repository;
   if (mod) mod.setAttemptRepository(repository);
