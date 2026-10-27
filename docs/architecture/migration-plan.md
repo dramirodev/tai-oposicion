@@ -8,19 +8,19 @@ Complejidad relativa: **baja** (cambio localizado y bajo riesgo), **media** (var
 | 1 | Extraer Progreso/estadísticas como primer vertical slice de solo lectura | Media | Implementado y fusionado mediante PR #49; la agregación de rendimiento por tema queda en una función pura tipada. |
 | 2 | Reducir contrato global `StudyServices` por feature sin mover estado persistido | Media | Implementado en esta PR #46; cada pantalla solicita solo los servicios que consume y la composición mantiene el agregado. |
 | 3 | Delimitar estado efímero compartido y evaluar Zustand en una sola rebanada | Baja/media | Implementado y fusionado mediante PR #45 para diálogos/toasts, con selectores y sin persistencia. |
-| 4 | Desacoplar `core/application/legacy-engine.ts` de persistencia/datos legacy | Alta | Declarar puertos mínimos para banco, progreso, reloj/sesión según necesidad; conectar adaptadores en `app`; tests con fakes; preservar selección, respuesta, pausa, reanudación y resultados. |
+| 4 | Desacoplar `core/application/legacy-engine.ts` de persistencia/datos legacy | Alta | PR #50 separa la lectura y validación de sesión guardada en un caso de uso con dominio y adaptador local; conserva el contrato `tai.run:<cuenta>`. |
 | 5 | Extraer composición/arranque de `legacy-router.ts` y retirar renderer muerto | Alta | Primer slice en PR #47: renderer HTML sin rutas activas retirado y bootstrap renombrado a servicios de aplicación. La extracción adicional del arranque de service worker/sync sigue pendiente. |
 | 6 | Encapsular DTO y modelos legacy en mappers/adapters | Media/alta | UI/dominio reciben modelos internos; adapters conservan lectura compatible de datos antiguos. Contratos externos sin cambios. |
 | 7 | Cierre de guardas y limpieza validada | Media | No new architecture debt, chequeo de ciclos, lint, typecheck, tests, build y E2E de rutas críticas. Retirar únicamente código sustituido sin referencias. |
 
 ### Estado de ejecución — actualización 2026-10-27
 
-- Base comprobada: `origin/main` `7d4a5bc`, con las PR #43, #45, #48 y #49 integradas.
+- Base comprobada: `origin/main` `4c70512`, con las PR #43, #45, #47, #48 y #49 integradas.
 - PR #44 se fusionó accidentalmente en la rama de iconografía; su reemplazo #49 incorporó el slice de estadísticas a `main`.
 - PR #45 (Zustand para estado efímero de diálogos/toasts) está integrada en `main`.
-- Orden 2: esta PR #46 aísla los servicios usados por cada pantalla; su rama se rebasó sobre `main` para quitar la dependencia de #45.
-- Orden 4: pendiente publicar la extracción acotada de recuperación de sesión guardada. La implementación local conserva el formato `tai.run:<cuenta>`, el almacenamiento por cuenta y la validación de sesión; hay que rebasarla y revalidarla contra el `main` actual.
-- Orden 5: PR #47 retira el renderer React legacy sin reemplazar el arranque todavía necesario; apunta directamente a `main` y espera validación remota.
+- Orden 2: esta PR #46 aísla los servicios usados por cada pantalla; su rama se está rebasando de nuevo sobre `main` tras la integración de #47.
+- Orden 4: PR #50 contiene la extracción acotada de recuperación de sesión guardada, basada directamente en `main`; `npm run check` pasó 409/409, el build pasó y el E2E de reanudación pasó 2/2 en Chromium/WebKit.
+- Orden 5: PR #47 retiró el renderer React legacy sin reemplazar el arranque todavía necesario; está integrada en `main`.
 - Órdenes 6 (DTO/mappers) y 7 (guardas finales/ciclos) siguen pendientes, después de revisar las fronteras activas y no como limpieza mecánica.
 - Nueva tarea de producto pendiente: loading accesible en Inicio mientras se resuelven los datos necesarios y Firebase Auth; mostrar después la vista adecuada a una sesión confirmada o a invitado. Ver detalle y casos de validación en el handoff.
 
