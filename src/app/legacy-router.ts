@@ -43,6 +43,7 @@ import { explanationMapper } from '../features/explanations/explanation-mapper.j
 import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
 import { loadQuestionEvolution, loadStrategyReportForPeriod } from './strategy-composition.js';
 import { createStatsServices } from './stats-composition.js';
+import { createFailuresComposition } from './failures-composition.js';
 import { createQuizServices } from './quiz-composition.js';
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './ai-study-export-composition.js';
@@ -327,26 +328,22 @@ const quizServices = createQuizServices(go, hashPath('home'), hashPath('result')
 
 
 
-let failureQuestionCache: Question[] = [];
-const failuresServices = {
-  async loadQuestions() {
-    await getMeta();
-    failureQuestionCache = (await byIds(falladasIds())).sort((first, second) => (store.rec(second.i)?.[2] || 0) - (store.rec(first.i)?.[2] || 0));
-    return failureQuestionCache.map(question => toFailureQuestionView(question, VERIFIED_SOURCES));
-  },
-  async loadTopics() { const index = await getIndex(); return index.temas.map(topic => ({ id: topic.id, name: topic.nombre })); },
-  getRecord(id: string) { return store.rec(id); },
-  isReviewed(id: string) { return store.rec(id)?.[11] === 1; },
-  setReviewed(id: string, topicId: string, reviewed: boolean) { store.setReviewed(id, topicId, reviewed); },
+const failuresServices = createFailuresComposition({
+  loadQuestionMetadata: getMeta,
+  loadQuestionIndex: getIndex,
+  loadQuestionsById: ids => byIds(ids),
+  failedQuestionIds: falladasIds,
+  lastAttemptAt: id => store.rec(id)?.[2],
+  readRecord: id => store.rec(id),
+  isReviewed: id => store.rec(id)?.[11] === 1,
+  setReviewed: (id, topicId, reviewed) => store.setReviewed(id, topicId, reviewed),
   topicName: temaName,
-  startPractice(ids: readonly string[], title: string) {
-    const byId = new Map(failureQuestionCache.map(question => [question.i, question]));
-    const items = shuffle(ids.map(id => byId.get(id)).filter((question): question is Question => !!question)).slice(0, 40);
-    if (!items.length) return toast('No hay preguntas con ese filtro.');
-    if (!createRun({ kind: 'test', feedback: true, items, titulo: title })) return toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.');
-    go(hashPath('quiz'));
-  },
-};
+  sourceFallbacks: VERIFIED_SOURCES,
+  shuffle,
+  createPractice: (items, title) => !!createRun({ kind: 'test', feedback: true, items, titulo: title }),
+  notify: toast,
+  navigateToQuiz: () => go(hashPath('quiz')),
+});
 const lightningServices = {
   async loadQuestion(): Promise<LightningQuestion | null> {
     await getMeta();
