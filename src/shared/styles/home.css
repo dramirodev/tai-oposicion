@@ -256,6 +256,10 @@
   margin: 0;
 }
 
+.menuhead h2:focus-visible {
+  outline: none;
+}
+
 .menu .gtitle:first-of-type {
   margin-top: 0.25rem;
 }

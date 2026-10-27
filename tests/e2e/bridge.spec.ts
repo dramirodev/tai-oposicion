@@ -524,10 +524,10 @@ test('el diálogo personalizado mantiene Tab y Shift+Tab dentro del menú', asyn
   const errors = await start(page);
   await page.locator('#menu').focus();
   await page.keyboard.press('Enter');
-  await expect(page.locator('#menux')).toBeFocused();
+  await expect(page.locator('#menuov .menuhead h2')).toBeFocused();
   const buttons = page.locator('#menuov button');
   const count = await buttons.count();
-  for (let index = 0; index < count; index++) {
+  for (let index = 0; index <= count; index++) {
     await page.keyboard.press('Tab');
     expect(await page.evaluate(() => !!document.activeElement?.closest('#menuov'))).toBe(true);
   }

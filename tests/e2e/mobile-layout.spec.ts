@@ -38,6 +38,11 @@ test('el menú móvil mantiene su panel dentro del viewport y permite llegar a t
 
   const panel = page.locator('#menuov .card.menu');
   await expect(panel).toBeVisible();
+  await expect(panel.locator('.menuhead h2')).toBeFocused();
+  expect(await page.locator('#menux').evaluate(button => button.matches(':focus-visible'))).toBe(false);
+  await page.keyboard.press('Tab');
+  await expect(page.locator('#menux')).toBeFocused();
+  expect(await page.locator('#menux').evaluate(button => button.matches(':focus-visible'))).toBe(true);
   const bounds = await panel.boundingBox();
   expect(bounds).not.toBeNull();
   expect(bounds!.y).toBeGreaterThanOrEqual(0);
@@ -48,4 +53,19 @@ test('el menú móvil mantiene su panel dentro del viewport y permite llegar a t
   await lastAction.scrollIntoViewIfNeeded();
   await expect(lastAction).toBeInViewport();
   expect(await page.locator('#menuov .menu-content').evaluate(element => element.scrollTop)).toBeGreaterThan(0);
+});
+
+test('el repaso rápido no deja Inicio seleccionado mientras se practica en móvil', async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  try {
+    const page = await context.newPage();
+    await prepareOwner(page);
+    await page.goto('/#/home');
+    await page.locator('#quick').tap();
+    await expect(page.locator('.opt').first()).toBeVisible();
+    await expect(page.locator('nav[aria-label="Principal"] [aria-current="page"]')).toHaveCount(0);
+    await expect(page.locator('nav[aria-label="Principal"] .on')).toHaveCount(0);
+  } finally {
+    await context.close();
+  }
 });
