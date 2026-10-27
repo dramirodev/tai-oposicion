@@ -43,3 +43,17 @@ La propuesta preserva las capas ya existentes y prioriza extraer un slice estad�
 - Validación del slice original: arquitectura sin deuda nueva, lint, ignore-growth, TypeScript, 405/405 pruebas, build y E2E de diálogo/menú/táctil 34/34. La versión reapuntada se volverá a validar antes de actualizar su PR.
 
 El siguiente trabajo en curso desacopla únicamente la lectura/validación de una sesión guardada. No extrae un puerto global para todo `legacy-engine` y conserva el formato `tai.run:<cuenta>`.
+## Etapa B — avance 2026-10-27
+
+La instrucción actual del usuario autoriza continuar la implementación de las tareas pendientes. Este primer incremento aborda el agregado de rendimiento por tema:
+
+- `StatsSnapshot`, las semanas y los modelos de comparación están ahora en `core/application/stats/statistics-model.ts`, en lugar de definirse junto al contexto React compartido. El contexto conserva reexports para compatibilidad, mientras la composición y páginas de Progreso importan el modelo de aplicación directamente.
+- `summarizeTopicProgress` recibe registros normalizados y un catálogo de temas; calcula respuestas, aciertos, porcentajes, vistas y prioridades con el umbral previo de ocho respuestas. No importa React, Zustand, Firebase ni almacén local.
+- `stats-composition.ts` adapta los datos existentes al modelo normalizado y mantiene la consulta local/HTTP, la comprobación de cuenta, los demás agregados y las acciones. No se cambian contratos persistidos, UI ni flujos.
+- Se añadió `tests/topic-progress.test.js` para verificar totales, umbral, orden, límite, cero datos y catálogo sin respuestas.
+- No se añadió un puerto de lectura nuevo: la función extraída es una transformación pura de valores ya obtenidos por la composición existente; crear una interfaz alrededor de esos mismos valores no separaría una operación de IO adicional. El límite actual de lectura en la composición queda como deuda de la siguiente revisión arquitectónica.
+- Validación local: arquitectura sin deuda nueva (64 excepciones preexistentes), ESLint, ignore-growth, TypeScript y Vitest serial **404/404**; build de producción correcto; E2E focalizada de progreso/gráficas **10/10** en Chromium/WebKit, claro/oscuro.
+
+PR #44 abre este slice sobre `fix/menu-iconography-mobile-hover` (PR #43), porque el handoff compartido se actualiza en ambas entregas. En la última consulta, #44 estaba `MERGEABLE` con `validate` en curso; #43 `MERGEABLE` con su `validate` cancelado. Revalidar ambos checks sin atribuir esa cancelación a una causa no confirmada.
+
+Siguiente: evaluar el store vanilla Zustand v5.0.12 para estado efímero compartido de diálogos/toasts; usar selectores en React, pruebas de transiciones y no persistir nada. Context7: biblioteca `/pmndrs/zustand`; consulta oficial de store vanilla y `useStore` selectivo completada. Las etapas restantes (contrato por feature, engine, router/arranque, DTOs y guardas de ciclos) continúan pendientes.

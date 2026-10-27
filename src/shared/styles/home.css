@@ -272,6 +272,11 @@
 .menu .lrow i {
   width: 2.25rem;
   height: 2.25rem;
+  color: var(--mute);
+}
+
+.menu .lrow.here i {
+  color: var(--ink);
 }
 
 .menu .lrow b {

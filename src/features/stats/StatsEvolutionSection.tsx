@@ -1,7 +1,8 @@
 import { Check, X } from 'lucide-react';
 import { lazy, Suspense } from 'react';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
-import type { StatsSnapshot, StatsServices, StatsWeek } from '../../shared/ui/study-services.js';
+import type { StatsServices } from '../../shared/ui/study-services.js';
+import type { StatsSnapshot, StatsWeek } from '../../core/application/stats/statistics-model.js';
 import type { QuestionEvolutionPoint, TrendPoint } from './StatsCharts.js';
 
 type QuestionWeek = QuestionEvolutionPoint;
