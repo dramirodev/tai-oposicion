@@ -6,9 +6,10 @@ export function useActiveSection(pathname: string): string {
   const lastKind = useSyncExternalStore(subscribe, getLastRunKind, getLastRunKind);
   const name = pathname.split('/')[1] || 'home';
   const kind = name === 'quiz' ? runKind : lastKind;
+  const practiceSection = kind === 'rev' ? '' : kind === 'sim' ? 'sim' : kind === 'test' ? 'test' : 'home';
   return ({
-    quiz: kind === 'sim' ? 'sim' : kind === 'test' ? 'test' : 'home',
-    result: kind === 'sim' ? 'sim' : kind === 'test' ? 'test' : 'home',
+    quiz: practiceSection,
+    result: practiceSection,
     sim2: 'sim',
     examenes: 'sim',
     errores: 'settings',
