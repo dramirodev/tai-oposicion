@@ -82,7 +82,7 @@ test('el mirror local cierra su conexión cuando otra pestaña actualiza la base
   }));
   expect(version).toBe(2);
 });
-test('el historial de intentos libera su conexión ante una actualización de esquema', async ({ page }) => {
+test('el historial de intentos libera su conexión ante una actualización desde otra pestaña', async ({ page, context }) => {
   await start(page);
   await page.locator('#quick').click();
   await expect(page.locator('#app h1')).toContainText('pregunta 1');
@@ -90,8 +90,10 @@ test('el historial de intentos libera su conexión ante una actualización de es
   await page.locator('#exit').click();
   await page.goto('/#/home');
   await expect(page.locator('#quick')).toBeVisible();
+  const otherTab = await context.newPage();
+  await start(otherTab);
 
-  const result = await page.evaluate(() => new Promise<{ version: number; wasBlocked: boolean }>(resolve => {
+  const result = await otherTab.evaluate(() => new Promise<{ version: number; wasBlocked: boolean }>(resolve => {
     const request = indexedDB.open('tai-attempts', 3);
     let wasBlocked = false;
     const timeout = window.setTimeout(() => resolve({ version: 0, wasBlocked }), 3000);
