@@ -260,3 +260,7 @@ Esta sección sustituye los estados de PR anteriores que quedaron obsoletos:
 - Mantener intacto `tests/design-training.test.js` sin confirmar del checkout principal.
 
 Siguiente paso: comprobar la mergeabilidad de #45; luego aplanar #46 y #47 sobre `main`, revisar sus diffs y validar antes de actualizarlas. Publicar después la recuperación de sesión como una PR independiente contra `main` y continuar el bootstrap restante, DTO/mappers y guardas de ciclos.
+
+## Nueva tarea — carga inicial de Inicio (2026-10-27)
+
+**PENDIENTE, implementación en PR independiente.** Mostrar un loading accesible en Inicio hasta que hayan terminado las cargas de datos que la pantalla necesita y se haya resuelto el estado de Firebase Auth. A continuación, presentar la variante adecuada a una sesión confirmada o a un usuario invitado. No enseñar datos parciales ni asumir autenticación durante la espera. Antes de implementar, identificar las fuentes de datos y estados de carga actuales de Inicio; preservar el acceso invitado, el uso offline y el contenido actual. Validar al menos: carga lenta, fallo de lectura, sesión autenticada, usuario sin sesión y cambios de ruta durante la carga.
