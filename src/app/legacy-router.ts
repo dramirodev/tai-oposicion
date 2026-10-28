@@ -16,8 +16,6 @@ import { randomStudyOrder as shuffle } from '../shared/ui/study-random.js';
 import { swipeDirection, studyKeyAction } from '../shared/ui/study-input.js';
 import { calculateStudyStreak } from '../core/domain/study-analytics.js';
 import { summarizeReadingSpeedFailures } from '../core/domain/question-performance.js';
-import { analyzeSimulation } from '../core/domain/simulation-analysis.js';
-import { renderSimulationAnalysisView } from '../features/simulation/simulation-analysis-view.js';
 import { previewBackupImport } from '../core/application/settings/backup-preview.js';
 import { META, getIndex, getMeta, getMetaIndex, temaOf, idsOfTema, getTema, getSup, temaName, now, byIds, fetchJson } from '../adapters/http/legacy-data.js';
 import { $, L, toast, ask } from '../shared/ui/legacy-dom.js';
@@ -42,6 +40,7 @@ import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
 import { loadQuestionEvolution, loadStrategyReportForPeriod } from './composition/stats/strategy-composition.js';
 import { createStatsServices } from './composition/stats/stats-composition.js';
 import { createExamCatalog } from './composition/simulations/exam-catalog-composition.js';
+import { createSimulationAnalysisView } from './composition/simulations/simulation-analysis-composition.js';
 import { createFailuresComposition } from './composition/failures/failures-composition.js';
 import { createLightningComposition } from './composition/trainers/lightning-composition.js';
 import { createTrapsComposition } from './composition/trainers/traps-composition.js';
@@ -113,16 +112,6 @@ async function resumeSaved() {
   if (resumeRun(p)) go(hashPath('quiz'));
 }
 
-function simAnalisis({ ses, items, ans, times, limit }: {
-  ses: { secs: number };
-  items: readonly Pick<Question, 'c'>[];
-  ans: (number | undefined)[];
-  times?: (number | undefined)[];
-  limit: number;
-}) {
-  const analysis = analyzeSimulation({ correct: items.map(question => question.c), answers: ans, times, limitSeconds: limit * 60, elapsedSeconds: ses.secs });
-  return renderSimulationAnalysisView(analysis, ses.secs, limit * 60);
-}
 // ───────── sesión rápida (~5 min) ─────────
 async function quickSession() {
   const account = store.accountId();
@@ -419,7 +408,7 @@ export const studyServices: StudyServices = {
       const { ses, items, ans, studyStates = [], highlights = [], confidences = [], discardedOptions = [] } = last;
       return { score: ses.nota, correct: ses.a, wrong: ses.f, blank: ses.b, consulted: studyStates.filter(state => state === 'revealed').length,
         accuracy: ses.a + ses.f ? pct(ses.a, ses.a + ses.f) : null, seconds: ses.secs, title: ses.titulo || '', interrupted: !!ses.interrupted, kind: ses.kind,
-        porTiempo: !!ses.porTiempo, analysis: last.limit && !ses.porTiempo ? simAnalisis(last) : '',
+        porTiempo: !!ses.porTiempo, analysis: last.limit && !ses.porTiempo ? createSimulationAnalysisView({ correctIndices: last.items.map(question => question.c), answers: last.ans, answerSeconds: last.times, timeLimitMinutes: last.limit, elapsedSeconds: ses.secs }) : '',
         secondPartAvailable: (ses.titulo || '').includes('Parte 1') && !!SIMCFG?.parte2,
         topics: Object.entries(ses.temas).sort(([left], [right]) => left.localeCompare(right)).map(([id, [correct, total]]) => ({ id, name: temaName(id), correct, total })),
         items: items.map((question, index) => {
