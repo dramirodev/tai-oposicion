@@ -1,5 +1,4 @@
 import { initializeApp } from 'firebase/app';
-import type { FirebaseOptions } from 'firebase/app';
 import { initializeAuth, GoogleAuthProvider, signInWithRedirect, signInWithPopup, getRedirectResult, onAuthStateChanged, signOut, indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence, browserPopupRedirectResolver } from 'firebase/auth';
 import {
   initializeFirestore, persistentLocalCache, persistentMultipleTabManager,
@@ -7,6 +6,7 @@ import {
 } from 'firebase/firestore';
 import type { Auth, User } from 'firebase/auth';
 import type { Firestore, FirestoreError, QuerySnapshot, DocumentSnapshot, Unsubscribe } from 'firebase/firestore';
+import { loadFirebaseConfig } from './firebase-config-loader.js';
 import type { AttemptRepository } from '../../core/ports/AttemptRepository.js';
 import * as store from '../local/legacy-store.js';
 import type { AccessLevel, AccessRequest, CardMap, ReportMap, SeenDoc, Session, StatMap } from '../legacy/types.js';
@@ -31,15 +31,7 @@ export function setAttemptRepository(repository: AttemptRepository): void { atte
 export async function init(metaFns: { temaOf: (id: string) => string | null; idsOfTema: (text: string) => string[] }): Promise<void> {
   temaOf = metaFns.temaOf; idsOfTema = metaFns.idsOfTema;
   status.authResolved = false;
-  let firebaseConfig: FirebaseOptions = {}, leida = false;
-  const readConfig = async (options?: RequestInit): Promise<FirebaseOptions> => {
-    const response = await fetch('firebase-config.json', options);
-    if (!response.ok) throw new Error(`No se pudo cargar la configuración (${response.status}).`);
-    return response.json() as Promise<FirebaseOptions>;
-  };
-  try { firebaseConfig = await readConfig({ cache: 'no-cache' }); leida = true; } catch {
-    try { firebaseConfig = await readConfig(); leida = true; } catch {}
-  }
+  const { config: firebaseConfig, loaded: leida } = await loadFirebaseConfig();
   const configured = status.configured = !!firebaseConfig.apiKey && !/PEGA/i.test(firebaseConfig.apiKey);
   status.host = location.host; status.authDomain = firebaseConfig.authDomain || '';
   // «sin configurar» solo si el fichero se leyó y no trae clave; si no se pudo leer (sin red) no es un problema de configuración
