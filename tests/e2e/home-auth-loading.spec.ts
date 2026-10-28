@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test('Inicio mantiene el loading mientras Firebase comprueba si hay sesión', async ({ page }) => {
+test('la app permanece bloqueada hasta que Firebase comprueba la sesión', async ({ page }) => {
   let releaseConfig!: () => void;
   let markConfigRequested!: () => void;
   const configGate = new Promise<void>(resolve => { releaseConfig = resolve; });
@@ -13,11 +13,15 @@ test('Inicio mantiene el loading mientras Firebase comprueba si hay sesión', as
   });
 
   await page.goto('/#/home');
-  await expect(page.locator('.page-loading--home')).toBeVisible();
+  await expect(page.locator('#initial-loading')).toBeVisible();
+  await expect(page.getByRole('progressbar', { name: 'Carga inicial' })).toBeVisible();
+  await expect(page.locator('#app')).toBeHidden();
+  await expect(page.locator('nav[aria-label="Principal"]')).toBeHidden();
   await configRequested;
-  await expect(page.locator('.page-loading--home')).toBeVisible();
+  await expect(page.locator('#initial-loading')).toBeVisible();
 
   releaseConfig();
   await expect(page.getByText('Firebase aún no está configurado: el progreso se guarda solo en este dispositivo.')).toBeVisible();
+  await expect(page.locator('#initial-loading')).toHaveCount(0);
   await expect(page.locator('.page-loading--home')).toHaveCount(0);
 });
