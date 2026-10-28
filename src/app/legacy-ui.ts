@@ -1,11 +1,11 @@
-import * as store from '../adapters/local/legacy-store.js';
+import { localProgressRepository, localStudyProgressGateway } from '../adapters/local/progress-repository.js';
 import { normalizeUiPreferences } from '../shared/presentation/ui-preferences.js';
 import { UI_ZOOMS } from '../shared/presentation/study-labels.js';
 
 const systemTheme = matchMedia('(prefers-color-scheme:dark)');
 
 function applyLegacyUi(): void {
-  const ui = normalizeUiPreferences(store.getCfg().ui);
+  const ui = normalizeUiPreferences(localStudyProgressGateway.getPreferences().ui);
   const root = document.documentElement;
   if (ui.theme === 'auto') root.removeAttribute('data-theme');
   else root.setAttribute('data-theme', ui.theme);
@@ -18,7 +18,7 @@ function applyLegacyUi(): void {
 }
 
 applyLegacyUi();
-store.onChange(applyLegacyUi);
+localProgressRepository.subscribe(applyLegacyUi);
 
 // El modo automático y la barra del navegador comparten un único tema resuelto.
 systemTheme.addEventListener?.('change', applyLegacyUi);

@@ -40,6 +40,13 @@ describe('localProgressRepository', () => {
     });
     expect(Object.keys(stored)).toEqual(['stats', 'sessions', 'cfg', 'seen', 'reports', 'cards']);
   });
+  it('omite tarjetas eliminadas al leer el modelo de dominio', async () => {
+    store.addFallo('question-1', 1000);
+    store.removeCard('FC-Q-question-1');
+
+    await expect(localProgressRepository.getCardReviews()).resolves.toEqual({});
+    await expect(localProgressRepository.getCardReview('FC-Q-question-1')).resolves.toBeUndefined();
+  });
 
   it('reads and writes preferences, seen topics, reports, and card reviews through their specific operations', async () => {
     await localProgressRepository.savePreferences({ exam: '2026-11-01', ui: { theme: 'dark', size: 1 } });

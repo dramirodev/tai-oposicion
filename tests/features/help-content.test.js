@@ -24,5 +24,7 @@ describe('help content', () => {
     expect(introduction.body.join(' ')).toContain('volver a la selección automática');
     expect(introduction.body.join(' ')).toMatch(/aunque el resultado sea bajo, primero se propone otra comprobación/i);
     expect(introduction.body.join(' ')).toMatch(/no puede deducir que debas releer todo el tema/i);
+    expect(introduction.body.join(' ')).toMatch(/no cronometra el tiempo real/i);
+    expect(introduction.body.join(' ')).toMatch(/días de descanso no acumulan actividades/i);
   });
 });

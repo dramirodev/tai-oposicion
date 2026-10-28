@@ -26,7 +26,15 @@ export function StatsPage() {
   const [message, setMessage] = useState('');
   useEffect(() => { let active = true; void stats.load().then(value => { if (active) { setSnapshot(value); setFirstSimulation(value.simulations.at(-2)?.id || value.simulations.at(-1)?.id || ''); setSecondSimulation(value.simulations.at(-1)?.id || ''); } }).catch(() => { if (active) setError('No se pudo cargar el progreso. Inténtalo de nuevo.'); }); return () => { active = false; }; }, [stats]);
   useEffect(() => { let active = true; void stats.loadQuestionEvolution(12).then(value => { if (active) setQuestionWeeks(value); }).catch(() => { if (active) setMessage('No se pudo leer el historial detallado. El resto del progreso sigue disponible.'); }); return () => { active = false; }; }, [stats]);
-  useEffect(() => { const filter = String(evolution.filter || 'g'); const weeks = Number(evolution.weeks || 12); void Promise.resolve(stats.loadWeekly({ weeks, ...(filter.startsWith('t:') ? { topic: filter.slice(2) } : filter.startsWith('k:') ? { type: filter.slice(2) } : {}) })).then(setWeekly); }, [evolution, stats]);
+  useEffect(() => {
+    let active = true;
+    const filter = String(evolution.filter || 'g');
+    const weeks = Number(evolution.weeks || 12);
+    void stats.loadWeekly({ weeks, ...(filter.startsWith('t:') ? { topic: filter.slice(2) } : filter.startsWith('k:') ? { type: filter.slice(2) } : {}) })
+      .then(value => { if (active) setWeekly(value); })
+      .catch(() => { if (active) setMessage('No se pudo cargar la evolución de las sesiones.'); });
+    return () => { active = false; };
+  }, [evolution, stats]);
   if (error) return <><h1>Progreso</h1><p className="note" role="alert">{error}</p><button className="btn" onClick={() => { setError(''); void stats.load().then(setSnapshot).catch(() => setError('No se pudo cargar el progreso. Inténtalo de nuevo.')); }}>Reintentar</button></>;
   if (!snapshot) return <PageLoading variant="legacy" />;
   const rank: Record<string, number> = { r: 0, y: 1, g: 2, n: 3 };

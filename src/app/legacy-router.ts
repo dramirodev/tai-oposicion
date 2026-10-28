@@ -4,7 +4,7 @@ import { questionNotice, sourceHtml } from '../shared/presentation/legacy-study.
 import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
 import * as store from '../adapters/local/legacy-store.js';
-import { localProgressRepository, localStudyProgressGateway } from '../adapters/local/progress-repository.js';
+import { localProgressRepository, localQuizProgressGateway, localStudyProgressGateway } from '../adapters/local/progress-repository.js';
 import { localGuestQuestionHistoryRepository } from '../adapters/local/guest-question-history.js';
 import { localReadingQuestionHistoryRepository } from '../adapters/local/reading-question-history.js';
 import { percentage as pct } from '../shared/presentation/format.js';
@@ -278,8 +278,8 @@ const settingsServicesWithSubscription = {
     return () => { settingsListeners.delete(listener); offStore(); offSync(); };
   },
 };
-const statsServices = createStatsServices({ go, startRun, startRepaso, trapTest });
-const quizServices = createQuizServices(go, hashPath('home'), hashPath('result'));
+const statsServices = createStatsServices({ go, startRun, startRepaso, trapTest }, localProgressRepository, localStudyProgressGateway);
+const quizServices = createQuizServices(go, hashPath('home'), hashPath('result'), localQuizProgressGateway);
 
 
 

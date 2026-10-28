@@ -7,6 +7,7 @@ export interface StudyProgressGateway {
   getQuestionStats(questionId: string): QuestionStats | undefined;
   getAllQuestionStats(): Readonly<Record<string, QuestionStats>>;
   getPreferences(): Preferences;
+  updatePreferences(update: (current: Preferences) => Preferences): void;
   getSeenTopics(): readonly string[];
   recordAnswer(questionId: string, topicId: string, result: AnswerResult, timestamp?: number, seconds?: number): void;
   addSession(session: SessionResult): void;
