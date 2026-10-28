@@ -13,6 +13,17 @@ it('mapea las preferencias conocidas a tipos de dominio y conserva el DTO serial
   if (mapped.ok) expect(JSON.stringify(preferencesMapper.toDto(mapped.value))).toBe(JSON.stringify(dto));
 });
 
+it('acepta el mismo DTO con propiedades en distinto orden', () => {
+  const mapped = preferencesMapper.toDomain({
+    sim: { scope: 'vistos', parte2: true, o: ['O', 'G'], min: 90, n: 80 },
+    ui: { lectura: 1, size: 2, theme: 'dark' },
+  });
+  expect(mapped).toMatchObject({ ok: true, value: {
+    sim: { n: 80, min: 90, o: ['O', 'G'], parte2: true, scope: 'vistos' },
+    ui: { theme: 'dark', size: 2, lectura: 1 },
+  } });
+});
+
 it('informa de preferencias que no cumplen los esquemas existentes', () => {
   expect(preferencesMapper.toDomain({ test: { n: 1000 } })).toMatchObject({ ok: false, reason: expect.any(String) });
 });
