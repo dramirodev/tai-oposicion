@@ -37,7 +37,7 @@ export function hiliteHtml(sourceTextInput: unknown, answerTextInput: unknown): 
 
 // ───────── lectura atenta (contra los fallos por velocidad) ─────────
 // Palabras que cambian el sentido: negaciones, excepciones, absolutos, restrictivos y cifras/plazos.
-const KW = /(?<![\p{L}\d])(NO|NUNCA|NINGUN[OA]S?|NADA|SIEMPRE|TODOS|TODAS|SOLO|SÓLO|ÚNICAMENTE|EXCLUSIVAMENTE|EXCEPTO|SALVO|INCORRECT[OA]S?|FALS[OA]S?|VERDADER[OA]S?|CORRECT[OA]S?|MÁXIM[OA]S?|MÍNIM[OA]S?|SIN|MENOS|MÁS|ANTES|DESPUÉS|HÁBILES|NATURALES)(?![\p{L}\d])|(?<![\p{L}\d])\d[\d.,]*\s?(?:%|bits?|bytes?|GB|MB|KB|Mbps|Gbps|MHz|GHz|días?|meses|años?|horas?|segundos?|puertos?)?/giu;
+const KW = /(?<![\p{L}\d])(NO|NUNCA|NINGUN[OA]S?|NADA|SIEMPRE|TODOS|TODAS|SOLO|SÓLO|ÚNICAMENTE|EXCLUSIVAMENTE|EXCEPTO|SALVO|INCORRECT[OA]S?|FALS[OA]S?|VERDADER[OA]S?|CORRECT[OA]S?|MÁXIM[OA]S?|MÍNIM[OA]S?|SIN|MENOS|MÁS|ANTES|DESPUÉS|HÁBILES|NATURALES)(?![\p{L}\d])|(?<![\p{L}\d])\d[\d.,]*(?:\s?(?:%|bits?|bytes?|GB|MB|KB|Mbps|Gbps|MHz|GHz|días?|meses|años?|horas?|segundos?|puertos?))?/giu;
 export function claveSpans(text: unknown): Span[] {
   const textValue = String(text ?? ''), spans: Span[] = []; let match: RegExpExecArray | null; KW.lastIndex = 0;
   while ((match = KW.exec(textValue))) {
@@ -107,7 +107,7 @@ function rangosCodigo(text: string): Span[] {
       if (matchEnd > matchStart) ranges.push([matchStart, matchEnd]);
     }
   }
-  // bloques con llaves { … }: desde la sentencia que los abre hasta la última llave
+  // bloques de código con llaves: no convertir llaves de conjuntos matemáticos en una sentencia
   const openBraceIndex = text.indexOf('{'), closeBraceIndex = text.lastIndexOf('}');
   if (openBraceIndex >= 0 && closeBraceIndex > openBraceIndex) {
     let statementStart = 0;
@@ -115,7 +115,7 @@ function rangosCodigo(text: string): Span[] {
     let separatorMatch: RegExpExecArray | null;
     while ((separatorMatch = sentenceSeparator.exec(prefix))) statementStart = separatorMatch.index + separatorMatch[0].length;
     const codeStart = /\b(?:function|public|private|protected|static|class|interface|void|int|for|while|if|switch|try|def|echo|print)\b|[A-Za-z_$][\w$]*\(/.exec(text.slice(statementStart, openBraceIndex));
-    ranges.push([codeStart ? statementStart + codeStart.index : openBraceIndex, closeBraceIndex + 1]);
+    if (codeStart) ranges.push([statementStart + codeStart.index, closeBraceIndex + 1]);
   }
   while ((match = SQL_WORDS.exec(text))) ranges.push([match.index, match.index + match[0].length]);
   ranges.sort((leftRange, rightRange) => leftRange[0] - rightRange[0] || rightRange[1] - leftRange[1]);
@@ -171,7 +171,7 @@ export function todoCodigo(text: unknown): boolean {
 // Texto → HTML seguro: escapa todo, pone en tipografía de código lo que lo parece y (opcional) resalta las palabras clave de lectura.
 export function richHtml(text: unknown, highlightKeywords = false): string {
   const textValue = String(text ?? '');
-  if (todoCodigo(textValue)) { const match = /^(\s*)([\s\S]*?)(\.?\s*)$/.exec(textValue)!; const blockClass = /\s/.test(match[2]) && match[2].length > 18 ? ' blk' : ''; return esc(match[1]) + '<code class="cd' + blockClass + '">' + codeInner(esc(match[2])) + '</code>' + (blockClass ? '' : esc(match[3])); } // en bloque, el punto final quedaría en una línea suelta
+  if (todoCodigo(textValue)) { const match = /^(\s*)([\s\S]*?)(\.?\s*)$/.exec(textValue)!; const blockClass = /\s/.test(match[2]) && match[2].length > 18 ? ' blk' : ''; return esc(match[1]) + '<code class="cd' + blockClass + '">' + codeInner(esc(match[2] + (blockClass ? match[3] : ''))) + '</code>' + (blockClass ? '' : esc(match[3])); }
   const codeRanges = rangosCodigo(textValue), keywordRanges = highlightKeywords ? claveSpans(textValue).filter(([keywordStart, keywordEnd]) => !codeRanges.some(([codeStart, codeEnd]) => keywordStart < codeEnd && codeStart < keywordEnd)) : [];
   const boundaries = new Set([0, textValue.length]);
   for (const [rangeStart, rangeEnd] of codeRanges) { boundaries.add(rangeStart); boundaries.add(rangeEnd); }
