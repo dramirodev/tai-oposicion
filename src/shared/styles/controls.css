@@ -292,8 +292,14 @@ button.ghost.sm {
 
 dialog.overlay,
 dialog.pause-modal {
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  margin: 0;
   border: 0;
   color: inherit;
+  overflow: visible;
 }
 
 dialog.overlay:not([open]),
