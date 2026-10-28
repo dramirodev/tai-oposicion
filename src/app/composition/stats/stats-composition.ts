@@ -25,7 +25,7 @@ export function createStatsServices(actions: StatsActions): StatsServices {
   return {
     async load(): Promise<StatsSnapshot> {
       const account = store.accountId();
-      const index = await studyQuestionCatalog.getIndex(); const questionMetadata = await studyQuestionCatalog.getMetadata();
+      const [index, questionMetadata] = await Promise.all([studyQuestionCatalog.getIndex(), studyQuestionCatalog.getMetadata()]);
       if (account !== store.accountId()) throw new Error('La cuenta cambió mientras se cargaban las estadísticas.');
       const metadata = Object.fromEntries(Object.entries(questionMetadata).flatMap(([id, entry]) => {
         if (!Array.isArray(entry)) return [];
