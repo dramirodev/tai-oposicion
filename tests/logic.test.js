@@ -370,6 +370,7 @@ describe('lectura atenta', () => {
     expect(h).toContain('<mark class="kw">ÚNICAMENTE</mark>');
     expect(h).toContain('<mark class="kw">10 días</mark>');
     expect(h).not.toContain('>no<');
+    expect(claveHtml('El artículo 1.1 de la Constitución')).toContain('<mark class="kw">1.1</mark> de');
   });
   it('escapa HTML', () => { expect(claveHtml('<b>NO</b>')).toContain('&lt;b&gt;'); });
   it('detecta si piden la negativa', () => {
@@ -397,6 +398,7 @@ describe('richHtml (código)', () => {
     expect(evil).toContain('&lt;script&gt;');
     expect(codeSpans('La Constitución Española de 1978 (CE) regula la Corona.')).toEqual([]);
     expect(codeSpans('Lenguaje C++ y Node.js son conocidos')).toEqual([]);
+    expect(codeSpans('Dada la relación R1={ad, ae, af, bd, cd} y la relación R2={ae, cd}, ¿cuál será el resultado de la operación R1- R2?')).toEqual([]);
   });
   it('combina palabras clave de lectura fuera del código', () => {
     const h = richHtml('Señale la INCORRECTA sobre SELECT.', true);
@@ -415,7 +417,7 @@ describe('richHtml: opciones que son todo código', () => {
     const strip = h => h.replace(/<b class="sk">|<\/b>/g, '');
     expect(strip(richHtml('GRANT.'))).toBe('<code class="cd">GRANT</code>.');
     expect(strip(richHtml('/sbin.'))).toBe('<code class="cd">/sbin</code>.');
-    expect(strip(richHtml('((a>b) and (a<d)) or ((a==d) and (b<=a)).'))).toBe('<code class="cd blk">((a&gt;b) and (a&lt;d)) or ((a==d) and (b&lt;=a))</code>');
+    expect(strip(richHtml('((a>b) and (a<d)) or ((a==d) and (b<=a)).'))).toBe('<code class="cd blk">((a&gt;b) and (a&lt;d)) or ((a==d) and (b&lt;=a)).</code>');
     expect(strip(richHtml('MODIFY TABLE P ADD COLUMN (sexo VARCHAR2(10))'))).toBe('<code class="cd blk">MODIFY TABLE P ADD COLUMN (sexo VARCHAR2(10))</code>');
     expect(richHtml('for (int i=0; i<12; i++) x[i];')).toMatch(/^<code class="cd blk">for \(int i=0; i&lt;12; i\+\+\) x\[i\];<\/code>$/);
   });
