@@ -1,4 +1,6 @@
-import type { TrainingActivity, TrainingPreferences } from './entities.js';
+import type { StudyReviewMode, TrainingActivity, TrainingPreferences } from './entities.js';
+import { recommendTopicIntervention } from './study-review-intervention.js';
+import type { TopicReviewEvidence } from './study-review-intervention.js';
 
 export const DEFAULT_TRAINING_PREFERENCES: TrainingPreferences = {
   minutesByDay: [0, 35, 40, 35, 20, 40, 60],
@@ -7,6 +9,7 @@ export const DEFAULT_TRAINING_PREFERENCES: TrainingPreferences = {
 };
 
 const supportedActivities = new Set<TrainingActivity>(['activeRecall', 'topicTest', 'failures', 'spacedReviews']);
+const supportedReviewModes = new Set<StudyReviewMode>(['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading']);
 
 export function normalizeTrainingPreferences(value: unknown): TrainingPreferences {
   const candidate = value && typeof value === 'object' && !Array.isArray(value) ? value as Partial<TrainingPreferences> : {};
@@ -22,7 +25,10 @@ export function normalizeTrainingPreferences(value: unknown): TrainingPreference
   const introductionDay = Number.isInteger(candidate.introductionDay) && candidate.introductionDay! >= 0 && candidate.introductionDay! <= 6
     ? candidate.introductionDay!
     : DEFAULT_TRAINING_PREFERENCES.introductionDay;
-  return { minutesByDay, introductionDay, activities };
+  const reviewModesByTopic = candidate.reviewModesByTopic && typeof candidate.reviewModesByTopic === 'object' && !Array.isArray(candidate.reviewModesByTopic)
+    ? Object.fromEntries(Object.entries(candidate.reviewModesByTopic).filter(([topicId, mode]) => /^T[1-4]\.\d{2}$/.test(topicId) && supportedReviewModes.has(mode as StudyReviewMode))) as Record<string, StudyReviewMode>
+    : undefined;
+  return { minutesByDay, introductionDay, activities, ...(reviewModesByTopic && Object.keys(reviewModesByTopic).length ? { reviewModesByTopic } : {}) };
 }
 
 export type TrainingPlanReason = 'active-recall' | 'new-topic-day' | 'weak-topics' | 'coverage' | 'recurring-failures' | 'due-reviews';
@@ -31,6 +37,7 @@ export interface PlannedTrainingActivity {
   minutes: number;
   reason: TrainingPlanReason;
   topicId?: string;
+  reviewIntervention?: ReturnType<typeof recommendTopicIntervention>;
 }
 export interface DailyTrainingPlan {
   weekday: number;
@@ -85,6 +92,7 @@ export function buildDailyTrainingPlan(input: {
   failureCount: number;
   weakTopicCount: number;
   weakTopicIds?: readonly string[];
+  topicReviewEvidence?: readonly TopicReviewEvidence[];
 }): DailyTrainingPlan {
   const weekday = Number.isInteger(input.weekday) && input.weekday >= 0 && input.weekday <= 6 ? input.weekday : 0;
   const preferences = normalizeTrainingPreferences(input.preferences);
@@ -106,7 +114,11 @@ export function buildDailyTrainingPlan(input: {
     const duration = allocation.get(activity) || 0;
     if (!duration) return [];
     const topicId = activity === 'topicTest' && reasons[activity] === 'weak-topics' ? input.weakTopicIds?.[0] : undefined;
-    return [{ activity, minutes: duration, reason: reasons[activity], ...(topicId ? { topicId } : {}) }];
+    const evidence = activity === 'topicTest' && topicId
+      ? input.topicReviewEvidence?.find(item => item.topicId === topicId)
+      : undefined;
+    const reviewIntervention = evidence ? recommendTopicIntervention(evidence, preferences.reviewModesByTopic?.[evidence.topicId]) : undefined;
+    return [{ activity, minutes: duration, reason: reasons[activity], ...(topicId ? { topicId } : {}), ...(reviewIntervention ? { reviewIntervention } : {}) }];
   });
   return { weekday, minutes, restDay: false, activities };
 }

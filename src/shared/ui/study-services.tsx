@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 import type { StatsComparison, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
-import type { TrainingActivity, TrainingPreferences } from '../../core/domain/entities.js';
+import type { StudyReviewMode, TrainingActivity, TrainingPreferences } from '../../core/domain/entities.js';
 import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
 import type { DailyTrainingSession } from '../../core/domain/study-training-session.js';
 export type { StatsComparison, StatsDomainTopic, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
@@ -29,6 +29,7 @@ export interface HomeServices {
   startTrainingSession(plan: DailyTrainingPlan): DailyTrainingSession | null;
   startTrainingActivity(): DailyTrainingSession | null;
   completeTrainingActivity(activity: TrainingActivity): DailyTrainingSession | null;
+  setTrainingReviewMode(topicId: string, mode: StudyReviewMode): void;
   openMenu(): void;
   login(): Promise<unknown>;
   requestAccess(): Promise<boolean>;

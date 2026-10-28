@@ -789,6 +789,13 @@
 .training-session-status { flex: 1 1 16rem; margin: 0; color: var(--mute); font-size: var(--fs-s); }
 .training-plan-activities { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,17rem),1fr)); gap: 0 1.5rem; }
 .training-plan-activities .lrow { min-width: 0; padding-inline: 0; background: transparent; }
+.training-plan-item { min-width: 0; }
+.training-explanation { margin: 0 0 0.5rem 2.5rem; color: var(--mute); font-size: var(--fs-s); }
+.training-explanation summary { width: fit-content; min-height: 2.75rem; display: flex; align-items: center; cursor: pointer; color: var(--link); text-decoration: underline; text-underline-offset: 0.15em; }
+.training-explanation p { margin: 0.25rem 0 0.5rem; color: var(--ink); }
+.training-explanation .sm { color: var(--mute); }
+.training-review-mode { display: grid; gap: 0.35rem; max-width: 22rem; margin-block: 0.75rem; color: var(--ink); }
+.training-review-mode select { width: 100%; min-height: 2.75rem; padding: 0.4rem 0.65rem; border: 1px solid var(--line); border-radius: var(--r-m); color: var(--ink); background: var(--card); font: inherit; }
 .home-training>p:last-child { margin-bottom: 0; }
 .home-primary { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-xl); padding: 1.5rem; }
 .session-launch { padding: 0.75rem 0 0.25rem; }

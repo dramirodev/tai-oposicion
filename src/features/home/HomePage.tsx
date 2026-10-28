@@ -59,6 +59,7 @@ export function HomePage() {
     onStartReview={() => void runAction('rev', services.startReview)}
     onStartTraining={startTraining}
     onCompleteTrainingActivity={completeTrainingActivity}
+    onSetTrainingReviewMode={(topicId, mode) => services.setTrainingReviewMode(topicId, mode)}
     onOpenMenu={services.openMenu}
     onLogin={() => void runAction('login', services.login)}
     onRequestAccess={() => void runAction('request', async () => {
