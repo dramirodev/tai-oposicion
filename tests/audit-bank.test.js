@@ -46,3 +46,28 @@ it('detecta caracteres de codificación dañada en preguntas y opciones', () => 
   expect(report.issues).toContainEqual(expect.objectContaining({ kind: 'suspicious-text-encoding', id: 'OCR-1', field: 'enunciado' }));
   expect(report.issues).toContainEqual(expect.objectContaining({ kind: 'suspicious-text-encoding', id: 'OCR-2', field: 'opciones.a' }));
 });
+
+it('no agrupa comandos cuyos flags distinguen mayúsculas y minúsculas', () => {
+  const question = (id, enunciado) => ({
+    id, tema: 'T3.10', tipo: 'D', dificultad: 1, familia: id,
+    enunciado, opciones: { a: 'A', b: 'B', c: 'C', d: 'D' }, correcta: 'a',
+    revision: { estado: 'verificada' },
+    cita_temario: [{ fuente: 'T3.10.pdf', pagina: 1, texto: 'git branch -d elimina ramas fusionadas; -D fuerza el borrado.' }],
+  });
+  const report = auditQuestionBank([{ source: 'generated', metadata: { total: 2, familias: 2 }, questions: [
+    question('G-LOWER', 'git branch -d <rama> elimina la rama:'),
+    question('G-UPPER', 'git branch -D <rama> elimina la rama:'),
+  ] }]);
+
+  expect(report.repeatedStatementGroups).toBe(0);
+});
+
+it('acepta citas con URL externa verificable aunque no tengan número de página', () => {
+  const report = auditQuestionBank([{ source: 'generated', metadata: { total: 1, familias: 1 }, questions: [{
+    id: 'G-URL', tema: 'T3.08', tipo: 'D', dificultad: 1, familia: 'G-URL', enunciado: 'Pregunta externa',
+    opciones: { a: 'A', b: 'B', c: 'C', d: 'D' }, correcta: 'a', revision: { estado: 'verificada' },
+    cita_temario: [{ fuente: 'Documentación oficial', texto: 'Descripción consultada. https://example.org/docs' }],
+  }] }]);
+
+  expect(report.issues.map(issue => issue.kind)).not.toContain('untraceable-citation');
+});

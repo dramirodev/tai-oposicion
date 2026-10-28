@@ -150,3 +150,27 @@ it('corrige dos reservas con una cita local precisa y conserva la restante', () 
   }
   expect(isQuestionEditoriallyQuarantined('GEN-T3.07-66.v2')).toBe(true);
 });
+
+it('precisa preguntas repetidas cuando el mismo pasaje sustenta más de una respuesta', () => {
+  const orders = by('T1.05.json', 'GEN-T1.05-54.v2');
+  const gifts = by('T1.05.json', 'GEN-T1.05-55.v2');
+  expect(orders.q).toContain('infracción manifiesta');
+  expect(orders.a[orders.c]).toContain('inmediatamente');
+  expect(orders.q).not.toBe(gifts.q);
+  expect(gifts.a[gifts.c]).toContain('usos habituales, sociales y de cortesía');
+
+  const navigation = by('T3.06.json', 'GEN-T3.06-243');
+  const session = by('T3.06.json', 'GEN-T3.06-243.v1');
+  expect(navigation.q).toContain('navegación');
+  expect(navigation.a[navigation.c]).toContain('Controlar el flujo');
+  expect(session.q).toContain('sesión');
+  expect(session.a[session.c]).toContain('Mantener el estado');
+
+  const framework = by('T3.06.json', 'GEN-T3.06-277');
+  const specification = by('T3.06.json', 'GEN-T3.06-281.v2');
+  expect(framework.q).toContain('tipo de framework');
+  expect(framework.a[framework.c]).toContain('framework de interfaz');
+  expect(specification.q).toContain('implementaciones');
+  expect(specification.a[specification.c]).toContain('Mojarra');
+  expect(specification.u).toContain('Apache MyFaces');
+});

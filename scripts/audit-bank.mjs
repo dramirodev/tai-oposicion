@@ -5,7 +5,13 @@ import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const readJson = file => JSON.parse(readFileSync(file, 'utf8'));
-const normalizedStatement = value => value.normalize('NFKC').trim().replace(/\s+/g, ' ').toLocaleLowerCase('es');
+const normalizedStatement = value => {
+  const normalized = value.normalize('NFKC').trim().replace(/\s+/g, ' ');
+  // Flags such as `git branch -d` and `git branch -D` are case-sensitive.
+  // Keep their spelling in the comparison key while folding ordinary prose.
+  const flags = [...normalized.matchAll(/(?:^|\s)-{1,2}[a-z][\w-]*/gi)].map(match => match[0].trim());
+  return `${normalized.toLocaleLowerCase('es')}\u0000${flags.join('\u0000')}`;
+};
 const suspiciousEncoding = /\uFFFD|ï¿½|Ã[\u0080-\u00BF]|Â[\u0080-\u00BF]|â[\u0080-\u00BF]|ðŸ/u;
 
 export function auditQuestionBank(groups) {
@@ -75,8 +81,9 @@ export function auditQuestionBank(groups) {
       const citations = question.cita_temario;
       if (!Array.isArray(citations) || !citations.length) issue('missing-citation', question);
       else for (const citation of citations) {
+        const hasExternalUrl = typeof citation.texto === 'string' && /https?:\/\/\S+/u.test(citation.texto);
         if (typeof citation.fuente !== 'string' || !citation.fuente.trim()
-          || !Number.isInteger(citation.pagina) || citation.pagina < 1
+          || ((!Number.isInteger(citation.pagina) || citation.pagina < 1) && !hasExternalUrl)
           || typeof citation.texto !== 'string' || !citation.texto.trim()) {
           issue('untraceable-citation', question);
           break;
