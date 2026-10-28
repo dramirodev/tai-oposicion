@@ -8,6 +8,7 @@ import type { Auth, User } from 'firebase/auth';
 import type { Firestore, FirestoreError, QuerySnapshot, DocumentSnapshot, Unsubscribe } from 'firebase/firestore';
 import { loadFirebaseConfig } from './firebase-config-loader.js';
 import { decodeFirebaseDocumentId, encodeFirebaseDocumentId } from './firebase-document-id-mapper.js';
+import { OWNER_EMAIL, rememberAccessForAccount } from './access-policy.js';
 import type { AttemptRepository } from '../../core/ports/AttemptRepository.js';
 import * as store from '../local/legacy-store.js';
 import type { AccessLevel, AccessRequest, CardMap, ReportMap, SeenDoc, Session, StatMap } from '../legacy/types.js';
@@ -18,7 +19,6 @@ const errorFields = (value: unknown): { code: unknown; message: unknown } => {
 };
 
 import { status, emit } from './legacy-sync-state.js';
-import { OWNER, rememberAccess } from '../legacy/access.js';
 import { syncAttemptHistory } from './attempt-sync.js';
 import { configureStudyBankSource } from './study-bank-source.js';
 
@@ -57,7 +57,7 @@ export async function init(metaFns: { temaOf: (id: string) => string | null; ids
     status.user = event ? { name: event.displayName || event.email || '', email: event.email || '', verified: !!event.emailVerified } : null;
     stopAcc(); stop(); uid = null;
     status.requested = false; status.reqs = []; status.grants = []; status.access = 'invitado';
-    store.switchAccount(event?.uid || null, !!event && event.email === OWNER && event.emailVerified);
+    store.switchAccount(event?.uid || null, !!event && event.email === OWNER_EMAIL && event.emailVerified);
     if (event) { uid = event.uid; resolveAccess(event); }
     else { uid = null; stop(); status.requested = false; status.reqs = []; status.grants = []; setAccess('invitado'); status.state = 'sin sesión'; emit(); }
     const epoch = accessEpoch;
@@ -97,12 +97,12 @@ let accUnsubs: Unsubscribe[] = [];
 let accessEpoch = 0;
 const canSync = () => !!uid && (status.access === 'propietario' || status.access === 'aprobado');
 function stopAcc() { accessEpoch++; accUnsubs.forEach(callback => { try { callback(); } catch {} }); accUnsubs = []; }
-function setAccess(entry: AccessLevel) { status.access = entry; rememberAccess(entry); }
+function setAccess(entry: AccessLevel) { status.access = entry; rememberAccessForAccount(store.accountId(), entry); }
 function accErr(error: unknown) { status.accessErr = String(errorFields(error).code || error); emit(); }
 function resolveAccess(url: User) {
   const mine = url.uid, epoch = accessEpoch, vivo = () => uid === mine && epoch === accessEpoch;
   status.accessErr = '';
-  if (url.email === OWNER && url.emailVerified) {
+  if (url.email === OWNER_EMAIL && url.emailVerified) {
     setAccess('propietario'); status.state = 'sincronizando…'; emit(); start();
     const lista = (campo: 'reqs' | 'grants', ord: (accessRequest: AccessRequest, accessRequestItem: AccessRequest) => number) => (snap: QuerySnapshot) => { if (!vivo()) return; const accessRequest: AccessRequest[] = []; snap.forEach(data => accessRequest.push({ uid: data.id, ...(data.data() as Omit<AccessRequest, 'uid'>) })); accessRequest.sort(ord); status[campo] = accessRequest; emit(); };
     accUnsubs.push(onSnapshot(collection(db, 'requests'), lista('reqs', (accessRequest, accessRequestItem) => (accessRequestItem.ts || 0) - (accessRequest.ts || 0)), accErr));
