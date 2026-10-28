@@ -15,7 +15,7 @@ function QuestionPrompt({ snapshot, prompt, sourceLabel, responseLocked }: { sna
   return <>
     <div className="meta"><span className="tag">{prompt.topicId} · {prompt.topicName}</span><span className={`tag o${prompt.origin}`}>{ORIGEN[prompt.origin]}{sourceLabel}</span>{prompt.provisional && <span className="tag warn">Respuesta provisional</span>}{prompt.mayExpire && <span className="tag warn">Puede caducar</span>}{prompt.variant && <span className="tag">Variante</span>}</div>
     {prompt.notice && <StudyMarkup html={prompt.notice} />}
-    {prompt.hasAssumption && <details className="sup scenario-context"><summary>Enunciado del supuesto</summary><div className="pre">{prompt.assumptionText}</div></details>}
+    {prompt.hasAssumption && <details className="sup scenario-context"><summary>Enunciado del supuesto</summary><div className="pre"><StudyMarkup html={richHtml(prompt.assumptionText)} /></div></details>}
     {prompt.context && <div className="ctx pre"><StudyMarkup html={richHtml(prompt.context)} /></div>}
     {asksForNegativeOption(prompt.statement) && <div className="pide">Ojo: te piden la opción INCORRECTA o la excepción</div>}
     <div className="enun pre" tabIndex={0} aria-label="Enunciado. Usa Mayús y las flechas para seleccionar texto"><StudyMarkup html={richHtml(prompt.statement, snapshot.readingMode === 1)} /></div>

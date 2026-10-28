@@ -39,11 +39,15 @@ export function createCardsController(dependencies: CardsControllerDependencies)
     ids: session.items.map(card => card.id), index: session.index, revealed: session.revealed, results: [...session.results],
   });
   const services: CardsServices = {
-    loadPlan: async (preferences: CardPreferences): Promise<CardsPlan> => {
+    seenTopics: dependencies.getSeen,
+    loadPlan: async (preferences: CardPreferences, topicIds?: readonly string[]): Promise<CardsPlan> => {
       const account = dependencies.accountId();
-      const cards = await dependencies.loadAllCards();
+      const loadedCards = await dependencies.loadAllCards();
       if (account !== dependencies.accountId()) throw new Error('La cuenta cambió mientras se cargaban las tarjetas.');
-      const records = dependencies.getCards(), timestamp = dependencies.now(), seen = new Set(dependencies.getSeen());
+      const seenTopics = new Set(dependencies.getSeen());
+      const allowedTopics = topicIds ? new Set(topicIds.filter(topicId => seenTopics.has(topicId))) : null;
+      const cards = allowedTopics ? loadedCards.filter(card => allowedTopics.has(card.t)) : loadedCards;
+      const records = dependencies.getCards(), timestamp = dependencies.now(), seen = seenTopics;
       const ids = selectLegacyCards(cards, records, {
         n: preferences.count, now: timestamp, maxNew: 10,
         seen: preferences.scope === 'vistos' && seen.size ? seen : null,

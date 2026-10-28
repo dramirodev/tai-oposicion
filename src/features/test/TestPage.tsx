@@ -15,6 +15,11 @@ export function TestPage() {
   const [searchParams] = useSearchParams();
   const newTopicRecommendation = searchParams.get('recommendation') === 'new-topic';
   const suggestedTopicId = searchParams.get('topic');
+  const trainingTopicsValue = searchParams.get('trainingTopics');
+  const trainingTopicIds = useMemo(() => trainingTopicsValue === null ? undefined
+    : [...new Set(trainingTopicsValue.split(',').filter(topicId => /^T[1-4]\.\d{2}$/.test(topicId)
+      && test.seenTopics().includes(topicId)))], [trainingTopicsValue, test]);
+  const trainingTopicSet = useMemo(() => trainingTopicIds ? new Set(trainingTopicIds) : null, [trainingTopicIds]);
   const [configuration, setConfiguration] = useState(() => test.getConfiguration());
   const [topics, setTopics] = useState<readonly TestTopic[]>([]);
   const [query, setQuery] = useState('');
@@ -27,16 +32,25 @@ export function TestPage() {
     let active = true;
     void test.loadTopics().then(value => {
       if (!active) return;
-      setTopics(value); setLoading(false);
+      const eligibleTopics = trainingTopicIds ? value.filter(topic => trainingTopicSet?.has(topic.id)) : value;
+      setTopics(eligibleTopics); setLoading(false);
       if (suggestedTopicId) {
-        const suggestedTopic = value.find(topic => topic.id === suggestedTopicId && topic.answerCount > 0);
+        const suggestedTopic = eligibleTopics.find(topic => topic.id === suggestedTopicId && (trainingTopicIds || topic.answerCount > 0));
         if (!suggestedTopic) {
-          setRecommendationMessage('El tema recomendado ya no tiene respuestas registradas. Elige un tema manualmente para continuar.');
+          setRecommendationMessage(trainingTopicIds
+            ? 'El tema recomendado no está entre tus temas vistos. Elige uno de los materiales que ya has marcado.'
+            : 'El tema recomendado ya no tiene respuestas registradas. Elige un tema manualmente para continuar.');
           return;
         }
         const next = updateTestConfiguration(test.getConfiguration(), { all: false, selected: [suggestedTopic.id], mode: 'aleatorio' });
         test.saveConfiguration(next); setConfiguration(next);
         setRecommendationMessage(`Tema para reforzar: ${suggestedTopic.id} · ${suggestedTopic.name}. Puedes cambiar la selección antes de empezar.`);
+        return;
+      }
+      if (trainingTopicIds) {
+        const next = updateTestConfiguration(test.getConfiguration(), { all: false, selected: trainingTopicIds });
+        test.saveConfiguration(next); setConfiguration(next);
+        setRecommendationMessage('Entrenamiento de hoy: solo se mostrarán materiales de los temas que has marcado como vistos.');
         return;
       }
       if (!newTopicRecommendation) return;
@@ -51,7 +65,7 @@ export function TestPage() {
       setRecommendationMessage(`Tema nuevo recomendado: ${nextTopic.id} · ${nextTopic.name}. Puedes cambiar la selección antes de empezar.`);
     }).catch(() => { if (active) { setMessage('No se pudieron cargar los temas. Comprueba la conexión e inténtalo de nuevo.'); setLoading(false); } });
     return () => { active = false; };
-  }, [test, newTopicRecommendation, suggestedTopicId]);
+  }, [test, newTopicRecommendation, suggestedTopicId, trainingTopicIds, trainingTopicSet]);
 
   const visibleTopics = useMemo(() => topicsForTest(topics, query), [topics, query]);
   const update = (change: Partial<TestConfiguration>) => {
@@ -65,7 +79,10 @@ export function TestPage() {
   const start = async () => {
     setStarting(true); setMessage('');
     try {
-      const result = await test.start(configuration);
+      const startConfiguration = trainingTopicIds
+        ? { ...configuration, all: false, selected: configuration.selected.filter(topicId => trainingTopicSet?.has(topicId)) }
+        : configuration;
+      const result = await test.start(startConfiguration);
       if (result === 'empty') setMessage(configuration.mode === 'falladas' ? 'No tienes preguntas falladas en esa selección.' : configuration.mode === 'dudosas' ? 'No tienes preguntas dudosas en esa selección.' : configuration.mode === 'trampas' ? 'Aún no hay datos de trampas: contesta al menos 5 preguntas de alguna trampa y falla alguna.' : 'No hay preguntas disponibles con ese filtro.');
       if (result === 'account-changed') setMessage('La cuenta cambió mientras se preparaba el test. Vuelve a intentarlo.');
     } catch { setMessage('No se pudo preparar el test. Comprueba la conexión e inténtalo de nuevo.'); }
@@ -101,8 +118,9 @@ export function TestPage() {
     </section>
     <section className="card" aria-label="Selección de temas">
       <h2 className="h3">Temas <small>({configuration.all ? 'Todo el temario' : `${selected.size} elegidos`})</small></h2>
+      {trainingTopicIds && <p className="note">El entrenamiento diario se limita a los temas que ya has marcado como vistos.</p>}
       <div className="seg" role="group" aria-label="Alcance de temas">
-        <button className={configuration.all ? 'on' : ''} aria-pressed={configuration.all} onClick={() => update({ all: true, selected: [] })}>Todo el temario</button>
+        {!trainingTopicIds && <button className={configuration.all ? 'on' : ''} aria-pressed={configuration.all} onClick={() => update({ all: true, selected: [] })}>Todo el temario</button>}
         <button className={!configuration.all ? 'on' : ''} aria-pressed={!configuration.all} onClick={() => update({ all: false })}>Elegir temas</button>
       </div>
       <label className="field" htmlFor="test-search">Buscar tema</label>

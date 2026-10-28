@@ -33,13 +33,17 @@ export function HomePage() {
     const step = started.activities[started.currentIndex];
     if (!step) return;
     const route: Record<TrainingActivity, string> = { activeRecall: 'cards', topicTest: 'test', failures: 'falladas', spacedReviews: 'cards' };
-    if (step.activity === 'spacedReviews' && !overview.cardsDue) runAction('training-review', services.startReview);
+    if (step.activity === 'spacedReviews' && !(overview.trainingDue?.cards ?? overview.cardsDue)) runAction('training-review', () => services.startReview(step.topicIds));
     else {
       const opensReadingList = step.activity === 'topicTest' && !!step.reviewMode && step.reviewMode !== 'active-retrieval';
       const destination = opensReadingList ? 'temario' : route[step.activity];
-      const query = step.activity !== 'topicTest' ? ''
-        : step.topicId ? `?topic=${encodeURIComponent(step.topicId)}`
-          : step.reason === 'new-topic-day' ? '?recommendation=new-topic' : '';
+      const queryParams = new URLSearchParams();
+      if (step.activity === 'topicTest') {
+        if (step.topicId) queryParams.set('topic', step.topicId);
+        else if (step.reason === 'new-topic-day') queryParams.set('recommendation', 'new-topic');
+      }
+      if (step.topicIds?.length) queryParams.set('trainingTopics', step.topicIds.join(','));
+      const query = queryParams.size ? `?${queryParams.toString()}` : '';
       void navigate('/' + destination + query);
     }
   };
@@ -58,7 +62,7 @@ export function HomePage() {
     pending={pending}
     onNavigate={route => { void navigate('/' + route); }}
     onQuickSession={() => void runAction('quick', services.quickSession)}
-    onStartReview={() => void runAction('rev', services.startReview)}
+    onStartReview={topicIds => void runAction('rev', () => services.startReview(topicIds))}
     onStartTraining={startTraining}
     onCompleteTrainingActivity={completeTrainingActivity}
     onSetTrainingReviewMode={(topicId, mode) => services.setTrainingReviewMode(topicId, mode)}

@@ -10,7 +10,7 @@ interface StudySessionLaunchDependencies {
   currentAccount(): string | null;
   fullAccess(): boolean;
   quickSelection(fullAccess: boolean): Promise<StudySelection>;
-  reviewSelection(): Promise<StudySelection>;
+  reviewSelection(topicIds?: readonly string[]): Promise<StudySelection>;
   startRun(configuration: RunCfg): boolean;
   showEmptyQuickSelection(fullAccess: boolean): void;
   showEmptyReviewSelection(): void;
@@ -30,9 +30,9 @@ export function createStudySessionLaunchController(dependencies: StudySessionLau
     dependencies.startRun({ kind: 'rev', feedback: true, items: selection.items, titulo: selection.titulo });
   }
 
-  async function startDueReview(): Promise<void> {
+  async function startDueReview(topicIds?: readonly string[]): Promise<void> {
     const account = dependencies.currentAccount();
-    const selection = await dependencies.reviewSelection();
+    const selection = await dependencies.reviewSelection(topicIds);
     if (account !== dependencies.currentAccount()) return;
     if (!selection.items.length) {
       dependencies.showEmptyReviewSelection();

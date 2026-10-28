@@ -138,4 +138,38 @@ describe('planificación diaria de estudio', () => {
     });
     expect(plan.activities).toEqual([{ activity: 'spacedReviews', minutes: 60, reason: 'due-reviews' }]);
   });
+
+  it('limita cada actividad diaria a los temas marcados y nunca recomienda temas no estudiados', () => {
+    const plan = buildDailyTrainingPlan({
+      preferences: DEFAULT_TRAINING_PREFERENCES,
+      weekday: 4,
+      dueCount: 3,
+      cardDueCount: 2,
+      failureCount: 4,
+      weakTopicCount: 2,
+      weakTopicIds: ['T3.02', 'T1.01'],
+      studiedTopicIds: ['T1.01'],
+      topicReviewEvidence: [
+        { topicId:'T1.01', topicName:'Organización', hasStudyMarker:true, distinctQuestionsAttempted:3, questionCoverageOfTarget:20, latestAnswerAccuracy:50, daysSinceLastQuestionAttempt:2 },
+        { topicId:'T3.02', topicName:'Tribunal', hasStudyMarker:false, distinctQuestionsAttempted:8, questionCoverageOfTarget:50, latestAnswerAccuracy:20, daysSinceLastQuestionAttempt:1 },
+      ],
+    });
+    expect(plan.activities.map(item => item.activity)).toEqual(['activeRecall', 'topicTest', 'failures', 'spacedReviews']);
+    expect(plan.activities.every(item => item.topicIds?.length && item.topicIds.every(topicId => topicId === 'T1.01'))).toBe(true);
+    expect(plan.activities.find(item => item.activity === 'topicTest')).toMatchObject({ reason:'weak-topics', topicId:'T1.01' });
+  });
+
+  it('no crea actividades cuando aún no hay temas marcados como vistos', () => {
+    const plan = buildDailyTrainingPlan({
+      preferences: DEFAULT_TRAINING_PREFERENCES,
+      weekday: 4,
+      dueCount: 20,
+      cardDueCount: 10,
+      failureCount: 8,
+      weakTopicCount: 4,
+      weakTopicIds: ['T3.02'],
+      studiedTopicIds: [],
+    });
+    expect(plan).toMatchObject({ restDay:false, activities:[] });
+  });
 });

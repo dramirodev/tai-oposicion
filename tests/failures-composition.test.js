@@ -14,6 +14,7 @@ function setup(overrides = {}) {
     loadQuestionIndex: vi.fn(async () => ({ temas: [{ id: 'T1.01', nombre: 'Tema 1' }] })),
     loadQuestionsById: vi.fn(async () => [question('old'), question('new')]),
     failedQuestionIds: vi.fn(() => ['old', 'new']),
+    seenTopics: vi.fn(() => ['T1.01']),
     setReviewed: vi.fn(),
     topicName: vi.fn(id => `Tema ${id}`),
     sourceFallbacks: {},

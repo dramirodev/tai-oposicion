@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Check, CircleHelp, Trash2, TriangleAlert, X } from 'lucide-react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate, useSearchParams } from 'react-router';
 import { ERROR_REPORT_REASONS } from '../../shared/presentation/study-labels.js';
 import { questionNotice, sourceHtml } from '../../shared/presentation/study-content.js';
 import { richHtml } from '../../shared/presentation/study-text.js';
@@ -103,12 +103,12 @@ function ActiveCardSession({ services, session, card, answerRef, headingRef, onE
       onKeyDown={event => { if (!session.revealed && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); show(); } }}>
       <div className="meta"><span className="tag">{card.t} · {services.topicName(card.t)}</span>{card.tipo && <span className="tag">{card.tipo}</span>}{card.caduca && <span className="tag warn">Puede caducar</span>}</div>
       <Notice card={card} />
-      {card.supTexto && <details className="sup"><summary>Enunciado del supuesto</summary><div className="pre">{card.supTexto}</div></details>}
+      {card.supTexto && <details className="sup"><summary>Enunciado del supuesto</summary><div className="pre"><StudyMarkup html={richHtml(card.supTexto)} /></div></details>}
       {card.cp && <div className="ctx pre"><StudyMarkup html={richHtml(card.cp)} /></div>}
       <div className="enun pre"><StudyMarkup html={richHtml(card.q)} /></div>
       {session.revealed ? <div ref={answerRef} className="card-answer" role="region" aria-label="Respuesta de la tarjeta" tabIndex={-1}><small>Respuesta</small><div className="pre"><StudyMarkup html={richHtml(card.a)} /></div>
-        {card.nota && <div className="cita"><span>Nota</span>{card.nota}</div>}
-        {card.ref && <div className="cita"><span>Temario</span>{card.ref}</div>}
+        {card.nota && <div className="cita"><span>Nota</span><StudyMarkup html={richHtml(card.nota)} /></div>}
+        {card.ref && <div className="cita"><span>Temario</span><StudyMarkup html={richHtml(card.ref)} /></div>}
         {source && <StudyMarkup html={source} />}
         <div className="repw" id="crep"><CardReport card={card} services={services} /></div>
         {card.src === 'fallo' && <button className="ghost fl" id="quit" onClick={event => { event.stopPropagation(); services.removeFailureCard(); refresh(value => value + 1); }}><Trash2 size="1em" aria-hidden="true" /> Quitar esta tarjeta</button>}
@@ -181,8 +181,15 @@ function getNextDueDate(services: CardsServices): Date | null {
 
 export function CardsPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const trainingTopicsValue = searchParams.get('trainingTopics');
   const home = useStudyService('home');
   const cards = useStudyService('cards');
+  const seenTopicIds = useMemo(() => new Set(cards.seenTopics()), [cards]);
+  const trainingTopicIds = useMemo(() => trainingTopicsValue === null ? undefined
+    : [...new Set(trainingTopicsValue.split(',').filter(topicId => /^T[1-4]\.\d{2}$/.test(topicId)
+      && seenTopicIds.has(topicId)))], [seenTopicIds, trainingTopicsValue]);
+  const trainingTopicSet = useMemo(() => trainingTopicIds ? new Set(trainingTopicIds) : null, [trainingTopicIds]);
   const initialPreferences = useMemo(() => cards.getPreferences(), [cards]);
   const [preferences, setPreferences] = useState<CardPreferences>(initialPreferences);
   const [plan, setPlan] = useState<CardsPlan | null>(null);
@@ -191,14 +198,15 @@ export function CardsPage() {
   const [planGeneration, setPlanGeneration] = useState(0);
   const [, refreshSession] = useState(0);
   const session = cards.getSession();
-  const requestKey = `${preferences.scope}:${preferences.count}:${planGeneration}`;
+  const requestKey = `${preferences.scope}:${preferences.count}:${trainingTopicIds?.join(',') ?? '*'}:${planGeneration}`;
 
   useEffect(() => {
     let active = true;
-    void cards.loadPlan(preferences).then(value => { if (active) { setPlan(value); setPlanKey(requestKey); setErrorKey(''); } }).catch(() => { if (active) setErrorKey(requestKey); });
+    void cards.loadPlan(preferences, trainingTopicIds).then(value => { if (active) { setPlan(value); setPlanKey(requestKey); setErrorKey(''); } }).catch(() => { if (active) setErrorKey(requestKey); });
     return () => { active = false; };
-  }, [cards, preferences, requestKey]);
+  }, [cards, preferences, requestKey, trainingTopicIds]);
 
+  if (session && trainingTopicSet && !session.items.every(card => trainingTopicSet.has(card.t))) return <div className="card" role="status"><h1>Hay una sesión de tarjetas anterior</h1><p>Se conserva para que puedas terminarla sin perder el progreso. Este entrenamiento solo usará tarjetas de los temas vistos.</p><div className="bar2"><Link className="btn" to="/cards">Continuar sesión anterior</Link><button className="btn sec" onClick={() => void navigate('/home')}>Volver al inicio</button></div></div>;
   if (session) return <CardSession services={cards} onExit={() => { cards.clearSession(); void navigate('/home'); }} onComplete={() => { cards.clearSession(); refreshSession(value => value + 1); setPlanGeneration(value => value + 1); }} />;
   if (errorKey === requestKey) return <div className="card" role="alert"><h1>No se pudo cargar</h1><p>{navigator.onLine === false ? 'Las tarjetas que aún no están guardadas en este dispositivo necesitan conexión.' : 'No se pudieron cargar las tarjetas. Inténtalo de nuevo.'}</p><button className="btn" onClick={() => setPlanGeneration(value => value + 1)}>Reintentar</button></div>;
   if (!plan || planKey !== requestKey) return <PageLoading variant="legacy" />;
@@ -212,8 +220,9 @@ export function CardsPage() {
     <h1>Tarjetas de repaso <Link className="help-icon-link" to="/ayuda?tema=repaso" aria-label="Ayuda sobre el repaso"><CircleHelp size="1em" strokeWidth={1.8} aria-hidden="true" focusable="false" /></Link></h1>
     <div className="sub">Primero intenta recordar la respuesta; después pulsa para verla y valora cómo te fue.</div>
     <div className="grid"><div className="stat"><b>{plan.summary.hoy}</b><span>vencen hoy</span></div><div className="stat"><b>{plan.summary.nuevas}</b><span>nuevas</span></div><div className="stat"><b>{plan.summary.enRepaso}</b><span>en repaso</span></div><div className="stat"><b>{plan.summary.dominadas}</b><span>dominadas</span></div></div>
+    {trainingTopicIds && <p className="note">Entrenamiento de hoy: tarjetas limitadas a los temas que has marcado como vistos.</p>}
     {plan.cards.length ? <><div className="card"><h2 className="h3">Tarjetas por sesión</h2><div className="seg" id="cn">{([10, 20, 30] as const).map(value => <button key={value} className={preferences.count === value ? 'on' : ''} aria-pressed={preferences.count === value} data-v={value} onClick={() => changePreferences({ ...preferences, count: value })}>{value}</button>)}</div>
-      <h2 className="h3">Tarjetas nuevas de</h2><div className="seg" id="cs">{([['vistos', 'Mis temas vistos'], ['todos', 'Todos los temas']] as const).map(([value, label]) => <button key={value} className={preferences.scope === value ? 'on' : ''} aria-pressed={preferences.scope === value} data-v={value} onClick={() => changePreferences({ ...preferences, scope: value })}>{label}</button>)}</div>
+      {!trainingTopicIds && <><h2 className="h3">Tarjetas nuevas de</h2><div className="seg" id="cs">{([['vistos', 'Mis temas vistos'], ['todos', 'Todos los temas']] as const).map(([value, label]) => <button key={value} className={preferences.scope === value ? 'on' : ''} aria-pressed={preferences.scope === value} data-v={value} onClick={() => changePreferences({ ...preferences, scope: value })}>{label}</button>)}</div></>}
       <p className="sm"><small>Las vencidas salen primero, mezcladas por tema. Como máximo 10 nuevas por sesión.</small></p></div>
       <div className="bar2 action-plan"><p className="sm" id="card-plan" role="status">{plan.ids.length} {plan.ids.length === 1 ? 'tarjeta' : 'tarjetas'}: {plan.reviews} de repaso y {plan.ids.length - plan.reviews} nuevas.</p><button className="btn" id="go" disabled={!plan.ids.length} onClick={begin}>Empezar</button></div></> : <div className="note">Aún no tienes tarjetas. Al fallar una pregunta en un test pulsa <b>«Hacer tarjeta»</b> (si el motivo no es un despiste) y aparecerá aquí.</div>}
   </>;

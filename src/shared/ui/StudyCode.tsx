@@ -26,10 +26,14 @@ function loadLanguage(highlighter: HighlighterCore, language: string) {
         : language === 'typescript' ? import('@shikijs/langs/typescript')
           : language === 'python' ? import('@shikijs/langs/python')
             : language === 'java' ? import('@shikijs/langs/java')
-              : language === 'c' ? import('@shikijs/langs/c')
-                : language === 'html' ? import('@shikijs/langs/html')
-                  : language === 'css' ? import('@shikijs/langs/css')
-                    : import('@shikijs/langs/bash');
+              : language === 'csharp' ? import('@shikijs/langs/csharp')
+                : language === 'cpp' ? import('@shikijs/langs/cpp')
+                  : language === 'php' ? import('@shikijs/langs/php')
+                    : language === 'xml' ? import('@shikijs/langs/xml')
+                      : language === 'c' ? import('@shikijs/langs/c')
+                        : language === 'html' ? import('@shikijs/langs/html')
+                          : language === 'css' ? import('@shikijs/langs/css')
+                            : import('@shikijs/langs/bash');
     load = highlighter.loadLanguage(module);
     languagePromises.set(language, load);
   }
@@ -70,6 +74,7 @@ async function highlightedContent(code: string): Promise<ReactNode | null> {
 
 export function StudyCode({ code, className, block = false }: { code: string; className?: string; block?: boolean }) {
   const [highlighted, setHighlighted] = useState<ReactNode | null>(null);
+  const language = inferCodeLanguage(code);
 
   useEffect(() => {
     let active = true;
@@ -82,7 +87,7 @@ export function StudyCode({ code, className, block = false }: { code: string; cl
   }, [code]);
 
   const classes = new Set([...(className?.split(/\s+/).filter(Boolean) ?? []), ...(block ? ['blk'] : []), ...(highlighted !== null ? ['shiki'] : [])]);
-  return <code className={[...classes].join(' ')}>
+  return <code className={[...classes].join(' ')} data-shiki-language={language}>
     {highlighted ?? code}
   </code>;
 }

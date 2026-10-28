@@ -13,6 +13,7 @@ export interface FailuresCompositionDependencies {
   loadQuestionIndex(): Promise<TopicIndex>;
   loadQuestionsById(ids: string[]): Promise<QuestionRecord[]>;
   failedQuestionIds(): string[];
+  seenTopics(): readonly string[];
   setReviewed(id: string, topicId: string, reviewed: boolean): void;
   topicName(id: string): string;
   sourceFallbacks: QuestionSourceFallbacks;
@@ -54,6 +55,7 @@ export function createFailuresComposition(dependencies: FailuresCompositionDepen
       const index = await dependencies.loadQuestionIndex();
       return index.temas.map(topic => ({ id: topic.id, name: topic.nombre }));
     },
+    seenTopics: dependencies.seenTopics,
     setReviewed: dependencies.setReviewed,
     topicName: dependencies.topicName,
     startPractice(ids, title) {

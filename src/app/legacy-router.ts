@@ -290,6 +290,7 @@ const failuresServices = createFailuresComposition({
   loadQuestionIndex: getIndex,
   loadQuestionsById: ids => studyQuestionCatalog.getQuestions(ids),
   failedQuestionIds: falladasIds,
+  seenTopics: store.getSeen,
   setReviewed: (id, topicId, reviewed) => store.setReviewed(id, topicId, reviewed),
   topicName: studyQuestionCatalog.getTopicName,
   sourceFallbacks: VERIFIED_SOURCES,
@@ -558,18 +559,32 @@ export const studyServices: StudyServices = {
       await recover(); const account = localStudyProgressGateway.accountId(); const index = await getIndex(); await getMeta();
       const progress = await getHomeProgressSummary(localProgressRepository);
       if (account !== localStudyProgressGateway.accountId()) throw new Error('La cuenta cambió mientras se cargaba el resumen de inicio.');
-      const due = (await dueQuestionIds()).length;
-      const cardDueCount = Object.values(store.getCards()).filter(record => record[3] >= 0 && record[4] <= studyQuestionCatalog.now()).length;
-      const failureCount = falladasIds().length;
+      const dueIds = await dueQuestionIds();
+      const due = dueIds.length;
+      const cardReviews = store.getCards();
+      const cardDueCount = Object.values(cardReviews).filter(record => record[3] >= 0 && record[4] <= studyQuestionCatalog.now()).length;
+      const failureIds = falladasIds();
+      const failureCount = failureIds.length;
       const streak = calculateStudyStreak(progress.answerTimestamps, Date.now());
       const exam = store.getCfg().exam;
       const daysToExam = exam ? Math.max(0, Math.ceil((+new Date(exam + 'T09:00:00') - Date.now()) / 86400000)) : null;
       const mastery = await dominioTemas(index);
       const trainingPreferences = normalizeTrainingPreferences(store.getCfg().training);
+      const studiedTopicSet = new Set(store.getSeen());
+      const studiedTopicIds = [...studiedTopicSet];
       const weakTopics = mastery.filter(topic => topic.est === 'r').sort((left, right) => left.score - right.score);
-      const studiedTopicIds = new Set(store.getSeen());
-      const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date().getDay(), dueCount: due, cardDueCount, failureCount, weakTopicCount: weakTopics.length, weakTopicIds: weakTopics.map(topic => topic.id),
-        topicReviewEvidence: mastery.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: studiedTopicIds.has(topic.id), distinctQuestionsAttempted: topic.seen, questionCoverageOfTarget: topic.cob, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias })) });
+      const studiedDueCount = dueIds.filter(id => studiedTopicSet.has(studyQuestionCatalog.getTopicForQuestion(id) || '')).length;
+      const studiedFailureCount = failureIds.filter(id => studiedTopicSet.has(studyQuestionCatalog.getTopicForQuestion(id) || '')).length;
+      const topicForCard = (id: string): string | undefined => {
+        const curatedTopic = /^FC-(T[1-4]\.\d{2})-/.exec(id)?.[1];
+        if (curatedTopic) return curatedTopic;
+        return id.startsWith('FC-Q-') ? studyQuestionCatalog.getTopicForQuestion(id.slice('FC-Q-'.length)) || undefined : undefined;
+      };
+      const studiedCardDueCount = Object.entries(cardReviews).filter(([id, record]) => record[3] >= 0
+        && record[4] <= studyQuestionCatalog.now() && studiedTopicSet.has(topicForCard(id) || '')).length;
+      const studiedWeakTopics = weakTopics.filter(topic => studiedTopicSet.has(topic.id));
+      const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date().getDay(), dueCount: studiedDueCount, cardDueCount: studiedCardDueCount, failureCount: studiedFailureCount, weakTopicCount: studiedWeakTopics.length, weakTopicIds: studiedWeakTopics.map(topic => topic.id), studiedTopicIds,
+        topicReviewEvidence: mastery.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: studiedTopicSet.has(topic.id), distinctQuestionsAttempted: topic.seen, questionCoverageOfTarget: topic.cob, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias })) });
       return { seen: progress.seen, total: index.n, answers: progress.answers, streak, daysToExam, due,
         completedSessions: store.getSessions().length,
         blocks: BLOQUES.map(([code, name]) => {
@@ -578,6 +593,7 @@ export const studyServices: StudyServices = {
             assessed: topics.filter(topic => topic.est !== 'n').length };
         }),
         cardsDue: cardDueCount,
+        trainingDue: { questions: studiedDueCount, cards: studiedCardDueCount },
         quickCount: progress.quickCount, slowCount: progress.slowCount, failures: failureCount,
         studiedTopics: store.getSeen().length, topicCount: index.temas.length,
         assessedTopics: mastery.filter(topic => topic.est !== 'n').length,

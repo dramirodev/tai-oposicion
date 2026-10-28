@@ -16,6 +16,7 @@
     "audit:bank": "node scripts/audit-bank.mjs",
     "test:e2e": "playwright test",
     "test:e2e:question-audit": "playwright test --config=playwright.question-audit.config.ts",
+    "test:e2e:code-audit": "playwright test --config=playwright.code-audit.config.ts",
     "test:e2e:ci": "node scripts/e2e-baseline.mjs",
     "measure:attempts": "node scripts/measure-attempt-volume.mjs",
     "check:architecture": "node scripts/check-architecture.mjs",

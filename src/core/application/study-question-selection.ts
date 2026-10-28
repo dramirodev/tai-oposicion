@@ -128,14 +128,18 @@ export function createStudyQuestionSelection(
     return { items, titulo: `Sesión rápida · ${dueCount} repasos + ${items.length - dueCount} nuevas` };
   }
 
-  async function repasoItems(): Promise<StudyQuestionSelection> {
+  async function repasoItems(topicIds?: readonly string[]): Promise<StudyQuestionSelection> {
     await catalog.getMetadata();
     const timestamp = catalog.now();
+    const seenTopics = new Set(progress.getSeenTopics());
+    const allowedTopics = topicIds
+      ? new Set(topicIds.filter(topicId => seenTopics.has(topicId)))
+      : null;
     const candidates: { id: string; topicId: string; dueAt: number }[] = [];
     for (const [id, statistics] of Object.entries(progress.getAllQuestionStats())) {
       const topicId = catalog.getTopicForQuestion(id);
       const dueAt = questionReviewDueAt(statistics);
-      if (dueAt !== undefined && dueAt <= timestamp && topicId) {
+      if (dueAt !== undefined && dueAt <= timestamp && topicId && (!allowedTopics || allowedTopics.has(topicId))) {
         candidates.push({ id, topicId, dueAt });
       }
     }

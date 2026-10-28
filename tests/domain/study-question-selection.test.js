@@ -3,13 +3,13 @@ import { createStudyQuestionSelection } from '../../src/core/application/study-q
 
 describe('study question selection', () => {
   const question = id => ({ i: id, o: 'O', np: 0, v: 0 });
-  function reviewSelection(statistics, now) {
+  function reviewSelection(statistics, now, topicByQuestion = {}, seenTopics = []) {
     const questions = Object.keys(statistics).map(question);
     const progress = {
       getPreferences: () => ({}),
       getAllQuestionStats: () => statistics,
       getQuestionStats: id => statistics[id],
-      getSeenTopics: () => [],
+      getSeenTopics: () => seenTopics,
       accountId: () => null,
       onAccountChange: () => () => {},
       recordAnswer: () => {},
@@ -17,7 +17,7 @@ describe('study question selection', () => {
     };
     const catalog = {
       getTopicQuestions: async () => questions,
-      getTopicForQuestion: id => id === 'without-topic' ? null : 'T1.01',
+      getTopicForQuestion: id => id === 'without-topic' ? null : topicByQuestion[id] || 'T1.01',
       getIndex: async () => ({ n: questions.length, nsup: 0, temas: [] }),
       getMetadata: async () => ({ _by: {} }),
       getMetadataSnapshot: () => ({ _by: {} }),
@@ -46,6 +46,24 @@ describe('study question selection', () => {
     await expect(selection.repasoItems()).resolves.toMatchObject({
       items: [{ i: 'regular' }, { i: 'reviewed' }],
     });
+  });
+
+  it('can restrict a daily due-review selection to explicitly studied topics', async () => {
+    const now = 20 * 86_400_000;
+    const selection = reviewSelection({
+      studied: { intervalStep:0, dueAt:now - 2 },
+      unstudied: { intervalStep:0, dueAt:now - 1 },
+    }, now, { studied:'T1.01', unstudied:'T2.01' }, ['T1.01']);
+    await expect(selection.repasoItems(['T1.01'])).resolves.toMatchObject({ items:[{ i:'studied' }] });
+  });
+
+  it('does not trust a training link for topics that are no longer marked as seen', async () => {
+    const now = 20 * 86_400_000;
+    const selection = reviewSelection({
+      noLongerSeen: { intervalStep:0, dueAt:now - 2 },
+    }, now, { noLongerSeen:'T1.01' }, []);
+
+    await expect(selection.repasoItems(['T1.01'])).resolves.toMatchObject({ items:[] });
   });
 
   it('keeps simulation allocation weighted while excluding reserved and non-scoring questions', async () => {

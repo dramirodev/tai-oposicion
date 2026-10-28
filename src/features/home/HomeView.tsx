@@ -75,29 +75,32 @@ function trainingReason(reason: HomeOverview['trainingPlan']['activities'][numbe
 function TrainingActivityRows({ overview, onNavigate, onStartReview, onSetReviewMode }: {
   overview: HomeOverview;
   onNavigate(route: string): void;
-  onStartReview(): void;
+  onStartReview(topicIds?: readonly string[]): void;
   onSetReviewMode?: (topicId: string, mode: StudyReviewMode | null) => void;
 }) {
+  const trainingDue = overview.trainingDue ?? { questions: overview.due, cards: overview.cardsDue };
   const dueSummary = [
-    overview.cardsDue ? `${overview.cardsDue} ${overview.cardsDue === 1 ? 'tarjeta' : 'tarjetas'}` : '',
-    overview.due ? `${overview.due} ${overview.due === 1 ? 'pregunta' : 'preguntas'}` : '',
+    trainingDue.cards ? `${trainingDue.cards} ${trainingDue.cards === 1 ? 'tarjeta' : 'tarjetas'}` : '',
+    trainingDue.questions ? `${trainingDue.questions} ${trainingDue.questions === 1 ? 'pregunta' : 'preguntas'}` : '',
   ].filter(Boolean).join(' y ');
   return <div className="training-plan-activities">{overview.trainingPlan.activities.map(item => {
     const copy = activityCopy[item.activity];
     const dueSuffix = item.activity === 'spacedReviews' && dueSummary ? ` ${dueSummary} pendientes.` : '';
     const intervention = item.reviewIntervention;
     const opensTopicList = intervention && intervention.mode !== 'active-retrieval';
-    const route = item.activity === 'topicTest'
+    const baseRoute = item.activity === 'topicTest'
       ? item.topicId ? `${opensTopicList ? 'temario' : 'test'}?topic=${encodeURIComponent(item.topicId)}`
         : item.reason === 'new-topic-day' ? 'test?recommendation=new-topic' : copy.route
       : copy.route;
+    const trainingScope = item.topicIds?.length ? `trainingTopics=${encodeURIComponent(item.topicIds.join(','))}` : '';
+    const route = trainingScope ? `${baseRoute}${baseRoute.includes('?') ? '&' : '?'}${trainingScope}` : baseRoute;
     const activityTitle = intervention
       ? `${reviewModeLabel[intervention.mode]} · ${intervention.topicName}`
       : copy.title;
     return <div className="training-plan-item" key={item.activity}>
       <Row id={`training-${item.activity}`} icon={copy.icon} title={activityTitle}
         subtitle={`${item.minutes} min orientativos · ${trainingReason(item.reason)}${dueSuffix}`}
-        onClick={() => item.activity === 'spacedReviews' && !overview.cardsDue ? onStartReview() : onNavigate(route)} />
+        onClick={() => item.activity === 'spacedReviews' && !trainingDue.cards ? onStartReview(item.topicIds) : onNavigate(route)} />
       <details className="training-explanation">
         <summary>¿Por qué me toca repasar esto?</summary>
         {item.reviewIntervention ? <div>
@@ -149,7 +152,7 @@ function TrainingSessionControls({ overview, onStartTraining, onCompleteActivity
 function DailyTraining({ overview, onNavigate, onStartReview, onStartTraining, onCompleteActivity, onSetReviewMode }: {
   overview: HomeOverview;
   onNavigate(route: string): void;
-  onStartReview(): void;
+  onStartReview(topicIds?: readonly string[]): void;
   onStartTraining(): void;
   onCompleteActivity(activity: TrainingActivity): void;
   onSetReviewMode?: (topicId: string, mode: StudyReviewMode | null) => void;
@@ -163,7 +166,9 @@ function DailyTraining({ overview, onNavigate, onStartReview, onStartTraining, o
       : plan.activities.length ? <>
         <div className="training-session-controls"><TrainingSessionControls overview={overview} onStartTraining={onStartTraining} onCompleteActivity={onCompleteActivity} /></div>
         <TrainingActivityRows overview={overview} onNavigate={onNavigate} onStartReview={onStartReview} onSetReviewMode={onSetReviewMode} />
-      </> : <p>No hay contenido pendiente para las modalidades elegidas hoy. El tiempo no se acumula; puedes cambiarlas en Ajustes.</p>}
+      </> : overview.studiedTopics === 0
+        ? <p>Aún no has marcado temas vistos. <Link to="/temario">Marca los temas que ya has estudiado</Link> para que el entrenamiento use solo esos materiales.</p>
+        : <p>No hay contenido pendiente para las modalidades elegidas hoy. El tiempo no se acumula; puedes cambiarlas en Ajustes.</p>}
     <p className="sm">El tiempo es orientativo. Al volver, puedes continuar o confirmar que has terminado el bloque. El avance se conserva en este dispositivo cuando el navegador permite almacenamiento; no se sincroniza entre dispositivos.</p>
   </section>;
 }
@@ -198,7 +203,7 @@ export interface HomeViewProps {
   pending: ReadonlySet<string>;
   onNavigate(route: string): void;
   onQuickSession(): void;
-  onStartReview(): void;
+  onStartReview(topicIds?: readonly string[]): void;
   onStartTraining(): void;
   onCompleteTrainingActivity(activity: TrainingActivity): void;
   onSetTrainingReviewMode?: (topicId: string, mode: StudyReviewMode | null) => void;

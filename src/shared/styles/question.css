@@ -429,6 +429,7 @@ input[type=date] {
   padding: 1rem;
   font-size: var(--fs-b);
   line-height: 1.65;
+  overflow-wrap: anywhere;
 }
 
 .cita span {

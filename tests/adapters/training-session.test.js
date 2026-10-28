@@ -20,6 +20,12 @@ it('conserva el tipo de intervención al recuperar una sesión del día', () => 
   expect(readTrainingSession('owner-a', timestamp)?.activities[0]).toMatchObject({ topicId:'T1.01', reviewMode:'selective-reading' });
 });
 
+it('conserva el alcance de temas vistos dentro del checkpoint diario', () => {
+  const scoped = { ...session, activities:[{ ...session.activities[0], topicIds:['T1.01', 'T2.03'] }] };
+  saveTrainingSession('owner-a', scoped);
+  expect(readTrainingSession('owner-a', timestamp)?.activities[0].topicIds).toEqual(['T1.01', 'T2.03']);
+});
+
 it('recupera checkpoints v1 anteriores que aún no guardaban motivo ni tema', () => {
   const old = { dateKey:'2026-10-28', activities:[{ activity:'activeRecall', minutes:10 }], currentIndex:0, currentStartedAt:timestamp, startedAt:timestamp, completedAt:null };
   localStorage.setItem('tai.training-session.v1.owner-a', JSON.stringify(old));

@@ -1,5 +1,6 @@
 import { escapeHtml } from './format.js';
 import { missingVisualQuestionIds } from './missing-visual-resources.js';
+import { richHtml } from './study-text.js';
 
 interface QuestionSource { url: string; title?: string; page?: number; verified: boolean }
 interface NoticeQuestion { i?: string; id?: string; n?: string; np?: number }
@@ -12,7 +13,7 @@ export function questionNotice(question: NoticeQuestion): string {
     ? '<aside class="question-notice warning" aria-label="Material visual pendiente"><b>Esquema o imagen pendiente</b><p>Esta pregunta cita un recurso visual que no está incluido.</p></aside>'
     : '';
   const contentNotice = !question.n && question.np !== 1 ? ''
-    : `<aside class="question-notice ${question.np === 1 ? 'warning' : ''}" aria-label="Advertencia de la pregunta"><b>${question.np === 1 ? 'Solo estudio · no puntuable' : 'Nota de la pregunta'}</b>${question.n ? `<p>${escapeHtml(question.n)}</p>` : '<p>Se conserva para estudiar; está excluida de los simulacros puntuables.</p>'}</aside>`;
+    : `<aside class="question-notice ${question.np === 1 ? 'warning' : ''}" aria-label="Advertencia de la pregunta"><b>${question.np === 1 ? 'Solo estudio · no puntuable' : 'Nota de la pregunta'}</b>${question.n ? `<p>${richHtml(question.n)}</p>` : '<p>Se conserva para estudiar; está excluida de los simulacros puntuables.</p>'}</aside>`;
   return visualNotice + contentNotice;
 }
 

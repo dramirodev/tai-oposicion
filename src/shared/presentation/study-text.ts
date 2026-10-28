@@ -76,14 +76,17 @@ const CODE_RES = [
   /(?<![\p{L}\d_$])[A-Za-z_$][\w$.]*=[&*]?[\w$.'"]+/gu,                                          // a=b, A.a=B.b
   /(?<![\p{L}\d_$])(?:int|float|char|double|long|short|void|boolean|String)(?:\[\])*\s*\*{0,2}\s*[A-Za-z_]\w*(?:\s*,\s*\*{0,2}[A-Za-z_]\w*)*\s*(?:=\s*new\s+\w+\[[^\]]*\])?;/gu, // int *a,b;  float[] x = new float[12];
   /(?<![\p{L}\d_$])[a-z][a-z0-9]*(?:_[a-z0-9]+)+(?![\p{L}\d_$])/gu,                        // snake_case
-  /(?<![\p{L}\d_$])(?!(?:macOS|iOS|iPadOS|iPhone|iPad|iCloud|iMac|tvOS|watchOS|visionOS|openSUSE|eDNI|eIDAS|iTunes|eBay|iOS)\b)[a-z]{2,}(?:[A-Z][a-z0-9]*)+(?![\p{L}\d_$])/gu, // camelCase
+  /(?<![\p{L}\d_$])(?!(?:macOS|iOS|iPadOS|iPhone|iPad|iCloud|iMac|tvOS|watchOS|visionOS|openSUSE|eDNI|eIDAS|iTunes|eBay|iOS)\b)[a-z]{2,}(?:[A-Z][a-z0-9]+)+(?![\p{L}\d_$])/gu, // camelCase
+  /(?:\bxmlns:[\w.-]+\s*=\s*["'][^"']+["']|(?<![\w.-])(?:xs|xsd):[A-Za-z_][\w.-]*)/g, // nombres de espacio y elementos XML Schema
   /(?<![\p{L}\d_$])[a-z]\s+(?:XNOR|NAND|XOR|NOR|AND|OR)\s+[a-z]\s*=\s*\d(?![\p{L}\d_$])/gu,        // a XOR b = 1
-  /@[A-Za-z_$][\w$]*(?:\s*\([^()]*\))?/g,                                                   // anotaciones Java
+  /(?<![\p{L}\d_$])@(?:[A-Z][\w$]*|interface\b)(?:\s*\([^()]*\))?/gu,                      // anotaciones Java (no marcas como Cl@ve/@firma)
   /[A-Za-z_$\d][\w$]*\s*\^\s*[A-Za-z_$\d][\w$]*/g,                                     // expresiones con XOR/caret
 ];
 const noEsLlamada = /^(?:\d|[A-Z]{1,2}$)/;
 function rangosCodigo(text: string): Span[] {
   const ranges: Span[] = [];
+  const urlRanges: Span[] = [...text.matchAll(/\bhttps?:\/\/[^\s<>"']+/giu)].map(url => [url.index!, url.index! + url[0].length]);
+  const intersectsUrl = (start: number, end: number) => urlRanges.some(([urlStart, urlEnd]) => start < urlEnd && end > urlStart);
   // sentencias SQL completas: desde la palabra inicial hasta «;», o hasta el final de la frase, o el final del texto
   SQL_START.lastIndex = 0; let match: RegExpExecArray | null;
   while ((match = SQL_START.exec(text))) {
@@ -92,7 +95,7 @@ function rangosCodigo(text: string): Span[] {
     const sentenceBoundary = /\.\s+(?=[¿¡A-ZÁÉÍÓÚÑ])|[?!]\s|\?$/g; sentenceBoundary.lastIndex = statementStart; const boundaryMatch = sentenceBoundary.exec(text);
     if (boundaryMatch && boundaryMatch.index < statementEnd) statementEnd = boundaryMatch.index;
     let trimmedStatementEnd = statementEnd; while (trimmedStatementEnd > statementStart && /[\s.]/.test(text[trimmedStatementEnd - 1])) trimmedStatementEnd--;
-    if (trimmedStatementEnd > statementStart + 6 && sqlCompleta(text.slice(statementStart, trimmedStatementEnd))) { ranges.push([statementStart, trimmedStatementEnd]); SQL_START.lastIndex = Math.max(trimmedStatementEnd, statementStart + 1); }
+    if (trimmedStatementEnd > statementStart + 6 && !intersectsUrl(statementStart, trimmedStatementEnd) && sqlCompleta(text.slice(statementStart, trimmedStatementEnd))) { ranges.push([statementStart, trimmedStatementEnd]); SQL_START.lastIndex = Math.max(trimmedStatementEnd, statementStart + 1); }
   }
   for (const re of CODE_RES) {
     re.lastIndex = 0;
@@ -104,7 +107,7 @@ function rangosCodigo(text: string): Span[] {
       if (re === CODE_RES[7] && /^C\+\+/.test(match[0])) continue;
       // no marcar paréntesis finales de frase: «cuando (a)» no es una llamada, pero sí «f(a)»
       while (matchEnd > matchStart && /[.,;:]$/.test(text.slice(matchStart, matchEnd)) && !/[)}\]]$/.test(text.slice(matchStart, matchEnd - 1))) matchEnd--;
-      if (matchEnd > matchStart) ranges.push([matchStart, matchEnd]);
+      if (matchEnd > matchStart && !intersectsUrl(matchStart, matchEnd)) ranges.push([matchStart, matchEnd]);
     }
   }
   // bloques de código con llaves: no convertir llaves de conjuntos matemáticos en una sentencia
@@ -117,7 +120,7 @@ function rangosCodigo(text: string): Span[] {
     const codeStart = /\b(?:function|public|private|protected|static|class|interface|void|int|for|while|if|switch|try|def|echo|print)\b|[A-Za-z_$][\w$]*\(/.exec(text.slice(statementStart, openBraceIndex));
     if (codeStart) ranges.push([statementStart + codeStart.index, closeBraceIndex + 1]);
   }
-  while ((match = SQL_WORDS.exec(text))) ranges.push([match.index, match.index + match[0].length]);
+  while ((match = SQL_WORDS.exec(text))) if (!intersectsUrl(match.index, match.index + match[0].length)) ranges.push([match.index, match.index + match[0].length]);
   ranges.sort((leftRange, rightRange) => leftRange[0] - rightRange[0] || rightRange[1] - leftRange[1]);
   const mergedRanges: Span[] = [];
   for (const [rangeStart, rangeEnd] of ranges) { const previousRange = mergedRanges[mergedRanges.length - 1]; if (previousRange && rangeStart <= previousRange[1]) previousRange[1] = Math.max(previousRange[1], rangeEnd); else mergedRanges.push([rangeStart, rangeEnd]); }

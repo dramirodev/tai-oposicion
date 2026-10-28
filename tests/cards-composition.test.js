@@ -86,3 +86,20 @@ it('no restaura la sesión de una cuenta si cambia durante la carga de tarjetas'
   expect(services.getSession()).toBeNull();
   expect(localStorage.getItem('tai.cards-session.v1.account-before')).not.toBeNull();
 });
+
+it('limita el plan de Active Recall a los temas recibidos aunque las preferencias digan todos', async () => {
+  const dependencies = {
+    loadQuestionMetadata: async () => {}, failedCardQuestionIds: () => [], loadQuestionsById: async () => [],
+    loadJson: async url => url === 'cards/index.json'
+      ? { temas: { 'T1.01': true, 'T3.02': true } }
+      : url.endsWith('T1.01.json') ? [{ id:'card-seen', q:'Tema visto', a:'Respuesta' }]
+        : [{ id:'card-unseen', q:'Tema no visto', a:'Respuesta' }],
+    verifiedSources: {}, readPreferences: () => ({ scope:'todos', n:10 }), savePreferences: vi.fn(), accountId: () => 'scope-test',
+    getCards: () => ({}), getSeen: () => ['T1.01'], getRecord: () => undefined, now: () => Date.now(), day: 86_400_000,
+    topicName: id => id, grade: vi.fn(), remove: vi.fn(), getReport: () => undefined, saveReport: vi.fn(),
+  };
+  const services = createCardsComposition(dependencies).services;
+  const plan = await services.loadPlan(services.getPreferences(), ['T1.01']);
+  expect(plan.cards.map(card => card.id)).toEqual(['card-seen']);
+  expect(plan.ids).toEqual(['card-seen']);
+});

@@ -39,6 +39,7 @@ export interface PlannedTrainingActivity {
   minutes: number;
   reason: TrainingPlanReason;
   topicId?: string;
+  topicIds?: readonly string[];
   reviewIntervention?: ReturnType<typeof recommendTopicIntervention>;
 }
 export interface DailyTrainingPlan {
@@ -94,6 +95,8 @@ export function buildDailyTrainingPlan(input: {
   failureCount: number;
   weakTopicCount: number;
   weakTopicIds?: readonly string[];
+  /** When supplied, every activity is restricted to this explicitly studied topic set. */
+  studiedTopicIds?: readonly string[];
   topicReviewEvidence?: readonly TopicReviewEvidence[];
 }): DailyTrainingPlan {
   const weekday = Number.isInteger(input.weekday) && input.weekday >= 0 && input.weekday <= 6 ? input.weekday : 0;
@@ -101,18 +104,27 @@ export function buildDailyTrainingPlan(input: {
   const minutes = preferences.minutesByDay[weekday];
   if (!minutes) return { weekday, minutes: 0, restDay: true, activities: [] };
 
+  const studiedTopicIds = input.studiedTopicIds === undefined ? undefined : [...new Set(input.studiedTopicIds)];
+  if (studiedTopicIds && studiedTopicIds.length === 0) return { weekday, minutes, restDay: false, activities: [] };
+  const studiedTopicSet = studiedTopicIds ? new Set(studiedTopicIds) : undefined;
+
   const cardDueCount = Number.isFinite(input.cardDueCount) ? Math.max(0, input.cardDueCount ?? 0) : 0;
   const candidates = enabledActivities(preferences, input.dueCount, cardDueCount, input.failureCount);
   if (!candidates.length) return { weekday, minutes, restDay: false, activities: [] };
   const allocation = allocateMinutes(candidates, minutes);
+  const weakTopicIds = studiedTopicIds
+    ? (input.weakTopicIds ?? []).filter(topicId => studiedTopicSet!.has(topicId))
+    : input.weakTopicIds;
   const reasons: Record<TrainingActivity, TrainingPlanReason> = {
     activeRecall: 'active-recall',
-    topicTest: weekday === preferences.introductionDay ? 'new-topic-day' : input.weakTopicCount ? 'weak-topics' : 'coverage',
+    topicTest: weekday === preferences.introductionDay && !studiedTopicIds ? 'new-topic-day'
+      : (studiedTopicIds ? !!weakTopicIds?.length : !!input.weakTopicCount) ? 'weak-topics' : 'coverage',
     failures: 'recurring-failures',
     spacedReviews: 'due-reviews',
   };
   const leastCoveredStudiedTopic = input.topicReviewEvidence
-    ?.filter(evidence => (evidence.hasStudyMarker || evidence.distinctQuestionsAttempted > 0)
+    ?.filter(evidence => (studiedTopicIds ? evidence.hasStudyMarker : evidence.hasStudyMarker || evidence.distinctQuestionsAttempted > 0)
+      && (!studiedTopicSet || studiedTopicSet.has(evidence.topicId))
       && typeof evidence.questionCoverageOfTarget === 'number'
       && evidence.questionCoverageOfTarget < 100)
     .sort((left, right) => left.questionCoverageOfTarget! - right.questionCoverageOfTarget!)[0];
@@ -121,14 +133,14 @@ export function buildDailyTrainingPlan(input: {
     const duration = allocation.get(activity) || 0;
     if (!duration) return [];
     const topicId = activity !== 'topicTest' ? undefined
-      : reasons[activity] === 'weak-topics' ? input.weakTopicIds?.[0]
+      : reasons[activity] === 'weak-topics' ? weakTopicIds?.[0]
         : reasons[activity] === 'new-topic-day' ? preferences.introductionTopicId
-          : reasons[activity] === 'coverage' ? leastCoveredStudiedTopic?.topicId : undefined;
+          : reasons[activity] === 'coverage' ? leastCoveredStudiedTopic?.topicId ?? studiedTopicIds?.[0] : undefined;
     const evidence = activity === 'topicTest' && topicId
       ? input.topicReviewEvidence?.find(item => item.topicId === topicId)
       : undefined;
     const reviewIntervention = evidence ? recommendTopicIntervention(evidence, preferences.reviewModesByTopic?.[evidence.topicId]) : undefined;
-    return [{ activity, minutes: duration, reason: reasons[activity], ...(topicId ? { topicId } : {}), ...(reviewIntervention ? { reviewIntervention } : {}) }];
+    return [{ activity, minutes: duration, reason: reasons[activity], ...(topicId ? { topicId } : {}), ...(studiedTopicIds ? { topicIds: studiedTopicIds } : {}), ...(reviewIntervention ? { reviewIntervention } : {}) }];
   });
   return { weekday, minutes, restDay: false, activities };
 }

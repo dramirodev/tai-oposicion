@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 import { questionNotice, sourceHtml } from '../../shared/presentation/study-content.js';
 import { TRAMPAS } from '../../shared/presentation/labels.js';
@@ -27,6 +27,14 @@ function FailureDetails({ question, streak, reviewed }: { question: FailureQuest
 
 export function FailuresPage() {
   const failures = useStudyService('failures');
+  const [searchParams] = useSearchParams();
+  const trainingTopicsValue = searchParams.get('trainingTopics');
+  const requestedTrainingTopicIds = useMemo(() => trainingTopicsValue === null ? undefined
+    : new Set(trainingTopicsValue.split(',').filter(topicId => /^T[1-4]\.\d{2}$/.test(topicId))), [trainingTopicsValue]);
+  const seenTopicIds = useMemo(() => new Set(failures.seenTopics()), [failures]);
+  const trainingTopicIds = useMemo(() => requestedTrainingTopicIds && new Set(
+    [...requestedTrainingTopicIds].filter(topicId => seenTopicIds.has(topicId)),
+  ), [requestedTrainingTopicIds, seenTopicIds]);
   const [questions, setQuestions] = useState<FailureQuestion[]>([]);
   const [topics, setTopics] = useState<readonly { id: string; name: string }[]>([]);
   const [filter, setFilter] = useState(EMPTY_FILTER);
@@ -40,22 +48,25 @@ export function FailuresPage() {
     }).catch(() => { if (active) { setLoadError(true); setLoaded(true); } });
     return () => { active = false; };
   }, [failures, reload]);
-  const selected = useMemo(() => selectFailures(questions, filter), [questions, filter]);
-  const byTopic = useMemo(() => new Map(questions.reduce((entries, question) => entries.set(question.topicId, (entries.get(question.topicId) || 0) + 1), new Map<string, number>())), [questions]);
+  const scopedQuestions = useMemo(() => trainingTopicIds ? questions.filter(question => trainingTopicIds.has(question.topicId)) : questions, [questions, trainingTopicIds]);
+  const selected = useMemo(() => selectFailures(scopedQuestions, filter), [scopedQuestions, filter]);
+  const byTopic = useMemo(() => new Map(scopedQuestions.reduce((entries, question) => entries.set(question.topicId, (entries.get(question.topicId) || 0) + 1), new Map<string, number>())), [scopedQuestions]);
 
   if (!loaded) return <PageLoading variant="legacy" />;
   if (loadError) return <><h1>Falladas <HelpIconLink topic="repaso" label="Ayuda sobre preguntas falladas y repaso" /></h1><div className="card" role="alert"><p>No se pudieron cargar las preguntas. Comprueba la conexión e inténtalo de nuevo.</p><button className="btn" onClick={() => { setLoaded(false); setLoadError(false); setReload(value => value + 1); }}>Reintentar</button></div></>;
   if (!questions.length) return <><h1>Falladas <HelpIconLink topic="repaso" label="Ayuda sobre preguntas falladas y repaso" /></h1><div className="card"><p className="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p></div></>;
+  if (trainingTopicIds && !scopedQuestions.length) return <><h1>Falladas <HelpIconLink topic="repaso" label="Ayuda sobre preguntas falladas y repaso" /></h1><div className="note">El entrenamiento de hoy solo considera los temas que has marcado como vistos. No hay preguntas falladas de esos temas.</div><Link className="btn sec" to="/home">Volver al entrenamiento</Link></>;
 
   return <>
     <h1>Falladas <HelpIconLink topic="repaso" label="Ayuda sobre preguntas falladas y repaso" /></h1>
+    {trainingTopicIds && <p className="note">Entrenamiento de hoy: solo fallos de temas que has marcado como vistos.</p>}
     <p className="sub">Cada pregunta permanece hasta acertarla tres veces seguidas. Un fallo reinicia el contador; dejarla en blanco no cuenta. Marcar el temario no la quita de la lista y programa una comprobación de recuerdo dos días después.</p>
-    <p className="sub" aria-live="polite">{selected.length === questions.length ? `${questions.length} preguntas` : `${selected.length} de ${questions.length} preguntas`}</p>
+    <p className="sub" aria-live="polite">{selected.length === scopedQuestions.length ? `${scopedQuestions.length} preguntas` : `${selected.length} de ${scopedQuestions.length} preguntas`}</p>
     <div className="card">
       <label className="sr" htmlFor="failure-query">Buscar en las preguntas falladas</label>
       <input id="failure-query" type="search" placeholder="Buscar: palabra, artículo, comando…" autoComplete="off" enterKeyHint="search" value={filter.query} onChange={event => setFilter(current => ({ ...current, query: event.target.value }))} />
       <label className="sr" htmlFor="failure-topic">Filtrar por tema</label>
-      <select id="failure-topic" value={filter.topicId} onChange={event => setFilter(current => ({ ...current, topicId: event.target.value }))}><option value="">Todos los temas</option>{topics.filter(topic => byTopic.has(topic.id)).map(topic => <option key={topic.id} value={topic.id}>{topic.id} · {topic.name} ({byTopic.get(topic.id)})</option>)}</select>
+      {!trainingTopicIds && <select id="failure-topic" value={filter.topicId} onChange={event => setFilter(current => ({ ...current, topicId: event.target.value }))}><option value="">Todos los temas</option>{topics.filter(topic => byTopic.has(topic.id)).map(topic => <option key={topic.id} value={topic.id}>{topic.id} · {topic.name} ({byTopic.get(topic.id)})</option>)}</select>}
       <div className="row"><label>Repaso del temario<select id="failure-syllabus" value={filter.syllabus} onChange={event => setFilter(current => ({ ...current, syllabus: event.target.value as FailureFilter['syllabus'] }))}><option value="">Todos</option><option value="pending">Pendiente de temario</option><option value="reviewed">Repasada</option></select></label>
         <label>Aciertos seguidos<select value={filter.streak} onChange={event => setFilter(current => ({ ...current, streak: event.target.value as FailureFilter['streak'] }))}><option value="">Todas las rachas</option><option value="0">0 de 3</option><option value="1">1 de 3</option><option value="2">2 de 3</option></select></label></div>
     </div>

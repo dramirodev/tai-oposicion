@@ -9,7 +9,7 @@ const reviewModes = new Set<StudyReviewMode>(['initial-study', 'active-retrieval
 const keyFor = (accountId: string | null) => `tai.training-session.v1.${encodeURIComponent(accountId || 'guest')}`;
 
 type StoredTrainingSessionStep = Pick<TrainingSessionStep, 'activity' | 'minutes'>
-  & Partial<Pick<TrainingSessionStep, 'reason' | 'topicId' | 'reviewMode'>>;
+  & Partial<Pick<TrainingSessionStep, 'reason' | 'topicId' | 'topicIds' | 'reviewMode'>>;
 type StoredTrainingSession = Omit<DailyTrainingSession, 'activities'> & { activities: readonly StoredTrainingSessionStep[] };
 
 function isSessionStep(value: unknown): value is StoredTrainingSessionStep {
@@ -19,7 +19,9 @@ function isSessionStep(value: unknown): value is StoredTrainingSessionStep {
     && Number.isInteger(step.minutes) && step.minutes! > 0 && step.minutes! <= 240
     && (step.reason === undefined || reasons.has(step.reason as TrainingPlanReason))
     && (step.reviewMode === undefined || reviewModes.has(step.reviewMode as StudyReviewMode))
-    && (step.topicId === undefined || (typeof step.topicId === 'string' && /^T[1-4]\.\d{2}$/.test(step.topicId)));
+    && (step.topicId === undefined || (typeof step.topicId === 'string' && /^T[1-4]\.\d{2}$/.test(step.topicId)))
+    && (step.topicIds === undefined || (Array.isArray(step.topicIds) && step.topicIds.length > 0
+      && step.topicIds.every(topicId => typeof topicId === 'string' && /^T[1-4]\.\d{2}$/.test(topicId))));
 }
 
 function isDailyTrainingSession(value: unknown, timestamp: number): value is StoredTrainingSession {
@@ -56,6 +58,7 @@ export function readTrainingSession(accountId: string | null, timestamp: number)
         minutes: step.minutes,
         reason: step.reason ?? defaultReason[step.activity],
         ...(step.topicId ? { topicId: step.topicId } : {}),
+        ...(step.topicIds ? { topicIds: [...step.topicIds] } : {}),
         ...(step.reviewMode ? { reviewMode: step.reviewMode } : {}),
       })),
     };

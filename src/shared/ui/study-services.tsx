@@ -11,6 +11,7 @@ export interface HomeOverview {
   completedSessions: number; blocks: HomeBlock[];
   seen: number; total: number; answers: number; streak: number; daysToExam: number | null;
   due: number; cardsDue: number; quickCount: number; slowCount: number; failures: number;
+  trainingDue: { questions: number; cards: number };
   studiedTopics: number; topicCount: number; assessedTopics: number; weakTopics: number; masteredTopics: number;
   trainingPlan: DailyTrainingPlan; trainingSession: DailyTrainingSession | null;
 }
@@ -26,7 +27,7 @@ export interface HomeServices {
   getActiveStudy(): ActiveStudy | null;
   subscribe(listener: () => void): () => void;
   quickSession(): Promise<void>;
-  startReview(): Promise<void>;
+  startReview(topicIds?: readonly string[]): Promise<void>;
   startTrainingSession(plan: DailyTrainingPlan): DailyTrainingSession | null;
   startTrainingActivity(): DailyTrainingSession | null;
   completeTrainingActivity(activity: TrainingActivity): DailyTrainingSession | null;
@@ -59,7 +60,8 @@ export interface ActiveCardsSession {
   account: string | null; items: StudyCard[]; index: number; revealed: boolean; results: [number, number, number];
 }
 export interface CardsServices {
-  loadPlan(preferences: CardPreferences): Promise<CardsPlan>;
+  loadPlan(preferences: CardPreferences, topicIds?: readonly string[]): Promise<CardsPlan>;
+  seenTopics(): readonly string[];
   loadAllCards(): Promise<StudyCard[]>;
   loadCuratedCards(): Promise<StudyCard[]>;
   getPreferences(): CardPreferences;
@@ -105,6 +107,7 @@ export interface FailureQuestion { id: string; topicId: string; statement: strin
 export interface FailureServices {
   loadQuestions(): Promise<FailureQuestion[]>;
   loadTopics(): Promise<readonly { id: string; name: string }[]>;
+  seenTopics(): readonly string[];
   setReviewed(id: string, topicId: string, reviewed: boolean): void;
   topicName(id: string): string;
   startPractice(ids: readonly string[], title: string): void;

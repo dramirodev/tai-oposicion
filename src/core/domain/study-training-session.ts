@@ -6,6 +6,7 @@ export interface TrainingSessionStep {
   minutes: number;
   reason: TrainingPlanReason;
   topicId?: string;
+  topicIds?: readonly string[];
   reviewMode?: StudyReviewMode;
 }
 
@@ -30,7 +31,7 @@ export function createDailyTrainingSession(plan: DailyTrainingPlan, timestamp: n
   if (plan.restDay || !plan.activities.length) return null;
   return {
     dateKey: localTrainingDateKey(timestamp),
-    activities: plan.activities.map(({ activity, minutes, reason, topicId, reviewIntervention }) => ({ activity, minutes, reason, ...(topicId ? { topicId } : {}), ...(reviewIntervention ? { reviewMode: reviewIntervention.mode } : {}) })),
+    activities: plan.activities.map(({ activity, minutes, reason, topicId, topicIds, reviewIntervention }) => ({ activity, minutes, reason, ...(topicId ? { topicId } : {}), ...(topicIds ? { topicIds: [...topicIds] } : {}), ...(reviewIntervention ? { reviewMode: reviewIntervention.mode } : {}) })),
     currentIndex: 0,
     currentStartedAt: null,
     startedAt: timestamp,
