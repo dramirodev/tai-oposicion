@@ -1,11 +1,10 @@
 import * as store from '../../../adapters/local/legacy-store.js';
 import { localProgressRepository } from '../../../adapters/local/progress-repository.js';
-import { META, getIndex, getMeta, now, byIds } from '../../../adapters/http/legacy-data.js';
 import { createTopicMasteryComposition } from '../topics/topic-mastery-composition.js';
 import { aggregateWeeks, simHistory, compareSessions } from '../../../features/stats/analytics-mapper.js';
 import { ORIGEN, TRAMPAS, TIPOS } from '../../../shared/presentation/labels.js';
 import { percentage } from '../../../shared/presentation/format.js';
-import { falladasIds } from '../study/study-engine-composition.js';
+import { falladasIds, studyQuestionCatalog } from '../study/study-engine-composition.js';
 import { loadQuestionEvolution, loadStrategyReportForPeriod } from './strategy-composition.js';
 import { renderStrategyReport } from '../../../features/stats/strategy-view.js';
 import type { StatsServices } from '../../../shared/ui/study-services.js';
@@ -17,34 +16,34 @@ import { getProgressStatistics } from '../../../core/application/stats/get-progr
 import { slowestQuestions } from '../../../core/domain/study-analytics.js';
 import { cardMapper } from '../../../adapters/local/mappers/card.js';
 import { forecastCardRetention } from '../../../adapters/local/fsrs-card-scheduler.js';
-import type { MetaEntry } from '../../../adapters/legacy/types.js';
+import type { StudyQuestionMetaEntry } from '../../../core/domain/study-catalog.js';
 
 interface StatsActions { go(path: string): void; startRun(run: RunCfg): boolean; startRepaso(): void; trapTest(count: number, traps: number[]): Promise<{ items: QuestionRecord[] }>; }
 
 export function createStatsServices(actions: StatsActions): StatsServices {
-  const dominioTemas = createTopicMasteryComposition({ progressRepository: localProgressRepository, accountId: store.accountId, questionIdsForTopic: topicId => META._by[topicId], now });
+  const dominioTemas = createTopicMasteryComposition({ progressRepository: localProgressRepository, accountId: store.accountId, questionIdsForTopic: topicId => studyQuestionCatalog.getMetadataSnapshot()?._by[topicId] || [], now: studyQuestionCatalog.now });
   return {
     async load(): Promise<StatsSnapshot> {
       const account = store.accountId();
-      const index = await getIndex(); await getMeta();
+      const [index, questionMetadata] = await Promise.all([studyQuestionCatalog.getIndex(), studyQuestionCatalog.getMetadata()]);
       if (account !== store.accountId()) throw new Error('La cuenta cambió mientras se cargaban las estadísticas.');
-      const metadata = Object.fromEntries(Object.entries(META).flatMap(([id, entry]) => {
+      const metadata = Object.fromEntries(Object.entries(questionMetadata).flatMap(([id, entry]) => {
         if (!Array.isArray(entry)) return [];
-        const [topicId, origin, type, traps] = entry as MetaEntry;
+        const [topicId, origin, type, traps] = entry as StudyQuestionMetaEntry;
         return [[id, { topicId, origin, type, traps }]];
       }));
-      const progress = await getProgressStatistics(localProgressRepository, metadata, index.temas.map(topic => ({ id: topic.id, name: topic.nombre, total: topic.n })), now());
+      const progress = await getProgressStatistics(localProgressRepository, metadata, index.temas.map(topic => ({ id: topic.id, name: topic.nombre, total: topic.n })), studyQuestionCatalog.now());
       if (account !== store.accountId()) throw new Error('La cuenta cambió mientras se cargaban las estadísticas.');
       const sessions = store.getSessions().slice(0, 12);
       const cardReviews = Object.values(store.getCards()).flatMap(record => {
         const mapped = cardMapper.toDomain(record);
         return mapped.ok ? [mapped.value] : [];
       });
-      const predictedCardRetention = forecastCardRetention(cardReviews, now());
+      const predictedCardRetention = forecastCardRetention(cardReviews, studyQuestionCatalog.now());
       const speed = progress.speed;
       const domains = (await dominioTemas(index)).map(topic => ({ id: topic.id, name: topic.nombre, accuracy: topic.prec, days: topic.dias, status: topic.est as StatsSnapshot['domains'][number]['status'], reason: topic.why, due: topic.due, score: topic.score }));
       const simulations = simHistory(store.getSessions()).map(session => ({ id: session.id, ts: session.ts, nota: session.nota, part: session.part, dNota: session.dNota, a: session.a, f: session.f, b: session.b, secs: session.secs }));
-      return { generatedAt: now(), answers: progress.answers, correct: progress.correct, accuracy: progress.accuracy, topics: progress.topics, weakTopics: progress.weakTopics, failureCount: falladasIds().length, sessions, reviewLoad: progress.reviewLoad, predictedCardRetention, failureReasons: progress.failureReasons, lucky: progress.lucky, speed: { count: speed.count, total: speed.total, percent: speed.percent },
+      return { generatedAt: studyQuestionCatalog.now(), answers: progress.answers, correct: progress.correct, accuracy: progress.accuracy, topics: progress.topics, weakTopics: progress.weakTopics, failureCount: falladasIds().length, sessions, reviewLoad: progress.reviewLoad, predictedCardRetention, failureReasons: progress.failureReasons, lucky: progress.lucky, speed: { count: speed.count, total: speed.total, percent: speed.percent },
         trapRates: Object.entries(progress.traps).filter(([, row]) => row[0] >= 5).map(([id, row]) => ({ id, label: TRAMPAS[id] || id, attempts: row[0], failures: row[1], rate: percentage(row[1], row[0]) })).sort((a, b) => b.rate - a.rate),
         origins: Object.entries(progress.origins).map(([id, row]) => ({ label: ORIGEN[id] || id, answers: row[0], accuracy: percentage(row[1], row[0]) })),
         types: Object.entries(progress.types).map(([id, row]) => ({ id, label: TIPOS[id] || id, answers: row[0], accuracy: percentage(row[1], row[0]) })), domains,
@@ -74,6 +73,6 @@ export function createStatsServices(actions: StatsActions): StatsServices {
     reviewDue() { actions.startRepaso(); },
     practiceFailures() { actions.go(hashPath('failures')); },
     async practiceTrap(id) { const result = await actions.trapTest(15, [Number(id)]); if (!result.items.length) return 'empty'; return actions.startRun({ kind: 'test', feedback: true, items: [...result.items], titulo: `Trampa: ${TRAMPAS[id] || id}` }) ? 'started' : 'empty'; },
-    async practiceSlow(onlyCorrect) { const stats = await localProgressRepository.getStats(); const selected = slowestQuestions(Object.entries(stats).map(([id, stat]) => ({ id, attempts: stat.attempts, correct: stat.correct, lastOutcome: stat.lastResult ?? -1, totalSeconds: stat.secondsStudied ?? 0, timedAnswers: stat.timedAnswers ?? 0 })), { onlyLastCorrect: onlyCorrect, limit: 15 }); const questions = await byIds(selected.map(item => item.id)); const byId = new Map(questions.map(question => [question.i, question])); const items = selected.map(item => byId.get(item.id)).filter((question): question is QuestionRecord => !!question); if (!items.length) return 'empty'; return actions.startRun({ kind: 'test', feedback: true, items, titulo: 'Preguntas lentas' }) ? 'started' : 'empty'; },
+    async practiceSlow(onlyCorrect) { const stats = await localProgressRepository.getStats(); const selected = slowestQuestions(Object.entries(stats).map(([id, stat]) => ({ id, attempts: stat.attempts, correct: stat.correct, lastOutcome: stat.lastResult ?? -1, totalSeconds: stat.secondsStudied ?? 0, timedAnswers: stat.timedAnswers ?? 0 })), { onlyLastCorrect: onlyCorrect, limit: 15 }); const questions = await studyQuestionCatalog.getQuestions(selected.map(item => item.id)); const byId = new Map(questions.map(question => [question.i, question])); const items = selected.map(item => byId.get(item.id)).filter((question): question is QuestionRecord => !!question); if (!items.length) return 'empty'; return actions.startRun({ kind: 'test', feedback: true, items, titulo: 'Preguntas lentas' }) ? 'started' : 'empty'; },
   };
 }
