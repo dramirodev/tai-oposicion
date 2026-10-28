@@ -9,6 +9,7 @@ import {
   questionPriority,
   shuffleItems,
 } from '../domain/selection.js';
+import { isQuestionEditoriallyQuarantined } from '../domain/question-review-overrides.js';
 import { hasPendingFailure, questionReviewDueAt, selectSpacedReviews } from '../domain/spaced-repetition.js';
 import { calculateTrapRates, selectTrapQuestions } from '../domain/traps.js';
 import type { QuestionRecord } from '../domain/question-record.js';
@@ -31,7 +32,8 @@ export function createStudyQuestionSelection(
 ) {
   const origins = (): Set<string> => new Set(progress.getPreferences().test?.o || ['O', 'A', 'G']);
   const questionAllowed = (question: Question, allowedOrigins: ReadonlySet<string>): boolean =>
-    isQuestionAllowed(question.o, question.r, allowedOrigins);
+    isQuestionAllowed(question.o, question.r, allowedOrigins)
+      && !isQuestionEditoriallyQuarantined(question.i);
 
   async function loadQuestionsInRequestedOrder(ids: readonly string[]): Promise<Question[]> {
     if (!ids.length) return [];
@@ -139,7 +141,11 @@ export function createStudyQuestionSelection(
     }
     const ids = selectSpacedReviews(candidates.map(item => ({ topicId: item.topicId, dueAt: item.dueAt, item })), 30)
       .map(review => review.item.id);
-    return { items: await loadQuestionsInRequestedOrder(ids), titulo: 'Repaso de fallos · más vencidas primero, temas mezclados' };
+    const items = await loadQuestionsInRequestedOrder(ids);
+    return {
+      items: items.filter(question => !isQuestionEditoriallyQuarantined(question.i)),
+      titulo: 'Repaso de fallos · más vencidas primero, temas mezclados',
+    };
   }
 
   async function selectQuestionsForTopics(
@@ -168,12 +174,15 @@ export function createStudyQuestionSelection(
     const questionsByTopic = await Promise.all(topics.map(topic => catalog.getTopicQuestions(topic.id)));
     const pools = Object.fromEntries(topics.map((topic, index) => {
       const available = shuffleItems(
-        questionsByTopic[index].filter(question => questionAllowed(question, allowedOrigins) && question.np !== 1),
+        questionsByTopic[index].filter(question => questionAllowed(question, allowedOrigins)
+          && (question.o !== 'G' || question.v === 0)
+          && question.np !== 1
+          && question.p !== 1),
         random,
       ).sort((left, right) => Number(!!progress.getQuestionStats(left.i)) - Number(!!progress.getQuestionStats(right.i)));
       return [topic.id, available];
     }));
-    return composeWeightedQuestions(topics, pools, count, random);
+    return composeWeightedQuestions(topics, pools, count, random, question => question.f || question.i);
   }
 
   async function trapTest(

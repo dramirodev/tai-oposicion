@@ -42,6 +42,28 @@ test('el menú de inicio mantiene los iconos alineados con la navegación', asyn
   await expect(menu).toContainText('Seguimiento');
   expect(errors).toEqual([]);
 });
+test('el diálogo de pausa se dimensiona respecto al viewport aunque viva dentro de #app', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await start(page);
+  const bounds = await page.evaluate(() => new Promise<{ x: number; y: number; width: number; height: number }>(resolve => {
+    const dialog = document.createElement('dialog');
+    dialog.className = 'pause-modal';
+    dialog.innerHTML = '<div class="card"><h2>Pausa de prueba</h2></div>';
+    document.querySelector('#app')!.append(dialog);
+    dialog.showModal();
+    requestAnimationFrame(() => {
+      const { x, y, width, height } = dialog.getBoundingClientRect();
+      dialog.close();
+      dialog.remove();
+      resolve({ x, y, width, height });
+    });
+  }));
+  expect(Math.abs(bounds.x)).toBeLessThanOrEqual(1);
+  expect(Math.abs(bounds.y)).toBeLessThanOrEqual(1);
+  expect(Math.abs(bounds.width - 390)).toBeLessThanOrEqual(1);
+  expect(Math.abs(bounds.height - 844)).toBeLessThanOrEqual(1);
+});
+
 async function savedAttemptHistory(page: Page) {
   return page.evaluate(() => new Promise<{ attempts: number; sessions: number; events: string[] }>((resolve, reject) => {
     const request = indexedDB.open('tai-attempts', 2);

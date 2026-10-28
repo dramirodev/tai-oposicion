@@ -3,6 +3,7 @@ import type { StatsComparison, StatsSnapshot, StatsWeek, TopicProgress } from '.
 import type { StudyReviewMode, TrainingActivity, TrainingPreferences } from '../../core/domain/entities.js';
 import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
 import type { DailyTrainingSession } from '../../core/domain/study-training-session.js';
+import type { ObservedStudyTime } from '../../core/domain/attempts/observed-study-time.js';
 export type { StatsComparison, StatsDomainTopic, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 export interface ActiveStudy { title: string; position: number; total: number }
 export interface HomeBlock { name: string; total: number; mastered: number; assessed: number }
@@ -177,7 +178,7 @@ export interface StatsServices {
   load(): Promise<StatsSnapshot>; getPreference(key: 'domainOrder' | 'evolution'): Record<string, string | number | boolean>; savePreference(key: 'domainOrder' | 'evolution', value: Record<string, string | number | boolean>): void;
   compareSimulations(firstId: string, secondId: string): StatsComparison | null;
   loadWeekly(filter: { topic?: string; type?: string; weeks: number }): Promise<readonly StatsWeek[]>;
-  loadQuestionEvolution(weeks: number): Promise<readonly { start: number; seen: number; correct: number; wrong: number; unknown: number }[]>;
+  loadStudyActivity(weeks: number): Promise<{ questionEvolution: readonly { start: number; seen: number; correct: number; wrong: number; unknown: number }[]; observedStudyTime: ObservedStudyTime }>;
   loadStrategy(days: number): Promise<string>;
   practiceTopics(ids?: readonly string[]): void; reviewDue(): void; practiceFailures(): void; practiceTrap(id: string): Promise<'started' | 'empty'>; practiceSlow(onlyCorrect: boolean): Promise<'started' | 'empty'>;
 }

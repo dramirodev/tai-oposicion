@@ -5,7 +5,7 @@ import { aggregateWeeks, simHistory, compareSessions } from '../../../features/s
 import { ORIGEN, TRAMPAS, TIPOS } from '../../../shared/presentation/labels.js';
 import { percentage } from '../../../shared/presentation/format.js';
 import { falladasIds, studyQuestionCatalog } from '../study/study-engine-composition.js';
-import { loadQuestionEvolution, loadStrategyReportForPeriod } from './strategy-composition.js';
+import { loadStudyActivity, loadStrategyReportForPeriod } from './strategy-composition.js';
 import { renderStrategyReport } from '../../../features/stats/strategy-view.js';
 import type { StatsServices } from '../../../shared/ui/study-services.js';
 import type { StatsSnapshot } from '../../../core/application/stats/statistics-model.js';
@@ -66,7 +66,7 @@ export function createStatsServices(actions: StatsActions, progressRepository: P
         topics: compare.rows.map(row => ({ id: row.t, first: row.pa, second: row.pb, delta: row.d })) };
     },
     async loadWeekly(filter) { const sessions = (await progressRepository.getSessions()).map(toLegacyStatsSession); return aggregateWeeks(sessions, { tema: filter.topic, tipo: filter.type, weeks: filter.weeks, now: studyQuestionCatalog.now() }).map(week => ({ start: week.start, n: week.n, ok: week.ok, secs: week.secs, sessions: week.ses, accuracy: week.acierto, secondsPerQuestion: week.segPreg })); },
-    loadQuestionEvolution,
+    loadStudyActivity,
     async loadStrategy(days) { return renderStrategyReport(await loadStrategyReportForPeriod(days)); },
     practiceTopics(ids) { studyProgress.updatePreferences(current => { const test = current.test || { n: 15, o: ['O', 'A', 'G'] as const }; return { ...current, test: { sel: ids ? [...ids] : [], n: test.n || 15, mode: 'nuevas', o: test.o ? [...test.o] : ['O', 'A', 'G'] } }; }); actions.go(hashPath('test')); },
     reviewDue() { actions.startRepaso(); },

@@ -10,6 +10,7 @@ export function hiliteHtml(sourceTextInput: unknown, answerTextInput: unknown): 
   const tokens = sourceText.split(/(\s+)/);
   const wordTokenIndexes: number[] = [];
   tokens.forEach((token, tokenIndex) => { if (token && !/^\s+$/.test(token)) wordTokenIndexes.push(tokenIndex); });
+  if (!answerText.trim() || !wordTokenIndexes.length) return richCitationMarkup(sourceText, null, escapeHtml);
   const normalizedWords = wordTokenIndexes.map(tokenIndex => normalizeWord(tokens[tokenIndex]));
   const answerKeywords = new Set(answerText.split(/\s+/).map(normalizeWord).filter(word => word.length > 3 && !STOP.has(word) || /^\d+$/.test(word)));
   if (!answerKeywords.size || !wordTokenIndexes.length) return richCitationMarkup(sourceText, null, escapeHtml);

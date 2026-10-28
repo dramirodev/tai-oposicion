@@ -348,6 +348,12 @@ describe('hiliteHtml', () => {
     expect(html).toContain('&lt;/b&gt;');
     expect(html).not.toContain('<b>x</b>');
   });
+  it('mantiene como código los ejemplos OCR de Java aunque no coincidan con la respuesta', () => {
+    const html = hiliteHtml('@ManyToMany(cascade=CascadeType.ALL) … private Set<Profesor> profesores;', 'respuesta sin coincidencias');
+    expect(html).toContain('<code class="cd">');
+    expect(html).toContain('&lt;Profesor&gt;');
+    expect(html).not.toContain('<Profesor>');
+  });
   it('conserva el formato de código y el resaltado dentro de las citas del temario', () => {
     const annotation = hiliteHtml('@ManyToMany(mappedBy = "courses")', 'zzzz');
     expect(annotation).toContain('<code class="cd">@ManyToMany(mappedBy = &quot;courses&quot;)</code>');

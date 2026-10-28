@@ -55,6 +55,7 @@ export function composeWeightedQuestions<T>(
   pools: Readonly<Record<string, readonly T[] | undefined>>,
   count: number,
   random: RandomGenerator,
+  uniqueKeyOf?: (item: T) => string | undefined,
 ): T[] {
   const active = topics.filter(topic => (pools[topic.id] || []).length);
   if (!active.length) return [];
@@ -85,7 +86,30 @@ export function composeWeightedQuestions<T>(
     remaining--;
   }
   const result: T[] = [];
-  for (const allocation of allocations) result.push(...pools[allocation.topicId]!.slice(0, allocation.count));
+  const seenKeys = new Set<string>();
+  const add = (item: T): boolean => {
+    const key = uniqueKeyOf?.(item);
+    if (key !== undefined && seenKeys.has(key)) return false;
+    result.push(item);
+    if (key !== undefined) seenKeys.add(key);
+    return true;
+  };
+  for (const allocation of allocations) {
+    let selected = 0;
+    for (const item of pools[allocation.topicId]!) {
+      if (selected >= allocation.count) break;
+      if (add(item)) selected++;
+    }
+  }
+  if (uniqueKeyOf) {
+    for (const allocation of allocations) {
+      if (result.length >= targetCount) break;
+      for (const item of pools[allocation.topicId]!) {
+        if (result.length >= targetCount) break;
+        add(item);
+      }
+    }
+  }
   return shuffleItems(result, random);
 }
 

@@ -39,6 +39,16 @@ it('reparte cupos por peso, limita el total a los pools y mezcla con aleatorieda
   expect(composeWeightedQuestions([{ id: 'A' }], { A: ['a'] }, 8, () => 0)).toEqual(['a']);
 });
 
+it('evita familias repetidas y rellena el cupo con familias alternativas', () => {
+  const topics = [{ id: 'A', weight: 1 }, { id: 'B', weight: 1 }];
+  const pools = {
+    A: [{ id: 'a1', family: 'shared' }, { id: 'a2', family: 'a2' }],
+    B: [{ id: 'b1', family: 'shared' }, { id: 'b2', family: 'b2' }],
+  };
+  expect(composeWeightedQuestions(topics, pools, 3, () => 0, question => question.family).map(question => question.family).sort())
+    .toEqual(['a2', 'b2', 'shared']);
+});
+
 it('estima la sesión rápida con el ritmo medido y los límites actuales', () => {
   expect(estimateQuickQuestionCount([], 5)).toBe(10);
   expect(estimateQuickQuestionCount([{ totalSeconds: 100, count: 10 }], 5)).toBe(15);

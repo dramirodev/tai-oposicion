@@ -6,7 +6,7 @@ const mocks = vi.hoisted(() => ({
     getTopicName: vi.fn(), getQuestions: vi.fn(),
   },
   falladasIds: vi.fn(),
-  loadQuestionEvolution: vi.fn(),
+  loadStudyActivity: vi.fn(),
   loadStrategyReportForPeriod: vi.fn(),
   renderStrategyReport: vi.fn(),
 }));
@@ -19,7 +19,7 @@ vi.mock('../src/app/composition/topics/topic-mastery-composition.js', () => ({
   createTopicMasteryComposition: () => async () => [],
 }));
 vi.mock('../src/app/composition/stats/strategy-composition.js', () => ({
-  loadQuestionEvolution: mocks.loadQuestionEvolution,
+  loadStudyActivity: mocks.loadStudyActivity,
   loadStrategyReportForPeriod: mocks.loadStrategyReportForPeriod,
 }));
 vi.mock('../src/features/stats/strategy-view.js', () => ({ renderStrategyReport: mocks.renderStrategyReport }));
