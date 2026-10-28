@@ -1,6 +1,6 @@
 import { httpBankRepository } from '../../../adapters/http/bank-repository.js';
 import { localAttemptRepository } from '../../../adapters/local/attempt-repository.js';
-import * as store from '../../../adapters/local/legacy-store.js';
+import { localStudyProgressGateway } from '../../../adapters/local/progress-repository.js';
 import { getStrategyReport } from '../../../core/application/attempts/get-strategy-report.js';
 import { flushAttemptTracking } from '../study/study-engine-composition.js';
 import { getQuestionEvolution } from '../../../core/application/attempts/get-question-evolution.js';
@@ -10,7 +10,7 @@ export async function loadStrategyReport(from: number, to: number) {
   const report = await getStrategyReport({
     repository: localAttemptRepository,
     bank: httpBankRepository,
-    scope: store.accountId() || 'guest',
+    scope: localStudyProgressGateway.accountId() || 'guest',
     from,
     to,
     generatedAt: Date.now(),
@@ -30,7 +30,7 @@ export async function loadQuestionEvolution(weeks: number) {
   await flushAttemptTracking();
   return getQuestionEvolution({
     repository: localAttemptRepository,
-    scope: store.accountId() || 'guest',
+    scope: localStudyProgressGateway.accountId() || 'guest',
     weeks,
     now: Date.now(),
   });

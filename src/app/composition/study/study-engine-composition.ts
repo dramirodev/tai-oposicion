@@ -6,10 +6,17 @@ import * as questionData from '../../../adapters/http/legacy-data.js';
 
 export const studyQuestionCatalog: StudyQuestionCatalog = {
   getIndex: questionData.getIndex,
+  getMetadataIndex: questionData.getMetaIndex,
   getMetadata: questionData.getMeta,
   getMetadataSnapshot: () => questionData.META,
+  getQuestionIdsForTopic: questionData.idsOfTema,
+  getScenarios: async () => Object.fromEntries(Object.entries(await questionData.getSup()).map(([id, scenario]) => [id, {
+    text: scenario.texto,
+    questions: scenario.q,
+    ...(scenario.conv ? { convocation: scenario.conv } : {}),
+  }])),
   getTopicQuestions: questionData.getTema,
-  getQuestions: questionData.byIds,
+  getQuestions: ids => questionData.byIds(ids),
   getTopicName: questionData.temaName,
   getTopicForQuestion: questionData.temaOf,
   now: questionData.now,

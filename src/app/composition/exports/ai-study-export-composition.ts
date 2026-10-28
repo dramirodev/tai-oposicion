@@ -2,7 +2,7 @@ import { httpBankRepository } from '../../../adapters/http/bank-repository.js';
 import { httpExplanationRepository } from '../../../adapters/http/explanation-repository.js';
 import { localAttemptRepository } from '../../../adapters/local/attempt-repository.js';
 import { aiStudyExportMapper } from '../../../adapters/local/mappers/ai-study-export.js';
-import * as store from '../../../adapters/local/legacy-store.js';
+import { localStudyProgressGateway } from '../../../adapters/local/progress-repository.js';
 import * as sync from '../../../adapters/firebase/sync-facade.js';
 import { deleteDetailedStudyHistory } from '../../../core/application/attempts/delete-detailed-study-history.js';
 import { listAiStudyExportSessions, prepareAiStudyExport } from '../../../core/application/attempts/prepare-ai-study-export.js';
@@ -14,7 +14,7 @@ const PREFERRED_PART_BYTES = 500_000;
 const byteLength = (content: string): number => new TextEncoder().encode(content).byteLength;
 
 export function listManualExportSessions(from: number, to: number, modes: readonly AttemptMode[]) {
-  return listAiStudyExportSessions({ repository: localAttemptRepository, scope: store.accountId() || 'guest', from, to, modes });
+  return listAiStudyExportSessions({ repository: localAttemptRepository, scope: localStudyProgressGateway.accountId() || 'guest', from, to, modes });
 }
 
 export async function createManualAiExport(filters: {
@@ -28,7 +28,7 @@ export async function createManualAiExport(filters: {
     repository: localAttemptRepository,
     bank: httpBankRepository,
     explanations: httpExplanationRepository,
-    scope: store.accountId() || 'guest',
+    scope: localStudyProgressGateway.accountId() || 'guest',
     generatedAt: Date.now(),
     filters,
     maxPartBytes: PREFERRED_PART_BYTES,
@@ -64,6 +64,6 @@ export async function createManualAiExport(filters: {
 
 export async function deleteManualStudyHistory() {
   await flushAttemptTracking();
-  await deleteDetailedStudyHistory(localAttemptRepository, store.accountId() || 'guest', Date.now());
+  await deleteDetailedStudyHistory(localAttemptRepository, localStudyProgressGateway.accountId() || 'guest', Date.now());
   return { accountSyncPending: !!sync.status.user };
 }
