@@ -95,7 +95,20 @@ export async function downloadOffline(bankIndex: Index, progress: (completedFile
   };
   const cardIndexData = await cacheFile('cards/index.json');
   requiredFiles.push(...getCardFiles(cardIndexData));
-  for (const filePath of requiredFiles) if (filePath !== 'cards/index.json') await cacheFile(filePath);
+  const filesToCache = requiredFiles.filter(filePath => filePath !== 'cards/index.json');
+  let nextFile = 0, failed = false, failure: unknown;
+  const cacheWorker = async () => {
+    while (!failed && nextFile < filesToCache.length) {
+      const filePath = filesToCache[nextFile++];
+      try {
+        await cacheFile(filePath);
+      } catch (error) {
+        if (!failed) { failed = true; failure = error; }
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(2, filesToCache.length) }, cacheWorker));
+  if (failed) throw failure;
   const offlineStatus = await inspectOffline(bankIndex);
   if (!isCurrent()) throw new Error('Descarga cancelada.');
   if (!offlineStatus.complete) throw new Error(`Descarga incompleta: faltan ${offlineStatus.missing.length} archivos.`);
