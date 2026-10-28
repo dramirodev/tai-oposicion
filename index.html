@@ -13,10 +13,14 @@
 <link rel="icon" href="icons/icon-192.png">
 <title>Preparación TAI</title>
 </head>
-<body>
+<body class="is-initial-loading">
 <div id="skip-nav"></div>
 <div id="workspace-shell"></div>
-<main id="app" tabindex="-1"><p class="sub loading" role="status">Cargando…</p></main>
+<main id="app" tabindex="-1"></main>
+<div id="initial-loading" class="initial-loading" role="status" aria-live="polite" aria-label="Cargando">
+  <p class="initial-loading__label">Cargando</p>
+  <div class="initial-loading__track" role="progressbar" aria-label="Carga inicial" aria-valuetext="Cargando la aplicación"><span></span></div>
+</div>
 <script type="module" src="/src/app/main.tsx"></script>
 </body>
 </html>

@@ -1,0 +1,55 @@
+body.is-initial-loading > :not(#initial-loading) {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.initial-loading {
+  position: fixed;
+  z-index: 10000;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 1rem;
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
+  padding: max(1.5rem, var(--sat)) 1.5rem max(1.5rem, var(--sab));
+  background: var(--bg);
+  color: var(--ink);
+  text-align: center;
+}
+
+.initial-loading__label {
+  margin: 0;
+  font-size: var(--fs-l);
+  font-weight: 600;
+}
+
+.initial-loading__track {
+  inline-size: min(12rem, calc(100vw - 3rem));
+  block-size: 0.25rem;
+  overflow: hidden;
+  border-radius: var(--r-pill);
+  background: var(--sel);
+}
+
+.initial-loading__track span {
+  display: block;
+  inline-size: 38%;
+  block-size: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  animation: initial-loading-progress 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes initial-loading-progress {
+  from { transform: translateX(0); }
+  to { transform: translateX(164%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .initial-loading__track span {
+    inline-size: 42%;
+    animation: none;
+  }
+}
