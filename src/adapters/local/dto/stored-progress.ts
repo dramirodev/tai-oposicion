@@ -7,7 +7,7 @@ export type Res = 0 | 1 | 2;
 export type StatRec = number[];
 export type StatMap = Record<string, StatRec>;
 
-/** Stable persisted tuple: [reviews, known, last, interval, due, grade]. */
+/** Stable local/Firestore card tuple: first six legacy fields plus optional versioned FSRS state. */
 export type CardRec = number[];
 export type CardMap = Record<string, CardRec>;
 

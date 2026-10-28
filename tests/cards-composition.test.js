@@ -1,5 +1,8 @@
-import { expect, it, vi } from 'vitest';
+import { afterEach, expect, it, vi } from 'vitest';
 import { createCardsComposition } from '../src/app/composition/cards/cards-composition.js';
+import { saveCardsSession } from '../src/adapters/local/cards-session.js';
+
+afterEach(() => localStorage.clear());
 
 it('combina tarjetas curatoriales válidas y tarjetas de preguntas falladas con caché por tema', async () => {
   const loadQuestionMetadata = vi.fn(async () => {});
@@ -30,4 +33,56 @@ it('combina tarjetas curatoriales válidas y tarjetas de preguntas falladas con 
   expect(cards[1]).toMatchObject({ q: '¿Cuál?', a: 'B', np: 42, source: { verified: true } });
   expect(loadQuestionMetadata).toHaveBeenCalledTimes(2);
   expect(loadJson).toHaveBeenCalledTimes(2);
+});
+
+it('reanuda en la misma cuenta después de recrear el controlador y descarta el checkpoint en otra cuenta', async () => {
+  let accountId = 'account-resume';
+  const dependencies = {
+    loadQuestionMetadata: async () => {}, failedCardQuestionIds: () => [], loadQuestionsById: async () => [],
+    loadJson: async url => url === 'cards/index.json' ? { temas: { T01: true } } : [{ id:'resume-card', q:'Pregunta', a:'Respuesta' }],
+    verifiedSources: {}, readPreferences: () => ({}), savePreferences: vi.fn(), accountId: () => accountId,
+    getCards: () => ({}), getSeen: () => [], getRecord: () => undefined, now: () => Date.now(), day: 86_400_000,
+    topicName: id => id, grade: vi.fn(), remove: vi.fn(), getReport: () => undefined, saveReport: vi.fn(),
+  };
+  const firstController = createCardsComposition(dependencies).services;
+  const firstPlan = await firstController.loadPlan(firstController.getPreferences());
+  firstController.startSession(firstPlan.cards, ['resume-card']);
+  firstController.reveal();
+  const revealed = createCardsComposition(dependencies).services;
+  await revealed.loadPlan(revealed.getPreferences());
+  expect(revealed.getSession()).toMatchObject({ index:0, revealed:true, results:[0,0,0], items:[{ id:'resume-card' }] });
+  revealed.grade(2);
+
+  const restored = createCardsComposition(dependencies).services;
+  await restored.loadPlan(restored.getPreferences());
+  expect(restored.getSession()).toMatchObject({ index:1, revealed:false, results:[0,0,1], items:[{ id:'resume-card' }] });
+
+  accountId = 'another-account';
+  const otherAccount = createCardsComposition(dependencies).services;
+  await otherAccount.loadPlan(otherAccount.getPreferences());
+  expect(otherAccount.getSession()).toBeNull();
+
+  restored.clearSession();
+  expect(localStorage.getItem('tai.cards-session.v1.account-resume')).toBeNull();
+});
+
+it('no restaura la sesión de una cuenta si cambia durante la carga de tarjetas', async () => {
+  let accountId = 'account-before';
+  let resolveMetadata;
+  const metadataPending = new Promise(resolve => { resolveMetadata = resolve; });
+  const dependencies = {
+    loadQuestionMetadata: () => metadataPending, failedCardQuestionIds: () => [], loadQuestionsById: async () => [],
+    loadJson: async url => url === 'cards/index.json' ? { temas: { T01: true } } : [{ id:'saved-card', q:'Pregunta', a:'Respuesta' }],
+    verifiedSources: {}, readPreferences: () => ({}), savePreferences: vi.fn(), accountId: () => accountId,
+    getCards: () => ({}), getSeen: () => [], getRecord: () => undefined, now: () => Date.now(), day: 86_400_000,
+    topicName: id => id, grade: vi.fn(), remove: vi.fn(), getReport: () => undefined, saveReport: vi.fn(),
+  };
+  saveCardsSession('account-before', { ids:['saved-card'], index:0, revealed:false, results:[0,0,0] });
+  const services = createCardsComposition(dependencies).services;
+  const pendingPlan = services.loadPlan(services.getPreferences());
+  accountId = 'account-after';
+  resolveMetadata();
+  await expect(pendingPlan).rejects.toThrow('La cuenta cambió mientras se cargaban las tarjetas.');
+  expect(services.getSession()).toBeNull();
+  expect(localStorage.getItem('tai.cards-session.v1.account-before')).not.toBeNull();
 });

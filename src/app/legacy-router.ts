@@ -32,7 +32,8 @@ import { createTopicMasteryComposition } from './composition/topics/topic-master
 import { createTopicProgressComposition } from './composition/topics/topic-progress-composition.js';
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
-import type { Origin, QuestionStats } from '../core/domain/entities.js';
+import type { Origin, QuestionStats, TrainingActivity, TrainingPreferences } from '../core/domain/entities.js';
+import { buildDailyTrainingPlan, normalizeTrainingPreferences } from '../core/domain/study-training-plan.js';
 import { createHighlight, questionContentRevision, resolveHighlight } from '../core/domain/attempts/highlights.js';
 import { canonicalText, paintTextHighlight, selectedTextAnchor } from '../shared/ui/text-highlights.js';
 import { findLegacyCodeExplanation } from './composition/explanations/explanation-composition.js';
@@ -60,6 +61,7 @@ import { menuActionIcons, navigationIcons } from './navigation-icons.js';
 import { bootAppServices as startAppBootstrap } from './app-bootstrap.js';
 import { createAppUpdateController } from './composition/updates/app-update-controller.js';
 import { createCardsComposition } from './composition/cards/cards-composition.js';
+import { createTrainingSessionComposition } from './composition/trainers/training-session-composition.js';
 import { getHomeProgressSummary } from '../core/application/stats/get-home-progress-summary.js';
 import type { QuestionRecord as Question } from '../core/domain/question-record.js';
 import { createReadingComposition } from './composition/trainers/reading-composition.js';
@@ -82,6 +84,7 @@ const appUpdates = createAppUpdateController({
 const recover = createAccountRecovery(store.accountId, () => store.recover());
 const dominioTemas = createTopicMasteryComposition({ progressRepository: localProgressRepository, accountId: store.accountId, questionIdsForTopic: topicId => META._by[topicId], now });
 const progressPorTema = createTopicProgressComposition({ progressRepository: localProgressRepository, accountId: store.accountId, questionIdsForTopic: topicId => META._by[topicId] });
+const trainingSession = createTrainingSessionComposition({ accountId: store.accountId, now });
 let routeReady: () => void;
 const firstReactRouteReady = new Promise<void>(resolve => { routeReady = resolve; });
 // saludo con el nombre de la cuenta de Google (se recuerda en el dispositivo; sin cuenta, solo «Hola»)
@@ -253,9 +256,10 @@ const settingsServices = {
   accountId: store.accountId,
   getSnapshot(): SettingsSnapshot {
     const ui = normalizeUiPreferences(store.getCfg().ui);
+    const training = normalizeTrainingPreferences(store.getCfg().training);
     return {
       sync: { state: sync.status.state, user: sync.status.user, configured: sync.status.configured, lastSync: sync.status.lastSync, error: sync.status.error, detail: sync.status.detail, host: sync.status.host, authDomain: sync.status.authDomain, accessError: sync.status.accessErr, requests: sync.status.reqs },
-      full: isFull(), level: accessLevel(), devMode: devMode(), devRevealed: devRevealed(), ui: { theme: ui.theme, size: ui.size, lectura: ui.lectura },
+      full: isFull(), level: accessLevel(), devMode: devMode(), devRevealed: devRevealed(), ui: { theme: ui.theme, size: ui.size, lectura: ui.lectura }, training,
       progress: { questions: settingsProgressQuestionCount, topics: store.getSeen().length, sessions: store.getSessions().length, openReports: Object.values(store.getReports()).filter(report => report.st === 'abierto').length },
       exam: String(store.getCfg().exam || ''), version: APP_VERSION, build: APP_BUILD.split('+')[1] || APP_BUILD, update: appUpdates.getAvailableUpdate()?.version || null,
       offline: settingsOffline, index: settingsIndex ? { questions: settingsIndex.n, scenarios: settingsIndex.nsup } : null,
@@ -275,6 +279,7 @@ const settingsServices = {
     const current = normalizeUiPreferences(store.getCfg().ui);
     store.setCfg('ui', { ...current, [key]: key === 'theme' ? value : Number(value) });
   },
+  setTrainingPreferences(value: TrainingPreferences) { store.setCfg('training', normalizeTrainingPreferences(value)); },
   setExam(value: string) { if (/^\d{4}-\d\d-\d\d$/.test(value)) store.setCfg('exam', value); },
   setDevMode(value: string | null) { setDevMode(value); notifyAccessChange(); notifySettings(); },
   revealDev() { revealDev(); notifySettings(); },
@@ -630,10 +635,15 @@ export const studyServices: StudyServices = {
       const progress = await getHomeProgressSummary(localProgressRepository);
       if (account !== store.accountId()) throw new Error('La cuenta cambió mientras se cargaba el resumen de inicio.');
       const due = (await dueQuestionIds()).length;
+      const cardDueCount = Object.values(store.getCards()).filter(record => record[3] >= 0 && record[4] <= now()).length;
+      const failureCount = falladasIds().length;
       const streak = calculateStudyStreak(progress.answerTimestamps, Date.now());
       const exam = store.getCfg().exam;
       const daysToExam = exam ? Math.max(0, Math.ceil((+new Date(exam + 'T09:00:00') - Date.now()) / 86400000)) : null;
       const mastery = await dominioTemas(index);
+      const trainingPreferences = normalizeTrainingPreferences(store.getCfg().training);
+      const weakTopics = mastery.filter(topic => topic.est === 'r').sort((left, right) => left.score - right.score);
+      const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date().getDay(), dueCount: due, cardDueCount, failureCount, weakTopicCount: weakTopics.length, weakTopicIds: weakTopics.map(topic => topic.id) });
       return { seen: progress.seen, total: index.n, answers: progress.answers, streak, daysToExam, due,
         completedSessions: store.getSessions().length,
         blocks: BLOQUES.map(([code, name]) => {
@@ -641,14 +651,17 @@ export const studyServices: StudyServices = {
           return { name, total: topics.length, mastered: topics.filter(topic => topic.est === 'g').length,
             assessed: topics.filter(topic => topic.est !== 'n').length };
         }),
-        cardsDue: Object.values(store.getCards()).filter(record => record[3] >= 0 && record[4] <= now()).length,
-        quickCount: progress.quickCount, slowCount: progress.slowCount, failures: falladasIds().length,
+        cardsDue: cardDueCount,
+        quickCount: progress.quickCount, slowCount: progress.slowCount, failures: failureCount,
         studiedTopics: store.getSeen().length, topicCount: index.temas.length,
         assessedTopics: mastery.filter(topic => topic.est !== 'n').length,
         weakTopics: mastery.filter(topic => topic.est === 'r').length,
-        masteredTopics: mastery.filter(topic => topic.est === 'g').length,
+        masteredTopics: mastery.filter(topic => topic.est === 'g').length, trainingPlan, trainingSession: trainingSession.getSession(),
       };
     },
+    startTrainingSession(plan) { return trainingSession.start(plan); },
+    startTrainingActivity() { return trainingSession.startCurrentActivity(); },
+    completeTrainingActivity(activity: TrainingActivity) { return trainingSession.completeActivity(activity); },
     quickSession, startReview: startRepaso, openMenu,
     login: sync.login, requestAccess: async () => await sync.requestAccess(), notify: toast,
   },

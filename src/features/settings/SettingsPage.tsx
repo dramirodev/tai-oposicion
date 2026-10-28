@@ -24,6 +24,7 @@ export function SettingsPage() {
     <UpdateSection settings={settings} snapshot={snapshot} />
     {(snapshot.devRevealed || snapshot.devMode !== null) && <DeveloperSection settings={settings} snapshot={snapshot} />}
     <ExamSection settings={settings} snapshot={snapshot} />
+    {snapshot.full && <TrainingScheduleSection settings={settings} snapshot={snapshot} />}
     {snapshot.full && <ReportsSection snapshot={snapshot} onOpen={() => navigate('/errores')} />}
     <OfflineSection settings={settings} snapshot={snapshot} />
     {snapshot.full && <AnkiSection settings={settings} />}
@@ -124,6 +125,45 @@ function DeveloperSection({ settings, snapshot }: { settings: SettingsServices; 
 
 function ExamSection({ settings, snapshot }: { settings: SettingsServices; snapshot: SettingsSnapshot }) {
   return <section className="card"><h2 className="h3">Objetivo de estudio</h2><label className="sm" htmlFor="exam-date">Fecha objetivo para la cuenta atrás (no confirma una convocatoria oficial)</label><input id="exam-date" type="date" value={snapshot.exam} onChange={event => settings.setExam(event.target.value)} /><p className="sm">Elige tu fecha de planificación; comprueba la fecha oficial en la convocatoria.</p></section>;
+}
+
+const trainingDays = [
+  { index: 1, name: 'Lunes' }, { index: 2, name: 'Martes' }, { index: 3, name: 'Miércoles' },
+  { index: 4, name: 'Jueves' }, { index: 5, name: 'Viernes' }, { index: 6, name: 'Sábado' }, { index: 0, name: 'Domingo' },
+] as const;
+const trainingActivities = [
+  ['activeRecall', 'Active Recall con tarjetas'], ['topicTest', 'Preguntas de tema'],
+  ['failures', 'Revisión de preguntas falladas'], ['spacedReviews', 'Repasos vencidos'],
+] as const;
+
+function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsServices; snapshot: SettingsSnapshot }) {
+  const updateMinutes = (day: number, rawValue: string) => {
+    const minutesByDay = [...snapshot.training.minutesByDay] as typeof snapshot.training.minutesByDay;
+    const parsed = Number(rawValue);
+    minutesByDay[day] = Number.isFinite(parsed) ? Math.max(0, Math.min(240, Math.round(parsed))) : 0;
+    settings.setTrainingPreferences({ ...snapshot.training, minutesByDay });
+  };
+  const updateActivity = (activity: typeof trainingActivities[number][0], enabled: boolean) => {
+    const activities = enabled
+      ? [...new Set([...snapshot.training.activities, activity])]
+      : snapshot.training.activities.filter(item => item !== activity);
+    if (!activities.length) return;
+    settings.setTrainingPreferences({ ...snapshot.training, activities });
+  };
+  return <section className="card"><h2 className="h3">Entrenamiento semanal</h2>
+    <p>Este tiempo forma parte de tus horas de estudio. Un día con 0 minutos es descanso; el entrenador no acumula su carga para mañana.</p>
+    <div className="training-schedule">{trainingDays.map(day => <label className="training-day" key={day.index}>
+      <span>{day.name}</span><span className="training-minute-input"><input aria-label={`${day.name}: minutos de entrenamiento`} type="number" min="0" max="240" step="5" value={snapshot.training.minutesByDay[day.index]} onChange={event => updateMinutes(day.index, event.target.value)} /> min</span>
+    </label>)}</div>
+    <label className="training-intro">Día habitual de introducción de temas
+      <select value={snapshot.training.introductionDay} onChange={event => settings.setTrainingPreferences({ ...snapshot.training, introductionDay: Number(event.target.value) })}>
+        {trainingDays.map(day => <option key={day.index} value={day.index}>{day.name}</option>)}
+      </select>
+    </label>
+    <fieldset className="training-activities"><legend>Actividades disponibles</legend>
+      {trainingActivities.map(([activity, label]) => <label key={activity}><input type="checkbox" checked={snapshot.training.activities.includes(activity)} disabled={snapshot.training.activities.length === 1 && snapshot.training.activities[0] === activity} onChange={event => updateActivity(activity, event.target.checked)} /> {label}</label>)}
+    </fieldset>
+  </section>;
 }
 
 function ReportsSection({ snapshot, onOpen }: { snapshot: SettingsSnapshot; onOpen(): void }) {

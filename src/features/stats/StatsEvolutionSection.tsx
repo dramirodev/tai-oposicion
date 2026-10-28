@@ -28,6 +28,18 @@ function MetricHistory({ snapshot, weekly, evolution, saveEvolution }: { snapsho
   </div>;
 }
 
+function CardRetentionForecast({ snapshot }: { snapshot: StatsSnapshot }) {
+  const forecast = snapshot.predictedCardRetention;
+  const points = forecast?.points.map(point => ({ timestamp: snapshot.generatedAt + point.days * 86_400_000, value: Math.round(point.recallProbability * 1000) / 10 })) || [];
+  return <><h3>Retención prevista de tarjetas</h3><div className="card">
+    {forecast ? <>
+      <Suspense fallback={<PageLoading variant="chart" />}><StatsTrendChart points={points} label="Retención prevista por FSRS para tarjetas programadas" metric="Recuerdo previsto" suffix="%" emptyMessage="Aún no se puede calcular una previsión." /></Suspense>
+      <p className="legend">Estimación del modelo FSRS-6 para {forecast.reviewedCards} {forecast.reviewedCards === 1 ? 'tarjeta' : 'tarjetas'} con una valoración registrada; no es un resultado observado ni representa todo el temario.</p>
+      <div className="table-scroll" role="region" aria-label="Datos de retención prevista en tarjetas" tabIndex={0}><table className="tb"><caption>Recuerdo previsto por FSRS</caption><thead><tr><th>En</th><th>Estimación</th></tr></thead><tbody>{forecast.points.map(point => <tr key={point.days}><td>{point.days} días</td><td>{Math.round(point.recallProbability * 100)}%</td></tr>)}</tbody></table></div>
+    </> : <p className="sub">Datos insuficientes: todavía no hay tarjetas valoradas con estado FSRS.</p>}
+  </div></>;
+}
+
 function SlowQuestions({ snapshot, stats, onlyCorrect, setOnlyCorrect, setMessage }: { snapshot: StatsSnapshot; stats: StatsServices; onlyCorrect: boolean; setOnlyCorrect: (value: boolean) => void; setMessage: (value: string) => void }) {
   const questions = snapshot.slow.filter(item => !onlyCorrect || item.lastOutcome === 1);
   const practice = async () => {
@@ -54,7 +66,7 @@ export function StatsEvolutionSection({ snapshot, stats, questionWeeks, weekly, 
   strategy: string; setStrategy: (value: string) => void; strategyDays: number; setStrategyDays: (value: number) => void;
   strategyBusy: boolean; setStrategyBusy: (value: boolean) => void;
 }) {
-  return <section aria-label="Evolución del estudio"><h2>Evolución</h2><h3>Resultados de preguntas</h3><QuestionHistory weeks={questionWeeks} /><MetricHistory snapshot={snapshot} weekly={weekly} evolution={evolution} saveEvolution={saveEvolution} />
+  return <section aria-label="Evolución del estudio"><h2>Evolución</h2><h3>Resultados de preguntas</h3><QuestionHistory weeks={questionWeeks} /><MetricHistory snapshot={snapshot} weekly={weekly} evolution={evolution} saveEvolution={saveEvolution} /><CardRetentionForecast snapshot={snapshot} />
     <SlowQuestions snapshot={snapshot} stats={stats} onlyCorrect={onlyCorrect} setOnlyCorrect={setOnlyCorrect} setMessage={setMessage} />
     <StrategyAnalysis stats={stats} strategy={strategy} setStrategy={setStrategy} days={strategyDays} setDays={setStrategyDays} busy={strategyBusy} setBusy={setStrategyBusy} />
   </section>;

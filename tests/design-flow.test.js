@@ -86,7 +86,7 @@ it('anticipa el número efectivo de tarjetas y su próximo repaso sin valorarlas
  await vi.waitFor(()=>expect(document.querySelector('#card-plan')?.textContent).toContain('11 tarjetas'));
  const before=JSON.stringify(store.getCards());document.querySelector('#go').click();await waitText('Mostrar respuesta');document.querySelector('#show').click();
  await vi.waitFor(()=>expect(document.querySelector('[data-g="0"]')).not.toBeNull());
- expect(document.querySelector('[data-g="0"]').textContent).toContain('2 días');
+ expect(document.querySelector('[data-g="0"]').textContent).toContain('1 minuto');
  expect(JSON.stringify(store.getCards())).toBe(before);
  document.querySelector('#exit').click();await waitText('Sesión rápida');
 });

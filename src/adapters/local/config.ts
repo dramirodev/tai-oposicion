@@ -7,6 +7,9 @@ const oneOf = (values: readonly unknown[]) => (value: unknown): boolean => value
 const bool = (value: unknown) => typeof value === 'boolean';
 const temas = (value: unknown) => Array.isArray(value) && value.every(value => typeof value === 'string' && /^T\d\.\d\d$/.test(value));
 const origins = (value: unknown) => Array.isArray(value) && value.every(value => ['O', 'A', 'G'].includes(value));
+const trainingMinutes = (value: unknown) => Array.isArray(value) && value.length === 7 && value.every(integer(0, 240));
+const trainingActivities = (value: unknown) => Array.isArray(value) && value.length >= 1 && value.length <= 4 && new Set(value).size === value.length
+  && value.every(oneOf(['activeRecall', 'topicTest', 'failures', 'spacedReviews']));
 const scope = oneOf(['vistos', 'todos']);
 type Check = (value: unknown) => boolean;
 const schemas: Record<string, { defaults: Record<string, unknown>; fields: Record<string, Check> }> = {
@@ -23,6 +26,7 @@ const schemas: Record<string, { defaults: Record<string, unknown>; fields: Recor
   } },
   simc: { defaults: {}, fields: { a: integer(0, 299), b: integer(0, 299) } },
   slow: { defaults: {}, fields: { ok: bool } },
+  training: { defaults: {}, fields: { minutesByDay: trainingMinutes, introductionDay: integer(0, 6), activities: trainingActivities } },
 };
 function cleanValue(itemValue: unknown, depth = 0): unknown {
   if (itemValue === null || typeof itemValue === 'boolean') return itemValue;

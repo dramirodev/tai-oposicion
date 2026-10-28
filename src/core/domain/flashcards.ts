@@ -20,45 +20,52 @@ export interface FlashcardSummary {
   due: number;
 }
 
-export function selectFlashcards(
+function classifyFlashcards(
   cards: readonly FlashcardCandidate[],
   reviews: Readonly<Record<string, CardReview | undefined>>,
-  { count, now, maxNew = 10, seenTopics = null }: FlashcardSelectionOptions,
-): string[] {
+  now: number,
+  seenTopics: ReadonlySet<string> | null,
+): { due: { id: string; topicId: string; dueAt: number }[]; fresh: FlashcardCandidate[] } {
   const due: { id: string; topicId: string; dueAt: number }[] = [];
   const fresh: FlashcardCandidate[] = [];
   for (const card of cards) {
     const review = reviews[card.id];
     if (review) {
-      if (review.intervalStep >= 0 && review.dueAt <= now) {
-        due.push({ id: card.id, topicId: card.topicId, dueAt: review.dueAt });
-      }
-    } else if (!seenTopics || seenTopics.has(card.topicId)) {
-      fresh.push(card);
-    }
+      if (review.intervalStep >= 0 && review.dueAt <= now) due.push({ id: card.id, topicId: card.topicId, dueAt: review.dueAt });
+    } else if (!seenTopics || seenTopics.has(card.topicId)) fresh.push(card);
   }
-  const selected = selectSpacedReviews(due, count).map(card => card.id);
-  const availableForNew = Math.min(count - selected.length, maxNew);
-  if (availableForNew > 0 && fresh.length) {
-    const byTopic = new Map<string, string[]>();
-    for (const card of fresh) {
-      if (!byTopic.has(card.topicId)) byTopic.set(card.topicId, []);
-      byTopic.get(card.topicId)!.push(card.id);
-    }
-    const topicIds = [...byTopic.keys()].sort();
-    let added = 0;
-    while (added < availableForNew && topicIds.some(topicId => byTopic.get(topicId)!.length)) {
-      for (const topicId of topicIds) {
-        if (added >= availableForNew) break;
-        const id = byTopic.get(topicId)!.shift();
-        if (id) {
-          selected.push(id);
-          added++;
-        }
-      }
+  return { due, fresh };
+}
+
+function selectNewCards(fresh: readonly FlashcardCandidate[], count: number): string[] {
+  if (count <= 0 || !fresh.length) return [];
+  const byTopic = new Map<string, string[]>();
+  for (const card of fresh) {
+    const topicCards = byTopic.get(card.topicId);
+    if (topicCards) topicCards.push(card.id);
+    else byTopic.set(card.topicId, [card.id]);
+  }
+  const topicIds = [...byTopic.keys()].sort();
+  const selected: string[] = [];
+  while (selected.length < count && topicIds.some(topicId => byTopic.get(topicId)!.length)) {
+    for (const topicId of topicIds) {
+      if (selected.length >= count) break;
+      const id = byTopic.get(topicId)!.shift();
+      if (id) selected.push(id);
     }
   }
   return selected;
+}
+
+export function selectFlashcards(
+  cards: readonly FlashcardCandidate[],
+  reviews: Readonly<Record<string, CardReview | undefined>>,
+  { count, now, maxNew = 10, seenTopics = null }: FlashcardSelectionOptions,
+): string[] {
+  const { due, fresh } = classifyFlashcards(cards, reviews, now, seenTopics);
+  const dueIds = selectSpacedReviews(due, count).map(card => card.id);
+  const availableForNew = Math.min(count - dueIds.length, maxNew);
+  return [...dueIds, ...selectNewCards(fresh, availableForNew)];
 }
 
 export function summarizeFlashcards(

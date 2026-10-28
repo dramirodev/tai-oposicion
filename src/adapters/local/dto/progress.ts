@@ -1,4 +1,5 @@
 export type StatRecordDto = number[];
+/** Legacy six-field card tuple with an optional versioned numeric FSRS extension. */
 export type CardRecordDto = number[];
 export interface SessionDto { id: string; ts: number; kind: 'sim'|'rev'|'test'; n: number; a: number; f: number; b: number; secs: number; nota: number; temas: Record<string,[number,number]>; tipos: Record<string,[number,number]>; fails: string[]; titulo: string; interrupted?: boolean; porTiempo?: boolean }
 export interface ReportDto { ts: number; tema: string; motivo: string; nota: string; st: 'abierto'|'resuelto'|'quitado' }

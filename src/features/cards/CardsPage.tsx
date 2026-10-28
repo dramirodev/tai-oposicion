@@ -46,8 +46,8 @@ function CompletedSession({ services, onExit, onComplete, headingRef }: {
   const nextDue = getNextDueDate(services);
   return <>
     <h1 ref={headingRef} tabIndex={-1}>Sesión terminada</h1>
-    <div className="grid"><div className="stat"><b>{known}</b><span>lo sabía</span></div><div className="stat"><b>{unsure}</b><span>dudaba</span></div><div className="stat"><b>{failed}</b><span>fallé</span></div><div className="stat"><b>{count ? Math.round(known * 100 / count) : 0}%</b><span>retención</span></div></div>
-    <p className="sub">{failed + unsure ? 'Las que fallaste o dudaste vuelven en 2 días.' : '¡Todas recordadas!'}{nextDue ? ` Próximo repaso: ${nextDue.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short' })}.` : ''}</p>
+    <div className="grid"><div className="stat"><b>{known}</b><span>lo sabía</span></div><div className="stat"><b>{unsure}</b><span>dudaba</span></div><div className="stat"><b>{failed}</b><span>fallé</span></div><div className="stat"><b>{count ? Math.round(known * 100 / count) : 0}%</b><span>marqué «lo sabía»</span></div></div>
+    <p className="sub">{failed + unsure ? 'Las valoraciones se han usado para calcular el siguiente repaso.' : '¡Todas recordadas!'}{nextDue ? ` Próximo repaso: ${nextDue.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short' })}.` : ''}</p>
     <button className="btn" id="otra" onClick={onComplete}>Otra sesión</button> <button className="btn sec" id="ini" onClick={onExit}>Inicio</button>
   </>;
 }

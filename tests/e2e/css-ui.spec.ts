@@ -225,6 +225,7 @@ test('el espaciado de texto conserva el reflujo con una sesión en curso', async
     await page.addStyleTag({ content: '*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}' });
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
   }
+  await page.locator('summary').filter({ hasText: 'Lectura y carga de repasos' }).click();
   await expect(page.locator('.chart-scroll')).toBeVisible();
 });
 

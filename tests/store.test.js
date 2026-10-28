@@ -198,22 +198,26 @@ describe('tarjetas (flashcards)', () => {
     expect(st.cardRec('FC-Q-GEN-T3.04-57.v1')).toEqual([0, 0, T0, 0, T0, 0]);
     expect(st.addFallo('bad id!', T0)).toBe(false);
   });
-  it('lo sabía sube de caja con los intervalos 2/5/14/30/60 y luego domina', () => {
+  it('guarda el estado FSRS y conserva contadores históricos durante los repasos', () => {
     const id = 'FC-T1.01-001';
-    st.gradeCard(id, 2, T0); expect(st.cardRec(id)[3]).toBe(0); expect(st.cardRec(id)[4]).toBe(T0 + 2 * D);
-    st.gradeCard(id, 2, T0 + 2 * D); expect(st.cardRec(id)[3]).toBe(1); expect(st.cardRec(id)[4]).toBe(T0 + 7 * D);
-    st.gradeCard(id, 2, T0 + 7 * D); st.gradeCard(id, 2, T0 + 21 * D); st.gradeCard(id, 2, T0 + 51 * D);
-    expect(st.cardRec(id)[3]).toBe(4); expect(st.cardRec(id)[4]).toBe(T0 + 51 * D + 60 * D);
-    st.gradeCard(id, 2, T0 + 120 * D); expect(st.cardRec(id)[3]).toBe(-1); expect(st.cardRec(id)[4]).toBe(0);
+    const first = st.gradeCard(id, 2, T0);
+    expect(first).toHaveLength(17); expect(first[6]).toBe(1); expect(first[7]).toBe(6); expect(first[13]).toBe(1); expect(first[4]).toBeGreaterThan(T0);
+    const second = st.gradeCard(id, 2, first[4]);
+    expect(second[0]).toBe(2); expect(second[1]).toBe(2); expect(second[13]).toBe(2); expect(second[4]).toBeGreaterThan(first[4]);
+    const third = st.gradeCard(id, 0, second[4]);
+    expect(third[0]).toBe(3); expect(third[1]).toBe(2); expect(third[5]).toBe(0); expect(third[13]).toBe(3);
   });
-  it('fallé y dudaba vuelven a +2 días y no suman acierto', () => {
+  it('fallar o dudar no suma aciertos y cada valoración calcula su propio vencimiento', () => {
     const id = 'FC-T1.01-002';
-    st.gradeCard(id, 2, T0); st.gradeCard(id, 2, T0 + 2 * D);
-    st.gradeCard(id, 1, T0 + 7 * D); expect(st.cardRec(id)[3]).toBe(0); expect(st.cardRec(id)[4]).toBe(T0 + 9 * D); expect(st.cardRec(id)[1]).toBe(2);
-    st.gradeCard(id, 0, T0 + 9 * D); expect(st.cardRec(id)[5]).toBe(0);
+    const first = st.gradeCard(id, 2, T0);
+    const second = st.gradeCard(id, 1, first[4]);
+    expect(second[1]).toBe(1); expect(second[5]).toBe(1); expect(second[4]).toBeGreaterThan(first[4]);
+    const third = st.gradeCard(id, 0, second[4]);
+    expect(third[1]).toBe(1); expect(third[5]).toBe(0); expect(third[4]).toBeGreaterThan(second[4]);
   });
-  it('una tarjeta de fallo valorada «lo sabía» pasa a +2 días (primer acierto)', () => {
-    st.addFallo('q1', T0); st.gradeCard('FC-Q-q1', 2, T0); expect(st.cardRec('FC-Q-q1')[3]).toBe(0); expect(st.cardRec('FC-Q-q1')[4]).toBe(T0 + 2 * D);
+  it('una tarjeta nacida de una pregunta crea estado de repetición al valorarla', () => {
+    st.addFallo('q1', T0); const review = st.gradeCard('FC-Q-q1', 2, T0);
+    expect(review[6]).toBe(1); expect(review[7]).toBe(6); expect(review[13]).toBe(1); expect(review[4]).toBeGreaterThan(T0);
   });
   it('valida basura y rechaza ids o notas inválidas', () => {
     expect(st.gradeCard('mal id', 2, T0)).toBeNull(); expect(st.gradeCard('FC-X-1', 7, T0)).toBeNull();
@@ -224,10 +228,27 @@ describe('tarjetas (flashcards)', () => {
   it('mergeCards gana lo más reciente, exporta/importa y persiste', async () => {
     st.gradeCard('FC-T1.01-003', 2, T0);
     expect(st.mergeCards({ 'FC-T1.01-003': [5, 5, T0 - 1, 2, 9, 2] })).toBe(false);
-    expect(st.mergeCards({ 'FC-T1.01-003': [5, 5, T0 + 1, 2, 9, 2] })).toBe(true);
     const txt = st.exportAll(); st.resetAll(); expect(st.cardRec('FC-T1.01-003')).toBeUndefined();
-    st.importAll(txt); expect(st.cardRec('FC-T1.01-003')[0]).toBe(5);
-    vi.resetModules(); const st2 = await import('../src/adapters/local/legacy-store.js'); expect(st2.cardRec('FC-T1.01-003')[0]).toBe(5);
+    st.importAll(txt); expect(st.cardRec('FC-T1.01-003')[0]).toBe(1); expect(st.cardRec('FC-T1.01-003')[6]).toBe(1); expect(st.cardRec('FC-T1.01-003')[7]).toBe(6);
+    expect(st.mergeCards({ 'FC-T1.01-003': [5, 5, T0 + D, 2, T0 + D + 9, 2] })).toBe(true);
+    expect(st.cardRec('FC-T1.01-003')[6]).toBe(1); expect(st.cardRec('FC-T1.01-003')[7]).toBe(6);
+    expect(st.cardRec('FC-T1.01-003')[0]).toBe(5); expect(st.cardRec('FC-T1.01-003')[1]).toBe(5);
+    const merged = st.exportAll(); st.resetAll(); expect(st.cardRec('FC-T1.01-003')).toBeUndefined();
+    st.importAll(merged); expect(st.cardRec('FC-T1.01-003')[0]).toBe(5);
+    vi.resetModules(); const st2 = await import('../src/adapters/local/legacy-store.js'); expect(st2.cardRec('FC-T1.01-003')[0]).toBe(5); expect(st2.cardRec('FC-T1.01-003')[7]).toBe(6);
+  });
+  it('conserva FSRS si una app antigua sincroniza un registro reciente sin valoración explícita', () => {
+    const id = 'FC-T1.01-legacy-sync';
+    const current = st.gradeCard(id, 2, T0);
+    const nextTimestamp = current[2] + D;
+    const remote = [current[0] + 1, current[1], nextTimestamp, 1, nextTimestamp + D];
+
+    expect(st.mergeCards({ [id]: remote })).toBe(true);
+    const merged = st.cardRec(id);
+    expect(merged.slice(6)).toEqual(current.slice(6));
+    expect(merged[0]).toBe(current[0] + 1);
+    expect(merged[1]).toBe(current[1]);
+    expect(merged[4]).toBe(current[4]);
   });
   it('removeCard borra la tarjeta', () => { st.addFallo('q9', T0); st.removeCard('FC-Q-q9'); expect(st.cardRec('FC-Q-q9')).toBeUndefined(); });
 });

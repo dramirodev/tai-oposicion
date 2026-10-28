@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router';
 import { useStudyService, type TestConfiguration, type TestTopic } from '../../shared/ui/study-services.js';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 import { topicsForTest, toggleTestTopics, updateTestConfiguration } from './test-controller.js';
@@ -11,18 +12,46 @@ const blocks = [
 
 export function TestPage() {
   const test = useStudyService('test');
+  const [searchParams] = useSearchParams();
+  const newTopicRecommendation = searchParams.get('recommendation') === 'new-topic';
+  const suggestedTopicId = searchParams.get('topic');
   const [configuration, setConfiguration] = useState(() => test.getConfiguration());
   const [topics, setTopics] = useState<readonly TestTopic[]>([]);
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [starting, setStarting] = useState(false);
   const [message, setMessage] = useState('');
+  const [recommendationMessage, setRecommendationMessage] = useState('');
 
   useEffect(() => {
     let active = true;
-    void test.loadTopics().then(value => { if (active) { setTopics(value); setLoading(false); } }).catch(() => { if (active) { setMessage('No se pudieron cargar los temas. Comprueba la conexión e inténtalo de nuevo.'); setLoading(false); } });
+    void test.loadTopics().then(value => {
+      if (!active) return;
+      setTopics(value); setLoading(false);
+      if (suggestedTopicId) {
+        const suggestedTopic = value.find(topic => topic.id === suggestedTopicId && topic.answerCount > 0);
+        if (!suggestedTopic) {
+          setRecommendationMessage('El tema recomendado ya no tiene respuestas registradas. Elige un tema manualmente para continuar.');
+          return;
+        }
+        const next = updateTestConfiguration(test.getConfiguration(), { all: false, selected: [suggestedTopic.id], mode: 'aleatorio' });
+        test.saveConfiguration(next); setConfiguration(next);
+        setRecommendationMessage(`Tema para reforzar: ${suggestedTopic.id} · ${suggestedTopic.name}. Puedes cambiar la selección antes de empezar.`);
+        return;
+      }
+      if (!newTopicRecommendation) return;
+      const studied = new Set(test.seenTopics());
+      const nextTopic = value.find(topic => topic.total > 0 && topic.answerCount === 0 && !studied.has(topic.id));
+      if (!nextTopic) {
+        setRecommendationMessage('No hay temas nuevos sin respuestas disponibles. Elige un tema manualmente para continuar el entrenamiento.');
+        return;
+      }
+      const next = updateTestConfiguration(test.getConfiguration(), { all: false, selected: [nextTopic.id], mode: 'nuevas' });
+      test.saveConfiguration(next); setConfiguration(next);
+      setRecommendationMessage(`Tema nuevo recomendado: ${nextTopic.id} · ${nextTopic.name}. Puedes cambiar la selección antes de empezar.`);
+    }).catch(() => { if (active) { setMessage('No se pudieron cargar los temas. Comprueba la conexión e inténtalo de nuevo.'); setLoading(false); } });
     return () => { active = false; };
-  }, [test]);
+  }, [test, newTopicRecommendation, suggestedTopicId]);
 
   const visibleTopics = useMemo(() => topicsForTest(topics, query), [topics, query]);
   const update = (change: Partial<TestConfiguration>) => {
@@ -46,6 +75,7 @@ export function TestPage() {
   const selected = new Set(configuration.selected);
   return <>
     <h1>Test por tema <HelpIconLink topic="sesiones" label="Ayuda sobre los controles del test" /></h1>
+    {recommendationMessage && <p className="note" role="status">{recommendationMessage}</p>}
     <section className="card" aria-label="Configuración del test">
       <h2 className="h3">Terminar por</h2>
       <div className="seg" role="group" aria-label="Límite del test">
