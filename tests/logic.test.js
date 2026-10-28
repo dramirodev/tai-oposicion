@@ -292,9 +292,9 @@ describe('repaso espaciado: prioridad, calendario y motivos', () => {
   });
   it('cargaRepasos agrupa por día y acumula las atrasadas en hoy', () => {
     const now = new Date(2026, 9, 22, 15).getTime(), D = 86400000, d0 = new Date(2026, 9, 22).getTime();
-    const st = { a: [1, 0, 0, 0, d0 - 3 * D, 0], b: [1, 0, 0, 1, d0 + 1000, 0], c: [1, 0, 0, 0, d0 + 2 * D + 5, 0], d: [1, 0, 0, -1, 0, 0], e: [1, 0, 0, 2, d0 + 40 * D, 0] };
+    const st = { a: [1, 0, 0, 0, d0 - 3 * D, 0], b: [1, 0, 0, 1, d0 + 1000, 0], c: [1, 0, 0, 0, d0 + 2 * D + 5, 0], d: [1, 0, 0, -1, 0, 0], e: [1, 0, 0, 2, d0 + 40 * D, 0], syllabus: [1, 0, d0, -1, 0, 1, 0, 0, 0, 0, 0, 1, d0 + D] };
     const c = cargaRepasos(st, now, 14);
-    expect(c[0]).toBe(2); expect(c[2]).toBe(1); expect(c.reduce((a, b) => a + b, 0)).toBe(3);
+    expect(c[0]).toBe(2); expect(c[2]).toBe(1); expect(c[3]).toBe(1); expect(c.reduce((a, b) => a + b, 0)).toBe(4);
   });
   it('motivosFallo cuenta solo si la última respuesta fue fallo', () => {
     const st = { a: [1, 0, 0, 0, 0, 0, 0, 0, 0, 1], b: [1, 0, 0, 0, 0, 0, 0, 0, 0, 2], c: [1, 1, 0, -1, 0, 1, 0, 0, 0, 2], d: [1, 0, 0, 0, 0, 0, 0, 0, 0, 2] };

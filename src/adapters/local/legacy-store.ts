@@ -268,7 +268,7 @@ export function toggleFlag(id: string, tema: string): number {
   if (syncer) syncer.schedule();
   return statRecord[6];
 }
-// Marca independiente de respuestas y del calendario; viaja en el mismo registro sincronizado.
+// La marca no altera respuestas ni vencimientos guardados; genera una comprobación diferida derivada al seleccionar repasos.
 export function setReviewed(id: string, tema: string, value: boolean): void {
   const statRecord = appState.stats[id]; if (!statRecord || typeof value !== 'boolean') return;
   const mapped = statsMapper.toDomain(statRecord);

@@ -9,7 +9,7 @@ import {
   questionPriority,
   shuffleItems,
 } from '../domain/selection.js';
-import { hasPendingFailure, selectSpacedReviews } from '../domain/spaced-repetition.js';
+import { hasPendingFailure, questionReviewDueAt, selectSpacedReviews } from '../domain/spaced-repetition.js';
 import { calculateTrapRates, selectTrapQuestions } from '../domain/traps.js';
 import type { QuestionRecord } from '../domain/question-record.js';
 import type { StudyCatalogIndex } from '../domain/study-catalog.js';
@@ -33,15 +33,26 @@ export function createStudyQuestionSelection(
   const questionAllowed = (question: Question, allowedOrigins: ReadonlySet<string>): boolean =>
     isQuestionAllowed(question.o, question.r, allowedOrigins);
 
+  async function loadQuestionsInRequestedOrder(ids: readonly string[]): Promise<Question[]> {
+    if (!ids.length) return [];
+    const loaded = await catalog.getQuestions([...ids]);
+    const byId = new Map(loaded.map(question => [question.i, question]));
+    return ids.flatMap(id => {
+      const question = byId.get(id);
+      return question ? [question] : [];
+    });
+  }
+
   async function dueQuestionIds(): Promise<string[]> {
     await catalog.getMetadata();
     const timestamp = catalog.now();
     return Object.entries(progress.getAllQuestionStats())
-      .filter(([id, statistics]) => (statistics.intervalStep ?? -1) >= 0
-        && (statistics.dueAt ?? 0) <= timestamp
-        && !!catalog.getTopicForQuestion(id))
-      .sort((left, right) => (left[1].dueAt ?? 0) - (right[1].dueAt ?? 0))
-      .map(([id]) => id);
+      .map(([id, statistics]) => ({ id, dueAt: questionReviewDueAt(statistics) }))
+      .filter((entry): entry is { id: string; dueAt: number } => entry.dueAt !== undefined
+        && entry.dueAt <= timestamp
+        && !!catalog.getTopicForQuestion(entry.id))
+      .sort((left, right) => left.dueAt - right.dueAt)
+      .map(entry => entry.id);
   }
 
   const falladasIds = (): string[] => Object.entries(progress.getAllQuestionStats())
@@ -83,7 +94,7 @@ export function createStudyQuestionSelection(
     const allowedOrigins = origins();
     if (!full) return { items: await quickGuest(index, count, allowedOrigins, history), titulo: 'Sesión rápida · una pregunta por tema' };
 
-    const due = (await catalog.getQuestions((await dueQuestionIds()).slice(0, count)))
+    const due = (await loadQuestionsInRequestedOrder((await dueQuestionIds()).slice(0, count)))
       .filter(question => questionAllowed(question, allowedOrigins));
     const seenTopics = new Set(progress.getSeenTopics());
     const statusOrder = { red: 0, yellow: 1, new: 2, green: 3 } as const;
@@ -121,13 +132,14 @@ export function createStudyQuestionSelection(
     const candidates: { id: string; topicId: string; dueAt: number }[] = [];
     for (const [id, statistics] of Object.entries(progress.getAllQuestionStats())) {
       const topicId = catalog.getTopicForQuestion(id);
-      if ((statistics.intervalStep ?? -1) >= 0 && (statistics.dueAt ?? 0) <= timestamp && topicId) {
-        candidates.push({ id, topicId, dueAt: statistics.dueAt ?? 0 });
+      const dueAt = questionReviewDueAt(statistics);
+      if (dueAt !== undefined && dueAt <= timestamp && topicId) {
+        candidates.push({ id, topicId, dueAt });
       }
     }
     const ids = selectSpacedReviews(candidates.map(item => ({ topicId: item.topicId, dueAt: item.dueAt, item })), 30)
       .map(review => review.item.id);
-    return { items: ids.length ? await catalog.getQuestions(ids) : [], titulo: 'Repaso de fallos · más vencidas primero, temas mezclados' };
+    return { items: await loadQuestionsInRequestedOrder(ids), titulo: 'Repaso de fallos · más vencidas primero, temas mezclados' };
   }
 
   async function selectQuestionsForTopics(

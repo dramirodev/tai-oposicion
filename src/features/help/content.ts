@@ -100,7 +100,8 @@ export const HELP_SECTIONS: readonly HelpSection[] = [
     id: 'repaso', title: 'Preguntas falladas y repaso', body: [
       'Una pregunta fallada permanece en la lista hasta que la aciertes tres veces seguidas. Otro fallo reinicia la racha; dejarla en blanco no cuenta como acierto ni como fallo. Marcar que repasaste su tema no la quita de la lista.',
       'En «Falladas» puedes buscar texto, filtrar por tema, por si has repasado el temario y por racha de aciertos. «Practicar estas» inicia una sesión con las preguntas que quedan en el filtro.',
-      '«Repasar hoy» muestra las preguntas que han llegado a su fecha de repaso. El sistema programa el siguiente repaso según cómo valores cada tarjeta.',
+      'Al marcar «Repasada en el temario» en una pregunta, TAI añade una comprobación de recuerdo dos días después. Si haces un intento antes de esa fecha, la comprobación diferida se conserva; un intento puntuado después de su fecha la completa. Si ya tenía otro vencimiento, se utiliza primero el que llegue antes. La marca no cambia respuestas ni puntuación.',
+      '«Repasar hoy» muestra las preguntas que han llegado a su fecha de repaso. El calendario de preguntas se basa en tus respuestas y en las marcas de repaso del temario; el de las tarjetas utiliza la valoración que indicas al revisarlas.',
     ],
   },
   {
