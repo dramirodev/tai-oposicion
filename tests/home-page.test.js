@@ -76,7 +76,7 @@ it('muestra el tiempo orientativo y los motivos de la recomendación de hoy', as
   renderApp(createElement(HomeView, { overview, access:{ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }, run:null, pending:new Set(), onNavigate, onStartReview, onStartTraining:vi.fn(), onCompleteTrainingActivity:vi.fn(), onQuickSession:vi.fn(), onOpenMenu:vi.fn(), onLogin:vi.fn(), onRequestAccess:vi.fn() }));
   expect(await screen.findByRole('heading', { name: 'Entrenamiento de hoy' })).toBeInTheDocument();
   expect(screen.getByText('40 min orientativos')).toBeInTheDocument();
-  expect(screen.getByText(/Prioridad basada en los temas con menor dominio estimado/)).toBeInTheDocument();
+  expect(document.querySelector('#training-topicTest small')).toHaveTextContent(/Prioridad basada en los temas con menor dominio estimado/);
   const user = userEvent.setup();
   await user.click(screen.getByRole('button', { name: /Active Recall/ }));
   expect(onNavigate).toHaveBeenCalledWith('cards');
@@ -147,4 +147,36 @@ it('abre Test centrado en el tema débil recomendado al comenzar la actividad', 
   expect(await screen.findByTestId('current-path')).toHaveTextContent('/test?topic=T2.01');
   expect(services.home.startTrainingSession).toHaveBeenCalledOnce();
   expect(services.home.startTrainingActivity).toHaveBeenCalledOnce();
+});
+
+it('explica con evidencia real por qué recomienda estudiar un tema y declara la regla provisional', async () => {
+  const overview = {
+    completedSessions:0, blocks:[], seen:0, total:100, answers:0, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0,
+    studiedTopics:0, topicCount:36, weakTopics:1, masteredTopics:0, assessedTopics:0, trainingSession:null,
+    trainingPlan:{ weekday:2, minutes:35, restDay:false, activities:[{ activity:'topicTest', minutes:35, reason:'weak-topics', topicId:'T1.02', reviewIntervention:{
+      mode:'broad-reading', confidence:'product-rule', topicId:'T1.02', topicName:'Organización del Estado', reason:'broad-low-results',
+      explanation:'Los resultados recientes son bajos en varias preguntas distintas. Como no hay apartados enlazados, una revisión amplia puede ser útil.', targets:[],
+      evidence:{ distinctQuestionsAttempted:6, latestAnswerAccuracy:33, daysSinceLastQuestionAttempt:10 },
+    } }] },
+  };
+  renderApp(createElement(HomeView, { overview, access:{ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }, run:null, pending:new Set(), onNavigate:vi.fn(), onStartReview:vi.fn(), onStartTraining:vi.fn(), onCompleteTrainingActivity:vi.fn(), onQuickSession:vi.fn(), onOpenMenu:vi.fn(), onLogin:vi.fn(), onRequestAccess:vi.fn() }));
+  await userEvent.setup().click(await screen.findByText('¿Por qué me toca repasar esto?'));
+  expect(screen.getByText(/Organización del Estado/)).toBeInTheDocument();
+  expect(screen.getByText(/6 preguntas distintas/)).toBeInTheDocument();
+  expect(screen.getByText(/no registra la fecha de lectura/)).toBeInTheDocument();
+  expect(screen.getByText(/no es un umbral pedagógico validado/)).toBeInTheDocument();
+});
+
+it('guarda la modalidad de repaso elegida por la persona para conservarla en la planificación', async () => {
+  const onSetTrainingReviewMode = vi.fn();
+  const overview = {
+    completedSessions:0, blocks:[], seen:0, total:100, answers:0, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0,
+    studiedTopics:0, topicCount:36, weakTopics:1, masteredTopics:0, assessedTopics:0, trainingSession:null,
+    trainingPlan:{ weekday:2, minutes:35, restDay:false, activities:[{ activity:'topicTest', minutes:35, reason:'weak-topics', topicId:'T1.02', reviewIntervention:{
+      mode:'active-retrieval', confidence:'provisional', topicId:'T1.02', topicName:'Organización del Estado', reason:'check-before-rereading', explanation:'Comprueba primero qué recuerdas.', targets:[], evidence:{ distinctQuestionsAttempted:2, latestAnswerAccuracy:50, daysSinceLastQuestionAttempt:8 },
+    } }] },
+  };
+  renderApp(createElement(HomeView, { overview, access:{ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }, run:null, pending:new Set(), onNavigate:vi.fn(), onStartReview:vi.fn(), onStartTraining:vi.fn(), onCompleteTrainingActivity:vi.fn(), onSetTrainingReviewMode, onQuickSession:vi.fn(), onOpenMenu:vi.fn(), onLogin:vi.fn(), onRequestAccess:vi.fn() }));
+  await userEvent.setup().selectOptions(await screen.findByRole('combobox', { name:'Modalidad de repaso para Organización del Estado' }), 'selective-reading');
+  expect(onSetTrainingReviewMode).toHaveBeenCalledWith('T1.02', 'selective-reading');
 });

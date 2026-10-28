@@ -44,6 +44,11 @@ describe('repaso espaciado', () => {
     vi.resetModules(); const st2 = await import('../src/adapters/local/legacy-store.js');
     expect(st2.rec('q1')[0]).toBe(1); expect(st2.getSeen()).toEqual(['T1.01']);
   });
+  it('persiste la modalidad de repaso manual por tema y la recupera tras recargar', async () => {
+    st.setCfg('training', { reviewModesByTopic: { 'T1.02': 'selective-reading' } });
+    vi.resetModules(); const st2 = await import('../src/adapters/local/legacy-store.js');
+    expect(st2.getCfg().training.reviewModesByTopic).toEqual({ 'T1.02': 'selective-reading' });
+  });
 });
 
 describe('motivo del fallo', () => {

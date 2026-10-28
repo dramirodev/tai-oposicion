@@ -68,6 +68,21 @@ describe('planificación diaria de estudio', () => {
     expect(plan.activities.find(item => item.activity === 'topicTest')).toMatchObject({ reason:'weak-topics', topicId:'T3.02' });
   });
 
+  it('adjunta una explicación de intervención basada en el historial real del tema', () => {
+    const plan = buildDailyTrainingPlan({
+      preferences: DEFAULT_TRAINING_PREFERENCES,
+      weekday: 2,
+      dueCount: 0,
+      failureCount: 0,
+      weakTopicCount: 1,
+      weakTopicIds: ['T1.02'],
+      topicReviewEvidence: [{ topicId: 'T1.02', topicName: 'Organización del Estado', hasStudyMarker: true, distinctQuestionsAttempted: 6, latestAnswerAccuracy: 33, daysSinceLastQuestionAttempt: 10 }],
+    });
+    expect(plan.activities.find(item => item.activity === 'topicTest')?.reviewIntervention).toMatchObject({
+      mode: 'broad-reading', topicId: 'T1.02', reason: 'broad-low-results', evidence: { distinctQuestionsAttempted: 6, latestAnswerAccuracy: 33, daysSinceLastQuestionAttempt: 10 },
+    });
+  });
+
   it('incluye las tarjetas FSRS vencidas aunque no haya repasos de preguntas pendientes', () => {
     const plan = buildDailyTrainingPlan({
       preferences: { ...DEFAULT_TRAINING_PREFERENCES, activities: ['spacedReviews'] },

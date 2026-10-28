@@ -1,6 +1,6 @@
 import { CalendarClock, Eye, ListChecks, Map, Play, RotateCcw, ScanSearch, Zap, ClipboardCheck, Layers2, Menu } from 'lucide-react';
 import { Link } from 'react-router';
-import type { TrainingActivity } from '../../core/domain/entities.js';
+import type { StudyReviewMode, TrainingActivity } from '../../core/domain/entities.js';
 import type { AccessOverview, ActiveStudy, HomeBlock, HomeOverview } from '../../shared/ui/study-services.js';
 
 const icons = {
@@ -53,6 +53,13 @@ const activityCopy = {
   spacedReviews: { title: 'Repasos vencidos', detail: 'Recupera conocimientos según las fechas de repaso guardadas.', route: 'cards', icon: 'redo' as const },
 };
 
+const reviewModeLabel = {
+  'initial-study': 'Estudio inicial',
+  'active-retrieval': 'Comprobación mediante preguntas',
+  'selective-reading': 'Relectura selectiva',
+  'broad-reading': 'Revisión amplia del temario',
+} as const;
+
 function trainingReason(reason: HomeOverview['trainingPlan']['activities'][number]['reason']) {
   const reasons = {
     'new-topic-day': 'Día de introducción de temas.',
@@ -65,10 +72,11 @@ function trainingReason(reason: HomeOverview['trainingPlan']['activities'][numbe
   return reasons[reason] ?? 'Recupera la respuesta antes de volver a consultarla.';
 }
 
-function TrainingActivityRows({ overview, onNavigate, onStartReview }: {
+function TrainingActivityRows({ overview, onNavigate, onStartReview, onSetReviewMode }: {
   overview: HomeOverview;
   onNavigate(route: string): void;
   onStartReview(): void;
+  onSetReviewMode?: (topicId: string, mode: StudyReviewMode) => void;
 }) {
   const dueSummary = [
     overview.cardsDue ? `${overview.cardsDue} ${overview.cardsDue === 1 ? 'tarjeta' : 'tarjetas'}` : '',
@@ -81,9 +89,31 @@ function TrainingActivityRows({ overview, onNavigate, onStartReview }: {
       ? item.topicId ? `test?topic=${encodeURIComponent(item.topicId)}`
         : item.reason === 'new-topic-day' ? 'test?recommendation=new-topic' : copy.route
       : copy.route;
-    return <Row key={item.activity} id={`training-${item.activity}`} icon={copy.icon} title={copy.title}
-      subtitle={`${item.minutes} min orientativos · ${trainingReason(item.reason)}${dueSuffix}`}
-      onClick={() => item.activity === 'spacedReviews' && !overview.cardsDue ? onStartReview() : onNavigate(route)} />;
+    return <div className="training-plan-item" key={item.activity}>
+      <Row id={`training-${item.activity}`} icon={copy.icon} title={copy.title}
+        subtitle={`${item.minutes} min orientativos · ${trainingReason(item.reason)}${dueSuffix}`}
+        onClick={() => item.activity === 'spacedReviews' && !overview.cardsDue ? onStartReview() : onNavigate(route)} />
+      <details className="training-explanation">
+        <summary>¿Por qué me toca repasar esto?</summary>
+        {item.reviewIntervention ? <div>
+          <p><b>{reviewModeLabel[item.reviewIntervention.mode]} · {item.reviewIntervention.topicId} {item.reviewIntervention.topicName}</b></p>
+          <p>{item.reviewIntervention.explanation}</p>
+          {item.reviewIntervention.evidence.distinctQuestionsAttempted > 0 && <p className="sm">Se han tenido en cuenta {item.reviewIntervention.evidence.distinctQuestionsAttempted} preguntas distintas y sus resultados más recientes. Esto no equivale a medir la retención a largo plazo.</p>}
+          {item.reviewIntervention.evidence.daysSinceLastQuestionAttempt !== null && <p className="sm">Último intento de una pregunta: hace {item.reviewIntervention.evidence.daysSinceLastQuestionAttempt} días. La app no registra la fecha de lectura del temario.</p>}
+          {item.reviewIntervention.mode === 'selective-reading' && !item.reviewIntervention.targets.length && <p className="sm">No hay un apartado enlazado con esos resultados. Tendrás que elegirlo en tu material de estudio; la app no puede identificarlo.</p>}
+          {item.reviewIntervention.targets.length > 0 && <ul>{item.reviewIntervention.targets.map(target => <li key={target.id}>{target.title}</li>)}</ul>}
+          {item.reviewIntervention.confidence === 'product-rule' && <p className="sm">Criterio de recomendación del producto; no es un umbral pedagógico validado.</p>}
+          {onSetReviewMode && <label className="training-review-mode">Cambiar modalidad
+            <select aria-label={`Modalidad de repaso para ${item.reviewIntervention.topicName}`} value={item.reviewIntervention.mode} onChange={event => onSetReviewMode(item.reviewIntervention!.topicId, event.target.value as StudyReviewMode)}>
+              {Object.entries(reviewModeLabel).map(([mode, label]) => <option key={mode} value={mode}>{label}</option>)}
+            </select>
+          </label>}
+          {item.reviewIntervention.mode !== 'active-retrieval' && <p>La actividad sigue abriendo el test; TAI no incluye el texto del temario. Usa tus apuntes y <Link to="/temario">abre la lista de temas</Link> para gestionar tus marcas.</p>}
+        </div> : <p>{item.activity === 'topicTest' && item.reason === 'new-topic-day'
+          ? 'Hoy coincide con el día de introducción configurado en Ajustes. La aplicación no registra qué tema se presenta en la academia, así que no puede asignar uno sin que lo elijas.'
+          : trainingReason(item.reason) + (item.activity === 'topicTest' ? ' La comprobación usa preguntas; no hay datos suficientes para recomendar una relectura concreta.' : '')}</p>}
+      </details>
+    </div>;
   })}</div>;
 }
 
@@ -109,12 +139,13 @@ function TrainingSessionControls({ overview, onStartTraining, onCompleteActivity
   </>;
 }
 
-function DailyTraining({ overview, onNavigate, onStartReview, onStartTraining, onCompleteActivity }: {
+function DailyTraining({ overview, onNavigate, onStartReview, onStartTraining, onCompleteActivity, onSetReviewMode }: {
   overview: HomeOverview;
   onNavigate(route: string): void;
   onStartReview(): void;
   onStartTraining(): void;
   onCompleteActivity(activity: TrainingActivity): void;
+  onSetReviewMode?: (topicId: string, mode: StudyReviewMode) => void;
 }) {
   const plan = overview.trainingPlan;
   return <section className="home-training" aria-labelledby="home-training-title">
@@ -124,7 +155,7 @@ function DailyTraining({ overview, onNavigate, onStartReview, onStartTraining, o
     {plan.restDay ? <p>Hoy es día de descanso. No se acumula trabajo para mañana.</p>
       : plan.activities.length ? <>
         <div className="training-session-controls"><TrainingSessionControls overview={overview} onStartTraining={onStartTraining} onCompleteActivity={onCompleteActivity} /></div>
-        <TrainingActivityRows overview={overview} onNavigate={onNavigate} onStartReview={onStartReview} />
+        <TrainingActivityRows overview={overview} onNavigate={onNavigate} onStartReview={onStartReview} onSetReviewMode={onSetReviewMode} />
       </> : <p>No hay contenido pendiente para las modalidades elegidas hoy. El tiempo no se acumula; puedes cambiarlas en Ajustes.</p>}
     <p className="sm">El tiempo es orientativo. Al volver, puedes continuar o confirmar que has terminado el bloque. El avance se conserva en este dispositivo cuando el navegador permite almacenamiento; no se sincroniza entre dispositivos.</p>
   </section>;
@@ -163,16 +194,17 @@ export interface HomeViewProps {
   onStartReview(): void;
   onStartTraining(): void;
   onCompleteTrainingActivity(activity: TrainingActivity): void;
+  onSetTrainingReviewMode?: (topicId: string, mode: StudyReviewMode) => void;
   onOpenMenu(): void;
   onLogin(): void;
   onRequestAccess(): void;
 }
 
-export function HomeView({ overview, access, run, pending, onNavigate, onQuickSession, onStartReview, onStartTraining, onCompleteTrainingActivity, onOpenMenu, onLogin, onRequestAccess }: HomeViewProps) {
+export function HomeView({ overview, access, run, pending, onNavigate, onQuickSession, onStartReview, onStartTraining, onCompleteTrainingActivity, onSetTrainingReviewMode, onOpenMenu, onLogin, onRequestAccess }: HomeViewProps) {
   return <>
     <HomeHeader access={access} overview={overview} onOpenMenu={onOpenMenu} />
     <p className="home-intro">Tu estudio, con perspectiva. Un paso más en tu preparación.</p>
-    {access.full && <DailyTraining overview={overview} onNavigate={onNavigate} onStartReview={onStartReview} onStartTraining={onStartTraining} onCompleteActivity={onCompleteTrainingActivity} />}
+    {access.full && <DailyTraining overview={overview} onNavigate={onNavigate} onStartReview={onStartReview} onStartTraining={onStartTraining} onCompleteActivity={onCompleteTrainingActivity} onSetReviewMode={onSetTrainingReviewMode} />}
     <div className="home-workspace"><PrimaryStudy overview={overview} access={access} run={run} pending={pending} navigate={onNavigate} onQuickSession={onQuickSession} />
       {access.full ? <FullAccessReview overview={overview} pending={pending} navigate={onNavigate} onStartReview={onStartReview} /> : <GuestAccess access={access} pending={pending} onLogin={onLogin} onRequestAccess={onRequestAccess} />}
     </div>

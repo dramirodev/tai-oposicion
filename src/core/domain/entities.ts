@@ -48,10 +48,13 @@ export interface Preferences {
   [key: string]: unknown;
 }
 export type TrainingActivity = 'activeRecall' | 'topicTest' | 'failures' | 'spacedReviews';
+export type StudyReviewMode = 'initial-study' | 'active-retrieval' | 'selective-reading' | 'broad-reading';
 export interface TrainingPreferences {
   /** Sunday-first local calendar: Sunday, Monday, ..., Saturday. */
   minutesByDay: [number, number, number, number, number, number, number];
   introductionDay: number;
   activities: TrainingActivity[];
+  /** User choices are retained per topic and take precedence over automatic guidance. */
+  reviewModesByTopic?: Record<string, StudyReviewMode>;
 }
 export interface UserProgress { statistics: Record<string, QuestionStats>; sessions: SessionResult[]; preferences: Preferences; seenTopics: string[]; seenAt: number; reports: Record<string, ErrorReport>; cardReviews: Record<string, CardReview> }

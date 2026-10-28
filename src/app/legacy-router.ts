@@ -30,7 +30,7 @@ import { createTopicMasteryComposition } from './composition/topics/topic-master
 import { createTopicProgressComposition } from './composition/topics/topic-progress-composition.js';
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
-import type { Origin, QuestionStats, TrainingActivity, TrainingPreferences } from '../core/domain/entities.js';
+import type { Origin, QuestionStats, StudyReviewMode, TrainingActivity, TrainingPreferences } from '../core/domain/entities.js';
 import { buildDailyTrainingPlan, normalizeTrainingPreferences } from '../core/domain/study-training-plan.js';
 import { createHighlight, questionContentRevision, resolveHighlight } from '../core/domain/attempts/highlights.js';
 import { canonicalText, paintTextHighlight, selectedTextAnchor } from '../shared/ui/text-highlights.js';
@@ -564,7 +564,9 @@ export const studyServices: StudyServices = {
       const mastery = await dominioTemas(index);
       const trainingPreferences = normalizeTrainingPreferences(store.getCfg().training);
       const weakTopics = mastery.filter(topic => topic.est === 'r').sort((left, right) => left.score - right.score);
-      const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date().getDay(), dueCount: due, cardDueCount, failureCount, weakTopicCount: weakTopics.length, weakTopicIds: weakTopics.map(topic => topic.id) });
+      const studiedTopicIds = new Set(store.getSeen());
+      const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date().getDay(), dueCount: due, cardDueCount, failureCount, weakTopicCount: weakTopics.length, weakTopicIds: weakTopics.map(topic => topic.id),
+        topicReviewEvidence: weakTopics.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: studiedTopicIds.has(topic.id), distinctQuestionsAttempted: topic.seen, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias })) });
       return { seen: progress.seen, total: index.n, answers: progress.answers, streak, daysToExam, due,
         completedSessions: store.getSessions().length,
         blocks: BLOQUES.map(([code, name]) => {
@@ -583,6 +585,10 @@ export const studyServices: StudyServices = {
     startTrainingSession(plan) { return trainingSession.start(plan); },
     startTrainingActivity() { return trainingSession.startCurrentActivity(); },
     completeTrainingActivity(activity: TrainingActivity) { return trainingSession.completeActivity(activity); },
+    setTrainingReviewMode(topicId: string, mode: StudyReviewMode) {
+      const preferences = normalizeTrainingPreferences(store.getCfg().training);
+      store.setCfg('training', { ...preferences, reviewModesByTopic: { ...preferences.reviewModesByTopic, [topicId]: mode } });
+    },
     quickSession, startReview: startRepaso, openMenu,
     login: sync.login, requestAccess: async () => await sync.requestAccess(), notify: toast,
   },

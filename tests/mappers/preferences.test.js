@@ -35,6 +35,13 @@ it('persiste la planificación semanal validada y mantiene legibles las preferen
   expect(normalizeTrainingPreferences(undefined)).toEqual(DEFAULT_TRAINING_PREFERENCES);
 });
 
+it('conserva modalidades elegidas manualmente por tema y descarta valores ajenos al esquema', () => {
+  const training = { reviewModesByTopic: { 'T1.02': 'selective-reading', 'T9.99': 'invented' } };
+  expect(preferencesMapper.toDomain({ training })).toMatchObject({ ok: false });
+  expect(normalizeTrainingPreferences(training)).toMatchObject({ reviewModesByTopic: { 'T1.02': 'selective-reading' } });
+  expect(preferencesMapper.toDomain({ training: { reviewModesByTopic: { 'T1.02': 'selective-reading' } } })).toMatchObject({ ok: true });
+});
+
 it('rechaza calendarios semanales incompletos o con minutos fuera de rango', () => {
   expect(preferencesMapper.toDomain({ training: { minutesByDay: [35, 40], introductionDay: 4, activities: ['topicTest'] } })).toMatchObject({ ok: false });
   expect(preferencesMapper.toDomain({ training: { minutesByDay: [0, 35, 40, 35, 20, 40, 241], introductionDay: 4, activities: ['topicTest'] } })).toMatchObject({ ok: false });
