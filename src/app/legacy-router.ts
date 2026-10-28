@@ -45,6 +45,7 @@ import { createStudyRunController } from './composition/study/study-run-controll
 import { createStudySessionLaunchController } from './composition/study/study-session-launch-controller.js';
 import { createStudyMenuGroups } from './composition/navigation/study-menu-composition.js';
 import { toSettingsSnapshot } from '../features/settings/settings-mapper.js';
+import { configureBankSource } from './composition/bank-source-composition.js';
 import { createFailuresComposition } from './composition/failures/failures-composition.js';
 import { createLightningComposition } from './composition/trainers/lightning-composition.js';
 import { createTrapsComposition } from './composition/trainers/traps-composition.js';
@@ -72,6 +73,7 @@ import { readingTokens, mixReadingIds } from '../features/trainers/reading-contr
 import type { TestConfiguration, ScenarioChoice, SimulationConfiguration, SimulationTab, SimulationExam, SimulationExamGroups, ResultServices } from '../shared/ui/study-services.js';
 
 // ───────── router ─────────
+configureBankSource();
 configureSessionStateStore(sessionStatePort);
 let navigate: (h: string, refresh?: boolean) => void = h => { location.hash = h; };
 export function configureAppNavigation(fn: (h: string, refresh?: boolean) => void): void { navigate = fn; }

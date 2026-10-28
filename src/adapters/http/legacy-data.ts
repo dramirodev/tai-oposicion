@@ -1,7 +1,9 @@
-import { loadBank } from '../firebase/legacy-bank.js';
 import { diagnoseQuestionDtos } from './question-diagnostics.js';
 import type { Index, Meta, Question } from '../legacy/types.js';
 interface SupEntry { texto: string; q: Question[] }
+type RemoteBankLoader = <T>(topicId: string) => Promise<T | null>;
+let remoteBankLoader: RemoteBankLoader = async () => null;
+export function configureRemoteBankLoader(loader: RemoteBankLoader): void { remoteBankLoader = loader; }
 // ───────── datos ─────────
 export let INDEX: Index | undefined, META: Meta, SUP: Record<string, SupEntry> | undefined;
 const supQuestions = new Map<string, Question>();
@@ -9,7 +11,7 @@ const cache = new Map<string, Promise<Question[]>>();
 let supLoading: Promise<Record<string, SupEntry>> | undefined;
 export async function fetchJson<T = unknown>(url: string): Promise<T> {
   const dataFileMatch = /^data\/([\w.-]+)\.json$/.exec(url); // el banco puede venir de Firestore; si no, JSON estático
-  if (dataFileMatch) { const remoteBankData = await loadBank<T>(dataFileMatch[1]); if (remoteBankData !== null) return remoteBankData; }
+  if (dataFileMatch) { const remoteBankData = await remoteBankLoader<T>(dataFileMatch[1]); if (remoteBankData !== null) return remoteBankData; }
   const response = await fetch(url); if (!response.ok) throw new Error(url); return response.json(); }
 export async function getIndex(): Promise<Index> { return (INDEX ||= await fetchJson<Index>('data/index.json')); }
 let metaLoading: Promise<Meta> | undefined;
