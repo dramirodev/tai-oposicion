@@ -44,11 +44,12 @@ function renderToken(node: Node, key: number): ReactNode {
   const token = node as HTMLSpanElement;
   const light = token.style.color;
   const dark = token.style.getPropertyValue('--shiki-dark');
+  const tokenClass = node.getAttribute('class');
   const style = {
     ...(light ? { '--shiki-token-light': light } : {}),
     ...(dark ? { '--shiki-token-dark': dark } : {}),
   } as CSSProperties;
-  return <span key={key} className={light || dark ? 'shiki-token' : node.getAttribute('class') || undefined} style={style}>{children}</span>;
+  return <span key={key} className={light || dark ? 'shiki-token' : tokenClass === 'line' ? 'shiki-line' : tokenClass || undefined} style={style}>{children}</span>;
 }
 
 async function highlightedContent(code: string): Promise<ReactNode | null> {
@@ -80,7 +81,8 @@ export function StudyCode({ code, className, block = false }: { code: string; cl
     return () => { active = false; };
   }, [code]);
 
-  return <code className={[className, block && 'blk', highlighted !== null && 'shiki'].filter(Boolean).join(' ')}>
+  const classes = new Set([...(className?.split(/\s+/).filter(Boolean) ?? []), ...(block ? ['blk'] : []), ...(highlighted !== null ? ['shiki'] : [])]);
+  return <code className={[...classes].join(' ')}>
     {highlighted ?? code}
   </code>;
 }

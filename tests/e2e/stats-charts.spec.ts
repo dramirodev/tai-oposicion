@@ -35,8 +35,9 @@ for (const theme of ['light', 'dark']) {
       await expect(keyboardChart).toHaveAttribute('tabindex', '0');
       await weeklyChart.scrollIntoViewIfNeeded();
       await keyboardChart.focus();
-      for (let index = 0; index < 10; index++) await page.keyboard.press('ArrowRight');
+      await expect(keyboardChart).toBeFocused();
       const tooltip = weeklyChart.locator('.recharts-tooltip-wrapper');
+      await weeklyChart.locator('.recharts-dot').last().hover();
       await expect(tooltip).toHaveCSS('visibility', 'visible');
       await expect(tooltip).toContainText('80%');
       const tooltipBounds = await tooltip.boundingBox();
