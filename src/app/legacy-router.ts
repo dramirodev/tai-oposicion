@@ -41,6 +41,7 @@ import { loadQuestionEvolution, loadStrategyReportForPeriod } from './compositio
 import { createStatsServices } from './composition/stats/stats-composition.js';
 import { createExamCatalog } from './composition/simulations/exam-catalog-composition.js';
 import { createSimulationAnalysisView } from './composition/simulations/simulation-analysis-composition.js';
+import { createStudyRunController } from './composition/study/study-run-controller.js';
 import { createFailuresComposition } from './composition/failures/failures-composition.js';
 import { createLightningComposition } from './composition/trainers/lightning-composition.js';
 import { createTrapsComposition } from './composition/trainers/traps-composition.js';
@@ -87,6 +88,19 @@ const progressPorTema = createTopicProgressComposition({ progressRepository: loc
 const trainingSession = createTrainingSessionComposition({ accountId: store.accountId, now });
 let routeReady: () => void;
 const firstReactRouteReady = new Promise<void>(resolve => { routeReady = resolve; });
+const studyRunController = createStudyRunController({
+  createRun: configuration => createRun(configuration) !== null,
+  getPendingRun: fullAccess => pendingRun(fullAccess),
+  isFullAccess: isFull,
+  currentAccount: store.accountId,
+  ask,
+  resume: pending => resumeRun(pending) !== null,
+  clearPendingRun: clearRun,
+  navigateToQuiz: () => go(hashPath('quiz')),
+  showEmptyRunMessage: () => toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.'),
+  resumePrompt: pending => formatPendingRunPrompt({ title: pending.saved.titulo, index: pending.saved.idx, itemCount: pending.items.length, seconds: pending.saved.secs, limitMinutes: pending.saved.limit, timeLimited: pending.saved.pt }),
+});
+const { startRun, resumeSaved } = studyRunController;
 // saludo con el nombre de la cuenta de Google (se recuerda en el dispositivo; sin cuenta, solo «Hola»)
 function saludo() {
   const u = sync.status.user; let n = '';
@@ -97,21 +111,6 @@ function saludo() {
   } catch (e) {}
   return n ? `Hola, ${n}` : 'Hola';
 }
-// ───────── motor de preguntas ─────────
-function startRun(cfg: any): boolean {
-  if (!createRun(cfg)) { toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.'); return false; }
-  go(hashPath('quiz'));
-  return true;
-}
-async function resumeSaved() {
-  const p = await pendingRun(isFull());
-  if (!p) return;
-  const accepted = await ask(formatPendingRunPrompt({ title: p.saved.titulo, index: p.saved.idx, itemCount: p.items.length, seconds: p.saved.secs, limitMinutes: p.saved.limit, timeLimited: p.saved.pt }), 'Continuar');
-  if (p.account !== store.accountId()) return;
-  if (!accepted) return clearRun();
-  if (resumeRun(p)) go(hashPath('quiz'));
-}
-
 // ───────── sesión rápida (~5 min) ─────────
 async function quickSession() {
   const account = store.accountId();
