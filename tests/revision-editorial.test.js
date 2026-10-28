@@ -91,3 +91,46 @@ it('permite las 16 preguntas corregidas tras cotejarlas con sus fuentes', () => 
     expect(isQuestionEditoriallyQuarantined(id), id).toBe(false);
   }
 });
+
+it('incluye 24 preguntas editoriales resueltas con fuente verificable', () => {
+  const reviewed = [
+    ['GEN-T2.01-66.v2', 'Un cuello de botella en el acceso a memoria.'],
+    ['GEN-T2.03-27', 'El mismo valor hash.'],
+    ['GEN-T2.03-77.v2', 'lg n comparaciones.'],
+    ['GEN-T3.03-63.v2', 'Tomar decisiones.'],
+    ['GEN-T3.03-41.v2', 'Conversiones implícitas inseguras.'],
+    ['GEN-T3.05-93.v2', 'Diciembre de 2017.'],
+    ['GEN-T3.06-420.v2', 'gRPC.'],
+    ['GEN-T3.06-99.v2', 'System.Nullable<T>.'],
+    ['GEN-T3.07-66', 'OpenShift o Kubernetes.'],
+    ['GEN-T3.07-66.v1', 'Aún no cubrían por completo esos aspectos.'],
+    ['GEN-T3.07-123.v2', 'Convertir automáticamente un fichero WSDL de una versión a otra.'],
+    ['GEN-T3.07-176', 'WADL.'],
+    ['GEN-T3.07-176.v1', 'Web Application Description Language.'],
+    ['GEN-T3.07-176.v2', 'XML.'],
+    ['GEN-T3.08-56.v1', '1.1.'],
+    ['GEN-T3.08-69.v2', 'xs:schema.'],
+    ['GEN-T3.08-795.v2', '2xx, satisfactoria.'],
+    ['GEN-T3.08-937.v2', 'Añade el valor 5 al final del array.'],
+    ['GEN-T3.08-950', 'Elimina un elemento del principio del array.'],
+    ['GEN-T3.08-950.v1', 'Elimina el último elemento del array.'],
+    ['GEN-T3.08-1142.v2', 'Natural Language Toolkit.'],
+    ['GEN-T3.08-1325.v2', 'Don’t Repeat Yourself.'],
+    ['GEN-T4.08-45.v1', '1999.'],
+    ['GEN-T4.02-143', 'En una capa escribible del contenedor sobre las capas de imagen de solo lectura.'],
+  ];
+  const index = load('index.json');
+  const metadata = load('meta.json');
+  for (const [id, answer] of reviewed) {
+    const topic = id.match(/^GEN-(T\d\.\d\d)-/)?.[1];
+    const question = topic && by(`${topic}.json`, id);
+    expect(question, id).toBeDefined();
+    expect(question.a[question.c], id).toBe(answer);
+    expect(question.v, id).toBe(0);
+    expect(question.u, id).toBeTruthy();
+    expect(isQuestionEditoriallyQuarantined(id), id).toBe(false);
+    expect(metadata[id]?.[1], id).toBe('G');
+    const topicIndex = index.temas.find(entry => entry.id === topic);
+    expect(topicIndex, id).toBeDefined();
+  }
+});
