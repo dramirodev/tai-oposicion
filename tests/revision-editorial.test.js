@@ -28,3 +28,36 @@ it('las cuatro preguntas ambiguas advierten del problema y no puntúan', () => {
   const q=by(f,id); expect(q.n?.length,id).toBeGreaterThan(40); expect(q.np,id).toBe(1);
  }
 });
+
+it('conserva las correcciones y los ejemplos de código de las preguntas generadas', () => {
+  const kruskal = by('T2.03.json', 'GEN-T2.03-86.v2');
+  expect(kruskal.a[kruskal.c]).toBe('Una arista de peso mínimo.');
+  expect(kruskal.n).toContain('Kruskal procesa aristas de menor a mayor peso');
+
+  const c90 = by('T3.06.json', 'GEN-T3.06-06');
+  expect(c90.q).toContain('C90');
+  expect(c90.n).toContain('La declaración tras una sentencia se admite desde C99');
+
+  const cpp = by('T3.06.json', 'GEN-T3.06-55.v1');
+  expect(cpp.a[cpp.c]).toBe('La condición de una estructura do/while.');
+  expect(cpp.n).toContain('do/while exige una expresión');
+
+  const bootstrap = by('T3.08.json', 'GEN-T3.08-588');
+  expect(bootstrap.q).toContain('Bootstrap 3');
+  expect(bootstrap.n).toContain('SM=768, MD=992 y LG=1200');
+
+  expect(by('T3.06.json', 'GEN-T3.06-69').u).toContain('(::)');
+  expect(by('T3.06.json', 'GEN-T3.06-87').u).toContain('template <class T>');
+  expect(by('T3.06.json', 'GEN-T3.06-284').u).toContain('<%@include ... %>');
+  expect(by('T3.06.json', 'GEN-T3.06-409').u).toContain('Expresiones Razor explícitas');
+
+  for (const id of ['GEN-T3.06-338', 'GEN-T3.06-338.v1', 'GEN-T3.06-338.v2']) {
+    expect(by('T3.06.json', id).u).toContain('@OneToMany(mappedBy="profesor", cascade=CascadeType.ALL)');
+  }
+  for (const id of ['GEN-T3.06-340', 'GEN-T3.06-340.v1', 'GEN-T3.06-340.v2']) {
+    const question = by('T3.06.json', id);
+    expect(question.u).toContain('cascade=CascadeType.ALL');
+    expect(question.u).toContain('joinColumns=');
+    expect(question.u).not.toMatch(/(?:^|,\s*)JoinColumns=/);
+  }
+});
