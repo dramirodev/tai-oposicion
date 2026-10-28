@@ -1,5 +1,6 @@
 import type { CardReview, ErrorReport, MappingResult, Preferences, QuestionStats, SessionResult } from '../../core/domain/entities.js';
 import type { ProgressRepository } from '../../core/ports/ProgressRepository.js';
+import type { QuizProgressGateway } from '../../core/ports/QuizProgressGateway.js';
 import type { StudyProgressGateway } from '../../core/ports/StudyProgressGateway.js';
 import * as store from './legacy-store.js';
 import { cardMapper } from './mappers/card.js';
@@ -58,11 +59,41 @@ export const localStudyProgressGateway: StudyProgressGateway = {
     const result = preferencesMapper.toDomain(store.getCfg());
     return result.ok ? result.value : {};
   },
+  updatePreferences(update) {
+    const result = preferencesMapper.toDomain(store.getCfg());
+    const current = result.ok ? result.value : {};
+    store.replaceCfg(preferencesMapper.toDto(update(current)));
+  },
   getSeenTopics: store.getSeen,
   recordAnswer: store.record,
   addSession(session: SessionResult) {
     store.addSession(sessionMapper.toDto(session));
   },
+};
+
+/** Synchronous question-review operations backed by the existing local progress store. */
+export const localQuizProgressGateway: QuizProgressGateway = {
+  getQuestionStats(questionId) {
+    const result = statsMapper.toDomain(store.rec(questionId));
+    return result.ok ? result.value : undefined;
+  },
+  getErrorReport(questionId) {
+    const result = reportMapper.toDomain(questionId, store.getReports()[questionId]);
+    return result.ok ? result.value : undefined;
+  },
+  getUiPreferences: () => store.getCfg().ui,
+  hasFailureCard: questionId => !!store.cardRec(`FC-Q-${questionId}`),
+  subscribe: store.onChange,
+  toggleFlag: store.toggleFlag,
+  setFailureReason: store.setMotivo,
+  markDoubt: store.doubt,
+  markLucky: store.suerte,
+  toggleFailureCard(questionId) {
+    const cardId = `FC-Q-${questionId}`;
+    if (store.cardRec(cardId)) store.removeCard(cardId);
+    else store.addFallo(questionId);
+  },
+  saveErrorReport: store.addReport,
 };
 
 export const localProgressRepository: ProgressRepository = {
@@ -121,11 +152,11 @@ export const localProgressRepository: ProgressRepository = {
   },
 
   async getCardReviews() {
-    return mapRecord(store.getCardsDoc(), (_id, record) => cardMapper.toDomain(record), 'cards');
+    return mapRecord(store.getCards(), (_id, record) => cardMapper.toDomain(record), 'cards');
   },
 
   async getCardReview(cardId: string) {
-    const record = store.getCardsDoc()[cardId];
+    const record = store.getCards()[cardId];
     if (!record) return undefined;
     const result = cardMapper.toDomain(record);
     if (result.ok) return result.value;

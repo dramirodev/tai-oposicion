@@ -9,20 +9,21 @@ Banco: 15.666 preguntas (oficiales, academia y generadas; cada una muestra su or
 
 Versión **1.1.3**. Banco de **36 temas**, **15.666 preguntas**, **417 preguntas de supuestos** y
 **1.410 tarjetas curadas**. Las tarjetas marcadas `revisar: true` se excluyen del repaso y de la exportación.
-Comprobación local: **228 pruebas Vitest en 24 archivos aprobadas**, validación de tarjetas y compilación correctas.
-Esto no acredita el último despliegue ni sustituye las pruebas reales de login, sincronización e instalación en iOS.
+Las comprobaciones locales más recientes están registradas en el handoff de desarrollo; una compilación o prueba local
+no acredita por sí sola el último despliegue ni sustituye las pruebas reales de login, sincronización e instalación en iOS.
 
 ## Organización del proyecto
 
-- `src/core/application/`: coordinación provisional; reglas puras se están separando del módulo mixto en `src/legacy/logic.ts`.
-- `src/adapters/`: IO local, Firebase, banco HTTP y caché offline; `adapters/legacy/` conserva modelos y acceso previos durante la transición.
-- `src/features/`: módulos legacy de las pantallas que se migrarán por funcionalidad.
-- `src/shared/`: UI común y presentación; `src/app/`: composición React, router y ciclo de vida.
-- `src/legacy/`: lógica aún mixta pendiente de dividir entre dominio y presentación.
+- `src/core/domain/`: modelos y reglas del estudio que no dependen de React, Firebase ni el navegador.
+- `src/core/application/` y `src/core/ports/`: casos de uso y contratos que la aplicación necesita para leer contenido y progreso.
+- `src/adapters/`: persistencia local, Firebase, banco HTTP y caché offline. Los adaptadores mantienen compatibilidad con los datos históricos mientras los consumidores usan modelos tipados.
+- `src/features/`: pantallas, componentes, controladores y modelos de presentación agrupados por funcionalidad.
+- `src/shared/`: UI, navegación y presentación reutilizadas.
+- `src/app/`: React Router, composición de dependencias y arranque. Los módulos de composición conectan los puertos con los adaptadores concretos.
 - `index.html`: entrada de Vite. `public/`: CSS, iconos, manifiesto PWA y service worker; `public/data/` y `public/cards/` contienen preguntas y tarjetas.
-- `scripts/`: compilación, validación y comprobación de fuentes de las tarjetas; `tools/`: utilidades auxiliares.
-- `tests/`: Vitest y Playwright.
-- `.github/workflows/deploy.yml`: pruebas, compilación y publicación automática en Firebase.
+- `scripts/`: compilación, validación y comprobación de arquitectura y fuentes; `tools/`: utilidades auxiliares.
+- `tests/`: Vitest, React Testing Library y Playwright.
+- `.github/workflows/deploy.yml`: validación, compilación y publicación automática en Firebase.
 
 ## Desarrollo local
 
@@ -103,7 +104,7 @@ mensajes «Refused to …»: indican qué dominio hay que añadir a la CSP.
 
 ## Pruebas
 `npm install` y después `npm test` (Vitest, unos 5 s). Cubren:
-- **Lógica legacy** (`src/legacy/logic.ts`): nota, reparto del simulacro, semáforo de dominio y utilidades.
+- **Reglas del estudio** (`src/core/domain/`): selección de preguntas, progreso, repetición espaciada y métricas, separadas de React y de la persistencia.
 - **Sincronización y caché**: cancelación de escrituras al cerrar sesión, rechazo de listeners antiguos y recuperación de la configuración sin conexión.
 - **Almacén legacy** (`src/adapters/local/legacy-store.ts`): importación segura, preferencias estructuradas, borrado sincronizado de tarjetas, repaso espaciado (+2, +5, +14, +30, +60 días), fusión con la nube y validación de datos externos (XSS, tipos).
 - **Generador**: rutas externas, variables de entorno, salida y conservación del banco ante entradas ausentes.
@@ -241,22 +242,19 @@ El progreso, la copia de IndexedDB, la sesión pendiente y el acceso recordado s
 Los fallos de los supuestos también aparecen en Falladas y en el repaso, con el enunciado general y el contexto particular de cada pregunta. Importar una copia con sesión activa solicita subir el progreso y sus datos asociados.
 
 
-### Migración React (fases 0 y 1)
+### Aplicación React
 
 La entrada de Vite es `index.html`; los datos fuente siguen en `public/data` y `public/cards`.
 Firebase y el servidor local sirven `dist/`. `npm start` compila y sirve con la misma CSP global
 que Firebase. `npm run deploy` conserva sus validaciones y su despliegue manual habitual.
 
-`npm run test:e2e` ejecuta Chromium y WebKit en 393×852, claro y oscuro, usando el banco real,
-Firebase sin configurar y almacenamiento aislado. Instalar antes: `npx playwright install chromium webkit`.
-Las 68 referencias visuales de la fase 0 se guardan en `tests/e2e/snapshots/`; solo el hash de compilación visible se enmascara. La cobertura E2E actual tiene 98 casos, incluidos reanudación, consulta terminal, exportación y simulacro.
-Las referencias son específicas de plataforma: `npm run test:e2e:ci` reconstruye el commit de fase 0
-indicado en `tests/e2e/baseline-ref.txt` para obtener las referencias del runner y después compara la app
-actual con `maxDiffPixelRatio: 0.001`. Sin ese fichero (fase 0), crea las referencias ausentes de esa plataforma.
+`npm run test:e2e` ejecuta los recorridos Playwright configurados para Chromium y WebKit, usando el banco real,
+Firebase sin configurar y almacenamiento aislado. Instala los navegadores requeridos con `npx playwright install chromium webkit`.
+Las referencias visuales son específicas de plataforma y se actualizan mediante los scripts documentados en `tests/e2e/`.
 No se autentica, no se escribe en Firestore ni se ejecuta un despliegue durante las pruebas.
 
-La fase 7 añade recorridos E2E integrados de consulta de solución, persistencia al recargar, exportación
-manual y simulacro con reanudación. Las pruebas de recuperación/importación antigua y las reglas de
+Los recorridos E2E incluyen consulta de solución, persistencia al recargar, exportación manual y
+simulacros con reanudación. Las pruebas de recuperación/importación antigua y las reglas de
 repaso y tarjetas están en Vitest. La pantalla con texto máximo se comprueba en viewports emulados
 320×720 y 1024×1366. Chromium y WebKit de Playwright son emulación: no prueban Safari físico,
 iPadOS, sincronización real entre dispositivos ni revisión editorial humana.

@@ -4,7 +4,7 @@ import { countFailureReasons, countLuckyCorrectAnswers, summarizeReadingSpeedFai
 import { aggregateWeeklyStudy, buildSimulationHistory, compareStudySessions, slowestQuestions, type StudySessionSummary } from '../../core/domain/study-analytics.js';
 
 type LegacyStats = Readonly<Record<string, readonly number[]>>;
-interface LegacySession {
+export interface LegacySession {
   id: string; ts: number; kind: 'sim' | 'rev' | 'test'; n: number; a: number; f: number; b: number; secs: number; nota: number;
   temas?: Readonly<Record<string, readonly [number, number]>>;
   tipos?: Readonly<Record<string, readonly [number, number]>>;
