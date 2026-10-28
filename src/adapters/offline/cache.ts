@@ -4,6 +4,35 @@ type Index = { temas: { id: string }[] };
 type CardIndex = { temas: Record<string, unknown> };
 export interface OfflineState { complete: boolean; missing: string[]; total: number; completedAt: number | null }
 const getBaseFilesToCache = (bankIndex: Index) => ['data/index.json', 'data/meta.json', 'data/supuestos.json', 'cards/index.json', 'explanations/index.json', ...bankIndex.temas.map(topic => `data/${topic.id}.json`)];
+
+/** Warms the browser/service-worker cache for question topics without blocking startup. */
+export async function prefetchQuestionBank(bankIndex: Index): Promise<void> {
+  const connection = typeof navigator === 'undefined'
+    ? undefined
+    : (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  if (connection?.saveData || (typeof navigator !== 'undefined' && navigator.onLine === false) || typeof caches === 'undefined') return;
+  try {
+    const questionCache = await caches.open(OFFLINE_DATA_CACHE_NAME);
+    const paths = bankIndex.temas.map(topic => `data/${topic.id}.json`);
+    const cached = await Promise.all(paths.map(path => questionCache.match(path)));
+    const missing = paths.filter((_, index) => !cached[index]);
+    const worker = async () => {
+      for (let path; (path = missing.shift());) {
+        try {
+          const response = await fetch(path);
+          if (!response.ok) return;
+          await response.arrayBuffer();
+        } catch {
+          return;
+        }
+      }
+    };
+    await Promise.all([worker(), worker()]);
+  } catch {
+    // Prefetch is an optional startup optimization; the normal request path remains available.
+  }
+}
+
 function isCardIndex(value: unknown): value is CardIndex {
   return !!value && typeof value === 'object' && !Array.isArray(value)
     && 'temas' in value && !!value.temas && typeof value.temas === 'object' && !Array.isArray(value.temas);

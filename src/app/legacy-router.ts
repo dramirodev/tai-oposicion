@@ -50,7 +50,7 @@ import { createTrapsComposition } from './composition/trainers/traps-composition
 import { createQuizServices } from './composition/quiz/quiz-composition.js';
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './composition/exports/ai-study-export-composition.js';
-import { inspectOffline, downloadOffline } from '../adapters/offline/cache.js';
+import { inspectOffline, downloadOffline, prefetchQuestionBank } from '../adapters/offline/cache.js';
 import { devMode, setDevMode, devRevealed, revealDev } from '../adapters/legacy/access.js';
 import { notifyAccessChange } from './access-events.js';
 import { exportAttemptArchive } from '../core/application/attempts/export-attempt-archive.js';
@@ -362,16 +362,7 @@ export function bootAppServices(): () => void {
 }
 
 // Descarga el banco en segundo plano (2 a la vez) para que Test, Simulacro y Repaso arranquen sin esperar a la red
-async function prefetchBanco() {
-  if ((navigator as any).connection?.saveData || navigator.onLine === false || !window.caches) return;
-  try {
-    const idx = await getIndex(), c = await caches.open('tai-data');
-    const cached = await Promise.all(idx.temas.map(t => c.match(`data/${t.id}.json`)));
-    const falta = idx.temas.filter((_, index) => !cached[index]).map(t => `data/${t.id}.json`);
-    const w = async () => { for (let u; (u = falta.shift());) { try { const response = await fetch(u); if (!response.ok) return; await response.arrayBuffer(); } catch (e) { return; } } };
-    await Promise.all([w(), w()]);
-  } catch (e) {}
-}
+async function prefetchBanco() { await prefetchQuestionBank(await getIndex()); }
 
 /** Temporary composition only: the React views own rendering and events. */
 export const studyServices: StudyServices = {
