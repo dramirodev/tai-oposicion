@@ -24,6 +24,22 @@ describe('banco de preguntas (public/data)', () => {
       expect([0, 1, 2, 3], q.i).toContain(q.c);
     }
   });
+  it('las cuatro preguntas editoriales corregidas tienen opciones distintas y conservan su clave', () => {
+    const corrections = new Map([
+      ['AS01-P1-100', [2, 'R(a, b, c), con clave primaria (a, b, c).']],
+      ['AS05G-P1-60', [1, 'Regla de la inversión.']],
+      ['AS08B-P1-R-01', [3, 'Una firma electrónica avanzada tendrá un efecto jurídico equivalente al de una firma manuscrita.']],
+      ['AS11B-P1-70', [1, 'if (x != 2)']],
+    ]);
+    for (const [id, [correctIndex, correctOption]] of corrections) {
+      const question = all.find(item => item.i === id);
+      expect(question, id).toBeDefined();
+      expect(new Set(question.a).size, id).toBe(4);
+      expect(question.c, id).toBe(correctIndex);
+      expect(question.a[question.c], id).toBe(correctOption);
+      expect(question.n, id).toMatch(/(?:Adaptación|Edición de contenido)/);
+    }
+  });
   it('el origen es O, A o G y el tema de cada pregunta coincide con su archivo', () => {
     for (const [t, qs] of Object.entries(banks)) for (const q of qs) { expect('OAG').toContain(q.o); expect(q.t, q.i).toBe(t); }
   });

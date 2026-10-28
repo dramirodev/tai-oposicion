@@ -29,8 +29,8 @@
       }
     ],
     "technical_sources": [],
-    "status": "conservada con advertencia",
-    "reason": "ADVERTENCIA: el original repite las alternativas A y D; se conservan literalmente. La duplicación no afecta a la respuesta B: Regla de la inversión. Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json.",
+    "status": "reformulada para eliminar alternativa repetida",
+    "reason": "Edición de contenido: la opción D sustituye la alternativa repetida del original por la regla 10 de Codd, Independencia de la integridad (T2.05, p. 9). La respuesta sigue siendo B.",
     "after": {
       "i": "AS05G-P1-60",
       "t": "T2.05",
@@ -40,18 +40,18 @@
         "Independencia de la distribución.",
         "Regla de la inversión.",
         "Catálogo dinámico.",
-        "Independencia de la distribución."
+        "Independencia de la integridad."
       ],
       "c": 1,
       "k": "I",
       "x": [],
       "d": null,
-      "n": "ADVERTENCIA: el original repite las alternativas A y D; se conservan literalmente. La duplicación no afecta a la respuesta B: Regla de la inversión. Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json."
+      "n": "Edición de contenido: la opción D sustituye la alternativa repetida del original por la regla 10 de Codd, Independencia de la integridad (T2.05, p. 9). La respuesta sigue siendo B."
     },
     "fields": [
+      "a",
       "n"
     ],
-    "warning": "ADVERTENCIA: el original repite las alternativas A y D; se conservan literalmente. La duplicación no afecta a la respuesta B: Regla de la inversión. Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json.",
     "scoring_exclusion_implemented": false
   },
   {
@@ -87,8 +87,8 @@
       "https://eur-lex.europa.eu/eli/reg/2014/910/oj/eng",
       "https://www.boe.es/buscar/doc.php?id=DOUE-L-2014-81822"
     ],
-    "status": "conservada con advertencia",
-    "reason": "ADVERTENCIA: el original repite las alternativas B y C; se conservan literalmente. La duplicación no afecta a la respuesta D: la equivalencia con la firma manuscrita corresponde a la firma cualificada. Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json.",
+    "status": "reformulada para eliminar alternativa repetida",
+    "reason": "Edición de contenido: la opción C sustituye la alternativa repetida del original por el requisito del artículo 26(b) del Reglamento eIDAS. La respuesta sigue siendo D: el efecto equivalente a una firma manuscrita corresponde a la firma electrónica cualificada (artículo 25.2).",
     "after": {
       "i": "AS08B-P1-R-01",
       "t": "T1.08",
@@ -97,19 +97,19 @@
       "a": [
         "Firma electrónica cualificada es una firma electrónica avanzada que se crea mediante un dispositivo cualificado de creación de firmas electrónicas y que se basa en un certificado cualificado de firma electrónica.",
         "Una firma electrónica avanzada estará vinculada al firmante de manera única.",
-        "Una firma electrónica avanzada estará vinculada al firmante de manera única.",
+        "Una firma electrónica avanzada será capaz de identificar al firmante.",
         "Una firma electrónica avanzada tendrá un efecto jurídico equivalente al de una firma manuscrita."
       ],
       "c": 3,
       "k": "I",
       "x": [],
       "d": null,
-      "n": "ADVERTENCIA: el original repite las alternativas B y C; se conservan literalmente. La duplicación no afecta a la respuesta D: la equivalencia con la firma manuscrita corresponde a la firma cualificada. Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json."
+      "n": "Edición de contenido: la opción C sustituye la alternativa repetida del original por el requisito del artículo 26(b) del Reglamento eIDAS. La respuesta sigue siendo D: el efecto equivalente a una firma manuscrita corresponde a la firma electrónica cualificada (artículo 25.2)."
     },
     "fields": [
+      "a",
       "n"
     ],
-    "warning": "ADVERTENCIA: el original repite las alternativas B y C; se conservan literalmente. La duplicación no afecta a la respuesta D: la equivalencia con la firma manuscrita corresponde a la firma cualificada. Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json.",
     "scoring_exclusion_implemented": false
   },
   {
@@ -143,8 +143,8 @@
       }
     ],
     "technical_sources": [],
-    "status": "conservada con advertencia",
-    "reason": "ADVERTENCIA: el original repite las alternativas A y C; se conservan literalmente. La duplicación no afecta a la respuesta B: if (x != 2). Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json.",
+    "status": "reformulada para eliminar alternativa repetida",
+    "reason": "Edición de contenido: la opción C sustituye la alternativa repetida del original por una asignación, sintaxis válida que no comprueba si x es distinto de 2. La respuesta correcta sigue siendo B.",
     "after": {
       "i": "AS11B-P1-70",
       "t": "T3.08",
@@ -153,7 +153,7 @@
       "a": [
         "if x <> 2",
         "if (x != 2)",
-        "if x <> 2",
+        "if (x = 2)",
         "if x != 2"
       ],
       "c": 1,
@@ -161,12 +161,12 @@
       "x": [],
       "d": null,
       "z": 1,
-      "n": "ADVERTENCIA: el original repite las alternativas A y C; se conservan literalmente. La duplicación no afecta a la respuesta B: if (x != 2). Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json."
+      "n": "Edición de contenido: la opción C sustituye la alternativa repetida del original por una asignación, sintaxis válida que no comprueba si x es distinto de 2. La respuesta correcta sigue siendo B."
     },
     "fields": [
+      "a",
       "n"
     ],
-    "warning": "ADVERTENCIA: el original repite las alternativas A y C; se conservan literalmente. La duplicación no afecta a la respuesta B: if (x != 2). Cotejo y páginas del PDF en public/data/revision-ocr/editorial-13.json.",
     "scoring_exclusion_implemented": false
   },
   {
@@ -894,6 +894,61 @@
       "n"
     ],
     "warning": "ADVERTENCIA HISTÓRICA: se conserva el enunciado y la clave oficial D. 10.254.252.4 contiene bits de host para máscara /24: la red es 10.254.252.0/24. No usar para evaluación puntuable sin aclarar si se pretende una ruta de host o de red. No se cambia el destino por conjetura. La exclusión se documenta; la aplicación actual no la aplica automáticamente. Fuente: https://man7.org/linux/man-pages/man8/route.8.html",
+    "scoring_exclusion_implemented": false
+  },
+  {
+    "id": "AS01-P1-100",
+    "file": "public/data/T3.02.json",
+    "before": {
+      "i": "AS01-P1-100",
+      "t": "T3.02",
+      "o": "A",
+      "q": "Dado el diagrama Entidad/Relación que se presenta a continuación, ¿qué relación se obtendrá en una transformación correcta al modelo relacional? Tenga en cuenta que los atributos a, b, c son, respectivamente, el identificador de las relaciones A, B y C. Los atributos subrayados indican que el atributo forma parte de la clave primaria.",
+      "a": [
+        "R(a, b, c).",
+        "R(a, b, c).",
+        "R(a, b, c).",
+        "R(a, b, c)."
+      ],
+      "c": 2,
+      "k": "D",
+      "x": [],
+      "d": null
+    },
+    "sources": [
+      {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/SIMULACROS/Simulacro 01.pdf",
+        "sha256": "bdbdec9e5a35ead20247871eb5d8c25f727f357b096461bd49b6464bacf54f95",
+        "pages": [
+          18
+        ]
+      }
+    ],
+    "technical_sources": [],
+    "status": "reconstruida en texto desde el PDF fuente",
+    "reason": "Adaptación textual del original: se describe el diagrama ternario y se expresa en cada opción la clave primaria que el PDF señala mediante subrayado.",
+    "after": {
+      "i": "AS01-P1-100",
+      "t": "T3.02",
+      "o": "A",
+      "q": "Dado el diagrama Entidad/Relación que se presenta a continuación, ¿qué relación se obtendrá en una transformación correcta al modelo relacional? Tenga en cuenta que los atributos a, b, c son, respectivamente, el identificador de las relaciones A, B y C. El diagrama muestra una relación ternaria R entre A, B y C, sin cardinalidades indicadas. En las opciones se expresa en texto la clave primaria que aparece subrayada en el original.",
+      "a": [
+        "R(a, b, c), con clave primaria (b, c).",
+        "R(a, b, c), con clave primaria (a).",
+        "R(a, b, c), con clave primaria (a, b, c).",
+        "R(a, b, c), con clave primaria (a, c)."
+      ],
+      "c": 2,
+      "k": "D",
+      "x": [],
+      "d": null,
+      "n": "Adaptación textual del original: se describe el diagrama ternario y se expresa en cada opción la clave primaria que el PDF señala mediante subrayado."
+    },
+    "fields": [
+      "q",
+      "a",
+      "n"
+    ],
     "scoring_exclusion_implemented": false
   }
 ]
