@@ -20,11 +20,11 @@ describe('help content', () => {
 
   it('explica el entrenamiento adaptativo sin dar por hecho que la app contiene el temario', () => {
     const introduction = HELP_SECTIONS.find(section => section.id === 'inicio');
-    expect(introduction.body.join(' ')).toContain('TAI no contiene el texto completo del temario');
+    expect(introduction.body.join(' ')).toContain('no contiene el texto completo del temario ni registra cuándo lo lees');
     expect(introduction.body.join(' ')).toContain('volver a la selección automática');
     expect(introduction.body.join(' ')).toMatch(/aunque el resultado sea bajo, primero se propone otra comprobación/i);
     expect(introduction.body.join(' ')).toMatch(/no puede deducir que debas releer todo el tema/i);
-    expect(introduction.body.join(' ')).toMatch(/no cronometra el tiempo real/i);
+    expect(introduction.body.join(' ')).toMatch(/no tiene cronómetro/i);
     expect(introduction.body.join(' ')).toMatch(/días de descanso no acumulan actividades/i);
   });
 });

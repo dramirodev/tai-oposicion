@@ -58,6 +58,6 @@ it('conserva las correcciones y los ejemplos de código de las preguntas generad
     const question = by('T3.06.json', id);
     expect(question.u).toContain('cascade=CascadeType.ALL');
     expect(question.u).toContain('joinColumns=');
-    expect(question.u).not.toContain('JoinColumns=');
+    expect(question.u).not.toMatch(/(?:^|,\s*)JoinColumns=/);
   }
 });
