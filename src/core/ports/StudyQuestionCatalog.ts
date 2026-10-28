@@ -8,6 +8,7 @@ export interface StudyQuestionCatalog {
   getMetadataSnapshot(): StudyQuestionMetadata | undefined;
   getTopicQuestions(topicId: string): Promise<QuestionRecord[]>;
   getQuestions(questionIds: string[]): Promise<QuestionRecord[]>;
+  getTopicName(topicId: string): string;
   getTopicForQuestion(questionId: string): string | null;
   now(): number;
 }

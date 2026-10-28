@@ -1,12 +1,11 @@
 import * as store from '../../../adapters/local/legacy-store.js';
-import { getCurrentRun, subscribe as subscribeEngine, startCurrentQuestion, tickCurrentRun, currentSecondsRemaining, setQuestionIndex, answerCurrentQuestion, answerDeferred, toggleReviewQuestion, setCurrentConfidence, toggleCurrentDiscardedOption, revealCurrentSolution, toggleDeferredBlank, setRunPaused, finishCurrentRun, clearActiveRun, addCurrentHighlight, removeCurrentHighlight } from '../study/study-engine-composition.js';
+import { getCurrentRun, subscribe as subscribeEngine, startCurrentQuestion, tickCurrentRun, currentSecondsRemaining, setQuestionIndex, answerCurrentQuestion, answerDeferred, toggleReviewQuestion, setCurrentConfidence, toggleCurrentDiscardedOption, revealCurrentSolution, toggleDeferredBlank, setRunPaused, finishCurrentRun, clearActiveRun, addCurrentHighlight, removeCurrentHighlight, studyQuestionCatalog } from '../study/study-engine-composition.js';
 import { clearRun, saveRun } from '../study/pending-run-composition.js';
 import { createHighlight, questionContentRevision } from '../../../core/domain/attempts/highlights.js';
 import { minimumReadingSeconds } from '../../../core/domain/reading-strategy.js';
 import { normalizeUiPreferences } from '../../../shared/presentation/ui-preferences.js';
 import { questionNotice, sourceHtml } from '../../../shared/presentation/legacy-study.js';
 import { VERIFIED_SOURCES } from '../../../adapters/http/verified-sources.js';
-import { temaName } from '../../../adapters/http/legacy-data.js';
 import { ask } from '../../../shared/ui/dialog-actions.js';
 import { toast } from '../../../shared/ui/legacy-dom.js';
 import { findLegacyCodeExplanation } from '../explanations/explanation-composition.js';
@@ -27,7 +26,7 @@ export function createQuizServices(go: (path: string) => void, homePath: string,
       const report = store.getReports()[question.i], confidence = run.confidences?.[run.idx] || undefined;
       const readingWaitSeconds = minimumReadingSeconds({ context: question.cp, statement: question.q, options: question.a });
       return { title: run.titulo || 'Práctica', index: run.idx, count: run.items.length, questionIds: run.items.map(item => item.i), seconds: run.secs, timeLimitSeconds: run.limit ? run.limit * 60 : null, remainingSeconds: run.limit ? currentSecondsRemaining() : null, readingWaitSeconds, readingGateUntil: run.qT0 ? run.qT0 + readingWaitSeconds * 1000 : 0, feedback: run.feedback, timed: !!run.porTiempo, paused: run.paused,
-        readingMode: normalizeUiPreferences(store.getCfg().ui).lectura, prompt: { id: question.i, topicId: question.t, topicName: temaName(question.t), origin: question.o, ...(question.y ? { year: question.y } : {}), statement: question.q, options: question.a, correctIndex: question.c, ...(question.cp ? { context: question.cp } : {}), ...(question.supTexto ? { assumptionText: question.supTexto } : {}), hasAssumption: !!question.s,
+        readingMode: normalizeUiPreferences(store.getCfg().ui).lectura, prompt: { id: question.i, topicId: question.t, topicName: studyQuestionCatalog.getTopicName(question.t), origin: question.o, ...(question.y ? { year: question.y } : {}), statement: question.q, options: question.a, correctIndex: question.c, ...(question.cp ? { context: question.cp } : {}), ...(question.supTexto ? { assumptionText: question.supTexto } : {}), hasAssumption: !!question.s,
           notice: questionNotice(question), ...(question.u ? { citation: question.u } : {}), source: sourceHtml(question, VERIFIED_SOURCES), traps: (question.x || []).map(id => String(id)), provisional: !!question.p, mayExpire: !!question.w, variant: question.o === 'G' && !!question.v, contentRevision: revision },
         ...(run.ans[run.idx] !== undefined ? { answer: run.ans[run.idx] } : {}), studyState: state, review: run.review || [], answers: run.ans, studyStates: run.studyStates || [], ...(confidence ? { confidence } : {}), discarded: run.discardedOptions?.[run.idx] || [], highlights: run.highlights?.[run.idx] || [], scoreByLuck: run.luck?.[run.idx] ?? null,
         recentAnswer: run.fast?.[run.idx] || null, flagged: !!record?.[6], failureReason, ...(report ? { report: { reason: report.motivo, note: report.nota, state: report.st } } : {}), cardExists: !!store.cardRec(`FC-Q-${question.i}`) };
