@@ -1,8 +1,8 @@
 // Control de acceso de la interfaz. Es cosmético: el banco de preguntas es un JSON público; lo que protegen
 // de verdad las reglas de Firestore es la sincronización y la gestión de accesos.
-import { accountId } from '../local/legacy-store.js';
 import type { AccessLevel } from './types.js';
-const ACC = () => 'tai.acc:' + (accountId() || 'guest');
+let readCurrentAccount: () => string | null = () => null;
+const ACC = () => 'tai.acc:' + (readCurrentAccount() || 'guest');
 const DEV = 'tai.dev';
 const rd = (key: string): string | null => { try { return localStorage.getItem(key); } catch { return null; } };
 const wr = (key: string, textValue: string | null): void => {
@@ -13,6 +13,9 @@ const wr = (key: string, textValue: string | null): void => {
 };
 const local = (): boolean => typeof location !== 'undefined' && ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
 let readCurrentAccess: () => AccessLevel | '' = () => '';
+export function configureAccessAccountReader(reader: () => string | null): void {
+  readCurrentAccount = reader;
+}
 export function configureAccessStatusReader(reader: () => AccessLevel | ''): void {
   readCurrentAccess = reader;
 }
