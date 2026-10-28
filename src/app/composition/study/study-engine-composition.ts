@@ -10,6 +10,7 @@ export const studyQuestionCatalog: StudyQuestionCatalog = {
   getMetadataSnapshot: () => questionData.META,
   getTopicQuestions: questionData.getTema,
   getQuestions: questionData.byIds,
+  getTopicName: questionData.temaName,
   getTopicForQuestion: questionData.temaOf,
   now: questionData.now,
 };
