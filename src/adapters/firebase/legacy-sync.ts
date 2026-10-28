@@ -1,5 +1,4 @@
 import { initializeApp } from 'firebase/app';
-import type { FirebaseOptions } from 'firebase/app';
 import { initializeAuth, GoogleAuthProvider, signInWithRedirect, signInWithPopup, getRedirectResult, onAuthStateChanged, signOut, indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence, browserPopupRedirectResolver } from 'firebase/auth';
 import {
   initializeFirestore, persistentLocalCache, persistentMultipleTabManager,
@@ -7,12 +6,12 @@ import {
 } from 'firebase/firestore';
 import type { Auth, User } from 'firebase/auth';
 import type { Firestore, FirestoreError, QuerySnapshot, DocumentSnapshot, Unsubscribe } from 'firebase/firestore';
+import { loadFirebaseConfig } from './firebase-config-loader.js';
+import { decodeFirebaseDocumentId, encodeFirebaseDocumentId } from './firebase-document-id-mapper.js';
 import type { AttemptRepository } from '../../core/ports/AttemptRepository.js';
 import * as store from '../local/legacy-store.js';
 import type { AccessLevel, AccessRequest, CardMap, ReportMap, SeenDoc, Session, StatMap } from '../legacy/types.js';
 
-const enc = (id: string) => id.replace(/\./g, '~');
-const dec = (id: string) => id.replace(/~/g, '.');
 const errorFields = (value: unknown): { code: unknown; message: unknown } => {
   const fields = value && typeof value === 'object' ? value as Record<string, unknown> : {};
   return { code: fields.code, message: fields.message };
@@ -31,15 +30,7 @@ export function setAttemptRepository(repository: AttemptRepository): void { atte
 export async function init(metaFns: { temaOf: (id: string) => string | null; idsOfTema: (text: string) => string[] }): Promise<void> {
   temaOf = metaFns.temaOf; idsOfTema = metaFns.idsOfTema;
   status.authResolved = false;
-  let firebaseConfig: FirebaseOptions = {}, leida = false;
-  const readConfig = async (options?: RequestInit): Promise<FirebaseOptions> => {
-    const response = await fetch('firebase-config.json', options);
-    if (!response.ok) throw new Error(`No se pudo cargar la configuración (${response.status}).`);
-    return response.json() as Promise<FirebaseOptions>;
-  };
-  try { firebaseConfig = await readConfig({ cache: 'no-cache' }); leida = true; } catch {
-    try { firebaseConfig = await readConfig(); leida = true; } catch {}
-  }
+  const { config: firebaseConfig, loaded: leida } = await loadFirebaseConfig();
   const configured = status.configured = !!firebaseConfig.apiKey && !/PEGA/i.test(firebaseConfig.apiKey);
   status.host = location.host; status.authDomain = firebaseConfig.authDomain || '';
   // «sin configurar» solo si el fichero se leyó y no trae clave; si no se pudo leer (sin red) no es un problema de configuración
@@ -177,7 +168,7 @@ function start(): void {
     const map: StatMap = Object.create(null);
     snap.forEach(data => {
       const metadata = (data.data() || {}).m || {};
-      for (const key of Object.keys(metadata)) map[dec(key)] = metadata[key];
+      for (const key of Object.keys(metadata)) map[decodeFirebaseDocumentId(key)] = metadata[key];
     });
     store.mergeRemote(map);
     ok();
@@ -233,7 +224,7 @@ function pushAll(remote: StatMap): void {
   const byTema: Record<string, StatMap> = {};
   for (const id in local) {
     const statRecord = remote[id];
-    if (store.needsSync(local[id], statRecord)) { const text = temaOf(id); if (text) (byTema[text] ||= {})[enc(id)] = local[id]; }
+    if (store.needsSync(local[id], statRecord)) { const text = temaOf(id); if (text) (byTema[text] ||= {})[encodeFirebaseDocumentId(id)] = local[id]; }
   }
   for (const textValue in byTema) setDoc(doc(db, 'users', me, 'stats', textValue), { m: byTema[textValue], u: Date.now() }, { merge: true }).catch(writeErr);
 }
@@ -255,7 +246,7 @@ function flush(): void {
   const data = store.takeDirty(); const stats = store.getStats();
   for (const text of data) {
     const statistics: StatMap = {};
-    for (const id of idsOfTema(text)) if (stats[id]) statistics[enc(id)] = stats[id];
+    for (const id of idsOfTema(text)) if (stats[id]) statistics[encodeFirebaseDocumentId(id)] = stats[id];
     setDoc(doc(db, 'users', uid, 'stats', text), { m: statistics, u: Date.now() }, { merge: true })
       .then(ok)
       .catch(writeErr);

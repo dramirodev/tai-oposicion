@@ -44,13 +44,15 @@ import { createSimulationAnalysisView } from './composition/simulations/simulati
 import { createStudyRunController } from './composition/study/study-run-controller.js';
 import { createStudySessionLaunchController } from './composition/study/study-session-launch-controller.js';
 import { createStudyMenuGroups } from './composition/navigation/study-menu-composition.js';
+import { toSettingsSnapshot } from '../features/settings/settings-mapper.js';
+import { configureBankSource } from './composition/bank-source-composition.js';
 import { createFailuresComposition } from './composition/failures/failures-composition.js';
 import { createLightningComposition } from './composition/trainers/lightning-composition.js';
 import { createTrapsComposition } from './composition/trainers/traps-composition.js';
 import { createQuizServices } from './composition/quiz/quiz-composition.js';
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './composition/exports/ai-study-export-composition.js';
-import { inspectOffline, downloadOffline } from '../adapters/offline/cache.js';
+import { inspectOffline, downloadOffline, prefetchQuestionBank } from '../adapters/offline/cache.js';
 import { devMode, setDevMode, devRevealed, revealDev } from '../adapters/legacy/access.js';
 import { notifyAccessChange } from './access-events.js';
 import { exportAttemptArchive } from '../core/application/attempts/export-attempt-archive.js';
@@ -71,6 +73,7 @@ import { readingTokens, mixReadingIds } from '../features/trainers/reading-contr
 import type { TestConfiguration, ScenarioChoice, SimulationConfiguration, SimulationTab, SimulationExam, SimulationExamGroups, ResultServices } from '../shared/ui/study-services.js';
 
 // ───────── router ─────────
+configureBankSource();
 configureSessionStateStore(sessionStatePort);
 let navigate: (h: string, refresh?: boolean) => void = h => { location.hash = h; };
 export function configureAppNavigation(fn: (h: string, refresh?: boolean) => void): void { navigate = fn; }
@@ -183,15 +186,14 @@ async function refreshSettingsProgressQuestionCount(): Promise<void> {
 const settingsServices = {
   accountId: store.accountId,
   getSnapshot(): SettingsSnapshot {
-    const ui = normalizeUiPreferences(store.getCfg().ui);
-    const training = normalizeTrainingPreferences(store.getCfg().training);
-    return {
+    return toSettingsSnapshot({
       sync: { state: sync.status.state, user: sync.status.user, configured: sync.status.configured, lastSync: sync.status.lastSync, error: sync.status.error, detail: sync.status.detail, host: sync.status.host, authDomain: sync.status.authDomain, accessError: sync.status.accessErr, requests: sync.status.reqs },
-      full: isFull(), level: accessLevel(), devMode: devMode(), devRevealed: devRevealed(), ui: { theme: ui.theme, size: ui.size, lectura: ui.lectura }, training,
+      full: isFull(), level: accessLevel(), devMode: devMode(), devRevealed: devRevealed(),
+      uiPreferences: store.getCfg().ui, trainingPreferences: store.getCfg().training,
       progress: { questions: settingsProgressQuestionCount, topics: store.getSeen().length, sessions: store.getSessions().length, openReports: Object.values(store.getReports()).filter(report => report.st === 'abierto').length },
-      exam: String(store.getCfg().exam || ''), version: APP_VERSION, build: APP_BUILD.split('+')[1] || APP_BUILD, update: appUpdates.getAvailableUpdate()?.version || null,
+      exam: store.getCfg().exam, version: APP_VERSION, build: APP_BUILD.split('+')[1] || APP_BUILD, update: appUpdates.getAvailableUpdate()?.version || null,
       offline: settingsOffline, index: settingsIndex ? { questions: settingsIndex.n, scenarios: settingsIndex.nsup } : null,
-    };
+    });
   },
   subscribe(listener: () => void) {
     const offStore = store.onChange(listener), offSync = sync.onStatus(listener);
@@ -362,16 +364,7 @@ export function bootAppServices(): () => void {
 }
 
 // Descarga el banco en segundo plano (2 a la vez) para que Test, Simulacro y Repaso arranquen sin esperar a la red
-async function prefetchBanco() {
-  if ((navigator as any).connection?.saveData || navigator.onLine === false || !window.caches) return;
-  try {
-    const idx = await getIndex(), c = await caches.open('tai-data');
-    const cached = await Promise.all(idx.temas.map(t => c.match(`data/${t.id}.json`)));
-    const falta = idx.temas.filter((_, index) => !cached[index]).map(t => `data/${t.id}.json`);
-    const w = async () => { for (let u; (u = falta.shift());) { try { const response = await fetch(u); if (!response.ok) return; await response.arrayBuffer(); } catch (e) { return; } } };
-    await Promise.all([w(), w()]);
-  } catch (e) {}
-}
+async function prefetchBanco() { await prefetchQuestionBank(await getIndex()); }
 
 /** Temporary composition only: the React views own rendering and events. */
 export const studyServices: StudyServices = {

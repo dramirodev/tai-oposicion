@@ -44,6 +44,20 @@ it('verifica la descarga completa de banco y tarjetas antes de guardar la fecha'
  entries.delete('cards/T1.01.json');
  const damaged=await inspectOffline(idx); expect(damaged.complete).toBe(false); expect(damaged.completedAt).toBeNull();
 });
+it('descarga los archivos independientes con concurrencia limitada a dos', async () => {
+ fakeCaches(); let active = 0, maximum = 0;
+ vi.stubGlobal('fetch', async path => {
+   active++; maximum = Math.max(maximum, active);
+   await new Promise(resolve => setTimeout(resolve, 5));
+   active--;
+   const body = path === 'cards/index.json' ? {temas:{'T1.01':1,'T1.02':1}} : path === 'data/index.json' ? {temas:[{id:'T1.01'},{id:'T1.02'}]} : path === 'explanations/index.json' ? [] : [];
+   return new Response(JSON.stringify(body));
+ });
+ const {downloadOffline} = await import('../src/adapters/offline/cache.js');
+ const state = await downloadOffline({temas:[{id:'T1.01'},{id:'T1.02'}]});
+ expect(state.complete).toBe(true);
+ expect(maximum).toBe(2);
+});
 it.each(['<html>Error</html>','{"unfinished":','null'])('rechaza recursos offline dañados: %s',async body=>{
  const {entries}=fakeCaches();
  for(const p of ['data/index.json','data/meta.json','data/supuestos.json','data/T1.01.json','cards/T1.01.json']) entries.set(p,new Response('{}'));
