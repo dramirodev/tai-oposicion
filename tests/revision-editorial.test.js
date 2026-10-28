@@ -134,3 +134,19 @@ it('incluye 24 preguntas editoriales resueltas con fuente verificable', () => {
     expect(topicIndex, id).toBeDefined();
   }
 });
+
+it('corrige dos reservas con una cita local precisa y conserva la restante', () => {
+  const reviewed = [
+    ['T3.07.json', 'GEN-T3.07-182.v2', 'RESTful.'],
+    ['T3.08.json', 'GEN-T3.08-63.v2', 'El documento debe tener un único elemento raíz.'],
+  ];
+  for (const [file, id, answer] of reviewed) {
+    const question = by(file, id);
+    expect(question, id).toBeDefined();
+    expect(question.a[question.c], id).toBe(answer);
+    expect(question.v, id).toBe(0);
+    expect(question.u, id).toBeTruthy();
+    expect(isQuestionEditoriallyQuarantined(id), id).toBe(false);
+  }
+  expect(isQuestionEditoriallyQuarantined('GEN-T3.07-66.v2')).toBe(true);
+});
