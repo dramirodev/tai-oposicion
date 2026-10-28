@@ -110,8 +110,10 @@
 
   .overlay.menu-dialog {
     box-sizing: border-box;
-    width: 100%;
-    height: 100%;
+    /* Safari calcula estos porcentajes desde el tamaño intrínseco del dialog.
+       El inset: 0 del overlay debe ser quien lo ajuste al viewport. */
+    width: auto;
+    height: auto;
     max-width: none;
     max-height: none;
     margin: 0;

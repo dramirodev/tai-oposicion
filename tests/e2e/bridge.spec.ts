@@ -15,10 +15,21 @@ async function start(page: Page) {
   return errors;
 }
 test('el menú de inicio mantiene los iconos alineados con la navegación', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   const errors = await start(page);
-  await page.locator('#menu').click();
+  // Safari pierde el foco del disparador si se abre con clic de puntero.
+  await page.locator('#menu').focus();
+  await page.keyboard.press('Enter');
   const menu = page.locator('#menuov');
   await expect(menu).toBeVisible();
+  const menuBounds = await menu.evaluate(element => {
+    const { x, y, width, height } = element.getBoundingClientRect();
+    return { x, y, width, height, viewportWidth: innerWidth, viewportHeight: innerHeight };
+  });
+  expect(menuBounds.x).toBeCloseTo(0, 0);
+  expect(menuBounds.y).toBeCloseTo(0, 0);
+  expect(menuBounds.width).toBeCloseTo(menuBounds.viewportWidth, 0);
+  expect(menuBounds.height).toBeCloseTo(menuBounds.viewportHeight, 0);
   const simulationMenuIcon = menu.getByRole('button', { name: /Simulacros/ }).locator('svg');
   const simulationNavigationIcon = page.locator('nav[aria-label="Principal"] a[href="#/sim"] svg');
   await page.mouse.move(0, 0);

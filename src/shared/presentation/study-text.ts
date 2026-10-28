@@ -12,7 +12,7 @@ export function hiliteHtml(sourceTextInput: unknown, answerTextInput: unknown): 
   tokens.forEach((token, tokenIndex) => { if (token && !/^\s+$/.test(token)) wordTokenIndexes.push(tokenIndex); });
   const normalizedWords = wordTokenIndexes.map(tokenIndex => normalizeWord(tokens[tokenIndex]));
   const answerKeywords = new Set(answerText.split(/\s+/).map(normalizeWord).filter(word => word.length > 3 && !STOP.has(word) || /^\d+$/.test(word)));
-  if (!answerKeywords.size || !wordTokenIndexes.length) return escapeHtml(sourceText);
+  if (!answerKeywords.size || !wordTokenIndexes.length) return richCitationMarkup(sourceText, null, escapeHtml);
   const isAnswerKeyword = normalizedWords.map(word => answerKeywords.has(word));
   let bestMatch: { startIndex: number; endIndex: number; score: number; matchedKeywordCount: number } | null = null;
   const maximumWindowLength = Math.min(wordTokenIndexes.length, answerKeywords.size * 2 + 6);
@@ -28,9 +28,10 @@ export function hiliteHtml(sourceTextInput: unknown, answerTextInput: unknown): 
       }
     }
   }
-  if (!bestMatch || bestMatch.matchedKeywordCount < Math.min(2, answerKeywords.size)) return escapeHtml(sourceText);
+  if (!bestMatch || bestMatch.matchedKeywordCount < Math.min(2, answerKeywords.size)) return richCitationMarkup(sourceText, null, escapeHtml);
   const firstTokenIndex = wordTokenIndexes[bestMatch.startIndex], lastTokenIndex = wordTokenIndexes[bestMatch.endIndex];
-  return escapeHtml(tokens.slice(0, firstTokenIndex).join('')) + '<b class="hl">' + escapeHtml(tokens.slice(firstTokenIndex, lastTokenIndex + 1).join('')) + '</b>' + escapeHtml(tokens.slice(lastTokenIndex + 1).join(''));
+  const emphasis: Span = [tokens.slice(0, firstTokenIndex).join('').length, tokens.slice(0, lastTokenIndex + 1).join('').length];
+  return richCitationMarkup(sourceText, emphasis, escapeHtml);
 }
 
 // ───────── lectura atenta (contra los fallos por velocidad) ─────────
@@ -76,6 +77,8 @@ const CODE_RES = [
   /(?<![\p{L}\d_$])[a-z][a-z0-9]*(?:_[a-z0-9]+)+(?![\p{L}\d_$])/gu,                        // snake_case
   /(?<![\p{L}\d_$])(?!(?:macOS|iOS|iPadOS|iPhone|iPad|iCloud|iMac|tvOS|watchOS|visionOS|openSUSE|eDNI|eIDAS|iTunes|eBay|iOS)\b)[a-z]{2,}(?:[A-Z][a-z0-9]*)+(?![\p{L}\d_$])/gu, // camelCase
   /(?<![\p{L}\d_$])[a-z]\s+(?:XNOR|NAND|XOR|NOR|AND|OR)\s+[a-z]\s*=\s*\d(?![\p{L}\d_$])/gu,        // a XOR b = 1
+  /@[A-Za-z_$][\w$]*(?:\s*\([^()]*\))?/g,                                                   // anotaciones Java
+  /[A-Za-z_$\d][\w$]*\s*\^\s*[A-Za-z_$\d][\w$]*/g,                                     // expresiones con XOR/caret
 ];
 const noEsLlamada = /^(?:\d|[A-Z]{1,2}$)/;
 function rangosCodigo(text: string): Span[] {
@@ -120,13 +123,32 @@ function rangosCodigo(text: string): Span[] {
   // «;» pegado al final de una sentencia forma parte del código
   for (const range of mergedRanges) if (text[range[1]] === ';') range[1]++;
   // fragmentos de código separados solo por «,», «;» o por un identificador suelto entre ellos («a=10,b; b=a++;») son un único bloque
-  const GAP = /^\s+$|^\s*[,;]\s*(?:[A-Za-z_]\w{0,15}\s*[,;]\s*)?$/;
+  const GAP = /^\s+$|^\s*(?:(?:[,;.]|::|->|=>|\^|&&|\|\|)\s*)+(?:[A-Za-z_]\w{0,15}\s*(?:(?:[,;.]|::|->|=>|\^|&&|\|\|)\s*)+)?$/;
   const combinedRanges: Span[] = [];
   for (const currentRange of mergedRanges) { const previousRange = combinedRanges[combinedRanges.length - 1]; if (previousRange && currentRange[0] >= previousRange[1] && GAP.test(text.slice(previousRange[1], currentRange[0]))) previousRange[1] = currentRange[1]; else combinedRanges.push([...currentRange]); }
   return combinedRanges;
 }
 export function codeSpans(text: unknown): Span[] { return rangosCodigo(String(text ?? '')); }
 const codeInner = (h: string) => h.replace(SQL_KW_RE, '<b class="sk">$1</b>');
+function richCitationMarkup(text: string, emphasis: Span | null, escapeHtml: (value: unknown) => string): string {
+  const codeRanges = rangosCodigo(text);
+  const boundaries = new Set([0, text.length]);
+  for (const [start, end] of codeRanges) { boundaries.add(start); boundaries.add(end); }
+  if (emphasis) { boundaries.add(emphasis[0]); boundaries.add(emphasis[1]); }
+  const points = [...boundaries].sort((left, right) => left - right);
+  const isInside = (ranges: Span[], index: number) => ranges.some(([start, end]) => index >= start && index < end);
+  let html = '';
+  for (let index = 0; index < points.length - 1; index++) {
+    const start = points[index], end = points[index + 1];
+    if (start === end) continue;
+    const isCode = isInside(codeRanges, start);
+    let content = escapeHtml(text.slice(start, end));
+    if (isCode) content = codeInner(content);
+    if (emphasis && start >= emphasis[0] && start < emphasis[1]) content = `<b class="hl">${content}</b>`;
+    html += isCode ? `<code class="cd">${content}</code>` : content;
+  }
+  return html.replace(/<\/code><code class="cd">/g, '');
+}
 // Un texto corto que es todo código (p. ej. una opción «((a>b) and (a<d))», «GRANT.», «MODIFY TABLE t ADD (x INT)»)
 // se pinta como un único bloque, en vez de trocearlo según qué fragmentos reconozca cada regla.
 const PROSA = /[áéíóúñ¿¡]|(?<![\p{L}\d_])(?:de|la|el|los|las|un|una|y|o|que|en|se|por|para|con|del|al|es|son|no|su|sus|lo|como|más|sin|si|entre|cuando)(?![\p{L}\d_])/iu;

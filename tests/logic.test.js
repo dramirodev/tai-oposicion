@@ -343,7 +343,16 @@ describe('hiliteHtml', () => {
     expect(h).toContain('300');
   });
   it('escapa HTML y no marca si no hay coincidencia', () => {
-    expect(hiliteHtml('a <b>x</b>', 'zzzz')).toBe('a &lt;b&gt;x&lt;/b&gt;');
+    const html = hiliteHtml('a <b>x</b>', 'zzzz');
+    expect(html).toContain('&lt;b&gt;');
+    expect(html).toContain('&lt;/b&gt;');
+    expect(html).not.toContain('<b>x</b>');
+  });
+  it('conserva el formato de código y el resaltado dentro de las citas del temario', () => {
+    const annotation = hiliteHtml('@ManyToMany(mappedBy = "courses")', 'zzzz');
+    expect(annotation).toContain('<code class="cd">@ManyToMany(mappedBy = "courses")</code>');
+    expect(richHtml('variable_estructura.nombre_variable')).toBe('<code class="cd">variable_estructura.nombre_variable</code>');
+    expect(richHtml('x ^ y')).toBe('<code class="cd">x ^ y</code>');
   });
 });
 
