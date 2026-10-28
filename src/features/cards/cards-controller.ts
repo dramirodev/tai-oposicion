@@ -1,12 +1,16 @@
-import { previewCardDueAt } from '../../core/domain/spaced-repetition.js';
 import { selectLegacyCards, summarizeLegacyCards } from './flashcard-mapper.js';
 import type { ActiveCardsSession, CardPreferences, CardsPlan, CardsServices, StudyCard } from '../../shared/ui/study-services.js';
+import type { CardsSessionCheckpoint } from '../../core/domain/entities.js';
 
 export interface CardsControllerDependencies {
   loadAllCards(): Promise<StudyCard[]>;
   loadCuratedCards(): Promise<StudyCard[]>;
   readPreferences(): unknown;
   savePreferences(preferences: CardPreferences): void;
+  readSavedSession(accountId: string | null): CardsSessionCheckpoint | null;
+  saveSession(accountId: string | null, session: CardsSessionCheckpoint): void;
+  clearSavedSession(accountId: string | null): void;
+  previewReviewDate(cardId: string, grade: 0 | 1 | 2, now: number): number;
   accountId(): string | null;
   getCards(): Readonly<Record<string, readonly number[]>>;
   getSeen(): readonly string[];
@@ -31,14 +35,29 @@ export function createCardsController(dependencies: CardsControllerDependencies)
     if (activeSession && activeSession.account !== dependencies.accountId()) activeSession = null;
     return activeSession;
   };
+  const persistSession = (session: ActiveCardsSession) => dependencies.saveSession(session.account, {
+    ids: session.items.map(card => card.id), index: session.index, revealed: session.revealed, results: [...session.results],
+  });
   const services: CardsServices = {
     loadPlan: async (preferences: CardPreferences): Promise<CardsPlan> => {
+      const account = dependencies.accountId();
       const cards = await dependencies.loadAllCards();
+      if (account !== dependencies.accountId()) throw new Error('La cuenta cambió mientras se cargaban las tarjetas.');
       const records = dependencies.getCards(), timestamp = dependencies.now(), seen = new Set(dependencies.getSeen());
       const ids = selectLegacyCards(cards, records, {
         n: preferences.count, now: timestamp, maxNew: 10,
         seen: preferences.scope === 'vistos' && seen.size ? seen : null,
       });
+      if (!getSession()) {
+        const saved = dependencies.readSavedSession(account);
+        if (saved) {
+          const byId = new Map(cards.map(card => [card.id, card]));
+          const items = saved.ids.map(id => byId.get(id));
+          if (items.every((card): card is StudyCard => !!card)) {
+            activeSession = { account, items, index: saved.index, revealed: saved.revealed, results: [...saved.results] };
+          } else dependencies.clearSavedSession(account);
+        }
+      }
       return { cards, summary: summarizeLegacyCards(cards, records, timestamp), ids, reviews: ids.filter(id => !!records[id]).length };
     },
     loadAllCards: dependencies.loadAllCards,
@@ -49,12 +68,14 @@ export function createCardsController(dependencies: CardsControllerDependencies)
     startSession(cards, ids) {
       const byId = new Map(cards.map(card => [card.id, card]));
       activeSession = { account: dependencies.accountId(), items: ids.map(id => byId.get(id)).filter((card): card is StudyCard => !!card), index: 0, revealed: false, results: [0, 0, 0] };
+      persistSession(activeSession);
       return activeSession;
     },
     reveal() {
       const session = getSession();
       if (!session || session.index >= session.items.length) return false;
       session.revealed = true;
+      persistSession(session);
       return true;
     },
     grade(value) {
@@ -64,6 +85,7 @@ export function createCardsController(dependencies: CardsControllerDependencies)
       session.results[value as 0 | 1 | 2]++;
       session.index++;
       session.revealed = false;
+      persistSession(session);
       return session;
     },
     removeFailureCard() {
@@ -72,17 +94,25 @@ export function createCardsController(dependencies: CardsControllerDependencies)
       dependencies.remove(card.id);
       session.items.splice(session.index, 1);
       session.revealed = false;
+      persistSession(session);
       return session;
     },
-    clearSession() { activeSession = null; },
+    clearSession() {
+      const session = activeSession;
+      activeSession = null;
+      if (session) dependencies.clearSavedSession(session.account);
+    },
     nextDueDates() {
       return Object.values(dependencies.getCards()).filter(record => record[3] >= 0 && record[4] > dependencies.now()).map(record => record[4]);
     },
     reviewLabel(cardId, value) {
-      const timestamp = dependencies.now(), record = dependencies.getRecord(cardId);
-      const next = previewCardDueAt(record ? { attempts: record[0], intervalStep: record[3] } : undefined, value, timestamp);
-      if (!next) return 'Dominada';
-      const days = Math.round((next - timestamp) / dependencies.day);
+      const timestamp = dependencies.now();
+      const next = dependencies.previewReviewDate(cardId, value as 0 | 1 | 2, timestamp);
+      const minutes = Math.max(1, Math.ceil((next - timestamp) / 60000));
+      if (minutes < 60) return `En ${minutes} ${minutes === 1 ? 'minuto' : 'minutos'}`;
+      const hours = Math.ceil(minutes / 60);
+      if (hours < 24) return `En ${hours} ${hours === 1 ? 'hora' : 'horas'}`;
+      const days = Math.ceil((next - timestamp) / dependencies.day);
       return `En ${days} ${days === 1 ? 'día' : 'días'}`;
     },
     topicName: dependencies.topicName,

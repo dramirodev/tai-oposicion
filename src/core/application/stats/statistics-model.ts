@@ -29,6 +29,7 @@ export interface StatsSnapshot {
   topics: readonly TopicProgress[];
   sessions: readonly { id: string; ts: number; kind: string; n: number; a: number; nota: number; secs: number }[];
   reviewLoad: readonly number[];
+  predictedCardRetention: { reviewedCards: number; points: readonly { days: 7 | 14 | 30; recallProbability: number }[] } | null;
   failureReasons: readonly number[];
   lucky: number;
   speed: { count: number; total: number; percent: number };

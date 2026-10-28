@@ -29,8 +29,9 @@ export function createLightningComposition(dependencies: LightningCompositionDep
       const candidates = pool.length ? pool : dependencies.shuffle(dependencies.knownQuestionIds()).slice(0, 10);
       const question = (await dependencies.loadQuestionsById(dependencies.shuffle(candidates).slice(0, 8))).find(item => !item.s && !item.cp);
       if (!question) return null;
-      const reason = lucky.includes(question.i) ? '🍀 Marcada como suerte' : due.includes(question.i) ? '⏰ Toca repasarla' : failed.includes(question.i) ? '↩ La fallaste' : '🆕 Nueva';
-      return { ...toFailureQuestionView(question, dependencies.sourceFallbacks), reason };
+      const reasonKind = lucky.includes(question.i) ? 'lucky' : due.includes(question.i) ? 'due' : failed.includes(question.i) ? 'failed' : 'new';
+      const reason = { lucky: 'Marcada como suerte', due: 'Toca repasarla', failed: 'La fallaste', new: 'Nueva' }[reasonKind];
+      return { ...toFailureQuestionView(question, dependencies.sourceFallbacks), reason, reasonKind };
     },
     record(questionId: string, topicId: string, correct: boolean, seconds: number) {
       dependencies.recordAnswer(questionId, topicId, correct, seconds);

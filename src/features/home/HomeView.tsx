@@ -1,5 +1,6 @@
 import { CalendarClock, Eye, ListChecks, Map, Play, RotateCcw, ScanSearch, Zap, ClipboardCheck, Layers2, Menu } from 'lucide-react';
 import { Link } from 'react-router';
+import type { TrainingActivity } from '../../core/domain/entities.js';
 import type { AccessOverview, ActiveStudy, HomeBlock, HomeOverview } from '../../shared/ui/study-services.js';
 
 const icons = {
@@ -45,6 +46,90 @@ function FullAccessReview({ overview, pending, navigate, onStartReview }: {
   </section>;
 }
 
+const activityCopy = {
+  activeRecall: { title: 'Active Recall', detail: 'Intenta recordar antes de revelar la respuesta.', route: 'cards', icon: 'card' as const },
+  topicTest: { title: 'Preguntas de tema', detail: 'Practica un tema nuevo o refuerza los que muestran más dificultad.', route: 'test', icon: 'test' as const },
+  failures: { title: 'Revisión de fallos', detail: 'Vuelve sobre preguntas que todavía necesitan refuerzo.', route: 'falladas', icon: 'redo' as const },
+  spacedReviews: { title: 'Repasos vencidos', detail: 'Recupera conocimientos según las fechas de repaso guardadas.', route: 'cards', icon: 'redo' as const },
+};
+
+function trainingReason(reason: HomeOverview['trainingPlan']['activities'][number]['reason']) {
+  const reasons = {
+    'new-topic-day': 'Día de introducción de temas.',
+    'weak-topics': 'Prioridad basada en los temas con menor dominio estimado.',
+    coverage: 'Amplía la cobertura con práctica de temas.',
+    'recurring-failures': 'Hay preguntas pendientes de afianzar.',
+    'due-reviews': 'Hay tarjetas o preguntas cuya fecha de repaso ya ha llegado.',
+    'active-recall': 'Recupera la respuesta antes de volver a consultarla.',
+  };
+  return reasons[reason] ?? 'Recupera la respuesta antes de volver a consultarla.';
+}
+
+function TrainingActivityRows({ overview, onNavigate, onStartReview }: {
+  overview: HomeOverview;
+  onNavigate(route: string): void;
+  onStartReview(): void;
+}) {
+  const dueSummary = [
+    overview.cardsDue ? `${overview.cardsDue} ${overview.cardsDue === 1 ? 'tarjeta' : 'tarjetas'}` : '',
+    overview.due ? `${overview.due} ${overview.due === 1 ? 'pregunta' : 'preguntas'}` : '',
+  ].filter(Boolean).join(' y ');
+  return <div className="training-plan-activities">{overview.trainingPlan.activities.map(item => {
+    const copy = activityCopy[item.activity];
+    const dueSuffix = item.activity === 'spacedReviews' && dueSummary ? ` ${dueSummary} pendientes.` : '';
+    const route = item.activity === 'topicTest'
+      ? item.topicId ? `test?topic=${encodeURIComponent(item.topicId)}`
+        : item.reason === 'new-topic-day' ? 'test?recommendation=new-topic' : copy.route
+      : copy.route;
+    return <Row key={item.activity} id={`training-${item.activity}`} icon={copy.icon} title={copy.title}
+      subtitle={`${item.minutes} min orientativos · ${trainingReason(item.reason)}${dueSuffix}`}
+      onClick={() => item.activity === 'spacedReviews' && !overview.cardsDue ? onStartReview() : onNavigate(route)} />;
+  })}</div>;
+}
+
+function TrainingSessionControls({ overview, onStartTraining, onCompleteActivity }: {
+  overview: HomeOverview;
+  onStartTraining(): void;
+  onCompleteActivity(activity: TrainingActivity): void;
+}) {
+  const session = overview.trainingSession;
+  if (!session) return <button className="btn" id="start-training" onClick={onStartTraining}>Empezar entrenamiento de hoy</button>;
+  if (session.completedAt !== null) {
+    const completedSteps = session.activities.slice(0, session.currentIndex);
+    const minutes = completedSteps.reduce((total, step) => total + step.minutes, 0);
+    const labels = completedSteps.map(step => activityCopy[step.activity].title).join(', ');
+    return <p className="training-session-status" role="status">Entrenamiento completado: {completedSteps.length} {completedSteps.length === 1 ? 'actividad' : 'actividades'} · {minutes} min orientativos ({labels}). El descanso no acumula tareas para mañana.</p>;
+  }
+  const currentStep = session.activities[session.currentIndex];
+  if (!currentStep) return <button className="btn" id="start-training" onClick={onStartTraining}>Empezar entrenamiento de hoy</button>;
+  return <>
+    <p className="training-session-status" role="status">Actividad {session.currentIndex + 1} de {session.activities.length}: {activityCopy[currentStep.activity].title} · {currentStep.minutes} min orientativos.</p>
+    <button className="btn" id="continue-training" onClick={onStartTraining}>{session.currentStartedAt === null ? 'Empezar actividad' : 'Continuar actividad'}</button>
+    {session.currentStartedAt !== null && <button className="btn sec" id="complete-training-activity" onClick={() => onCompleteActivity(currentStep.activity)}>He terminado esta actividad</button>}
+  </>;
+}
+
+function DailyTraining({ overview, onNavigate, onStartReview, onStartTraining, onCompleteActivity }: {
+  overview: HomeOverview;
+  onNavigate(route: string): void;
+  onStartReview(): void;
+  onStartTraining(): void;
+  onCompleteActivity(activity: TrainingActivity): void;
+}) {
+  const plan = overview.trainingPlan;
+  return <section className="home-training" aria-labelledby="home-training-title">
+    <div className="home-domain-heading"><h2 className="section-title" id="home-training-title">Entrenamiento de hoy</h2>
+      {!plan.restDay && <span className="sm">{plan.minutes} min orientativos</span>}
+    </div>
+    {plan.restDay ? <p>Hoy es día de descanso. No se acumula trabajo para mañana.</p>
+      : plan.activities.length ? <>
+        <div className="training-session-controls"><TrainingSessionControls overview={overview} onStartTraining={onStartTraining} onCompleteActivity={onCompleteActivity} /></div>
+        <TrainingActivityRows overview={overview} onNavigate={onNavigate} onStartReview={onStartReview} />
+      </> : <p>No hay contenido pendiente para las modalidades elegidas hoy. El tiempo no se acumula; puedes cambiarlas en Ajustes.</p>}
+    <p className="sm">El tiempo es orientativo. Al volver, puedes continuar o confirmar que has terminado el bloque. El avance se conserva en este dispositivo cuando el navegador permite almacenamiento; no se sincroniza entre dispositivos.</p>
+  </section>;
+}
+
 function GuestAccess({ access, pending, onLogin, onRequestAccess }: {
   access: AccessOverview; pending: ReadonlySet<string>; onLogin(): void; onRequestAccess(): void;
 }) {
@@ -76,15 +161,18 @@ export interface HomeViewProps {
   onNavigate(route: string): void;
   onQuickSession(): void;
   onStartReview(): void;
+  onStartTraining(): void;
+  onCompleteTrainingActivity(activity: TrainingActivity): void;
   onOpenMenu(): void;
   onLogin(): void;
   onRequestAccess(): void;
 }
 
-export function HomeView({ overview, access, run, pending, onNavigate, onQuickSession, onStartReview, onOpenMenu, onLogin, onRequestAccess }: HomeViewProps) {
+export function HomeView({ overview, access, run, pending, onNavigate, onQuickSession, onStartReview, onStartTraining, onCompleteTrainingActivity, onOpenMenu, onLogin, onRequestAccess }: HomeViewProps) {
   return <>
     <HomeHeader access={access} overview={overview} onOpenMenu={onOpenMenu} />
     <p className="home-intro">Tu estudio, con perspectiva. Un paso más en tu preparación.</p>
+    {access.full && <DailyTraining overview={overview} onNavigate={onNavigate} onStartReview={onStartReview} onStartTraining={onStartTraining} onCompleteActivity={onCompleteTrainingActivity} />}
     <div className="home-workspace"><PrimaryStudy overview={overview} access={access} run={run} pending={pending} navigate={onNavigate} onQuickSession={onQuickSession} />
       {access.full ? <FullAccessReview overview={overview} pending={pending} navigate={onNavigate} onStartReview={onStartReview} /> : <GuestAccess access={access} pending={pending} onLogin={onLogin} onRequestAccess={onRequestAccess} />}
     </div>

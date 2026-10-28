@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Zap } from 'lucide-react';
+import { Clock3, Clover, RotateCcw, Sparkles, Zap } from 'lucide-react';
 import { Link } from 'react-router';
 import { useStudyService, type LightningQuestion } from '../../shared/ui/study-services.js';
 import { richHtml, hiliteHtml } from '../../shared/presentation/study-text.js';
@@ -30,11 +30,12 @@ export function LightningPage() {
   if (!question) return <><h1>Pregunta relámpago</h1><div className="card"><p>No hay pregunta disponible.</p></div><Link className="btn sec" to="/home">Inicio</Link></>;
 
   const correct = answered === question.correctIndex;
+  const ReasonIcon = { lucky: Clover, due: Clock3, failed: RotateCcw, new: Sparkles }[question.reasonKind];
   const notice = questionNotice({ i: question.id, n: question.note, np: question.nonScoring });
   const source = sourceHtml({ i: question.id, source: question.source, u: question.citation });
   return <>
     <h1><Zap className="inline-feature-icon" size="1em" strokeWidth={1.7} aria-hidden="true" /> Pregunta relámpago</h1>
-    <p className="sub">{question.reason}</p>
+    <p className="sub"><ReasonIcon className="inline-feature-icon" size="1em" strokeWidth={1.7} aria-hidden="true" /> {question.reason}</p>
     <article className="card q">
       <div className="meta"><span className="tag">{question.topicId} · {lightning.topicName(question.topicId)}</span></div>
       {notice && <StudyMarkup html={notice} />}{source && <StudyMarkup html={source} />}

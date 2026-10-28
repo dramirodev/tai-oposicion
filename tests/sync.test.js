@@ -35,6 +35,13 @@ it('cancela una escritura de tarjetas pendiente al cerrar sesión', async () => 
   await expect(vi.advanceTimersByTimeAsync(4000)).resolves.not.toThrow();
   expect(boundary.writes).toEqual([]);
 });
+it('sincroniza el estado FSRS versionado de una tarjeta con el documento de la cuenta activa', async () => {
+  store.gradeCard('FC-Q-q1', 2, 1_800_000_000_000);
+  await vi.advanceTimersByTimeAsync(4000);
+  const write = boundary.writes.find(item => item.path === 'users/user1/cfg/cards');
+  expect(write.value.m['FC-Q-q1']).toHaveLength(17);
+  expect(write.value.m['FC-Q-q1'].slice(6, 8)).toEqual([1, 6]);
+});
 it('no dirige una escritura pendiente ni un listener anterior a otra cuenta', async () => {
   sync.pushCards({ 'FC-Q-q1': [1, 1, 1000, 0, 1000, 2] });
   const previous = boundary.snapshots.find(x => x.ref.path === 'users/user1/cfg/cards');

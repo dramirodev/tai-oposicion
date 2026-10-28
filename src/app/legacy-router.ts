@@ -16,12 +16,10 @@ import { randomStudyOrder as shuffle } from '../shared/ui/study-random.js';
 import { swipeDirection, studyKeyAction } from '../shared/ui/study-input.js';
 import { calculateStudyStreak } from '../core/domain/study-analytics.js';
 import { summarizeReadingSpeedFailures } from '../core/domain/question-performance.js';
-import { analyzeSimulation } from '../core/domain/simulation-analysis.js';
-import { renderSimulationAnalysisView } from '../features/simulation/simulation-analysis-view.js';
 import { previewBackupImport } from '../core/application/settings/backup-preview.js';
 import { META, getIndex, getMeta, getMetaIndex, temaOf, idsOfTema, getTema, getSup, temaName, now, byIds, fetchJson } from '../adapters/http/legacy-data.js';
 import { $, L, toast, ask } from '../shared/ui/legacy-dom.js';
-import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
+import { showMenu } from '../shared/ui/dialog-actions.js';
 import { BLOQUES, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
 import { isFull, isOwner, accessLevel, GUEST_ROUTES } from '../adapters/legacy/access.js';
@@ -32,7 +30,8 @@ import { createTopicMasteryComposition } from './composition/topics/topic-master
 import { createTopicProgressComposition } from './composition/topics/topic-progress-composition.js';
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
-import type { Origin, QuestionStats } from '../core/domain/entities.js';
+import type { Origin, QuestionStats, TrainingActivity, TrainingPreferences } from '../core/domain/entities.js';
+import { buildDailyTrainingPlan, normalizeTrainingPreferences } from '../core/domain/study-training-plan.js';
 import { createHighlight, questionContentRevision, resolveHighlight } from '../core/domain/attempts/highlights.js';
 import { canonicalText, paintTextHighlight, selectedTextAnchor } from '../shared/ui/text-highlights.js';
 import { findLegacyCodeExplanation } from './composition/explanations/explanation-composition.js';
@@ -40,6 +39,11 @@ import { explanationMapper } from '../features/explanations/explanation-mapper.j
 import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
 import { loadQuestionEvolution, loadStrategyReportForPeriod } from './composition/stats/strategy-composition.js';
 import { createStatsServices } from './composition/stats/stats-composition.js';
+import { createExamCatalog } from './composition/simulations/exam-catalog-composition.js';
+import { createSimulationAnalysisView } from './composition/simulations/simulation-analysis-composition.js';
+import { createStudyRunController } from './composition/study/study-run-controller.js';
+import { createStudySessionLaunchController } from './composition/study/study-session-launch-controller.js';
+import { createStudyMenuGroups } from './composition/navigation/study-menu-composition.js';
 import { createFailuresComposition } from './composition/failures/failures-composition.js';
 import { createLightningComposition } from './composition/trainers/lightning-composition.js';
 import { createTrapsComposition } from './composition/trainers/traps-composition.js';
@@ -56,10 +60,10 @@ import { localAttemptRepository } from '../adapters/local/attempt-repository.js'
 import { attemptArchiveMapper } from '../adapters/local/mappers/attempt-archive.js';
 import { cleanCfg } from '../adapters/local/config.js';
 import { hashPath } from './router/paths.js';
-import { menuActionIcons, navigationIcons } from './navigation-icons.js';
 import { bootAppServices as startAppBootstrap } from './app-bootstrap.js';
 import { createAppUpdateController } from './composition/updates/app-update-controller.js';
 import { createCardsComposition } from './composition/cards/cards-composition.js';
+import { createTrainingSessionComposition } from './composition/trainers/training-session-composition.js';
 import { getHomeProgressSummary } from '../core/application/stats/get-home-progress-summary.js';
 import type { QuestionRecord as Question } from '../core/domain/question-record.js';
 import { createReadingComposition } from './composition/trainers/reading-composition.js';
@@ -82,8 +86,32 @@ const appUpdates = createAppUpdateController({
 const recover = createAccountRecovery(store.accountId, () => store.recover());
 const dominioTemas = createTopicMasteryComposition({ progressRepository: localProgressRepository, accountId: store.accountId, questionIdsForTopic: topicId => META._by[topicId], now });
 const progressPorTema = createTopicProgressComposition({ progressRepository: localProgressRepository, accountId: store.accountId, questionIdsForTopic: topicId => META._by[topicId] });
+const trainingSession = createTrainingSessionComposition({ accountId: store.accountId, now });
 let routeReady: () => void;
 const firstReactRouteReady = new Promise<void>(resolve => { routeReady = resolve; });
+const studyRunController = createStudyRunController({
+  createRun: configuration => createRun(configuration) !== null,
+  getPendingRun: fullAccess => pendingRun(fullAccess),
+  isFullAccess: isFull,
+  currentAccount: store.accountId,
+  ask,
+  resume: pending => resumeRun(pending) !== null,
+  clearPendingRun: clearRun,
+  navigateToQuiz: () => go(hashPath('quiz')),
+  showEmptyRunMessage: () => toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.'),
+  resumePrompt: pending => formatPendingRunPrompt({ title: pending.saved.titulo, index: pending.saved.idx, itemCount: pending.items.length, seconds: pending.saved.secs, limitMinutes: pending.saved.limit, timeLimited: pending.saved.pt }),
+});
+const { startRun, resumeSaved } = studyRunController;
+const studySessionLaunch = createStudySessionLaunchController({
+  currentAccount: store.accountId,
+  fullAccess: isFull,
+  quickSelection: full => quickItems(full, localGuestQuestionHistoryRepository),
+  reviewSelection: repasoItems,
+  startRun,
+  showEmptyQuickSelection: full => toast(full ? 'No hay preguntas nuevas ni repasos con esos filtros.' : 'No hay preguntas disponibles ahora mismo.'),
+  showEmptyReviewSelection: () => toast('No tienes repasos pendientes hoy.'),
+});
+const { startQuickSession: quickSession, startDueReview: startRepaso } = studySessionLaunch;
 // saludo con el nombre de la cuenta de Google (se recuerda en el dispositivo; sin cuenta, solo «Hola»)
 function saludo() {
   const u = sync.status.user; let n = '';
@@ -94,49 +122,7 @@ function saludo() {
   } catch (e) {}
   return n ? `Hola, ${n}` : 'Hola';
 }
-// ───────── motor de preguntas ─────────
-function startRun(cfg: any): boolean {
-  if (!createRun(cfg)) { toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.'); return false; }
-  go(hashPath('quiz'));
-  return true;
-}
-async function resumeSaved() {
-  const p = await pendingRun(isFull());
-  if (!p) return;
-  const accepted = await ask(formatPendingRunPrompt({ title: p.saved.titulo, index: p.saved.idx, itemCount: p.items.length, seconds: p.saved.secs, limitMinutes: p.saved.limit, timeLimited: p.saved.pt }), 'Continuar');
-  if (p.account !== store.accountId()) return;
-  if (!accepted) return clearRun();
-  if (resumeRun(p)) go(hashPath('quiz'));
-}
-
-function simAnalisis({ ses, items, ans, times, limit }: {
-  ses: { secs: number };
-  items: readonly Pick<Question, 'c'>[];
-  ans: (number | undefined)[];
-  times?: (number | undefined)[];
-  limit: number;
-}) {
-  const analysis = analyzeSimulation({ correct: items.map(question => question.c), answers: ans, times, limitSeconds: limit * 60, elapsedSeconds: ses.secs });
-  return renderSimulationAnalysisView(analysis, ses.secs, limit * 60);
-}
-// ───────── sesión rápida (~5 min) ─────────
-async function quickSession() {
-  const account = store.accountId();
-  const r = await quickItems(isFull(), localGuestQuestionHistoryRepository);
-  if (account !== store.accountId()) return;
-  if (!r.items.length) { toast(isFull() ? 'No hay preguntas nuevas ni repasos con esos filtros.' : 'No hay preguntas disponibles ahora mismo.'); return; }
-  startRun({ kind: 'rev', feedback: true, items: r.items, titulo: r.titulo });
-}
-async function startRepaso() {
-  const account = store.accountId();
-  const r = await repasoItems();
-  if (account !== store.accountId()) return;
-  if (!r.items.length) { toast('No tienes repasos pendientes hoy.'); return; }
-  startRun({ kind: 'rev', feedback: true, ...r });
-}
-
 // ───────── menú general ─────────
-const GUEST_MENU = (G: any) => [['Estudiar', [G[0][1][0]]], G[3]];
 async function openMenu() {
   if ($('#menuov')) return;
   const account = store.accountId();
@@ -147,71 +133,16 @@ async function openMenu() {
   const speed = summarizeReadingSpeedFailures(Object.entries(statistics).map(([id, record]) => ({ id, lastOutcome: record.lastResult ?? -1, lastReasonCode: record.errorReason })));
   const nErr = Object.values(store.getReports()).filter(r => r.st === 'abierto').length;
   const aqui = location.hash || hashPath('home');
-  const G = [
-    ['Estudiar', [
-      [menuActionIcons.quick, 'Sesión rápida', '10 preguntas en unos 5 minutos', () => quickSession()],
-      [menuActionIcons.review, 'Repaso de fallos', due ? due + (due === 1 ? ' pregunta toca repasar hoy' : ' preguntas toca repasar hoy') : 'Nada pendiente hoy', () => startRepaso()],
-      [navigationIcons.cards, 'Tarjetas de repaso', nCards ? nCards + (nCards === 1 ? ' tarjeta vence hoy' : ' tarjetas vencen hoy') : 'Repetición espaciada', hashPath('cards')],
-      [navigationIcons.test, 'Test por tema', '10–40 preguntas con corrección inmediata', hashPath('test')],
-      [navigationIcons.sim, 'Simulacros', 'Completo, por examen o por tema', hashPath('simulation')],
-    ]],
-    ['Entrenar un hábito', [
-      [navigationIcons.traps, 'Detective de trampas', 'Marca qué trampas esconde cada pregunta', hashPath('traps')],
-      [navigationIcons.reading, 'Lectura atenta', speed.count ? speed.count + ' fallos por velocidad' : 'Qué piden, palabras clave y respuesta', hashPath('reading')],
-      [navigationIcons.lightning, 'Pregunta relámpago', 'Una sola pregunta', hashPath('lightning')],
-    ]],
-    ['Seguimiento', [
-      [navigationIcons.stats, 'Progreso', 'Mapa de dominio, simulacros y evolución', hashPath('stats')],
-      [navigationIcons.topics, 'Temas vistos', store.getSeen().length + ' temas marcados', hashPath('topics')],
-      [navigationIcons.failures, 'Preguntas falladas', falladasIds().length + ' para buscar y releer', hashPath('failures')],
-      [menuActionIcons.errors, 'Errores del banco', nErr ? nErr + ' por revisar' : 'Nada por revisar', hashPath('errors')],
-    ]],
-    ['La app', [
-      [navigationIcons.home, 'Inicio', 'Resumen y cuenta atrás', hashPath('home')],
-      ...(isOwner() ? [[navigationIcons.access, 'Accesos', sync.status.reqs.length ? sync.status.reqs.length + ' solicitudes por revisar' : 'Quién puede usar la app', hashPath('access')]] : []),
-      [navigationIcons.settings, 'Ajustes', appUpdates.getAvailableUpdate() ? 'Hay una versión nueva' : 'Cuenta, apariencia, copia y versión ' + APP_VERSION, hashPath('settings')],
-      [navigationIcons.help, 'Ayuda', 'Motivos, práctica, simulacros y guardado', hashPath('help')],
-    ]],
-  ];
-  await showMenu((isFull() ? G : GUEST_MENU(G)) as MenuGroup[], aqui, go);
+  const groups = createStudyMenuGroups({
+    fullAccess: isFull(), owner: isOwner(), pendingQuestions: due, pendingCards: nCards,
+    readingSpeedFailures: speed.count, openReports: nErr, seenTopics: store.getSeen().length,
+    failedQuestions: falladasIds().length, accessRequests: sync.status.reqs.length,
+    updateAvailable: !!appUpdates.getAvailableUpdate(), actions: { quickSession, startReview: startRepaso },
+  });
+  await showMenu(groups, aqui, go);
 }
 
 // ───────── mis trampas ─────────
-// ───────── exámenes y simulacros por número ─────────
-const EX_OFICIALES: Record<string, string> = {
-  'TAIL2022-P1': 'Ingreso libre 2022 (conv. 2023)', 'TAI2024B-P1': 'Ingreso libre 2023-24 (conv. 2024)', 'L2018-P1': 'Ingreso libre 2018',
-  'L2019-P1': 'Ingreso libre 2019', 'L2025A-P1': 'Ingreso libre 2025', 'L2025X-P1': 'Ingreso libre 2025 (extraordinario)',
-  'P2018-P1': 'Promoción interna 2018', 'P2019-P1': 'Promoción interna 2019', 'P2022-P1': 'Promoción interna 2022 (conv. 2023)',
-  'P2024A-P1': 'Promoción interna 2021-24 (conv. 2024)', 'P2025A-P1': 'Promoción interna 2025',
-};
-function listaExamenes() {
-  const g: Record<string, any> = {};
-  for (const id in META) {
-    if (id === '_by') continue; const o = META[id][1];
-    if (o !== 'O' && o !== 'A') continue;
-    const m = /^(.*-P1)-(\d+)$/.exec(id); if (!m) continue; // las de reserva (-R-) quedan fuera
-    (g[m[1]] ||= []).push(id);
-  }
-  const sims = [], ofi = [];
-  for (const k in g) {
-    const ids = g[k].sort(), a = /^AS(\d+)([A-Z]?)-P1$/.exec(k);
-    if (a && ids.length >= 20) sims.push({ k, ids, n: +a[1], nombre: `Simulacro ${+a[1]}${a[2] ? ' (' + a[2] + ')' : ''}` });
-    else if (EX_OFICIALES[k] && ids.length >= 20) ofi.push({ k, ids, nombre: EX_OFICIALES[k] });
-  }
-  sims.sort((x, y) => x.n - y.n || x.k.localeCompare(y.k)); ofi.sort((x, y) => x.nombre.localeCompare(y.nombre));
-  // tests por tema de la academia (AT…): el tema es el que más se repite entre sus preguntas
-  const tests = [];
-  for (const k in g) {
-    if (!/^AT\d+(ALT)?-P1$/.test(k) || g[k].length < 10) continue;
-    const c: Record<string, any> = {}; for (const id of g[k]) { const t = META[id][0]; c[t] = (c[t] || 0) + 1; }
-    const tema = Object.keys(c).sort((a, b) => c[b] - c[a])[0];
-    tests.push({ k, ids: g[k].sort(), tema, nombre: '' });
-  }
-  tests.sort((a, b) => a.tema.localeCompare(b.tema) || a.k.localeCompare(b.k));
-  const vistos: Record<string, any> = {};
-  for (const t of tests) { const n = vistos[t.tema] = (vistos[t.tema] || 0) + 1; t.nombre = `Test ${t.tema} · ${temaName(t.tema)}${tests.filter(x => x.tema === t.tema).length > 1 ? ' (' + n + ')' : ''}`; }
-  return { sims, ofi, tests };
-}
 let SIMCFG: any = null;
 let reviewScenarioQuestions = new Map<string, Question[]>();
 let reviewScenarioTexts = new Map<string, string>();
@@ -253,9 +184,10 @@ const settingsServices = {
   accountId: store.accountId,
   getSnapshot(): SettingsSnapshot {
     const ui = normalizeUiPreferences(store.getCfg().ui);
+    const training = normalizeTrainingPreferences(store.getCfg().training);
     return {
       sync: { state: sync.status.state, user: sync.status.user, configured: sync.status.configured, lastSync: sync.status.lastSync, error: sync.status.error, detail: sync.status.detail, host: sync.status.host, authDomain: sync.status.authDomain, accessError: sync.status.accessErr, requests: sync.status.reqs },
-      full: isFull(), level: accessLevel(), devMode: devMode(), devRevealed: devRevealed(), ui: { theme: ui.theme, size: ui.size, lectura: ui.lectura },
+      full: isFull(), level: accessLevel(), devMode: devMode(), devRevealed: devRevealed(), ui: { theme: ui.theme, size: ui.size, lectura: ui.lectura }, training,
       progress: { questions: settingsProgressQuestionCount, topics: store.getSeen().length, sessions: store.getSessions().length, openReports: Object.values(store.getReports()).filter(report => report.st === 'abierto').length },
       exam: String(store.getCfg().exam || ''), version: APP_VERSION, build: APP_BUILD.split('+')[1] || APP_BUILD, update: appUpdates.getAvailableUpdate()?.version || null,
       offline: settingsOffline, index: settingsIndex ? { questions: settingsIndex.n, scenarios: settingsIndex.nsup } : null,
@@ -275,6 +207,7 @@ const settingsServices = {
     const current = normalizeUiPreferences(store.getCfg().ui);
     store.setCfg('ui', { ...current, [key]: key === 'theme' ? value : Number(value) });
   },
+  setTrainingPreferences(value: TrainingPreferences) { store.setCfg('training', normalizeTrainingPreferences(value)); },
   setExam(value: string) { if (/^\d{4}-\d\d-\d\d$/.test(value)) store.setCfg('exam', value); },
   setDevMode(value: string | null) { setDevMode(value); notifyAccessChange(); notifySettings(); },
   revealDev() { revealDev(); notifySettings(); },
@@ -448,7 +381,7 @@ export const studyServices: StudyServices = {
       const { ses, items, ans, studyStates = [], highlights = [], confidences = [], discardedOptions = [] } = last;
       return { score: ses.nota, correct: ses.a, wrong: ses.f, blank: ses.b, consulted: studyStates.filter(state => state === 'revealed').length,
         accuracy: ses.a + ses.f ? pct(ses.a, ses.a + ses.f) : null, seconds: ses.secs, title: ses.titulo || '', interrupted: !!ses.interrupted, kind: ses.kind,
-        porTiempo: !!ses.porTiempo, analysis: last.limit && !ses.porTiempo ? simAnalisis(last) : '',
+        porTiempo: !!ses.porTiempo, analysis: last.limit && !ses.porTiempo ? createSimulationAnalysisView({ correctIndices: last.items.map(question => question.c), answers: last.ans, answerSeconds: last.times, timeLimitMinutes: last.limit, elapsedSeconds: ses.secs }) : '',
         secondPartAvailable: (ses.titulo || '').includes('Parte 1') && !!SIMCFG?.parte2,
         topics: Object.entries(ses.temas).sort(([left], [right]) => left.localeCompare(right)).map(([id, [correct, total]]) => ({ id, name: temaName(id), correct, total })),
         items: items.map((question, index) => {
@@ -490,7 +423,7 @@ export const studyServices: StudyServices = {
     seenTopics: store.getSeen,
     async loadExamGroups(): Promise<SimulationExamGroups> {
       await getMetaIndex();
-      const lists = listaExamenes(), sessions = store.getSessions();
+      const lists = createExamCatalog(META, temaName), sessions = store.getSessions();
       const map = (entries: { k: string; ids: string[]; nombre: string }[]): SimulationExam[] => entries.map(entry => {
         const attempts = sessions.filter(session => session.titulo === entry.nombre);
         return { id: entry.k, name: entry.nombre, questionCount: entry.ids.length, attempts: attempts.length,
@@ -512,7 +445,7 @@ export const studyServices: StudyServices = {
     },
     async startExam(id, mode) {
       const account = store.accountId(); await getMeta();
-      const lists = listaExamenes(), selected = [...lists.ofi, ...lists.sims, ...lists.tests].find(exam => exam.k === id);
+      const lists = createExamCatalog(META, temaName), selected = [...lists.ofi, ...lists.sims, ...lists.tests].find(exam => exam.k === id);
       if (!selected) return 'empty';
       const items = (await byIds(selected.ids)).filter(question => !(question as Question & { s?: unknown }).s);
       if (account !== store.accountId()) return 'account-changed';
@@ -630,10 +563,15 @@ export const studyServices: StudyServices = {
       const progress = await getHomeProgressSummary(localProgressRepository);
       if (account !== store.accountId()) throw new Error('La cuenta cambió mientras se cargaba el resumen de inicio.');
       const due = (await dueQuestionIds()).length;
+      const cardDueCount = Object.values(store.getCards()).filter(record => record[3] >= 0 && record[4] <= now()).length;
+      const failureCount = falladasIds().length;
       const streak = calculateStudyStreak(progress.answerTimestamps, Date.now());
       const exam = store.getCfg().exam;
       const daysToExam = exam ? Math.max(0, Math.ceil((+new Date(exam + 'T09:00:00') - Date.now()) / 86400000)) : null;
       const mastery = await dominioTemas(index);
+      const trainingPreferences = normalizeTrainingPreferences(store.getCfg().training);
+      const weakTopics = mastery.filter(topic => topic.est === 'r').sort((left, right) => left.score - right.score);
+      const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date().getDay(), dueCount: due, cardDueCount, failureCount, weakTopicCount: weakTopics.length, weakTopicIds: weakTopics.map(topic => topic.id) });
       return { seen: progress.seen, total: index.n, answers: progress.answers, streak, daysToExam, due,
         completedSessions: store.getSessions().length,
         blocks: BLOQUES.map(([code, name]) => {
@@ -641,14 +579,17 @@ export const studyServices: StudyServices = {
           return { name, total: topics.length, mastered: topics.filter(topic => topic.est === 'g').length,
             assessed: topics.filter(topic => topic.est !== 'n').length };
         }),
-        cardsDue: Object.values(store.getCards()).filter(record => record[3] >= 0 && record[4] <= now()).length,
-        quickCount: progress.quickCount, slowCount: progress.slowCount, failures: falladasIds().length,
+        cardsDue: cardDueCount,
+        quickCount: progress.quickCount, slowCount: progress.slowCount, failures: failureCount,
         studiedTopics: store.getSeen().length, topicCount: index.temas.length,
         assessedTopics: mastery.filter(topic => topic.est !== 'n').length,
         weakTopics: mastery.filter(topic => topic.est === 'r').length,
-        masteredTopics: mastery.filter(topic => topic.est === 'g').length,
+        masteredTopics: mastery.filter(topic => topic.est === 'g').length, trainingPlan, trainingSession: trainingSession.getSession(),
       };
     },
+    startTrainingSession(plan) { return trainingSession.start(plan); },
+    startTrainingActivity() { return trainingSession.startCurrentActivity(); },
+    completeTrainingActivity(activity: TrainingActivity) { return trainingSession.completeActivity(activity); },
     quickSession, startReview: startRepaso, openMenu,
     login: sync.login, requestAccess: async () => await sync.requestAccess(), notify: toast,
   },

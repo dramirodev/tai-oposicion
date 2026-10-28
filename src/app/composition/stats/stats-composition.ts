@@ -15,6 +15,8 @@ import type { RunCfg } from '../study/study-engine-composition.js';
 import { hashPath } from '../../../shared/navigation/paths.js';
 import { getProgressStatistics } from '../../../core/application/stats/get-progress-statistics.js';
 import { slowestQuestions } from '../../../core/domain/study-analytics.js';
+import { cardMapper } from '../../../adapters/local/mappers/card.js';
+import { forecastCardRetention } from '../../../adapters/local/fsrs-card-scheduler.js';
 import type { MetaEntry } from '../../../adapters/legacy/types.js';
 
 interface StatsActions { go(path: string): void; startRun(run: RunCfg): boolean; startRepaso(): void; trapTest(count: number, traps: number[]): Promise<{ items: QuestionRecord[] }>; }
@@ -34,10 +36,15 @@ export function createStatsServices(actions: StatsActions): StatsServices {
       const progress = await getProgressStatistics(localProgressRepository, metadata, index.temas.map(topic => ({ id: topic.id, name: topic.nombre, total: topic.n })), now());
       if (account !== store.accountId()) throw new Error('La cuenta cambió mientras se cargaban las estadísticas.');
       const sessions = store.getSessions().slice(0, 12);
+      const cardReviews = Object.values(store.getCards()).flatMap(record => {
+        const mapped = cardMapper.toDomain(record);
+        return mapped.ok ? [mapped.value] : [];
+      });
+      const predictedCardRetention = forecastCardRetention(cardReviews, now());
       const speed = progress.speed;
       const domains = (await dominioTemas(index)).map(topic => ({ id: topic.id, name: topic.nombre, accuracy: topic.prec, days: topic.dias, status: topic.est as StatsSnapshot['domains'][number]['status'], reason: topic.why, due: topic.due, score: topic.score }));
       const simulations = simHistory(store.getSessions()).map(session => ({ id: session.id, ts: session.ts, nota: session.nota, part: session.part, dNota: session.dNota, a: session.a, f: session.f, b: session.b, secs: session.secs }));
-      return { generatedAt: now(), answers: progress.answers, correct: progress.correct, accuracy: progress.accuracy, topics: progress.topics, weakTopics: progress.weakTopics, failureCount: falladasIds().length, sessions, reviewLoad: progress.reviewLoad, failureReasons: progress.failureReasons, lucky: progress.lucky, speed: { count: speed.count, total: speed.total, percent: speed.percent },
+      return { generatedAt: now(), answers: progress.answers, correct: progress.correct, accuracy: progress.accuracy, topics: progress.topics, weakTopics: progress.weakTopics, failureCount: falladasIds().length, sessions, reviewLoad: progress.reviewLoad, predictedCardRetention, failureReasons: progress.failureReasons, lucky: progress.lucky, speed: { count: speed.count, total: speed.total, percent: speed.percent },
         trapRates: Object.entries(progress.traps).filter(([, row]) => row[0] >= 5).map(([id, row]) => ({ id, label: TRAMPAS[id] || id, attempts: row[0], failures: row[1], rate: percentage(row[1], row[0]) })).sort((a, b) => b.rate - a.rate),
         origins: Object.entries(progress.origins).map(([id, row]) => ({ label: ORIGEN[id] || id, answers: row[0], accuracy: percentage(row[1], row[0]) })),
         types: Object.entries(progress.types).map(([id, row]) => ({ id, label: TIPOS[id] || id, answers: row[0], accuracy: percentage(row[1], row[0]) })), domains,

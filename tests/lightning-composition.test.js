@@ -30,7 +30,7 @@ describe('lightning composition', () => {
     expect(dependencies.loadQuestionMetadata).toHaveBeenCalledOnce();
     expect(dependencies.loadDueQuestionIds).toHaveBeenCalledOnce();
     expect(dependencies.loadQuestionsById).toHaveBeenCalledWith(['due', 'failed']);
-    expect(result).toMatchObject({ id: 'due', topicId: 'T1.01', statement: 'Pregunta due', reason: '⏰ Toca repasarla' });
+    expect(result).toMatchObject({ id: 'due', topicId: 'T1.01', statement: 'Pregunta due', reason: 'Toca repasarla', reasonKind: 'due' });
   });
 
   it('skips questions that are assumptions or context-only prompts', async () => {
@@ -41,7 +41,7 @@ describe('lightning composition', () => {
       loadQuestionsById: vi.fn(async () => [question('scenario', { s: true }), question('context', { cp: 'Contexto' }), question('plain')]),
     });
 
-    await expect(services.loadQuestion()).resolves.toMatchObject({ id: 'plain', reason: '🆕 Nueva' });
+    await expect(services.loadQuestion()).resolves.toMatchObject({ id: 'plain', reason: 'Nueva', reasonKind: 'new' });
   });
 
   it('records the answer and exposes the topic name through its dependency', async () => {

@@ -9,7 +9,21 @@ export interface Question { id: string; topicId: string; origin: Origin; stateme
 export interface QuestionStats { attempts: number; correct: number; lastSeenAt: number; intervalStep?: number; dueAt?: number; lastResult?: AnswerResult; doubtful?: boolean; secondsStudied?: number; timedAnswers?: number; errorReason?: number; failureStreak?: number; syllabusReviewed?: boolean; syllabusReviewedAt?: number }
 export interface SessionResult { id: string; completedAt: number; kind: SessionKind; questionCount: number; correctCount: number; wrongCount: number; blankCount: number; durationSeconds: number; score: number; topicResults: Record<string, [number, number]>; typeResults: Record<string, [number, number]>; failedQuestionIds: string[]; title: string; interrupted?: boolean; timeLimited?: boolean }
 export interface Session { id: string; kind: SessionKind; questionIds: string[]; answers: Record<string, number | null>; currentIndex: number; startedAt: number; title: string }
-export interface CardReview { attempts: number; known: number; lastReviewedAt: number; intervalStep: number; dueAt: number; lastGrade?: number }
+export interface FsrsCardState {
+  schemaVersion: 1;
+  algorithmVersion: 6;
+  stability: number;
+  difficulty: number;
+  elapsedDays: number;
+  scheduledDays: number;
+  learningSteps: number;
+  reps: number;
+  lapses: number;
+  state: 0 | 1 | 2 | 3;
+  lastReviewAt: number | null;
+}
+export interface CardReview { attempts: number; known: number; lastReviewedAt: number; intervalStep: number; dueAt: number; lastGrade?: number; fsrs?: FsrsCardState }
+export interface CardsSessionCheckpoint { ids: string[]; index: number; revealed: boolean; results: [number, number, number] }
 export interface Flashcard { id: string; front: string; back: string }
 export interface Trap { id: string; questionId: string; explanation?: string }
 export interface ErrorReport { questionId: string; reportedAt: number; topicId: string; reason: string; note: string; state: ReportState }
@@ -18,6 +32,7 @@ export interface ExamConfig { examDate?: string; durationMinutes?: number; quest
 export interface Topic { id: string; name: string }
 export interface Preferences {
   exam?: string;
+  training?: TrainingPreferences;
   ui?: { theme?: 'auto' | 'light' | 'dark'; size?: number; lectura?: number };
   test?: { all?: boolean; sel?: string[]; n?: number; mode?: 'nuevas' | 'aleatorio' | 'falladas' | 'dudosas' | 'trampas'; o?: Origin[]; pt?: number; min?: number };
   sim?: { n?: number; min?: number; o?: Origin[]; parte2?: boolean; scope?: 'vistos' | 'todos' };
@@ -31,5 +46,12 @@ export interface Preferences {
   dmord?: string;
   tdet?: Record<string, number[]>;
   [key: string]: unknown;
+}
+export type TrainingActivity = 'activeRecall' | 'topicTest' | 'failures' | 'spacedReviews';
+export interface TrainingPreferences {
+  /** Sunday-first local calendar: Sunday, Monday, ..., Saturday. */
+  minutesByDay: [number, number, number, number, number, number, number];
+  introductionDay: number;
+  activities: TrainingActivity[];
 }
 export interface UserProgress { statistics: Record<string, QuestionStats>; sessions: SessionResult[]; preferences: Preferences; seenTopics: string[]; seenAt: number; reports: Record<string, ErrorReport>; cardReviews: Record<string, CardReview> }

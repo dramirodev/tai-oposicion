@@ -1,5 +1,8 @@
 import { createContext, useContext } from 'react';
 import type { StatsComparison, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
+import type { TrainingActivity, TrainingPreferences } from '../../core/domain/entities.js';
+import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
+import type { DailyTrainingSession } from '../../core/domain/study-training-session.js';
 export type { StatsComparison, StatsDomainTopic, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 export interface ActiveStudy { title: string; position: number; total: number }
 export interface HomeBlock { name: string; total: number; mastered: number; assessed: number }
@@ -8,6 +11,7 @@ export interface HomeOverview {
   seen: number; total: number; answers: number; streak: number; daysToExam: number | null;
   due: number; cardsDue: number; quickCount: number; slowCount: number; failures: number;
   studiedTopics: number; topicCount: number; assessedTopics: number; weakTopics: number; masteredTopics: number;
+  trainingPlan: DailyTrainingPlan; trainingSession: DailyTrainingSession | null;
 }
 export interface AccessOverview {
   full: boolean; level: string; greeting: string; state: string; configured: boolean;
@@ -22,6 +26,9 @@ export interface HomeServices {
   subscribe(listener: () => void): () => void;
   quickSession(): Promise<void>;
   startReview(): Promise<void>;
+  startTrainingSession(plan: DailyTrainingPlan): DailyTrainingSession | null;
+  startTrainingActivity(): DailyTrainingSession | null;
+  completeTrainingActivity(activity: TrainingActivity): DailyTrainingSession | null;
   openMenu(): void;
   login(): Promise<unknown>;
   requestAccess(): Promise<boolean>;
@@ -100,7 +107,8 @@ export interface FailureServices {
   topicName(id: string): string;
   startPractice(ids: readonly string[], title: string): void;
 }
-export interface LightningQuestion extends FailureQuestion { reason: string }
+export type LightningReasonKind = 'lucky' | 'due' | 'failed' | 'new';
+export interface LightningQuestion extends FailureQuestion { reason: string; reasonKind: LightningReasonKind }
 export interface LightningServices { loadQuestion(): Promise<LightningQuestion | null>; record(questionId: string, topicId: string, correct: boolean, seconds: number): void; topicName(id: string): string }
 export interface TrapPrompt extends FailureQuestion { topicName: string; trapIds: readonly number[]; choices: readonly number[] }
 export interface TrapAnswer { hits: number; missed: number; falseAlarms: number; total: number; correctIds: readonly number[]; selectedIds: readonly number[] }
@@ -178,7 +186,7 @@ export type QuizFinishResult = 'finished' | 'cancelled' | 'empty';
 export interface QuizServices { getSnapshot(): QuizSnapshot | null; subscribe(listener: () => void): () => void; startCurrentQuestion(): void; persist(): void; tick(): void; setIndex(index: number): void; answer(index: number): void; toggleReview(): void; setConfidence(value: 'sure' | 'betweenTwo' | 'guess'): void; toggleDiscard(index: number): void; reveal(): boolean; markBlank(): void; toggleBlank(): void; setPaused(paused: boolean): void; finish(reason?: 'complete' | 'interrupted' | 'timeout'): Promise<QuizFinishResult>; exit(): Promise<void>; cancelConfirmation(): void; toggleFlag(): void; setFailureReason(reason: number): void; markDoubt(): void; markLuck(): void; toggleCard(): void; addHighlight(anchor: { field: 'statement' | `option:${number}`; sourceText: string; start: number; end: number }, category: 'key' | 'doubt'): boolean; removeHighlight(id: string): void; saveReport(reason: string, note: string): void; loadExplanation(): Promise<{ status: 'current' | 'outdated' | 'missing'; content?: string }> }
 export interface SettingsSnapshot {
   sync: { state: string; user: { name: string; email: string } | null; configured: boolean; lastSync: number; error: string; detail: string; host: string; authDomain: string; accessError: string; requests: readonly AccessMember[] };
-  full: boolean; level: string; devMode: string | null; devRevealed: boolean; ui: { theme: string; size: number; lectura: number };
+  full: boolean; level: string; devMode: string | null; devRevealed: boolean; ui: { theme: string; size: number; lectura: number }; training: TrainingPreferences;
   progress: { questions: number; topics: number; sessions: number; openReports: number }; exam: string; version: string; build: string; update: string | null;
   offline: { complete: boolean; missing: readonly string[]; total: number; completedAt: number | null } | null; index: { questions: number; scenarios: number } | null;
 }
@@ -188,6 +196,7 @@ export interface SettingsServices {
   subscribe(listener: () => void): () => void;
   load(): Promise<void>;
   setPreference(key: 'theme' | 'size' | 'lectura', value: string | number): void;
+  setTrainingPreferences(value: TrainingPreferences): void;
   setExam(value: string): void;
   setDevMode(value: string | null): void;
   revealDev(): void;

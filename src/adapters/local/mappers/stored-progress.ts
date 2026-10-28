@@ -108,7 +108,7 @@ export function cleanCard(result: unknown): CardRec | null {
   const intervalStep = boundedNumber(result[3], -1, 4);
   const dueAt = boundedNumber(result[4]);
   const lastGrade = boundedNumber(result[5], 0, 2);
-  return [
+  const cleanRecord = [
     reviewCount,
     Math.min(knownCount, reviewCount),
     updatedAt,
@@ -116,6 +116,11 @@ export function cleanCard(result: unknown): CardRec | null {
     dueAt || 0,
     lastGrade === null ? 0 : Math.floor(lastGrade),
   ];
+  const fsrsValues = result.slice(6, 17);
+  const validFsrs = result.length === 17 && fsrsValues[0] === 1 && fsrsValues[1] === 6
+    && fsrsValues.slice(1).every(value => typeof value === 'number' && Number.isFinite(value))
+    && Number.isInteger(fsrsValues[9]) && fsrsValues[9] >= 0 && fsrsValues[9] <= 3;
+  return validFsrs ? [...cleanRecord, ...fsrsValues] : cleanRecord;
 }
 
 export function cleanCards(map: unknown): CardMap {

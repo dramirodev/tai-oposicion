@@ -1,4 +1,5 @@
 import { useLayoutEffect, type ReactNode } from 'react';
+import { X } from 'lucide-react';
 import { useStore } from 'zustand';
 import { createPortal } from 'react-dom';
 import { dialogStore, type DialogRequest, type MenuAction, type MenuGroup } from './dialog-store.js';
@@ -7,7 +8,7 @@ import { NativeDialog } from './NativeDialog.js';
 function Dialog({ dialog: data, top }: { dialog: DialogRequest; top: boolean }) {
   const select = (action: MenuAction) => { data.done(true); if (typeof action === 'function') action(); else data.navigate?.(action); };
   if (data.kind === 'menu') return <NativeDialog id="menuov" dialogId={data.id} open={top} className="overlay menu-dialog" labelledBy={`menu-title-${data.id}`} initialFocusSelector={`#menu-title-${data.id}`} onCancel={() => data.done(false)} onBackdropClick={() => data.done(false)}>
-    <div className="card menu"><div className="menuhead"><h2 id={`menu-title-${data.id}`} tabIndex={-1}>Menú</h2><button className="ghost" id="menux" aria-label="Cerrar menú" onClick={() => data.done(false)}>✕</button></div>
+    <div className="card menu"><div className="menuhead"><h2 id={`menu-title-${data.id}`} tabIndex={-1}>Menú</h2><button className="ghost" id="menux" aria-label="Cerrar menú" onClick={() => data.done(false)}><X size="1.25rem" strokeWidth={1.7} aria-hidden="true" /></button></div>
       <div className="menu-content">{data.groups?.map(([title, items], group) => <MenuSection key={title} title={title} items={items} offset={data.groups!.slice(0, group).reduce((itemAccumulator, [, rows]) => itemAccumulator + rows.length, 0)} current={data.current} select={select} />)}</div>
     </div></NativeDialog>;
   const ask = data.kind === 'ask';

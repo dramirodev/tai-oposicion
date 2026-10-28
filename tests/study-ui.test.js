@@ -1,6 +1,7 @@
 import {it,expect} from 'vitest';
 import {questionNotice,sourceHtml,filterFailures} from '../src/shared/presentation/legacy-study.js';
-import {previewCardDueAt} from '../src/core/domain/spaced-repetition.ts';
+import {previewCardWithFsrs} from '../src/adapters/local/fsrs-card-scheduler.ts';
+import {cardMapper} from '../src/adapters/local/mappers/card.js';
 it('advierte antes del estudio sin convertir una nota normal en error',()=>{
  expect(questionNotice({np:1,n:'Original ambiguo <script>'})).toContain('Solo estudio');
  expect(questionNotice({np:1,n:'Original ambiguo <script>'})).not.toContain('<script>');
@@ -26,7 +27,8 @@ it('anticipa la próxima revisión igual que el almacén sin escribir en él',as
  const now=1800000000000;
  for(const old of [undefined,[0,0,now,0,now,0],[2,1,now,1,now,2],[10,8,now,4,now,2]])for(const grade of [0,1,2]){
   store.resetAll();if(old)store.mergeCards({'FC-demo':old});
-  const predicted=previewCardDueAt(old ? {attempts:old[0],intervalStep:old[3]} : undefined,grade,now);
+  const mapped=old ? cardMapper.toDomain(old) : null;
+  const predicted=previewCardWithFsrs(mapped?.ok ? mapped.value : undefined,grade,now);
   const actual=store.gradeCard('FC-demo',grade,now);
   expect(predicted).toEqual(actual[4]);
  }

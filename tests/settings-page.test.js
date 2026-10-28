@@ -3,12 +3,13 @@ import { createElement } from 'react';
 import { renderApp } from './helpers/render-app.js';
 import { screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { DEFAULT_TRAINING_PREFERENCES } from '../src/core/domain/study-training-plan.js';
 vi.mock('../src/shared/ui/dialog-actions.js', () => ({ ask: vi.fn(async () => true), toast: vi.fn() }));
-let account, settings, view;
-const snapshot = () => ({ sync: { state: 'sin sesión', user: null, configured: false, lastSync: 0, error: '', detail: '', host: '', authDomain: '', accessError: '', requests: [] }, full: false, level: 'invitado', devMode: null, devRevealed: false, ui: { theme: 'auto', size: 0, lectura: 0 }, progress: { questions: 0, topics: 0, sessions: 0, openReports: 0 }, exam: '', version: '1.1.3', build: 'test', update: null, offline: null, index: null });
+let account, settings, view, fullAccess;
+const snapshot = () => ({ sync: { state: 'sin sesión', user: null, configured: false, lastSync: 0, error: '', detail: '', host: '', authDomain: '', accessError: '', requests: [] }, full: fullAccess, level: fullAccess ? 'propietario' : 'invitado', devMode: null, devRevealed: false, ui: { theme: 'auto', size: 0, lectura: 0 }, training: DEFAULT_TRAINING_PREFERENCES, progress: { questions: 0, topics: 0, sessions: 0, openReports: 0 }, exam: '', version: '1.1.3', build: 'test', update: null, offline: null, index: null });
 function createSettings() { return {
  accountId: () => account, getSnapshot: snapshot, subscribe: () => () => {}, load: async () => {},
- setPreference: vi.fn(), setExam: vi.fn(), setDevMode: vi.fn(), revealDev: vi.fn(), requestAccess: vi.fn(async () => true), login: vi.fn(), logout: vi.fn(), retrySync: vi.fn(),
+ setPreference: vi.fn(), setTrainingPreferences: vi.fn(), setExam: vi.fn(), setDevMode: vi.fn(), revealDev: vi.fn(), requestAccess: vi.fn(async () => true), login: vi.fn(), logout: vi.fn(), retrySync: vi.fn(),
  checkUpdate: vi.fn(async () => null), applyUpdate: vi.fn(), downloadOffline: vi.fn(async () => ({ complete: true, missing: [], total: 0, completedAt: null })),
  exportAnki: vi.fn(async () => ''), exportBackup: vi.fn(async () => ''), previewBackup: vi.fn(() => ({ summary: '1 pregunta nueva', serialized: '{"stats":{"nuevo":[1,1,200]}}' })),
  importBackup: vi.fn(async () => {}), resetAll: vi.fn(), findAiSessions: vi.fn(async () => []), buildAiExport: vi.fn(async () => ({})), deleteAiHistory: vi.fn(async () => ({ accountSyncPending: false })),
@@ -18,7 +19,7 @@ async function renderSettings() {
  view = renderApp(createElement(SettingsPage), { services: { settings } });
  await screen.findByRole('heading', { name: 'Ajustes' });
 }
-beforeEach(() => { account = 'cuenta-a'; settings = createSettings(); });
+beforeEach(() => { account = 'cuenta-a'; fullAccess = false; settings = createSettings(); });
 afterEach(() => { view?.unmount(); view = undefined; vi.clearAllMocks(); });
 it('presenta ajustes por secciones y persiste los cambios de apariencia', async () => {
  const user = userEvent.setup();
@@ -28,6 +29,16 @@ it('presenta ajustes por secciones y persiste los cambios de apariencia', async 
  expect(screen.getByText('Diagnóstico técnico')).toBeInTheDocument();
  expect(screen.getAllByRole('status').length).toBeGreaterThan(0);
  await user.click(screen.getByRole('button', { name: 'Claro' })); expect(settings.setPreference).toHaveBeenCalledWith('theme', 'light');
+});
+it('permite editar el presupuesto semanal y las modalidades del entrenador', async () => {
+ fullAccess = true;
+ const user = userEvent.setup();
+ await renderSettings();
+ const sundayMinutes = screen.getByRole('spinbutton', { name: 'Domingo: minutos de entrenamiento' });
+ fireEvent.change(sundayMinutes, { target: { value: '25' } });
+ expect(settings.setTrainingPreferences).toHaveBeenLastCalledWith(expect.objectContaining({ minutesByDay: [25, 35, 40, 35, 20, 40, 60] }));
+ await user.click(screen.getByRole('checkbox', { name: 'Active Recall con tarjetas' }));
+ expect(settings.setTrainingPreferences).toHaveBeenLastCalledWith(expect.objectContaining({ activities: ['topicTest', 'failures', 'spacedReviews'] }));
 });
 it('confirma antes de combinar una copia y muestra el resultado', async () => {
  const { ask } = await import('../src/shared/ui/dialog-actions.js'); await renderSettings();

@@ -1,7 +1,7 @@
 import { cleanCfg, cleanCfgSetting } from './config.js';
 import { CARD_REVIEW_INTERVALS_DAYS, CALENDAR_DAY_MILLISECONDS } from '../../core/domain/spaced-repetition.js';
 import { markLuckyQuestion, markQuestionSyllabusReviewed, recordQuestionAnswer, recordQuestionFailureReason, scheduleDoubtfulQuestion } from '../../core/domain/question-progress.js';
-import { gradeCardReview } from '../../core/domain/card-review.js';
+import { scheduleCardWithFsrs } from './fsrs-card-scheduler.js';
 import { mergeQuestionProgress, questionProgressNeedsSync } from '../../core/domain/progress-merge.js';
 import { mergeSessionHistory, MAX_SESSION_HISTORY } from '../../core/domain/session-history.js';
 import { statsMapper } from './mappers/stats.js';
@@ -310,9 +310,30 @@ const deletedCard = (result?: CardRec) => result?.[5] === -1;
 export const getCardsDoc = (): CardMap => appState.cards || (appState.cards = createDictionary());
 export const getCards = (): CardMap => Object.fromEntries(Object.entries(getCardsDoc()).filter(([, result]) => !deletedCard(result)));
 export const cardRec = (id: string): CardRec | undefined => { const result = getCardsDoc()[id]; return deletedCard(result) ? undefined : result; };
+function preserveFsrsOnLegacyCardUpdate(stored: CardRec, incoming: CardRec, original: unknown): CardRec {
+  const current = cardMapper.toDomain(stored), updated = cardMapper.toDomain(incoming);
+  if (!current.ok || !current.value.fsrs || !updated.ok || updated.value.fsrs) return incoming;
+  const hasExplicitGrade = Array.isArray(original) && original.length >= 6
+    && Number.isInteger(original[5]) && original[5] >= 0 && original[5] <= 2;
+  const migrated = hasExplicitGrade
+    ? scheduleCardWithFsrs(current.value, original[5] as 0 | 1 | 2, incoming[2], stored[2])
+    : { ...current.value, lastReviewedAt: Math.max(current.value.lastReviewedAt, updated.value.lastReviewedAt) };
+  migrated.attempts = updated.value.attempts;
+  migrated.known = updated.value.known;
+  return cardMapper.toDto(migrated);
+}
 export function mergeCards(m0: unknown): boolean {
   const incomingCards = cleanCards(m0); appState.cards = appState.cards || createDictionary(); let changed = false;
-  for (const cardId of Object.keys(incomingCards)) { const storedCard = appState.cards[cardId], incomingCard = incomingCards[cardId]; if (!storedCard || incomingCard[2] > storedCard[2]) { appState.cards[cardId] = incomingCard; changed = true; } }
+  for (const cardId of Object.keys(incomingCards)) {
+    const storedCard = appState.cards[cardId], incomingCard = incomingCards[cardId];
+    if (!storedCard || incomingCard[2] > storedCard[2]) {
+      const raw = m0 && typeof m0 === 'object' ? (m0 as Record<string, unknown>)[cardId] : undefined;
+      appState.cards[cardId] = storedCard && !deletedCard(incomingCard)
+        ? preserveFsrsOnLegacyCardUpdate(storedCard, incomingCard, raw)
+        : incomingCard;
+      changed = true;
+    }
+  }
   if (changed) { persist(); emit(); }
   return changed;
 }
@@ -329,13 +350,13 @@ export function removeCard(id: string): void {
   appState.cards[id] = [0, 0, Math.max(Date.now(), result[2] + 1), -1, 0, -1];
   persist(); emit(); if (syncer && syncer.pushCards) syncer.pushCards(appState.cards);
 }
-// Valora una tarjeta: 0 fallé · 1 dudaba (cuentan como fallo: vuelve a +2 días) · 2 lo sabía (sube de caja)
+// Valora una tarjeta con FSRS: 0 fallé · 1 dudaba · 2 lo sabía.
 export function gradeCard(id: string, grade: number, now = Date.now()): CardRec | null {
   if (!CARD_RE.test(id) || ![0, 1, 2].includes(grade)) return null;
   appState.cards = appState.cards || createDictionary();
   const current = cardRec(id);
   const mapped = current ? cardMapper.toDomain(current) : null;
-  const graded = gradeCardReview(mapped?.ok ? mapped.value : undefined, grade as 0 | 1 | 2, now, appState.cards[id]?.[2] || 0);
+  const graded = scheduleCardWithFsrs(mapped?.ok ? mapped.value : undefined, grade as 0 | 1 | 2, now, appState.cards[id]?.[2] || 0);
   const cardRecord = cardMapper.toDto(graded);
   appState.cards[id] = cardRecord; persist(); emit(); if (syncer && syncer.pushCards) syncer.pushCards(appState.cards);
   return cardRecord;
