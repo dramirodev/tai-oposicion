@@ -94,6 +94,8 @@ describe('informes de errores del banco', () => {
     st.addReport('q1', 'T1.01', 'Otro', 'a');
     const t = st.getReports().q1.ts;
     expect(st.mergeReports({ q1: { ts: t - 5, motivo: 'viejo', nota: '', tema: '', st: 'abierto' } })).toBe(false);
+    expect(st.mergeReports({ q1: { ts: t, motivo: 'empate', nota: '', tema: '', st: 'abierto' } })).toBe(false);
+    expect(st.getReports().q1.motivo).toBe('Otro');
     expect(st.mergeReports({ q1: { ts: t + 5, motivo: 'nuevo', nota: '', tema: '', st: 'resuelto' }, '<img>': { ts: 1 }, q2: 'x' })).toBe(true);
     expect(st.getReports().q1.motivo).toBe('nuevo'); expect(Object.keys(st.getReports())).toEqual(['q1']);
   });
