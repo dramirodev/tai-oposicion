@@ -44,6 +44,7 @@ import { createSimulationAnalysisView } from './composition/simulations/simulati
 import { createStudyRunController } from './composition/study/study-run-controller.js';
 import { createStudySessionLaunchController } from './composition/study/study-session-launch-controller.js';
 import { createStudyMenuGroups } from './composition/navigation/study-menu-composition.js';
+import { toSettingsSnapshot } from '../features/settings/settings-mapper.js';
 import { createFailuresComposition } from './composition/failures/failures-composition.js';
 import { createLightningComposition } from './composition/trainers/lightning-composition.js';
 import { createTrapsComposition } from './composition/trainers/traps-composition.js';
@@ -183,15 +184,14 @@ async function refreshSettingsProgressQuestionCount(): Promise<void> {
 const settingsServices = {
   accountId: store.accountId,
   getSnapshot(): SettingsSnapshot {
-    const ui = normalizeUiPreferences(store.getCfg().ui);
-    const training = normalizeTrainingPreferences(store.getCfg().training);
-    return {
+    return toSettingsSnapshot({
       sync: { state: sync.status.state, user: sync.status.user, configured: sync.status.configured, lastSync: sync.status.lastSync, error: sync.status.error, detail: sync.status.detail, host: sync.status.host, authDomain: sync.status.authDomain, accessError: sync.status.accessErr, requests: sync.status.reqs },
-      full: isFull(), level: accessLevel(), devMode: devMode(), devRevealed: devRevealed(), ui: { theme: ui.theme, size: ui.size, lectura: ui.lectura }, training,
+      full: isFull(), level: accessLevel(), devMode: devMode(), devRevealed: devRevealed(),
+      uiPreferences: store.getCfg().ui, trainingPreferences: store.getCfg().training,
       progress: { questions: settingsProgressQuestionCount, topics: store.getSeen().length, sessions: store.getSessions().length, openReports: Object.values(store.getReports()).filter(report => report.st === 'abierto').length },
-      exam: String(store.getCfg().exam || ''), version: APP_VERSION, build: APP_BUILD.split('+')[1] || APP_BUILD, update: appUpdates.getAvailableUpdate()?.version || null,
+      exam: store.getCfg().exam, version: APP_VERSION, build: APP_BUILD.split('+')[1] || APP_BUILD, update: appUpdates.getAvailableUpdate()?.version || null,
       offline: settingsOffline, index: settingsIndex ? { questions: settingsIndex.n, scenarios: settingsIndex.nsup } : null,
-    };
+    });
   },
   subscribe(listener: () => void) {
     const offStore = store.onChange(listener), offSync = sync.onStatus(listener);
