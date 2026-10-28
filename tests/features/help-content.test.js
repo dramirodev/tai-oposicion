@@ -22,5 +22,7 @@ describe('help content', () => {
     const introduction = HELP_SECTIONS.find(section => section.id === 'inicio');
     expect(introduction.body.join(' ')).toContain('TAI no contiene el texto completo del temario');
     expect(introduction.body.join(' ')).toContain('volver a la selección automática');
+    expect(introduction.body.join(' ')).toMatch(/aunque el resultado sea bajo, primero se propone otra comprobación/i);
+    expect(introduction.body.join(' ')).toMatch(/no puede deducir que debas releer todo el tema/i);
   });
 });
