@@ -1,5 +1,6 @@
 import { it, expect, beforeEach } from 'vitest';
 import { readFileSync } from 'node:fs';
+import { isQuestionEditoriallyQuarantined } from '../src/core/domain/question-review-overrides.js';
 const load = f => JSON.parse(readFileSync(`public/data/${f}`, 'utf8'));
 const by = (f, id) => load(f).find(q => q.i === id);
 it('las preguntas reescritas como «versión editorial» vuelven a su contenido original', () => {
@@ -59,5 +60,34 @@ it('conserva las correcciones y los ejemplos de código de las preguntas generad
     expect(question.u).toContain('cascade=CascadeType.ALL');
     expect(question.u).toContain('joinColumns=');
     expect(question.u).not.toMatch(/(?:^|,\s*)JoinColumns=/);
+  }
+});
+
+it('permite las 16 preguntas corregidas tras cotejarlas con sus fuentes', () => {
+  const reviewed = [
+    ['T2.01.json', 'GEN-T2.01-18.v1', 'La universalidad, la eficiencia y la no ambigüedad.'],
+    ['T3.03.json', 'GEN-T3.03-26.v2', 'Procesan datos.'],
+    ['T3.03.json', 'GEN-T3.03-35.v2', 'Los sucesos (eventos) que ocurren.'],
+    ['T3.03.json', 'GEN-T3.03-42', 'Propósitos específicos.'],
+    ['T3.06.json', 'GEN-T3.06-19.v2', 'main.'],
+    ['T3.06.json', 'GEN-T3.06-100.v2', 'const.'],
+    ['T3.06.json', 'GEN-T3.06-428.v1', 'El objeto DataReader.'],
+    ['T3.07.json', 'GEN-T3.07-27.v1', 'HTML.'],
+    ['T3.07.json', 'GEN-T3.07-30.v2', 'Lógica de negocio compleja para los servidores.'],
+    ['T3.07.json', 'GEN-T3.07-31.v2', 'Tres o más niveles.'],
+    ['T3.07.json', 'GEN-T3.07-72.v2', 'SOAP.'],
+    ['T3.07.json', 'GEN-T3.07-123', '2.0.'],
+    ['T3.07.json', 'GEN-T3.07-123.v1', '1.1.'],
+    ['T3.07.json', 'GEN-T3.07-173', 'Swagger.'],
+    ['T3.10.json', 'GEN-T3.10-324.v1', 'master.'],
+    ['T4.10.json', 'GEN-T4.10-40.v1', 'La detección de colisiones.'],
+  ];
+  for (const [file, id, answer] of reviewed) {
+    const question = by(file, id);
+    expect(question, id).toBeDefined();
+    expect(question.a[question.c], id).toBe(answer);
+    expect(question.v, id).toBe(0);
+    expect(question.u, id).toBeTruthy();
+    expect(isQuestionEditoriallyQuarantined(id), id).toBe(false);
   }
 });

@@ -112,7 +112,7 @@ describe('study question selection', () => {
       A: [
         { i: 'generated-full', o: 'G', v: 0, f: 'family-full' },
         { i: 'generated-partial', o: 'G', v: 1, f: 'family-partial' },
-        { i: 'GEN-T3.03-26.v2', o: 'G', v: 0, f: 'family-quarantined' },
+        { i: 'GEN-T3.03-63.v2', o: 'G', v: 0, f: 'family-quarantined' },
         { i: 'official', o: 'O' },
         { i: 'official-provisional', o: 'O', p: 1 },
       ],
@@ -172,7 +172,7 @@ describe('study question selection', () => {
       getMetadataSnapshot: () => ({ _by: {} }),
       getQuestions: async () => [
         { i: 'partial', o: 'G', v: 1, f: 'family' },
-        { i: 'GEN-T3.03-26.v2', o: 'G', v: 0, f: 'quarantined-family' },
+        { i: 'GEN-T3.03-63.v2', o: 'G', v: 0, f: 'quarantined-family' },
       ], now: () => 10,
     };
     const { items } = await createStudyQuestionSelection(progress, catalog).repasoItems();
