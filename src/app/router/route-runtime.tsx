@@ -1,12 +1,14 @@
 import { createHashRouter } from 'react-router';
 import { Layout } from '../layouts/Layout.js';
 import { RouteError } from './RouteError.js';
-import { lazy, Suspense, useLayoutEffect, type ReactNode } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect, useSyncExternalStore, type ReactNode } from 'react';
 import { useLocation } from 'react-router';
 import { ReactScreen } from '../layouts/ReactScreen.js';
 import { ExamsRedirect } from './ExamsRedirect.js';
 import { paths, routeSegment } from './paths.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
+import { useOptionalStudyService } from '../../shared/ui/study-services.js';
+import { useInitialAppReadySignal } from '../../shared/ui/InitialAppLoading.js';
 const HomePage = lazy(() => import('../../features/home/HomePage.js').then(module => ({ default: module.HomePage })));
 const AccessPage = lazy(() => import('../../features/access/AccessPage.js').then(module => ({ default: module.AccessPage })));
 const HelpPage = lazy(() => import('../../features/help/HelpPage.js').then(module => ({ default: module.HelpPage })));
@@ -34,13 +36,34 @@ export function configureRuntime(runtime: AppRuntime): void { appRuntime = runti
 let legacyRefreshSeq = 0;
 let stopAppServices: (() => void) | undefined;
 const loading = <PageLoading variant="legacy" />;
+const noSubscription = () => () => {};
+const readyWithoutServices = () => true;
 function FocusAfterLoad({ children }: { children: ReactNode }) {
   const location = useLocation();
+  const home = useOptionalStudyService('home');
+  const authResolved = useSyncExternalStore(home?.subscribe ?? noSubscription, home?.authResolved ?? readyWithoutServices, readyWithoutServices);
+  const markInitialAppReady = useInitialAppReadySignal();
   useLayoutEffect(() => {
     const heading = document.querySelector<HTMLElement>('.route-transition h1');
     if (heading) { heading.tabIndex = -1; heading.focus({ preventScroll: true }); }
     appRuntime?.markReady();
   }, [location.key]);
+  useEffect(() => {
+    if (!authResolved) return;
+    const app = document.getElementById('app');
+    if (!app) return;
+    const markReadyWhenContentIsLoaded = () => {
+      if (app.querySelector('.page-loading')) return false;
+      markInitialAppReady();
+      return true;
+    };
+    if (markReadyWhenContentIsLoaded()) return;
+    const observer = new MutationObserver(() => {
+      if (markReadyWhenContentIsLoaded()) observer.disconnect();
+    });
+    observer.observe(app, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [authResolved, location.key, markInitialAppReady]);
   return <>{children}</>;
 }
 const screen = (element: React.ReactNode, options?: { home?: boolean; restricted?: boolean }) => (
