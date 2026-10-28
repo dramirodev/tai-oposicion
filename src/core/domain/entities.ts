@@ -53,6 +53,8 @@ export interface TrainingPreferences {
   /** Sunday-first local calendar: Sunday, Monday, ..., Saturday. */
   minutesByDay: [number, number, number, number, number, number, number];
   introductionDay: number;
+  /** Optional weekly topic selected by the student or academy. */
+  introductionTopicId?: string;
   activities: TrainingActivity[];
   /** User choices are retained per topic and take precedence over automatic guidance. */
   reviewModesByTopic?: Record<string, StudyReviewMode>;

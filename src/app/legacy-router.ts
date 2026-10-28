@@ -192,7 +192,7 @@ const settingsServices = {
       uiPreferences: store.getCfg().ui, trainingPreferences: store.getCfg().training,
       progress: { questions: settingsProgressQuestionCount, topics: store.getSeen().length, sessions: store.getSessions().length, openReports: Object.values(store.getReports()).filter(report => report.st === 'abierto').length },
       exam: store.getCfg().exam, version: APP_VERSION, build: APP_BUILD.split('+')[1] || APP_BUILD, update: appUpdates.getAvailableUpdate()?.version || null,
-      offline: settingsOffline, index: settingsIndex ? { questions: settingsIndex.n, scenarios: settingsIndex.nsup } : null,
+      offline: settingsOffline, index: settingsIndex ? { questions: settingsIndex.n, scenarios: settingsIndex.nsup, topics: settingsIndex.temas.map(topic => ({ id: topic.id, name: topic.nombre })) } : null,
     });
   },
   subscribe(listener: () => void) {
@@ -566,7 +566,7 @@ export const studyServices: StudyServices = {
       const weakTopics = mastery.filter(topic => topic.est === 'r').sort((left, right) => left.score - right.score);
       const studiedTopicIds = new Set(store.getSeen());
       const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date().getDay(), dueCount: due, cardDueCount, failureCount, weakTopicCount: weakTopics.length, weakTopicIds: weakTopics.map(topic => topic.id),
-        topicReviewEvidence: weakTopics.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: studiedTopicIds.has(topic.id), distinctQuestionsAttempted: topic.seen, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias })) });
+        topicReviewEvidence: mastery.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: studiedTopicIds.has(topic.id), distinctQuestionsAttempted: topic.seen, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias })) });
       return { seen: progress.seen, total: index.n, answers: progress.answers, streak, daysToExam, due,
         completedSessions: store.getSessions().length,
         blocks: BLOQUES.map(([code, name]) => {
@@ -585,9 +585,12 @@ export const studyServices: StudyServices = {
     startTrainingSession(plan) { return trainingSession.start(plan); },
     startTrainingActivity() { return trainingSession.startCurrentActivity(); },
     completeTrainingActivity(activity: TrainingActivity) { return trainingSession.completeActivity(activity); },
-    setTrainingReviewMode(topicId: string, mode: StudyReviewMode) {
+    setTrainingReviewMode(topicId: string, mode: StudyReviewMode | null) {
       const preferences = normalizeTrainingPreferences(store.getCfg().training);
-      store.setCfg('training', { ...preferences, reviewModesByTopic: { ...preferences.reviewModesByTopic, [topicId]: mode } });
+      const reviewModesByTopic = { ...preferences.reviewModesByTopic };
+      if (mode) reviewModesByTopic[topicId] = mode;
+      else delete reviewModesByTopic[topicId];
+      store.setCfg('training', { ...preferences, reviewModesByTopic });
     },
     quickSession, startReview: startRepaso, openMenu,
     login: sync.login, requestAccess: async () => await sync.requestAccess(), notify: toast,

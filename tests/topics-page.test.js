@@ -18,3 +18,15 @@ it('marks only filtered topics in a block without losing input focus', async () 
   expect(studied).toEqual(['T1.01']);
   expect(container.querySelector('#topic-search')).toBe(input);
 });
+
+it('abre filtrado por el tema incluido en la recomendación del planificador', async () => {
+  const topics={accountId:()=>null,getStudied:()=>[],subscribe:()=>()=>{},setStudied:()=>{},loadTopics:async()=>[
+    {id:'T1.01',name:'Redes',total:10,answered:0,accuracy:null},
+    {id:'T3.02',name:'Tribunal Constitucional',total:10,answered:0,accuracy:null},
+  ]};
+  const { container } = renderApp(createElement(TopicsPage), { services: { topics }, initialEntries: ['/temario?topic=T3.02'] });
+  await screen.findByText('Tribunal Constitucional');
+  expect(container.querySelector('#topic-search')).toHaveValue('T3.02');
+  expect(container.querySelectorAll('[data-t]')).toHaveLength(1);
+  expect(container.querySelector('[data-t="T3.02"]')).toBeInTheDocument();
+});

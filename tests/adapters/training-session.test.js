@@ -14,6 +14,12 @@ it('aísla el checkpoint por cuenta y elimina sesiones de días anteriores', () 
   expect(localStorage.getItem('tai.training-session.v1.owner-a')).toBeNull();
 });
 
+it('conserva el tipo de intervención al recuperar una sesión del día', () => {
+  const planned = { ...session, activities: [{ ...session.activities[0], reviewMode: 'selective-reading' }] };
+  saveTrainingSession('owner-a', planned);
+  expect(readTrainingSession('owner-a', timestamp)?.activities[0]).toMatchObject({ topicId:'T1.01', reviewMode:'selective-reading' });
+});
+
 it('recupera checkpoints v1 anteriores que aún no guardaban motivo ni tema', () => {
   const old = { dateKey:'2026-10-28', activities:[{ activity:'activeRecall', minutes:10 }], currentIndex:0, currentStartedAt:timestamp, startedAt:timestamp, completedAt:null };
   localStorage.setItem('tai.training-session.v1.owner-a', JSON.stringify(old));

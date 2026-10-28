@@ -29,7 +29,7 @@ export interface HomeServices {
   startTrainingSession(plan: DailyTrainingPlan): DailyTrainingSession | null;
   startTrainingActivity(): DailyTrainingSession | null;
   completeTrainingActivity(activity: TrainingActivity): DailyTrainingSession | null;
-  setTrainingReviewMode(topicId: string, mode: StudyReviewMode): void;
+  setTrainingReviewMode(topicId: string, mode: StudyReviewMode | null): void;
   openMenu(): void;
   login(): Promise<unknown>;
   requestAccess(): Promise<boolean>;
@@ -189,7 +189,7 @@ export interface SettingsSnapshot {
   sync: { state: string; user: { name: string; email: string } | null; configured: boolean; lastSync: number; error: string; detail: string; host: string; authDomain: string; accessError: string; requests: readonly AccessMember[] };
   full: boolean; level: string; devMode: string | null; devRevealed: boolean; ui: { theme: string; size: number; lectura: number }; training: TrainingPreferences;
   progress: { questions: number; topics: number; sessions: number; openReports: number }; exam: string; version: string; build: string; update: string | null;
-  offline: { complete: boolean; missing: readonly string[]; total: number; completedAt: number | null } | null; index: { questions: number; scenarios: number } | null;
+  offline: { complete: boolean; missing: readonly string[]; total: number; completedAt: number | null } | null; index: { questions: number; scenarios: number; topics?: readonly { id: string; name: string }[] } | null;
 }
 export interface SettingsServices {
   accountId(): string | null;

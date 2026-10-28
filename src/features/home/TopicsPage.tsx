@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 import { BLOQUES } from '../../shared/presentation/labels.js';
 import { useStudyService } from '../../shared/ui/study-services.js';
 import { usePageReady } from '../../shared/ui/use-page-ready.js';
@@ -9,10 +9,13 @@ import { filterTopics, toggleTopicSelection } from './topics-controller.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
 export function TopicsPage() {
   const services = useStudyService('topics'), navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const requestedTopic = searchParams.get('topic') ?? '';
   const resource = useMemo(() => ({ accountId: services.accountId, subscribe: services.subscribe, load: () => services.loadTopics() }), [services]);
   const { value: topics, error } = useAccountResource(resource);
   usePageReady(!!topics || !!error);
-  const [query, setQuery] = useState('');
+  const [queryOverride, setQueryOverride] = useState<{ routeTopic: string; value: string } | null>(null);
+  const query = queryOverride?.routeTopic === requestedTopic ? queryOverride.value : requestedTopic;
   const [open, setOpen] = useState<ReadonlySet<string>>(() => new Set(BLOQUES.map(([block]) => block)));
   if (error) return <div className="card" role="alert"><h2>No se pudo cargar</h2><p>No se pudo cargar el temario. Inténtalo de nuevo.</p><button className="btn" id="retryRoute" onClick={() => void navigate('/temario')}>Reintentar</button></div>;
   if (!topics) return <PageLoading variant="topics" />;
@@ -31,7 +34,7 @@ export function TopicsPage() {
     });
   };
   return <TopicsView topics={topics} visible={visible} selected={selected} query={query} open={open}
-    onQueryChange={setQuery} onToggle={toggle} onToggleBlock={toggleBlock}
+    onQueryChange={value => setQueryOverride({ routeTopic: requestedTopic, value })} onToggle={toggle} onToggleBlock={toggleBlock}
     onSelectAll={() => services.setStudied(topics.map(topic => topic.id))}
     onClearSelection={() => services.setStudied([])}
     onStartSimulation={() => void navigate('/sim')}

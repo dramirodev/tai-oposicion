@@ -76,7 +76,7 @@ function TrainingActivityRows({ overview, onNavigate, onStartReview, onSetReview
   overview: HomeOverview;
   onNavigate(route: string): void;
   onStartReview(): void;
-  onSetReviewMode?: (topicId: string, mode: StudyReviewMode) => void;
+  onSetReviewMode?: (topicId: string, mode: StudyReviewMode | null) => void;
 }) {
   const dueSummary = [
     overview.cardsDue ? `${overview.cardsDue} ${overview.cardsDue === 1 ? 'tarjeta' : 'tarjetas'}` : '',
@@ -85,12 +85,17 @@ function TrainingActivityRows({ overview, onNavigate, onStartReview, onSetReview
   return <div className="training-plan-activities">{overview.trainingPlan.activities.map(item => {
     const copy = activityCopy[item.activity];
     const dueSuffix = item.activity === 'spacedReviews' && dueSummary ? ` ${dueSummary} pendientes.` : '';
+    const intervention = item.reviewIntervention;
+    const opensTopicList = intervention && intervention.mode !== 'active-retrieval';
     const route = item.activity === 'topicTest'
-      ? item.topicId ? `test?topic=${encodeURIComponent(item.topicId)}`
+      ? item.topicId ? `${opensTopicList ? 'temario' : 'test'}?topic=${encodeURIComponent(item.topicId)}`
         : item.reason === 'new-topic-day' ? 'test?recommendation=new-topic' : copy.route
       : copy.route;
+    const activityTitle = intervention
+      ? `${reviewModeLabel[intervention.mode]} · ${intervention.topicName}`
+      : copy.title;
     return <div className="training-plan-item" key={item.activity}>
-      <Row id={`training-${item.activity}`} icon={copy.icon} title={copy.title}
+      <Row id={`training-${item.activity}`} icon={copy.icon} title={activityTitle}
         subtitle={`${item.minutes} min orientativos · ${trainingReason(item.reason)}${dueSuffix}`}
         onClick={() => item.activity === 'spacedReviews' && !overview.cardsDue ? onStartReview() : onNavigate(route)} />
       <details className="training-explanation">
@@ -104,11 +109,12 @@ function TrainingActivityRows({ overview, onNavigate, onStartReview, onSetReview
           {item.reviewIntervention.targets.length > 0 && <ul>{item.reviewIntervention.targets.map(target => <li key={target.id}>{target.title}</li>)}</ul>}
           {item.reviewIntervention.confidence === 'product-rule' && <p className="sm">Criterio de recomendación del producto; no es un umbral pedagógico validado.</p>}
           {onSetReviewMode && <label className="training-review-mode">Cambiar modalidad
-            <select aria-label={`Modalidad de repaso para ${item.reviewIntervention.topicName}`} value={item.reviewIntervention.mode} onChange={event => onSetReviewMode(item.reviewIntervention!.topicId, event.target.value as StudyReviewMode)}>
+            <select aria-label={`Modalidad de repaso para ${item.reviewIntervention.topicName}`} value={item.reviewIntervention.mode} onChange={event => onSetReviewMode(item.reviewIntervention!.topicId, event.target.value === 'automatic' ? null : event.target.value as StudyReviewMode)}>
+              <option value="automatic">Usar recomendación automática</option>
               {Object.entries(reviewModeLabel).map(([mode, label]) => <option key={mode} value={mode}>{label}</option>)}
             </select>
           </label>}
-          {item.reviewIntervention.mode !== 'active-retrieval' && <p>La actividad sigue abriendo el test; TAI no incluye el texto del temario. Usa tus apuntes y <Link to="/temario">abre la lista de temas</Link> para gestionar tus marcas.</p>}
+          {item.reviewIntervention.mode !== 'active-retrieval' && <p>TAI no incluye el texto del temario. Consulta tus apuntes y <Link to={route.startsWith('temario?') ? `/${route}` : '/temario'}>abre el tema en la lista del temario</Link> para gestionar tus marcas.</p>}
         </div> : <p>{item.activity === 'topicTest' && item.reason === 'new-topic-day'
           ? 'Hoy coincide con el día de introducción configurado en Ajustes. La aplicación no registra qué tema se presenta en la academia, así que no puede asignar uno sin que lo elijas.'
           : trainingReason(item.reason) + (item.activity === 'topicTest' ? ' La comprobación usa preguntas; no hay datos suficientes para recomendar una relectura concreta.' : '')}</p>}
@@ -145,7 +151,7 @@ function DailyTraining({ overview, onNavigate, onStartReview, onStartTraining, o
   onStartReview(): void;
   onStartTraining(): void;
   onCompleteActivity(activity: TrainingActivity): void;
-  onSetReviewMode?: (topicId: string, mode: StudyReviewMode) => void;
+  onSetReviewMode?: (topicId: string, mode: StudyReviewMode | null) => void;
 }) {
   const plan = overview.trainingPlan;
   return <section className="home-training" aria-labelledby="home-training-title">
@@ -194,7 +200,7 @@ export interface HomeViewProps {
   onStartReview(): void;
   onStartTraining(): void;
   onCompleteTrainingActivity(activity: TrainingActivity): void;
-  onSetTrainingReviewMode?: (topicId: string, mode: StudyReviewMode) => void;
+  onSetTrainingReviewMode?: (topicId: string, mode: StudyReviewMode | null) => void;
   onOpenMenu(): void;
   onLogin(): void;
   onRequestAccess(): void;

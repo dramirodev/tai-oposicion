@@ -160,6 +160,16 @@ function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsSer
         {trainingDays.map(day => <option key={day.index} value={day.index}>{day.name}</option>)}
       </select>
     </label>
+    <label className="training-intro">Tema que estás introduciendo esta semana
+      <select value={snapshot.training.introductionTopicId ?? ''} onChange={event => {
+        const introductionTopicId = event.target.value || undefined;
+        settings.setTrainingPreferences({ ...snapshot.training, introductionTopicId });
+      }}>
+        <option value="">Sin tema asignado</option>
+        {snapshot.index?.topics?.map(topic => <option key={topic.id} value={topic.id}>{topic.id} · {topic.name}</option>)}
+      </select>
+    </label>
+    <p className="sm">Al elegir un tema, el entrenador puede sugerir un estudio inicial provisional si aún no hay una marca de estudio ni respuestas. El temario completo se consulta en tus apuntes.</p>
     <fieldset className="training-activities"><legend>Actividades disponibles</legend>
       {trainingActivities.map(([activity, label]) => <label key={activity}><input type="checkbox" checked={snapshot.training.activities.includes(activity)} disabled={snapshot.training.activities.length === 1 && snapshot.training.activities[0] === activity} onChange={event => updateActivity(activity, event.target.checked)} /> {label}</label>)}
     </fieldset>

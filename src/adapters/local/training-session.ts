@@ -1,14 +1,15 @@
 import type { DailyTrainingSession, TrainingSessionStep } from '../../core/domain/study-training-session.js';
-import type { TrainingActivity } from '../../core/domain/entities.js';
+import type { StudyReviewMode, TrainingActivity } from '../../core/domain/entities.js';
 import type { TrainingPlanReason } from '../../core/domain/study-training-plan.js';
 import { localTrainingDateKey } from '../../core/domain/study-training-session.js';
 
 const activities = new Set<TrainingActivity>(['activeRecall', 'topicTest', 'failures', 'spacedReviews']);
 const reasons = new Set<TrainingPlanReason>(['active-recall', 'new-topic-day', 'weak-topics', 'coverage', 'recurring-failures', 'due-reviews']);
+const reviewModes = new Set<StudyReviewMode>(['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading']);
 const keyFor = (accountId: string | null) => `tai.training-session.v1.${encodeURIComponent(accountId || 'guest')}`;
 
 type StoredTrainingSessionStep = Pick<TrainingSessionStep, 'activity' | 'minutes'>
-  & Partial<Pick<TrainingSessionStep, 'reason' | 'topicId'>>;
+  & Partial<Pick<TrainingSessionStep, 'reason' | 'topicId' | 'reviewMode'>>;
 type StoredTrainingSession = Omit<DailyTrainingSession, 'activities'> & { activities: readonly StoredTrainingSessionStep[] };
 
 function isSessionStep(value: unknown): value is StoredTrainingSessionStep {
@@ -17,6 +18,7 @@ function isSessionStep(value: unknown): value is StoredTrainingSessionStep {
   return activities.has(step.activity as TrainingActivity)
     && Number.isInteger(step.minutes) && step.minutes! > 0 && step.minutes! <= 240
     && (step.reason === undefined || reasons.has(step.reason as TrainingPlanReason))
+    && (step.reviewMode === undefined || reviewModes.has(step.reviewMode as StudyReviewMode))
     && (step.topicId === undefined || (typeof step.topicId === 'string' && /^T[1-4]\.\d{2}$/.test(step.topicId)));
 }
 
@@ -54,6 +56,7 @@ export function readTrainingSession(accountId: string | null, timestamp: number)
         minutes: step.minutes,
         reason: step.reason ?? defaultReason[step.activity],
         ...(step.topicId ? { topicId: step.topicId } : {}),
+        ...(step.reviewMode ? { reviewMode: step.reviewMode } : {}),
       })),
     };
   } catch { /* Invalid local checkpoints are removed below. */ }
