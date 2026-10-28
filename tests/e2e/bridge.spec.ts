@@ -14,6 +14,23 @@ async function start(page: Page) {
   await page.goto('/#/home'); await expect(page.locator('#quick')).toBeVisible();
   return errors;
 }
+test('el menú de inicio mantiene los iconos alineados con la navegación', async ({ page }) => {
+  const errors = await start(page);
+  await page.locator('#menu').click();
+  const menu = page.locator('#menuov');
+  await expect(menu).toBeVisible();
+  const simulationMenuIcon = menu.getByRole('button', { name: /Simulacros/ }).locator('svg');
+  const simulationNavigationIcon = page.locator('nav[aria-label="Principal"] a[href="#/sim"] svg');
+  await page.mouse.move(0, 0);
+  await expect(simulationMenuIcon).toBeVisible();
+  await expect(simulationNavigationIcon).toHaveCount(1);
+  const menuColor = await simulationMenuIcon.evaluate(icon => getComputedStyle(icon).color);
+  const navigationColor = await simulationNavigationIcon.evaluate(icon => getComputedStyle(icon).color);
+  expect(menuColor).toBe(navigationColor);
+  await expect(menu).toContainText('Entrenar un hábito');
+  await expect(menu).toContainText('Seguimiento');
+  expect(errors).toEqual([]);
+});
 async function savedAttemptHistory(page: Page) {
   return page.evaluate(() => new Promise<{ attempts: number; sessions: number; events: string[] }>((resolve, reject) => {
     const request = indexedDB.open('tai-attempts', 2);

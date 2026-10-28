@@ -19,7 +19,7 @@ import { summarizeReadingSpeedFailures } from '../core/domain/question-performan
 import { previewBackupImport } from '../core/application/settings/backup-preview.js';
 import { META, getIndex, getMeta, getMetaIndex, temaOf, idsOfTema, getTema, getSup, temaName, now, byIds, fetchJson } from '../adapters/http/legacy-data.js';
 import { $, L, toast, ask } from '../shared/ui/legacy-dom.js';
-import { showMenu, type MenuGroup } from '../shared/ui/dialog-actions.js';
+import { showMenu } from '../shared/ui/dialog-actions.js';
 import { BLOQUES, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
 import { isFull, isOwner, accessLevel, GUEST_ROUTES } from '../adapters/legacy/access.js';
@@ -42,6 +42,8 @@ import { createStatsServices } from './composition/stats/stats-composition.js';
 import { createExamCatalog } from './composition/simulations/exam-catalog-composition.js';
 import { createSimulationAnalysisView } from './composition/simulations/simulation-analysis-composition.js';
 import { createStudyRunController } from './composition/study/study-run-controller.js';
+import { createStudySessionLaunchController } from './composition/study/study-session-launch-controller.js';
+import { createStudyMenuGroups } from './composition/navigation/study-menu-composition.js';
 import { createFailuresComposition } from './composition/failures/failures-composition.js';
 import { createLightningComposition } from './composition/trainers/lightning-composition.js';
 import { createTrapsComposition } from './composition/trainers/traps-composition.js';
@@ -58,7 +60,6 @@ import { localAttemptRepository } from '../adapters/local/attempt-repository.js'
 import { attemptArchiveMapper } from '../adapters/local/mappers/attempt-archive.js';
 import { cleanCfg } from '../adapters/local/config.js';
 import { hashPath } from './router/paths.js';
-import { menuActionIcons, navigationIcons } from './navigation-icons.js';
 import { bootAppServices as startAppBootstrap } from './app-bootstrap.js';
 import { createAppUpdateController } from './composition/updates/app-update-controller.js';
 import { createCardsComposition } from './composition/cards/cards-composition.js';
@@ -101,6 +102,16 @@ const studyRunController = createStudyRunController({
   resumePrompt: pending => formatPendingRunPrompt({ title: pending.saved.titulo, index: pending.saved.idx, itemCount: pending.items.length, seconds: pending.saved.secs, limitMinutes: pending.saved.limit, timeLimited: pending.saved.pt }),
 });
 const { startRun, resumeSaved } = studyRunController;
+const studySessionLaunch = createStudySessionLaunchController({
+  currentAccount: store.accountId,
+  fullAccess: isFull,
+  quickSelection: full => quickItems(full, localGuestQuestionHistoryRepository),
+  reviewSelection: repasoItems,
+  startRun,
+  showEmptyQuickSelection: full => toast(full ? 'No hay preguntas nuevas ni repasos con esos filtros.' : 'No hay preguntas disponibles ahora mismo.'),
+  showEmptyReviewSelection: () => toast('No tienes repasos pendientes hoy.'),
+});
+const { startQuickSession: quickSession, startDueReview: startRepaso } = studySessionLaunch;
 // saludo con el nombre de la cuenta de Google (se recuerda en el dispositivo; sin cuenta, solo «Hola»)
 function saludo() {
   const u = sync.status.user; let n = '';
@@ -111,24 +122,7 @@ function saludo() {
   } catch (e) {}
   return n ? `Hola, ${n}` : 'Hola';
 }
-// ───────── sesión rápida (~5 min) ─────────
-async function quickSession() {
-  const account = store.accountId();
-  const r = await quickItems(isFull(), localGuestQuestionHistoryRepository);
-  if (account !== store.accountId()) return;
-  if (!r.items.length) { toast(isFull() ? 'No hay preguntas nuevas ni repasos con esos filtros.' : 'No hay preguntas disponibles ahora mismo.'); return; }
-  startRun({ kind: 'rev', feedback: true, items: r.items, titulo: r.titulo });
-}
-async function startRepaso() {
-  const account = store.accountId();
-  const r = await repasoItems();
-  if (account !== store.accountId()) return;
-  if (!r.items.length) { toast('No tienes repasos pendientes hoy.'); return; }
-  startRun({ kind: 'rev', feedback: true, ...r });
-}
-
 // ───────── menú general ─────────
-const GUEST_MENU = (G: any) => [['Estudiar', [G[0][1][0]]], G[3]];
 async function openMenu() {
   if ($('#menuov')) return;
   const account = store.accountId();
@@ -139,33 +133,13 @@ async function openMenu() {
   const speed = summarizeReadingSpeedFailures(Object.entries(statistics).map(([id, record]) => ({ id, lastOutcome: record.lastResult ?? -1, lastReasonCode: record.errorReason })));
   const nErr = Object.values(store.getReports()).filter(r => r.st === 'abierto').length;
   const aqui = location.hash || hashPath('home');
-  const G = [
-    ['Estudiar', [
-      [menuActionIcons.quick, 'Sesión rápida', '10 preguntas en unos 5 minutos', () => quickSession()],
-      [menuActionIcons.review, 'Repaso de fallos', due ? due + (due === 1 ? ' pregunta toca repasar hoy' : ' preguntas toca repasar hoy') : 'Nada pendiente hoy', () => startRepaso()],
-      [navigationIcons.cards, 'Tarjetas de repaso', nCards ? nCards + (nCards === 1 ? ' tarjeta vence hoy' : ' tarjetas vencen hoy') : 'Repetición espaciada', hashPath('cards')],
-      [navigationIcons.test, 'Test por tema', '10–40 preguntas con corrección inmediata', hashPath('test')],
-      [navigationIcons.sim, 'Simulacros', 'Completo, por examen o por tema', hashPath('simulation')],
-    ]],
-    ['Entrenar un hábito', [
-      [navigationIcons.traps, 'Detective de trampas', 'Marca qué trampas esconde cada pregunta', hashPath('traps')],
-      [navigationIcons.reading, 'Lectura atenta', speed.count ? speed.count + ' fallos por velocidad' : 'Qué piden, palabras clave y respuesta', hashPath('reading')],
-      [navigationIcons.lightning, 'Pregunta relámpago', 'Una sola pregunta', hashPath('lightning')],
-    ]],
-    ['Seguimiento', [
-      [navigationIcons.stats, 'Progreso', 'Mapa de dominio, simulacros y evolución', hashPath('stats')],
-      [navigationIcons.topics, 'Temas vistos', store.getSeen().length + ' temas marcados', hashPath('topics')],
-      [navigationIcons.failures, 'Preguntas falladas', falladasIds().length + ' para buscar y releer', hashPath('failures')],
-      [menuActionIcons.errors, 'Errores del banco', nErr ? nErr + ' por revisar' : 'Nada por revisar', hashPath('errors')],
-    ]],
-    ['La app', [
-      [navigationIcons.home, 'Inicio', 'Resumen y cuenta atrás', hashPath('home')],
-      ...(isOwner() ? [[navigationIcons.access, 'Accesos', sync.status.reqs.length ? sync.status.reqs.length + ' solicitudes por revisar' : 'Quién puede usar la app', hashPath('access')]] : []),
-      [navigationIcons.settings, 'Ajustes', appUpdates.getAvailableUpdate() ? 'Hay una versión nueva' : 'Cuenta, apariencia, copia y versión ' + APP_VERSION, hashPath('settings')],
-      [navigationIcons.help, 'Ayuda', 'Motivos, práctica, simulacros y guardado', hashPath('help')],
-    ]],
-  ];
-  await showMenu((isFull() ? G : GUEST_MENU(G)) as MenuGroup[], aqui, go);
+  const groups = createStudyMenuGroups({
+    fullAccess: isFull(), owner: isOwner(), pendingQuestions: due, pendingCards: nCards,
+    readingSpeedFailures: speed.count, openReports: nErr, seenTopics: store.getSeen().length,
+    failedQuestions: falladasIds().length, accessRequests: sync.status.reqs.length,
+    updateAvailable: !!appUpdates.getAvailableUpdate(), actions: { quickSession, startReview: startRepaso },
+  });
+  await showMenu(groups, aqui, go);
 }
 
 // ───────── mis trampas ─────────
