@@ -17,4 +17,10 @@ describe('help content', () => {
     ]);
     expect(HELP_SECTIONS.every(section => section.title && section.body.length > 0)).toBe(true);
   });
+
+  it('explica el entrenamiento adaptativo sin dar por hecho que la app contiene el temario', () => {
+    const introduction = HELP_SECTIONS.find(section => section.id === 'inicio');
+    expect(introduction.body.join(' ')).toContain('TAI no contiene el texto completo del temario');
+    expect(introduction.body.join(' ')).toContain('volver a la selección automática');
+  });
 });
