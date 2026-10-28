@@ -144,7 +144,7 @@ describe('study question selection', () => {
   it('keeps partially verified questions for practice but omits editorially quarantined questions', async () => {
     const progress = {
       getPreferences: () => ({}),
-      getAllQuestionStats: () => ({ partial: { intervalStep: 0, dueAt: 0 }, quarantined: { intervalStep: 0, dueAt: 0 } }),
+      getAllQuestionStats: () => ({ partial: { intervalStep: 0, dueAt: 1 }, quarantined: { intervalStep: 0, dueAt: 1 } }),
       getQuestionStats: () => undefined, getSeenTopics: () => [], accountId: () => null,
       onAccountChange: () => () => {}, recordAnswer: () => {}, addSession: () => {},
     };
@@ -155,9 +155,8 @@ describe('study question selection', () => {
       getQuestions: async () => [
         { i: 'partial', o: 'G', v: 1, f: 'family' },
         { i: 'GEN-T3.03-26.v2', o: 'G', v: 0, f: 'quarantined-family' },
-      ], now: () => 1,
+      ], now: () => 10,
     };
-
     const { items } = await createStudyQuestionSelection(progress, catalog).repasoItems();
 
     expect(items.map(question => question.i)).toEqual(['partial']);
