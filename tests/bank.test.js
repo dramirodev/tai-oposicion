@@ -4,17 +4,17 @@ import { gzipSync } from 'node:zlib';
 import { pack, plan } from '../scripts/publish_bank.mjs';
 
 const remote = vi.hoisted(() => ({ meta: null, files: {}, calls: { meta: 0, file: 0 } }));
-vi.mock('../src/adapters/legacy/access.js', () => ({ isFull: () => true }));
 vi.mock('../src/adapters/firebase/study-bank-source.js', () => ({
-  bankMeta: async () => { remote.calls.meta++; return remote.meta; },
-  bankFile: async n => { remote.calls.file++; return remote.files[n] || null; },
+  bankMeta: async () => { remote.calls.meta++; return remote.canRead ? remote.meta : null; },
+  bankFile: async n => { remote.calls.file++; return remote.canRead ? remote.files[n] || null : null; },
 }));
 let bank;
 const publish = (name, obj) => { const p = pack(Buffer.from(JSON.stringify(obj))); remote.files[name] = new Uint8Array(p.z); remote.meta = { v: 1, files: { ...(remote.meta?.files || {}), [name]: p.h } }; };
 beforeEach(async () => {
   vi.resetModules(); localStorage.clear(); indexedDB = new IDBFactory();
-  remote.meta = null; remote.files = {}; remote.calls = { meta: 0, file: 0 };
+  remote.meta = null; remote.files = {}; remote.calls = { meta: 0, file: 0 }; remote.canRead = true;
   bank = await import('../src/adapters/firebase/legacy-bank.js');
+  bank.configureBankAccessGate(() => true);
 });
 it('desactivado por defecto: devuelve null y no toca Firestore', async () => {
   publish('T1.01', [{ i: 'a' }]);
@@ -54,6 +54,14 @@ it('si Firestore no tiene el fichero o falla, devuelve null para usar el JSON es
   expect(await bank.loadBank('T9.99')).toBeNull();
   remote.meta = { v: 1, files: { 'T1.01': 'x' } };
   expect(await bank.loadBank('T1.01')).toBeNull();
+});
+it('sin acceso no lee ni siquiera una copia remota guardada en este dispositivo', async () => {
+  localStorage.setItem('tai.bank', 'fs'); publish('T1.01', [{ i: 'a' }]);
+  expect(await bank.loadBank('T1.01')).toEqual([{ i: 'a' }]);
+  bank.configureBankAccessGate(() => false);
+  const callsBeforeDeniedRead = { ...remote.calls };
+  expect(await bank.loadBank('T1.01')).toBeNull();
+  expect(remote.calls).toEqual(callsBeforeDeniedRead);
 });
 it('el script de publicación solo sube lo que cambió y borra lo que sobra', () => {
   expect(plan({ a: '1', b: '2' }, { a: '1', b: '9', c: '3' })).toEqual({ up: ['b'], del: ['c'] });
