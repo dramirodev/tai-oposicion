@@ -4,8 +4,10 @@ import { markLuckyQuestion, markQuestionSyllabusReviewed, recordQuestionAnswer, 
 import { scheduleCardWithFsrs } from './fsrs-card-scheduler.js';
 import { mergeQuestionProgress, questionProgressNeedsSync } from '../../core/domain/progress-merge.js';
 import { mergeSessionHistory, MAX_SESSION_HISTORY } from '../../core/domain/session-history.js';
+import { mergeErrorReports } from '../../core/domain/error-reports.js';
 import { statsMapper } from './mappers/stats.js';
 import { cardMapper } from './mappers/card.js';
+import { reportMapper } from './mappers/report.js';
 import type { AppState, CardMap, CardRec, Cfg, ReportMap, ReportState, Res, SeenDoc, Session, StatMap, StatRec } from '../legacy/types.js';
 import {
   clearPendingLegacyAdoption,
@@ -79,10 +81,20 @@ export function setReportState(id: string, st: ReportState): void {
   persist(); emit(); if (syncer && syncer.pushReports) syncer.pushReports(appState.reports);
 }
 export function mergeReports(m0: unknown): boolean {
-  const incomingReports = cleanReports(m0); appState.reports = appState.reports || createDictionary(); let changed = false;
-  for (const questionId of Object.keys(incomingReports)) if (!appState.reports[questionId] || incomingReports[questionId].ts > appState.reports[questionId].ts) { appState.reports[questionId] = incomingReports[questionId]; changed = true; }
-  if (changed) { persist(); emit(); }
-  return changed;
+  const incomingReports = cleanReports(m0);
+  appState.reports = appState.reports || createDictionary();
+  const toDomain = (reports: ReportMap) => Object.entries(reports).flatMap(([questionId, report]) => {
+    const result = reportMapper.toDomain(questionId, report);
+    return result.ok ? [result.value] : [];
+  });
+  const merged = mergeErrorReports(toDomain(appState.reports), toDomain(incomingReports));
+  if (!merged.changed) return false;
+
+  const reports = createDictionary<ReportMap[string]>();
+  for (const report of merged.reports) reports[report.questionId] = reportMapper.toDto(report);
+  appState.reports = reports;
+  persist(); emit();
+  return true;
 }
 
 
