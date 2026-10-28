@@ -1,6 +1,6 @@
 import { diagnoseQuestionDtos } from './question-diagnostics.js';
 import type { Index, Meta, Question } from '../legacy/types.js';
-interface SupEntry { texto: string; q: Question[] }
+interface SupEntry { texto: string; q: Question[]; conv?: string }
 type RemoteBankLoader = <T>(topicId: string) => Promise<T | null>;
 let remoteBankLoader: RemoteBankLoader = async () => null;
 export function configureRemoteBankLoader(loader: RemoteBankLoader): void { remoteBankLoader = loader; }

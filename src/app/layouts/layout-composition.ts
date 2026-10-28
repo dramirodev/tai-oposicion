@@ -2,11 +2,11 @@ import { useEffect, useRef, useSyncExternalStore } from 'react';
 import type { NavigateFunction } from 'react-router';
 import { configureAccessAccountReader, configureAccessStatusReader, isFull, isOwner, GUEST_ROUTES } from '../../adapters/legacy/access.js';
 import { syncGateway } from '../../adapters/firebase/legacy-sync-state.js';
-import { accountId } from '../../adapters/local/legacy-store.js';
+import { localStudyProgressGateway } from '../../adapters/local/progress-repository.js';
 import { hasActiveRun } from '../composition/study/study-engine-composition.js';
 import { subscribeAccessChanges } from '../access-events.js';
 
-configureAccessAccountReader(accountId);
+configureAccessAccountReader(localStudyProgressGateway.accountId);
 configureAccessStatusReader(() => syncGateway.getSnapshot().access);
 
 const subscribe = (notify: () => void) => {

@@ -1,4 +1,4 @@
-import * as store from '../../../adapters/local/legacy-store.js';
+import { localStudyProgressGateway } from '../../../adapters/local/progress-repository.js';
 import { clearPendingRun, readPendingRun, writePendingRun } from '../../../adapters/local/pending-run-storage.js';
 import { loadPendingRun } from '../../../core/application/runs/pending-run.js';
 import { clearRun, hasActiveRun, saveRun, setPendingRunStorage, studyQuestionCatalog } from './study-engine-composition.js';
@@ -6,7 +6,7 @@ import { clearRun, hasActiveRun, saveRun, setPendingRunStorage, studyQuestionCat
 setPendingRunStorage({ write: writePendingRun, clear: clearPendingRun });
 
 const repository = {
-  currentAccount: store.accountId,
+  currentAccount: localStudyProgressGateway.accountId,
   hasActiveRun,
   read: readPendingRun,
   clear: clearPendingRun,

@@ -1,5 +1,5 @@
 import * as store from '../../../adapters/local/legacy-store.js';
-import { localProgressRepository } from '../../../adapters/local/progress-repository.js';
+import { localProgressRepository, localStudyProgressGateway } from '../../../adapters/local/progress-repository.js';
 import { createTopicMasteryComposition } from '../topics/topic-mastery-composition.js';
 import { aggregateWeeks, simHistory, compareSessions } from '../../../features/stats/analytics-mapper.js';
 import { ORIGEN, TRAMPAS, TIPOS } from '../../../shared/presentation/labels.js';
@@ -21,19 +21,19 @@ import type { StudyQuestionMetaEntry } from '../../../core/domain/study-catalog.
 interface StatsActions { go(path: string): void; startRun(run: RunCfg): boolean; startRepaso(): void; trapTest(count: number, traps: number[]): Promise<{ items: QuestionRecord[] }>; }
 
 export function createStatsServices(actions: StatsActions): StatsServices {
-  const dominioTemas = createTopicMasteryComposition({ progressRepository: localProgressRepository, accountId: store.accountId, questionIdsForTopic: topicId => studyQuestionCatalog.getMetadataSnapshot()?._by[topicId] || [], now: studyQuestionCatalog.now });
+  const dominioTemas = createTopicMasteryComposition({ progressRepository: localProgressRepository, accountId: localStudyProgressGateway.accountId, questionIdsForTopic: topicId => studyQuestionCatalog.getMetadataSnapshot()?._by[topicId] || [], now: studyQuestionCatalog.now });
   return {
     async load(): Promise<StatsSnapshot> {
-      const account = store.accountId();
+      const account = localStudyProgressGateway.accountId();
       const [index, questionMetadata] = await Promise.all([studyQuestionCatalog.getIndex(), studyQuestionCatalog.getMetadata()]);
-      if (account !== store.accountId()) throw new Error('La cuenta cambió mientras se cargaban las estadísticas.');
+      if (account !== localStudyProgressGateway.accountId()) throw new Error('La cuenta cambió mientras se cargaban las estadísticas.');
       const metadata = Object.fromEntries(Object.entries(questionMetadata).flatMap(([id, entry]) => {
         if (!Array.isArray(entry)) return [];
         const [topicId, origin, type, traps] = entry as StudyQuestionMetaEntry;
         return [[id, { topicId, origin, type, traps }]];
       }));
       const progress = await getProgressStatistics(localProgressRepository, metadata, index.temas.map(topic => ({ id: topic.id, name: topic.nombre, total: topic.n })), studyQuestionCatalog.now());
-      if (account !== store.accountId()) throw new Error('La cuenta cambió mientras se cargaban las estadísticas.');
+      if (account !== localStudyProgressGateway.accountId()) throw new Error('La cuenta cambió mientras se cargaban las estadísticas.');
       const sessions = store.getSessions().slice(0, 12);
       const cardReviews = Object.values(store.getCards()).flatMap(record => {
         const mapped = cardMapper.toDomain(record);
