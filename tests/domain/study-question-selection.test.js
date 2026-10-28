@@ -88,4 +88,78 @@ describe('study question selection', () => {
 
     expect(chosen.map(question => question.i).sort()).toEqual(['a-new', 'b-new']);
   });
+
+  it('excludes partially verified generated questions from scoring simulations', async () => {
+    const questions = {
+      A: [
+        { i: 'generated-full', o: 'G', v: 0, f: 'family-full' },
+        { i: 'generated-partial', o: 'G', v: 1, f: 'family-partial' },
+        { i: 'GEN-T3.03-26.v2', o: 'G', v: 0, f: 'family-quarantined' },
+        { i: 'official', o: 'O' },
+        { i: 'official-provisional', o: 'O', p: 1 },
+      ],
+    };
+    const progress = {
+      getPreferences: () => ({}), getAllQuestionStats: () => ({}), getQuestionStats: () => undefined,
+      getSeenTopics: () => [], accountId: () => null, onAccountChange: () => () => {},
+      recordAnswer: () => {}, addSession: () => {},
+    };
+    const catalog = {
+      getTopicQuestions: async topicId => questions[topicId], getTopicForQuestion: () => null,
+      getIndex: async () => ({ n: 0, nsup: 0, temas: [] }), getMetadata: async () => ({ _by: {} }),
+      getMetadataSnapshot: () => ({ _by: {} }), getQuestions: async () => [], now: () => 0,
+    };
+    const selection = createStudyQuestionSelection(progress, catalog);
+
+    const chosen = await selection.selectWeightedSimulationQuestions([{ id: 'A' }], new Set(['O', 'G']), 4, () => 0);
+    const practice = await selection.selectQuestionsForTopics({ topics: ['A'], origins: new Set(['O', 'G']), mode: 'aleatorio', count: 5 }, () => 0);
+
+    expect(chosen.map(question => question.i).sort()).toEqual(['generated-full', 'official']);
+    expect(practice.map(question => question.i).sort()).toEqual(['generated-full', 'generated-partial', 'official', 'official-provisional']);
+  });
+
+  it('does not select two generated variants from the same family across topics', async () => {
+    const questions = {
+      A: [{ i: 'variant-a', o: 'G', v: 0, f: 'same-family' }, { i: 'other-a', o: 'G', v: 0, f: 'family-a' }],
+      B: [{ i: 'variant-b', o: 'G', v: 0, f: 'same-family' }, { i: 'other-b', o: 'G', v: 0, f: 'family-b' }],
+    };
+    const progress = {
+      getPreferences: () => ({}), getAllQuestionStats: () => ({}), getQuestionStats: () => undefined,
+      getSeenTopics: () => [], accountId: () => null, onAccountChange: () => () => {},
+      recordAnswer: () => {}, addSession: () => {},
+    };
+    const catalog = {
+      getTopicQuestions: async topicId => questions[topicId], getTopicForQuestion: () => null,
+      getIndex: async () => ({ n: 0, nsup: 0, temas: [] }), getMetadata: async () => ({ _by: {} }),
+      getMetadataSnapshot: () => ({ _by: {} }), getQuestions: async () => [], now: () => 0,
+    };
+    const selection = createStudyQuestionSelection(progress, catalog);
+
+    const chosen = await selection.selectWeightedSimulationQuestions([{ id: 'A' }, { id: 'B' }], new Set(['G']), 3, () => 0);
+
+    expect(chosen).toHaveLength(3);
+    expect(chosen.filter(question => question.f === 'same-family')).toHaveLength(1);
+  });
+
+  it('keeps partially verified questions for practice but omits editorially quarantined questions', async () => {
+    const progress = {
+      getPreferences: () => ({}),
+      getAllQuestionStats: () => ({ partial: { intervalStep: 0, dueAt: 0 }, quarantined: { intervalStep: 0, dueAt: 0 } }),
+      getQuestionStats: () => undefined, getSeenTopics: () => [], accountId: () => null,
+      onAccountChange: () => () => {}, recordAnswer: () => {}, addSession: () => {},
+    };
+    const catalog = {
+      getTopicQuestions: async () => [], getTopicForQuestion: () => 'A',
+      getIndex: async () => ({ n: 0, nsup: 0, temas: [] }), getMetadata: async () => ({ _by: {} }),
+      getMetadataSnapshot: () => ({ _by: {} }),
+      getQuestions: async () => [
+        { i: 'partial', o: 'G', v: 1, f: 'family' },
+        { i: 'GEN-T3.03-26.v2', o: 'G', v: 0, f: 'quarantined-family' },
+      ], now: () => 1,
+    };
+
+    const { items } = await createStudyQuestionSelection(progress, catalog).repasoItems();
+
+    expect(items.map(question => question.i)).toEqual(['partial']);
+  });
 });

@@ -5,9 +5,30 @@ import { StatsTopicsSection } from './StatsTopicsSection.js';
 import { StatsSimulationSection } from './StatsSimulationSection.js';
 import { StatsEvolutionSection } from './StatsEvolutionSection.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
+import type { ObservedStudyTime } from '../../core/domain/attempts/observed-study-time.js';
 
 type Tab = 'temas' | 'sims' | 'evo';
 const date = (time: number) => new Date(time).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+function formatObservedDuration(milliseconds: number): string {
+  const minutes = Math.floor(milliseconds / 60_000);
+  if (minutes < 1) return 'Menos de 1 min';
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+  if (!hours) return `${minutes} min`;
+  return remainingMinutes ? `${hours} h ${remainingMinutes} min` : `${hours} h`;
+}
+
+function ObservedStudyTimeSummary({ value, loaded }: { value: ObservedStudyTime | null; loaded: boolean }) {
+  return <section className="card" aria-label="Tiempo activo en preguntas">
+    <h2 className="h3">Tiempo activo en preguntas</h2>
+    {!loaded ? <p role="status">Calculando el tiempo registrado…</p> : !value ? <p role="status">No se pudo cargar el tiempo registrado. El resto del progreso sigue disponible.</p> : value.questionAttempts === 0 ? <p>Aún no hay sesiones con tiempo registrado.</p> : <>
+      <div className="grid"><div className="stat"><b>{value.observedMilliseconds > 0 ? formatObservedDuration(value.observedMilliseconds) : 'Sin tiempo medible'}</b><span>Tiempo acumulado observado en preguntas</span></div></div>
+      <p>{value.completeAttempts + value.partialAttempts} preguntas con tiempo observado: {value.completeAttempts} completas y {value.partialAttempts} parciales. {value.unavailableAttempts ? `${value.unavailableAttempts} sin datos de tiempo.` : ''}</p>
+      <p className="legend">Cuenta solo los intervalos en que una pregunta estuvo abierta y la aplicación visible. No incluye lectura ni tarjetas, y no reconstruye actividad antigua sin datos.</p>
+    </>}
+  </section>;
+}
+
 export function StatsPage() {
   const stats = useStudyService('stats');
   const [snapshot, setSnapshot] = useState<StatsSnapshot | null>(null);
@@ -16,6 +37,8 @@ export function StatsPage() {
   const [domainOrder, setDomainOrder] = useState(() => String(stats.getPreference('domainOrder').order || 'tema'));
   const [evolution, setEvolution] = useState(() => stats.getPreference('evolution'));
   const [questionWeeks, setQuestionWeeks] = useState<readonly { start: number; seen: number; correct: number; wrong: number; unknown: number }[]>([]);
+  const [studyTime, setStudyTime] = useState<ObservedStudyTime | null>(null);
+  const [studyActivityLoaded, setStudyActivityLoaded] = useState(false);
   const [weekly, setWeekly] = useState<readonly StatsWeek[]>([]);
   const [slowOnlyCorrect, setSlowOnlyCorrect] = useState(false);
   const [strategy, setStrategy] = useState('');
@@ -25,7 +48,7 @@ export function StatsPage() {
   const [secondSimulation, setSecondSimulation] = useState('');
   const [message, setMessage] = useState('');
   useEffect(() => { let active = true; void stats.load().then(value => { if (active) { setSnapshot(value); setFirstSimulation(value.simulations.at(-2)?.id || value.simulations.at(-1)?.id || ''); setSecondSimulation(value.simulations.at(-1)?.id || ''); } }).catch(() => { if (active) setError('No se pudo cargar el progreso. Inténtalo de nuevo.'); }); return () => { active = false; }; }, [stats]);
-  useEffect(() => { let active = true; void stats.loadQuestionEvolution(12).then(value => { if (active) setQuestionWeeks(value); }).catch(() => { if (active) setMessage('No se pudo leer el historial detallado. El resto del progreso sigue disponible.'); }); return () => { active = false; }; }, [stats]);
+  useEffect(() => { let active = true; void stats.loadStudyActivity(12).then(value => { if (active) { setQuestionWeeks(value.questionEvolution); setStudyTime(value.observedStudyTime); setStudyActivityLoaded(true); } }).catch(() => { if (active) { setStudyActivityLoaded(true); setMessage('No se pudo leer el historial detallado. El resto del progreso sigue disponible.'); } }); return () => { active = false; }; }, [stats]);
   useEffect(() => {
     let active = true;
     const filter = String(evolution.filter || 'g');
@@ -49,6 +72,7 @@ export function StatsPage() {
       <p>{snapshot.answers ? `${snapshot.answers} ${snapshot.answers === 1 ? 'respuesta registrada' : 'respuestas registradas'} · ${snapshot.accuracy}% de acierto.` : 'Empieza una sesión para descubrir qué temas necesitas reforzar.'} {snapshot.weakTopics.length ? `Refuerza ${snapshot.weakTopics.map(topic => topic.id).join(', ')}.` : 'El mapa mostrará las prioridades a medida que practiques.'}</p>
       <div className="row"><button className="btn" disabled={!snapshot.reviewLoad[0]} onClick={() => stats.reviewDue()}>Repasar hoy · {snapshot.reviewLoad[0] || 0}</button><button className="btn sec" onClick={() => stats.practiceFailures()}>Preguntas falladas · {snapshot.failureCount}</button><button className="btn sec" onClick={() => stats.practiceTopics()}>Practicar temas</button></div>
     </section>
+    <ObservedStudyTimeSummary value={studyTime} loaded={studyActivityLoaded} />
     <div className="seg stats-sections" role="group" aria-label="Sección de progreso">{([['temas', 'Temas'], ['sims', 'Simulacros'], ['evo', 'Evolución']] as const).map(([id, label]) => <button key={id} className={tab === id ? 'on' : ''} aria-pressed={tab === id} onClick={() => setTab(id)}>{label}</button>)}</div>
     {tab === 'temas' && <StatsTopicsSection snapshot={snapshot} stats={stats} topics={topics} domainOrder={domainOrder} setDomainOrder={setDomainOrder} formattedDays={formattedDays} setMessage={setMessage} />}
     {tab === 'sims' && <StatsSimulationSection snapshot={snapshot} visibleSimulations={visibleSimulations} firstSimulation={firstSimulation} secondSimulation={secondSimulation} setFirstSimulation={setFirstSimulation} setSecondSimulation={setSecondSimulation} trend={trend} />}

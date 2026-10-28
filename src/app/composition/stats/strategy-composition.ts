@@ -3,7 +3,7 @@ import { localAttemptRepository } from '../../../adapters/local/attempt-reposito
 import { localStudyProgressGateway } from '../../../adapters/local/progress-repository.js';
 import { getStrategyReport } from '../../../core/application/attempts/get-strategy-report.js';
 import { flushAttemptTracking } from '../study/study-engine-composition.js';
-import { getQuestionEvolution } from '../../../core/application/attempts/get-question-evolution.js';
+import { getStudyActivity } from '../../../core/application/attempts/get-question-evolution.js';
 
 export async function loadStrategyReport(from: number, to: number) {
   await flushAttemptTracking();
@@ -26,12 +26,17 @@ export function loadStrategyReportForPeriod(days: number) {
   return loadStrategyReport(to - days * 86400000, to + 1);
 }
 
-export async function loadQuestionEvolution(weeks: number) {
+export async function loadStudyActivity(weeks: number) {
   await flushAttemptTracking();
-  return getQuestionEvolution({
+  return getStudyActivity({
     repository: localAttemptRepository,
     scope: localStudyProgressGateway.accountId() || 'guest',
     weeks,
     now: Date.now(),
   });
+}
+
+/** Compatibility entry point for callers interested only in question history. */
+export async function loadQuestionEvolution(weeks: number) {
+  return (await loadStudyActivity(weeks)).questionEvolution;
 }
