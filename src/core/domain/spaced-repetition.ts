@@ -6,6 +6,10 @@ export interface SpacedReview {
 export interface ReviewScheduleEntry {
   intervalStep?: number;
   dueAt?: number;
+  lastSeenAt?: number;
+  lastResult?: number;
+  syllabusReviewed?: boolean;
+  syllabusReviewedAt?: number;
 }
 
 export interface FailureStreakStats {
@@ -47,6 +51,23 @@ export function selectSpacedReviews<T extends SpacedReview>(items: readonly T[],
   return selected;
 }
 
+/** The existing first interval is a product default, not a scientifically optimal delay. */
+export function questionReviewDueAt(entry: ReviewScheduleEntry): number | undefined {
+  const scheduledDueAt = (entry.intervalStep ?? -1) >= 0 && (entry.dueAt ?? 0) > 0
+    ? entry.dueAt
+    : undefined;
+  const reviewedAt = entry.syllabusReviewedAt;
+  const hasReviewTimestamp = typeof reviewedAt === 'number' && Number.isFinite(reviewedAt) && reviewedAt > 0;
+  const delayedCheckAt = entry.syllabusReviewed === true && hasReviewTimestamp
+    ? reviewedAt + CARD_REVIEW_INTERVALS_DAYS[0] * CALENDAR_DAY_MILLISECONDS
+    : undefined;
+  const delayedCheckPending = delayedCheckAt !== undefined
+    && ((entry.lastSeenAt ?? 0) < delayedCheckAt || entry.lastResult === 2);
+  const activeDueDates = [scheduledDueAt, delayedCheckPending ? delayedCheckAt : undefined]
+    .filter((dueAt): dueAt is number => dueAt !== undefined);
+  return activeDueDates.length ? Math.min(...activeDueDates) : undefined;
+}
+
 /** Count due reviews by local calendar day; overdue entries belong to today. */
 export function countReviewsByDay(entries: readonly ReviewScheduleEntry[], now: number, days = 14): number[] {
   const dayMilliseconds = 86400000;
@@ -57,8 +78,9 @@ export function countReviewsByDay(entries: readonly ReviewScheduleEntry[], now: 
   const today = dayOrdinal(now);
   const counts = new Array<number>(days).fill(0);
   for (const entry of entries) {
-    if (!(entry.intervalStep! >= 0) || !entry.dueAt) continue;
-    const offset = dayOrdinal(entry.dueAt) - today;
+    const dueAt = questionReviewDueAt(entry);
+    if (dueAt === undefined) continue;
+    const offset = dayOrdinal(dueAt) - today;
     if (offset < days) counts[Math.max(0, offset)]++;
   }
   return counts;

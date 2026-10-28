@@ -49,7 +49,7 @@ export function FailuresPage() {
 
   return <>
     <h1>Falladas <HelpIconLink topic="repaso" label="Ayuda sobre preguntas falladas y repaso" /></h1>
-    <p className="sub">Cada pregunta permanece hasta acertarla tres veces seguidas. Un fallo reinicia el contador; dejarla en blanco no cuenta. Marcar el temario no la quita de la lista.</p>
+    <p className="sub">Cada pregunta permanece hasta acertarla tres veces seguidas. Un fallo reinicia el contador; dejarla en blanco no cuenta. Marcar el temario no la quita de la lista y programa una comprobación de recuerdo dos días después.</p>
     <p className="sub" aria-live="polite">{selected.length === questions.length ? `${questions.length} preguntas` : `${selected.length} de ${questions.length} preguntas`}</p>
     <div className="card">
       <label className="sr" htmlFor="failure-query">Buscar en las preguntas falladas</label>

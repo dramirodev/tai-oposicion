@@ -75,7 +75,10 @@ export function velocidad(stats: LegacyStats) {
 }
 
 export function cargaRepasos(stats: LegacyStats, now: number, days = 14): number[] {
-  const entries = Object.values(stats).map(stat => ({ intervalStep: stat[3], dueAt: stat[4] }));
+  const entries = Object.values(stats).map(stat => ({
+    intervalStep: stat[3], dueAt: stat[4], lastSeenAt: stat[2], lastResult: stat[5],
+    syllabusReviewed: stat[11] === 1, syllabusReviewedAt: stat[12],
+  }));
   return countReviewsByDay(entries, now, days);
 }
 
