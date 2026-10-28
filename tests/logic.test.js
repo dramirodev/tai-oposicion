@@ -350,7 +350,7 @@ describe('hiliteHtml', () => {
   });
   it('conserva el formato de código y el resaltado dentro de las citas del temario', () => {
     const annotation = hiliteHtml('@ManyToMany(mappedBy = "courses")', 'zzzz');
-    expect(annotation).toContain('<code class="cd">@ManyToMany(mappedBy = "courses")</code>');
+    expect(annotation).toContain('<code class="cd">@ManyToMany(mappedBy = &quot;courses&quot;)</code>');
     expect(richHtml('variable_estructura.nombre_variable')).toBe('<code class="cd">variable_estructura.nombre_variable</code>');
     expect(richHtml('x ^ y')).toBe('<code class="cd">x ^ y</code>');
   });
