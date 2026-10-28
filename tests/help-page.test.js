@@ -14,3 +14,13 @@ it('renders the offline guide and every historical failure category as React con
   }
   expect(screen.getByText(/no se muestran soluciones/i)).toBeInTheDocument();
 });
+
+it('keeps help instructions aligned with current menu labels and measured study behavior', () => {
+  const section = (id) => HELP_SECTIONS.find(item => item.id === id)?.body.join(' ') || '';
+  expect(section('acceso')).toContain('abre «Accesos» en el menú');
+  expect(section('inicio')).toContain('10 preguntas y suele llevar unos cinco minutos; no tiene cronómetro');
+  expect(section('inicio')).toContain('«Temas vistos»');
+  expect(section('inicio')).toContain('consulta tus apuntes por separado');
+  expect(section('inicio')).toContain('tiempo activo observado mientras respondes preguntas en sesiones completadas');
+  expect(section('errores')).toContain('En el menú abre «Errores del banco»');
+});
