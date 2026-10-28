@@ -1,7 +1,6 @@
 // Control de acceso de la interfaz. Es cosmético: el banco de preguntas es un JSON público; lo que protegen
 // de verdad las reglas de Firestore es la sincronización y la gestión de accesos.
 import { accountId } from '../local/legacy-store.js';
-import { status } from '../firebase/legacy-sync-state.js';
 import type { AccessLevel } from './types.js';
 const ACC = () => 'tai.acc:' + (accountId() || 'guest');
 const DEV = 'tai.dev';
@@ -13,13 +12,17 @@ const wr = (key: string, textValue: string | null): void => {
   } catch {}
 };
 const local = (): boolean => typeof location !== 'undefined' && ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
+let readCurrentAccess: () => AccessLevel | '' = () => '';
+export function configureAccessStatusReader(reader: () => AccessLevel | ''): void {
+  readCurrentAccess = reader;
+}
 // Modo desarrollador: '1' = acceso completo, '0' = ver como invitado (ni siquiera en localhost), sin valor = automático.
 export const devMode = (): string | null => rd(DEV);
 export const setDevMode = (textValue: string | null): void => { wr(DEV, textValue); };
 export const devRevealed = (): boolean => rd('tai.devui') === '1';
 export const revealDev = (): void => wr('tai.devui', '1');
 // Nivel real de la cuenta; mientras Firebase no responde (o sin red) se usa el último conocido en este dispositivo.
-export const accessLevel = (): AccessLevel => status.access || (rd(ACC()) as AccessLevel | null) || 'invitado';
+export const accessLevel = (): AccessLevel => readCurrentAccess() || (rd(ACC()) as AccessLevel | null) || 'invitado';
 export function isFull(): boolean {
   const textValue = devMode();
   if (textValue === '0') return false;
