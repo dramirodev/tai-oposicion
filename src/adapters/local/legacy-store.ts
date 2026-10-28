@@ -9,6 +9,7 @@ import { statsMapper } from './mappers/stats.js';
 import { cardMapper } from './mappers/card.js';
 import { reportMapper } from './mappers/report.js';
 import type { AppState, CardMap, CardRec, Cfg, ReportMap, ReportState, Res, SeenDoc, Session, StatMap, StatRec } from '../legacy/types.js';
+import type { ProgressSyncCallbacks } from '../contracts/progress-sync.js';
 import {
   clearPendingLegacyAdoption,
   hasPendingLegacyAdoption,
@@ -98,7 +99,7 @@ export function mergeReports(m0: unknown): boolean {
 }
 
 
-export interface Syncer { schedule(): void; pushSession?(sessionRecord: Session): void; pushSeen?(seenDocument: SeenDoc): void; pushReports?(reports: ReportMap): void; pushCards?(cards: CardMap): void; pushImport?(): void }
+export type Syncer = ProgressSyncCallbacks;
 let appState: AppState = load();
 const listeners = new Set<() => void>();
 let dirty = new Set<string>();

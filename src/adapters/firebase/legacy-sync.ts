@@ -11,8 +11,8 @@ import { decodeFirebaseDocumentId, encodeFirebaseDocumentId } from './firebase-d
 import { OWNER_EMAIL, rememberAccessForAccount } from './access-policy.js';
 import type { AttemptRepository } from '../../core/ports/AttemptRepository.js';
 import type { AccessLevel } from '../../core/domain/entities.js';
-import * as store from '../local/legacy-store.js';
 import type { AccessRequest, CardMap, ReportMap, SeenDoc, Session, StatMap } from '../legacy/types.js';
+import type { ProgressSyncStore } from '../contracts/progress-sync.js';
 
 const errorFields = (value: unknown): { code: unknown; message: unknown } => {
   const fields = value && typeof value === 'object' ? value as Record<string, unknown> : {};
@@ -27,8 +27,17 @@ let auth: Auth, db: Firestore, uid: string | null = null, timer: ReturnType<type
 let temaOf: (id: string) => string | null = () => null; // id -> tema
 let idsOfTema: (text: string) => string[] = () => [];
 let attemptRepository: AttemptRepository | null = null;
+let progressStore: ProgressSyncStore | null = null;
+const getProgressStore = (): ProgressSyncStore => {
+  if (!progressStore) throw new Error('El almacén de progreso no se ha conectado a la sincronización.');
+  return progressStore;
+};
 export function setAttemptRepository(repository: AttemptRepository): void { attemptRepository = repository; }
-export async function init(metaFns: { temaOf: (id: string) => string | null; idsOfTema: (text: string) => string[] }): Promise<void> {
+export async function init(
+  metaFns: { temaOf: (id: string) => string | null; idsOfTema: (text: string) => string[] },
+  localProgress: ProgressSyncStore,
+): Promise<void> {
+  progressStore = localProgress;
   temaOf = metaFns.temaOf; idsOfTema = metaFns.idsOfTema;
   status.authResolved = false;
   const { config: firebaseConfig, loaded: leida } = await loadFirebaseConfig();
@@ -58,13 +67,13 @@ export async function init(metaFns: { temaOf: (id: string) => string | null; ids
     status.user = event ? { name: event.displayName || event.email || '', email: event.email || '', verified: !!event.emailVerified } : null;
     stopAcc(); stop(); uid = null;
     status.requested = false; status.reqs = []; status.grants = []; status.access = 'invitado';
-    store.switchAccount(event?.uid || null, !!event && event.email === OWNER_EMAIL && event.emailVerified);
+    getProgressStore().switchAccount(event?.uid || null, !!event && event.email === OWNER_EMAIL && event.emailVerified);
     if (event) { uid = event.uid; resolveAccess(event); }
     else { uid = null; stop(); status.requested = false; status.reqs = []; status.grants = []; setAccess('invitado'); status.state = 'sin sesión'; emit(); }
     const epoch = accessEpoch;
-    void store.recover().then(ch => { if (ch && epoch === accessEpoch && uid === (event?.uid || null)) pushImport(); });
+    void getProgressStore().recover().then(ch => { if (ch && epoch === accessEpoch && uid === (event?.uid || null)) pushImport(); });
   });
-  store.setSyncer({ schedule, pushSession, pushSeen, pushReports, pushCards, pushImport });
+  getProgressStore().setSyncer({ schedule, pushSession, pushSeen, pushReports, pushCards, pushImport });
   } catch (error) {
     status.error = String(error instanceof Error ? error.message : error);
     status.state = 'error';
@@ -98,7 +107,7 @@ let accUnsubs: Unsubscribe[] = [];
 let accessEpoch = 0;
 const canSync = () => !!uid && (status.access === 'propietario' || status.access === 'aprobado');
 function stopAcc() { accessEpoch++; accUnsubs.forEach(callback => { try { callback(); } catch {} }); accUnsubs = []; }
-function setAccess(entry: AccessLevel) { status.access = entry; rememberAccessForAccount(store.accountId(), entry); }
+function setAccess(entry: AccessLevel) { status.access = entry; rememberAccessForAccount(getProgressStore().accountId(), entry); }
 function accErr(error: unknown) { status.accessErr = String(errorFields(error).code || error); emit(); }
 function resolveAccess(url: User) {
   const mine = url.uid, epoch = accessEpoch, vivo = () => uid === mine && epoch === accessEpoch;
@@ -171,7 +180,7 @@ function start(): void {
       const metadata = (data.data() || {}).m || {};
       for (const key of Object.keys(metadata)) map[decodeFirebaseDocumentId(key)] = metadata[key];
     });
-    store.mergeRemote(map);
+    getProgressStore().mergeRemote(map);
     ok();
     // sube lo local que el servidor no tenga o tenga más antiguo
     pushAll(map);
@@ -179,34 +188,34 @@ function start(): void {
   unsubs.push(onSnapshot(query(collection(db, 'users', me, 'sessions'), orderBy('ts', 'desc'), limit(300)), snap => {
     if (!active()) return;
     const entry: unknown[] = []; snap.forEach(data => entry.push(data.data()));
-    store.mergeSessions(entry);
+    getProgressStore().mergeSessions(entry);
     const remoteIds = new Set(entry.map(state => (state as Session).id));
-    for (const session of store.getSessions()) if (!remoteIds.has(session.id)) pushSession(session);
+    for (const session of getProgressStore().getSessions()) if (!remoteIds.has(session.id)) pushSession(session);
   }, error));
   unsubs.push(onSnapshot(doc(db, 'users', me, 'cfg', 'seen'), data => {
     if (!active()) return;
-    if (data.exists()) store.mergeSeen(data.data());
-    const loc = store.getSeenDoc(), rem = data.exists() ? data.data() : null;
+    if (data.exists()) getProgressStore().mergeSeen(data.data());
+    const loc = getProgressStore().getSeenDoc(), rem = data.exists() ? data.data() : null;
     if (loc.ts && (!rem || loc.ts > (rem.ts || 0))) pushSeen(loc);
   }, error));
   unsubs.push(onSnapshot(doc(db, 'users', me, 'cfg', 'reports'), data => {
     if (!active()) return;
-    if (data.exists()) store.mergeReports((data.data() || {}).m);
-    const loc = store.getReports(), rem = data.exists() ? ((data.data() || {}).m || {}) : {};
+    if (data.exists()) getProgressStore().mergeReports((data.data() || {}).m);
+    const loc = getProgressStore().getReports(), rem = data.exists() ? ((data.data() || {}).m || {}) : {};
     if (Object.keys(loc).some(key => !rem[key] || loc[key].ts > rem[key].ts)) pushReports(loc);
   }, error));
   unsubs.push(onSnapshot(doc(db, 'users', me, 'cfg', 'cards'), data => {
     if (!active()) return;
     const rem = data.exists() ? ((data.data() || {}).m || {}) : {};
-    if (data.exists()) store.mergeCards(rem);
-    const loc = store.getCardsDoc();
+    if (data.exists()) getProgressStore().mergeCards(rem);
+    const loc = getProgressStore().getCardsDoc();
     if (Object.keys(loc).some(key => !rem[key] || loc[key][2] > rem[key][2])) pushCards(loc);
   }, error));
 }
 export function pushCards(metadata: CardMap): void {
   if (!canSync() || !uid) return;
   clearTimeout(cardsT);
-  const targetUid: string = uid, payload = store.cleanCards(metadata);
+  const targetUid: string = uid, payload = getProgressStore().cleanCards(metadata);
   cardsT = setTimeout(() => {
     if (uid !== targetUid) return;
     setDoc(doc(db, 'users', targetUid, 'cfg', 'cards'), { m: payload, u: Date.now() }, { merge: true }).catch(writeErr);
@@ -221,11 +230,11 @@ function stop(): void {
 
 function pushAll(remote: StatMap): void {
   const me = uid; if (!canSync() || !me) return;
-  const local = store.getStats();
+  const local = getProgressStore().getStats();
   const byTema: Record<string, StatMap> = {};
   for (const id in local) {
     const statRecord = remote[id];
-    if (store.needsSync(local[id], statRecord)) { const text = temaOf(id); if (text) (byTema[text] ||= {})[encodeFirebaseDocumentId(id)] = local[id]; }
+    if (getProgressStore().needsSync(local[id], statRecord)) { const text = temaOf(id); if (text) (byTema[text] ||= {})[encodeFirebaseDocumentId(id)] = local[id]; }
   }
   for (const textValue in byTema) setDoc(doc(db, 'users', me, 'stats', textValue), { m: byTema[textValue], u: Date.now() }, { merge: true }).catch(writeErr);
 }
@@ -233,8 +242,8 @@ function pushAll(remote: StatMap): void {
 function pushImport(): void {
   if (!canSync()) return;
   pushAll({});
-  for (const session of store.getSessions()) pushSession(session);
-  pushSeen(store.getSeenDoc()); pushReports(store.getReports()); pushCards(store.getCardsDoc());
+  for (const session of getProgressStore().getSessions()) pushSession(session);
+  pushSeen(getProgressStore().getSeenDoc()); pushReports(getProgressStore().getReports()); pushCards(getProgressStore().getCardsDoc());
 }
 
 export function schedule(): void {
@@ -244,7 +253,7 @@ export function schedule(): void {
 }
 function flush(): void {
   if (!canSync() || !uid) return;
-  const data = store.takeDirty(); const stats = store.getStats();
+  const data = getProgressStore().takeDirty(); const stats = getProgressStore().getStats();
   for (const text of data) {
     const statistics: StatMap = {};
     for (const id of idsOfTema(text)) if (stats[id]) statistics[encodeFirebaseDocumentId(id)] = stats[id];

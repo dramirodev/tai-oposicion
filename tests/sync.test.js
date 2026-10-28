@@ -26,7 +26,7 @@ beforeEach(async () => {
   boundary.writes.length = 0; boundary.snapshots.length = 0; boundary.auth.currentUser = null;
   vi.stubGlobal('fetch', async () => ({ ok: true, json: async () => ({ apiKey: 'test', authDomain: 'localhost' }) }));
   store = await import('../src/adapters/local/legacy-store.js'); sync = await import('../src/adapters/firebase/legacy-sync.js');
-  await sync.init({ temaOf: () => 'T1.01', idsOfTema: () => [] }); user('user1');
+  await sync.init({ temaOf: () => 'T1.01', idsOfTema: () => [] }, store); user('user1');
 });
 afterEach(() => { vi.clearAllTimers(); vi.useRealTimers(); vi.unstubAllGlobals(); });
 it('cancela una escritura de tarjetas pendiente al cerrar sesión', async () => {
@@ -174,7 +174,7 @@ it('rechaza cuerpos de error HTTP de configuración antes de interpretarlos', as
   const json = vi.fn(async () => ({ apiKey: 'error-body' }));
   const fetch = vi.fn(async () => ({ ok: false, status: 503, json }));
   vi.stubGlobal('fetch', fetch);
-  await sync.init({ temaOf: () => null, idsOfTema: () => [] });
+  await sync.init({ temaOf: () => null, idsOfTema: () => [] }, store);
   const { status } = await import('../src/adapters/firebase/legacy-sync-state.js');
   expect(fetch).toHaveBeenCalledTimes(2);
   expect(json).not.toHaveBeenCalled();
@@ -187,7 +187,7 @@ it('conserva el segundo intento si falla la primera petición de configuración'
     .mockResolvedValueOnce({ ok: false, status: 404, json: errorJson })
     .mockResolvedValueOnce({ ok: true, json: async () => ({ apiKey: 'test', authDomain: 'localhost' }) });
   vi.stubGlobal('fetch', fetch);
-  await sync.init({ temaOf: () => null, idsOfTema: () => [] });
+  await sync.init({ temaOf: () => null, idsOfTema: () => [] }, store);
   const { status } = await import('../src/adapters/firebase/legacy-sync-state.js');
   expect(fetch).toHaveBeenCalledTimes(2);
   expect(errorJson).not.toHaveBeenCalled();
