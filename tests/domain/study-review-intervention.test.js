@@ -15,8 +15,8 @@ describe('recomendación de intervención de estudio', () => {
     expect(recommendTopicIntervention({ ...baseEvidence, distinctQuestionsAttempted: 1 })).toMatchObject({ mode: 'active-retrieval', confidence: 'provisional', reason: 'check-before-rereading' });
   });
 
-  it('elige revisión amplia con resultados bajos en varias preguntas distintas y la etiqueta como regla del producto', () => {
-    expect(recommendTopicIntervention({ ...baseEvidence, distinctQuestionsAttempted: 5, latestAnswerAccuracy: 40 })).toMatchObject({ mode: 'broad-reading', confidence: 'product-rule', reason: 'broad-low-results' });
+  it('ante resultados bajos comprueba primero el recuerdo y no infiere que haga falta releer todo', () => {
+    expect(recommendTopicIntervention({ ...baseEvidence, distinctQuestionsAttempted: 5, latestAnswerAccuracy: 40 })).toMatchObject({ mode: 'active-retrieval', confidence: 'product-rule', reason: 'low-results-need-diagnosis', explanation: expect.stringContaining('40 %') });
   });
 
   it('prioriza apartados explícitamente identificados sobre una revisión completa', () => {

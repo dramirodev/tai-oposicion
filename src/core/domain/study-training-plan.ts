@@ -111,13 +111,19 @@ export function buildDailyTrainingPlan(input: {
     failures: 'recurring-failures',
     spacedReviews: 'due-reviews',
   };
+  const leastCoveredStudiedTopic = input.topicReviewEvidence
+    ?.filter(evidence => (evidence.hasStudyMarker || evidence.distinctQuestionsAttempted > 0)
+      && typeof evidence.questionCoverageOfTarget === 'number'
+      && evidence.questionCoverageOfTarget < 100)
+    .sort((left, right) => left.questionCoverageOfTarget! - right.questionCoverageOfTarget!)[0];
   const order: TrainingActivity[] = ['activeRecall', 'topicTest', 'failures', 'spacedReviews'];
   const activities = order.flatMap(activity => {
     const duration = allocation.get(activity) || 0;
     if (!duration) return [];
     const topicId = activity !== 'topicTest' ? undefined
       : reasons[activity] === 'weak-topics' ? input.weakTopicIds?.[0]
-        : reasons[activity] === 'new-topic-day' ? preferences.introductionTopicId : undefined;
+        : reasons[activity] === 'new-topic-day' ? preferences.introductionTopicId
+          : reasons[activity] === 'coverage' ? leastCoveredStudiedTopic?.topicId : undefined;
     const evidence = activity === 'topicTest' && topicId
       ? input.topicReviewEvidence?.find(item => item.topicId === topicId)
       : undefined;

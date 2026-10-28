@@ -163,13 +163,13 @@ it('abre el tema en Temario cuando la intervención requiere lectura', async () 
   expect(await screen.findByTestId('current-path')).toHaveTextContent('/temario?topic=T3.02');
 });
 
-it('explica con evidencia real por qué recomienda estudiar un tema y declara la regla provisional', async () => {
+it('explica la evidencia y conserva una modalidad amplia elegida manualmente', async () => {
   const overview = {
     completedSessions:0, blocks:[], seen:0, total:100, answers:0, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0,
     studiedTopics:0, topicCount:36, weakTopics:1, masteredTopics:0, assessedTopics:0, trainingSession:null,
     trainingPlan:{ weekday:2, minutes:35, restDay:false, activities:[{ activity:'topicTest', minutes:35, reason:'weak-topics', topicId:'T1.02', reviewIntervention:{
-      mode:'broad-reading', confidence:'product-rule', topicId:'T1.02', topicName:'Organización del Estado', reason:'broad-low-results',
-      explanation:'Los resultados recientes son bajos en varias preguntas distintas. Como no hay apartados enlazados, una revisión amplia puede ser útil.', targets:[],
+      mode:'broad-reading', confidence:'user-selected', topicId:'T1.02', topicName:'Organización del Estado', reason:'manual-choice',
+      explanation:'Has elegido manualmente esta modalidad. La recomendación automática se conserva como información de apoyo, y tu elección prevalece.', targets:[],
       evidence:{ distinctQuestionsAttempted:6, latestAnswerAccuracy:33, daysSinceLastQuestionAttempt:10 },
     } }] },
   };
@@ -178,7 +178,7 @@ it('explica con evidencia real por qué recomienda estudiar un tema y declara la
   expect(screen.getAllByText(/Organización del Estado/)).toHaveLength(2);
   expect(screen.getByText(/6 preguntas distintas/)).toBeInTheDocument();
   expect(screen.getByText(/no registra la fecha de lectura/)).toBeInTheDocument();
-  expect(screen.getByText(/no es un umbral pedagógico validado/)).toBeInTheDocument();
+  expect(screen.getByText(/Has elegido manualmente esta modalidad/)).toBeInTheDocument();
 });
 
 it('guarda la modalidad de repaso elegida por la persona para conservarla en la planificación', async () => {

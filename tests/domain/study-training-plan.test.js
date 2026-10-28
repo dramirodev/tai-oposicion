@@ -82,7 +82,37 @@ describe('planificación diaria de estudio', () => {
     expect(plan.activities.find(item => item.activity === 'topicTest')).toMatchObject({ reason:'weak-topics', topicId:'T3.02' });
   });
 
-  it('adjunta una explicación de intervención basada en el historial real del tema', () => {
+  it('usa el tema estudiado con menor cobertura registrada cuando amplía práctica', () => {
+    const plan = buildDailyTrainingPlan({
+      preferences: DEFAULT_TRAINING_PREFERENCES,
+      weekday: 2,
+      dueCount: 0,
+      failureCount: 0,
+      weakTopicCount: 0,
+      topicReviewEvidence: [
+        { topicId:'T1.01', topicName:'Organización', hasStudyMarker:true, distinctQuestionsAttempted:0, questionCoverageOfTarget:72, latestAnswerAccuracy:null, daysSinceLastQuestionAttempt:null },
+        { topicId:'T3.02', topicName:'Tribunal', hasStudyMarker:false, distinctQuestionsAttempted:0, questionCoverageOfTarget:0, latestAnswerAccuracy:null, daysSinceLastQuestionAttempt:null },
+        { topicId:'T2.01', topicName:'Informática', hasStudyMarker:true, distinctQuestionsAttempted:2, questionCoverageOfTarget:24, latestAnswerAccuracy:50, daysSinceLastQuestionAttempt:4 },
+      ],
+    });
+    expect(plan.activities.find(item => item.activity === 'topicTest')).toMatchObject({
+      reason:'coverage', topicId:'T2.01', reviewIntervention:{ topicId:'T2.01', evidence:{ questionCoverageOfTarget:24 } },
+    });
+  });
+
+  it('no infiere tema inicial de cobertura desde ausencia total de evidencia', () => {
+    const plan = buildDailyTrainingPlan({
+      preferences: DEFAULT_TRAINING_PREFERENCES,
+      weekday: 2,
+      dueCount: 0,
+      failureCount: 0,
+      weakTopicCount: 0,
+      topicReviewEvidence: [{ topicId:'T1.01', topicName:'Organización', hasStudyMarker:false, distinctQuestionsAttempted:0, questionCoverageOfTarget:0, latestAnswerAccuracy:null, daysSinceLastQuestionAttempt:null }],
+    });
+    expect(plan.activities.find(item => item.activity === 'topicTest')).not.toHaveProperty('topicId');
+  });
+
+  it('ante resultados bajos prioriza comprobar el recuerdo en vez de recomendar lectura amplia', () => {
     const plan = buildDailyTrainingPlan({
       preferences: DEFAULT_TRAINING_PREFERENCES,
       weekday: 2,
@@ -93,7 +123,7 @@ describe('planificación diaria de estudio', () => {
       topicReviewEvidence: [{ topicId: 'T1.02', topicName: 'Organización del Estado', hasStudyMarker: true, distinctQuestionsAttempted: 6, latestAnswerAccuracy: 33, daysSinceLastQuestionAttempt: 10 }],
     });
     expect(plan.activities.find(item => item.activity === 'topicTest')?.reviewIntervention).toMatchObject({
-      mode: 'broad-reading', topicId: 'T1.02', reason: 'broad-low-results', evidence: { distinctQuestionsAttempted: 6, latestAnswerAccuracy: 33, daysSinceLastQuestionAttempt: 10 },
+      mode: 'active-retrieval', topicId: 'T1.02', reason: 'low-results-need-diagnosis', explanation: expect.stringContaining('33 %'), evidence: { distinctQuestionsAttempted: 6, latestAnswerAccuracy: 33, daysSinceLastQuestionAttempt: 10 },
     });
   });
 

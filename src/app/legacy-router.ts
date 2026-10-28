@@ -566,7 +566,7 @@ export const studyServices: StudyServices = {
       const weakTopics = mastery.filter(topic => topic.est === 'r').sort((left, right) => left.score - right.score);
       const studiedTopicIds = new Set(store.getSeen());
       const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date().getDay(), dueCount: due, cardDueCount, failureCount, weakTopicCount: weakTopics.length, weakTopicIds: weakTopics.map(topic => topic.id),
-        topicReviewEvidence: mastery.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: studiedTopicIds.has(topic.id), distinctQuestionsAttempted: topic.seen, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias })) });
+        topicReviewEvidence: mastery.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: studiedTopicIds.has(topic.id), distinctQuestionsAttempted: topic.seen, questionCoverageOfTarget: topic.cob, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias })) });
       return { seen: progress.seen, total: index.n, answers: progress.answers, streak, daysToExam, due,
         completedSessions: store.getSessions().length,
         blocks: BLOQUES.map(([code, name]) => {
