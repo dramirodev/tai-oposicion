@@ -4,6 +4,7 @@ export type { AccessLevel } from '../../core/domain/entities.js';
 export type { AppState, CardMap, CardRec, Cfg, Report, ReportMap, ReportState, Res, SeenDoc, Session, SessionKind, StatMap, StatRec } from '../local/dto/stored-progress.js';
 
 
+
 /** Origen de la pregunta: O oficial, A academia, G generada. */
 export type Origin = 'O' | 'A' | 'G';
 export type Question = QuestionRecord;

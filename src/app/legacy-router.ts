@@ -358,7 +358,7 @@ export function bootAppServices(): () => void {
     applyUpdate: appUpdates.applyUpdate,
     loadMetadataAndInitializeSync: async () => {
       try { await getMeta(); } catch (error) { console.error(error); }
-      try { await sync.init({ temaOf, idsOfTema }); } catch (error) { console.error(error); }
+      try { await sync.init({ temaOf, idsOfTema }, store); } catch (error) { console.error(error); }
     },
   });
 }
