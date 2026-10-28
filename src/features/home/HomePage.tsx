@@ -35,10 +35,12 @@ export function HomePage() {
     const route: Record<TrainingActivity, string> = { activeRecall: 'cards', topicTest: 'test', failures: 'falladas', spacedReviews: 'cards' };
     if (step.activity === 'spacedReviews' && !overview.cardsDue) runAction('training-review', services.startReview);
     else {
+      const opensReadingList = step.activity === 'topicTest' && !!step.reviewMode && step.reviewMode !== 'active-retrieval';
+      const destination = opensReadingList ? 'temario' : route[step.activity];
       const query = step.activity !== 'topicTest' ? ''
         : step.topicId ? `?topic=${encodeURIComponent(step.topicId)}`
           : step.reason === 'new-topic-day' ? '?recommendation=new-topic' : '';
-      void navigate('/' + route[step.activity] + query);
+      void navigate('/' + destination + query);
     }
   };
   const completeTrainingActivity = (activity: TrainingActivity) => {

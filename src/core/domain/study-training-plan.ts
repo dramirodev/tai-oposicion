@@ -25,10 +25,12 @@ export function normalizeTrainingPreferences(value: unknown): TrainingPreference
   const introductionDay = Number.isInteger(candidate.introductionDay) && candidate.introductionDay! >= 0 && candidate.introductionDay! <= 6
     ? candidate.introductionDay!
     : DEFAULT_TRAINING_PREFERENCES.introductionDay;
+  const introductionTopicId = typeof candidate.introductionTopicId === 'string' && /^T[1-4]\.\d{2}$/.test(candidate.introductionTopicId)
+    ? candidate.introductionTopicId : undefined;
   const reviewModesByTopic = candidate.reviewModesByTopic && typeof candidate.reviewModesByTopic === 'object' && !Array.isArray(candidate.reviewModesByTopic)
     ? Object.fromEntries(Object.entries(candidate.reviewModesByTopic).filter(([topicId, mode]) => /^T[1-4]\.\d{2}$/.test(topicId) && supportedReviewModes.has(mode as StudyReviewMode))) as Record<string, StudyReviewMode>
     : undefined;
-  return { minutesByDay, introductionDay, activities, ...(reviewModesByTopic && Object.keys(reviewModesByTopic).length ? { reviewModesByTopic } : {}) };
+  return { minutesByDay, introductionDay, activities, ...(introductionTopicId ? { introductionTopicId } : {}), ...(reviewModesByTopic && Object.keys(reviewModesByTopic).length ? { reviewModesByTopic } : {}) };
 }
 
 export type TrainingPlanReason = 'active-recall' | 'new-topic-day' | 'weak-topics' | 'coverage' | 'recurring-failures' | 'due-reviews';
@@ -113,7 +115,9 @@ export function buildDailyTrainingPlan(input: {
   const activities = order.flatMap(activity => {
     const duration = allocation.get(activity) || 0;
     if (!duration) return [];
-    const topicId = activity === 'topicTest' && reasons[activity] === 'weak-topics' ? input.weakTopicIds?.[0] : undefined;
+    const topicId = activity !== 'topicTest' ? undefined
+      : reasons[activity] === 'weak-topics' ? input.weakTopicIds?.[0]
+        : reasons[activity] === 'new-topic-day' ? preferences.introductionTopicId : undefined;
     const evidence = activity === 'topicTest' && topicId
       ? input.topicReviewEvidence?.find(item => item.topicId === topicId)
       : undefined;

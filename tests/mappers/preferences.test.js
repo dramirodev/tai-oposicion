@@ -42,6 +42,11 @@ it('conserva modalidades elegidas manualmente por tema y descarta valores ajenos
   expect(preferencesMapper.toDomain({ training: { reviewModesByTopic: { 'T1.02': 'selective-reading' } } })).toMatchObject({ ok: true });
 });
 
+it('conserva el tema de introducción elegido y descarta identificadores con formato inválido', () => {
+  expect(normalizeTrainingPreferences({ introductionTopicId: 'T3.02' })).toMatchObject({ introductionTopicId: 'T3.02' });
+  expect(normalizeTrainingPreferences({ introductionTopicId: 'T9.99' })).not.toHaveProperty('introductionTopicId');
+});
+
 it('rechaza calendarios semanales incompletos o con minutos fuera de rango', () => {
   expect(preferencesMapper.toDomain({ training: { minutesByDay: [35, 40], introductionDay: 4, activities: ['topicTest'] } })).toMatchObject({ ok: false });
   expect(preferencesMapper.toDomain({ training: { minutesByDay: [0, 35, 40, 35, 20, 40, 241], introductionDay: 4, activities: ['topicTest'] } })).toMatchObject({ ok: false });

@@ -44,6 +44,20 @@ describe('planificación diaria de estudio', () => {
     expect(plan.activities.reduce((total, item) => total + item.minutes, 0)).toBe(3);
   });
 
+  it('recomienda estudio inicial provisional para el tema de academia seleccionado', () => {
+    const plan = buildDailyTrainingPlan({
+      preferences: { ...DEFAULT_TRAINING_PREFERENCES, introductionTopicId: 'T3.02' },
+      weekday: DEFAULT_TRAINING_PREFERENCES.introductionDay,
+      dueCount: 0,
+      failureCount: 0,
+      weakTopicCount: 0,
+      topicReviewEvidence: [{ topicId: 'T3.02', topicName: 'Tribunal Constitucional', hasStudyMarker: false, distinctQuestionsAttempted: 0, latestAnswerAccuracy: null, daysSinceLastQuestionAttempt: null }],
+    });
+    expect(plan.activities.find(item => item.activity === 'topicTest')).toMatchObject({
+      topicId: 'T3.02', reviewIntervention: { mode: 'initial-study', confidence: 'provisional', reason: 'study-not-marked' },
+    });
+  });
+
   it('respeta las modalidades que la persona ha elegido', () => {
     const plan = buildDailyTrainingPlan({
       preferences: { ...DEFAULT_TRAINING_PREFERENCES, activities: ['activeRecall', 'spacedReviews'] },

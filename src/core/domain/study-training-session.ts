@@ -1,4 +1,4 @@
-import type { TrainingActivity } from './entities.js';
+import type { StudyReviewMode, TrainingActivity } from './entities.js';
 import type { DailyTrainingPlan, TrainingPlanReason } from './study-training-plan.js';
 
 export interface TrainingSessionStep {
@@ -6,6 +6,7 @@ export interface TrainingSessionStep {
   minutes: number;
   reason: TrainingPlanReason;
   topicId?: string;
+  reviewMode?: StudyReviewMode;
 }
 
 export interface DailyTrainingSession {
@@ -29,7 +30,7 @@ export function createDailyTrainingSession(plan: DailyTrainingPlan, timestamp: n
   if (plan.restDay || !plan.activities.length) return null;
   return {
     dateKey: localTrainingDateKey(timestamp),
-    activities: plan.activities.map(({ activity, minutes, reason, topicId }) => ({ activity, minutes, reason, ...(topicId ? { topicId } : {}) })),
+    activities: plan.activities.map(({ activity, minutes, reason, topicId, reviewIntervention }) => ({ activity, minutes, reason, ...(topicId ? { topicId } : {}), ...(reviewIntervention ? { reviewMode: reviewIntervention.mode } : {}) })),
     currentIndex: 0,
     currentStartedAt: null,
     startedAt: timestamp,

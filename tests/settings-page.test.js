@@ -40,6 +40,13 @@ it('permite editar el presupuesto semanal y las modalidades del entrenador', asy
  await user.click(screen.getByRole('checkbox', { name: 'Active Recall con tarjetas' }));
  expect(settings.setTrainingPreferences).toHaveBeenLastCalledWith(expect.objectContaining({ activities: ['topicTest', 'failures', 'spacedReviews'] }));
 });
+it('permite asignar el tema nuevo de la semana en los ajustes', async () => {
+ fullAccess = true;
+ settings.getSnapshot = () => ({ ...snapshot(), index: { questions: 10, scenarios: 0, topics: [{ id: 'T3.02', name: 'Tribunal Constitucional' }] } });
+ const user = userEvent.setup(); await renderSettings();
+ await user.selectOptions(screen.getByRole('combobox', { name: 'Tema que estás introduciendo esta semana' }), 'T3.02');
+ expect(settings.setTrainingPreferences).toHaveBeenCalledWith(expect.objectContaining({ introductionTopicId: 'T3.02' }));
+});
 it('confirma antes de combinar una copia y muestra el resultado', async () => {
  const { ask } = await import('../src/shared/ui/dialog-actions.js'); await renderSettings();
  const input = screen.getByLabelText('Importar');
