@@ -21,6 +21,7 @@ export interface AccessOverview {
 }
 export interface HomeServices {
   loadOverview(): Promise<HomeOverview>;
+  seenTopics(): readonly string[];
   accountId(): string | null;
   authResolved(): boolean;
   getAccess(): AccessOverview;

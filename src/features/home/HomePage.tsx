@@ -7,7 +7,7 @@ import { useActionLifetime } from '../../shared/ui/use-action-lifetime.js';
 import { usePageReady } from '../../shared/ui/use-page-ready.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { HomeView } from './HomeView.js';
-import { createHomeController } from './home-controller.js';
+import { createHomeController, scopeTrainingRouteToSeenTopics } from './home-controller.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
 
 export function HomePage() {
@@ -22,6 +22,14 @@ export function HomePage() {
   usePageReady(authResolved && (!!overview || !!error));
   const navigate = useNavigate();
   const runAction = (id: string, action: () => Promise<unknown>) => { void controller.runAction(id, action); };
+  const navigateHomeRoute = (route: string) => {
+    const scopedRoute = scopeTrainingRouteToSeenTopics(route, services.seenTopics());
+    if (!scopedRoute) {
+      services.notify('Marca primero los temas que ya has estudiado para preparar un entrenamiento de hoy.');
+      return;
+    }
+    void navigate('/' + scopedRoute);
+  };
   if (!authResolved || (!overview && !error)) return <PageLoading variant="home" />;
   if (error) return <div className="card" role="alert"><h2>No se pudo cargar</h2><p>{navigator.onLine === false ? 'Estás sin conexión y esta pantalla necesita datos que aún no están descargados (Ajustes → Uso sin conexión).' : 'Algo ha fallado al cargar los datos. Inténtalo de nuevo; si sigue igual, recarga la app.'}</p><button className="btn" id="retryRoute" onClick={() => void navigate('/home')}>Reintentar</button></div>;
   if (!overview) return <PageLoading variant="home" />;
@@ -32,19 +40,27 @@ export function HomePage() {
     if (!started || started.completedAt !== null) return;
     const step = started.activities[started.currentIndex];
     if (!step) return;
+    const seenTopics = [...new Set(services.seenTopics())];
+    if (!seenTopics.length) {
+      services.notify('Marca primero los temas que ya has estudiado para preparar un entrenamiento de hoy.');
+      return;
+    }
+    const seenTopicSet = new Set(seenTopics);
+    const savedTopicIds = step.topicIds?.filter(topicId => seenTopicSet.has(topicId)) ?? [];
+    const topicIds = savedTopicIds.length ? savedTopicIds : seenTopics;
+    const topicId = step.topicId && seenTopicSet.has(step.topicId) ? step.topicId : undefined;
     const route: Record<TrainingActivity, string> = { activeRecall: 'cards', topicTest: 'test', failures: 'falladas', spacedReviews: 'cards' };
-    if (step.activity === 'spacedReviews' && !(overview.trainingDue?.cards ?? overview.cardsDue)) runAction('training-review', () => services.startReview(step.topicIds));
+    if (step.activity === 'spacedReviews' && !(overview.trainingDue?.cards ?? overview.cardsDue)) runAction('training-review', () => services.startReview(topicIds));
     else {
-      const opensReadingList = step.activity === 'topicTest' && !!step.reviewMode && step.reviewMode !== 'active-retrieval';
+      const opensReadingList = step.activity === 'topicTest' && !!topicId && !!step.reviewMode && step.reviewMode !== 'active-retrieval';
       const destination = opensReadingList ? 'temario' : route[step.activity];
       const queryParams = new URLSearchParams();
       if (step.activity === 'topicTest') {
-        if (step.topicId) queryParams.set('topic', step.topicId);
-        else if (step.reason === 'new-topic-day') queryParams.set('recommendation', 'new-topic');
+        if (topicId) queryParams.set('topic', topicId);
       }
-      if (step.topicIds?.length) queryParams.set('trainingTopics', step.topicIds.join(','));
+      queryParams.set('trainingTopics', topicIds.join(','));
       const query = queryParams.size ? `?${queryParams.toString()}` : '';
-      void navigate('/' + destination + query);
+      navigateHomeRoute(destination + query);
     }
   };
   const completeTrainingActivity = (activity: TrainingActivity) => {
@@ -60,7 +76,7 @@ export function HomePage() {
     access={services.getAccess()}
     run={services.getActiveStudy()}
     pending={pending}
-    onNavigate={route => { void navigate('/' + route); }}
+    onNavigate={navigateHomeRoute}
     onQuickSession={() => void runAction('quick', services.quickSession)}
     onStartReview={topicIds => void runAction('rev', () => services.startReview(topicIds))}
     onStartTraining={startTraining}

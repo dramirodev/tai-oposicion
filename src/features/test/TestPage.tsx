@@ -79,9 +79,19 @@ export function TestPage() {
   const start = async () => {
     setStarting(true); setMessage('');
     try {
-      const startConfiguration = trainingTopicIds
-        ? { ...configuration, all: false, selected: configuration.selected.filter(topicId => trainingTopicSet?.has(topicId)) }
+      const currentSeenTopics = new Set(test.seenTopics());
+      const allowedTrainingTopics = new Set((trainingTopicIds ?? []).filter(topicId => currentSeenTopics.has(topicId)));
+      if (trainingTopicsValue !== null && !allowedTrainingTopics.size) {
+        setMessage('No tienes temas marcados como vistos para este entrenamiento. Vuelve al inicio y actualiza la selección.');
+        return;
+      }
+      const startConfiguration = trainingTopicsValue !== null
+        ? { ...configuration, all: false, selected: configuration.selected.filter(topicId => allowedTrainingTopics.has(topicId) && trainingTopicSet?.has(topicId)) }
         : configuration;
+      if (trainingTopicsValue !== null && !startConfiguration.selected.length) {
+        setMessage('Elige un tema que siga marcado como visto para empezar este entrenamiento.');
+        return;
+      }
       const result = await test.start(startConfiguration);
       if (result === 'empty') setMessage(configuration.mode === 'falladas' ? 'No tienes preguntas falladas en esa selección.' : configuration.mode === 'dudosas' ? 'No tienes preguntas dudosas en esa selección.' : configuration.mode === 'trampas' ? 'Aún no hay datos de trampas: contesta al menos 5 preguntas de alguna trampa y falla alguna.' : 'No hay preguntas disponibles con ese filtro.');
       if (result === 'account-changed') setMessage('La cuenta cambió mientras se preparaba el test. Vuelve a intentarlo.');

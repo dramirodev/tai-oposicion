@@ -32,6 +32,7 @@ import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
 import type { Origin, QuestionStats, StudyReviewMode, TrainingActivity, TrainingPreferences } from '../core/domain/entities.js';
 import { buildDailyTrainingPlan, normalizeTrainingPreferences } from '../core/domain/study-training-plan.js';
+import { filterTopicMasteryToSeen } from '../core/domain/topic-mastery.js';
 import { createHighlight, questionContentRevision, resolveHighlight } from '../core/domain/attempts/highlights.js';
 import { canonicalText, paintTextHighlight, selectedTextAnchor } from '../shared/ui/text-highlights.js';
 import { findLegacyCodeExplanation } from './composition/explanations/explanation-composition.js';
@@ -551,6 +552,7 @@ export const studyServices: StudyServices = {
   markReady: () => routeReady(),
   home: {
     accountId: localStudyProgressGateway.accountId,
+    seenTopics: () => store.getSeen(),
     authResolved() { return sync.status.authResolved; },
     getActiveStudy() { const run = getCurrentRun(); return run ? { title: run.titulo || 'Test', position: run.idx, total: run.items.length } : null; },
     getAccess() { return { full: isFull(), level: accessLevel(), greeting: saludo(), state: sync.status.state, configured: sync.status.configured, signedIn: !!sync.status.user, pendingRequests: sync.status.access === 'propietario' ? sync.status.reqs.length : 0 }; },
@@ -572,7 +574,8 @@ export const studyServices: StudyServices = {
       const trainingPreferences = normalizeTrainingPreferences(store.getCfg().training);
       const studiedTopicSet = new Set(store.getSeen());
       const studiedTopicIds = [...studiedTopicSet];
-      const weakTopics = mastery.filter(topic => topic.est === 'r').sort((left, right) => left.score - right.score);
+      const studiedMastery = filterTopicMasteryToSeen(mastery, studiedTopicIds);
+      const studiedWeakTopics = studiedMastery.filter(topic => topic.est === 'r').sort((left, right) => left.score - right.score);
       const studiedDueCount = dueIds.filter(id => studiedTopicSet.has(studyQuestionCatalog.getTopicForQuestion(id) || '')).length;
       const studiedFailureCount = failureIds.filter(id => studiedTopicSet.has(studyQuestionCatalog.getTopicForQuestion(id) || '')).length;
       const topicForCard = (id: string): string | undefined => {
@@ -582,13 +585,12 @@ export const studyServices: StudyServices = {
       };
       const studiedCardDueCount = Object.entries(cardReviews).filter(([id, record]) => record[3] >= 0
         && record[4] <= studyQuestionCatalog.now() && studiedTopicSet.has(topicForCard(id) || '')).length;
-      const studiedWeakTopics = weakTopics.filter(topic => studiedTopicSet.has(topic.id));
       const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date().getDay(), dueCount: studiedDueCount, cardDueCount: studiedCardDueCount, failureCount: studiedFailureCount, weakTopicCount: studiedWeakTopics.length, weakTopicIds: studiedWeakTopics.map(topic => topic.id), studiedTopicIds,
-        topicReviewEvidence: mastery.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: studiedTopicSet.has(topic.id), distinctQuestionsAttempted: topic.seen, questionCoverageOfTarget: topic.cob, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias })) });
+        topicReviewEvidence: studiedMastery.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: true, distinctQuestionsAttempted: topic.seen, questionCoverageOfTarget: topic.cob, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias })) });
       return { seen: progress.seen, total: index.n, answers: progress.answers, streak, daysToExam, due,
         completedSessions: store.getSessions().length,
         blocks: BLOQUES.map(([code, name]) => {
-          const topics = mastery.filter(topic => topic.id.startsWith(code));
+          const topics = studiedMastery.filter(topic => topic.id.startsWith(code));
           return { name, total: topics.length, mastered: topics.filter(topic => topic.est === 'g').length,
             assessed: topics.filter(topic => topic.est !== 'n').length };
         }),
@@ -596,9 +598,9 @@ export const studyServices: StudyServices = {
         trainingDue: { questions: studiedDueCount, cards: studiedCardDueCount },
         quickCount: progress.quickCount, slowCount: progress.slowCount, failures: failureCount,
         studiedTopics: store.getSeen().length, topicCount: index.temas.length,
-        assessedTopics: mastery.filter(topic => topic.est !== 'n').length,
-        weakTopics: mastery.filter(topic => topic.est === 'r').length,
-        masteredTopics: mastery.filter(topic => topic.est === 'g').length, trainingPlan, trainingSession: trainingSession.getSession(),
+        assessedTopics: studiedMastery.filter(topic => topic.est !== 'n').length,
+        weakTopics: studiedWeakTopics.length,
+        masteredTopics: studiedMastery.filter(topic => topic.est === 'g').length, trainingPlan, trainingSession: trainingSession.getSession(),
       };
     },
     startTrainingSession(plan) { return trainingSession.start(plan); },

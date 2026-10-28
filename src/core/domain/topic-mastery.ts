@@ -32,6 +32,15 @@ export interface TopicMasteryResult<Topic> {
 
 export const COVERAGE_OBJECTIVE = 0.6;
 
+/** Keeps mastery results within topics the learner has explicitly marked as studied. */
+export function filterTopicMasteryToSeen<Topic extends { id: string }>(
+  topics: readonly Topic[],
+  seenTopicIds: readonly string[],
+): Topic[] {
+  const seen = new Set(seenTopicIds);
+  return topics.filter(topic => seen.has(topic.id));
+}
+
 export function analyzeTopicMastery<Topic extends { id: string; questionCount: number }>(
   topics: readonly Topic[],
   questionIdsForTopic: (topicId: string) => readonly string[] | undefined,

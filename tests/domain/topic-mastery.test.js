@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest';
-import { analyzeTopicMastery } from '../../src/core/domain/topic-mastery.js';
+import { analyzeTopicMastery, filterTopicMasteryToSeen } from '../../src/core/domain/topic-mastery.js';
 
 const now = 2_000_000_000;
 
@@ -26,4 +26,14 @@ it('distingue el estado nuevo, sin datos suficientes y el estado reciente', () =
     attempts: 8, correct: 8, lastSeenAt: now, intervalStep: -1, lastResult: 1,
   }), now);
   expect(results.map(result => [result.status, result.reason])).toEqual([['new', 'not-started'], ['green', 'recent']]);
+});
+
+it('calcula las recomendaciones solo sobre temas marcados como vistos', () => {
+  const topics = [
+    { id: 'T1.01', score: 35 },
+    { id: 'T2.01', score: 10 },
+    { id: 'T3.01', score: 90 },
+  ];
+
+  expect(filterTopicMasteryToSeen(topics, ['T1.01', 'T3.01'])).toEqual([topics[0], topics[2]]);
 });

@@ -137,6 +137,7 @@ it('abre Test centrado en el tema débil recomendado al comenzar la actividad', 
   const session = { dateKey:'2026-10-28', activities:[{ activity:'topicTest', minutes:35, reason:'weak-topics', topicId:'T2.01' }], currentIndex:0, currentStartedAt:1, startedAt:1, completedAt:null };
   const services = { home: {
     accountId:() => null, authResolved:() => true, subscribe:() => () => {}, getActiveStudy:() => null,
+    seenTopics:() => ['T2.01'],
     getAccess:() => ({ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }),
     loadOverview:async () => ({ completedSessions:0, blocks:[], seen:0, total:100, answers:0, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0, studiedTopics:0, topicCount:36, weakTopics:1, masteredTopics:0, assessedTopics:0, trainingPlan:{ weekday:2, minutes:35, restDay:false, activities:[{ activity:'topicTest', minutes:35, reason:'weak-topics', topicId:'T2.01' }] }, trainingSession:null }),
     startTrainingSession:vi.fn(() => session), startTrainingActivity:vi.fn(() => session), completeTrainingActivity:vi.fn(),
@@ -153,6 +154,7 @@ it('abre el tema en Temario cuando la intervención requiere lectura', async () 
   const session = { dateKey:'2026-10-28', activities:[{ activity:'topicTest', minutes:20, reason:'new-topic-day', topicId:'T3.02', reviewMode:'initial-study' }], currentIndex:0, currentStartedAt:1, startedAt:1, completedAt:null };
   const services = { home: {
     accountId:() => null, authResolved:() => true, subscribe:() => () => {}, getActiveStudy:() => null,
+    seenTopics:() => ['T3.02'],
     getAccess:() => ({ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }),
     loadOverview:async () => ({ completedSessions:0, blocks:[], seen:0, total:100, answers:0, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0, studiedTopics:0, topicCount:36, weakTopics:0, masteredTopics:0, assessedTopics:0, trainingPlan:{ weekday:4, minutes:20, restDay:false, activities:[{ activity:'topicTest', minutes:20, reason:'new-topic-day', topicId:'T3.02', reviewIntervention:{ mode:'initial-study', confidence:'provisional', topicId:'T3.02', topicName:'Tribunal Constitucional', reason:'study-not-marked', explanation:'Aún no hay una marca de estudio ni respuestas.', targets:[], evidence:{ distinctQuestionsAttempted:0, latestAnswerAccuracy:null, daysSinceLastQuestionAttempt:null } } }] }, trainingSession:null }),
     startTrainingSession:vi.fn(() => session), startTrainingActivity:vi.fn(() => session), completeTrainingActivity:vi.fn(), setTrainingReviewMode:vi.fn(),
@@ -160,7 +162,54 @@ it('abre el tema en Temario cuando la intervención requiere lectura', async () 
   }};
   renderApp(createElement('div', null, createElement(HomePage), createElement(CurrentPath)), { services });
   await userEvent.setup().click(await screen.findByRole('button', { name:'Empezar entrenamiento de hoy' }));
-  expect(await screen.findByTestId('current-path')).toHaveTextContent('/temario?topic=T3.02');
+  expect(await screen.findByTestId('current-path')).toHaveTextContent('/temario?topic=T3.02&trainingTopics=T3.02');
+});
+
+it('restringe una sesión diaria antigua a los temas vistos ahora', async () => {
+  const legacySession = { dateKey:'2026-10-28', activities:[{ activity:'topicTest', minutes:20, reason:'new-topic-day', topicId:'T3.02', reviewMode:'initial-study' }], currentIndex:0, currentStartedAt:1, startedAt:1, completedAt:null };
+  const services = { home: {
+    accountId:() => null, authResolved:() => true, subscribe:() => () => {}, getActiveStudy:() => null,
+    seenTopics:() => ['T1.01', 'T2.01'],
+    getAccess:() => ({ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }),
+    loadOverview:async () => ({ completedSessions:0, blocks:[], seen:0, total:100, answers:0, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0, studiedTopics:2, topicCount:36, weakTopics:0, masteredTopics:0, assessedTopics:0, trainingPlan:{ weekday:2, minutes:20, restDay:false, activities:[{ activity:'topicTest', minutes:20, reason:'coverage' }] }, trainingSession:null }),
+    startTrainingSession:vi.fn(() => legacySession), startTrainingActivity:vi.fn(() => legacySession), completeTrainingActivity:vi.fn(),
+    quickSession:async () => {}, startReview:async () => {}, openMenu:vi.fn(), login:async () => {}, requestAccess:async () => false, notify:vi.fn(),
+  }};
+  renderApp(createElement('div', null, createElement(HomePage), createElement(CurrentPath)), { services });
+  await userEvent.setup().click(await screen.findByRole('button', { name:'Empezar entrenamiento de hoy' }));
+  expect(await screen.findByTestId('current-path')).toHaveTextContent('/test?trainingTopics=T1.01%2CT2.01');
+  expect(screen.getByTestId('current-path')).not.toHaveTextContent('T3.02');
+});
+
+it('no permite que una recomendación antigua de dominio bajo abra un tema no visto', async () => {
+  const services = { home: {
+    accountId:() => null, authResolved:() => true, subscribe:() => () => {}, getActiveStudy:() => null,
+    seenTopics:() => ['T1.01'],
+    getAccess:() => ({ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }),
+    loadOverview:async () => ({ completedSessions:0, blocks:[], seen:1, total:100, answers:3, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0, studiedTopics:1, topicCount:36, weakTopics:1, masteredTopics:0, assessedTopics:1, trainingPlan:{ weekday:2, minutes:20, restDay:false, activities:[{ activity:'topicTest', minutes:20, reason:'weak-topics', topicId:'T3.02', topicIds:['T3.02', 'T1.01'] }] }, trainingSession:null }),
+    startTrainingSession:vi.fn(), startTrainingActivity:vi.fn(), completeTrainingActivity:vi.fn(), startReview:async () => {}, quickSession:async () => {}, openMenu:vi.fn(), login:async () => {}, requestAccess:async () => false, notify:vi.fn(),
+  }};
+  renderApp(createElement('div', null, createElement(HomePage), createElement(CurrentPath)), { services });
+  await userEvent.setup().click(await screen.findByRole('button', { name:/Preguntas de tema/ }));
+  expect(await screen.findByTestId('current-path')).toHaveTextContent('/test?trainingTopics=T1.01');
+  expect(screen.getByTestId('current-path')).not.toHaveTextContent('T3.02');
+});
+
+it('no abre contenido de entrenamiento si no hay temas marcados como vistos', async () => {
+  const session = { dateKey:'2026-10-28', activities:[{ activity:'topicTest', minutes:20, reason:'coverage' }], currentIndex:0, currentStartedAt:1, startedAt:1, completedAt:null };
+  const notify = vi.fn();
+  const services = { home: {
+    accountId:() => null, authResolved:() => true, subscribe:() => () => {}, getActiveStudy:() => null,
+    seenTopics:() => [],
+    getAccess:() => ({ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }),
+    loadOverview:async () => ({ completedSessions:0, blocks:[], seen:0, total:100, answers:0, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0, studiedTopics:0, topicCount:36, weakTopics:0, masteredTopics:0, assessedTopics:0, trainingPlan:{ weekday:2, minutes:20, restDay:false, activities:[{ activity:'topicTest', minutes:20, reason:'coverage' }] }, trainingSession:null }),
+    startTrainingSession:vi.fn(() => session), startTrainingActivity:vi.fn(() => session), completeTrainingActivity:vi.fn(),
+    quickSession:async () => {}, startReview:async () => {}, openMenu:vi.fn(), login:async () => {}, requestAccess:async () => false, notify,
+  }};
+  renderApp(createElement('div', null, createElement(HomePage), createElement(CurrentPath)), { services });
+  await userEvent.setup().click(await screen.findByRole('button', { name:'Empezar entrenamiento de hoy' }));
+  expect(notify).toHaveBeenCalledWith('Marca primero los temas que ya has estudiado para preparar un entrenamiento de hoy.');
+  expect(screen.getByTestId('current-path')).toHaveTextContent('/');
 });
 
 it('explica la evidencia y conserva una modalidad amplia elegida manualmente', async () => {
