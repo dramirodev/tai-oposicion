@@ -62,14 +62,15 @@ export const HELP_SECTIONS: readonly HelpSection[] = [
     id: 'acceso', title: 'Acceso y cuenta', body: [
       'Sin acceso completo puedes usar la sesión rápida de cinco minutos. Para abrir tests por tema, simulacros, tarjetas, progreso y entrenamientos, inicia sesión desde Ajustes y solicita acceso; el propietario debe aprobarlo.',
       'Si tienes acceso completo, tu progreso se guarda en este dispositivo. Al iniciar sesión con acceso aprobado también puede sincronizarse con tu cuenta para usarlo en otros dispositivos.',
+      'Si eres el propietario, abre «Accesos» en el menú para aprobar o rechazar solicitudes y revocar después un acceso concedido.',
     ],
   },
   {
     id: 'inicio', title: 'Inicio y tipos de práctica', body: [
       'Inicio muestra si tienes una sesión en curso, las preguntas pendientes de repaso, las falladas y un resumen de tu actividad. Pulsa «Continuar sesión» para volver donde estabas.',
-      'La sesión rápida dura cinco minutos. Con acceso completo también puedes elegir un test por tema, un simulacro, tarjetas o uno de los entrenamientos. «Temas estudiados» sirve para marcar lo que ya has repasado.',
-      'En «Entrenamiento de hoy» puedes consultar por qué se recomienda una actividad. Para un tema que ya has estudiado, se priorizan preguntas para comprobar qué recuerdas. Aunque el resultado sea bajo, primero se propone otra comprobación: TAI no puede deducir que debas releer todo el tema ni qué apartado revisar con solo ese dato. Si hace falta leer, elige el tema semanal en Ajustes y abre tus apuntes desde Temario. TAI no contiene el texto completo del temario ni registra cuándo lo lees. Puedes cambiar la modalidad recomendada o volver a la selección automática.',
-      'Los minutos del plan son orientativos. Puedes empezar o continuar la actividad y marcarla como terminada al volver; la aplicación no cronometra el tiempo real de estudio. Los días de descanso no acumulan actividades para mañana.',
+      'La sesión rápida incluye 10 preguntas y suele llevar unos cinco minutos; no tiene cronómetro. Con acceso completo también puedes elegir un test por tema, un simulacro, tarjetas o uno de los entrenamientos. «Temas vistos» sirve para marcar lo que ya has repasado.',
+      'En «Entrenamiento de hoy» puedes consultar por qué se recomienda una actividad. Para un tema que ya has estudiado, se priorizan preguntas para comprobar qué recuerdas. Aunque el resultado sea bajo, primero se propone otra comprobación: TAI no puede deducir que debas releer todo el tema ni qué apartado revisar con solo ese dato. Si hace falta leer, elige el tema semanal en Ajustes y consulta tus apuntes por separado. «Temas vistos» sirve para marcar tu cobertura, pero no contiene el texto completo del temario ni registra cuándo lo lees. Puedes cambiar la modalidad recomendada o volver a la selección automática.',
+      'Los minutos del plan son orientativos. El informe de estrategia registra el tiempo activo observado mientras respondes preguntas en sesiones completadas; no suma todo el tiempo de estudio ni incluye la lectura de apuntes o las tarjetas. Puedes empezar o continuar la actividad y marcarla como terminada al volver. Los días de descanso no acumulan actividades para mañana.',
     ],
   },
   {
@@ -121,7 +122,7 @@ export const HELP_SECTIONS: readonly HelpSection[] = [
   {
     id: 'errores', title: 'Avisar de un error en una pregunta', body: [
       'Si ves un posible error en el banco, pulsa «Avisar de error» al responder. Elige un motivo y, si quieres, escribe una nota breve. El aviso queda guardado en este dispositivo y puede sincronizarse con tu cuenta.',
-      'En Ajustes abre «Errores del banco» para revisar los avisos, marcarlos como resueltos, reabrirlos, quitarlos o exportarlos en JSON para corregirlos.',
+      'En el menú abre «Errores del banco» —también está en Ajustes— para revisar los avisos, marcarlos como resueltos, reabrirlos, quitarlos o exportarlos en JSON para corregirlos.',
     ],
   },
   {
