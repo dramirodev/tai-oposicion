@@ -9,7 +9,7 @@ export const studyQuestionCatalog: StudyQuestionCatalog = {
   getMetadataIndex: questionData.getMetaIndex,
   getMetadata: questionData.getMeta,
   getMetadataSnapshot: () => questionData.META,
-  getQuestionIdsForTopic: questionData.idsOfTema,
+  getQuestionIdsForTopic: questionData.activeIdsOfTema,
   getScenarios: async () => Object.fromEntries(Object.entries(await questionData.getSup()).map(([id, scenario]) => [id, {
     text: scenario.texto,
     questions: scenario.q,

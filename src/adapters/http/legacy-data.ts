@@ -20,7 +20,10 @@ export async function getMetaIndex(): Promise<Meta> {
   if (!metaLoading) metaLoading = (async () => {
     const meta = await fetchJson<Meta>('data/meta.json');
     const by: Record<string, string[]> = {};
-    for (const id in meta) (by[meta[id][0]] ||= []).push(id);
+    for (const id in meta) {
+      if (meta[id][5]) continue;
+      (by[meta[id][0]] ||= []).push(id);
+    }
     meta._by = by; META = meta;
     return meta;
   })().finally(() => { metaLoading = undefined; });
@@ -33,7 +36,8 @@ export async function getMeta(): Promise<Meta> {
   return meta;
 }
 export const temaOf = (questionId: string): string | null => META && META[questionId] ? META[questionId][0] : supQuestions.get(questionId)?.t || null;
-export const idsOfTema = (topicId: string): string[] => [...(META?._by[topicId] || []), ...[...supQuestions.values()].filter(question => question.t === topicId).map(question => question.i)];
+export const activeIdsOfTema = (topicId: string): string[] => [...(META?._by[topicId] || []), ...[...supQuestions.values()].filter(question => question.t === topicId).map(question => question.i)];
+export const idsOfTema = (topicId: string): string[] => [...activeIdsOfTema(topicId), ...Object.entries(META || {}).filter(([, entry]) => entry?.[0] === topicId && entry[5]).map(([id]) => id)];
 export async function getTema(topicId: string): Promise<Question[]> { if (!cache.has(topicId)) cache.set(topicId, fetchJson<Question[]>(`data/${topicId}.json`).then(questionRows => { diagnoseQuestionDtos(questionRows); return questionRows; }).catch(error => { cache.delete(topicId); throw error; })); return cache.get(topicId)!; }
 export async function getSup(): Promise<Record<string, SupEntry>> {
   if (SUP) return SUP;
@@ -52,8 +56,12 @@ export const now = (): number => Date.now();
 
 export async function byIds(ids: string[]): Promise<Question[]> {
   await getMeta();
-  const requiredTopics = new Set(ids.map(questionId => META[questionId]?.[0]).filter(Boolean));
+  const canonicalIds = ids.map(questionId => META[questionId]?.[5] || questionId);
+  const requiredTopics = new Set(canonicalIds.map(questionId => META[questionId]?.[0]).filter(Boolean));
   const questionsById = new Map<string, Question>(supQuestions);
   for (const topicQuestions of await Promise.all([...requiredTopics].map(getTema))) for (const question of topicQuestions) questionsById.set(question.i, question);
-  return ids.map(questionId => questionsById.get(questionId)).filter((question): question is Question => !!question);
+  return canonicalIds.flatMap((canonicalId, index) => {
+    const question = questionsById.get(canonicalId);
+    return question ? [{ ...question, i: ids[index] }] : [];
+  });
 }

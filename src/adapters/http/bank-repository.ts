@@ -19,10 +19,12 @@ async function getTopicQuestions(topicId: string): Promise<Question[]> {
 
 export const httpBankRepository: BankRepository = {
   async getQuestion(questionId) {
-    await getMeta();
+    const meta = await getMeta();
     const topicId = temaOf(questionId);
     if (!topicId) return undefined;
-    return (await getTopicQuestions(topicId)).find(question => question.id === questionId);
+    const canonicalId = meta[questionId]?.[5] || questionId;
+    const question = (await getTopicQuestions(topicId)).find(item => item.id === canonicalId);
+    return question && canonicalId !== questionId ? { ...question, id: questionId } : question;
   },
 
   async getQuestions(topicIds) {

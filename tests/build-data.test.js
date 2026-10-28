@@ -13,10 +13,10 @@ function fixture() {
   const bank = path.join(root, 'banco con espacios'), temario = path.join(root, 'temario'), sup = path.join(root, 'supuestos'), out = path.join(root, 'salida');
   for (const dir of [bank, path.join(bank, 'generadas'), temario, sup, out]) mkdirSync(dir, { recursive: true });
   const json = (file, data) => writeFileSync(file, JSON.stringify(data));
-  const q = { id: 'O-1', tema: 'T2.01', enunciado: 'Pregunta de prueba', opciones: { a: 'Uno', b: 'Dos', c: 'Tres', d: 'Cuatro' }, correcta: 'b', tipo: 'D', convocatoria: '2024', plantilla: 'definitiva' };
-  json(path.join(bank, 'banco_literal.json'), { preguntas: [q, { ...q, id: 'S-1', supuesto_id: 'S1' }] });
+  const q = { id: 'O-1', ids_duplicados: ['O-legacy'], tema: 'T2.01', enunciado: 'Pregunta de prueba', opciones: { a: 'Uno', b: 'Dos', c: 'Tres', d: 'Cuatro' }, correcta: 'b', tipo: 'D', convocatoria: '2024', plantilla: 'definitiva' };
+  json(path.join(bank, 'banco_literal.json'), { preguntas: [q, { ...q, id: 'S-1', ids_duplicados: [], supuesto_id: 'S1' }] });
   json(path.join(bank, 'banco_academia.json'), { preguntas: [] });
-  json(path.join(bank, 'generadas', 'banco_generado_T2.01.json'), { preguntas: [{ ...q, id: 'G-1', revision: { estado: 'verificada' }, cita_temario: [{ texto: 'Fuente de prueba' }] }] });
+  json(path.join(bank, 'generadas', 'banco_generado_T2.01.json'), { preguntas: [{ ...q, id: 'G-1', ids_duplicados: [], revision: { estado: 'verificada' }, cita_temario: [{ texto: 'Fuente de prueba' }] }] });
   json(path.join(sup, 'supuestos.json'), { S1: { convocatoria: '2024', texto: 'Caso práctico' } });
   json(path.join(sup, 'supuestos_academia.json'), {});
   writeFileSync(path.join(temario, 'T2.01 Hardware - Temario.txt'), 'Temario de prueba');
@@ -36,6 +36,8 @@ describe('generación portable del banco', () => {
     expect(read('T2.01.json')[1]).toMatchObject({ i: 'G-1', o: 'G', u: 'Fuente de prueba', v: 0 });
     expect(read('supuestos.json').S1.q).toHaveLength(1);
     expect(read('meta.json')['O-1']).toEqual(['T2.01', 'O', 'D', [], 0]);
+    expect(read('meta.json')['O-legacy']).toEqual(['T2.01', 'O', 'D', [], 0, 'O-1']);
+    expect(read('T2.01.json').some(question => question.i === 'O-legacy')).toBe(false);
   });
   it('acepta variables de entorno y da prioridad a los argumentos', () => {
     const f = fixture(), r = run(f, ['--out-dir', f.out], { BANK_DIR: f.bank, SUPUESTOS_DIR: f.sup, TEMARIO_DIR: f.temario, OUT_DIR: path.join(f.root, 'otra') });

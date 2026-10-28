@@ -9,8 +9,8 @@ export type { AppState, CardMap, CardRec, Cfg, Report, ReportMap, ReportState, R
 export type Origin = 'O' | 'A' | 'G';
 export type Question = QuestionRecord;
 
-/** Entrada de meta.json: [tema, ...datos auxiliares]. */
-export type MetaEntry = [string, Origin, string, (number | string)[], number];
+/** Entrada de meta.json; las entradas alias añaden el ID canónico en la posición 5. */
+export type MetaEntry = [string, Origin, string, (number | string)[], number, string?];
 export type Meta = Record<string, MetaEntry> & { _by: Record<string, string[]> };
 export interface TemaInfo { id: string; nombre: string; n: number }
 export interface Index { n: number; nsup: number; temas: TemaInfo[] }

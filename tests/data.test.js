@@ -42,14 +42,14 @@ describe('banco de preguntas (public/data)', () => {
   });
   it('normaliza erratas tipográficas documentadas en las fuentes sin cambiar las claves', () => {
     const oql = all.find(question => question.i === 'TAI2024B-P1-28');
-    const foreignKey = all.find(question => question.i === 'L2024A-P1-28');
+    const foreignKey = all.find(question => question.i === 'TAI2024B-P1-30');
     const java = all.find(question => question.i === 'AT306-P1-15');
     expect(oql.a[2]).toBe('Un lenguaje de consulta de datos.');
     expect(oql.c).toBe(2);
     expect(oql.n).toContain('el PDF repite «de datos»');
     expect(foreignKey.a[2]).toBe('Un atributo que puede tener valores duplicados.');
     expect(foreignKey.c).toBe(1);
-    expect(foreignKey.n).toContain('el PDF repite «de datos»');
+    expect(foreignKey.n).toContain('repetición «de datos»');
     expect(java.a[3]).toContain('método arrancar');
     expect(java.c).toBe(3);
     expect(java.n).toContain('errata «arranchar»');
@@ -62,6 +62,23 @@ describe('banco de preguntas (public/data)', () => {
   });
   it('meta.json cubre todas las preguntas con el tema correcto', () => {
     for (const q of all) expect(meta[q.i]?.[0], q.i).toBe(q.t);
+  });
+  it('los IDs de preguntas retiradas son alias históricos de su pregunta canónica', () => {
+    for (const [alias, canonical, topic] of [
+      ['L2024A-P1-30', 'TAI2024B-P1-28', 'T2.05'],
+      ['L2024A-P1-28', 'TAI2024B-P1-30', 'T3.02'],
+      ['AS09-P1-10', 'AT107-P1-74', 'T1.07'],
+      ['AS04-P1-100', 'AS01-P1-24', 'T3.02'],
+    ]) {
+      expect(meta[alias]).toEqual([...meta[canonical].slice(0, 5), canonical]);
+      expect(banks[topic].filter(question => question.i === alias)).toHaveLength(0);
+      expect(banks[topic].filter(question => question.i === canonical)).toHaveLength(1);
+    }
+  });
+  it('corrige una clave de academia contradicha por el texto constitucional', () => {
+    const question = banks['T1.01'].find(item => item.i === 'AT1012-P1-25');
+    expect(question?.a[question.c]).toBe('Negociación colectiva.');
+    expect(question?.n).toContain('el PDF marca b');
   });
   it('cada tema tiene peso positivo para el simulacro', () => { for (const t of index.temas) expect(t.w, t.id).toBeGreaterThan(0); });
   it('supuestos: preguntas válidas y los que ofrece el simulacro tienen enunciado', () => {

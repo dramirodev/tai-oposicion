@@ -70,7 +70,7 @@ def generate(args):
     generadas = []
     for file in sorted((args.bank_dir / 'generadas').glob('banco_generado_T*.json')):
         generadas.extend(load_json(file)['preguntas'])
-    temas, sup_q = collections.defaultdict(list), collections.defaultdict(list)
+    temas, sup_q, aliases = collections.defaultdict(list), collections.defaultdict(list), {}
     for questions, origen in [(literal, 'O'), (academia, 'A'), (generadas, 'G')]:
         for question in questions:
             data = conv(question, origen)
@@ -78,6 +78,10 @@ def generate(args):
                 sup_q[question['supuesto_id']].append(data)
             else:
                 temas[data['t']].append(data)
+            for alias_id in question.get('ids_duplicados', []):
+                if alias_id == question['id'] or alias_id in aliases:
+                    raise ValueError(f"ID alias inválido o repetido: {alias_id}")
+                aliases[alias_id] = question
     output, idx, meta = {}, {'temas': []}, {}
     for tema in sorted(temas):
         questions = temas[tema]
@@ -88,6 +92,13 @@ def generate(args):
                              'O': count['O'], 'A': count['A'], 'G': count['G']})
         for q in questions:
             meta[q['i']] = [tema, q['o'], q['k'] or '', q['x'], q['d'] or 0]
+    for alias_id, question in aliases.items():
+        canonical_id = question['id']
+        if alias_id in meta:
+            raise ValueError(f"ID alias ya utilizado por otra pregunta: {alias_id}")
+        if canonical_id not in meta:
+            raise ValueError(f"El destino del alias no está en el banco: {canonical_id}")
+        meta[alias_id] = [*meta[canonical_id], canonical_id]
     sup = {}
     for key, value in list(supuestos.items()) + list(supuestos_academia.items()):
         sup[key] = {'conv': value.get('convocatoria'), 'texto': value['texto'], 'q': sup_q.get(key, [])}
