@@ -3,7 +3,6 @@
 import { accountId } from '../local/legacy-store.js';
 import { status } from '../firebase/legacy-sync-state.js';
 import type { AccessLevel } from './types.js';
-export const OWNER = 'dramiro@gmail.com';
 const ACC = () => 'tai.acc:' + (accountId() || 'guest');
 const DEV = 'tai.dev';
 const rd = (key: string): string | null => { try { return localStorage.getItem(key); } catch { return null; } };
@@ -21,7 +20,6 @@ export const devRevealed = (): boolean => rd('tai.devui') === '1';
 export const revealDev = (): void => wr('tai.devui', '1');
 // Nivel real de la cuenta; mientras Firebase no responde (o sin red) se usa el último conocido en este dispositivo.
 export const accessLevel = (): AccessLevel => status.access || (rd(ACC()) as AccessLevel | null) || 'invitado';
-export const rememberAccess = (lvl: AccessLevel): void => wr(ACC(), lvl === 'propietario' || lvl === 'aprobado' ? lvl : null);
 export function isFull(): boolean {
   const textValue = devMode();
   if (textValue === '0') return false;
