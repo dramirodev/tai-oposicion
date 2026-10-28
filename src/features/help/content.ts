@@ -68,7 +68,7 @@ export const HELP_SECTIONS: readonly HelpSection[] = [
     id: 'inicio', title: 'Inicio y tipos de práctica', body: [
       'Inicio muestra si tienes una sesión en curso, las preguntas pendientes de repaso, las falladas y un resumen de tu actividad. Pulsa «Continuar sesión» para volver donde estabas.',
       'La sesión rápida dura cinco minutos. Con acceso completo también puedes elegir un test por tema, un simulacro, tarjetas o uno de los entrenamientos. «Temas estudiados» sirve para marcar lo que ya has repasado.',
-      'En «Entrenamiento de hoy» puedes consultar por qué se recomienda una actividad. Para un tema que ya has estudiado, se priorizan preguntas para comprobar qué recuerdas; si hace falta leer, elige el tema semanal en Ajustes y abre tus apuntes desde Temario. TAI no contiene el texto completo del temario ni registra cuándo lo lees. Puedes cambiar la modalidad recomendada o volver a la selección automática.',
+      'En «Entrenamiento de hoy» puedes consultar por qué se recomienda una actividad. Para un tema que ya has estudiado, se priorizan preguntas para comprobar qué recuerdas. Aunque el resultado sea bajo, primero se propone otra comprobación: TAI no puede deducir que debas releer todo el tema ni qué apartado revisar con solo ese dato. Si hace falta leer, elige el tema semanal en Ajustes y abre tus apuntes desde Temario. TAI no contiene el texto completo del temario ni registra cuándo lo lees. Puedes cambiar la modalidad recomendada o volver a la selección automática.',
     ],
   },
   {

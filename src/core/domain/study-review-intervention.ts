@@ -6,6 +6,8 @@ export interface TopicReviewEvidence {
   topicName: string;
   hasStudyMarker: boolean;
   distinctQuestionsAttempted: number;
+  /** Progress through the existing question-bank coverage objective, 0-100. */
+  questionCoverageOfTarget?: number;
   latestAnswerAccuracy: number | null;
   daysSinceLastQuestionAttempt: number | null;
   /** A section is selectable only when the content source identifies it explicitly. */
@@ -17,11 +19,12 @@ export interface StudyReviewIntervention {
   confidence: StudyReviewConfidence;
   topicId: string;
   topicName: string;
-  reason: 'manual-choice' | 'study-not-marked' | 'weak-sections-identified' | 'broad-low-results' | 'check-before-rereading' | 'no-history';
+  reason: 'manual-choice' | 'study-not-marked' | 'weak-sections-identified' | 'low-results-need-diagnosis' | 'check-before-rereading' | 'no-history';
   explanation: string;
   targets: readonly { id: string; title: string }[];
   evidence: {
     distinctQuestionsAttempted: number;
+    questionCoverageOfTarget: number | null;
     latestAnswerAccuracy: number | null;
     daysSinceLastQuestionAttempt: number | null;
   };
@@ -53,10 +56,12 @@ export function recommendTopicIntervention(evidence: TopicReviewEvidence, manual
     reason = 'weak-sections-identified';
     explanation = 'Hay apartados débiles identificados en el material. Revisa solo esos apartados y después comprueba el recuerdo con preguntas.';
   } else if (attempts >= 5 && accuracy !== null && accuracy <= 50) {
-    mode = 'broad-reading';
+    // A low score across a small topic sample cannot show whether difficulties are
+    // widespread. Ask the learner to retrieve first; keep broad reading manual until
+    // the app can record a sufficiently broad diagnostic.
     confidence = 'product-rule';
-    reason = 'broad-low-results';
-    explanation = 'Los resultados recientes son bajos en varias preguntas distintas. Como no hay apartados enlazados, una revisión amplia puede ser útil; este umbral es una regla provisional del producto, no una medida científica de dominio.';
+    reason = 'low-results-need-diagnosis';
+    explanation = `La precisión registrada es ${accuracy} % en preguntas de este tema. Antes de recomendar releerlo entero, comprueba qué recuerdas con otra práctica; estos datos no muestran si la dificultad abarca todo el tema.`;
   }
 
   if (manualMode) {
@@ -76,6 +81,8 @@ export function recommendTopicIntervention(evidence: TopicReviewEvidence, manual
     targets,
     evidence: {
       distinctQuestionsAttempted: attempts,
+      questionCoverageOfTarget: Number.isFinite(evidence.questionCoverageOfTarget)
+        ? Math.min(100, Math.max(0, evidence.questionCoverageOfTarget!)) : null,
       latestAnswerAccuracy: accuracy,
       daysSinceLastQuestionAttempt: evidence.daysSinceLastQuestionAttempt,
     },
