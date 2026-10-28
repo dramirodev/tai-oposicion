@@ -41,6 +41,7 @@ import { explanationMapper } from '../features/explanations/explanation-mapper.j
 import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
 import { loadQuestionEvolution, loadStrategyReportForPeriod } from './composition/stats/strategy-composition.js';
 import { createStatsServices } from './composition/stats/stats-composition.js';
+import { createExamCatalog } from './composition/simulations/exam-catalog-composition.js';
 import { createFailuresComposition } from './composition/failures/failures-composition.js';
 import { createLightningComposition } from './composition/trainers/lightning-composition.js';
 import { createTrapsComposition } from './composition/trainers/traps-composition.js';
@@ -180,41 +181,6 @@ async function openMenu() {
 }
 
 // ───────── mis trampas ─────────
-// ───────── exámenes y simulacros por número ─────────
-const EX_OFICIALES: Record<string, string> = {
-  'TAIL2022-P1': 'Ingreso libre 2022 (conv. 2023)', 'TAI2024B-P1': 'Ingreso libre 2023-24 (conv. 2024)', 'L2018-P1': 'Ingreso libre 2018',
-  'L2019-P1': 'Ingreso libre 2019', 'L2025A-P1': 'Ingreso libre 2025', 'L2025X-P1': 'Ingreso libre 2025 (extraordinario)',
-  'P2018-P1': 'Promoción interna 2018', 'P2019-P1': 'Promoción interna 2019', 'P2022-P1': 'Promoción interna 2022 (conv. 2023)',
-  'P2024A-P1': 'Promoción interna 2021-24 (conv. 2024)', 'P2025A-P1': 'Promoción interna 2025',
-};
-function listaExamenes() {
-  const g: Record<string, any> = {};
-  for (const id in META) {
-    if (id === '_by') continue; const o = META[id][1];
-    if (o !== 'O' && o !== 'A') continue;
-    const m = /^(.*-P1)-(\d+)$/.exec(id); if (!m) continue; // las de reserva (-R-) quedan fuera
-    (g[m[1]] ||= []).push(id);
-  }
-  const sims = [], ofi = [];
-  for (const k in g) {
-    const ids = g[k].sort(), a = /^AS(\d+)([A-Z]?)-P1$/.exec(k);
-    if (a && ids.length >= 20) sims.push({ k, ids, n: +a[1], nombre: `Simulacro ${+a[1]}${a[2] ? ' (' + a[2] + ')' : ''}` });
-    else if (EX_OFICIALES[k] && ids.length >= 20) ofi.push({ k, ids, nombre: EX_OFICIALES[k] });
-  }
-  sims.sort((x, y) => x.n - y.n || x.k.localeCompare(y.k)); ofi.sort((x, y) => x.nombre.localeCompare(y.nombre));
-  // tests por tema de la academia (AT…): el tema es el que más se repite entre sus preguntas
-  const tests = [];
-  for (const k in g) {
-    if (!/^AT\d+(ALT)?-P1$/.test(k) || g[k].length < 10) continue;
-    const c: Record<string, any> = {}; for (const id of g[k]) { const t = META[id][0]; c[t] = (c[t] || 0) + 1; }
-    const tema = Object.keys(c).sort((a, b) => c[b] - c[a])[0];
-    tests.push({ k, ids: g[k].sort(), tema, nombre: '' });
-  }
-  tests.sort((a, b) => a.tema.localeCompare(b.tema) || a.k.localeCompare(b.k));
-  const vistos: Record<string, any> = {};
-  for (const t of tests) { const n = vistos[t.tema] = (vistos[t.tema] || 0) + 1; t.nombre = `Test ${t.tema} · ${temaName(t.tema)}${tests.filter(x => x.tema === t.tema).length > 1 ? ' (' + n + ')' : ''}`; }
-  return { sims, ofi, tests };
-}
 let SIMCFG: any = null;
 let reviewScenarioQuestions = new Map<string, Question[]>();
 let reviewScenarioTexts = new Map<string, string>();
@@ -495,7 +461,7 @@ export const studyServices: StudyServices = {
     seenTopics: store.getSeen,
     async loadExamGroups(): Promise<SimulationExamGroups> {
       await getMetaIndex();
-      const lists = listaExamenes(), sessions = store.getSessions();
+      const lists = createExamCatalog(META, temaName), sessions = store.getSessions();
       const map = (entries: { k: string; ids: string[]; nombre: string }[]): SimulationExam[] => entries.map(entry => {
         const attempts = sessions.filter(session => session.titulo === entry.nombre);
         return { id: entry.k, name: entry.nombre, questionCount: entry.ids.length, attempts: attempts.length,
@@ -517,7 +483,7 @@ export const studyServices: StudyServices = {
     },
     async startExam(id, mode) {
       const account = store.accountId(); await getMeta();
-      const lists = listaExamenes(), selected = [...lists.ofi, ...lists.sims, ...lists.tests].find(exam => exam.k === id);
+      const lists = createExamCatalog(META, temaName), selected = [...lists.ofi, ...lists.sims, ...lists.tests].find(exam => exam.k === id);
       if (!selected) return 'empty';
       const items = (await byIds(selected.ids)).filter(question => !(question as Question & { s?: unknown }).s);
       if (account !== store.accountId()) return 'account-changed';
