@@ -112,7 +112,6 @@ describe('study question selection', () => {
       A: [
         { i: 'generated-full', o: 'G', v: 0, f: 'family-full' },
         { i: 'generated-partial', o: 'G', v: 1, f: 'family-partial' },
-        { i: 'GEN-T3.07-66.v2', o: 'G', v: 0, f: 'family-quarantined' },
         { i: 'official', o: 'O' },
         { i: 'official-provisional', o: 'O', p: 1 },
       ],

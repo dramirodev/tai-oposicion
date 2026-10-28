@@ -135,8 +135,9 @@ it('incluye 24 preguntas editoriales resueltas con fuente verificable', () => {
   }
 });
 
-it('corrige dos reservas con una cita local precisa y conserva la restante', () => {
+it('corrige las tres reservas con citas locales precisas', () => {
   const reviewed = [
+    ['T3.07.json', 'GEN-T3.07-66.v2', 'Punto a punto, dotando a cada microservicio de inteligencia adicional.'],
     ['T3.07.json', 'GEN-T3.07-182.v2', 'RESTful.'],
     ['T3.08.json', 'GEN-T3.08-63.v2', 'El documento debe tener un único elemento raíz.'],
   ];
@@ -148,7 +149,6 @@ it('corrige dos reservas con una cita local precisa y conserva la restante', () 
     expect(question.u, id).toBeTruthy();
     expect(isQuestionEditoriallyQuarantined(id), id).toBe(false);
   }
-  expect(isQuestionEditoriallyQuarantined('GEN-T3.07-66.v2')).toBe(true);
 });
 
 it('precisa preguntas repetidas cuando el mismo pasaje sustenta más de una respuesta', () => {
