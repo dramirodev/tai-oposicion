@@ -10,8 +10,9 @@ import { loadFirebaseConfig } from './firebase-config-loader.js';
 import { decodeFirebaseDocumentId, encodeFirebaseDocumentId } from './firebase-document-id-mapper.js';
 import { OWNER_EMAIL, rememberAccessForAccount } from './access-policy.js';
 import type { AttemptRepository } from '../../core/ports/AttemptRepository.js';
+import type { AccessLevel } from '../../core/domain/entities.js';
 import * as store from '../local/legacy-store.js';
-import type { AccessLevel, AccessRequest, CardMap, ReportMap, SeenDoc, Session, StatMap } from '../legacy/types.js';
+import type { AccessRequest, CardMap, ReportMap, SeenDoc, Session, StatMap } from '../legacy/types.js';
 
 const errorFields = (value: unknown): { code: unknown; message: unknown } => {
   const fields = value && typeof value === 'object' ? value as Record<string, unknown> : {};
