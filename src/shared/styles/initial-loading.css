@@ -35,21 +35,74 @@ body.is-initial-loading > :not(#initial-loading) {
 
 .initial-loading__track span {
   display: block;
-  inline-size: 38%;
+  inline-size: 34%;
   block-size: 100%;
   border-radius: inherit;
   background: var(--accent);
-  animation: initial-loading-progress 1.4s ease-in-out infinite alternate;
+  animation: initial-loading-sweep 1.25s linear infinite;
 }
 
-@keyframes initial-loading-progress {
-  from { transform: translateX(0); }
-  to { transform: translateX(164%); }
+.initial-update[hidden] { display: none; }
+
+.initial-update {
+  inline-size: min(28rem, calc(100vw - 2rem));
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-l, 1rem);
+  background: var(--card, var(--bg));
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%);
+  text-align: start;
+}
+
+.initial-update h1 {
+  margin: 0 0 0.75rem;
+  font-size: var(--fs-xl, 1.5rem);
+}
+
+.initial-update p { margin: 0.5rem 0; }
+.initial-update__version { color: var(--mute); font-size: var(--fs-s, 0.875rem); }
+.initial-update__status { min-block-size: 1.5em; color: var(--mute); font-size: var(--fs-s, 0.875rem); }
+
+.initial-update__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  margin-block-start: 1.25rem;
+}
+
+.initial-update__actions button {
+  min-block-size: 2.75rem;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid var(--control-line, var(--line));
+  border-radius: var(--r-m, 0.5rem);
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.initial-update__actions .initial-update__primary {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.initial-update__actions button:focus-visible {
+  outline: 0.1875rem solid var(--accent);
+  outline-offset: 0.125rem;
+}
+
+.initial-update__actions button:disabled { cursor: wait; opacity: 0.65; }
+
+@keyframes initial-loading-sweep {
+  from { transform: translateX(-110%); }
+  to { transform: translateX(340%); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .initial-loading__track span {
     inline-size: 42%;
+    margin-inline-start: 29%;
     animation: none;
   }
 }

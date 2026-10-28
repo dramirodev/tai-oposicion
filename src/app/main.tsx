@@ -1,15 +1,15 @@
 import '../shared/styles/index.css';
-import './legacy-ui.js';
-import { createRoot } from 'react-dom/client';
-import { StrictMode } from 'react';
-import { App } from './App.js';
-import { initializeApp, shutdownApp } from './router/route-runtime.js';
-import { initializeAttemptTracking } from './composition/attempts/attempt-tracking-composition.js';
-initializeAttemptTracking();
-initializeApp();
-export const root = createRoot(document.getElementById('app')!);
-root.render(<StrictMode><App /></StrictMode>);
+import { runStartupUpdateGate } from './composition/updates/startup-update-gate.js';
+import { APP_BUILD } from './build-info.js';
+
+let stopApp: (() => void) | undefined;
+
+void (async () => {
+  await runStartupUpdateGate(APP_BUILD);
+  const app = await import('./start-app.js');
+  stopApp = app.unmountApp;
+})();
+
 export function unmountApp(): void {
-  root.unmount();
-  shutdownApp();
+  stopApp?.();
 }

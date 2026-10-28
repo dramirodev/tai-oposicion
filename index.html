@@ -17,9 +17,21 @@
 <div id="skip-nav"></div>
 <div id="workspace-shell"></div>
 <main id="app" tabindex="-1"></main>
-<div id="initial-loading" class="initial-loading" role="status" aria-live="polite" aria-label="Cargando">
-  <p class="initial-loading__label">Cargando</p>
-  <div class="initial-loading__track" role="progressbar" aria-label="Carga inicial" aria-valuetext="Cargando la aplicación"><span></span></div>
+<div id="initial-loading" class="initial-loading">
+  <div id="initial-loading-progress" role="status" aria-live="polite" aria-label="Cargando">
+    <p class="initial-loading__label">Cargando</p>
+    <div class="initial-loading__track" role="progressbar" aria-label="Carga inicial" aria-valuetext="Cargando la aplicación"><span></span></div>
+  </div>
+  <section id="initial-update-dialog" class="initial-update" role="dialog" aria-modal="true" aria-labelledby="initial-update-title" hidden>
+    <h1 id="initial-update-title">Actualización disponible</h1>
+    <p>Hay una nueva versión de TAI. ¿Quieres actualizar antes de entrar?</p>
+    <p id="initial-update-version" class="initial-update__version"></p>
+    <p id="initial-update-status" class="initial-update__status" aria-live="polite"></p>
+    <div class="initial-update__actions">
+      <button id="initial-update-confirm" class="initial-update__primary" type="button">Actualizar ahora</button>
+      <button id="initial-update-continue" type="button">Entrar sin actualizar</button>
+    </div>
+  </section>
 </div>
 <script type="module" src="/src/app/main.tsx"></script>
 </body>
