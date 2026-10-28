@@ -40,6 +40,20 @@ describe('banco de preguntas (public/data)', () => {
       expect(question.n, id).toMatch(/(?:Adaptación|Edición de contenido)/);
     }
   });
+  it('normaliza erratas tipográficas documentadas en las fuentes sin cambiar las claves', () => {
+    const oql = all.find(question => question.i === 'TAI2024B-P1-28');
+    const foreignKey = all.find(question => question.i === 'L2024A-P1-28');
+    const java = all.find(question => question.i === 'AT306-P1-15');
+    expect(oql.a[2]).toBe('Un lenguaje de consulta de datos.');
+    expect(oql.c).toBe(2);
+    expect(oql.n).toContain('el PDF repite «de datos»');
+    expect(foreignKey.a[2]).toBe('Un atributo que puede tener valores duplicados.');
+    expect(foreignKey.c).toBe(1);
+    expect(foreignKey.n).toContain('el PDF repite «de datos»');
+    expect(java.a[3]).toContain('método arrancar');
+    expect(java.c).toBe(3);
+    expect(java.n).toContain('errata «arranchar»');
+  });
   it('el origen es O, A o G y el tema de cada pregunta coincide con su archivo', () => {
     for (const [t, qs] of Object.entries(banks)) for (const q of qs) { expect('OAG').toContain(q.o); expect(q.t, q.i).toBe(t); }
   });
