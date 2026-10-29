@@ -22,5 +22,6 @@ it('keeps help instructions aligned with current menu labels and measured study 
   expect(section('inicio')).toContain('«Temas vistos»');
   expect(section('inicio')).toContain('la lectura de apuntes o la reconstrucción mental no se observa directamente');
   expect(section('inicio')).toContain('checkpoint se conserva en este dispositivo');
+  expect(section('inicio')).toContain('cinco sesiones completadas más recientes');
   expect(section('errores')).toContain('En el menú abre «Errores del banco»');
 });
