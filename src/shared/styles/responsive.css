@@ -250,3 +250,19 @@
   }
   :is(input,select,textarea):not(:disabled):hover { border-color: var(--selb); }
 }
+
+/* A zoom elevado deja poco ancho para las etiquetas de los cinco destinos. */
+@media(max-width:15rem) {
+  nav[aria-label="Principal"] a {
+    font-size: 0;
+  }
+
+  .overlay.menu-dialog .card.menu {
+    width: min(100%,28.75rem);
+  }
+
+  .menu .lrow>span {
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+}
