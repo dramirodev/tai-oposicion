@@ -11,7 +11,7 @@ import { decodeFirebaseDocumentId, encodeFirebaseDocumentId } from './firebase-d
 import { OWNER_EMAIL, rememberAccessForAccount } from './access-policy.js';
 import type { AttemptRepository } from '../../core/ports/AttemptRepository.js';
 import type { AccessLevel } from '../../core/domain/entities.js';
-import type { DailyTrainingSession } from '../../core/domain/study-training-session.js';
+import type { DailyTrainingSession, TrainingSessionHistoryEntry } from '../../core/domain/study-training-session.js';
 import type { AccessRequest, CardMap, ReportMap, SeenDoc, Session, StatMap } from '../legacy/types.js';
 import type { ProgressSyncStore } from '../contracts/progress-sync.js';
 
@@ -29,7 +29,12 @@ let temaOf: (id: string) => string | null = () => null; // id -> tema
 let idsOfTema: (text: string) => string[] = () => [];
 let attemptRepository: AttemptRepository | null = null;
 let progressStore: ProgressSyncStore | null = null;
-interface TrainingSessionSyncStore { getSession(): DailyTrainingSession | null; mergeRemote(session: unknown, updatedAt: number): boolean }
+interface TrainingSessionSyncStore {
+  getSession(): DailyTrainingSession | null;
+  getHistory(): readonly TrainingSessionHistoryEntry[];
+  mergeRemote(session: unknown, updatedAt: number): boolean;
+  mergeRemoteHistory(history: unknown): boolean;
+}
 let trainingSessionStore: TrainingSessionSyncStore | null = null;
 const getProgressStore = (): ProgressSyncStore => {
   if (!progressStore) throw new Error('El almacén de progreso no se ha conectado a la sincronización.');
@@ -180,8 +185,9 @@ function start(): void {
   if (trainingSessionStore) unsubs.push(onSnapshot(doc(db, 'users', me, 'cfg', 'training'), snapshot => {
     if (!active() || !trainingSessionStore) return;
     const remote = snapshot.exists() ? snapshot.data() : null;
-    const remoteSession = remote && remote.schemaVersion === 1 && remote.session && typeof remote.updatedAt === 'number'
+    const remoteSession = remote && [1, 2].includes(remote.schemaVersion) && remote.session && typeof remote.updatedAt === 'number'
       ? remote.session as DailyTrainingSession : null;
+    if (remote?.schemaVersion === 2) trainingSessionStore.mergeRemoteHistory(remote.history);
     const merged = remoteSession ? trainingSessionStore.mergeRemote(remoteSession, Number(remote?.updatedAt)) : false;
     const local = trainingSessionStore.getSession();
     const remoteUpdatedAt = typeof remote?.updatedAt === 'number' ? remote.updatedAt : 0;
@@ -285,7 +291,7 @@ export function pushSession(session: Session): void {
 export function pushTrainingSession(session: DailyTrainingSession): void {
   if (!canSync() || !uid) return;
   const targetUid = uid;
-  const payload = { schemaVersion: 1, updatedAt: session.updatedAt ?? Date.now(), session };
+  const payload = { schemaVersion: 2, updatedAt: session.updatedAt ?? Date.now(), session, history: trainingSessionStore?.getHistory() ?? [] };
   void setDoc(doc(db, 'users', targetUid, 'cfg', 'training'), payload)
     .then(() => { if (uid === targetUid) ok(); })
     .catch(writeErr);

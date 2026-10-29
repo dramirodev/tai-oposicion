@@ -26,7 +26,7 @@ beforeEach(async () => {
   boundary.writes.length = 0; boundary.snapshots.length = 0; boundary.auth.currentUser = null;
   vi.stubGlobal('fetch', async () => ({ ok: true, json: async () => ({ apiKey: 'test', authDomain: 'localhost' }) }));
   store = await import('../src/adapters/local/legacy-store.js'); sync = await import('../src/adapters/firebase/legacy-sync.js');
-  trainingStore = { getSession: vi.fn(() => null), mergeRemote: vi.fn(() => false) };
+  trainingStore = { getSession: vi.fn(() => null), getHistory: vi.fn(() => []), mergeRemote: vi.fn(() => false), mergeRemoteHistory: vi.fn(() => false) };
   await sync.init({ temaOf: () => 'T1.01', idsOfTema: () => [] }, store, trainingStore); user('user1');
 });
 afterEach(() => { vi.clearAllTimers(); vi.useRealTimers(); vi.unstubAllGlobals(); });
@@ -103,14 +103,19 @@ it('sincroniza el checkpoint de planificación solo bajo la cuenta aprobada y lo
     currentIndex: 0, currentStartedAt: null, elapsedSecondsByActivity: [0], updatedAt: Date.now(), startedAt: Date.now(), completedAt: null,
   };
   trainingStore.getSession.mockReturnValue(session);
+  const history = [{ id: session.dateKey, dateKey: session.dateKey, startedAt: session.startedAt, completedAt: session.startedAt + 2,
+    plannedMinutes:20, activities: session.activities, elapsedSecondsByActivity:[2] }];
+  trainingStore.getHistory.mockReturnValue(history);
   const listener = boundary.snapshots.find(item => item.ref.path === 'users/user1/cfg/training');
   expect(listener).toBeTruthy();
   listener.cb({ exists: () => false, data: () => null });
   await Promise.resolve();
-  expect(boundary.writes).toContainEqual({ path: 'users/user1/cfg/training', value: { schemaVersion: 1, updatedAt: session.updatedAt, session } });
+  expect(boundary.writes).toContainEqual({ path: 'users/user1/cfg/training', value: { schemaVersion: 2, updatedAt: session.updatedAt, session, history } });
   const remote = { ...session, currentIndex: 1, updatedAt: session.updatedAt + 1 };
   listener.cb({ exists: () => true, data: () => ({ schemaVersion: 1, updatedAt: remote.updatedAt, session: remote }) });
   expect(trainingStore.mergeRemote).toHaveBeenCalledWith(remote, remote.updatedAt);
+  listener.cb({ exists: () => true, data: () => ({ schemaVersion: 2, updatedAt: remote.updatedAt, session: remote, history }) });
+  expect(trainingStore.mergeRemoteHistory).toHaveBeenCalledWith(history);
   await sync.logout();
   sync.pushTrainingSession(session);
   expect(boundary.writes.filter(item => item.path === 'users/user1/cfg/training')).toHaveLength(1);

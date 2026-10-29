@@ -6,8 +6,9 @@ import {
   pauseTrainingSessionActivity,
   startTrainingSessionActivity,
   type DailyTrainingSession,
+  type TrainingSessionHistoryEntry,
 } from '../../../core/domain/study-training-session.js';
-import { mergeRemoteTrainingSession, readTrainingSession, saveTrainingSession } from '../../../adapters/local/training-session.js';
+import { mergeRemoteTrainingSession, mergeRemoteTrainingSessionHistory, readTrainingSession, readTrainingSessionHistory, saveTrainingSession } from '../../../adapters/local/training-session.js';
 
 export function createTrainingSessionComposition(dependencies: {
   accountId(): string | null;
@@ -24,8 +25,14 @@ export function createTrainingSessionComposition(dependencies: {
   };
   return {
     getSession,
+    getHistory(): readonly TrainingSessionHistoryEntry[] {
+      return readTrainingSessionHistory(dependencies.accountId());
+    },
     mergeRemote(session: unknown, updatedAt: number): boolean {
       return mergeRemoteTrainingSession(dependencies.accountId(), dependencies.now(), session, updatedAt);
+    },
+    mergeRemoteHistory(history: unknown): boolean {
+      return mergeRemoteTrainingSessionHistory(dependencies.accountId(), history);
     },
     start(plan: DailyTrainingPlan): DailyTrainingSession | null {
       const existing = getSession();

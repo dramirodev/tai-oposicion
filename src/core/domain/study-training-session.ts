@@ -23,6 +23,32 @@ export interface DailyTrainingSession {
   completedAt: number | null;
 }
 
+/** Immutable summary of one completed daily training session. */
+export interface TrainingSessionHistoryEntry {
+  id: string;
+  dateKey: string;
+  startedAt: number;
+  completedAt: number;
+  plannedMinutes: number;
+  activities: readonly TrainingSessionStep[];
+  elapsedSecondsByActivity: readonly number[];
+}
+
+export const MAX_TRAINING_SESSION_HISTORY = 30;
+
+export function toTrainingSessionHistoryEntry(session: DailyTrainingSession): TrainingSessionHistoryEntry | null {
+  if (session.completedAt === null || session.currentIndex !== session.activities.length || !session.activities.length) return null;
+  return {
+    id: session.dateKey,
+    dateKey: session.dateKey,
+    startedAt: session.startedAt,
+    completedAt: session.completedAt,
+    plannedMinutes: session.activities.reduce((sum, activity) => sum + activity.minutes, 0),
+    activities: session.activities.map(activity => ({ ...activity, ...(activity.topicIds ? { topicIds: [...activity.topicIds] } : {}) })),
+    elapsedSecondsByActivity: session.activities.map((_, index) => session.elapsedSecondsByActivity?.[index] ?? 0),
+  };
+}
+
 export function localTrainingDateKey(timestamp: number): string {
   const date = new Date(timestamp);
   const year = date.getFullYear();

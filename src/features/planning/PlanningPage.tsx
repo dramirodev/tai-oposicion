@@ -52,8 +52,10 @@ const reasonText: Record<DailyTrainingPlan['activities'][number]['reason'], stri
 const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 const focusLabels = { rest: 'Descanso', 'new-content': 'Contenido nuevo', consolidation: 'Recuperación y consolidación' } as const;
 const formatMinutes = (seconds: number) => `${Math.floor(seconds / 60)} min${seconds % 60 ? ` ${seconds % 60} s` : ''}`;
+const activityCountText = (count: number) => `${count} ${count === 1 ? 'actividad' : 'actividades'}`;
 const localDateFormatter = new Intl.DateTimeFormat('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 const localDate = (date: Date) => localDateFormatter.format(date);
+const historyDateFormatter = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
 
 const reviewModeLabels: Record<NonNullable<TrainingSessionStep['reviewMode']>, string> = {
   'active-retrieval': 'comprobar primero qué recuerdas',
@@ -275,6 +277,20 @@ function PlanningEvidence({ overview }: { overview: HomeOverview }) {
   </section>;
 }
 
+function PlanningHistory({ overview }: { overview: HomeOverview }) {
+  const sessions = (overview.trainingHistory ?? []).slice(0, 5);
+  return <section className="planning-history" aria-labelledby="planning-history-title">
+    <div className="planning-section-heading"><div><p className="planning-kicker">Seguimiento</p><h2 id="planning-history-title">Sesiones recientes</h2></div></div>
+    {sessions.length ? <ol>{sessions.map(session => {
+      const elapsed = session.elapsedSecondsByActivity.reduce((sum, value) => sum + value, 0);
+      return <li key={session.id}>
+        <div><b>{historyDateFormatter.format(new Date(session.startedAt))}</b><span>{formatMinutes(elapsed)} · {activityCountText(session.activities.length)}</span></div>
+        <p>{session.activities.map(activity => activityPresentation[activity.activity].title).join(' · ')}</p>
+      </li>;
+    })}</ol> : <p className="planning-history-empty">Cuando completes una sesión, su duración y actividades aparecerán aquí.</p>}
+  </section>;
+}
+
 export function PlanningPage() {
   const services = useStudyService('home');
   const authResolved = useSyncExternalStore(services.subscribe, services.authResolved, () => false);
@@ -305,6 +321,7 @@ export function PlanningPage() {
     <PlanningTodayCard model={model} overview={overview} activeStudy={!!services.getActiveStudy()} onStart={actions.startSession} onPause={actions.pauseSession} />
     <PlanningActivityList model={model} />
     {!model.session?.completedAt && <WeekSchedule preferences={settings.training} weekday={model.weekday} />}
+    <PlanningHistory overview={overview} />
     <PlanningEvidence overview={overview} />
   </main>;
 }

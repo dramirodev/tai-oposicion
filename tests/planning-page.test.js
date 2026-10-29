@@ -67,3 +67,15 @@ it('distingue el tiempo disponible del tiempo previsto cuando aún no hay activi
   expect(screen.queryByText('Tiempo previsto')).not.toBeInTheDocument();
   expect(screen.getByText('120 min', { selector:'dd' })).toBeInTheDocument();
 });
+
+it('muestra en el historial solo la duración y las actividades de sesiones completadas recibidas', async () => {
+  const startedAt = new Date(2026, 9, 28, 12).getTime();
+  const sessionOverview = overview(newTopicPlan, { trainingHistory:[{
+    id:'2026-10-28', dateKey:'2026-10-28', startedAt, completedAt:startedAt + 75_000,
+    plannedMinutes:10, activities:[{ activity:'activeRecall', minutes:10, reason:'active-recall' }], elapsedSecondsByActivity:[75],
+  }] });
+  renderApp(createElement(PlanningPage), { services:servicesFor(sessionOverview) });
+  expect(await screen.findByRole('heading', { name:'Sesiones recientes' })).toBeInTheDocument();
+  expect(screen.getByText('1 min 15 s · 1 actividad')).toBeInTheDocument();
+  expect(screen.getByText('Recuperación activa')).toBeInTheDocument();
+});

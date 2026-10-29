@@ -823,7 +823,7 @@
 .planning-kicker { margin: 0 0 .25rem; color: var(--mute); font-size: var(--fs-s); }
 .planning-date { display: flex; align-items: center; gap: .5rem; margin: 0; color: var(--mute); }
 .planning-settings-link { min-height: 2.75rem; display: inline-flex; align-items: center; flex: none; }
-.planning-today,.planning-activities,.planning-week,.planning-evidence { min-width: 0; margin-block: 1.25rem; padding: 1.25rem clamp(1rem, 3vw, 1.75rem); border: 1px solid var(--line); border-radius: var(--r-xl); background: var(--card); }
+.planning-today,.planning-activities,.planning-week,.planning-history,.planning-evidence { min-width: 0; margin-block: 1.25rem; padding: 1.25rem clamp(1rem, 3vw, 1.75rem); border: 1px solid var(--line); border-radius: var(--r-xl); background: var(--card); }
 .planning-section-heading { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: .75rem 1.25rem; }
 .planning-section-heading h2 { margin: 0; font-size: clamp(1.25rem, 3vw, 1.65rem); letter-spacing: -.02em; }
 .planning-section-heading>a { min-height: 2.75rem; display: inline-flex; align-items: center; gap: .35rem; }
@@ -866,6 +866,12 @@
 .planning-week li span { font-size: 1.125rem; font-variant-numeric: tabular-nums; }
 .planning-week li small { color: var(--mute); line-height: 1.35; overflow-wrap: anywhere; }
 .planning-week-note { margin: .875rem 0 0; color: var(--mute); font-size: var(--fs-s); }
+.planning-history>ol { display: grid; margin: 1rem 0 0; padding: 0; list-style: none; }
+.planning-history li { min-width: 0; padding-block: .875rem; border-top: 1px solid var(--line); }
+.planning-history li>div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem .75rem; }
+.planning-history li>div span,.planning-history li>p,.planning-history-empty { color: var(--mute); font-size: var(--fs-s); }
+.planning-history li>p { margin: .35rem 0 0; overflow-wrap: anywhere; }
+.planning-history-empty { margin: 1rem 0 0; }
 .planning-evidence-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: .75rem 1.25rem; margin-top: 1rem; }
 .planning-evidence-grid p { display: grid; align-content: start; gap: .3rem; margin: 0; padding-top: .75rem; border-top: 1px solid var(--line); }
 .planning-evidence-grid span { color: var(--mute); font-size: var(--fs-s); }
@@ -892,7 +898,7 @@
   .planning-page { padding-top: 1rem; }
   .planning-header { flex-direction: column; }
   .planning-settings-link { align-self: flex-start; }
-  .planning-today,.planning-activities,.planning-week,.planning-evidence { padding: 1rem; }
+  .planning-today,.planning-activities,.planning-week,.planning-history,.planning-evidence { padding: 1rem; }
   .planning-facts { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .planning-facts>div:nth-child(2),.planning-facts>div:nth-child(4) { border-inline-end: 0; }
   .planning-facts>div:nth-child(3) { border-inline-end: 1px solid var(--line); }

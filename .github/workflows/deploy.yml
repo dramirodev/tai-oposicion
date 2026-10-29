@@ -50,6 +50,9 @@ jobs:
       - name: Validar tarjetas
         run: node scripts/validate_cards.mjs
 
+      - name: Validar reglas de Firestore en el emulador
+        run: npm run test:firestore-rules
+
       - name: Credenciales de Firebase
         env:
           SA_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TAI_OPOSICION }}

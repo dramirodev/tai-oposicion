@@ -1,4 +1,4 @@
-import type { DailyTrainingSession, TrainingSessionStep } from '../../core/domain/study-training-session.js';
+import { MAX_TRAINING_SESSION_HISTORY, toTrainingSessionHistoryEntry, type DailyTrainingSession, type TrainingSessionHistoryEntry, type TrainingSessionStep } from '../../core/domain/study-training-session.js';
 import type { StudyReviewMode, TrainingActivity } from '../../core/domain/entities.js';
 import type { TrainingPlanReason } from '../../core/domain/study-training-plan.js';
 import { localTrainingDateKey } from '../../core/domain/study-training-session.js';
@@ -7,6 +7,7 @@ const activities = new Set<TrainingActivity>(['newContent', 'activeRecall', 'top
 const reasons = new Set<TrainingPlanReason>(['active-recall', 'new-content-day', 'new-topic-day', 'weak-topics', 'coverage', 'recurring-failures', 'due-reviews']);
 const reviewModes = new Set<StudyReviewMode>(['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading']);
 const keyFor = (accountId: string | null) => `tai.training-session.v1.${encodeURIComponent(accountId || 'guest')}`;
+const historyKeyFor = (accountId: string | null) => `tai.training-history.v1.${encodeURIComponent(accountId || 'guest')}`;
 
 type StoredTrainingSessionStep = Pick<TrainingSessionStep, 'activity' | 'minutes'>
   & Partial<Pick<TrainingSessionStep, 'reason' | 'topicId' | 'topicIds' | 'reviewMode'>>;
@@ -22,6 +23,59 @@ function isSessionStep(value: unknown): value is StoredTrainingSessionStep {
     && (step.topicId === undefined || (typeof step.topicId === 'string' && /^T[1-4]\.\d{2}$/.test(step.topicId)))
     && (step.topicIds === undefined || (Array.isArray(step.topicIds) && step.topicIds.length > 0
       && step.topicIds.every(topicId => typeof topicId === 'string' && /^T[1-4]\.\d{2}$/.test(topicId))));
+}
+
+function isTrainingHistoryEntry(value: unknown): value is TrainingSessionHistoryEntry {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+  const entry = value as Partial<TrainingSessionHistoryEntry>;
+  return typeof entry.id === 'string' && /^20\d{2}-\d{2}-\d{2}$/.test(entry.id)
+    && entry.id === entry.dateKey
+    && Number.isFinite(entry.startedAt) && Number.isFinite(entry.completedAt)
+    && entry.startedAt! >= 0 && entry.completedAt! >= entry.startedAt!
+    && Number.isInteger(entry.plannedMinutes) && entry.plannedMinutes! > 0 && entry.plannedMinutes! <= 1440
+    && Array.isArray(entry.activities) && entry.activities.length > 0 && entry.activities.length <= 6
+    && entry.activities.every(isSessionStep)
+    && new Set(entry.activities.map(activity => activity.activity)).size === entry.activities.length
+    && Array.isArray(entry.elapsedSecondsByActivity)
+    && entry.elapsedSecondsByActivity.length === entry.activities.length
+    && entry.elapsedSecondsByActivity.every(seconds => Number.isInteger(seconds) && seconds >= 0 && seconds <= 86_400);
+}
+
+function readHistory(accountId: string | null): TrainingSessionHistoryEntry[] {
+  try {
+    const serialized = localStorage.getItem(historyKeyFor(accountId));
+    if (!serialized) return [];
+    const parsed: unknown = JSON.parse(serialized);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(isTrainingHistoryEntry).sort((left, right) => right.completedAt - left.completedAt).slice(0, MAX_TRAINING_SESSION_HISTORY);
+  } catch { return []; }
+}
+
+function mergeHistory(accountId: string | null, incoming: readonly TrainingSessionHistoryEntry[]): boolean {
+  const current = readHistory(accountId);
+  const byId = new Map(current.map(entry => [entry.id, entry]));
+  let changed = false;
+  for (const entry of incoming) {
+    if (!isTrainingHistoryEntry(entry)) continue;
+    const existing = byId.get(entry.id);
+    if (existing && existing.completedAt >= entry.completedAt) continue;
+    byId.set(entry.id, entry);
+    changed = true;
+  }
+  if (!changed) return false;
+  const merged = [...byId.values()].sort((left, right) => right.completedAt - left.completedAt).slice(0, MAX_TRAINING_SESSION_HISTORY);
+  try { localStorage.setItem(historyKeyFor(accountId), JSON.stringify(merged)); }
+  catch { /* The active session remains usable when history storage is unavailable. */ }
+  return true;
+}
+
+export function readTrainingSessionHistory(accountId: string | null): readonly TrainingSessionHistoryEntry[] {
+  return readHistory(accountId);
+}
+
+export function mergeRemoteTrainingSessionHistory(accountId: string | null, value: unknown): boolean {
+  if (!Array.isArray(value)) return false;
+  return mergeHistory(accountId, value.filter(isTrainingHistoryEntry));
 }
 
 function isDailyTrainingSession(value: unknown, timestamp: number): value is StoredTrainingSession {
@@ -75,6 +129,8 @@ export function readTrainingSession(accountId: string | null, timestamp: number)
 export function saveTrainingSession(accountId: string | null, session: DailyTrainingSession): void {
   try { localStorage.setItem(keyFor(accountId), JSON.stringify(session)); }
   catch { /* The daily plan remains usable if storage is unavailable. */ }
+  const completed = toTrainingSessionHistoryEntry(session);
+  if (completed) mergeHistory(accountId, [completed]);
 }
 
 /** Merge only a valid current-day checkpoint newer than the local copy. */

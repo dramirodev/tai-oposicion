@@ -93,12 +93,18 @@ service cloud.firestore {
         && (!('reviewMode' in step) || step.reviewMode in ['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading']);
     }
 
+    function validTrainingHistory(history) {
+      // The owner can only write their own data. The client validates each history entry;
+      // rules bound the aggregate to keep the configuration document small.
+      return history is list && history.size() <= 30;
+    }
+
     function validTrainingSession() {
       let d = request.resource.data;
       let s = d.session;
-      return d.keys().hasOnly(['schemaVersion', 'updatedAt', 'session'])
+      return d.keys().hasOnly(['schemaVersion', 'updatedAt', 'session', 'history'])
         && d.keys().hasAll(['schemaVersion', 'updatedAt', 'session'])
-        && d.schemaVersion == 1
+        && (d.schemaVersion == 1 ? !('history' in d) : d.schemaVersion == 2 && 'history' in d && validTrainingHistory(d.history))
         && d.updatedAt is number
         && s is map
         && s.keys().hasOnly(['dateKey', 'activities', 'currentIndex', 'currentStartedAt', 'elapsedSecondsByActivity', 'updatedAt', 'startedAt', 'completedAt'])

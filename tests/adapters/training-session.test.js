@@ -1,5 +1,5 @@
 import { afterEach, expect, it, vi } from 'vitest';
-import { mergeRemoteTrainingSession, readTrainingSession, saveTrainingSession } from '../../src/adapters/local/training-session.js';
+import { mergeRemoteTrainingSession, mergeRemoteTrainingSessionHistory, readTrainingSession, readTrainingSessionHistory, saveTrainingSession } from '../../src/adapters/local/training-session.js';
 
 afterEach(() => { vi.restoreAllMocks(); localStorage.clear(); });
 
@@ -53,4 +53,25 @@ it('aplica solo un checkpoint remoto del mismo día que sea más reciente y cons
   expect(mergeRemoteTrainingSession('owner-a', timestamp, local, timestamp + 1_000)).toBe(false);
   expect(readTrainingSession('owner-b', timestamp)).toBeNull();
   expect(mergeRemoteTrainingSession('owner-a', timestamp + 86_400_000, remote, timestamp + 2_000)).toBe(false);
+});
+
+it('archiva una sesión completada una sola vez y conserva su duración en días posteriores', () => {
+  const completed = { ...session, currentIndex:1, currentStartedAt:null, elapsedSecondsByActivity:[75], updatedAt:timestamp + 75_000, completedAt:timestamp + 75_000 };
+  saveTrainingSession('owner-a', completed);
+  saveTrainingSession('owner-a', completed);
+  expect(readTrainingSessionHistory('owner-a')).toEqual([{
+    id:'2026-10-28', dateKey:'2026-10-28', startedAt:timestamp, completedAt:timestamp + 75_000,
+    plannedMinutes:10, activities:completed.activities, elapsedSecondsByActivity:[75],
+  }]);
+  expect(readTrainingSessionHistory('owner-a')).toHaveLength(1);
+  expect(readTrainingSessionHistory('owner-b')).toEqual([]);
+  expect(readTrainingSessionHistory('owner-a')[0].elapsedSecondsByActivity).toEqual([75]);
+});
+
+it('fusiona historial remoto válido, elimina duplicados y omite entradas malformadas', () => {
+  const entry = { id:'2026-10-28', dateKey:'2026-10-28', startedAt:timestamp, completedAt:timestamp + 20_000,
+    plannedMinutes:10, activities:session.activities, elapsedSecondsByActivity:[20] };
+  expect(mergeRemoteTrainingSessionHistory('owner-a', [entry, { ...entry, id:'bad' }, entry])).toBe(true);
+  expect(readTrainingSessionHistory('owner-a')).toEqual([entry]);
+  expect(mergeRemoteTrainingSessionHistory('owner-a', [entry])).toBe(false);
 });

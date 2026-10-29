@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react';
 import type { StatsComparison, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 import type { StudyReviewMode, TrainingActivity, TrainingPreferences } from '../../core/domain/entities.js';
 import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
-import type { DailyTrainingSession } from '../../core/domain/study-training-session.js';
+import type { DailyTrainingSession, TrainingSessionHistoryEntry } from '../../core/domain/study-training-session.js';
 import type { ObservedStudyTime } from '../../core/domain/attempts/observed-study-time.js';
 export type { StatsComparison, StatsDomainTopic, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 export interface ActiveStudy { title: string; position: number; total: number }
@@ -16,6 +16,7 @@ export interface HomeOverview {
   nextNewTopic?: { id: string; name: string };
   studiedTopics: number; topicCount: number; assessedTopics: number; weakTopics: number; masteredTopics: number;
   trainingPlan: DailyTrainingPlan; trainingSession: DailyTrainingSession | null;
+  trainingHistory?: readonly TrainingSessionHistoryEntry[];
 }
 export interface AccessOverview {
   full: boolean; level: string; greeting: string; state: string; configured: boolean;

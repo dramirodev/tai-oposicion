@@ -9,6 +9,7 @@
     "lint": "eslint src",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:firestore-rules": "npx --yes firebase-tools@13.35.1 emulators:exec --only firestore --project demo-tai-training-rules \"npx vitest run tests/firestore-rules.test.js\"",
     "lint:ignore-growth": "node scripts/lint-ignore-growth.mjs",
     "typecheck": "tsc -p .",
     "deploy": "npm run typecheck && npm test && npm run build && node scripts/validate_cards.mjs && npx --yes firebase-tools@13.35.1 deploy --only hosting,firestore:rules --project tai-oposicion",
@@ -39,6 +40,7 @@
     "zustand": "^5.0.16"
   },
   "devDependencies": {
+    "@firebase/rules-unit-testing": "^3.0.4",
     "@playwright/test": "^1.64.1",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
