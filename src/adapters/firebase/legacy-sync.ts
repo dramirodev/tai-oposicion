@@ -2,17 +2,15 @@ import { initializeApp } from 'firebase/app';
 import { initializeAuth, connectAuthEmulator, GoogleAuthProvider, signInWithRedirect, signInWithPopup, getRedirectResult, onAuthStateChanged, signOut, indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence, browserPopupRedirectResolver } from 'firebase/auth';
 import {
   initializeFirestore, connectFirestoreEmulator, persistentLocalCache, persistentMultipleTabManager,
-  doc, setDoc, deleteDoc, onSnapshot, collection, query, orderBy, limit
+  doc, setDoc, onSnapshot, collection, query, orderBy, limit
 } from 'firebase/firestore';
 import type { Auth, User } from 'firebase/auth';
-import type { Firestore, FirestoreError, QuerySnapshot, DocumentSnapshot, Unsubscribe } from 'firebase/firestore';
+import type { Firestore, FirestoreError, Unsubscribe } from 'firebase/firestore';
 import { loadFirebaseConfig } from './firebase-config-loader.js';
 import { localFirebaseEmulators } from './local-emulator-config.js';
 import { decodeFirebaseDocumentId, encodeFirebaseDocumentId } from './firebase-document-id-mapper.js';
 import { OWNER_EMAIL } from './access-policy.js';
 import type { AttemptRepository } from '../../core/ports/AttemptRepository.js';
-import type { AccessLevel, AccessRequest } from '../../core/domain/entities.js';
-import type { AccessRequestRecord } from './dto/access.js';
 import type { DailyTrainingSession } from '../../core/domain/study-training-session.js';
 import type { CardMap, ReportMap, SeenDoc, Session, StatMap } from '../contracts/progress-data.js';
 import type { ProgressSyncStore } from '../contracts/progress-sync.js';
@@ -23,6 +21,7 @@ const errorFields = (value: unknown): { code: unknown; message: unknown } => {
 };
 
 import { status, emit } from './sync-status-store.js';
+import { createFirebaseAccessControl } from './access-control.js';
 import { syncAttemptHistory } from './attempt-sync.js';
 import { configureStudyBankSource } from './study-bank-source.js';
 import { createTrainingSessionSyncAdapter, type TrainingSessionSyncStore } from './training-session-sync.js';
@@ -38,6 +37,16 @@ let progressStore: ProgressSyncStore | null = null;
 let trainingSessionStore: TrainingSessionSyncStore | null = null;
 let paperRecallStore: PaperRecallSyncStore | null = null;
 let trainingCalendarStore: TrainingCalendarSyncStore | null = null;
+const accessControl = createFirebaseAccessControl({
+  auth: () => auth,
+  database: () => db,
+  userId: () => uid,
+  ownerEmail: OWNER_EMAIL,
+  status,
+  emit,
+  startSync: () => start(),
+  stopSync: () => stop(),
+});
 const getProgressStore = (): ProgressSyncStore => {
   if (!progressStore) throw new Error('El almacén de progreso no se ha conectado a la sincronización.');
   return progressStore;
@@ -84,13 +93,13 @@ export async function init(
   onAuthStateChanged(auth, (event: User | null) => {
     status.authResolved = true;
     status.user = event ? { name: event.displayName || event.email || '', email: event.email || '', verified: !!event.emailVerified } : null;
-    stopAcc(); stop(); uid = null;
-    status.requested = false; status.reqs = []; status.grants = []; status.access = 'invitado';
+    accessControl.stop(); stop(); uid = null;
+    status.requested = false; status.reqs = []; status.grants = []; accessControl.setAccess('invitado');
     getProgressStore().switchAccount(event?.uid || null, !!event && event.email === OWNER_EMAIL && event.emailVerified);
-    if (event) { uid = event.uid; resolveAccess(event); }
-    else { uid = null; stop(); status.requested = false; status.reqs = []; status.grants = []; setAccess('invitado'); status.state = 'sin sesión'; emit(); }
-    const epoch = accessEpoch;
-    void getProgressStore().recover().then(ch => { if (ch && epoch === accessEpoch && uid === (event?.uid || null)) pushImport(); });
+    if (event) { uid = event.uid; accessControl.resolve(event); }
+    else { uid = null; stop(); status.requested = false; status.reqs = []; status.grants = []; accessControl.setAccess('invitado'); status.state = 'sin sesión'; emit(); }
+    const epoch = accessControl.getEpoch();
+    void getProgressStore().recover().then(ch => { if (ch && epoch === accessControl.getEpoch() && uid === (event?.uid || null)) pushImport(); });
   });
   getProgressStore().setSyncer({ schedule, pushSession, pushSeen, pushReports, pushCards, pushImport });
   } catch (error) {
@@ -121,53 +130,11 @@ export async function login(): Promise<void> {
   if (!auth.currentUser) status.state = 'sin sesión';
   emit();
 }
-// ── Acceso: el propietario tiene todo; el resto es invitado hasta que el propietario lo apruebe (access/{uid}) ──
-let accUnsubs: Unsubscribe[] = [];
-let accessEpoch = 0;
 const canSync = () => !!uid && (status.access === 'propietario' || status.access === 'aprobado');
-function stopAcc() { accessEpoch++; accUnsubs.forEach(callback => { try { callback(); } catch {} }); accUnsubs = []; }
-function setAccess(entry: AccessLevel) { status.access = entry; }
-function accErr(error: unknown) { status.accessErr = String(errorFields(error).code || error); emit(); }
-function resolveAccess(url: User) {
-  const mine = url.uid, epoch = accessEpoch, vivo = () => uid === mine && epoch === accessEpoch;
-  status.accessErr = '';
-  if (url.email === OWNER_EMAIL && url.emailVerified) {
-    setAccess('propietario'); status.state = 'sincronizando…'; emit(); start();
-    const lista = (campo: 'reqs' | 'grants', ord: (accessRequest: AccessRequestRecord, accessRequestItem: AccessRequestRecord) => number) => (snap: QuerySnapshot) => { if (!vivo()) return; const accessRequest: AccessRequestRecord[] = []; snap.forEach(data => accessRequest.push({ uid: data.id, ...(data.data() as Omit<AccessRequestRecord, 'uid'>) })); accessRequest.sort(ord); status[campo] = accessRequest; emit(); };
-    accUnsubs.push(onSnapshot(collection(db, 'requests'), lista('reqs', (accessRequest, accessRequestItem) => (accessRequestItem.ts || 0) - (accessRequest.ts || 0)), accErr));
-    accUnsubs.push(onSnapshot(collection(db, 'access'), lista('grants', (accessRequest, accessRequestItem) => String(accessRequest.email).localeCompare(String(accessRequestItem.email))), accErr));
-    return;
-  }
-  status.reqs = []; status.grants = []; status.state = 'sesión iniciada';
-  if (status.access === 'propietario') setAccess('invitado'); // otra cuenta en el mismo dispositivo
-  emit();
-  accUnsubs.push(onSnapshot(doc(db, 'access', mine), (data: DocumentSnapshot) => {
-    if (!vivo()) return;
-    if (data.exists() && (data.data() || {}).ok === true) {
-      if (status.access !== 'aprobado') { setAccess('aprobado'); status.state = 'sincronizando…'; start(); }
-    } else {
-      const era = status.access === 'aprobado';
-      setAccess(status.requested ? 'pendiente' : 'invitado');
-      if (era) { stop(); status.state = 'sesión iniciada'; }
-    }
-    emit();
-  }, accErr));
-  accUnsubs.push(onSnapshot(doc(db, 'requests', mine), (data: DocumentSnapshot) => {
-    if (!vivo()) return;
-    status.requested = data.exists();
-    if (status.access !== 'aprobado') setAccess(status.requested ? 'pendiente' : 'invitado');
-    emit();
-  }, accErr));
-}
-export async function requestAccess(): Promise<boolean> {
-  const url = auth && auth.currentUser; if (!url || !db) return false;
-  try { await setDoc(doc(db, 'requests', url.uid), { email: url.email, name: url.displayName || url.email, ts: Date.now() }); return true; } catch (error) { accErr(error); return false; }
-}
-export async function approve(accessRequest: AccessRequest): Promise<boolean> {
-  try { await setDoc(doc(db, 'access', accessRequest.uid), { ok: true, email: accessRequest.email, name: accessRequest.name || accessRequest.email, ts: Date.now() }); await deleteDoc(doc(db, 'requests', accessRequest.uid)); return true; } catch (error) { accErr(error); return false; }
-}
-export const reject = async (id: string): Promise<boolean> => { try { await deleteDoc(doc(db, 'requests', id)); return true; } catch (error) { accErr(error); return false; } };
-export const revoke = async (id: string): Promise<boolean> => { try { await deleteDoc(doc(db, 'access', id)); return true; } catch (error) { accErr(error); return false; } };
+export const requestAccess = accessControl.requestAccess;
+export const approve = accessControl.approve;
+export const reject = accessControl.reject;
+export const revoke = accessControl.revoke;
 export const logout = (): Promise<void> | undefined => auth && signOut(auth);
 export function retry(): void { status.error = ''; retryN = 0; if (uid) { status.state = 'sincronizando…'; emit(); start(); } }
 
