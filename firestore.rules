@@ -193,7 +193,7 @@ service cloud.firestore {
               && request.resource.data.response == resource.data.response
               && request.resource.data.outcome == resource.data.outcome
               && request.resource.data.terminalEventId == resource.data.terminalEventId)
-            || (request.resource.data.terminalEventId < resource.data.terminalEventId
+            || (request.resource.data.terminalEventId != resource.data.terminalEventId
               && terminalEventIsValid(attemptId))))
         || (resource.data.mode == 'practice'
           && resource.data.state in ['unseen', 'pending']

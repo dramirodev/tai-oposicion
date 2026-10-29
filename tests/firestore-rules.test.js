@@ -82,6 +82,39 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
     await assertFails(setDoc(doc(testEnv.unauthenticatedContext().firestore(), 'users/student/cfg/trainingCalendar'), { schemaVersion:1, updatedAt:activity.updatedAt, activities:[activity] }));
   });
 
+  it('permite revelar una respuesta con un nuevo evento terminal válido aunque su id sea lexicográficamente mayor', async () => {
+    const attemptId = 'attempt-reveal';
+    const answeredEventId = 'event-11111111111111111111111111111111';
+    const revealedEventId = 'event-ffffffffffffffffffffffffffffffff';
+    expect(revealedEventId > answeredEventId).toBe(true);
+    const answeredAttempt = {
+      schemaVersion:1, id:attemptId, sessionId:'session-1', questionId:'T1.01-1', contentRevision:'',
+      mode:'practice', position:0, exposure:1, state:'answered', response:0, outcome:'correct',
+      confidence:null, discardedOptions:[], highlights:[], createdAt:1_793_280_000_000,
+      lastSequence:1, appliedEventIds:[answeredEventId], terminalEventId:answeredEventId,
+    };
+    const revealEvent = {
+      schemaVersion:1, id:revealedEventId, attemptId, sequence:2, type:'reveal',
+      at:1_793_280_001_000, payload:{},
+    };
+    const userDb = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    await testEnv.withSecurityRulesDisabled(async context => {
+      const adminDb = context.firestore();
+      await setDoc(doc(adminDb, `users/student/attempts/${attemptId}`), answeredAttempt);
+      await setDoc(doc(adminDb, `users/student/attempts/${attemptId}/events/${answeredEventId}`), {
+        schemaVersion:1, id:answeredEventId, attemptId, sequence:1, type:'answer', at:answeredAttempt.createdAt,
+        payload:{ optionIndex:0, outcome:'correct' },
+      });
+    });
+
+    const attemptReference = doc(userDb, `users/student/attempts/${attemptId}`);
+    await assertSucceeds(setDoc(doc(userDb, `users/student/attempts/${attemptId}/events/${revealedEventId}`), revealEvent));
+    await assertSucceeds(setDoc(attemptReference, {
+      ...answeredAttempt, state:'revealed', response:null, outcome:null,
+      lastSequence:2, appliedEventIds:[answeredEventId, revealedEventId], terminalEventId:revealedEventId,
+    }));
+  });
+
   it('sincroniza la reprogramación entre clientes de la misma cuenta', async () => {
     const firstDb = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
     const secondDb = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
