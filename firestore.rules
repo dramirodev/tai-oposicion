@@ -291,7 +291,7 @@ service cloud.firestore {
         && request.resource.data.t is list
         && request.resource.data.ts is number;
     }
-    // Checkpoint diario de la planificación; no contiene respuestas ni el historial del usuario.
+    // Checkpoint e historial resumido de planificación; no contiene respuestas de preguntas.
     match /users/{uid}/cfg/training {
       allow read: if canUse(uid);
       allow create, update: if canUse(uid) && validTrainingSession();

@@ -118,7 +118,9 @@ it('sincroniza el checkpoint de planificación solo bajo la cuenta aprobada y lo
   expect(trainingStore.mergeRemoteHistory).toHaveBeenCalledWith(history);
   await sync.logout();
   sync.pushTrainingSession(session);
-  expect(boundary.writes.filter(item => item.path === 'users/user1/cfg/training')).toHaveLength(1);
+  const trainingWrites = boundary.writes.filter(item => item.path === 'users/user1/cfg/training');
+  expect(trainingWrites).toHaveLength(2);
+  expect(trainingWrites.at(-1).value).toMatchObject({ schemaVersion:2, session:remote, history });
 });
 it('reenvía el checkpoint local más reciente cuando recibe un cambio remoto atrasado', async () => {
   const timestamp = Date.now();
@@ -137,6 +139,29 @@ it('reenvía el checkpoint local más reciente cuando recibe un cambio remoto at
   expect(trainingStore.mergeRemote).toHaveBeenCalledWith(remote, remote.updatedAt);
   expect(boundary.writes).toContainEqual({ path:'users/user1/cfg/training', value:{
     schemaVersion:2, updatedAt:local.updatedAt, session:local, history:[],
+  } });
+});
+it('vuelve a sincronizar el historial local ausente sin reemplazar el checkpoint remoto', () => {
+  const timestamp = Date.now();
+  const remoteSession = {
+    dateKey: new Date(timestamp).toLocaleDateString('en-CA'),
+    activities: [{ activity:'activeRecall', minutes:20, reason:'active-recall' }],
+    currentIndex:0, currentStartedAt:null, elapsedSecondsByActivity:[0],
+    updatedAt:timestamp, startedAt:timestamp, completedAt:null,
+  };
+  const history = [{ id:'2026-10-28', dateKey:'2026-10-28', startedAt:timestamp - 86_400_000,
+    completedAt:timestamp - 86_399_000, plannedMinutes:10,
+    activities:[{ activity:'activeRecall', minutes:10, reason:'active-recall' }], elapsedSecondsByActivity:[60] }];
+  trainingStore.getSession.mockReturnValue(null);
+  trainingStore.getHistory.mockReturnValue(history);
+  const listener = boundary.snapshots.find(item => item.ref.path === 'users/user1/cfg/training');
+
+  listener.cb({ exists:() => true, data:() => ({ schemaVersion:2, updatedAt:timestamp, session:remoteSession, history:[] }) });
+
+  expect(trainingStore.mergeRemoteHistory).toHaveBeenCalledWith([]);
+  expect(trainingStore.mergeRemote).toHaveBeenCalledWith(remoteSession, timestamp);
+  expect(boundary.writes).toContainEqual({ path:'users/user1/cfg/training', value:{
+    schemaVersion:2, updatedAt:timestamp, session:remoteSession, history,
   } });
 });
 it('aprobar escribe el acceso y borra la solicitud; revocar lo borra', async () => {

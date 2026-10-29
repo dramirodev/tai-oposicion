@@ -36,6 +36,26 @@ interface TrainingSessionSyncStore {
   mergeRemoteHistory(history: unknown): boolean;
 }
 let trainingSessionStore: TrainingSessionSyncStore | null = null;
+function hasLocalTrainingHistoryMissingRemotely(
+  localHistory: readonly TrainingSessionHistoryEntry[],
+  remoteHistory: unknown,
+  schemaVersion: unknown,
+): boolean {
+  if (!localHistory.length) return false;
+  if (schemaVersion !== 2 || !Array.isArray(remoteHistory)) return true;
+  const remoteById = new Map<string, number>();
+  for (const value of remoteHistory) {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) continue;
+    const entry = value as { id?: unknown; completedAt?: unknown };
+    if (typeof entry.id === 'string' && typeof entry.completedAt === 'number' && Number.isFinite(entry.completedAt)) {
+      remoteById.set(entry.id, entry.completedAt);
+    }
+  }
+  return localHistory.some(entry => {
+    const remoteCompletedAt = remoteById.get(entry.id);
+    return remoteCompletedAt === undefined || entry.completedAt > remoteCompletedAt;
+  });
+}
 const getProgressStore = (): ProgressSyncStore => {
   if (!progressStore) throw new Error('El almacén de progreso no se ha conectado a la sincronización.');
   return progressStore;
@@ -188,10 +208,15 @@ function start(): void {
     const remoteSession = remote && [1, 2].includes(remote.schemaVersion) && remote.session && typeof remote.updatedAt === 'number'
       ? remote.session as DailyTrainingSession : null;
     if (remote?.schemaVersion === 2) trainingSessionStore.mergeRemoteHistory(remote.history);
+    const historyNeedsUpload = hasLocalTrainingHistoryMissingRemotely(
+      trainingSessionStore.getHistory(), remote?.history, remote?.schemaVersion,
+    );
     const merged = remoteSession ? trainingSessionStore.mergeRemote(remoteSession, Number(remote?.updatedAt)) : false;
     const local = trainingSessionStore.getSession();
     const remoteUpdatedAt = typeof remote?.updatedAt === 'number' ? remote.updatedAt : 0;
-    if (local && (!merged || !remoteSession) && (local.updatedAt ?? local.startedAt) > remoteUpdatedAt) pushTrainingSession(local);
+    const localUpdatedAt = local ? local.updatedAt ?? local.startedAt : 0;
+    if (local && (!merged || !remoteSession) && localUpdatedAt > remoteUpdatedAt) pushTrainingSession(local);
+    else if (historyNeedsUpload && remoteSession) pushTrainingSession(local && localUpdatedAt >= remoteUpdatedAt ? local : remoteSession);
   }, error));
   // estadísticas: un documento por tema
   unsubs.push(onSnapshot(collection(db, 'users', me, 'stats'), snap => {
