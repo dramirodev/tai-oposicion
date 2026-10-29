@@ -235,6 +235,30 @@ test('un día de consolidación sin temas vistos muestra tiempo disponible, no u
   await expect(page.getByRole('definition').filter({ hasText: '120 min' })).toBeVisible();
 });
 
+test('el historial de Planificación muestra todas las sesiones en móvil sin desbordarse', async ({ page }) => {
+  await prepare(page, 'light', 0, true);
+  const history = Array.from({ length:7 }, (_, index) => {
+    const startedAt = new Date(2026, 9, 28 - index, 12).getTime();
+    const dateKey = new Date(startedAt).toLocaleDateString('en-CA');
+    return { id:dateKey, dateKey, startedAt, completedAt:startedAt + 60_000, plannedMinutes:10,
+      activities:[{ activity:'activeRecall', minutes:10, reason:'active-recall' }], elapsedSecondsByActivity:[60] };
+  });
+  await page.addInitScript(value => localStorage.setItem('tai.training-history.v1.guest', JSON.stringify(value)), history);
+  await page.setViewportSize({ width:320, height:900 });
+  await page.goto('/#/planificacion');
+
+  await expect(page.locator('.planning-history li')).toHaveCount(5);
+  const showAll = page.locator('.planning-history-toggle');
+  await expect(showAll).toHaveAccessibleName('Mostrar todas las sesiones (7)');
+  await expect(showAll).toHaveAttribute('aria-expanded', 'false');
+  expect((await showAll.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+  await showAll.click();
+  await expect(page.locator('.planning-history li')).toHaveCount(7);
+  await expect(showAll).toHaveAttribute('aria-expanded', 'true');
+  await expect(showAll).toHaveAccessibleName('Mostrar solo las cinco más recientes');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+});
+
 test('Planificación conserva el contenido dentro del viewport desde móvil estrecho hasta escritorio grande', async ({ page }) => {
   await prepare(page, 'light', 0);
   await page.clock.setFixedTime(new Date('2026-10-24T12:00:00+02:00'));

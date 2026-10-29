@@ -872,6 +872,7 @@
 .planning-history li>div span,.planning-history li>p,.planning-history-empty { color: var(--mute); font-size: var(--fs-s); }
 .planning-history li>p { margin: .35rem 0 0; overflow-wrap: anywhere; }
 .planning-history-empty { margin: 1rem 0 0; }
+.planning-history-toggle { min-height: 2.75rem; margin-top: .5rem; padding: .375rem 0; border: 0; background: transparent; color: var(--link); font: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; text-underline-offset: .15em; }
 .planning-evidence-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: .75rem 1.25rem; margin-top: 1rem; }
 .planning-evidence-grid p { display: grid; align-content: start; gap: .3rem; margin: 0; padding-top: .75rem; border-top: 1px solid var(--line); }
 .planning-evidence-grid span { color: var(--mute); font-size: var(--fs-s); }

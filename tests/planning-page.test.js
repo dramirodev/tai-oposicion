@@ -79,3 +79,22 @@ it('muestra en el historial solo la duración y las actividades de sesiones comp
   expect(screen.getByText('1 min 15 s · 1 actividad')).toBeInTheDocument();
   expect(screen.getByText('Recuperación activa')).toBeInTheDocument();
 });
+
+it('permite desplegar el historial completo y volver a las cinco sesiones más recientes', async () => {
+  const user = userEvent.setup();
+  const trainingHistory = Array.from({ length:6 }, (_, index) => {
+    const startedAt = new Date(2026, 9, 28 - index, 12).getTime();
+    const dateKey = new Date(startedAt).toLocaleDateString('en-CA');
+    return { id:dateKey, dateKey, startedAt, completedAt:startedAt + 60_000, plannedMinutes:10,
+      activities:[{ activity:'activeRecall', minutes:10, reason:'active-recall' }], elapsedSecondsByActivity:[60] };
+  });
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(newTopicPlan, { trainingHistory })) });
+
+  expect(await screen.findByRole('heading', { name:'Sesiones recientes' })).toBeInTheDocument();
+  expect(screen.getAllByText('Recuperación activa')).toHaveLength(5);
+  const showAll = screen.getByRole('button', { name:'Mostrar todas las sesiones (6)' });
+  expect(showAll).toHaveAttribute('aria-expanded', 'false');
+  await user.click(showAll);
+  expect(screen.getAllByText('Recuperación activa')).toHaveLength(6);
+  expect(screen.getByRole('button', { name:'Mostrar solo las cinco más recientes' })).toHaveAttribute('aria-expanded', 'true');
+});

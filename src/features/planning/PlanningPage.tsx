@@ -278,16 +278,24 @@ function PlanningEvidence({ overview }: { overview: HomeOverview }) {
 }
 
 function PlanningHistory({ overview }: { overview: HomeOverview }) {
+  const [showAll, setShowAll] = useState(false);
   const sessions = (overview.trainingHistory ?? []).slice(0, 5);
+  const allSessions = overview.trainingHistory ?? [];
+  const visibleSessions = showAll ? allSessions : sessions;
   return <section className="planning-history" aria-labelledby="planning-history-title">
     <div className="planning-section-heading"><div><p className="planning-kicker">Seguimiento</p><h2 id="planning-history-title">Sesiones recientes</h2></div></div>
-    {sessions.length ? <ol>{sessions.map(session => {
+    {allSessions.length ? <>
+      <ol id="planning-history-list">{visibleSessions.map(session => {
       const elapsed = session.elapsedSecondsByActivity.reduce((sum, value) => sum + value, 0);
       return <li key={session.id}>
         <div><b>{historyDateFormatter.format(new Date(session.startedAt))}</b><span>{formatMinutes(elapsed)} · {activityCountText(session.activities.length)}</span></div>
         <p>{session.activities.map(activity => activityPresentation[activity.activity].title).join(' · ')}</p>
       </li>;
-    })}</ol> : <p className="planning-history-empty">Cuando completes una sesión, su duración y actividades aparecerán aquí.</p>}
+      })}</ol>
+      {allSessions.length > 5 && <button className="planning-history-toggle" type="button" aria-controls="planning-history-list" aria-expanded={showAll} onClick={() => setShowAll(value => !value)}>
+        {showAll ? 'Mostrar solo las cinco más recientes' : `Mostrar todas las sesiones (${allSessions.length})`}
+      </button>}
+    </> : <p className="planning-history-empty">Cuando completes una sesión, su duración y actividades aparecerán aquí.</p>}
   </section>;
 }
 
