@@ -13,24 +13,24 @@ const publish = (name, obj) => { const p = pack(Buffer.from(JSON.stringify(obj))
 beforeEach(async () => {
   vi.resetModules(); localStorage.clear(); indexedDB = new IDBFactory();
   remote.meta = null; remote.files = {}; remote.calls = { meta: 0, file: 0 }; remote.canRead = true;
-  bank = await import('../src/adapters/firebase/legacy-bank.js');
-  bank.configureBankAccessGate(() => true);
+  bank = await import('../src/adapters/firebase/study-bank-cache-source.js');
+  bank.configureStudyBankAccessGate(() => true);
 });
 it('desactivado por defecto: devuelve null y no toca Firestore', async () => {
   publish('T1.01', [{ i: 'a' }]);
-  expect(await bank.loadBank('T1.01')).toBeNull();
+  expect(await bank.loadStudyBank('T1.01')).toBeNull();
   expect(remote.calls).toEqual({ meta: 0, file: 0 });
 });
 it('descarga y descomprime el fichero; la segunda vez sale de la copia local', async () => {
   localStorage.setItem('tai.bank', 'fs'); publish('T1.01', [{ i: 'a', q: 'ñandú' }]);
-  expect(await bank.loadBank('T1.01')).toEqual([{ i: 'a', q: 'ñandú' }]);
+  expect(await bank.loadStudyBank('T1.01')).toEqual([{ i: 'a', q: 'ñandú' }]);
   expect(remote.calls.file).toBe(1);
-  expect(await bank.loadBank('T1.01')).toEqual([{ i: 'a', q: 'ñandú' }]);
+  expect(await bank.loadStudyBank('T1.01')).toEqual([{ i: 'a', q: 'ñandú' }]);
   expect(remote.calls.file).toBe(1);
 });
 it('conserva la base de caché publicada y su almacén al usar idb', async () => {
   localStorage.setItem('tai.bank', 'fs'); publish('T1.01', [{ i: 'a' }]);
-  await bank.loadBank('T1.01');
+  await bank.loadStudyBank('T1.01');
   const request = indexedDB.open('tai-bank');
   const database = await new Promise((resolve, reject) => {
     request.onsuccess = () => resolve(request.result);
@@ -42,25 +42,25 @@ it('conserva la base de caché publicada y su almacén al usar idb', async () =>
 });
 it('con copia local responde al instante y se actualiza detrás si cambia el hash', async () => {
   localStorage.setItem('tai.bank', 'fs'); publish('T1.01', [{ i: 'viejo' }]);
-  await bank.loadBank('T1.01');
-  publish('T1.01', [{ i: 'nuevo' }]); bank._reset();
-  expect(await bank.loadBank('T1.01')).toEqual([{ i: 'viejo' }]);
+  await bank.loadStudyBank('T1.01');
+  publish('T1.01', [{ i: 'nuevo' }]); bank.resetStudyBankCacheSourceForTests();
+  expect(await bank.loadStudyBank('T1.01')).toEqual([{ i: 'viejo' }]);
   await vi.waitFor(() => expect(remote.calls.file).toBe(2));
   await new Promise(r => setTimeout(r, 50));
-  expect(await bank.loadBank('T1.01')).toEqual([{ i: 'nuevo' }]);
+  expect(await bank.loadStudyBank('T1.01')).toEqual([{ i: 'nuevo' }]);
 });
 it('si Firestore no tiene el fichero o falla, devuelve null para usar el JSON estático', async () => {
   localStorage.setItem('tai.bank', 'fs');
-  expect(await bank.loadBank('T9.99')).toBeNull();
+  expect(await bank.loadStudyBank('T9.99')).toBeNull();
   remote.meta = { v: 1, files: { 'T1.01': 'x' } };
-  expect(await bank.loadBank('T1.01')).toBeNull();
+  expect(await bank.loadStudyBank('T1.01')).toBeNull();
 });
 it('sin acceso no lee ni siquiera una copia remota guardada en este dispositivo', async () => {
   localStorage.setItem('tai.bank', 'fs'); publish('T1.01', [{ i: 'a' }]);
-  expect(await bank.loadBank('T1.01')).toEqual([{ i: 'a' }]);
-  bank.configureBankAccessGate(() => false);
+  expect(await bank.loadStudyBank('T1.01')).toEqual([{ i: 'a' }]);
+  bank.configureStudyBankAccessGate(() => false);
   const callsBeforeDeniedRead = { ...remote.calls };
-  expect(await bank.loadBank('T1.01')).toBeNull();
+  expect(await bank.loadStudyBank('T1.01')).toBeNull();
   expect(remote.calls).toEqual(callsBeforeDeniedRead);
 });
 it('el script de publicación solo sube lo que cambió y borra lo que sobra', () => {
