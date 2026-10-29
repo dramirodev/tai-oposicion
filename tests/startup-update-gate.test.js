@@ -28,6 +28,15 @@ it('continúa directamente si no hay una versión nueva disponible', async () =>
   expect(document.getElementById('initial-update-dialog').hidden).toBe(true);
 });
 
+it('no compara el manifiesto desplegado con un build local de desarrollo', async () => {
+  const fetchVersion = vi.fn();
+  vi.stubGlobal('fetch', fetchVersion);
+
+  await runStartupUpdateGate('dev');
+
+  expect(fetchVersion).not.toHaveBeenCalled();
+});
+
 it('mantiene la aplicación en la pantalla inicial hasta que se elija continuar', async () => {
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ version: '1.2.0', build: 'new' }))));
   addUpdateDialog();

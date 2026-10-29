@@ -1,5 +1,6 @@
 import type { PendingRun } from '../../../core/application/runs/pending-run.js';
 import type { RunCfg } from '../../../core/application/session-model.js';
+import type { TrainingActivity } from '../../../core/domain/entities.js';
 
 interface StudyRunControllerDependencies {
   createRun(configuration: RunCfg): boolean;
@@ -9,19 +10,19 @@ interface StudyRunControllerDependencies {
   ask(message: string, confirmLabel: string): Promise<boolean>;
   resume(run: PendingRun): boolean;
   clearPendingRun(): void;
-  navigateToQuiz(): void;
+  navigateToQuiz(dailyTrainingActivity?: TrainingActivity): void;
   showEmptyRunMessage(): void;
   resumePrompt(run: PendingRun): string;
 }
 
 /** Coordinates starting and restoring a study run without owning its storage or renderer. */
 export function createStudyRunController(dependencies: StudyRunControllerDependencies) {
-  function startRun(configuration: RunCfg): boolean {
+  function startRun(configuration: RunCfg, dailyTrainingActivity?: TrainingActivity): boolean {
     if (!dependencies.createRun(configuration)) {
       dependencies.showEmptyRunMessage();
       return false;
     }
-    dependencies.navigateToQuiz();
+    dependencies.navigateToQuiz(dailyTrainingActivity);
     return true;
   }
 

@@ -13,7 +13,7 @@ import { renderCodeExplanation } from '../../../features/explanations/legacy-vie
 import type { QuizServices } from '../../../shared/ui/study-services.js';
 import type { QuizProgressGateway } from '../../../core/ports/QuizProgressGateway.js';
 
-export function createQuizServices(go: (path: string) => void, homePath: string, resultPath: string, progress: QuizProgressGateway): QuizServices {
+export function createQuizServices(go: (path: string) => void, homePath: string, resultPath: string | (() => string), progress: QuizProgressGateway): QuizServices {
   let closing = false;
   let endConfirmation: AbortController | null = null;
   return {
@@ -52,7 +52,7 @@ export function createQuizServices(go: (path: string) => void, homePath: string,
         reason = 'interrupted';
       }
       if (!finishCurrentRun(reason)) { toast('Se acabó el tiempo sin contestar ninguna pregunta.'); go(homePath); return 'empty'; }
-      go(resultPath); return 'finished';
+      go(typeof resultPath === 'function' ? resultPath() : resultPath); return 'finished';
     },
     async exit() {
       const run = getCurrentRun(); if (!run || closing) return;

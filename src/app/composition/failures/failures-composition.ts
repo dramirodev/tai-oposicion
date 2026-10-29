@@ -2,6 +2,7 @@ import type { QuestionRecord } from '../../../core/domain/question-record.js';
 import type { QuestionStats } from '../../../core/domain/entities.js';
 import type { ProgressRepository } from '../../../core/ports/ProgressRepository.js';
 import type { FailureQuestion, FailureServices } from '../../../shared/ui/study-services.js';
+import type { TrainingActivity } from '../../../core/domain/entities.js';
 import { toFailureQuestionView, type QuestionSourceFallbacks } from '../../mappers/study-question-view-mapper.js';
 
 interface TopicIndex { temas: readonly { id: string; nombre: string }[] }
@@ -18,9 +19,9 @@ export interface FailuresCompositionDependencies {
   topicName(id: string): string;
   sourceFallbacks: QuestionSourceFallbacks;
   shuffle<T>(items: readonly T[]): T[];
-  createPractice(items: QuestionRecord[], title: string): boolean;
+  createPractice(items: QuestionRecord[], title: string, dailyTrainingActivity?: TrainingActivity): boolean;
   notify(message: string): void;
-  navigateToQuiz(): void;
+  navigateToQuiz(dailyTrainingActivity?: TrainingActivity): void;
 }
 
 /** Composes failed-question data, progress and navigation for the failures feature. */
@@ -58,12 +59,15 @@ export function createFailuresComposition(dependencies: FailuresCompositionDepen
     seenTopics: dependencies.seenTopics,
     setReviewed: dependencies.setReviewed,
     topicName: dependencies.topicName,
-    startPractice(ids, title) {
+    startPractice(ids, title, options) {
       const questionsById = new Map(cachedQuestions.map(question => [question.i, question]));
       const items = dependencies.shuffle(ids.map(id => questionsById.get(id)).filter((question): question is QuestionRecord => !!question)).slice(0, 40);
       if (!items.length) return dependencies.notify('No hay preguntas con ese filtro.');
-      if (!dependencies.createPractice(items, title)) return dependencies.notify('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.');
-      dependencies.navigateToQuiz();
+      const created = options?.dailyTrainingActivity
+        ? dependencies.createPractice(items, title, options.dailyTrainingActivity)
+        : dependencies.createPractice(items, title);
+      if (!created) return dependencies.notify('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.');
+      dependencies.navigateToQuiz(options?.dailyTrainingActivity);
     },
   };
 }

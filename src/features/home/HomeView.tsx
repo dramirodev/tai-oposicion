@@ -1,6 +1,6 @@
-import { CalendarClock, Eye, ListChecks, Map, Play, RotateCcw, ScanSearch, Zap, ClipboardCheck, Layers2, Menu } from 'lucide-react';
+import { CalendarClock, Check, Eye, ListChecks, Map, Play, RotateCcw, ScanSearch, Zap, ClipboardCheck, Layers2, Menu } from 'lucide-react';
 import { Link } from 'react-router';
-import type { StudyReviewMode, TrainingActivity } from '../../core/domain/entities.js';
+import type { StudyReviewMode } from '../../core/domain/entities.js';
 import type { AccessOverview, ActiveStudy, HomeBlock, HomeOverview } from '../../shared/ui/study-services.js';
 
 const icons = {
@@ -24,15 +24,13 @@ function HomeHeader({ access, overview, onOpenMenu }: { access: AccessOverview; 
   </>;
 }
 
-function PrimaryStudy({ overview, access, run, pending, navigate, onQuickSession }: {
-  overview: HomeOverview; access: AccessOverview; run: ActiveStudy | null; pending: ReadonlySet<string>;
-  navigate(route: string): void; onQuickSession(): void;
+function PrimaryStudy({ run, navigate }: {
+  run: ActiveStudy;
+  navigate(route: string): void;
 }) {
-  return <section className="home-primary" aria-labelledby="home-start-title"><h2 className="section-title" id="home-start-title">Tu próxima sesión</h2>
-    {run && <button className="cta" id="continue" onClick={() => navigate('quiz')}><span><b>Continuar sesión</b><small>{run.title} · pregunta {run.position + 1} de {run.total}</small></span><Icon name="play" /></button>}
-    <div className="session-launch"><p className="session-heading">{run ? 'También puedes practicar' : 'Un paso más, pregunta a pregunta'}</p><button className={`cta ${run ? 'secondary-session' : ''}`} id="quick" disabled={pending.has('quick')} onClick={onQuickSession}>{pending.has('quick') ? 'Cargando…' : <><span><b className="ctt">Sesión rápida</b><small>{!access.full ? '5 min · una pregunta de cada tema, distintas cada vez' : `5 min · ${overview.quickCount} preguntas: ${overview.due ? 'tus repasos pendientes (' + overview.due + ') y ' : ''}nuevas de tus temas más débiles`}</small></span><i className="play" aria-hidden="true"><Icon name="play" /></i></>}</button></div>
-    {access.full && <div className="tiles"><Tile id="test" icon="test" title="Test" subtitle="por tema" onClick={() => navigate('test')} /><Tile id="sim" icon="sim" title="Simulacros" subtitle="con tiempo" onClick={() => navigate('sim')} /><Tile id="cards" icon="card" title="Tarjetas" subtitle={overview.cardsDue ? `${overview.cardsDue} ${overview.cardsDue === 1 ? 'pendiente' : 'pendientes'}` : 'repaso'} badge={overview.cardsDue} onClick={() => navigate('cards')} /></div>}
-    {!overview.answers && <p className="note">Empieza con una sesión rápida; después marca los temas que hayas estudiado y consulta tu progreso.</p>}
+  return <section className="home-primary" aria-labelledby="home-start-title">
+    <h2 className="section-title" id="home-start-title">Sesión en curso</h2>
+    <button className="cta" id="continue" onClick={() => navigate('quiz')}><span><b>Continuar sesión</b><small>{run.title} · pregunta {run.position + 1} de {run.total}</small></span><Icon name="play" /></button>
   </section>;
 }
 
@@ -72,10 +70,9 @@ function trainingReason(reason: HomeOverview['trainingPlan']['activities'][numbe
   return reasons[reason] ?? 'Recupera la respuesta antes de volver a consultarla.';
 }
 
-function TrainingActivityRows({ overview, onNavigate, onStartReview, onSetReviewMode }: {
+function TrainingActivityRows({ overview, activities, onSetReviewMode }: {
   overview: HomeOverview;
-  onNavigate(route: string): void;
-  onStartReview(topicIds?: readonly string[]): void;
+  activities: readonly HomeOverview['trainingPlan']['activities'][number][];
   onSetReviewMode?: (topicId: string, mode: StudyReviewMode | null) => void;
 }) {
   const trainingDue = overview.trainingDue ?? { questions: overview.due, cards: overview.cardsDue };
@@ -83,24 +80,33 @@ function TrainingActivityRows({ overview, onNavigate, onStartReview, onSetReview
     trainingDue.cards ? `${trainingDue.cards} ${trainingDue.cards === 1 ? 'tarjeta' : 'tarjetas'}` : '',
     trainingDue.questions ? `${trainingDue.questions} ${trainingDue.questions === 1 ? 'pregunta' : 'preguntas'}` : '',
   ].filter(Boolean).join(' y ');
-  return <div className="training-plan-activities">{overview.trainingPlan.activities.map(item => {
+  const session = overview.trainingSession;
+  const focusedStep = activities.find(item => item.topicId || item.reviewIntervention);
+  const focusTopic = focusedStep?.reviewIntervention?.topicName
+    ?? overview.studiedTopicDetails?.find(topic => topic.id === focusedStep?.topicId)?.name;
+  const themeLabel = focusedStep?.topicId
+    ? `${focusedStep.topicId}${focusTopic ? ` · ${focusTopic}` : ''}`
+    : '';
+  return <>
+    <section className="training-topic-agenda" aria-labelledby="training-topic-agenda-title">
+      <h3 id="training-topic-agenda-title">Temas previstos para repasar</h3>
+      {focusedStep?.topicId ? <div><b>{themeLabel}</b><p>{focusedStep.reviewIntervention?.explanation ?? 'La práctica de hoy se centra en este tema, dentro de los temas que has marcado como vistos.'}</p></div>
+        : <p>La práctica de hoy se limitará a tus {overview.studiedTopics} temas marcados como vistos.</p>}
+    </section>
+    <ol className="training-progress-rail" aria-label="Progreso del entrenamiento de hoy">{activities.map((item, index) => {
     const copy = activityCopy[item.activity];
     const dueSuffix = item.activity === 'spacedReviews' && dueSummary ? ` ${dueSummary} pendientes.` : '';
     const intervention = item.reviewIntervention;
-    const opensTopicList = intervention && intervention.mode !== 'active-retrieval';
-    const baseRoute = item.activity === 'topicTest'
-      ? item.topicId ? `${opensTopicList ? 'temario' : 'test'}?topic=${encodeURIComponent(item.topicId)}`
-        : item.reason === 'new-topic-day' ? 'test?recommendation=new-topic' : copy.route
-      : copy.route;
-    const trainingScope = item.topicIds?.length ? `trainingTopics=${encodeURIComponent(item.topicIds.join(','))}` : '';
-    const route = trainingScope ? `${baseRoute}${baseRoute.includes('?') ? '&' : '?'}${trainingScope}` : baseRoute;
     const activityTitle = intervention
       ? `${reviewModeLabel[intervention.mode]} · ${intervention.topicName}`
       : copy.title;
-    return <div className="training-plan-item" key={item.activity}>
-      <Row id={`training-${item.activity}`} icon={copy.icon} title={activityTitle}
-        subtitle={`${item.minutes} min orientativos · ${trainingReason(item.reason)}${dueSuffix}`}
-        onClick={() => item.activity === 'spacedReviews' && !trainingDue.cards ? onStartReview(item.topicIds) : onNavigate(route)} />
+    const completed = !!session && index < session.currentIndex;
+    const current = !!session && index === session.currentIndex && session.completedAt === null;
+    const upcoming = !completed && !current;
+    return <li id={`training-${item.activity}`} className={`training-plan-item${completed ? ' is-complete' : ''}${current ? ' is-current' : ''}${upcoming ? ' is-upcoming' : ''}`} key={item.activity} aria-current={current ? 'step' : undefined}>
+      <span className="training-step-marker" aria-hidden="true">{completed ? <Check size="1em" strokeWidth={2.2} /> : null}</span>
+      <div className="training-plan-step">
+      <div className="training-plan-row"><i aria-hidden="true"><Icon name={copy.icon} /></i><span><b>{activityTitle}</b><small><span className="sr">{completed ? 'Completada. ' : current ? 'En curso. ' : 'Pendiente. '}</span>{item.minutes} min · {trainingReason(item.reason)}{dueSuffix}</small></span></div>
       <details className="training-explanation">
         <summary>¿Por qué me toca repasar esto?</summary>
         {item.reviewIntervention ? <div>
@@ -118,19 +124,20 @@ function TrainingActivityRows({ overview, onNavigate, onStartReview, onSetReview
               {Object.entries(reviewModeLabel).map(([mode, label]) => <option key={mode} value={mode}>{label}</option>)}
             </select>
           </label>}
-          {item.reviewIntervention.mode !== 'active-retrieval' && <p>TAI no incluye el texto del temario. Consulta tus apuntes y <Link to={route.startsWith('temario?') ? `/${route}` : '/temario'}>abre el tema en la lista del temario</Link> para gestionar tus marcas.</p>}
+          {item.reviewIntervention.mode !== 'active-retrieval' && <p>TAI no incluye el texto del temario. Consulta tus apuntes y <Link to="/temario">abre el tema en la lista del temario</Link> para gestionar tus marcas.</p>}
         </div> : <p>{item.activity === 'topicTest' && item.reason === 'new-topic-day'
           ? 'Hoy coincide con el día de introducción configurado en Ajustes. La aplicación no registra qué tema se presenta en la academia, así que no puede asignar uno sin que lo elijas.'
           : trainingReason(item.reason) + (item.activity === 'topicTest' ? ' La comprobación usa preguntas; no hay datos suficientes para recomendar una relectura concreta.' : '')}</p>}
       </details>
-    </div>;
-  })}</div>;
+      </div>
+    </li>;
+    })}</ol>
+  </>;
 }
 
-function TrainingSessionControls({ overview, onStartTraining, onCompleteActivity }: {
+function TrainingSessionControls({ overview, onStartTraining }: {
   overview: HomeOverview;
   onStartTraining(): void;
-  onCompleteActivity(activity: TrainingActivity): void;
 }) {
   const session = overview.trainingSession;
   if (!session) return <button className="btn" id="start-training" onClick={onStartTraining}>Empezar entrenamiento de hoy</button>;
@@ -144,33 +151,33 @@ function TrainingSessionControls({ overview, onStartTraining, onCompleteActivity
   if (!currentStep) return <button className="btn" id="start-training" onClick={onStartTraining}>Empezar entrenamiento de hoy</button>;
   return <>
     <p className="training-session-status" role="status">Actividad {session.currentIndex + 1} de {session.activities.length}: {activityCopy[currentStep.activity].title} · {currentStep.minutes} min orientativos.</p>
-    <button className="btn" id="continue-training" onClick={onStartTraining}>{session.currentStartedAt === null ? 'Empezar actividad' : 'Continuar actividad'}</button>
-    {session.currentStartedAt !== null && <button className="btn sec" id="complete-training-activity" onClick={() => onCompleteActivity(currentStep.activity)}>He terminado esta actividad</button>}
+    <button className="btn" id="continue-training" onClick={onStartTraining}>{session.currentStartedAt !== null ? 'Continuar actividad' : session.currentIndex > 0 ? 'Continuar con la siguiente actividad' : 'Empezar entrenamiento de hoy'}</button>
   </>;
 }
 
-function DailyTraining({ overview, onNavigate, onStartReview, onStartTraining, onCompleteActivity, onSetReviewMode }: {
+function DailyTraining({ overview, onStartTraining, onSetReviewMode }: {
   overview: HomeOverview;
-  onNavigate(route: string): void;
-  onStartReview(topicIds?: readonly string[]): void;
   onStartTraining(): void;
-  onCompleteActivity(activity: TrainingActivity): void;
   onSetReviewMode?: (topicId: string, mode: StudyReviewMode | null) => void;
 }) {
   const plan = overview.trainingPlan;
+  const activities = overview.trainingSession?.activities ?? plan.activities;
   return <section className="home-training" aria-labelledby="home-training-title">
     <div className="home-domain-heading"><h2 className="section-title" id="home-training-title">Entrenamiento de hoy</h2>
       {!plan.restDay && <span className="sm">{plan.minutes} min orientativos</span>}
     </div>
-    {plan.restDay ? <p>Hoy es día de descanso. No se acumula trabajo para mañana.</p>
-      : plan.activities.length ? <>
-        <div className="training-session-controls"><TrainingSessionControls overview={overview} onStartTraining={onStartTraining} onCompleteActivity={onCompleteActivity} /></div>
-        <TrainingActivityRows overview={overview} onNavigate={onNavigate} onStartReview={onStartReview} onSetReviewMode={onSetReviewMode} />
+    {plan.restDay && !overview.trainingSession ? <p>Hoy es día de descanso. No se acumula trabajo para mañana.</p>
+      : activities.length ? <>
+        <div className="training-session-controls"><TrainingSessionControls overview={overview} onStartTraining={onStartTraining} /></div>
+        <TrainingActivityRows overview={overview} activities={activities} onSetReviewMode={onSetReviewMode} />
       </> : overview.studiedTopics === 0
         ? <p>Aún no has marcado temas vistos. <Link to="/temario">Marca los temas que ya has estudiado</Link> para que el entrenamiento use solo esos materiales.</p>
         : <p>No hay contenido pendiente para las modalidades elegidas hoy. El tiempo no se acumula; puedes cambiarlas en Ajustes.</p>}
-    <p className="sm">El tiempo es orientativo. Al volver, puedes continuar o confirmar que has terminado el bloque. El avance se conserva en este dispositivo cuando el navegador permite almacenamiento; no se sincroniza entre dispositivos.</p>
   </section>;
+}
+
+function QuickSessionButton({ overview, access, pending, onQuickSession }: { overview: HomeOverview; access: AccessOverview; pending: ReadonlySet<string>; onQuickSession(): void }) {
+  return <button className="cta home-quick-session" id="quick" disabled={pending.has('quick')} onClick={onQuickSession}>{pending.has('quick') ? 'Cargando…' : <><span><b className="ctt">Sesión rápida</b><small>{!access.full ? '5 min · una pregunta de cada tema, distintas cada vez' : `5 min · ${overview.quickCount} preguntas: ${overview.due ? 'tus repasos pendientes (' + overview.due + ') y ' : ''}nuevas de tus temas más débiles`}</small></span><i className="play" aria-hidden="true"><Icon name="play" /></i></>}</button>;
 }
 
 function GuestAccess({ access, pending, onLogin, onRequestAccess }: {
@@ -205,19 +212,20 @@ export interface HomeViewProps {
   onQuickSession(): void;
   onStartReview(topicIds?: readonly string[]): void;
   onStartTraining(): void;
-  onCompleteTrainingActivity(activity: TrainingActivity): void;
   onSetTrainingReviewMode?: (topicId: string, mode: StudyReviewMode | null) => void;
   onOpenMenu(): void;
   onLogin(): void;
   onRequestAccess(): void;
 }
 
-export function HomeView({ overview, access, run, pending, onNavigate, onQuickSession, onStartReview, onStartTraining, onCompleteTrainingActivity, onSetTrainingReviewMode, onOpenMenu, onLogin, onRequestAccess }: HomeViewProps) {
+export function HomeView({ overview, access, run, pending, onNavigate, onQuickSession, onStartReview, onStartTraining, onSetTrainingReviewMode, onOpenMenu, onLogin, onRequestAccess }: HomeViewProps) {
   return <>
     <HomeHeader access={access} overview={overview} onOpenMenu={onOpenMenu} />
     <p className="home-intro">Tu estudio, con perspectiva. Un paso más en tu preparación.</p>
-    {access.full && <DailyTraining overview={overview} onNavigate={onNavigate} onStartReview={onStartReview} onStartTraining={onStartTraining} onCompleteActivity={onCompleteTrainingActivity} onSetReviewMode={onSetTrainingReviewMode} />}
-    <div className="home-workspace"><PrimaryStudy overview={overview} access={access} run={run} pending={pending} navigate={onNavigate} onQuickSession={onQuickSession} />
+    <QuickSessionButton overview={overview} access={access} pending={pending} onQuickSession={onQuickSession} />
+    {access.full && <DailyTraining overview={overview} onStartTraining={onStartTraining} onSetReviewMode={onSetTrainingReviewMode} />}
+    <div className={`home-workspace${run ? ' has-active-session' : ''}`}>
+      {run && <PrimaryStudy run={run} navigate={onNavigate} />}
       {access.full ? <FullAccessReview overview={overview} pending={pending} navigate={onNavigate} onStartReview={onStartReview} /> : <GuestAccess access={access} pending={pending} onLogin={onLogin} onRequestAccess={onRequestAccess} />}
     </div>
     <HomeMetrics overview={overview} full={access.full} />

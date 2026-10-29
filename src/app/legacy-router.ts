@@ -104,7 +104,7 @@ const studyRunController = createStudyRunController({
   ask,
   resume: pending => resumeRun(pending) !== null,
   clearPendingRun: clearRun,
-  navigateToQuiz: () => go(hashPath('quiz')),
+  navigateToQuiz: dailyTrainingActivity => go(hashPath('quiz') + (dailyTrainingActivity ? `?dailyTraining=${dailyTrainingActivity}` : '')),
   showEmptyRunMessage: () => toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.'),
   resumePrompt: pending => formatPendingRunPrompt({ title: pending.saved.titulo, index: pending.saved.idx, itemCount: pending.items.length, seconds: pending.saved.secs, limitMinutes: pending.saved.limit, timeLimited: pending.saved.pt }),
 });
@@ -216,7 +216,7 @@ const settingsServices = {
   setTrainingPreferences(value: TrainingPreferences) { store.setCfg('training', normalizeTrainingPreferences(value)); },
   setExam(value: string) { if (/^\d{4}-\d\d-\d\d$/.test(value)) store.setCfg('exam', value); },
   setDevMode(value: string | null) { setDevMode(value); notifyAccessChange(); notifySettings(); },
-  revealDev() { revealDev(); notifySettings(); },
+  revealDev() { const revealed = revealDev(); if (revealed) notifySettings(); return revealed; },
   async requestAccess() { return await sync.requestAccess(); },
   async login() { return await sync.login(); },
   async logout() { return await sync.logout(); },
@@ -280,7 +280,10 @@ const settingsServicesWithSubscription = {
   },
 };
 const statsServices = createStatsServices({ go, startRun, startRepaso, trapTest }, localProgressRepository, localStudyProgressGateway);
-const quizServices = createQuizServices(go, hashPath('home'), hashPath('result'), localQuizProgressGateway);
+const quizServices = createQuizServices(go, hashPath('home'), () => {
+  const activity = new URLSearchParams(location.hash.split('?')[1] || '').get('dailyTraining');
+  return hashPath('result') + (activity && ['activeRecall', 'topicTest', 'failures', 'spacedReviews'].includes(activity) ? `?dailyTraining=${activity}` : '');
+}, localQuizProgressGateway);
 
 
 
@@ -298,7 +301,7 @@ const failuresServices = createFailuresComposition({
   shuffle,
   createPractice: (items, title) => !!createRun({ kind: 'test', feedback: true, items, titulo: title }),
   notify: toast,
-  navigateToQuiz: () => go(hashPath('quiz')),
+  navigateToQuiz: dailyTrainingActivity => go(hashPath('quiz') + (dailyTrainingActivity ? `?dailyTraining=${dailyTrainingActivity}` : '')),
 });
 const lightningServices = createLightningComposition({
   loadQuestionMetadata: getMeta,
@@ -490,7 +493,7 @@ export const studyServices: StudyServices = {
         o: [...configuration.origins], pt: configuration.timed ? 1 : 0, min: configuration.minutes });
     },
     seenTopics: store.getSeen,
-    async start(configuration) {
+    async start(configuration, options) {
       const account = localStudyProgressGateway.accountId();
       const selected = [...configuration.selected];
       const topics = configuration.all ? (await getIndex()).temas.map(topic => topic.id) : selected;
@@ -498,12 +501,12 @@ export const studyServices: StudyServices = {
         const result = await trapTest(configuration.timed ? 300 : configuration.count, undefined, selected.length ? selected : undefined);
         if (account !== localStudyProgressGateway.accountId()) return 'account-changed';
         if (!result.items.length) return 'empty';
-        return startRun({ kind: 'test', feedback: true, items: result.items, titulo: 'Mis trampas · ' + result.targets.map(key => TRAMPAS[key] || key).join(', '), ...(configuration.timed ? { limit: configuration.minutes, porTiempo: true } : {}) }) ? 'started' : 'empty';
+        return startRun({ kind: 'test', feedback: true, items: result.items, titulo: 'Mis trampas · ' + result.targets.map(key => TRAMPAS[key] || key).join(', '), ...(configuration.timed ? { limit: configuration.minutes, porTiempo: true } : {}) }, options?.dailyTrainingActivity) ? 'started' : 'empty';
       }
       const items = await selectQuestionsForTopics({ topics, origins: new Set(configuration.origins), mode: configuration.mode, count: configuration.timed ? 300 : configuration.count });
       if (account !== localStudyProgressGateway.accountId()) return 'account-changed';
       if (!items.length) return 'empty';
-      return startRun({ kind: 'test', feedback: true, items, titulo: selected.length === 1 ? studyQuestionCatalog.getTopicName(selected[0]) + (configuration.timed ? ` · ${configuration.minutes} min` : '') : 'Test' + (configuration.timed ? ` · ${configuration.minutes} min` : ''), ...(configuration.timed ? { limit: configuration.minutes, porTiempo: true } : {}) }) ? 'started' : 'empty';
+      return startRun({ kind: 'test', feedback: true, items, titulo: selected.length === 1 ? studyQuestionCatalog.getTopicName(selected[0]) + (configuration.timed ? ` · ${configuration.minutes} min` : '') : 'Test' + (configuration.timed ? ` · ${configuration.minutes} min` : ''), ...(configuration.timed ? { limit: configuration.minutes, porTiempo: true } : {}) }, options?.dailyTrainingActivity) ? 'started' : 'empty';
     },
   },
   cards: cardsServices,
@@ -598,6 +601,7 @@ export const studyServices: StudyServices = {
         trainingDue: { questions: studiedDueCount, cards: studiedCardDueCount },
         quickCount: progress.quickCount, slowCount: progress.slowCount, failures: failureCount,
         studiedTopics: store.getSeen().length, topicCount: index.temas.length,
+        studiedTopicDetails: index.temas.filter(topic => studiedTopicSet.has(topic.id)).map(topic => ({ id: topic.id, name: topic.nombre })),
         assessedTopics: studiedMastery.filter(topic => topic.est !== 'n').length,
         weakTopics: studiedWeakTopics.length,
         masteredTopics: studiedMastery.filter(topic => topic.est === 'g').length, trainingPlan, trainingSession: trainingSession.getSession(),
@@ -613,7 +617,7 @@ export const studyServices: StudyServices = {
       else delete reviewModesByTopic[topicId];
       store.setCfg('training', { ...preferences, reviewModesByTopic });
     },
-    quickSession, startReview: startRepaso, openMenu,
+    quickSession, startReview: (topicIds, dailyTrainingActivity) => startRepaso(topicIds, dailyTrainingActivity), openMenu,
     login: sync.login, requestAccess: async () => await sync.requestAccess(), notify: toast,
   },
   topics: {

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 import { questionNotice, sourceHtml } from '../../shared/presentation/study-content.js';
@@ -29,6 +29,7 @@ export function FailuresPage() {
   const failures = useStudyService('failures');
   const [searchParams] = useSearchParams();
   const trainingTopicsValue = searchParams.get('trainingTopics');
+  const dailyTraining = searchParams.get('dailyTraining') === 'failures';
   const requestedTrainingTopicIds = useMemo(() => trainingTopicsValue === null ? undefined
     : new Set(trainingTopicsValue.split(',').filter(topicId => /^T[1-4]\.\d{2}$/.test(topicId))), [trainingTopicsValue]);
   const seenTopicIds = useMemo(() => new Set(failures.seenTopics()), [failures]);
@@ -41,6 +42,7 @@ export function FailuresPage() {
   const [loadError, setLoadError] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [reload, setReload] = useState(0);
+  const autoStarted = useRef(false);
   useEffect(() => {
     let active = true;
     void Promise.all([failures.loadQuestions(), failures.loadTopics()]).then(([loaded, availableTopics]) => {
@@ -51,6 +53,12 @@ export function FailuresPage() {
   const scopedQuestions = useMemo(() => trainingTopicIds ? questions.filter(question => trainingTopicIds.has(question.topicId)) : questions, [questions, trainingTopicIds]);
   const selected = useMemo(() => selectFailures(scopedQuestions, filter), [scopedQuestions, filter]);
   const byTopic = useMemo(() => new Map(scopedQuestions.reduce((entries, question) => entries.set(question.topicId, (entries.get(question.topicId) || 0) + 1), new Map<string, number>())), [scopedQuestions]);
+
+  useEffect(() => {
+    if (!dailyTraining || !loaded || loadError || autoStarted.current || !selected.length) return;
+    autoStarted.current = true;
+    failures.startPractice(selected.map(question => question.id), 'Entrenamiento de hoy · Revisión de fallos', { dailyTrainingActivity: 'failures' });
+  }, [dailyTraining, failures, loaded, loadError, selected]);
 
   if (!loaded) return <PageLoading variant="legacy" />;
   if (loadError) return <><h1>Falladas <HelpIconLink topic="repaso" label="Ayuda sobre preguntas falladas y repaso" /></h1><div className="card" role="alert"><p>No se pudieron cargar las preguntas. Comprueba la conexión e inténtalo de nuevo.</p><button className="btn" onClick={() => { setLoaded(false); setLoadError(false); setReload(value => value + 1); }}>Reintentar</button></div></>;

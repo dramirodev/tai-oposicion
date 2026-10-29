@@ -26,5 +26,7 @@ describe('help content', () => {
     expect(introduction.body.join(' ')).toMatch(/no puede deducir que debas releer todo el tema/i);
     expect(introduction.body.join(' ')).toMatch(/no tiene cronómetro/i);
     expect(introduction.body.join(' ')).toMatch(/días de descanso no acumulan actividades/i);
+    expect(introduction.body.join(' ')).toMatch(/la actividad queda marcada al completar la sesión/i);
+    expect(introduction.body.join(' ')).toMatch(/no se sincroniza entre dispositivos/i);
   });
 });

@@ -110,17 +110,18 @@ function UpdateSection({ settings, snapshot }: { settings: SettingsServices; sna
   const revealDeveloper = () => {
     taps.current++;
     if (taps.current < 7) return;
-    settings.revealDev(); taps.current = 0; toast('Modo desarrollador activado');
+    if (!settings.revealDev()) return;
+    taps.current = 0; toast('Modo desarrollador activado');
   };
   return <section className="card"><h2 className="h3">Descargas y actualizaciones</h2>
-    <button className="ghost sm" type="button" aria-label="Versión de la aplicación. Pulsa siete veces para activar el modo desarrollador." onClick={revealDeveloper}>Versión <b>{snapshot.version}</b> <small>({snapshot.build})</small></button>
+    <button className="ghost sm" type="button" aria-label="Versión de la aplicación" onClick={revealDeveloper}>Versión <b>{snapshot.version}</b> <small>({snapshot.build})</small></button>
     <p className="sm">{snapshot.update ? `Hay una versión nueva: ${snapshot.update}.` : 'Comprueba si hay una versión nueva; si la hay, la app se recarga para usarla.'}</p>
     <button className={`btn ${snapshot.update ? '' : 'sec'}`} disabled={checking} onClick={() => void update()}>{checking ? 'Buscando…' : snapshot.update ? 'Actualizar ahora' : 'Buscar actualización'}</button>
   </section>;
 }
 
 function DeveloperSection({ settings, snapshot }: { settings: SettingsServices; snapshot: SettingsSnapshot }) {
-  return <section className="card"><h2 className="h3">Modo desarrollador</h2><p className="sm">Acceso en este dispositivo</p><div className="seg" role="group" aria-label="Modo desarrollador"><DevButton value={null} current={snapshot.devMode} label="Automático" onChange={settings.setDevMode} /><DevButton value="1" current={snapshot.devMode} label="Completo" onChange={settings.setDevMode} /><DevButton value="0" current={snapshot.devMode} label="Como invitado" onChange={settings.setDevMode} /></div><p><small>Automático: completo en localhost, para el propietario y los aprobados. «Como invitado» sirve para ver lo que ve alguien sin acceso.</small></p></section>;
+  return <section className="card"><h2 className="h3">Modo desarrollador</h2><p className="sm">Vista de desarrollo local</p><div className="seg" role="group" aria-label="Modo desarrollador"><DevButton value={null} current={snapshot.devMode} label="Automático" onChange={settings.setDevMode} /><DevButton value="1" current={snapshot.devMode} label="Completo" onChange={settings.setDevMode} /><DevButton value="0" current={snapshot.devMode} label="Como invitado" onChange={settings.setDevMode} /></div><p><small>El modo completo está disponible en desarrollo local. En producción, el acceso depende de la cuenta autorizada.</small></p></section>;
 }
 
 function ExamSection({ settings, snapshot }: { settings: SettingsServices; snapshot: SettingsSnapshot }) {

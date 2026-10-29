@@ -1,5 +1,6 @@
 import type { QuestionRecord } from '../../../core/domain/question-record.js';
 import type { RunCfg } from '../../../core/application/session-model.js';
+import type { TrainingActivity } from '../../../core/domain/entities.js';
 
 interface StudySelection {
   items: QuestionRecord[];
@@ -11,7 +12,7 @@ interface StudySessionLaunchDependencies {
   fullAccess(): boolean;
   quickSelection(fullAccess: boolean): Promise<StudySelection>;
   reviewSelection(topicIds?: readonly string[]): Promise<StudySelection>;
-  startRun(configuration: RunCfg): boolean;
+  startRun(configuration: RunCfg, dailyTrainingActivity?: TrainingActivity): boolean;
   showEmptyQuickSelection(fullAccess: boolean): void;
   showEmptyReviewSelection(): void;
 }
@@ -30,7 +31,7 @@ export function createStudySessionLaunchController(dependencies: StudySessionLau
     dependencies.startRun({ kind: 'rev', feedback: true, items: selection.items, titulo: selection.titulo });
   }
 
-  async function startDueReview(topicIds?: readonly string[]): Promise<void> {
+  async function startDueReview(topicIds?: readonly string[], dailyTrainingActivity?: TrainingActivity): Promise<void> {
     const account = dependencies.currentAccount();
     const selection = await dependencies.reviewSelection(topicIds);
     if (account !== dependencies.currentAccount()) return;
@@ -38,7 +39,9 @@ export function createStudySessionLaunchController(dependencies: StudySessionLau
       dependencies.showEmptyReviewSelection();
       return;
     }
-    dependencies.startRun({ kind: 'rev', feedback: true, ...selection });
+    const configuration = { kind: 'rev' as const, feedback: true, ...selection };
+    if (dailyTrainingActivity) dependencies.startRun(configuration, dailyTrainingActivity);
+    else dependencies.startRun(configuration);
   }
 
   return { startQuickSession, startDueReview };

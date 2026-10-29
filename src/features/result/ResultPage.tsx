@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Check, TriangleAlert } from 'lucide-react';
-import { Link } from 'react-router';
+import { Link, useNavigate, useSearchParams } from 'react-router';
 import { ERROR_REPORT_REASONS } from '../../shared/presentation/study-labels.js';
 import { hiliteHtml, richHtml } from '../../shared/presentation/study-text.js';
 import { resolveHighlight } from '../../core/domain/attempts/highlights.js';
@@ -89,9 +89,21 @@ function ReviewItem({ item, index, report, interrupted }: { item: ResultItem; in
 
 export function ResultPage() {
   const result = useStudyService('result');
+  const home = useStudyService('home');
   const snapshot = useResultSnapshot();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const advancedDailyActivity = useRef(false);
+  const dailyTrainingActivity = searchParams.get('dailyTraining');
   const [strategy, setStrategy] = useState('');
   const [strategyLoading, setStrategyLoading] = useState(false);
+  useEffect(() => {
+    const activity = dailyTrainingActivity;
+    if (advancedDailyActivity.current || !snapshot || snapshot.interrupted
+      || !['topicTest', 'failures', 'spacedReviews'].includes(activity || '')) return;
+    advancedDailyActivity.current = true;
+    home.completeTrainingActivity(activity as 'topicTest' | 'failures' | 'spacedReviews');
+  }, [dailyTrainingActivity, home, snapshot]);
   if (!snapshot) return <><h1>Resultado</h1><p className="note">No hay un resultado disponible. <Link to="/home">Volver al inicio</Link></p></>;
   return <>
     <h1>Resultado</h1>
@@ -102,7 +114,7 @@ export function ResultPage() {
       {snapshot.consulted > 0 && <div className="legend" id="consulted-count">{snapshot.consulted} {snapshot.consulted === 1 ? 'solución consultada' : 'soluciones consultadas'} · contadas como blanco, sin acierto ni fallo</div>}
       <div className="legend">{snapshot.accuracy === null ? 'Sin respuestas evaluables' : `${snapshot.accuracy} % de acierto sobre lo contestado`} · {Math.floor(snapshot.seconds / 60)}:{String(snapshot.seconds % 60).padStart(2, '0')}</div>
     </div>
-    <div className="row">{snapshot.secondPartAvailable && <button className="btn" onClick={() => result.continuePartTwo()}>Seguir con la parte 2 (supuesto)</button>}{snapshot.wrong > 0 && <button className="btn" onClick={() => result.repeatFailures()}>Repetir las falladas</button>}<button className="btn sec" onClick={() => result.goHome()}>Inicio</button></div>
+    <div className="row">{snapshot.secondPartAvailable && <button className="btn" onClick={() => result.continuePartTwo()}>Seguir con la parte 2 (supuesto)</button>}{snapshot.wrong > 0 && <button className="btn" onClick={() => result.repeatFailures()}>Repetir las falladas</button>}<button className="btn sec" onClick={() => dailyTrainingActivity ? void navigate('/home') : result.goHome()}>{dailyTrainingActivity ? 'Continuar con el entrenamiento' : 'Inicio'}</button></div>
     {snapshot.analysis && <StudyMarkup html={snapshot.analysis} />}
     {snapshot.kind === 'sim' && !snapshot.interrupted && <section className="strategy-result"><h2>Analítica de estrategia</h2><p className="sub">Análisis del historial completado; las sesiones incompletas se excluyen y la muestra pequeña no genera recomendación.</p><button className="btn sec" disabled={strategyLoading} onClick={() => { setStrategyLoading(true); void result.loadStrategy().then(setStrategy).catch(() => setStrategy('No se pudo leer el historial detallado. El resultado de esta sesión sigue disponible.')).finally(() => setStrategyLoading(false)); }}>{strategyLoading ? 'Calculando…' : 'Calcular informe del último año'}</button>{strategy && <div aria-live="polite"><StudyMarkup html={strategy} /></div>}</section>}
     <h2>Por tema</h2><div className="card">{snapshot.topics.map(topic => <div className="line" key={topic.id}><span>{topic.id} {topic.name}</span><span>{topic.correct}/{topic.total}</span></div>)}</div>

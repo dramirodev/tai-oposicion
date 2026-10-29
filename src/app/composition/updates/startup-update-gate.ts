@@ -76,6 +76,10 @@ async function installAvailableUpdate(): Promise<void> {
 
 /** Holds the app behind the initial loading screen until the user handles a known update. */
 export async function runStartupUpdateGate(currentBuild: string): Promise<void> {
+  // Local/test builds have no immutable build identifier to compare with the
+  // deployed manifest. Checking it can hold the entire app behind an update
+  // prompt that is unrelated to the code currently running.
+  if (!currentBuild || currentBuild === 'dev') return;
   const update = await fetchAvailableVersion(currentBuild);
   if (!update) return;
 

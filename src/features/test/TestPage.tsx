@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Link, useSearchParams } from 'react-router';
 import { useStudyService, type TestConfiguration, type TestTopic } from '../../shared/ui/study-services.js';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 import { topicsForTest, toggleTestTopics, updateTestConfiguration } from './test-controller.js';
@@ -16,6 +16,7 @@ export function TestPage() {
   const newTopicRecommendation = searchParams.get('recommendation') === 'new-topic';
   const suggestedTopicId = searchParams.get('topic');
   const trainingTopicsValue = searchParams.get('trainingTopics');
+  const dailyTraining = searchParams.get('dailyTraining') === 'topicTest';
   const trainingTopicIds = useMemo(() => trainingTopicsValue === null ? undefined
     : [...new Set(trainingTopicsValue.split(',').filter(topicId => /^T[1-4]\.\d{2}$/.test(topicId)
       && test.seenTopics().includes(topicId)))], [trainingTopicsValue, test]);
@@ -27,6 +28,7 @@ export function TestPage() {
   const [starting, setStarting] = useState(false);
   const [message, setMessage] = useState('');
   const [recommendationMessage, setRecommendationMessage] = useState('');
+  const autoStarted = useRef(false);
 
   useEffect(() => {
     let active = true;
@@ -42,15 +44,17 @@ export function TestPage() {
             : 'El tema recomendado ya no tiene respuestas registradas. Elige un tema manualmente para continuar.');
           return;
         }
-        const next = updateTestConfiguration(test.getConfiguration(), { all: false, selected: [suggestedTopic.id], mode: 'aleatorio' });
-        test.saveConfiguration(next); setConfiguration(next);
-        setRecommendationMessage(`Tema para reforzar: ${suggestedTopic.id} · ${suggestedTopic.name}. Puedes cambiar la selección antes de empezar.`);
+        const next = updateTestConfiguration(test.getConfiguration(), { all: false, selected: [suggestedTopic.id], mode: 'aleatorio', ...(dailyTraining ? { origins: ['O', 'A', 'G'] } : {}) });
+        if (!dailyTraining) test.saveConfiguration(next);
+        setConfiguration(next);
+        setRecommendationMessage(dailyTraining ? '' : `Tema para reforzar: ${suggestedTopic.id} · ${suggestedTopic.name}. Puedes cambiar la selección antes de empezar.`);
         return;
       }
       if (trainingTopicIds) {
-        const next = updateTestConfiguration(test.getConfiguration(), { all: false, selected: trainingTopicIds });
-        test.saveConfiguration(next); setConfiguration(next);
-        setRecommendationMessage('Entrenamiento de hoy: solo se mostrarán materiales de los temas que has marcado como vistos.');
+        const next = updateTestConfiguration(test.getConfiguration(), { all: false, selected: trainingTopicIds, ...(dailyTraining ? { mode: 'aleatorio', origins: ['O', 'A', 'G'] } : {}) });
+        if (!dailyTraining) test.saveConfiguration(next);
+        setConfiguration(next);
+        setRecommendationMessage(dailyTraining ? '' : 'Entrenamiento de hoy: solo se mostrarán materiales de los temas que has marcado como vistos.');
         return;
       }
       if (!newTopicRecommendation) return;
@@ -65,7 +69,7 @@ export function TestPage() {
       setRecommendationMessage(`Tema nuevo recomendado: ${nextTopic.id} · ${nextTopic.name}. Puedes cambiar la selección antes de empezar.`);
     }).catch(() => { if (active) { setMessage('No se pudieron cargar los temas. Comprueba la conexión e inténtalo de nuevo.'); setLoading(false); } });
     return () => { active = false; };
-  }, [test, newTopicRecommendation, suggestedTopicId, trainingTopicIds, trainingTopicSet]);
+  }, [test, dailyTraining, newTopicRecommendation, suggestedTopicId, trainingTopicIds, trainingTopicSet]);
 
   const visibleTopics = useMemo(() => topicsForTest(topics, query), [topics, query]);
   const update = (change: Partial<TestConfiguration>) => {
@@ -76,7 +80,7 @@ export function TestPage() {
     const next = toggleTestTopics(configuration, ids);
     test.saveConfiguration(next); setConfiguration(next);
   };
-  const start = async () => {
+  const start = useCallback(async (dailyTrainingActivity?: 'topicTest') => {
     setStarting(true); setMessage('');
     try {
       const currentSeenTopics = new Set(test.seenTopics());
@@ -92,12 +96,23 @@ export function TestPage() {
         setMessage('Elige un tema que siga marcado como visto para empezar este entrenamiento.');
         return;
       }
-      const result = await test.start(startConfiguration);
+      const result = dailyTrainingActivity
+        ? await test.start(startConfiguration, { dailyTrainingActivity })
+        : await test.start(startConfiguration);
       if (result === 'empty') setMessage(configuration.mode === 'falladas' ? 'No tienes preguntas falladas en esa selección.' : configuration.mode === 'dudosas' ? 'No tienes preguntas dudosas en esa selección.' : configuration.mode === 'trampas' ? 'Aún no hay datos de trampas: contesta al menos 5 preguntas de alguna trampa y falla alguna.' : 'No hay preguntas disponibles con ese filtro.');
       if (result === 'account-changed') setMessage('La cuenta cambió mientras se preparaba el test. Vuelve a intentarlo.');
     } catch { setMessage('No se pudo preparar el test. Comprueba la conexión e inténtalo de nuevo.'); }
     finally { setStarting(false); }
-  };
+  }, [configuration, test, trainingTopicSet, trainingTopicIds, trainingTopicsValue]);
+
+  useEffect(() => {
+    if (!dailyTraining || loading || autoStarted.current) return;
+    autoStarted.current = true;
+    void start('topicTest');
+  }, [dailyTraining, loading, start]);
+
+  if (dailyTraining && (loading || starting || !message)) return <PageLoading variant="legacy" />;
+  if (dailyTraining && message) return <><h1>Entrenamiento de hoy</h1><div className="note" role="alert">{message}</div><Link className="btn sec" to="/home">Volver al entrenamiento</Link></>;
 
   const selected = new Set(configuration.selected);
   return <>

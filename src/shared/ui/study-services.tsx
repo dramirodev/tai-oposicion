@@ -12,6 +12,7 @@ export interface HomeOverview {
   seen: number; total: number; answers: number; streak: number; daysToExam: number | null;
   due: number; cardsDue: number; quickCount: number; slowCount: number; failures: number;
   trainingDue: { questions: number; cards: number };
+  studiedTopicDetails?: readonly { id: string; name: string }[];
   studiedTopics: number; topicCount: number; assessedTopics: number; weakTopics: number; masteredTopics: number;
   trainingPlan: DailyTrainingPlan; trainingSession: DailyTrainingSession | null;
 }
@@ -28,7 +29,7 @@ export interface HomeServices {
   getActiveStudy(): ActiveStudy | null;
   subscribe(listener: () => void): () => void;
   quickSession(): Promise<void>;
-  startReview(topicIds?: readonly string[]): Promise<void>;
+  startReview(topicIds?: readonly string[], dailyTrainingActivity?: TrainingActivity): Promise<void>;
   startTrainingSession(plan: DailyTrainingPlan): DailyTrainingSession | null;
   startTrainingActivity(): DailyTrainingSession | null;
   completeTrainingActivity(activity: TrainingActivity): DailyTrainingSession | null;
@@ -111,7 +112,7 @@ export interface FailureServices {
   seenTopics(): readonly string[];
   setReviewed(id: string, topicId: string, reviewed: boolean): void;
   topicName(id: string): string;
-  startPractice(ids: readonly string[], title: string): void;
+  startPractice(ids: readonly string[], title: string, options?: { dailyTrainingActivity?: TrainingActivity }): void;
 }
 export type LightningReasonKind = 'lucky' | 'due' | 'failed' | 'new';
 export interface LightningQuestion extends FailureQuestion { reason: string; reasonKind: LightningReasonKind }
@@ -147,7 +148,7 @@ export interface TestServices {
   getConfiguration(): TestConfiguration;
   saveConfiguration(configuration: TestConfiguration): void;
   seenTopics(): readonly string[];
-  start(configuration: TestConfiguration): Promise<'started' | 'empty' | 'account-changed'>;
+  start(configuration: TestConfiguration, options?: { dailyTrainingActivity?: TrainingActivity }): Promise<'started' | 'empty' | 'account-changed'>;
 }
 export interface ScenarioChoice { id: string; text: string }
 export interface SimulationReviewServices { loadChoices(): Promise<readonly ScenarioChoice[]>; start(id: string): 'started' | 'unavailable'; }
@@ -205,7 +206,7 @@ export interface SettingsServices {
   setTrainingPreferences(value: TrainingPreferences): void;
   setExam(value: string): void;
   setDevMode(value: string | null): void;
-  revealDev(): void;
+  revealDev(): boolean;
   requestAccess(): Promise<boolean>; login(): Promise<unknown>; logout(): Promise<unknown>; retrySync(): Promise<unknown>;
   checkUpdate(): Promise<string | null | undefined>; applyUpdate(): Promise<void>;
   downloadOffline(progress: (done: number, total: number) => void, isCurrent: () => boolean): Promise<NonNullable<SettingsSnapshot['offline']>>;

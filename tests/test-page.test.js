@@ -61,6 +61,15 @@ it('vuelve a comprobar los temas vistos justo antes de iniciar un entrenamiento'
   expect(test.start.mock.calls[0][0].selected).not.toContain('T2.01');
 });
 
+it('inicia automáticamente el test preparado desde Entrenamiento de hoy', async () => {
+  await render(['/test?dailyTraining=topicTest&topic=T1.01&trainingTopics=T1.01']);
+  await vi.waitFor(() => expect(test.start).toHaveBeenCalledWith(
+    expect.objectContaining({ all:false, selected:['T1.01'], mode:'aleatorio' }),
+    { dailyTrainingActivity:'topicTest' },
+  ));
+  expect(screen.queryByRole('heading', { name:'Configuración del test' })).not.toBeInTheDocument();
+});
+
 it('explica si no quedan temas nuevos y no cambia la configuración habitual', async () => {
   test.seenTopics.mockReturnValue(['T1.01', 'T2.01']);
   await render(['/test?recommendation=new-topic']);
