@@ -100,6 +100,23 @@ function useSettingsSnapshot() {
   return snapshot;
 }
 
+function PaperRecallPriorityNote({ step, assessment, now }: { step: TrainingSessionStep; assessment?: PaperRecallAssessment; now: number }) {
+  if (step.reason !== 'weak-topics' || !assessment || assessment.rating === 'remembered' || !needsPaperRecallFollowUp(assessment, now)) return null;
+  return <p className="planning-reason">Tu autoevaluación de recuerdo en papel fue «{recallRatingLabels[assessment.rating]}» el {historyDateFormatter.format(new Date(assessment.ratedAt))}. Es una señal personal; por eso hoy se propone comprobar este tema con preguntas.</p>;
+}
+
+function PaperRecallAssessmentControl({ topicId, assessment, onRecord }: {
+  topicId: string; assessment?: PaperRecallAssessment; onRecord(topicId: string, rating: PaperRecallRating): void;
+}) {
+  return <fieldset className="planning-recall-assessment">
+    <legend>Después de estudiar en papel y cerrar los apuntes, ¿cuánto recordaste?</legend>
+    <div>{([
+      ['remembered', 'Lo recordé'], ['partial', 'Parcialmente'], ['not-remembered', 'No lo recordé'],
+    ] as const).map(([rating, label]) => <button key={rating} className={`btn sec${assessment?.rating === rating ? ' is-selected' : ''}`} aria-pressed={assessment?.rating === rating} onClick={() => onRecord(topicId, rating)}>{label}</button>)}</div>
+    <small>{assessment ? `Autoevaluación guardada · ${historyDateFormatter.format(assessment.ratedAt)}` : 'Es una valoración personal; no se mezcla con tus notas de test.'}</small>
+  </fieldset>;
+}
+
 function PlanningActivity({ step, index, session, topicName, elapsedSeconds, running, now, recallAssessment, onRecallAssessment }: {
   step: TrainingSessionStep; index: number; session: DailyTrainingSession | null; topicName?: string;
   elapsedSeconds: number; running: boolean; now: number; recallAssessment?: PaperRecallAssessment;
@@ -117,16 +134,10 @@ function PlanningActivity({ step, index, session, topicName, elapsedSeconds, run
       <details><summary>Instrucciones y motivo</summary><p>{presentation.instruction}</p>
         {step.reviewMode && <p>Modalidad recomendada: {reviewModeLabels[step.reviewMode]}.</p>}
         <p className="planning-reason">{step.reviewMode ? 'La intervención se conserva desde la recomendación de hoy. ' : ''}{reasonText[step.reason]}</p>
-        {step.reason === 'weak-topics' && recallAssessment && needsPaperRecallFollowUp(recallAssessment, now) && recallAssessment.rating !== 'remembered' && <p className="planning-reason">Tu autoevaluación de recuerdo en papel fue «{recallRatingLabels[recallAssessment.rating]}» el {historyDateFormatter.format(new Date(recallAssessment.ratedAt))}. Es una señal personal; por eso hoy se propone comprobar este tema con preguntas.</p>}
+        <PaperRecallPriorityNote step={step} assessment={recallAssessment} now={now} />
       </details>
       {state.current && <div className="planning-activity-timer" role="status" aria-live="off"><Clock3 size="1rem" aria-hidden="true" /> Tiempo en esta actividad: {formatMinutes(elapsedSeconds)} {running ? '· contando' : '· en pausa'}</div>}
-      {state.completed && step.activity === 'newContent' && step.topicId && onRecallAssessment && <fieldset className="planning-recall-assessment">
-        <legend>Después de estudiar en papel y cerrar los apuntes, ¿cuánto recordaste?</legend>
-        <div>{([
-          ['remembered', 'Lo recordé'], ['partial', 'Parcialmente'], ['not-remembered', 'No lo recordé'],
-        ] as const).map(([rating, label]) => <button key={rating} className={`btn sec${recallAssessment?.rating === rating ? ' is-selected' : ''}`} aria-pressed={recallAssessment?.rating === rating} onClick={() => onRecallAssessment(step.topicId!, rating)}>{label}</button>)}</div>
-        <small>{recallAssessment ? `Autoevaluación guardada · ${historyDateFormatter.format(recallAssessment.ratedAt)}` : 'Es una valoración personal; no se mezcla con tus notas de test.'}</small>
-      </fieldset>}
+      {state.completed && step.activity === 'newContent' && step.topicId && onRecallAssessment && <PaperRecallAssessmentControl topicId={step.topicId} assessment={recallAssessment} onRecord={onRecallAssessment} />}
       <p className="planning-resource">Recurso de TAI: <Link to={activityResourcePath(step)}>{presentation.resource}</Link></p>
     </article>
   </li>;
