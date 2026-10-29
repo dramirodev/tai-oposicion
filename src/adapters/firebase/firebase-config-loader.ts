@@ -1,7 +1,16 @@
 import type { FirebaseOptions } from 'firebase/app';
 
+export interface FirebaseEmulatorEndpoints {
+  authHost: string;
+  authPort: number;
+  firestoreHost: string;
+  firestorePort: number;
+}
+
+export type AppFirebaseOptions = FirebaseOptions & { taiEmulators?: Partial<FirebaseEmulatorEndpoints> };
+
 export interface FirebaseConfigLoadResult {
-  config: FirebaseOptions;
+  config: AppFirebaseOptions;
   loaded: boolean;
 }
 
@@ -13,7 +22,7 @@ export async function loadFirebaseConfig(fetcher: typeof fetch = (...args) => fe
   const read = async (options?: RequestInit): Promise<FirebaseOptions> => {
     const response = await fetcher('firebase-config.json', options);
     if (!response.ok) throw new Error(`No se pudo cargar la configuración (${response.status}).`);
-    return await response.json() as FirebaseOptions;
+    return await response.json() as AppFirebaseOptions;
   };
 
   try {

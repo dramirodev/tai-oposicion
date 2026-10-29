@@ -10,6 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:firestore-rules": "npx --yes firebase-tools@13.35.1 emulators:exec --only firestore --project demo-tai-training-rules \"npx vitest run tests/firestore-rules.test.js\"",
+    "test:e2e:firebase-auth": "npx --yes firebase-tools@13.35.1 emulators:exec --only auth,firestore --project demo-tai-auth \"TAI_AUTH_EMULATOR=1 TAI_FIREBASE_EMULATORS=1 npm run test:e2e -- --grep 'Firebase Auth Emulator'\"",
     "lint:ignore-growth": "node scripts/lint-ignore-growth.mjs",
     "typecheck": "tsc -p .",
     "deploy": "npm run typecheck && npm test && npm run build && node scripts/validate_cards.mjs && npx --yes firebase-tools@13.35.1 deploy --only hosting,firestore:rules --project tai-oposicion",

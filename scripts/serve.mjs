@@ -6,6 +6,14 @@ import { extname, join, normalize, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const headers = Object.fromEntries(JSON.parse(await readFile(new URL('../firebase.json', import.meta.url), 'utf8')).hosting.headers.find(headerConfig => headerConfig.source === '**').headers.map(header => [header.key, header.value]));
+// The emulator-only test server may frame and call the local Auth/Firestore emulators.
+// Never add these loopback origins to Firebase Hosting's production CSP.
+if (process.env.TAI_FIREBASE_EMULATORS === '1') {
+  const policy = headers['Content-Security-Policy'];
+  headers['Content-Security-Policy'] = policy
+    .replace("connect-src 'self'", "connect-src 'self' http://127.0.0.1:9099 http://127.0.0.1:8080 https://apis.google.com")
+    .replace('frame-src ', 'frame-src http://127.0.0.1:9099 ');
+}
 const root = resolve(fileURLToPath(new URL('../dist', import.meta.url)));
 const port = Number(process.env.PORT) || 4173, host = process.env.HOST || '127.0.0.1';
 const TIPOS = {

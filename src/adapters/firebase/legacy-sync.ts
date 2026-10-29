@@ -1,12 +1,13 @@
 import { initializeApp } from 'firebase/app';
-import { initializeAuth, GoogleAuthProvider, signInWithRedirect, signInWithPopup, getRedirectResult, onAuthStateChanged, signOut, indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence, browserPopupRedirectResolver } from 'firebase/auth';
+import { initializeAuth, connectAuthEmulator, GoogleAuthProvider, signInWithRedirect, signInWithPopup, getRedirectResult, onAuthStateChanged, signOut, indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence, browserPopupRedirectResolver } from 'firebase/auth';
 import {
-  initializeFirestore, persistentLocalCache, persistentMultipleTabManager,
+  initializeFirestore, connectFirestoreEmulator, persistentLocalCache, persistentMultipleTabManager,
   doc, setDoc, deleteDoc, onSnapshot, collection, query, orderBy, limit
 } from 'firebase/firestore';
 import type { Auth, User } from 'firebase/auth';
 import type { Firestore, FirestoreError, QuerySnapshot, DocumentSnapshot, Unsubscribe } from 'firebase/firestore';
 import { loadFirebaseConfig } from './firebase-config-loader.js';
+import { localFirebaseEmulators } from './local-emulator-config.js';
 import { decodeFirebaseDocumentId, encodeFirebaseDocumentId } from './firebase-document-id-mapper.js';
 import { OWNER_EMAIL, rememberAccessForAccount } from './access-policy.js';
 import type { AttemptRepository } from '../../core/ports/AttemptRepository.js';
@@ -62,9 +63,12 @@ export async function init(
   status.state = 'comprobando sesión…'; emit();
   try {
   const app = initializeApp(firebaseConfig);
+  const emulators = localFirebaseEmulators(firebaseConfig, location.hostname);
   // Persistencia explícita (IndexedDB y, si no, localStorage): en iOS la sesión debe sobrevivir al cierre de la app.
   auth = initializeAuth(app, { persistence: [indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence], popupRedirectResolver: browserPopupRedirectResolver });
+  if (emulators) connectAuthEmulator(auth, `http://${emulators.authHost}:${emulators.authPort}`);
   db = initializeFirestore(app, { localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }), experimentalAutoDetectLongPolling: true }); // Safari/iOS: si el canal en streaming falla, usa long-polling
+  if (emulators) connectFirestoreEmulator(db, emulators.firestoreHost, emulators.firestorePort);
   configureStudyBankSource(db, canSync);
   const pend = (() => { try { return localStorage.getItem('tai.redir'); } catch { return null; } })();
   getRedirectResult(auth).then(result => {
