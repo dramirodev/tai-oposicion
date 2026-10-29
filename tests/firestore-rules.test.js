@@ -5,6 +5,8 @@ import { resolve } from 'node:path';
 import { assertFails, assertSucceeds, initializeTestEnvironment } from '@firebase/rules-unit-testing';
 import { disableNetwork, doc, enableNetwork, getDoc, setDoc } from 'firebase/firestore';
 import { createTrainingSessionSyncAdapter } from '../src/adapters/firebase/training-session-sync.ts';
+import { createPaperRecallSyncAdapter } from '../src/adapters/firebase/paper-recall-sync.ts';
+import { mergePaperRecallAssessments } from '../src/core/domain/paper-recall-assessment.ts';
 
 const projectId = 'demo-tai-training-rules';
 let testEnv;
@@ -52,6 +54,18 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
   it('permite a una cuenta aprobada guardar su checkpoint e historial acotado v2', async () => {
     const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
     await assertSucceeds(setDoc(doc(db, 'users/student/cfg/training'), documentFor(2, [historyEntry])));
+  });
+
+  it('aísla autoevaluaciones del temario en papel por usuario y limita el documento', async () => {
+    const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const other = testEnv.authenticatedContext('other', { email:'other@example.test', email_verified:true }).firestore();
+    const reference = doc(db, 'users/student/cfg/trainingRecall');
+    const assessment = { id:'2026-10-29:T1.01', topicId:'T1.01', dateKey:'2026-10-29', ratedAt:1_793_280_000_000, rating:'partial' };
+    await assertSucceeds(setDoc(reference, { schemaVersion:1, updatedAt:assessment.ratedAt, assessments:[assessment] }));
+    await assertFails(getDoc(doc(other, 'users/student/cfg/trainingRecall')));
+    await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:assessment.ratedAt, assessments:Array.from({ length:91 }, (_, index) => ({ ...assessment, id:`${assessment.id}:${index}` })) }));
+    await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:assessment.ratedAt, assessments:[], unexpected:true }));
+    await assertFails(setDoc(doc(testEnv.unauthenticatedContext().firestore(), 'users/student/cfg/trainingRecall'), { schemaVersion:1, updatedAt:assessment.ratedAt, assessments:[assessment] }));
   });
 
   it('rechaza historiales que exceden el límite y campos de nivel superior desconocidos', async () => {
@@ -136,6 +150,57 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
       firstActive = false;
       secondActive = false;
     } finally {
+      stopFirst(); stopSecond();
+      await enableNetwork(firstDb);
+      await enableNetwork(secondDb);
+    }
+  });
+
+  it('sincroniza autoevaluaciones entre clientes autenticados y al recuperar conexión', async () => {
+    const firstDb = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const secondDb = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const createStore = () => {
+      let assessments = [];
+      return {
+        get:() => assessments,
+        mergeRemote:value => {
+          const merged = mergePaperRecallAssessments(assessments, value);
+          const changed = JSON.stringify(merged) !== JSON.stringify(assessments);
+          assessments = merged;
+          return changed;
+        },
+        record:value => { assessments = mergePaperRecallAssessments(assessments, [value]); },
+      };
+    };
+    const waitFor = async predicate => {
+      const deadline = Date.now() + 8_000;
+      while (!predicate()) {
+        if (Date.now() >= deadline) throw new Error('La autoevaluación no llegó al otro cliente a tiempo.');
+        await new Promise(resolve => setTimeout(resolve, 20));
+      }
+    };
+    const first = createStore();
+    const second = createStore();
+    let active = true;
+    const firstAdapter = createPaperRecallSyncAdapter({ db:firstDb, uid:'student', store:first, isActive:() => active, onSynced:() => {}, onWriteError:error => { throw error; } });
+    const secondAdapter = createPaperRecallSyncAdapter({ db:secondDb, uid:'student', store:second, isActive:() => active, onSynced:() => {}, onWriteError:error => { throw error; } });
+    const stopFirst = firstAdapter.listen(error => { throw error; });
+    const stopSecond = secondAdapter.listen(error => { throw error; });
+    try {
+      const initial = { id:'2026-10-29:T1.01', topicId:'T1.01', dateKey:'2026-10-29', ratedAt:1_793_280_000_000, rating:'remembered' };
+      first.record(initial);
+      await firstAdapter.push();
+      await waitFor(() => second.get()[0]?.id === initial.id);
+
+      await disableNetwork(secondDb);
+      const correction = { ...initial, ratedAt:initial.ratedAt + 1, rating:'not-remembered' };
+      second.record(correction);
+      void secondAdapter.push();
+      await enableNetwork(secondDb);
+      await waitFor(() => first.get()[0]?.rating === 'not-remembered');
+      expect((await getDoc(doc(firstDb, 'users/student/cfg/trainingRecall'))).data()).toMatchObject({ schemaVersion:1, assessments:[correction] });
+    } finally {
+      active = false;
       stopFirst(); stopSecond();
       await enableNetwork(firstDb);
       await enableNetwork(secondDb);

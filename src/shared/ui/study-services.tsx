@@ -3,6 +3,7 @@ import type { StatsComparison, StatsSnapshot, StatsWeek, TopicProgress } from '.
 import type { StudyReviewMode, TrainingActivity, TrainingPreferences } from '../../core/domain/entities.js';
 import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
 import type { DailyTrainingSession, TrainingSessionHistoryEntry } from '../../core/domain/study-training-session.js';
+import type { PaperRecallAssessment, PaperRecallRating } from '../../core/domain/paper-recall-assessment.js';
 import type { ObservedStudyTime } from '../../core/domain/attempts/observed-study-time.js';
 export type { StatsComparison, StatsDomainTopic, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 export interface ActiveStudy { title: string; position: number; total: number }
@@ -17,6 +18,7 @@ export interface HomeOverview {
   studiedTopics: number; topicCount: number; assessedTopics: number; weakTopics: number; masteredTopics: number;
   trainingPlan: DailyTrainingPlan; trainingSession: DailyTrainingSession | null;
   trainingHistory?: readonly TrainingSessionHistoryEntry[];
+  paperRecallAssessments?: readonly PaperRecallAssessment[];
 }
 export interface AccessOverview {
   full: boolean; level: string; greeting: string; state: string; configured: boolean;
@@ -36,6 +38,7 @@ export interface HomeServices {
   startTrainingActivity(): DailyTrainingSession | null;
   pauseTrainingActivity(): DailyTrainingSession | null;
   completeTrainingActivity(activity: TrainingActivity): DailyTrainingSession | null;
+  recordPaperRecall?(topicId: string, rating: PaperRecallRating): PaperRecallAssessment | null;
   setTrainingReviewMode(topicId: string, mode: StudyReviewMode | null): void;
   openMenu(): void;
   login(): Promise<unknown>;

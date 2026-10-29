@@ -45,7 +45,7 @@ export function TopicsPage() {
   return <>
     {dailyNewContent && <section className="planned-topic-study" aria-labelledby="planned-topic-title">
       <h2 id="planned-topic-title">Estudio inicial · {topics.find(topic => topic.id === requestedTopic)?.name ?? requestedTopic}</h2>
-      <p>Consulta tu material de estudio y trabaja el tema. TAI no incluye los resúmenes ni esquemas de este temario; al marcarlo como visto, esta actividad quedará completada.</p>
+      <p>Estudia el tema en papel. Antes de consultar los apuntes, intenta recordar sus ideas principales. Al marcarlo como visto, volverás a Planificación para indicar cuánto recordaste; esta autoevaluación no es un resultado de examen.</p>
     </section>}
     <TopicsView topics={topics} visible={visible} selected={selected} query={query} open={open}
     onQueryChange={value => setQueryOverride({ routeTopic: requestedTopic, value })} onToggle={toggle} onToggleBlock={toggleBlock}

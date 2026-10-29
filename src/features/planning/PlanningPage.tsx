@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import { CalendarDays, Check, ChevronLeft, ChevronRight, CircleHelp, Clock3, Pause, Play } from 'lucide-react';
 import type { TrainingActivity } from '../../core/domain/entities.js';
 import type { DailyTrainingSession, TrainingSessionHistoryEntry, TrainingSessionStep } from '../../core/domain/study-training-session.js';
+import { needsPaperRecallFollowUp, type PaperRecallAssessment, type PaperRecallRating } from '../../core/domain/paper-recall-assessment.js';
 import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
 import { useStudyService, type HomeOverview, type HomeServices, type SettingsSnapshot } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
@@ -15,7 +16,7 @@ import { resolvePlannedActivityAction } from './planning-controller.js';
 const activityPresentation: Record<TrainingActivity, { title: string; objective: string; instruction: string; resource: string }> = {
   newContent: {
     title: 'Estudio de tema nuevo', objective: 'Avanzar en el temario sin perder el hilo.',
-    instruction: 'Estudia el material de este tema fuera de TAI. Después, marca el tema como visto para cerrar este paso.', resource: 'Temario',
+    instruction: 'Estudia el tema en papel. Antes de mirar los apuntes, intenta reconstruir lo que recuerdes; después marca el tema como visto y registra cómo te fue.', resource: 'Temario',
   },
   activeRecall: {
     title: 'Recuperación activa', objective: 'Recordar antes de volver a mirar la respuesta.',
@@ -43,7 +44,7 @@ const reasonText: Record<DailyTrainingPlan['activities'][number]['reason'], stri
   'active-recall': 'Practica recordar el contenido antes de consultar la respuesta.',
   'new-content-day': 'El enfoque de hoy reserva tiempo para el siguiente tema sin marcar como visto.',
   'new-topic-day': 'Hoy coincide con el día semanal configurado para introducir temas.',
-  'weak-topics': 'Prioridad basada en resultados de temas vistos; es una regla del producto, no una medida científica de dominio.',
+  'weak-topics': 'Prioridad basada en resultados de preguntas o autoevaluaciones de temas vistos; es una regla del producto, no una medida científica de dominio.',
   coverage: 'Amplía la práctica de los temas que has marcado como vistos.',
   'recurring-failures': 'Hay preguntas falladas de temas vistos que aún requieren repaso.',
   'due-reviews': 'Hay tarjetas o preguntas de temas vistos con repaso pendiente.',
@@ -63,6 +64,9 @@ const reviewModeLabels: Record<NonNullable<TrainingSessionStep['reviewMode']>, s
   'initial-study': 'estudio inicial',
   'selective-reading': 'revisión selectiva',
   'broad-reading': 'revisión amplia',
+};
+const recallRatingLabels: Record<PaperRecallRating, string> = {
+  remembered: 'Lo recordé', partial: 'Parcialmente', 'not-remembered': 'No lo recordé',
 };
 
 function activityState(session: DailyTrainingSession | null, index: number) {
@@ -96,9 +100,10 @@ function useSettingsSnapshot() {
   return snapshot;
 }
 
-function PlanningActivity({ step, index, session, topicName, elapsedSeconds, running }: {
+function PlanningActivity({ step, index, session, topicName, elapsedSeconds, running, now, recallAssessment, onRecallAssessment }: {
   step: TrainingSessionStep; index: number; session: DailyTrainingSession | null; topicName?: string;
-  elapsedSeconds: number; running: boolean;
+  elapsedSeconds: number; running: boolean; now: number; recallAssessment?: PaperRecallAssessment;
+  onRecallAssessment?(topicId: string, rating: PaperRecallRating): void;
 }) {
   const presentation = activityPresentation[step.activity];
   const state = activityState(session, index);
@@ -112,8 +117,16 @@ function PlanningActivity({ step, index, session, topicName, elapsedSeconds, run
       <details><summary>Instrucciones y motivo</summary><p>{presentation.instruction}</p>
         {step.reviewMode && <p>Modalidad recomendada: {reviewModeLabels[step.reviewMode]}.</p>}
         <p className="planning-reason">{step.reviewMode ? 'La intervención se conserva desde la recomendación de hoy. ' : ''}{reasonText[step.reason]}</p>
+        {step.reason === 'weak-topics' && recallAssessment && needsPaperRecallFollowUp(recallAssessment, now) && recallAssessment.rating !== 'remembered' && <p className="planning-reason">Tu autoevaluación de recuerdo en papel fue «{recallRatingLabels[recallAssessment.rating]}» el {historyDateFormatter.format(new Date(recallAssessment.ratedAt))}. Es una señal personal; por eso hoy se propone comprobar este tema con preguntas.</p>}
       </details>
       {state.current && <div className="planning-activity-timer" role="status" aria-live="off"><Clock3 size="1rem" aria-hidden="true" /> Tiempo en esta actividad: {formatMinutes(elapsedSeconds)} {running ? '· contando' : '· en pausa'}</div>}
+      {state.completed && step.activity === 'newContent' && step.topicId && onRecallAssessment && <fieldset className="planning-recall-assessment">
+        <legend>Después de estudiar en papel y cerrar los apuntes, ¿cuánto recordaste?</legend>
+        <div>{([
+          ['remembered', 'Lo recordé'], ['partial', 'Parcialmente'], ['not-remembered', 'No lo recordé'],
+        ] as const).map(([rating, label]) => <button key={rating} className={`btn sec${recallAssessment?.rating === rating ? ' is-selected' : ''}`} aria-pressed={recallAssessment?.rating === rating} onClick={() => onRecallAssessment(step.topicId!, rating)}>{label}</button>)}</div>
+        <small>{recallAssessment ? `Autoevaluación guardada · ${historyDateFormatter.format(recallAssessment.ratedAt)}` : 'Es una valoración personal; no se mezcla con tus notas de test.'}</small>
+      </fieldset>}
       <p className="planning-resource">Recurso de TAI: <Link to={activityResourcePath(step)}>{presentation.resource}</Link></p>
     </article>
   </li>;
@@ -260,7 +273,12 @@ function usePlanningSessionActions(services: HomeServices, overview: HomeOvervie
   };
 
   const pauseSession = () => { services.pauseTrainingActivity(); refresh(); };
-  return { startSession, pauseSession };
+  const recordRecallAssessment = (topicId: string, rating: PaperRecallRating) => {
+    if (!services.recordPaperRecall) return;
+    if (services.recordPaperRecall(topicId, rating)) refresh();
+    else services.notify('No se pudo guardar la autoevaluación en este dispositivo. Comprueba el espacio disponible e inténtalo de nuevo.');
+  };
+  return { startSession, pauseSession, recordRecallAssessment };
 }
 
 function SessionActionArea({ model, activeStudy, onStart, onPause }: {
@@ -298,18 +316,22 @@ function PlanningTodayCard({ model, overview, activeStudy, onStart, onPause }: {
   </section>;
 }
 
-function PlanningActivityList({ model }: { model: PlanningViewModel }) {
+function PlanningActivityList({ model, assessments, now, onRecallAssessment }: {
+  model: PlanningViewModel; assessments: readonly PaperRecallAssessment[];
+  now: number;
+  onRecallAssessment(topicId: string, rating: PaperRecallRating): void;
+}) {
   if (!model.activities.length) return null;
   return <section className="planning-activities" aria-labelledby="planning-activities-title">
     <div className="planning-section-heading"><div><p className="planning-kicker">Orden de trabajo</p><h2 id="planning-activities-title">Pasos de la sesión</h2></div><span>{model.completedCount} de {model.activities.length} completadas</span></div>
-    <ol>{model.activities.map((step, index) => <PlanningActivity key={step.activity} step={step} index={index} session={model.session} topicName={step.topicId ? model.topicNames.get(step.topicId) : undefined} elapsedSeconds={index === model.activeIndex ? model.activeSeconds : model.session?.elapsedSecondsByActivity?.[index] ?? 0} running={index === model.activeIndex && model.session?.currentStartedAt !== null && model.session?.currentStartedAt !== undefined} />)}</ol>
+    <ol>{model.activities.map((step, index) => <PlanningActivity key={step.activity} step={step} index={index} session={model.session} topicName={step.topicId ? model.topicNames.get(step.topicId) : undefined} elapsedSeconds={index === model.activeIndex ? model.activeSeconds : model.session?.elapsedSecondsByActivity?.[index] ?? 0} running={index === model.activeIndex && model.session?.currentStartedAt !== null && model.session?.currentStartedAt !== undefined} now={now} recallAssessment={assessments.find(item => item.topicId === step.topicId)} onRecallAssessment={onRecallAssessment} />)}</ol>
   </section>;
 }
 
 function PlanningEvidence({ overview }: { overview: HomeOverview }) {
   return <section className="planning-evidence" aria-labelledby="planning-evidence-title">
     <div className="planning-section-heading"><div><p className="planning-kicker">Seguimiento sin mezclar medidas</p><h2 id="planning-evidence-title">Qué registra TAI</h2></div><Link to="/stats">Ver progreso</Link></div>
-    <div className="planning-evidence-grid"><p><b>Cobertura</b><span>{overview.studiedTopics} de {overview.topicCount} temas marcados como vistos.</span></p><p><b>Resultados de preguntas</b><span>{overview.assessedTopics} temas tienen actividad evaluada; los aciertos no prueban por sí solos recuerdo libre.</span></p><p><b>Comprensión</b><span>No se mide directamente todavía; TAI no infiere comprensión de una marca de lectura.</span></p><p><b>Examen</b><span>Los resultados de test y simulacros se muestran por separado en Progreso.</span></p></div>
+    <div className="planning-evidence-grid"><p><b>Cobertura</b><span>{overview.studiedTopics} de {overview.topicCount} temas marcados como vistos.</span></p><p><b>Resultados de preguntas</b><span>{overview.assessedTopics} temas tienen actividad evaluada; los aciertos no prueban por sí solos recuerdo libre.</span></p><p><b>Recuerdo en papel</b><span>{overview.paperRecallAssessments?.length ?? 0} autoevaluaciones. Son una señal personal, separada de los resultados objetivos.</span></p><p><b>Comprensión</b><span>No se mide directamente todavía; TAI no infiere comprensión de una marca de lectura.</span></p><p><b>Examen</b><span>Los resultados de test y simulacros se muestran por separado en Progreso.</span></p></div>
     <p className="planning-caveat"><CircleHelp size="1rem" aria-hidden="true" /> La lectura de resúmenes y esquemas ocurre con tus materiales externos. TAI no dispone aquí de esos documentos ni registra su lectura; por eso la actividad pide recuperar primero y usar el material solo para corregir lagunas.</p>
   </section>;
 }
@@ -364,7 +386,7 @@ export function PlanningPage() {
       <Link className="planning-settings-link" to="/settings">Configurar semana</Link>
     </header>
     <PlanningTodayCard model={model} overview={overview} activeStudy={!!services.getActiveStudy()} onStart={actions.startSession} onPause={actions.pauseSession} />
-    <PlanningActivityList model={model} />
+    <PlanningActivityList model={model} assessments={overview.paperRecallAssessments ?? []} now={now.getTime()} onRecallAssessment={actions.recordRecallAssessment} />
     <WeekSchedule preferences={settings.training} weekday={model.weekday} now={now} history={overview.trainingHistory ?? []} />
     <PlanningHistory overview={overview} />
     <PlanningEvidence overview={overview} />

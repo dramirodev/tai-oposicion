@@ -31,6 +31,8 @@ import { createTopicProgressComposition } from './composition/topics/topic-progr
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
 import type { Origin, QuestionStats, StudyReviewMode, TrainingActivity, TrainingPreferences } from '../core/domain/entities.js';
+import type { PaperRecallRating } from '../core/domain/paper-recall-assessment.js';
+import { latestPaperRecallByTopic, needsPaperRecallFollowUp } from '../core/domain/paper-recall-assessment.js';
 import { buildDailyTrainingPlan, normalizeTrainingPreferences } from '../core/domain/study-training-plan.js';
 import { filterTopicMasteryToSeen } from '../core/domain/topic-mastery.js';
 import { createHighlight, questionContentRevision, resolveHighlight } from '../core/domain/attempts/highlights.js';
@@ -67,6 +69,7 @@ import { bootAppServices as startAppBootstrap } from './app-bootstrap.js';
 import { createAppUpdateController } from './composition/updates/app-update-controller.js';
 import { createCardsComposition } from './composition/cards/cards-composition.js';
 import { createTrainingSessionComposition } from './composition/trainers/training-session-composition.js';
+import { createPaperRecallComposition } from './composition/trainers/paper-recall-composition.js';
 import { getHomeProgressSummary } from '../core/application/stats/get-home-progress-summary.js';
 import type { QuestionRecord as Question } from '../core/domain/question-record.js';
 import { createReadingComposition } from './composition/trainers/reading-composition.js';
@@ -93,6 +96,7 @@ const recover = createAccountRecovery(localStudyProgressGateway.accountId, () =>
 const dominioTemas = createTopicMasteryComposition({ progressRepository: localProgressRepository, accountId: localStudyProgressGateway.accountId, questionIdsForTopic: topicId => studyQuestionCatalog.getMetadataSnapshot()?._by[topicId] || [], now: studyQuestionCatalog.now });
 const progressPorTema = createTopicProgressComposition({ progressRepository: localProgressRepository, accountId: localStudyProgressGateway.accountId, questionIdsForTopic: topicId => studyQuestionCatalog.getMetadataSnapshot()?._by[topicId] || [] });
 const trainingSession = createTrainingSessionComposition({ accountId: localStudyProgressGateway.accountId, now: studyQuestionCatalog.now, push: session => { void sync.pushTrainingSession(session); } });
+const paperRecall = createPaperRecallComposition({ accountId: localStudyProgressGateway.accountId, now: studyQuestionCatalog.now, push: () => { void sync.pushPaperRecallAssessments(); } });
 let routeReady: () => void;
 const firstReactRouteReady = new Promise<void>(resolve => { routeReady = resolve; });
 const studyRunController = createStudyRunController({
@@ -362,7 +366,7 @@ export function bootAppServices(): () => void {
     prefetchBank: prefetchBanco,
     loadMetadataAndInitializeSync: async () => {
       try { await getMeta(); } catch (error) { console.error(error); }
-      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getQuestionIdsForTopic }, store, trainingSession); } catch (error) { console.error(error); }
+      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getQuestionIdsForTopic }, store, trainingSession, paperRecall); } catch (error) { console.error(error); }
     },
   });
 }
@@ -579,6 +583,10 @@ export const studyServices: StudyServices = {
       const nextNewTopic = nextNewTopicEntry ?? index.temas.find(topic => !studiedTopicSet.has(topic.id));
       const studiedMastery = filterTopicMasteryToSeen(mastery, studiedTopicIds);
       const studiedWeakTopics = studiedMastery.filter(topic => topic.est === 'r').sort((left, right) => left.score - right.score);
+      const recallAssessments = paperRecall.get().filter(item => studiedTopicSet.has(item.topicId));
+      const latestRecall = latestPaperRecallByTopic(recallAssessments);
+      const selfReportedWeakTopics = [...latestRecall.values()].filter(item => needsPaperRecallFollowUp(item, studyQuestionCatalog.now())).map(item => item.topicId);
+      const weakTopicIds = [...new Set([...studiedWeakTopics.map(topic => topic.id), ...selfReportedWeakTopics])];
       const studiedDueCount = dueIds.filter(id => studiedTopicSet.has(studyQuestionCatalog.getTopicForQuestion(id) || '')).length;
       const studiedFailureCount = failureIds.filter(id => studiedTopicSet.has(studyQuestionCatalog.getTopicForQuestion(id) || '')).length;
       const topicForCard = (id: string): string | undefined => {
@@ -588,7 +596,7 @@ export const studyServices: StudyServices = {
       };
       const studiedCardDueCount = Object.entries(cardReviews).filter(([id, record]) => record[3] >= 0
         && record[4] <= studyQuestionCatalog.now() && studiedTopicSet.has(topicForCard(id) || '')).length;
-      const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date().getDay(), dueCount: studiedDueCount, cardDueCount: studiedCardDueCount, failureCount: studiedFailureCount, weakTopicCount: studiedWeakTopics.length, weakTopicIds: studiedWeakTopics.map(topic => topic.id), studiedTopicIds, nextNewTopic: nextNewTopic ? { topicId: nextNewTopic.id, topicName: nextNewTopic.nombre } : undefined,
+      const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date().getDay(), dueCount: studiedDueCount, cardDueCount: studiedCardDueCount, failureCount: studiedFailureCount, weakTopicCount: weakTopicIds.length, weakTopicIds, studiedTopicIds, nextNewTopic: nextNewTopic ? { topicId: nextNewTopic.id, topicName: nextNewTopic.nombre } : undefined,
         topicReviewEvidence: studiedMastery.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: true, distinctQuestionsAttempted: topic.seen, questionCoverageOfTarget: topic.cob, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias })) });
       return { seen: progress.seen, total: index.n, answers: progress.answers, streak, daysToExam, due,
         completedSessions: store.getSessions().length,
@@ -605,13 +613,14 @@ export const studyServices: StudyServices = {
         nextNewTopic: nextNewTopic ? { id: nextNewTopic.id, name: nextNewTopic.nombre } : undefined,
         assessedTopics: studiedMastery.filter(topic => topic.est !== 'n').length,
         weakTopics: studiedWeakTopics.length,
-        masteredTopics: studiedMastery.filter(topic => topic.est === 'g').length, trainingPlan, trainingSession: trainingSession.getSession(), trainingHistory: trainingSession.getHistory(),
+        masteredTopics: studiedMastery.filter(topic => topic.est === 'g').length, trainingPlan, trainingSession: trainingSession.getSession(), trainingHistory: trainingSession.getHistory(), paperRecallAssessments: recallAssessments,
       };
     },
     startTrainingSession(plan) { return trainingSession.start(plan); },
     startTrainingActivity() { return trainingSession.startCurrentActivity(); },
     pauseTrainingActivity() { return trainingSession.pauseCurrentActivity(); },
     completeTrainingActivity(activity: TrainingActivity) { return trainingSession.completeActivity(activity); },
+    recordPaperRecall(topicId: string, rating: PaperRecallRating) { return paperRecall.record(topicId, rating); },
     setTrainingReviewMode(topicId: string, mode: StudyReviewMode | null) {
       const preferences = normalizeTrainingPreferences(store.getCfg().training);
       const reviewModesByTopic = { ...preferences.reviewModesByTopic };

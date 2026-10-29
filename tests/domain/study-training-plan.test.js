@@ -59,6 +59,22 @@ describe('planificación diaria de estudio', () => {
     expect(plan.activities[1].topicIds).toEqual(['T1.01']);
   });
 
+  it('prioriza preguntas del tema visto con autoevaluación reciente de recuerdo débil', () => {
+    const plan = buildDailyTrainingPlan({
+      preferences:DEFAULT_TRAINING_PREFERENCES,
+      weekday:1,
+      dueCount:0,
+      cardDueCount:0,
+      failureCount:0,
+      weakTopicCount:1,
+      weakTopicIds:['T1.01'],
+      studiedTopicIds:['T1.01'],
+      nextNewTopic:{ topicId:'T1.02', topicName:'Tema siguiente' },
+    });
+    expect(plan.activities.map(item => item.activity)).toEqual(['newContent', 'topicTest']);
+    expect(plan.activities.find(item => item.activity === 'topicTest')).toMatchObject({ reason:'weak-topics', topicId:'T1.01', topicIds:['T1.01'] });
+  });
+
   it('marca el domingo como descanso y no traslada su carga a otro día', () => {
     const plan = buildDailyTrainingPlan({ preferences: testPreferences, weekday: 0, dueCount: 20, failureCount: 8, weakTopicCount: 3 });
     expect(plan).toEqual({ weekday: 0, minutes: 0, restDay: true, activities: [] });

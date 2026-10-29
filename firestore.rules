@@ -297,6 +297,17 @@ service cloud.firestore {
       allow create, update: if canUse(uid) && validTrainingSession();
       allow delete: if false;
     }
+    // Autoevaluaciones breves del temario en papel; separadas de los resultados objetivos.
+    match /users/{uid}/cfg/trainingRecall {
+      allow read: if canUse(uid);
+      allow create, update: if canUse(uid)
+        && request.resource.data.keys().hasOnly(['schemaVersion', 'updatedAt', 'assessments'])
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.updatedAt is number
+        && request.resource.data.assessments is list
+        && request.resource.data.assessments.size() <= 90;
+      allow delete: if false;
+    }
     // Informes de errores del banco
     match /users/{uid}/cfg/cards {
       allow read: if canUse(uid);

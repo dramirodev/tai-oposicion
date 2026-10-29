@@ -27,5 +27,8 @@ describe('help content', () => {
     expect(introduction.body.join(' ')).toMatch(/días de descanso no acumulan actividades/i);
     expect(introduction.body.join(' ')).toMatch(/al completarla, vuelve a Planificación para continuar/i);
     expect(introduction.body.join(' ')).toMatch(/se sincroniza con la cuenta cuando hay acceso aprobado y las reglas de Firebase publicadas/i);
+    expect(introduction.body.join(' ')).toMatch(/después de estudiar tus apuntes en papel.*indica si recordaste el contenido/i);
+    expect(introduction.body.join(' ')).toMatch(/la valoración del recuerdo es una autoevaluación, no una nota de examen/i);
+    expect(introduction.body.join(' ')).toMatch(/no las mezcla con tus resultados de test/i);
   });
 });

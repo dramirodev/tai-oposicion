@@ -3,10 +3,12 @@ import { test, expect, type Page } from '@playwright/test';
 async function prepare(page: Page, theme = 'dark', size = 3, fullAccess = false) {
   await page.route('**/firebase-config.json', route => route.fulfill({ json: {} }));
   await page.addInitScript(({ theme, size, fullAccess }) => {
+    if (localStorage.getItem('tai.e2e.fixture-ready')) return;
     Math.random = () => 0.5;
     localStorage.setItem('tai.dev', '1');
     if (fullAccess) localStorage.setItem('tai.acc:guest', 'propietario');
     localStorage.setItem('tai.v1:guest', JSON.stringify({ stats: {}, sessions: [], cfg: { ui: { theme, size } }, seen: { t: fullAccess ? ['T1.01'] : [], ts: 0 }, cards: {}, reports: {} }));
+    localStorage.setItem('tai.e2e.fixture-ready', '1');
   }, { theme, size, fullAccess });
 }
 
@@ -222,6 +224,36 @@ test('Planificación prepara la sesión fuera de Inicio y permite comenzar el pa
   await expect(page.locator('.planning-activity')).toHaveCount(2);
   await page.getByRole('button', { name: 'Comenzar sesión' }).click();
   await expect(page).toHaveURL(/#\/temario\?topic=T1\.02&dailyTraining=newContent/);
+});
+
+test('registra el recuerdo del tema en papel y prioriza su comprobación el día siguiente', async ({ page }) => {
+  await prepare(page, 'light', 0, true);
+  await page.clock.setFixedTime(new Date('2026-10-29T12:00:00+02:00'));
+  await page.goto('/#/planificacion');
+  await page.getByRole('button', { name:'Comenzar sesión' }).click();
+  await expect(page).toHaveURL(/#\/temario\?topic=T1\.02&dailyTraining=newContent/);
+  await page.locator('[data-t="T1.02"]').click({ noWaitAfter:true });
+  await expect(page).toHaveURL(/#\/planificacion$/);
+
+  const assessment = page.getByRole('group', { name:'Después de estudiar en papel y cerrar los apuntes, ¿cuánto recordaste?' });
+  await expect(assessment).toBeVisible();
+  await assessment.getByRole('button', { name:'Parcialmente' }).click();
+  await expect(assessment.getByRole('button', { name:'Parcialmente' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(assessment.getByText(/Autoevaluación guardada/)).toBeVisible();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('tai.paper-recall.v1.guest') || '[]'))).toMatchObject([
+    { topicId:'T1.02', rating:'partial', dateKey:'2026-10-29' },
+  ]);
+
+  await page.clock.setFixedTime(new Date('2026-10-30T12:00:00+02:00'));
+  await page.reload();
+  await expect(page.locator('#app h1')).toHaveText('Planificación de estudio');
+  await expect(page.getByText(/2 de \d+ temas marcados como vistos/)).toBeVisible();
+  const nextDayActivities = page.locator('.planning-activity');
+  await expect(nextDayActivities).toHaveCount(2);
+  await expect(nextDayActivities.nth(1)).toContainText('Preguntas del tema prioritario');
+  await expect(nextDayActivities.nth(1)).toContainText('T1.02');
+  await nextDayActivities.nth(1).getByText('Instrucciones y motivo').click();
+  await expect(nextDayActivities.nth(1)).toContainText('Tu autoevaluación de recuerdo en papel fue «Parcialmente» el 29 de octubre de 2026');
 });
 
 test('un día de consolidación sin temas vistos muestra tiempo disponible, no una duración de sesión inventada', async ({ page }) => {

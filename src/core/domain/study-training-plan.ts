@@ -137,6 +137,7 @@ export function buildDailyTrainingPlan(input: {
   if (canStudyNewContent) {
     const reinforcement: TrainingActivity | undefined = candidates.includes('spacedReviews') ? 'spacedReviews'
       : candidates.includes('failures') ? 'failures'
+        : (input.weakTopicIds ?? []).some(topicId => studiedTopicSet?.has(topicId)) && candidates.includes('topicTest') ? 'topicTest'
         : candidates.includes('activeRecall') ? 'activeRecall'
           : candidates.includes('topicTest') ? 'topicTest' : undefined;
     candidates = ['newContent', ...(reinforcement ? [reinforcement] : [])];
