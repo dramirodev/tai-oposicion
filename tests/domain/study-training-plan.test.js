@@ -1,66 +1,108 @@
 import { describe, expect, it } from 'vitest';
 import { buildDailyTrainingPlan, DEFAULT_TRAINING_PREFERENCES } from '../../src/core/domain/study-training-plan.ts';
 
+const testPreferences = {
+  ...DEFAULT_TRAINING_PREFERENCES,
+  minutesByDay: [0, 35, 40, 35, 20, 40, 60],
+  focusByDay: ['rest', 'consolidation', 'consolidation', 'consolidation', 'consolidation', 'consolidation', 'consolidation'],
+  activities: DEFAULT_TRAINING_PREFERENCES.activities.filter(activity => activity !== 'newContent'),
+  activityVersion: 3,
+};
+
 describe('planificación diaria de estudio', () => {
-  it('usa la planificación semanal inicial y divide 40 minutos en actividades equilibradas', () => {
+  it('divide una sesión de referencia de 40 minutos en actividades equilibradas', () => {
     const plan = buildDailyTrainingPlan({
-      preferences: DEFAULT_TRAINING_PREFERENCES,
+      preferences: testPreferences,
       weekday: 2,
       dueCount: 8,
       failureCount: 4,
       weakTopicCount: 2,
     });
 
-    expect(DEFAULT_TRAINING_PREFERENCES.minutesByDay).toEqual([0, 35, 40, 35, 20, 40, 60]);
+    expect(DEFAULT_TRAINING_PREFERENCES.minutesByDay).toEqual([0, 120, 120, 120, 120, 120, 120]);
     expect(plan.minutes).toBe(40);
     expect(plan.activities.map(({ activity, minutes }) => [activity, minutes])).toEqual([
-      ['activeRecall', 10], ['topicTest', 15], ['failures', 10], ['spacedReviews', 5],
+      ['activeRecall', 8], ['topicTest', 12], ['mixedTopicTest', 8], ['failures', 8], ['spacedReviews', 4],
     ]);
     expect(plan.activities.map(item => item.minutes).reduce((total, minutes) => total + minutes, 0)).toBe(plan.minutes);
   });
 
+  it('prepara el tema nuevo siguiente solo en días reservados para contenido nuevo', () => {
+    const plan = buildDailyTrainingPlan({
+      preferences: DEFAULT_TRAINING_PREFERENCES,
+      weekday: 1,
+      dueCount: 0,
+      failureCount: 0,
+      weakTopicCount: 0,
+      studiedTopicIds: [],
+      nextNewTopic: { topicId: 'T1.01', topicName: 'Organización del Estado' },
+    });
+    expect(plan.minutes).toBe(120);
+    expect(plan.activities.find(item => item.activity === 'newContent')).toMatchObject({ topicId: 'T1.01', reason: 'new-content-day' });
+    expect(plan.activities.every(item => item.activity === 'newContent')).toBe(true);
+  });
+
+  it('limita un día de contenido nuevo al tema siguiente y a un único tipo de refuerzo prioritario', () => {
+    const plan = buildDailyTrainingPlan({
+      preferences: DEFAULT_TRAINING_PREFERENCES,
+      weekday: 1,
+      dueCount: 5,
+      cardDueCount: 2,
+      failureCount: 4,
+      weakTopicCount: 1,
+      studiedTopicIds: ['T1.01'],
+      nextNewTopic: { topicId: 'T1.02', topicName: 'Organización administrativa' },
+    });
+    expect(plan.activities.map(item => item.activity)).toEqual(['newContent', 'spacedReviews']);
+    expect(plan.activities[0].minutes).toBeGreaterThan(plan.activities[1].minutes);
+    expect(plan.activities[0].topicId).toBe('T1.02');
+    expect(plan.activities[1].topicIds).toEqual(['T1.01']);
+  });
+
   it('marca el domingo como descanso y no traslada su carga a otro día', () => {
-    const plan = buildDailyTrainingPlan({ preferences: DEFAULT_TRAINING_PREFERENCES, weekday: 0, dueCount: 20, failureCount: 8, weakTopicCount: 3 });
+    const plan = buildDailyTrainingPlan({ preferences: testPreferences, weekday: 0, dueCount: 20, failureCount: 8, weakTopicCount: 3 });
     expect(plan).toEqual({ weekday: 0, minutes: 0, restDay: true, activities: [] });
   });
 
   it('omite actividades sin contenido y reparte todo el tiempo disponible entre las demás', () => {
-    const plan = buildDailyTrainingPlan({ preferences: DEFAULT_TRAINING_PREFERENCES, weekday: 1, dueCount: 0, failureCount: 0, weakTopicCount: 0 });
-    expect(plan.activities.map(item => item.activity)).toEqual(['activeRecall', 'topicTest']);
+    const plan = buildDailyTrainingPlan({ preferences: testPreferences, weekday: 1, dueCount: 0, failureCount: 0, weakTopicCount: 0, studiedTopicIds: ['T1.01'] });
+    expect(plan.activities.map(item => item.activity)).toEqual(['activeRecall', 'topicTest', 'mixedTopicTest']);
     expect(plan.activities.map(item => item.minutes).reduce((total, minutes) => total + minutes, 0)).toBe(35);
     expect(plan.activities.every(item => item.minutes > 0)).toBe(true);
   });
 
   it('usa práctica del tema nuevo en el día de introducción y limita bloques a los minutos del día', () => {
     const plan = buildDailyTrainingPlan({
-      preferences: { ...DEFAULT_TRAINING_PREFERENCES, minutesByDay: [0, 35, 40, 35, 3, 40, 60] },
+      preferences: { ...testPreferences, focusByDay: ['rest', 'consolidation', 'consolidation', 'consolidation', 'new-content', 'consolidation', 'consolidation'], minutesByDay: [0, 35, 40, 35, 3, 40, 60], activities: [...testPreferences.activities, 'newContent'] },
       weekday: 4,
       dueCount: 3,
       failureCount: 2,
       weakTopicCount: 0,
+      studiedTopicIds: [],
+      nextNewTopic: { topicId: 'T3.02', topicName: 'Tribunal Constitucional' },
     });
-    expect(plan.activities).toHaveLength(3);
-    expect(plan.activities.find(item => item.activity === 'topicTest').reason).toBe('new-topic-day');
+    expect(plan.activities).toHaveLength(1);
+    expect(plan.activities.find(item => item.activity === 'newContent')).toMatchObject({ reason: 'new-content-day', topicId: 'T3.02' });
     expect(plan.activities.reduce((total, item) => total + item.minutes, 0)).toBe(3);
   });
 
   it('recomienda estudio inicial provisional para el tema de academia seleccionado', () => {
     const plan = buildDailyTrainingPlan({
-      preferences: { ...DEFAULT_TRAINING_PREFERENCES, introductionTopicId: 'T3.02' },
-      weekday: DEFAULT_TRAINING_PREFERENCES.introductionDay,
+      preferences: { ...testPreferences, focusByDay: ['rest', 'consolidation', 'consolidation', 'consolidation', 'new-content', 'consolidation', 'consolidation'], activities: [...testPreferences.activities, 'newContent'], introductionTopicId: 'T3.02' },
+      weekday: testPreferences.introductionDay,
       dueCount: 0,
       failureCount: 0,
       weakTopicCount: 0,
+      studiedTopicIds: [],
+      nextNewTopic: { topicId: 'T3.02', topicName: 'Tribunal Constitucional' },
       topicReviewEvidence: [{ topicId: 'T3.02', topicName: 'Tribunal Constitucional', hasStudyMarker: false, distinctQuestionsAttempted: 0, latestAnswerAccuracy: null, daysSinceLastQuestionAttempt: null }],
     });
-    expect(plan.activities.find(item => item.activity === 'topicTest')).toMatchObject({
-      topicId: 'T3.02', reviewIntervention: { mode: 'initial-study', confidence: 'provisional', reason: 'study-not-marked' },
-    });
+    expect(plan.activities).toEqual([{ activity: 'newContent', minutes: 20, reason: 'new-content-day', topicId: 'T3.02' }]);
   });
 
   it('respeta las modalidades que la persona ha elegido', () => {
     const plan = buildDailyTrainingPlan({
-      preferences: { ...DEFAULT_TRAINING_PREFERENCES, activities: ['activeRecall', 'spacedReviews'] },
+      preferences: { ...testPreferences, activities: ['activeRecall', 'spacedReviews'] },
       weekday: 6,
       dueCount: 0,
       failureCount: 9,
@@ -72,7 +114,7 @@ describe('planificación diaria de estudio', () => {
 
   it('adjunta el tema débil prioritario a la actividad de test', () => {
     const plan = buildDailyTrainingPlan({
-      preferences: DEFAULT_TRAINING_PREFERENCES,
+      preferences: testPreferences,
       weekday: 2,
       dueCount: 0,
       failureCount: 0,
@@ -84,7 +126,7 @@ describe('planificación diaria de estudio', () => {
 
   it('usa el tema estudiado con menor cobertura registrada cuando amplía práctica', () => {
     const plan = buildDailyTrainingPlan({
-      preferences: DEFAULT_TRAINING_PREFERENCES,
+      preferences: testPreferences,
       weekday: 2,
       dueCount: 0,
       failureCount: 0,
@@ -102,19 +144,19 @@ describe('planificación diaria de estudio', () => {
 
   it('no infiere tema inicial de cobertura desde ausencia total de evidencia', () => {
     const plan = buildDailyTrainingPlan({
-      preferences: DEFAULT_TRAINING_PREFERENCES,
+      preferences: testPreferences,
       weekday: 2,
       dueCount: 0,
       failureCount: 0,
       weakTopicCount: 0,
       topicReviewEvidence: [{ topicId:'T1.01', topicName:'Organización', hasStudyMarker:false, distinctQuestionsAttempted:0, questionCoverageOfTarget:0, latestAnswerAccuracy:null, daysSinceLastQuestionAttempt:null }],
     });
-    expect(plan.activities.find(item => item.activity === 'topicTest')).not.toHaveProperty('topicId');
+    expect(plan.activities.some(item => item.activity === 'topicTest')).toBe(false);
   });
 
   it('ante resultados bajos prioriza comprobar el recuerdo en vez de recomendar lectura amplia', () => {
     const plan = buildDailyTrainingPlan({
-      preferences: DEFAULT_TRAINING_PREFERENCES,
+      preferences: testPreferences,
       weekday: 2,
       dueCount: 0,
       failureCount: 0,
@@ -129,19 +171,20 @@ describe('planificación diaria de estudio', () => {
 
   it('incluye las tarjetas FSRS vencidas aunque no haya repasos de preguntas pendientes', () => {
     const plan = buildDailyTrainingPlan({
-      preferences: { ...DEFAULT_TRAINING_PREFERENCES, activities: ['spacedReviews'] },
+      preferences: { ...testPreferences, activities: ['spacedReviews'] },
       weekday: 6,
       dueCount: 0,
       cardDueCount: 2,
       failureCount: 0,
       weakTopicCount: 0,
+      studiedTopicIds: ['T1.01'],
     });
-    expect(plan.activities).toEqual([{ activity: 'spacedReviews', minutes: 60, reason: 'due-reviews' }]);
+    expect(plan.activities).toEqual([{ activity: 'spacedReviews', minutes: 60, reason: 'due-reviews', topicIds: ['T1.01'] }]);
   });
 
   it('limita cada actividad diaria a los temas marcados y nunca recomienda temas no estudiados', () => {
     const plan = buildDailyTrainingPlan({
-      preferences: DEFAULT_TRAINING_PREFERENCES,
+      preferences: testPreferences,
       weekday: 4,
       dueCount: 3,
       cardDueCount: 2,
@@ -161,7 +204,7 @@ describe('planificación diaria de estudio', () => {
 
   it('no crea actividades cuando aún no hay temas marcados como vistos', () => {
     const plan = buildDailyTrainingPlan({
-      preferences: DEFAULT_TRAINING_PREFERENCES,
+      preferences: testPreferences,
       weekday: 4,
       dueCount: 20,
       cardDueCount: 10,

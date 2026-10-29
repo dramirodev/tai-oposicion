@@ -32,7 +32,7 @@ export function createStudyMenuGroups(input: StudyMenuInput): MenuGroup[] {
     [navigationIcons.lightning, 'Pregunta relámpago', 'Una sola pregunta', hashPath('lightning')],
   ]];
   const tracking: MenuGroup = ['Seguimiento', [
-    [navigationIcons.planning, 'Planificación de estudio', 'Entrenamiento y organización de hoy', `${hashPath('home')}?focus=training`],
+    [navigationIcons.planning, 'Planificación de estudio', 'Sesión de hoy y calendario semanal', hashPath('planning')],
     [navigationIcons.stats, 'Progreso', 'Mapa de dominio, simulacros y evolución', hashPath('stats')],
     [navigationIcons.topics, 'Temas vistos', `${input.seenTopics} temas marcados`, hashPath('topics')],
     [navigationIcons.failures, 'Preguntas falladas', `${input.failedQuestions} para buscar y releer`, hashPath('failures')],

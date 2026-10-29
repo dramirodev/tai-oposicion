@@ -11,6 +11,7 @@ import { decodeFirebaseDocumentId, encodeFirebaseDocumentId } from './firebase-d
 import { OWNER_EMAIL, rememberAccessForAccount } from './access-policy.js';
 import type { AttemptRepository } from '../../core/ports/AttemptRepository.js';
 import type { AccessLevel } from '../../core/domain/entities.js';
+import type { DailyTrainingSession } from '../../core/domain/study-training-session.js';
 import type { AccessRequest, CardMap, ReportMap, SeenDoc, Session, StatMap } from '../legacy/types.js';
 import type { ProgressSyncStore } from '../contracts/progress-sync.js';
 
@@ -28,6 +29,8 @@ let temaOf: (id: string) => string | null = () => null; // id -> tema
 let idsOfTema: (text: string) => string[] = () => [];
 let attemptRepository: AttemptRepository | null = null;
 let progressStore: ProgressSyncStore | null = null;
+interface TrainingSessionSyncStore { getSession(): DailyTrainingSession | null; mergeRemote(session: unknown, updatedAt: number): boolean }
+let trainingSessionStore: TrainingSessionSyncStore | null = null;
 const getProgressStore = (): ProgressSyncStore => {
   if (!progressStore) throw new Error('El almacén de progreso no se ha conectado a la sincronización.');
   return progressStore;
@@ -36,8 +39,10 @@ export function setAttemptRepository(repository: AttemptRepository): void { atte
 export async function init(
   metaFns: { temaOf: (id: string) => string | null; idsOfTema: (text: string) => string[] },
   localProgress: ProgressSyncStore,
+  localTrainingSession?: TrainingSessionSyncStore,
 ): Promise<void> {
   progressStore = localProgress;
+  trainingSessionStore = localTrainingSession ?? null;
   temaOf = metaFns.temaOf; idsOfTema = metaFns.idsOfTema;
   status.authResolved = false;
   const { config: firebaseConfig, loaded: leida } = await loadFirebaseConfig();
@@ -172,6 +177,16 @@ function start(): void {
   const active = () => uid === sessionUid && epoch === syncEpoch;
   const error = (event: FirestoreError) => { if (active()) listenErr(event); };
   if (attemptRepository) unsubs.push(syncAttemptHistory({ db, uid: me, repository: attemptRepository, active, onError: error }));
+  if (trainingSessionStore) unsubs.push(onSnapshot(doc(db, 'users', me, 'cfg', 'training'), snapshot => {
+    if (!active() || !trainingSessionStore) return;
+    const remote = snapshot.exists() ? snapshot.data() : null;
+    const remoteSession = remote && remote.schemaVersion === 1 && remote.session && typeof remote.updatedAt === 'number'
+      ? remote.session as DailyTrainingSession : null;
+    const merged = remoteSession ? trainingSessionStore.mergeRemote(remoteSession, Number(remote?.updatedAt)) : false;
+    const local = trainingSessionStore.getSession();
+    const remoteUpdatedAt = typeof remote?.updatedAt === 'number' ? remote.updatedAt : 0;
+    if (local && (!merged || !remoteSession) && (local.updatedAt ?? local.startedAt) > remoteUpdatedAt) pushTrainingSession(local);
+  }, error));
   // estadísticas: un documento por tema
   unsubs.push(onSnapshot(collection(db, 'users', me, 'stats'), snap => {
     if (!active()) return;
@@ -265,6 +280,15 @@ function flush(): void {
 export function pushSession(session: Session): void {
   if (!canSync() || !uid) return;
   setDoc(doc(db, 'users', uid, 'sessions', session.id), session).catch(writeErr);
+}
+
+export function pushTrainingSession(session: DailyTrainingSession): void {
+  if (!canSync() || !uid) return;
+  const targetUid = uid;
+  const payload = { schemaVersion: 1, updatedAt: session.updatedAt ?? Date.now(), session };
+  void setDoc(doc(db, 'users', targetUid, 'cfg', 'training'), payload)
+    .then(() => { if (uid === targetUid) ok(); })
+    .catch(writeErr);
 }
 
 export function pushSeen(data: SeenDoc): void {

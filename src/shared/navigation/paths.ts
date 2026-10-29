@@ -4,6 +4,7 @@ export const paths = {
   access: '/acceso',
   help: '/ayuda',
   topics: '/temario',
+  planning: '/planificacion',
   quiz: '/quiz',
   result: '/result',
   test: '/test',

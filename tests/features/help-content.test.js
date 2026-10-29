@@ -20,13 +20,12 @@ describe('help content', () => {
 
   it('explica el entrenamiento adaptativo sin dar por hecho que la app contiene el temario', () => {
     const introduction = HELP_SECTIONS.find(section => section.id === 'inicio');
-    expect(introduction.body.join(' ')).toContain('no contiene el texto completo del temario ni registra cuándo lo lees');
-    expect(introduction.body.join(' ')).toContain('volver a la selección automática');
-    expect(introduction.body.join(' ')).toMatch(/aunque el resultado sea bajo, primero se propone otra comprobación/i);
-    expect(introduction.body.join(' ')).toMatch(/no puede deducir que debas releer todo el tema/i);
+    expect(introduction.body.join(' ')).toContain('la lectura de apuntes o la reconstrucción mental no se observa directamente');
+    expect(introduction.body.join(' ')).toMatch(/los tests, repasos y preguntas se limitan a los temas que has marcado como vistos/i);
+    expect(introduction.body.join(' ')).toContain('los umbrales y el reparto de minutos son reglas iniciales del producto');
     expect(introduction.body.join(' ')).toMatch(/no tiene cronómetro/i);
     expect(introduction.body.join(' ')).toMatch(/días de descanso no acumulan actividades/i);
-    expect(introduction.body.join(' ')).toMatch(/la actividad queda marcada al completar la sesión/i);
-    expect(introduction.body.join(' ')).toMatch(/no se sincroniza entre dispositivos/i);
+    expect(introduction.body.join(' ')).toMatch(/al completarla, vuelve a Planificación para continuar/i);
+    expect(introduction.body.join(' ')).toMatch(/se sincroniza con la cuenta cuando hay acceso aprobado y las reglas de Firebase publicadas/i);
   });
 });

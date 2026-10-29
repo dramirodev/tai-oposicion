@@ -239,7 +239,7 @@ export function CardsPage() {
     }
   }, [cards, dailyTrainingActivity, plan, planKey, preparedIds, requestKey, session]);
 
-  const onSessionComplete = () => { cards.clearSession(); refreshSession(value => value + 1); if (dailyTrainingActivity) void navigate('/home'); else setPlanGeneration(value => value + 1); };
+  const onSessionComplete = () => { cards.clearSession(); refreshSession(value => value + 1); if (dailyTrainingActivity) void navigate('/planificacion'); else setPlanGeneration(value => value + 1); };
   const onSessionExit = () => { cards.clearSession(); void navigate('/home'); };
   const onActivityFinished = () => { if (dailyTrainingActivity) home.completeTrainingActivity(dailyTrainingActivity); };
   if (pageState !== 'plan') return <CardsPageStatus state={pageState} cards={cards} dailyTraining={!!dailyTrainingActivity} onSessionExit={onSessionExit} onSessionComplete={onSessionComplete} onActivityFinished={onActivityFinished} onRetry={() => setPlanGeneration(value => value + 1)} onHome={() => void navigate('/home')} />;

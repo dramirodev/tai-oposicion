@@ -10,7 +10,7 @@ it('starts app lifecycle work after the first route and cleans up listeners and 
     onAccountChange: listener => { events.push(listener); return vi.fn(); },
     goHome: vi.fn(), recover: vi.fn(async () => {}),
     setAttemptTrackingVisible: vi.fn(), flushStore: vi.fn(), flushAttemptTracking: vi.fn(),
-    saveRun: vi.fn(), routeReady: Promise.resolve(), resumeSaved: vi.fn(), prefetchBank: vi.fn(),
+    saveRun: vi.fn(), pauseTrainingSession: vi.fn(), routeReady: Promise.resolve(), resumeSaved: vi.fn(), prefetchBank: vi.fn(),
     checkUpdate: vi.fn(async () => ({ version: '1.2.0' })), announceUpdate: vi.fn(),
     loadMetadataAndInitializeSync: vi.fn(async () => {}),
   };
@@ -30,6 +30,7 @@ it('starts app lifecycle work after the first route and cleans up listeners and 
   expect(dependencies.setAttemptTrackingVisible).toHaveBeenLastCalledWith(false);
   expect(dependencies.flushStore).toHaveBeenCalledTimes(2);
   expect(dependencies.flushAttemptTracking).toHaveBeenCalledTimes(2);
+  expect(dependencies.pauseTrainingSession).toHaveBeenCalledTimes(2);
   expect(dependencies.saveRun).toHaveBeenCalledTimes(2);
 
   await vi.advanceTimersByTimeAsync(4000);

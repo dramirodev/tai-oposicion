@@ -3,8 +3,8 @@ import type { StudyReviewMode, TrainingActivity } from '../../core/domain/entiti
 import type { TrainingPlanReason } from '../../core/domain/study-training-plan.js';
 import { localTrainingDateKey } from '../../core/domain/study-training-session.js';
 
-const activities = new Set<TrainingActivity>(['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']);
-const reasons = new Set<TrainingPlanReason>(['active-recall', 'new-topic-day', 'weak-topics', 'coverage', 'recurring-failures', 'due-reviews']);
+const activities = new Set<TrainingActivity>(['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']);
+const reasons = new Set<TrainingPlanReason>(['active-recall', 'new-content-day', 'new-topic-day', 'weak-topics', 'coverage', 'recurring-failures', 'due-reviews']);
 const reviewModes = new Set<StudyReviewMode>(['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading']);
 const keyFor = (accountId: string | null) => `tai.training-session.v1.${encodeURIComponent(accountId || 'guest')}`;
 
@@ -28,10 +28,14 @@ function isDailyTrainingSession(value: unknown, timestamp: number): value is Sto
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
   const session = value as Partial<StoredTrainingSession>;
   if (session.dateKey !== localTrainingDateKey(timestamp) || !Array.isArray(session.activities)
-    || !session.activities.length || session.activities.length > 5 || !session.activities.every(isSessionStep)
+    || !session.activities.length || session.activities.length > 6 || !session.activities.every(isSessionStep)
     || new Set(session.activities.map(step => step.activity)).size !== session.activities.length
     || !Number.isInteger(session.currentIndex) || session.currentIndex! < 0 || session.currentIndex! > session.activities.length
+    || (session.elapsedSecondsByActivity !== undefined && (!Array.isArray(session.elapsedSecondsByActivity)
+      || session.elapsedSecondsByActivity.length !== session.activities.length
+      || !session.elapsedSecondsByActivity.every(seconds => Number.isInteger(seconds) && seconds >= 0 && seconds <= 86_400)))
     || !Number.isFinite(session.startedAt) || session.startedAt! < 0
+    || (session.updatedAt !== undefined && (!Number.isFinite(session.updatedAt) || session.updatedAt < session.startedAt!))
     || (session.currentStartedAt !== null && (!Number.isFinite(session.currentStartedAt) || session.currentStartedAt! < session.startedAt!))
     || (session.completedAt !== null && (!Number.isFinite(session.completedAt) || session.completedAt! < session.startedAt!))) return false;
   if (session.completedAt !== null && session.currentIndex !== session.activities.length) return false;
@@ -40,7 +44,7 @@ function isDailyTrainingSession(value: unknown, timestamp: number): value is Sto
 }
 
 const defaultReason: Record<TrainingActivity, TrainingPlanReason> = {
-  activeRecall: 'active-recall', topicTest: 'coverage', mixedTopicTest: 'coverage', failures: 'recurring-failures', spacedReviews: 'due-reviews',
+  newContent: 'new-content-day', activeRecall: 'active-recall', topicTest: 'coverage', mixedTopicTest: 'coverage', failures: 'recurring-failures', spacedReviews: 'due-reviews',
 };
 
 export function readTrainingSession(accountId: string | null, timestamp: number): DailyTrainingSession | null {
@@ -71,6 +75,27 @@ export function readTrainingSession(accountId: string | null, timestamp: number)
 export function saveTrainingSession(accountId: string | null, session: DailyTrainingSession): void {
   try { localStorage.setItem(keyFor(accountId), JSON.stringify(session)); }
   catch { /* The daily plan remains usable if storage is unavailable. */ }
+}
+
+/** Merge only a valid current-day checkpoint newer than the local copy. */
+export function mergeRemoteTrainingSession(accountId: string | null, timestamp: number, value: unknown, updatedAt: number): boolean {
+  if (!Number.isFinite(updatedAt) || !isDailyTrainingSession(value, timestamp)) return false;
+  const current = readTrainingSession(accountId, timestamp);
+  if (current && (current.updatedAt ?? current.startedAt) >= updatedAt) return false;
+  const incoming = value as StoredTrainingSession;
+  saveTrainingSession(accountId, {
+    ...incoming,
+    updatedAt,
+    activities: incoming.activities.map(step => ({
+      activity: step.activity,
+      minutes: step.minutes,
+      reason: step.reason ?? defaultReason[step.activity],
+      ...(step.topicId ? { topicId: step.topicId } : {}),
+      ...(step.topicIds ? { topicIds: [...step.topicIds] } : {}),
+      ...(step.reviewMode ? { reviewMode: step.reviewMode } : {}),
+    })),
+  });
+  return true;
 }
 
 export function clearTrainingSession(accountId: string | null): void {

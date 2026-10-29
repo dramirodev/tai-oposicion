@@ -1,15 +1,18 @@
-import type { StudyReviewMode, TrainingActivity, TrainingPreferences } from './entities.js';
+import type { StudyReviewMode, TrainingActivity, TrainingDayFocus, TrainingPreferences } from './entities.js';
 import { recommendTopicIntervention } from './study-review-intervention.js';
 import type { TopicReviewEvidence } from './study-review-intervention.js';
 
 export const DEFAULT_TRAINING_PREFERENCES: TrainingPreferences = {
-  minutesByDay: [0, 35, 40, 35, 20, 40, 60],
+  minutesByDay: [0, 120, 120, 120, 120, 120, 120],
+  focusByDay: ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'],
   introductionDay: 4,
-  activities: ['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'],
-  activityVersion: 2,
+  activities: ['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'],
+  activityVersion: 3,
 };
 
-const supportedActivities = new Set<TrainingActivity>(['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']);
+const supportedDayFocus = new Set<TrainingDayFocus>(['rest', 'new-content', 'consolidation']);
+
+const supportedActivities = new Set<TrainingActivity>(['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']);
 const supportedReviewModes = new Set<StudyReviewMode>(['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading']);
 
 export function normalizeTrainingPreferences(value: unknown): TrainingPreferences {
@@ -19,13 +22,18 @@ export function normalizeTrainingPreferences(value: unknown): TrainingPreference
     && minutes.every(item => Number.isInteger(item) && item >= 0 && item <= 240)
     ? [...minutes] as TrainingPreferences['minutesByDay']
     : [...DEFAULT_TRAINING_PREFERENCES.minutesByDay];
+  const focus = candidate.focusByDay;
+  const focusByDay: NonNullable<TrainingPreferences['focusByDay']> = Array.isArray(focus) && focus.length === 7
+    && focus.every(item => supportedDayFocus.has(item as TrainingDayFocus))
+    ? [...focus] as NonNullable<TrainingPreferences['focusByDay']>
+    : [...DEFAULT_TRAINING_PREFERENCES.focusByDay!];
   const storedActivities = Array.isArray(candidate.activities)
     ? [...new Set(candidate.activities.filter((activity): activity is TrainingActivity => supportedActivities.has(activity as TrainingActivity)))]
     : [...DEFAULT_TRAINING_PREFERENCES.activities];
   const configuredActivities = storedActivities.length ? storedActivities : [...DEFAULT_TRAINING_PREFERENCES.activities];
-  const activities = candidate.activityVersion === 2
+  const activities = candidate.activityVersion === 3
     ? configuredActivities
-    : [...new Set([...configuredActivities, 'mixedTopicTest' as const])];
+    : [...new Set([...configuredActivities, 'mixedTopicTest' as const, 'newContent' as const])];
   const introductionDay = Number.isInteger(candidate.introductionDay) && candidate.introductionDay! >= 0 && candidate.introductionDay! <= 6
     ? candidate.introductionDay!
     : DEFAULT_TRAINING_PREFERENCES.introductionDay;
@@ -34,10 +42,10 @@ export function normalizeTrainingPreferences(value: unknown): TrainingPreference
   const reviewModesByTopic = candidate.reviewModesByTopic && typeof candidate.reviewModesByTopic === 'object' && !Array.isArray(candidate.reviewModesByTopic)
     ? Object.fromEntries(Object.entries(candidate.reviewModesByTopic).filter(([topicId, mode]) => /^T[1-4]\.\d{2}$/.test(topicId) && supportedReviewModes.has(mode as StudyReviewMode))) as Record<string, StudyReviewMode>
     : undefined;
-  return { minutesByDay, introductionDay, activities, activityVersion: 2, ...(introductionTopicId ? { introductionTopicId } : {}), ...(reviewModesByTopic && Object.keys(reviewModesByTopic).length ? { reviewModesByTopic } : {}) };
+  return { minutesByDay, focusByDay, introductionDay, activities, activityVersion: 3, ...(introductionTopicId ? { introductionTopicId } : {}), ...(reviewModesByTopic && Object.keys(reviewModesByTopic).length ? { reviewModesByTopic } : {}) };
 }
 
-export type TrainingPlanReason = 'active-recall' | 'new-topic-day' | 'weak-topics' | 'coverage' | 'recurring-failures' | 'due-reviews';
+export type TrainingPlanReason = 'active-recall' | 'new-content-day' | 'new-topic-day' | 'weak-topics' | 'coverage' | 'recurring-failures' | 'due-reviews';
 export interface PlannedTrainingActivity {
   activity: TrainingActivity;
   minutes: number;
@@ -54,6 +62,7 @@ export interface DailyTrainingPlan {
 }
 
 const activityWeight: Record<TrainingActivity, number> = {
+  newContent: 3,
   activeRecall: 2,
   topicTest: 3,
   mixedTopicTest: 2,
@@ -61,12 +70,14 @@ const activityWeight: Record<TrainingActivity, number> = {
   spacedReviews: 1,
 };
 
-function enabledActivities(preferences: TrainingPreferences, dueCount: number, cardDueCount: number, failureCount: number, studiedTopicCount: number): TrainingActivity[] {
+function enabledActivities(preferences: TrainingPreferences, dueCount: number, cardDueCount: number, failureCount: number, studiedTopicCount: number, canStudyNewContent: boolean): TrainingActivity[] {
   return preferences.activities.filter(activity => {
+    if (activity === 'newContent') return canStudyNewContent;
+    if (!studiedTopicCount) return false;
     if (activity === 'spacedReviews') return dueCount > 0 || cardDueCount > 0;
     if (activity === 'failures') return failureCount > 0;
     if (activity === 'mixedTopicTest') return studiedTopicCount > 0;
-    return true;
+    return studiedTopicCount > 0;
   });
 }
 
@@ -103,6 +114,8 @@ export function buildDailyTrainingPlan(input: {
   weakTopicIds?: readonly string[];
   /** When supplied, every activity is restricted to this explicitly studied topic set. */
   studiedTopicIds?: readonly string[];
+  /** First not-yet-marked topic, in syllabus order, with its real catalogue name. */
+  nextNewTopic?: { topicId: string; topicName: string };
   topicReviewEvidence?: readonly TopicReviewEvidence[];
 }): DailyTrainingPlan {
   const weekday = Number.isInteger(input.weekday) && input.weekday >= 0 && input.weekday <= 6 ? input.weekday : 0;
@@ -111,17 +124,30 @@ export function buildDailyTrainingPlan(input: {
   if (!minutes) return { weekday, minutes: 0, restDay: true, activities: [] };
 
   const studiedTopicIds = input.studiedTopicIds === undefined ? undefined : [...new Set(input.studiedTopicIds)];
-  if (studiedTopicIds && studiedTopicIds.length === 0) return { weekday, minutes, restDay: false, activities: [] };
   const studiedTopicSet = studiedTopicIds ? new Set(studiedTopicIds) : undefined;
+  const preferredTopic = preferences.introductionTopicId && !studiedTopicSet?.has(preferences.introductionTopicId)
+    ? preferences.introductionTopicId : undefined;
+  const newTopicId = preferredTopic ?? (input.nextNewTopic && !studiedTopicSet?.has(input.nextNewTopic.topicId) ? input.nextNewTopic.topicId : undefined);
+  const canStudyNewContent = preferences.focusByDay?.[weekday] === 'new-content' && !!newTopicId;
 
   const cardDueCount = Number.isFinite(input.cardDueCount) ? Math.max(0, input.cardDueCount ?? 0) : 0;
-  const candidates = enabledActivities(preferences, input.dueCount, cardDueCount, input.failureCount, studiedTopicIds?.length ?? 0);
+  const evidencedTopics = input.topicReviewEvidence?.filter(item => item.hasStudyMarker || item.distinctQuestionsAttempted > 0).length ?? 0;
+  const studiedTopicCount = studiedTopicIds === undefined ? Math.max(input.weakTopicCount, evidencedTopics) : studiedTopicIds.length;
+  let candidates = enabledActivities(preferences, input.dueCount, cardDueCount, input.failureCount, studiedTopicCount, canStudyNewContent);
+  if (canStudyNewContent) {
+    const reinforcement: TrainingActivity | undefined = candidates.includes('spacedReviews') ? 'spacedReviews'
+      : candidates.includes('failures') ? 'failures'
+        : candidates.includes('activeRecall') ? 'activeRecall'
+          : candidates.includes('topicTest') ? 'topicTest' : undefined;
+    candidates = ['newContent', ...(reinforcement ? [reinforcement] : [])];
+  }
   if (!candidates.length) return { weekday, minutes, restDay: false, activities: [] };
   const allocation = allocateMinutes(candidates, minutes);
   const weakTopicIds = studiedTopicIds
     ? (input.weakTopicIds ?? []).filter(topicId => studiedTopicSet!.has(topicId))
     : input.weakTopicIds;
   const reasons: Record<TrainingActivity, TrainingPlanReason> = {
+    newContent: 'new-content-day',
     activeRecall: 'active-recall',
     topicTest: weekday === preferences.introductionDay && !studiedTopicIds ? 'new-topic-day'
       : (studiedTopicIds ? !!weakTopicIds?.length : !!input.weakTopicCount) ? 'weak-topics' : 'coverage',
@@ -135,11 +161,12 @@ export function buildDailyTrainingPlan(input: {
       && typeof evidence.questionCoverageOfTarget === 'number'
       && evidence.questionCoverageOfTarget < 100)
     .sort((left, right) => left.questionCoverageOfTarget! - right.questionCoverageOfTarget!)[0];
-  const order: TrainingActivity[] = ['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'];
+  const order: TrainingActivity[] = ['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'];
   const activities = order.flatMap(activity => {
     const duration = allocation.get(activity) || 0;
     if (!duration) return [];
-    const topicId = activity !== 'topicTest' ? undefined
+    const topicId = activity === 'newContent' ? newTopicId
+      : activity !== 'topicTest' ? undefined
       : reasons[activity] === 'weak-topics' ? weakTopicIds?.[0]
         : reasons[activity] === 'new-topic-day' ? preferences.introductionTopicId
           : reasons[activity] === 'coverage' ? leastCoveredStudiedTopic?.topicId ?? studiedTopicIds?.[0] : undefined;
@@ -147,7 +174,7 @@ export function buildDailyTrainingPlan(input: {
       ? input.topicReviewEvidence?.find(item => item.topicId === topicId)
       : undefined;
     const reviewIntervention = evidence ? recommendTopicIntervention(evidence, preferences.reviewModesByTopic?.[evidence.topicId]) : undefined;
-    return [{ activity, minutes: duration, reason: reasons[activity], ...(topicId ? { topicId } : {}), ...(studiedTopicIds ? { topicIds: studiedTopicIds } : {}), ...(reviewIntervention ? { reviewIntervention } : {}) }];
+    return [{ activity, minutes: duration, reason: reasons[activity], ...(topicId ? { topicId } : {}), ...(activity !== 'newContent' && studiedTopicIds ? { topicIds: studiedTopicIds } : {}), ...(reviewIntervention ? { reviewIntervention } : {}) }];
   });
   return { weekday, minutes, restDay: false, activities };
 }

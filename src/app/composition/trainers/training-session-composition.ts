@@ -3,39 +3,54 @@ import type { DailyTrainingPlan } from '../../../core/domain/study-training-plan
 import {
   completeTrainingSessionActivity,
   createDailyTrainingSession,
+  pauseTrainingSessionActivity,
   startTrainingSessionActivity,
   type DailyTrainingSession,
 } from '../../../core/domain/study-training-session.js';
-import { readTrainingSession, saveTrainingSession } from '../../../adapters/local/training-session.js';
+import { mergeRemoteTrainingSession, readTrainingSession, saveTrainingSession } from '../../../adapters/local/training-session.js';
 
 export function createTrainingSessionComposition(dependencies: {
   accountId(): string | null;
   now(): number;
+  push?(session: DailyTrainingSession): void;
 }) {
   const getSession = () => readTrainingSession(dependencies.accountId(), dependencies.now());
-  const save = (session: DailyTrainingSession) => saveTrainingSession(dependencies.accountId(), session);
+  const save = (session: DailyTrainingSession) => {
+    const updatedAt = Math.max(dependencies.now(), (session.updatedAt ?? session.startedAt) + 1);
+    const checkpoint = { ...session, updatedAt };
+    saveTrainingSession(dependencies.accountId(), checkpoint);
+    dependencies.push?.(checkpoint);
+    return checkpoint;
+  };
   return {
     getSession,
+    mergeRemote(session: unknown, updatedAt: number): boolean {
+      return mergeRemoteTrainingSession(dependencies.accountId(), dependencies.now(), session, updatedAt);
+    },
     start(plan: DailyTrainingPlan): DailyTrainingSession | null {
       const existing = getSession();
       if (existing) return existing;
       const created = createDailyTrainingSession(plan, dependencies.now());
-      if (created) save(created);
+      if (created) return save(created);
       return created;
     },
     startCurrentActivity(): DailyTrainingSession | null {
       const session = getSession();
       if (!session) return null;
       const started = startTrainingSessionActivity(session, dependencies.now());
-      if (started !== session) save(started);
-      return started;
+      return started !== session ? save(started) : started;
+    },
+    pauseCurrentActivity(): DailyTrainingSession | null {
+      const session = getSession();
+      if (!session) return null;
+      const paused = pauseTrainingSessionActivity(session, dependencies.now());
+      return paused !== session ? save(paused) : paused;
     },
     completeActivity(activity: TrainingActivity): DailyTrainingSession | null {
       const session = getSession();
       if (!session) return null;
       const completed = completeTrainingSessionActivity(session, activity, dependencies.now());
-      if (completed !== session) save(completed);
-      return completed;
+      return completed !== session ? save(completed) : completed;
     },
   };
 }

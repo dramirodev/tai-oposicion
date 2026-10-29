@@ -20,7 +20,7 @@ it('keeps help instructions aligned with current menu labels and measured study 
   expect(section('acceso')).toContain('abre «Accesos» en el menú');
   expect(section('inicio')).toContain('10 preguntas y suele llevar unos cinco minutos; no tiene cronómetro');
   expect(section('inicio')).toContain('«Temas vistos»');
-  expect(section('inicio')).toContain('consulta tus apuntes por separado');
-  expect(section('inicio')).toContain('tiempo activo observado mientras respondes preguntas en sesiones completadas');
+  expect(section('inicio')).toContain('la lectura de apuntes o la reconstrucción mental no se observa directamente');
+  expect(section('inicio')).toContain('checkpoint se conserva en este dispositivo');
   expect(section('errores')).toContain('En el menú abre «Errores del banco»');
 });

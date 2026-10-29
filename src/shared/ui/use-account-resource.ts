@@ -5,7 +5,7 @@ interface ResourceServices<Value> {
   load(): Promise<Value>;
 }
 /** Ignore late reads after navigation, a newer read or an account switch. */
-export function useAccountResource<Value>(services: ResourceServices<Value>) {
+export function useAccountResource<Value>(services: ResourceServices<Value>, refreshKey?: string | number) {
   const [state, setState] = useState<{ value?: Value; error?: unknown }>({});
   useEffect(() => {
     let active = true, sequence = 0, previousAccount = services.accountId();
@@ -20,6 +20,6 @@ export function useAccountResource<Value>(services: ResourceServices<Value>) {
     };
     refresh(); const off = services.subscribe(refresh);
     return () => { active = false; sequence++; off(); };
-  }, [services]);
+  }, [services, refreshKey]);
   return state;
 }

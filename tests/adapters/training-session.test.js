@@ -1,5 +1,5 @@
 import { afterEach, expect, it, vi } from 'vitest';
-import { readTrainingSession, saveTrainingSession } from '../../src/adapters/local/training-session.js';
+import { mergeRemoteTrainingSession, readTrainingSession, saveTrainingSession } from '../../src/adapters/local/training-session.js';
 
 afterEach(() => { vi.restoreAllMocks(); localStorage.clear(); });
 
@@ -42,4 +42,15 @@ it('descarta checkpoints corruptos y tolera localStorage bloqueado', () => {
   expect(localStorage.getItem('tai.training-session.v1.owner-a')).toBeNull();
   vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => { throw new Error('Storage denied'); });
   expect(readTrainingSession('owner-a', timestamp)).toBeNull();
+});
+
+it('aplica solo un checkpoint remoto del mismo día que sea más reciente y conserva el aislamiento por cuenta', () => {
+  const local = { ...session, currentStartedAt: null, updatedAt: timestamp + 1_000 };
+  saveTrainingSession('owner-a', local);
+  const remote = { ...session, activities: [...session.activities, { activity: 'failures', minutes: 10, reason: 'recurring-failures' }], currentIndex: 1, currentStartedAt: null, updatedAt: timestamp + 2_000 };
+  expect(mergeRemoteTrainingSession('owner-a', timestamp, remote, timestamp + 2_000)).toBe(true);
+  expect(readTrainingSession('owner-a', timestamp)?.currentIndex).toBe(1);
+  expect(mergeRemoteTrainingSession('owner-a', timestamp, local, timestamp + 1_000)).toBe(false);
+  expect(readTrainingSession('owner-b', timestamp)).toBeNull();
+  expect(mergeRemoteTrainingSession('owner-a', timestamp + 86_400_000, remote, timestamp + 2_000)).toBe(false);
 });

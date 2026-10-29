@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { completeTrainingSessionActivity, createDailyTrainingSession, startTrainingSessionActivity } from '../../src/core/domain/study-training-session.ts';
+import { completeTrainingSessionActivity, createDailyTrainingSession, pauseTrainingSessionActivity, startTrainingSessionActivity } from '../../src/core/domain/study-training-session.ts';
 
 const plan = { weekday:2, minutes:30, restDay:false, activities:[
   { activity:'activeRecall', minutes:10, reason:'active-recall' },
@@ -32,5 +32,16 @@ describe('sesión diaria guiada', () => {
     const started = startTrainingSessionActivity(created, now - 3_600_000);
     expect(started.currentStartedAt).toBe(now);
     expect(completeTrainingSessionActivity(started, 'activeRecall', now - 7_200_000).completedAt).toBe(now);
+  });
+
+  it('pausa y reanuda una actividad conservando tiempo acumulado sin duplicarlo', () => {
+    const now = 1_800_000_000_000;
+    const created = createDailyTrainingSession({ ...plan, activities: [plan.activities[0]] }, now);
+    const started = startTrainingSessionActivity(created, now + 1_000);
+    const paused = pauseTrainingSessionActivity(started, now + 16_000);
+    expect(paused).toMatchObject({ currentStartedAt: null, elapsedSecondsByActivity: [15] });
+    const resumed = startTrainingSessionActivity(paused, now + 60_000);
+    const completed = completeTrainingSessionActivity(resumed, 'activeRecall', now + 70_000);
+    expect(completed).toMatchObject({ elapsedSecondsByActivity: [25], currentIndex: 1, completedAt: now + 70_000 });
   });
 });

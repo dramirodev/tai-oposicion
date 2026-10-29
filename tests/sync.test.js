@@ -19,14 +19,15 @@ vi.mock('firebase/firestore', () => ({
   setDoc: async (ref, value) => { boundary.writes.push({ path: ref.path, value }); },
   deleteDoc: async ref => { boundary.writes.push({ path: ref.path, deleted: true }); },
 }));
-let sync, store;
+let sync, store, trainingStore;
 const user = (uid, email = 'dramiro@gmail.com') => { const u = { uid, email, displayName: 'Persona', emailVerified: true }; boundary.auth.currentUser = u; boundary.authChanged(u); };
 beforeEach(async () => {
   vi.resetModules(); vi.useFakeTimers(); localStorage.clear();
   boundary.writes.length = 0; boundary.snapshots.length = 0; boundary.auth.currentUser = null;
   vi.stubGlobal('fetch', async () => ({ ok: true, json: async () => ({ apiKey: 'test', authDomain: 'localhost' }) }));
   store = await import('../src/adapters/local/legacy-store.js'); sync = await import('../src/adapters/firebase/legacy-sync.js');
-  await sync.init({ temaOf: () => 'T1.01', idsOfTema: () => [] }, store); user('user1');
+  trainingStore = { getSession: vi.fn(() => null), mergeRemote: vi.fn(() => false) };
+  await sync.init({ temaOf: () => 'T1.01', idsOfTema: () => [] }, store, trainingStore); user('user1');
 });
 afterEach(() => { vi.clearAllTimers(); vi.useRealTimers(); vi.unstubAllGlobals(); });
 it('cancela una escritura de tarjetas pendiente al cerrar sesión', async () => {
@@ -94,6 +95,25 @@ it('la solicitud pasa a pendiente y el aprobado empieza a sincronizar', async ()
   expect(paths()).toContain('users/u2/stats');
   snap('access/u2', null);
   expect(status.access).not.toBe('aprobado');
+});
+
+it('sincroniza el checkpoint de planificación solo bajo la cuenta aprobada y lo combina al recibir cambios', async () => {
+  const session = {
+    dateKey: new Date().toLocaleDateString('en-CA'), activities: [{ activity: 'activeRecall', minutes: 20, reason: 'active-recall', topicIds: ['T1.01'] }],
+    currentIndex: 0, currentStartedAt: null, elapsedSecondsByActivity: [0], updatedAt: Date.now(), startedAt: Date.now(), completedAt: null,
+  };
+  trainingStore.getSession.mockReturnValue(session);
+  const listener = boundary.snapshots.find(item => item.ref.path === 'users/user1/cfg/training');
+  expect(listener).toBeTruthy();
+  listener.cb({ exists: () => false, data: () => null });
+  await Promise.resolve();
+  expect(boundary.writes).toContainEqual({ path: 'users/user1/cfg/training', value: { schemaVersion: 1, updatedAt: session.updatedAt, session } });
+  const remote = { ...session, currentIndex: 1, updatedAt: session.updatedAt + 1 };
+  listener.cb({ exists: () => true, data: () => ({ schemaVersion: 1, updatedAt: remote.updatedAt, session: remote }) });
+  expect(trainingStore.mergeRemote).toHaveBeenCalledWith(remote, remote.updatedAt);
+  await sync.logout();
+  sync.pushTrainingSession(session);
+  expect(boundary.writes.filter(item => item.path === 'users/user1/cfg/training')).toHaveLength(1);
 });
 it('aprobar escribe el acceso y borra la solicitud; revocar lo borra', async () => {
   boundary.writes.length = 0;

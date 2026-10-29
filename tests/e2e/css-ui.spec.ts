@@ -204,24 +204,56 @@ test('saltar al contenido conserva la ruta y ofrece un destino de teclado', asyn
   expect(page.url()).toBe(before);
 });
 
-test('Inicio ordena la sesión rápida antes del entrenamiento secuencial', async ({ page }) => {
+test('Planificación prepara la sesión fuera de Inicio y permite comenzar el paso configurado', async ({ page }) => {
   await prepare(page, 'light', 0, true);
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/#/home');
   await expect(page.locator('#quick')).toBeVisible();
-  await expect(page.locator('#home-training')).toHaveCount(1);
-  await expect(page.locator('.training-progress-rail')).toHaveCount(1);
-  if (page.context().browser()?.browserType().name() === 'chromium') await expect(page.locator('#home-training')).toBeVisible();
-  const quick = await page.locator('#quick').boundingBox();
-  const training = await page.locator('#home-training').boundingBox();
-  expect(quick).not.toBeNull(); expect(training).not.toBeNull();
-  expect(quick!.y + quick!.height).toBeLessThan(training!.y);
-  expect(await page.locator('.training-progress-rail > li').count()).toBeGreaterThan(0);
+  await expect(page.locator('.home-training')).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Abrir Planificación de estudio' })).toHaveAttribute('href', '#/planificacion');
   await page.locator('#menu').focus();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('dialog')).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(page.locator('#menu')).toBeFocused();
+
+  await page.goto('/#/planificacion');
+  await expect(page.locator('#app h1')).toHaveText('Planificación de estudio');
+  await expect(page.locator('.planning-activity')).toHaveCount(2);
+  await page.getByRole('button', { name: 'Comenzar sesión' }).click();
+  await expect(page).toHaveURL(/#\/temario\?topic=T1\.02&dailyTraining=newContent/);
+});
+
+test('un día de consolidación sin temas vistos muestra tiempo disponible, no una duración de sesión inventada', async ({ page }) => {
+  await prepare(page, 'light', 0);
+  await page.clock.setFixedTime(new Date('2026-10-24T12:00:00+02:00'));
+  await page.goto('/#/planificacion');
+  await expect(page.locator('#app h1')).toHaveText('Planificación de estudio');
+  await expect(page.getByText('No hay actividades justificadas con la información disponible.')).toBeVisible();
+  await expect(page.getByText('Tiempo disponible')).toBeVisible();
+  await expect(page.getByText('Tiempo previsto')).toHaveCount(0);
+  await expect(page.getByRole('definition').filter({ hasText: '120 min' })).toBeVisible();
+});
+
+test('Planificación conserva el contenido dentro del viewport desde móvil estrecho hasta escritorio grande', async ({ page }) => {
+  await prepare(page, 'light', 0);
+  await page.clock.setFixedTime(new Date('2026-10-24T12:00:00+02:00'));
+  await page.goto('/#/planificacion');
+  await expect(page.locator('#app h1')).toHaveText('Planificación de estudio');
+  for (const width of [320, 375, 430, 768, 1024, 1280, 1440, 1920]) {
+    await page.setViewportSize({ width, height: 900 });
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    const pageBounds = await page.locator('.planning-page').boundingBox();
+    expect(pageBounds).not.toBeNull();
+    expect(pageBounds!.x + pageBounds!.width).toBeLessThanOrEqual(width + 1);
+  }
+  await page.setViewportSize({ width: 320, height: 900 });
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  const bottomVisibility = await page.evaluate(() => ({
+    contentBottom: document.querySelector('.planning-evidence')!.getBoundingClientRect().bottom,
+    navigationTop: document.querySelector('nav[aria-label="Principal"]')!.getBoundingClientRect().top,
+  }));
+  expect(bottomVisibility.contentBottom).toBeLessThanOrEqual(bottomVisibility.navigationTop + 1);
 });
 
 test('el espaciado de texto conserva el reflujo con una sesión en curso', async ({ page }) => {

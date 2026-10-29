@@ -42,7 +42,6 @@ it('shows the domain summary when every assessed topic is still yellow', async (
   expect(document.querySelector('.home-block').textContent).toBe('Bloque I0 de 11 dominados');
   expect(document.querySelector('.home-metrics').textContent).toContain('Preguntas vistas1 / 100');
 });
-
 it('keeps the home loading until its data and authentication status are resolved', async () => {
   const listeners = new Set();
   let authResolved = false;
@@ -69,25 +68,12 @@ it('keeps the home loading until its data and authentication status are resolved
   expect(screen.getByRole('heading', { name: 'Sesión sin iniciar' })).toBeInTheDocument();
 });
 
-it('muestra el progreso y el tema previsto sin acciones que permitan saltar pasos', async () => {
-  const onStartReview = vi.fn();
-  const onStartTraining = vi.fn();
-  const overview = { completedSessions:0,blocks:[],seen:0,total:100,answers:0,streak:0,daysToExam:null,due:6,cardsDue:0,quickCount:5,slowCount:0,failures:3,studiedTopics:1,studiedTopicDetails:[{id:'T1.01',name:'Organización del Estado'}],topicCount:36,weakTopics:2,masteredTopics:0,assessedTopics:0,trainingSession:null,trainingPlan:{weekday:2,minutes:40,restDay:false,activities:[{activity:'activeRecall',minutes:10,reason:'active-recall'},{activity:'topicTest',minutes:15,reason:'weak-topics',topicId:'T1.01',reviewIntervention:{mode:'active-retrieval',confidence:'provisional',topicId:'T1.01',topicName:'Organización del Estado',reason:'check-before-rereading',explanation:'Comprueba qué recuerdas de este tema.',targets:[],evidence:{distinctQuestionsAttempted:3,latestAnswerAccuracy:50,daysSinceLastQuestionAttempt:4}}},{activity:'failures',minutes:10,reason:'recurring-failures'},{activity:'spacedReviews',minutes:5,reason:'due-reviews'}]}};
-  renderApp(createElement(HomeView, { overview, access:{ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }, run:null, pending:new Set(), onNavigate:vi.fn(), onStartReview, onStartTraining, onQuickSession:vi.fn(), onOpenMenu:vi.fn(), onLogin:vi.fn(), onRequestAccess:vi.fn() }));
-  expect(await screen.findByRole('heading', { name: 'Entrenamiento de hoy' })).toBeInTheDocument();
-  expect(screen.getByText('40 min orientativos')).toBeInTheDocument();
-  expect(document.querySelector('#training-topicTest .training-plan-row small')).toHaveTextContent(/Prioridad basada en los temas con menor dominio estimado/);
-  expect(screen.getByRole('heading', { name:'Temas previstos para repasar' })).toBeInTheDocument();
-  expect(screen.getByText('T1.01 · Organización del Estado')).toBeInTheDocument();
-  expect(document.querySelector('#quick').compareDocumentPosition(document.querySelector('.home-training')) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-  const user = userEvent.setup();
-  expect(screen.queryByRole('heading', { name: 'Tu próxima sesión' })).not.toBeInTheDocument();
-  expect(document.querySelector('.home-primary')).toBeNull();
-  expect(document.querySelector('#test, #sim, #cards')).toBeNull();
-  expect(screen.queryByRole('button', { name:/Active Recall/ })).not.toBeInTheDocument();
-  expect(screen.queryByRole('button', { name:/Preguntas de tema/ })).not.toBeInTheDocument();
-  await user.click(screen.getByRole('button', { name:'Empezar entrenamiento de hoy' }));
-  expect(onStartTraining).toHaveBeenCalledOnce();
+it('concentra el plan diario en Planificación y evita duplicarlo en Inicio', async () => {
+  const overview = { completedSessions:0,blocks:[],seen:0,total:100,answers:0,streak:0,daysToExam:null,due:0,cardsDue:0,quickCount:5,slowCount:0,failures:0,studiedTopics:1,topicCount:36,weakTopics:0,masteredTopics:0,assessedTopics:0,trainingSession:null,trainingPlan:restPlan };
+  renderApp(createElement(HomeView, { overview, access:{ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }, run:null, pending:new Set(), onNavigate:vi.fn(), onStartReview:vi.fn(), onQuickSession:vi.fn(), onOpenMenu:vi.fn(), onLogin:vi.fn(), onRequestAccess:vi.fn() }));
+  expect(screen.getByRole('heading', { name:'Tu estudio de hoy' })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name:'Abrir Planificación de estudio' })).toHaveAttribute('href', '/planificacion');
+  expect(screen.queryByRole('heading', { name:'Entrenamiento de hoy' })).not.toBeInTheDocument();
 });
 
 it('mantiene el acceso directo para continuar una sesión activa', async () => {
@@ -97,177 +83,11 @@ it('mantiene el acceso directo para continuar una sesión activa', async () => {
   renderApp(createElement(HomeView, {
     overview,
     access:{ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 },
-    run:{ title:'Repaso', position:2, total:10 }, pending:new Set(), onNavigate:navigate, onStartReview:vi.fn(), onStartTraining:vi.fn(), onQuickSession:vi.fn(), onOpenMenu:vi.fn(), onLogin:vi.fn(), onRequestAccess:vi.fn(),
+    run:{ title:'Repaso', position:2, total:10 }, pending:new Set(), onNavigate:navigate, onStartReview:vi.fn(), onQuickSession:vi.fn(), onOpenMenu:vi.fn(), onLogin:vi.fn(), onRequestAccess:vi.fn(),
   }));
 
   expect(screen.getByRole('heading', { name:'Sesión en curso' })).toBeInTheDocument();
   expect(screen.getByText('Repaso · pregunta 3 de 10')).toBeInTheDocument();
   await user.click(screen.getByRole('button', { name:/Continuar sesión/ }));
   expect(navigate).toHaveBeenCalledWith('quiz');
-});
-
-it('incluye en la secuencia las tarjetas FSRS vencidas', async () => {
-  const overview = { completedSessions:0,blocks:[],seen:0,total:100,answers:0,streak:0,daysToExam:null,due:0,cardsDue:3,quickCount:5,slowCount:0,failures:0,studiedTopics:0,topicCount:36,weakTopics:0,masteredTopics:0,assessedTopics:0,trainingSession:null,trainingPlan:{weekday:2,minutes:40,restDay:false,activities:[{activity:'spacedReviews',minutes:40,reason:'due-reviews'}]}};
-  renderApp(createElement(HomeView, { overview, access:{ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }, run:null, pending:new Set(), onNavigate:vi.fn(), onStartReview:vi.fn(), onStartTraining:vi.fn(), onQuickSession:vi.fn(), onOpenMenu:vi.fn(), onLogin:vi.fn(), onRequestAccess:vi.fn() }));
-  expect(document.querySelector('#training-spacedReviews')).toHaveTextContent(/Repasos vencidos.*3 tarjetas pendientes/);
-});
-
-it('explica en el plan el día de introducción configurado', async () => {
-  const overview = { completedSessions:0,blocks:[],seen:0,total:100,answers:0,streak:0,daysToExam:null,due:0,cardsDue:0,quickCount:5,slowCount:0,failures:0,studiedTopics:0,topicCount:36,weakTopics:0,masteredTopics:0,assessedTopics:0,trainingSession:null,trainingPlan:{weekday:4,minutes:20,restDay:false,activities:[{activity:'topicTest',minutes:20,reason:'new-topic-day'}]}};
-  renderApp(createElement(HomeView, { overview, access:{ full:true,level:'propietario',greeting:'Hola',state:'sincronizado',configured:true,signedIn:true,pendingRequests:0 },run:null,pending:new Set(),onNavigate:vi.fn(),onStartReview:vi.fn(),onStartTraining:vi.fn(),onQuickSession:vi.fn(),onOpenMenu:vi.fn(),onLogin:vi.fn(),onRequestAccess:vi.fn() }));
-  expect(await screen.findByText(/Día de introducción de temas/)).toBeInTheDocument();
-});
-
-it('permite reanudar el paso guardado y muestra el avance sin confirmación manual', async () => {
-  const overview = {
-    completedSessions:0, blocks:[], seen:0, total:100, answers:0, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0,
-    studiedTopics:0, topicCount:36, weakTopics:0, masteredTopics:0, assessedTopics:0,
-    trainingPlan:{ weekday:2, minutes:30, restDay:false, activities:[{activity:'activeRecall',minutes:10,reason:'active-recall'},{activity:'topicTest',minutes:20,reason:'coverage'}] },
-    trainingSession:{ dateKey:'2026-10-28', activities:[{activity:'activeRecall',minutes:10,reason:'active-recall'},{activity:'topicTest',minutes:20,reason:'coverage'}], currentIndex:0, currentStartedAt:100, startedAt:100, completedAt:null },
-  };
-  renderApp(createElement(HomeView, { overview, access:{ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }, run:null, pending:new Set(), onNavigate:vi.fn(), onStartReview:vi.fn(), onStartTraining:vi.fn(), onQuickSession:vi.fn(), onOpenMenu:vi.fn(), onLogin:vi.fn(), onRequestAccess:vi.fn() }));
-  expect(await screen.findByText('Actividad 1 de 2: Active Recall · 10 min orientativos.')).toBeInTheDocument();
-  expect(screen.getByRole('button', { name:'Continuar actividad' })).toBeInTheDocument();
-  expect(screen.queryByRole('button', { name:'He terminado esta actividad' })).not.toBeInTheDocument();
-  expect(document.querySelector('.training-plan-item.is-current')).toHaveAttribute('aria-current', 'step');
-});
-
-it('resume actividades y minutos orientativos en el resumen del entrenamiento terminado', async () => {
-  const overview = {
-    completedSessions:0,blocks:[],seen:0,total:100,answers:0,streak:0,daysToExam:null,due:0,cardsDue:0,quickCount:5,slowCount:0,failures:0,
-    studiedTopics:0,topicCount:36,weakTopics:0,masteredTopics:0,assessedTopics:0,
-    trainingPlan:{weekday:2,minutes:20,restDay:false,activities:[{activity:'activeRecall',minutes:10,reason:'active-recall'},{activity:'topicTest',minutes:10,reason:'coverage'}]},
-    trainingSession:{dateKey:'2026-10-28',activities:[{activity:'activeRecall',minutes:10,reason:'active-recall'},{activity:'topicTest',minutes:10,reason:'coverage'}],currentIndex:2,currentStartedAt:null,startedAt:100,completedAt:200},
-  };
-  renderApp(createElement(HomeView,{overview,access:{full:true,level:'propietario',greeting:'Hola',state:'sincronizado',configured:true,signedIn:true,pendingRequests:0},run:null,pending:new Set(),onNavigate:vi.fn(),onStartReview:vi.fn(),onStartTraining:vi.fn(),onCompleteTrainingActivity:vi.fn(),onQuickSession:vi.fn(),onOpenMenu:vi.fn(),onLogin:vi.fn(),onRequestAccess:vi.fn()}));
-  expect(await screen.findByRole('status')).toHaveTextContent('Entrenamiento completado: 2 actividades · 20 min orientativos');
-  expect(screen.getByRole('status')).toHaveTextContent('Active Recall, Preguntas de tema');
-});
-
-it('prepara el test diario con el tema débil y limita su alcance a temas vistos', async () => {
-  const session = { dateKey:'2026-10-28', activities:[{ activity:'topicTest', minutes:35, reason:'weak-topics', topicId:'T2.01' }], currentIndex:0, currentStartedAt:1, startedAt:1, completedAt:null };
-  const services = { home: {
-    accountId:() => null, authResolved:() => true, subscribe:() => () => {}, getActiveStudy:() => null,
-    seenTopics:() => ['T2.01'],
-    getAccess:() => ({ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }),
-    loadOverview:async () => ({ completedSessions:0, blocks:[], seen:0, total:100, answers:0, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0, studiedTopics:0, topicCount:36, weakTopics:1, masteredTopics:0, assessedTopics:0, trainingPlan:{ weekday:2, minutes:35, restDay:false, activities:[{ activity:'topicTest', minutes:35, reason:'weak-topics', topicId:'T2.01' }] }, trainingSession:null }),
-    startTrainingSession:vi.fn(() => session), startTrainingActivity:vi.fn(() => session), completeTrainingActivity:vi.fn(),
-    quickSession:async () => {}, startReview:async () => {}, openMenu:vi.fn(), login:async () => {}, requestAccess:async () => false, notify:vi.fn(),
-  }};
-  renderApp(createElement('div', null, createElement(HomePage), createElement(CurrentPath)), { services });
-  await userEvent.setup().click(await screen.findByRole('button', { name:'Empezar entrenamiento de hoy' }));
-  expect(await screen.findByTestId('current-path')).toHaveTextContent('/test?dailyTraining=topicTest&trainingTopics=T2.01&topic=T2.01');
-  expect(services.home.startTrainingSession).toHaveBeenCalledOnce();
-  expect(services.home.startTrainingActivity).toHaveBeenCalledOnce();
-});
-
-it('prepara una comprobación del tema incluso cuando la recomendación aconseja leer', async () => {
-  const session = { dateKey:'2026-10-28', activities:[{ activity:'topicTest', minutes:20, reason:'new-topic-day', topicId:'T3.02', reviewMode:'initial-study' }], currentIndex:0, currentStartedAt:1, startedAt:1, completedAt:null };
-  const services = { home: {
-    accountId:() => null, authResolved:() => true, subscribe:() => () => {}, getActiveStudy:() => null,
-    seenTopics:() => ['T3.02'],
-    getAccess:() => ({ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }),
-    loadOverview:async () => ({ completedSessions:0, blocks:[], seen:0, total:100, answers:0, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0, studiedTopics:0, topicCount:36, weakTopics:0, masteredTopics:0, assessedTopics:0, trainingPlan:{ weekday:4, minutes:20, restDay:false, activities:[{ activity:'topicTest', minutes:20, reason:'new-topic-day', topicId:'T3.02', reviewIntervention:{ mode:'initial-study', confidence:'provisional', topicId:'T3.02', topicName:'Tribunal Constitucional', reason:'study-not-marked', explanation:'Aún no hay una marca de estudio ni respuestas.', targets:[], evidence:{ distinctQuestionsAttempted:0, latestAnswerAccuracy:null, daysSinceLastQuestionAttempt:null } } }] }, trainingSession:null }),
-    startTrainingSession:vi.fn(() => session), startTrainingActivity:vi.fn(() => session), completeTrainingActivity:vi.fn(), setTrainingReviewMode:vi.fn(),
-    quickSession:async () => {}, startReview:async () => {}, openMenu:vi.fn(), login:async () => {}, requestAccess:async () => false, notify:vi.fn(),
-  }};
-  renderApp(createElement('div', null, createElement(HomePage), createElement(CurrentPath)), { services });
-  await userEvent.setup().click(await screen.findByRole('button', { name:'Empezar entrenamiento de hoy' }));
-  expect(await screen.findByTestId('current-path')).toHaveTextContent('/test?dailyTraining=topicTest&trainingTopics=T3.02&topic=T3.02');
-});
-
-it('restringe una sesión diaria antigua a los temas vistos ahora', async () => {
-  const legacySession = { dateKey:'2026-10-28', activities:[{ activity:'topicTest', minutes:20, reason:'new-topic-day', topicId:'T3.02', reviewMode:'initial-study' }], currentIndex:0, currentStartedAt:1, startedAt:1, completedAt:null };
-  const services = { home: {
-    accountId:() => null, authResolved:() => true, subscribe:() => () => {}, getActiveStudy:() => null,
-    seenTopics:() => ['T1.01', 'T2.01'],
-    getAccess:() => ({ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }),
-    loadOverview:async () => ({ completedSessions:0, blocks:[], seen:0, total:100, answers:0, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0, studiedTopics:2, topicCount:36, weakTopics:0, masteredTopics:0, assessedTopics:0, trainingPlan:{ weekday:2, minutes:20, restDay:false, activities:[{ activity:'topicTest', minutes:20, reason:'coverage' }] }, trainingSession:null }),
-    startTrainingSession:vi.fn(() => legacySession), startTrainingActivity:vi.fn(() => legacySession), completeTrainingActivity:vi.fn(),
-    quickSession:async () => {}, startReview:async () => {}, openMenu:vi.fn(), login:async () => {}, requestAccess:async () => false, notify:vi.fn(),
-  }};
-  renderApp(createElement('div', null, createElement(HomePage), createElement(CurrentPath)), { services });
-  await userEvent.setup().click(await screen.findByRole('button', { name:'Empezar entrenamiento de hoy' }));
-  expect(await screen.findByTestId('current-path')).toHaveTextContent('/test?dailyTraining=topicTest&trainingTopics=T1.01%2CT2.01');
-  expect(screen.getByTestId('current-path')).not.toHaveTextContent('T3.02');
-});
-
-it('no permite que una recomendación antigua de dominio bajo abra un tema no visto', async () => {
-  const services = { home: {
-    accountId:() => null, authResolved:() => true, subscribe:() => () => {}, getActiveStudy:() => null,
-    seenTopics:() => ['T1.01'],
-    getAccess:() => ({ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }),
-    loadOverview:async () => ({ completedSessions:0, blocks:[], seen:1, total:100, answers:3, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0, studiedTopics:1, topicCount:36, weakTopics:1, masteredTopics:0, assessedTopics:1, trainingPlan:{ weekday:2, minutes:20, restDay:false, activities:[{ activity:'topicTest', minutes:20, reason:'weak-topics', topicId:'T3.02', topicIds:['T3.02', 'T1.01'] }] }, trainingSession:null }),
-    startTrainingSession:vi.fn(), startTrainingActivity:vi.fn(), completeTrainingActivity:vi.fn(), startReview:async () => {}, quickSession:async () => {}, openMenu:vi.fn(), login:async () => {}, requestAccess:async () => false, notify:vi.fn(),
-  }};
-  renderApp(createElement('div', null, createElement(HomePage), createElement(CurrentPath)), { services });
-  const session = { dateKey:'2026-10-28',activities:[{activity:'topicTest',minutes:20,reason:'weak-topics',topicId:'T3.02',topicIds:['T3.02','T1.01']}],currentIndex:0,currentStartedAt:1,startedAt:1,completedAt:null };
-  services.home.startTrainingSession.mockReturnValue(session);
-  services.home.startTrainingActivity.mockReturnValue(session);
-  await userEvent.setup().click(await screen.findByRole('button', { name:'Empezar entrenamiento de hoy' }));
-  expect(await screen.findByTestId('current-path')).toHaveTextContent('/test?dailyTraining=topicTest&trainingTopics=T1.01');
-  expect(screen.getByTestId('current-path')).not.toHaveTextContent('T3.02');
-});
-
-it('no abre contenido de entrenamiento si no hay temas marcados como vistos', async () => {
-  const session = { dateKey:'2026-10-28', activities:[{ activity:'topicTest', minutes:20, reason:'coverage' }], currentIndex:0, currentStartedAt:1, startedAt:1, completedAt:null };
-  const notify = vi.fn();
-  const services = { home: {
-    accountId:() => null, authResolved:() => true, subscribe:() => () => {}, getActiveStudy:() => null,
-    seenTopics:() => [],
-    getAccess:() => ({ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }),
-    loadOverview:async () => ({ completedSessions:0, blocks:[], seen:0, total:100, answers:0, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0, studiedTopics:0, topicCount:36, weakTopics:0, masteredTopics:0, assessedTopics:0, trainingPlan:{ weekday:2, minutes:20, restDay:false, activities:[{ activity:'topicTest', minutes:20, reason:'coverage' }] }, trainingSession:null }),
-    startTrainingSession:vi.fn(() => session), startTrainingActivity:vi.fn(() => session), completeTrainingActivity:vi.fn(),
-    quickSession:async () => {}, startReview:async () => {}, openMenu:vi.fn(), login:async () => {}, requestAccess:async () => false, notify,
-  }};
-  renderApp(createElement('div', null, createElement(HomePage), createElement(CurrentPath)), { services });
-  await userEvent.setup().click(await screen.findByRole('button', { name:'Empezar entrenamiento de hoy' }));
-  expect(notify).toHaveBeenCalledWith('Marca primero los temas que ya has estudiado para preparar un entrenamiento de hoy.');
-  expect(screen.getByTestId('current-path')).toHaveTextContent('/');
-});
-
-it('explica la evidencia y conserva una modalidad amplia elegida manualmente', async () => {
-  const overview = {
-    completedSessions:0, blocks:[], seen:0, total:100, answers:0, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0,
-    studiedTopics:0, topicCount:36, weakTopics:1, masteredTopics:0, assessedTopics:0, trainingSession:null,
-    trainingPlan:{ weekday:2, minutes:35, restDay:false, activities:[{ activity:'topicTest', minutes:35, reason:'weak-topics', topicId:'T1.02', reviewIntervention:{
-      mode:'broad-reading', confidence:'user-selected', topicId:'T1.02', topicName:'Organización del Estado', reason:'manual-choice',
-      explanation:'Has elegido manualmente esta modalidad. La recomendación automática se conserva como información de apoyo, y tu elección prevalece.', targets:[],
-      evidence:{ distinctQuestionsAttempted:6, latestAnswerAccuracy:33, daysSinceLastQuestionAttempt:10 },
-    } }] },
-  };
-  renderApp(createElement(HomeView, { overview, access:{ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }, run:null, pending:new Set(), onNavigate:vi.fn(), onStartReview:vi.fn(), onStartTraining:vi.fn(), onCompleteTrainingActivity:vi.fn(), onQuickSession:vi.fn(), onOpenMenu:vi.fn(), onLogin:vi.fn(), onRequestAccess:vi.fn() }));
-  await userEvent.setup().click(await screen.findByText('¿Por qué me toca repasar esto?'));
-  expect(screen.getAllByText(/Organización del Estado/)).toHaveLength(3);
-  expect(screen.getByText(/6 preguntas distintas/)).toBeInTheDocument();
-  expect(screen.getByText(/no registra la fecha de lectura/)).toBeInTheDocument();
-  expect(screen.getAllByText(/Has elegido manualmente esta modalidad/)).toHaveLength(2);
-});
-
-it('guarda la modalidad de repaso elegida por la persona para conservarla en la planificación', async () => {
-  const onSetTrainingReviewMode = vi.fn();
-  const overview = {
-    completedSessions:0, blocks:[], seen:0, total:100, answers:0, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0,
-    studiedTopics:0, topicCount:36, weakTopics:1, masteredTopics:0, assessedTopics:0, trainingSession:null,
-    trainingPlan:{ weekday:2, minutes:35, restDay:false, activities:[{ activity:'topicTest', minutes:35, reason:'weak-topics', topicId:'T1.02', reviewIntervention:{
-      mode:'active-retrieval', confidence:'provisional', topicId:'T1.02', topicName:'Organización del Estado', reason:'check-before-rereading', explanation:'Comprueba primero qué recuerdas.', targets:[], evidence:{ distinctQuestionsAttempted:2, latestAnswerAccuracy:50, daysSinceLastQuestionAttempt:8 },
-    } }] },
-  };
-  renderApp(createElement(HomeView, { overview, access:{ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }, run:null, pending:new Set(), onNavigate:vi.fn(), onStartReview:vi.fn(), onStartTraining:vi.fn(), onCompleteTrainingActivity:vi.fn(), onSetTrainingReviewMode, onQuickSession:vi.fn(), onOpenMenu:vi.fn(), onLogin:vi.fn(), onRequestAccess:vi.fn() }));
-  await userEvent.setup().selectOptions(await screen.findByRole('combobox', { name:'Modalidad de repaso para Organización del Estado' }), 'selective-reading');
-  expect(onSetTrainingReviewMode).toHaveBeenCalledWith('T1.02', 'selective-reading');
-});
-
-it('permite volver a la recomendación automática después de elegir una modalidad manual', async () => {
-  const onSetTrainingReviewMode = vi.fn();
-  const overview = {
-    completedSessions:0, blocks:[], seen:0, total:100, answers:0, streak:0, daysToExam:null, due:0, cardsDue:0, quickCount:5, slowCount:0, failures:0,
-    studiedTopics:0, topicCount:36, weakTopics:1, masteredTopics:0, assessedTopics:0, trainingSession:null,
-    trainingPlan:{ weekday:2, minutes:35, restDay:false, activities:[{ activity:'topicTest', minutes:35, reason:'weak-topics', topicId:'T1.02', reviewIntervention:{
-      mode:'active-retrieval', confidence:'provisional', topicId:'T1.02', topicName:'Organización del Estado', reason:'check-before-rereading', explanation:'Comprueba primero qué recuerdas.', targets:[], evidence:{ distinctQuestionsAttempted:2, latestAnswerAccuracy:50, daysSinceLastQuestionAttempt:8 },
-    } }] },
-  };
-  renderApp(createElement(HomeView, { overview, access:{ full:true, level:'propietario', greeting:'Hola', state:'sincronizado', configured:true, signedIn:true, pendingRequests:0 }, run:null, pending:new Set(), onNavigate:vi.fn(), onStartReview:vi.fn(), onStartTraining:vi.fn(), onCompleteTrainingActivity:vi.fn(), onSetTrainingReviewMode, onQuickSession:vi.fn(), onOpenMenu:vi.fn(), onLogin:vi.fn(), onRequestAccess:vi.fn() }));
-  await userEvent.setup().selectOptions(await screen.findByRole('combobox', { name:'Modalidad de repaso para Organización del Estado' }), 'automatic');
-  expect(onSetTrainingReviewMode).toHaveBeenCalledWith('T1.02', null);
 });

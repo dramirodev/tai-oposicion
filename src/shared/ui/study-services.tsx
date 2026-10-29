@@ -13,6 +13,7 @@ export interface HomeOverview {
   due: number; cardsDue: number; quickCount: number; slowCount: number; failures: number;
   trainingDue: { questions: number; cards: number };
   studiedTopicDetails?: readonly { id: string; name: string }[];
+  nextNewTopic?: { id: string; name: string };
   studiedTopics: number; topicCount: number; assessedTopics: number; weakTopics: number; masteredTopics: number;
   trainingPlan: DailyTrainingPlan; trainingSession: DailyTrainingSession | null;
 }
@@ -32,6 +33,7 @@ export interface HomeServices {
   startReview(topicIds?: readonly string[], dailyTrainingActivity?: TrainingActivity): Promise<void>;
   startTrainingSession(plan: DailyTrainingPlan): DailyTrainingSession | null;
   startTrainingActivity(): DailyTrainingSession | null;
+  pauseTrainingActivity(): DailyTrainingSession | null;
   completeTrainingActivity(activity: TrainingActivity): DailyTrainingSession | null;
   setTrainingReviewMode(topicId: string, mode: StudyReviewMode | null): void;
   openMenu(): void;

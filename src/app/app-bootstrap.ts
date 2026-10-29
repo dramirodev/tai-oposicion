@@ -6,6 +6,7 @@ export interface AppBootstrapDependencies {
   flushStore(): void;
   flushAttemptTracking(): Promise<unknown> | void;
   saveRun(): void;
+  pauseTrainingSession?(): void;
   routeReady: Promise<void>;
   resumeSaved(): Promise<unknown> | void;
   prefetchBank(): Promise<unknown> | void;
@@ -30,12 +31,14 @@ export function bootAppServices(dependencies: AppBootstrapDependencies): () => v
       const visible = document.visibilityState === 'visible';
       dependencies.setAttemptTrackingVisible(visible);
       if (!visible) {
+        dependencies.pauseTrainingSession?.();
         dependencies.flushStore();
         void dependencies.flushAttemptTracking();
       }
     });
     listen(window, 'pagehide', () => {
       dependencies.setAttemptTrackingVisible(false);
+      dependencies.pauseTrainingSession?.();
       dependencies.flushStore();
       void dependencies.flushAttemptTracking();
     });

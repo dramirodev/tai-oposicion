@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { BLOQUES } from '../../shared/presentation/labels.js';
 import { useStudyService } from '../../shared/ui/study-services.js';
@@ -9,8 +9,11 @@ import { filterTopics, toggleTopicSelection } from './topics-controller.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
 export function TopicsPage() {
   const services = useStudyService('topics'), navigate = useNavigate();
+  const home = useStudyService('home');
   const [searchParams] = useSearchParams();
   const requestedTopic = searchParams.get('topic') ?? '';
+  const dailyNewContent = searchParams.get('dailyTraining') === 'newContent';
+  const completedPlannedStudy = useRef(false);
   const resource = useMemo(() => ({ accountId: services.accountId, subscribe: services.subscribe, load: () => services.loadTopics() }), [services]);
   const { value: topics, error } = useAccountResource(resource);
   usePageReady(!!topics || !!error);
@@ -22,7 +25,13 @@ export function TopicsPage() {
   const selected = new Set(services.getStudied());
   const visible = filterTopics(topics, query);
   const toggle = (ids: string[]) => {
-    services.setStudied(toggleTopicSelection(services.getStudied(), ids));
+    const next = toggleTopicSelection(services.getStudied(), ids);
+    services.setStudied(next);
+    if (dailyNewContent && requestedTopic && next.includes(requestedTopic) && !completedPlannedStudy.current) {
+      completedPlannedStudy.current = true;
+      home.completeTrainingActivity('newContent');
+      void navigate('/planificacion');
+    }
   };
   const toggleBlock = (block: string, expanded: boolean) => {
     if (query) return;
@@ -33,10 +42,16 @@ export function TopicsPage() {
       return next;
     });
   };
-  return <TopicsView topics={topics} visible={visible} selected={selected} query={query} open={open}
+  return <>
+    {dailyNewContent && <section className="planned-topic-study" aria-labelledby="planned-topic-title">
+      <h2 id="planned-topic-title">Estudio inicial · {topics.find(topic => topic.id === requestedTopic)?.name ?? requestedTopic}</h2>
+      <p>Consulta tu material de estudio y trabaja el tema. TAI no incluye los resúmenes ni esquemas de este temario; al marcarlo como visto, esta actividad quedará completada.</p>
+    </section>}
+    <TopicsView topics={topics} visible={visible} selected={selected} query={query} open={open}
     onQueryChange={value => setQueryOverride({ routeTopic: requestedTopic, value })} onToggle={toggle} onToggleBlock={toggleBlock}
     onSelectAll={() => services.setStudied(topics.map(topic => topic.id))}
     onClearSelection={() => services.setStudied([])}
     onStartSimulation={() => void navigate('/sim')}
-  />;
+    />
+  </>;
 }

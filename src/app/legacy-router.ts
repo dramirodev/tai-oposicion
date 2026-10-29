@@ -92,7 +92,7 @@ const appUpdates = createAppUpdateController({
 const recover = createAccountRecovery(localStudyProgressGateway.accountId, () => store.recover());
 const dominioTemas = createTopicMasteryComposition({ progressRepository: localProgressRepository, accountId: localStudyProgressGateway.accountId, questionIdsForTopic: topicId => studyQuestionCatalog.getMetadataSnapshot()?._by[topicId] || [], now: studyQuestionCatalog.now });
 const progressPorTema = createTopicProgressComposition({ progressRepository: localProgressRepository, accountId: localStudyProgressGateway.accountId, questionIdsForTopic: topicId => studyQuestionCatalog.getMetadataSnapshot()?._by[topicId] || [] });
-const trainingSession = createTrainingSessionComposition({ accountId: localStudyProgressGateway.accountId, now: studyQuestionCatalog.now });
+const trainingSession = createTrainingSessionComposition({ accountId: localStudyProgressGateway.accountId, now: studyQuestionCatalog.now, push: session => { void sync.pushTrainingSession(session); } });
 let routeReady: () => void;
 const firstReactRouteReady = new Promise<void>(resolve => { routeReady = resolve; });
 const studyRunController = createStudyRunController({
@@ -356,12 +356,13 @@ export function bootAppServices(): () => void {
     flushStore: () => { store.flushNow(); },
     flushAttemptTracking,
     saveRun,
+    pauseTrainingSession: () => { trainingSession.pauseCurrentActivity(); },
     routeReady: firstReactRouteReady,
     resumeSaved: () => resumeSaved().catch(() => {}),
     prefetchBank: prefetchBanco,
     loadMetadataAndInitializeSync: async () => {
       try { await getMeta(); } catch (error) { console.error(error); }
-      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getQuestionIdsForTopic }, store); } catch (error) { console.error(error); }
+      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getQuestionIdsForTopic }, store, trainingSession); } catch (error) { console.error(error); }
     },
   });
 }
@@ -572,6 +573,10 @@ export const studyServices: StudyServices = {
       const trainingPreferences = normalizeTrainingPreferences(store.getCfg().training);
       const studiedTopicSet = new Set(store.getSeen());
       const studiedTopicIds = [...studiedTopicSet];
+      const nextNewTopicEntry = trainingPreferences.introductionTopicId && !studiedTopicSet.has(trainingPreferences.introductionTopicId)
+        ? index.temas.find(topic => topic.id === trainingPreferences.introductionTopicId)
+        : undefined;
+      const nextNewTopic = nextNewTopicEntry ?? index.temas.find(topic => !studiedTopicSet.has(topic.id));
       const studiedMastery = filterTopicMasteryToSeen(mastery, studiedTopicIds);
       const studiedWeakTopics = studiedMastery.filter(topic => topic.est === 'r').sort((left, right) => left.score - right.score);
       const studiedDueCount = dueIds.filter(id => studiedTopicSet.has(studyQuestionCatalog.getTopicForQuestion(id) || '')).length;
@@ -583,7 +588,7 @@ export const studyServices: StudyServices = {
       };
       const studiedCardDueCount = Object.entries(cardReviews).filter(([id, record]) => record[3] >= 0
         && record[4] <= studyQuestionCatalog.now() && studiedTopicSet.has(topicForCard(id) || '')).length;
-      const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date().getDay(), dueCount: studiedDueCount, cardDueCount: studiedCardDueCount, failureCount: studiedFailureCount, weakTopicCount: studiedWeakTopics.length, weakTopicIds: studiedWeakTopics.map(topic => topic.id), studiedTopicIds,
+      const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date().getDay(), dueCount: studiedDueCount, cardDueCount: studiedCardDueCount, failureCount: studiedFailureCount, weakTopicCount: studiedWeakTopics.length, weakTopicIds: studiedWeakTopics.map(topic => topic.id), studiedTopicIds, nextNewTopic: nextNewTopic ? { topicId: nextNewTopic.id, topicName: nextNewTopic.nombre } : undefined,
         topicReviewEvidence: studiedMastery.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: true, distinctQuestionsAttempted: topic.seen, questionCoverageOfTarget: topic.cob, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias })) });
       return { seen: progress.seen, total: index.n, answers: progress.answers, streak, daysToExam, due,
         completedSessions: store.getSessions().length,
@@ -597,6 +602,7 @@ export const studyServices: StudyServices = {
         quickCount: progress.quickCount, slowCount: progress.slowCount, failures: failureCount,
         studiedTopics: store.getSeen().length, topicCount: index.temas.length,
         studiedTopicDetails: index.temas.filter(topic => studiedTopicSet.has(topic.id)).map(topic => ({ id: topic.id, name: topic.nombre })),
+        nextNewTopic: nextNewTopic ? { id: nextNewTopic.id, name: nextNewTopic.nombre } : undefined,
         assessedTopics: studiedMastery.filter(topic => topic.est !== 'n').length,
         weakTopics: studiedWeakTopics.length,
         masteredTopics: studiedMastery.filter(topic => topic.est === 'g').length, trainingPlan, trainingSession: trainingSession.getSession(),
@@ -604,6 +610,7 @@ export const studyServices: StudyServices = {
     },
     startTrainingSession(plan) { return trainingSession.start(plan); },
     startTrainingActivity() { return trainingSession.startCurrentActivity(); },
+    pauseTrainingActivity() { return trainingSession.pauseCurrentActivity(); },
     completeTrainingActivity(activity: TrainingActivity) { return trainingSession.completeActivity(activity); },
     setTrainingReviewMode(topicId: string, mode: StudyReviewMode | null) {
       const preferences = normalizeTrainingPreferences(store.getCfg().training);

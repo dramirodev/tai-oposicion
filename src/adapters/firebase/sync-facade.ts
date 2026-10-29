@@ -25,7 +25,7 @@ export function setAttemptRepository(repository: AttemptRepository): void {
 }
 // Si el módulo ya está cargado se llama de forma síncrona: signInWithPopup necesita ejecutarse dentro del gesto del usuario.
 const call = <R>(callback: (metadata: Mod) => R): R | Promise<R> => (mod ? callback(mod) : load().then(callback));
-export const init = (metadata: Parameters<Mod['init']>[0], progressStore: ProgressSyncStore) => load().then(value => value.init(metadata, progressStore));
+export const init = (metadata: Parameters<Mod['init']>[0], progressStore: ProgressSyncStore, trainingSessionStore?: Parameters<Mod['init']>[2]) => load().then(value => value.init(metadata, progressStore, trainingSessionStore));
 export const login = () => call(metadata => metadata.login());
 export const logout = () => call(metadata => metadata.logout());
 export const retry = () => call(metadata => metadata.retry());
@@ -33,3 +33,4 @@ export const requestAccess = () => call(metadata => metadata.requestAccess());
 export const approve = (accessRequest: AccessRequest) => call(metadata => metadata.approve(accessRequest));
 export const reject = (id: string) => call(metadata => metadata.reject(id));
 export const revoke = (id: string) => call(metadata => metadata.revoke(id));
+export const pushTrainingSession = (session: import('../../core/domain/study-training-session.js').DailyTrainingSession) => call(metadata => metadata.pushTrainingSession(session));

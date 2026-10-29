@@ -15,6 +15,10 @@ export interface DailyTrainingSession {
   activities: readonly TrainingSessionStep[];
   currentIndex: number;
   currentStartedAt: number | null;
+  /** Measured foreground study time per activity, retained when paused. */
+  elapsedSecondsByActivity?: readonly number[];
+  /** Monotonic-ish local checkpoint time used to resolve cross-device updates. */
+  updatedAt?: number;
   startedAt: number;
   completedAt: number | null;
 }
@@ -34,6 +38,8 @@ export function createDailyTrainingSession(plan: DailyTrainingPlan, timestamp: n
     activities: plan.activities.map(({ activity, minutes, reason, topicId, topicIds, reviewIntervention }) => ({ activity, minutes, reason, ...(topicId ? { topicId } : {}), ...(topicIds ? { topicIds: [...topicIds] } : {}), ...(reviewIntervention ? { reviewMode: reviewIntervention.mode } : {}) })),
     currentIndex: 0,
     currentStartedAt: null,
+    elapsedSecondsByActivity: plan.activities.map(() => 0),
+    updatedAt: timestamp,
     startedAt: timestamp,
     completedAt: null,
   };
@@ -41,7 +47,15 @@ export function createDailyTrainingSession(plan: DailyTrainingPlan, timestamp: n
 
 export function startTrainingSessionActivity(session: DailyTrainingSession, timestamp: number): DailyTrainingSession {
   if (session.completedAt !== null || session.currentIndex >= session.activities.length || session.currentStartedAt !== null) return session;
-  return { ...session, currentStartedAt: Math.max(timestamp, session.startedAt) };
+  return { ...session, currentStartedAt: Math.max(timestamp, session.startedAt), updatedAt: timestamp };
+}
+
+export function pauseTrainingSessionActivity(session: DailyTrainingSession, timestamp: number): DailyTrainingSession {
+  const startedAt = session.currentStartedAt;
+  if (session.completedAt !== null || startedAt === null || session.currentIndex >= session.activities.length) return session;
+  const elapsedSecondsByActivity = [...(session.elapsedSecondsByActivity ?? session.activities.map(() => 0))];
+  elapsedSecondsByActivity[session.currentIndex] += Math.max(0, Math.floor((timestamp - startedAt) / 1000));
+  return { ...session, currentStartedAt: null, elapsedSecondsByActivity, updatedAt: timestamp };
 }
 
 export function completeTrainingSessionActivity(
@@ -53,10 +67,14 @@ export function completeTrainingSessionActivity(
     || session.activities[session.currentIndex]?.activity !== activity) return session;
   const currentIndex = session.currentIndex + 1;
   const isComplete = currentIndex >= session.activities.length;
+  const elapsedSecondsByActivity = [...(session.elapsedSecondsByActivity ?? session.activities.map(() => 0))];
+  elapsedSecondsByActivity[session.currentIndex] += Math.max(0, Math.floor((timestamp - session.currentStartedAt) / 1000));
   return {
     ...session,
     currentIndex,
     currentStartedAt: null,
+    elapsedSecondsByActivity,
+    updatedAt: timestamp,
     completedAt: isComplete ? Math.max(timestamp, session.currentStartedAt, session.startedAt) : null,
   };
 }

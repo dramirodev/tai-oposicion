@@ -132,8 +132,9 @@ const trainingDays = [
   { index: 1, name: 'Lunes' }, { index: 2, name: 'Martes' }, { index: 3, name: 'Miércoles' },
   { index: 4, name: 'Jueves' }, { index: 5, name: 'Viernes' }, { index: 6, name: 'Sábado' }, { index: 0, name: 'Domingo' },
 ] as const;
+const trainingFocusLabels = { rest: 'Descanso', 'new-content': 'Contenido nuevo', consolidation: 'Recuperación y consolidación' } as const;
 const trainingActivities = [
-  ['activeRecall', 'Active Recall con tarjetas'], ['topicTest', 'Preguntas de tema'],
+  ['newContent', 'Estudio de tema nuevo'], ['activeRecall', 'Active Recall con tarjetas'], ['topicTest', 'Preguntas de tema'],
   ['mixedTopicTest', 'Preguntas variadas de temas vistos'],
   ['failures', 'Revisión de preguntas falladas'], ['spacedReviews', 'Repasos vencidos'],
 ] as const;
@@ -142,8 +143,15 @@ function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsSer
   const updateMinutes = (day: number, rawValue: string) => {
     const minutesByDay = [...snapshot.training.minutesByDay] as typeof snapshot.training.minutesByDay;
     const parsed = Number(rawValue);
-    minutesByDay[day] = Number.isFinite(parsed) ? Math.max(0, Math.min(240, Math.round(parsed))) : 0;
+    minutesByDay[day] = Number.isFinite(parsed) ? Math.max(0, Math.min(120, Math.round(parsed))) : 0;
     settings.setTrainingPreferences({ ...snapshot.training, minutesByDay });
+  };
+  const updateFocus = (day: number, focus: keyof typeof trainingFocusLabels) => {
+    const focusByDay = [...(snapshot.training.focusByDay ?? [
+      'rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation',
+    ])] as NonNullable<typeof snapshot.training.focusByDay>;
+    focusByDay[day] = focus;
+    settings.setTrainingPreferences({ ...snapshot.training, focusByDay });
   };
   const updateActivity = (activity: typeof trainingActivities[number][0], enabled: boolean) => {
     const activities = enabled
@@ -152,11 +160,14 @@ function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsSer
     if (!activities.length) return;
     settings.setTrainingPreferences({ ...snapshot.training, activities });
   };
-  return <section className="card"><h2 className="h3">Entrenamiento semanal</h2>
+  return <section className="card" id="training-schedule"><h2 className="h3">Entrenamiento semanal</h2>
     <p>Este tiempo forma parte de tus horas de estudio. Un día con 0 minutos es descanso; el entrenador no acumula su carga para mañana.</p>
-    <div className="training-schedule">{trainingDays.map(day => <label className="training-day" key={day.index}>
-      <span>{day.name}</span><span className="training-minute-input"><input aria-label={`${day.name}: minutos de entrenamiento`} type="number" min="0" max="240" step="5" value={snapshot.training.minutesByDay[day.index]} onChange={event => updateMinutes(day.index, event.target.value)} /> min</span>
-    </label>)}</div>
+    <div className="training-schedule">{trainingDays.map(day => <div className="training-day" key={day.index}>
+      <label htmlFor={`training-minutes-${day.index}`}>{day.name}</label><span className="training-minute-input"><input id={`training-minutes-${day.index}`} aria-label={`${day.name}: minutos de entrenamiento`} type="number" min="0" max="120" step="5" value={snapshot.training.minutesByDay[day.index]} onChange={event => updateMinutes(day.index, event.target.value)} /> min</span>
+      <label className="training-focus-label" htmlFor={`training-focus-${day.index}`}>Enfoque</label><select id={`training-focus-${day.index}`} aria-label={`${day.name}: enfoque de estudio`} value={(snapshot.training.focusByDay ?? ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'])[day.index]} onChange={event => updateFocus(day.index, event.target.value as keyof typeof trainingFocusLabels)}>
+        {Object.entries(trainingFocusLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+      </select>
+    </div>)}</div>
     <label className="training-intro">Día habitual de introducción de temas
       <select value={snapshot.training.introductionDay} onChange={event => settings.setTrainingPreferences({ ...snapshot.training, introductionDay: Number(event.target.value) })}>
         {trainingDays.map(day => <option key={day.index} value={day.index}>{day.name}</option>)}

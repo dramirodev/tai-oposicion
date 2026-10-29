@@ -47,17 +47,20 @@ export interface Preferences {
   tdet?: Record<string, number[]>;
   [key: string]: unknown;
 }
-export type TrainingActivity = 'activeRecall' | 'topicTest' | 'mixedTopicTest' | 'failures' | 'spacedReviews';
+export type TrainingActivity = 'newContent' | 'activeRecall' | 'topicTest' | 'mixedTopicTest' | 'failures' | 'spacedReviews';
+export type TrainingDayFocus = 'rest' | 'new-content' | 'consolidation';
 export type StudyReviewMode = 'initial-study' | 'active-retrieval' | 'selective-reading' | 'broad-reading';
 export interface TrainingPreferences {
   /** Sunday-first local calendar: Sunday, Monday, ..., Saturday. */
   minutesByDay: [number, number, number, number, number, number, number];
+  /** Sunday-first intent for the weekly study rhythm; an engineering default, not a proven optimum. */
+  focusByDay?: [TrainingDayFocus, TrainingDayFocus, TrainingDayFocus, TrainingDayFocus, TrainingDayFocus, TrainingDayFocus, TrainingDayFocus];
   introductionDay: number;
   /** Optional weekly topic selected by the student or academy. */
   introductionTopicId?: string;
   activities: TrainingActivity[];
   /** Marks preference migrations so removed activities stay disabled after saving. */
-  activityVersion?: 2;
+  activityVersion?: 2 | 3;
   /** User choices are retained per topic and take precedence over automatic guidance. */
   reviewModesByTopic?: Record<string, StudyReviewMode>;
 }

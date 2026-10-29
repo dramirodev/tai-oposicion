@@ -14,5 +14,6 @@ export function useActiveSection(pathname: string): string {
     examenes: 'sim',
     errores: 'settings',
     falladas: 'home',
+    planificacion: 'planificacion',
   } as Record<string, string>)[name] || name;
 }
