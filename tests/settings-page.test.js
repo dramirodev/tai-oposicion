@@ -30,6 +30,10 @@ it('presenta ajustes por secciones y persiste los cambios de apariencia', async 
  expect(screen.getAllByRole('status').length).toBeGreaterThan(0);
  await user.click(screen.getByRole('button', { name: 'Claro' })); expect(settings.setPreference).toHaveBeenCalledWith('theme', 'light');
 });
+it('expone la versión visible completa en el nombre accesible del control de versión', async () => {
+ await renderSettings();
+ expect(screen.getByRole('button', { name: 'Versión 1.1.3 (test)' })).toBeInTheDocument();
+});
 it('permite editar el presupuesto semanal y las modalidades del entrenador', async () => {
  fullAccess = true;
  const user = userEvent.setup();
@@ -38,7 +42,7 @@ it('permite editar el presupuesto semanal y las modalidades del entrenador', asy
  fireEvent.change(sundayMinutes, { target: { value: '25' } });
  expect(settings.setTrainingPreferences).toHaveBeenLastCalledWith(expect.objectContaining({ minutesByDay: [25, 35, 40, 35, 20, 40, 60] }));
  await user.click(screen.getByRole('checkbox', { name: 'Active Recall con tarjetas' }));
- expect(settings.setTrainingPreferences).toHaveBeenLastCalledWith(expect.objectContaining({ activities: ['topicTest', 'failures', 'spacedReviews'] }));
+ expect(settings.setTrainingPreferences).toHaveBeenLastCalledWith(expect.objectContaining({ activities: ['topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'] }));
 });
 it('permite asignar el tema nuevo de la semana en los ajustes', async () => {
  fullAccess = true;

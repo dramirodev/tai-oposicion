@@ -256,9 +256,9 @@ function mapPart(
 /** Builds a deterministic, account-free export and groups complete sessions without truncating records. */
 export function buildAiStudyExport(input: BuildAiStudyExportInput): AiStudyExport {
   const selected = new Set(input.filters.sessionIds);
-  const modes = [...new Set(input.filters.modes)].sort(compare) as Array<'practice' | 'simulation'>;
+  const modes = new Set(input.filters.modes);
   const sessions = input.archive.sessions.filter(session => selected.has(session.id)
-    && modes.includes(session.mode) && session.status === 'completed'
+    && modes.has(session.mode) && session.status === 'completed'
     && session.startedAt >= input.filters.from && session.startedAt < input.filters.to)
     .sort((left, right) => left.startedAt - right.startedAt || compare(left.id, right.id));
   const sessionIds = new Set(sessions.map(session => session.id));
@@ -296,7 +296,7 @@ export function buildAiStudyExport(input: BuildAiStudyExportInput): AiStudyExpor
   });
   return {
     createdAt: input.generatedAt,
-    filters: { from: input.filters.from, to: input.filters.to, modes, sessionCount: sessions.length },
+    filters: { from: input.filters.from, to: input.filters.to, modes: [...input.filters.modes], sessionCount: sessions.length },
     report: input.report,
     manifest: {
       format: 'tai-study-ai-export', schemaVersion: 1, partCount: parts.length,

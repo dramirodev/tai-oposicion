@@ -88,7 +88,6 @@ const appUpdates = createAppUpdateController({
   flushProgress: () => store.flushNow(),
   getRegistration: () => navigator.serviceWorker?.getRegistration(),
   reload: () => location.reload(),
-  onUpdateReady: () => toast('Hay una versión nueva.', { label: 'Actualizar', fn: () => appUpdates.applyUpdate() }),
 });
 const recover = createAccountRecovery(localStudyProgressGateway.accountId, () => store.recover());
 const dominioTemas = createTopicMasteryComposition({ progressRepository: localProgressRepository, accountId: localStudyProgressGateway.accountId, questionIdsForTopic: topicId => studyQuestionCatalog.getMetadataSnapshot()?._by[topicId] || [], now: studyQuestionCatalog.now });
@@ -360,10 +359,6 @@ export function bootAppServices(): () => void {
     routeReady: firstReactRouteReady,
     resumeSaved: () => resumeSaved().catch(() => {}),
     prefetchBank: prefetchBanco,
-    watchUpdates: appUpdates.watchUpdates,
-    checkUpdate: appUpdates.checkUpdate,
-    announceUpdate: version => toast(`Hay una versión nueva (${version}).`, { label: 'Actualizar', fn: () => appUpdates.applyUpdate() }),
-    applyUpdate: appUpdates.applyUpdate,
     loadMetadataAndInitializeSync: async () => {
       try { await getMeta(); } catch (error) { console.error(error); }
       try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getQuestionIdsForTopic }, store); } catch (error) { console.error(error); }

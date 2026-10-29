@@ -11,8 +11,8 @@ it('starts app lifecycle work after the first route and cleans up listeners and 
     goHome: vi.fn(), recover: vi.fn(async () => {}),
     setAttemptTrackingVisible: vi.fn(), flushStore: vi.fn(), flushAttemptTracking: vi.fn(),
     saveRun: vi.fn(), routeReady: Promise.resolve(), resumeSaved: vi.fn(), prefetchBank: vi.fn(),
-    watchUpdates: vi.fn(() => vi.fn()), checkUpdate: vi.fn(async () => null), announceUpdate: vi.fn(),
-    applyUpdate: vi.fn(), loadMetadataAndInitializeSync: vi.fn(async () => {}),
+    checkUpdate: vi.fn(async () => ({ version: '1.2.0' })), announceUpdate: vi.fn(),
+    loadMetadataAndInitializeSync: vi.fn(async () => {}),
   };
   const stop = bootAppServices(dependencies);
   await vi.advanceTimersByTimeAsync(0);
@@ -23,7 +23,8 @@ it('starts app lifecycle work after the first route and cleans up listeners and 
   events[0]();
   expect(dependencies.goHome).toHaveBeenCalledOnce();
 
-  const visibility = vi.spyOn(document, 'visibilityState', 'get').mockReturnValue('hidden');
+  let documentVisibility = 'hidden';
+  const visibility = vi.spyOn(document, 'visibilityState', 'get').mockImplementation(() => documentVisibility);
   document.dispatchEvent(new Event('visibilitychange'));
   window.dispatchEvent(new Event('pagehide'));
   expect(dependencies.setAttemptTrackingVisible).toHaveBeenLastCalledWith(false);
@@ -33,11 +34,17 @@ it('starts app lifecycle work after the first route and cleans up listeners and 
 
   await vi.advanceTimersByTimeAsync(4000);
   expect(dependencies.prefetchBank).toHaveBeenCalledOnce();
+  await vi.advanceTimersByTimeAsync(2000);
+  expect(dependencies.checkUpdate).not.toHaveBeenCalled();
+  documentVisibility = 'visible';
+  document.dispatchEvent(new Event('visibilitychange'));
+  expect(dependencies.checkUpdate).not.toHaveBeenCalled();
   stop();
   document.dispatchEvent(new Event('visibilitychange'));
   window.dispatchEvent(new Event('pagehide'));
   await vi.advanceTimersByTimeAsync(10000);
   expect(dependencies.flushStore).toHaveBeenCalledTimes(2);
   expect(dependencies.prefetchBank).toHaveBeenCalledOnce();
+  expect(dependencies.checkUpdate).not.toHaveBeenCalled();
   visibility.mockRestore();
 });

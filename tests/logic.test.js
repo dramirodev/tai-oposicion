@@ -393,6 +393,7 @@ describe('richHtml (código)', () => {
     expect(sql).toContain('<code class="cd"><b class="sk">SELECT</b> * <b class="sk">FROM</b>');
     expect(sql).toContain('en SQL?');
     expect(richHtml('El comando chmod 755 f.txt y la opción -R')).toMatch(/<code class="cd">chmod 755 f.txt<\/code>/);
+    expect(richHtml('El comando ln -s /etc/passwd /home/usuario/claves:')).toBe('El comando <code class="cd">ln -s /etc/passwd /home/usuario/claves</code>:');
     const evil = richHtml('<script>alert(1)</script> y <img src=x onerror=alert(1)>');
     expect(evil).not.toMatch(/<script|<img/);
     expect(evil).toContain('&lt;script&gt;');

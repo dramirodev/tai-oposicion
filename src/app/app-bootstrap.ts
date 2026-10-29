@@ -9,10 +9,6 @@ export interface AppBootstrapDependencies {
   routeReady: Promise<void>;
   resumeSaved(): Promise<unknown> | void;
   prefetchBank(): Promise<unknown> | void;
-  watchUpdates(registration: ServiceWorkerRegistration): () => void;
-  checkUpdate(): Promise<{ version: string } | null | undefined>;
-  announceUpdate(version: string): void;
-  applyUpdate(): Promise<void>;
   loadMetadataAndInitializeSync(): Promise<unknown>;
 }
 
@@ -21,7 +17,6 @@ export function bootAppServices(dependencies: AppBootstrapDependencies): () => v
   const controller = new AbortController();
   const timers: ReturnType<typeof setTimeout>[] = [];
   let stopped = false;
-  let stopWatchingUpdates: (() => void) | undefined;
   const listen = (target: EventTarget, event: string, listener: () => void) =>
     target.addEventListener(event, listener, { signal: controller.signal });
   const stopWatchingAccount = dependencies.onAccountChange(dependencies.goHome);
@@ -46,9 +41,7 @@ export function bootAppServices(dependencies: AppBootstrapDependencies): () => v
     });
 
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('../sw.js').then(registration => {
-        if (!stopped) stopWatchingUpdates = dependencies.watchUpdates(registration);
-      }).catch(() => {});
+      void navigator.serviceWorker.register('../sw.js').catch(() => {});
     }
 
     await dependencies.routeReady;
@@ -60,15 +53,6 @@ export function bootAppServices(dependencies: AppBootstrapDependencies): () => v
     void dependencies.resumeSaved();
     timers.push(setTimeout(() => { void dependencies.prefetchBank(); }, 4000));
 
-    const announceUpdate = async () => {
-      const update = await dependencies.checkUpdate();
-      if (update && !stopped) dependencies.announceUpdate(update.version);
-    };
-    timers.push(setTimeout(() => { void announceUpdate(); }, 6000));
-    listen(document, 'visibilitychange', () => {
-      if (document.visibilityState === 'visible') void announceUpdate();
-    });
-
     if (!stopped) {
       try { await dependencies.loadMetadataAndInitializeSync(); } catch (error) { console.error(error); }
     }
@@ -79,6 +63,5 @@ export function bootAppServices(dependencies: AppBootstrapDependencies): () => v
     controller.abort();
     timers.forEach(clearTimeout);
     stopWatchingAccount();
-    stopWatchingUpdates?.();
   };
 }

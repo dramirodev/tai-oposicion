@@ -18,7 +18,7 @@ it('maps current settings and normalizes the stored training and UI preferences'
   const snapshot = toSettingsSnapshot(input());
 
   expect(snapshot.ui).toEqual({ theme: 'dark', size: 2, lectura: 1 });
-  expect(snapshot.training).toEqual({ minutesByDay: [0, 10, 20, 30, 40, 50, 60], introductionDay: 3, activities: ['topicTest'] });
+  expect(snapshot.training).toEqual({ minutesByDay: [0, 10, 20, 30, 40, 50, 60], introductionDay: 3, activityVersion: 2, activities: ['topicTest', 'mixedTopicTest'] });
   expect(snapshot.progress).toEqual({ questions: 9, topics: 2, sessions: 3, openReports: 1 });
   expect(snapshot.exam).toBe('2027-06-01');
   expect(snapshot.index).toEqual({ questions: 15666, scenarios: 417 });
@@ -28,6 +28,6 @@ it('provides safe defaults for old or malformed preferences and exam values', ()
   const snapshot = toSettingsSnapshot(input({ uiPreferences: { theme: 'blue', size: 99, lectura: -1 }, trainingPreferences: null, exam: null }));
 
   expect(snapshot.ui).toEqual({ theme: 'auto', size: 0, lectura: 0 });
-  expect(snapshot.training).toEqual({ minutesByDay: [0, 35, 40, 35, 20, 40, 60], introductionDay: 4, activities: ['activeRecall', 'topicTest', 'failures', 'spacedReviews'] });
+  expect(snapshot.training).toEqual({ minutesByDay: [0, 35, 40, 35, 20, 40, 60], introductionDay: 4, activityVersion: 2, activities: ['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'] });
   expect(snapshot.exam).toBe('');
 });

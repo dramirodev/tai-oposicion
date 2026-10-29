@@ -17,8 +17,7 @@ code.cd .sk {
 }
 
 code.cd.shiki:not(.blk) {
-  display: inline-block;
-  max-width: 100%;
+  display: inline;
   vertical-align: baseline;
 }
 

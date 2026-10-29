@@ -18,7 +18,7 @@ it('builds the full menu with navigation icons, study summaries and owner access
   expect(groups[0][1][0][0]).toBe(menuActionIcons.quick);
   expect(groups[0][1][2][0]).toBe(navigationIcons.cards);
   expect(groups[0][1][2][2]).toBe('3 tarjetas vencen hoy');
-  expect(groups[2][1][1][2]).toBe('6 temas marcados');
+  expect(groups[2][1][1][2]).toBe('Mapa de dominio, simulacros y evolución');
   expect(groups[3][1].find(([, title]) => title === 'Accesos')?.[2]).toBe('8 solicitudes por revisar');
 });
 

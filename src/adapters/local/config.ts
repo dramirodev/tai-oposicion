@@ -14,6 +14,8 @@ const trainingTopicId = (value: unknown) => typeof value === 'string' && /^T[1-4
 const trainingReviewModes = (value: unknown) => object(value) && Object.keys(value).length <= 36
   && Object.entries(value).every(([topicId, mode]) => /^T[1-4]\.\d{2}$/.test(topicId) && ['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading'].includes(String(mode)));
 const scope = oneOf(['vistos', 'todos']);
+const copyDefaults = (defaults: Record<string, unknown>): Record<string, unknown> =>
+  Object.fromEntries(Object.entries(defaults).map(([key, value]) => [key, Array.isArray(value) ? [...value] : value]));
 type Check = (value: unknown) => boolean;
 const schemas: Record<string, { defaults: Record<string, unknown>; fields: Record<string, Check> }> = {
   ui: { defaults: {}, fields: { theme: oneOf(['auto', 'light', 'dark']), size: integer(0, 3), lectura: integer(0, 2) } },
@@ -51,7 +53,7 @@ export function cleanCfgSetting(key: string, value: unknown): unknown {
   const schema = own(schemas, key) ? schemas[key] : null;
   if (schema) {
     if (!object(itemValue)) return undefined;
-    const out: Record<string, unknown> = JSON.parse(JSON.stringify(schema.defaults));
+    const out = copyDefaults(schema.defaults);
     for (const [field, check] of Object.entries(schema.fields)) if (own(itemValue, field) && check(itemValue[field])) out[field] = itemValue[field];
     return out;
   }

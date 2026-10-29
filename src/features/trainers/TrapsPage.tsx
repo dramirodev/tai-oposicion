@@ -6,6 +6,7 @@ import { richHtml, hiliteHtml } from '../../shared/presentation/study-text.js';
 import { questionNotice, sourceHtml } from '../../shared/presentation/study-content.js';
 import { TRAMPAS, TRAMPA_EXPL } from '../../shared/presentation/labels.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
+import { getTrapChoicePresentation } from './trap-choice-presentation.js';
 import { useStudyService, type TrapAnswer, type TrapRun, type TrapsServices } from '../../shared/ui/study-services.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
 
@@ -79,16 +80,9 @@ function TrapQuestion({ run, selected, result, onToggle, onExit, onSubmit, onNex
 
 function TrapChoice({ id, selected, correct, revealed, wasSelected, onToggle }: { id: number; selected: boolean; correct: boolean; revealed: boolean; wasSelected: boolean; onToggle(id: number): void }) {
   const trapLabel = TRAMPAS[id] || String(id);
-  let className = selected ? 'on' : '';
-  let label = trapLabel;
-  if (revealed && correct) {
-    className = wasSelected ? 'ok' : 'sug';
-    label = `${wasSelected ? 'Detectada: ' : 'No la viste: '}${trapLabel}`;
-  } else if (revealed && wasSelected) {
-    className = 'bad';
-    label = `Falsa alarma: ${trapLabel}`;
-  } else if (revealed) className = '';
-  return <button className={className} aria-pressed={selected} disabled={revealed} onClick={() => onToggle(id)}>{revealed && correct ? wasSelected ? <Check size="1em" aria-hidden="true" /> : <Circle size="1em" aria-hidden="true" /> : revealed && wasSelected ? <CircleX size="1em" aria-hidden="true" /> : null}{label}</button>;
+  const presentation = getTrapChoicePresentation({ trapLabel, selected, correct, revealed, wasSelected });
+  const Icon = presentation.icon === 'check' ? Check : presentation.icon === 'circle' ? Circle : presentation.icon === 'circle-x' ? CircleX : null;
+  return <button className={presentation.className} aria-pressed={selected} disabled={revealed} onClick={() => onToggle(id)}>{Icon && <Icon size="1em" aria-hidden="true" />}{presentation.label}</button>;
 }
 
 function TrapFeedback({ prompt, result, selectedIds, falseAlarms }: { prompt: TrapRun['items'][number]; result: TrapAnswer; selectedIds: ReadonlySet<number>; falseAlarms: readonly number[] }) {

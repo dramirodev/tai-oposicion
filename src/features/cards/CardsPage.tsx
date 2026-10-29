@@ -7,6 +7,7 @@ import { richHtml } from '../../shared/presentation/study-text.js';
 import { useStudyService, type CardsServices, type CardPreferences, type CardsPlan, type StudyCard } from '../../shared/ui/study-services.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
+import { resolveCardsPageState } from './cards-page-state.js';
 
 const gradeLabels = ['Fallé', 'Dudaba', 'Lo sabía'] as const;
 const reasons = ERROR_REPORT_REASONS;
@@ -212,6 +213,16 @@ export function CardsPage() {
     ? plan.ids.slice(0, plan.reviews)
     : plan?.ids ?? [], [dailyTrainingActivity, plan]);
   const requestKey = `${preferences.scope}:${preferences.count}:${trainingTopicIds?.join(',') ?? '*'}:${planGeneration}`;
+  const pageState = resolveCardsPageState({
+    session,
+    trainingTopicIds: trainingTopicSet,
+    dailyTrainingActivity: !!dailyTrainingActivity,
+    preparedIds,
+    errorKey,
+    requestKey,
+    planKey,
+    hasPlan: !!plan,
+  });
 
   useEffect(() => {
     let active = true;
@@ -228,19 +239,48 @@ export function CardsPage() {
     }
   }, [cards, dailyTrainingActivity, plan, planKey, preparedIds, requestKey, session]);
 
-  if (session && trainingTopicSet && !session.items.every(card => trainingTopicSet.has(card.t))) return <div className="card" role="status"><h1>La sesión de tarjetas anterior no coincide con tus temas vistos</h1><p>La sesión se conserva para no perder el progreso, pero este entrenamiento solo muestra tarjetas de los temas que has marcado. Puedes volver a Inicio para continuar con el plan de hoy.</p><div className="bar2"><button className="btn" onClick={() => void navigate('/home')}>Volver al inicio</button></div></div>;
-  if (dailyTrainingActivity && session && session.items.map(card => card.id).join('\0') !== preparedIds.join('\0')) return <div className="card" role="status"><h1>Hay otra sesión de tarjetas pendiente</h1><p>Se conserva para no perder tu avance. Termínala desde Tarjetas y después vuelve al plan de hoy.</p><div className="bar2"><button className="btn" onClick={() => void navigate('/home')}>Volver al entrenamiento</button></div></div>;
-  if (errorKey === requestKey) return <div className="card" role="alert"><h1>No se pudo cargar</h1><p>{navigator.onLine === false ? 'Las tarjetas que aún no están guardadas en este dispositivo necesitan conexión.' : 'No se pudieron cargar las tarjetas. Inténtalo de nuevo.'}</p><button className="btn" onClick={() => setPlanGeneration(value => value + 1)}>Reintentar</button></div>;
-  if (dailyTrainingActivity && !session && !preparedIds.length && planKey === requestKey) return <><h1>Entrenamiento de hoy</h1><div className="note" role="status">No hay tarjetas disponibles para esta actividad dentro de los temas vistos. Puedes volver al plan de hoy.</div><Link className="btn sec" to="/home">Volver al entrenamiento</Link></>;
-  if (dailyTrainingActivity && !session) return <PageLoading variant="legacy" />;
-  if (session) return <CardSession services={cards} onExit={() => { cards.clearSession(); void navigate('/home'); }} onComplete={() => { cards.clearSession(); refreshSession(value => value + 1); if (dailyTrainingActivity) void navigate('/home'); else setPlanGeneration(value => value + 1); }} onActivityFinished={() => { if (dailyTrainingActivity) home.completeTrainingActivity(dailyTrainingActivity); }} dailyTraining={!!dailyTrainingActivity} />;
-  if (!plan || planKey !== requestKey) return <PageLoading variant="legacy" />;
+  const onSessionComplete = () => { cards.clearSession(); refreshSession(value => value + 1); if (dailyTrainingActivity) void navigate('/home'); else setPlanGeneration(value => value + 1); };
+  const onSessionExit = () => { cards.clearSession(); void navigate('/home'); };
+  const onActivityFinished = () => { if (dailyTrainingActivity) home.completeTrainingActivity(dailyTrainingActivity); };
+  if (pageState !== 'plan') return <CardsPageStatus state={pageState} cards={cards} dailyTraining={!!dailyTrainingActivity} onSessionExit={onSessionExit} onSessionComplete={onSessionComplete} onActivityFinished={onActivityFinished} onRetry={() => setPlanGeneration(value => value + 1)} onHome={() => void navigate('/home')} />;
+  if (!plan) return <PageLoading variant="legacy" />;
 
   const changePreferences = (next: CardPreferences) => { cards.savePreferences(next); setPreferences(next); };
   const begin = () => {
     if (!plan.ids.length) { home.notify('No hay tarjetas pendientes ahora mismo. Vuelve cuando venza alguna.'); return; }
     cards.startSession(plan.cards, plan.ids); refreshSession(value => value + 1);
   };
+  return <CardsPlanView plan={plan} preferences={preferences} trainingTopicIds={trainingTopicIds} changePreferences={changePreferences} begin={begin} />;
+}
+
+function CardsPageStatus({ state, cards, dailyTraining, onSessionExit, onSessionComplete, onActivityFinished, onRetry, onHome }: {
+  state: Exclude<ReturnType<typeof resolveCardsPageState>, 'plan'>;
+  cards: CardsServices;
+  dailyTraining: boolean;
+  onSessionExit(): void;
+  onSessionComplete(): void;
+  onActivityFinished(): void;
+  onRetry(): void;
+  onHome(): void;
+}) {
+  switch (state) {
+    case 'topic-scope-mismatch': return <div className="card" role="status"><h1>La sesión de tarjetas anterior no coincide con tus temas vistos</h1><p>La sesión se conserva para no perder el progreso, pero este entrenamiento solo muestra tarjetas de los temas que has marcado. Puedes volver a Inicio para continuar con el plan de hoy.</p><div className="bar2"><button className="btn" onClick={onHome}>Volver al inicio</button></div></div>;
+    case 'another-session-pending': return <div className="card" role="status"><h1>Hay otra sesión de tarjetas pendiente</h1><p>Se conserva para no perder tu avance. Termínala desde Tarjetas y después vuelve al plan de hoy.</p><div className="bar2"><button className="btn" onClick={onHome}>Volver al entrenamiento</button></div></div>;
+    case 'load-error': return <div className="card" role="alert"><h1>No se pudo cargar</h1><p>{navigator.onLine === false ? 'Las tarjetas que aún no están guardadas en este dispositivo necesitan conexión.' : 'No se pudieron cargar las tarjetas. Inténtalo de nuevo.'}</p><button className="btn" onClick={onRetry}>Reintentar</button></div>;
+    case 'no-daily-cards': return <><h1>Entrenamiento de hoy</h1><div className="note" role="status">No hay tarjetas disponibles para esta actividad dentro de los temas vistos. Puedes volver al plan de hoy.</div><Link className="btn sec" to="/home">Volver al entrenamiento</Link></>;
+    case 'daily-loading':
+    case 'loading': return <PageLoading variant="legacy" />;
+    case 'session': return <CardSession services={cards} onExit={onSessionExit} onComplete={onSessionComplete} onActivityFinished={onActivityFinished} dailyTraining={dailyTraining} />;
+  }
+}
+
+function CardsPlanView({ plan, preferences, trainingTopicIds, changePreferences, begin }: {
+  plan: CardsPlan;
+  preferences: CardPreferences;
+  trainingTopicIds: string[] | undefined;
+  changePreferences(next: CardPreferences): void;
+  begin(): void;
+}) {
   return <>
     <h1>Tarjetas de repaso <Link className="help-icon-link" to="/ayuda?tema=repaso" aria-label="Ayuda sobre el repaso"><CircleHelp size="1em" strokeWidth={1.8} aria-hidden="true" focusable="false" /></Link></h1>
     <div className="sub">Primero intenta recordar la respuesta; después pulsa para verla y valora cómo te fue.</div>

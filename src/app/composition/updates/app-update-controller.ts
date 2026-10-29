@@ -10,7 +10,6 @@ export interface AppUpdateDependencies {
   getRegistration(): Promise<ServiceWorkerRegistration | undefined>;
   reload(): void;
   fetchVersion?: (url: string, options: RequestInit) => Promise<Response>;
-  onUpdateReady(): void;
 }
 
 /** Coordinates version checks and service-worker updates at the application boundary. */
@@ -58,22 +57,9 @@ export function createAppUpdateController(dependencies: AppUpdateDependencies) {
     dependencies.reload();
   }
 
-  function watchUpdates(registration: ServiceWorkerRegistration): () => void {
-    const controller = new AbortController();
-    const watch = (worker: ServiceWorker) => worker.addEventListener('statechange', () => {
-      if (worker.state === 'installed' && navigator.serviceWorker?.controller) dependencies.onUpdateReady();
-    }, { signal: controller.signal });
-    if (registration.installing) watch(registration.installing);
-    registration.addEventListener('updatefound', () => {
-      if (registration.installing) watch(registration.installing);
-    }, { signal: controller.signal });
-    return () => controller.abort();
-  }
-
   return {
     checkUpdate,
     applyUpdate,
-    watchUpdates,
     getAvailableUpdate: () => availableUpdate,
   };
 }

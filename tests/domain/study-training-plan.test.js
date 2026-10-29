@@ -154,7 +154,7 @@ describe('planificación diaria de estudio', () => {
         { topicId:'T3.02', topicName:'Tribunal', hasStudyMarker:false, distinctQuestionsAttempted:8, questionCoverageOfTarget:50, latestAnswerAccuracy:20, daysSinceLastQuestionAttempt:1 },
       ],
     });
-    expect(plan.activities.map(item => item.activity)).toEqual(['activeRecall', 'topicTest', 'failures', 'spacedReviews']);
+    expect(plan.activities.map(item => item.activity)).toEqual(['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']);
     expect(plan.activities.every(item => item.topicIds?.length && item.topicIds.every(topicId => topicId === 'T1.01'))).toBe(true);
     expect(plan.activities.find(item => item.activity === 'topicTest')).toMatchObject({ reason:'weak-topics', topicId:'T1.01' });
   });
