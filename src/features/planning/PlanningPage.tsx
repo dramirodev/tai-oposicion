@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { CalendarDays, Check, CircleHelp, Clock3, Pause, Play } from 'lucide-react';
+import { CalendarDays, Check, ChevronLeft, ChevronRight, CircleHelp, Clock3, Pause, Play } from 'lucide-react';
 import type { TrainingActivity } from '../../core/domain/entities.js';
-import type { DailyTrainingSession, TrainingSessionStep } from '../../core/domain/study-training-session.js';
+import type { DailyTrainingSession, TrainingSessionHistoryEntry, TrainingSessionStep } from '../../core/domain/study-training-session.js';
 import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
 import { useStudyService, type HomeOverview, type HomeServices, type SettingsSnapshot } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
@@ -118,14 +118,50 @@ function PlanningActivity({ step, index, session, topicName, elapsedSeconds, run
   </li>;
 }
 
-function WeekSchedule({ preferences, weekday }: { preferences: SettingsSnapshot['training']; weekday: number }) {
+function WeekSchedule({ preferences, weekday, now, history }: { preferences: SettingsSnapshot['training']; weekday: number; now: Date; history: readonly TrainingSessionHistoryEntry[] }) {
+  const [view, setView] = useState<'week' | 'month'>('week');
+  const [month, setMonth] = useState(() => new Date(now.getFullYear(), now.getMonth(), 1));
   const focus = preferences.focusByDay ?? ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'];
+  const dateKey = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  const monthTitle = new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric' }).format(month);
+  const firstDayOffset = (new Date(month.getFullYear(), month.getMonth(), 1).getDay() + 6) % 7;
+  const daysInMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate();
+  const completedDays = new Set(history.map(session => session.dateKey));
   return <section className="planning-week" aria-labelledby="planning-week-title">
     <div className="planning-section-heading"><div><p className="planning-kicker">Ritmo semanal</p><h2 id="planning-week-title">Estudio, repaso y descanso</h2></div><Link to="/settings">Ajustar disponibilidad</Link></div>
-    <ol>{[1, 2, 3, 4, 5, 6, 0].map(day => <li key={day} className={day === weekday ? 'is-today' : ''} aria-current={day === weekday ? 'date' : undefined}>
-      <b>{dayNames[day]}</b><span>{preferences.minutesByDay[day] ? `${preferences.minutesByDay[day]} min` : '0 min'}</span><small>{focusLabels[focus[day]]}{day === preferences.introductionDay ? ' · academia' : ''}</small>
-    </li>)}</ol>
-    <p className="planning-week-note">El reparto inicial reserva cuatro días para avanzar en contenido, dos para recuperar y consolidar, y el domingo para descansar. Son preferencias editables del producto, no una distribución demostrada como óptima.</p>
+    <div className="planning-schedule-views" aria-label="Vista del calendario">
+      <button type="button" aria-pressed={view === 'week'} onClick={() => setView('week')}>Semana</button>
+      <button type="button" aria-pressed={view === 'month'} onClick={() => setView('month')}>Mes</button>
+    </div>
+    {view === 'week' ? <>
+      <ol>{[1, 2, 3, 4, 5, 6, 0].map(day => <li key={day} className={day === weekday ? 'is-today' : ''} aria-current={day === weekday ? 'date' : undefined}>
+        <b>{dayNames[day]}</b><span>{preferences.minutesByDay[day] ? `${preferences.minutesByDay[day]} min` : '0 min'}</span><small>{focusLabels[focus[day]]}{day === preferences.introductionDay ? ' · academia' : ''}</small>
+      </li>)}</ol>
+      <p className="planning-week-note">El reparto refleja tus preferencias editables, no una distribución demostrada como óptima.</p>
+    </> : <div className="planning-month">
+      <div className="planning-month-heading"><button type="button" aria-label="Mes anterior" onClick={() => setMonth(value => new Date(value.getFullYear(), value.getMonth() - 1, 1))}><ChevronLeft aria-hidden="true" /></button><h3>{monthTitle}</h3><button type="button" aria-label="Mes siguiente" onClick={() => setMonth(value => new Date(value.getFullYear(), value.getMonth() + 1, 1))}><ChevronRight aria-hidden="true" /></button></div>
+      <div className="planning-month-grid" role="group" aria-label={`Disponibilidad de estudio en ${monthTitle}`}>
+        {[1, 2, 3, 4, 5, 6, 0].map(day => <b className="planning-month-weekday" key={day}>{dayNames[day].slice(0, 2)}</b>)}
+        {Array.from({ length: firstDayOffset }, (_, index) => <span className="planning-month-blank" aria-hidden="true" key={`blank-${index}`} />)}
+        {Array.from({ length: daysInMonth }, (_, index) => {
+          const date = new Date(month.getFullYear(), month.getMonth(), index + 1);
+          const day = date.getDay();
+          const minutes = preferences.minutesByDay[day];
+          const isToday = dateKey(date) === dateKey(now);
+          const completed = completedDays.has(dateKey(date));
+          const focusLabel = focusLabels[focus[day]];
+          const academy = day === preferences.introductionDay;
+          const description = `${dayNames[day]} ${index + 1}: ${minutes ? `${minutes} minutos disponibles, ${focusLabel}${academy ? ', academia' : ''}` : 'descanso'}${completed ? ', sesión completada' : ''}${isToday ? ', hoy' : ''}`;
+          return <div role="group" className={`planning-month-day${isToday ? ' is-today' : ''}${completed ? ' is-complete' : ''}`} aria-label={description} key={dateKey(date)}>
+            <b>{index + 1}</b>
+            {minutes > 0 ? <><span className="planning-month-time"><span className="planning-month-time-wide">{minutes} min</span><span className="planning-month-time-narrow">{minutes}m</span></span><small>{academy ? 'Academia' : focusLabel}</small></> : <small>Descanso</small>}
+            {completed && <strong>Completada</strong>}
+            {isToday && <strong>Hoy</strong>}
+          </div>;
+        })}
+      </div>
+      <p className="planning-week-note">El calendario muestra la disponibilidad configurada y las sesiones completadas que aún están en el historial. Las actividades concretas solo se preparan para hoy; las fechas futuras no son tareas asignadas.</p>
+    </div>}
   </section>;
 }
 
@@ -328,7 +364,7 @@ export function PlanningPage() {
     </header>
     <PlanningTodayCard model={model} overview={overview} activeStudy={!!services.getActiveStudy()} onStart={actions.startSession} onPause={actions.pauseSession} />
     <PlanningActivityList model={model} />
-    {!model.session?.completedAt && <WeekSchedule preferences={settings.training} weekday={model.weekday} />}
+    <WeekSchedule preferences={settings.training} weekday={model.weekday} now={now} history={overview.trainingHistory ?? []} />
     <PlanningHistory overview={overview} />
     <PlanningEvidence overview={overview} />
   </main>;

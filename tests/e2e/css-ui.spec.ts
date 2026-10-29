@@ -259,6 +259,22 @@ test('el historial de Planificación muestra todas las sesiones en móvil sin de
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
 });
 
+test('el calendario mensual distingue disponibilidad de sesiones completadas en móvil', async ({ page }) => {
+  await prepare(page, 'light', 0, true);
+  await page.clock.setFixedTime(new Date('2026-10-29T12:00:00+02:00'));
+  await page.setViewportSize({ width:320, height:900 });
+  await page.goto('/#/planificacion');
+
+  await page.getByRole('button', { name:'Mes', exact:true }).click();
+  await expect(page.locator('.planning-month-day')).toHaveCount(31);
+  await expect(page.getByRole('group', { name:/jueves 29: 120 minutos disponibles.*academia.*hoy/i })).toBeVisible();
+  await expect(page.getByRole('group', { name:/domingo 25: descanso/i })).toBeVisible();
+  await expect(page.getByText(/Las actividades concretas solo se preparan para hoy/)).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  await page.getByRole('button', { name:'Mes siguiente' }).click();
+  await expect(page.getByRole('heading', { name:'noviembre de 2026' })).toBeVisible();
+});
+
 test('Planificación conserva el contenido dentro del viewport desde móvil estrecho hasta escritorio grande', async ({ page }) => {
   await prepare(page, 'light', 0);
   await page.clock.setFixedTime(new Date('2026-10-24T12:00:00+02:00'));

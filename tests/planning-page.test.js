@@ -98,3 +98,21 @@ it('permite desplegar el historial completo y volver a las cinco sesiones más r
   expect(screen.getAllByText('Recuperación activa')).toHaveLength(6);
   expect(screen.getByRole('button', { name:'Mostrar solo las cinco más recientes' })).toHaveAttribute('aria-expanded', 'true');
 });
+
+it('muestra disponibilidad mensual y marca únicamente sesiones realmente completadas', async () => {
+  const user = userEvent.setup();
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12);
+  const dateKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+  const history = [{ id:dateKey, dateKey, startedAt:today.getTime(), completedAt:today.getTime() + 60_000,
+    plannedMinutes:10, activities:[{ activity:'activeRecall', minutes:10, reason:'active-recall' }], elapsedSecondsByActivity:[60] }];
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(newTopicPlan, { trainingHistory:history })) });
+
+  await user.click(await screen.findByRole('button', { name:'Mes' }));
+  const days = screen.getAllByRole('group', { name:/minutos disponibles|descanso/ });
+  expect(days).toHaveLength(new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate());
+  expect(screen.getByRole('group', { name:/sesión completada, hoy/ })).toBeInTheDocument();
+  expect(screen.getByText(/Las actividades concretas solo se preparan para hoy/)).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name:'Mes siguiente' }));
+  expect(screen.getByRole('heading', { name:new Intl.DateTimeFormat('es-ES', { month:'long', year:'numeric' }).format(new Date(now.getFullYear(), now.getMonth() + 1, 1)) })).toBeInTheDocument();
+});
