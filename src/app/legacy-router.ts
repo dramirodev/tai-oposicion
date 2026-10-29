@@ -17,7 +17,7 @@ import { swipeDirection, studyKeyAction } from '../shared/ui/study-input.js';
 import { calculateStudyStreak } from '../core/domain/study-analytics.js';
 import { summarizeReadingSpeedFailures } from '../core/domain/question-performance.js';
 import { previewBackupImport } from '../core/application/settings/backup-preview.js';
-import { fetchJson } from '../adapters/http/legacy-data.js';
+import { fetchJson } from '../adapters/http/study-question-catalog.js';
 import { $, L, toast, ask } from '../shared/ui/legacy-dom.js';
 import { showMenu } from '../shared/ui/dialog-actions.js';
 import { BLOQUES, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
@@ -372,7 +372,7 @@ export function bootAppServices(): () => void {
     prefetchBank: prefetchBanco,
     loadMetadataAndInitializeSync: async () => {
       try { await getMeta(); } catch (error) { console.error(error); }
-      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getQuestionIdsForTopic }, store, trainingSession, paperRecall, trainingCalendar); } catch (error) { console.error(error); }
+      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getAllQuestionIdsForTopic }, store, trainingSession, paperRecall, trainingCalendar); } catch (error) { console.error(error); }
     },
   });
 }

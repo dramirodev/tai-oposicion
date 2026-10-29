@@ -80,10 +80,10 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   await vi.waitFor(() => expect(document.querySelector('#failure-results').textContent).toContain('Ninguna pregunta'));
   await navigate('sim', 'Simulacros');
   // Una carga de Falladas pendiente no debe reemplazar la ruta de destino.
-  const data = await import('../src/adapters/http/legacy-data.js');
-  const originalByIds = data.byIds;
+  const { studyQuestionCatalog } = await import('../src/app/composition/study/study-engine-composition.js');
+  const originalByIds = studyQuestionCatalog.getQuestions;
   let release;
-  const delayed = vi.spyOn(data, 'byIds').mockImplementationOnce(ids => new Promise(resolve => {
+  const delayed = vi.spyOn(studyQuestionCatalog, 'getQuestions').mockImplementationOnce(ids => new Promise(resolve => {
     release = async () => resolve(await originalByIds(ids));
   }));
   location.hash = '#/falladas';

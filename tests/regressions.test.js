@@ -6,7 +6,7 @@ let store, engine, data, recovery;
 beforeEach(async () => {
   vi.resetModules(); vi.useFakeTimers(); localStorage.clear();
   vi.stubGlobal('fetch', async url => ({ok:true,json:async()=>JSON.parse(readFileSync(path.join('public',String(url)),'utf8'))}));
-  store=await import('../src/adapters/local/legacy-store.js');engine=await import('../src/app/composition/study/study-engine-composition.js');data=await import('../src/adapters/http/legacy-data.js');recovery=await import('../src/app/composition/study/pending-run-composition.js');await data.getMeta();
+  store=await import('../src/adapters/local/legacy-store.js');engine=await import('../src/app/composition/study/study-engine-composition.js');data=await import('../src/adapters/http/study-question-catalog.js');recovery=await import('../src/app/composition/study/pending-run-composition.js');await data.getMetadata();
 });
 afterEach(()=>{vi.clearAllTimers();vi.useRealTimers();vi.unstubAllGlobals();vi.restoreAllMocks();});
 it('cerrar dos veces la misma sesión no duplica intentos',()=>{
@@ -52,11 +52,11 @@ it('recupera la copia antigua de IndexedDB solo para el propietario',async()=>{
  store.switchAccount('owner',true);await store.recover();expect(store.rec('legacyMirror')?.[0]).toBe(1);
 });
 it('recupera los supuestos con el enunciado y mantiene la racha hasta tres aciertos',async()=>{
- const [q]=await data.byIds(['TAI2024B-S1-01']);expect(q.supTexto.length).toBeGreaterThan(100);
+ const [q]=await data.getQuestions(['TAI2024B-S1-01']);expect(q.supTexto.length).toBeGreaterThan(100);
  store.record(q.i,q.t,0,1000);
  for(let i=1;i<=3;i++){expect(engine.falladasIds()).toContain(q.i);store.record(q.i,q.t,1,1000+i);}
  expect(engine.falladasIds()).not.toContain(q.i);
- expect(data.idsOfTema(q.t)).toContain(q.i);
+ expect(data.getAllQuestionIdsForTopic(q.t)).toContain(q.i);
 });
 it('desmarcar el temario también prevalece sobre respuestas antiguas',()=>{
  store.record('mark','T1.01',0,1000);store.setReviewed('mark','T1.01',true);
@@ -66,7 +66,7 @@ it('desmarcar el temario también prevalece sobre respuestas antiguas',()=>{
 });
 it('no reanuda ni registra una respuesta de una sesión de otra cuenta',async()=>{
  store.switchAccount('owner-session');
- const [q]=await data.getTema('T1.01');
+ const [q]=await data.getTopicQuestions('T1.01');
  const run=engine.createRun({kind:'test',feedback:true,items:[q]});engine.saveRun();engine.clearActiveRun();
  const pending=await recovery.pendingRun(true);expect(pending).not.toBeNull();
  store.switchAccount('friend-session');
@@ -79,6 +79,6 @@ it('una respuesta de formato antiguo no convierte un acierto limpio en fallo pen
  expect(store.pendingFailure(store.rec('old-version'))).toBe(false);
 });
 it('conserva el contexto específico de una pregunta al añadir el enunciado general del supuesto',async()=>{
- const [q]=await data.byIds(['L2025A-S2-04']);
+ const [q]=await data.getQuestions(['L2025A-S2-04']);
  expect(q.cp).toMatch(/^En un momento determinado, la web del Ministerio deja de estar accesible/);
 });

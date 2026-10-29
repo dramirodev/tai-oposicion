@@ -10,7 +10,7 @@ it('actualiza la pestaña activa desde la suscripción del motor', async () => {
   const engine = await import('../src/app/composition/study/study-engine-composition.js');
   const sessionState = await import('../src/app/session-state-store.js');
   engine.configureSessionStateStore(sessionState.sessionStatePort);
-  await (await import('../src/adapters/http/legacy-data.js')).getMeta();
+  await (await import('../src/adapters/http/study-question-catalog.js')).getMetadata();
   const { useActiveSection } = await import('../src/app/layouts/useActiveSection.js');
   let renders = 0;
   function Probe({ path }) {

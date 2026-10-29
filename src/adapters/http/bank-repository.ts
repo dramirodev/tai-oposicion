@@ -1,6 +1,6 @@
 import type { Question } from '../../core/domain/entities.js';
 import type { BankRepository } from '../../core/ports/BankRepository.js';
-import { getMeta, getTema, temaOf } from './legacy-data.js';
+import { getMetadata, getTopicForQuestion, getTopicQuestions as loadTopicQuestionRecords } from './study-question-catalog.js';
 import { clearQuestionDiagnostics, mapQuestionDtos } from './question-diagnostics.js';
 
 const topicCache = new Map<string, Promise<Question[]>>();
@@ -8,7 +8,7 @@ const topicCache = new Map<string, Promise<Question[]>>();
 async function getTopicQuestions(topicId: string): Promise<Question[]> {
   let pending = topicCache.get(topicId);
   if (!pending) {
-    pending = getTema(topicId).then(rows => mapQuestionDtos(rows)).catch((error: unknown) => {
+    pending = loadTopicQuestionRecords(topicId).then(rows => mapQuestionDtos(rows)).catch((error: unknown) => {
       topicCache.delete(topicId);
       throw error;
     });
@@ -19,8 +19,8 @@ async function getTopicQuestions(topicId: string): Promise<Question[]> {
 
 export const httpBankRepository: BankRepository = {
   async getQuestion(questionId) {
-    const meta = await getMeta();
-    const topicId = temaOf(questionId);
+    const meta = await getMetadata();
+    const topicId = getTopicForQuestion(questionId);
     if (!topicId) return undefined;
     const canonicalId = meta[questionId]?.[5] || questionId;
     const question = (await getTopicQuestions(topicId)).find(item => item.id === canonicalId);
@@ -28,7 +28,7 @@ export const httpBankRepository: BankRepository = {
   },
 
   async getQuestions(topicIds) {
-    await getMeta();
+    await getMetadata();
     return (await Promise.all(topicIds.map(getTopicQuestions))).flat();
   },
 };

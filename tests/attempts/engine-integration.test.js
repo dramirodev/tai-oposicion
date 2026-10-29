@@ -22,9 +22,9 @@ describe('integración del motor con el historial local', () => {
     localStorage.clear();
     engine = await import('../../src/app/composition/study/study-engine-composition.js');
     store = await import('../../src/adapters/local/legacy-store.js');
-    data = await import('../../src/adapters/http/legacy-data.js');
+    data = await import('../../src/adapters/http/study-question-catalog.js');
     recovery = await import('../../src/app/composition/study/pending-run-composition.js');
-    await data.getMeta();
+    await data.getMetadata();
     serial = 0;
     repository = createLocalAttemptRepository(`attempt-engine-${Date.now()}-${Math.random()}`);
     tracker = createAttemptTracker({
@@ -45,7 +45,7 @@ describe('integración del motor con el historial local', () => {
   });
 
   it('registra un intento nuevo y cada respuesta exactamente una vez, sin inventar eventos antiguos', async () => {
-    const question = (await data.getTema('T1.01')).find(item => !item.np);
+    const question = (await data.getTopicQuestions('T1.01')).find(item => !item.np);
     const run = engine.createRun({ kind: 'test', feedback: true, items: [question] });
     engine.startCurrentQuestion();
     engine.answerQuestion(run, question, question.c, 0);
@@ -62,7 +62,7 @@ describe('integración del motor con el historial local', () => {
   });
 
   it('mantiene las escrituras de A en A al cambiar a B mientras A sigue guardando', async () => {
-    const question = (await data.getTema('T1.01')).find(item => !item.np);
+    const question = (await data.getTopicQuestions('T1.01')).find(item => !item.np);
     store.switchAccount('account-a');
     let releaseA;
     const pendingA = new Promise(resolve => { releaseA = resolve; });
@@ -93,7 +93,7 @@ describe('integración del motor con el historial local', () => {
   });
 
   it('reanuda un guardado antiguo sin metadatos de intento ni crear historial retroactivo', async () => {
-    const question = (await data.getTema('T1.01')).find(item => !item.np);
+    const question = (await data.getTopicQuestions('T1.01')).find(item => !item.np);
     const saved = {
       kind: 'sim', idx: 0, ids: [question.i], savedAt: Date.now(), ans: [],
     };
@@ -116,7 +116,7 @@ describe('integración del motor con el historial local', () => {
   });
 
   it('deja No lo sé pendiente, permite contestar al volver y bloquea el primer resultado', async () => {
-    const question = (await data.getTema('T1.01')).find(item => !item.np);
+    const question = (await data.getTopicQuestions('T1.01')).find(item => !item.np);
     const run = engine.createRun({ kind: 'test', feedback: true, items: [question] });
     engine.startCurrentQuestion();
     engine.answerQuestion(run, question, -1, 0);
@@ -132,7 +132,7 @@ describe('integración del motor con el historial local', () => {
   });
 
   it('persiste la consulta como blanco bloqueado y reconoce respuestas antiguas -1 como consulta', async () => {
-    const question = (await data.getTema('T1.01')).find(item => !item.np);
+    const question = (await data.getTopicQuestions('T1.01')).find(item => !item.np);
     const run = engine.createRun({ kind: 'test', feedback: true, items: [question] });
     engine.answerQuestion(run, question, -1, 0);
     engine.saveRun();
@@ -161,7 +161,7 @@ describe('integración del motor con el historial local', () => {
   });
 
   it('registra y conserva marcas, confianza y descartes por pregunta', async () => {
-    const question = (await data.getTema('T1.01')).find(item => !item.np);
+    const question = (await data.getTopicQuestions('T1.01')).find(item => !item.np);
     const run = engine.createRun({ kind: 'test', feedback: true, items: [question] });
     engine.startCurrentQuestion();
     const mark = createHighlight({
@@ -186,7 +186,7 @@ describe('integración del motor con el historial local', () => {
   });
 
   it('limita confianza y descartes al periodo previo a responder sin cambiar la edición del simulacro', async () => {
-    const question = (await data.getTema('T1.01')).find(item => !item.np);
+    const question = (await data.getTopicQuestions('T1.01')).find(item => !item.np);
     const run = engine.createRun({ kind: 'sim', feedback: false, items: [question] });
     expect(engine.revealCurrentSolution()).toBe(false);
     expect(engine.setCurrentConfidence('sure')).toBe(true);
@@ -202,7 +202,7 @@ describe('integración del motor con el historial local', () => {
   });
 
   it('mantiene los descartes ordenados y los bloquea tras responder una pregunta de práctica', async () => {
-    const question = (await data.getTema('T1.01')).find(item => !item.np);
+    const question = (await data.getTopicQuestions('T1.01')).find(item => !item.np);
     const run = engine.createRun({ kind: 'test', feedback: true, items: [question] });
 
     expect(engine.toggleCurrentDiscardedOption(-1)).toBe(false);

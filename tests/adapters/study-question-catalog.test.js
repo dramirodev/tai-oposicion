@@ -1,5 +1,5 @@
 import { afterEach, expect, it, vi } from 'vitest';
-import { configureRemoteBankLoader, fetchJson } from '../../src/adapters/http/legacy-data.js';
+import { configureRemoteBankLoader, fetchJson } from '../../src/adapters/http/study-question-catalog.js';
 
 afterEach(() => {
   configureRemoteBankLoader(async () => null);

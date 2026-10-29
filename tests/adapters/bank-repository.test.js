@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { clearBankRepositoryCache, httpBankRepository } from '../../src/adapters/http/bank-repository.js';
-import { activeIdsOfTema, byIds, idsOfTema } from '../../src/adapters/http/legacy-data.js';
+import { getQuestionIdsForTopic, getQuestions, getAllQuestionIdsForTopic } from '../../src/adapters/http/study-question-catalog.js';
 
 describe('httpBankRepository', () => {
   beforeEach(() => {
@@ -37,12 +37,12 @@ describe('httpBankRepository', () => {
     const alias = 'L2024A-P1-30';
     const activeQuestions = await httpBankRepository.getQuestions(['T2.05']);
     const historicalQuestion = await httpBankRepository.getQuestion(alias);
-    const [historicalAttemptQuestion] = await byIds([alias]);
+    const [historicalAttemptQuestion] = await getQuestions([alias]);
 
     expect(activeQuestions.filter(question => question.id === canonical)).toHaveLength(1);
     expect(activeQuestions.some(question => question.id === alias)).toBe(false);
-    expect(activeIdsOfTema('T2.05')).not.toContain(alias);
-    expect(idsOfTema('T2.05')).toContain(alias);
+    expect(getQuestionIdsForTopic('T2.05')).not.toContain(alias);
+    expect(getAllQuestionIdsForTopic('T2.05')).toContain(alias);
     expect(historicalQuestion).toMatchObject({ id: alias, statement: '¿Qué es el lenguaje OQL en el contexto de las bases de datos orientadas a objetos?' });
     expect(historicalAttemptQuestion).toMatchObject({ i: alias, q: historicalQuestion?.statement, c: 2 });
   });
@@ -55,12 +55,12 @@ describe('httpBankRepository', () => {
       clearBankRepositoryCache();
       const active = await httpBankRepository.getQuestions([topic]);
       const historical = await httpBankRepository.getQuestion(alias);
-      const [attemptQuestion] = await byIds([alias]);
+      const [attemptQuestion] = await getQuestions([alias]);
 
       expect(active.filter(question => question.id === canonical)).toHaveLength(1);
       expect(active.some(question => question.id === alias)).toBe(false);
-      expect(activeIdsOfTema(topic)).not.toContain(alias);
-      expect(idsOfTema(topic)).toContain(alias);
+      expect(getQuestionIdsForTopic(topic)).not.toContain(alias);
+      expect(getAllQuestionIdsForTopic(topic)).toContain(alias);
       expect(historical).toMatchObject({ id: alias, topicId: topic });
       expect(attemptQuestion).toMatchObject({ i: alias, t: topic, c: expect.any(Number) });
       expect(attemptQuestion.c).toBe(correctIndex);

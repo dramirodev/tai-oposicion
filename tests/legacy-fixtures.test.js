@@ -20,9 +20,9 @@ beforeEach(async () => {
   }));
   store = await import('../src/adapters/local/legacy-store.js');
   engine = await import('../src/app/composition/study/study-engine-composition.js');
-  data = await import('../src/adapters/http/legacy-data.js');
+  data = await import('../src/adapters/http/study-question-catalog.js');
   recovery = await import('../src/app/composition/study/pending-run-composition.js');
-  await data.getMeta();
+  await data.getMetadata();
 });
 
 afterEach(() => {
