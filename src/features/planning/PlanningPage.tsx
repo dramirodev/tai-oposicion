@@ -162,7 +162,7 @@ interface PlanningViewModel {
   totalElapsed: number;
   progress: number;
   state: 'completed' | 'rest' | 'activities' | 'missing-new-topic' | 'empty';
-  emptyMessage: 'no-content' | 'mark-topic';
+  emptyMessage: 'no-content' | 'mark-topic' | 'select-introduction-topic';
   actionLabel: string;
 }
 
@@ -205,7 +205,8 @@ function buildPlanningViewModel(overview: HomeOverview, settings: SettingsSnapsh
     completedCount, activeIndex, activeSeconds, totalElapsed,
     progress: activities.length ? Math.min(100, Math.round(completedCount * 100 / activities.length)) : 0,
     state,
-    emptyMessage: overview.studiedTopics ? 'no-content' : 'mark-topic',
+    emptyMessage: !overview.nextNewTopic && focus === 'new-content' ? 'select-introduction-topic'
+      : overview.studiedTopics ? 'no-content' : 'mark-topic',
     actionLabel,
   };
 }
@@ -256,6 +257,7 @@ function SessionActionArea({ model, activeStudy, onStart, onPause }: {
     <p>Las actividades se abren ya preparadas; al terminar, vuelves aquí para seguir con el paso siguiente.</p>
   </div>;
   if (model.state === 'missing-new-topic') return <p>No se ha podido preparar el siguiente tema. <Link to="/temario">Revisa el temario</Link>.</p>;
+  if (model.emptyMessage === 'select-introduction-topic') return <p>Elige el tema que vas a introducir esta semana en <Link to="/settings#training-schedule">Ajustes</Link> para preparar el contenido nuevo.</p>;
   return <p>{model.emptyMessage === 'no-content' ? 'No hay contenido pendiente para las modalidades elegidas.' : <>Primero marca el siguiente tema que vas a estudiar. <Link to="/temario">Abrir temario</Link></>}</p>;
 }
 

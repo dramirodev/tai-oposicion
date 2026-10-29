@@ -245,7 +245,10 @@ Los fallos de los supuestos también aparecen en Falladas y en el repaso, con el
 
 La entrada de Vite es `index.html`; los datos fuente siguen en `public/data` y `public/cards`.
 Firebase y el servidor local sirven `dist/`. `npm start` compila y sirve con la misma CSP global
-que Firebase. `npm run deploy` conserva sus validaciones y su despliegue manual habitual.
+que Firebase. Para desarrollar con recarga automática al guardar cambios, ejecuta `npm run dev`
+y abre la URL local que muestra Vite (por defecto, `http://127.0.0.1:5173`). En este modo no se
+registra el service worker para evitar que su caché interfiera con los cambios. `npm run deploy`
+conserva sus validaciones y su despliegue manual habitual.
 
 `npm run test:e2e` ejecuta los recorridos Playwright configurados para Chromium y WebKit, usando el banco real,
 Firebase sin configurar y almacenamiento aislado. Instala los navegadores requeridos con `npx playwright install chromium webkit`.

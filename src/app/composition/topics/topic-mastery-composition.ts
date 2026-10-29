@@ -1,6 +1,6 @@
 import type { ProgressRepository } from '../../../core/ports/ProgressRepository.js';
 import { mapTopicMasteryToLegacy } from '../../mappers/topic-mastery-mapper.js';
-import type { Index } from '../../../adapters/legacy/types.js';
+import type { StudyCatalogIndex as Index } from '../../../core/domain/study-catalog.js';
 
 interface TopicMasteryDependencies {
   progressRepository: Pick<ProgressRepository, 'getStats'>;

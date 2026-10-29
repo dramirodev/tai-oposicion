@@ -127,7 +127,8 @@ export function buildDailyTrainingPlan(input: {
   const studiedTopicSet = studiedTopicIds ? new Set(studiedTopicIds) : undefined;
   const preferredTopic = preferences.introductionTopicId && !studiedTopicSet?.has(preferences.introductionTopicId)
     ? preferences.introductionTopicId : undefined;
-  const newTopicId = preferredTopic ?? (input.nextNewTopic && !studiedTopicSet?.has(input.nextNewTopic.topicId) ? input.nextNewTopic.topicId : undefined);
+  const newTopicId = preferredTopic && input.nextNewTopic?.topicId === preferredTopic
+    && !studiedTopicSet?.has(preferredTopic) ? preferredTopic : undefined;
   const canStudyNewContent = preferences.focusByDay?.[weekday] === 'new-content' && !!newTopicId;
 
   const cardDueCount = Number.isFinite(input.cardDueCount) ? Math.max(0, input.cardDueCount ?? 0) : 0;

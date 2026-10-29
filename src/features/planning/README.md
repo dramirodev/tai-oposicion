@@ -4,7 +4,7 @@
 
 La página consume el plan diario del entrenador existente. Presenta las actividades ordenadas, permite comenzar o continuar la sesión y abre los flujos ya preparados de temario, tarjetas, test, fallos y repasos. La sesión conserva el paso, las marcas temporales y el tiempo medido por actividad en almacenamiento local; puede sincronizar ese checkpoint en el documento privado `users/{uid}/cfg/training` para cuentas aprobadas. No escribe respuestas, resultados ni datos del temario en ese documento.
 
-La selección de práctica y dominio se limita a temas marcados como vistos. En días de contenido nuevo se propone el siguiente tema real del catálogo, sin marcarlo automáticamente como visto. Los resúmenes, esquemas y vídeos completos no forman parte del contenido disponible en TAI; el paso de estudio inicial enlaza al temario y explica que se debe consultar el material externo. Marcar un tema como visto registra cobertura declarada, no acredita que se haya leído o comprendido.
+La selección de práctica y dominio se limita a temas marcados como vistos. En días de contenido nuevo solo se propone el tema de introducción semanal elegido en Ajustes, si sigue sin marcarse como visto y existe en el catálogo. Sin elección explícita, no se asigna ningún tema automáticamente. Los resúmenes, esquemas y vídeos completos no forman parte del contenido disponible en TAI; el paso de estudio inicial enlaza al temario y explica que se debe consultar el material externo. Marcar un tema como visto registra cobertura declarada, no acredita que se haya leído o comprendido.
 
 La repetición espaciada continúa utilizando FSRS para las tarjetas que ya lo tienen configurado. La planificación diaria no crea un segundo calendario de FSRS. El checkpoint de una sesión tampoco constituye un historial pedagógico o una evaluación de retención.
 
@@ -22,9 +22,9 @@ La repetición espaciada continúa utilizando FSRS para las tarjetas que ya lo t
 ## Reglas de producto (heurísticas, no resultados científicos)
 
 - La semana predeterminada contiene seis días de estudio de hasta 120 minutos y domingo de descanso. Lunes, martes, jueves y viernes se enfocan en contenido nuevo; miércoles y sábado, en recuperación/consolidación. Es una configuración inicial editable, no una proporción recomendada por investigación.
-- En un día de contenido nuevo, el plan propone el siguiente tema no marcado como visto y, como máximo, una actividad de refuerzo. Si hay repasos vencidos, prioriza esos repasos; después, fallos; después, tarjetas de Active Recall; por último, test del tema. La ponderación y el límite son heurísticas para reservar tiempo al temario y evitar llenar toda la sesión.
+- En un día de contenido nuevo, el plan propone el tema de introducción semanal seleccionado y no marcado como visto, y como máximo una actividad de refuerzo. Sin tema seleccionado no prepara contenido nuevo. Si hay repasos vencidos, prioriza esos repasos; después, fallos; después, tarjetas de Active Recall; por último, test del tema. La ponderación y el límite son heurísticas para reservar tiempo al temario y evitar llenar toda la sesión.
 - En días de consolidación se usan únicamente temas marcados como vistos. Los resultados y tarjetas vencidas pueden priorizarse; cualquier clasificación de dominio hereda las limitaciones de los datos y no es una medición independiente de retención.
-- Si faltan datos no se inventan resultados: una persona sin temas vistos puede recibir un paso de estudio inicial; si no hay tema nuevo, repasos o preguntas disponibles, el plan queda vacío y explica por qué.
+- Si faltan datos no se inventan resultados: una persona sin temas vistos recibe un paso de estudio inicial solo cuando ha elegido un tema semanal; si no hay tema elegido, repasos o preguntas disponibles, el plan queda vacío y explica por qué.
 - El 30 de junio de 2027 se presenta solo como fecha estimada personal cuando el usuario no haya configurado una fecha objetivo. No se describe como fecha oficial del examen.
 
 ## Evaluación pendiente

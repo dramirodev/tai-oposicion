@@ -9,11 +9,12 @@ import type { Firestore, FirestoreError, QuerySnapshot, DocumentSnapshot, Unsubs
 import { loadFirebaseConfig } from './firebase-config-loader.js';
 import { localFirebaseEmulators } from './local-emulator-config.js';
 import { decodeFirebaseDocumentId, encodeFirebaseDocumentId } from './firebase-document-id-mapper.js';
-import { OWNER_EMAIL, rememberAccessForAccount } from './access-policy.js';
+import { OWNER_EMAIL } from './access-policy.js';
 import type { AttemptRepository } from '../../core/ports/AttemptRepository.js';
-import type { AccessLevel } from '../../core/domain/entities.js';
+import type { AccessLevel, AccessRequest } from '../../core/domain/entities.js';
+import type { AccessRequestRecord } from './dto/access.js';
 import type { DailyTrainingSession } from '../../core/domain/study-training-session.js';
-import type { AccessRequest, CardMap, ReportMap, SeenDoc, Session, StatMap } from '../legacy/types.js';
+import type { CardMap, ReportMap, SeenDoc, Session, StatMap } from '../contracts/progress-data.js';
 import type { ProgressSyncStore } from '../contracts/progress-sync.js';
 
 const errorFields = (value: unknown): { code: unknown; message: unknown } => {
@@ -125,14 +126,14 @@ let accUnsubs: Unsubscribe[] = [];
 let accessEpoch = 0;
 const canSync = () => !!uid && (status.access === 'propietario' || status.access === 'aprobado');
 function stopAcc() { accessEpoch++; accUnsubs.forEach(callback => { try { callback(); } catch {} }); accUnsubs = []; }
-function setAccess(entry: AccessLevel) { status.access = entry; rememberAccessForAccount(getProgressStore().accountId(), entry); }
+function setAccess(entry: AccessLevel) { status.access = entry; }
 function accErr(error: unknown) { status.accessErr = String(errorFields(error).code || error); emit(); }
 function resolveAccess(url: User) {
   const mine = url.uid, epoch = accessEpoch, vivo = () => uid === mine && epoch === accessEpoch;
   status.accessErr = '';
   if (url.email === OWNER_EMAIL && url.emailVerified) {
     setAccess('propietario'); status.state = 'sincronizando…'; emit(); start();
-    const lista = (campo: 'reqs' | 'grants', ord: (accessRequest: AccessRequest, accessRequestItem: AccessRequest) => number) => (snap: QuerySnapshot) => { if (!vivo()) return; const accessRequest: AccessRequest[] = []; snap.forEach(data => accessRequest.push({ uid: data.id, ...(data.data() as Omit<AccessRequest, 'uid'>) })); accessRequest.sort(ord); status[campo] = accessRequest; emit(); };
+    const lista = (campo: 'reqs' | 'grants', ord: (accessRequest: AccessRequestRecord, accessRequestItem: AccessRequestRecord) => number) => (snap: QuerySnapshot) => { if (!vivo()) return; const accessRequest: AccessRequestRecord[] = []; snap.forEach(data => accessRequest.push({ uid: data.id, ...(data.data() as Omit<AccessRequestRecord, 'uid'>) })); accessRequest.sort(ord); status[campo] = accessRequest; emit(); };
     accUnsubs.push(onSnapshot(collection(db, 'requests'), lista('reqs', (accessRequest, accessRequestItem) => (accessRequestItem.ts || 0) - (accessRequest.ts || 0)), accErr));
     accUnsubs.push(onSnapshot(collection(db, 'access'), lista('grants', (accessRequest, accessRequestItem) => String(accessRequest.email).localeCompare(String(accessRequestItem.email))), accErr));
     return;

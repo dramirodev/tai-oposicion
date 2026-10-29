@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import type { ExplanationLookup } from '../../core/domain/explanations.js';
+import { CodeExplanationView } from '../explanations/CodeExplanation.js';
 import { Check, TriangleAlert } from 'lucide-react';
 import { Link, useNavigate, useSearchParams } from 'react-router';
 import { ERROR_REPORT_REASONS } from '../../shared/presentation/study-labels.js';
@@ -35,7 +37,7 @@ const outcomePresentation = {
   revealed: { style: 'b', label: 'Solución consultada · blanco' },
 } as const;
 
-function ReviewDetails({ item, explanation }: { item: ResultItem; explanation: string }) {
+function ReviewDetails({ item, explanation }: { item: ResultItem; explanation: ExplanationLookup }) {
   return <>
     {item.notice && <StudyMarkup html={item.notice} languageContext={item.statement} />}
     <div className="pre review-statement"><StudyMarkup html={richHtml(item.statement)} languageContext={item.statement} /></div>
@@ -45,19 +47,20 @@ function ReviewDetails({ item, explanation }: { item: ResultItem; explanation: s
     {item.highlights.length > 0 && <p className="sub">Tus marcas de este intento:</p>}
     {item.citation && <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(item.citation, item.options[item.correctIndex])} languageContext={item.statement} /></div>}
     {item.source && <StudyMarkup html={item.source} languageContext={item.statement} />}
-    {explanation && <div className="code-explanation-slot" aria-live="polite"><StudyMarkup html={explanation} languageContext={item.statement} /></div>}
+    {explanation.status === 'current' && <div className="code-explanation-slot" aria-live="polite"><CodeExplanationView explanation={explanation.explanation} /></div>}
+    {explanation.status === 'outdated' && <p className="sub" role="status">Hay una explicación de una revisión anterior; no se muestra para evitar información desactualizada.</p>}
   </>;
 }
 
 function ReviewItem({ item, index, report, interrupted }: { item: ResultItem; index: number; report: ResultReport | undefined; interrupted: boolean }) {
   const result = useStudyService('result');
-  const [explanation, setExplanation] = useState('');
+  const [explanation, setExplanation] = useState<ExplanationLookup>({ status: 'missing' });
   const { style, label } = outcomePresentation[item.outcome];
 
   useEffect(() => {
     if (item.outcome === 'revealed' || interrupted) return;
     let active = true;
-    void result.loadExplanation(item).then(value => { if (active && value.status === 'current') setExplanation(value.content || ''); if (active && value.status === 'outdated') setExplanation('Hay una explicación de una revisión anterior; no se muestra para evitar información desactualizada.'); }).catch(() => {});
+    void result.loadExplanation(item).then(value => { if (active) setExplanation(value); }).catch(() => {});
     return () => { active = false; };
   }, [interrupted, item, item.outcome, result]);
 

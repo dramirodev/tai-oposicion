@@ -43,7 +43,7 @@ export function bootAppServices(dependencies: AppBootstrapDependencies): () => v
       void dependencies.flushAttemptTracking();
     });
 
-    if ('serviceWorker' in navigator) {
+    if (!import.meta.env.DEV && 'serviceWorker' in navigator) {
       void navigator.serviceWorker.register('../sw.js').catch(() => {});
     }
 

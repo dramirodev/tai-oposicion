@@ -26,6 +26,7 @@ beforeEach(async () => {
   boundary.writes.length = 0; boundary.snapshots.length = 0; boundary.auth.currentUser = null;
   vi.stubGlobal('fetch', async () => ({ ok: true, json: async () => ({ apiKey: 'test', authDomain: 'localhost' }) }));
   store = await import('../src/adapters/local/legacy-store.js'); sync = await import('../src/adapters/firebase/legacy-sync.js');
+  await import('../src/app/composition/access-composition.js');
   trainingStore = { getSession: vi.fn(() => null), getHistory: vi.fn(() => []), mergeRemote: vi.fn(() => false), mergeRemoteHistory: vi.fn(() => false) };
   await sync.init({ temaOf: () => 'T1.01', idsOfTema: () => [] }, store, trainingStore); user('user1');
 });

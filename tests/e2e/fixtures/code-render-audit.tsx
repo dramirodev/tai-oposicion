@@ -1,12 +1,12 @@
 import { createRoot, type Root } from 'react-dom/client';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { useLayoutEffect, useState } from 'react';
 import { hiliteHtml, richHtml } from '../../../src/shared/presentation/study-text.js';
 import { questionNotice } from '../../../src/shared/presentation/study-content.js';
 import { StudyMarkup } from '../../../src/shared/ui/StudyMarkup.js';
 import { inferCodeLanguage } from '../../../src/shared/ui/study-code-language.js';
-import { explanationMapper as explanationViewMapper } from '../../../src/features/explanations/explanation-mapper.js';
+import { CodeExplanationView } from '../../../src/features/explanations/CodeExplanation.js';
 import { explanationMapper as explanationDomainMapper } from '../../../src/adapters/http/mappers/explanation.js';
-import { renderCodeExplanation } from '../../../src/features/explanations/legacy-view.js';
 import '../../../src/shared/styles/index.css';
 
 interface BankQuestion {
@@ -221,8 +221,7 @@ async function loadAudit(): Promise<{ records: AuditRecord[]; summary: AuditSumm
   for (const raw of explanations) {
     const mapped = explanationDomainMapper.toDomain(raw);
     if (!mapped.ok) throw new Error(`Explicación inválida ${raw.i}: ${mapped.reason}`);
-    const vm = explanationViewMapper.toViewModel(mapped.value);
-    const explanationHtml = renderCodeExplanation(vm, raw.i);
+    const explanationHtml = renderToStaticMarkup(<CodeExplanationView explanation={mapped.value} />);
     append({ path: 'public/explanations/index.json', id: raw.i, kind: 'explanation', origin: mapped.value.language, fields: explanationFields(raw), explanationHtml });
   }
   summary.records.question = topicData.reduce((total, topic) => total + topic.rows.length, 0) + scenarioQuestionCount;

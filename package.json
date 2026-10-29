@@ -3,6 +3,7 @@
   "version": "1.1.12",
   "private": true,
   "scripts": {
+    "dev": "vite --host 127.0.0.1",
     "start": "npm run build && node scripts/serve.mjs",
     "serve": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs",

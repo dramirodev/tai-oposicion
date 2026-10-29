@@ -27,7 +27,7 @@ describe('planificación diaria de estudio', () => {
     expect(plan.activities.map(item => item.minutes).reduce((total, minutes) => total + minutes, 0)).toBe(plan.minutes);
   });
 
-  it('prepara el tema nuevo siguiente solo en días reservados para contenido nuevo', () => {
+  it('no asigna un tema nuevo cuando no se ha elegido el tema de introducción semanal', () => {
     const plan = buildDailyTrainingPlan({
       preferences: DEFAULT_TRAINING_PREFERENCES,
       weekday: 1,
@@ -37,14 +37,12 @@ describe('planificación diaria de estudio', () => {
       studiedTopicIds: [],
       nextNewTopic: { topicId: 'T1.01', topicName: 'Organización del Estado' },
     });
-    expect(plan.minutes).toBe(120);
-    expect(plan.activities.find(item => item.activity === 'newContent')).toMatchObject({ topicId: 'T1.01', reason: 'new-content-day' });
-    expect(plan.activities.every(item => item.activity === 'newContent')).toBe(true);
+    expect(plan.activities).toEqual([]);
   });
 
-  it('limita un día de contenido nuevo al tema siguiente y a un único tipo de refuerzo prioritario', () => {
+  it('limita el tema semanal elegido y a un único tipo de refuerzo prioritario', () => {
     const plan = buildDailyTrainingPlan({
-      preferences: DEFAULT_TRAINING_PREFERENCES,
+      preferences: { ...DEFAULT_TRAINING_PREFERENCES, introductionTopicId: 'T1.02' },
       weekday: 1,
       dueCount: 5,
       cardDueCount: 2,
@@ -71,7 +69,7 @@ describe('planificación diaria de estudio', () => {
       studiedTopicIds:['T1.01'],
       nextNewTopic:{ topicId:'T1.02', topicName:'Tema siguiente' },
     });
-    expect(plan.activities.map(item => item.activity)).toEqual(['newContent', 'topicTest']);
+    expect(plan.activities.map(item => item.activity)).toEqual(['activeRecall', 'topicTest', 'mixedTopicTest']);
     expect(plan.activities.find(item => item.activity === 'topicTest')).toMatchObject({ reason:'weak-topics', topicId:'T1.01', topicIds:['T1.01'] });
   });
 
@@ -89,7 +87,7 @@ describe('planificación diaria de estudio', () => {
 
   it('usa práctica del tema nuevo en el día de introducción y limita bloques a los minutos del día', () => {
     const plan = buildDailyTrainingPlan({
-      preferences: { ...testPreferences, focusByDay: ['rest', 'consolidation', 'consolidation', 'consolidation', 'new-content', 'consolidation', 'consolidation'], minutesByDay: [0, 35, 40, 35, 3, 40, 60], activities: [...testPreferences.activities, 'newContent'] },
+      preferences: { ...testPreferences, focusByDay: ['rest', 'consolidation', 'consolidation', 'consolidation', 'new-content', 'consolidation', 'consolidation'], minutesByDay: [0, 35, 40, 35, 3, 40, 60], activities: [...testPreferences.activities, 'newContent'], introductionTopicId: 'T3.02' },
       weekday: 4,
       dueCount: 3,
       failureCount: 2,

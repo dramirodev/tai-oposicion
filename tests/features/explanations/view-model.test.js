@@ -1,6 +1,8 @@
+import React from 'react';
 import { describe, expect, it } from 'vitest';
+import { render } from '@testing-library/react';
 import { explanationMapper } from '../../../src/features/explanations/explanation-mapper.js';
-import { renderCodeExplanation } from '../../../src/features/explanations/legacy-view.js';
+import { CodeExplanationView } from '../../../src/features/explanations/CodeExplanation.js';
 
 const entity = {
   questionId: 'Q-1', contentRevision: 'rev-1', language: 'Java', editorialStatus: 'draft',
@@ -9,18 +11,18 @@ const entity = {
   editorialNote: 'Revisión humana pendiente.', sources: [{ title: 'JLS', url: 'https://docs.oracle.com/spec' }],
 };
 
-describe('explicación de código para el puente legado', () => {
+describe('explicación de código como vista React', () => {
   it('marks AI drafted content as pending editorial review', () => {
     const vm = explanationMapper.toViewModel(entity);
     expect(vm).toMatchObject({ editorialLabel: 'Borrador', editorialNote: 'Revisión humana pendiente.' });
   });
 
-  it('escapes code, output, notes and titles when producing accessible markup', () => {
-    const markup = renderCodeExplanation(explanationMapper.toViewModel(entity));
-    expect(markup).toContain('aria-labelledby');
-    expect(markup).toContain('&lt;script&gt;alert(1)&lt;/script&gt;');
-    expect(markup).toContain('&lt;img src=x onerror=alert(1)&gt;');
-    expect(markup).not.toContain('<script>');
-    expect(markup).not.toContain('<img src=x');
+  it('renders untrusted code and editorial text as text with accessible structure', () => {
+    const { container } = render(React.createElement(CodeExplanationView, { explanation: entity }));
+    expect(container.querySelector('section[aria-labelledby] h3')).toHaveTextContent('Explicación del código');
+    expect(container.querySelector('pre.code-sample')).toHaveTextContent('<script>alert(1)</script>');
+    expect(container.querySelector('pre.code-result')).toHaveTextContent('<img src=x onerror=alert(1)>');
+    expect(container.querySelector('script, img')).toBeNull();
+    expect(container.querySelector('a[href="https://docs.oracle.com/spec"]')).toHaveTextContent('JLS');
   });
 });

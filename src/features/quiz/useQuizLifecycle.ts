@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import type { ExplanationLookup } from '../../core/domain/explanations.js';
 import type { QuizServices } from '../../shared/ui/study-services.js';
 
 export function useQuizClock(quiz: QuizServices) {
@@ -23,17 +24,16 @@ export function useQuizClock(quiz: QuizServices) {
   return { clock, finishingRef };
 }
 
-export function useQuizExplanation(quiz: QuizServices, promptId: string | undefined, revealed: boolean, studyState: string | undefined, questionIndex: number | undefined) {
-  const [result, setResult] = useState<{ id: string; content: string }>({ id: '', content: '' });
+export function useQuizExplanation(quiz: QuizServices, promptId: string | undefined, revealed: boolean, studyState: string | undefined, questionIndex: number | undefined): ExplanationLookup {
+  const [result, setResult] = useState<{ id: string; value: ExplanationLookup }>({ id: '', value: { status: 'missing' } });
   useEffect(() => {
     if (!promptId || !revealed) return;
     let active = true;
     void quiz.loadExplanation().then(value => {
       if (!active) return;
-      if (value.status === 'current') setResult({ id: promptId, content: value.content || '' });
-      if (value.status === 'outdated') setResult({ id: promptId, content: 'Hay una explicación de una revisión anterior; no se muestra para evitar información desactualizada.' });
+      setResult({ id: promptId, value: value.status === 'current' || value.status === 'outdated' ? value : { status: 'missing' } });
     }).catch(() => {});
     return () => { active = false; };
   }, [promptId, quiz, revealed, studyState, questionIndex]);
-  return result.id === promptId ? result.content : '';
+  return result.id === promptId ? result.value : { status: 'missing' as const };
 }

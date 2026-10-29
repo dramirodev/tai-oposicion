@@ -1,4 +1,4 @@
-import type { Meta } from '../../../adapters/legacy/types.js';
+import type { StudyQuestionMetadata as Meta } from '../../../core/domain/study-catalog.js';
 
 const OFFICIAL_EXAM_NAMES: Readonly<Record<string, string>> = {
   'TAIL2022-P1': 'Ingreso libre 2022 (conv. 2023)', 'TAI2024B-P1': 'Ingreso libre 2023-24 (conv. 2024)', 'L2018-P1': 'Ingreso libre 2018',

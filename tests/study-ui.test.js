@@ -1,5 +1,6 @@
 import {it,expect} from 'vitest';
-import {questionNotice,sourceHtml,filterFailures} from '../src/shared/presentation/legacy-study.js';
+import {questionNotice,sourceHtml} from '../src/shared/presentation/study-content.js';
+import {selectFailures} from '../src/features/failures/failures-controller.ts';
 import {previewCardWithFsrs} from '../src/adapters/local/fsrs-card-scheduler.ts';
 import {cardMapper} from '../src/adapters/local/mappers/card.js';
 it('advierte antes del estudio sin convertir una nota normal en error',()=>{
@@ -14,13 +15,9 @@ it('solo abre fuentes verificadas y con protocolo seguro',()=>{
  expect(sourceHtml({u:'Fragmento'})).toContain('sin enlace verificado');
 });
 it('filtra marcas y rachas sin modificar los registros',()=>{
- const questions=[{i:'a',t:'T1.01',q:'alpha',a:[]},{i:'b',t:'T1.01',q:'beta',a:[]}];
- const items=[
-  {value:questions[0],id:'a',topic:'T1.01',reviewed:true,streak:1,searchableText:'alpha'},
-  {value:questions[1],id:'b',topic:'T1.01',reviewed:false,streak:0,searchableText:'beta'},
- ];
- expect(filterFailures(items,{q:'',t:'',review:'pending',streak:''}).map(q=>q.i)).toEqual(['b']);
- expect(filterFailures(items,{q:'',t:'',review:'',streak:'1'}).map(q=>q.i)).toEqual(['a']);
+ const questions=[{id:'a',topicId:'T1.01',statement:'alpha',options:[],progress:{syllabusReviewed:true,failureStreak:1}},{id:'b',topicId:'T1.01',statement:'beta',options:[],progress:{syllabusReviewed:false,failureStreak:0}}];
+ expect(selectFailures(questions,{query:'',topicId:'',syllabus:'pending',streak:''}).map(q=>q.id)).toEqual(['b']);
+ expect(selectFailures(questions,{query:'',topicId:'',syllabus:'',streak:'1'}).map(q=>q.id)).toEqual(['a']);
 });
 it('anticipa la próxima revisión igual que el almacén sin escribir en él',async()=>{
  const store=await import('../src/adapters/local/legacy-store.js');store.resetAll();

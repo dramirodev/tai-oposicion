@@ -12,6 +12,37 @@ async function prepare(page: Page, theme = 'dark', size = 3, fullAccess = false)
   }, { theme, size, fullAccess });
 }
 
+async function selectIntroductionTopic(page: Page, topicId: string) {
+  await page.goto('/#/settings');
+  await page.getByLabel('Tema que estás introduciendo esta semana').selectOption(topicId);
+}
+
+test('Ajustes mantiene completas las etiquetas del horario semanal en escritorio y móvil', async ({ page }) => {
+  await prepare(page, 'light', 0, true);
+  await page.setViewportSize({ width: 1100, height: 850 });
+  await page.goto('/#/settings');
+  await expect(page.getByRole('heading', { name: 'Entrenamiento semanal' })).toBeVisible();
+  await expect(page.locator('.training-day')).toHaveCount(7);
+
+  for (const width of [1100, 320]) {
+    await page.setViewportSize({ width, height: 850 });
+    const fits = await page.locator('.training-day').evaluateAll(days => days.every(day => {
+      const weekday = day.querySelector<HTMLLabelElement>(':scope > label:first-child');
+      const focus = day.querySelector<HTMLLabelElement>('.training-focus-label');
+      const minutes = day.querySelector<HTMLElement>('.training-minute-input');
+      const select = day.querySelector<HTMLSelectElement>('select');
+      if (!weekday || !focus || !minutes || !select) return false;
+      const bounds = day.getBoundingClientRect();
+      return weekday.scrollWidth <= weekday.clientWidth
+        && focus.scrollWidth <= focus.clientWidth
+        && minutes.getBoundingClientRect().right <= bounds.right
+        && select.scrollWidth <= select.clientWidth
+        && select.getBoundingClientRect().right <= bounds.right;
+    }));
+    expect(fits, `etiquetas y controles dentro de las tarjetas a ${width}px`).toBe(true);
+  }
+});
+
 for (const theme of ['light', 'dark']) {
   test(`los bloques de código conservan formato y tema mientras cargan · ${theme}`, async ({ page }) => {
     await prepare(page, theme, 0);
@@ -208,6 +239,7 @@ test('saltar al contenido conserva la ruta y ofrece un destino de teclado', asyn
 
 test('Planificación prepara la sesión fuera de Inicio y permite comenzar el paso configurado', async ({ page }) => {
   await prepare(page, 'light', 0, true);
+  await selectIntroductionTopic(page, 'T1.02');
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/#/home');
   await expect(page.locator('#quick')).toBeVisible();
@@ -228,6 +260,7 @@ test('Planificación prepara la sesión fuera de Inicio y permite comenzar el pa
 
 test('registra el recuerdo del tema en papel y prioriza su comprobación el día siguiente', async ({ page }) => {
   await prepare(page, 'light', 0, true);
+  await selectIntroductionTopic(page, 'T1.02');
   await page.clock.setFixedTime(new Date('2026-10-29T12:00:00+02:00'));
   await page.goto('/#/planificacion');
   await page.getByRole('button', { name:'Comenzar sesión' }).click();
@@ -249,7 +282,7 @@ test('registra el recuerdo del tema en papel y prioriza su comprobación el día
   await expect(page.locator('#app h1')).toHaveText('Planificación de estudio');
   await expect(page.getByText(/2 de \d+ temas marcados como vistos/)).toBeVisible();
   const nextDayActivities = page.locator('.planning-activity');
-  await expect(nextDayActivities).toHaveCount(2);
+  await expect(nextDayActivities).toHaveCount(3);
   await expect(nextDayActivities.nth(1)).toContainText('Preguntas del tema prioritario');
   await expect(nextDayActivities.nth(1)).toContainText('T1.02');
   await nextDayActivities.nth(1).getByText('Instrucciones y motivo').click();

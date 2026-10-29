@@ -1,6 +1,6 @@
 import { saveExportFile } from '../shared/ui/download-file.js';
 import type { SettingsServices, SettingsSnapshot, StudyServices } from '../shared/ui/study-services.js';
-import { questionNotice, sourceHtml } from '../shared/presentation/legacy-study.js';
+import { questionNotice, sourceHtml } from '../shared/presentation/study-content.js';
 import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
 import * as store from '../adapters/local/legacy-store.js';
@@ -22,7 +22,7 @@ import { $, L, toast, ask } from '../shared/ui/legacy-dom.js';
 import { showMenu } from '../shared/ui/dialog-actions.js';
 import { BLOQUES, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
-import { isFull, isOwner, accessLevel, GUEST_ROUTES } from '../adapters/legacy/access.js';
+import { isFull, isOwner, accessLevel, devMode, setDevMode, devRevealed, revealDev } from './composition/access-composition.js';
 import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, clearActiveRun, createRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, revealCurrentSolution, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, dueQuestionIds, selectQuestionsForTopics, selectWeightedSimulationQuestions, setCurrentConfidence, toggleCurrentDiscardedOption, addCurrentHighlight, removeCurrentHighlight, studyQuestionCatalog } from './composition/study/study-engine-composition.js';
 import { sessionStatePort } from './session-state-store.js';
 import { clearRun, pendingRun, saveRun } from './composition/study/pending-run-composition.js';
@@ -38,9 +38,7 @@ import { buildDailyTrainingPlan, normalizeTrainingPreferences } from '../core/do
 import { filterTopicMasteryToSeen } from '../core/domain/topic-mastery.js';
 import { createHighlight, questionContentRevision, resolveHighlight } from '../core/domain/attempts/highlights.js';
 import { canonicalText, paintTextHighlight, selectedTextAnchor } from '../shared/ui/text-highlights.js';
-import { findLegacyCodeExplanation } from './composition/explanations/explanation-composition.js';
-import { explanationMapper } from '../features/explanations/explanation-mapper.js';
-import { renderCodeExplanation } from '../features/explanations/legacy-view.js';
+import { findCodeExplanation } from './composition/explanations/explanation-composition.js';
 import { loadQuestionEvolution, loadStrategyReportForPeriod } from './composition/stats/strategy-composition.js';
 import { createStatsServices } from './composition/stats/stats-composition.js';
 import { createExamCatalog } from './composition/simulations/exam-catalog-composition.js';
@@ -57,7 +55,6 @@ import { createQuizServices } from './composition/quiz/quiz-composition.js';
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './composition/exports/ai-study-export-composition.js';
 import { inspectOffline, downloadOffline, prefetchQuestionBank } from '../adapters/offline/cache.js';
-import { devMode, setDevMode, devRevealed, revealDev } from '../adapters/legacy/access.js';
 import { notifyAccessChange } from './access-events.js';
 import { exportAttemptArchive } from '../core/application/attempts/export-attempt-archive.js';
 import { importAttemptArchive } from '../core/application/attempts/import-attempt-archive.js';
@@ -412,9 +409,7 @@ export const studyServices: StudyServices = {
     goHome() { go(hashPath('home')); },
     async loadStrategy() { return renderStrategyReport(await loadStrategyReportForPeriod(365)); },
     async loadExplanation(item) {
-      const result = await findLegacyCodeExplanation(item.id, item.statement, [...item.options]);
-      if (result.status === 'current') return { status: 'current', content: renderCodeExplanation(explanationMapper.toViewModel(result.explanation)) };
-      return { status: result.status };
+      return findCodeExplanation(item.id, item.statement, [...item.options]);
     },
     getReport(id) { const report = store.getReports()[id]; return report ? { reason: report.motivo, note: report.nota, state: report.st } : undefined; },
     saveReport(id, topicId, reason, note) { store.addReport(id, topicId, reason, note); },
@@ -589,7 +584,7 @@ export const studyServices: StudyServices = {
       const nextNewTopicEntry = trainingPreferences.introductionTopicId && !studiedTopicSet.has(trainingPreferences.introductionTopicId)
         ? index.temas.find(topic => topic.id === trainingPreferences.introductionTopicId)
         : undefined;
-      const nextNewTopic = nextNewTopicEntry ?? index.temas.find(topic => !studiedTopicSet.has(topic.id));
+      const nextNewTopic = nextNewTopicEntry;
       const studiedMastery = filterTopicMasteryToSeen(mastery, studiedTopicIds);
       const studiedWeakTopics = studiedMastery.filter(topic => topic.est === 'r').sort((left, right) => left.score - right.score);
       const recallAssessments = paperRecall.get().filter(item => studiedTopicSet.has(item.topicId));

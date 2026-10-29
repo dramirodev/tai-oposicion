@@ -923,9 +923,6 @@
 .home-planning-shortcut { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin-block: 1rem 1.75rem; padding-block: 1rem; border-block: 1px solid var(--line); }
 .home-planning-shortcut h2 { flex: 1 1 100%; margin: 0; }
 .home-planning-shortcut p { flex: 1 1 22rem; margin: 0; color: var(--mute); }
-.training-day { display: grid; grid-template-columns: minmax(0,1fr) auto; }
-.training-day .training-focus-label { grid-column: 1; color: var(--mute); font-size: var(--fs-xs, .8125rem); }
-.training-day select { grid-column: 2; grid-row: 2; max-width: 18rem; min-height: 2.5rem; padding: .35rem .55rem; border: 1px solid var(--line); border-radius: var(--r-m); color: var(--ink); background: var(--card); font: inherit; font-size: var(--fs-s); }
 #training-schedule { scroll-margin-block-start: 1rem; }
 @media(max-width: 760px) {
   .planning-facts { grid-template-columns: repeat(3,minmax(0,1fr)); }
@@ -961,7 +958,6 @@
   .planning-activity-marker { width: 1.75rem; height: 1.75rem; }
   .planning-activity:not(:last-child)::before { inset-inline-start: .8125rem; }
   .home-planning-shortcut { align-items: flex-start; }
-  .training-day select { max-width: min(18rem, 62vw); }
 }
 @media(prefers-reduced-motion: reduce) { .planning-progress>span { transition: none; } }
 @media(max-width:600px) {

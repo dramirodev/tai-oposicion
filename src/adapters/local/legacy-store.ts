@@ -8,7 +8,7 @@ import { mergeErrorReports } from '../../core/domain/error-reports.js';
 import { statsMapper } from './mappers/stats.js';
 import { cardMapper } from './mappers/card.js';
 import { reportMapper } from './mappers/report.js';
-import type { AppState, CardMap, CardRec, Cfg, ReportMap, ReportState, Res, SeenDoc, Session, StatMap, StatRec } from '../legacy/types.js';
+import type { AppState, CardMap, CardRec, Cfg, ReportMap, ReportState, Res, SeenDoc, Session, StatMap, StatRec } from './dto/stored-progress.js';
 import type { ProgressSyncCallbacks } from '../contracts/progress-sync.js';
 import {
   clearPendingLegacyAdoption,

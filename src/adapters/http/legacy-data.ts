@@ -1,5 +1,6 @@
 import { diagnoseQuestionDtos } from './question-diagnostics.js';
-import type { Index, Meta, Question } from '../legacy/types.js';
+import type { StudyCatalogIndex as Index, StudyQuestionMetadata as Meta } from '../../core/domain/study-catalog.js';
+import type { QuestionRecord as Question } from '../../core/domain/question-record.js';
 interface SupEntry { texto: string; q: Question[]; conv?: string }
 type RemoteBankLoader = <T>(topicId: string) => Promise<T | null>;
 let remoteBankLoader: RemoteBankLoader = async () => null;

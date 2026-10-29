@@ -1,4 +1,4 @@
-import type { CardMap, ReportMap, SeenDoc, Session, StatMap, StatRec } from '../local/dto/stored-progress.js';
+import type { CardMap, ReportMap, SeenDoc, Session, StatMap, StatRec } from './progress-data.js';
 
 /** Callbacks used by local progress storage to notify the Firebase sync adapter. */
 export interface ProgressSyncCallbacks {

@@ -3,14 +3,13 @@ import { clearRun, saveRun } from '../study/pending-run-composition.js';
 import { createHighlight, questionContentRevision } from '../../../core/domain/attempts/highlights.js';
 import { minimumReadingSeconds } from '../../../core/domain/reading-strategy.js';
 import { normalizeUiPreferences } from '../../../shared/presentation/ui-preferences.js';
-import { questionNotice, sourceHtml } from '../../../shared/presentation/legacy-study.js';
+import { questionNotice, sourceHtml } from '../../../shared/presentation/study-content.js';
 import { VERIFIED_SOURCES } from '../../../adapters/http/verified-sources.js';
 import { ask } from '../../../shared/ui/dialog-actions.js';
 import { toast } from '../../../shared/ui/legacy-dom.js';
-import { findLegacyCodeExplanation } from '../explanations/explanation-composition.js';
-import { explanationMapper } from '../../../features/explanations/explanation-mapper.js';
-import { renderCodeExplanation } from '../../../features/explanations/legacy-view.js';
+import { findCodeExplanation } from '../explanations/explanation-composition.js';
 import type { QuizServices } from '../../../shared/ui/study-services.js';
+import type { ExplanationLookup } from '../../../core/domain/explanations.js';
 import type { QuizProgressGateway } from '../../../core/ports/QuizProgressGateway.js';
 
 export function createQuizServices(go: (path: string) => void, homePath: string, resultPath: string | (() => string), progress: QuizProgressGateway): QuizServices {
@@ -79,6 +78,6 @@ export function createQuizServices(go: (path: string) => void, homePath: string,
     },
     removeHighlight(id) { removeCurrentHighlight(id); },
     saveReport(reason, note) { const run = getCurrentRun(), question = run?.items[run.idx]; if (question) progress.saveErrorReport(question.i, question.t, reason, note.trim()); },
-    async loadExplanation() { const run = getCurrentRun(), question = run?.items[run.idx]; if (!question) return { status: 'missing' }; const result = await findLegacyCodeExplanation(question.i, question.q, question.a); if (result.status !== 'current') return { status: result.status }; return { status: 'current', content: renderCodeExplanation(explanationMapper.toViewModel(result.explanation)) }; },
+    async loadExplanation(): Promise<ExplanationLookup> { const run = getCurrentRun(), question = run?.items[run.idx]; if (!question) return { status: 'missing' }; return findCodeExplanation(question.i, question.q, question.a); },
   };
 }

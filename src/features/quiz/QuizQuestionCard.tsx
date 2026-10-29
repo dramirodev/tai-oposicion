@@ -50,7 +50,7 @@ function QuestionHighlightTools({ snapshot, prompt, selection, highlightMark, se
 export function QuizQuestionCard({ snapshot, prompt, rootRef, sourceLabel, responseLocked, revealed, gateRemaining, selection, highlightMark, setHighlightMark, addMark, explanation }: {
   snapshot: QuizSnapshot; prompt: QuizPrompt; rootRef: RefObject<HTMLDivElement | null>; sourceLabel: string;
   responseLocked: boolean; revealed: boolean; gateRemaining: number; selection: boolean; highlightMark: HighlightMark;
-  setHighlightMark: (mark: HighlightMark) => void; addMark: (category: 'key' | 'doubt') => void; explanation: string;
+  setHighlightMark: (mark: HighlightMark) => void; addMark: (category: 'key' | 'doubt') => void; explanation: import('../../core/domain/explanations.js').ExplanationLookup;
 }) {
   return <div className={`card q${prompt.hasAssumption ? ' with-sup' : ''}`}>
     <QuestionPrompt snapshot={snapshot} prompt={prompt} sourceLabel={sourceLabel} responseLocked={responseLocked} />

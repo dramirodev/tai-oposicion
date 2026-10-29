@@ -9,14 +9,6 @@
   },
   {
     "file": "src/adapters/firebase/legacy-bank.ts",
-    "kind": "legacy-import",
-    "detail": "src/adapters/legacy/access.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/adapters/firebase/legacy-bank.ts",
     "kind": "legacy-module",
     "detail": "src/adapters/firebase/legacy-bank.ts",
     "count": 1,
@@ -25,14 +17,6 @@
   },
   {
     "file": "src/adapters/firebase/legacy-sync-state.ts",
-    "kind": "legacy-import",
-    "detail": "src/adapters/legacy/types.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/adapters/firebase/legacy-sync-state.ts",
     "kind": "legacy-module",
     "detail": "src/adapters/firebase/legacy-sync-state.ts",
     "count": 1,
@@ -43,22 +27,6 @@
     "file": "src/adapters/firebase/legacy-sync.ts",
     "kind": "legacy-import",
     "detail": "src/adapters/firebase/legacy-sync-state.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/adapters/firebase/legacy-sync.ts",
-    "kind": "legacy-import",
-    "detail": "src/adapters/legacy/access.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/adapters/firebase/legacy-sync.ts",
-    "kind": "legacy-import",
-    "detail": "src/adapters/legacy/types.ts",
     "count": 1,
     "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
     "task": "phase-5-legacy-removal"
@@ -104,14 +72,6 @@
     "task": "phase-5-legacy-removal"
   },
   {
-    "file": "src/adapters/firebase/sync-facade.ts",
-    "kind": "legacy-import",
-    "detail": "src/adapters/legacy/types.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
     "file": "src/adapters/http/bank-repository.ts",
     "kind": "legacy-import",
     "detail": "src/adapters/http/legacy-data.ts",
@@ -129,72 +89,8 @@
   },
   {
     "file": "src/adapters/http/legacy-data.ts",
-    "kind": "legacy-import",
-    "detail": "src/adapters/legacy/types.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/adapters/http/legacy-data.ts",
     "kind": "legacy-module",
     "detail": "src/adapters/http/legacy-data.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/adapters/http/verified-sources.ts",
-    "kind": "legacy-import",
-    "detail": "src/adapters/legacy/types.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/adapters/legacy/access.ts",
-    "kind": "legacy-import",
-    "detail": "src/adapters/firebase/legacy-sync-state.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/adapters/legacy/access.ts",
-    "kind": "legacy-import",
-    "detail": "src/adapters/legacy/types.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/adapters/legacy/access.ts",
-    "kind": "legacy-import",
-    "detail": "src/adapters/local/legacy-store.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/adapters/legacy/access.ts",
-    "kind": "legacy-module",
-    "detail": "src/adapters/legacy/access.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/adapters/legacy/types.ts",
-    "kind": "legacy-module",
-    "detail": "src/adapters/legacy/types.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/adapters/local/legacy-store.ts",
-    "kind": "legacy-import",
-    "detail": "src/adapters/legacy/types.ts",
     "count": 1,
     "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
     "task": "phase-5-legacy-removal"
@@ -242,31 +138,7 @@
   {
     "file": "src/app/legacy-router.ts",
     "kind": "legacy-import",
-    "detail": "src/adapters/legacy/access.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/app/legacy-router.ts",
-    "kind": "legacy-import",
     "detail": "src/adapters/local/legacy-store.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/app/legacy-router.ts",
-    "kind": "legacy-import",
-    "detail": "src/features/explanations/legacy-view.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/app/legacy-router.ts",
-    "kind": "legacy-import",
-    "detail": "src/shared/presentation/legacy-study.ts",
     "count": 1,
     "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
     "task": "phase-5-legacy-removal"
@@ -307,22 +179,6 @@
     "file": "src/app/main.tsx",
     "kind": "legacy-import",
     "detail": "src/app/legacy-ui.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/features/explanations/legacy-view.ts",
-    "kind": "legacy-module",
-    "detail": "src/features/explanations/legacy-view.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/shared/presentation/legacy-study.ts",
-    "kind": "legacy-module",
-    "detail": "src/shared/presentation/legacy-study.ts",
     "count": 1,
     "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
     "task": "phase-5-legacy-removal"

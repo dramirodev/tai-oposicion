@@ -1,6 +1,6 @@
 // Fachada de la sincronización: el SDK de Firebase se carga bajo demanda (import dinámico) tras el primer pintado.
 import { status, onStatus, emit } from './legacy-sync-state.js';
-import type { AccessRequest } from '../legacy/types.js';
+import type { AccessRequest } from '../../core/domain/entities.js';
 import type { ProgressSyncStore } from '../contracts/progress-sync.js';
 import type { AttemptRepository } from '../../core/ports/AttemptRepository.js';
 export { status, onStatus };

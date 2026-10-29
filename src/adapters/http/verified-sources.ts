@@ -1,6 +1,6 @@
 // Referencias técnicas cotejadas: public/data/revision-ocr/editorial-13.json.
 // No son enlaces a los PDF locales del temario ni implican que la clave histórica sea válida.
-import type { Question } from '../legacy/types.js';
+import type { QuestionRecord as Question } from '../../core/domain/question-record.js';
 export const VERIFIED_SOURCES: Record<string, NonNullable<Question['source']>> = {
   "AS08B-P1-R-01": {
     "url": "https://eur-lex.europa.eu/eli/reg/2014/910/oj/eng",

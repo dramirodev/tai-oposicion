@@ -1,13 +1,10 @@
 import { useEffect, useRef, useSyncExternalStore } from 'react';
 import type { NavigateFunction } from 'react-router';
-import { configureAccessAccountReader, configureAccessStatusReader, isFull, isOwner, GUEST_ROUTES } from '../../adapters/legacy/access.js';
+import { isFull, isOwner } from '../composition/access-composition.js';
 import { syncGateway } from '../../adapters/firebase/legacy-sync-state.js';
-import { localStudyProgressGateway } from '../../adapters/local/progress-repository.js';
 import { hasActiveRun } from '../composition/study/study-engine-composition.js';
 import { subscribeAccessChanges } from '../access-events.js';
-
-configureAccessAccountReader(localStudyProgressGateway.accountId);
-configureAccessStatusReader(() => syncGateway.getSnapshot().access);
+import { isGuestNavigationRoute } from '../router/route-access.js';
 
 const subscribe = (notify: () => void) => {
   const stopSync = syncGateway.subscribe(notify);
@@ -15,7 +12,7 @@ const subscribe = (notify: () => void) => {
   return () => { stopSync(); stopAccess(); };
 };
 
-export const isGuestNavigationRoute = (route: string): boolean => GUEST_ROUTES.has(route);
+export { isGuestNavigationRoute };
 
 /** Composes account, access and study-session state for the application shell. */
 export function useLayoutAccess(pathname: string, navigate: NavigateFunction) {

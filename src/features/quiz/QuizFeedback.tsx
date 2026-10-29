@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import type { ExplanationLookup } from '../../core/domain/explanations.js';
+import { CodeExplanationView } from '../explanations/CodeExplanation.js';
 import { Brain, Check, Clover, NotebookTabs, Star, TriangleAlert } from 'lucide-react';
 import { TRAMPAS } from '../../shared/presentation/labels.js';
 import { FAILURE_REASONS } from '../../shared/presentation/study-labels.js';
@@ -54,7 +56,7 @@ function QuizReport({ snapshot }: { snapshot: QuizSnapshot }) {
     <div className="row"><button className="btn" onClick={() => { quiz.saveReport(reason, note); setOpen(false); }}>Guardar</button><button className="btn sec" onClick={() => setOpen(false)}>Cancelar</button></div></div></div>;
 }
 
-export function QuizFeedback({ snapshot, prompt, explanation }: { snapshot: QuizSnapshot; prompt: QuizPrompt; explanation: string }) {
+export function QuizFeedback({ snapshot, prompt, explanation }: { snapshot: QuizSnapshot; prompt: QuizPrompt; explanation: ExplanationLookup }) {
   const quiz = useStudyService('quiz');
   const kind = snapshot.studyState === 'revealed' ? 'note' : snapshot.answer === prompt.correctIndex ? 'good' : 'wrong';
   return <div className={`fb ${kind}`} role="status">
@@ -63,6 +65,7 @@ export function QuizFeedback({ snapshot, prompt, explanation }: { snapshot: Quiz
     <CorrectAnswerActions snapshot={snapshot} />
     <button className="ghost fl" id="flag" onClick={() => quiz.toggleFlag()}><Star size="1em" fill={snapshot.flagged ? 'currentColor' : 'none'} aria-hidden="true" /> {snapshot.flagged ? 'Dudosa' : 'Marcar como dudosa'}</button>
     <QuizReport snapshot={snapshot} />
-    {explanation && <div id="code-explanation-slot" aria-live="polite"><StudyMarkup html={explanation} languageContext={prompt.statement} /></div>}
+    {explanation.status === 'current' && <div id="code-explanation-slot" aria-live="polite"><CodeExplanationView explanation={explanation.explanation} /></div>}
+    {explanation.status === 'outdated' && <p className="sub" role="status">Hay una explicación de una revisión anterior; no se muestra para evitar información desactualizada.</p>}
   </div>;
 }

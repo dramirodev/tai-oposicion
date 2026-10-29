@@ -68,6 +68,13 @@ it('distingue el tiempo disponible del tiempo previsto cuando aún no hay activi
   expect(screen.getByText('120 min', { selector:'dd' })).toBeInTheDocument();
 });
 
+it('pide elegir el tema semanal en Ajustes cuando no hay tema asignado', async () => {
+  const emptyPlan = { weekday:1, minutes:120, restDay:false, activities:[] };
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(emptyPlan, { nextNewTopic:undefined })) });
+  expect(await screen.findByRole('link', { name:'Ajustes' })).toHaveAttribute('href', '/settings#training-schedule');
+  expect(screen.getByText(/Elige el tema que vas a introducir esta semana/)).toBeInTheDocument();
+});
+
 it('muestra en el historial solo la duración y las actividades de sesiones completadas recibidas', async () => {
   const startedAt = new Date(2026, 9, 28, 12).getTime();
   const sessionOverview = overview(newTopicPlan, { trainingHistory:[{
