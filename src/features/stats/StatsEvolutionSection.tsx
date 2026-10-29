@@ -1,6 +1,7 @@
 import { Check, X } from 'lucide-react';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
+import { richHtml } from '../../shared/presentation/study-text.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
 import type { StatsServices } from '../../shared/ui/study-services.js';
 import type { StatsSnapshot, StatsWeek } from '../../core/application/stats/statistics-model.js';
@@ -9,6 +10,7 @@ import type { QuestionEvolutionPoint, TrendPoint } from './StatsCharts.js';
 type QuestionWeek = QuestionEvolutionPoint;
 type EvolutionPreference = Record<string, string | number | boolean> & { mode?: string; filter?: string | number; weeks?: string | number; table?: boolean };
 const date = (time: number) => new Date(time).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+const EMPTY_QUESTION_STATEMENTS: ReadonlyMap<string, string> = new Map();
 const StatsTrendChart = lazy(() => import('./StatsCharts.js').then(module => ({ default: module.StatsTrendChart })));
 const QuestionEvolutionChart = lazy(() => import('./StatsCharts.js').then(module => ({ default: module.QuestionEvolutionChart })));
 
@@ -40,13 +42,45 @@ function CardRetentionForecast({ snapshot }: { snapshot: StatsSnapshot }) {
   </div></>;
 }
 
+function SlowQuestionRow({ item, statement, loading, loadError }: {
+  item: StatsSnapshot['slow'][number];
+  statement?: string;
+  loading: boolean;
+  loadError: boolean;
+}) {
+  return <div className="sl">
+    <div className="slh"><b>{Math.round(item.averageSeconds)} s</b><small>{item.correct}/{item.attempts} aciertos{item.lastOutcome === 1 ? <> · última <Check size="1em" aria-hidden="true" /></> : item.lastOutcome === 0 ? <> · última <X size="1em" aria-hidden="true" /></> : ''}</small></div>
+    {statement ? <div className="sl-question"><StudyMarkup html={richHtml(statement)} /></div> : <p className="sub sl-question-pending">{loading ? 'Cargando enunciado…' : loadError ? 'No se pudo cargar el enunciado.' : 'Enunciado no disponible.'}</p>}
+    <small className="sl-id">{item.id}</small>
+  </div>;
+}
+
 function SlowQuestions({ snapshot, stats, onlyCorrect, setOnlyCorrect, setMessage }: { snapshot: StatsSnapshot; stats: StatsServices; onlyCorrect: boolean; setOnlyCorrect: (value: boolean) => void; setMessage: (value: string) => void }) {
   const questions = snapshot.slow.filter(item => !onlyCorrect || item.lastOutcome === 1);
+  const questionIdsKey = questions.map(item => item.id).join('\0');
+  const [statementResult, setStatementResult] = useState<{ key: string; statements: ReadonlyMap<string, string>; error: boolean } | null>(null);
+  const resultMatchesQuestions = statementResult?.key === questionIdsKey;
+  const statements = resultMatchesQuestions ? statementResult.statements : EMPTY_QUESTION_STATEMENTS;
+  const statementLoadError = resultMatchesQuestions && statementResult.error;
+  const loadingStatements = !!questionIdsKey && !resultMatchesQuestions;
+  useEffect(() => {
+    let active = true;
+    const questionIds = questionIdsKey ? questionIdsKey.split('\0') : [];
+    if (!questionIds.length) return () => { active = false; };
+    void stats.loadQuestionStatements(questionIds).then(rows => {
+      if (active) {
+        setStatementResult({ key: questionIdsKey, statements: new Map(rows.filter(row => row.statement.trim()).map(row => [row.id, row.statement])), error: false });
+      }
+    }).catch(() => {
+      if (active) setStatementResult({ key: questionIdsKey, statements: EMPTY_QUESTION_STATEMENTS, error: true });
+    });
+    return () => { active = false; };
+  }, [questionIdsKey, stats]);
   const practice = async () => {
     try { const result = await stats.practiceSlow(onlyCorrect); if (result === 'empty') setMessage('Aún no hay tiempos guardados para practicar.'); }
     catch { setMessage('No se pudieron preparar las preguntas lentas.'); }
   };
-  return <><h2>Preguntas lentas</h2><div className="card"><div className="seg"><button className={!onlyCorrect ? 'on' : ''} aria-pressed={!onlyCorrect} onClick={() => setOnlyCorrect(false)}>Todas</button><button className={onlyCorrect ? 'on' : ''} aria-pressed={onlyCorrect} onClick={() => setOnlyCorrect(true)}>Las que aciertas</button></div><p className="legend">Las que más tardas en contestar. Si las aciertas pero tardas mucho, probablemente aún no las dominas.</p>{questions.map(item => <div className="sl" key={item.id}><div className="slh"><b>{Math.round(item.averageSeconds)} s</b><small>{item.correct}/{item.attempts} aciertos{item.lastOutcome === 1 ? <> · última <Check size="1em" aria-hidden="true" /></> : item.lastOutcome === 0 ? <> · última <X size="1em" aria-hidden="true" /></> : ''}</small></div><div className="sm">{item.id}</div></div>)}<div className="row"><button className="btn" onClick={() => { void practice(); }}>Practicar estas preguntas</button></div></div></>;
+  return <><h2>Preguntas lentas</h2><div className="card"><div className="seg"><button className={!onlyCorrect ? 'on' : ''} aria-pressed={!onlyCorrect} onClick={() => setOnlyCorrect(false)}>Todas</button><button className={onlyCorrect ? 'on' : ''} aria-pressed={onlyCorrect} onClick={() => setOnlyCorrect(true)}>Las que aciertas</button></div><p className="legend">Las que más tardas en contestar. Si las aciertas pero tardas mucho, probablemente aún no las dominas.</p>{statementLoadError && <p className="sub" role="status">No se pudieron cargar algunos enunciados; puedes identificarlos por su código.</p>}{questions.map(item => <SlowQuestionRow key={item.id} item={item} statement={statements.get(item.id)} loading={loadingStatements} loadError={statementLoadError} />)}<div className="row"><button className="btn" onClick={() => { void practice(); }}>Practicar estas preguntas</button></div></div></>;
 }
 
 function StrategyAnalysis({ stats, strategy, setStrategy, days, setDays, busy, setBusy }: { stats: StatsServices; strategy: string; setStrategy: (value: string) => void; days: number; setDays: (value: number) => void; busy: boolean; setBusy: (value: boolean) => void }) {

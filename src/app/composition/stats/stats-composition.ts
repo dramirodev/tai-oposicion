@@ -65,6 +65,10 @@ export function createStatsServices(actions: StatsActions, progressRepository: P
       return { scoreDelta: compare.dNota, accuracyDelta: compare.dAcierto, secondsDelta: compare.dSeg,
         topics: compare.rows.map(row => ({ id: row.t, first: row.pa, second: row.pb, delta: row.d })) };
     },
+    async loadQuestionStatements(questionIds) {
+      const questions = await studyQuestionCatalog.getQuestions([...new Set(questionIds)]);
+      return questions.map(question => ({ id: question.i, statement: question.q }));
+    },
     async loadWeekly(filter) { const sessions = (await progressRepository.getSessions()).map(toLegacyStatsSession); return aggregateWeeks(sessions, { tema: filter.topic, tipo: filter.type, weeks: filter.weeks, now: studyQuestionCatalog.now() }).map(week => ({ start: week.start, n: week.n, ok: week.ok, secs: week.secs, sessions: week.ses, accuracy: week.acierto, secondsPerQuestion: week.segPreg })); },
     loadStudyActivity,
     async loadStrategy(days) { return renderStrategyReport(await loadStrategyReportForPeriod(days)); },

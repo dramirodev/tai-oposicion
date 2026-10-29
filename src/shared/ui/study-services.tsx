@@ -183,6 +183,7 @@ export interface StatsServices {
   load(): Promise<StatsSnapshot>; getPreference(key: 'domainOrder' | 'evolution'): Record<string, string | number | boolean>; savePreference(key: 'domainOrder' | 'evolution', value: Record<string, string | number | boolean>): void;
   compareSimulations(firstId: string, secondId: string): StatsComparison | null;
   loadWeekly(filter: { topic?: string; type?: string; weeks: number }): Promise<readonly StatsWeek[]>;
+  loadQuestionStatements(questionIds: readonly string[]): Promise<readonly { id: string; statement: string }[]>;
   loadStudyActivity(weeks: number): Promise<{ questionEvolution: readonly { start: number; seen: number; correct: number; wrong: number; unknown: number }[]; observedStudyTime: ObservedStudyTime }>;
   loadStrategy(days: number): Promise<string>;
   practiceTopics(ids?: readonly string[]): void; reviewDue(): void; practiceFailures(): void; practiceTrap(id: string): Promise<'started' | 'empty'>; practiceSlow(onlyCorrect: boolean): Promise<'started' | 'empty'>;

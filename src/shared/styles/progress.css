@@ -188,6 +188,14 @@
   font-size: var(--fs-xl);
 }
 
+.sl-question {
+  margin-top: 0.5rem;
+  line-height: 1.5;
+}
+
+.sl-question-pending { margin-block: 0.5rem 0; }
+.sl-id { display: block; margin-top: 0.375rem; }
+
 /* ===== mapa de dominio ===== */
 
 .dot {
