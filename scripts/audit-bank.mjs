@@ -13,6 +13,12 @@ const normalizedStatement = value => {
   return `${normalized.toLocaleLowerCase('es')}\u0000${flags.join('\u0000')}`;
 };
 const suspiciousEncoding = /\uFFFD|ï¿½|Ã[\u0080-\u00BF]|Â[\u0080-\u00BF]|â[\u0080-\u00BF]|ðŸ/u;
+const genericPromptStatements = new Set([
+  'indique la respuesta correcta:\u0000',
+  'indique la respuesta incorrecta:\u0000',
+  'señale la respuesta correcta:\u0000',
+  'señale la respuesta incorrecta:\u0000',
+]);
 
 export function auditQuestionBank(groups) {
   const records = groups.flatMap(group => group.questions.map(question => ({ source: group.source, question })));
@@ -109,9 +115,40 @@ export function auditQuestionBank(groups) {
   }
   const duplicateStatements = [...byStatement.values()].filter(questions => questions.length > 1);
   for (const questions of duplicateStatements) {
-    issues.push({ kind: 'repeated-statement-review', ids: questions.map(({ question }) => question.id), topics: [...new Set(questions.map(({ question }) => question.tema))] });
+    const ids = questions.map(({ question }) => question.id);
+    const topics = [...new Set(questions.map(({ question }) => question.tema))];
+    const allGenerated = questions.every(record => record.source === 'generated');
+    const families = new Set(questions.map(({ question }) => question.familia).filter(Boolean));
+    const normalizedChoice = value => typeof value === 'string'
+      ? value.normalize('NFKC').trim().replace(/\s+/g, ' ').toLocaleLowerCase('es')
+      : '';
+    const answersByChoiceSet = new Map();
+    for (const { question } of questions) {
+      const choices = question.opciones || {};
+      const signature = JSON.stringify(Object.values(choices).map(normalizedChoice).sort());
+      const correctAnswer = normalizedChoice(choices[question.correcta]);
+      const answers = answersByChoiceSet.get(signature) || new Set();
+      answers.add(correctAnswer);
+      answersByChoiceSet.set(signature, answers);
+    }
+    const conflictingFamilyKeys = [...answersByChoiceSet.values()].some(answers => answers.size > 1);
+    const sameGeneratedFamily = allGenerated && families.size === 1
+      && questions.every(({ question }) => typeof question.familia === 'string' && question.familia.trim())
+      && !conflictingFamilyKeys;
+    const genericPrompt = genericPromptStatements.has(normalizedStatement(questions[0].question.enunciado));
+
+    if (sameGeneratedFamily) {
+      issues.push({ kind: 'generated-family-variant-review', family: [...families][0], ids, topics });
+    } else if (genericPrompt) {
+      issues.push({ kind: 'generic-prompt-collision-review', prompt: questions[0].question.enunciado, ids, topics });
+    } else {
+      issues.push({ kind: 'repeated-statement-review', ids, topics });
+    }
   }
   const generatedDuplicateStatements = duplicateStatements.filter(questions => questions.every(record => record.source === 'generated'));
+  const generatedFamilyVariantGroups = issues.filter(item => item.kind === 'generated-family-variant-review').length;
+  const genericPromptCollisionGroups = issues.filter(item => item.kind === 'generic-prompt-collision-review').length;
+  const repeatedStatementReviewGroups = issues.filter(item => item.kind === 'repeated-statement-review').length;
 
   return {
     counts,
@@ -119,9 +156,12 @@ export function auditQuestionBank(groups) {
     generatedFamilySizes: familySizes,
     generatedSourceMetadata: sourceMetadata,
     repeatedStatementGroups: duplicateStatements.length,
+    repeatedStatementReviewGroups,
+    generatedFamilyVariantGroups,
+    genericPromptCollisionGroups,
     generatedRepeatedStatementGroups: generatedDuplicateStatements.length,
     issues,
-    semanticReview: 'Enunciado, respuesta única, vigencia, epígrafe y valor de variantes requieren cotejo humano en los PDF fuente del temario; este informe no los infiere.',
+    semanticReview: 'El informe separa colisiones de plantillas genéricas y variantes de una misma familia. No valida claves ni determina si una repetición es pedagógicamente redundante: enunciado, respuesta única, vigencia, epígrafe y valor de variantes requieren cotejo humano con los PDF fuente del temario.',
   };
 }
 

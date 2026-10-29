@@ -62,6 +62,64 @@ it('no agrupa comandos cuyos flags distinguen mayúsculas y minúsculas', () => 
   expect(report.repeatedStatementGroups).toBe(0);
 });
 
+it('separa variantes de una misma familia generada de repeticiones editoriales entre preguntas', () => {
+  const question = (id, options, correct, family = 'shared-family') => ({
+    id, tema: 'T3.05', tipo: 'D', dificultad: 1, familia: family,
+    enunciado: '¿Qué patrón de diseño encaja con el caso descrito?',
+    opciones: options, correcta: correct,
+    revision: { estado: 'verificada' },
+    cita_temario: [{ fuente: 'T3.05.pdf', pagina: 18, texto: 'Patrones de diseño.' }],
+  });
+  const report = auditQuestionBank([{ source: 'generated', metadata: { total: 2, familias: 1 }, questions: [
+    question('G-V1', { a: 'Singleton', b: 'Factory', c: 'Adapter', d: 'Observer' }, 'a'),
+    question('G-V2', { a: 'Observer', b: 'Factory', c: 'Adapter', d: 'Singleton' }, 'd'),
+  ] }]);
+
+  expect(report.repeatedStatementGroups).toBe(1);
+  expect(report.repeatedStatementReviewGroups).toBe(0);
+  expect(report.generatedFamilyVariantGroups).toBe(1);
+  expect(report.issues).toContainEqual(expect.objectContaining({
+    kind: 'generated-family-variant-review', family: 'shared-family', ids: ['G-V1', 'G-V2'],
+  }));
+});
+
+it('mantiene como conflicto los miembros de una familia que cambian la clave con las mismas opciones', () => {
+  const question = (id, correct) => ({
+    id, tema: 'T3.05', tipo: 'D', dificultad: 1, familia: 'conflicting-family',
+    enunciado: '¿Qué patrón de diseño encaja con el caso descrito?',
+    opciones: { a: 'Singleton', b: 'Factory', c: 'Adapter', d: 'Observer' }, correcta: correct,
+    revision: { estado: 'verificada' },
+    cita_temario: [{ fuente: 'T3.05.pdf', pagina: 18, texto: 'Patrones de diseño.' }],
+  });
+  const report = auditQuestionBank([{ source: 'generated', metadata: { total: 2, familias: 1 }, questions: [
+    question('G-CONFLICT-1', 'a'), question('G-CONFLICT-2', 'd'),
+  ] }]);
+
+  expect(report.repeatedStatementReviewGroups).toBe(1);
+  expect(report.generatedFamilyVariantGroups).toBe(0);
+  expect(report.issues).toContainEqual(expect.objectContaining({
+    kind: 'repeated-statement-review', ids: ['G-CONFLICT-1', 'G-CONFLICT-2'],
+  }));
+});
+
+it('clasifica los enunciados genéricos sin confundirlos con duplicados de contenido', () => {
+  const question = (id, options, correct) => ({
+    id, tema: 'T1.04', tipo: 'D', dificultad: 1, enunciado: 'Indique la respuesta correcta:',
+    opciones: options, correcta: correct,
+  });
+  const report = auditQuestionBank([{ source: 'academy', questions: [
+    question('A-1', { a: 'Transparencia', b: 'Datos', c: 'Gobierno', d: 'Ninguna' }, 'a'),
+    question('A-2', { a: 'Agenda 2030', b: 'Acceso público', c: 'Privacidad', d: 'Todas' }, 'b'),
+  ] }]);
+
+  expect(report.repeatedStatementGroups).toBe(1);
+  expect(report.repeatedStatementReviewGroups).toBe(0);
+  expect(report.genericPromptCollisionGroups).toBe(1);
+  expect(report.issues).toContainEqual(expect.objectContaining({
+    kind: 'generic-prompt-collision-review', ids: ['A-1', 'A-2'],
+  }));
+});
+
 it('acepta citas con URL externa verificable aunque no tengan número de página', () => {
   const report = auditQuestionBank([{ source: 'generated', metadata: { total: 1, familias: 1 }, questions: [{
     id: 'G-URL', tema: 'T3.08', tipo: 'D', dificultad: 1, familia: 'G-URL', enunciado: 'Pregunta externa',
