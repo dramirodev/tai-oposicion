@@ -57,13 +57,13 @@ jobs:
           printf '%s' "$SA_JSON" > "$RUNNER_TEMP/sa.json"
           echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/sa.json" >> "$GITHUB_ENV"
 
+      # Rules forman parte del límite de autorización: si este paso falla, la release se detiene antes de publicar Hosting.
+      # La cuenta de servicio necesita el rol «Firebase Rules Admin».
+      - name: Desplegar reglas de Firestore
+        run: npx --yes firebase-tools@13.35.1 deploy --only firestore:rules --project tai-oposicion --non-interactive
+
       - name: Desplegar hosting
         run: npx --yes firebase-tools@13.35.1 deploy --only hosting --project tai-oposicion --non-interactive
-
-      # Las reglas de Firestore necesitan el rol «Firebase Rules Admin» en la cuenta de servicio.
-      # Si aún no se lo has dado, no rompe el hosting, pero deja un aviso visible en la ejecución.
-      - name: Desplegar reglas de Firestore
-        run: npx --yes firebase-tools@13.35.1 deploy --only firestore:rules --project tai-oposicion --non-interactive || echo "::warning title=Reglas de Firestore::NO se han desplegado; revisa el rol Firebase Rules Admin de la cuenta de servicio" 
 
   tag:
     name: Etiquetar build validado

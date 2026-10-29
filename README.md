@@ -186,8 +186,7 @@ La exportación analítica es una copia separada, no sustituye `tai-progreso.jso
 
 ## Publicación
 
-Cada push a `main` ejecuta pruebas, compilación y validación de tarjetas antes de publicar el hosting.
-El paso de reglas de Firestore puede dejar un aviso sin hacer fallar el flujo: revisa ese resultado por separado.
+Cada push a `main` ejecuta pruebas, compilación y validación de tarjetas. Después despliega primero las reglas de Firestore y luego Hosting; si falla el despliegue de reglas, el flujo se detiene y no publica Hosting ni crea el tag de la release. La cuenta de servicio necesita el rol «Firebase Rules Admin».
 Procedimiento y configuración en [DESPLIEGUE_AUTOMATICO.md](DESPLIEGUE_AUTOMATICO.md).
 
 ## Mantenimiento de seguridad y accesibilidad
