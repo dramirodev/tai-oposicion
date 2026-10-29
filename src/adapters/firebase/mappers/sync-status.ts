@@ -1,5 +1,5 @@
 import type { SyncStatusSnapshot } from '../../../core/ports/SyncGateway.js';
-import type { SyncStatus } from '../legacy-sync-state.js';
+import type { SyncStatus } from '../sync-status-store.js';
 
 export const syncStatusMapper = {
   toDomain(dto: SyncStatus): SyncStatusSnapshot {

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useSyncExternalStore } from 'react';
 import type { NavigateFunction } from 'react-router';
 import { isFull, isOwner } from '../composition/access-composition.js';
-import { syncGateway } from '../../adapters/firebase/legacy-sync-state.js';
+import { syncGateway } from '../../adapters/firebase/sync-status-store.js';
 import { hasActiveRun } from '../composition/study/study-engine-composition.js';
 import { subscribeAccessChanges } from '../access-events.js';
 import { isGuestNavigationRoute } from '../router/route-access.js';

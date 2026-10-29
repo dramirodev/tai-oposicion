@@ -1,7 +1,7 @@
 import { canManageAccess, canUseFullApp } from '../../core/domain/access-policy.js';
 import { localStudyProgressGateway } from '../../adapters/local/progress-repository.js';
 import { isDevelopmentUiRevealed, developmentMode, readRememberedAccess, rememberAccessForAccount, revealDevelopmentUi, setDevelopmentMode } from '../../adapters/local/access-preferences.js';
-import { syncGateway } from '../../adapters/firebase/legacy-sync-state.js';
+import { syncGateway } from '../../adapters/firebase/sync-status-store.js';
 
 const localRuntime = import.meta.env.DEV || (typeof location !== 'undefined' && ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname));
 

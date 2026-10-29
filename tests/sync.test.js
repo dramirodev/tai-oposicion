@@ -65,7 +65,7 @@ it('sube la marca de borrado para impedir que reaparezca una tarjeta eliminada',
 const snap = (path, data) => boundary.snapshots.filter(x => x.ref.path === path).at(-1).cb({ exists: () => data !== null, data: () => data, id: path.split('/').pop() });
 const paths = () => boundary.snapshots.map(x => x.ref.path);
 it('el propietario sincroniza y escucha solicitudes y accesos', async () => {
-  const { status } = await import('../src/adapters/firebase/legacy-sync-state.js');
+  const { status } = await import('../src/adapters/firebase/sync-status-store.js');
   expect(status.access).toBe('propietario');
   expect(paths()).toContain('users/user1/stats');
   expect(paths()).toContain('requests'); expect(paths()).toContain('access');
@@ -73,7 +73,7 @@ it('el propietario sincroniza y escucha solicitudes y accesos', async () => {
   expect(status.reqs).toEqual([{ uid: 'u9', email: 'a@x.es', name: 'A', ts: 5 }]);
 });
 it('un invitado no sincroniza datos y queda como invitado', async () => {
-  const { status } = await import('../src/adapters/firebase/legacy-sync-state.js');
+  const { status } = await import('../src/adapters/firebase/sync-status-store.js');
   boundary.snapshots.length = 0; user('u2', 'amigo@example.test');
   expect(paths()).toEqual(['access/u2', 'requests/u2']);
   snap('access/u2', null); snap('requests/u2', null);
@@ -84,7 +84,7 @@ it('un invitado no sincroniza datos y queda como invitado', async () => {
   expect(boundary.writes).toEqual([]);
 });
 it('la solicitud pasa a pendiente y el aprobado empieza a sincronizar', async () => {
-  const { status } = await import('../src/adapters/firebase/legacy-sync-state.js');
+  const { status } = await import('../src/adapters/firebase/sync-status-store.js');
   boundary.snapshots.length = 0; user('u2', 'amigo@example.test');
   expect(await sync.requestAccess()).toBe(true);
   expect(boundary.writes.at(-1)).toMatchObject({ path: 'requests/u2', value: { email: 'amigo@example.test' } });
@@ -245,7 +245,7 @@ it('rechaza cuerpos de error HTTP de configuración antes de interpretarlos', as
   const fetch = vi.fn(async () => ({ ok: false, status: 503, json }));
   vi.stubGlobal('fetch', fetch);
   await sync.init({ temaOf: () => null, idsOfTema: () => [] }, store);
-  const { status } = await import('../src/adapters/firebase/legacy-sync-state.js');
+  const { status } = await import('../src/adapters/firebase/sync-status-store.js');
   expect(fetch).toHaveBeenCalledTimes(2);
   expect(json).not.toHaveBeenCalled();
   expect(status.configured).toBe(false);
@@ -258,7 +258,7 @@ it('conserva el segundo intento si falla la primera petición de configuración'
     .mockResolvedValueOnce({ ok: true, json: async () => ({ apiKey: 'test', authDomain: 'localhost' }) });
   vi.stubGlobal('fetch', fetch);
   await sync.init({ temaOf: () => null, idsOfTema: () => [] }, store);
-  const { status } = await import('../src/adapters/firebase/legacy-sync-state.js');
+  const { status } = await import('../src/adapters/firebase/sync-status-store.js');
   expect(fetch).toHaveBeenCalledTimes(2);
   expect(errorJson).not.toHaveBeenCalled();
   expect(status.configured).toBe(true);

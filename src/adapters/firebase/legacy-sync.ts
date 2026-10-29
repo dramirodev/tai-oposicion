@@ -22,7 +22,7 @@ const errorFields = (value: unknown): { code: unknown; message: unknown } => {
   return { code: fields.code, message: fields.message };
 };
 
-import { status, emit } from './legacy-sync-state.js';
+import { status, emit } from './sync-status-store.js';
 import { syncAttemptHistory } from './attempt-sync.js';
 import { configureStudyBankSource } from './study-bank-source.js';
 import { createTrainingSessionSyncAdapter, type TrainingSessionSyncStore } from './training-session-sync.js';
