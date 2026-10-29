@@ -120,6 +120,25 @@ it('sincroniza el checkpoint de planificación solo bajo la cuenta aprobada y lo
   sync.pushTrainingSession(session);
   expect(boundary.writes.filter(item => item.path === 'users/user1/cfg/training')).toHaveLength(1);
 });
+it('reenvía el checkpoint local más reciente cuando recibe un cambio remoto atrasado', async () => {
+  const timestamp = Date.now();
+  const local = {
+    dateKey: new Date(timestamp).toLocaleDateString('en-CA'),
+    activities: [{ activity:'activeRecall', minutes:20, reason:'active-recall' }],
+    currentIndex:1, currentStartedAt:null, elapsedSecondsByActivity:[60],
+    updatedAt:timestamp + 2, startedAt:timestamp, completedAt:null,
+  };
+  const remote = { ...local, currentIndex:0, updatedAt:timestamp + 1, elapsedSecondsByActivity:[0] };
+  trainingStore.getSession.mockReturnValue(local);
+  const listener = boundary.snapshots.find(item => item.ref.path === 'users/user1/cfg/training');
+
+  listener.cb({ exists:() => true, data:() => ({ schemaVersion:2, updatedAt:remote.updatedAt, session:remote, history:[] }) });
+
+  expect(trainingStore.mergeRemote).toHaveBeenCalledWith(remote, remote.updatedAt);
+  expect(boundary.writes).toContainEqual({ path:'users/user1/cfg/training', value:{
+    schemaVersion:2, updatedAt:local.updatedAt, session:local, history:[],
+  } });
+});
 it('aprobar escribe el acceso y borra la solicitud; revocar lo borra', async () => {
   boundary.writes.length = 0;
   await sync.approve({ uid: 'u9', email: 'a@x.es', name: 'A' });
