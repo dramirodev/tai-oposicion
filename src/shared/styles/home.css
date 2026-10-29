@@ -890,6 +890,21 @@
 .planning-month-day>small { color: var(--mute); }
 .planning-month-day>strong { color: var(--brand); font-weight: 700; }
 .planning-month-time-narrow { display: none; }
+.planning-calendar-editor { min-width: 0; margin-block-start: 1.25rem; padding: 1rem; border: 1px solid var(--line); border-radius: var(--r-m); background: var(--surface-soft); }
+.planning-calendar-editor h4 { margin: 0; font-size: var(--fs-m); }
+.planning-calendar-editor>p { margin-block: .4rem .75rem; color: var(--mute); }
+.planning-calendar-form { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); align-items: end; gap: .75rem; }
+.planning-calendar-form label,.planning-reschedule-date { display: grid; gap: .3rem; min-width: 0; color: var(--mute); font-size: var(--fs-s); }
+.planning-calendar-form input,.planning-calendar-form select,.planning-reschedule-date input { box-sizing: border-box; width: 100%; min-width: 0; min-height: 2.75rem; padding: .5rem; border: 1px solid var(--line-strong,var(--line)); border-radius: var(--r-s); color: var(--ink); background: var(--card); font: inherit; }
+.planning-calendar-form>.btn { min-height: 2.75rem; }
+.planning-calendar-activities { display: grid; gap: .5rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+.planning-calendar-activities>li { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(8rem,12rem) auto; align-items: center; gap: .75rem; min-width: 0; padding: .75rem; border: 1px solid var(--line); border-radius: var(--r-m); background: var(--card); }
+.planning-calendar-activities>li>div { display: grid; gap: .25rem; min-width: 0; }
+.planning-calendar-activities>li>div span { color: var(--mute); font-size: var(--fs-s); overflow-wrap: anywhere; }
+.planning-calendar-activities .btn { min-height: 2.75rem; white-space: nowrap; }
+.planning-calendar-proposal { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin-block-start: .75rem; padding: .75rem; border-inline-start: .25rem solid var(--brand); border-radius: var(--r-s); background: var(--card); }
+.planning-calendar-proposal p { flex: 1 1 100%; margin: 0; }
+.planning-calendar-error { color: var(--danger,var(--ink)); font-weight: 650; }
 .planning-history>ol { display: grid; margin: 1rem 0 0; padding: 0; list-style: none; }
 .planning-history li { min-width: 0; padding-block: .875rem; border-top: 1px solid var(--line); }
 .planning-history li>div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem .75rem; }
@@ -934,6 +949,13 @@
   .planning-month-day>span,.planning-month-day>small,.planning-month-day>strong { font-size: .75rem; }
   .planning-month-time-wide { display: none; }
   .planning-month-time-narrow { display: inline; }
+  .planning-month-day>small { display: none; }
+  .planning-calendar-form { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .planning-calendar-form>.btn { grid-column: 1 / -1; }
+  .planning-calendar-activities>li { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+  .planning-calendar-activities>li>div { grid-column: 1 / -1; }
+  .planning-calendar-activities .btn { width: 100%; }
+  .planning-reschedule-date { grid-column: 1 / -1; }
   .planning-evidence-grid { grid-template-columns: 1fr; }
   .planning-activity { grid-template-columns: 1.75rem minmax(0,1fr); gap: .625rem; }
   .planning-activity-marker { width: 1.75rem; height: 1.75rem; }

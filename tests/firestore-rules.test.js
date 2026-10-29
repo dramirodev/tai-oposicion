@@ -6,7 +6,9 @@ import { assertFails, assertSucceeds, initializeTestEnvironment } from '@firebas
 import { disableNetwork, doc, enableNetwork, getDoc, setDoc } from 'firebase/firestore';
 import { createTrainingSessionSyncAdapter } from '../src/adapters/firebase/training-session-sync.ts';
 import { createPaperRecallSyncAdapter } from '../src/adapters/firebase/paper-recall-sync.ts';
+import { createTrainingCalendarSyncAdapter } from '../src/adapters/firebase/training-calendar-sync.ts';
 import { mergePaperRecallAssessments } from '../src/core/domain/paper-recall-assessment.ts';
+import { mergeScheduledStudyActivities } from '../src/core/domain/study-training-calendar.ts';
 
 const projectId = 'demo-tai-training-rules';
 let testEnv;
@@ -66,6 +68,45 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
     await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:assessment.ratedAt, assessments:Array.from({ length:91 }, (_, index) => ({ ...assessment, id:`${assessment.id}:${index}` })) }));
     await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:assessment.ratedAt, assessments:[], unexpected:true }));
     await assertFails(setDoc(doc(testEnv.unauthenticatedContext().firestore(), 'users/student/cfg/trainingRecall'), { schemaVersion:1, updatedAt:assessment.ratedAt, assessments:[assessment] }));
+  });
+
+  it('aísla la agenda de repasos por cuenta y limita su documento', async () => {
+    const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const other = testEnv.authenticatedContext('other', { email:'other@example.test', email_verified:true }).firestore();
+    const reference = doc(db, 'users/student/cfg/trainingCalendar');
+    const activity = { id:'2026-10-30:topicTest:T1.01', dateKey:'2026-10-30', activity:'topicTest', topicId:'T1.01', minutes:30, createdAt:1_793_280_000_000, updatedAt:1_793_280_000_000 };
+    await assertSucceeds(setDoc(reference, { schemaVersion:1, updatedAt:activity.updatedAt, activities:[activity] }));
+    await assertFails(getDoc(doc(other, 'users/student/cfg/trainingCalendar')));
+    await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:activity.updatedAt, activities:Array.from({ length:91 }, (_, index) => ({ ...activity, id:`${activity.id}:${index}` })) }));
+    await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:activity.updatedAt, activities:[], unexpected:true }));
+    await assertFails(setDoc(doc(testEnv.unauthenticatedContext().firestore(), 'users/student/cfg/trainingCalendar'), { schemaVersion:1, updatedAt:activity.updatedAt, activities:[activity] }));
+  });
+
+  it('sincroniza la reprogramación entre clientes de la misma cuenta', async () => {
+    const firstDb = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const secondDb = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const activity = { id:'2026-10-30:topicTest:T1.01', dateKey:'2026-10-30', activity:'topicTest', topicId:'T1.01', minutes:30, createdAt:1_793_280_000_000, updatedAt:1_793_280_000_000 };
+    const makeStore = () => {
+      let activities = [];
+      return { get:() => activities, mergeRemote(value) { const merged = mergeScheduledStudyActivities(activities, value); const changed = JSON.stringify(merged) !== JSON.stringify(activities); activities = merged; return changed; }, set:value => { activities = value; } };
+    };
+    const firstStore = makeStore(), secondStore = makeStore();
+    firstStore.set([activity]);
+    let active = true;
+    const first = createTrainingCalendarSyncAdapter({ db:firstDb, uid:'student', store:firstStore, isActive:() => active, onSynced:() => {}, onWriteError:error => { throw error; } });
+    const second = createTrainingCalendarSyncAdapter({ db:secondDb, uid:'student', store:secondStore, isActive:() => active, onSynced:() => {}, onWriteError:error => { throw error; } });
+    const stopFirst = first.listen(error => { throw error; }), stopSecond = second.listen(error => { throw error; });
+    const waitFor = async predicate => { for (let attempt = 0; attempt < 50 && !predicate(); attempt++) await new Promise(resolveWait => setTimeout(resolveWait, 20)); expect(predicate()).toBe(true); };
+    try {
+      await first.push();
+      await waitFor(() => secondStore.get()[0]?.dateKey === '2026-10-30');
+      secondStore.set([{ ...activity, dateKey:'2026-10-31', updatedAt:activity.updatedAt + 1 }]);
+      await second.push();
+      await waitFor(() => firstStore.get()[0]?.dateKey === '2026-10-31');
+      expect((await getDoc(doc(firstDb, 'users/student/cfg/trainingCalendar'))).data()?.activities[0].dateKey).toBe('2026-10-31');
+      const other = testEnv.authenticatedContext('other', { email:'other@example.test', email_verified:true }).firestore();
+      await assertFails(getDoc(doc(other, 'users/student/cfg/trainingCalendar')));
+    } finally { active = false; stopFirst(); stopSecond(); }
   });
 
   it('rechaza historiales que exceden el límite y campos de nivel superior desconocidos', async () => {

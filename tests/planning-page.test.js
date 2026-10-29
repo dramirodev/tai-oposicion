@@ -112,7 +112,8 @@ it('muestra disponibilidad mensual y marca únicamente sesiones realmente comple
   const days = screen.getAllByRole('group', { name:/minutos disponibles|descanso/ });
   expect(days).toHaveLength(new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate());
   expect(screen.getByRole('group', { name:/sesión completada, hoy/ })).toBeInTheDocument();
-  expect(screen.getByText(/Las actividades concretas solo se preparan para hoy/)).toBeInTheDocument();
+  expect(screen.getByText(/Las actividades futuras son repasos que tú confirmas/)).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name:'Programar un repaso' })).toBeInTheDocument();
   await user.click(screen.getByRole('button', { name:'Mes siguiente' }));
   expect(screen.getByRole('heading', { name:new Intl.DateTimeFormat('es-ES', { month:'long', year:'numeric' }).format(new Date(now.getFullYear(), now.getMonth() + 1, 1)) })).toBeInTheDocument();
 });

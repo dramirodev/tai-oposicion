@@ -26,6 +26,8 @@ import { syncAttemptHistory } from './attempt-sync.js';
 import { configureStudyBankSource } from './study-bank-source.js';
 import { createTrainingSessionSyncAdapter, type TrainingSessionSyncStore } from './training-session-sync.js';
 import { createPaperRecallSyncAdapter, type PaperRecallSyncStore } from './paper-recall-sync.js';
+import { createTrainingCalendarSyncAdapter, type TrainingCalendarSyncStore } from './training-calendar-sync.js';
+import type { ScheduledStudyActivity } from '../../core/domain/study-training-calendar.js';
 
 let auth: Auth, db: Firestore, uid: string | null = null, timer: ReturnType<typeof setTimeout> | undefined, cardsT: ReturnType<typeof setTimeout> | undefined, retryT: ReturnType<typeof setTimeout> | undefined, retryN = 0, syncEpoch = 0, unsubs: Unsubscribe[] = [];
 let temaOf: (id: string) => string | null = () => null; // id -> tema
@@ -34,6 +36,7 @@ let attemptRepository: AttemptRepository | null = null;
 let progressStore: ProgressSyncStore | null = null;
 let trainingSessionStore: TrainingSessionSyncStore | null = null;
 let paperRecallStore: PaperRecallSyncStore | null = null;
+let trainingCalendarStore: TrainingCalendarSyncStore | null = null;
 const getProgressStore = (): ProgressSyncStore => {
   if (!progressStore) throw new Error('El almacén de progreso no se ha conectado a la sincronización.');
   return progressStore;
@@ -44,10 +47,12 @@ export async function init(
   localProgress: ProgressSyncStore,
   localTrainingSession?: TrainingSessionSyncStore,
   localPaperRecall?: PaperRecallSyncStore,
+  localTrainingCalendar?: TrainingCalendarSyncStore,
 ): Promise<void> {
   progressStore = localProgress;
   trainingSessionStore = localTrainingSession ?? null;
   paperRecallStore = localPaperRecall ?? null;
+  trainingCalendarStore = localTrainingCalendar ?? null;
   temaOf = metaFns.temaOf; idsOfTema = metaFns.idsOfTema;
   status.authResolved = false;
   const { config: firebaseConfig, loaded: leida } = await loadFirebaseConfig();
@@ -193,6 +198,10 @@ function start(): void {
     const adapter = createPaperRecallSyncAdapter({ db, uid:me, store:paperRecallStore, isActive:active, onSynced:ok, onWriteError:writeErr });
     unsubs.push(adapter.listen(error));
   }
+  if (trainingCalendarStore) {
+    const adapter = createTrainingCalendarSyncAdapter({ db, uid:me, store:trainingCalendarStore, isActive:active, onSynced:ok, onWriteError:writeErr });
+    unsubs.push(adapter.listen(error));
+  }
   // estadísticas: un documento por tema
   unsubs.push(onSnapshot(collection(db, 'users', me, 'stats'), snap => {
     if (!active()) return;
@@ -305,6 +314,15 @@ export function pushPaperRecallAssessments(): void {
     db, uid:targetUid, store:paperRecallStore, isActive:() => uid === targetUid && canSync(), onSynced:ok, onWriteError:writeErr,
   });
   void adapter.push();
+}
+
+export function pushTrainingCalendar(activities?: readonly ScheduledStudyActivity[]): void {
+  if (!canSync() || !uid || !trainingCalendarStore) return;
+  const targetUid = uid;
+  const adapter = createTrainingCalendarSyncAdapter({
+    db, uid:targetUid, store:trainingCalendarStore, isActive:() => uid === targetUid && canSync(), onSynced:ok, onWriteError:writeErr,
+  });
+  void adapter.push(activities);
 }
 
 export function pushSeen(data: SeenDoc): void {

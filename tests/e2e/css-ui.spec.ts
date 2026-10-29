@@ -301,11 +301,59 @@ test('el calendario mensual distingue disponibilidad de sesiones completadas en 
   await expect(page.locator('.planning-month-day')).toHaveCount(31);
   await expect(page.getByRole('group', { name:/jueves 29: 120 minutos disponibles.*academia.*hoy/i })).toBeVisible();
   await expect(page.getByRole('group', { name:/domingo 25: descanso/i })).toBeVisible();
-  await expect(page.getByText(/Las actividades concretas solo se preparan para hoy/)).toBeVisible();
+  await expect(page.locator('.planning-month-day>small').first()).toBeHidden();
+  await expect(page.getByText(/Las actividades futuras son repasos que tú confirmas/)).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
   await page.getByRole('button', { name:'Mes siguiente' }).click();
   await expect(page.getByRole('heading', { name:'noviembre de 2026' })).toBeVisible();
 });
+
+for (const theme of ['light', 'dark']) {
+test(`programa y reprograma un repaso de papel solo tras confirmar y conserva el cambio al recargar · ${theme}`, async ({ page }) => {
+  await prepare(page, theme, 0, true);
+  await page.clock.setFixedTime(new Date('2026-10-29T12:00:00+02:00'));
+  await page.setViewportSize({ width:375, height:812 });
+  await page.goto('/#/planificacion');
+  await page.getByRole('button', { name:'Mes', exact:true }).click();
+  await page.getByLabel('Fecha del repaso').fill('2026-11-02');
+  await page.getByLabel('Tema del repaso').selectOption('T1.01');
+  await page.getByLabel('Tipo de repaso').selectOption('topicTest');
+  await page.getByLabel('Duración del repaso').selectOption('20');
+  await page.getByRole('button', { name:'Revisar propuesta' }).click();
+  await expect(page.getByRole('group', { name:'Propuesta pendiente de confirmación' })).toContainText('lunes, 2 de noviembre de 2026');
+  await expect(page.getByRole('list', { name:'Repasos planificados' })).toHaveCount(0);
+  await page.getByRole('button', { name:'Confirmar planificación' }).click();
+
+  const activity = page.getByRole('list', { name:'Repasos planificados' }).getByRole('listitem');
+  await expect(activity).toContainText('Test por tema');
+  await expect(activity).toContainText('T1.01');
+  await expect(activity).toContainText('20 min');
+  await expect(activity.getByRole('button', { name:'Abrir' })).toBeVisible();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('tai.training-calendar.v1.guest') || '[]'))).toMatchObject([
+    { dateKey:'2026-11-02', activity:'topicTest', topicId:'T1.01', minutes:20 },
+  ]);
+
+  await page.reload();
+  await page.getByRole('button', { name:'Mes', exact:true }).click();
+  const reloadedActivity = page.getByRole('list', { name:'Repasos planificados' }).getByRole('listitem');
+  await expect(reloadedActivity).toContainText('lunes, 2 de noviembre de 2026');
+  await reloadedActivity.getByLabel('Nueva fecha para T1.01').fill('2026-11-03');
+  await reloadedActivity.getByRole('button', { name:'Reprogramar' }).click();
+  await expect(page.getByRole('group', { name:'Propuesta pendiente de confirmación' })).toContainText('martes, 3 de noviembre de 2026');
+  await expect(reloadedActivity).toContainText('lunes, 2 de noviembre de 2026');
+  await page.getByRole('button', { name:'Confirmar planificación' }).click();
+  await expect(page.getByRole('list', { name:'Repasos planificados' }).getByRole('listitem')).toContainText('martes, 3 de noviembre de 2026');
+  await page.reload();
+  await page.getByRole('button', { name:'Mes', exact:true }).click();
+  const persistedActivity = page.getByRole('list', { name:'Repasos planificados' }).getByRole('listitem');
+  await expect(persistedActivity).toContainText('martes, 3 de noviembre de 2026');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375);
+  await page.screenshot({ path:`test-results/planning-calendar-mobile-${theme}.png`, fullPage:true });
+  await persistedActivity.getByRole('button', { name:'Abrir' }).click();
+  await expect(page).toHaveURL(/#\/test\?dailyTraining=topicTest&trainingTopics=T1\.01&topic=T1\.01/);
+  await expect(page.locator('#app h1')).toContainText('pregunta 1 de');
+});
+}
 
 test('Planificación conserva el contenido dentro del viewport desde móvil estrecho hasta escritorio grande', async ({ page }) => {
   await prepare(page, 'light', 0);

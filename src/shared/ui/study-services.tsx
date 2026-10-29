@@ -4,6 +4,7 @@ import type { StudyReviewMode, TrainingActivity, TrainingPreferences } from '../
 import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
 import type { DailyTrainingSession, TrainingSessionHistoryEntry } from '../../core/domain/study-training-session.js';
 import type { PaperRecallAssessment, PaperRecallRating } from '../../core/domain/paper-recall-assessment.js';
+import type { ScheduleDecision, ScheduledStudyActivity, ScheduledStudyActivityKind } from '../../core/domain/study-training-calendar.js';
 import type { ObservedStudyTime } from '../../core/domain/attempts/observed-study-time.js';
 export type { StatsComparison, StatsDomainTopic, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 export interface ActiveStudy { title: string; position: number; total: number }
@@ -39,6 +40,9 @@ export interface HomeServices {
   pauseTrainingActivity(): DailyTrainingSession | null;
   completeTrainingActivity(activity: TrainingActivity): DailyTrainingSession | null;
   recordPaperRecall?(topicId: string, rating: PaperRecallRating): PaperRecallAssessment | null;
+  scheduledStudyActivities?(): readonly ScheduledStudyActivity[];
+  scheduleStudyActivity?(input: { dateKey: string; activity: ScheduledStudyActivityKind; topicId: string; minutes: number }): ScheduleDecision | { ok:false; reason:'storage-failed' };
+  rescheduleStudyActivity?(input: { id: string; dateKey: string }): ScheduleDecision | { ok:false; reason:'storage-failed' };
   setTrainingReviewMode(topicId: string, mode: StudyReviewMode | null): void;
   openMenu(): void;
   login(): Promise<unknown>;

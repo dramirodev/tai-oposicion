@@ -32,6 +32,7 @@ import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
 import type { Origin, QuestionStats, StudyReviewMode, TrainingActivity, TrainingPreferences } from '../core/domain/entities.js';
 import type { PaperRecallRating } from '../core/domain/paper-recall-assessment.js';
+import type { ScheduledStudyActivity } from '../core/domain/study-training-calendar.js';
 import { latestPaperRecallByTopic, needsPaperRecallFollowUp } from '../core/domain/paper-recall-assessment.js';
 import { buildDailyTrainingPlan, normalizeTrainingPreferences } from '../core/domain/study-training-plan.js';
 import { filterTopicMasteryToSeen } from '../core/domain/topic-mastery.js';
@@ -70,6 +71,7 @@ import { createAppUpdateController } from './composition/updates/app-update-cont
 import { createCardsComposition } from './composition/cards/cards-composition.js';
 import { createTrainingSessionComposition } from './composition/trainers/training-session-composition.js';
 import { createPaperRecallComposition } from './composition/trainers/paper-recall-composition.js';
+import { createTrainingCalendarComposition } from './composition/trainers/training-calendar-composition.js';
 import { getHomeProgressSummary } from '../core/application/stats/get-home-progress-summary.js';
 import type { QuestionRecord as Question } from '../core/domain/question-record.js';
 import { createReadingComposition } from './composition/trainers/reading-composition.js';
@@ -97,6 +99,13 @@ const dominioTemas = createTopicMasteryComposition({ progressRepository: localPr
 const progressPorTema = createTopicProgressComposition({ progressRepository: localProgressRepository, accountId: localStudyProgressGateway.accountId, questionIdsForTopic: topicId => studyQuestionCatalog.getMetadataSnapshot()?._by[topicId] || [] });
 const trainingSession = createTrainingSessionComposition({ accountId: localStudyProgressGateway.accountId, now: studyQuestionCatalog.now, push: session => { void sync.pushTrainingSession(session); } });
 const paperRecall = createPaperRecallComposition({ accountId: localStudyProgressGateway.accountId, now: studyQuestionCatalog.now, push: () => { void sync.pushPaperRecallAssessments(); } });
+const trainingCalendar = createTrainingCalendarComposition({
+  accountId: localStudyProgressGateway.accountId,
+  now: studyQuestionCatalog.now,
+  getSeenTopics: store.getSeen,
+  getPreferences: () => normalizeTrainingPreferences(store.getCfg().training),
+  push: activities => { void sync.pushTrainingCalendar(activities); },
+});
 let routeReady: () => void;
 const firstReactRouteReady = new Promise<void>(resolve => { routeReady = resolve; });
 const studyRunController = createStudyRunController({
@@ -366,7 +375,7 @@ export function bootAppServices(): () => void {
     prefetchBank: prefetchBanco,
     loadMetadataAndInitializeSync: async () => {
       try { await getMeta(); } catch (error) { console.error(error); }
-      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getQuestionIdsForTopic }, store, trainingSession, paperRecall); } catch (error) { console.error(error); }
+      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getQuestionIdsForTopic }, store, trainingSession, paperRecall, trainingCalendar); } catch (error) { console.error(error); }
     },
   });
 }
@@ -621,6 +630,9 @@ export const studyServices: StudyServices = {
     pauseTrainingActivity() { return trainingSession.pauseCurrentActivity(); },
     completeTrainingActivity(activity: TrainingActivity) { return trainingSession.completeActivity(activity); },
     recordPaperRecall(topicId: string, rating: PaperRecallRating) { return paperRecall.record(topicId, rating); },
+    scheduledStudyActivities() { return trainingCalendar.get(); },
+    scheduleStudyActivity(input: Parameters<typeof trainingCalendar.schedule>[0]) { return trainingCalendar.schedule(input); },
+    rescheduleStudyActivity(input: Parameters<typeof trainingCalendar.reschedule>[0]) { return trainingCalendar.reschedule(input); },
     setTrainingReviewMode(topicId: string, mode: StudyReviewMode | null) {
       const preferences = normalizeTrainingPreferences(store.getCfg().training);
       const reviewModesByTopic = { ...preferences.reviewModesByTopic };
