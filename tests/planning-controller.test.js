@@ -1,0 +1,43 @@
+import { describe, expect, it } from 'vitest';
+import { resolvePlannedActivityAction } from '../src/features/planning/planning-controller.ts';
+
+const session = (step, overrides = {}) => ({
+  activities: [step], currentIndex: 0, completedAt: null,
+  dateKey: '2026-10-29', currentStartedAt: null, startedAt: 0, ...overrides,
+});
+const step = (activity, extra = {}) => ({ activity, minutes: 10, reason: 'coverage', ...extra });
+
+describe('resolvePlannedActivityAction', () => {
+  it('opens the selected new syllabus topic without requiring studied topics', () => {
+    expect(resolvePlannedActivityAction(session(step('newContent', { topicId: 'T1.02' })), [], 0))
+      .toEqual({ type: 'navigate', path: '/temario?topic=T1.02&dailyTraining=newContent' });
+  });
+
+  it('refuses recovery activities when there are no studied topics', () => {
+    expect(resolvePlannedActivityAction(session(step('mixedTopicTest')), [], 0))
+      .toEqual({ type: 'notify', message: 'Marca temas vistos antes de iniciar actividades de recuperación.' });
+  });
+
+  it('keeps a topic test within its studied topic', () => {
+    const result = resolvePlannedActivityAction(session(step('topicTest', { topicId: 'T1.02', topicIds: ['T1.01', 'T1.02'] })), ['T1.01', 'T1.02', 'T2.01'], 0);
+    expect(result).toMatchObject({ type: 'navigate', path: expect.stringContaining('trainingTopics=T1.02') });
+    expect(result).toMatchObject({ path: expect.stringContaining('topic=T1.02') });
+  });
+
+  it('drops stale topic IDs and never places unstudied material in a route', () => {
+    const result = resolvePlannedActivityAction(session(step('mixedTopicTest', { topicIds: ['T1.02', 'T3.01'] })), ['T1.02'], 0);
+    expect(result).toEqual({ type: 'navigate', path: '/test?dailyTraining=mixedTopicTest&trainingTopics=T1.02' });
+  });
+
+  it('uses the prepared due-review flow when no cards are due', () => {
+    expect(resolvePlannedActivityAction(session(step('spacedReviews')), ['T1.02'], 0))
+      .toEqual({ type: 'start-review', topicIds: ['T1.02'] });
+  });
+
+  it('opens cards directly when there are due cards and ignores completed sessions', () => {
+    expect(resolvePlannedActivityAction(session(step('spacedReviews')), ['T1.02'], 2))
+      .toMatchObject({ type: 'navigate', path: expect.stringContaining('/cards?') });
+    expect(resolvePlannedActivityAction(session(step('activeRecall'), { completedAt: 100 }), ['T1.02'], 0))
+      .toEqual({ type: 'none' });
+  });
+});

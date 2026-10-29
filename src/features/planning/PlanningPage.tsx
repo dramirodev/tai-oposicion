@@ -4,12 +4,13 @@ import { CalendarDays, Check, CircleHelp, Clock3, Pause, Play } from 'lucide-rea
 import type { TrainingActivity } from '../../core/domain/entities.js';
 import type { DailyTrainingSession, TrainingSessionStep } from '../../core/domain/study-training-session.js';
 import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
-import { useStudyService, type HomeOverview, type SettingsSnapshot } from '../../shared/ui/study-services.js';
+import { useStudyService, type HomeOverview, type HomeServices, type SettingsSnapshot } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { useActionLifetime } from '../../shared/ui/use-action-lifetime.js';
 import { usePageReady } from '../../shared/ui/use-page-ready.js';
-import { createHomeController, scopeTrainingRouteToSeenTopics } from '../home/home-controller.js';
+import { createHomeController } from '../home/home-controller.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
+import { resolvePlannedActivityAction } from './planning-controller.js';
 
 const activityPresentation: Record<TrainingActivity, { title: string; objective: string; instruction: string; resource: string }> = {
   newContent: {
@@ -51,7 +52,33 @@ const reasonText: Record<DailyTrainingPlan['activities'][number]['reason'], stri
 const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 const focusLabels = { rest: 'Descanso', 'new-content': 'Contenido nuevo', consolidation: 'Recuperación y consolidación' } as const;
 const formatMinutes = (seconds: number) => `${Math.floor(seconds / 60)} min${seconds % 60 ? ` ${seconds % 60} s` : ''}`;
-const localDate = (date: Date) => new Intl.DateTimeFormat('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(date);
+const localDateFormatter = new Intl.DateTimeFormat('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+const localDate = (date: Date) => localDateFormatter.format(date);
+
+const reviewModeLabels: Record<NonNullable<TrainingSessionStep['reviewMode']>, string> = {
+  'active-retrieval': 'comprobar primero qué recuerdas',
+  'initial-study': 'estudio inicial',
+  'selective-reading': 'revisión selectiva',
+  'broad-reading': 'revisión amplia',
+};
+
+function activityState(session: DailyTrainingSession | null, index: number) {
+  const completed = !!session && index < session.currentIndex;
+  const current = !!session && index === session.currentIndex && session.completedAt === null;
+  return {
+    completed,
+    current,
+    label: completed ? 'Completada' : current ? 'En curso' : 'Pendiente',
+    className: `planning-activity${completed ? ' is-complete' : ''}${current ? ' is-current' : ''}`,
+  };
+}
+
+function activityResourcePath(step: TrainingSessionStep): string {
+  if (step.activity === 'newContent') return `/temario?topic=${encodeURIComponent(step.topicId ?? '')}&dailyTraining=newContent`;
+  if (step.activity === 'activeRecall' || step.activity === 'spacedReviews') return '/cards';
+  if (step.activity === 'topicTest' || step.activity === 'mixedTopicTest') return '/test';
+  return '/falladas';
+}
 
 function useSettingsSnapshot() {
   const settings = useStudyService('settings');
@@ -71,24 +98,20 @@ function PlanningActivity({ step, index, session, topicName, elapsedSeconds, run
   elapsedSeconds: number; running: boolean;
 }) {
   const presentation = activityPresentation[step.activity];
-  const completed = !!session && index < session.currentIndex;
-  const current = !!session && index === session.currentIndex && session.completedAt === null;
+  const state = activityState(session, index);
   const topic = topicName ? `${step.topicId} · ${topicName}` : step.topicId;
-  return <li className={`planning-activity${completed ? ' is-complete' : ''}${current ? ' is-current' : ''}`} aria-current={current ? 'step' : undefined}>
-    <span className="planning-activity-marker" aria-hidden="true">{completed ? <Check size="1rem" /> : index + 1}</span>
+  return <li className={state.className} aria-current={state.current ? 'step' : undefined}>
+    <span className="planning-activity-marker" aria-hidden="true">{state.completed ? <Check size="1rem" /> : index + 1}</span>
     <article className="planning-activity-content">
-      <div className="planning-activity-heading"><div><p className="planning-activity-type">{completed ? 'Completada' : current ? 'En curso' : 'Pendiente'}</p><h3>{presentation.title}</h3></div><span className="planning-duration">{step.minutes} min</span></div>
+      <div className="planning-activity-heading"><div><p className="planning-activity-type">{state.label}</p><h3>{presentation.title}</h3></div><span className="planning-duration">{step.minutes} min</span></div>
       {topic && <p className="planning-topic">{topic}</p>}
       <p>{presentation.objective}</p>
       <details><summary>Instrucciones y motivo</summary><p>{presentation.instruction}</p>
-        {step.reviewMode && <p>Modalidad recomendada: {step.reviewMode === 'active-retrieval' ? 'comprobar primero qué recuerdas' : step.reviewMode === 'initial-study' ? 'estudio inicial' : step.reviewMode === 'selective-reading' ? 'revisión selectiva' : 'revisión amplia'}.</p>}
+        {step.reviewMode && <p>Modalidad recomendada: {reviewModeLabels[step.reviewMode]}.</p>}
         <p className="planning-reason">{step.reviewMode ? 'La intervención se conserva desde la recomendación de hoy. ' : ''}{reasonText[step.reason]}</p>
       </details>
-      {current && <div className="planning-activity-timer" role="status" aria-live="off"><Clock3 size="1rem" aria-hidden="true" /> Tiempo en esta actividad: {formatMinutes(elapsedSeconds)} {running ? '· contando' : '· en pausa'}</div>}
-      <p className="planning-resource">Recurso de TAI: {step.activity === 'newContent' ? <Link to={`/temario?topic=${encodeURIComponent(step.topicId ?? '')}&dailyTraining=newContent`}>{presentation.resource}</Link>
-        : step.activity === 'activeRecall' || step.activity === 'spacedReviews' ? <Link to="/cards">{presentation.resource}</Link>
-          : step.activity === 'topicTest' || step.activity === 'mixedTopicTest' ? <Link to="/test">{presentation.resource}</Link>
-            : <Link to="/falladas">{presentation.resource}</Link>}</p>
+      {state.current && <div className="planning-activity-timer" role="status" aria-live="off"><Clock3 size="1rem" aria-hidden="true" /> Tiempo en esta actividad: {formatMinutes(elapsedSeconds)} {running ? '· contando' : '· en pausa'}</div>}
+      <p className="planning-resource">Recurso de TAI: <Link to={activityResourcePath(step)}>{presentation.resource}</Link></p>
     </article>
   </li>;
 }
@@ -104,10 +127,157 @@ function WeekSchedule({ preferences, weekday }: { preferences: SettingsSnapshot[
   </section>;
 }
 
+interface PlanningViewModel {
+  plan: DailyTrainingPlan;
+  session: DailyTrainingSession | null;
+  activities: readonly TrainingSessionStep[];
+  topicNames: Map<string, string>;
+  weekday: number;
+  focus: keyof typeof focusLabels;
+  title: string;
+  purpose: string;
+  examDistance: string;
+  timeLabel: string;
+  recordedTime: string;
+  topicCount: number;
+  completedCount: number;
+  activeIndex: number;
+  activeSeconds: number;
+  totalElapsed: number;
+  progress: number;
+  state: 'completed' | 'rest' | 'activities' | 'missing-new-topic' | 'empty';
+  emptyMessage: 'no-content' | 'mark-topic';
+  actionLabel: string;
+}
+
+function buildPlanningViewModel(overview: HomeOverview, settings: SettingsSnapshot, now: Date, clock: number, seenTopics: readonly string[]): PlanningViewModel {
+  const plan = overview.trainingPlan;
+  const session = overview.trainingSession;
+  const activities = session?.activities ?? plan.activities;
+  const completedCount = session?.currentIndex ?? 0;
+  const activeIndex = session?.currentIndex ?? 0;
+  const activeSecondsBase = session?.elapsedSecondsByActivity?.[activeIndex] ?? 0;
+  const currentElapsed = session?.currentStartedAt !== null && session?.currentStartedAt !== undefined ? Math.max(0, Math.floor((clock - session.currentStartedAt) / 1000)) : 0;
+  const activeSeconds = activeSecondsBase + currentElapsed;
+  const totalElapsed = (session?.elapsedSecondsByActivity ?? []).reduce((sum, value) => sum + value, 0) + currentElapsed;
+  const topicNames = new Map((overview.studiedTopicDetails ?? []).map(topic => [topic.id, topic.name]));
+  if (overview.nextNewTopic) topicNames.set(overview.nextNewTopic.id, overview.nextNewTopic.name);
+  const weekday = now.getDay();
+  const estimatedExamDays = Math.max(0, Math.ceil((Date.UTC(2027, 5, 30) - Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) / 86_400_000));
+  const examDays = overview.daysToExam ?? estimatedExamDays;
+  const focus = (settings.training.focusByDay ?? ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'])[weekday];
+  const completed = session?.completedAt !== null && session?.completedAt !== undefined;
+  const hasPlannedActivities = activities.length > 0;
+  const missingNewTopic = !activities.length && !seenTopics.length && plan.activities.some(activity => activity.activity === 'newContent');
+  const state: PlanningViewModel['state'] = completed ? 'completed'
+    : plan.restDay ? 'rest'
+      : hasPlannedActivities ? 'activities'
+        : missingNewTopic ? 'missing-new-topic'
+          : 'empty';
+  const title = completed ? 'Sesión completada' : session && session.currentIndex > 0 ? 'Continúa tu sesión' : 'Mi sesión de hoy';
+  const purpose = completed ? 'Has llegado al final de las actividades preparadas para hoy.'
+    : plan.restDay ? 'Hoy es descanso. El trabajo pendiente no se acumula.'
+      : hasPlannedActivities ? focus === 'consolidation' ? 'Hoy toca recuperar conocimientos y consolidar lo que ya has estudiado.' : 'Hoy avanzarás en el tema nuevo y practicarás el material de temas vistos que necesite revisión.'
+        : 'No hay actividades justificadas con la información disponible.';
+  const actionLabel = session?.currentStartedAt ? 'Continuar actividad' : session?.currentIndex ? 'Continuar sesión' : 'Comenzar sesión';
+  return {
+    plan, session, activities, topicNames, weekday, focus, title, purpose,
+    examDistance: `${examDays} días · ${overview.daysToExam !== null ? 'fecha objetivo' : 'fecha estimada: 30 jun 2027'}`,
+    timeLabel: activities.length ? 'Tiempo previsto' : 'Tiempo disponible',
+    recordedTime: session ? formatMinutes(totalElapsed) : 'Aún no iniciado',
+    topicCount: new Set(activities.flatMap(step => step.topicIds ?? (step.topicId ? [step.topicId] : []))).size,
+    completedCount, activeIndex, activeSeconds, totalElapsed,
+    progress: activities.length ? Math.min(100, Math.round(completedCount * 100 / activities.length)) : 0,
+    state,
+    emptyMessage: overview.studiedTopics ? 'no-content' : 'mark-topic',
+    actionLabel,
+  };
+}
+
+function usePlanningSessionActions(services: HomeServices, overview: HomeOverview | undefined, navigate: ReturnType<typeof useNavigate>, refresh: () => void) {
+  const lifetime = useActionLifetime(services.accountId);
+  const [controller] = useState(() => createHomeController(lifetime, services.notify));
+
+  const openActivity = (session: DailyTrainingSession, source: HomeOverview) => {
+    const action = resolvePlannedActivityAction(session, [...new Set(services.seenTopics())], source.trainingDue.cards);
+    if (action.type === 'none') return;
+    if (action.type === 'notify') { services.notify(action.message); return; }
+    if (action.type === 'start-review') {
+      void controller.runAction('planning-review', () => services.startReview(action.topicIds, 'spacedReviews'));
+      return;
+    }
+    void navigate(action.path);
+  };
+
+  const startSession = () => {
+    if (!overview) return;
+    if (services.getActiveStudy()) {
+      services.notify('Termina o continúa primero el test que ya tienes abierto para conservar su avance.');
+      return;
+    }
+    const session = services.startTrainingSession(overview.trainingPlan);
+    const started = services.startTrainingActivity() ?? session;
+    if (started) openActivity(started, overview);
+  };
+
+  const pauseSession = () => { services.pauseTrainingActivity(); refresh(); };
+  return { startSession, pauseSession };
+}
+
+function SessionActionArea({ model, activeStudy, onStart, onPause }: {
+  model: PlanningViewModel; activeStudy: boolean; onStart(): void; onPause(): void;
+}) {
+  if (model.state === 'completed') return <p className="planning-session-complete" role="status">Sesión finalizada · {model.completedCount} actividades · {formatMinutes(model.totalElapsed)} registrados.</p>;
+  if (model.state === 'rest') return <p className="planning-session-complete">Día de descanso · no se trasladan tareas a mañana.</p>;
+  if (model.state === 'activities') return <div className="planning-session-actions">
+    <button className="btn" onClick={onStart} disabled={activeStudy}><Play size="1rem" aria-hidden="true" />{model.actionLabel}</button>
+    {model.session?.currentStartedAt !== null && model.session?.currentStartedAt !== undefined && <button className="btn sec" onClick={onPause}><Pause size="1rem" aria-hidden="true" />Pausar tiempo</button>}
+    <p>Las actividades se abren ya preparadas; al terminar, vuelves aquí para seguir con el paso siguiente.</p>
+  </div>;
+  if (model.state === 'missing-new-topic') return <p>No se ha podido preparar el siguiente tema. <Link to="/temario">Revisa el temario</Link>.</p>;
+  return <p>{model.emptyMessage === 'no-content' ? 'No hay contenido pendiente para las modalidades elegidas.' : <>Primero marca el siguiente tema que vas a estudiar. <Link to="/temario">Abrir temario</Link></>}</p>;
+}
+
+function PlanningTodayCard({ model, overview, activeStudy, onStart, onPause }: {
+  model: PlanningViewModel; overview: HomeOverview; activeStudy: boolean; onStart(): void; onPause(): void;
+}) {
+  const { activities } = model;
+  return <section className="planning-today" aria-labelledby="planning-today-title">
+    <div className="planning-today-main">
+      <div className="planning-section-heading"><div><p className="planning-kicker">{focusLabels[model.focus]}</p><h2 id="planning-today-title">{model.title}</h2></div><span className="planning-exam-distance">{model.examDistance}</span></div>
+      <p className="planning-purpose">{model.purpose}</p>
+      <dl className="planning-facts">
+        <div><dt>{model.timeLabel}</dt><dd>{model.plan.minutes} min</dd></div>
+        <div><dt>Tiempo registrado</dt><dd>{model.recordedTime}</dd></div>
+        <div><dt>Actividades</dt><dd>{activities.length}</dd></div>
+        <div><dt>Temas implicados</dt><dd>{model.topicCount}</dd></div>
+        <div><dt>Repasos vencidos</dt><dd>{overview.trainingDue.cards + overview.trainingDue.questions}</dd></div>
+      </dl>
+      <SessionActionArea model={model} activeStudy={activeStudy} onStart={onStart} onPause={onPause} />
+      {activities.length > 0 && <div className="planning-progress" aria-label={`Progreso: ${model.completedCount} de ${activities.length} actividades`}><span style={{ width: `${model.progress}%` }} /></div>}
+    </div>
+  </section>;
+}
+
+function PlanningActivityList({ model }: { model: PlanningViewModel }) {
+  if (!model.activities.length) return null;
+  return <section className="planning-activities" aria-labelledby="planning-activities-title">
+    <div className="planning-section-heading"><div><p className="planning-kicker">Orden de trabajo</p><h2 id="planning-activities-title">Pasos de la sesión</h2></div><span>{model.completedCount} de {model.activities.length} completadas</span></div>
+    <ol>{model.activities.map((step, index) => <PlanningActivity key={step.activity} step={step} index={index} session={model.session} topicName={step.topicId ? model.topicNames.get(step.topicId) : undefined} elapsedSeconds={index === model.activeIndex ? model.activeSeconds : model.session?.elapsedSecondsByActivity?.[index] ?? 0} running={index === model.activeIndex && model.session?.currentStartedAt !== null && model.session?.currentStartedAt !== undefined} />)}</ol>
+  </section>;
+}
+
+function PlanningEvidence({ overview }: { overview: HomeOverview }) {
+  return <section className="planning-evidence" aria-labelledby="planning-evidence-title">
+    <div className="planning-section-heading"><div><p className="planning-kicker">Seguimiento sin mezclar medidas</p><h2 id="planning-evidence-title">Qué registra TAI</h2></div><Link to="/stats">Ver progreso</Link></div>
+    <div className="planning-evidence-grid"><p><b>Cobertura</b><span>{overview.studiedTopics} de {overview.topicCount} temas marcados como vistos.</span></p><p><b>Resultados de preguntas</b><span>{overview.assessedTopics} temas tienen actividad evaluada; los aciertos no prueban por sí solos recuerdo libre.</span></p><p><b>Comprensión</b><span>No se mide directamente todavía; TAI no infiere comprensión de una marca de lectura.</span></p><p><b>Examen</b><span>Los resultados de test y simulacros se muestran por separado en Progreso.</span></p></div>
+    <p className="planning-caveat"><CircleHelp size="1rem" aria-hidden="true" /> La lectura de resúmenes y esquemas ocurre con tus materiales externos. TAI no dispone aquí de esos documentos ni registra su lectura; por eso la actividad pide recuperar primero y usar el material solo para corregir lagunas.</p>
+  </section>;
+}
+
 export function PlanningPage() {
   const services = useStudyService('home');
   const authResolved = useSyncExternalStore(services.subscribe, services.authResolved, () => false);
-  const lifetime = useActionLifetime(services.accountId);
   const [reload, setReload] = useState(0);
   const resource = useMemo(() => ({ accountId: services.accountId, subscribe: services.subscribe, load: () => services.loadOverview() }), [services]);
   const { value: overview, error } = useAccountResource(resource, reload);
@@ -119,116 +289,22 @@ export function PlanningPage() {
   }, []);
   usePageReady(authResolved && (!!overview || !!error));
   const navigate = useNavigate();
-  const [controller] = useState(() => createHomeController(lifetime, services.notify));
-  const seenTopics = [...new Set(services.seenTopics())];
-
-  const openActivity = (session: DailyTrainingSession, source: HomeOverview) => {
-    if (session.completedAt !== null) return;
-    const step = session.activities[session.currentIndex];
-    if (!step) return;
-    if (step.activity === 'newContent') {
-      if (!step.topicId) { services.notify('No se ha encontrado un tema nuevo disponible.'); return; }
-      void navigate(`/temario?topic=${encodeURIComponent(step.topicId)}&dailyTraining=newContent`);
-      return;
-    }
-    const available = [...new Set(services.seenTopics())];
-    if (!available.length) { services.notify('Marca temas vistos antes de iniciar actividades de recuperación.'); return; }
-    const scope = new Set(available);
-    const planned = step.topicIds?.filter(id => scope.has(id)) ?? [];
-    const oneTopic = step.topicId && scope.has(step.topicId) ? step.topicId : undefined;
-    const topics = step.activity === 'topicTest' && oneTopic ? [oneTopic] : planned.length ? planned : available;
-    const destinations: Record<Exclude<TrainingActivity, 'newContent'>, string> = {
-      activeRecall: 'cards', topicTest: 'test', mixedTopicTest: 'test', failures: 'falladas', spacedReviews: 'cards',
-    };
-    if (step.activity === 'spacedReviews' && !(source.trainingDue?.cards ?? source.cardsDue)) {
-      void controller.runAction('planning-review', () => services.startReview(topics, 'spacedReviews'));
-      return;
-    }
-    const params = new URLSearchParams({ dailyTraining: step.activity, trainingTopics: topics.join(',') });
-    if (step.activity === 'topicTest' && oneTopic) params.set('topic', oneTopic);
-    const route = scopeTrainingRouteToSeenTopics(`${destinations[step.activity]}?${params.toString()}`, available);
-    if (!route) { services.notify('No se encontraron temas vistos válidos para esta actividad.'); return; }
-    void navigate(`/${route}`);
-  };
-
-  const startSession = () => {
-    if (!overview) return;
-    if (services.getActiveStudy()) { services.notify('Termina o continúa primero el test que ya tienes abierto para conservar su avance.'); return; }
-    const session = services.startTrainingSession(overview.trainingPlan);
-    const started = services.startTrainingActivity() ?? session;
-    if (started) openActivity(started, overview);
-  };
-  const pauseSession = () => {
-    services.pauseTrainingActivity();
-    setReload(value => value + 1);
-  };
+  const actions = usePlanningSessionActions(services, overview, navigate, () => setReload(value => value + 1));
 
   if (!authResolved || (!overview && !error)) return <PageLoading variant="home" />;
   if (error) return <div className="card" role="alert"><h2>No se pudo cargar la planificación</h2><p>Inténtalo de nuevo. Si no tienes conexión, los datos de la cuenta todavía pueden no estar disponibles en este dispositivo.</p><button className="btn" onClick={() => setReload(value => value + 1)}>Reintentar</button></div>;
   if (!overview) return <PageLoading variant="home" />;
 
-  const plan = overview.trainingPlan;
-  const session = overview.trainingSession;
-  const activities = session?.activities ?? plan.activities;
-  const focusTopicCount = new Set(activities.flatMap(step => step.topicIds ?? (step.topicId ? [step.topicId] : []))).size;
-  const completedCount = session?.currentIndex ?? 0;
-  const activeIndex = session?.currentIndex ?? 0;
-  const activeSecondsBase = session?.elapsedSecondsByActivity?.[activeIndex] ?? 0;
-  const activeSeconds = activeSecondsBase + (session?.currentStartedAt !== null && session?.currentStartedAt !== undefined ? Math.max(0, Math.floor((clock - session.currentStartedAt) / 1000)) : 0);
-  const totalElapsed = (session?.elapsedSecondsByActivity ?? []).reduce((sum, value) => sum + value, 0) + (session?.currentStartedAt ? Math.max(0, Math.floor((clock - session.currentStartedAt) / 1000)) : 0);
-  const details = new Map((overview.studiedTopicDetails ?? []).map(topic => [topic.id, topic.name]));
-  if (overview.nextNewTopic) details.set(overview.nextNewTopic.id, overview.nextNewTopic.name);
-  const targetDate = new Date();
-  const today = targetDate.getDay();
-  const estimatedExamDays = Math.max(0, Math.ceil((Date.UTC(2027, 5, 30) - Date.UTC(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate())) / 86_400_000));
-  const examDays = overview.daysToExam ?? estimatedExamDays;
-  const focus = (settings.training.focusByDay ?? ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'])[today];
-  const title = session?.completedAt ? 'Sesión completada' : session && session.currentIndex > 0 ? 'Continúa tu sesión' : 'Mi sesión de hoy';
-  const canStartNew = !seenTopics.length && plan.activities.some(activity => activity.activity === 'newContent');
-  const progress = activities.length ? Math.min(100, Math.round(completedCount * 100 / activities.length)) : 0;
-
+  const now = new Date();
+  const model = buildPlanningViewModel(overview, settings, now, clock, services.seenTopics());
   return <main className="planning-page">
     <header className="planning-header">
-      <div><p className="planning-kicker">TAI · Plan de estudio</p><h1>Planificación de estudio</h1><p className="planning-date"><CalendarDays size="1rem" aria-hidden="true" />{localDate(targetDate)}</p></div>
+      <div><p className="planning-kicker">TAI · Plan de estudio</p><h1>Planificación de estudio</h1><p className="planning-date"><CalendarDays size="1rem" aria-hidden="true" />{localDate(now)}</p></div>
       <Link className="planning-settings-link" to="/settings">Configurar semana</Link>
     </header>
-
-    <section className="planning-today" aria-labelledby="planning-today-title">
-      <div className="planning-today-main">
-        <div className="planning-section-heading"><div><p className="planning-kicker">{focusLabels[focus]}</p><h2 id="planning-today-title">{title}</h2></div>
-          <span className="planning-exam-distance">{examDays} días · {overview.daysToExam !== null ? 'fecha objetivo' : 'fecha estimada: 30 jun 2027'}</span>
-        </div>
-        <p className="planning-purpose">{session?.completedAt ? 'Has llegado al final de las actividades preparadas para hoy.' : plan.restDay ? 'Hoy es descanso. El trabajo pendiente no se acumula.' : plan.activities.length ? focus === 'consolidation' ? 'Hoy toca recuperar conocimientos y consolidar lo que ya has estudiado.' : 'Hoy avanzarás en el tema nuevo y practicarás el material de temas vistos que necesite revisión.' : 'No hay actividades justificadas con la información disponible.'}</p>
-        <dl className="planning-facts">
-          <div><dt>{activities.length ? 'Tiempo previsto' : 'Tiempo disponible'}</dt><dd>{plan.minutes} min</dd></div>
-          <div><dt>Tiempo registrado</dt><dd>{session ? formatMinutes(totalElapsed) : 'Aún no iniciado'}</dd></div>
-          <div><dt>Actividades</dt><dd>{activities.length}</dd></div>
-          <div><dt>Temas implicados</dt><dd>{focusTopicCount}</dd></div>
-          <div><dt>Repasos vencidos</dt><dd>{(overview.trainingDue?.cards ?? 0) + (overview.trainingDue?.questions ?? 0)}</dd></div>
-        </dl>
-        {session?.completedAt ? <p className="planning-session-complete" role="status">Sesión finalizada · {completedCount} actividades · {formatMinutes(totalElapsed)} registrados.</p>
-          : !plan.restDay && plan.activities.length ? <div className="planning-session-actions">
-            <button className="btn" onClick={startSession} disabled={!!services.getActiveStudy()}><Play size="1rem" aria-hidden="true" />{session?.currentStartedAt ? 'Continuar actividad' : session?.currentIndex ? 'Continuar sesión' : 'Comenzar sesión'}</button>
-            {session?.currentStartedAt !== null && session?.currentStartedAt !== undefined && <button className="btn sec" onClick={pauseSession}><Pause size="1rem" aria-hidden="true" />Pausar tiempo</button>}
-            <p>Las actividades se abren ya preparadas; al terminar, vuelves aquí para seguir con el paso siguiente.</p>
-          </div> : plan.restDay ? <p className="planning-session-complete">Día de descanso · no se trasladan tareas a mañana.</p>
-            : canStartNew ? <p>No se ha podido preparar el siguiente tema. <Link to="/temario">Revisa el temario</Link>.</p>
-              : <p>{overview.studiedTopics ? 'No hay contenido pendiente para las modalidades elegidas.' : <>Primero marca el siguiente tema que vas a estudiar. <Link to="/temario">Abrir temario</Link></>}</p>}
-        {activities.length > 0 && <div className="planning-progress" aria-label={`Progreso: ${completedCount} de ${activities.length} actividades`}><span style={{ width: `${progress}%` }} /></div>}
-      </div>
-    </section>
-
-    {activities.length > 0 && <section className="planning-activities" aria-labelledby="planning-activities-title">
-      <div className="planning-section-heading"><div><p className="planning-kicker">Orden de trabajo</p><h2 id="planning-activities-title">Pasos de la sesión</h2></div><span>{completedCount} de {activities.length} completadas</span></div>
-      <ol>{activities.map((step, index) => <PlanningActivity key={`${index}-${step.activity}`} step={step} index={index} session={session} topicName={step.topicId ? details.get(step.topicId) : undefined} elapsedSeconds={index === activeIndex ? activeSeconds : session?.elapsedSecondsByActivity?.[index] ?? 0} running={index === activeIndex && session?.currentStartedAt !== null && session?.currentStartedAt !== undefined} />)}</ol>
-    </section>}
-
-    {!session?.completedAt && <WeekSchedule preferences={settings.training} weekday={today} />}
-
-    <section className="planning-evidence" aria-labelledby="planning-evidence-title">
-      <div className="planning-section-heading"><div><p className="planning-kicker">Seguimiento sin mezclar medidas</p><h2 id="planning-evidence-title">Qué registra TAI</h2></div><Link to="/stats">Ver progreso</Link></div>
-      <div className="planning-evidence-grid"><p><b>Cobertura</b><span>{overview.studiedTopics} de {overview.topicCount} temas marcados como vistos.</span></p><p><b>Resultados de preguntas</b><span>{overview.assessedTopics} temas tienen actividad evaluada; los aciertos no prueban por sí solos recuerdo libre.</span></p><p><b>Comprensión</b><span>No se mide directamente todavía; TAI no infiere comprensión de una marca de lectura.</span></p><p><b>Examen</b><span>Los resultados de test y simulacros se muestran por separado en Progreso.</span></p></div>
-      <p className="planning-caveat"><CircleHelp size="1rem" aria-hidden="true" /> La lectura de resúmenes y esquemas ocurre con tus materiales externos. TAI no dispone aquí de esos documentos ni registra su lectura; por eso la actividad pide recuperar primero y usar el material solo para corregir lagunas.</p>
-    </section>
+    <PlanningTodayCard model={model} overview={overview} activeStudy={!!services.getActiveStudy()} onStart={actions.startSession} onPause={actions.pauseSession} />
+    <PlanningActivityList model={model} />
+    {!model.session?.completedAt && <WeekSchedule preferences={settings.training} weekday={model.weekday} />}
+    <PlanningEvidence overview={overview} />
   </main>;
 }
