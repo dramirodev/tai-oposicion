@@ -19,6 +19,7 @@ code.cd .sk {
 code.cd.shiki:not(.blk) {
   display: inline;
   vertical-align: baseline;
+  white-space: break-spaces;
 }
 
 code.cd.blk {

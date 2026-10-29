@@ -46,7 +46,7 @@ it('respeta los lenguajes declarados en el marcado y normaliza sus alias', async
 });
 
 it('usa el contexto de la pregunta para resaltar una opción JSON malformada del banco real', async () => {
-  const questions = JSON.parse(readFileSync(new URL('../public/data/T3.08.json', import.meta.url), 'utf8'));
+  const questions = JSON.parse(readFileSync('public/data/T3.08.json', 'utf8'));
   const question = questions.find(({ i }) => i === 'AS04-P1-R-04');
   expect(question).toBeDefined();
   const option = question.a[3];

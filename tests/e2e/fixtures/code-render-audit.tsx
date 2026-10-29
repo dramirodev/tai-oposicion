@@ -52,6 +52,7 @@ interface AuditApi extends AuditSummary {
   total: number;
   renderBatch(offset: number, size: number): Promise<void>;
   renderIndexes(indexes: number[]): Promise<void>;
+  renderRecordsById(ids: string[]): Promise<void>;
 }
 
 declare global { interface Window { codeRenderAudit?: AuditApi; codeRenderReady?: Promise<void>; codeRenderError?: string; } }
@@ -256,6 +257,7 @@ window.codeRenderReady = loadAudit().then(({ records: loaded, summary }) => {
     total: records.length,
     renderBatch: (offset, size) => new Promise(resolve => { resolveBatch = resolve; setBatch?.(records.slice(offset, offset + size)); }),
     renderIndexes: indexes => new Promise(resolve => { resolveBatch = resolve; setBatch?.(indexes.map(index => records[index]).filter((record): record is AuditRecord => !!record)); }),
+    renderRecordsById: ids => new Promise(resolve => { resolveBatch = resolve; setBatch?.(records.filter(record => ids.includes(record.id))); }),
   };
   setBatch?.(records.slice(0, 1));
 }).catch(error => { window.codeRenderError = error instanceof Error ? error.message : String(error); throw error; });

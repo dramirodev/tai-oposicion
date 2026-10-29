@@ -17,6 +17,7 @@ interface AuditApi {
   codeCases: { path: string; id: string; field: string; fragmentIndex: number; text: string; language: string }[];
   renderBatch(offset: number, size: number): Promise<void>;
   renderIndexes(indexes: number[]): Promise<void>;
+  renderRecordsById(ids: string[]): Promise<void>;
 }
 
 declare global { interface Window { codeRenderAudit?: AuditApi; codeRenderReady?: Promise<void>; codeRenderError?: string; } }
@@ -28,7 +29,7 @@ test('Shiki presenta todos los fragmentos reales del banco, supuestos, tarjetas 
   const loadError = await page.evaluate(() => window.codeRenderError);
   if (loadError) throw new Error(`No se pudo construir el inventario del banco: ${loadError}`);
   const summary = await page.evaluate(() => {
-    const { total: _total, renderBatch: _renderBatch, renderIndexes: _renderIndexes, ...value } = window.codeRenderAudit!;
+    const { total: _total, renderBatch: _renderBatch, renderIndexes: _renderIndexes, renderRecordsById: _renderRecordsById, ...value } = window.codeRenderAudit!;
     return { ...value, total: window.codeRenderAudit!.total };
   });
   expect(summary.records.question).toBe(15_662 + 417);
@@ -92,11 +93,18 @@ test('Shiki presenta todos los fragmentos reales del banco, supuestos, tarjetas 
             if (field.querySelector('script,iframe,object,embed,[onerror],[onclick]')) issues.push(`${id}/${name}: contenido interpretado como HTML ejecutable`);
             for (const code of codeElements) {
               const fieldBounds = field.getBoundingClientRect();
-              const codeBounds = code.getBoundingClientRect();
-              if (codeBounds.left < fieldBounds.left - 1 || codeBounds.right > fieldBounds.right + 2) issues.push(`${id}/${name}: código se sale de su contenedor`);
+              // Inline elements can wrap onto multiple lines. Their bounding box is the union
+              // of all fragments, so inspect each rendered fragment instead of that union.
+              const codeFragments = [...code.getClientRects()];
+              const overflowingFragment = codeFragments.find(fragment => fragment.left < fieldBounds.left - 1 || fragment.right > fieldBounds.right + 2);
+              if (overflowingFragment) {
+                const style = getComputedStyle(code);
+                const fieldStyle = getComputedStyle(field);
+                issues.push(`${id}/${name}: código se sale de su contenedor (fragment ${overflowingFragment.left.toFixed(2)}–${overflowingFragment.right.toFixed(2)}, field ${fieldBounds.left.toFixed(2)}–${fieldBounds.right.toFixed(2)}, text=${JSON.stringify(code.textContent)}, font=${style.fontSize} ${style.fontFamily}, whiteSpace=${style.whiteSpace}, wrap=${style.overflowWrap}, fieldWidth=${fieldStyle.width}, fieldPadding=${fieldStyle.paddingInline}, display=${style.display})`);
+              }
               const language = code.dataset.shikiLanguage;
               if (!language) issues.push(`${id}/${name}: falta la decisión de lenguaje/fallback`);
-              if (!['text', 'bash', 'sql', 'java', 'python', 'javascript', 'typescript', 'c', 'cpp', 'csharp', 'php', 'xml', 'html', 'css'].includes(language || '')) issues.push(`${id}/${name}: lenguaje Shiki desconocido ${language}`);
+              if (!['text', 'bash', 'c', 'cpp', 'csharp', 'css', 'html', 'java', 'javascript', 'jsx', 'json', 'json5', 'jsonc', 'php', 'powershell', 'python', 'scss', 'shell', 'shellsession', 'sql', 'tsx', 'typescript', 'xml', 'yaml'].includes(language || '')) issues.push(`${id}/${name}: lenguaje Shiki desconocido ${language}`);
               const tokens = [...code.querySelectorAll<HTMLElement>('.shiki-token')];
               if (language !== 'text' && tokens.length === 0) issues.push(`${id}/${name}: Shiki no generó tokens para ${language}`);
               if (tokens.some(token => getComputedStyle(token).color === 'rgba(0, 0, 0, 0)')) issues.push(`${id}/${name}: token invisible con tema ${document.documentElement.dataset.colorScheme}`);
@@ -109,6 +117,10 @@ test('Shiki presenta todos los fragmentos reales del banco, supuestos, tarjetas 
         if (document.documentElement.scrollWidth > innerWidth + 1) issues.push(`página: desbordamiento horizontal de ${document.documentElement.scrollWidth - innerWidth}px`);
         return { issues, rows: articles.length, code: document.querySelectorAll('[data-audit-field] code').length, ids: articles.map(article => article.dataset.auditRecord) };
       });
+      if (result.issues.length) {
+        const firstRecordId = result.issues[0].split('/')[0].split(':')[0];
+        await page.locator(`article[data-audit-record="${firstRecordId}"]`).screenshot({ path: join(artifactDirectory, `${testInfo.project.name}-failure-${firstRecordId}.png`) });
+      }
       expect(result.issues, `${combination.theme}, ${combination.width}px, texto ${combination.textSize}, lote ${offset}–${offset + result.rows}`).toEqual([]);
       rendered += result.rows;
       visibleCode += result.code;
@@ -123,6 +135,23 @@ test('Shiki presenta todos los fragmentos reales del banco, supuestos, tarjetas 
     }
     expect(rendered).toBe(summary.total);
     report.push({ ...combination, renderedRecords: rendered, renderedCodeElements: visibleCode });
+  }
+
+  await page.setViewportSize({ width: 320, height: 780 });
+  await page.evaluate(() => {
+    document.documentElement.dataset.colorScheme = 'light';
+    document.documentElement.dataset.textSize = '0';
+    document.documentElement.style.setProperty('--z', '1');
+  });
+  const regressionCases = ['AT203-P1-39', 'AT204-P1-04'];
+  await page.evaluate(ids => window.codeRenderAudit!.renderRecordsById(ids), regressionCases);
+  await page.waitForFunction(() => [...document.querySelectorAll<HTMLElement>('[data-audit-field] code')].every(code => code.classList.contains('shiki')));
+  for (const id of regressionCases) {
+    const article = page.locator(`article[data-audit-record="${id}"]`);
+    await expect(article).toHaveCount(1);
+    const name = `${testInfo.project.name}-regression-${id}-320-light.png`;
+    const screenshot = await article.screenshot({ path: join(artifactDirectory, name) });
+    await testInfo.attach(name, { body: screenshot, contentType: 'image/png' });
   }
 
   const inventory = { ...summary, combinations: report };
