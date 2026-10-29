@@ -400,7 +400,7 @@ test.describe('explicaciones offline con el service worker real', () => {
     expect(cached.index.map(row => row.i)).toContain(question.i);
     expect(errors.filter(error => !error.startsWith('Failed to load resource:'))).toEqual([]);
     const allowedOfflineRequests = ['https://apis.google.com/', 'https://www.googleapis.com/identitytoolkit/', 'https://tai-oposicion.firebaseapp.com/__/auth/'];
-    expect(failedRequests.filter(url => !allowedOfflineRequests.some(prefix => url.startsWith(prefix)) && !url.endsWith('/explanations/index.json'))).toEqual([]);
+    expect(failedRequests.filter(url => !allowedOfflineRequests.some(prefix => url.startsWith(prefix)) && !url.endsWith('/explanations/index.json') && !url.endsWith('/version.json'))).toEqual([]);
   });
 });
 test('el simulacro no presenta explicaciones ni corrección mientras sigue activo', async ({ page }) => {

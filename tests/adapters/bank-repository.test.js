@@ -50,6 +50,7 @@ describe('httpBankRepository', () => {
     for (const [alias, canonical, topic, correctIndex] of [
       ['AS09-P1-10', 'AT107-P1-74', 'T1.07', 0],
       ['AS04-P1-100', 'AS01-P1-24', 'T3.02', 3],
+      ['AT204-P1-53', 'P2022-P1-33', 'T2.04', 3],
     ]) {
       clearBankRepositoryCache();
       const active = await httpBankRepository.getQuestions([topic]);

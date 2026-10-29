@@ -9,7 +9,12 @@ self.addEventListener('fetch', e => {
   if (r.method !== 'GET') return;
   const u = new URL(r.url);
   if (u.origin !== location.origin || u.pathname.startsWith('/__/')) return; // Firebase/Google: red directa
-  if (u.pathname.endsWith('/version.json')) { e.respondWith(fetch(r, { cache: 'no-store' })); return; } // para saber si hay versión nueva: nunca de caché
+  if (u.pathname.endsWith('/version.json')) {
+    // Network-only: offline startup treats this as unavailable and continues
+    // with the app already cached by the shell handler.
+    e.respondWith(fetch(r, { cache: 'no-store' }).catch(() => new Response(null, { status: 503, statusText: 'Offline' })));
+    return;
+  }
   if (u.pathname.endsWith('/firebase-config.json')) { // la configuración siempre de red; caché solo sin conexión
     e.respondWith((async () => {
       try {

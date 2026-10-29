@@ -3,11 +3,11 @@
 App web instalable para iPhone y iPad: test por tema, simulacro (parte 1 + supuesto), repaso espaciado de fallos
 (+2, +5, +14, +30, +60 días) y estadísticas por tema/trampa. Funciona sin conexión y sincroniza el historial con Firebase.
 
-Banco: 15.666 preguntas (oficiales, academia y generadas; cada una muestra su origen) + 417 de supuestos prácticos.
+Banco: 15.661 preguntas activas (oficiales, academia y generadas; cada una muestra su origen) + 417 de supuestos prácticos.
 
 ## Estado actual (29 de octubre de 2026)
 
-Versión **1.1.11**. Banco de **36 temas**, **15.662 preguntas**, **417 preguntas de supuestos** y
+Versión **1.1.12**. Banco de **36 temas**, **15.661 preguntas**, **417 preguntas de supuestos** y
 **1.410 tarjetas curadas**. Las tarjetas marcadas `revisar: true` se excluyen del repaso y de la exportación.
 Las comprobaciones locales más recientes están registradas en el handoff de desarrollo; una compilación o prueba local
 no acredita por sí sola el último despliegue ni sustituye las pruebas reales de login, sincronización e instalación en iOS.

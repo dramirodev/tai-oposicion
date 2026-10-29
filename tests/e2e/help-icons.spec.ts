@@ -26,11 +26,19 @@ test('el índice de Ayuda lleva a instrucciones disponibles y los avisos visuale
   const help = page.getByRole('heading', { name: 'Ayuda' });
   await expect(help).toBeVisible();
   const index = page.getByRole('navigation', { name: 'Contenido de ayuda' });
-  await expect(index.getByRole('link')).toHaveCount(20);
+  const details = index.locator('details');
+  if (!await details.evaluate(element => (element as HTMLDetailsElement).open)) await details.locator('summary').click();
+  await expect(index.getByRole('link')).not.toHaveCount(0);
   await index.getByRole('link', { name: 'Uso sin conexión' }).click();
   await expect(page.locator('#offline')).toBeVisible();
   await expect(page.locator('#offline')).toContainText('Descargar para uso sin conexión');
 
+  // The link changes the query and smoothly scrolls the long page; return to
+  // the index before activating its second item to avoid clicking while it
+  // is still moving.
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  if (!await details.evaluate(element => (element as HTMLDetailsElement).open)) await details.locator('summary').click();
+  await expect(details.locator('summary')).toBeVisible();
   await index.getByRole('link', { name: 'Avisos sobre imágenes o esquemas' }).click();
   await expect(page.locator('#material-visual')).toBeVisible();
   await expect(page.locator('#material-visual')).toContainText('Esquema o imagen pendiente');

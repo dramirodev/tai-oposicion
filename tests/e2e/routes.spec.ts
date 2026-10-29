@@ -126,7 +126,7 @@ test.describe('service worker real', () => {
   await expect(page.locator('#highlight-tools')).toBeVisible();
   await page.locator('[data-add-highlight="key"]').click();
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('tai.run:guest') || 'null').highlights[0])).toHaveLength(1);
-  expect(errors).toEqual([]);
+  expect(errors.filter(error => !error.includes('status of 503 (Offline)'))).toEqual([]);
 });
 
 test('Inicio no ofrece cambiar la fecha cuando ya tiene un objetivo', async ({ page }) => {

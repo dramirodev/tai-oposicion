@@ -1,12 +1,13 @@
 import { test, expect, type Page } from '@playwright/test';
 
-async function prepare(page: Page, theme = 'dark', size = 3) {
+async function prepare(page: Page, theme = 'dark', size = 3, fullAccess = false) {
   await page.route('**/firebase-config.json', route => route.fulfill({ json: {} }));
-  await page.addInitScript(({ theme, size }) => {
+  await page.addInitScript(({ theme, size, fullAccess }) => {
     Math.random = () => 0.5;
     localStorage.setItem('tai.dev', '1');
-    localStorage.setItem('tai.v1:guest', JSON.stringify({ stats: {}, sessions: [], cfg: { ui: { theme, size } }, seen: { t: [], ts: 0 }, cards: {}, reports: {} }));
-  }, { theme, size });
+    if (fullAccess) localStorage.setItem('tai.acc:guest', 'propietario');
+    localStorage.setItem('tai.v1:guest', JSON.stringify({ stats: {}, sessions: [], cfg: { ui: { theme, size } }, seen: { t: fullAccess ? ['T1.01'] : [], ts: 0 }, cards: {}, reports: {} }));
+  }, { theme, size, fullAccess });
 }
 
 for (const theme of ['light', 'dark']) {
@@ -14,6 +15,8 @@ for (const theme of ['light', 'dark']) {
     await prepare(page, theme, 0);
     await page.setViewportSize({ width: 320, height: 720 });
     await page.goto('/#/ayuda');
+    await expect(page.locator('html')).toHaveAttribute('data-color-scheme', theme);
+    await expect(page.locator('#app h1')).toHaveText('Ayuda');
     await page.evaluate(() => {
       const sample = document.createElement('pre');
       sample.className = 'code-sample';
@@ -29,7 +32,9 @@ for (const theme of ['light', 'dark']) {
       const explanation = document.createElement('section');
       explanation.className = 'card code-explanation';
       explanation.append(sample);
-      document.querySelector('#app')?.append(explanation);
+      // Keep the CSS probe outside React's owned root: navigation/startup may
+      // replace #app while the lazy screen finishes mounting.
+      document.body.append(explanation);
     });
 
     const styles = await page.locator('.code-explanation .code-sample > code').evaluate(code => {
@@ -49,6 +54,8 @@ for (const theme of ['light', 'dark']) {
     await prepare(page, theme, 0);
     await page.setViewportSize({ width: 320, height: 720 });
     await page.goto('/#/ayuda');
+    await expect(page.locator('html')).toHaveAttribute('data-color-scheme', theme);
+    await expect(page.locator('#app h1')).toHaveText('Ayuda');
     await page.evaluate(() => {
       const token = document.createElement('span');
       token.className = 'shiki-token';
@@ -74,7 +81,7 @@ for (const theme of ['light', 'dark']) {
       const fixture = document.createElement('section');
       fixture.setAttribute('aria-label', 'Fragmentos de código de pregunta y respuesta');
       fixture.append(statement, answer);
-      document.querySelector('#app')?.append(fixture);
+      document.body.append(fixture);
     });
 
     const colors = await page.locator('[aria-label="Fragmentos de código de pregunta y respuesta"] .shiki-token').evaluateAll(tokens =>
@@ -197,16 +204,19 @@ test('saltar al contenido conserva la ruta y ofrece un destino de teclado', asyn
   expect(page.url()).toBe(before);
 });
 
-test('Inicio distribuye práctica y repaso en escritorio sin duplicar acciones', async ({ page }) => {
-  await prepare(page, 'light', 0);
+test('Inicio ordena la sesión rápida antes del entrenamiento secuencial', async ({ page }) => {
+  await prepare(page, 'light', 0, true);
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/#/home');
-  await expect(page.locator('#quick')).toHaveCount(1);
-  const primary = await page.locator('.home-primary').boundingBox();
-  const review = await page.locator('.home-review').boundingBox();
-  expect(primary).not.toBeNull(); expect(review).not.toBeNull();
-  expect(Math.abs(primary!.y - review!.y)).toBeLessThan(2);
-  expect(review!.x).toBeGreaterThan(primary!.x + primary!.width);
+  await expect(page.locator('#quick')).toBeVisible();
+  await expect(page.locator('#home-training')).toHaveCount(1);
+  await expect(page.locator('.training-progress-rail')).toHaveCount(1);
+  if (page.context().browser()?.browserType().name() === 'chromium') await expect(page.locator('#home-training')).toBeVisible();
+  const quick = await page.locator('#quick').boundingBox();
+  const training = await page.locator('#home-training').boundingBox();
+  expect(quick).not.toBeNull(); expect(training).not.toBeNull();
+  expect(quick!.y + quick!.height).toBeLessThan(training!.y);
+  expect(await page.locator('.training-progress-rail > li').count()).toBeGreaterThan(0);
   await page.locator('#menu').focus();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('dialog')).toBeVisible();

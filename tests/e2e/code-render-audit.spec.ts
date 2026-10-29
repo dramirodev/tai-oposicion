@@ -32,7 +32,7 @@ test('Shiki presenta todos los fragmentos reales del banco, supuestos, tarjetas 
     const { total: _total, renderBatch: _renderBatch, renderIndexes: _renderIndexes, renderRecordsById: _renderRecordsById, ...value } = window.codeRenderAudit!;
     return { ...value, total: window.codeRenderAudit!.total };
   });
-  expect(summary.records.question).toBe(15_662 + 417);
+  expect(summary.records.question).toBe(15_661 + 417);
   expect(summary.records.scenario).toBe(32);
   expect(summary.records.card).toBe(1_410);
   expect(summary.records.explanation).toBeGreaterThan(0);

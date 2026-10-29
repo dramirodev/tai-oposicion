@@ -69,11 +69,19 @@ describe('banco de preguntas (public/data)', () => {
       ['L2024A-P1-28', 'TAI2024B-P1-30', 'T3.02'],
       ['AS09-P1-10', 'AT107-P1-74', 'T1.07'],
       ['AS04-P1-100', 'AS01-P1-24', 'T3.02'],
+      ['AT204-P1-53', 'P2022-P1-33', 'T2.04'],
     ]) {
       expect(meta[alias]).toEqual([...meta[canonical].slice(0, 5), canonical]);
       expect(banks[topic].filter(question => question.i === alias)).toHaveLength(0);
       expect(banks[topic].filter(question => question.i === canonical)).toHaveLength(1);
     }
+  });
+  it('conserva la pregunta oficial de 2022 y su respuesta al retirar la copia de academia', () => {
+    const canonical = banks['T2.04'].find(question => question.i === 'P2022-P1-33');
+    expect(canonical?.c).toBe(3);
+    expect(canonical?.a[canonical.c]).toBe('Constituir el conjunto de software y hardware necesario para el funcionamiento del ordenador.');
+    expect(canonical?.n).toContain('no "constituye el hardware"');
+    expect(banks['T2.04'].filter(question => question.i === 'AT204-P1-53')).toHaveLength(0);
   });
   it('corrige una clave de academia contradicha por el texto constitucional', () => {
     const question = banks['T1.01'].find(item => item.i === 'AT1012-P1-25');

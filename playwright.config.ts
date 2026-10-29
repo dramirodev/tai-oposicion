@@ -1,7 +1,9 @@
 import { defineConfig } from '@playwright/test';
 export default defineConfig({
   testDir: './tests/e2e',
-  testIgnore: '**/question-render-audit.spec.ts',
+  // These corpus audits have dedicated Vite servers/configurations; the
+  // general suite serves the built app from scripts/serve.mjs.
+  testIgnore: ['**/question-render-audit.spec.ts', '**/code-render-audit.spec.ts'],
   timeout: 30_000,
   fullyParallel: true,
   // WebKit shares Playwright's temporary trace directory across workers on

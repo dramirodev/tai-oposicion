@@ -30,7 +30,7 @@ test('los controles del informe de estrategia se alinean en móvil', async ({ pa
   expect(Math.abs(alignment.selectRight - alignment.buttonRight)).toBeLessThanOrEqual(1);
 });
 
-test('las cifras secundarias del inicio no duplican el contador de tarjetas en móvil', async ({ page }) => {
+test('Inicio no muestra el antiguo acceso duplicado a tarjetas en móvil', async ({ page }) => {
   await prepareOwner(page);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.addInitScript(() => {
@@ -40,9 +40,9 @@ test('las cifras secundarias del inicio no duplican el contador de tarjetas en m
     }));
   });
   await page.goto('/#/home');
-  const tile = page.locator('#cards');
-  await expect(tile).toContainText('14 pendientes');
-  await expect(tile.locator('.bdg')).toBeHidden();
+  await expect(page.locator('#quick')).toBeVisible();
+  await expect(page.locator('#cards')).toHaveCount(0);
+  await expect(page.locator('.home-metrics .bdg')).toHaveCount(0);
 });
 
 test('los apartados largos de Progreso empiezan plegados en móvil y se pueden abrir', async ({ page }) => {
