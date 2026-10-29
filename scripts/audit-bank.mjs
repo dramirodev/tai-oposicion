@@ -120,7 +120,7 @@ export function auditQuestionBank(groups) {
     const allGenerated = questions.every(record => record.source === 'generated');
     const families = new Set(questions.map(({ question }) => question.familia).filter(Boolean));
     const normalizedChoice = value => typeof value === 'string'
-      ? value.normalize('NFKC').trim().replace(/\s+/g, ' ').toLocaleLowerCase('es')
+      ? value.normalize('NFKC').trim().replace(/\s+/g, ' ')
       : '';
     const answersByChoiceSet = new Map();
     for (const { question } of questions) {

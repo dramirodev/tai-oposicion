@@ -102,6 +102,22 @@ it('mantiene como conflicto los miembros de una familia que cambian la clave con
   }));
 });
 
+it('no equipara por mayúsculas las respuestas de opciones sensibles al caso', () => {
+  const question = (id, correct) => ({
+    id, tema: 'T3.07', tipo: 'D', dificultad: 1, familia: 'case-sensitive-family',
+    enunciado: '¿Qué opción distingue los identificadores solicitados?',
+    opciones: { a: 'KB', b: 'Kb', c: 'MB', d: 'Mb' }, correcta: correct,
+    revision: { estado: 'verificada' },
+    cita_temario: [{ fuente: 'T3.07.pdf', pagina: 1, texto: 'La capitalización distingue estos identificadores.' }],
+  });
+  const report = auditQuestionBank([{ source: 'generated', metadata: { total: 2, familias: 1 }, questions: [
+    question('G-KB', 'a'), question('G-Kb', 'b'),
+  ] }]);
+
+  expect(report.repeatedStatementReviewGroups).toBe(1);
+  expect(report.generatedFamilyVariantGroups).toBe(0);
+});
+
 it('clasifica los enunciados genéricos sin confundirlos con duplicados de contenido', () => {
   const question = (id, options, correct) => ({
     id, tema: 'T1.04', tipo: 'D', dificultad: 1, enunciado: 'Indique la respuesta correcta:',
