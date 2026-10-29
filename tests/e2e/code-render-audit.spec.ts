@@ -31,7 +31,7 @@ test('Shiki presenta todos los fragmentos reales del banco, supuestos, tarjetas 
     const { total: _total, renderBatch: _renderBatch, renderIndexes: _renderIndexes, ...value } = window.codeRenderAudit!;
     return { ...value, total: window.codeRenderAudit!.total };
   });
-  expect(summary.records.question).toBe(15_623 + 417);
+  expect(summary.records.question).toBe(15_662 + 417);
   expect(summary.records.scenario).toBe(32);
   expect(summary.records.card).toBe(1_410);
   expect(summary.records.explanation).toBeGreaterThan(0);
@@ -100,6 +100,9 @@ test('Shiki presenta todos los fragmentos reales del banco, supuestos, tarjetas 
               const tokens = [...code.querySelectorAll<HTMLElement>('.shiki-token')];
               if (language !== 'text' && tokens.length === 0) issues.push(`${id}/${name}: Shiki no generó tokens para ${language}`);
               if (tokens.some(token => getComputedStyle(token).color === 'rgba(0, 0, 0, 0)')) issues.push(`${id}/${name}: token invisible con tema ${document.documentElement.dataset.colorScheme}`);
+              if (language !== 'text' && tokens.length > 0 && tokens.every(token => getComputedStyle(token).color === getComputedStyle(code).color)) {
+                issues.push(`${id}/${name}: el tema no aplica los colores de Shiki para ${language}`);
+              }
             }
           }
         }

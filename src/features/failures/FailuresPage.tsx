@@ -14,13 +14,13 @@ const dateLabel = (timestamp: number) => new Date(timestamp).toLocaleDateString(
 
 function FailureDetails({ question, streak, reviewed }: { question: FailureQuestion; streak: number; reviewed: boolean }) {
   const markup = questionNotice({ i: question.id, n: question.note, np: question.nonScoring }) + sourceHtml({ i: question.id, source: question.source, u: question.citation });
-  return <details className="rv f"><summary><i /><span className="pre"><StudyMarkup html={richHtml(question.statement)} /><br /><small className="sub">Aciertos seguidos: {streak}/3 · {reviewed ? 'Temario repasado' : 'Pendiente de temario'}</small></span></summary>
-    {markup && <StudyMarkup html={markup} />}
-    {question.assumptionText && <details className="sup"><summary>Enunciado del supuesto</summary><div className="pre">{question.assumptionText}</div></details>}
-    {question.context && <div className="ctx pre"><StudyMarkup html={richHtml(question.context)} /></div>}
-    {question.options.map((option, index) => <div className={`ro ${index === question.correctIndex ? 'ok' : ''}`} key={`${question.id}-${index}`}><b>{'ABCD'[index]}</b> <StudyMarkup html={richHtml(option)} />{index === question.correctIndex && <span className="sr"> (Respuesta correcta)</span>}</div>)}
-    {question.citation ? <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(question.citation, question.options[question.correctIndex])} /></div> : <p className="sm sub">Esta pregunta no tiene fragmento de temario asociado.</p>}
-    {question.note && <div className="cita"><span>Nota</span>{question.note}</div>}
+  return <details className="rv f"><summary><i /><span className="pre"><StudyMarkup html={richHtml(question.statement)} languageContext={question.statement} /><br /><small className="sub">Aciertos seguidos: {streak}/3 · {reviewed ? 'Temario repasado' : 'Pendiente de temario'}</small></span></summary>
+    {markup && <StudyMarkup html={markup} languageContext={question.statement} />}
+    {question.assumptionText && <details className="sup"><summary>Enunciado del supuesto</summary><div className="pre"><StudyMarkup html={richHtml(question.assumptionText)} languageContext={question.statement} /></div></details>}
+    {question.context && <div className="ctx pre"><StudyMarkup html={richHtml(question.context)} languageContext={question.statement} /></div>}
+    {question.options.map((option, index) => <div className={`ro ${index === question.correctIndex ? 'ok' : ''}`} key={`${question.id}-${index}`}><b>{'ABCD'[index]}</b> <StudyMarkup html={richHtml(option)} languageContext={question.statement} />{index === question.correctIndex && <span className="sr"> (Respuesta correcta)</span>}</div>)}
+    {question.citation ? <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(question.citation, question.options[question.correctIndex])} languageContext={question.statement} /></div> : <p className="sm sub">Esta pregunta no tiene fragmento de temario asociado.</p>}
+    {question.note && <div className="cita"><span>Nota</span><StudyMarkup html={richHtml(question.note)} languageContext={question.statement} /></div>}
     {question.traps?.length ? <p className="sm sub">Trampas: {question.traps.map(trap => TRAMPAS[trap] || String(trap)).join(' · ')}</p> : null}
   </details>;
 }

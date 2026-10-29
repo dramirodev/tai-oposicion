@@ -66,10 +66,10 @@ function TrapQuestion({ run, selected, result, onToggle, onExit, onSubmit, onNex
     <div className="qhead"><button className="ghost" aria-label="Salir" onClick={onExit}><X size="1.25rem" aria-hidden="true" /></button><div className="prog" role="progressbar" aria-label="Progreso" aria-valuemin={0} aria-valuemax={run.items.length} aria-valuenow={run.index}><div style={{ width: `${100 * run.index / run.items.length}%` }} /></div><div className="cnt">{run.index + 1}/{run.items.length}</div></div>
     <h1 className="sub"><ScanSearch className="inline-feature-icon" size="1em" strokeWidth={1.7} aria-hidden="true" /> Detective de trampas</h1><p className="sm">Lee el enunciado y todas las opciones: las trampas pueden estar en cualquiera de ellos.</p>
     <article className="card q"><div className="meta"><span className="tag">{prompt.topicId} · {prompt.topicName}</span></div>
-      {notice && <StudyMarkup html={notice} />}{source && <StudyMarkup html={source} />}
-      {prompt.context && <div className="ctx pre"><StudyMarkup html={richHtml(prompt.context)} /></div>}
-      <div className="enun pre"><StudyMarkup html={richHtml(prompt.statement, true)} /></div>
-      <div className="opts">{prompt.options.map((option, index) => <div className={`opt dis${result && index === prompt.correctIndex ? ' ok' : ''}`} key={`${prompt.id}-${index}`}><b>{'ABCD'[index]}</b><span className="pre"><StudyMarkup html={richHtml(option, true)} /></span></div>)}</div>
+      {notice && <StudyMarkup html={notice} languageContext={prompt.statement} />}{source && <StudyMarkup html={source} languageContext={prompt.statement} />}
+      {prompt.context && <div className="ctx pre"><StudyMarkup html={richHtml(prompt.context)} languageContext={prompt.statement} /></div>}
+      <div className="enun pre"><StudyMarkup html={richHtml(prompt.statement, true)} languageContext={prompt.statement} /></div>
+      <div className="opts">{prompt.options.map((option, index) => <div className={`opt dis${result && index === prompt.correctIndex ? ' ok' : ''}`} key={`${prompt.id}-${index}`}><b>{'ABCD'[index]}</b><span className="pre"><StudyMarkup html={richHtml(option, true)} languageContext={prompt.statement} /></span></div>)}</div>
       <p><b>¿Qué trampas ves aquí?</b> <small>Marca todas las que apliquen ({prompt.trapIds.length === 1 ? 'hay 1 posible' : 'hay varias posibles'}).</small></p>
       <div className="mot">{prompt.choices.map(id => <TrapChoice key={id} id={id} selected={selected.has(id)} correct={correctIds.has(id)} revealed={!!result} wasSelected={resultSelectedIds.has(id)} onToggle={onToggle} />)}</div>
       {result && <TrapFeedback prompt={prompt} result={result} selectedIds={resultSelectedIds} falseAlarms={falseAlarms} />}
@@ -89,7 +89,7 @@ function TrapFeedback({ prompt, result, selectedIds, falseAlarms }: { prompt: Tr
   return <div className={`fb ${result.missed || result.falseAlarms ? 'wrong' : 'good'}`} role="status"><b>{!result.missed && !result.falseAlarms ? '¡Detectadas todas!' : `Detectaste ${result.hits} de ${result.total}${result.falseAlarms ? ` y marcaste ${result.falseAlarms} de más` : ''}.`}</b> Respuesta correcta: <b>{'ABCD'[prompt.correctIndex]}</b>
     {result.correctIds.map(id => <div className={`trapx ${selectedIds.has(id) ? 'trap-detected' : 'miss'}`} key={id}><b>{selectedIds.has(id) ? 'Detectada' : 'No la viste'}: {TRAMPAS[id] || id}</b><p>{TRAMPA_EXPL[id] || ''}</p></div>)}
     {falseAlarms.map(id => <div className="trapx trap-false-alarm" key={id}><b>Falsa alarma: {TRAMPAS[id] || id}</b><p>No aplica aquí. {TRAMPA_EXPL[id] || ''}</p></div>)}
-    {prompt.citation && <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(prompt.citation, prompt.options[prompt.correctIndex])} /></div>}{prompt.note && <div className="cita"><span>Nota</span>{prompt.note}</div>}
+    {prompt.citation && <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(prompt.citation, prompt.options[prompt.correctIndex])} languageContext={prompt.statement} /></div>}{prompt.note && <div className="cita"><span>Nota</span><StudyMarkup html={richHtml(prompt.note)} languageContext={prompt.statement} /></div>}
   </div>;
 }
 

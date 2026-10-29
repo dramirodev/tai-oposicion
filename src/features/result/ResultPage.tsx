@@ -37,15 +37,15 @@ const outcomePresentation = {
 
 function ReviewDetails({ item, explanation }: { item: ResultItem; explanation: string }) {
   return <>
-    {item.notice && <StudyMarkup html={item.notice} />}
-    <div className="pre review-statement"><StudyMarkup html={richHtml(item.statement)} /></div>
-    {item.options.map((option, optionIndex) => <div className={`ro ${optionIndex === item.correctIndex ? 'ok' : optionIndex === item.answer ? 'bad' : ''}`} data-answer-index={optionIndex} key={`${item.id}-${optionIndex}`}><b>{'ABCD'[optionIndex]}</b> <span className="pre review-option-text"><StudyMarkup html={richHtml(option)} /></span>{optionIndex === item.correctIndex && <> <span className="sr">(Respuesta correcta)</span></>}</div>)}
+    {item.notice && <StudyMarkup html={item.notice} languageContext={item.statement} />}
+    <div className="pre review-statement"><StudyMarkup html={richHtml(item.statement)} languageContext={item.statement} /></div>
+    {item.options.map((option, optionIndex) => <div className={`ro ${optionIndex === item.correctIndex ? 'ok' : optionIndex === item.answer ? 'bad' : ''}`} data-answer-index={optionIndex} key={`${item.id}-${optionIndex}`}><b>{'ABCD'[optionIndex]}</b> <span className="pre review-option-text"><StudyMarkup html={richHtml(option)} languageContext={item.statement} /></span>{optionIndex === item.correctIndex && <> <span className="sr">(Respuesta correcta)</span></>}</div>)}
     {item.confidence && <p className="sub">Confianza antes de responder: {item.confidence === 'sure' ? 'Seguro' : item.confidence === 'betweenTwo' ? 'Entre dos' : 'Adivino'}</p>}
     {item.discardedOptions.length > 0 && <p className="sub">Opciones que descartaste antes de responder: {item.discardedOptions.map(option => 'ABCD'[option]).join(', ')}</p>}
     {item.highlights.length > 0 && <p className="sub">Tus marcas de este intento:</p>}
-    {item.citation && <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(item.citation, item.options[item.correctIndex])} /></div>}
-    {item.source && <StudyMarkup html={item.source} />}
-    {explanation && <div className="code-explanation-slot" aria-live="polite"><StudyMarkup html={explanation} /></div>}
+    {item.citation && <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(item.citation, item.options[item.correctIndex])} languageContext={item.statement} /></div>}
+    {item.source && <StudyMarkup html={item.source} languageContext={item.statement} />}
+    {explanation && <div className="code-explanation-slot" aria-live="polite"><StudyMarkup html={explanation} languageContext={item.statement} /></div>}
   </>;
 }
 

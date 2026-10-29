@@ -13,7 +13,7 @@ const gradeLabels = ['Fallé', 'Dudaba', 'Lo sabía'] as const;
 const reasons = ERROR_REPORT_REASONS;
 function Notice({ card }: { card: StudyCard }) {
   const html = questionNotice({ n: card.nota, np: card.np, i: card.id.startsWith('FC-Q-') ? card.id.slice(5) : undefined });
-  return html ? <StudyMarkup html={html} /> : null;
+  return html ? <StudyMarkup html={html} languageContext={card.q} /> : null;
 }
 
 function CardReport({ card, services }: { card: StudyCard; services: CardsServices }) {
@@ -105,13 +105,13 @@ function ActiveCardSession({ services, session, card, answerRef, headingRef, onE
       onKeyDown={event => { if (!session.revealed && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); show(); } }}>
       <div className="meta"><span className="tag">{card.t} · {services.topicName(card.t)}</span>{card.tipo && <span className="tag">{card.tipo}</span>}{card.caduca && <span className="tag warn">Puede caducar</span>}</div>
       <Notice card={card} />
-      {card.supTexto && <details className="sup"><summary>Enunciado del supuesto</summary><div className="pre"><StudyMarkup html={richHtml(card.supTexto)} /></div></details>}
-      {card.cp && <div className="ctx pre"><StudyMarkup html={richHtml(card.cp)} /></div>}
-      <div className="enun pre"><StudyMarkup html={richHtml(card.q)} /></div>
-      {session.revealed ? <div ref={answerRef} className="card-answer" role="region" aria-label="Respuesta de la tarjeta" tabIndex={-1}><small>Respuesta</small><div className="pre"><StudyMarkup html={richHtml(card.a)} /></div>
-        {card.nota && <div className="cita"><span>Nota</span><StudyMarkup html={richHtml(card.nota)} /></div>}
-        {card.ref && <div className="cita"><span>Temario</span><StudyMarkup html={richHtml(card.ref)} /></div>}
-        {source && <StudyMarkup html={source} />}
+      {card.supTexto && <details className="sup"><summary>Enunciado del supuesto</summary><div className="pre"><StudyMarkup html={richHtml(card.supTexto)} languageContext={card.q} /></div></details>}
+      {card.cp && <div className="ctx pre"><StudyMarkup html={richHtml(card.cp)} languageContext={card.q} /></div>}
+      <div className="enun pre"><StudyMarkup html={richHtml(card.q)} languageContext={card.q} /></div>
+      {session.revealed ? <div ref={answerRef} className="card-answer" role="region" aria-label="Respuesta de la tarjeta" tabIndex={-1}><small>Respuesta</small><div className="pre"><StudyMarkup html={richHtml(card.a)} languageContext={card.q} /></div>
+        {card.nota && <div className="cita"><span>Nota</span><StudyMarkup html={richHtml(card.nota)} languageContext={card.q} /></div>}
+        {card.ref && <div className="cita"><span>Temario</span><StudyMarkup html={richHtml(card.ref)} languageContext={card.q} /></div>}
+        {source && <StudyMarkup html={source} languageContext={card.q} />}
         <div className="repw" id="crep"><CardReport card={card} services={services} /></div>
         {card.src === 'fallo' && <button className="ghost fl" id="quit" onClick={event => { event.stopPropagation(); services.removeFailureCard(); refresh(value => value + 1); }}><Trash2 size="1em" aria-hidden="true" /> Quitar esta tarjeta</button>}
       </div> : <div className="fh">Toca para ver la respuesta</div>}

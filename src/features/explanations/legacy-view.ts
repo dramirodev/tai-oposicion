@@ -7,7 +7,7 @@ export function renderCodeExplanation(viewModel: CodeExplanationVM, id = 'curren
     <h3 class="h3" id="code-explanation-title-${escapeHtml(id)}">${escapeHtml(viewModel.heading)}</h3>
     <p class="explanation-status"><span class="tag warn">${escapeHtml(viewModel.editorialLabel)}</span>${viewModel.editorialNote ? ` ${richHtml(viewModel.editorialNote)}` : ''}</p>
     <p class="sub">Lenguaje: ${escapeHtml(viewModel.language)}</p>
-    <pre class="code-sample" tabindex="0"><code>${escapeHtml(viewModel.snippet)}</code></pre>
+    <pre class="code-sample" tabindex="0"><code data-language="${escapeHtml(viewModel.language)}">${escapeHtml(viewModel.snippet)}</code></pre>
     <p><b>${escapeHtml(viewModel.resultLabel)}:</b></p>
     ${viewModel.resultValue !== undefined ? `<pre class="code-result"><code>${escapeHtml(viewModel.resultValue)}</code></pre>` : ''}
     <ol>${viewModel.steps.map(step => `<li><b>${richHtml(step.title)}</b><p>${richHtml(step.explanation)}</p></li>`).join('')}</ol>

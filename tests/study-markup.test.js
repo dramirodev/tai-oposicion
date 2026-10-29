@@ -1,8 +1,9 @@
 import { expect, it, vi } from 'vitest';
 import React from 'react';
+import { readFileSync } from 'node:fs';
 import { render, screen } from '@testing-library/react';
 import { StudyMarkup } from '../src/shared/ui/StudyMarkup.js';
-import { inferCodeLanguage } from '../src/shared/ui/study-code-language.js';
+import { inferCodeLanguage, normalizeCodeLanguage } from '../src/shared/ui/study-code-language.js';
 import { richHtml } from '../src/shared/presentation/study-text.js';
 import { renderCodeExplanation } from '../src/features/explanations/legacy-view.js';
 
@@ -34,6 +35,64 @@ it('resalta código inline real en enunciados y opciones de respuesta', async ()
   expect(container.querySelectorAll('code.cd.shiki').length).toBe(2);
 });
 
+it('respeta los lenguajes declarados en el marcado y normaliza sus alias', async () => {
+  const { container } = render(React.createElement(StudyMarkup, {
+    html: '<p><code class="language-js">const valor = 1;</code></p><pre><code lang="yml">clave: valor</code></pre>',
+  }));
+
+  await vi.waitFor(() => expect(container.querySelectorAll('code.shiki .shiki-token').length).toBeGreaterThan(0), { timeout: 10000 });
+  expect(container.querySelector('code.language-js')).toHaveAttribute('data-shiki-language', 'javascript');
+  expect(container.querySelector('pre code')).toHaveAttribute('data-shiki-language', 'yaml');
+});
+
+it('usa el contexto de la pregunta para resaltar una opción JSON malformada del banco real', async () => {
+  const questions = JSON.parse(readFileSync(new URL('../public/data/T3.08.json', import.meta.url), 'utf8'));
+  const question = questions.find(({ i }) => i === 'AS04-P1-R-04');
+  expect(question).toBeDefined();
+  const option = question.a[3];
+  const { container } = render(React.createElement(StudyMarkup, {
+    html: richHtml(option),
+    languageContext: question.q,
+  }));
+
+  await vi.waitFor(() => expect(container.querySelector('code.shiki[data-shiki-language="json"] .shiki-token')).toBeInTheDocument(), { timeout: 10000 });
+  expect(container.querySelector('code')?.textContent).toBe(option);
+});
+
+it.each([
+  ['{"menu": { "id": "file", "popup": { "menuitem": [ {"value": "Open"} ]} ]}', 'json'],
+  ['<xs:complexType><xs:element name="item" /></xs:complexType>', 'xml'],
+  ['@Test void testException() { assertThrows(Exception.class, action); }', 'java'],
+  ['printf("%d", valor);', 'c'],
+  ['firewall-cmd --permanent --zone=public --add-rich-rule=rule', 'bash'],
+  ['DROP TABLE usuarios;', 'sql'],
+  ['fn main() { println!("hola"); }', 'text'],
+])('clasifica conservadoramente fragmentos %s como %s', (code, language) => {
+  expect(inferCodeLanguage(code)).toBe(language);
+});
+
+it('usa una mención inequívoca del lenguaje en el contexto cuando el fragmento no basta', () => {
+  expect(inferCodeLanguage('{ "menu", "id" }', undefined, 'Indique cuál de estos contenidos pertenece a JSON válido')).toBe('json');
+  expect(inferCodeLanguage('{ "menu", "id" }', 'java', 'Indique cuál pertenece a JSON')).toBe('java');
+  expect(inferCodeLanguage('@Firma', undefined, 'Esta pregunta se resuelve usando Java')).toBe('text');
+});
+
+it('distingue JavaScript de los falsos indicios de Java y C#', () => {
+  expect(inferCodeLanguage('const longitud = texto.length;', undefined, 'Código JavaScript')).toBe('javascript');
+  expect(inferCodeLanguage('const resultado = condicion ? cierto : falso;', undefined, 'Código JavaScript')).toBe('javascript');
+});
+
+it('reconoce JSX y TSX antes de clasificar sus etiquetas como HTML', () => {
+  expect(inferCodeLanguage('const vista = <MiComponente valor={actual} />;', undefined, 'Componente React con JSX')).toBe('jsx');
+  expect(inferCodeLanguage('const vista = <MiComponente valor={actual} />;', undefined, 'Componente React con TypeScript y TSX')).toBe('tsx');
+  expect(inferCodeLanguage('<div class="contenido">Texto</div>')).toBe('html');
+});
+
+it('normaliza las etiquetas de texto plano que admite Shiki', () => {
+  expect(normalizeCodeLanguage('plain')).toBe('text');
+  expect(normalizeCodeLanguage('plaintext')).toBe('text');
+});
+
 it.each([
   ['System.out.println(i);', 'java'],
   ['static int main(String[] args)', 'java'],
@@ -57,7 +116,7 @@ it('no resalta como código el nombre Cl@ve ni partes de una URL de cita', () =>
 
 it('resalta el código también dentro de los pasos y explicaciones', async () => {
   const markup = renderCodeExplanation({
-    heading: 'Explicación', editorialLabel: 'Revisada', language: 'Java', snippet: 'int i = 0;\nSystem.out.println(i);',
+    heading: 'Explicación', editorialLabel: 'Revisada', language: 'Java', snippet: 'int valor = 1;',
     resultLabel: 'Resultado esperado', resultValue: '0',
     steps: [{ title: 'Condición', explanation: 'System.out.println(i); se ejecuta después.' }],
     distractors: [{ optionIndex: 0, explanation: 'El bucle no llega a ejecutar System.out.println(i).' }],
@@ -65,6 +124,6 @@ it('resalta el código también dentro de los pasos y explicaciones', async () =
   });
   const { container } = render(React.createElement(StudyMarkup, { html: markup }));
   await vi.waitFor(() => expect(container.querySelectorAll('code.shiki[data-shiki-language="java"]')).toHaveLength(3), { timeout: 10000 });
-  expect(container.querySelector('.code-sample code')?.textContent).toBe('int i = 0;\nSystem.out.println(i);');
+  expect(container.querySelector('.code-sample code')?.textContent).toBe('int valor = 1;');
   expect(container.querySelector('ol li p code')?.textContent).toBe('System.out.println(i);');
 });

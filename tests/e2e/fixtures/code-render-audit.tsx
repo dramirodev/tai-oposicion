@@ -24,6 +24,8 @@ interface AuditField {
   outputText: string;
   fragments: string[];
   directCode?: boolean;
+  language?: string;
+  languageContext?: string;
 }
 interface AuditRecord {
   path: string;
@@ -58,41 +60,43 @@ function htmlText(html: string): string {
   return new DOMParser().parseFromString(html, 'text/html').body.textContent || '';
 }
 
-function markupField(name: string, value: string | undefined, html = value ? richHtml(value, true) : ''): AuditField | null {
+function markupField(name: string, value: string | undefined, html = value ? richHtml(value, true) : '', languageContext?: string): AuditField | null {
   if (!value || !html) return null;
   const document = new DOMParser().parseFromString(html, 'text/html');
   const fragments = Array.from(document.querySelectorAll('code.cd'), code => code.textContent || '');
-  return { name, sourceText: value, html, outputText: document.body.textContent || '', fragments };
+  return { name, sourceText: value, html, outputText: document.body.textContent || '', fragments, languageContext };
 }
 
 function questionFields(question: BankQuestion, scenarioText?: string): AuditField[] {
   const fields: AuditField[] = [];
-  const statement = markupField('enunciado', question.q);
+  const statement = markupField('enunciado', question.q, undefined, question.q);
   if (statement) fields.push(statement);
   question.a.forEach((option, index) => {
-    const field = markupField(`opcion_${index + 1}`, option);
+    const field = markupField(`opcion_${index + 1}`, option, undefined, question.q);
     if (field) fields.push(field);
   });
   const notice = questionNotice({ n: question.n, np: question.np, i: question.i });
   if (notice) {
-    const field = markupField('nota_feedback', question.n || '', notice);
+    const field = markupField('nota_feedback', question.n || '', notice, question.q);
     if (field) fields.push(field);
   }
   if (question.u) {
-    const field = markupField('cita_feedback', question.u, hiliteHtml(question.u, question.a[question.c] || ''));
+    const field = markupField('cita_feedback', question.u, hiliteHtml(question.u, question.a[question.c] || ''), question.q);
     if (field) fields.push(field);
   }
-  const context = markupField('contexto', question.cp);
+  const context = markupField('contexto', question.cp, undefined, question.q);
   if (context) fields.push(context);
-  const assumption = markupField('texto_supuesto', scenarioText || question.supTexto);
+  const assumption = markupField('texto_supuesto', scenarioText || question.supTexto, undefined, question.q);
   if (assumption) fields.push(assumption);
   return fields;
 }
 
-function directCodeField(name: string, value: string | undefined): AuditField | null {
+function directCodeField(name: string, value: string | undefined, language?: string): AuditField | null {
   if (!value) return null;
-  const html = `<pre class="${name === 'fragmento' ? 'code-sample' : 'code-result'}"><code>${value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;')}</code></pre>`;
-  return { name, sourceText: value, html, outputText: value, fragments: [value], directCode: true };
+  const escape = (text: string) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+  const languageAttribute = language ? ` data-language="${escape(language)}"` : '';
+  const html = `<pre class="${name === 'fragmento' ? 'code-sample' : 'code-result'}"><code${languageAttribute}>${escape(value)}</code></pre>`;
+  return { name, sourceText: value, html, outputText: value, fragments: [value], directCode: true, language };
 }
 
 function explanationFields(raw: ExplanationDto): AuditField[] {
@@ -100,22 +104,22 @@ function explanationFields(raw: ExplanationDto): AuditField[] {
   if (!mapped.ok) throw new Error(`Explicación inválida ${raw.i}: ${mapped.reason}`);
   const explanation = mapped.value;
   const fields: AuditField[] = [];
-  const snippet = directCodeField('fragmento', explanation.snippet);
+  const snippet = directCodeField('fragmento', explanation.snippet, explanation.language);
   if (snippet) fields.push(snippet);
   const result = directCodeField('resultado.valor', explanation.result.value);
   if (result) fields.push(result);
   explanation.steps.forEach((step, index) => {
     for (const [name, value] of [[`pasos.${index}.titulo`, step.title], [`pasos.${index}.detalle`, step.explanation]] as const) {
-      const field = markupField(name, value);
+      const field = markupField(name, value, undefined, explanation.language);
       if (field) fields.push(field);
     }
   });
   explanation.distractors.forEach((item, index) => {
-    const field = markupField(`distractores.${index}.detalle`, item.explanation);
+    const field = markupField(`distractores.${index}.detalle`, item.explanation, undefined, explanation.language);
     if (field) fields.push(field);
   });
   for (const [name, value] of [['nota_editorial', explanation.editorialNote], ['limitacion', explanation.limitation], ...explanation.sources.flatMap((source, index) => [[`fuentes.${index}.titulo`, source.title], [`fuentes.${index}.seccion`, source.section] as const])] as const) {
-    const field = markupField(name, value);
+    const field = markupField(name, value, undefined, explanation.language);
     if (field) fields.push(field);
   }
   return fields;
@@ -124,8 +128,8 @@ function explanationFields(raw: ExplanationDto): AuditField[] {
 function fieldHasCode(field: AuditField): boolean { return field.fragments.length > 0; }
 
 function AuditFieldView({ field, letter }: { field: AuditField; letter?: string }) {
-  if (field.name.startsWith('opcion_')) return <div className="option-control"><button className="opt" type="button" aria-pressed="false"><b>{letter}</b><span className="pre audit-field" data-audit-field={field.name} data-expected={field.outputText} data-expected-source={field.sourceText} data-expected-code-count={field.fragments.length}><StudyMarkup html={field.html} /></span></button></div>;
-  const content = <div className="audit-field" data-audit-field={field.name} data-expected={field.outputText} data-expected-source={field.sourceText} data-expected-code-count={field.fragments.length}><StudyMarkup html={field.html} /></div>;
+  if (field.name.startsWith('opcion_')) return <div className="option-control"><button className="opt" type="button" aria-pressed="false"><b>{letter}</b><span className="pre audit-field" data-audit-field={field.name} data-expected={field.outputText} data-expected-source={field.sourceText} data-expected-code-count={field.fragments.length}><StudyMarkup html={field.html} languageContext={field.languageContext} /></span></button></div>;
+  const content = <div className="audit-field" data-audit-field={field.name} data-expected={field.outputText} data-expected-source={field.sourceText} data-expected-code-count={field.fragments.length}><StudyMarkup html={field.html} languageContext={field.languageContext} /></div>;
   if (field.name === 'enunciado') return <div className="enun pre">{content}</div>;
   if (field.name === 'nota_feedback') return <div className="ctx pre">{content}</div>;
   if (field.name === 'cita_feedback') return <div className="cita">{content}</div>;
@@ -189,7 +193,7 @@ async function loadAudit(): Promise<{ records: AuditRecord[]; summary: AuditSumm
         summary.byField[field.name] = (summary.byField[field.name] || 0) + field.fragments.length;
         summary.bySource[record.kind] = (summary.bySource[record.kind] || 0) + field.fragments.length;
         for (const [fragmentIndex, text] of field.fragments.entries()) {
-          const language = inferCodeLanguage(text);
+          const language = inferCodeLanguage(text, field.language, field.languageContext);
           summary.fragmentCount++;
           summary.byLanguage[language] = (summary.byLanguage[language] || 0) + 1;
           summary.codeCases.push({ path: record.path, id: record.id, field: field.name, fragmentIndex, text, language });

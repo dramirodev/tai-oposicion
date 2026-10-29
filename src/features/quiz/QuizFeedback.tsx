@@ -15,8 +15,8 @@ function FeedbackMessage({ snapshot, prompt }: { snapshot: QuizSnapshot; prompt:
     <b>{message}</b> · Respuesta: <b>{'ABCD'[prompt.correctIndex]}</b>
     {snapshot.studyState === 'revealed' && <span className="sr" id="live">Solución consultada · cuenta como blanco</span>}
     {snapshot.studyState !== 'revealed' && snapshot.answer !== -1 && snapshot.answer !== prompt.correctIndex && snapshot.recentAnswer && <div className="fbsub">Marcaste {'ABCD'[snapshot.answer!]} en {snapshot.recentAnswer[0]} s{snapshot.recentAnswer[0] < snapshot.recentAnswer[1] * 0.6 ? `; leerla con calma lleva unos ${snapshot.recentAnswer[1]} s` : ''}.</div>}
-    {prompt.citation && <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(prompt.citation, prompt.options[prompt.correctIndex])} /></div>}
-    {prompt.source && <StudyMarkup html={prompt.source} />}
+    {prompt.citation && <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(prompt.citation, prompt.options[prompt.correctIndex])} languageContext={prompt.statement} /></div>}
+    {prompt.source && <StudyMarkup html={prompt.source} languageContext={prompt.statement} />}
     {prompt.traps.length > 0 && <div className="trap">Trampa: {prompt.traps.map(id => TRAMPAS[id] || id).join(' · ')}</div>}
   </>;
 }
@@ -63,6 +63,6 @@ export function QuizFeedback({ snapshot, prompt, explanation }: { snapshot: Quiz
     <CorrectAnswerActions snapshot={snapshot} />
     <button className="ghost fl" id="flag" onClick={() => quiz.toggleFlag()}><Star size="1em" fill={snapshot.flagged ? 'currentColor' : 'none'} aria-hidden="true" /> {snapshot.flagged ? 'Dudosa' : 'Marcar como dudosa'}</button>
     <QuizReport snapshot={snapshot} />
-    {explanation && <div id="code-explanation-slot" aria-live="polite"><StudyMarkup html={explanation} /></div>}
+    {explanation && <div id="code-explanation-slot" aria-live="polite"><StudyMarkup html={explanation} languageContext={prompt.statement} /></div>}
   </div>;
 }

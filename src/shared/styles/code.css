@@ -54,11 +54,11 @@ code.cd.blk {
   overflow-wrap: anywhere;
 }
 
-code.cd.shiki .shiki-token {
+code.shiki .shiki-token {
   color: var(--shiki-token-light);
 }
 
-:root[data-color-scheme=dark] code.cd.shiki .shiki-token {
+:root[data-color-scheme=dark] code.shiki .shiki-token {
   color: var(--shiki-token-dark, var(--shiki-token-light));
 }
 

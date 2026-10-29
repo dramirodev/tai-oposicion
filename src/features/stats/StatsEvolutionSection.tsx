@@ -50,7 +50,7 @@ function SlowQuestionRow({ item, statement, loading, loadError }: {
 }) {
   return <div className="sl">
     <div className="slh"><b>{Math.round(item.averageSeconds)} s</b><small>{item.correct}/{item.attempts} aciertos{item.lastOutcome === 1 ? <> · última <Check size="1em" aria-hidden="true" /></> : item.lastOutcome === 0 ? <> · última <X size="1em" aria-hidden="true" /></> : ''}</small></div>
-    {statement ? <div className="sl-question"><StudyMarkup html={richHtml(statement)} /></div> : <p className="sub sl-question-pending">{loading ? 'Cargando enunciado…' : loadError ? 'No se pudo cargar el enunciado.' : 'Enunciado no disponible.'}</p>}
+    {statement ? <div className="sl-question"><StudyMarkup html={richHtml(statement)} languageContext={statement} /></div> : <p className="sub sl-question-pending">{loading ? 'Cargando enunciado…' : loadError ? 'No se pudo cargar el enunciado.' : 'Enunciado no disponible.'}</p>}
     <small className="sl-id">{item.id}</small>
   </div>;
 }

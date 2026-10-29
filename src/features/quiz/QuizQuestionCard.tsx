@@ -14,11 +14,11 @@ function QuestionPrompt({ snapshot, prompt, sourceLabel, responseLocked }: { sna
   const confidenceLabels = { sure: 'Seguro', betweenTwo: 'Entre dos', guess: 'Adivino' };
   return <>
     <div className="meta"><span className="tag">{prompt.topicId} · {prompt.topicName}</span><span className={`tag o${prompt.origin}`}>{ORIGEN[prompt.origin]}{sourceLabel}</span>{prompt.provisional && <span className="tag warn">Respuesta provisional</span>}{prompt.mayExpire && <span className="tag warn">Puede caducar</span>}{prompt.variant && <span className="tag">Variante</span>}</div>
-    {prompt.notice && <StudyMarkup html={prompt.notice} />}
-    {prompt.hasAssumption && <details className="sup scenario-context"><summary>Enunciado del supuesto</summary><div className="pre"><StudyMarkup html={richHtml(prompt.assumptionText)} /></div></details>}
-    {prompt.context && <div className="ctx pre"><StudyMarkup html={richHtml(prompt.context)} /></div>}
+    {prompt.notice && <StudyMarkup html={prompt.notice} languageContext={prompt.statement} />}
+    {prompt.hasAssumption && <details className="sup scenario-context"><summary>Enunciado del supuesto</summary><div className="pre"><StudyMarkup html={richHtml(prompt.assumptionText)} languageContext={prompt.statement} /></div></details>}
+    {prompt.context && <div className="ctx pre"><StudyMarkup html={richHtml(prompt.context)} languageContext={prompt.statement} /></div>}
     {asksForNegativeOption(prompt.statement) && <div className="pide">Ojo: te piden la opción INCORRECTA o la excepción</div>}
-    <div className="enun pre" tabIndex={0} aria-label="Enunciado. Usa Mayús y las flechas para seleccionar texto"><StudyMarkup html={richHtml(prompt.statement, snapshot.readingMode === 1)} /></div>
+    <div className="enun pre" tabIndex={0} aria-label="Enunciado. Usa Mayús y las flechas para seleccionar texto"><StudyMarkup html={richHtml(prompt.statement, snapshot.readingMode === 1)} languageContext={prompt.statement} /></div>
     <div className="study-signals" aria-label="Señales opcionales de estudio"><span className="study-signals-label">¿Cómo lo ves?</span>{(['sure', 'betweenTwo', 'guess'] as const).map(value => <button type="button" className={`signal${snapshot.confidence === value ? ' on' : ''}`} data-confidence={value} aria-pressed={snapshot.confidence === value} disabled={responseLocked || snapshot.paused} onClick={() => quiz.setConfidence(value)} key={value}>{confidenceLabels[value]}</button>)}</div>
   </>;
 }
@@ -36,7 +36,7 @@ function QuestionOptions({ snapshot, prompt, rootRef, revealed, responseLocked, 
         const currentSelection = window.getSelection();
         if (currentSelection && !currentSelection.isCollapsed && (rootRef.current?.querySelector(`.opt[data-i="${index}"]`)?.contains(currentSelection.anchorNode) || rootRef.current?.querySelector(`.opt[data-i="${index}"]`)?.contains(currentSelection.focusNode))) return;
         quiz.answer(index);
-      }}><b>{'ABCD'[index]}</b><span className="pre" aria-label={`Opción ${'ABCD'[index]}. Usa Mayús y las flechas para seleccionar texto`}><StudyMarkup html={richHtml(option, snapshot.readingMode === 1)} /></span>{correct && <span className="sr">(respuesta correcta)</span>}{wrong && <span className="sr">(tu respuesta, incorrecta)</span>}</button>
+      }}><b>{'ABCD'[index]}</b><span className="pre" aria-label={`Opción ${'ABCD'[index]}. Usa Mayús y las flechas para seleccionar texto`}><StudyMarkup html={richHtml(option, snapshot.readingMode === 1)} languageContext={prompt.statement} /></span>{correct && <span className="sr">(respuesta correcta)</span>}{wrong && <span className="sr">(tu respuesta, incorrecta)</span>}</button>
       <button type="button" className={`discard-option${discarded ? ' on' : ''}`} data-discard-option={index} aria-pressed={discarded} aria-label={`${discarded ? 'Restaurar' : 'Descartar'} opción ${'ABCD'[index]}`} disabled={responseLocked || snapshot.paused || gateRemaining > 0} onClick={() => quiz.toggleDiscard(index)}>{discarded ? 'Restaurar' : 'Descartar'}</button>
     </div>;
   })}</div>;

@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
 import { StudyCode } from './StudyCode.js';
 
-function renderNode(node: Node, key: number): ReactNode {
+function renderNode(node: Node, key: number, languageContext?: string): ReactNode {
   if (node.nodeType === Node.TEXT_NODE) return node.nodeValue;
   if (!(node instanceof Element)) return null;
-  const children = Array.from(node.childNodes).map((child, index) => renderNode(child, index));
+  const children = Array.from(node.childNodes).map((child, index) => renderNode(child, index, languageContext));
   const className = node.getAttribute('class') || undefined;
   const label = node.getAttribute('aria-label') || undefined;
   const id = node.getAttribute('id') || undefined;
@@ -13,7 +13,10 @@ function renderNode(node: Node, key: number): ReactNode {
     case 'b': return <b key={key} className={className}>{children}</b>;
     case 'code': {
       const block = node.classList.contains('blk') || node.parentElement?.tagName === 'PRE';
-      return <StudyCode key={key} code={node.textContent || ''} className={className} block={block} />;
+      const languageClass = [...node.classList].find(value => /^(?:language|lang)-/i.test(value));
+      const language = node.getAttribute('data-language') || node.getAttribute('data-lang') || node.getAttribute('lang') || languageClass?.replace(/^(?:language|lang)-/i, '');
+      const codeClassName = node.classList.contains('cd') ? className : [className, 'cd'].filter(Boolean).join(' ');
+      return <StudyCode key={key} code={node.textContent || ''} className={codeClassName} language={language} languageContext={languageContext} block={block} />;
     }
     case 'h3': return <h3 key={key} className={className} id={id}>{children}</h3>;
     case 'h4': return <h4 key={key} className={className} id={id}>{children}</h4>;
@@ -40,7 +43,7 @@ function renderNode(node: Node, key: number): ReactNode {
 }
 
 /** Converts the escaped markup produced by the study text formatters into React elements. */
-export function StudyMarkup({ html }: { html: string }) {
+export function StudyMarkup({ html, languageContext }: { html: string; languageContext?: string }) {
   const document = new DOMParser().parseFromString(html, 'text/html');
-  return <>{Array.from(document.body.childNodes).map((node, index) => renderNode(node, index))}</>;
+  return <>{Array.from(document.body.childNodes).map((node, index) => renderNode(node, index, languageContext))}</>;
 }

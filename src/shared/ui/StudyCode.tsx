@@ -7,6 +7,30 @@ import { inferCodeLanguage } from './study-code-language.js';
 
 let highlighterPromise: Promise<HighlighterCore> | undefined;
 const languagePromises = new Map<string, Promise<void>>();
+const languageImports = {
+  bash: () => import('@shikijs/langs/bash'),
+  c: () => import('@shikijs/langs/c'),
+  cpp: () => import('@shikijs/langs/cpp'),
+  csharp: () => import('@shikijs/langs/csharp'),
+  css: () => import('@shikijs/langs/css'),
+  html: () => import('@shikijs/langs/html'),
+  java: () => import('@shikijs/langs/java'),
+  javascript: () => import('@shikijs/langs/javascript'),
+  jsx: () => import('@shikijs/langs/jsx'),
+  json: () => import('@shikijs/langs/json'),
+  json5: () => import('@shikijs/langs/json5'),
+  jsonc: () => import('@shikijs/langs/jsonc'),
+  php: () => import('@shikijs/langs/php'),
+  powershell: () => import('@shikijs/langs/powershell'),
+  python: () => import('@shikijs/langs/python'),
+  scss: () => import('@shikijs/langs/scss'),
+  shellsession: () => import('@shikijs/langs/shellsession'),
+  sql: () => import('@shikijs/langs/sql'),
+  tsx: () => import('@shikijs/langs/tsx'),
+  typescript: () => import('@shikijs/langs/typescript'),
+  xml: () => import('@shikijs/langs/xml'),
+  yaml: () => import('@shikijs/langs/yaml'),
+} as const;
 
 function getHighlighter() {
   highlighterPromise ??= createHighlighterCore({
@@ -21,20 +45,15 @@ function loadLanguage(highlighter: HighlighterCore, language: string) {
   if (language === 'text') return Promise.resolve();
   let load = languagePromises.get(language);
   if (!load) {
-    const module = language === 'sql' ? import('@shikijs/langs/sql')
-      : language === 'javascript' ? import('@shikijs/langs/javascript')
-        : language === 'typescript' ? import('@shikijs/langs/typescript')
-          : language === 'python' ? import('@shikijs/langs/python')
-            : language === 'java' ? import('@shikijs/langs/java')
-              : language === 'csharp' ? import('@shikijs/langs/csharp')
-                : language === 'cpp' ? import('@shikijs/langs/cpp')
-                  : language === 'php' ? import('@shikijs/langs/php')
-                    : language === 'xml' ? import('@shikijs/langs/xml')
-                      : language === 'c' ? import('@shikijs/langs/c')
-                        : language === 'html' ? import('@shikijs/langs/html')
-                          : language === 'css' ? import('@shikijs/langs/css')
-                            : import('@shikijs/langs/bash');
-    load = highlighter.loadLanguage(module);
+    const importLanguage = Object.prototype.hasOwnProperty.call(languageImports, language)
+      ? languageImports[language as keyof typeof languageImports]
+      : undefined;
+    if (!importLanguage) return Promise.resolve();
+    load = importLanguage().then(module => highlighter.loadLanguage(module));
+    load = load.catch(error => {
+      languagePromises.delete(language);
+      throw error;
+    });
     languagePromises.set(language, load);
   }
   return load;
@@ -56,9 +75,8 @@ function renderToken(node: Node, key: number): ReactNode {
   return <span key={key} className={light || dark ? 'shiki-token' : tokenClass === 'line' ? 'shiki-line' : tokenClass || undefined} style={style}>{children}</span>;
 }
 
-async function highlightedContent(code: string): Promise<ReactNode | null> {
+async function highlightedContent(code: string, lang: string): Promise<ReactNode | null> {
   const highlighter = await getHighlighter();
-  const lang = inferCodeLanguage(code);
   await loadLanguage(highlighter, lang);
   const html = highlighter.codeToHtml(code, {
     lang,
@@ -72,19 +90,19 @@ async function highlightedContent(code: string): Promise<ReactNode | null> {
   return Array.from(highlightedCode.childNodes).map((node, index) => renderToken(node, index));
 }
 
-export function StudyCode({ code, className, block = false }: { code: string; className?: string; block?: boolean }) {
+export function StudyCode({ code, className, language: declaredLanguage, languageContext, block = false }: { code: string; className?: string; language?: string; languageContext?: string; block?: boolean }) {
   const [highlighted, setHighlighted] = useState<ReactNode | null>(null);
-  const language = inferCodeLanguage(code);
+  const language = inferCodeLanguage(code, declaredLanguage, languageContext);
 
   useEffect(() => {
     let active = true;
-    void highlightedContent(code).then(result => {
+    void highlightedContent(code, language).then(result => {
       if (active) setHighlighted(result);
     }).catch(() => {
       if (active) setHighlighted(null);
     });
     return () => { active = false; };
-  }, [code]);
+  }, [code, language]);
 
   const classes = new Set([...(className?.split(/\s+/).filter(Boolean) ?? []), ...(block ? ['blk'] : []), ...(highlighted !== null ? ['shiki'] : [])]);
   return <code className={[...classes].join(' ')} data-shiki-language={language}>
