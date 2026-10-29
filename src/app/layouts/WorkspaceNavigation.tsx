@@ -34,6 +34,7 @@ export function WorkspaceNavigation({ full, owner, section, pathname, navigate }
   const link = (destination: Destination) => { const Icon = destination.icon; return <a key={destination.route} href={hashSegment(destination.route)} className={active(destination.route) ? 'is-active' : ''} aria-current={active(destination.route) ? 'page' : undefined}><Icon size="1.125rem" strokeWidth={1.7} aria-hidden="true" /><span>{destination.label}</span></a>; };
   const openMenu = () => {
     const menu: MenuGroup[] = [['Inicio', [[navigationIcons.home, 'Inicio', '', hashPath('home')]]]];
+    if (full) menu.push(['Planificación', [[navigationIcons.planning, 'Planificación de estudio', 'Entrenamiento y organización de hoy', `${hashPath('home')}?focus=training`]]]);
     for (const [title, routes] of groups) {
       const items: MenuGroup[1] = destinations.filter(d => (routes as readonly string[]).includes(d.route) && visible(d.route)).map(d => [d.icon, d.label, '', hashSegment(d.route)]);
       if (items.length) menu.push([title, items]);

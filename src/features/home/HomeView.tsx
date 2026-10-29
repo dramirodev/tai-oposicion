@@ -47,6 +47,7 @@ function FullAccessReview({ overview, pending, navigate, onStartReview }: {
 const activityCopy = {
   activeRecall: { title: 'Active Recall', detail: 'Intenta recordar antes de revelar la respuesta.', route: 'cards', icon: 'card' as const },
   topicTest: { title: 'Preguntas de tema', detail: 'Practica un tema nuevo o refuerza los que muestran más dificultad.', route: 'test', icon: 'test' as const },
+  mixedTopicTest: { title: 'Preguntas variadas de temas vistos', detail: 'Comprueba el temario que has marcado como visto, además del tema prioritario.', route: 'test', icon: 'test' as const },
   failures: { title: 'Revisión de fallos', detail: 'Vuelve sobre preguntas que todavía necesitan refuerzo.', route: 'falladas', icon: 'redo' as const },
   spacedReviews: { title: 'Repasos vencidos', detail: 'Recupera conocimientos según las fechas de repaso guardadas.', route: 'cards', icon: 'redo' as const },
 };
@@ -125,7 +126,9 @@ function TrainingActivityRows({ overview, activities, onSetReviewMode }: {
             </select>
           </label>}
           {item.reviewIntervention.mode !== 'active-retrieval' && <p>TAI no incluye el texto del temario. Consulta tus apuntes y <Link to="/temario">abre el tema en la lista del temario</Link> para gestionar tus marcas.</p>}
-        </div> : <p>{item.activity === 'topicTest' && item.reason === 'new-topic-day'
+        </div> : <p>{item.activity === 'mixedTopicTest'
+          ? 'Este test mezcla preguntas de todos los temas que has marcado como vistos, además del refuerzo prioritario.'
+          : item.activity === 'topicTest' && item.reason === 'new-topic-day'
           ? 'Hoy coincide con el día de introducción configurado en Ajustes. La aplicación no registra qué tema se presenta en la academia, así que no puede asignar uno sin que lo elijas.'
           : trainingReason(item.reason) + (item.activity === 'topicTest' ? ' La comprobación usa preguntas; no hay datos suficientes para recomendar una relectura concreta.' : '')}</p>}
       </details>
@@ -162,7 +165,7 @@ function DailyTraining({ overview, onStartTraining, onSetReviewMode }: {
 }) {
   const plan = overview.trainingPlan;
   const activities = overview.trainingSession?.activities ?? plan.activities;
-  return <section className="home-training" aria-labelledby="home-training-title">
+  return <section className="home-training" id="home-training" tabIndex={-1} aria-labelledby="home-training-title">
     <div className="home-domain-heading"><h2 className="section-title" id="home-training-title">Entrenamiento de hoy</h2>
       {!plan.restDay && <span className="sm">{plan.minutes} min orientativos</span>}
     </div>

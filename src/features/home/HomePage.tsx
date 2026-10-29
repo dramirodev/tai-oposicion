@@ -1,5 +1,5 @@
-import { useMemo, useState, useSyncExternalStore } from 'react';
-import { useNavigate } from 'react-router';
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
+import { useNavigate, useSearchParams } from 'react-router';
 import type { TrainingActivity } from '../../core/domain/entities.js';
 import type { DailyTrainingSession } from '../../core/domain/study-training-session.js';
 import { useStudyService } from '../../shared/ui/study-services.js';
@@ -21,6 +21,20 @@ export function HomePage() {
   const { value: overview, error } = useAccountResource(resource);
   usePageReady(authResolved && (!!overview || !!error));
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  useEffect(() => {
+    if (searchParams.get('focus') !== 'training' || !overview) return;
+    const frame = window.requestAnimationFrame(() => {
+      const target = document.getElementById('home-training');
+      if (!target) return;
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      const next = new URLSearchParams(searchParams);
+      next.delete('focus');
+      setSearchParams(next, { replace: true, preventScrollReset: true });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [overview, searchParams, setSearchParams]);
   const runAction = (id: string, action: () => Promise<unknown>) => { void controller.runAction(id, action); };
   const navigateHomeRoute = (route: string) => {
     const scopedRoute = scopeTrainingRouteToSeenTopics(route, services.seenTopics());
@@ -41,9 +55,11 @@ export function HomePage() {
     }
     const seenTopicSet = new Set(seenTopics);
     const savedTopicIds = step.topicIds?.filter(topicId => seenTopicSet.has(topicId)) ?? [];
-    const topicIds = savedTopicIds.length ? savedTopicIds : seenTopics;
     const topicId = step.topicId && seenTopicSet.has(step.topicId) ? step.topicId : undefined;
-    const route: Record<TrainingActivity, string> = { activeRecall: 'cards', topicTest: 'test', failures: 'falladas', spacedReviews: 'cards' };
+    const topicIds = step.activity === 'topicTest' && topicId
+      ? [topicId]
+      : savedTopicIds.length ? savedTopicIds : seenTopics;
+    const route: Record<TrainingActivity, string> = { activeRecall: 'cards', topicTest: 'test', mixedTopicTest: 'test', failures: 'falladas', spacedReviews: 'cards' };
     if (step.activity === 'spacedReviews' && !(sourceOverview.trainingDue?.cards ?? sourceOverview.cardsDue)) {
       runAction('training-review', () => services.startReview(topicIds, 'spacedReviews'));
       return;

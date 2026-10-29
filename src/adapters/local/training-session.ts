@@ -3,7 +3,7 @@ import type { StudyReviewMode, TrainingActivity } from '../../core/domain/entiti
 import type { TrainingPlanReason } from '../../core/domain/study-training-plan.js';
 import { localTrainingDateKey } from '../../core/domain/study-training-session.js';
 
-const activities = new Set<TrainingActivity>(['activeRecall', 'topicTest', 'failures', 'spacedReviews']);
+const activities = new Set<TrainingActivity>(['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']);
 const reasons = new Set<TrainingPlanReason>(['active-recall', 'new-topic-day', 'weak-topics', 'coverage', 'recurring-failures', 'due-reviews']);
 const reviewModes = new Set<StudyReviewMode>(['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading']);
 const keyFor = (accountId: string | null) => `tai.training-session.v1.${encodeURIComponent(accountId || 'guest')}`;
@@ -28,7 +28,7 @@ function isDailyTrainingSession(value: unknown, timestamp: number): value is Sto
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
   const session = value as Partial<StoredTrainingSession>;
   if (session.dateKey !== localTrainingDateKey(timestamp) || !Array.isArray(session.activities)
-    || !session.activities.length || session.activities.length > 4 || !session.activities.every(isSessionStep)
+    || !session.activities.length || session.activities.length > 5 || !session.activities.every(isSessionStep)
     || new Set(session.activities.map(step => step.activity)).size !== session.activities.length
     || !Number.isInteger(session.currentIndex) || session.currentIndex! < 0 || session.currentIndex! > session.activities.length
     || !Number.isFinite(session.startedAt) || session.startedAt! < 0
@@ -40,7 +40,7 @@ function isDailyTrainingSession(value: unknown, timestamp: number): value is Sto
 }
 
 const defaultReason: Record<TrainingActivity, TrainingPlanReason> = {
-  activeRecall: 'active-recall', topicTest: 'coverage', failures: 'recurring-failures', spacedReviews: 'due-reviews',
+  activeRecall: 'active-recall', topicTest: 'coverage', mixedTopicTest: 'coverage', failures: 'recurring-failures', spacedReviews: 'due-reviews',
 };
 
 export function readTrainingSession(accountId: string | null, timestamp: number): DailyTrainingSession | null {

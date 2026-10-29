@@ -16,7 +16,8 @@ export function TestPage() {
   const newTopicRecommendation = searchParams.get('recommendation') === 'new-topic';
   const suggestedTopicId = searchParams.get('topic');
   const trainingTopicsValue = searchParams.get('trainingTopics');
-  const dailyTraining = searchParams.get('dailyTraining') === 'topicTest';
+  const dailyTrainingActivity = searchParams.get('dailyTraining');
+  const dailyTraining = dailyTrainingActivity === 'topicTest' || dailyTrainingActivity === 'mixedTopicTest';
   const trainingTopicIds = useMemo(() => trainingTopicsValue === null ? undefined
     : [...new Set(trainingTopicsValue.split(',').filter(topicId => /^T[1-4]\.\d{2}$/.test(topicId)
       && test.seenTopics().includes(topicId)))], [trainingTopicsValue, test]);
@@ -80,7 +81,7 @@ export function TestPage() {
     const next = toggleTestTopics(configuration, ids);
     test.saveConfiguration(next); setConfiguration(next);
   };
-  const start = useCallback(async (dailyTrainingActivity?: 'topicTest') => {
+  const start = useCallback(async (activity?: 'topicTest' | 'mixedTopicTest') => {
     setStarting(true); setMessage('');
     try {
       const currentSeenTopics = new Set(test.seenTopics());
@@ -96,8 +97,8 @@ export function TestPage() {
         setMessage('Elige un tema que siga marcado como visto para empezar este entrenamiento.');
         return;
       }
-      const result = dailyTrainingActivity
-        ? await test.start(startConfiguration, { dailyTrainingActivity })
+      const result = activity
+        ? await test.start(startConfiguration, { dailyTrainingActivity: activity })
         : await test.start(startConfiguration);
       if (result === 'empty') setMessage(configuration.mode === 'falladas' ? 'No tienes preguntas falladas en esa selección.' : configuration.mode === 'dudosas' ? 'No tienes preguntas dudosas en esa selección.' : configuration.mode === 'trampas' ? 'Aún no hay datos de trampas: contesta al menos 5 preguntas de alguna trampa y falla alguna.' : 'No hay preguntas disponibles con ese filtro.');
       if (result === 'account-changed') setMessage('La cuenta cambió mientras se preparaba el test. Vuelve a intentarlo.');
@@ -108,8 +109,8 @@ export function TestPage() {
   useEffect(() => {
     if (!dailyTraining || loading || autoStarted.current) return;
     autoStarted.current = true;
-    void start('topicTest');
-  }, [dailyTraining, loading, start]);
+    void start(dailyTrainingActivity as 'topicTest' | 'mixedTopicTest');
+  }, [dailyTraining, dailyTrainingActivity, loading, start]);
 
   if (dailyTraining && (loading || starting || !message)) return <PageLoading variant="legacy" />;
   if (dailyTraining && message) return <><h1>Entrenamiento de hoy</h1><div className="note" role="alert">{message}</div><Link className="btn sec" to="/home">Volver al entrenamiento</Link></>;

@@ -5,10 +5,11 @@ import type { TopicReviewEvidence } from './study-review-intervention.js';
 export const DEFAULT_TRAINING_PREFERENCES: TrainingPreferences = {
   minutesByDay: [0, 35, 40, 35, 20, 40, 60],
   introductionDay: 4,
-  activities: ['activeRecall', 'topicTest', 'failures', 'spacedReviews'],
+  activities: ['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'],
+  activityVersion: 2,
 };
 
-const supportedActivities = new Set<TrainingActivity>(['activeRecall', 'topicTest', 'failures', 'spacedReviews']);
+const supportedActivities = new Set<TrainingActivity>(['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']);
 const supportedReviewModes = new Set<StudyReviewMode>(['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading']);
 
 export function normalizeTrainingPreferences(value: unknown): TrainingPreferences {
@@ -18,10 +19,13 @@ export function normalizeTrainingPreferences(value: unknown): TrainingPreference
     && minutes.every(item => Number.isInteger(item) && item >= 0 && item <= 240)
     ? [...minutes] as TrainingPreferences['minutesByDay']
     : [...DEFAULT_TRAINING_PREFERENCES.minutesByDay];
-  const configuredActivities = Array.isArray(candidate.activities)
+  const storedActivities = Array.isArray(candidate.activities)
     ? [...new Set(candidate.activities.filter((activity): activity is TrainingActivity => supportedActivities.has(activity as TrainingActivity)))]
     : [...DEFAULT_TRAINING_PREFERENCES.activities];
-  const activities = configuredActivities.length ? configuredActivities : [...DEFAULT_TRAINING_PREFERENCES.activities];
+  const configuredActivities = storedActivities.length ? storedActivities : [...DEFAULT_TRAINING_PREFERENCES.activities];
+  const activities = candidate.activityVersion === 2
+    ? configuredActivities
+    : [...new Set([...configuredActivities, 'mixedTopicTest' as const])];
   const introductionDay = Number.isInteger(candidate.introductionDay) && candidate.introductionDay! >= 0 && candidate.introductionDay! <= 6
     ? candidate.introductionDay!
     : DEFAULT_TRAINING_PREFERENCES.introductionDay;
@@ -30,7 +34,7 @@ export function normalizeTrainingPreferences(value: unknown): TrainingPreference
   const reviewModesByTopic = candidate.reviewModesByTopic && typeof candidate.reviewModesByTopic === 'object' && !Array.isArray(candidate.reviewModesByTopic)
     ? Object.fromEntries(Object.entries(candidate.reviewModesByTopic).filter(([topicId, mode]) => /^T[1-4]\.\d{2}$/.test(topicId) && supportedReviewModes.has(mode as StudyReviewMode))) as Record<string, StudyReviewMode>
     : undefined;
-  return { minutesByDay, introductionDay, activities, ...(introductionTopicId ? { introductionTopicId } : {}), ...(reviewModesByTopic && Object.keys(reviewModesByTopic).length ? { reviewModesByTopic } : {}) };
+  return { minutesByDay, introductionDay, activities, activityVersion: 2, ...(introductionTopicId ? { introductionTopicId } : {}), ...(reviewModesByTopic && Object.keys(reviewModesByTopic).length ? { reviewModesByTopic } : {}) };
 }
 
 export type TrainingPlanReason = 'active-recall' | 'new-topic-day' | 'weak-topics' | 'coverage' | 'recurring-failures' | 'due-reviews';
@@ -52,14 +56,16 @@ export interface DailyTrainingPlan {
 const activityWeight: Record<TrainingActivity, number> = {
   activeRecall: 2,
   topicTest: 3,
+  mixedTopicTest: 2,
   failures: 2,
   spacedReviews: 1,
 };
 
-function enabledActivities(preferences: TrainingPreferences, dueCount: number, cardDueCount: number, failureCount: number): TrainingActivity[] {
+function enabledActivities(preferences: TrainingPreferences, dueCount: number, cardDueCount: number, failureCount: number, studiedTopicCount: number): TrainingActivity[] {
   return preferences.activities.filter(activity => {
     if (activity === 'spacedReviews') return dueCount > 0 || cardDueCount > 0;
     if (activity === 'failures') return failureCount > 0;
+    if (activity === 'mixedTopicTest') return studiedTopicCount > 0;
     return true;
   });
 }
@@ -109,7 +115,7 @@ export function buildDailyTrainingPlan(input: {
   const studiedTopicSet = studiedTopicIds ? new Set(studiedTopicIds) : undefined;
 
   const cardDueCount = Number.isFinite(input.cardDueCount) ? Math.max(0, input.cardDueCount ?? 0) : 0;
-  const candidates = enabledActivities(preferences, input.dueCount, cardDueCount, input.failureCount);
+  const candidates = enabledActivities(preferences, input.dueCount, cardDueCount, input.failureCount, studiedTopicIds?.length ?? 0);
   if (!candidates.length) return { weekday, minutes, restDay: false, activities: [] };
   const allocation = allocateMinutes(candidates, minutes);
   const weakTopicIds = studiedTopicIds
@@ -119,6 +125,7 @@ export function buildDailyTrainingPlan(input: {
     activeRecall: 'active-recall',
     topicTest: weekday === preferences.introductionDay && !studiedTopicIds ? 'new-topic-day'
       : (studiedTopicIds ? !!weakTopicIds?.length : !!input.weakTopicCount) ? 'weak-topics' : 'coverage',
+    mixedTopicTest: 'coverage',
     failures: 'recurring-failures',
     spacedReviews: 'due-reviews',
   };
@@ -128,7 +135,7 @@ export function buildDailyTrainingPlan(input: {
       && typeof evidence.questionCoverageOfTarget === 'number'
       && evidence.questionCoverageOfTarget < 100)
     .sort((left, right) => left.questionCoverageOfTarget! - right.questionCoverageOfTarget!)[0];
-  const order: TrainingActivity[] = ['activeRecall', 'topicTest', 'failures', 'spacedReviews'];
+  const order: TrainingActivity[] = ['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'];
   const activities = order.flatMap(activity => {
     const duration = allocation.get(activity) || 0;
     if (!duration) return [];

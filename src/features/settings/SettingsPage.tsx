@@ -134,6 +134,7 @@ const trainingDays = [
 ] as const;
 const trainingActivities = [
   ['activeRecall', 'Active Recall con tarjetas'], ['topicTest', 'Preguntas de tema'],
+  ['mixedTopicTest', 'Preguntas variadas de temas vistos'],
   ['failures', 'Revisión de preguntas falladas'], ['spacedReviews', 'Repasos vencidos'],
 ] as const;
 

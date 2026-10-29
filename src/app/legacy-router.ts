@@ -282,7 +282,7 @@ const settingsServicesWithSubscription = {
 const statsServices = createStatsServices({ go, startRun, startRepaso, trapTest }, localProgressRepository, localStudyProgressGateway);
 const quizServices = createQuizServices(go, hashPath('home'), () => {
   const activity = new URLSearchParams(location.hash.split('?')[1] || '').get('dailyTraining');
-  return hashPath('result') + (activity && ['activeRecall', 'topicTest', 'failures', 'spacedReviews'].includes(activity) ? `?dailyTraining=${activity}` : '');
+  return hashPath('result') + (activity && ['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'].includes(activity) ? `?dailyTraining=${activity}` : '');
 }, localQuizProgressGateway);
 
 

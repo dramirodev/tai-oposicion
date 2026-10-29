@@ -100,9 +100,9 @@ export function ResultPage() {
   useEffect(() => {
     const activity = dailyTrainingActivity;
     if (advancedDailyActivity.current || !snapshot || snapshot.interrupted
-      || !['topicTest', 'failures', 'spacedReviews'].includes(activity || '')) return;
+      || !['topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'].includes(activity || '')) return;
     advancedDailyActivity.current = true;
-    home.completeTrainingActivity(activity as 'topicTest' | 'failures' | 'spacedReviews');
+    home.completeTrainingActivity(activity as 'topicTest' | 'mixedTopicTest' | 'failures' | 'spacedReviews');
   }, [dailyTrainingActivity, home, snapshot]);
   if (!snapshot) return <><h1>Resultado</h1><p className="note">No hay un resultado disponible. <Link to="/home">Volver al inicio</Link></p></>;
   return <>

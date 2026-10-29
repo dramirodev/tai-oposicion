@@ -748,7 +748,7 @@
 .hhead h1 { font: 600 var(--fs-h1)/1.25 var(--font-ui); letter-spacing: -.035em; }
 .home-intro { color: var(--mute); margin: -0.25rem 0 1.75rem; font-size: var(--fs-b); }
 .home-workspace { gap: 1.5rem; }
-.home-training { margin-block: 1rem 1.75rem; padding: 1.25rem 1.5rem; border: 1px solid var(--line); border-radius: var(--r-xl); background: var(--card); }
+.home-training { margin-block: 1rem 1.75rem; padding: 1.25rem 1.5rem; border: 1px solid var(--line); border-radius: var(--r-xl); background: var(--card); scroll-margin-block-start: 1rem; }
 .home-training .home-domain-heading { margin-bottom: 0.25rem; }
 .training-session-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-block: 0.75rem; padding: 0.75rem; border-radius: var(--r-m); background: var(--surface-soft); }
 .training-session-status { flex: 1 1 16rem; margin: 0; color: var(--mute); font-size: var(--fs-s); }

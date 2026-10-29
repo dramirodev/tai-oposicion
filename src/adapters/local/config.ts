@@ -8,8 +8,8 @@ const bool = (value: unknown) => typeof value === 'boolean';
 const temas = (value: unknown) => Array.isArray(value) && value.every(value => typeof value === 'string' && /^T\d\.\d\d$/.test(value));
 const origins = (value: unknown) => Array.isArray(value) && value.every(value => ['O', 'A', 'G'].includes(value));
 const trainingMinutes = (value: unknown) => Array.isArray(value) && value.length === 7 && value.every(integer(0, 240));
-const trainingActivities = (value: unknown) => Array.isArray(value) && value.length >= 1 && value.length <= 4 && new Set(value).size === value.length
-  && value.every(oneOf(['activeRecall', 'topicTest', 'failures', 'spacedReviews']));
+const trainingActivities = (value: unknown) => Array.isArray(value) && value.length >= 1 && value.length <= 5 && new Set(value).size === value.length
+  && value.every(oneOf(['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']));
 const trainingTopicId = (value: unknown) => typeof value === 'string' && /^T[1-4]\.\d{2}$/.test(value);
 const trainingReviewModes = (value: unknown) => object(value) && Object.keys(value).length <= 36
   && Object.entries(value).every(([topicId, mode]) => /^T[1-4]\.\d{2}$/.test(topicId) && ['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading'].includes(String(mode)));
@@ -29,7 +29,7 @@ const schemas: Record<string, { defaults: Record<string, unknown>; fields: Recor
   } },
   simc: { defaults: {}, fields: { a: integer(0, 299), b: integer(0, 299) } },
   slow: { defaults: {}, fields: { ok: bool } },
-  training: { defaults: {}, fields: { minutesByDay: trainingMinutes, introductionDay: integer(0, 6), introductionTopicId: trainingTopicId, activities: trainingActivities, reviewModesByTopic: trainingReviewModes } },
+  training: { defaults: {}, fields: { minutesByDay: trainingMinutes, introductionDay: integer(0, 6), introductionTopicId: trainingTopicId, activities: trainingActivities, activityVersion: oneOf([2]), reviewModesByTopic: trainingReviewModes } },
 };
 function cleanValue(itemValue: unknown, depth = 0): unknown {
   if (itemValue === null || typeof itemValue === 'boolean') return itemValue;

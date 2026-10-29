@@ -4,6 +4,7 @@ import {
   CalendarClock,
   CircleHelp,
   CircleX,
+  CalendarDays,
   ClipboardCheck,
   Eye,
   House,
@@ -33,6 +34,7 @@ export const navigationIcons = {
   help: CircleHelp,
   settings: Settings2,
   access: KeyRound,
+  planning: CalendarDays,
 } satisfies Record<string, LucideIcon>;
 
 export const menuActionIcons = {
