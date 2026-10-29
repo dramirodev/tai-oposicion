@@ -43,7 +43,6 @@ export async function listAiStudyExportSessions(input: {
   to: number;
   modes: readonly AttemptMode[];
 }): Promise<AiStudyExportSessionChoice[]> {
-  const choices: AiStudyExportSessionChoice[] = [];
   const attemptCounts = new Map<string, number>();
   const modes = new Set(input.modes);
   let cursor: string | undefined;
@@ -52,11 +51,12 @@ export async function listAiStudyExportSessions(input: {
     for (const attempt of page.attempts) attemptCounts.set(attempt.sessionId, (attemptCounts.get(attempt.sessionId) || 0) + 1);
     cursor = page.nextCursor || undefined;
   } while (cursor);
-  for (const sessionId of attemptCounts.keys()) {
+  const loaded = await Promise.all([...attemptCounts.keys()].map(async sessionId => {
     const session = await input.repository.getSession(input.scope, sessionId);
-    if (!session || session.status !== 'completed' || session.startedAt < input.from || session.startedAt >= input.to || !modes.has(session.mode)) continue;
-    choices.push({ id: session.id, mode: session.mode, startedAt: session.startedAt, ...(session.endedAt !== undefined ? { endedAt: session.endedAt } : {}), attemptCount: attemptCounts.get(session.id) || 0 });
-  }
+    if (!session || session.status !== 'completed' || session.startedAt < input.from || session.startedAt >= input.to || !modes.has(session.mode)) return null;
+    return { id: session.id, mode: session.mode, startedAt: session.startedAt, ...(session.endedAt !== undefined ? { endedAt: session.endedAt } : {}), attemptCount: attemptCounts.get(session.id) || 0 };
+  }));
+  const choices = loaded.filter((choice): choice is AiStudyExportSessionChoice => choice !== null);
   return choices.sort((left, right) => left.startedAt - right.startedAt || (left.id < right.id ? -1 : left.id > right.id ? 1 : 0));
 }
 

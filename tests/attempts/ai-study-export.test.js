@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { prepareAiStudyExport } from '../../src/core/application/attempts/prepare-ai-study-export.ts';
+import { listAiStudyExportSessions, prepareAiStudyExport } from '../../src/core/application/attempts/prepare-ai-study-export.ts';
 import { questionContentRevision } from '../../src/core/domain/attempts/highlights.ts';
 
 const sessions = [
@@ -17,6 +17,21 @@ const archiveRepository = {
   getSession: vi.fn(async (_scope, id) => sessions.find(session => session.id === id)),
   getEvents: vi.fn(async () => ({ events: [], nextCursor: null })),
 };
+
+it('carga sesiones independientes en paralelo y filtra manteniendo el orden cronológico', async () => {
+  const pending = new Map();
+  const repository = {
+    getScopePage: vi.fn(async () => ({ attempts: [
+      { sessionId: 'later' }, { sessionId: 'earlier' }, { sessionId: 'later' },
+    ], nextCursor: null })),
+    getSession: vi.fn((_scope, id) => new Promise(resolve => pending.set(id, resolve))),
+  };
+  const resultPromise = listAiStudyExportSessions({ repository, scope: 'account-private', from: 0, to: 300, modes: ['practice'] });
+  await vi.waitFor(() => expect(repository.getSession).toHaveBeenCalledTimes(2));
+  pending.get('later')({ id: 'later', mode: 'practice', status: 'completed', startedAt: 200 });
+  pending.get('earlier')({ id: 'earlier', mode: 'simulation', status: 'completed', startedAt: 100 });
+  await expect(resultPromise).resolves.toEqual([{ id: 'later', mode: 'practice', startedAt: 200, attemptCount: 2 }]);
+});
 
 it('prepara solo sesiones completadas seleccionadas dentro del periodo y modalidad y busca sus contenidos', async () => {
   const bank = { getQuestion: vi.fn(async id => ({ id, topicId: 'T1.01', origin: 'O', statement: id, options: ['ok'], correctIndex: 0 })) };
