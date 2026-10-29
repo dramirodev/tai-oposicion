@@ -56,6 +56,7 @@ const activityCountText = (count: number) => `${count} ${count === 1 ? 'activida
 const localDateFormatter = new Intl.DateTimeFormat('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 const localDate = (date: Date) => localDateFormatter.format(date);
 const historyDateFormatter = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+const monthTitleFormatter = new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric' });
 
 const reviewModeLabels: Record<NonNullable<TrainingSessionStep['reviewMode']>, string> = {
   'active-retrieval': 'comprobar primero qué recuerdas',
@@ -123,7 +124,7 @@ function WeekSchedule({ preferences, weekday, now, history }: { preferences: Set
   const [month, setMonth] = useState(() => new Date(now.getFullYear(), now.getMonth(), 1));
   const focus = preferences.focusByDay ?? ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'];
   const dateKey = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-  const monthTitle = new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric' }).format(month);
+  const monthTitle = monthTitleFormatter.format(month);
   const firstDayOffset = (new Date(month.getFullYear(), month.getMonth(), 1).getDay() + 6) % 7;
   const daysInMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate();
   const completedDays = new Set(history.map(session => session.dateKey));
