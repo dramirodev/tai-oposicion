@@ -3,7 +3,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { assertFails, assertSucceeds, initializeTestEnvironment } from '@firebase/rules-unit-testing';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 const projectId = 'demo-tai-training-rules';
 let testEnv;
@@ -58,6 +58,21 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
     const oversized = Array.from({ length:31 }, (_, index) => ({ ...historyEntry, id:`2026-10-${String(index + 1).padStart(2, '0')}`, dateKey:`2026-10-${String(index + 1).padStart(2, '0')}` }));
     await assertFails(setDoc(doc(db, 'users/student/cfg/training'), documentFor(2, oversized)));
     await assertFails(setDoc(doc(db, 'users/student/cfg/training'), { ...documentFor(2, []), extra:true }));
+  });
+
+  it('permite reanudar desde otro dispositivo de la misma cuenta y ver el checkpoint más reciente', async () => {
+    const firstDevice = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const secondDevice = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const path = 'users/student/cfg/training';
+    await assertSucceeds(setDoc(doc(firstDevice, path), documentFor(2, [historyEntry])));
+    const initial = await assertSucceeds(getDoc(doc(secondDevice, path)));
+    expect(initial.data()).toEqual(documentFor(2, [historyEntry]));
+
+    const resumed = { ...session, currentIndex:0, completedAt:null, updatedAt:session.completedAt + 1 };
+    const checkpoint = { schemaVersion:2, updatedAt:resumed.updatedAt, session:resumed, history:[historyEntry] };
+    await assertSucceeds(setDoc(doc(secondDevice, path), checkpoint));
+    const restored = await assertSucceeds(getDoc(doc(firstDevice, path)));
+    expect(restored.data()).toEqual(checkpoint);
   });
 
   it('impide que una cuenta aprobada escriba en el espacio de otra y que una no aprobada escriba el suyo', async () => {
