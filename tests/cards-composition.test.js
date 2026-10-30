@@ -103,3 +103,23 @@ it('limita el plan de Active Recall a los temas recibidos aunque las preferencia
   expect(plan.cards.map(card => card.id)).toEqual(['card-seen']);
   expect(plan.ids).toEqual(['card-seen']);
 });
+
+it('conserva la sesión guardada con tarjetas de otros temas al abrir un plan acotado a un tema', async () => {
+  const dependencies = {
+    loadQuestionMetadata: async () => {}, failedCardQuestionIds: () => [], loadQuestionsById: async () => [],
+    loadJson: async url => url === 'cards/index.json'
+      ? { temas: { 'T1.01': true, 'T1.02': true } }
+      : [{ id: url.includes('T1.01') ? 'card-a' : 'card-b', q: 'Pregunta', a: 'Respuesta' }],
+    verifiedSources: {}, readPreferences: () => ({}), savePreferences: vi.fn(), accountId: () => 'partial-scope',
+    getCards: () => ({}), getSeen: () => ['T1.01', 'T1.02'], getRecord: () => undefined, now: () => Date.now(), day: 86_400_000,
+    topicName: id => id, grade: vi.fn(), remove: vi.fn(), getReport: () => undefined, saveReport: vi.fn(),
+  };
+  saveCardsSession('partial-scope', { ids: ['card-a', 'card-b'], index: 1, revealed: false, results: [1, 0, 0] });
+  const services = createCardsComposition(dependencies).services;
+
+  const plan = await services.loadPlan(services.getPreferences(), ['T1.01']);
+
+  expect(plan.cards.map(card => card.id)).toEqual(['card-a']);
+  expect(services.getSession()).toMatchObject({ index: 1, results: [1, 0, 0] });
+  expect(services.getSession().items.map(card => card.id)).toEqual(['card-a', 'card-b']);
+});

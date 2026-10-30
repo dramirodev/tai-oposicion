@@ -55,7 +55,8 @@ export function createCardsController(dependencies: CardsControllerDependencies)
       if (!getSession()) {
         const saved = dependencies.readSavedSession(account);
         if (saved) {
-          const byId = new Map(cards.map(card => [card.id, card]));
+          // Se resuelve contra todas las tarjetas, no solo las del tema acotado: abrir un plan parcial no debe perder el progreso.
+          const byId = new Map(loadedCards.map(card => [card.id, card]));
           const items = saved.ids.map(id => byId.get(id));
           if (items.every((card): card is StudyCard => !!card)) {
             activeSession = { account, items, index: saved.index, revealed: saved.revealed, results: [...saved.results] };
