@@ -91,6 +91,8 @@ export function scheduleDoubtfulQuestion(current: QuestionStats | undefined, tim
     ...current,
     intervalStep: 0,
     dueAt: timestamp + CARD_REVIEW_INTERVALS_DAYS[0] * CALENDAR_DAY_MILLISECONDS,
+    // La fusión entre dispositivos decide por lastSeenAt: sin avanzarlo, una duda marcada tras publicarse la respuesta no se sube.
+    lastSeenAt: Math.max(current.lastSeenAt, timestamp),
   };
 }
 
