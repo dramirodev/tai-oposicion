@@ -1,7 +1,7 @@
 import 'fake-indexeddb/auto';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-const boundary = vi.hoisted(() => ({ snapshots: [], documents: new Map(), writes: [], deletes: [], reads: [], pages: new Map(), failWrites: false, afterDelete: null }));
+const boundary = vi.hoisted(() => ({ snapshots: [], documents: new Map(), writes: [], deletes: [], reads: [], pages: new Map(), failWrites: false, afterDelete: null, inFlight: 0, maxInFlight: 0, readDelay: 0 }));
 vi.mock('firebase/firestore', () => ({
   collection: (_db, ...parts) => ({ path: parts.join('/') }),
   doc: (_db, ...parts) => ({ path: parts.join('/') }),
@@ -12,7 +12,14 @@ vi.mock('firebase/firestore', () => ({
     boundary.afterDelete?.();
   },
   getDoc: async ref => ({ exists: () => boundary.documents.has(ref.path), data: () => boundary.documents.get(ref.path) }),
-  getDocs: async ref => { boundary.reads.push(ref.path); return { docs: boundary.pages.get(ref.path) || [] }; },
+  getDocs: async ref => {
+    boundary.reads.push(ref.path);
+    boundary.inFlight++;
+    boundary.maxInFlight = Math.max(boundary.maxInFlight, boundary.inFlight);
+    if (boundary.readDelay) await new Promise(resolve => setTimeout(resolve, boundary.readDelay));
+    boundary.inFlight--;
+    return { docs: boundary.pages.get(ref.path) || [] };
+  },
   limit: count => ({ type: 'limit', count }),
   onSnapshot: (ref, next, error) => {
     const listener = { ref, next, error, active: true };
@@ -44,6 +51,9 @@ describe('syncAttemptHistory', () => {
     boundary.deletes.length = 0;
     boundary.pages.clear();
     boundary.reads.length = 0;
+    boundary.inFlight = 0;
+    boundary.maxInFlight = 0;
+    boundary.readDelay = 0;
     boundary.failWrites = false;
     boundary.afterDelete = null;
     repo = createLocalAttemptRepository(`attempt-sync-${Date.now()}-${Math.random()}`);
@@ -64,7 +74,10 @@ describe('syncAttemptHistory', () => {
       type: 'answer', id: 'event-1', sequence: 1, at: 200, monotonicAt: 20, optionIndex: 2, outcome: 'wrong',
     });
     await repo.saveTransition('user-1', answered.attempt, answered.event);
-    await vi.waitFor(() => expect(boundary.writes.map(write => write.path)).toContain('users/user-1/attempts/attempt-1/events/event-1'));
+    await vi.waitFor(() => {
+      expect(boundary.writes.map(write => write.path)).toContain('users/user-1/attempts/attempt-1/events/event-1');
+      expect(boundary.documents.get('users/user-1/attempts/attempt-1')?.state).toBe('answered');
+    });
     expect(boundary.writes.map(write => write.path)).toContain('users/user-1/attemptSessions/session-1');
     expect(boundary.writes.findIndex(write => write.path.endsWith('/events/event-1')))
       .toBeLessThan(boundary.writes.findIndex(write => write.path === 'users/user-1/attempts/attempt-1' && write.value.state === 'answered'));
@@ -115,6 +128,25 @@ describe('syncAttemptHistory', () => {
       expect(await repo.getAttempt('user-1', attempt.id)).toMatchObject({ response: 1, outcome: 'correct' });
       expect((await repo.getEvents('user-1', attempt.id)).events).toHaveLength(1);
     });
+    off();
+  });
+
+  it('limita a cuatro las lecturas de eventos simultáneas al recibir muchos intentos a la vez', async () => {
+    const off = syncAttemptHistory({ db: {}, uid: 'user-1', repository: repo, active: () => true, onError: error => { throw error; } });
+    const remote = index => ({
+      id: `bulk-${index}`, sessionId: 'bulk-session', questionId: `q-${index}`, contentRevision: '', mode: 'practice', position: index, exposure: 1,
+      state: 'unseen', response: null, outcome: null, confidence: null, discardedOptions: [], highlights: [], createdAt: 600, lastSequence: 0, appliedEventIds: [],
+    });
+    const documents = Array.from({ length: 12 }, (_, index) => ({ id: `bulk-${index}`, data: () => attemptMapper.toDto(remote(index)) }));
+    boundary.readDelay = 15;
+
+    boundary.snapshots.find(listener => listener.ref.path === 'users/user-1/attempts').next({
+      docs: documents, docChanges: () => documents.map(document => ({ type: 'added', doc: document })),
+    });
+
+    await vi.waitFor(() => expect(boundary.reads.filter(path => path.endsWith('/events'))).toHaveLength(12), { timeout: 4000 });
+    expect(boundary.maxInFlight).toBeGreaterThan(1);
+    expect(boundary.maxInFlight).toBeLessThanOrEqual(4);
     off();
   });
 

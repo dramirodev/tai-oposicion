@@ -1,9 +1,13 @@
 // @vitest-environment node
+import 'fake-indexeddb/auto';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { assertFails, assertSucceeds, initializeTestEnvironment } from '@firebase/rules-unit-testing';
 import { disableNetwork, doc, enableNetwork, getDoc, setDoc } from 'firebase/firestore';
+import { syncAttemptHistory } from '../src/adapters/firebase/attempt-sync.ts';
+import { createLocalAttemptRepository } from '../src/adapters/local/attempt-repository.ts';
+import { applyAttemptAction } from '../src/core/domain/attempts/transitions.ts';
 import { createTrainingSessionSyncAdapter } from '../src/adapters/firebase/training-session-sync.ts';
 import { createPaperRecallSyncAdapter } from '../src/adapters/firebase/paper-recall-sync.ts';
 import { createTrainingCalendarSyncAdapter } from '../src/adapters/firebase/training-calendar-sync.ts';
@@ -381,6 +385,75 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
       await assertFails(setDoc(doc(db, 'users/student/stats/T1.02'), { m:keys(5001), u:1 }));
       await assertSucceeds(setDoc(doc(db, 'users/student/cfg/seen'), { t:ids(36), ts:1 }));
       await assertFails(setDoc(doc(db, 'users/student/cfg/seen'), { t:ids(201), ts:1 }));
+    });
+  });
+
+  describe('sincronización de intentos', () => {
+    const student = () => testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const waitFor = async predicate => {
+      const deadline = Date.now() + 10_000;
+      while (!(await predicate())) {
+        if (Date.now() >= deadline) throw new Error('La sincronización de intentos agotó el tiempo de espera.');
+        await new Promise(resolve => setTimeout(resolve, 50));
+      }
+    };
+    // withSecurityRulesDisabled devuelve Promise<void>: el valor se recoge por cierre, no con el retorno del callback.
+    const remoteData = async path => {
+      let data = null;
+      await testEnv.withSecurityRulesDisabled(async context => { const snapshot = await getDoc(doc(context.firestore(), path)); data = snapshot.exists() ? snapshot.data() : null; });
+      return data;
+    };
+
+    it('encola sin errores las transiciones hechas sin conexión y las publica al reconectar', async () => {
+      const db = student(), repository = createLocalAttemptRepository(`offline-${Date.now()}-${Math.random()}`), errors = [];
+      const stop = syncAttemptHistory({ db, uid:'student', repository, active:() => true, onError:error => errors.push(error) });
+      try {
+        await new Promise(resolve => setTimeout(resolve, 200));
+        await disableNetwork(db);
+        const attempt = { id:'attempt-offline', sessionId:'session-offline', questionId:'T1.01-1', contentRevision:'', mode:'practice', position:0, exposure:1,
+          state:'unseen', response:null, outcome:null, confidence:null, discardedOptions:[], highlights:[], createdAt:Date.now(), lastSequence:0, appliedEventIds:[] };
+        await repository.createSession('student', { id:'session-offline', mode:'practice', status:'active', startedAt:Date.now(), lastSequence:0 });
+        await repository.createAttempt('student', attempt);
+        const answered = applyAttemptAction(attempt, { type:'answer', id:'event-offline', sequence:1, at:Date.now(), monotonicAt:10, optionIndex:1, outcome:'correct' });
+        await repository.saveTransition('student', answered.attempt, answered.event);
+        await new Promise(resolve => setTimeout(resolve, 400));
+
+        expect(errors.map(error => error.code ?? error.message)).toEqual([]);
+
+        await enableNetwork(db);
+        await new Promise(resolve => setTimeout(resolve, 1_500));
+        expect(errors.map(error => error.code ?? error.message)).toEqual([]);
+        await waitFor(async () => (await remoteData('users/student/attempts/attempt-offline'))?.state === 'answered');
+        expect(await remoteData('users/student/attempts/attempt-offline/events/event-offline')).toMatchObject({ type:'answer', sequence:1 });
+        expect(await remoteData('users/student/attemptSessions/session-offline')).toMatchObject({ status:'active' });
+        expect(errors).toEqual([]);
+      } finally {
+        stop();
+        await enableNetwork(db);
+      }
+    }, 30_000);
+
+    it('admite reescribir con los mismos datos un evento, un intento completado y una sesión cerrada, pero no cambiarlos', async () => {
+      const attempt = { schemaVersion:1, id:'attempt-idem', sessionId:'session-idem', questionId:'T1.01-1', contentRevision:'', mode:'practice', position:0, exposure:1,
+        state:'answered', response:0, outcome:'correct', confidence:null, discardedOptions:[], highlights:[], createdAt:1_000, completedAt:2_000,
+        lastSequence:1, appliedEventIds:['event-idem'], terminalEventId:'event-idem' };
+      const event = { schemaVersion:1, id:'event-idem', attemptId:'attempt-idem', sequence:1, type:'answer', at:1_500, monotonicAt:5, payload:{ optionIndex:0, outcome:'correct' } };
+      const closedSession = { schemaVersion:1, id:'session-idem', mode:'practice', status:'completed', startedAt:1_000, endedAt:2_000, lastSequence:1 };
+      await testEnv.withSecurityRulesDisabled(async context => {
+        const adminDb = context.firestore();
+        await setDoc(doc(adminDb, 'users/student/attempts/attempt-idem'), attempt);
+        await setDoc(doc(adminDb, 'users/student/attempts/attempt-idem/events/event-idem'), event);
+        await setDoc(doc(adminDb, 'users/student/attemptSessions/session-idem'), closedSession);
+      });
+      const db = student();
+
+      await assertSucceeds(setDoc(doc(db, 'users/student/attempts/attempt-idem/events/event-idem'), event));
+      await assertSucceeds(setDoc(doc(db, 'users/student/attempts/attempt-idem'), attempt));
+      await assertSucceeds(setDoc(doc(db, 'users/student/attemptSessions/session-idem'), closedSession));
+
+      await assertFails(setDoc(doc(db, 'users/student/attempts/attempt-idem/events/event-idem'), { ...event, at:1_501 }));
+      await assertFails(setDoc(doc(db, 'users/student/attempts/attempt-idem'), { ...attempt, completedAt:2_001 }));
+      await assertFails(setDoc(doc(db, 'users/student/attemptSessions/session-idem'), { ...closedSession, endedAt:2_001 }));
     });
   });
 });

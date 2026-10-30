@@ -260,10 +260,12 @@ service cloud.firestore {
       allow create: if canUse(uid)
         && validAttempt(attemptId)
         && (request.resource.data.state in ['unseen', 'pending'] || terminalEventIsValid(attemptId));
+      // Reescribir un intento con los mismos datos no cambia nada: el cliente publica de forma idempotente, sin leer antes.
       allow update: if canUse(uid)
-        && validAttempt(attemptId)
-        && !('completedAt' in resource.data)
-        && practiceAnswerIsLocked(attemptId);
+        && ((validAttempt(attemptId)
+            && !('completedAt' in resource.data)
+            && practiceAnswerIsLocked(attemptId))
+          || request.resource.data == resource.data);
       allow delete: if canUse(uid);
 
       match /events/{eventId} {
@@ -271,7 +273,8 @@ service cloud.firestore {
         allow create: if canUse(uid)
           && exists(/databases/$(database)/documents/users/$(uid)/attempts/$(attemptId))
           && validAttemptEvent(eventId, attemptId);
-        allow update: if false;
+        // Los eventos son inmutables; solo se admite reescribirlos idénticos (publicación idempotente).
+        allow update: if canUse(uid) && request.resource.data == resource.data;
         allow delete: if canUse(uid);
       }
     }
@@ -279,9 +282,10 @@ service cloud.firestore {
       allow read: if canUse(uid);
       allow create: if canUse(uid) && validAttemptSession(sessionId);
       allow update: if canUse(uid)
-        && validAttemptSession(sessionId)
-        && resource.data.status == 'active'
-        && request.resource.data.lastSequence >= resource.data.lastSequence;
+        && ((validAttemptSession(sessionId)
+            && resource.data.status == 'active'
+            && request.resource.data.lastSequence >= resource.data.lastSequence)
+          || request.resource.data == resource.data);
       allow delete: if canUse(uid);
     }
     // El tombstone impide que una copia remota vieja resucite el detalle borrado.

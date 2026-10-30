@@ -20,6 +20,18 @@ import { attemptMapper } from '../local/mappers/attempt.js';
 import { attemptSessionMapper } from '../local/mappers/attempt-session.js';
 
 const PAGE_SIZE = 100;
+/** Lecturas de eventos simultáneas: la primera carga trae hasta 100 intentos y cada uno lanza al menos una consulta. */
+const MAX_CONCURRENT_PULLS = 4;
+
+function createLimiter(maxConcurrent: number) {
+  let running = 0;
+  const waiting: Array<() => void> = [];
+  return async <T>(task: () => Promise<T>): Promise<T> => {
+    if (running >= maxConcurrent) await new Promise<void>(resolve => waiting.push(resolve));
+    running++;
+    try { return await task(); } finally { running--; waiting.shift()?.(); }
+  };
+}
 
 function stableJson(value: unknown): string {
   if (Array.isArray(value)) return `[${value.map(stableJson).join(',')}]`;
@@ -43,6 +55,7 @@ export function syncAttemptHistory(options: FirestoreAttemptSyncOptions): Unsubs
   const scope = idScope(uid);
   const base = ['users', uid] as const;
   const pendingWrites = new Map<string, Promise<void>>();
+  const pullLimit = createLimiter(MAX_CONCURRENT_PULLS);
   let closed = false;
   const fail = (error: unknown) => { if (!closed && active()) onError(error as FirestoreError); };
   const eventCursor = (sequence: number): string => JSON.stringify({ sequence, id: '' });
@@ -89,7 +102,7 @@ export function syncAttemptHistory(options: FirestoreAttemptSyncOptions): Unsubs
       if (change.type === 'removed') continue;
       const mapped = attemptMapper.toDomain(change.doc.data());
       if (!mapped.ok) continue;
-      void pullAttempt(mapped.value).catch(fail);
+      void pullLimit(() => pullAttempt(mapped.value)).catch(fail);
     }
   }, onError));
 
@@ -119,20 +132,13 @@ export function syncAttemptHistory(options: FirestoreAttemptSyncOptions): Unsubs
 
   async function pushSession(session: QuestionAttemptSession): Promise<void> {
     if (closed || !active()) return;
-    const ref = doc(db, ...base, 'attemptSessions', session.id);
-    const value = attemptSessionMapper.toDto(session);
-    const current = await getDoc(ref);
-    if (!active() || (current.exists() && stableJson(current.data()) === stableJson(value))) return;
-    await setDoc(ref, value);
+    // Escritura idempotente (id determinista, sin leer antes): sin conexión el SDK la encola y la reenvía al reconectar.
+    await setDoc(doc(db, ...base, 'attemptSessions', session.id), attemptSessionMapper.toDto(session));
   }
 
   async function pushAttemptNow(attempt: QuestionAttempt): Promise<void> {
     if (closed || !active()) return;
-    const ref = doc(db, ...base, 'attempts', attempt.id);
-    const value = attemptMapper.toDto(attempt);
-    const current = await getDoc(ref);
-    if (!active() || (current.exists() && stableJson(current.data()) === stableJson(value))) return;
-    await setDoc(ref, value);
+    await setDoc(doc(db, ...base, 'attempts', attempt.id), attemptMapper.toDto(attempt));
   }
 
   function queueAttemptWrite(attemptId: string, action: () => Promise<void>): Promise<void> {
@@ -151,10 +157,8 @@ export function syncAttemptHistory(options: FirestoreAttemptSyncOptions): Unsubs
 
   async function pushEvent(event: AttemptEvent): Promise<void> {
     if (closed || !active()) return;
-    const ref = doc(db, ...base, 'attempts', event.attemptId, 'events', event.id);
-    const existing = await getDoc(ref);
-    if (!active() || existing.exists()) return;
-    await setDoc(ref, attemptMapper.eventToDto(event));
+    // Los eventos tienen id determinista y son inmutables: reescribir uno idéntico es inofensivo (las reglas lo admiten).
+    await setDoc(doc(db, ...base, 'attempts', event.attemptId, 'events', event.id), attemptMapper.eventToDto(event));
   }
 
   async function pullAttempt(attempt: QuestionAttempt): Promise<void> {
