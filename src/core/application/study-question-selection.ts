@@ -52,13 +52,14 @@ export function createStudyQuestionSelection(
       .map(([id, statistics]) => ({ id, dueAt: questionReviewDueAt(statistics) }))
       .filter((entry): entry is { id: string; dueAt: number } => entry.dueAt !== undefined
         && entry.dueAt <= timestamp
-        && !!catalog.getTopicForQuestion(entry.id))
+        && !!catalog.getTopicForQuestion(entry.id)
+        && !isQuestionEditoriallyQuarantined(entry.id))
       .sort((left, right) => left.dueAt - right.dueAt)
       .map(entry => entry.id);
   }
 
   const falladasIds = (): string[] => Object.entries(progress.getAllQuestionStats())
-    .filter(([id, stats]) => catalog.getTopicForQuestion(id) && hasPendingFailure(stats))
+    .filter(([id, stats]) => catalog.getTopicForQuestion(id) && hasPendingFailure(stats) && !isQuestionEditoriallyQuarantined(id))
     .map(([id]) => id);
 
   async function quickGuest(
@@ -139,7 +140,7 @@ export function createStudyQuestionSelection(
     for (const [id, statistics] of Object.entries(progress.getAllQuestionStats())) {
       const topicId = catalog.getTopicForQuestion(id);
       const dueAt = questionReviewDueAt(statistics);
-      if (dueAt !== undefined && dueAt <= timestamp && topicId && (!allowedTopics || allowedTopics.has(topicId))) {
+      if (dueAt !== undefined && dueAt <= timestamp && topicId && !isQuestionEditoriallyQuarantined(id) && (!allowedTopics || allowedTopics.has(topicId))) {
         candidates.push({ id, topicId, dueAt });
       }
     }
