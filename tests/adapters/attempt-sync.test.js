@@ -1,7 +1,7 @@
 import 'fake-indexeddb/auto';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-const boundary = vi.hoisted(() => ({ snapshots: [], documents: new Map(), writes: [], deletes: [], pages: new Map(), failWrites: false, afterDelete: null }));
+const boundary = vi.hoisted(() => ({ snapshots: [], documents: new Map(), writes: [], deletes: [], reads: [], pages: new Map(), failWrites: false, afterDelete: null }));
 vi.mock('firebase/firestore', () => ({
   collection: (_db, ...parts) => ({ path: parts.join('/') }),
   doc: (_db, ...parts) => ({ path: parts.join('/') }),
@@ -12,7 +12,7 @@ vi.mock('firebase/firestore', () => ({
     boundary.afterDelete?.();
   },
   getDoc: async ref => ({ exists: () => boundary.documents.has(ref.path), data: () => boundary.documents.get(ref.path) }),
-  getDocs: async ref => ({ docs: boundary.pages.get(ref.path) || [] }),
+  getDocs: async ref => { boundary.reads.push(ref.path); return { docs: boundary.pages.get(ref.path) || [] }; },
   limit: count => ({ type: 'limit', count }),
   onSnapshot: (ref, next, error) => {
     const listener = { ref, next, error, active: true };
@@ -43,6 +43,7 @@ describe('syncAttemptHistory', () => {
     boundary.writes.length = 0;
     boundary.deletes.length = 0;
     boundary.pages.clear();
+    boundary.reads.length = 0;
     boundary.failWrites = false;
     boundary.afterDelete = null;
     repo = createLocalAttemptRepository(`attempt-sync-${Date.now()}-${Math.random()}`);
@@ -104,14 +105,42 @@ describe('syncAttemptHistory', () => {
     const attempt = transition.attempt;
     const eventDocument = { id: 'remote-event', data: () => attemptMapper.eventToDto(transition.event) };
     boundary.pages.set('users/user-1/attempts/remote-attempt/events', [eventDocument]);
+    const remoteDocument = { id: attempt.id, data: () => attemptMapper.toDto(attempt) };
     boundary.snapshots.find(listener => listener.ref.path === 'users/user-1/attempts').next({
-      docs: [{ id: attempt.id, data: () => attemptMapper.toDto(attempt) }],
+      docs: [remoteDocument],
+      docChanges: () => [{ type: 'added', doc: remoteDocument }],
     });
 
     await vi.waitFor(async () => {
       expect(await repo.getAttempt('user-1', attempt.id)).toMatchObject({ response: 1, outcome: 'correct' });
       expect((await repo.getEvents('user-1', attempt.id)).events).toHaveLength(1);
     });
+    off();
+  });
+
+  it('al cambiar un intento remoto solo vuelve a leer los eventos de ese intento', async () => {
+    const off = syncAttemptHistory({ db: {}, uid: 'user-1', repository: repo, active: () => true, onError: error => { throw error; } });
+    const remote = id => ({
+      id, sessionId: 'remote-session', questionId: `q-${id}`, contentRevision: '', mode: 'practice', position: 0, exposure: 1,
+      state: 'unseen', response: null, outcome: null, confidence: null, discardedOptions: [], highlights: [],
+      createdAt: 500, lastSequence: 0, appliedEventIds: [],
+    });
+    const asDocument = attempt => ({ id: attempt.id, data: () => attemptMapper.toDto(attempt) });
+    const [first, second] = [asDocument(remote('attempt-a')), asDocument(remote('attempt-b'))];
+    const listener = boundary.snapshots.find(item => item.ref.path === 'users/user-1/attempts');
+    const snapshot = (changes) => ({ docs: [first, second], docChanges: () => changes.map(([type, document]) => ({ type, doc: document })) });
+
+    listener.next(snapshot([['added', first], ['added', second]]));
+    await vi.waitFor(() => expect(boundary.reads.filter(path => path.endsWith('/events')).sort()).toEqual([
+      'users/user-1/attempts/attempt-a/events', 'users/user-1/attempts/attempt-b/events',
+    ]));
+    boundary.reads.length = 0;
+
+    listener.next(snapshot([['modified', second]]));
+    await vi.waitFor(() => expect(boundary.reads).toContain('users/user-1/attempts/attempt-b/events'));
+    await new Promise(resolve => setTimeout(resolve, 50));
+
+    expect(boundary.reads.filter(path => path.endsWith('/events'))).toEqual(['users/user-1/attempts/attempt-b/events']);
     off();
   });
 

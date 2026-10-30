@@ -84,8 +84,10 @@ export function syncAttemptHistory(options: FirestoreAttemptSyncOptions): Unsubs
   const attemptQuery = query(collection(db, ...base, 'attempts'), orderBy('createdAt', 'desc'), limit(PAGE_SIZE));
   unsubs.push(onSnapshot(attemptQuery, snapshot => {
     if (!active() || closed) return;
-    for (const document of snapshot.docs) {
-      const mapped = attemptMapper.toDomain(document.data());
+    // Solo los intentos nuevos o modificados: recorrer todos relanzaba la lectura de eventos de hasta 100 intentos en cada cambio.
+    for (const change of snapshot.docChanges()) {
+      if (change.type === 'removed') continue;
+      const mapped = attemptMapper.toDomain(change.doc.data());
       if (!mapped.ok) continue;
       void pullAttempt(mapped.value).catch(fail);
     }
