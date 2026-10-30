@@ -923,11 +923,13 @@
 .home-planning-shortcut h2 { flex: 1 1 100%; margin: 0; }
 .home-planning-shortcut p { flex: 1 1 22rem; margin: 0; color: var(--mute); }
 #training-schedule { scroll-margin-block-start: 1rem; }
+@media(max-width: 840px) {
+  .planning-week>ol { grid-template-columns: repeat(4,minmax(0,1fr)); }
+}
 @media(max-width: 760px) {
   .planning-facts { grid-template-columns: repeat(3,minmax(0,1fr)); }
   .planning-facts>div:nth-child(3) { border-inline-end: 0; }
   .planning-facts>div:nth-child(n+4) { border-top: 1px solid var(--line); }
-  .planning-week>ol { grid-template-columns: repeat(4,minmax(0,1fr)); }
   .planning-evidence-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
 }
 @media(max-width: 520px) {
@@ -964,8 +966,8 @@
   .home-primary { padding: 1.25rem; }
   .home-quick-session { width: 100%; }
   .home-metrics>div { padding-inline: 0.75rem; }
-  .home-metrics dd { font-size: 1.5rem; }
-  .home-metrics dd small { display: block; margin-top: 0.25rem; }
+  .home-metrics dd { font-size: 1.375rem; white-space: nowrap; }
+  .home-metrics dd small { display: inline; margin: 0; font-size: .875rem; }
   .home-blocks { grid-template-columns: 1fr; }
 }
 :root[data-text-size="2"] .home-metrics,:root[data-text-size="3"] .home-metrics { grid-template-columns: 1fr; gap: 1rem; }
