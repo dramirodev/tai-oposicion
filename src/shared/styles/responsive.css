@@ -99,6 +99,16 @@
 
 /* La rejilla estrecha usa una opción completa y una acción secundaria separada. */
 
+@keyframes mobile-menu-overlay-enter {
+  from { background-color: rgba(10,20,38,0); }
+  to { background-color: rgba(10,20,38,.58); }
+}
+
+@keyframes mobile-menu-panel-enter {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
 @media(max-width:600px) {
   .strategy-controls {
     grid-template-columns: minmax(0,1fr);
@@ -117,19 +127,34 @@
     max-width: none;
     max-height: none;
     margin: 0;
+    align-items: stretch;
+    justify-content: flex-end;
     overflow: hidden;
-    padding: max(0.75rem,var(--sat)) 0.75rem max(0.75rem,var(--sab));
+    padding: 0;
   }
 
   .overlay.menu-dialog .card.menu {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    width: min(80vw,28.75rem);
-    height: auto;
-    max-height: calc(100dvh - max(0.75rem,var(--sat)) - max(0.75rem,var(--sab)));
+    width: min(88vw,22.5rem);
+    height: 100dvh;
+    max-height: none;
     min-height: 0;
+    margin: 0;
     overflow: hidden;
-    padding-bottom: 0;
+    padding: max(0.875rem,var(--sat)) 0.875rem 0;
+    border-radius: var(--r-xl) 0 0 var(--r-xl);
+  }
+
+  @media(prefers-reduced-motion:no-preference) {
+    .overlay.menu-dialog {
+      animation: mobile-menu-overlay-enter var(--duration-standard) ease-out both;
+    }
+
+    .overlay.menu-dialog .card.menu {
+      animation: mobile-menu-panel-enter var(--duration-standard) cubic-bezier(.2,.8,.2,1) both;
+    }
   }
 
   .menuhead {
@@ -138,7 +163,7 @@
   }
 
   .menu-content {
-    flex: 0 1 auto;
+    flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
     overscroll-behavior: contain;
