@@ -8,28 +8,34 @@ export interface QuestionEvolutionWeek {
   unknown: number;
 }
 
-const DAY = 86400000;
+/** Local midnight of `monday` shifted by whole calendar weeks, so a daylight-saving change cannot move the week boundary. */
+function weekStart(monday: Date, offsetWeeks: number): number {
+  const date = new Date(monday);
+  date.setDate(date.getDate() + offsetWeeks * 7);
+  return date.getTime();
+}
 
 /** Counts final outcomes from completed sessions; legacy aggregate data is not backfilled. */
 export function buildQuestionEvolution(archive: AttemptArchive, weeks: number, now: number): QuestionEvolutionWeek[] {
   const count = Math.max(1, Math.floor(weeks));
-  const today = new Date(now);
-  today.setHours(0, 0, 0, 0);
-  today.setDate(today.getDate() - (today.getDay() + 6) % 7);
-  const first = today.getTime() - (count - 1) * 7 * DAY;
+  const monday = new Date(now);
+  monday.setHours(0, 0, 0, 0);
+  monday.setDate(monday.getDate() - (monday.getDay() + 6) % 7);
   const result = Array.from({ length: count }, (_, index) => ({
-    start: first + index * 7 * DAY,
+    start: weekStart(monday, index - (count - 1)),
     seen: 0,
     correct: 0,
     wrong: 0,
     unknown: 0,
   }));
+  const end = weekStart(monday, 1);
   const sessions = new Map(archive.sessions.map(session => [session.id, session]));
   for (const attempt of archive.attempts) {
     const session = sessions.get(attempt.sessionId);
     if (session?.status !== 'completed' || attempt.state === 'unseen') continue;
-    const index = Math.floor((session.startedAt - first) / (7 * DAY));
-    if (index < 0 || index >= count) continue;
+    if (session.startedAt < result[0].start || session.startedAt >= end) continue;
+    let index = count - 1;
+    while (index > 0 && result[index].start > session.startedAt) index--;
     const week = result[index];
     week.seen++;
     if (attempt.outcome === 'correct') week.correct++;
