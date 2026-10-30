@@ -1,3 +1,4 @@
+import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import importPlugin from 'eslint-plugin-import';
 import reactHooks from 'eslint-plugin-react-hooks';
 import tseslint from 'typescript-eslint';
@@ -89,4 +90,5 @@ export default tseslint.config(
       ...reactHooks.configs.flat.recommended.rules,
     },
   },
+  eslintConfigPrettier,
 );

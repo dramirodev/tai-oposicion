@@ -1,0 +1,17 @@
+# Artefactos generados y dependencias
+/dist/
+/node_modules/
+/coverage/
+/test-results/
+/playwright-report/
+/reports/
+.vite/
+.firebase/
+.codegraph/
+
+# Datos del banco y tarjetas: se generan con scripts y no son código
+/public/
+
+# Instantáneas de pruebas visuales y lockfile
+/tests/e2e/snapshots/
+package-lock.json
