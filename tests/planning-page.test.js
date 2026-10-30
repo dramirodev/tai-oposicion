@@ -52,6 +52,17 @@ it('permite iniciar el paso de tema nuevo aunque todavía no haya temas vistos',
   expect(await screen.findByTestId('current-path')).toHaveTextContent('/temario?topic=T1.01&dailyTraining=newContent');
 });
 
+it('muestra desde el primer instante el tiempo real de una actividad en curso, no 0 hasta el primer tick', async () => {
+  const startedAt = Date.now() - 125_000;
+  const running = overview(newTopicPlan);
+  running.trainingSession = { dateKey:new Date().toLocaleDateString('en-CA'), activities:newTopicPlan.activities, currentIndex:0, currentStartedAt:startedAt, elapsedSecondsByActivity:[0], startedAt, completedAt:null };
+  renderApp(createElement(PlanningPage), { services:servicesFor(running) });
+
+  const timer = await screen.findByText(/Tiempo en esta actividad/);
+
+  expect(timer).toHaveTextContent(/Tiempo en esta actividad: 2 min/);
+});
+
 it('muestra descanso y deja fuera tareas atrasadas sin temas vistos', async () => {
   const rest = { weekday:0, minutes:0, restDay:true, activities:[] };
   renderApp(createElement(PlanningPage), { services:servicesFor(overview(rest, { due:12, cardsDue:8 })) });

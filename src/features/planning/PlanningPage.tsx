@@ -332,7 +332,7 @@ export function PlanningPage() {
   const resource = useMemo(() => ({ accountId: services.accountId, subscribe: services.subscribe, load: () => services.loadOverview() }), [services]);
   const { value: overview, error } = useAccountResource(resource, reload);
   const settings = useSettingsSnapshot();
-  const [clock, setClock] = useState(0);
+  const [clock, setClock] = useState(() => Date.now()); // con 0, el cronómetro de una actividad en curso mostraba 0 s hasta el primer tick
   useEffect(() => {
     const timer = window.setInterval(() => setClock(Date.now()), 1000);
     return () => window.clearInterval(timer);
