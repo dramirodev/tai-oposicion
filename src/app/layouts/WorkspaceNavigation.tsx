@@ -37,7 +37,8 @@ export function WorkspaceNavigation({ full, owner, section, pathname, navigate }
     const menu: MenuGroup[] = [['Inicio', [[navigationIcons.home, 'Inicio', '', hashPath('home')]]]];
     if (full) menu.push(['Planificación', [[navigationIcons.planning, 'Planificación de estudio', 'Sesión de hoy y calendario semanal', hashPath('planning')]]]);
     for (const [title, routes] of groups) {
-      const items: MenuGroup[1] = destinations.filter(d => (routes as readonly string[]).includes(d.route) && visible(d.route)).map(d => [d.icon, d.label, '', hashSegment(d.route)]);
+      const menuRoutes = full && title === 'Afianzar' ? routes.filter(route => route !== 'planificacion') : routes;
+      const items: MenuGroup[1] = destinations.filter(d => (menuRoutes as readonly string[]).includes(d.route) && visible(d.route)).map(d => [d.icon, d.label, '', hashSegment(d.route)]);
       if (items.length) menu.push([title, items]);
     }
     void showMenu(menu, hashSegment(current), path => navigate(path.slice(1)));
