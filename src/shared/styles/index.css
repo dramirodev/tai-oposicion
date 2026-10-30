@@ -440,10 +440,10 @@ nav[aria-label="Principal"] a {
 }
 
 nav[aria-label="Principal"] a.on {
-  background: var(--sel);
-  color: var(--selb);
+  background: var(--nav-active);
+  color: var(--ink);
   font-weight: 650;
-  box-shadow: inset 0 3px 0 var(--selb);
+  box-shadow: none;
 }
 
 nav[aria-label="Principal"] a i {
@@ -1070,7 +1070,7 @@ ul.tips li {
     justify-content: flex-end;
     overflow: hidden;
     padding: 0;
-    & .card.menu { box-sizing: border-box; display: flex; flex-direction: column; width: 100%; height: 100vh; height: 100dvh; max-width: none; max-height: none; min-height: 0; margin: 0; overflow: hidden; padding: max(0.875rem,var(--sat)) max(0.875rem,env(safe-area-inset-right,0px)) 0 max(0.875rem,env(safe-area-inset-left,0px)); border-radius: 0; box-shadow: none; }
+    & .card.menu { box-sizing: border-box; display: flex; flex-direction: column; width: min(88vw,22.5rem); height: 100vh; height: 100dvh; max-width: none; max-height: none; min-height: 0; margin: 0; overflow: hidden; padding: max(0.875rem,var(--sat)) max(0.875rem,env(safe-area-inset-right,0px)) 0 max(0.875rem,env(safe-area-inset-left,0px)); border-radius: 0; box-shadow: none; }
     &.mobile-menu-enter { @media (prefers-reduced-motion: no-preference) { animation: mobile-menu-overlay-enter 260ms ease-out both; } }
     &.mobile-menu-enter .card.menu { @media (prefers-reduced-motion: no-preference) { animation: mobile-menu-panel-enter 320ms cubic-bezier(.16,1,.3,1) both; } }
     & .menu-content { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding-bottom: max(1.125rem,var(--sab)); }

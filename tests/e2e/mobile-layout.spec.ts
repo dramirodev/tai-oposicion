@@ -89,6 +89,8 @@ test('el menú móvil mantiene su panel dentro del viewport y permite llegar a t
   expect(await page.locator('#menux').evaluate(button => button.matches(':focus-visible'))).toBe(true);
   const bounds = await panel.boundingBox();
   expect(bounds).not.toBeNull();
+  expect(bounds!.x).toBeGreaterThan(0);
+  expect(bounds!.x + bounds!.width).toBeCloseTo(320, 0);
   expect(bounds!.y).toBeGreaterThanOrEqual(0);
   expect(bounds!.y + bounds!.height).toBeLessThanOrEqual(640);
   expect(bounds!.height).toBeGreaterThan(560);
@@ -109,13 +111,18 @@ test('el menú móvil y la carga inicial animan en WebKit cuando no se reduce el
   const dialog = page.locator('#menuov');
   const panel = dialog.locator('.card.menu');
   await expect(dialog).toHaveClass(/mobile-menu-enter/);
+  await expect.poll(() => dialog.evaluate(element => getComputedStyle(element).backgroundColor)).toBe('rgba(10, 20, 38, 0.58)');
   const menuAnimations = await panel.evaluate(element => element.getAnimations().map(animation => ({
     name: animation instanceof CSSAnimation ? animation.animationName : '',
     duration: animation.effect?.getTiming().duration,
   })));
   expect(menuAnimations).toContainEqual({ name: 'mobile-menu-panel-enter', duration: 320 });
   expect(await panel.evaluate(element => getComputedStyle(element).borderRadius)).toBe('0px');
-  expect((await panel.boundingBox())?.width).toBeCloseTo(390, 0);
+  const panelBounds = await panel.boundingBox();
+  expect(panelBounds).not.toBeNull();
+  expect(panelBounds!.width).toBeCloseTo(Math.min(390 * 0.88, 360), 0);
+  expect(panelBounds!.x).toBeGreaterThan(0);
+  expect(panelBounds!.x + panelBounds!.width).toBeCloseTo(390, 0);
 
   await page.route('**/*.js', route => route.abort());
   await page.goto('/');
