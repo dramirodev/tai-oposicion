@@ -287,4 +287,100 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
     await assertFails(setDoc(doc(approved, 'users/other/cfg/training'), documentFor(1)));
     await assertFails(setDoc(doc(otherAccount, 'users/other/cfg/training'), documentFor(1)));
   });
+
+  it('reserva el banco y las tarjetas a cuentas aprobadas y nunca permite escribirlos desde el cliente', async () => {
+    const files = ['bank/meta', 'bank/f_T1.01', 'bank/f_cards_T1.01'];
+    await testEnv.withSecurityRulesDisabled(async context => {
+      const adminDb = context.firestore();
+      for (const path of files) await setDoc(doc(adminDb, path), { h:'hash', z:'' });
+      await setDoc(doc(adminDb, 'access/unverified'), { ok:true });
+    });
+    const approved = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const notApproved = testEnv.authenticatedContext('stranger', { email:'stranger@example.test', email_verified:true }).firestore();
+    // Aprobado en access/, pero con el correo sin verificar: debe quedar fuera.
+    const unverified = testEnv.authenticatedContext('unverified', { email:'unverified@example.test', email_verified:false }).firestore();
+    const anonymous = testEnv.unauthenticatedContext().firestore();
+    for (const path of files) {
+      await assertSucceeds(getDoc(doc(approved, path)));
+      await assertFails(getDoc(doc(notApproved, path)));
+      await assertFails(getDoc(doc(unverified, path)));
+      await assertFails(getDoc(doc(anonymous, path)));
+      await assertFails(setDoc(doc(approved, path), { h:'otro', z:'' }));
+    }
+  });
+
+  describe('abuso del espacio de usuario', () => {
+    const verified = uid => testEnv.authenticatedContext(uid, { email:`${uid}@example.test`, email_verified:true }).firestore();
+
+    it('niega toda lectura y escritura sin sesión', async () => {
+      const anonymous = testEnv.unauthenticatedContext().firestore();
+      await assertFails(getDoc(doc(anonymous, 'users/student/stats/T1.01')));
+      await assertFails(setDoc(doc(anonymous, 'users/student/stats/T1.01'), { m:{}, u:1 }));
+      await assertFails(getDoc(doc(anonymous, 'access/student')));
+      await assertFails(setDoc(doc(anonymous, 'requests/student'), { email:'student@example.test', name:'x', ts:Date.now() }));
+    });
+
+    it('impide que una cuenta aprobada lea el espacio de otra', async () => {
+      await testEnv.withSecurityRulesDisabled(async context => {
+        const adminDb = context.firestore();
+        await setDoc(doc(adminDb, 'access/other'), { ok:true });
+        await setDoc(doc(adminDb, 'users/other/stats/T1.01'), { m:{}, u:1 });
+      });
+      await assertSucceeds(getDoc(doc(verified('other'), 'users/other/stats/T1.01')));
+      await assertFails(getDoc(doc(verified('student'), 'users/other/stats/T1.01')));
+    });
+
+    it('niega el espacio propio si el correo no está verificado, aunque figure como aprobada', async () => {
+      await testEnv.withSecurityRulesDisabled(async context => { await setDoc(doc(context.firestore(), 'access/unverified'), { ok:true }); });
+      const unverified = testEnv.authenticatedContext('unverified', { email:'unverified@example.test', email_verified:false }).firestore();
+      await assertFails(setDoc(doc(unverified, 'users/unverified/stats/T1.01'), { m:{}, u:1 }));
+      await assertFails(getDoc(doc(unverified, 'users/unverified/stats/T1.01')));
+    });
+
+    it('no permite autoaprobarse ni aprobar a otros salvo al propietario', async () => {
+      await assertFails(setDoc(doc(verified('stranger'), 'access/stranger'), { ok:true }));
+      await assertFails(setDoc(doc(verified('student'), 'access/other'), { ok:true }));
+      const owner = testEnv.authenticatedContext('owner', { email:'dramiro@gmail.com', email_verified:true }).firestore();
+      await assertSucceeds(setDoc(doc(owner, 'access/stranger'), { ok:true }));
+    });
+
+    it('valida las solicitudes de acceso: correo propio, fecha reciente, nombre acotado y sin campos extra', async () => {
+      const now = Date.now(), db = verified('applicant');
+      const request = overrides => ({ email:'applicant@example.test', name:'Aspirante', ts:now, ...overrides });
+      await assertFails(setDoc(doc(db, 'requests/applicant'), request({ email:'otro@example.test' })));
+      await assertFails(setDoc(doc(db, 'requests/applicant'), request({ ts:now - 3_600_000 })));
+      await assertFails(setDoc(doc(db, 'requests/applicant'), request({ name:'x'.repeat(200) })));
+      await assertFails(setDoc(doc(db, 'requests/applicant'), request({ ok:true })));
+      await assertFails(setDoc(doc(verified('intruder'), 'requests/applicant'), request()));
+      await assertSucceeds(setDoc(doc(db, 'requests/applicant'), request()));
+    });
+
+    it('rechaza campos desconocidos y tipos erróneos en estadísticas, sesiones y tombstone de intentos', async () => {
+      const db = verified('student');
+      await assertFails(setDoc(doc(db, 'users/student/stats/T1.01'), { m:{}, u:1, extra:true }));
+      await assertFails(setDoc(doc(db, 'users/student/stats/T1.01'), { m:[], u:1 }));
+      await assertSucceeds(setDoc(doc(db, 'users/student/stats/T1.01'), { m:{}, u:1 }));
+      const base = { id:'s1', ts:1, kind:'test', n:1, a:1, f:0, b:0, secs:1, nota:5, temas:{}, tipos:{}, fails:[], titulo:'t' };
+      await assertSucceeds(setDoc(doc(db, 'users/student/sessions/s1'), base));
+      await assertFails(setDoc(doc(db, 'users/student/sessions/s2'), { ...base, id:'s2', extra:true }));
+      await assertFails(setDoc(doc(db, 'users/student/sessions/s3'), { ...base, id:'s3', kind:'otro' }));
+      await assertFails(setDoc(doc(db, 'users/student/cfg/attempts'), { schemaVersion:1, deletedAt:1, revision:0 }));
+      await assertSucceeds(setDoc(doc(db, 'users/student/cfg/attempts'), { schemaVersion:1, deletedAt:1, revision:1 }));
+    });
+
+    it('acota el tamaño de estadísticas, sesiones y temas vistos sin rechazar documentos legítimos grandes', async () => {
+      const db = verified('student'), keys = count => Object.fromEntries(Array.from({ length:count }, (_, index) => [`k${index}`, 1]));
+      const ids = count => Array.from({ length:count }, (_, index) => `T1.01-${index}`);
+      const session = (id, overrides = {}) => ({ id, ts:1, kind:'test', n:1, a:1, f:0, b:0, secs:1, nota:5, temas:keys(36), tipos:keys(10), fails:ids(1000), titulo:'t'.repeat(300), ...overrides });
+      await assertSucceeds(setDoc(doc(db, 'users/student/sessions/legit'), session('legit')));
+      await assertFails(setDoc(doc(db, 'users/student/sessions/long'), session('long', { titulo:'t'.repeat(501) })));
+      await assertFails(setDoc(doc(db, 'users/student/sessions/fails'), session('fails', { fails:ids(5001) })));
+      await assertFails(setDoc(doc(db, 'users/student/sessions/topics'), session('topics', { temas:keys(201) })));
+      await assertFails(setDoc(doc(db, 'users/student/sessions/types'), session('types', { tipos:keys(101) })));
+      await assertSucceeds(setDoc(doc(db, 'users/student/stats/T1.01'), { m:keys(5000), u:1 }));
+      await assertFails(setDoc(doc(db, 'users/student/stats/T1.02'), { m:keys(5001), u:1 }));
+      await assertSucceeds(setDoc(doc(db, 'users/student/cfg/seen'), { t:ids(36), ts:1 }));
+      await assertFails(setDoc(doc(db, 'users/student/cfg/seen'), { t:ids(201), ts:1 }));
+    });
+  });
 });

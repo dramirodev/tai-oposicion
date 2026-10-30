@@ -233,7 +233,8 @@ service cloud.firestore {
       allow create, update: if canUse(uid)
         && request.resource.data.keys().hasOnly(['m', 'u'])
         && request.resource.data.u is number
-        && request.resource.data.m is map;
+        && request.resource.data.m is map
+        && request.resource.data.m.size() <= 5000;
     }
     match /users/{uid}/sessions/{sessionId} {
       allow read: if canUse(uid);
@@ -246,12 +247,12 @@ service cloud.firestore {
         && request.resource.data.f is number && request.resource.data.b is number
         && request.resource.data.secs is number
         && request.resource.data.nota is number
-        && request.resource.data.temas is map
+        && request.resource.data.temas is map && request.resource.data.temas.size() <= 200
         && (!('porTiempo' in request.resource.data) || request.resource.data.porTiempo is bool)
         && (!('interrupted' in request.resource.data) || request.resource.data.interrupted is bool)
-        && request.resource.data.tipos is map
-        && request.resource.data.fails is list
-        && request.resource.data.titulo is string;
+        && request.resource.data.tipos is map && request.resource.data.tipos.size() <= 100
+        && request.resource.data.fails is list && request.resource.data.fails.size() <= 5000
+        && request.resource.data.titulo is string && request.resource.data.titulo.size() <= 500;
     }
     // Historial detallado de intentos: una proyección por pregunta y eventos inmutables.
     match /users/{uid}/attempts/{attemptId} {
@@ -298,7 +299,7 @@ service cloud.firestore {
       allow read: if canUse(uid);
       allow create, update: if canUse(uid)
         && request.resource.data.keys().hasOnly(['t', 'ts'])
-        && request.resource.data.t is list
+        && request.resource.data.t is list && request.resource.data.t.size() <= 200
         && request.resource.data.ts is number;
     }
     // Checkpoint e historial resumido de planificación; no contiene respuestas de preguntas.
