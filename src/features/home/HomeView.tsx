@@ -55,8 +55,8 @@ function GuestAccess({ access, pending, onLogin, onRequestAccess }: {
   </div>;
 }
 
-function HomeMetrics({ overview, full, className = '' }: { overview: HomeOverview; full: boolean; className?: string }) {
-  return <dl className={`home-metrics ${className}`.trim()} aria-label="Tu preparación">
+function HomeMetrics({ overview, full }: { overview: HomeOverview; full: boolean }) {
+  return <dl className="home-metrics" aria-label="Tu preparación">
     <div><dt>Preguntas vistas</dt><dd>{overview.seen.toLocaleString('es-ES')} <small>/ {overview.total.toLocaleString('es-ES')}</small></dd></div>
     <div><dt>Temas estudiados</dt><dd>{overview.studiedTopics} <small>/ {overview.topicCount}</small></dd></div>
     <div><dt>{full ? 'Tarjetas pendientes' : 'Sesiones completadas'}</dt><dd>{full ? overview.cardsDue : overview.completedSessions}</dd></div>
@@ -86,17 +86,13 @@ export interface HomeViewProps {
 export function HomeView({ overview, access, run, pending, onNavigate, onQuickSession, onStartReview, onOpenMenu, onLogin, onRequestAccess }: HomeViewProps) {
   return <>
     <HomeHeader access={access} overview={overview} onOpenMenu={onOpenMenu} />
-    <div className="home-intro-metrics">
-      <p className="home-intro">Tu estudio, con perspectiva. Un paso más en tu preparación.</p>
-      <HomeMetrics overview={overview} full={access.full} className="home-metrics--intro" />
-    </div>
+    <HomeMetrics overview={overview} full={access.full} />
     <QuickSessionButton overview={overview} access={access} pending={pending} onQuickSession={onQuickSession} />
     {access.full && <section className="home-planning-shortcut" aria-labelledby="home-planning-title"><h2 className="section-title" id="home-planning-title">Tu estudio de hoy</h2><p>La sesión preparada, los temas y el calendario semanal están en Planificación.</p><Link className="btn" to="/planificacion">Abrir Planificación de estudio</Link></section>}
     <div className={`home-workspace${run ? ' has-active-session' : ''}`}>
       {run && <PrimaryStudy run={run} navigate={onNavigate} />}
       {access.full ? <FullAccessReview overview={overview} pending={pending} navigate={onNavigate} onStartReview={onStartReview} /> : <GuestAccess access={access} pending={pending} onLogin={onLogin} onRequestAccess={onRequestAccess} />}
     </div>
-    <HomeMetrics overview={overview} full={access.full} className="home-metrics--below" />
     <HomeDomain blocks={overview.blocks} full={access.full} />
     <SyncNote access={access} />
   </>;
