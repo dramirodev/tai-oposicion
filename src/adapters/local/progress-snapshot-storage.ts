@@ -37,6 +37,20 @@ export function hasProgressSnapshot(storageKey: string): boolean {
   try { return !!localStorage.getItem(storageKey); } catch { return false; }
 }
 
+/**
+ * Guarda una copia del texto almacenado cuando no se pudo usar: el estado vacío que lo sustituye lo sobrescribiría.
+ * Conserva la primera copia para que una lectura posterior no la machaque con otro texto.
+ */
+export function preserveUnusableProgressSnapshot(storageKey: string): boolean {
+  try {
+    const value = localStorage.getItem(storageKey);
+    const backupKey = `${storageKey}.unreadable`;
+    if (!value || localStorage.getItem(backupKey)) return false;
+    localStorage.setItem(backupKey, value);
+    return true;
+  } catch { return false; }
+}
+
 export function writeProgressSnapshot(storageKey: string, snapshot: unknown): boolean {
   try {
     localStorage.setItem(storageKey, JSON.stringify(snapshot));

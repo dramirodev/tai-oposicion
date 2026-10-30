@@ -19,6 +19,7 @@ import {
   progressStorageKey,
   readActiveAccount,
   readMirroredProgress,
+  preserveUnusableProgressSnapshot,
   readProgressSnapshot,
   unscopedProgressStorageKey,
   writeActiveAccount,
@@ -110,6 +111,8 @@ function load(key = stateKey()): AppState {
     const parsedData = readProgressSnapshot(key) as Partial<AppState> | null;
     if (parsedData && parsedData.stats) return { stats: cleanStats(parsedData.stats), sessions: cleanSessions(parsedData.sessions).slice(0, MAX_SESIONES), cfg: cleanCfg(parsedData.cfg), seen: cleanSeen(parsedData.seen), reports: cleanReports(parsedData.reports), cards: cleanCards(parsedData.cards) };
   } catch {}
+  // Si había un texto guardado que no se pudo usar, el estado vacío de abajo lo sobrescribirá en el próximo guardado.
+  preserveUnusableProgressSnapshot(key);
   return { stats: createDictionary(), sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: createDictionary(), cards: createDictionary() };
 }
 // La copia antigua queda intacta; solo el propietario puede adoptarla.
