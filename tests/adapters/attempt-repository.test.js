@@ -168,6 +168,56 @@ describe('localAttemptRepository', () => {
     expect([...firstPage.events, ...secondPage.events].map(event => event.id)).toEqual(['Z-event', 'a-event']);
   });
 
+  describe('notificaciones de transiciones', () => {
+    const transitions = listener => listener.mock.calls.map(([change]) => change).filter(change => change.type === 'transition');
+    const conflictingAnswers = initial => ({
+      earlier: transition(initial, { type: 'answer', sequence: 1, id: 'Z-event', optionIndex: 2, outcome: 'wrong' }),
+      later: transition(initial, { type: 'answer', sequence: 1, id: 'a-event', optionIndex: 1, outcome: 'correct' }),
+    });
+
+    it('no publica la transición de un conflicto que pierde: la proyección local no cambió, aunque el evento se conserve', async () => {
+      const repo = repository(), initial = makeAttempt(), listener = vi.fn();
+      await repo.createAttempt('guest', initial);
+      const { earlier, later } = conflictingAnswers(initial);
+      await repo.saveTransition('guest', earlier.attempt, earlier.event);
+      repo.subscribe('guest', listener);
+
+      expect(await repo.saveTransition('guest', later.attempt, later.event)).toEqual({ status: 'conflict', eventIds: ['Z-event', 'a-event'] });
+
+      expect(transitions(listener)).toHaveLength(0);
+      expect((await repo.getAttempt('guest', initial.id)).response).toBe(2);
+      expect((await repo.getEvents('guest', initial.id)).events).toHaveLength(2);
+    });
+
+    it('sí publica la transición de un conflicto que gana, porque actualiza la proyección local', async () => {
+      const repo = repository(), initial = makeAttempt(), listener = vi.fn();
+      await repo.createAttempt('guest', initial);
+      const { earlier, later } = conflictingAnswers(initial);
+      await repo.saveTransition('guest', later.attempt, later.event);
+      repo.subscribe('guest', listener);
+
+      expect((await repo.saveTransition('guest', earlier.attempt, earlier.event)).status).toBe('conflict');
+
+      expect(transitions(listener)).toHaveLength(1);
+      expect(transitions(listener)[0].event.id).toBe('Z-event');
+    });
+
+    it('un suscriptor que falla no deja colgado el guardado ni impide avisar a los demás', async () => {
+      const repo = repository(), initial = makeAttempt(), healthy = vi.fn();
+      const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+      await repo.createAttempt('guest', initial);
+      repo.subscribe('guest', () => { throw new Error('suscriptor roto'); });
+      repo.subscribe('guest', healthy);
+      const first = transition(initial, { type: 'answer', sequence: 1, id: 'event-once', optionIndex: 2, outcome: 'wrong' });
+
+      await expect(repo.saveTransition('guest', first.attempt, first.event)).resolves.toEqual({ status: 'stored' });
+
+      expect(transitions(healthy)).toHaveLength(1);
+      expect(error).toHaveBeenCalled();
+      error.mockRestore();
+    });
+  });
+
   it('reconcilia de forma determinista una respuesta terminal importada de otro dispositivo', async () => {
     const repo = repository();
     const initial = makeAttempt();

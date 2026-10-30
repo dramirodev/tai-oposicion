@@ -181,7 +181,10 @@ export function createLocalAttemptRepository(databaseName = 'tai-attempts'): Att
   let database: Promise<IDBDatabase> | undefined;
   const listeners = new Map<string, Set<(change: AttemptRepositoryChange) => void>>();
   const db = () => (database ||= openDatabase(databaseName, () => { database = undefined; }));
-  const notify = (scope: string, change: AttemptRepositoryChange) => listeners.get(scope)?.forEach(listener => listener(change));
+  // Un suscriptor roto no debe dejar sin resolver el guardado ya confirmado ni impedir que avisemos a los demás.
+  const notify = (scope: string, change: AttemptRepositoryChange) => listeners.get(scope)?.forEach(listener => {
+    try { listener(change); } catch (error) { console.error('Un suscriptor del historial de intentos falló:', error); }
+  });
 
   return {
     subscribe(scope, listener) {
@@ -265,8 +268,11 @@ export function createLocalAttemptRepository(databaseName = 'tai-attempts'): Att
         const attempts = tx.objectStore('attempts');
         const events = tx.objectStore('events');
         const outcome: { value: AppendAttemptEventResult } = { value: { status: 'stored' } };
+        // Solo se publica si la fila del intento cambió: tras un conflicto perdedor el evento se conserva, pero publicar
+        // `attempt` haría que el sync subiera a remoto una proyección que el local no tiene.
+        let projectionSaved = false;
         tx.oncomplete = () => {
-          if (outcome.value.status !== 'duplicate') notify(scope, { source: 'local', type: 'transition', attempt, event });
+          if (projectionSaved) notify(scope, { source: 'local', type: 'transition', attempt, event });
           resolve(outcome.value);
         };
         tx.onerror = () => reject(tx.error || new Error('No se pudo guardar el evento del intento'));
@@ -303,6 +309,7 @@ export function createLocalAttemptRepository(databaseName = 'tai-attempts'): Att
                   : null;
                 if (winner?.id === event.id && attempt.lastSequence === event.sequence) {
                   attempts.put(attemptRow(scope, attempt));
+                  projectionSaved = true;
                 }
                 return;
               }
@@ -312,6 +319,7 @@ export function createLocalAttemptRepository(databaseName = 'tai-attempts'): Att
                 return;
               }
               attempts.put(attemptRow(scope, attempt));
+              projectionSaved = true;
             };
           };
         };
