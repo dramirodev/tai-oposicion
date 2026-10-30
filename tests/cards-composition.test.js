@@ -4,6 +4,16 @@ import { saveCardsSession } from '../src/adapters/local/cards-session.js';
 
 afterEach(() => localStorage.clear());
 
+function cardProgress(seenTopics = []) {
+  return {
+    getCardReviews: () => ({}),
+    getSeenTopics: () => seenTopics,
+    previewReviewDate: (_cardId, _grade, timestamp) => timestamp + 60_000,
+    gradeCard: vi.fn(),
+    removeCard: vi.fn(),
+  };
+}
+
 it('combina tarjetas curatoriales válidas y tarjetas de preguntas falladas con caché por tema', async () => {
   const loadQuestionMetadata = vi.fn(async () => {});
   const loadJson = vi.fn(async url => url === 'cards/index.json'
@@ -20,8 +30,8 @@ it('combina tarjetas curatoriales válidas y tarjetas de preguntas falladas con 
     loadJson,
     verifiedSources: { q1: { url: 'https://example.test/q1', verified: true } },
     readPreferences: () => ({}), savePreferences: vi.fn(), accountId: () => 'account-1',
-    getCards: () => ({}), getSeen: () => [], getRecord: () => undefined, now: () => 1000, day: 86_400_000,
-    topicName: id => id, grade: vi.fn(), remove: vi.fn(), getReport: () => undefined, saveReport: vi.fn(),
+    progress: cardProgress(), now: () => 1000, day: 86_400_000,
+    topicName: id => id, getReport: () => undefined, saveReport: vi.fn(),
   };
   const composition = createCardsComposition(dependencies);
 
@@ -41,8 +51,8 @@ it('reanuda en la misma cuenta después de recrear el controlador y descarta el 
     loadQuestionMetadata: async () => {}, failedCardQuestionIds: () => [], loadQuestionsById: async () => [],
     loadJson: async url => url === 'cards/index.json' ? { temas: { T01: true } } : [{ id:'resume-card', q:'Pregunta', a:'Respuesta' }],
     verifiedSources: {}, readPreferences: () => ({}), savePreferences: vi.fn(), accountId: () => accountId,
-    getCards: () => ({}), getSeen: () => [], getRecord: () => undefined, now: () => Date.now(), day: 86_400_000,
-    topicName: id => id, grade: vi.fn(), remove: vi.fn(), getReport: () => undefined, saveReport: vi.fn(),
+    progress: cardProgress(), now: () => Date.now(), day: 86_400_000,
+    topicName: id => id, getReport: () => undefined, saveReport: vi.fn(),
   };
   const firstController = createCardsComposition(dependencies).services;
   const firstPlan = await firstController.loadPlan(firstController.getPreferences());
@@ -74,8 +84,8 @@ it('no restaura la sesión de una cuenta si cambia durante la carga de tarjetas'
     loadQuestionMetadata: () => metadataPending, failedCardQuestionIds: () => [], loadQuestionsById: async () => [],
     loadJson: async url => url === 'cards/index.json' ? { temas: { T01: true } } : [{ id:'saved-card', q:'Pregunta', a:'Respuesta' }],
     verifiedSources: {}, readPreferences: () => ({}), savePreferences: vi.fn(), accountId: () => accountId,
-    getCards: () => ({}), getSeen: () => [], getRecord: () => undefined, now: () => Date.now(), day: 86_400_000,
-    topicName: id => id, grade: vi.fn(), remove: vi.fn(), getReport: () => undefined, saveReport: vi.fn(),
+    progress: cardProgress(), now: () => Date.now(), day: 86_400_000,
+    topicName: id => id, getReport: () => undefined, saveReport: vi.fn(),
   };
   saveCardsSession('account-before', { ids:['saved-card'], index:0, revealed:false, results:[0,0,0] });
   const services = createCardsComposition(dependencies).services;
@@ -95,8 +105,8 @@ it('limita el plan de Active Recall a los temas recibidos aunque las preferencia
       : url.endsWith('T1.01.json') ? [{ id:'card-seen', q:'Tema visto', a:'Respuesta' }]
         : [{ id:'card-unseen', q:'Tema no visto', a:'Respuesta' }],
     verifiedSources: {}, readPreferences: () => ({ scope:'todos', n:10 }), savePreferences: vi.fn(), accountId: () => 'scope-test',
-    getCards: () => ({}), getSeen: () => ['T1.01'], getRecord: () => undefined, now: () => Date.now(), day: 86_400_000,
-    topicName: id => id, grade: vi.fn(), remove: vi.fn(), getReport: () => undefined, saveReport: vi.fn(),
+    progress: cardProgress(['T1.01']), now: () => Date.now(), day: 86_400_000,
+    topicName: id => id, getReport: () => undefined, saveReport: vi.fn(),
   };
   const services = createCardsComposition(dependencies).services;
   const plan = await services.loadPlan(services.getPreferences(), ['T1.01']);
@@ -111,8 +121,8 @@ it('conserva la sesión guardada con tarjetas de otros temas al abrir un plan ac
       ? { temas: { 'T1.01': true, 'T1.02': true } }
       : [{ id: url.includes('T1.01') ? 'card-a' : 'card-b', q: 'Pregunta', a: 'Respuesta' }],
     verifiedSources: {}, readPreferences: () => ({}), savePreferences: vi.fn(), accountId: () => 'partial-scope',
-    getCards: () => ({}), getSeen: () => ['T1.01', 'T1.02'], getRecord: () => undefined, now: () => Date.now(), day: 86_400_000,
-    topicName: id => id, grade: vi.fn(), remove: vi.fn(), getReport: () => undefined, saveReport: vi.fn(),
+    progress: cardProgress(['T1.01', 'T1.02']), now: () => Date.now(), day: 86_400_000,
+    topicName: id => id, getReport: () => undefined, saveReport: vi.fn(),
   };
   saveCardsSession('partial-scope', { ids: ['card-a', 'card-b'], index: 1, revealed: false, results: [1, 0, 0] });
   const services = createCardsComposition(dependencies).services;

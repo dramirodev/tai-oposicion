@@ -1,12 +1,13 @@
-import { explanationMapper } from './explanation-mapper.js';
+import { useId } from 'react';
 import type { CodeExplanation } from '../../core/domain/explanations.js';
-import { richHtml } from '../../shared/presentation/study-text.js';
-import { StudyCode } from '../../shared/ui/StudyCode.js';
-import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
+import { codeExplanationPresenter } from '../presentation/code-explanation.js';
+import { richHtml } from '../presentation/study-text.js';
+import { StudyCode } from './StudyCode.js';
+import { StudyMarkup } from './StudyMarkup.js';
 
 export function CodeExplanationView({ explanation }: { explanation: CodeExplanation }) {
   const titleId = `code-explanation-${useId().replaceAll(':', '')}`;
-  const view = explanationMapper.toViewModel(explanation);
+  const view = codeExplanationPresenter.toViewModel(explanation);
   return <section className="card code-explanation" aria-labelledby={titleId}>
     <h3 className="h3" id={titleId}>{view.heading}</h3>
     <div className="explanation-status"><span className="tag warn">{view.editorialLabel}</span>{view.editorialNote && <StudyMarkup html={richHtml(view.editorialNote)} languageContext={view.language} />}</div>
@@ -20,4 +21,3 @@ export function CodeExplanationView({ explanation }: { explanation: CodeExplanat
     <ul className="explanation-sources">{view.sources.map((source, index) => <li key={`${source.url}-${index}`}><a href={source.url} target="_blank" rel="noopener noreferrer"><StudyMarkup html={richHtml(source.title)} languageContext={view.language} /></a>{source.section && <> · <StudyMarkup html={richHtml(source.section)} languageContext={view.language} /></>}</li>)}</ul>
   </section>;
 }
-import { useId } from 'react';

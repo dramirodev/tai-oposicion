@@ -8,6 +8,7 @@ import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
 import { useStudyService, type FailureQuestion } from '../../shared/ui/study-services.js';
 import { selectFailures, type FailureFilter } from './failures-controller.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
+import { PageMessage } from '../../shared/ui/PageMessage.js';
 
 const EMPTY_FILTER: FailureFilter = { query: '', topicId: '', syllabus: '', streak: '' };
 const dateLabel = (timestamp: number) => new Date(timestamp).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
@@ -61,8 +62,8 @@ export function FailuresPage() {
   }, [dailyTraining, failures, loaded, loadError, selected]);
 
   if (!loaded) return <PageLoading variant="legacy" />;
-  if (loadError) return <><h1>Falladas <HelpIconLink topic="repaso" label="Ayuda sobre preguntas falladas y repaso" /></h1><div className="card" role="alert"><p>No se pudieron cargar las preguntas. Comprueba la conexión e inténtalo de nuevo.</p><button className="btn" onClick={() => { setLoaded(false); setLoadError(false); setReload(value => value + 1); }}>Reintentar</button></div></>;
-  if (!questions.length) return <><h1>Falladas <HelpIconLink topic="repaso" label="Ayuda sobre preguntas falladas y repaso" /></h1><div className="card"><p className="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p></div></>;
+  if (loadError) return <><h1>Falladas <HelpIconLink topic="repaso" label="Ayuda sobre preguntas falladas y repaso" /></h1><PageMessage role="alert"><p>No se pudieron cargar las preguntas. Comprueba la conexión e inténtalo de nuevo.</p><button className="btn" onClick={() => { setLoaded(false); setLoadError(false); setReload(value => value + 1); }}>Reintentar</button></PageMessage></>;
+  if (!questions.length) return <><h1>Falladas <HelpIconLink topic="repaso" label="Ayuda sobre preguntas falladas y repaso" /></h1><PageMessage><p className="sub">Aún no tienes preguntas falladas. Cuando falles alguna aparecerá aquí para que la busques y releas el tema.</p></PageMessage></>;
   if (trainingTopicIds && !scopedQuestions.length) return <><h1>Falladas <HelpIconLink topic="repaso" label="Ayuda sobre preguntas falladas y repaso" /></h1><div className="note">El entrenamiento de hoy solo considera los temas que has marcado como vistos. No hay preguntas falladas de esos temas.</div><Link className="btn sec" to="/home">Volver al entrenamiento</Link></>;
 
   return <>

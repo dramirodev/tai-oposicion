@@ -21,7 +21,7 @@ describe('integración del motor con el historial local', () => {
     }));
     localStorage.clear();
     engine = await import('../../src/app/composition/study/study-engine-composition.js');
-    store = await import('../../src/adapters/local/legacy-store.js');
+    store = await import('../../src/adapters/local/local-progress-store.js');
     data = await import('../../src/adapters/http/study-question-catalog.js');
     recovery = await import('../../src/app/composition/study/pending-run-composition.js');
     await data.getMetadata();

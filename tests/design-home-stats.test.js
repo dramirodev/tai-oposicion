@@ -9,7 +9,7 @@ beforeEach(async () => {
   document.body.innerHTML = '<main id="app"></main>';
   vi.stubGlobal('scrollTo', vi.fn()); vi.stubGlobal('matchMedia',()=>({matches:false}));
   vi.stubGlobal('fetch', async url => ({ ok:true, json:async()=>JSON.parse(readFileSync(path.join('public',String(url)), 'utf8')) }));
-  store = await import('../src/adapters/local/legacy-store.js'); engine = await import('../src/app/composition/study/study-engine-composition.js');
+  store = await import('../src/adapters/local/local-progress-store.js'); engine = await import('../src/app/composition/study/study-engine-composition.js');
   routes={};
   const React = await import('react'); rtl = await import('@testing-library/react');
   const { MemoryRouter } = await import('react-router');

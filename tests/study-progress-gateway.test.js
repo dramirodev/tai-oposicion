@@ -7,7 +7,7 @@ describe('localStudyProgressGateway', () => {
   beforeEach(async () => {
     localStorage.clear();
     vi.resetModules();
-    store = await import('../src/adapters/local/legacy-store.js');
+    store = await import('../src/adapters/local/local-progress-store.js');
     gateway = (await import('../src/adapters/local/progress-repository.js')).localStudyProgressGateway;
   });
 
@@ -26,7 +26,7 @@ describe('localStudyProgressGateway', () => {
   });
 
   it('actualiza preferencias en bloque sin perder ajustes de otras pantallas', async () => {
-    store = await import('../src/adapters/local/legacy-store.js');
+    store = await import('../src/adapters/local/local-progress-store.js');
     store.setCfg('training', { minutesByDay: [0, 35, 40, 35, 20, 40, 60], introductionDay: 4, activities: ['topicTest'] });
     store.setCfg('evo', { m: 'tiempo', f: 'g', w: 8, tabla: true });
 

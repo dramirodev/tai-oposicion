@@ -24,7 +24,7 @@ it('un error HTTP no marca una descarga como completa ni escribe una fecha', asy
  expect(localStorage.getItem('tai.offline-verified')).toBeNull();
 });
 it('valida una copia antes de tocar el progreso y conserva los registros locales ausentes', async () => {
- const store = await import('../src/adapters/local/legacy-store.js'); store.record('local','T1.01',0,100);
+ const store = await import('../src/adapters/local/local-progress-store.js'); store.record('local','T1.01',0,100);
  const {studyServices} = await import('../src/app/app-services-composition.js');
  expect(() => studyServices.settings.previewBackup('{"stats":[]}')).toThrow('Archivo no válido');
  const p = studyServices.settings.previewBackup(JSON.stringify({stats:{nuevo:[1,1,200],mal:['x']}}));

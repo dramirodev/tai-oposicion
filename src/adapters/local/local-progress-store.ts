@@ -1,4 +1,5 @@
 import { cleanCfg, cleanCfgSetting } from './config.js';
+import { createStore } from 'zustand/vanilla';
 import { CARD_REVIEW_INTERVALS_DAYS, CALENDAR_DAY_MILLISECONDS } from '../../core/domain/spaced-repetition.js';
 import { markLuckyQuestion, markQuestionSyllabusReviewed, recordQuestionAnswer, recordQuestionFailureReason, scheduleDoubtfulQuestion } from '../../core/domain/question-progress.js';
 import { scheduleCardWithFsrs } from './fsrs-card-scheduler.js';
@@ -101,8 +102,10 @@ export function mergeReports(m0: unknown): boolean {
 
 
 export type Syncer = ProgressSyncCallbacks;
-let appState: AppState = load();
-const listeners = new Set<() => void>();
+const progressStore = createStore<{ progress: AppState; revision: number }>(() => ({ progress: load(), revision: 0 }));
+// DTOs stay inside this adapter. Zustand is the single in-memory authority;
+// revision publishes mutations while preserving the historical DTO identity.
+let appState: AppState = progressStore.getState().progress;
 let dirty = new Set<string>();
 let syncer: Syncer | null = null;
 
@@ -123,6 +126,7 @@ export function switchAccount(next: string | null, adoptLegacy = false): void {
   writeActiveAccount(next);
   const hasLocal = hasProgressSnapshot(stateKey());
   appState = load(!hasLocal && adoptLegacy ? unscopedProgressStorageKey() : stateKey());
+  progressStore.setState({ progress: appState });
   if (!hasLocal && adoptLegacy && next) {
     markLegacyProgressForAdoption(next);
   }
@@ -178,9 +182,9 @@ export async function recover(): Promise<boolean> {
   } catch { return false; }
 }
 export function flushNow(): Promise<void> { writeProgressSnapshot(stateKey(), appState); return flushMirror(); }
-export function onChange(fn: () => void): () => void { listeners.add(fn); return () => listeners.delete(fn); }
+export function onChange(fn: () => void): () => void { return progressStore.subscribe(() => fn()); }
 export const subscribe: (fn: () => void) => () => void = onChange;
-function emit() { listeners.forEach(listener => listener()); }
+function emit() { progressStore.setState(state => ({ revision: state.revision + 1 })); }
 
 export const getStats = (): StatMap => appState.stats;
 export const getSessions = (): Session[] => appState.sessions;
@@ -394,4 +398,4 @@ export function importAll(txt: unknown): void {
   if (parsedData.cfg) { appState.cfg = { ...appState.cfg, ...cleanCfg(parsedData.cfg) }; persist(); emit(); }
   syncer?.pushImport?.();
 }
-export function resetAll(): void { appState = { stats: createDictionary(), sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: createDictionary(), cards: createDictionary() }; persist(); emit(); }
+export function resetAll(): void { appState = { stats: createDictionary(), sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: createDictionary(), cards: createDictionary() }; progressStore.setState({ progress: appState }); persist(); emit(); }

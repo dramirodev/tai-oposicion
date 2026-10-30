@@ -7,6 +7,8 @@ import { questionNotice, sourceHtml } from '../../shared/presentation/study-cont
 import { TRAMPAS } from '../../shared/presentation/labels.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
+import { StudyFeedback } from '../../shared/ui/StudyFeedback.js';
+import { StudyQuestionSources } from '../../shared/ui/StudyQuestionSources.js';
 
 export function LightningPage() {
   const lightning = useStudyService('lightning');
@@ -38,18 +40,18 @@ export function LightningPage() {
     <p className="sub"><ReasonIcon className="inline-feature-icon" size="1em" strokeWidth={1.7} aria-hidden="true" /> {question.reason}</p>
     <article className="card q">
       <div className="meta"><span className="tag">{question.topicId} · {lightning.topicName(question.topicId)}</span></div>
-      {notice && <StudyMarkup html={notice} languageContext={question.statement} />}{source && <StudyMarkup html={source} languageContext={question.statement} />}
+      <StudyQuestionSources noticeHtml={notice} sourceHtml={source} languageContext={question.statement} />
       {question.context && <div className="ctx pre"><StudyMarkup html={richHtml(question.context)} languageContext={question.statement} /></div>}
       <div className="enun pre"><StudyMarkup html={richHtml(question.statement)} languageContext={question.statement} /></div>
       <div className="opts">{question.options.map((option, index) => <button key={`${question.id}-${index}`} className={`opt${answered === null ? '' : index === question.correctIndex ? ' ok' : answered === index ? ' bad' : ' dis'}`} disabled={answered !== null} onClick={() => {
         setAnswered(index);
         lightning.record(question.id, question.topicId, index === question.correctIndex, Math.max(1, Math.round((Date.now() - startedAt.current) / 1000)));
       }}><b>{'ABCD'[index]}</b><span className="pre"><StudyMarkup html={richHtml(option)} languageContext={question.statement} /></span></button>)}</div>
-      {answered !== null && <div className={`fb motion-safe:animate-[fbin_.2s_ease-out] ${correct ? 'good' : 'wrong'}`} role="status"><b>{correct ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>{'ABCD'[question.correctIndex]}</b>
+      {answered !== null && <StudyFeedback tone={correct ? 'good' : 'wrong'}><b>{correct ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>{'ABCD'[question.correctIndex]}</b>
         {question.citation && <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(question.citation, question.options[question.correctIndex])} languageContext={question.statement} /></div>}
         {question.note && <div className="cita"><span>Nota</span><StudyMarkup html={richHtml(question.note)} languageContext={question.statement} /></div>}
         {!!question.traps?.length && <div className="trap">Trampa: {question.traps.map(trap => TRAMPAS[trap] || String(trap)).join(' · ')}</div>}
-      </div>}
+      </StudyFeedback>}
     </article>
     <div className="bar2">{answered === null ? <Link className="btn sec" to="/home">Ahora no</Link> : <><button className="btn" autoFocus onClick={next}>Otra →</button><Link className="btn sec" to="/home">Inicio</Link></>}</div>
   </>;

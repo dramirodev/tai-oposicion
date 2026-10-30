@@ -12,7 +12,7 @@ import { calculateTrapRates, selectTrapQuestions } from '../src/core/domain/trap
 import { ERROR_REPORT_REASONS as MOTIVOS, FAILURE_REASONS as MOTIVOS_FALLO, UI_ZOOMS as ZOOMS } from '../src/shared/presentation/study-labels.js';
 import { normalizeUiPreferences as normUi } from '../src/shared/presentation/ui-preferences.js';
 import { swipeDirection as swipeDir, studyKeyAction as keyAction } from '../src/shared/ui/study-input.js';
-import { selectLegacyCards as pickCards, summarizeLegacyCards as cardStats, cardFromFailedQuestion as cardFromQuestion } from '../src/features/cards/flashcard-mapper.js';
+import { selectCards as pickCards, summarizeCards as cardStats, cardFromFailedQuestion as cardFromQuestion } from '../src/features/cards/flashcard-mapper.js';
 import { hiliteHtml, claveSpans, claveHtml, richHtml, codeSpans, todoCodigo } from '../src/shared/presentation/study-text.js';
 import { asksForNegativeOption as pideNegativa, minimumReadingSeconds as minLectura } from '../src/core/domain/reading-strategy.js';
 
@@ -314,7 +314,11 @@ describe('tarjetas: selección y estadísticas', () => {
   const C = (t, k) => Array.from({ length: k }, (_, i) => ({ id: `FC-${t}-${i}`, t }));
   it('vencidas primero y luego nuevas (máx. maxNew), mezclando temas', () => {
     const cards = [...C('A', 5), ...C('B', 5)];
-    const recs = { 'FC-A-0': [1, 0, now, 0, now - 2 * D, 0], 'FC-B-0': [1, 0, now, 0, now - D, 0], 'FC-A-1': [1, 1, now, 1, now + D, 2] };
+    const recs = {
+      'FC-A-0': { attempts: 1, known: 0, lastReviewedAt: now, intervalStep: 0, dueAt: now - 2 * D, lastGrade: 0 },
+      'FC-B-0': { attempts: 1, known: 0, lastReviewedAt: now, intervalStep: 0, dueAt: now - D, lastGrade: 0 },
+      'FC-A-1': { attempts: 1, known: 1, lastReviewedAt: now, intervalStep: 1, dueAt: now + D, lastGrade: 2 },
+    };
     const r = pickCards(cards, recs, { n: 6, now, maxNew: 3 });
     expect(r.slice(0, 2)).toEqual(['FC-A-0', 'FC-B-0']);
     expect(r).toHaveLength(5); expect(r).not.toContain('FC-A-1');
@@ -327,7 +331,11 @@ describe('tarjetas: selección y estadísticas', () => {
   });
   it('cardStats clasifica nuevas, en repaso, vencen hoy y dominadas', () => {
     const cards = C('A', 4);
-    const recs = { 'FC-A-0': [2, 2, now, -1, 0, 2], 'FC-A-1': [1, 1, now, 0, now - 1, 2], 'FC-A-2': [1, 1, now, 1, now + D, 2] };
+    const recs = {
+      'FC-A-0': { attempts: 2, known: 2, lastReviewedAt: now, intervalStep: -1, dueAt: 0, lastGrade: 2 },
+      'FC-A-1': { attempts: 1, known: 1, lastReviewedAt: now, intervalStep: 0, dueAt: now - 1, lastGrade: 2 },
+      'FC-A-2': { attempts: 1, known: 1, lastReviewedAt: now, intervalStep: 1, dueAt: now + D, lastGrade: 2 },
+    };
     expect(cardStats(cards, recs, now)).toEqual({ nuevas: 1, enRepaso: 2, dominadas: 1, hoy: 1 });
   });
   it('cardFromQuestion usa la opción correcta, la nota y la cita', () => {

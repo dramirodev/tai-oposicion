@@ -3,7 +3,7 @@ import React from 'react';
 import { readFileSync } from 'node:fs';
 import { render, screen } from '@testing-library/react';
 import { StudyMarkup } from '../src/shared/ui/StudyMarkup.js';
-import { CodeExplanationView } from '../src/features/explanations/CodeExplanation.js';
+import { CodeExplanationView } from '../src/shared/ui/CodeExplanationView.js';
 import { inferCodeLanguage, normalizeCodeLanguage } from '../src/shared/ui/study-code-language.js';
 import { richHtml } from '../src/shared/presentation/study-text.js';
 

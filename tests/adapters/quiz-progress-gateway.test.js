@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import * as store from '../../src/adapters/local/legacy-store.js';
+import * as store from '../../src/adapters/local/local-progress-store.js';
 import { localQuizProgressGateway } from '../../src/adapters/local/progress-repository.js';
 
 describe('localQuizProgressGateway', () => {

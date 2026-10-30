@@ -2,8 +2,8 @@ import type { SettingsServices, SettingsSnapshot, StudyServices } from '../share
 import { questionNotice, sourceHtml } from '../shared/presentation/study-content.js';
 import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
 import * as sync from '../adapters/firebase/sync-facade.js';
-import * as store from '../adapters/local/legacy-store.js';
-import { localProgressRepository, localQuizProgressGateway, localStudyProgressGateway } from '../adapters/local/progress-repository.js';
+import * as progressStore from '../adapters/local/local-progress-store.js';
+import { localCardProgressGateway, localProgressRepository, localQuizProgressGateway, localStudyProgressGateway } from '../adapters/local/progress-repository.js';
 import { localGuestQuestionHistoryRepository } from '../adapters/local/guest-question-history.js';
 import { localReadingQuestionHistoryRepository } from '../adapters/local/reading-question-history.js';
 import { percentage as pct } from '../shared/presentation/format.js';
@@ -81,11 +81,11 @@ function go(h: string) { navigate(h); }
 const appUpdates = createAppUpdateController({
   currentBuild: APP_BUILD,
   saveRun,
-  flushProgress: () => store.flushNow(),
+  flushProgress: () => progressStore.flushNow(),
   getRegistration: () => navigator.serviceWorker?.getRegistration(),
   reload: () => location.reload(),
 });
-const recover = createAccountRecovery(localStudyProgressGateway.accountId, () => store.recover());
+const recover = createAccountRecovery(localStudyProgressGateway.accountId, () => progressStore.recover());
 const dominioTemas = createTopicMasteryComposition({ progressRepository: localProgressRepository, accountId: localStudyProgressGateway.accountId, questionIdsForTopic: topicId => studyQuestionCatalog.getMetadataSnapshot()?._by[topicId] || [], now: studyQuestionCatalog.now });
 const progressPorTema = createTopicProgressComposition({ progressRepository: localProgressRepository, accountId: localStudyProgressGateway.accountId, questionIdsForTopic: topicId => studyQuestionCatalog.getMetadataSnapshot()?._by[topicId] || [] });
 const trainingSession = createTrainingSessionComposition({ accountId: localStudyProgressGateway.accountId, now: studyQuestionCatalog.now, push: session => { void sync.pushTrainingSession(session); } });
@@ -93,8 +93,8 @@ const paperRecall = createPaperRecallComposition({ accountId: localStudyProgress
 const trainingCalendar = createTrainingCalendarComposition({
   accountId: localStudyProgressGateway.accountId,
   now: studyQuestionCatalog.now,
-  getSeenTopics: store.getSeen,
-  getPreferences: () => normalizeTrainingPreferences(store.getCfg().training),
+  getSeenTopics: localStudyProgressGateway.getSeenTopics,
+  getPreferences: () => normalizeTrainingPreferences(localStudyProgressGateway.getPreferences().training),
   push: activities => { void sync.pushTrainingCalendar(activities); },
 });
 let routeReady: () => void;
@@ -137,15 +137,18 @@ async function openMenu() {
   if (document.getElementById('menuov')) return;
   const account = localStudyProgressGateway.accountId();
   await getMeta();
-  const due = (await dueQuestionIds()).length, nCards = Object.values(store.getCards()).filter(r => r[3] >= 0 && r[4] <= studyQuestionCatalog.now()).length;
-  const statistics = await localProgressRepository.getStats().catch((): Readonly<Record<string, QuestionStats>> => ({}));
+  const [due, statistics, cards, reports] = await Promise.all([
+    dueQuestionIds().then(ids => ids.length), localProgressRepository.getStats().catch((): Readonly<Record<string, QuestionStats>> => ({})),
+    localProgressRepository.getCardReviews(), localProgressRepository.getReports(),
+  ]);
+  const nCards = Object.values(cards).filter(card => card.dueAt <= studyQuestionCatalog.now()).length;
   if (account !== localStudyProgressGateway.accountId()) return;
   const speed = summarizeReadingSpeedFailures(Object.entries(statistics).map(([id, record]) => ({ id, lastOutcome: record.lastResult ?? -1, lastReasonCode: record.errorReason })));
-  const nErr = Object.values(store.getReports()).filter(r => r.st === 'abierto').length;
+  const nErr = Object.values(reports).filter(report => report.state === 'abierto').length;
   const aqui = location.hash || hashPath('home');
   const groups = createStudyMenuGroups({
     fullAccess: isFull(), owner: isOwner(), pendingQuestions: due, pendingCards: nCards,
-    readingSpeedFailures: speed.count, openReports: nErr, seenTopics: store.getSeen().length,
+    readingSpeedFailures: speed.count, openReports: nErr, seenTopics: localStudyProgressGateway.getSeenTopics().length,
     failedQuestions: falladasIds().length, accessRequests: sync.status.reqs.length,
     updateAvailable: !!appUpdates.getAvailableUpdate(), actions: { quickSession, startReview: startRepaso },
   });
@@ -166,16 +169,16 @@ async function selectSimulationQuestions(index: Awaited<ReturnType<typeof getInd
 // Las pantallas comparten navegación y limpieza; cada módulo conserva su estado de sesión.
 const cardsComposition = createCardsComposition({
   loadQuestionMetadata: getMeta,
-  failedCardQuestionIds: () => Object.keys(store.getCards()).filter(id => id.startsWith('FC-Q-')).map(id => id.slice(5)),
+  failedCardQuestionIds: () => Object.keys(localCardProgressGateway.getCardReviews()).filter(id => id.startsWith('FC-Q-')).map(id => id.slice(5)),
   loadQuestionsById: ids => studyQuestionCatalog.getQuestions(ids),
   loadJson: fetchJson,
   verifiedSources: VERIFIED_SOURCES,
-  readPreferences: () => store.getCfg().cardsc,
-  savePreferences: preferences => store.setCfg('cardsc', preferences),
-  accountId: localStudyProgressGateway.accountId, getCards: store.getCards, getSeen: store.getSeen, getRecord: store.cardRec,
-  now: studyQuestionCatalog.now, day: store.DAY, topicName: studyQuestionCatalog.getTopicName, grade: store.gradeCard, remove: store.removeCard,
-  getReport: id => store.getReports()[id],
-  saveReport: (card, reason, note) => store.addReport(card.id, card.t, reason, note),
+  readPreferences: () => localStudyProgressGateway.getPreferences().cardsc,
+  savePreferences: preferences => localStudyProgressGateway.updatePreferences(current => ({ ...current, cardsc: preferences })),
+  accountId: localStudyProgressGateway.accountId, progress: localCardProgressGateway,
+  now: studyQuestionCatalog.now, day: 86_400_000, topicName: studyQuestionCatalog.getTopicName,
+  getReport: id => { const report = localStudyProgressGateway.getErrorReport(id); return report && { ts: report.reportedAt, tema: report.topicId, motivo: report.reason, nota: report.note, st: report.state }; },
+  saveReport: (card, reason, note) => localStudyProgressGateway.saveErrorReport({ questionId: card.id, topicId: card.t, reason, note, state: 'abierto', reportedAt: Date.now() }),
 });
 const { services: cardsServices, loadAllCards: allCards } = cardsComposition;
 let settingsIndex: Awaited<ReturnType<typeof getIndex>> | null = null;
@@ -194,17 +197,18 @@ async function refreshSettingsProgressQuestionCount(): Promise<void> {
 const settingsServices = {
   accountId: localStudyProgressGateway.accountId,
   getSnapshot(): SettingsSnapshot {
+    const preferences = localStudyProgressGateway.getPreferences();
     return toSettingsSnapshot({
       sync: { state: sync.status.state, user: sync.status.user, configured: sync.status.configured, lastSync: sync.status.lastSync, error: sync.status.error, detail: sync.status.detail, host: sync.status.host, authDomain: sync.status.authDomain, accessError: sync.status.accessErr, requests: sync.status.reqs },
       full: isFull(), level: accessLevel(), devMode: devMode(), devRevealed: devRevealed(),
-      uiPreferences: store.getCfg().ui, trainingPreferences: store.getCfg().training,
-      progress: { questions: settingsProgressQuestionCount, topics: store.getSeen().length, sessions: store.getSessions().length, openReports: Object.values(store.getReports()).filter(report => report.st === 'abierto').length },
-      exam: store.getCfg().exam, version: APP_VERSION, build: APP_BUILD.split('+')[1] || APP_BUILD, update: appUpdates.getAvailableUpdate()?.version || null,
+      uiPreferences: preferences.ui, trainingPreferences: preferences.training,
+      progress: { questions: settingsProgressQuestionCount, topics: localStudyProgressGateway.getSeenTopics().length, sessions: localStudyProgressGateway.getSessions().length, openReports: Object.values(localStudyProgressGateway.getErrorReports()).filter(report => report.state === 'abierto').length },
+      exam: preferences.exam, version: APP_VERSION, build: APP_BUILD.split('+')[1] || APP_BUILD, update: appUpdates.getAvailableUpdate()?.version || null,
       offline: settingsOffline, index: settingsIndex ? { questions: settingsIndex.n, scenarios: settingsIndex.nsup, topics: settingsIndex.temas.map(topic => ({ id: topic.id, name: topic.nombre })) } : null,
     });
   },
   subscribe(listener: () => void) {
-    const offStore = store.onChange(listener), offSync = sync.onStatus(listener);
+    const offStore = localProgressRepository.subscribe(listener), offSync = sync.onStatus(listener);
     return () => { offStore(); offSync(); };
   },
   async load() {
@@ -214,11 +218,17 @@ const settingsServices = {
     notifySettings();
   },
   setPreference(key: 'theme' | 'size' | 'lectura', value: string | number) {
-    const current = normalizeUiPreferences(store.getCfg().ui);
-    store.setCfg('ui', { ...current, [key]: key === 'theme' ? value : Number(value) });
+    localStudyProgressGateway.updatePreferences(current => {
+      const ui = normalizeUiPreferences(current.ui);
+      return { ...current, ui: { ...ui, [key]: key === 'theme' ? value : Number(value) } };
+    });
   },
-  setTrainingPreferences(value: TrainingPreferences) { store.setCfg('training', normalizeTrainingPreferences(value)); },
-  setExam(value: string) { if (isStudyDateKey(value)) store.setCfg('exam', value); },
+  setTrainingPreferences(value: TrainingPreferences) {
+    localStudyProgressGateway.updatePreferences(current => ({ ...current, training: normalizeTrainingPreferences(value) }));
+  },
+  setExam(value: string) {
+    if (isStudyDateKey(value)) localStudyProgressGateway.updatePreferences(current => ({ ...current, exam: value }));
+  },
   setDevMode(value: string | null) { setDevMode(value); notifyAccessChange(); notifySettings(); },
   revealDev() { const revealed = revealDev(); if (revealed) notifySettings(); return revealed; },
   async requestAccess() { return await sync.requestAccess(); },
@@ -243,30 +253,30 @@ const settingsServices = {
   async exportBackup() {
     const account = localStudyProgressGateway.accountId() || 'guest';
     const archive = await exportAttemptArchive(localAttemptRepository, account, Date.now());
-    const backup = JSON.parse(store.exportAll()); backup.attemptHistory = attemptArchiveMapper.toDto(archive);
+    const backup = JSON.parse(progressStore.exportAll()); backup.attemptHistory = attemptArchiveMapper.toDto(archive);
     return JSON.stringify(backup);
   },
   previewBackup(text: string) {
     return previewBackupImport(text, {
-      cleanStats: store.cleanStats,
-      cleanSessions: store.cleanSessions,
-      cleanCards: store.cleanCards,
-      cleanReports: store.cleanReports,
-      cleanSeen: store.cleanSeen,
+      cleanStats: progressStore.cleanStats,
+      cleanSessions: progressStore.cleanSessions,
+      cleanCards: progressStore.cleanCards,
+      cleanReports: progressStore.cleanReports,
+      cleanSeen: progressStore.cleanSeen,
       cleanConfig: cleanCfg,
-      getStats: store.getStats,
-      getQuestionStats: store.rec,
-      needsSync: store.needsSync,
+      getStats: progressStore.getStats,
+      getQuestionStats: progressStore.rec,
+      needsSync: progressStore.needsSync,
       attemptArchive: attemptArchiveMapper,
     });
   },
   async importBackup(serialized: string, attemptArchive?: unknown) {
     const account = localStudyProgressGateway.accountId();
-    store.importAll(serialized);
+    progressStore.importAll(serialized);
     if (attemptArchive) await importAttemptArchive(localAttemptRepository, account || 'guest', attemptArchive as AttemptArchive);
     if (localStudyProgressGateway.accountId() !== account) throw new Error('La cuenta cambió durante la importación. Comprueba el progreso antes de continuar.');
   },
-  resetAll: () => store.resetAll(),
+  resetAll: () => progressStore.resetAll(),
   findAiSessions: (from: number, to: number, modes: readonly ('practice' | 'simulation')[]) => listManualExportSessions(from, to, [...modes]),
   buildAiExport: (input: Parameters<SettingsServices['buildAiExport']>[0]) => createManualAiExport({ ...input, modes: [...input.modes], sessionIds: [...input.sessionIds] }),
   deleteAiHistory: deleteManualStudyHistory,
@@ -279,7 +289,7 @@ const settingsServicesWithSubscription = {
   subscribe(listener: () => void) {
     settingsListeners.add(listener);
     const onStoreChange = () => { listener(); void refreshSettingsProgressQuestionCount(); };
-    const offStore = store.onChange(onStoreChange), offSync = sync.onStatus(listener);
+    const offStore = localProgressRepository.subscribe(onStoreChange), offSync = sync.onStatus(listener);
     return () => { settingsListeners.delete(listener); offStore(); offSync(); };
   },
 };
@@ -298,8 +308,8 @@ const failuresServices = createFailuresComposition({
   loadQuestionIndex: getIndex,
   loadQuestionsById: ids => studyQuestionCatalog.getQuestions(ids),
   failedQuestionIds: falladasIds,
-  seenTopics: store.getSeen,
-  setReviewed: (id, topicId, reviewed) => store.setReviewed(id, topicId, reviewed),
+  seenTopics: localStudyProgressGateway.getSeenTopics,
+  setReviewed: localStudyProgressGateway.setSyllabusReviewed,
   topicName: studyQuestionCatalog.getTopicName,
   sourceFallbacks: VERIFIED_SOURCES,
   shuffle,
@@ -315,7 +325,7 @@ const lightningServices = createLightningComposition({
   shuffle,
   loadQuestionsById: ids => studyQuestionCatalog.getQuestions(ids),
   sourceFallbacks: VERIFIED_SOURCES,
-  recordAnswer: (questionId, topicId, correct, seconds) => store.record(questionId, topicId, correct ? 1 : 0, studyQuestionCatalog.now(), seconds),
+  recordAnswer: (questionId, topicId, correct, seconds) => localStudyProgressGateway.recordAnswer(questionId, topicId, correct ? 1 : 0, studyQuestionCatalog.now(), seconds),
   topicName: studyQuestionCatalog.getTopicName,
 });
 const trapsServices = createTrapsComposition({
@@ -328,12 +338,13 @@ const trapsServices = createTrapsComposition({
   shuffle,
   sourceFallbacks: VERIFIED_SOURCES,
   topicName: studyQuestionCatalog.getTopicName,
-  readDetectionStats: () => (store.getCfg().tdet || {}) as unknown as Record<string, readonly [number, number]>,
-  writeDetectionStats: stats => store.setCfg('tdet', stats),
+  readDetectionStats: () => Object.fromEntries(Object.entries(localStudyProgressGateway.getPreferences().tdet || {}).flatMap(([id, value]) => value.length === 2
+    ? [[id, [value[0], value[1]] as const]] : [])),
+  writeDetectionStats: stats => localStudyProgressGateway.updatePreferences(current => ({ ...current, tdet: Object.fromEntries(Object.entries(stats).map(([id, value]) => [id, [...value]])) })),
 });
 const readingServices = createReadingComposition({
   accountId: localStudyProgressGateway.accountId,
-  onAccountChange: store.onAccountChange,
+  onAccountChange: localStudyProgressGateway.onAccountChange,
   loadQuestionMetadata: getMeta,
   readQuestionStats: () => localProgressRepository.getStats(),
   fastQuestionIds: stats => summarizeReadingSpeedFailures(Object.entries(stats).map(([id, record]) => ({ id, lastOutcome: record.lastResult ?? -1, lastReasonCode: record.errorReason }))).questionIds,
@@ -345,7 +356,7 @@ const readingServices = createReadingComposition({
   shuffle,
   tokenize: readingTokens,
   sourceFallbacks: VERIFIED_SOURCES,
-  recordAnswer: (questionId, topicId, correct, timestamp, seconds) => store.record(questionId, topicId, correct ? 1 : 0, timestamp, seconds),
+  recordAnswer: (questionId, topicId, correct, timestamp, seconds) => localStudyProgressGateway.recordAnswer(questionId, topicId, correct ? 1 : 0, timestamp, seconds),
   now: studyQuestionCatalog.now,
   currentTime: Date.now,
 });
@@ -354,11 +365,11 @@ const readingServices = createReadingComposition({
 // ───────── arranque ─────────
 export function bootAppServices(): () => void {
   return startAppBootstrap({
-    onAccountChange: store.onAccountChange,
+    onAccountChange: localStudyProgressGateway.onAccountChange,
     goHome: () => go(hashPath('home')),
     recover,
     setAttemptTrackingVisible,
-    flushStore: () => { store.flushNow(); },
+    flushStore: () => { progressStore.flushNow(); },
     flushAttemptTracking,
     saveRun,
     pauseTrainingSession: () => { trainingSession.pauseCurrentActivity(); },
@@ -367,7 +378,7 @@ export function bootAppServices(): () => void {
     prefetchBank: prefetchBanco,
     loadMetadataAndInitializeSync: async () => {
       try { await getMeta(); } catch (error) { console.error(error); }
-      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getAllQuestionIdsForTopic }, store, trainingSession, paperRecall, trainingCalendar); } catch (error) { console.error(error); }
+      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getAllQuestionIdsForTopic }, progressStore, trainingSession, paperRecall, trainingCalendar); } catch (error) { console.error(error); }
     },
   });
 }
@@ -395,7 +406,7 @@ export const studyServices: StudyServices = {
             contentRevision: questionContentRevision(question.q, question.a) };
         }) };
     },
-    subscribe(listener) { const offEngine = subscribeEngine(listener), offStore = store.onChange(listener); return () => { offEngine(); offStore(); }; },
+    subscribe(listener) { const offEngine = subscribeEngine(listener), offStore = localProgressRepository.subscribe(listener); return () => { offEngine(); offStore(); }; },
     continuePartTwo() { go(hashPath('simulationReview')); },
     repeatFailures() {
       const last = getLastResult(); if (!last) return false;
@@ -406,36 +417,36 @@ export const studyServices: StudyServices = {
     async loadExplanation(item) {
       return findCodeExplanation(item.id, item.statement, [...item.options]);
     },
-    getReport(id) { const report = store.getReports()[id]; return report ? { reason: report.motivo, note: report.nota, state: report.st } : undefined; },
-    saveReport(id, topicId, reason, note) { store.addReport(id, topicId, reason, note); },
+    getReport(id) { const report = localStudyProgressGateway.getErrorReport(id); return report && { reason: report.reason, note: report.note, state: report.state }; },
+    saveReport(id, topicId, reason, note) { localStudyProgressGateway.saveErrorReport({ questionId: id, topicId, reason, note, state: 'abierto', reportedAt: Date.now() }); },
   },
   simulation: {
-    getTab() { const value = store.getCfg().simtab; return value === 'examen' || value === 'tema' ? value : 'completo'; },
-    setTab(tab) { store.setCfg('simtab', tab); },
+    getTab() { const value = localStudyProgressGateway.getPreferences().simtab; return value === 'examen' || value === 'tema' ? value : 'completo'; },
+    setTab(tab) { localStudyProgressGateway.updatePreferences(current => ({ ...current, simtab: tab })); },
     getConfiguration() {
-      const saved = store.getCfg().sim || {};
+      const saved = localStudyProgressGateway.getPreferences().sim || {};
       return { count: saved.n === 40 ? 40 : 80, minutes: ([45, 60, 90, 120].includes(saved.min ?? 0) ? saved.min : 90) as SimulationConfiguration['minutes'],
         scope: saved.scope === 'todos' ? 'todos' : 'vistos', origins: saved.o || ['O', 'G'], includeSecondPart: saved.parte2 !== false };
     },
     saveConfiguration(configuration) {
-      store.setCfg('sim', { n: configuration.count, min: configuration.minutes, o: [...configuration.origins], parte2: configuration.includeSecondPart, scope: configuration.scope });
+      localStudyProgressGateway.updatePreferences(current => ({ ...current, sim: { n: configuration.count, min: configuration.minutes, o: [...configuration.origins], parte2: configuration.includeSecondPart, scope: configuration.scope } }));
     },
-    seenTopics: store.getSeen,
+    seenTopics: localStudyProgressGateway.getSeenTopics,
     async loadExamGroups(): Promise<SimulationExamGroups> {
       const metadata = await studyQuestionCatalog.getMetadataIndex();
-      const lists = createExamCatalog(metadata, studyQuestionCatalog.getTopicName), sessions = store.getSessions();
+      const lists = createExamCatalog(metadata, studyQuestionCatalog.getTopicName), sessions = localStudyProgressGateway.getSessions();
       const map = (entries: { k: string; ids: string[]; nombre: string }[]): SimulationExam[] => entries.map(entry => {
-        const attempts = sessions.filter(session => session.titulo === entry.nombre);
+        const attempts = sessions.filter(session => session.title === entry.nombre);
         return { id: entry.k, name: entry.nombre, questionCount: entry.ids.length, attempts: attempts.length,
-          latest: attempts[0]?.nota ?? null, best: attempts.length ? Math.max(...attempts.map(session => session.nota)) : null };
+          latest: attempts[0]?.score ?? null, best: attempts.length ? Math.max(...attempts.map(session => session.score)) : null };
       });
       return { official: map(lists.ofi), academy: map(lists.sims), topicTests: map(lists.tests) };
     },
-    getSelectedExam() { return store.getCfg().exsel || null; },
-    selectExam(id) { store.setCfg('exsel', id); },
+    getSelectedExam() { return localStudyProgressGateway.getPreferences().exsel || null; },
+    selectExam(id) { localStudyProgressGateway.updatePreferences(current => ({ ...current, exsel: id })); },
     async startConfigured(configuration) {
       const account = localStudyProgressGateway.accountId(), index = await getIndex(); await getMeta();
-      const seen = store.getSeen(), only = configuration.scope !== 'todos' && seen.length ? new Set(seen) : null;
+      const seen = localStudyProgressGateway.getSeenTopics(), only = configuration.scope !== 'todos' && seen.length ? new Set(seen) : null;
       const origins = new Set(configuration.origins);
       const items = await selectSimulationQuestions(index, origins, configuration.count, only);
       if (account !== localStudyProgressGateway.accountId()) return 'account-changed';
@@ -455,7 +466,7 @@ export const studyServices: StudyServices = {
         : startRun({ kind: 'test', feedback: true, items, titulo: selected.nombre });
       return started ? 'started' : 'empty';
     },
-    openExams() { store.setCfg('simtab', 'examen'); go(hashPath('simulation')); },
+    openExams() { localStudyProgressGateway.updatePreferences(current => ({ ...current, simtab: 'examen' })); go(hashPath('simulation')); },
   },
   simulationReview: {
     async loadChoices(): Promise<ScenarioChoice[]> {
@@ -482,16 +493,16 @@ export const studyServices: StudyServices = {
       return summaries.map(({ id, name, total, attempted, correct, answerCount }) => ({ id, name, total, attempted, correct, answerCount }));
     },
     getConfiguration() {
-      const saved = store.getCfg().test || {};
+      const saved = localStudyProgressGateway.getPreferences().test || {};
       return { all: typeof saved.all === 'boolean' ? saved.all : !(saved.sel || []).length, selected: saved.sel || [], count: ([10, 15, 25, 40].includes(saved.n ?? 0) ? saved.n : 15) as TestConfiguration['count'],
         mode: (['nuevas', 'aleatorio', 'falladas', 'dudosas', 'trampas'].includes(saved.mode ?? '') ? saved.mode : 'nuevas') as TestConfiguration['mode'], origins: saved.o || ['O', 'A', 'G'], timed: !!saved.pt,
         minutes: ([10, 20, 30, 45, 60].includes(saved.min ?? 0) ? saved.min : 20) as TestConfiguration['minutes'] };
     },
     saveConfiguration(configuration) {
-      store.setCfg('test', { all: configuration.all, sel: [...configuration.selected], n: configuration.count, mode: configuration.mode,
-        o: [...configuration.origins], pt: configuration.timed ? 1 : 0, min: configuration.minutes });
+      localStudyProgressGateway.updatePreferences(current => ({ ...current, test: { all: configuration.all, sel: [...configuration.selected], n: configuration.count, mode: configuration.mode,
+        o: [...configuration.origins], pt: configuration.timed ? 1 : 0, min: configuration.minutes } }));
     },
-    seenTopics: store.getSeen,
+    seenTopics: localStudyProgressGateway.getSeenTopics,
     async start(configuration, options) {
       const account = localStudyProgressGateway.accountId();
       const selected = [...configuration.selected];
@@ -517,10 +528,10 @@ export const studyServices: StudyServices = {
   stats: statsServices,
   settings: settingsServicesWithSubscription,
   errors: {
-    getFilter() { return String(store.getCfg().errf || 'abierto'); },
-    getReports() { return Object.entries(store.getReports()).map(([id, report]) => ({ id, ts: report.ts, tema: report.tema, motivo: report.motivo, nota: report.nota, state: report.st })); },
-    subscribe: store.onChange,
-    setFilter(filter) { store.setCfg('errf', filter); },
+    getFilter() { return String(localStudyProgressGateway.getPreferences().errf || 'abierto'); },
+    getReports() { return Object.values(localStudyProgressGateway.getErrorReports()).map(report => ({ id: report.questionId, ts: report.reportedAt, tema: report.topicId, motivo: report.reason, nota: report.note, state: report.state })); },
+    subscribe: localProgressRepository.subscribe,
+    setFilter(filter) { localStudyProgressGateway.updatePreferences(current => ({ ...current, errf: filter })); },
     async loadContent(ids) {
       const requestedIds = new Set(ids);
       const questionIds = ids.filter(id => !id.startsWith('FC-'));
@@ -528,17 +539,18 @@ export const studyServices: StudyServices = {
       const cards = ids.some(id => id.startsWith('FC-')) ? (await allCards()).filter(card => requestedIds.has(card.id)).map(card => ({ id: card.id, question: card.q, answer: card.a, reference: card.ref || null })) : [];
       return { questions, cards };
     },
-    setState(id, state) { store.setReportState(id, state); },
+    setState(id, state) { localStudyProgressGateway.setErrorReportState(id, state); },
     async exportData() {
-      const reports = Object.entries(store.getReports()).filter(([, report]) => report.st !== 'quitado').sort(([, first], [, second]) => second.ts - first.ts);
-      const ids = reports.map(([id]) => id);
+      const reports = Object.values(localStudyProgressGateway.getErrorReports()).filter(report => report.state !== 'quitado').sort((first, second) => second.reportedAt - first.reportedAt);
+      const ids = reports.map(report => report.questionId);
       const questionIds = ids.filter(id => !id.startsWith('FC-'));
       const questions = new Map((await studyQuestionCatalog.getQuestions(questionIds)).map(question => [question.i, question]));
       const cards = ids.some(id => id.startsWith('FC-')) ? new Map((await allCards()).map(card => [card.id, card])) : new Map();
-      const errors = reports.map(([id, report]) => {
+      const errors = reports.map(report => {
+        const id = report.questionId;
         const question = questions.get(id), card = cards.get(id);
         return { id, tarjeta: card ? { pregunta: card.q, respuesta: card.a, ref: card.ref || null } : undefined,
-          tema: report.tema, estado: report.st, motivo: report.motivo, nota: report.nota,
+          tema: report.topicId, estado: report.state, motivo: report.reason, nota: report.note,
           origen: question ? ORIGEN[question.o] : null, enunciado: question?.q, opciones: question?.a,
           correcta: question ? LETRAS_OPCION[question.c] : null, cita: question?.u || null,
           trampas: (question?.x || []).map(trap => TRAMPAS[trap] || trap) };
@@ -547,34 +559,35 @@ export const studyServices: StudyServices = {
     },
   },
   access: {
-    accountId: localStudyProgressGateway.accountId, subscribe(listener) { const offSync = sync.onStatus(listener), offStore = store.onChange(listener); return () => { offSync(); offStore(); }; },
+    accountId: localStudyProgressGateway.accountId, subscribe(listener) { const offSync = sync.onStatus(listener), offStore = localProgressRepository.subscribe(listener); return () => { offSync(); offStore(); }; },
     async load() { await recover(); return { owner: isOwner(), error: sync.status.accessErr || undefined, requests: sync.status.reqs, grants: sync.status.grants }; },
     approve: async member => await sync.approve(member), reject: async uid => await sync.reject(uid), revoke: async uid => await sync.revoke(uid), confirm: ask, notify: toast,
   },
   markReady: () => routeReady(),
   home: {
     accountId: localStudyProgressGateway.accountId,
-    seenTopics: () => store.getSeen(),
+    seenTopics: localStudyProgressGateway.getSeenTopics,
     authResolved() { return sync.status.authResolved; },
     getActiveStudy() { const run = getCurrentRun(); return run ? { title: run.titulo || 'Test', position: run.idx, total: run.items.length } : null; },
     getAccess() { return { full: isFull(), level: accessLevel(), greeting: saludo(), state: sync.status.state, configured: sync.status.configured, signedIn: !!sync.status.user, pendingRequests: sync.status.access === 'propietario' ? sync.status.reqs.length : 0 }; },
-    subscribe(listener) { const offStore = store.onChange(listener), offSync = sync.onStatus(listener), offEngine = subscribeEngine(listener); return () => { offStore(); offSync(); offEngine(); }; },
+    subscribe(listener) { const offStore = localProgressRepository.subscribe(listener), offSync = sync.onStatus(listener), offEngine = subscribeEngine(listener); return () => { offStore(); offSync(); offEngine(); }; },
     async loadOverview() {
       await recover(); const account = localStudyProgressGateway.accountId(); const index = await getIndex(); await getMeta();
       const progress = await getHomeProgressSummary(localProgressRepository);
       if (account !== localStudyProgressGateway.accountId()) throw new Error('La cuenta cambió mientras se cargaba el resumen de inicio.');
       const dueIds = await dueQuestionIds();
       const due = dueIds.length;
-      const cardReviews = store.getCards();
-      const cardDueCount = Object.values(cardReviews).filter(record => record[3] >= 0 && record[4] <= studyQuestionCatalog.now()).length;
+      const cardReviews = localCardProgressGateway.getCardReviews();
+      const cardDueCount = Object.values(cardReviews).filter(record => record.dueAt <= studyQuestionCatalog.now()).length;
       const failureIds = falladasIds();
       const failureCount = failureIds.length;
       const streak = calculateStudyStreak(progress.answerTimestamps, Date.now());
-      const exam = store.getCfg().exam;
+      const exam = localStudyProgressGateway.getPreferences().exam;
       const daysToExam = daysUntilStudyDate(exam, Date.now());
       const mastery = await dominioTemas(index);
-      const trainingPreferences = normalizeTrainingPreferences(store.getCfg().training);
-      const studiedTopicSet = new Set(store.getSeen());
+      const trainingPreferences = normalizeTrainingPreferences(localStudyProgressGateway.getPreferences().training);
+      const seenTopics = localStudyProgressGateway.getSeenTopics();
+      const studiedTopicSet = new Set(seenTopics);
       const studiedTopicIds = [...studiedTopicSet];
       const nextNewTopicEntry = trainingPreferences.introductionTopicId && !studiedTopicSet.has(trainingPreferences.introductionTopicId)
         ? index.temas.find(topic => topic.id === trainingPreferences.introductionTopicId)
@@ -593,12 +606,12 @@ export const studyServices: StudyServices = {
         if (curatedTopic) return curatedTopic;
         return id.startsWith('FC-Q-') ? studyQuestionCatalog.getTopicForQuestion(id.slice('FC-Q-'.length)) || undefined : undefined;
       };
-      const studiedCardDueCount = Object.entries(cardReviews).filter(([id, record]) => record[3] >= 0
-        && record[4] <= studyQuestionCatalog.now() && studiedTopicSet.has(topicForCard(id) || '')).length;
+      const studiedCardDueCount = Object.entries(cardReviews).filter(([id, record]) => record.dueAt <= studyQuestionCatalog.now()
+        && studiedTopicSet.has(topicForCard(id) || '')).length;
       const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date().getDay(), dueCount: studiedDueCount, cardDueCount: studiedCardDueCount, failureCount: studiedFailureCount, weakTopicCount: weakTopicIds.length, weakTopicIds, studiedTopicIds, nextNewTopic: nextNewTopic ? { topicId: nextNewTopic.id, topicName: nextNewTopic.nombre } : undefined,
         topicReviewEvidence: studiedMastery.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: true, distinctQuestionsAttempted: topic.seen, questionCoverageOfTarget: topic.cob, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias })) });
       return { seen: progress.seen, total: index.n, answers: progress.answers, streak, daysToExam, due,
-        completedSessions: store.getSessions().length,
+        completedSessions: localStudyProgressGateway.getSessions().length,
         blocks: BLOQUES.map(([code, name]) => {
           const topics = studiedMastery.filter(topic => topic.id.startsWith(code));
           return { name, total: topics.length, mastered: topics.filter(topic => topic.est === 'g').length,
@@ -607,7 +620,7 @@ export const studyServices: StudyServices = {
         cardsDue: cardDueCount,
         trainingDue: { questions: studiedDueCount, cards: studiedCardDueCount },
         quickCount: progress.quickCount, slowCount: progress.slowCount, failures: failureCount,
-        studiedTopics: store.getSeen().length, topicCount: index.temas.length,
+        studiedTopics: seenTopics.length, topicCount: index.temas.length,
         studiedTopicDetails: index.temas.filter(topic => studiedTopicSet.has(topic.id)).map(topic => ({ id: topic.id, name: topic.nombre })),
         nextNewTopic: nextNewTopic ? { id: nextNewTopic.id, name: nextNewTopic.nombre } : undefined,
         assessedTopics: studiedMastery.filter(topic => topic.est !== 'n').length,
@@ -624,18 +637,18 @@ export const studyServices: StudyServices = {
     scheduleStudyActivity(input: Parameters<typeof trainingCalendar.schedule>[0]) { return trainingCalendar.schedule(input); },
     rescheduleStudyActivity(input: Parameters<typeof trainingCalendar.reschedule>[0]) { return trainingCalendar.reschedule(input); },
     setTrainingReviewMode(topicId: string, mode: StudyReviewMode | null) {
-      const preferences = normalizeTrainingPreferences(store.getCfg().training);
+      const preferences = normalizeTrainingPreferences(localStudyProgressGateway.getPreferences().training);
       const reviewModesByTopic = { ...preferences.reviewModesByTopic };
       if (mode) reviewModesByTopic[topicId] = mode;
       else delete reviewModesByTopic[topicId];
-      store.setCfg('training', { ...preferences, reviewModesByTopic });
+      localStudyProgressGateway.updatePreferences(current => ({ ...current, training: { ...preferences, reviewModesByTopic } }));
     },
     quickSession, startReview: (topicIds, dailyTrainingActivity) => startRepaso(topicIds, dailyTrainingActivity), openMenu,
     login: sync.login, requestAccess: async () => await sync.requestAccess(), notify: toast,
   },
   topics: {
-    accountId: localStudyProgressGateway.accountId, getStudied: store.getSeen,
-    setStudied(ids) { store.setSeen(ids); }, subscribe: store.onChange,
+    accountId: localStudyProgressGateway.accountId, getStudied: localStudyProgressGateway.getSeenTopics,
+    setStudied(ids) { localProgressRepository.saveSeenTopics(ids); }, subscribe: localProgressRepository.subscribe,
     async loadTopics() {
       await recover(); const index = await getIndex(); await getMeta();
       const summaries = await progressPorTema(index.temas.map(topic => ({ id: topic.id, name: topic.nombre, total: topic.n })));

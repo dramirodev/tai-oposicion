@@ -1,14 +1,20 @@
 import { useEffect, useState } from 'react';
-import { Check, Circle, CircleX, ScanSearch, X } from 'lucide-react';
+import { Check, Circle, CircleX, ScanSearch } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { ask } from '../../shared/ui/dialog-actions.js';
 import { richHtml, hiliteHtml } from '../../shared/presentation/study-text.js';
 import { questionNotice, sourceHtml } from '../../shared/presentation/study-content.js';
 import { TRAMPAS, TRAMPA_EXPL } from '../../shared/presentation/labels.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
+import { StudyTextPanel } from '../../shared/ui/StudyTextPanel.js';
 import { getTrapChoicePresentation } from './trap-choice-presentation.js';
 import { useStudyService, type TrapAnswer, type TrapRun, type TrapsServices } from '../../shared/ui/study-services.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
+import { PageMessage } from '../../shared/ui/PageMessage.js';
+import { StudyFeedback } from '../../shared/ui/StudyFeedback.js';
+import { StudyQuestionSources } from '../../shared/ui/StudyQuestionSources.js';
+import { StudyProgressBar } from '../../shared/ui/StudyProgressBar.js';
+import { StudyExitButton } from '../../shared/ui/StudyExitButton.js';
 
 export function TrapsPage() {
   const traps = useStudyService('traps');
@@ -30,9 +36,9 @@ export function TrapsPage() {
 
   const exit = async () => { if (await ask('¿Salir del ejercicio?', 'Salir')) { traps.resetRun(); navigate('/home'); } };
   if (loading) return <PageLoading variant="study" />;
-  if (error) return <><h1>Detective de trampas</h1><div className="card" role="alert"><p>No se pudo cargar el ejercicio. Comprueba la conexión e inténtalo de nuevo.</p><button className="btn" onClick={() => { setError(false); setLoading(true); setRun(null); }}>Reintentar</button></div></>;
+  if (error) return <><h1>Detective de trampas</h1><PageMessage role="alert"><p>No se pudo cargar el ejercicio. Comprueba la conexión e inténtalo de nuevo.</p><button className="btn" onClick={() => { setError(false); setLoading(true); setRun(null); }}>Reintentar</button></PageMessage></>;
   if (complete && completedRun) return <TrapSummary run={completedRun} traps={traps} onAgain={() => { traps.resetRun(); setComplete(false); setCompletedRun(null); setLoading(true); setRun(null); }} onHome={() => navigate('/home')} />;
-  if (!run?.items.length) return <><h1>Detective de trampas</h1><div className="card"><p>No hay preguntas disponibles para este ejercicio.</p></div><button className="btn sec" onClick={() => navigate('/home')}>Inicio</button></>;
+  if (!run?.items.length) return <><h1>Detective de trampas</h1><PageMessage><p>No hay preguntas disponibles para este ejercicio.</p></PageMessage><button className="btn sec" onClick={() => navigate('/home')}>Inicio</button></>;
 
   const submit = () => {
     const result = traps.evaluate([...selected]);
@@ -63,10 +69,10 @@ function TrapQuestion({ run, selected, result, onToggle, onExit, onSubmit, onNex
   const resultSelectedIds = new Set(result?.selectedIds || []);
   const falseAlarms = result ? result.selectedIds.filter(id => !correctIds.has(id)) : [];
   return <>
-    <div className="qhead"><button className="ghost" aria-label="Salir" onClick={onExit}><X size="1.25rem" aria-hidden="true" /></button><div className="prog" role="progressbar" aria-label="Progreso" aria-valuemin={0} aria-valuemax={run.items.length} aria-valuenow={run.index}><div className="origin-left animate-[grow_.45s_cubic-bezier(.2,.7,.2,1)]" style={{ width: `${100 * run.index / run.items.length}%` }} /></div><div className="cnt">{run.index + 1}/{run.items.length}</div></div>
+    <div className="qhead"><StudyExitButton onExit={onExit} /><StudyProgressBar trackClassName="prog" fillClassName="origin-left animate-[grow_.45s_cubic-bezier(.2,.7,.2,1)]" percent={100 * run.index / run.items.length} valueNow={run.index} valueMax={run.items.length} /><div className="cnt">{run.index + 1}/{run.items.length}</div></div>
     <h1 className="sub"><ScanSearch className="inline-feature-icon" size="1em" strokeWidth={1.7} aria-hidden="true" /> Detective de trampas</h1><p className="sm">Lee el enunciado y todas las opciones: las trampas pueden estar en cualquiera de ellos.</p>
     <article className="card q"><div className="meta"><span className="tag">{prompt.topicId} · {prompt.topicName}</span></div>
-      {notice && <StudyMarkup html={notice} languageContext={prompt.statement} />}{source && <StudyMarkup html={source} languageContext={prompt.statement} />}
+      <StudyQuestionSources noticeHtml={notice} sourceHtml={source} languageContext={prompt.statement} />
       {prompt.context && <div className="ctx pre"><StudyMarkup html={richHtml(prompt.context)} languageContext={prompt.statement} /></div>}
       <div className="enun pre"><StudyMarkup html={richHtml(prompt.statement, true)} languageContext={prompt.statement} /></div>
       <div className="opts">{prompt.options.map((option, index) => <div className={`opt dis${result && index === prompt.correctIndex ? ' ok' : ''}`} key={`${prompt.id}-${index}`}><b>{'ABCD'[index]}</b><span className="pre"><StudyMarkup html={richHtml(option, true)} languageContext={prompt.statement} /></span></div>)}</div>
@@ -86,11 +92,12 @@ function TrapChoice({ id, selected, correct, revealed, wasSelected, onToggle }: 
 }
 
 function TrapFeedback({ prompt, result, selectedIds, falseAlarms }: { prompt: TrapRun['items'][number]; result: TrapAnswer; selectedIds: ReadonlySet<number>; falseAlarms: readonly number[] }) {
-  return <div className={`fb motion-safe:animate-[fbin_.2s_ease-out] ${result.missed || result.falseAlarms ? 'wrong' : 'good'}`} role="status"><b>{!result.missed && !result.falseAlarms ? '¡Detectadas todas!' : `Detectaste ${result.hits} de ${result.total}${result.falseAlarms ? ` y marcaste ${result.falseAlarms} de más` : ''}.`}</b> Respuesta correcta: <b>{'ABCD'[prompt.correctIndex]}</b>
+  return <StudyFeedback tone={result.missed || result.falseAlarms ? 'wrong' : 'good'}><b>{!result.missed && !result.falseAlarms ? '¡Detectadas todas!' : `Detectaste ${result.hits} de ${result.total}${result.falseAlarms ? ` y marcaste ${result.falseAlarms} de más` : ''}.`}</b> Respuesta correcta: <b>{'ABCD'[prompt.correctIndex]}</b>
     {result.correctIds.map(id => <div className={`trapx my-2.5 rounded-[var(--r-m)] border border-[var(--line)] border-l-4 bg-[var(--card)] px-3.5 py-3 ${selectedIds.has(id) ? 'trap-detected border-l-[var(--ok)]' : 'miss border-l-[var(--amber-strong)]'}`} key={id}><b className="text-[length:var(--fs-b)]">{selectedIds.has(id) ? 'Detectada' : 'No la viste'}: {TRAMPAS[id] || id}</b><p className="mb-0 mt-1 text-[length:var(--fs-m)] leading-[1.45] text-[var(--ink)]">{TRAMPA_EXPL[id] || ''}</p></div>)}
     {falseAlarms.map(id => <div className="trapx trap-false-alarm my-2.5 rounded-[var(--r-m)] border border-[var(--line)] border-l-4 border-l-[var(--bad)] bg-[var(--card)] px-3.5 py-3" key={id}><b className="text-[length:var(--fs-b)]">Falsa alarma: {TRAMPAS[id] || id}</b><p className="mb-0 mt-1 text-[length:var(--fs-m)] leading-[1.45] text-[var(--ink)]">No aplica aquí. {TRAMPA_EXPL[id] || ''}</p></div>)}
-    {prompt.citation && <div className="mt-2.5 rounded-[var(--r-l)] border border-[var(--line)] bg-[var(--card)] p-4 text-[length:var(--fs-b)] leading-[1.65] text-[var(--ink)] [overflow-wrap:anywhere]"><span className="mb-1.5 block text-[length:var(--fs-xs)] font-bold text-[var(--mute)]">Temario</span><StudyMarkup html={hiliteHtml(prompt.citation, prompt.options[prompt.correctIndex])} languageContext={prompt.statement} /></div>}{prompt.note && <div className="mt-2.5 rounded-[var(--r-l)] border border-[var(--line)] bg-[var(--card)] p-4 text-[length:var(--fs-b)] leading-[1.65] text-[var(--ink)] [overflow-wrap:anywhere]"><span className="mb-1.5 block text-[length:var(--fs-xs)] font-bold text-[var(--mute)]">Nota</span><StudyMarkup html={richHtml(prompt.note)} languageContext={prompt.statement} /></div>}
-  </div>;
+    {prompt.citation && <StudyTextPanel title="Temario" html={hiliteHtml(prompt.citation, prompt.options[prompt.correctIndex])} languageContext={prompt.statement} />}
+    {prompt.note && <StudyTextPanel title="Nota" html={richHtml(prompt.note)} languageContext={prompt.statement} />}
+  </StudyFeedback>;
 }
 
 function TrapSummary({ run, traps, onAgain, onHome }: { run: TrapRun; traps: TrapsServices; onAgain(): void; onHome(): void }) {

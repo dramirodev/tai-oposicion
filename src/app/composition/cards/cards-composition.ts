@@ -2,8 +2,6 @@ import type { QuestionRecord } from '../../../core/domain/question-record.js';
 import type { CardsServices, StudyCard } from '../../../shared/ui/study-services.js';
 import { createCardsController, type CardsControllerDependencies } from '../../../features/cards/cards-controller.js';
 import { cardFromFailedQuestion } from '../../../features/cards/flashcard-mapper.js';
-import { cardMapper } from '../../../adapters/local/mappers/card.js';
-import { previewCardWithFsrs } from '../../../adapters/local/fsrs-card-scheduler.js';
 import { clearCardsSession, readCardsSession, saveCardsSession } from '../../../adapters/local/cards-session.js';
 
 interface CardQuestionDependencies {
@@ -14,7 +12,7 @@ interface CardQuestionDependencies {
   verifiedSources: Readonly<Record<string, QuestionRecord['source']>>;
 }
 
-export type CardsCompositionDependencies = CardQuestionDependencies & Omit<CardsControllerDependencies, 'loadAllCards' | 'loadCuratedCards' | 'previewReviewDate' | 'readSavedSession' | 'saveSession' | 'clearSavedSession'>;
+export type CardsCompositionDependencies = CardQuestionDependencies & Omit<CardsControllerDependencies, 'loadAllCards' | 'loadCuratedCards' | 'readSavedSession' | 'saveSession' | 'clearSavedSession'>;
 
 /** Loads curated and failed-question cards, then wires the existing study-card controller. */
 export function createCardsComposition(dependencies: CardsCompositionDependencies): { services: CardsServices; loadAllCards(): Promise<StudyCard[]> } {
@@ -60,22 +58,14 @@ export function createCardsComposition(dependencies: CardsCompositionDependencie
     loadCuratedCards,
     readPreferences: dependencies.readPreferences,
     savePreferences: dependencies.savePreferences,
-    previewReviewDate(cardId, grade, timestamp) {
-      const record = dependencies.getRecord(cardId), mapped = record ? cardMapper.toDomain(record) : null;
-      return previewCardWithFsrs(mapped?.ok ? mapped.value : undefined, grade, timestamp);
-    },
     readSavedSession: readCardsSession,
     saveSession: saveCardsSession,
     clearSavedSession: clearCardsSession,
+    progress: dependencies.progress,
     accountId: dependencies.accountId,
-    getCards: dependencies.getCards,
-    getSeen: dependencies.getSeen,
-    getRecord: dependencies.getRecord,
     now: dependencies.now,
     day: dependencies.day,
     topicName: dependencies.topicName,
-    grade: dependencies.grade,
-    remove: dependencies.remove,
     getReport: dependencies.getReport,
     saveReport: dependencies.saveReport,
   });

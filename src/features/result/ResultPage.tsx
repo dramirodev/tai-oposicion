@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { ExplanationLookup } from '../../core/domain/explanations.js';
-import { CodeExplanationView } from '../explanations/CodeExplanation.js';
+import { CodeExplanationView } from '../../shared/ui/CodeExplanationView.js';
 import { Check, TriangleAlert } from 'lucide-react';
 import { Link, useNavigate, useSearchParams } from 'react-router';
 import { ERROR_REPORT_REASONS } from '../../shared/presentation/study-labels.js';

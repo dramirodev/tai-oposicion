@@ -39,5 +39,5 @@ it('doble pulsación en Terminar no duplica el intento de examen',async()=>{
  },{timeout:10000});
  document.querySelector('.overlay [data-v="1"]').click();
  await waitText('Resultado');
- const store=await import('../src/adapters/local/legacy-store.js');expect(store.rec(q.i)[0]).toBe(1);
+ const store=await import('../src/adapters/local/local-progress-store.js');expect(store.rec(q.i)[0]).toBe(1);
 },30000);

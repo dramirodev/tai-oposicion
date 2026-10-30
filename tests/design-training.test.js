@@ -16,7 +16,7 @@ beforeEach(async () => {
  rtl = await import('@testing-library/react');
  vi.stubGlobal('matchMedia', () => ({ matches: true })); vi.stubGlobal('scrollTo', () => {}); Element.prototype.scrollIntoView = () => {};
  vi.stubGlobal('fetch', async url => ({ ok: true, json: async () => String(url).includes('meta.json') ? { 'TRAIN-1': ['T1.01', 'O', 'I', [1], 2] } : String(url).includes('supuestos') ? {} : [question] }));
- store = await import('../src/adapters/local/legacy-store.js'); ({ studyServices: services } = await import('../src/app/app-services-composition.js'));
+ store = await import('../src/adapters/local/local-progress-store.js'); ({ studyServices: services } = await import('../src/app/app-services-composition.js'));
 });
 afterEach(() => { activeView?.unmount(); activeView = undefined; vi.useRealTimers(); vi.unstubAllGlobals(); });
 it('Detective presenta opciones, evalúa trampas y conserva el recuento', async () => {

@@ -43,7 +43,7 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   expect(document.querySelector('.overlay').textContent).toContain('¿Salir?');
   document.querySelector('.overlay [data-v="1"]').click();
   await waitText('Resultado');
-  const store = await import('../src/adapters/local/legacy-store.js');
+  const store = await import('../src/adapters/local/local-progress-store.js');
   const session = store.getSessions()[0];
   expect(session.a + session.f).toBe(1);
   expect(session.b).toBe(14);

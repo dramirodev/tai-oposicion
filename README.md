@@ -92,6 +92,8 @@ Pantallas React (features) ──> casos de uso y contratos (core/application, c
 - **`src/shared/`:** navegación, componentes compartidos, servicios de interfaz, presentación de preguntas y estilos comunes.
 - **`src/app/`:** entrada React, rutas con hash, layouts, arranque y composición. Aquí se conectan las features con los casos de uso y adaptadores concretos.
 
+Las features pueden reutilizar módulos de `shared/` y contratos o casos de uso de `core/`, pero no importarse entre sí. Los componentes y hooks de interfaz compartidos pertenecen a `shared/ui/`; la preparación de datos exclusiva para presentación, a `shared/presentation/`; las reglas y operaciones comunes independientes de React, a `core/domain/` y `core/application/`; y la traducción de DTO o formatos de persistencia, al adaptador correspondiente. Los controladores de interacción que solo usa una pantalla permanecen en su feature. `npm run check:architecture` detecta dependencias directas entre features.
+
 La composición mantiene persistencia y servicios fuera de las pantallas. Las pantallas reciben servicios tipados mediante contratos compartidos y React Router las carga de forma diferida. `app-services-composition.ts` conecta esos contratos con los casos de uso y adaptadores. El helper DOM imperativo y el antiguo `legacy-router.ts` se retiraron; `legacy-store.ts` se conserva como adaptador de los formatos de progreso históricos para proteger los datos guardados mientras avanza su migración.
 
 ## Paquetes utilizados

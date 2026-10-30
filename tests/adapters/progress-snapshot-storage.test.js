@@ -42,7 +42,7 @@ describe('arranque con un snapshot de progreso ilegible', () => {
   it('conserva una copia del texto dañado en vez de perderlo al guardar el estado vacío', async () => {
     localStorage.setItem('tai.v1:guest', '{"stats": {broken');
 
-    await import('../../src/adapters/local/legacy-store.js');
+    await import('../../src/adapters/local/local-progress-store.js');
 
     expect(localStorage.getItem('tai.v1:guest.unreadable')).toBe('{"stats": {broken');
   });
@@ -50,7 +50,7 @@ describe('arranque con un snapshot de progreso ilegible', () => {
   it('no deja copia cuando el snapshot es válido', async () => {
     localStorage.setItem('tai.v1:guest', JSON.stringify({ stats: {}, sessions: [], cfg: {}, seen: { t: [], ts: 0 } }));
 
-    await import('../../src/adapters/local/legacy-store.js');
+    await import('../../src/adapters/local/local-progress-store.js');
 
     expect(localStorage.getItem('tai.v1:guest.unreadable')).toBeNull();
   });

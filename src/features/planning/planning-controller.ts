@@ -1,5 +1,5 @@
 import type { DailyTrainingSession, TrainingSessionStep } from '../../core/domain/study-training-session.js';
-import { scopeTrainingRouteToSeenTopics } from '../home/home-controller.js';
+import { scopeTrainingRouteToSeenTopics } from '../../shared/navigation/training-route.js';
 
 export type PlannedActivityAction =
   | { type: 'none' }

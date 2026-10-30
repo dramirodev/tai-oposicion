@@ -10,8 +10,10 @@ import { useStudyService, type HomeOverview, type HomeServices, type SettingsSna
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { useActionLifetime } from '../../shared/ui/use-action-lifetime.js';
 import { usePageReady } from '../../shared/ui/use-page-ready.js';
-import { createHomeController, scopeTrainingRouteToSeenTopics } from '../home/home-controller.js';
+import { scopeTrainingRouteToSeenTopics } from '../../shared/navigation/training-route.js';
+import { createPendingActionController } from '../../shared/ui/pending-action-controller.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
+import { PageMessage } from '../../shared/ui/PageMessage.js';
 import { resolvePlannedActivityAction } from './planning-controller.js';
 import { StudyCalendar } from './StudyCalendar.js';
 
@@ -213,7 +215,7 @@ function buildPlanningViewModel(overview: HomeOverview, settings: SettingsSnapsh
 
 function usePlanningSessionActions(services: HomeServices, overview: HomeOverview | undefined, navigate: ReturnType<typeof useNavigate>, refresh: () => void) {
   const lifetime = useActionLifetime(services.accountId);
-  const [controller] = useState(() => createHomeController(lifetime, services.notify));
+  const [controller] = useState(() => createPendingActionController(lifetime, services.notify));
 
   const openActivity = (session: DailyTrainingSession, source: HomeOverview) => {
     const action = resolvePlannedActivityAction(session, [...new Set(services.seenTopics())], source.trainingDue.cards);
@@ -349,7 +351,7 @@ export function PlanningPage() {
   const scheduledActivities = services.scheduledStudyActivities?.() ?? [];
 
   if (!authResolved || (!overview && !error)) return <PageLoading variant="home" />;
-  if (error) return <div className="card" role="alert"><h2>No se pudo cargar la planificación</h2><p>Inténtalo de nuevo. Si no tienes conexión, los datos de la cuenta todavía pueden no estar disponibles en este dispositivo.</p><button className="btn" onClick={() => setReload(value => value + 1)}>Reintentar</button></div>;
+  if (error) return <PageMessage role="alert" title="No se pudo cargar la planificación"><p>Inténtalo de nuevo. Si no tienes conexión, los datos de la cuenta todavía pueden no estar disponibles en este dispositivo.</p><button className="btn" onClick={() => setReload(value => value + 1)}>Reintentar</button></PageMessage>;
   if (!overview) return <PageLoading variant="home" />;
 
   const now = new Date();

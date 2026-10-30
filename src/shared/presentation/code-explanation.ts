@@ -1,6 +1,6 @@
 import type { CodeExplanation, ExplanationResultKind } from '../../core/domain/explanations.js';
 
-export interface CodeExplanationVM {
+export interface CodeExplanationViewModel {
   heading: string;
   editorialLabel: string;
   editorialNote?: string;
@@ -21,8 +21,8 @@ const resultLabels: Record<ExplanationResultKind, string> = {
   logic: 'Análisis lógico',
 };
 
-export const explanationMapper = {
-  toViewModel(explanation: CodeExplanation): CodeExplanationVM {
+export const codeExplanationPresenter = {
+  toViewModel(explanation: CodeExplanation): CodeExplanationViewModel {
     return {
       heading: 'Explicación del código',
       editorialLabel: explanation.editorialStatus === 'reviewed' ? 'Revisada' : 'Borrador',

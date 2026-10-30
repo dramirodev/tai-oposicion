@@ -1,19 +1,23 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Check, CircleHelp, Trash2, TriangleAlert, X } from 'lucide-react';
+import { Check, CircleHelp, Trash2, TriangleAlert } from 'lucide-react';
 import { Link, useNavigate, useSearchParams } from 'react-router';
 import { ERROR_REPORT_REASONS } from '../../shared/presentation/study-labels.js';
 import { questionNotice, sourceHtml } from '../../shared/presentation/study-content.js';
 import { richHtml } from '../../shared/presentation/study-text.js';
 import { useStudyService, type CardsServices, type CardPreferences, type CardsPlan, type StudyCard } from '../../shared/ui/study-services.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
+import { PageMessage } from '../../shared/ui/PageMessage.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
+import { StudyQuestionSources } from '../../shared/ui/StudyQuestionSources.js';
+import { StudyProgressBar } from '../../shared/ui/StudyProgressBar.js';
+import { StudyExitButton } from '../../shared/ui/StudyExitButton.js';
 import { resolveCardsPageState } from './cards-page-state.js';
 
 const gradeLabels = ['Fallé', 'Dudaba', 'Lo sabía'] as const;
 const reasons = ERROR_REPORT_REASONS;
 function Notice({ card }: { card: StudyCard }) {
   const html = questionNotice({ n: card.nota, np: card.np, i: card.id.startsWith('FC-Q-') ? card.id.slice(5) : undefined });
-  return html ? <StudyMarkup html={html} languageContext={card.q} /> : null;
+  return <StudyQuestionSources noticeHtml={html} languageContext={card.q} />;
 }
 
 function CardReport({ card, services }: { card: StudyCard; services: CardsServices }) {
@@ -99,7 +103,7 @@ function ActiveCardSession({ services, session, card, answerRef, headingRef, onE
   const percent = Math.round(100 * session.index / total);
   return <>
     <h1 className="sr" ref={headingRef} tabIndex={-1}>Tarjetas · tarjeta {session.index + 1} de {total}</h1>
-    <div className="qhead sticky top-[calc(var(--sat)/var(--z,1))] z-[3] mb-4 flex items-center gap-4 border-b-0 bg-canvas py-3"><button className="ghost h-12 w-12 flex-none rounded-[var(--r-m)] border border-line bg-[var(--card)] p-0 text-[length:var(--fs-xl)] text-ink" id="exit" aria-label="Salir" onClick={onExit}><X size="1.25rem" aria-hidden="true" /></button><div className="prog min-w-0 h-[.375rem] flex-1 overflow-hidden rounded-full bg-line" role="progressbar" aria-label="Progreso" aria-valuemin={0} aria-valuemax={total} aria-valuenow={session.index}><div className="h-full bg-[var(--selb)] origin-left animate-[grow_.45s_cubic-bezier(.2,.7,.2,1)]" style={{ width: `${percent}%` }} /></div><div className="cnt min-w-11 text-right text-[length:var(--fs-m)] font-semibold text-muted">{session.index + 1}/{total}</div></div>
+    <div className="qhead sticky top-[calc(var(--sat)/var(--z,1))] z-[3] mb-4 flex items-center gap-4 border-b-0 bg-canvas py-3"><StudyExitButton className="ghost h-12 w-12 flex-none rounded-[var(--r-m)] border border-line bg-[var(--card)] p-0 text-[length:var(--fs-xl)] text-ink" id="exit" onExit={onExit} /><StudyProgressBar trackClassName="prog min-w-0 h-[.375rem] flex-1 overflow-hidden rounded-full bg-line" percent={percent} valueNow={session.index} valueMax={total} /><div className="cnt min-w-11 text-right text-[length:var(--fs-m)] font-semibold text-muted">{session.index + 1}/{total}</div></div>
     <div className="card q fc min-h-80 flex flex-col cursor-pointer leading-[1.65]" id="fc" role="group" aria-label="Pregunta de la tarjeta" tabIndex={0} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
       onClick={event => { if (!session.revealed && !(event.target as HTMLElement).closest('button,a,details,input,select,textarea')) show(); }}
       onKeyDown={event => { if (!session.revealed && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); show(); } }}>
@@ -111,7 +115,7 @@ function ActiveCardSession({ services, session, card, answerRef, headingRef, onE
       {session.revealed ? <div ref={answerRef} className="card-answer mt-1.5 p-5 rounded-md bg-[color:var(--okbg)] border border-[color:var(--good-line)]" role="region" aria-label="Respuesta de la tarjeta" tabIndex={-1}><small className="block normal-case tracking-normal text-[length:var(--fs-xs)] !text-[color:var(--good-ink)] mb-1 !font-semibold">Respuesta</small><div className="pre text-[length:var(--fs-xl)] font-medium leading-[1.6]"><StudyMarkup html={richHtml(card.a)} languageContext={card.q} /></div>
         {card.nota && <div className="cita"><span>Nota</span><StudyMarkup html={richHtml(card.nota)} languageContext={card.q} /></div>}
         {card.ref && <div className="cita"><span>Temario</span><StudyMarkup html={richHtml(card.ref)} languageContext={card.q} /></div>}
-        {source && <StudyMarkup html={source} languageContext={card.q} />}
+        <StudyQuestionSources sourceHtml={source} languageContext={card.q} />
         <div className="repw" id="crep"><CardReport card={card} services={services} /></div>
         {card.src === 'fallo' && <button className="ghost ghost-compact" id="quit" onClick={event => { event.stopPropagation(); services.removeFailureCard(); refresh(value => value + 1); }}><Trash2 size="1em" aria-hidden="true" /> Quitar esta tarjeta</button>}
       </div> : <div className="fh mt-auto text-center text-[color:var(--mute)] text-[length:var(--fs-m)] py-3">Toca para ver la respuesta</div>}
@@ -264,10 +268,10 @@ function CardsPageStatus({ state, cards, dailyTraining, onSessionExit, onSession
   onHome(): void;
 }) {
   switch (state) {
-    case 'topic-scope-mismatch': return <div className="card" role="status"><h1>La sesión de tarjetas anterior no coincide con tus temas vistos</h1><p>La sesión se conserva para no perder el progreso, pero este entrenamiento solo muestra tarjetas de los temas que has marcado. Puedes volver a Inicio para continuar con el plan de hoy.</p><div className="bar2"><button className="btn" onClick={onHome}>Volver al inicio</button></div></div>;
-    case 'another-session-pending': return <div className="card" role="status"><h1>Hay otra sesión de tarjetas pendiente</h1><p>Se conserva para no perder tu avance. Termínala desde Tarjetas y después vuelve al plan de hoy.</p><div className="bar2"><button className="btn" onClick={onHome}>Volver al entrenamiento</button></div></div>;
-    case 'load-error': return <div className="card" role="alert"><h1>No se pudo cargar</h1><p>{navigator.onLine === false ? 'Las tarjetas que aún no están guardadas en este dispositivo necesitan conexión.' : 'No se pudieron cargar las tarjetas. Inténtalo de nuevo.'}</p><button className="btn" onClick={onRetry}>Reintentar</button></div>;
-    case 'no-daily-cards': return <><h1>Entrenamiento de hoy</h1><div className="note" role="status">No hay tarjetas disponibles para esta actividad dentro de los temas vistos. Puedes volver al plan de hoy.</div><Link className="btn sec" to="/home">Volver al entrenamiento</Link></>;
+    case 'topic-scope-mismatch': return <PageMessage role="status" titleLevel={1} title="La sesión de tarjetas anterior no coincide con tus temas vistos"><p>La sesión se conserva para no perder el progreso, pero este entrenamiento solo muestra tarjetas de los temas que has marcado. Puedes volver a Inicio para continuar con el plan de hoy.</p><div className="bar2"><button className="btn" onClick={onHome}>Volver al inicio</button></div></PageMessage>;
+    case 'another-session-pending': return <PageMessage role="status" titleLevel={1} title="Hay otra sesión de tarjetas pendiente"><p>Se conserva para no perder tu avance. Termínala desde Tarjetas y después vuelve al plan de hoy.</p><div className="bar2"><button className="btn" onClick={onHome}>Volver al entrenamiento</button></div></PageMessage>;
+    case 'load-error': return <PageMessage role="alert" titleLevel={1} title="No se pudo cargar"><p>{navigator.onLine === false ? 'Las tarjetas que aún no están guardadas en este dispositivo necesitan conexión.' : 'No se pudieron cargar las tarjetas. Inténtalo de nuevo.'}</p><button className="btn" onClick={onRetry}>Reintentar</button></PageMessage>;
+    case 'no-daily-cards': return <><h1>Entrenamiento de hoy</h1><PageMessage className="note" role="status">No hay tarjetas disponibles para esta actividad dentro de los temas vistos. Puedes volver al plan de hoy.</PageMessage><Link className="btn sec" to="/home">Volver al entrenamiento</Link></>;
     case 'daily-loading':
     case 'loading': return <PageLoading variant="legacy" />;
     case 'session': return <CardSession services={cards} onExit={onSessionExit} onComplete={onSessionComplete} onActivityFinished={onActivityFinished} dailyTraining={dailyTraining} />;

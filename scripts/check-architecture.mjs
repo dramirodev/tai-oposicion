@@ -44,6 +44,9 @@ export function scanArchitecture(rootDirectory) {
         features: ['adapters', 'app'], shared: ['adapters', 'app'],
       };
       if (target.startsWith('src/') && (forbidden[layer(file)] || []).includes(layer(target))) addEdge(file, 'layer-import', target);
+      const sourceFeature = file.match(/^src\/features\/([^/]+)\//)?.[1];
+      const targetFeature = target.match(/^src\/features\/([^/]+)\//)?.[1];
+      if (sourceFeature && targetFeature && sourceFeature !== targetFeature) addEdge(file, 'feature-import', target);
       if (target.startsWith('src/') && (/\/(dto|view-models)\//.test(target)) &&
         (layer(file) !== layer(target) || layer(file) !== 'adapters' && !file.startsWith(dirname(target) + '/'))) addEdge(file, 'representation-import', target);
       if (layer(file) === 'adapters' && target.startsWith('src/core/application/')) addEdge(file, 'layer-import', target);

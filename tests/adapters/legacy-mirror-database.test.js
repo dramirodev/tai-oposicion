@@ -31,9 +31,9 @@ describe('legacy mirror IndexedDB', () => {
     });
     oldConnection.close();
 
-    const { recover } = await import('../../src/adapters/local/legacy-store.js');
+    const { recover } = await import('../../src/adapters/local/local-progress-store.js');
     expect(await recover()).toBe(true);
-    const store = await import('../../src/adapters/local/legacy-store.js');
+    const store = await import('../../src/adapters/local/local-progress-store.js');
     expect(store.rec('q1')).toEqual([1, 1, 100, -1, 0, 1, 0, 0, 0, 0]);
   });
 

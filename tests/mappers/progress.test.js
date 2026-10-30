@@ -4,7 +4,7 @@ import { progressMapper } from '../../src/adapters/local/mappers/progress.js';
 let store;
 beforeEach(async () => {
   localStorage.clear(); vi.resetModules();
-  store = await import('../../src/adapters/local/legacy-store.js');
+  store = await import('../../src/adapters/local/local-progress-store.js');
   store.resetAll();
 });
 

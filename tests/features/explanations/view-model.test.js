@@ -1,8 +1,8 @@
 import React from 'react';
 import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/react';
-import { explanationMapper } from '../../../src/features/explanations/explanation-mapper.js';
-import { CodeExplanationView } from '../../../src/features/explanations/CodeExplanation.js';
+import { codeExplanationPresenter } from '../../../src/shared/presentation/code-explanation.js';
+import { CodeExplanationView } from '../../../src/shared/ui/CodeExplanationView.js';
 
 const entity = {
   questionId: 'Q-1', contentRevision: 'rev-1', language: 'Java', editorialStatus: 'draft',
@@ -13,7 +13,7 @@ const entity = {
 
 describe('explicación de código como vista React', () => {
   it('marks AI drafted content as pending editorial review', () => {
-    const vm = explanationMapper.toViewModel(entity);
+    const vm = codeExplanationPresenter.toViewModel(entity);
     expect(vm).toMatchObject({ editorialLabel: 'Borrador', editorialNote: 'Revisión humana pendiente.' });
   });
 

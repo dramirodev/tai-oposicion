@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import type { ExplanationLookup } from '../../core/domain/explanations.js';
-import { CodeExplanationView } from '../explanations/CodeExplanation.js';
+import { CodeExplanationView } from '../../shared/ui/CodeExplanationView.js';
 import { Brain, Check, Clover, NotebookTabs, Star, TriangleAlert } from 'lucide-react';
 import { TRAMPAS } from '../../shared/presentation/labels.js';
 import { FAILURE_REASONS } from '../../shared/presentation/study-labels.js';
 import { hiliteHtml } from '../../shared/presentation/study-text.js';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
+import { StudyTextPanel } from '../../shared/ui/StudyTextPanel.js';
+import { StudyFeedback } from '../../shared/ui/StudyFeedback.js';
 import { useStudyService, type QuizPrompt, type QuizSnapshot } from '../../shared/ui/study-services.js';
 
 function FeedbackMessage({ snapshot, prompt }: { snapshot: QuizSnapshot; prompt: QuizPrompt }) {
@@ -17,7 +19,7 @@ function FeedbackMessage({ snapshot, prompt }: { snapshot: QuizSnapshot; prompt:
     <b>{message}</b> · Respuesta: <b>{'ABCD'[prompt.correctIndex]}</b>
     {snapshot.studyState === 'revealed' && <span className="sr" id="live">Solución consultada · cuenta como blanco</span>}
     {snapshot.studyState !== 'revealed' && snapshot.answer !== -1 && snapshot.answer !== prompt.correctIndex && snapshot.recentAnswer && <div className="mt-1 text-[length:var(--fs-m)] opacity-90">Marcaste {'ABCD'[snapshot.answer!]} en {snapshot.recentAnswer[0]} s{snapshot.recentAnswer[0] < snapshot.recentAnswer[1] * 0.6 ? `; leerla con calma lleva unos ${snapshot.recentAnswer[1]} s` : ''}.</div>}
-    {prompt.citation && <div className="mt-2.5 rounded-[var(--r-l)] border border-[var(--line)] bg-[var(--card)] p-4 text-[length:var(--fs-b)] leading-[1.65] text-[var(--ink)] [overflow-wrap:anywhere]"><span className="mb-1.5 block text-[length:var(--fs-xs)] font-bold text-[var(--mute)]">Temario</span><StudyMarkup html={hiliteHtml(prompt.citation, prompt.options[prompt.correctIndex])} languageContext={prompt.statement} /></div>}
+    {prompt.citation && <StudyTextPanel title="Temario" html={hiliteHtml(prompt.citation, prompt.options[prompt.correctIndex])} languageContext={prompt.statement} />}
     {prompt.source && <StudyMarkup html={prompt.source} languageContext={prompt.statement} />}
     {prompt.traps.length > 0 && <div className="trap">Trampa: {prompt.traps.map(id => TRAMPAS[id] || id).join(' · ')}</div>}
   </>;
@@ -62,7 +64,7 @@ function QuizReport({ snapshot }: { snapshot: QuizSnapshot }) {
 export function QuizFeedback({ snapshot, prompt, explanation }: { snapshot: QuizSnapshot; prompt: QuizPrompt; explanation: ExplanationLookup }) {
   const quiz = useStudyService('quiz');
   const kind = snapshot.studyState === 'revealed' ? 'note' : snapshot.answer === prompt.correctIndex ? 'good' : 'wrong';
-  return <div className={`fb motion-safe:animate-[fbin_.2s_ease-out] ${kind}`} role="status">
+  return <StudyFeedback tone={kind}>
     <FeedbackMessage snapshot={snapshot} prompt={prompt} />
     <FailedAnswerActions snapshot={snapshot} prompt={prompt} />
     <CorrectAnswerActions snapshot={snapshot} />
@@ -70,5 +72,5 @@ export function QuizFeedback({ snapshot, prompt, explanation }: { snapshot: Quiz
     <QuizReport snapshot={snapshot} />
     {explanation.status === 'current' && <div id="code-explanation-slot" aria-live="polite"><CodeExplanationView explanation={explanation.explanation} /></div>}
     {explanation.status === 'outdated' && <p className="sub" role="status">Hay una explicación de una revisión anterior; no se muestra para evitar información desactualizada.</p>}
-  </div>;
+  </StudyFeedback>;
 }

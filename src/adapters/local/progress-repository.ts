@@ -2,8 +2,10 @@ import type { CardReview, ErrorReport, MappingResult, Preferences, QuestionStats
 import type { ProgressRepository } from '../../core/ports/ProgressRepository.js';
 import type { QuizProgressGateway } from '../../core/ports/QuizProgressGateway.js';
 import type { StudyProgressGateway } from '../../core/ports/StudyProgressGateway.js';
-import * as store from './legacy-store.js';
+import type { CardProgressGateway } from '../../core/ports/CardProgressGateway.js';
+import * as store from './local-progress-store.js';
 import { cardMapper } from './mappers/card.js';
+import { previewCardWithFsrs } from './fsrs-card-scheduler.js';
 import { preferencesMapper } from './mappers/preferences.js';
 import { reportMapper } from './mappers/report.js';
 import { sessionMapper } from './mappers/session.js';
@@ -42,6 +44,29 @@ function mapStatistics(record: unknown): QuestionStats | undefined {
   return result.ok ? result.value : undefined;
 }
 
+function mapCardReviews(records: Readonly<Record<string, unknown>>): Record<string, CardReview> {
+  return mapRecord(records, (_id, record) => cardMapper.toDomain(record), 'cards');
+}
+
+/** Typed card-session boundary; historical card tuples stay inside the local adapter. */
+export const localCardProgressGateway: CardProgressGateway = {
+  getCardReviews: () => mapCardReviews(store.getCards()),
+  getCardReview(cardId) {
+    const record = store.cardRec(cardId);
+    if (!record) return undefined;
+    const result = cardMapper.toDomain(record);
+    if (result.ok) return result.value;
+    console.warn(`Progreso local cards.${cardId}: ${result.reason}`);
+    return undefined;
+  },
+  getSeenTopics: store.getSeen,
+  previewReviewDate(cardId, grade, timestamp) {
+    return previewCardWithFsrs(this.getCardReview(cardId), grade, timestamp);
+  },
+  gradeCard(cardId, grade, timestamp) { store.gradeCard(cardId, grade, timestamp); },
+  removeCard: store.removeCard,
+};
+
 /** Synchronous typed API needed by the study engine while a question is active. */
 export const localStudyProgressGateway: StudyProgressGateway = {
   accountId: store.accountId,
@@ -54,6 +79,16 @@ export const localStudyProgressGateway: StudyProgressGateway = {
       if (mapped) statistics[questionId] = mapped;
     }
     return statistics;
+  },
+  getSessions() {
+    return mapList(store.getSessions(), value => sessionMapper.toDomain(value), 'sessions');
+  },
+  getErrorReports() {
+    return mapRecord(store.getReports(), reportMapper.toDomain, 'reports');
+  },
+  getErrorReport(questionId) {
+    const result = reportMapper.toDomain(questionId, store.getReports()[questionId]);
+    return result.ok ? result.value : undefined;
   },
   getPreferences() {
     const result = preferencesMapper.toDomain(store.getCfg());
@@ -69,6 +104,9 @@ export const localStudyProgressGateway: StudyProgressGateway = {
   addSession(session: SessionResult) {
     store.addSession(sessionMapper.toDto(session));
   },
+  saveErrorReport(report) { store.addReport(report.questionId, report.topicId, report.reason, report.note); },
+  setErrorReportState(questionId, state) { store.setReportState(questionId, state); },
+  setSyllabusReviewed(questionId, topicId, reviewed) { store.setReviewed(questionId, topicId, reviewed); },
 };
 
 /** Synchronous question-review operations backed by the existing local progress store. */
@@ -152,16 +190,11 @@ export const localProgressRepository: ProgressRepository = {
   },
 
   async getCardReviews() {
-    return mapRecord(store.getCards(), (_id, record) => cardMapper.toDomain(record), 'cards');
+    return localCardProgressGateway.getCardReviews();
   },
 
   async getCardReview(cardId: string) {
-    const record = store.getCards()[cardId];
-    if (!record) return undefined;
-    const result = cardMapper.toDomain(record);
-    if (result.ok) return result.value;
-    console.warn(`Progreso local cards.${cardId}: ${result.reason}`);
-    return undefined;
+    return localCardProgressGateway.getCardReview(cardId);
   },
 
   async saveCardReviews(reviews: Readonly<Record<string, CardReview>>) {

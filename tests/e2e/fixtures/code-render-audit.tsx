@@ -5,7 +5,7 @@ import { hiliteHtml, richHtml } from '../../../src/shared/presentation/study-tex
 import { questionNotice } from '../../../src/shared/presentation/study-content.js';
 import { StudyMarkup } from '../../../src/shared/ui/StudyMarkup.js';
 import { inferCodeLanguage } from '../../../src/shared/ui/study-code-language.js';
-import { CodeExplanationView } from '../../../src/features/explanations/CodeExplanation.js';
+import { CodeExplanationView } from '../../../src/shared/ui/CodeExplanationView.js';
 import { explanationMapper as explanationDomainMapper } from '../../../src/adapters/http/mappers/explanation.js';
 import '../../../src/shared/styles/index.css';
 

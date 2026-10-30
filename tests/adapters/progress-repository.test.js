@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import * as store from '../../src/adapters/local/legacy-store.js';
-import { localProgressRepository } from '../../src/adapters/local/progress-repository.js';
+import * as store from '../../src/adapters/local/local-progress-store.js';
+import { localCardProgressGateway, localProgressRepository } from '../../src/adapters/local/progress-repository.js';
 
 describe('localProgressRepository', () => {
   beforeEach(() => {
@@ -46,6 +46,24 @@ describe('localProgressRepository', () => {
 
     await expect(localProgressRepository.getCardReviews()).resolves.toEqual({});
     await expect(localProgressRepository.getCardReview('FC-Q-question-1')).resolves.toBeUndefined();
+  });
+
+  it('adapta las tarjetas históricas a CardReview y conserva la extensión FSRS al calificarlas', () => {
+    store.addFallo('question-fsrs', 1000);
+    expect(localCardProgressGateway.getCardReview('FC-Q-question-fsrs')).toMatchObject({
+      attempts: 0, intervalStep: 0, dueAt: 1000,
+    });
+
+    localCardProgressGateway.gradeCard('FC-Q-question-fsrs', 2, 2000);
+
+    expect(localCardProgressGateway.getCardReview('FC-Q-question-fsrs')).toMatchObject({
+      attempts: 1, known: 1, lastGrade: 2, fsrs: { schemaVersion: 1, algorithmVersion: 6 },
+    });
+    expect(store.getCards()['FC-Q-question-fsrs']).toHaveLength(17);
+    expect(localCardProgressGateway.previewReviewDate('FC-Q-question-fsrs', 1, 3000)).toBeGreaterThan(3000);
+
+    localCardProgressGateway.removeCard('FC-Q-question-fsrs');
+    expect(localCardProgressGateway.getCardReview('FC-Q-question-fsrs')).toBeUndefined();
   });
 
   it('reads and writes preferences, seen topics, reports, and card reviews through their specific operations', async () => {
