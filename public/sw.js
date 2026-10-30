@@ -1,6 +1,6 @@
 // Service worker: shell + datos, "stale-while-revalidate" para todo lo del mismo origen.
 const V = 'tai-v76', DATA = 'tai-data'; // el banco descargado vive en su propia caché: un despliegue no lo borra
-const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-512-maskable.png', 'icons/icon-180.png', 'explanations/index.json'];
+const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-512-maskable.png', 'icons/icon-180.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => caches.open(DATA)).then(c => c.addAll(['data/index.json', 'data/meta.json'])).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V && k !== DATA).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('message', e => { if (e.data === 'skip') self.skipWaiting(); });
@@ -49,7 +49,7 @@ self.addEventListener('fetch', e => {
     return;
   }
   e.respondWith((async () => {
-    const c = await caches.open(/\/(data|cards)\//.test(u.pathname) ? DATA : V);
+    const c = await caches.open(/\/(data|cards|explanations)\//.test(u.pathname) ? DATA : V);
     const hit = await c.match(r, { ignoreSearch: true });
     const net = fetch(r).then(res => { if (res && res.ok) c.put(r, res.clone()); return res; }).catch(() => null);
     if (hit) { e.waitUntil(net); return hit; }

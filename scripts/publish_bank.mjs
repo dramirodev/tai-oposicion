@@ -1,8 +1,8 @@
-// Publica el banco (public/data/*.json) en Firestore como documentos comprimidos: bank/f_<nombre> y bank/meta.
+// Publica el banco (public/data/*.json) y las tarjetas (public/cards/*.json, como cards_<nombre>) en Firestore como documentos comprimidos: bank/f_<nombre> y bank/meta.
 // Solo sube lo que ha cambiado (compara hashes con bank/meta). No necesita dependencias: usa la API REST de Firestore.
 //   ACCESS_TOKEN=$(gcloud auth print-access-token) node scripts/publish_bank.mjs [--dry]
 // La cuenta del token necesita permiso de escritura en Firestore del proyecto (p. ej. propietario). Las reglas no se aplican a IAM.
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { gzipSync } from 'node:zlib';
 import { fileURLToPath } from 'node:url';
@@ -20,8 +20,13 @@ export function plan(local, remote) {
   const del = Object.keys(remote).filter(name => !(name in local));
   return { up, del };
 }
-export const loadLocal = (dir = join(root, 'public', 'data')) =>
-  Object.fromEntries(readdirSync(dir).filter(textValue => textValue.endsWith('.json')).sort().map(textValue => [textValue.slice(0, -5), pack(readFileSync(join(dir, textValue)))]));
+const packDirectory = (dir, prefix = '') => existsSync(dir)
+  ? Object.fromEntries(readdirSync(dir).filter(textValue => textValue.endsWith('.json')).sort().map(textValue => [prefix + textValue.slice(0, -5), pack(readFileSync(join(dir, textValue)))]))
+  : {};
+/** Banco (`data/*`), tarjetas (`cards_*`) y explicaciones (`explanations_*`): ninguno se despliega ya como JSON estático. */
+export const loadLocal = (dir = join(root, 'public', 'data'), cardsDir = join(root, 'public', 'cards'), explanationsDir = join(root, 'public', 'explanations')) => ({
+  ...packDirectory(dir), ...packDirectory(cardsDir, 'cards_'), ...packDirectory(explanationsDir, 'explanations_'),
+});
 
 async function api(method, path, token, body) {
   const response = await fetch(base + path, { method, headers: { authorization: 'Bearer ' + token, 'content-type': 'application/json' }, body: body && JSON.stringify(body) });

@@ -5,6 +5,11 @@ interface ScenarioEntry { texto: string; q: Question[]; conv?: string }
 type RemoteBankLoader = <T>(topicId: string) => Promise<T | null>;
 let remoteBankLoader: RemoteBankLoader = async () => null;
 export function configureRemoteBankLoader(loader: RemoteBankLoader): void { remoteBankLoader = loader; }
+let sampleOnly: () => boolean = () => false;
+/** Sin acceso completo solo existe la muestra pública de cada tema (`sample/<tema>.json`). */
+export function configureBankSample(isSampleOnly: () => boolean): void { sampleOnly = isSampleOnly; }
+/** Las cachés por tema distinguen la muestra del banco completo: al obtener acceso no deben servir la muestra. */
+export const topicCacheKey = (topicId: string): string => sampleOnly() ? `sample:${topicId}` : topicId;
 // ───────── study catalog ─────────
 let catalogIndex: Index | undefined;
 let questionMetadata: Meta | undefined;
@@ -12,10 +17,23 @@ let scenarios: Record<string, ScenarioEntry> | undefined;
 const supQuestions = new Map<string, Question>();
 const cache = new Map<string, Promise<Question[]>>();
 let scenariosLoading: Promise<Record<string, ScenarioEntry>> | undefined;
+const bankFileMatch = /^(data|cards|explanations)\/([\w.-]+)\.json$/, topicFileMatch = /^data\/(T\d\.\d\d)\.json$/;
+/** Nombre del fichero en `bank/f_<nombre>`: los de `cards/` y `explanations/` llevan prefijo para no chocar con `index`. */
+const bankName = (url: string): string | null => { const match = bankFileMatch.exec(url); return match ? (match[1] === 'data' ? match[2] : `${match[1]}_${match[2]}`) : null; };
+/** Resuelve un fichero del banco: datos de Firestore (solo aprobados), muestra pública (invitados) o URL estática. */
+async function resolveBankFile<T>(url: string): Promise<{ data: T } | { target: string }> {
+  const name = bankName(url), topic = topicFileMatch.exec(url), sample = !!topic && sampleOnly();
+  if (name && !sample) { const remoteBankData = await remoteBankLoader<T>(name); if (remoteBankData !== null) return { data: remoteBankData }; }
+  return { target: sample ? `sample/${topic![1]}.json` : url };
+}
+export async function fetchBankResponse(url: string, init?: RequestInit): Promise<Response> {
+  const resolved = await resolveBankFile<unknown>(url);
+  return 'data' in resolved ? new Response(JSON.stringify(resolved.data), { headers: { 'content-type': 'application/json' } }) : fetch(resolved.target, init);
+}
 export async function fetchJson<T = unknown>(url: string): Promise<T> {
-  const dataFileMatch = /^data\/([\w.-]+)\.json$/.exec(url); // el banco puede venir de Firestore; si no, JSON estático
-  if (dataFileMatch) { const remoteBankData = await remoteBankLoader<T>(dataFileMatch[1]); if (remoteBankData !== null) return remoteBankData; }
-  const response = await fetch(url); if (!response.ok) throw new Error(url); return response.json(); }
+  const resolved = await resolveBankFile<T>(url); // el banco puede venir de Firestore; si no, JSON estático (o la muestra para invitados)
+  if ('data' in resolved) return resolved.data;
+  const response = await fetch(resolved.target); if (!response.ok) throw new Error(resolved.target); return response.json(); }
 export async function getIndex(): Promise<Index> { return (catalogIndex ||= await fetchJson<Index>('data/index.json')); }
 let metaLoading: Promise<Meta> | undefined;
 export async function getMetadataIndex(): Promise<Meta> {
@@ -42,7 +60,7 @@ export const getMetadataSnapshot = (): Meta | undefined => questionMetadata;
 export const getTopicForQuestion = (questionId: string): string | null => questionMetadata?.[questionId]?.[0] || supQuestions.get(questionId)?.t || null;
 export const getQuestionIdsForTopic = (topicId: string): string[] => [...(questionMetadata?._by[topicId] || []), ...[...supQuestions.values()].filter(question => question.t === topicId).map(question => question.i)];
 export const getAllQuestionIdsForTopic = (topicId: string): string[] => [...getQuestionIdsForTopic(topicId), ...Object.entries(questionMetadata || {}).filter(([, entry]) => entry?.[0] === topicId && entry[5]).map(([id]) => id)];
-export async function getTopicQuestions(topicId: string): Promise<Question[]> { if (!cache.has(topicId)) cache.set(topicId, fetchJson<Question[]>(`data/${topicId}.json`).then(questionRows => { diagnoseQuestionDtos(questionRows); return questionRows; }).catch(error => { cache.delete(topicId); throw error; })); return cache.get(topicId)!; }
+export async function getTopicQuestions(topicId: string): Promise<Question[]> { const key = topicCacheKey(topicId); if (!cache.has(key)) cache.set(key, fetchJson<Question[]>(`data/${topicId}.json`).then(questionRows => { diagnoseQuestionDtos(questionRows); return questionRows; }).catch(error => { cache.delete(key); throw error; })); return cache.get(key)!; }
 export async function getScenarios(): Promise<Record<string, ScenarioEntry>> {
   if (scenarios) return scenarios;
   if (!scenariosLoading) scenariosLoading = fetchJson<Record<string, ScenarioEntry>>('data/supuestos.json').then(data => {

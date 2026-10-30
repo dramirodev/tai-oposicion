@@ -3,7 +3,11 @@ const OFFLINE_DATA_CACHE_NAME = 'tai-data', OFFLINE_VERIFICATION_KEY = 'tai.offl
 type Index = { temas: { id: string }[] };
 type CardIndex = { temas: Record<string, unknown> };
 export interface OfflineState { complete: boolean; missing: string[]; total: number; completedAt: number | null }
-const getBaseFilesToCache = (bankIndex: Index) => ['data/index.json', 'data/meta.json', 'data/supuestos.json', 'cards/index.json', 'explanations/index.json', ...bankIndex.temas.map(topic => `data/${topic.id}.json`)];
+type OfflineFileFetcher = (url: string, init?: RequestInit) => Promise<Response>;
+let fetchOfflineFile: OfflineFileFetcher = (...request) => fetch(...request);
+/** El banco completo ya no se sirve como JSON estático: la composición aporta la fuente autenticada. */
+export function configureOfflineFileFetcher(fetcher: OfflineFileFetcher): void { fetchOfflineFile = fetcher; }
+const getBaseFilesToCache =(bankIndex: Index) => ['data/index.json', 'data/meta.json', 'data/supuestos.json', 'cards/index.json', 'explanations/index.json', ...bankIndex.temas.map(topic => `data/${topic.id}.json`)];
 
 /** Warms the browser/service-worker cache for question topics without blocking startup. */
 export async function prefetchQuestionBank(bankIndex: Index): Promise<void> {
@@ -19,9 +23,9 @@ export async function prefetchQuestionBank(bankIndex: Index): Promise<void> {
     const worker = async () => {
       for (let path; (path = missing.shift());) {
         try {
-          const response = await fetch(path);
+          const response = await fetchOfflineFile(path);
           if (!response.ok) return;
-          await response.arrayBuffer();
+          await questionCache.put(path, response); // la fuente autenticada no pasa por el service worker
         } catch {
           return;
         }
@@ -84,7 +88,7 @@ export async function downloadOffline(bankIndex: Index, progress: (completedFile
   let completedFiles = 0;
   const cacheFile = async (filePath: string) => {
     if (!isCurrent()) throw new Error('Descarga cancelada al salir de Ajustes o cambiar de cuenta.');
-    const response = await fetch(filePath, {cache:'reload'});
+    const response = await fetchOfflineFile(filePath, {cache:'reload'});
     if (!response.ok) throw new Error(`No se pudo descargar ${filePath}. Reintenta cuando tengas conexión.`);
     const responseBody = await response.clone().json(); // rechaza errores HTML con estado 200
     if (filePath === 'explanations/index.json' && !Array.isArray(responseBody)) throw new Error('El índice de explicaciones no es una lista válida.');

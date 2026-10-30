@@ -1,4 +1,5 @@
-// Fuente opcional de Firestore con caché local y fallback HTTP en la composición.
+// Fuente de Firestore con caché local; activa por defecto en producción y solo con acceso completo.
+// Si algo falla, la composición recurre al JSON estático, que en producción solo conserva la muestra pública.
 import { cacheStudyBankFile, readCachedStudyBankFile } from '../local/study-bank-cache.js';
 
 let metaP: Promise<Record<string, string> | null> | undefined;
@@ -9,7 +10,11 @@ export function configureStudyBankAccessGate(canAccess: () => boolean): void {
   hasBankAccess = canAccess;
 }
 
-export const studyBankCacheEnabled = (): boolean => { try { return localStorage.getItem('tai.bank') === 'fs'; } catch { return false; } };
+/** En producción el banco completo solo se sirve desde Firestore; `tai.bank` = 'fs' | 'static' fuerza una u otra fuente (desarrollo). */
+export const studyBankCacheEnabled = (): boolean => {
+  const production = !!import.meta.env?.PROD;
+  try { const forced = localStorage.getItem('tai.bank'); return forced === 'fs' || (forced !== 'static' && production); } catch { return production; }
+};
 
 export async function decompressStudyBankFile(bytes: Uint8Array): Promise<string> {
   const body = new Response(bytes as BodyInit).body!.pipeThrough(new DecompressionStream('gzip'));

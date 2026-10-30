@@ -16,10 +16,29 @@ beforeEach(async () => {
   bank = await import('../src/adapters/firebase/study-bank-cache-source.js');
   bank.configureStudyBankAccessGate(() => true);
 });
-it('desactivado por defecto: devuelve null y no toca Firestore', async () => {
+it('en desarrollo está desactivado por defecto: devuelve null y no toca Firestore', async () => {
   publish('T1.01', [{ i: 'a' }]);
   expect(await bank.loadStudyBank('T1.01')).toBeNull();
   expect(remote.calls).toEqual({ meta: 0, file: 0 });
+});
+it('en producción está activo por defecto y tai.bank = static lo desactiva', async () => {
+  vi.stubEnv('PROD', true);
+  try {
+    publish('T1.01', [{ i: 'a' }]);
+    expect(await bank.loadStudyBank('T1.01')).toEqual([{ i: 'a' }]);
+    localStorage.setItem('tai.bank', 'static');
+    expect(bank.studyBankCacheEnabled()).toBe(false);
+    expect(await bank.loadStudyBank('T1.01')).toBeNull();
+  } finally { vi.unstubAllEnvs(); }
+});
+it('en producción un invitado no lee el banco aunque esté activo', async () => {
+  vi.stubEnv('PROD', true);
+  try {
+    publish('T1.01', [{ i: 'a' }]);
+    bank.configureStudyBankAccessGate(() => false);
+    expect(await bank.loadStudyBank('T1.01')).toBeNull();
+    expect(remote.calls).toEqual({ meta: 0, file: 0 });
+  } finally { vi.unstubAllEnvs(); }
 });
 it('descarga y descomprime el fichero; la segunda vez sale de la copia local', async () => {
   localStorage.setItem('tai.bank', 'fs'); publish('T1.01', [{ i: 'a', q: 'ñandú' }]);

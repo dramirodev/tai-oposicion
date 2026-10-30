@@ -1,18 +1,19 @@
 import type { Question } from '../../core/domain/entities.js';
 import type { BankRepository } from '../../core/ports/BankRepository.js';
-import { getMetadata, getTopicForQuestion, getTopicQuestions as loadTopicQuestionRecords } from './study-question-catalog.js';
+import { getMetadata, getTopicForQuestion, getTopicQuestions as loadTopicQuestionRecords, topicCacheKey } from './study-question-catalog.js';
 import { clearQuestionDiagnostics, mapQuestionDtos } from './question-diagnostics.js';
 
 const topicCache = new Map<string, Promise<Question[]>>();
 
 async function getTopicQuestions(topicId: string): Promise<Question[]> {
-  let pending = topicCache.get(topicId);
+  const key = topicCacheKey(topicId);
+  let pending = topicCache.get(key);
   if (!pending) {
     pending = loadTopicQuestionRecords(topicId).then(rows => mapQuestionDtos(rows)).catch((error: unknown) => {
-      topicCache.delete(topicId);
+      topicCache.delete(key);
       throw error;
     });
-    topicCache.set(topicId, pending);
+    topicCache.set(key, pending);
   }
   return pending;
 }

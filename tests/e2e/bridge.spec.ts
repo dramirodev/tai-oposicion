@@ -373,6 +373,9 @@ test.describe('explicaciones offline con el service worker real', () => {
     const explanation = { i: question.i, rev: `fnv1a-${(hash >>> 0).toString(16).padStart(8, '0')}`, lang: 'Java', status: 'draft', snippet: 'int valor = 1;', result: { kind: 'logic', value: '1' }, steps: [{ title: 'Lectura', detail: 'El ejemplo explica la evaluación.' }], distractors: [], limitation: 'Material de práctica; no se ejecuta.', editorialNote: 'Pendiente de revisión humana.', sources: [{ title: 'JLS', url: 'https://docs.oracle.com/javase/specs/jls/se21/html/' }] };
     await page.evaluate(async index => {
       const url = new URL('explanations/index.json', location.href);
+      // El índice ya no se precachea en la instalación: el service worker lo guarda en tai-data al primer uso.
+      await fetch(url);
+      for (let attempt = 0; attempt < 20 && !(await caches.match(url)); attempt++) await new Promise(resolve => setTimeout(resolve, 100));
       const cachesWithIndex = await Promise.all((await caches.keys()).map(async name => {
         const cache = await caches.open(name);
         return (await cache.match(url)) ? cache : undefined;

@@ -16,6 +16,7 @@
     "typecheck": "tsc -p .",
     "deploy": "npm run typecheck && npm test && npm run build && node scripts/validate_cards.mjs && npx --yes firebase-tools@13.35.1 deploy --only hosting,firestore:rules --project tai-oposicion",
     "publish:bank": "node scripts/publish_bank.mjs",
+    "build:sample": "node scripts/build_sample.mjs",
     "audit:bank": "node scripts/audit-bank.mjs",
     "test:e2e": "playwright test",
     "test:e2e:question-audit": "playwright test --config=playwright.question-audit.config.ts",

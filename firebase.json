@@ -5,7 +5,11 @@
       "firebase.json",
       "**/.*",
       "data/revision-ocr/**",
-      "data/revision-ocr.md"
+      "data/revision-ocr.md",
+      "data/T*.json",
+      "data/supuestos.json",
+      "cards/**",
+      "explanations/**"
     ],
     "headers": [
       {
