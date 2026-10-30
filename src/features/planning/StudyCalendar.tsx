@@ -41,7 +41,8 @@ export function StudyCalendar({ preferences, weekday, now, history, topics, acti
   const [kind, setKind] = useState<ScheduledStudyActivityKind>('activeRecall');
   const [minutes, setMinutes] = useState(20);
   const [proposal, setProposal] = useState<Proposal | null>(null);
-  const [moveDateKey, setMoveDateKey] = useState('');
+  // La fecha pendiente de cada repaso se guarda por separado: una sola compartida se copiaba a todas las filas.
+  const [moveDates, setMoveDates] = useState<Record<string, string>>({});
   const [error, setError] = useState('');
   const focus = preferences.focusByDay ?? ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'];
   const monthTitle = monthTitleFormatter.format(month);
@@ -60,7 +61,7 @@ export function StudyCalendar({ preferences, weekday, now, history, topics, acti
   };
 
   const prepareMove = (activity: ScheduledStudyActivity) => {
-    const targetDate = moveDateKey || dayKey(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1));
+    const targetDate = moveDates[activity.id] || dayKey(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1));
     const decision = proposeStudyActivityReschedule({ id:activity.id, dateKey:targetDate, now:now.getTime(), preferences, seenTopicIds:topics.map(topic => topic.id), existing:activities });
     const message = decisionText(decision);
     setError(message || '');
@@ -72,7 +73,10 @@ export function StudyCalendar({ preferences, weekday, now, history, topics, acti
     const decision = proposal.type === 'create' ? onSchedule(proposal) : onReschedule(proposal);
     const message = decisionText(decision);
     setError(message || '');
-    if (!message) { setProposal(null); setMoveDateKey(''); }
+    if (!message) {
+      setProposal(null);
+      if (proposal.type === 'move') setMoveDates(current => Object.fromEntries(Object.entries(current).filter(([id]) => id !== proposal.id)));
+    }
   };
 
   const activitiesByDate = new Map<string, ScheduledStudyActivity[]>();
@@ -125,7 +129,7 @@ export function StudyCalendar({ preferences, weekday, now, history, topics, acti
           return <li key={activity.id}>
             <div><b>{fullDateFormatter.format(scheduledDate)}</b><span>{activityNames[activity.activity]} · {activity.topicId} {topicName(activity.topicId)} · {activity.minutes} min</span></div>
             <button className="btn sec" type="button" onClick={() => onOpenActivity(activity)}>Abrir</button>
-            <label className="planning-reschedule-date">Nueva fecha<input aria-label={`Nueva fecha para ${activity.topicId}`} type="date" min={dayKey(tomorrow)} max={dayKey(maxDate)} value={moveDateKey} onChange={event => { setMoveDateKey(event.target.value); setProposal(null); setError(''); }} /></label>
+            <label className="planning-reschedule-date">Nueva fecha<input aria-label={`Nueva fecha para ${activity.topicId}`} type="date" min={dayKey(tomorrow)} max={dayKey(maxDate)} value={moveDates[activity.id] ?? ''} onChange={event => { setMoveDates(current => ({ ...current, [activity.id]: event.target.value })); setProposal(null); setError(''); }} /></label>
             <button className="btn sec" type="button" onClick={() => prepareMove(activity)}>Reprogramar</button>
           </li>;
         })}</ul>}

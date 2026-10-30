@@ -1,7 +1,7 @@
 import { expect, it, vi } from 'vitest';
 import { createElement, Fragment } from 'react';
 import { renderApp } from './helpers/render-app.js';
-import { screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useLocation } from 'react-router';
 import { PlanningPage } from '../src/features/planning/PlanningPage.tsx';
@@ -61,6 +61,22 @@ it('muestra desde el primer instante el tiempo real de una actividad en curso, n
   const timer = await screen.findByText(/Tiempo en esta actividad/);
 
   expect(timer).toHaveTextContent(/Tiempo en esta actividad: 2 min/);
+});
+
+it('guarda la nueva fecha de cada repaso programado por separado', async () => {
+  const inDays = days => new Date(Date.now() + days * 86_400_000).toLocaleDateString('en-CA');
+  const scheduled = ['T1.01', 'T1.02'].map((topicId, index) => ({ id:`activity-${index}`, dateKey:inDays(5 + index), activity:'activeRecall', topicId, minutes:20, createdAt:1, updatedAt:1 }));
+  const studied = [{ id:'T1.01', name:'Uno' }, { id:'T1.02', name:'Dos' }];
+  const planned = overview(newTopicPlan, { studiedTopics:2, studiedTopicDetails:studied });
+  renderApp(createElement(PlanningPage), { services:servicesFor(planned, { home:{ scheduledStudyActivities:() => scheduled, seenTopics:() => ['T1.01', 'T1.02'] } }) });
+
+  await userEvent.setup().click(await screen.findByRole('button', { name:'Mes' }));
+  const first = await screen.findByLabelText('Nueva fecha para T1.01');
+  const second = screen.getByLabelText('Nueva fecha para T1.02');
+  fireEvent.change(first, { target:{ value:inDays(9) } });
+
+  expect(first).toHaveValue(inDays(9));
+  expect(second).toHaveValue('');
 });
 
 it('muestra descanso y deja fuera tareas atrasadas sin temas vistos', async () => {
