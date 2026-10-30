@@ -1077,6 +1077,17 @@ ul.tips li {
   }
 }
 
+/* Keep navigation scrollable while removing the persistent scrollbar gutter. */
+.workspace-sidebar,
+.menu-content {
+  scrollbar-width: none;
+}
+
+.workspace-sidebar::-webkit-scrollbar,
+.menu-content::-webkit-scrollbar {
+  display: none;
+}
+
 @media(max-width:600px) {
   :root[data-text-size="2"] .dm,:root[data-text-size="3"] .dm {
     grid-template-columns: 1fr;
@@ -1126,7 +1137,7 @@ ul.tips li {
     background: var(--sel);
   }
 
-  .seg button:hover:not(:disabled),.signal:hover:not(:disabled),.discard-option:hover:not(:disabled) {
+  .ghost:hover:not(:disabled),.iconbtn:hover:not(:disabled),.seg button:hover:not(:disabled),.signal:hover:not(:disabled),.discard-option:hover:not(:disabled) {
     border-color: var(--selb);
     color: var(--selb);
   }

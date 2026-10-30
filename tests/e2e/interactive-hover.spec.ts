@@ -14,4 +14,11 @@ test('hover distingue destinos sin alterar la navegación seleccionada', async (
   await expect.poll(() => active.evaluate(el => getComputedStyle(el).color)).toBe('rgb(32, 35, 38)');
   await expect.poll(() => active.evaluate(el => getComputedStyle(el).boxShadow)).toBe('none');
   await expect(page).toHaveURL(/#\/home$/);
+
+  await page.locator('#menu').click();
+  const menuItem = page.locator('#menuov .lrow').first();
+  await expect(menuItem).toBeVisible();
+  const menuItemBefore = await menuItem.evaluate(el => getComputedStyle(el).backgroundColor);
+  await menuItem.hover();
+  await expect.poll(() => menuItem.evaluate(el => getComputedStyle(el).backgroundColor)).not.toBe(menuItemBefore);
 });

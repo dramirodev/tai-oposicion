@@ -98,7 +98,23 @@ test('el menú móvil mantiene su panel dentro del viewport y permite llegar a t
   const lastAction = page.locator('#menuov .lrow').last();
   await lastAction.scrollIntoViewIfNeeded();
   await expect(lastAction).toBeInViewport();
-  expect(await page.locator('#menuov .menu-content').evaluate(element => element.scrollTop)).toBeGreaterThan(0);
+  const content = page.locator('#menuov .menu-content');
+  expect(await content.evaluate(element => getComputedStyle(element).scrollbarWidth)).toBe('none');
+  expect(await content.evaluate(element => element.scrollTop)).toBeGreaterThan(0);
+});
+
+test('la barra lateral de escritorio oculta el indicador sin perder el desplazamiento', async ({ page }) => {
+  await prepareOwner(page);
+  await page.setViewportSize({ width: 1440, height: 600 });
+  await page.goto('/#/home');
+
+  const sidebar = page.locator('.workspace-sidebar');
+  await expect(sidebar).toBeVisible();
+  const lastLink = sidebar.locator('a').last();
+  await lastLink.scrollIntoViewIfNeeded();
+  await expect(lastLink).toBeInViewport();
+  expect(await sidebar.evaluate(element => getComputedStyle(element).scrollbarWidth)).toBe('none');
+  expect(await sidebar.evaluate(element => element.scrollTop)).toBeGreaterThan(0);
 });
 
 test('el menú móvil y la carga inicial animan en WebKit cuando no se reduce el movimiento', async ({ page }) => {

@@ -35,12 +35,15 @@ function FailedAnswerActions({ snapshot, prompt }: { snapshot: QuizSnapshot; pro
 
 function CorrectAnswerActions({ snapshot }: { snapshot: QuizSnapshot }) {
   const quiz = useStudyService('quiz');
+  const [selectionByQuestion, setSelectionByQuestion] = useState<Record<string, 'doubt' | 'luck'>>({});
   if (snapshot.studyState === 'revealed' || snapshot.answer !== snapshot.prompt.correctIndex) return null;
-  const lucky = snapshot.scoreByLuck === 6 || snapshot.scoreByLuck === 8;
+  const selected = selectionByQuestion[snapshot.prompt.id] ?? (snapshot.failureReason === 6 ? 'luck' : null);
   return <div className="mot"><small>¿Seguro? (entra en repaso a +2 días)</small>
     {snapshot.scoreByLuck === 6 && <b className="r"><Clover size="1em" aria-hidden="true" /> Marcada como suerte: acierto 1/2. Otra vez bien y se quita la etiqueta.</b>}
     {snapshot.scoreByLuck === 8 && <b className="r"><Clover size="1em" aria-hidden="true" /> ¡Acierto 2/2! Etiqueta de suerte quitada: ya la sabes.</b>}
-    <button className={lucky ? 'on' : ''} data-a="doubt" onClick={() => quiz.markDoubt()}><Brain size="1em" aria-hidden="true" /> Acerté dudando</button><button className={lucky ? 'on' : ''} data-a="suerte" onClick={() => quiz.markLuck()}><Clover size="1em" aria-hidden="true" /> Fue suerte</button>
+    {selected === 'doubt' && <b className="r" role="status">La pregunta queda programada para volver al repaso.</b>}
+    {selected === 'luck' && snapshot.scoreByLuck !== 6 && snapshot.scoreByLuck !== 8 && <b className="r" role="status"><Clover size="1em" aria-hidden="true" /> Marcada como suerte: se repetirá mañana.</b>}
+    <button className={selected === 'doubt' ? 'on' : ''} aria-pressed={selected === 'doubt'} data-a="doubt" onClick={() => { quiz.markDoubt(); setSelectionByQuestion(current => ({ ...current, [snapshot.prompt.id]: 'doubt' })); }}><Brain size="1em" aria-hidden="true" /> Acerté dudando</button><button className={selected === 'luck' ? 'on' : ''} aria-pressed={selected === 'luck'} data-a="suerte" onClick={() => { quiz.markLuck(); setSelectionByQuestion(current => ({ ...current, [snapshot.prompt.id]: 'luck' })); }}><Clover size="1em" aria-hidden="true" /> Fue suerte</button>
   </div>;
 }
 

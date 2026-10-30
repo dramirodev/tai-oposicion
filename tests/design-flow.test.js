@@ -28,6 +28,21 @@ it('muestra la advertencia histórica antes de permitir contestar',async()=>{
  expect(document.querySelector('#app').textContent).toContain('original ambiguo');
  expect(store.rec(q.i)).toBeUndefined();
 });
+it('selecciona por separado los motivos de un acierto y actualiza el repaso',async()=>{
+ const q=JSON.parse(readFileSync('public/data/T1.01.json','utf8'))[0];
+ engine.createRun({kind:'test',feedback:true,items:[q]});await navigate('quiz','pregunta 1');
+ engine.answerCurrentQuestion(q.c,0);await waitText('¡Correcto!');
+ const doubt=document.querySelector('[data-a="doubt"]'),luck=document.querySelector('[data-a="suerte"]');
+ doubt.click();
+ await vi.waitFor(()=>expect(doubt.getAttribute('aria-pressed')).toBe('true'));
+ expect(luck.getAttribute('aria-pressed')).toBe('false');
+ expect(document.querySelector('#app').textContent).toContain('programada para volver al repaso');
+ luck.click();
+ await vi.waitFor(()=>expect(luck.getAttribute('aria-pressed')).toBe('true'));
+ expect(doubt.getAttribute('aria-pressed')).toBe('false');
+ expect(store.rec(q.i)[9]).toBe(6);
+ expect(document.querySelector('#app').textContent).toContain('se repetirá mañana');
+});
 it('identifica una sesión interrumpida sin alterar su puntuación global',async()=>{
  const qs=JSON.parse(readFileSync('public/data/T1.01.json','utf8')).slice(0,3);
  const run=engine.createRun({kind:'sim',feedback:false,items:qs});engine.answerDeferred(run,qs[0].c);
