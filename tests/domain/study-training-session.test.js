@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { completeTrainingSessionActivity, createDailyTrainingSession, pauseTrainingSessionActivity, startTrainingSessionActivity, toTrainingSessionHistoryEntry } from '../../src/core/domain/study-training-session.ts';
+import { completeTrainingSessionActivity, createDailyTrainingSession, localDayStart, localTrainingDateKey, pauseTrainingSessionActivity, startTrainingSessionActivity, toTrainingSessionHistoryEntry } from '../../src/core/domain/study-training-session.ts';
 
 const plan = { weekday:2, minutes:30, restDay:false, activities:[
   { activity:'activeRecall', minutes:10, reason:'active-recall' },
@@ -53,6 +53,27 @@ describe('sesión diaria guiada', () => {
     expect(toTrainingSessionHistoryEntry(finished)).toMatchObject({
       id: finished.dateKey, dateKey: finished.dateKey, startedAt: now, completedAt: now + 5_001,
       plannedMinutes:10, activities: plan.activities.slice(0, 1), elapsedSecondsByActivity:[5],
+    });
+  });
+
+  describe('límites de día locales', () => {
+    it('empieza el día exactamente en la medianoche local, sea cual sea la zona horaria del equipo', () => {
+      const start = localDayStart('2026-10-29');
+      expect(localTrainingDateKey(start)).toBe('2026-10-29');
+      expect(localTrainingDateKey(start - 1)).toBe('2026-10-28');
+    });
+
+    it('desplaza por días de calendario, también al cruzar un cambio de hora', () => {
+      for (const day of ['2026-03-28', '2026-10-24', '2026-10-31']) {
+        const next = localDayStart(day, 1);
+        expect(localTrainingDateKey(next), day).toBe(localTrainingDateKey(localDayStart(day) + 36 * 3_600_000));
+        expect(localTrainingDateKey(next - 1), day).toBe(day);
+      }
+    });
+
+    it('devuelve NaN, no un instante inventado, cuando no hay fecha', () => {
+      expect(Number.isNaN(localDayStart(''))).toBe(true);
+      expect(Number.isNaN(localDayStart('no-es-fecha'))).toBe(true);
     });
   });
 });

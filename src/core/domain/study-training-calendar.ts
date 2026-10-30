@@ -1,4 +1,5 @@
 import type { TrainingActivity, TrainingPreferences } from './entities.js';
+import { localTrainingDateKey } from './study-training-session.js';
 
 export type ScheduledStudyActivityKind = Extract<TrainingActivity, 'activeRecall' | 'topicTest'>;
 export const MAX_SCHEDULED_STUDY_ACTIVITIES = 90;
@@ -45,6 +46,12 @@ function dateOrdinal(dateKey: string): number {
   return Math.floor(Date.UTC(year, month - 1, day) / DAY_MS);
 }
 
+/** Días de calendario locales hasta `dateKey` (0 si llega o ya pasó); null si la fecha no es válida. */
+export function daysUntilStudyDate(dateKey: unknown, now: number): number | null {
+  if (!isStudyDateKey(dateKey) || !Number.isFinite(now)) return null;
+  return Math.max(0, dateOrdinal(dateKey) - dateOrdinal(localTrainingDateKey(now)));
+}
+
 function validateTarget(input: {
   dateKey: string; activity: ScheduledStudyActivityKind; topicId: string; minutes: number;
   now: number; preferences: TrainingPreferences; seenTopicIds: readonly string[];
@@ -52,8 +59,7 @@ function validateTarget(input: {
 }): ScheduleDecision | { ok: true } {
   if (!isStudyDateKey(input.dateKey)) return { ok: false, reason: 'invalid-date' };
   if (!Number.isFinite(input.now)) return { ok: false, reason: 'invalid-date' };
-  const today = new Date(input.now);
-  const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+  const todayKey = localTrainingDateKey(input.now);
   const difference = dateOrdinal(input.dateKey) - dateOrdinal(todayKey);
   if (difference <= 0) return { ok: false, reason: 'past-date' };
   if (difference > MAX_SCHEDULE_DAYS) return { ok: false, reason: 'too-far' };
@@ -65,7 +71,9 @@ function validateTarget(input: {
   if (!available) return { ok: false, reason: 'rest-day' };
   const sameDay = input.existing.filter(item => item.dateKey === input.dateKey && item.id !== input.ignoredId);
   if (sameDay.some(item => item.activity === input.activity && item.topicId === input.topicId)) return { ok: false, reason: 'duplicate' };
-  if (input.existing.length - (input.ignoredId ? 1 : 0) >= MAX_SCHEDULED_STUDY_ACTIVITIES) return { ok:false, reason:'schedule-limit' };
+  // Solo cuentan las actividades que aún no han pasado: las pasadas no se pueden borrar y bloquearían la agenda para siempre.
+  const upcoming = input.existing.filter(item => item.id !== input.ignoredId && dateOrdinal(item.dateKey) >= dateOrdinal(todayKey));
+  if (upcoming.length >= MAX_SCHEDULED_STUDY_ACTIVITIES) return { ok:false, reason:'schedule-limit' };
   const allocated = sameDay.reduce((total, item) => total + item.minutes, 0);
   if (allocated + input.minutes > available) return { ok: false, reason: 'day-capacity' };
   return { ok: true };
@@ -99,7 +107,9 @@ export function mergeScheduledStudyActivities(current: readonly ScheduledStudyAc
   for (const value of incoming) {
     if (!isScheduledStudyActivity(value)) continue;
     const previous = merged.get(value.id);
-    if (!previous || value.updatedAt > previous.updatedAt) merged.set(value.id, value);
+    // Con el mismo updatedAt gana la fecha mayor: ambos dispositivos eligen igual y convergen.
+    if (!previous || value.updatedAt > previous.updatedAt || (value.updatedAt === previous.updatedAt && value.dateKey > previous.dateKey)) merged.set(value.id, value);
   }
-  return [...merged.values()].sort((left, right) => left.dateKey.localeCompare(right.dateKey) || left.createdAt - right.createdAt).slice(0, MAX_SCHEDULED_STUDY_ACTIVITIES);
+  // Al superar el tope se descartan las actividades más antiguas: las futuras son las que importan.
+  return [...merged.values()].sort((left, right) => left.dateKey.localeCompare(right.dateKey) || left.createdAt - right.createdAt).slice(-MAX_SCHEDULED_STUDY_ACTIVITIES);
 }

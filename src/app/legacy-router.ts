@@ -32,7 +32,7 @@ import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
 import type { Origin, QuestionStats, StudyReviewMode, TrainingActivity, TrainingPreferences } from '../core/domain/entities.js';
 import type { PaperRecallRating } from '../core/domain/paper-recall-assessment.js';
-import type { ScheduledStudyActivity } from '../core/domain/study-training-calendar.js';
+import { daysUntilStudyDate, isStudyDateKey, type ScheduledStudyActivity } from '../core/domain/study-training-calendar.js';
 import { latestPaperRecallByTopic, needsPaperRecallFollowUp } from '../core/domain/paper-recall-assessment.js';
 import { buildDailyTrainingPlan, normalizeTrainingPreferences } from '../core/domain/study-training-plan.js';
 import { filterTopicMasteryToSeen } from '../core/domain/topic-mastery.js';
@@ -223,7 +223,7 @@ const settingsServices = {
     store.setCfg('ui', { ...current, [key]: key === 'theme' ? value : Number(value) });
   },
   setTrainingPreferences(value: TrainingPreferences) { store.setCfg('training', normalizeTrainingPreferences(value)); },
-  setExam(value: string) { if (/^\d{4}-\d\d-\d\d$/.test(value)) store.setCfg('exam', value); },
+  setExam(value: string) { if (isStudyDateKey(value)) store.setCfg('exam', value); },
   setDevMode(value: string | null) { setDevMode(value); notifyAccessChange(); notifySettings(); },
   revealDev() { const revealed = revealDev(); if (revealed) notifySettings(); return revealed; },
   async requestAccess() { return await sync.requestAccess(); },
@@ -576,7 +576,7 @@ export const studyServices: StudyServices = {
       const failureCount = failureIds.length;
       const streak = calculateStudyStreak(progress.answerTimestamps, Date.now());
       const exam = store.getCfg().exam;
-      const daysToExam = exam ? Math.max(0, Math.ceil((+new Date(exam + 'T09:00:00') - Date.now()) / 86400000)) : null;
+      const daysToExam = daysUntilStudyDate(exam, Date.now());
       const mastery = await dominioTemas(index);
       const trainingPreferences = normalizeTrainingPreferences(store.getCfg().training);
       const studiedTopicSet = new Set(store.getSeen());

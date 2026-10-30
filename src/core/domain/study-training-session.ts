@@ -57,6 +57,12 @@ export function localTrainingDateKey(timestamp: number): string {
   return `${year}-${month}-${day}`;
 }
 
+/** Medianoche local de `dateKey` (YYYY-MM-DD) desplazada `offsetDays` días de calendario; NaN si no hay fecha. */
+export function localDayStart(dateKey: string, offsetDays = 0): number {
+  const [year, month, day] = dateKey.split('-').map(Number);
+  return new Date(year, month - 1, day + offsetDays).getTime();
+}
+
 export function createDailyTrainingSession(plan: DailyTrainingPlan, timestamp: number): DailyTrainingSession | null {
   if (plan.restDay || !plan.activities.length) return null;
   return {

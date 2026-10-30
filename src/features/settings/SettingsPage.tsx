@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
+import { localDayStart } from '../../core/domain/study-training-session.js';
 import { ask, toast } from '../../shared/ui/dialog-actions.js';
 import { saveExportFile } from '../../shared/ui/download-file.js';
 import { useStudyService, type SettingsServices, type SettingsSnapshot } from '../../shared/ui/study-services.js';
@@ -228,7 +229,8 @@ function useAiStudyExport(settings: SettingsServices) {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const sessionModes = () => [modes.practice ? 'practice' : null, modes.simulation ? 'simulation' : null].filter((mode): mode is 'practice' | 'simulation' => !!mode);
   const dateRange = (messageForInvalid: string) => {
-    const start = Date.parse(`${from}T00:00:00.000Z`), end = Date.parse(`${to}T00:00:00.000Z`) + 86400000;
+    // «Desde» y «Hasta» son días locales: de medianoche local a medianoche local del día siguiente.
+    const start = localDayStart(from), end = localDayStart(to, 1);
     if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) throw new Error(messageForInvalid);
     return { from: start, to: end };
   };
