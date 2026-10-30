@@ -35,7 +35,7 @@ export function QuizPage() {
   return <div ref={root} className="quiz-page">
     <QuizSessionHeader snapshot={snapshot} pace={pace} headingRef={heading} onExit={() => void quiz.exit()} onPause={() => quiz.setPaused(true)} />
     <QuizQuestionMap snapshot={snapshot} onJump={index => { quiz.setIndex(index); window.scrollTo(0, 0); }} />
-    <QuizQuestionCard snapshot={snapshot} prompt={prompt} rootRef={root} sourceLabel={sourceLabel} responseLocked={responseLocked} revealed={revealed} gateRemaining={gateRemaining} selection={selection} highlightMark={highlightMark} setHighlightMark={setHighlightMark} addMark={addMark} explanation={explanation} />
+    <QuizQuestionCard key={prompt.id} snapshot={snapshot} prompt={prompt} rootRef={root} sourceLabel={sourceLabel} responseLocked={responseLocked} revealed={revealed} gateRemaining={gateRemaining} selection={selection} highlightMark={highlightMark} setHighlightMark={setHighlightMark} addMark={addMark} explanation={explanation} />
     <QuizNavigation snapshot={snapshot} onPrevious={movePrevious} onNext={() => void moveNext()} onBlank={markBlank} onReveal={() => { if (quiz.reveal()) window.scrollTo(0, 0); }} onToggleBlank={() => quiz.toggleBlank()} onToggleReview={() => quiz.toggleReview()} />
     <QuizPauseDialog paused={snapshot.paused} onResume={() => quiz.setPaused(false)} />
   </div>;

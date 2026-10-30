@@ -9,7 +9,10 @@ import { QuizFeedback } from './QuizFeedback.js';
 
 type HighlightMark = { questionId: string; id: string | null };
 
-function QuestionPrompt({ snapshot, prompt, sourceLabel, responseLocked }: { snapshot: QuizSnapshot; prompt: QuizPrompt; sourceLabel: string; responseLocked: boolean }) {
+function QuestionPrompt({ snapshot, prompt, sourceLabel, responseLocked, selection, highlightMark, setHighlightMark, addMark }: {
+  snapshot: QuizSnapshot; prompt: QuizPrompt; sourceLabel: string; responseLocked: boolean; selection: boolean;
+  highlightMark: HighlightMark; setHighlightMark: (mark: HighlightMark) => void; addMark: (category: 'key' | 'doubt') => void;
+}) {
   const quiz = useStudyService('quiz');
   const confidenceLabels = { sure: 'Seguro', betweenTwo: 'Entre dos', guess: 'Adivino' };
   return <>
@@ -19,6 +22,7 @@ function QuestionPrompt({ snapshot, prompt, sourceLabel, responseLocked }: { sna
     {prompt.context && <div className="ctx pre"><StudyMarkup html={richHtml(prompt.context)} languageContext={prompt.statement} /></div>}
     {asksForNegativeOption(prompt.statement) && <div className="pide">Ojo: te piden la opción INCORRECTA o la excepción</div>}
     <div className="enun pre" tabIndex={0} aria-label="Enunciado. Usa Mayús y las flechas para seleccionar texto"><StudyMarkup html={richHtml(prompt.statement, snapshot.readingMode === 1)} languageContext={prompt.statement} /></div>
+    <QuestionHighlightTools snapshot={snapshot} prompt={prompt} selection={selection} highlightMark={highlightMark} setHighlightMark={setHighlightMark} addMark={addMark} />
     <div className="study-signals" aria-label="Señales opcionales de estudio"><span className="study-signals-label">¿Cómo lo ves?</span>{(['sure', 'betweenTwo', 'guess'] as const).map(value => <button type="button" className={`signal${snapshot.confidence === value ? ' on' : ''}`} data-confidence={value} aria-pressed={snapshot.confidence === value} disabled={responseLocked || snapshot.paused} onClick={() => quiz.setConfidence(value)} key={value}>{confidenceLabels[value]}</button>)}</div>
   </>;
 }
@@ -53,9 +57,8 @@ export function QuizQuestionCard({ snapshot, prompt, rootRef, sourceLabel, respo
   setHighlightMark: (mark: HighlightMark) => void; addMark: (category: 'key' | 'doubt') => void; explanation: import('../../core/domain/explanations.js').ExplanationLookup;
 }) {
   return <div className={`card q${prompt.hasAssumption ? ' with-sup' : ''}`}>
-    <QuestionPrompt snapshot={snapshot} prompt={prompt} sourceLabel={sourceLabel} responseLocked={responseLocked} />
+    <QuestionPrompt snapshot={snapshot} prompt={prompt} sourceLabel={sourceLabel} responseLocked={responseLocked} selection={selection} highlightMark={highlightMark} setHighlightMark={setHighlightMark} addMark={addMark} />
     <QuestionOptions snapshot={snapshot} prompt={prompt} rootRef={rootRef} revealed={revealed} responseLocked={responseLocked} gateRemaining={gateRemaining} />
-    <QuestionHighlightTools snapshot={snapshot} prompt={prompt} selection={selection} highlightMark={highlightMark} setHighlightMark={setHighlightMark} addMark={addMark} />
     <p className="sub stale-highlight" id="stale-highlight" hidden>Una marca no coincide con el texto actual y no se ha movido.</p>
     {gateRemaining > 0 && <div className="gate" id="gate" role="status"><Eye size="1em" aria-hidden="true" /> Lee con calma: podrás responder en {gateRemaining} s. ¿Qué te piden? ¿Hay NO, SALVO, cifras?</div>}
     {revealed && <QuizFeedback snapshot={snapshot} prompt={prompt} explanation={explanation} />}

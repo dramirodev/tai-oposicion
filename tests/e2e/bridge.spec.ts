@@ -82,6 +82,65 @@ async function savedAttemptHistory(page: Page) {
     };
   }));
 }
+
+function questionStatement(id: string): string {
+  const dataDirectory = join(process.cwd(), 'public/data');
+  const topicFile = readdirSync(dataDirectory).find(file => /^T\d+\.\d+\.json$/.test(file)
+    && (JSON.parse(readFileSync(join(dataDirectory, file), 'utf8')) as { i: string }[]).some(question => question.i === id));
+  if (!topicFile) throw new Error(`No se encuentra la pregunta ${id} en los datos locales`);
+  const question = (JSON.parse(readFileSync(join(dataDirectory, topicFile), 'utf8')) as { i: string; q: string }[]).find(item => item.i === id);
+  if (!question) throw new Error(`No se encuentra el enunciado de ${id}`);
+  return question.q;
+}
+
+test('una marca del enunciado no contamina la siguiente pregunta', async ({ page }) => {
+  const errors = await start(page);
+  await page.locator('#quick').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  const ids = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.run:guest') || 'null').ids as string[]);
+  const expectedFirstStatement = questionStatement(ids[0]);
+  const expectedNextStatement = questionStatement(ids[1]);
+
+  await page.locator('.enun').evaluate(element => {
+    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+    const text = walker.nextNode() as Text | null;
+    if (!text?.length) throw new Error('El enunciado no tiene texto seleccionable');
+    const range = document.createRange();
+    range.setStart(text, 0);
+    range.setEnd(text, Math.min(12, text.length));
+    const selection = window.getSelection()!;
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.dispatchEvent(new Event('selectionchange'));
+  });
+  await expect(page.locator('#highlight-tools')).toBeVisible();
+  const toolbarPlacement = await page.evaluate(() => {
+    const statement = document.querySelector('.enun')!.getBoundingClientRect();
+    const toolbar = document.querySelector('#highlight-tools')!.getBoundingClientRect();
+    const options = document.querySelector('.opts')!.getBoundingClientRect();
+    return { statementBottom: statement.bottom, toolbarTop: toolbar.top, optionsTop: options.top };
+  });
+  expect(toolbarPlacement.toolbarTop).toBeGreaterThanOrEqual(toolbarPlacement.statementBottom - 1);
+  expect(toolbarPlacement.toolbarTop).toBeLessThan(toolbarPlacement.optionsTop);
+  await page.locator('[data-add-highlight="key"]').click();
+  await expect(page.locator('.enun mark[data-category="key"]')).toHaveCount(1);
+  await expect(page.locator('#next')).toBeEnabled();
+  await page.locator('#next').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 2');
+
+  const actualNextStatement = await page.locator('.enun').evaluate(element => element.textContent || '');
+  const normalize = (value: string) => value.replace(/\s+/g, ' ').trim();
+  expect(normalize(actualNextStatement)).toBe(normalize(expectedNextStatement));
+  await expect(page.locator('.enun mark[data-mark-id]')).toHaveCount(0);
+
+  await page.locator('#prev').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  const restoredFirstStatement = await page.locator('.enun').evaluate(element => element.textContent || '');
+  expect(normalize(restoredFirstStatement)).toBe(normalize(expectedFirstStatement));
+  await expect(page.locator('.enun mark[data-category="key"]')).toHaveCount(1);
+  expect(errors).toEqual([]);
+});
+
 test('guarda en pagehide y reanuda la sesión y el progreso tras recargar', async ({ page }) => {
   const errors = await start(page);
   await page.locator('#quick').click();
