@@ -1,24 +1,17 @@
 # Estilos compartidos
 
-`index.css` es la única entrada, importada por `src/app/main.tsx`. Vite resuelve sus imports y publica una hoja minificada con hash en `dist/assets`. El generador del shell incluye todos los assets, también CSS; no añadir una URL fija `style.css` al service worker.
+`index.css` es la única entrada CSS, importada por `src/app/main.tsx`. Tailwind CSS 4 genera las utilidades desde clases estáticas en HTML y TSX; Vite resuelve sus imports y publica una hoja minificada con hash en `dist/assets`. El generador del shell incluye todos los assets, también CSS; no añadir una URL fija `style.css` al service worker.
 
-El CSS sigue siendo global porque las pantallas heredadas generan HTML fuera de la reconciliación React. Las clases e IDs usados por eventos son contratos: comprobar sus productores, consumidores y pruebas antes de renombrar.
+`index.css` es la única hoja de estilos de la aplicación. Las pantallas usan utilidades Tailwind generadas desde JSX y clases `@utility` para contratos semánticos, estados y contenido dinámico. Los tokens y estilos base viven en `theme` y `base`. Se conservan selectores CSS solo para estilos globales, reglas ligadas a atributos de accesibilidad/tema/ruta, pseudoelementos, animaciones y comportamientos de viewport o puntero que dependen de varios componentes. Se retiraron las hojas `tokens.css`, `base.css`, `controls.css`, `question.css`, `home.css`, `responsive.css`, `workspace.css`, `progress.css`, `initial-loading.css`, `loading.css`, `motion.css`, `cards.css` y `code.css`. El antiguo helper DOM imperativo y `legacy-router.ts` ya no existen.
 
-## Responsabilidades y orden
+## Capas y migración
 
-1. `tokens.css`: colores semánticos, escalas, espacios y safe areas.
-2. `base.css`: elementos, texto, foco y preferencias de movimiento.
-3. `controls.css`: superficies, botones, diálogos, navegación y formularios.
-4. `question.css`: preguntas, opciones, selección y corrección.
-5. `code.css`: código inline y bloques de preguntas, respuestas y explicaciones; tokens de Shiki por tema.
-6. `progress.css`: resultados, mapa de dominio, gráficos e historial.
-7. `cards.css`: tarjeta y respuesta de repaso.
-8. `home.css`: inicio, tiles, menú y exámenes.
-9. `motion.css`: efectos de respuesta y entrada.
-10. `responsive.css`: reflujo, variantes de estudio y funcionalidades añadidas.
-11. `workspace.css`: marco React de Precisión y presentación común de pantallas heredadas, aplicado al final mientras exista el puente.
+- `@layer theme`: tokens semánticos y variantes claro/oscuro.
+- `@layer base`: tipografía, elementos, foco, safe areas y movimiento reducido.
+- Reglas CSS globales: atributos de tema/tamaño/ruta, estados de interacción compartidos, pseudo-elementos, animaciones y adaptaciones de viewport que no pertenecen a una sola clase de componente.
+- `@utility`: estilos semánticos reutilizables, estados del contenido dinámico y selectores descendientes que Tailwind genera y aplica junto con las clases del markup.
 
-Conservar este orden mientras existan variantes globales. No introducir una layer aislada: las reglas normales sin layer ganarían a esa layer. No purgar clases por búsqueda de literales; hay estados y nombres construidos dinámicamente.
+Al ajustar pantallas, priorizar clases Tailwind en el markup y extender las utilidades existentes; reservar los selectores CSS globales para los casos descritos arriba. No purgar clases por búsqueda de literales: hay estados y nombres construidos dinámicamente.
 
 ## Contratos
 
@@ -59,7 +52,7 @@ Geist variable se aloja en `fonts/geist-variable.woff2` con licencia SIL OFL en 
 
 Inicio prioriza continuar una sesión cuando existe, ofrece práctica rápida y repaso, agrupa las métricas reales en una franja y resume el dominio por los cuatro bloques del temario. No confunde temas estudiados con preguntas contestadas. Sus IDs y eventos se mantienen. Progreso presenta los temas en filas; Ajustes usa encabezados de sección a la izquierda y controles a la derecha cuando hay espacio. Opciones, tarjetas, diálogos, avisos, formularios y tablas comparten tokens.
 
-`workspace.css` es una capa de presentación transitoria, sin CSS layers: las pantallas todavía generan HTML fuera de React. Mantiene las clases heredadas y concentra las variantes visuales de Precisión; no extraer ni renombrar esos contratos sin revisar los consumidores. Se han consolidado los tokens oscuros y eliminado la entrada animada de pantallas y el degradado obsoleto de la barra de acciones.
+`workspace.css` concentra ajustes de presentación compartidos de Precisión. Mantiene nombres de clase que también usan las pruebas y los servicios de estudio; comprobar sus productores y consumidores antes de retirarlos. Se han consolidado los tokens oscuros y eliminado la entrada animada de pantallas y el degradado obsoleto de la barra de acciones.
 
 | Ancho | Intención |
 |---|---|

@@ -150,7 +150,7 @@ export function TestPage() {
         <button className={!configuration.all ? 'on' : ''} aria-pressed={!configuration.all} onClick={() => update({ all: false })}>Elegir temas</button>
       </div>
       <label className="field" htmlFor="test-search">Buscar tema</label>
-      <input id="test-search" type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Nombre o código del tema" />
+      <input className="search-input" id="test-search" type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Nombre o código del tema" />
       <div className="row"><button className="btn sec" onClick={() => {
         const ids = test.seenTopics(); if (!ids.length) { setMessage('Aún no has marcado temas vistos (pantalla «Temas vistos» en Inicio).'); return; }
         update({ all: false, selected: ids });
@@ -161,7 +161,7 @@ export function TestPage() {
         const ids = entries.map(topic => topic.id);
         return <details className="bl topic-block" key={prefix} open={!!query || prefix === 'T1'}>
           <summary>{title}</summary>
-          <div className="blh"><span>Seleccionar bloque</span><button className="ghost sm" onClick={event => { event.preventDefault(); topicSelection(ids); }}>todos</button></div>
+          <div className="blh"><span>Seleccionar bloque</span><button className="ghost ghost-small" onClick={event => { event.preventDefault(); topicSelection(ids); }}>todos</button></div>
         {entries.map(topic => <label className={`tm ${selected.has(topic.id) ? 'on' : ''}`} key={topic.id}>
             <input type="checkbox" checked={selected.has(topic.id)} onChange={event => topicSelection(event.target.checked ? [...selected, topic.id] : [...selected].filter(id => id !== topic.id))} />
             <span><b>{topic.id}</b> {topic.name}</span><small>{topic.attempted}/{topic.total}{topic.answerCount ? ` · ${Math.round(topic.correct * 100 / topic.answerCount)}%` : ''}</small>

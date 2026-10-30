@@ -39,7 +39,7 @@ export function ReadingPage() {
   const question = progress.items[progress.index];
   const questionCount = progress.items.length;
   return <>
-    <div className="qhead"><button className="ghost" aria-label="Salir" onClick={() => void exit()}><X size="1.25rem" aria-hidden="true" /></button><div className="prog" role="progressbar" aria-label="Progreso" aria-valuemin={0} aria-valuemax={questionCount} aria-valuenow={progress.index}><div style={{ width: `${100 * progress.index / questionCount}%` }} /></div><div className="cnt">{progress.index + 1}/{questionCount}</div></div>
+    <div className="qhead sticky top-[calc(var(--sat)/var(--z,1))] z-[3] mb-4 flex items-center gap-4 border-b-0 bg-canvas py-3"><button className="ghost" aria-label="Salir" onClick={() => void exit()}><X size="1.25rem" aria-hidden="true" /></button><div className="prog min-w-0 h-[.375rem] flex-1 overflow-hidden rounded-full bg-line" role="progressbar" aria-label="Progreso" aria-valuemin={0} aria-valuemax={questionCount} aria-valuenow={progress.index}><div className="h-full bg-[var(--selb)] origin-left animate-[grow_.45s_cubic-bezier(.2,.7,.2,1)]" style={{ width: `${100 * progress.index / questionCount}%` }} /></div><div className="cnt min-w-11 text-right text-[length:var(--fs-m)] font-semibold text-muted">{progress.index + 1}/{questionCount}</div></div>
     <h1 className="sub">Lectura atenta · paso {progress.step + 1} de 3</h1>
     {progress.step === 0 && <MeaningStep question={question} progress={progress} reading={reading} />}
     {progress.step === 1 && <KeywordStep question={question} progress={progress} reading={reading} />}
@@ -56,7 +56,7 @@ function QuestionSources({ question }: { question: ReadingPrompt }) {
 function MeaningStep({ question, progress, reading }: { question: ReadingPrompt; progress: ReadingProgress; reading: ReadingServices }) {
   return <article className="card q"><QuestionSources question={question} /><div className="enun pre"><StudyMarkup html={richHtml(question.statement)} languageContext={question.statement} /></div><p><b>1. ¿Qué te piden?</b> Antes de ver las opciones.</p>
     <div className="opts"><button className={`opt${progress.meaningChoice === 0 && progress.meaningCorrect !== null ? progress.meaningCorrect ? ' ok' : ' bad' : ''}`} disabled={progress.meaningChoice !== null} onClick={() => reading.answerMeaning(0)}><b><Check aria-hidden="true" /></b><span>La opción CORRECTA / VERDADERA</span></button><button className={`opt${progress.meaningChoice === 1 && progress.meaningCorrect !== null ? progress.meaningCorrect ? ' ok' : ' bad' : ''}`} disabled={progress.meaningChoice !== null} onClick={() => reading.answerMeaning(1)}><b><X aria-hidden="true" /></b><span>La INCORRECTA / FALSA / la excepción</span></button></div>
-    {progress.meaningChoice !== null && <><div className={`fb ${progress.meaningCorrect ? 'good' : 'wrong'}`} role="status"><b>{progress.meaningCorrect ? '¡Bien leído!' : 'Ojo: lo habías leído al revés.'}</b> Te piden la opción <b>{question.asksForNegative ? 'INCORRECTA / excepción' : 'CORRECTA'}</b>.</div><div className="bar2"><button className="btn" onClick={() => reading.continueMeaning()}>Siguiente →</button></div></>}
+    {progress.meaningChoice !== null && <><div className={`fb motion-safe:animate-[fbin_.2s_ease-out] ${progress.meaningCorrect ? 'good' : 'wrong'}`} role="status"><b>{progress.meaningCorrect ? '¡Bien leído!' : 'Ojo: lo habías leído al revés.'}</b> Te piden la opción <b>{question.asksForNegative ? 'INCORRECTA / excepción' : 'CORRECTA'}</b>.</div><div className="bar2"><button className="btn" onClick={() => reading.continueMeaning()}>Siguiente →</button></div></>}
   </article>;
 }
 
@@ -95,7 +95,7 @@ function WordFeedback({ result }: { result: NonNullable<ReadingProgress['wordRes
   if (result.claimedNone && result.total === 0) message = <><b>Correcto:</b> no hay palabras clave destacables. Lo importante es entender bien qué pide.</>;
   else if (result.claimedNone) message = <><b>Ojo:</b> sí había {result.total} palabra{result.total === 1 ? '' : 's'} clave (resaltada{result.total === 1 ? '' : 's'}). Mira qué cambia el sentido.</>;
   else if (result.total) message = <>Detectaste <b>{result.hit}</b> de <b>{result.total}</b> palabras clave{result.missed ? ' (las que faltaban están resaltadas)' : ''}.{result.extra ? ` Marcaste ${result.extra} que no eran clave.` : ''}</>;
-  return <div className={`fb ${result.missed ? 'wrong' : 'good'}`} role="status">{message}</div>;
+  return <div className={`fb motion-safe:animate-[fbin_.2s_ease-out] ${result.missed ? 'wrong' : 'good'}`} role="status">{message}</div>;
 }
 
 function OptionsStep({ question, progress, reading, clock, questionCount }: { question: ReadingPrompt; progress: ReadingProgress; reading: ReadingServices; clock: number; questionCount: number }) {
@@ -104,7 +104,7 @@ function OptionsStep({ question, progress, reading, clock, questionCount }: { qu
   return <article className="card q"><QuestionSources question={question} /><div className="enun pre"><StudyMarkup html={richHtml(question.statement, true)} languageContext={question.statement} /></div><p className="sm"><b>3. Lee las cuatro opciones enteras</b> antes de responder.</p>
     <div className="opts">{question.options.map((option, index) => <button key={`${question.id}-${index}`} className={`opt${progress.selectedAnswer === null ? '' : index === question.correctIndex ? ' ok' : progress.selectedAnswer === index ? ' bad' : ' dis'}`} disabled={remaining > 0 || progress.selectedAnswer !== null} onClick={() => { setTooFast(reading.answerOption(index) === false); }}><b>{'ABCD'[index]}</b><span className="pre"><StudyMarkup html={richHtml(option, true)} languageContext={question.statement} /></span></button>)}</div>
     {remaining > 0 && <p className="gate" role="status">Lectura mínima: {remaining} s</p>}{tooFast && remaining > 0 && <p className="sub">Lee el enunciado y las opciones antes de responder.</p>}
-    {progress.selectedAnswer !== null && <><div className={`fb ${progress.answerCorrect ? 'good' : 'wrong'}`} role="status"><b>{progress.answerCorrect ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>{'ABCD'[question.correctIndex]}</b>{question.citation && <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(question.citation, question.options[question.correctIndex])} languageContext={question.statement} /></div>}{question.note && <div className="cita"><span>Nota</span><StudyMarkup html={richHtml(question.note)} languageContext={question.statement} /></div>}</div><div className="bar2"><button className="btn" onClick={() => reading.next()}>{progress.index + 1 === questionCount ? 'Terminar' : 'Siguiente'} →</button></div></>}
+    {progress.selectedAnswer !== null && <><div className={`fb motion-safe:animate-[fbin_.2s_ease-out] ${progress.answerCorrect ? 'good' : 'wrong'}`} role="status"><b>{progress.answerCorrect ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>{'ABCD'[question.correctIndex]}</b>{question.citation && <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(question.citation, question.options[question.correctIndex])} languageContext={question.statement} /></div>}{question.note && <div className="cita"><span>Nota</span><StudyMarkup html={richHtml(question.note)} languageContext={question.statement} /></div>}</div><div className="bar2"><button className="btn" onClick={() => reading.next()}>{progress.index + 1 === questionCount ? 'Terminar' : 'Siguiente'} →</button></div></>}
   </article>;
 }
 
@@ -114,7 +114,7 @@ function ReadingSummary({ progress, onAgain, onHome }: { progress: ReadingProgre
   const meaning = progress.outcomes.filter(outcome => outcome.meaningCorrect).length;
   const marked = progress.outcomes.reduce((sum, outcome) => sum + outcome.marked[0], 0);
   const keywords = progress.outcomes.reduce((sum, outcome) => sum + outcome.marked[1], 0);
-  return <><h1>Lectura atenta</h1><div className="grid"><div className="stat"><b>{correct}/{total}</b><span>aciertos</span></div><div className="stat"><b>{meaning}/{total}</b><span>«qué piden» bien</span></div><div className="stat"><b>{keywords ? `${percentage(marked, keywords)}%` : '—'}</b><span>palabras clave</span></div></div>
+  return <><h1>Lectura atenta</h1><div className="stats-grid"><div className="stat"><b>{correct}/{total}</b><span>aciertos</span></div><div className="stat"><b>{meaning}/{total}</b><span>«qué piden» bien</span></div><div className="stat"><b>{keywords ? `${percentage(marked, keywords)}%` : '—'}</b><span>palabras clave</span></div></div>
     <div className="card"><h2 className="h3">Método de 3 pasos</h2><ul className="tips">{READING_TIPS.map(tip => <li key={tip}>{tip}</li>)}</ul></div>
     <div className="bar2"><button className="btn" onClick={onAgain}>Otra tanda</button><button className="btn sec" onClick={onHome}>Inicio</button></div>
   </>;

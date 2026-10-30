@@ -115,7 +115,7 @@ function UpdateSection({ settings, snapshot }: { settings: SettingsServices; sna
     taps.current = 0; toast('Modo desarrollador activado');
   };
   return <section className="card"><h2 className="h3">Descargas y actualizaciones</h2>
-    <button className="ghost sm" type="button" aria-label={`Versión ${snapshot.version} (${snapshot.build})`} onClick={revealDeveloper}>Versión <b>{snapshot.version}</b> <small>({snapshot.build})</small></button>
+    <button className="ghost ghost-small" type="button" aria-label={`Versión ${snapshot.version} (${snapshot.build})`} onClick={revealDeveloper}>Versión <b>{snapshot.version}</b> <small>({snapshot.build})</small></button>
     <p className="sm">{snapshot.update ? `Hay una versión nueva: ${snapshot.update}.` : 'Comprueba si hay una versión nueva; si la hay, la app se recarga para usarla.'}</p>
     <button className={`btn ${snapshot.update ? '' : 'sec'}`} disabled={checking} onClick={() => void update()}>{checking ? 'Buscando…' : snapshot.update ? 'Actualizar ahora' : 'Buscar actualización'}</button>
   </section>;

@@ -1,4 +1,5 @@
 export const ORIGEN: Record<string, string> = { O: 'Oficial', A: 'Academia', G: 'Generada' };
+export const LETRAS_OPCION = ['A', 'B', 'C', 'D'] as const;
 export const TRAMPAS: Record<string, string> = { 1: 'Cambio de sujeto/órgano', 2: 'Cifra o plazo vecino', 3: 'Alcance del sujeto', 4: 'Pregunta inversa', 5: 'Obligación/facultad', 6: 'Numeración de normas', 7: 'Conceptos casi idénticos', 8: 'Orden invertido', 9: 'Inventado que suena real', 10: 'Trampa del supuesto', 11: 'Contaminación entre normas', 12: 'Absolutización', 13: 'Intruso', 14: 'Cierta pero no responde' };
 export const TRAMPA_EXPL: Record<string, string> = {
   1: 'Cambian quién hace algo: el órgano, la autoridad o el sujeto correcto se sustituye por otro parecido.',

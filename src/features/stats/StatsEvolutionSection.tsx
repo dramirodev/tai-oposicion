@@ -6,6 +6,7 @@ import { PageLoading } from '../../shared/ui/PageLoading.js';
 import type { StatsServices } from '../../shared/ui/study-services.js';
 import type { StatsSnapshot, StatsWeek } from '../../core/application/stats/statistics-model.js';
 import type { QuestionEvolutionPoint, TrendPoint } from './StatsCharts.js';
+import { statsTableClasses, statsTableScrollClasses } from './stats-classes.js';
 
 type QuestionWeek = QuestionEvolutionPoint;
 type EvolutionPreference = Record<string, string | number | boolean> & { mode?: string; filter?: string | number; weeks?: string | number; table?: boolean };
@@ -16,7 +17,7 @@ const QuestionEvolutionChart = lazy(() => import('./StatsCharts.js').then(module
 
 function QuestionHistory({ weeks }: { weeks: readonly QuestionWeek[] }) {
   if (!weeks.some(week => week.seen)) return <p className="sub">Aún no hay sesiones completadas con historial detallado en este periodo. Los registros antiguos no se reconstruyen.</p>;
-  return <div className="card"><Suspense fallback={<PageLoading variant="chart" />}><QuestionEvolutionChart weeks={weeks} /></Suspense><div className="table-scroll" role="region" aria-label="Datos semanales de evolución" tabIndex={0}><table className="tb"><caption>Preguntas por semana</caption><thead><tr>{['Semana', 'Vistas', 'Acertadas', 'Falladas', 'No lo sé'].map(value => <th key={value}>{value}</th>)}</tr></thead><tbody>{weeks.filter(week => week.seen).map(week => <tr key={week.start}><td>{date(week.start)}</td><td>{week.seen}</td><td>{week.correct}</td><td>{week.wrong}</td><td>{week.unknown}</td></tr>)}</tbody></table></div></div>;
+  return <div className="card"><Suspense fallback={<PageLoading variant="chart" />}><QuestionEvolutionChart weeks={weeks} /></Suspense><div className={statsTableScrollClasses} role="region" aria-label="Datos semanales de evolución" tabIndex={0}><table className={statsTableClasses}><caption>Preguntas por semana</caption><thead><tr>{['Semana', 'Vistas', 'Acertadas', 'Falladas', 'No lo sé'].map(value => <th key={value}>{value}</th>)}</tr></thead><tbody>{weeks.filter(week => week.seen).map(week => <tr key={week.start}><td>{date(week.start)}</td><td>{week.seen}</td><td>{week.correct}</td><td>{week.wrong}</td><td>{week.unknown}</td></tr>)}</tbody></table></div></div>;
 }
 
 function MetricHistory({ snapshot, weekly, evolution, saveEvolution }: { snapshot: StatsSnapshot; weekly: readonly StatsWeek[]; evolution: EvolutionPreference; saveEvolution: (next: Record<string, string | number | boolean>) => void }) {
@@ -25,8 +26,8 @@ function MetricHistory({ snapshot, weekly, evolution, saveEvolution }: { snapsho
   return <div className="card"><div className="seg"><button className={!timed ? 'on' : ''} aria-pressed={!timed} onClick={() => saveEvolution({ mode: 'acierto' })}>Acierto</button><button className={timed ? 'on' : ''} aria-pressed={timed} onClick={() => saveEvolution({ mode: 'tiempo' })}>Tiempo por pregunta</button></div>
     <div className="row"><label>Qué medir en la evolución<select aria-label="Qué medir en la evolución" disabled={timed} value={String(evolution.filter)} onChange={event => saveEvolution({ filter: event.target.value })}><option value="g">Todo el temario</option><optgroup label="Por tipo de pregunta">{snapshot.types.map(type => <option key={type.id} value={`k:${type.id}`}>{type.label}</option>)}</optgroup><optgroup label="Por tema">{snapshot.topics.map(topic => <option key={topic.id} value={`t:${topic.id}`}>{topic.id} {topic.name}</option>)}</optgroup></select></label><label>Número de semanas<select aria-label="Número de semanas" value={String(evolution.weeks)} onChange={event => saveEvolution({ weeks: Number(event.target.value) })}>{[8, 12, 26].map(weeks => <option key={weeks}>{weeks}</option>)}</select></label></div>
     <Suspense fallback={<PageLoading variant="chart" />}><StatsTrendChart label={timed ? 'Segundos medios por pregunta cada semana' : 'Acierto cada semana'} metric={timed ? 'Segundos por pregunta' : 'Acierto'} suffix={timed ? ' s' : '%'} points={points} emptyMessage="Aún no hay datos de evolución para el periodo seleccionado." /></Suspense>
-    <p className="legend">{timed ? 'Segundos medios por pregunta en tus sesiones (sin contar pausas).' : 'Porcentaje de aciertos por semana, sobre las preguntas contestadas en esa semana.'}<button className="ghost sm" aria-expanded={!!evolution.table} onClick={() => saveEvolution({ table: !evolution.table })}>{evolution.table ? 'Ocultar tabla' : 'Ver tabla'}</button></p>
-    {evolution.table && <div className="table-scroll" role="region" aria-label="Tabla de progreso" tabIndex={0}><table className="tb"><caption>Evolución semanal</caption><thead><tr><th>Semana</th><th>{timed ? 'seg/preg.' : 'Acierto'}</th><th>Resp.</th></tr></thead><tbody>{weekly.filter(week => week.n).map(week => <tr key={week.start}><td>{date(week.start)}</td><td>{timed ? week.secondsPerQuestion ?? '—' : week.accuracy ?? '—'}</td><td>{week.n}</td></tr>)}</tbody></table></div>}
+    <p className="legend">{timed ? 'Segundos medios por pregunta en tus sesiones (sin contar pausas).' : 'Porcentaje de aciertos por semana, sobre las preguntas contestadas en esa semana.'}<button className="ghost ghost-small" aria-expanded={!!evolution.table} onClick={() => saveEvolution({ table: !evolution.table })}>{evolution.table ? 'Ocultar tabla' : 'Ver tabla'}</button></p>
+    {evolution.table && <div className={statsTableScrollClasses} role="region" aria-label="Tabla de progreso" tabIndex={0}><table className={statsTableClasses}><caption>Evolución semanal</caption><thead><tr><th>Semana</th><th>{timed ? 'seg/preg.' : 'Acierto'}</th><th>Resp.</th></tr></thead><tbody>{weekly.filter(week => week.n).map(week => <tr key={week.start}><td>{date(week.start)}</td><td>{timed ? week.secondsPerQuestion ?? '—' : week.accuracy ?? '—'}</td><td>{week.n}</td></tr>)}</tbody></table></div>}
   </div>;
 }
 
@@ -37,7 +38,7 @@ function CardRetentionForecast({ snapshot }: { snapshot: StatsSnapshot }) {
     {forecast ? <>
       <Suspense fallback={<PageLoading variant="chart" />}><StatsTrendChart points={points} label="Retención prevista por FSRS para tarjetas programadas" metric="Recuerdo previsto" suffix="%" emptyMessage="Aún no se puede calcular una previsión." /></Suspense>
       <p className="legend">Estimación del modelo FSRS-6 para {forecast.reviewedCards} {forecast.reviewedCards === 1 ? 'tarjeta' : 'tarjetas'} con una valoración registrada; no es un resultado observado ni representa todo el temario.</p>
-      <div className="table-scroll" role="region" aria-label="Datos de retención prevista en tarjetas" tabIndex={0}><table className="tb"><caption>Recuerdo previsto por FSRS</caption><thead><tr><th>En</th><th>Estimación</th></tr></thead><tbody>{forecast.points.map(point => <tr key={point.days}><td>{point.days} días</td><td>{Math.round(point.recallProbability * 100)}%</td></tr>)}</tbody></table></div>
+      <div className={statsTableScrollClasses} role="region" aria-label="Datos de retención prevista en tarjetas" tabIndex={0}><table className={statsTableClasses}><caption>Recuerdo previsto por FSRS</caption><thead><tr><th>En</th><th>Estimación</th></tr></thead><tbody>{forecast.points.map(point => <tr key={point.days}><td>{point.days} días</td><td>{Math.round(point.recallProbability * 100)}%</td></tr>)}</tbody></table></div>
     </> : <p className="sub">Datos insuficientes: todavía no hay tarjetas valoradas con estado FSRS.</p>}
   </div></>;
 }
@@ -48,10 +49,10 @@ function SlowQuestionRow({ item, statement, loading, loadError }: {
   loading: boolean;
   loadError: boolean;
 }) {
-  return <div className="sl">
-    <div className="slh"><b>{Math.round(item.averageSeconds)} s</b><small>{item.correct}/{item.attempts} aciertos{item.lastOutcome === 1 ? <> · última <Check size="1em" aria-hidden="true" /></> : item.lastOutcome === 0 ? <> · última <X size="1em" aria-hidden="true" /></> : ''}</small></div>
-    {statement ? <div className="sl-question"><StudyMarkup html={richHtml(statement)} languageContext={statement} /></div> : <p className="sub sl-question-pending">{loading ? 'Cargando enunciado…' : loadError ? 'No se pudo cargar el enunciado.' : 'Enunciado no disponible.'}</p>}
-    <small className="sl-id">{item.id}</small>
+  return <div className="sl border-b border-line py-2.5">
+    <div className="slh flex items-baseline gap-3"><b className="text-xl">{Math.round(item.averageSeconds)} s</b><small>{item.correct}/{item.attempts} aciertos{item.lastOutcome === 1 ? <> · última <Check size="1em" aria-hidden="true" /></> : item.lastOutcome === 0 ? <> · última <X size="1em" aria-hidden="true" /></> : ''}</small></div>
+    {statement ? <div className="sl-question mt-2 leading-[1.5]"><StudyMarkup html={richHtml(statement)} languageContext={statement} /></div> : <p className="sub sl-question-pending mt-2 mb-0">{loading ? 'Cargando enunciado…' : loadError ? 'No se pudo cargar el enunciado.' : 'Enunciado no disponible.'}</p>}
+    <small className="sl-id mt-1.5 block">{item.id}</small>
   </div>;
 }
 
@@ -90,7 +91,7 @@ function StrategyAnalysis({ stats, strategy, setStrategy, days, setDays, busy, s
     catch { setStrategy('No se pudo leer el historial detallado. El progreso agregado sigue disponible.'); }
     finally { setBusy(false); }
   };
-  return <><h2>Analítica de estrategia</h2><div className="card"><p>Informe experimental sobre el historial detallado. Solo incluye sesiones completadas. Recomendaciones con al menos 20 respuestas en 3 sesiones; describen asociación observada, no causalidad.</p><div className="strategy-controls"><label htmlFor="strategy-period">Periodo<select id="strategy-period" value={days} onChange={event => setDays(Number(event.target.value))}><option value={30}>Últimos 30 días</option><option value={90}>Últimos 90 días</option><option value={365}>Último año</option></select></label><button className="btn" disabled={busy} onClick={() => { void calculate(); }}>{busy ? 'Calculando…' : 'Calcular informe'}</button></div>{strategy && <div aria-live="polite"><StudyMarkup html={strategy} /></div>}</div></>;
+  return <><h2>Analítica de estrategia</h2><div className="card"><p>Informe experimental sobre el historial detallado. Solo incluye sesiones completadas. Recomendaciones con al menos 20 respuestas en 3 sesiones; describen asociación observada, no causalidad.</p><div className="my-3 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 max-[600px]:grid-cols-[minmax(0,1fr)] max-[600px]:[&>button]:w-full"><label className="grid min-w-0 gap-1.5" htmlFor="strategy-period">Periodo<select className="w-full" id="strategy-period" value={days} onChange={event => setDays(Number(event.target.value))}><option value={30}>Últimos 30 días</option><option value={90}>Últimos 90 días</option><option value={365}>Último año</option></select></label><button className="btn" disabled={busy} onClick={() => { void calculate(); }}>{busy ? 'Calculando…' : 'Calcular informe'}</button></div>{strategy && <div aria-live="polite"><StudyMarkup html={strategy} /></div>}</div></>;
 }
 
 export function StatsEvolutionSection({ snapshot, stats, questionWeeks, weekly, evolution, saveEvolution, onlyCorrect, setOnlyCorrect, setMessage, strategy, setStrategy, strategyDays, setStrategyDays, strategyBusy, setStrategyBusy }: {

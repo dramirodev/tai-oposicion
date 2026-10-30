@@ -102,18 +102,18 @@ function useSettingsSnapshot() {
 
 function PaperRecallPriorityNote({ step, assessment, now }: { step: TrainingSessionStep; assessment?: PaperRecallAssessment; now: number }) {
   if (step.reason !== 'weak-topics' || !assessment || assessment.rating === 'remembered' || !needsPaperRecallFollowUp(assessment, now)) return null;
-  return <p className="planning-reason">Tu autoevaluación de recuerdo en papel fue «{recallRatingLabels[assessment.rating]}» el {historyDateFormatter.format(new Date(assessment.ratedAt))}. Es una señal personal; por eso hoy se propone comprobar este tema con preguntas.</p>;
+  return <p className="planning-reason max-w-[76ch] mt-[.35rem] mb-[.6rem] text-muted">Tu autoevaluación de recuerdo en papel fue «{recallRatingLabels[assessment.rating]}» el {historyDateFormatter.format(new Date(assessment.ratedAt))}. Es una señal personal; por eso hoy se propone comprobar este tema con preguntas.</p>;
 }
 
 function PaperRecallAssessmentControl({ topicId, assessment, onRecord }: {
   topicId: string; assessment?: PaperRecallAssessment; onRecord(topicId: string, rating: PaperRecallRating): void;
 }) {
-  return <fieldset className="planning-recall-assessment">
-    <legend>Después de estudiar en papel y cerrar los apuntes, ¿cuánto recordaste?</legend>
-    <div>{([
+  return <fieldset className="planning-recall-assessment my-3 min-w-0 rounded-[var(--r-m)] border border-line p-3">
+    <legend className="max-w-full px-1 font-[650]">Después de estudiar en papel y cerrar los apuntes, ¿cuánto recordaste?</legend>
+    <div className="flex flex-wrap gap-2">{([
       ['remembered', 'Lo recordé'], ['partial', 'Parcialmente'], ['not-remembered', 'No lo recordé'],
-    ] as const).map(([rating, label]) => <button key={rating} className={`btn sec${assessment?.rating === rating ? ' is-selected' : ''}`} aria-pressed={assessment?.rating === rating} onClick={() => onRecord(topicId, rating)}>{label}</button>)}</div>
-    <small>{assessment ? `Autoevaluación guardada · ${historyDateFormatter.format(assessment.ratedAt)}` : 'Es una valoración personal; no se mezcla con tus notas de test.'}</small>
+    ] as const).map(([rating, label]) => <button key={rating} className={`btn sec${assessment?.rating === rating ? ' border-brand text-brand [box-shadow:inset_0_0_0_1px_var(--brand)]' : ''}`} aria-pressed={assessment?.rating === rating} onClick={() => onRecord(topicId, rating)}>{label}</button>)}</div>
+    <small className="mt-2 block text-muted">{assessment ? `Autoevaluación guardada · ${historyDateFormatter.format(assessment.ratedAt)}` : 'Es una valoración personal; no se mezcla con tus notas de test.'}</small>
   </fieldset>;
 }
 
@@ -125,20 +125,20 @@ function PlanningActivity({ step, index, session, topicName, elapsedSeconds, run
   const presentation = activityPresentation[step.activity];
   const state = activityState(session, index);
   const topic = topicName ? `${step.topicId} · ${topicName}` : step.topicId;
-  return <li className={state.className} aria-current={state.current ? 'step' : undefined}>
-    <span className="planning-activity-marker" aria-hidden="true">{state.completed ? <Check size="1rem" /> : index + 1}</span>
-    <article className="planning-activity-content">
-      <div className="planning-activity-heading"><div><p className="planning-activity-type">{state.label}</p><h3>{presentation.title}</h3></div><span className="planning-duration">{step.minutes} min</span></div>
-      {topic && <p className="planning-topic">{topic}</p>}
-      <p>{presentation.objective}</p>
-      <details><summary>Instrucciones y motivo</summary><p>{presentation.instruction}</p>
-        {step.reviewMode && <p>Modalidad recomendada: {reviewModeLabels[step.reviewMode]}.</p>}
-        <p className="planning-reason">{step.reviewMode ? 'La intervención se conserva desde la recomendación de hoy. ' : ''}{reasonText[step.reason]}</p>
+  return <li className={`${state.className} relative grid min-w-0 grid-cols-[2rem_minmax(0,1fr)] gap-3.5 pb-4 max-[520px]:grid-cols-[1.75rem_minmax(0,1fr)] max-[520px]:gap-2.5`} aria-current={state.current ? 'step' : undefined}>
+    <span className={`planning-activity-marker relative z-[1] grid h-8 w-8 place-items-center rounded-full border border-[var(--line-strong,var(--line))] text-muted [background:var(--card)] text-[length:var(--fs-s)] [font-variant-numeric:tabular-nums] max-[600px]:h-7 max-[600px]:w-7${state.completed ? ' border-brand bg-brand text-[var(--on-brand)]' : state.current ? ' border-2 border-brand text-brand' : ''}`} aria-hidden="true">{state.completed ? <Check size="1rem" /> : index + 1}</span>
+    <article className="planning-activity-content min-w-0 pt-0.5 pb-4">
+      <div className="planning-activity-heading flex items-start justify-between gap-3"><div><p className="planning-activity-type mb-[.15rem] text-muted text-[length:var(--fs-xs)]">{state.label}</p><h3 className="m-0 text-lg leading-[1.35]">{presentation.title}</h3></div><span className="planning-duration flex-none text-muted [font-variant-numeric:tabular-nums]">{step.minutes} min</span></div>
+      {topic && <p className="planning-topic my-2 text-muted text-[length:var(--fs-s)]">{topic}</p>}
+      <p className="my-2">{presentation.objective}</p>
+      <details className="text-[length:var(--fs-s)]"><summary className="min-h-11 inline-flex items-center text-link cursor-pointer underline underline-offset-[.15em]">Instrucciones y motivo</summary><p className="max-w-[76ch] mt-[.35rem] mb-[.6rem]">{presentation.instruction}</p>
+        {step.reviewMode && <p className="max-w-[76ch] mt-[.35rem] mb-[.6rem]">Modalidad recomendada: {reviewModeLabels[step.reviewMode]}.</p>}
+        <p className="planning-reason max-w-[76ch] mt-[.35rem] mb-[.6rem] text-muted">{step.reviewMode ? 'La intervención se conserva desde la recomendación de hoy. ' : ''}{reasonText[step.reason]}</p>
         <PaperRecallPriorityNote step={step} assessment={recallAssessment} now={now} />
       </details>
-      {state.current && <div className="planning-activity-timer" role="status" aria-live="off"><Clock3 size="1rem" aria-hidden="true" /> Tiempo en esta actividad: {formatMinutes(elapsedSeconds)} {running ? '· contando' : '· en pausa'}</div>}
+      {state.current && <div className="planning-activity-timer my-2 flex items-center gap-[.4rem] text-[length:var(--fs-s)] [font-variant-numeric:tabular-nums]" role="status" aria-live="off"><Clock3 size="1rem" aria-hidden="true" /> Tiempo en esta actividad: {formatMinutes(elapsedSeconds)} {running ? '· contando' : '· en pausa'}</div>}
       {state.completed && step.activity === 'newContent' && step.topicId && onRecallAssessment && <PaperRecallAssessmentControl topicId={step.topicId} assessment={recallAssessment} onRecord={onRecallAssessment} />}
-      <p className="planning-resource">Recurso de TAI: <Link to={activityResourcePath(step)}>{presentation.resource}</Link></p>
+      <p className="planning-resource my-2 text-muted">Recurso de TAI: <Link to={activityResourcePath(step)}>{presentation.resource}</Link></p>
     </article>
   </li>;
 }
@@ -249,12 +249,12 @@ function usePlanningSessionActions(services: HomeServices, overview: HomeOvervie
 function SessionActionArea({ model, activeStudy, onStart, onPause }: {
   model: PlanningViewModel; activeStudy: boolean; onStart(): void; onPause(): void;
 }) {
-  if (model.state === 'completed') return <p className="planning-session-complete" role="status">Sesión finalizada · {model.completedCount} actividades · {formatMinutes(model.totalElapsed)} registrados.</p>;
-  if (model.state === 'rest') return <p className="planning-session-complete">Día de descanso · no se trasladan tareas a mañana.</p>;
-  if (model.state === 'activities') return <div className="planning-session-actions">
-    <button className="btn" onClick={onStart} disabled={activeStudy}><Play size="1rem" aria-hidden="true" />{model.actionLabel}</button>
-    {model.session?.currentStartedAt !== null && model.session?.currentStartedAt !== undefined && <button className="btn sec" onClick={onPause}><Pause size="1rem" aria-hidden="true" />Pausar tiempo</button>}
-    <p>Las actividades se abren ya preparadas; al terminar, vuelves aquí para seguir con el paso siguiente.</p>
+  if (model.state === 'completed') return <p className="planning-session-complete my-4" role="status">Sesión finalizada · {model.completedCount} actividades · {formatMinutes(model.totalElapsed)} registrados.</p>;
+  if (model.state === 'rest') return <p className="planning-session-complete my-4">Día de descanso · no se trasladan tareas a mañana.</p>;
+  if (model.state === 'activities') return <div className="planning-session-actions mt-4 flex flex-wrap items-center gap-2.5">
+    <button className="btn inline-flex items-center justify-center gap-2" onClick={onStart} disabled={activeStudy}><Play size="1rem" aria-hidden="true" />{model.actionLabel}</button>
+    {model.session?.currentStartedAt !== null && model.session?.currentStartedAt !== undefined && <button className="btn sec inline-flex items-center justify-center gap-2" onClick={onPause}><Pause size="1rem" aria-hidden="true" />Pausar tiempo</button>}
+    <p className="mt-[.15rem] mb-0 flex-[1_1_100%] text-muted text-[length:var(--fs-s)]">Las actividades se abren ya preparadas; al terminar, vuelves aquí para seguir con el paso siguiente.</p>
   </div>;
   if (model.state === 'missing-new-topic') return <p>No se ha podido preparar el siguiente tema. <Link to="/temario">Revisa el temario</Link>.</p>;
   if (model.emptyMessage === 'select-introduction-topic') return <p>Elige el tema que vas a introducir esta semana en <Link to="/settings#training-schedule">Ajustes</Link> para preparar el contenido nuevo.</p>;
@@ -265,19 +265,19 @@ function PlanningTodayCard({ model, overview, activeStudy, onStart, onPause }: {
   model: PlanningViewModel; overview: HomeOverview; activeStudy: boolean; onStart(): void; onPause(): void;
 }) {
   const { activities } = model;
-  return <section className="planning-today" aria-labelledby="planning-today-title">
+  return <section className="planning-today my-5 min-w-0 rounded-[var(--r-xl)] border border-line py-5 px-[clamp(1rem,3vw,1.75rem)] max-[520px]:p-4 [background:var(--card)]" aria-labelledby="planning-today-title">
     <div className="planning-today-main">
-      <div className="planning-section-heading"><div><p className="planning-kicker">{focusLabels[model.focus]}</p><h2 id="planning-today-title">{model.title}</h2></div><span className="planning-exam-distance">{model.examDistance}</span></div>
-      <p className="planning-purpose">{model.purpose}</p>
-      <dl className="planning-facts">
-        <div><dt>{model.timeLabel}</dt><dd>{model.plan.minutes} min</dd></div>
-        <div><dt>Tiempo registrado</dt><dd>{model.recordedTime}</dd></div>
-        <div><dt>Actividades</dt><dd>{activities.length}</dd></div>
-        <div><dt>Temas implicados</dt><dd>{model.topicCount}</dd></div>
-        <div><dt>Repasos vencidos</dt><dd>{overview.trainingDue.cards + overview.trainingDue.questions}</dd></div>
+      <div className="planning-section-heading flex flex-wrap items-end justify-between gap-x-5 gap-y-3"><div><p className="planning-kicker mb-1 text-muted text-[length:var(--fs-s)]">{focusLabels[model.focus]}</p><h2 className="m-0 text-[clamp(1.25rem,3vw,1.65rem)] tracking-[-.02em]" id="planning-today-title">{model.title}</h2></div><span className="planning-exam-distance text-muted text-[length:var(--fs-s)]">{model.examDistance}</span></div>
+      <p className="planning-purpose mt-3.5 mb-4 max-w-[68ch] text-muted">{model.purpose}</p>
+      <dl className="planning-facts my-4 grid grid-cols-5 border-y border-line max-[760px]:grid-cols-3 max-[520px]:grid-cols-2">
+        <div className="min-w-0 border-e border-line px-3 py-3.5 first:ps-0 last:border-e-0"><dt className="text-muted text-[length:var(--fs-xs)]">{model.timeLabel}</dt><dd className="mt-1 mb-0 text-[clamp(1.1rem,2vw,1.45rem)] [font-variant-numeric:tabular-nums] [overflow-wrap:anywhere]">{model.plan.minutes} min</dd></div>
+        <div className="min-w-0 border-e border-line px-3 py-3.5 first:ps-0 last:border-e-0"><dt className="text-muted text-[length:var(--fs-xs)]">Tiempo registrado</dt><dd className="mt-1 mb-0 text-[clamp(1.1rem,2vw,1.45rem)] [font-variant-numeric:tabular-nums] [overflow-wrap:anywhere]">{model.recordedTime}</dd></div>
+        <div className="min-w-0 border-e border-line px-3 py-3.5 first:ps-0 last:border-e-0"><dt className="text-muted text-[length:var(--fs-xs)]">Actividades</dt><dd className="mt-1 mb-0 text-[clamp(1.1rem,2vw,1.45rem)] [font-variant-numeric:tabular-nums] [overflow-wrap:anywhere]">{activities.length}</dd></div>
+        <div className="min-w-0 border-e border-line px-3 py-3.5 first:ps-0 last:border-e-0"><dt className="text-muted text-[length:var(--fs-xs)]">Temas implicados</dt><dd className="mt-1 mb-0 text-[clamp(1.1rem,2vw,1.45rem)] [font-variant-numeric:tabular-nums] [overflow-wrap:anywhere]">{model.topicCount}</dd></div>
+        <div className="min-w-0 border-e border-line px-3 py-3.5 first:ps-0 last:border-e-0"><dt className="text-muted text-[length:var(--fs-xs)]">Repasos vencidos</dt><dd className="mt-1 mb-0 text-[clamp(1.1rem,2vw,1.45rem)] [font-variant-numeric:tabular-nums] [overflow-wrap:anywhere]">{overview.trainingDue.cards + overview.trainingDue.questions}</dd></div>
       </dl>
       <SessionActionArea model={model} activeStudy={activeStudy} onStart={onStart} onPause={onPause} />
-      {activities.length > 0 && <div className="planning-progress" aria-label={`Progreso: ${model.completedCount} de ${activities.length} actividades`}><span style={{ width: `${model.progress}%` }} /></div>}
+      {activities.length > 0 && <div className="planning-progress mt-5 h-[.3rem] overflow-hidden rounded-[99px] bg-[var(--surface-soft)]" aria-label={`Progreso: ${model.completedCount} de ${activities.length} actividades`}><span className="block h-full rounded-[inherit] bg-brand motion-safe:[transition:width_.25s_ease]" style={{ width: `${model.progress}%` }} /></div>}
     </div>
   </section>;
 }
@@ -288,17 +288,23 @@ function PlanningActivityList({ model, assessments, now, onRecallAssessment }: {
   onRecallAssessment(topicId: string, rating: PaperRecallRating): void;
 }) {
   if (!model.activities.length) return null;
-  return <section className="planning-activities" aria-labelledby="planning-activities-title">
-    <div className="planning-section-heading"><div><p className="planning-kicker">Orden de trabajo</p><h2 id="planning-activities-title">Pasos de la sesión</h2></div><span>{model.completedCount} de {model.activities.length} completadas</span></div>
-    <ol>{model.activities.map((step, index) => <PlanningActivity key={step.activity} step={step} index={index} session={model.session} topicName={step.topicId ? model.topicNames.get(step.topicId) : undefined} elapsedSeconds={index === model.activeIndex ? model.activeSeconds : model.session?.elapsedSecondsByActivity?.[index] ?? 0} running={index === model.activeIndex && model.session?.currentStartedAt !== null && model.session?.currentStartedAt !== undefined} now={now} recallAssessment={assessments.find(item => item.topicId === step.topicId)} onRecallAssessment={onRecallAssessment} />)}</ol>
+  return <section className="planning-activities my-5 min-w-0 rounded-[var(--r-xl)] border border-line py-5 px-[clamp(1rem,3vw,1.75rem)] max-[520px]:p-4 [background:var(--card)]" aria-labelledby="planning-activities-title">
+    <div className="planning-section-heading flex flex-wrap items-end justify-between gap-x-5 gap-y-3"><div><p className="planning-kicker mb-1 text-muted text-[length:var(--fs-s)]">Orden de trabajo</p><h2 className="m-0 text-[clamp(1.25rem,3vw,1.65rem)] tracking-[-.02em]" id="planning-activities-title">Pasos de la sesión</h2></div><span>{model.completedCount} de {model.activities.length} completadas</span></div>
+    <ol className="mt-5 mb-0 grid gap-0 p-0 list-none">{model.activities.map((step, index) => <PlanningActivity key={step.activity} step={step} index={index} session={model.session} topicName={step.topicId ? model.topicNames.get(step.topicId) : undefined} elapsedSeconds={index === model.activeIndex ? model.activeSeconds : model.session?.elapsedSecondsByActivity?.[index] ?? 0} running={index === model.activeIndex && model.session?.currentStartedAt !== null && model.session?.currentStartedAt !== undefined} now={now} recallAssessment={assessments.find(item => item.topicId === step.topicId)} onRecallAssessment={onRecallAssessment} />)}</ol>
   </section>;
 }
 
 function PlanningEvidence({ overview }: { overview: HomeOverview }) {
-  return <section className="planning-evidence" aria-labelledby="planning-evidence-title">
-    <div className="planning-section-heading"><div><p className="planning-kicker">Seguimiento sin mezclar medidas</p><h2 id="planning-evidence-title">Qué registra TAI</h2></div><Link to="/stats">Ver progreso</Link></div>
-    <div className="planning-evidence-grid"><p><b>Cobertura</b><span>{overview.studiedTopics} de {overview.topicCount} temas marcados como vistos.</span></p><p><b>Resultados de preguntas</b><span>{overview.assessedTopics} temas tienen actividad evaluada; los aciertos no prueban por sí solos recuerdo libre.</span></p><p><b>Recuerdo en papel</b><span>{overview.paperRecallAssessments?.length ?? 0} autoevaluaciones. Son una señal personal, separada de los resultados objetivos.</span></p><p><b>Comprensión</b><span>No se mide directamente todavía; TAI no infiere comprensión de una marca de lectura.</span></p><p><b>Examen</b><span>Los resultados de test y simulacros se muestran por separado en Progreso.</span></p></div>
-    <p className="planning-caveat"><CircleHelp size="1rem" aria-hidden="true" /> La lectura de resúmenes y esquemas ocurre con tus materiales externos. TAI no dispone aquí de esos documentos ni registra su lectura; por eso la actividad pide recuperar primero y usar el material solo para corregir lagunas.</p>
+  return <section className="planning-evidence my-5 min-w-0 rounded-[var(--r-xl)] border border-line py-5 px-[clamp(1rem,3vw,1.75rem)] max-[520px]:p-4 [background:var(--card)]" aria-labelledby="planning-evidence-title">
+    <div className="planning-section-heading flex flex-wrap items-end justify-between gap-x-5 gap-y-3"><div><p className="planning-kicker mb-1 text-muted text-[length:var(--fs-s)]">Seguimiento sin mezclar medidas</p><h2 className="m-0 text-[clamp(1.25rem,3vw,1.65rem)] tracking-[-.02em]" id="planning-evidence-title">Qué registra TAI</h2></div><Link className="min-h-11 inline-flex items-center gap-1" to="/stats">Ver progreso</Link></div>
+    <div className="planning-evidence-grid mt-4 grid grid-cols-4 gap-x-5 gap-y-3 max-[760px]:grid-cols-2 max-[520px]:grid-cols-1">{[
+      ['Cobertura', `${overview.studiedTopics} de ${overview.topicCount} temas marcados como vistos.`],
+      ['Resultados de preguntas', `${overview.assessedTopics} temas tienen actividad evaluada; los aciertos no prueban por sí solos recuerdo libre.`],
+      ['Recuerdo en papel', `${overview.paperRecallAssessments?.length ?? 0} autoevaluaciones. Son una señal personal, separada de los resultados objetivos.`],
+      ['Comprensión', 'No se mide directamente todavía; TAI no infiere comprensión de una marca de lectura.'],
+      ['Examen', 'Los resultados de test y simulacros se muestran por separado en Progreso.'],
+    ].map(([label, detail]) => <p className="m-0 grid content-start gap-[.3rem] border-t border-line pt-3" key={label}><b>{label}</b><span className="text-muted text-[length:var(--fs-s)]">{detail}</span></p>)}</div>
+    <p className="planning-caveat mt-4 mb-0 flex items-start gap-2 text-muted text-[length:var(--fs-s)]"><CircleHelp className="mt-[.15rem] flex-none" size="1rem" aria-hidden="true" /> La lectura de resúmenes y esquemas ocurre con tus materiales externos. TAI no dispone aquí de esos documentos ni registra su lectura; por eso la actividad pide recuperar primero y usar el material solo para corregir lagunas.</p>
   </section>;
 }
 
@@ -307,20 +313,20 @@ function PlanningHistory({ overview }: { overview: HomeOverview }) {
   const sessions = (overview.trainingHistory ?? []).slice(0, 5);
   const allSessions = overview.trainingHistory ?? [];
   const visibleSessions = showAll ? allSessions : sessions;
-  return <section className="planning-history" aria-labelledby="planning-history-title">
-    <div className="planning-section-heading"><div><p className="planning-kicker">Seguimiento</p><h2 id="planning-history-title">Sesiones recientes</h2></div></div>
+  return <section className="planning-history my-5 min-w-0 rounded-[var(--r-xl)] border border-line py-5 px-[clamp(1rem,3vw,1.75rem)] max-[520px]:p-4 [background:var(--card)]" aria-labelledby="planning-history-title">
+    <div className="planning-section-heading flex flex-wrap items-end justify-between gap-x-5 gap-y-3"><div><p className="planning-kicker mb-1 text-muted text-[length:var(--fs-s)]">Seguimiento</p><h2 className="m-0 text-[clamp(1.25rem,3vw,1.65rem)] tracking-[-.02em]" id="planning-history-title">Sesiones recientes</h2></div></div>
     {allSessions.length ? <>
-      <ol id="planning-history-list">{visibleSessions.map(session => {
+      <ol className="mt-4 mb-0 grid p-0 list-none" id="planning-history-list">{visibleSessions.map(session => {
       const elapsed = session.elapsedSecondsByActivity.reduce((sum, value) => sum + value, 0);
-      return <li key={session.id}>
-        <div><b>{historyDateFormatter.format(new Date(session.startedAt))}</b><span>{formatMinutes(elapsed)} · {activityCountText(session.activities.length)}</span></div>
-        <p>{session.activities.map(activity => activityPresentation[activity.activity].title).join(' · ')}</p>
+      return <li className="min-w-0 border-t border-line py-3.5" key={session.id}>
+        <div className="flex flex-wrap justify-between gap-x-3 gap-y-1"><b>{historyDateFormatter.format(new Date(session.startedAt))}</b><span className="text-muted text-[length:var(--fs-s)]">{formatMinutes(elapsed)} · {activityCountText(session.activities.length)}</span></div>
+        <p className="mt-[.35rem] mb-0 text-muted text-[length:var(--fs-s)] [overflow-wrap:anywhere]">{session.activities.map(activity => activityPresentation[activity.activity].title).join(' · ')}</p>
       </li>;
       })}</ol>
-      {allSessions.length > 5 && <button className="planning-history-toggle" type="button" aria-controls="planning-history-list" aria-expanded={showAll} onClick={() => setShowAll(value => !value)}>
+      {allSessions.length > 5 && <button className="planning-history-toggle min-h-11 mt-2 px-0 py-1.5 border-0 bg-transparent text-link font-semibold cursor-pointer underline underline-offset-[.15em]" type="button" aria-controls="planning-history-list" aria-expanded={showAll} onClick={() => setShowAll(value => !value)}>
         {showAll ? 'Mostrar solo las cinco más recientes' : `Mostrar todas las sesiones (${allSessions.length})`}
       </button>}
-    </> : <p className="planning-history-empty">Cuando completes una sesión, su duración y actividades aparecerán aquí.</p>}
+    </> : <p className="planning-history-empty my-4 text-muted text-[length:var(--fs-s)]">Cuando completes una sesión, su duración y actividades aparecerán aquí.</p>}
   </section>;
 }
 
@@ -367,10 +373,10 @@ export function PlanningPage() {
     if (!scoped) { services.notify('Ese tema ya no está marcado como visto. Actualiza la agenda antes de iniciar el repaso.'); return; }
     void navigate(`/${scoped}`);
   };
-  return <main className="planning-page">
-    <header className="planning-header">
-      <div><p className="planning-kicker">TAI · Plan de estudio</p><h1>Planificación de estudio</h1><p className="planning-date"><CalendarDays size="1rem" aria-hidden="true" />{localDate(now)}</p></div>
-      <Link className="planning-settings-link" to="/settings">Configurar semana</Link>
+  return <main className="planning-page mx-auto w-full max-w-[68rem] pt-6 pb-12 max-[520px]:pt-4">
+    <header className="planning-header mb-6 flex items-start justify-between gap-4 max-[520px]:flex-col">
+      <div><p className="planning-kicker mb-1 text-muted text-[length:var(--fs-s)]">TAI · Plan de estudio</p><h1 className="mt-0.5 mb-2 text-[clamp(1.5rem,3vw,2rem)] tracking-[-.035em]">Planificación de estudio</h1><p className="planning-date m-0 flex items-center gap-2 text-muted"><CalendarDays size="1rem" aria-hidden="true" />{localDate(now)}</p></div>
+      <Link className="planning-settings-link min-h-11 inline-flex flex-none items-center max-[520px]:self-start" to="/settings">Configurar semana</Link>
     </header>
     <PlanningTodayCard model={model} overview={overview} activeStudy={!!services.getActiveStudy()} onStart={actions.startSession} onPause={actions.pauseSession} />
     <PlanningActivityList model={model} assessments={overview.paperRecallAssessments ?? []} now={now.getTime()} onRecallAssessment={actions.recordRecallAssessment} />

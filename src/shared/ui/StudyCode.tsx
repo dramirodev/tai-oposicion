@@ -104,7 +104,12 @@ export function StudyCode({ code, className, language: declaredLanguage, languag
     return () => { active = false; };
   }, [code, language]);
 
-  const classes = new Set([...(className?.split(/\s+/).filter(Boolean) ?? []), ...(block ? ['blk'] : []), ...(highlighted !== null ? ['shiki'] : [])]);
+  const classes = new Set([
+    'cd',
+    ...(block ? ['blk'] : []),
+    ...(className?.split(/\s+/).filter(Boolean) ?? []),
+    ...(highlighted !== null ? ['shiki'] : []),
+  ]);
   return <code className={[...classes].join(' ')} data-shiki-language={language}>
     {highlighted ?? code}
   </code>;

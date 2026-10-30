@@ -24,14 +24,14 @@ function CardReport({ card, services }: { card: StudyCard; services: CardsServic
   const [saved, setSaved] = useState(initial?.st === 'abierto');
   const save = () => { services.saveReport(card, reason, note.trim()); setSaved(true); setEditing(false); };
   if (!editing) return saved
-    ? <span className="rep ok"><Check size="1em" aria-hidden="true" /> Error anotado <button className="ghost sm" data-rep onClick={() => setEditing(true)}>editar</button></span>
-    : <button className="ghost fl" data-rep onClick={() => setEditing(true)}><TriangleAlert size="1em" aria-hidden="true" /> Avisar de error</button>;
-  return <div className="repf">
-    <select aria-label="Motivo del error" value={reason} onChange={event => setReason(event.target.value)}>
+    ? <span className="rep ok text-[length:var(--fs-m)] text-[var(--good-ink)]"><Check size="1em" aria-hidden="true" /> Error anotado <button className="ghost ghost-small" data-rep onClick={() => setEditing(true)}>editar</button></span>
+    : <button className="ghost ghost-compact" data-rep onClick={() => setEditing(true)}><TriangleAlert size="1em" aria-hidden="true" /> Avisar de error</button>;
+  return <div className="repf mt-2 flex flex-col gap-2">
+    <select className="font-[inherit] rounded-[var(--r-m)] border-[1.5px] border-line bg-surface p-2.5 text-[length:var(--fs-b)] text-ink" aria-label="Motivo del error" value={reason} onChange={event => setReason(event.target.value)}>
       {reasons.map(item => <option key={item}>{item}</option>)}
     </select>
-    <input aria-label="Qué falla" maxLength={300} placeholder="Qué falla (opcional)" value={note} onChange={event => setNote(event.target.value)} />
-    <div className="row"><button className="btn" onClick={save}>Guardar</button><button className="btn sec" onClick={() => setEditing(false)}>Cancelar</button></div>
+    <input className="font-[inherit] rounded-[var(--r-m)] border-[1.5px] border-line bg-surface p-2.5 text-[length:var(--fs-b)] text-ink" aria-label="Qué falla" maxLength={300} placeholder="Qué falla (opcional)" value={note} onChange={event => setNote(event.target.value)} />
+    <div className="row"><button className="btn !min-h-[2.625rem] !px-4 !py-2.5 !text-[length:var(--fs-b)]" onClick={save}>Guardar</button><button className="btn sec !min-h-[2.625rem] !px-4 !py-2.5 !text-[length:var(--fs-b)]" onClick={() => setEditing(false)}>Cancelar</button></div>
   </div>;
 }
 
@@ -48,7 +48,7 @@ function CompletedSession({ services, onExit, onComplete, headingRef, dailyTrain
   const nextDue = getNextDueDate(services);
   return <>
     <h1 ref={headingRef} tabIndex={-1}>Sesión terminada</h1>
-    <div className="grid"><div className="stat"><b>{known}</b><span>lo sabía</span></div><div className="stat"><b>{unsure}</b><span>dudaba</span></div><div className="stat"><b>{failed}</b><span>fallé</span></div><div className="stat"><b>{count ? Math.round(known * 100 / count) : 0}%</b><span>marqué «lo sabía»</span></div></div>
+    <div className="stats-grid"><div className="stat"><b>{known}</b><span>lo sabía</span></div><div className="stat"><b>{unsure}</b><span>dudaba</span></div><div className="stat"><b>{failed}</b><span>fallé</span></div><div className="stat"><b>{count ? Math.round(known * 100 / count) : 0}%</b><span>marqué «lo sabía»</span></div></div>
     <p className="sub">{failed + unsure ? 'Las valoraciones se han usado para calcular el siguiente repaso.' : '¡Todas recordadas!'}{nextDue ? ` Próximo repaso: ${nextDue.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short' })}.` : ''}</p>
     {dailyTraining ? <button className="btn" id="otra" onClick={onComplete}>Continuar con el entrenamiento</button> : <button className="btn" id="otra" onClick={onComplete}>Otra sesión</button>} <button className="btn sec" id="ini" onClick={onExit}>Inicio</button>
   </>;
@@ -99,25 +99,25 @@ function ActiveCardSession({ services, session, card, answerRef, headingRef, onE
   const percent = Math.round(100 * session.index / total);
   return <>
     <h1 className="sr" ref={headingRef} tabIndex={-1}>Tarjetas · tarjeta {session.index + 1} de {total}</h1>
-    <div className="qhead"><button className="ghost" id="exit" aria-label="Salir" onClick={onExit}><X size="1.25rem" aria-hidden="true" /></button><div className="prog" role="progressbar" aria-label="Progreso" aria-valuemin={0} aria-valuemax={total} aria-valuenow={session.index}><div style={{ width: `${percent}%` }} /></div><div className="cnt">{session.index + 1}/{total}</div></div>
-    <div className="card q fc" id="fc" role="group" aria-label="Pregunta de la tarjeta" tabIndex={0} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
+    <div className="qhead sticky top-[calc(var(--sat)/var(--z,1))] z-[3] mb-4 flex items-center gap-4 border-b-0 bg-canvas py-3"><button className="ghost h-12 w-12 flex-none rounded-[var(--r-m)] border border-line bg-[var(--card)] p-0 text-[length:var(--fs-xl)] text-ink" id="exit" aria-label="Salir" onClick={onExit}><X size="1.25rem" aria-hidden="true" /></button><div className="prog min-w-0 h-[.375rem] flex-1 overflow-hidden rounded-full bg-line" role="progressbar" aria-label="Progreso" aria-valuemin={0} aria-valuemax={total} aria-valuenow={session.index}><div className="h-full bg-[var(--selb)] origin-left animate-[grow_.45s_cubic-bezier(.2,.7,.2,1)]" style={{ width: `${percent}%` }} /></div><div className="cnt min-w-11 text-right text-[length:var(--fs-m)] font-semibold text-muted">{session.index + 1}/{total}</div></div>
+    <div className="card q fc min-h-80 flex flex-col cursor-pointer leading-[1.65]" id="fc" role="group" aria-label="Pregunta de la tarjeta" tabIndex={0} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
       onClick={event => { if (!session.revealed && !(event.target as HTMLElement).closest('button,a,details,input,select,textarea')) show(); }}
       onKeyDown={event => { if (!session.revealed && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); show(); } }}>
       <div className="meta"><span className="tag">{card.t} · {services.topicName(card.t)}</span>{card.tipo && <span className="tag">{card.tipo}</span>}{card.caduca && <span className="tag warn">Puede caducar</span>}</div>
       <Notice card={card} />
       {card.supTexto && <details className="sup"><summary>Enunciado del supuesto</summary><div className="pre"><StudyMarkup html={richHtml(card.supTexto)} languageContext={card.q} /></div></details>}
       {card.cp && <div className="ctx pre"><StudyMarkup html={richHtml(card.cp)} languageContext={card.q} /></div>}
-      <div className="enun pre"><StudyMarkup html={richHtml(card.q)} languageContext={card.q} /></div>
-      {session.revealed ? <div ref={answerRef} className="card-answer" role="region" aria-label="Respuesta de la tarjeta" tabIndex={-1}><small>Respuesta</small><div className="pre"><StudyMarkup html={richHtml(card.a)} languageContext={card.q} /></div>
+      <div className="enun pre mt-4 mb-6 text-[length:var(--fs-xl)] leading-[1.65]"><StudyMarkup html={richHtml(card.q)} languageContext={card.q} /></div>
+      {session.revealed ? <div ref={answerRef} className="card-answer mt-1.5 p-5 rounded-md bg-[color:var(--okbg)] border border-[color:var(--good-line)]" role="region" aria-label="Respuesta de la tarjeta" tabIndex={-1}><small className="block normal-case tracking-normal text-[length:var(--fs-xs)] !text-[color:var(--good-ink)] mb-1 !font-semibold">Respuesta</small><div className="pre text-[length:var(--fs-xl)] font-medium leading-[1.6]"><StudyMarkup html={richHtml(card.a)} languageContext={card.q} /></div>
         {card.nota && <div className="cita"><span>Nota</span><StudyMarkup html={richHtml(card.nota)} languageContext={card.q} /></div>}
         {card.ref && <div className="cita"><span>Temario</span><StudyMarkup html={richHtml(card.ref)} languageContext={card.q} /></div>}
         {source && <StudyMarkup html={source} languageContext={card.q} />}
         <div className="repw" id="crep"><CardReport card={card} services={services} /></div>
-        {card.src === 'fallo' && <button className="ghost fl" id="quit" onClick={event => { event.stopPropagation(); services.removeFailureCard(); refresh(value => value + 1); }}><Trash2 size="1em" aria-hidden="true" /> Quitar esta tarjeta</button>}
-      </div> : <div className="fh">Toca para ver la respuesta</div>}
+        {card.src === 'fallo' && <button className="ghost ghost-compact" id="quit" onClick={event => { event.stopPropagation(); services.removeFailureCard(); refresh(value => value + 1); }}><Trash2 size="1em" aria-hidden="true" /> Quitar esta tarjeta</button>}
+      </div> : <div className="fh mt-auto text-center text-[color:var(--mute)] text-[length:var(--fs-m)] py-3">Toca para ver la respuesta</div>}
     </div>
     <div className="bar2">{session.revealed ? gradeLabels.map((label, gradeValue) => <button key={label} className={`btn ${gradeValue === 0 ? 'bad' : gradeValue === 1 ? 'sec' : ''}`} data-g={gradeValue} onClick={() => grade(gradeValue)}>{label}<small>{services.reviewLabel(card.id, gradeValue)}</small></button>) : <button className="btn" id="show" onClick={show}>Mostrar respuesta</button>}</div>
-    {session.revealed && <p className="sub fgl">Teclado 1·2·3 · deslizar ← Fallé · → Lo sabía</p>}
+    {session.revealed && <p className="sub fgl text-center !mt-4 !mb-0">Teclado 1·2·3 · deslizar ← Fallé · → Lo sabía</p>}
   </>;
 }
 
@@ -284,7 +284,7 @@ function CardsPlanView({ plan, preferences, trainingTopicIds, changePreferences,
   return <>
     <h1>Tarjetas de repaso <Link className="help-icon-link" to="/ayuda?tema=repaso" aria-label="Ayuda sobre el repaso"><CircleHelp size="1em" strokeWidth={1.8} aria-hidden="true" focusable="false" /></Link></h1>
     <div className="sub">Primero intenta recordar la respuesta; después pulsa para verla y valora cómo te fue.</div>
-    <div className="grid"><div className="stat"><b>{plan.summary.hoy}</b><span>vencen hoy</span></div><div className="stat"><b>{plan.summary.nuevas}</b><span>nuevas</span></div><div className="stat"><b>{plan.summary.enRepaso}</b><span>en repaso</span></div><div className="stat"><b>{plan.summary.dominadas}</b><span>dominadas</span></div></div>
+    <div className="stats-grid"><div className="stat"><b>{plan.summary.hoy}</b><span>vencen hoy</span></div><div className="stat"><b>{plan.summary.nuevas}</b><span>nuevas</span></div><div className="stat"><b>{plan.summary.enRepaso}</b><span>en repaso</span></div><div className="stat"><b>{plan.summary.dominadas}</b><span>dominadas</span></div></div>
     {trainingTopicIds && <p className="note">Entrenamiento de hoy: tarjetas limitadas a los temas que has marcado como vistos.</p>}
     {plan.cards.length ? <><div className="card"><h2 className="h3">Tarjetas por sesión</h2><div className="seg" id="cn">{([10, 20, 30] as const).map(value => <button key={value} className={preferences.count === value ? 'on' : ''} aria-pressed={preferences.count === value} data-v={value} onClick={() => changePreferences({ ...preferences, count: value })}>{value}</button>)}</div>
       {!trainingTopicIds && <><h2 className="h3">Tarjetas nuevas de</h2><div className="seg" id="cs">{([['vistos', 'Mis temas vistos'], ['todos', 'Todos los temas']] as const).map(([value, label]) => <button key={value} className={preferences.scope === value ? 'on' : ''} aria-pressed={preferences.scope === value} data-v={value} onClick={() => changePreferences({ ...preferences, scope: value })}>{label}</button>)}</div></>}

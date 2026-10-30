@@ -2,6 +2,7 @@
 export function observeScrollSections(root: HTMLElement): () => void {
   if (typeof IntersectionObserver === 'undefined') return () => {};
   const preference = matchMedia('(prefers-reduced-motion: reduce)');
+  const enterAnimation = 'motion-safe:animate-[section-arrive_280ms_cubic-bezier(.16,1,.3,1)]';
   let stop = () => {};
   const start = () => {
     stop();
@@ -10,7 +11,7 @@ export function observeScrollSections(root: HTMLElement): () => void {
     const observer = new IntersectionObserver(entries => {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
-        if (!entry.target.matches(':focus-within')) entry.target.classList.add('scroll-enter');
+        if (!entry.target.matches(':focus-within')) entry.target.classList.add('scroll-enter', enterAnimation);
         observer.unobserve(entry.target);
       }
     }, { threshold: 0.08 });
@@ -22,7 +23,7 @@ export function observeScrollSections(root: HTMLElement): () => void {
     const changes = new MutationObserver(scan);
     changes.observe(root, { childList: true, subtree: true });
     scan();
-    stop = () => { observer.disconnect(); changes.disconnect(); root.querySelectorAll('.scroll-enter').forEach(section => section.classList.remove('scroll-enter')); };
+    stop = () => { observer.disconnect(); changes.disconnect(); root.querySelectorAll('.scroll-enter').forEach(section => section.classList.remove('scroll-enter', enterAnimation)); };
   };
   start();
   preference.addEventListener?.('change', start);

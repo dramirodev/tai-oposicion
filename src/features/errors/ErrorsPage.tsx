@@ -7,12 +7,13 @@ import { selectErrorReports } from './errors-controller.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
 
 const FILTERS = [['abierto', 'Por revisar'], ['resuelto', 'Resueltos'], ['todos', 'Todos']] as const;
+const CODE_CLASSES = 'cd';
 
 function CardText({ value }: { value: string }) {
   if (todoCodigo(value)) {
     const match = /^(\s*)([\s\S]*?)(\.?\s*)$/.exec(value)!;
     const block = /\s/.test(match[2]) && match[2].length > 18;
-    return <>{match[1]}<code className={`cd${block ? ' blk' : ''}`}>{match[2]}</code>{block ? '' : match[3]}</>;
+    return <>{match[1]}<code className={`${CODE_CLASSES}${block ? ' blk' : ''}`}>{match[2]}</code>{block ? '' : match[3]}</>;
   }
   const ranges = codeSpans(value);
   if (!ranges.length) return <>{value}</>;
@@ -20,7 +21,7 @@ function CardText({ value }: { value: string }) {
   let position = 0;
   for (const [start, end] of ranges) {
     if (start > position) parts.push(value.slice(position, start));
-    parts.push(<code className="cd" key={`${start}-${end}`}>{value.slice(start, end)}</code>);
+    parts.push(<code className={CODE_CLASSES} key={`${start}-${end}`}>{value.slice(start, end)}</code>);
     position = end;
   }
   if (position < value.length) parts.push(value.slice(position));
@@ -72,8 +73,8 @@ export function ErrorsPage() {
       return <article className="card" key={report.id}>
         <div className="meta"><span className="tag">{report.id}</span>{question?.origin && <span className="tag">{question.origin}</span>}{card && <span className="tag">Tarjeta</span>}<span className="tag warn">{report.motivo || 'Otro'}</span>{report.state === 'resuelto' && <span className="tag oG">Resuelto</span>}</div>
         {report.nota && <p className="sm"><b>Nota:</b> {report.nota}</p>}
-        {card ? <><div className="pre sm"><CardText value={card.question} /></div><div className="ro ok"><b>R</b> <CardText value={card.answer} /></div>{card.reference && <div className="cita"><span>Temario</span>{card.reference}</div>}</>
-          : question ? <><div className="pre sm">{question.statement}</div>{question.options.map(option => <div className={`ro ${option.correct ? 'ok' : ''}`} key={`${question.id}-${option.label}`}><b>{option.label}</b> {option.text}{option.correct && <> <Check size="1em" aria-label="Respuesta correcta" /></>}</div>)}{question.reference && <div className="cita"><span>Temario</span>{question.reference}</div>}</>
+        {card ? <><div className="pre sm"><CardText value={card.question} /></div><div className="mt-1 rounded-[var(--r-s)] bg-[var(--okbg)] px-2 py-1.5"><b>R</b> <CardText value={card.answer} /></div>{card.reference && <div className="cita"><span>Temario</span>{card.reference}</div>}</>
+          : question ? <><div className="pre sm">{question.statement}</div>{question.options.map(option => <div className={`mt-1 rounded-[var(--r-s)] px-2 py-1.5 ${option.correct ? 'bg-[var(--okbg)]' : ''}`} key={`${question.id}-${option.label}`}><b>{option.label}</b> {option.text}{option.correct && <> <Check size="1em" aria-label="Respuesta correcta" /></>}</div>)}{question.reference && <div className="cita"><span>Temario</span>{question.reference}</div>}</>
             : <p className="sub">{failedKey === reportKey ? 'No se pudo cargar el contenido del aviso. Comprueba la conexión e inténtalo de nuevo.' : 'La pregunta ya no está en el banco.'}</p>}
         <div className="row"><button className="btn sec" onClick={() => errors.setState(report.id, report.state === 'resuelto' ? 'abierto' : 'resuelto')}>{report.state === 'resuelto' ? 'Reabrir' : 'Marcar resuelto'}</button><button className="btn sec" onClick={() => errors.setState(report.id, 'quitado')}>Quitar</button></div>
       </article>;

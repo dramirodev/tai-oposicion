@@ -137,7 +137,7 @@ function AuditFieldView({ field, letter }: { field: AuditField; letter?: string 
   if (field.name === 'contexto') return <div className="ctx pre">{content}</div>;
   if (field.name === 'texto_supuesto') return <details className="sup scenario-context" open><summary>Enunciado del supuesto</summary><div className="pre">{content}</div></details>;
   if (field.name === 'pregunta') return <div className="enun pre">{content}</div>;
-  if (field.name === 'respuesta') return <div className="card-answer"><small>Respuesta</small><div className="pre">{content}</div></div>;
+  if (field.name === 'respuesta') return <div className="card-answer mt-1.5 p-5 rounded-md bg-[color:var(--okbg)] border border-[color:var(--good-line)]"><small className="block normal-case tracking-normal text-[length:var(--fs-xs)] !text-[color:var(--good-ink)] mb-1 !font-semibold">Respuesta</small><div className="pre text-[length:var(--fs-xl)] font-medium leading-[1.6]">{content}</div></div>;
   if (field.name === 'referencia') return <div className="cita"><span>Temario</span>{content}</div>;
   if (field.name === 'nota') return <div className="cita"><span>Nota</span>{content}</div>;
   return content;

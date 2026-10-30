@@ -16,8 +16,8 @@ function FeedbackMessage({ snapshot, prompt }: { snapshot: QuizSnapshot; prompt:
   return <>
     <b>{message}</b> · Respuesta: <b>{'ABCD'[prompt.correctIndex]}</b>
     {snapshot.studyState === 'revealed' && <span className="sr" id="live">Solución consultada · cuenta como blanco</span>}
-    {snapshot.studyState !== 'revealed' && snapshot.answer !== -1 && snapshot.answer !== prompt.correctIndex && snapshot.recentAnswer && <div className="fbsub">Marcaste {'ABCD'[snapshot.answer!]} en {snapshot.recentAnswer[0]} s{snapshot.recentAnswer[0] < snapshot.recentAnswer[1] * 0.6 ? `; leerla con calma lleva unos ${snapshot.recentAnswer[1]} s` : ''}.</div>}
-    {prompt.citation && <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(prompt.citation, prompt.options[prompt.correctIndex])} languageContext={prompt.statement} /></div>}
+    {snapshot.studyState !== 'revealed' && snapshot.answer !== -1 && snapshot.answer !== prompt.correctIndex && snapshot.recentAnswer && <div className="mt-1 text-[length:var(--fs-m)] opacity-90">Marcaste {'ABCD'[snapshot.answer!]} en {snapshot.recentAnswer[0]} s{snapshot.recentAnswer[0] < snapshot.recentAnswer[1] * 0.6 ? `; leerla con calma lleva unos ${snapshot.recentAnswer[1]} s` : ''}.</div>}
+    {prompt.citation && <div className="mt-2.5 rounded-[var(--r-l)] border border-[var(--line)] bg-[var(--card)] p-4 text-[length:var(--fs-b)] leading-[1.65] text-[var(--ink)] [overflow-wrap:anywhere]"><span className="mb-1.5 block text-[length:var(--fs-xs)] font-bold text-[var(--mute)]">Temario</span><StudyMarkup html={hiliteHtml(prompt.citation, prompt.options[prompt.correctIndex])} languageContext={prompt.statement} /></div>}
     {prompt.source && <StudyMarkup html={prompt.source} languageContext={prompt.statement} />}
     {prompt.traps.length > 0 && <div className="trap">Trampa: {prompt.traps.map(id => TRAMPAS[id] || id).join(' · ')}</div>}
   </>;
@@ -49,8 +49,8 @@ function QuizReport({ snapshot }: { snapshot: QuizSnapshot }) {
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState(snapshot.report?.reason || 'Respuesta correcta mal marcada');
   const [note, setNote] = useState(snapshot.report?.note || '');
-  if (snapshot.report?.state === 'abierto' && !open) return <div className="repw"><span className="rep ok"><Check size="1em" aria-hidden="true" /> Error anotado <button className="ghost sm" onClick={() => setOpen(true)}>editar</button></span></div>;
-  if (!open) return <div className="repw"><button className="ghost fl" onClick={() => setOpen(true)}><TriangleAlert size="1em" aria-hidden="true" /> Avisar de error</button></div>;
+  if (snapshot.report?.state === 'abierto' && !open) return <div className="repw"><span className="rep ok"><Check size="1em" aria-hidden="true" /> Error anotado <button className="ghost ghost-small" onClick={() => setOpen(true)}>editar</button></span></div>;
+  if (!open) return <div className="repw"><button className="ghost ghost-compact" onClick={() => setOpen(true)}><TriangleAlert size="1em" aria-hidden="true" /> Avisar de error</button></div>;
   return <div className="repw"><div className="repf"><label htmlFor="report-reason">Motivo del error</label><select id="report-reason" value={reason} onChange={event => setReason(event.target.value)}>{['Respuesta correcta mal marcada', 'Enunciado erróneo o confuso', 'Opciones repetidas o dos correctas', 'La cita del temario no coincide', 'Otro'].map(value => <option key={value}>{value}</option>)}</select>
     <label htmlFor="report-note">Qué falla (opcional)</label><input id="report-note" maxLength={300} placeholder="Qué falla (opcional)" value={note} onChange={event => setNote(event.target.value)} />
     <div className="row"><button className="btn" onClick={() => { quiz.saveReport(reason, note); setOpen(false); }}>Guardar</button><button className="btn sec" onClick={() => setOpen(false)}>Cancelar</button></div></div></div>;
@@ -59,11 +59,11 @@ function QuizReport({ snapshot }: { snapshot: QuizSnapshot }) {
 export function QuizFeedback({ snapshot, prompt, explanation }: { snapshot: QuizSnapshot; prompt: QuizPrompt; explanation: ExplanationLookup }) {
   const quiz = useStudyService('quiz');
   const kind = snapshot.studyState === 'revealed' ? 'note' : snapshot.answer === prompt.correctIndex ? 'good' : 'wrong';
-  return <div className={`fb ${kind}`} role="status">
+  return <div className={`fb motion-safe:animate-[fbin_.2s_ease-out] ${kind}`} role="status">
     <FeedbackMessage snapshot={snapshot} prompt={prompt} />
     <FailedAnswerActions snapshot={snapshot} prompt={prompt} />
     <CorrectAnswerActions snapshot={snapshot} />
-    <button className="ghost fl" id="flag" onClick={() => quiz.toggleFlag()}><Star size="1em" fill={snapshot.flagged ? 'currentColor' : 'none'} aria-hidden="true" /> {snapshot.flagged ? 'Dudosa' : 'Marcar como dudosa'}</button>
+    <button className="ghost ghost-compact" id="flag" onClick={() => quiz.toggleFlag()}><Star size="1em" fill={snapshot.flagged ? 'currentColor' : 'none'} aria-hidden="true" /> {snapshot.flagged ? 'Dudosa' : 'Marcar como dudosa'}</button>
     <QuizReport snapshot={snapshot} />
     {explanation.status === 'current' && <div id="code-explanation-slot" aria-live="polite"><CodeExplanationView explanation={explanation.explanation} /></div>}
     {explanation.status === 'outdated' && <p className="sub" role="status">Hay una explicación de una revisión anterior; no se muestra para evitar información desactualizada.</p>}

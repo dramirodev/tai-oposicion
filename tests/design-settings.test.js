@@ -25,7 +25,7 @@ it('un error HTTP no marca una descarga como completa ni escribe una fecha', asy
 });
 it('valida una copia antes de tocar el progreso y conserva los registros locales ausentes', async () => {
  const store = await import('../src/adapters/local/legacy-store.js'); store.record('local','T1.01',0,100);
- const {studyServices} = await import('../src/app/legacy-router.js');
+ const {studyServices} = await import('../src/app/app-services-composition.js');
  expect(() => studyServices.settings.previewBackup('{"stats":[]}')).toThrow('Archivo no válido');
  const p = studyServices.settings.previewBackup(JSON.stringify({stats:{nuevo:[1,1,200],mal:['x']}}));
  expect(p.summary).toContain('1 pregunta nueva'); expect(p.summary).toContain('1 pregunta conservada'); expect(p.summary).toContain('1 registro descartado');

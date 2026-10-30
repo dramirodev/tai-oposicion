@@ -112,54 +112,6 @@
     "task": "phase-5-legacy-removal"
   },
   {
-    "file": "src/app/App.tsx",
-    "kind": "legacy-import",
-    "detail": "src/app/legacy-router.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/app/legacy-router.ts",
-    "kind": "html-write",
-    "detail": "innerHTML",
-    "count": 2,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-1-react"
-  },
-  {
-    "file": "src/app/legacy-router.ts",
-    "kind": "legacy-import",
-    "detail": "src/adapters/http/legacy-data.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/app/legacy-router.ts",
-    "kind": "legacy-import",
-    "detail": "src/adapters/local/legacy-store.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/app/legacy-router.ts",
-    "kind": "legacy-import",
-    "detail": "src/shared/ui/legacy-dom.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/app/legacy-router.ts",
-    "kind": "legacy-module",
-    "detail": "src/app/legacy-router.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
     "file": "src/app/legacy-ui.ts",
     "kind": "legacy-import",
     "detail": "src/adapters/local/legacy-store.ts",
@@ -179,22 +131,6 @@
     "file": "src/app/main.tsx",
     "kind": "legacy-import",
     "detail": "src/app/legacy-ui.ts",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-5-legacy-removal"
-  },
-  {
-    "file": "src/shared/ui/legacy-dom.ts",
-    "kind": "html-write",
-    "detail": "innerHTML",
-    "count": 1,
-    "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
-    "task": "phase-1-react"
-  },
-  {
-    "file": "src/shared/ui/legacy-dom.ts",
-    "kind": "legacy-module",
-    "detail": "src/shared/ui/legacy-dom.ts",
     "count": 1,
     "reason": "Código existente en f466ff3; retirar al migrar su responsabilidad, sin aumentar el recuento.",
     "task": "phase-5-legacy-removal"

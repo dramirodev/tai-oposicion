@@ -9,13 +9,13 @@ export function QuizQuestionMap({ snapshot, onJump }: { snapshot: QuizSnapshot; 
   const summary = snapshot.feedback
     ? `${answered} respondidas · ${snapshot.studyStates.filter(state => state === 'pending').length} pendientes · ${snapshot.studyStates.filter(state => state === 'revealed').length} consultadas`
     : `${answered} respondidas · ${snapshot.review.length} para revisar`;
-  return <details className="question-map">
-    <summary>Mapa de preguntas · {summary}</summary>
-    <div className="question-grid">{snapshot.questionIds.map((questionId, index) => {
+  return <details className="question-map my-3 rounded-[var(--r-m)] border border-line bg-transparent px-3">
+    <summary className="min-h-11 cursor-pointer py-3.5 text-[length:var(--fs-s)] font-medium leading-[1.6]">Mapa de preguntas · {summary}</summary>
+    <div className="question-grid mb-3 grid grid-cols-[repeat(auto-fit,minmax(6.75rem,1fr))] gap-2 max-h-[40vh] overflow-auto">{snapshot.questionIds.map((questionId, index) => {
       const status = questionStatus(snapshot, index);
       const label = questionStatusLabel(status, snapshot.feedback);
-      return <button key={questionId} data-jump={index} aria-current={index === snapshot.index ? 'step' : undefined} className={status} onClick={() => onJump(index)}>
-        {index + 1}<small>{label}{review.has(index) ? ' · Revisar' : ''}</small>
+      return <button key={questionId} data-jump={index} aria-current={index === snapshot.index ? 'step' : undefined} className={`min-h-[3.75rem] rounded-[var(--r-s)] border border-muted bg-[var(--card)] p-2 text-[length:var(--fs-l)] text-ink [font-family:inherit] [font-weight:inherit] leading-[inherit] ${status === 'answered' ? 'answered !bg-[var(--sel)]' : status}${index === snapshot.index ? ' outline outline-[3px] outline-[var(--selb)] -outline-offset-[3px]' : ''}`} onClick={() => onJump(index)}>
+        {index + 1}<small className="block text-[length:var(--fs-xs)]">{label}{review.has(index) ? ' · Revisar' : ''}</small>
       </button>;
     })}</div>
   </details>;
@@ -48,7 +48,7 @@ export function QuizNavigation({ snapshot, onPrevious, onNext, onBlank, onReveal
 
 function ReviewQuestionButton({ snapshot, onToggleReview }: { snapshot: QuizSnapshot; onToggleReview: () => void }) {
   const marked = snapshot.review.includes(snapshot.index);
-  return <button className="ghost" id="review-question" aria-pressed={marked} onClick={onToggleReview}>
+  return <button className="ghost review-question" id="review-question" aria-pressed={marked} onClick={onToggleReview}>
     {marked && <Check size="1em" aria-hidden="true" />} {marked ? 'Marcada para revisar' : 'Marcar para revisar'}
   </button>;
 }

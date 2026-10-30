@@ -8,19 +8,22 @@ interface NativeDialogProps {
   onBackdropClick?: () => void;
   children: ReactNode;
   className?: string;
+  openAnimationClass?: string;
   id?: string;
   dialogId?: number;
 }
 
 /** Keeps native modal behavior in sync with React state and focuses the intended first action. */
-export function NativeDialog({ open, labelledBy, initialFocusSelector, onCancel, onBackdropClick, children, className, id, dialogId }: NativeDialogProps) {
+export function NativeDialog({ open, labelledBy, initialFocusSelector, onCancel, onBackdropClick, children, className, openAnimationClass, id, dialogId }: NativeDialogProps) {
   const ref = useRef<HTMLDialogElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const wasOpenRef = useRef(false);
+  const animationFrameRef = useRef<number | null>(null);
 
   useEffect(() => {
     const dialog = ref.current;
     return () => {
+      if (animationFrameRef.current !== null) cancelAnimationFrame(animationFrameRef.current);
       if (!dialog?.open) return;
       if (typeof dialog.close === 'function') dialog.close();
       else dialog.removeAttribute('open');
@@ -65,14 +68,24 @@ export function NativeDialog({ open, labelledBy, initialFocusSelector, onCancel,
       if (typeof dialog.showModal === 'function') dialog.showModal();
       else dialog.setAttribute('open', '');
       dialog.querySelector<HTMLElement>(initialFocusSelector)?.focus();
+      if (openAnimationClass) {
+        dialog.classList.remove(openAnimationClass);
+        animationFrameRef.current = requestAnimationFrame(() => {
+          dialog.classList.add(openAnimationClass);
+          animationFrameRef.current = null;
+        });
+      }
       wasOpenRef.current = true;
     } else if (!open && dialog.open) {
+      if (animationFrameRef.current !== null) cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
+      if (openAnimationClass) dialog.classList.remove(openAnimationClass);
       if (typeof dialog.close === 'function') dialog.close();
       else dialog.removeAttribute('open');
       if (wasOpenRef.current && previousFocusRef.current?.isConnected) previousFocusRef.current.focus({ preventScroll: true });
       wasOpenRef.current = false;
     }
-  }, [initialFocusSelector, open]);
+  }, [initialFocusSelector, open, openAnimationClass]);
 
   return <dialog ref={ref} id={id} data-dialog-id={dialogId} className={className} aria-labelledby={labelledBy}
     onCancel={event => { event.preventDefault(); onCancel(); }}>

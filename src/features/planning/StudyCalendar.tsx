@@ -83,61 +83,61 @@ export function StudyCalendar({ preferences, weekday, now, history, topics, acti
   for (const activity of activities) activitiesByDate.set(activity.dateKey, [...(activitiesByDate.get(activity.dateKey) ?? []), activity]);
   const topicName = (id: string) => topics.find(topic => topic.id === id)?.name || id;
 
-  return <section className="planning-week" aria-labelledby="planning-week-title">
-    <div className="planning-section-heading"><div><p className="planning-kicker">Ritmo semanal</p><h2 id="planning-week-title">Estudio, repaso y descanso</h2></div><Link to="/settings">Ajustar disponibilidad</Link></div>
-    <div className="planning-schedule-views" aria-label="Vista del calendario">
-      <button type="button" aria-pressed={view === 'week'} onClick={() => setView('week')}>Semana</button>
-      <button type="button" aria-pressed={view === 'month'} onClick={() => setView('month')}>Mes</button>
+  return <section className="planning-week my-5 min-w-0 rounded-[var(--r-xl)] border border-line py-5 px-[clamp(1rem,3vw,1.75rem)] max-[520px]:p-4 [background:var(--card)]" aria-labelledby="planning-week-title">
+    <div className="planning-section-heading flex flex-wrap items-end justify-between gap-x-5 gap-y-3"><div><p className="planning-kicker mb-1 text-muted text-[length:var(--fs-s)]">Ritmo semanal</p><h2 className="m-0 text-[clamp(1.25rem,3vw,1.65rem)] tracking-[-.02em]" id="planning-week-title">Estudio, repaso y descanso</h2></div><Link className="min-h-11 inline-flex items-center gap-1" to="/settings">Ajustar disponibilidad</Link></div>
+    <div className="planning-schedule-views mt-4 flex gap-2" aria-label="Vista del calendario">
+      <button className={`min-w-11 min-h-11 rounded-[var(--r-m)] border border-line bg-[var(--card)] px-3 py-[.45rem] text-ink [font:inherit] [cursor:pointer]${view === 'week' ? ' !border-ink !bg-[var(--surface-soft)] !font-bold' : ''}`} type="button" aria-pressed={view === 'week'} onClick={() => setView('week')}>Semana</button>
+      <button className={`min-w-11 min-h-11 rounded-[var(--r-m)] border border-line bg-[var(--card)] px-3 py-[.45rem] text-ink [font:inherit] [cursor:pointer]${view === 'month' ? ' !border-ink !bg-[var(--surface-soft)] !font-bold' : ''}`} type="button" aria-pressed={view === 'month'} onClick={() => setView('month')}>Mes</button>
     </div>
     {view === 'week' ? <>
-      <ol>{[1, 2, 3, 4, 5, 6, 0].map(day => <li key={day} className={day === weekday ? 'is-today' : ''} aria-current={day === weekday ? 'date' : undefined}>
-        <b>{dayNames[day]}</b><span>{preferences.minutesByDay[day] ? `${preferences.minutesByDay[day]} min` : '0 min'}</span><small>{focusLabels[focus[day]]}{day === preferences.introductionDay ? ' · academia' : ''}</small>
+      <ol className="mt-4 mb-0 grid grid-cols-7 gap-2 p-0 list-none max-[840px]:grid-cols-4 max-[520px]:grid-cols-2">{[1, 2, 3, 4, 5, 6, 0].map(day => <li key={day} className={`planning-week-day grid min-h-24 min-w-0 content-start gap-[.35rem] rounded-[var(--r-m)] border border-line p-3${day === weekday ? ' !border-brand ![box-shadow:inset_0_0_0_1px_var(--brand)]' : ''}`} aria-current={day === weekday ? 'date' : undefined}>
+        <b className="text-[length:var(--fs-s)]">{dayNames[day]}</b><span className="text-lg [font-variant-numeric:tabular-nums]">{preferences.minutesByDay[day] ? `${preferences.minutesByDay[day]} min` : '0 min'}</span><small className="leading-[1.35] text-muted [overflow-wrap:anywhere]">{focusLabels[focus[day]]}{day === preferences.introductionDay ? ' · academia' : ''}</small>
       </li>)}</ol>
-      <p className="planning-week-note">El reparto refleja tus preferencias editables, no una distribución demostrada como óptima.</p>
-    </> : <div className="planning-month">
-      <div className="planning-month-heading"><button type="button" aria-label="Mes anterior" onClick={() => setMonth(value => new Date(value.getFullYear(), value.getMonth() - 1, 1))}><ChevronLeft aria-hidden="true" /></button><h3>{monthTitle}</h3><button type="button" aria-label="Mes siguiente" onClick={() => setMonth(value => new Date(value.getFullYear(), value.getMonth() + 1, 1))}><ChevronRight aria-hidden="true" /></button></div>
-      <div className="planning-month-grid" role="group" aria-label={`Disponibilidad de estudio en ${monthTitle}`}>
-        {[1, 2, 3, 4, 5, 6, 0].map(day => <b className="planning-month-weekday" key={day}>{dayNames[day].slice(0, 2)}</b>)}
-        {Array.from({ length:firstDayOffset }, (_, index) => <span className="planning-month-blank" aria-hidden="true" key={`blank-${index}`} />)}
+      <p className="planning-week-note mt-3.5 mb-0 text-muted text-[length:var(--fs-s)]">El reparto refleja tus preferencias editables, no una distribución demostrada como óptima.</p>
+    </> : <div className="planning-month mt-4">
+      <div className="planning-month-heading mb-3 flex items-center justify-between gap-3"><button className="grid min-w-11 min-h-11 place-items-center rounded-[var(--r-m)] border border-line bg-[var(--card)] p-1 text-ink [font:inherit] [cursor:pointer]" type="button" aria-label="Mes anterior" onClick={() => setMonth(value => new Date(value.getFullYear(), value.getMonth() - 1, 1))}><ChevronLeft aria-hidden="true" /></button><h3 className="m-0 text-[length:var(--fs-m)] capitalize">{monthTitle}</h3><button className="grid min-w-11 min-h-11 place-items-center rounded-[var(--r-m)] border border-line bg-[var(--card)] p-1 text-ink [font:inherit] [cursor:pointer]" type="button" aria-label="Mes siguiente" onClick={() => setMonth(value => new Date(value.getFullYear(), value.getMonth() + 1, 1))}><ChevronRight aria-hidden="true" /></button></div>
+      <div className="planning-month-grid grid grid-cols-7 gap-[.35rem] max-[520px]:gap-[.2rem]" role="group" aria-label={`Disponibilidad de estudio en ${monthTitle}`}>
+        {[1, 2, 3, 4, 5, 6, 0].map(day => <b className="planning-month-weekday py-[.3rem] text-center text-muted text-[length:var(--fs-xs)]" key={day}>{dayNames[day].slice(0, 2)}</b>)}
+        {Array.from({ length:firstDayOffset }, (_, index) => <span className="planning-month-blank min-w-0" aria-hidden="true" key={`blank-${index}`} />)}
         {Array.from({ length:daysInMonth }, (_, index) => {
           const date = new Date(month.getFullYear(), month.getMonth(), index + 1);
           const day = date.getDay(), dateValue = dayKey(date), dayActivities = activitiesByDate.get(dateValue) ?? [];
           const isToday = dateValue === dayKey(now), completed = completedDays.has(dateValue), minutesAvailable = preferences.minutesByDay[day];
           const academy = day === preferences.introductionDay;
           const description = `${dayNames[day]} ${index + 1}: ${minutesAvailable ? `${minutesAvailable} minutos disponibles, ${focusLabels[focus[day]]}${academy ? ', academia' : ''}` : 'descanso'}${completed ? ', sesión completada' : ''}${dayActivities.length ? `, ${dayActivities.length} repasos planificados` : ''}${isToday ? ', hoy' : ''}`;
-          return <div role="group" className={`planning-month-day${isToday ? ' is-today' : ''}${completed ? ' is-complete' : ''}${dayActivities.length ? ' has-planned-activities' : ''}`} aria-label={description} key={dateValue}>
-            <b>{index + 1}</b>
-            {minutesAvailable ? <><span className="planning-month-time"><span className="planning-month-time-wide">{minutesAvailable} min</span><span className="planning-month-time-narrow">{minutesAvailable}m</span></span><small>{academy ? 'Academia' : focusLabels[focus[day]]}</small></> : <small>Descanso</small>}
-            {!!dayActivities.length && <strong>{dayActivities.length} {dayActivities.length === 1 ? 'repaso' : 'repasos'}</strong>}
-            {completed && <strong>Completada</strong>}{isToday && <strong>Hoy</strong>}
+          return <div role="group" className={`planning-month-day grid min-w-0 min-h-20 content-start gap-[.2rem] rounded-[var(--r-s)] border border-line p-[.35rem] [overflow-wrap:anywhere] max-[520px]:min-h-[4.5rem] max-[520px]:p-1${isToday ? ' !border-brand ![box-shadow:inset_0_0_0_1px_var(--brand)]' : ''}${completed ? ' !bg-[var(--surface-soft)]' : ''}${dayActivities.length ? ' has-planned-activities' : ''}`} aria-label={description} key={dateValue}>
+            <b className="text-[length:var(--fs-s)]">{index + 1}</b>
+            {minutesAvailable ? <><span className="planning-month-time text-[length:var(--fs-xs)] leading-[1.25]"><span className="planning-month-time-wide max-[520px]:hidden">{minutesAvailable} min</span><span className="planning-month-time-narrow hidden max-[520px]:inline">{minutesAvailable}m</span></span><small className="text-[length:var(--fs-xs)] leading-[1.25] text-muted max-[520px]:hidden">{academy ? 'Academia' : focusLabels[focus[day]]}</small></> : <small className="text-[length:var(--fs-xs)] leading-[1.25] text-muted max-[520px]:hidden">Descanso</small>}
+            {!!dayActivities.length && <strong className="text-[length:var(--fs-xs)] leading-[1.25] text-brand font-bold">{dayActivities.length} {dayActivities.length === 1 ? 'repaso' : 'repasos'}</strong>}
+            {completed && <strong className="text-[length:var(--fs-xs)] leading-[1.25] text-brand font-bold">Completada</strong>}{isToday && <strong className="text-[length:var(--fs-xs)] leading-[1.25] text-brand font-bold">Hoy</strong>}
           </div>;
         })}
       </div>
-      <p className="planning-week-note">Las actividades futuras son repasos que tú confirmas para temas ya vistos. El temario se consulta en papel; TAI no añade PDFs ni inventa apartados.</p>
-      <section className="planning-calendar-editor" aria-labelledby="planned-activity-title">
-        <h4 id="planned-activity-title">Programar un repaso</h4>
-        <p>Elige una actividad de un tema visto. TAI respeta el descanso y el tiempo disponible de cada día.</p>
-        {!topics.length ? <p>No hay temas vistos para planificar. Márcalos en «Temas vistos» después de estudiarlos en papel.</p> : <div className="planning-calendar-form">
-          <label>Fecha<input aria-label="Fecha del repaso" type="date" min={dayKey(tomorrow)} max={dayKey(maxDate)} value={dateKey} onChange={event => { setDateKey(event.target.value); setProposal(null); setError(''); }} /></label>
-          <label>Tema visto<select aria-label="Tema del repaso" value={topicId} onChange={event => { setTopicId(event.target.value); setProposal(null); setError(''); }}>{topics.map(topic => <option key={topic.id} value={topic.id}>{topic.id} · {topic.name}</option>)}</select></label>
-          <label>Actividad<select aria-label="Tipo de repaso" value={kind} onChange={event => { setKind(event.target.value as ScheduledStudyActivityKind); setProposal(null); setError(''); }}><option value="activeRecall">Tarjetas de repaso</option><option value="topicTest">Test por tema</option></select></label>
-          <label>Duración<select aria-label="Duración del repaso" value={minutes} onChange={event => { setMinutes(Number(event.target.value)); setProposal(null); setError(''); }}>{[10, 20, 30, 40, 60].map(value => <option key={value} value={value}>{value} minutos</option>)}</select></label>
-          <button className="btn sec" type="button" onClick={prepareCreation}>Revisar propuesta</button>
+      <p className="planning-week-note mt-3.5 mb-0 text-muted text-[length:var(--fs-s)]">Las actividades futuras son repasos que tú confirmas para temas ya vistos. El temario se consulta en papel; TAI no añade PDFs ni inventa apartados.</p>
+      <section className="planning-calendar-editor mt-5 min-w-0 rounded-[var(--r-m)] border border-line bg-[var(--surface-soft)] p-4" aria-labelledby="planned-activity-title">
+        <h4 className="m-0 text-[length:var(--fs-m)]" id="planned-activity-title">Programar un repaso</h4>
+        <p className="mt-[.4rem] mb-3 text-muted">Elige una actividad de un tema visto. TAI respeta el descanso y el tiempo disponible de cada día.</p>
+        {!topics.length ? <p className="mt-[.4rem] mb-3 text-muted">No hay temas vistos para planificar. Márcalos en «Temas vistos» después de estudiarlos en papel.</p> : <div className="planning-calendar-form grid grid-cols-4 items-end gap-3 max-[520px]:grid-cols-2">
+          <label className="grid min-w-0 gap-[.3rem] text-muted text-[length:var(--fs-s)]">Fecha<input className="box-border w-full min-w-0 min-h-11 rounded-[var(--r-s)] border border-[var(--line-strong,var(--line))] bg-[var(--card)] p-2 text-ink [font:inherit]" aria-label="Fecha del repaso" type="date" min={dayKey(tomorrow)} max={dayKey(maxDate)} value={dateKey} onChange={event => { setDateKey(event.target.value); setProposal(null); setError(''); }} /></label>
+          <label className="grid min-w-0 gap-[.3rem] text-muted text-[length:var(--fs-s)]">Tema visto<select className="box-border w-full min-w-0 min-h-11 rounded-[var(--r-s)] border border-[var(--line-strong,var(--line))] bg-[var(--card)] p-2 text-ink [font:inherit]" aria-label="Tema del repaso" value={topicId} onChange={event => { setTopicId(event.target.value); setProposal(null); setError(''); }}>{topics.map(topic => <option key={topic.id} value={topic.id}>{topic.id} · {topic.name}</option>)}</select></label>
+          <label className="grid min-w-0 gap-[.3rem] text-muted text-[length:var(--fs-s)]">Actividad<select className="box-border w-full min-w-0 min-h-11 rounded-[var(--r-s)] border border-[var(--line-strong,var(--line))] bg-[var(--card)] p-2 text-ink [font:inherit]" aria-label="Tipo de repaso" value={kind} onChange={event => { setKind(event.target.value as ScheduledStudyActivityKind); setProposal(null); setError(''); }}><option value="activeRecall">Tarjetas de repaso</option><option value="topicTest">Test por tema</option></select></label>
+          <label className="grid min-w-0 gap-[.3rem] text-muted text-[length:var(--fs-s)]">Duración<select className="box-border w-full min-w-0 min-h-11 rounded-[var(--r-s)] border border-[var(--line-strong,var(--line))] bg-[var(--card)] p-2 text-ink [font:inherit]" aria-label="Duración del repaso" value={minutes} onChange={event => { setMinutes(Number(event.target.value)); setProposal(null); setError(''); }}>{[10, 20, 30, 40, 60].map(value => <option key={value} value={value}>{value} minutos</option>)}</select></label>
+          <button className="btn sec min-h-11 max-[520px]:col-span-full" type="button" onClick={prepareCreation}>Revisar propuesta</button>
         </div>}
-        {activities.length > 0 && <ul className="planning-calendar-activities" aria-label="Repasos planificados">{activities.map(activity => {
+        {activities.length > 0 && <ul className="planning-calendar-activities mt-4 mb-0 grid gap-2 p-0 list-none" aria-label="Repasos planificados">{activities.map(activity => {
           const scheduledDate = new Date(`${activity.dateKey}T12:00:00`);
-          return <li key={activity.id}>
-            <div><b>{fullDateFormatter.format(scheduledDate)}</b><span>{activityNames[activity.activity]} · {activity.topicId} {topicName(activity.topicId)} · {activity.minutes} min</span></div>
-            <button className="btn sec" type="button" onClick={() => onOpenActivity(activity)}>Abrir</button>
-            <label className="planning-reschedule-date">Nueva fecha<input aria-label={`Nueva fecha para ${activity.topicId}`} type="date" min={dayKey(tomorrow)} max={dayKey(maxDate)} value={moveDates[activity.id] ?? ''} onChange={event => { setMoveDates(current => ({ ...current, [activity.id]: event.target.value })); setProposal(null); setError(''); }} /></label>
-            <button className="btn sec" type="button" onClick={() => prepareMove(activity)}>Reprogramar</button>
+          return <li className="grid min-w-0 grid-cols-[minmax(0,1fr)_auto_minmax(8rem,12rem)_auto] items-center gap-3 rounded-[var(--r-m)] border border-line bg-[var(--card)] p-3 max-[520px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]" key={activity.id}>
+            <div className="grid min-w-0 gap-1 max-[520px]:col-span-full"><b>{fullDateFormatter.format(scheduledDate)}</b><span className="text-muted text-[length:var(--fs-s)] [overflow-wrap:anywhere]">{activityNames[activity.activity]} · {activity.topicId} {topicName(activity.topicId)} · {activity.minutes} min</span></div>
+            <button className="btn sec min-h-11 whitespace-nowrap max-[520px]:w-full" type="button" onClick={() => onOpenActivity(activity)}>Abrir</button>
+            <label className="planning-reschedule-date grid min-w-0 gap-[.3rem] text-muted text-[length:var(--fs-s)] max-[520px]:col-span-full">Nueva fecha<input className="box-border w-full min-w-0 min-h-11 rounded-[var(--r-s)] border border-[var(--line-strong,var(--line))] bg-[var(--card)] p-2 text-ink [font:inherit]" aria-label={`Nueva fecha para ${activity.topicId}`} type="date" min={dayKey(tomorrow)} max={dayKey(maxDate)} value={moveDates[activity.id] ?? ''} onChange={event => { setMoveDates(current => ({ ...current, [activity.id]: event.target.value })); setProposal(null); setError(''); }} /></label>
+            <button className="btn sec min-h-11 whitespace-nowrap max-[520px]:w-full" type="button" onClick={() => prepareMove(activity)}>Reprogramar</button>
           </li>;
         })}</ul>}
-        {proposal && <div className="planning-calendar-proposal" role="group" aria-label="Propuesta pendiente de confirmación">
-          {proposal.type === 'create' ? <p>Propuesta: {activityNames[proposal.activity]} de {proposal.minutes} min para {proposal.topicId} · {topicName(proposal.topicId)}, el {fullDateFormatter.format(new Date(`${proposal.dateKey}T12:00:00`))}.</p> : <p>Propuesta: mover el repaso a {fullDateFormatter.format(new Date(`${proposal.dateKey}T12:00:00`))}. El cambio no se guardará hasta que lo confirmes.</p>}
+        {proposal && <div className="planning-calendar-proposal mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-[var(--r-s)] bg-[var(--card)] p-3 [border-inline-start:.25rem_solid_var(--brand)]" role="group" aria-label="Propuesta pendiente de confirmación">
+          {proposal.type === 'create' ? <p className="m-0 flex-[1_1_100%]">Propuesta: {activityNames[proposal.activity]} de {proposal.minutes} min para {proposal.topicId} · {topicName(proposal.topicId)}, el {fullDateFormatter.format(new Date(`${proposal.dateKey}T12:00:00`))}.</p> : <p className="m-0 flex-[1_1_100%]">Propuesta: mover el repaso a {fullDateFormatter.format(new Date(`${proposal.dateKey}T12:00:00`))}. El cambio no se guardará hasta que lo confirmes.</p>}
           <button className="btn" type="button" onClick={confirmProposal}>Confirmar planificación</button><button className="btn sec" type="button" onClick={() => setProposal(null)}>Cancelar</button>
         </div>}
-        {error && <p className="planning-calendar-error" role="alert">{error}</p>}
+        {error && <p className="planning-calendar-error font-[650] [color:var(--danger,var(--ink))]" role="alert">{error}</p>}
       </section>
     </div>}
   </section>;

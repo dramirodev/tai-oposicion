@@ -45,7 +45,7 @@ export function LightningPage() {
         setAnswered(index);
         lightning.record(question.id, question.topicId, index === question.correctIndex, Math.max(1, Math.round((Date.now() - startedAt.current) / 1000)));
       }}><b>{'ABCD'[index]}</b><span className="pre"><StudyMarkup html={richHtml(option)} languageContext={question.statement} /></span></button>)}</div>
-      {answered !== null && <div className={`fb ${correct ? 'good' : 'wrong'}`} role="status"><b>{correct ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>{'ABCD'[question.correctIndex]}</b>
+      {answered !== null && <div className={`fb motion-safe:animate-[fbin_.2s_ease-out] ${correct ? 'good' : 'wrong'}`} role="status"><b>{correct ? '¡Correcto!' : 'Incorrecto'}</b> · Respuesta: <b>{'ABCD'[question.correctIndex]}</b>
         {question.citation && <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(question.citation, question.options[question.correctIndex])} languageContext={question.statement} /></div>}
         {question.note && <div className="cita"><span>Nota</span><StudyMarkup html={richHtml(question.note)} languageContext={question.statement} /></div>}
         {!!question.traps?.length && <div className="trap">Trampa: {question.traps.map(trap => TRAMPAS[trap] || String(trap)).join(' · ')}</div>}

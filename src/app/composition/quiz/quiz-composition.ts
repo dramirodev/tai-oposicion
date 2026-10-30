@@ -5,8 +5,7 @@ import { minimumReadingSeconds } from '../../../core/domain/reading-strategy.js'
 import { normalizeUiPreferences } from '../../../shared/presentation/ui-preferences.js';
 import { questionNotice, sourceHtml } from '../../../shared/presentation/study-content.js';
 import { VERIFIED_SOURCES } from '../../../adapters/http/verified-sources.js';
-import { ask } from '../../../shared/ui/dialog-actions.js';
-import { toast } from '../../../shared/ui/legacy-dom.js';
+import { ask, toast } from '../../../shared/ui/dialog-actions.js';
 import { findCodeExplanation } from '../explanations/explanation-composition.js';
 import type { QuizServices } from '../../../shared/ui/study-services.js';
 import type { ExplanationLookup } from '../../../core/domain/explanations.js';

@@ -23,7 +23,7 @@ export function ReactScreen({ children, home = false, restricted = false }: { ch
     return observeScrollSections(root.current);
   }, [location.key, blocked]);
   if (blocked) return <Navigate to="/home" replace />;
-  return <div ref={root} className="route-transition" tabIndex={-1} data-screen={location.pathname.split('/')[1] || 'home'}>
+  return <div ref={root} className="route-transition motion-safe:animate-[screen-arrive_160ms_ease-out]" tabIndex={-1} data-screen={location.pathname.split('/')[1] || 'home'}>
     {!home && !isQuiz && run && <div className="note run"><b>{run.title}</b> en curso · {Math.min(run.position + 1, run.total)}/{run.total} <Link className="btn" id="resume" to="/quiz">Continuar</Link></div>}
     {children}
   </div>;

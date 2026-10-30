@@ -99,6 +99,36 @@ test('el menú móvil mantiene su panel dentro del viewport y permite llegar a t
   expect(await page.locator('#menuov .menu-content').evaluate(element => element.scrollTop)).toBeGreaterThan(0);
 });
 
+test('el menú móvil y la carga inicial animan en WebKit cuando no se reduce el movimiento', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await prepareOwner(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/#/home');
+  await page.locator('#menu').click();
+
+  const dialog = page.locator('#menuov');
+  const panel = dialog.locator('.card.menu');
+  await expect(dialog).toHaveClass(/mobile-menu-enter/);
+  const menuAnimations = await panel.evaluate(element => element.getAnimations().map(animation => ({
+    name: animation instanceof CSSAnimation ? animation.animationName : '',
+    duration: animation.effect?.getTiming().duration,
+  })));
+  expect(menuAnimations).toContainEqual({ name: 'mobile-menu-panel-enter', duration: 320 });
+  expect(await panel.evaluate(element => getComputedStyle(element).borderRadius)).toBe('0px');
+  expect((await panel.boundingBox())?.width).toBeCloseTo(390, 0);
+
+  await page.route('**/*.js', route => route.abort());
+  await page.goto('/');
+  const loading = page.locator('#initial-loading-progress span');
+  await expect(loading).toBeVisible();
+  const loadingAnimations = await loading.evaluate(element => element.getAnimations().map(animation => ({
+    name: animation instanceof CSSAnimation ? animation.animationName : '',
+    duration: animation.effect?.getTiming().duration,
+    playState: animation.playState,
+  })));
+  expect(loadingAnimations).toContainEqual({ name: 'initial-loading-sweep', duration: 1250, playState: 'running' });
+});
+
 test('el repaso rápido no deja Inicio seleccionado mientras se practica en móvil', async ({ browser }) => {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   try {

@@ -1,18 +1,19 @@
-import { it, expect, vi } from 'vitest';
-it('aísla el DOM y la limpieza de una ruta pendiente después de desmontarla', async () => {
-  document.body.innerHTML = '<main id="app"></main>';
-  vi.stubGlobal('matchMedia', () => ({ matches: true }));
-  const ui = await import('../src/shared/ui/legacy-dom.js');
-  expect(ui).not.toHaveProperty('app');
-  const old = document.createElement('div'); document.querySelector('#app').append(old);
-  const dispose = ui.bindLegacyHost(old);
-  const scope = ui.legacyScope(); const off = vi.fn(); scope.screen.cleanup = off;
-  dispose(); expect(off).toHaveBeenCalledTimes(1); old.remove();
-  const next = document.createElement('div'); next.innerHTML = '<h1 id="next">Destino</h1>'; document.querySelector('#app').append(next);
-  const disposeNext = ui.bindLegacyHost(next);
-  scope.app.innerHTML = '<h1 id="late">Carga anterior</h1>';
-  expect(document.querySelector('#app').textContent).toBe('Destino');
-  expect(scope.$('#next')).toBeNull();
-  const lateOff = vi.fn(); scope.screen.cleanup = lateOff; expect(lateOff).toHaveBeenCalledOnce();
-  disposeNext(); dispose(); expect(off).toHaveBeenCalledOnce();
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { expect, it } from 'vitest';
+
+function sourceFiles(directory) {
+  return readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
+    const path = join(directory, entry.name);
+    return entry.isDirectory() ? sourceFiles(path) : /\.[jt]sx?$/.test(entry.name) ? [path] : [];
+  });
+}
+
+it('mantiene la app fuera del antiguo puente DOM imperativo', () => {
+  const root = join(process.cwd(), 'src');
+  const files = sourceFiles(root);
+  expect(existsSync(join(root, 'shared/ui/legacy-dom.ts'))).toBe(false);
+  expect(existsSync(join(root, 'app/legacy-router.ts'))).toBe(false);
+  expect(files.every(file => !readFileSync(file, 'utf8').includes('legacy-dom'))).toBe(true);
+  expect(existsSync(join(root, 'app/app-services-composition.ts'))).toBe(true);
 });

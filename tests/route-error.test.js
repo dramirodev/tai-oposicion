@@ -6,7 +6,7 @@ import { RouterProvider, Outlet } from 'react-router';
 vi.mock('../src/app/layouts/ReactScreen.js', () => ({ ReactScreen: ({children}) => children }));
 vi.mock('../src/features/home/HomePage.js', () => ({ HomePage: () => React.createElement('h1', null, 'Inicio recuperado') }));
 const failure = vi.hoisted(() => ({ active: true }));
-vi.mock('../src/app/legacy-router.js', () => ({ configureAppNavigation: vi.fn(), bootAppServices: () => () => {} }));
+vi.mock('../src/app/app-services-composition.js', () => ({ configureAppNavigation: vi.fn(), bootAppServices: () => () => {} }));
 vi.mock('../src/app/layouts/Layout.js', () => ({ Layout: () => React.createElement(Outlet) }));
 vi.mock('../src/features/test/TestPage.js', () => ({ TestPage: () => {
   if (failure.active) throw new Error('detalle interno sensible');

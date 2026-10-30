@@ -17,7 +17,7 @@ beforeEach(async () => {
   const { HomePage } = await import('../src/features/home/HomePage.tsx');
   const { TopicsPage } = await import('../src/features/home/TopicsPage.tsx');
   const { StatsPage } = await import('../src/features/stats/StatsPage.tsx');
-  const { studyServices } = await import('../src/app/legacy-router.ts');
+  const { studyServices } = await import('../src/app/app-services-composition.ts');
   const mount=async (Page, waitForReady=true) => { activeView?.unmount(); const container = document.createElement('div'); document.querySelector('#app').append(container); activeView = rtl.render(React.createElement(MemoryRouter,null,React.createElement(AppServicesProvider,{value:studyServices},React.createElement(Page))), { container }); if (waitForReady) await rtl.screen.findByRole('heading', { level: 1 }); };
   routes.home=(options)=>mount(HomePage, options?.waitForReady ?? true); routes.temario=()=>mount(TopicsPage); routes.stats=()=>mount(StatsPage);
 });
@@ -103,7 +103,7 @@ it('buscar y navegar no modifica el progreso y una cuenta nueva no recibe la pan
   spy.mockRestore();
 });
 it('una sesión rápida pendiente no se inicia en otra cuenta', async()=> {
-  const { studyServices }=await import('../src/app/legacy-router.ts');
+  const { studyServices }=await import('../src/app/app-services-composition.ts');
   const question=JSON.parse(readFileSync('public/data/T1.01.json','utf8'))[0];
   let finish;
   vi.spyOn(engine,'quickItems').mockImplementationOnce(()=>new Promise(resolve=>{finish=resolve;}));

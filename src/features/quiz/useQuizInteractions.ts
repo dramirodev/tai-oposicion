@@ -1,4 +1,4 @@
-import { useEffect, useEffectEvent, useRef, useState, type RefObject } from 'react';
+import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState, type RefObject } from 'react';
 import { resolveHighlight } from '../../core/domain/attempts/highlights.js';
 import { canonicalText, paintTextHighlight, selectedTextAnchor } from '../../shared/ui/text-highlights.js';
 import { studyKeyAction, swipeDirection } from '../../shared/ui/study-input.js';
@@ -15,15 +15,20 @@ export function useQuizInteractions({ root, snapshot, prompt, moveNext, movePrev
   markBlank: () => void;
 }) {
   const quiz = useStudyService('quiz');
-  const [selection, setSelection] = useState(false);
+  const [selectionQuestionId, setSelectionQuestionId] = useState<string | null>(null);
   const [highlightMark, setHighlightMark] = useState<HighlightMark>({ questionId: '', id: null });
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const markBlankFromKeyboard = useEffectEvent(markBlank);
+
+  useLayoutEffect(() => {
+    window.getSelection()?.removeAllRanges();
+  }, [prompt?.id]);
+
   const addMark = (category: 'key' | 'doubt') => {
     const anchor = root.current && selectedTextAnchor(root.current);
     if (anchor && quiz.addHighlight(anchor, category)) {
       window.getSelection()?.removeAllRanges();
-      setSelection(false);
+      setSelectionQuestionId(null);
     }
   };
 
@@ -48,7 +53,7 @@ export function useQuizInteractions({ root, snapshot, prompt, moveNext, movePrev
     if (!host) return;
     const syncSelection = () => {
       const anchor = selectedTextAnchor(host);
-      setSelection(!!anchor);
+      setSelectionQuestionId(anchor ? prompt.id : null);
       const mark = anchor && snapshot.highlights.find(item => item.field === anchor.field && item.start < anchor.end && item.end > anchor.start);
       setHighlightMark({ questionId: prompt.id, id: mark?.id || null });
     };
@@ -101,7 +106,7 @@ export function useQuizInteractions({ root, snapshot, prompt, moveNext, movePrev
     };
   }, [markBlank, moveNext, movePrevious, prompt, quiz, root, snapshot]);
 
-  return { selection, highlightMark, setHighlightMark, addMark };
+  return { selection: selectionQuestionId === prompt?.id, highlightMark, setHighlightMark, addMark };
 }
 
 function moveTextSelection(event: KeyboardEvent, textRoot: Element) {

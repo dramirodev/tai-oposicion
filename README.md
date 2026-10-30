@@ -92,7 +92,7 @@ Pantallas React (features) ──> casos de uso y contratos (core/application, c
 - **`src/shared/`:** navegación, componentes compartidos, servicios de interfaz, presentación de preguntas y estilos comunes.
 - **`src/app/`:** entrada React, rutas con hash, layouts, arranque y composición. Aquí se conectan las features con los casos de uso y adaptadores concretos.
 
-La composición mantiene persistencia y servicios fuera de las pantallas. Las pantallas reciben servicios tipados mediante contratos compartidos. React Router carga las pantallas de forma diferida; `legacy-router.ts` y `legacy-store.ts` siguen funcionando como puente de compatibilidad mientras se completa la migración. Las rutas, formatos de progreso y contratos históricos se conservan para no perder enlaces ni datos guardados.
+La composición mantiene persistencia y servicios fuera de las pantallas. Las pantallas reciben servicios tipados mediante contratos compartidos y React Router las carga de forma diferida. `app-services-composition.ts` conecta esos contratos con los casos de uso y adaptadores. El helper DOM imperativo y el antiguo `legacy-router.ts` se retiraron; `legacy-store.ts` se conserva como adaptador de los formatos de progreso históricos para proteger los datos guardados mientras avanza su migración.
 
 ## Paquetes utilizados
 

@@ -63,7 +63,7 @@ function TrapQuestion({ run, selected, result, onToggle, onExit, onSubmit, onNex
   const resultSelectedIds = new Set(result?.selectedIds || []);
   const falseAlarms = result ? result.selectedIds.filter(id => !correctIds.has(id)) : [];
   return <>
-    <div className="qhead"><button className="ghost" aria-label="Salir" onClick={onExit}><X size="1.25rem" aria-hidden="true" /></button><div className="prog" role="progressbar" aria-label="Progreso" aria-valuemin={0} aria-valuemax={run.items.length} aria-valuenow={run.index}><div style={{ width: `${100 * run.index / run.items.length}%` }} /></div><div className="cnt">{run.index + 1}/{run.items.length}</div></div>
+    <div className="qhead"><button className="ghost" aria-label="Salir" onClick={onExit}><X size="1.25rem" aria-hidden="true" /></button><div className="prog" role="progressbar" aria-label="Progreso" aria-valuemin={0} aria-valuemax={run.items.length} aria-valuenow={run.index}><div className="origin-left animate-[grow_.45s_cubic-bezier(.2,.7,.2,1)]" style={{ width: `${100 * run.index / run.items.length}%` }} /></div><div className="cnt">{run.index + 1}/{run.items.length}</div></div>
     <h1 className="sub"><ScanSearch className="inline-feature-icon" size="1em" strokeWidth={1.7} aria-hidden="true" /> Detective de trampas</h1><p className="sm">Lee el enunciado y todas las opciones: las trampas pueden estar en cualquiera de ellos.</p>
     <article className="card q"><div className="meta"><span className="tag">{prompt.topicId} · {prompt.topicName}</span></div>
       {notice && <StudyMarkup html={notice} languageContext={prompt.statement} />}{source && <StudyMarkup html={source} languageContext={prompt.statement} />}
@@ -86,10 +86,10 @@ function TrapChoice({ id, selected, correct, revealed, wasSelected, onToggle }: 
 }
 
 function TrapFeedback({ prompt, result, selectedIds, falseAlarms }: { prompt: TrapRun['items'][number]; result: TrapAnswer; selectedIds: ReadonlySet<number>; falseAlarms: readonly number[] }) {
-  return <div className={`fb ${result.missed || result.falseAlarms ? 'wrong' : 'good'}`} role="status"><b>{!result.missed && !result.falseAlarms ? '¡Detectadas todas!' : `Detectaste ${result.hits} de ${result.total}${result.falseAlarms ? ` y marcaste ${result.falseAlarms} de más` : ''}.`}</b> Respuesta correcta: <b>{'ABCD'[prompt.correctIndex]}</b>
-    {result.correctIds.map(id => <div className={`trapx ${selectedIds.has(id) ? 'trap-detected' : 'miss'}`} key={id}><b>{selectedIds.has(id) ? 'Detectada' : 'No la viste'}: {TRAMPAS[id] || id}</b><p>{TRAMPA_EXPL[id] || ''}</p></div>)}
-    {falseAlarms.map(id => <div className="trapx trap-false-alarm" key={id}><b>Falsa alarma: {TRAMPAS[id] || id}</b><p>No aplica aquí. {TRAMPA_EXPL[id] || ''}</p></div>)}
-    {prompt.citation && <div className="cita"><span>Temario</span><StudyMarkup html={hiliteHtml(prompt.citation, prompt.options[prompt.correctIndex])} languageContext={prompt.statement} /></div>}{prompt.note && <div className="cita"><span>Nota</span><StudyMarkup html={richHtml(prompt.note)} languageContext={prompt.statement} /></div>}
+  return <div className={`fb motion-safe:animate-[fbin_.2s_ease-out] ${result.missed || result.falseAlarms ? 'wrong' : 'good'}`} role="status"><b>{!result.missed && !result.falseAlarms ? '¡Detectadas todas!' : `Detectaste ${result.hits} de ${result.total}${result.falseAlarms ? ` y marcaste ${result.falseAlarms} de más` : ''}.`}</b> Respuesta correcta: <b>{'ABCD'[prompt.correctIndex]}</b>
+    {result.correctIds.map(id => <div className={`trapx my-2.5 rounded-[var(--r-m)] border border-[var(--line)] border-l-4 bg-[var(--card)] px-3.5 py-3 ${selectedIds.has(id) ? 'trap-detected border-l-[var(--ok)]' : 'miss border-l-[var(--amber-strong)]'}`} key={id}><b className="text-[length:var(--fs-b)]">{selectedIds.has(id) ? 'Detectada' : 'No la viste'}: {TRAMPAS[id] || id}</b><p className="mb-0 mt-1 text-[length:var(--fs-m)] leading-[1.45] text-[var(--ink)]">{TRAMPA_EXPL[id] || ''}</p></div>)}
+    {falseAlarms.map(id => <div className="trapx trap-false-alarm my-2.5 rounded-[var(--r-m)] border border-[var(--line)] border-l-4 border-l-[var(--bad)] bg-[var(--card)] px-3.5 py-3" key={id}><b className="text-[length:var(--fs-b)]">Falsa alarma: {TRAMPAS[id] || id}</b><p className="mb-0 mt-1 text-[length:var(--fs-m)] leading-[1.45] text-[var(--ink)]">No aplica aquí. {TRAMPA_EXPL[id] || ''}</p></div>)}
+    {prompt.citation && <div className="mt-2.5 rounded-[var(--r-l)] border border-[var(--line)] bg-[var(--card)] p-4 text-[length:var(--fs-b)] leading-[1.65] text-[var(--ink)] [overflow-wrap:anywhere]"><span className="mb-1.5 block text-[length:var(--fs-xs)] font-bold text-[var(--mute)]">Temario</span><StudyMarkup html={hiliteHtml(prompt.citation, prompt.options[prompt.correctIndex])} languageContext={prompt.statement} /></div>}{prompt.note && <div className="mt-2.5 rounded-[var(--r-l)] border border-[var(--line)] bg-[var(--card)] p-4 text-[length:var(--fs-b)] leading-[1.65] text-[var(--ink)] [overflow-wrap:anywhere]"><span className="mb-1.5 block text-[length:var(--fs-xs)] font-bold text-[var(--mute)]">Nota</span><StudyMarkup html={richHtml(prompt.note)} languageContext={prompt.statement} /></div>}
   </div>;
 }
 
@@ -98,7 +98,7 @@ function TrapSummary({ run, traps, onAgain, onHome }: { run: TrapRun; traps: Tra
   const hits = run.results.reduce((sum, item) => sum + item.hits, 0);
   const falseAlarms = run.results.reduce((sum, item) => sum + item.falseAlarms, 0);
   const weaknesses = traps.getWeaknesses();
-  return <><h1>Detective de trampas</h1><div className="grid"><div className="stat"><b>{hits}/{total}</b><span>trampas detectadas</span></div><div className="stat"><b>{falseAlarms}</b><span>falsas alarmas</span></div></div>
+  return <><h1>Detective de trampas</h1><div className="stats-grid"><div className="stat"><b>{hits}/{total}</b><span>trampas detectadas</span></div><div className="stat"><b>{falseAlarms}</b><span>falsas alarmas</span></div></div>
     <div className="card"><h2 className="h3">Las que más se te escapan</h2>{weaknesses.length ? weaknesses.map(item => <div className="line" key={item.id}><span>{TRAMPAS[item.id] || item.id}</span><span>{Math.round(item.detected * 100 / item.seen)}% <small>({item.detected}/{item.seen})</small></span></div>) : <p className="sub">Aparecerá cuando hayas visto cada trampa al menos 3 veces.</p>}</div>
     <div className="bar2"><button className="btn" onClick={onAgain}>Otra tanda</button><button className="btn sec" onClick={onHome}>Inicio</button></div>
   </>;

@@ -1,4 +1,3 @@
-import { saveExportFile } from '../shared/ui/download-file.js';
 import type { SettingsServices, SettingsSnapshot, StudyServices } from '../shared/ui/study-services.js';
 import { questionNotice, sourceHtml } from '../shared/presentation/study-content.js';
 import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
@@ -8,22 +7,18 @@ import { localProgressRepository, localQuizProgressGateway, localStudyProgressGa
 import { localGuestQuestionHistoryRepository } from '../adapters/local/guest-question-history.js';
 import { localReadingQuestionHistoryRepository } from '../adapters/local/reading-question-history.js';
 import { percentage as pct } from '../shared/presentation/format.js';
-import { richHtml, hiliteHtml } from '../shared/presentation/study-text.js';
-import { FAILURE_REASONS as MOTIVOS_FALLO } from '../shared/presentation/study-labels.js';
 import { normalizeUiPreferences } from '../shared/presentation/ui-preferences.js';
-import { calculateExamScore as nota } from '../core/domain/scoring.js';
 import { randomStudyOrder as shuffle } from '../shared/ui/study-random.js';
-import { swipeDirection, studyKeyAction } from '../shared/ui/study-input.js';
 import { calculateStudyStreak } from '../core/domain/study-analytics.js';
 import { summarizeReadingSpeedFailures } from '../core/domain/question-performance.js';
 import { previewBackupImport } from '../core/application/settings/backup-preview.js';
 import { fetchJson } from '../adapters/http/study-question-catalog.js';
-import { $, L, toast, ask } from '../shared/ui/legacy-dom.js';
+import { ask, toast } from '../shared/ui/dialog-actions.js';
 import { showMenu } from '../shared/ui/dialog-actions.js';
-import { BLOQUES, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
+import { BLOQUES, LETRAS_OPCION, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
 import { isFull, isOwner, accessLevel, devMode, setDevMode, devRevealed, revealDev } from './composition/access-composition.js';
-import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, clearActiveRun, createRun, resumeRun, tickCurrentRun, currentSecondsRemaining, answerCurrentQuestion, answerCurrentDeferred, revealCurrentSolution, finishCurrentRun, setQuestionIndex, toggleReviewQuestion, setRunPaused, toggleDeferredBlank, startCurrentQuestion, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, dueQuestionIds, selectQuestionsForTopics, selectWeightedSimulationQuestions, setCurrentConfidence, toggleCurrentDiscardedOption, addCurrentHighlight, removeCurrentHighlight, studyQuestionCatalog } from './composition/study/study-engine-composition.js';
+import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, createRun, resumeRun, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, dueQuestionIds, selectQuestionsForTopics, selectWeightedSimulationQuestions, studyQuestionCatalog } from './composition/study/study-engine-composition.js';
 import { sessionStatePort } from './session-state-store.js';
 import { clearRun, pendingRun, saveRun } from './composition/study/pending-run-composition.js';
 import { createTopicMasteryComposition } from './composition/topics/topic-mastery-composition.js';
@@ -32,14 +27,13 @@ import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
 import type { Origin, QuestionStats, StudyReviewMode, TrainingActivity, TrainingPreferences } from '../core/domain/entities.js';
 import type { PaperRecallRating } from '../core/domain/paper-recall-assessment.js';
-import { daysUntilStudyDate, isStudyDateKey, type ScheduledStudyActivity } from '../core/domain/study-training-calendar.js';
+import { daysUntilStudyDate, isStudyDateKey } from '../core/domain/study-training-calendar.js';
 import { latestPaperRecallByTopic, needsPaperRecallFollowUp } from '../core/domain/paper-recall-assessment.js';
 import { buildDailyTrainingPlan, normalizeTrainingPreferences } from '../core/domain/study-training-plan.js';
 import { filterTopicMasteryToSeen } from '../core/domain/topic-mastery.js';
-import { createHighlight, questionContentRevision, resolveHighlight } from '../core/domain/attempts/highlights.js';
-import { canonicalText, paintTextHighlight, selectedTextAnchor } from '../shared/ui/text-highlights.js';
+import { questionContentRevision } from '../core/domain/attempts/highlights.js';
 import { findCodeExplanation } from './composition/explanations/explanation-composition.js';
-import { loadQuestionEvolution, loadStrategyReportForPeriod } from './composition/stats/strategy-composition.js';
+import { loadStrategyReportForPeriod } from './composition/stats/strategy-composition.js';
 import { createStatsServices } from './composition/stats/stats-composition.js';
 import { createExamCatalog } from './composition/simulations/exam-catalog-composition.js';
 import { createSimulationAnalysisView } from './composition/simulations/simulation-analysis-composition.js';
@@ -73,7 +67,7 @@ import { getHomeProgressSummary } from '../core/application/stats/get-home-progr
 import type { QuestionRecord as Question } from '../core/domain/question-record.js';
 import { createReadingComposition } from './composition/trainers/reading-composition.js';
 import { readingTokens, mixReadingIds } from '../features/trainers/reading-controller.js';
-import type { TestConfiguration, ScenarioChoice, SimulationConfiguration, SimulationTab, SimulationExam, SimulationExamGroups, ResultServices } from '../shared/ui/study-services.js';
+import type { TestConfiguration, ScenarioChoice, SimulationConfiguration, SimulationExam, SimulationExamGroups } from '../shared/ui/study-services.js';
 
 const { getIndex } = studyQuestionCatalog;
 const getMeta = studyQuestionCatalog.getMetadata;
@@ -135,12 +129,12 @@ function saludo() {
     if (u) { const raw = u.name && !u.name.includes('@') ? u.name.trim().split(/\s+/)[0] : ''; n = raw; localStorage.setItem('tai.name', n); }
     else if (sync.status.state === 'sin sesión') localStorage.removeItem('tai.name');
     else n = localStorage.getItem('tai.name') || '';
-  } catch (e) {}
+  } catch {}
   return n ? `Hola, ${n}` : 'Hola';
 }
 // ───────── menú general ─────────
 async function openMenu() {
-  if ($('#menuov')) return;
+  if (document.getElementById('menuov')) return;
   const account = localStudyProgressGateway.accountId();
   await getMeta();
   const due = (await dueQuestionIds()).length, nCards = Object.values(store.getCards()).filter(r => r[3] >= 0 && r[4] <= studyQuestionCatalog.now()).length;
@@ -159,13 +153,14 @@ async function openMenu() {
 }
 
 // ───────── mis trampas ─────────
-let SIMCFG: any = null;
+interface SimulationRunConfiguration { includeSecondPart: boolean; secondPartMinutes: number }
+let simulationRunConfiguration: SimulationRunConfiguration | null = null;
 let reviewScenarioQuestions = new Map<string, Question[]>();
 let reviewScenarioTexts = new Map<string, string>();
 let reviewScenarioAccount: string | null = null;
-async function simParte1(idx: any, org: any, N: any, only: any) {
-  const temas = idx.temas.filter((t: any) => !only || only.has(t.id));
-  return selectWeightedSimulationQuestions(temas.map((topic: any) => ({ id: topic.id, weight: topic.w })), org, N);
+async function selectSimulationQuestions(index: Awaited<ReturnType<typeof getIndex>>, origins: ReadonlySet<Origin>, count: number, onlyTopics: ReadonlySet<string> | null) {
+  const topics = index.temas.filter(topic => !onlyTopics || onlyTopics.has(topic.id));
+  return selectWeightedSimulationQuestions(topics.map(topic => ({ id: topic.id, weight: topic.w })), origins, count);
 }
 // Parte 2 tras la parte 1: ofrece 2 supuestos
 // Las pantallas comparten navegación y limpieza; cada módulo conserva su estado de sesión.
@@ -389,7 +384,7 @@ export const studyServices: StudyServices = {
       return { score: ses.nota, correct: ses.a, wrong: ses.f, blank: ses.b, consulted: studyStates.filter(state => state === 'revealed').length,
         accuracy: ses.a + ses.f ? pct(ses.a, ses.a + ses.f) : null, seconds: ses.secs, title: ses.titulo || '', interrupted: !!ses.interrupted, kind: ses.kind,
         porTiempo: !!ses.porTiempo, analysis: last.limit && !ses.porTiempo ? createSimulationAnalysisView({ correctIndices: last.items.map(question => question.c), answers: last.ans, answerSeconds: last.times, timeLimitMinutes: last.limit, elapsedSeconds: ses.secs }) : '',
-        secondPartAvailable: (ses.titulo || '').includes('Parte 1') && !!SIMCFG?.parte2,
+        secondPartAvailable: (ses.titulo || '').includes('Parte 1') && !!simulationRunConfiguration?.includeSecondPart,
         topics: Object.entries(ses.temas).sort(([left], [right]) => left.localeCompare(right)).map(([id, [correct, total]]) => ({ id, name: studyQuestionCatalog.getTopicName(id), correct, total })),
         items: items.map((question, index) => {
           const answer = ans[index], revealed = studyStates[index] === 'revealed';
@@ -442,10 +437,10 @@ export const studyServices: StudyServices = {
       const account = localStudyProgressGateway.accountId(), index = await getIndex(); await getMeta();
       const seen = store.getSeen(), only = configuration.scope !== 'todos' && seen.length ? new Set(seen) : null;
       const origins = new Set(configuration.origins);
-      const items = await simParte1(index, origins, configuration.count, only);
+      const items = await selectSimulationQuestions(index, origins, configuration.count, only);
       if (account !== localStudyProgressGateway.accountId()) return 'account-changed';
       if (!items.length) return 'empty';
-      SIMCFG = { parte2: configuration.includeSecondPart, org: [...origins], min2: Math.round(configuration.minutes * 0.45) };
+      simulationRunConfiguration = { includeSecondPart: configuration.includeSecondPart, secondPartMinutes: Math.round(configuration.minutes * 0.45) };
       return startRun({ kind: 'sim', feedback: false, items, limit: configuration.minutes, titulo: 'Simulacro · Parte 1' }) ? 'started' : 'empty';
     },
     async startExam(id, mode) {
@@ -476,7 +471,7 @@ export const studyServices: StudyServices = {
     start(id) {
       const items = reviewScenarioQuestions.get(id);
       if (!items?.length || reviewScenarioAccount !== localStudyProgressGateway.accountId()) return 'unavailable';
-      const started = startRun({ kind: 'sim', feedback: false, items, limit: SIMCFG?.min2 || 40, supTexto: reviewScenarioTexts.get(id), titulo: 'Simulacro · Parte 2 (supuesto)' });
+      const started = startRun({ kind: 'sim', feedback: false, items, limit: simulationRunConfiguration?.secondPartMinutes || 40, supTexto: reviewScenarioTexts.get(id), titulo: 'Simulacro · Parte 2 (supuesto)' });
       return started ? 'started' : 'unavailable';
     },
   },
@@ -529,7 +524,7 @@ export const studyServices: StudyServices = {
     async loadContent(ids) {
       const requestedIds = new Set(ids);
       const questionIds = ids.filter(id => !id.startsWith('FC-'));
-      const questions = (await studyQuestionCatalog.getQuestions(questionIds)).map(question => ({ id: question.i, origin: ORIGEN[question.o], statement: question.q, options: question.a.map((text, index) => ({ label: L[index], text, correct: index === question.c })), reference: question.u, traps: (question.x || []).map(trap => TRAMPAS[trap] || String(trap)) }));
+      const questions = (await studyQuestionCatalog.getQuestions(questionIds)).map(question => ({ id: question.i, origin: ORIGEN[question.o], statement: question.q, options: question.a.map((text, index) => ({ label: LETRAS_OPCION[index], text, correct: index === question.c })), reference: question.u, traps: (question.x || []).map(trap => TRAMPAS[trap] || String(trap)) }));
       const cards = ids.some(id => id.startsWith('FC-')) ? (await allCards()).filter(card => requestedIds.has(card.id)).map(card => ({ id: card.id, question: card.q, answer: card.a, reference: card.ref || null })) : [];
       return { questions, cards };
     },
@@ -545,7 +540,7 @@ export const studyServices: StudyServices = {
         return { id, tarjeta: card ? { pregunta: card.q, respuesta: card.a, ref: card.ref || null } : undefined,
           tema: report.tema, estado: report.st, motivo: report.motivo, nota: report.nota,
           origen: question ? ORIGEN[question.o] : null, enunciado: question?.q, opciones: question?.a,
-          correcta: question ? L[question.c] : null, cita: question?.u || null,
+          correcta: question ? LETRAS_OPCION[question.c] : null, cita: question?.u || null,
           trampas: (question?.x || []).map(trap => TRAMPAS[trap] || trap) };
       });
       return JSON.stringify({ generado: new Date().toISOString(), errores: errors }, null, 1);

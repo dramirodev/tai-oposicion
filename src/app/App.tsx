@@ -1,4 +1,4 @@
-import { bootAppServices, configureAppNavigation, studyServices } from './legacy-router.js';
+import { bootAppServices, configureAppNavigation, studyServices } from './app-services-composition.js';
 import { AppServicesProvider } from './services.js';
 import { configureRuntime } from './router/route-runtime.js';
 import { Routes } from './router/Routes.js';

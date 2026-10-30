@@ -14,23 +14,23 @@
 <link rel="icon" href="icons/icon-192.png">
 <title>Preparación TAI</title>
 </head>
-<body class="is-initial-loading">
+<body class="is-initial-loading [&.is-initial-loading>*:not(#initial-loading)]:invisible [&.is-initial-loading>*:not(#initial-loading)]:pointer-events-none">
 <div id="skip-nav"></div>
 <div id="workspace-shell"></div>
 <main id="app" tabindex="-1"></main>
-<div id="initial-loading" class="initial-loading">
+<div id="initial-loading" class="fixed inset-0 z-[10000] grid content-center justify-items-center gap-4 pt-[max(1.5rem,var(--sat))] pr-6 pb-[max(1.5rem,var(--sab))] pl-6 bg-canvas text-ink text-center">
   <div id="initial-loading-progress" role="status" aria-live="polite" aria-label="Cargando">
-    <p class="initial-loading__label">Cargando</p>
-    <div class="initial-loading__track" role="progressbar" aria-label="Carga inicial" aria-valuetext="Cargando la aplicación"><span></span></div>
+    <p class="m-0 text-[length:var(--fs-l)] font-semibold">Cargando</p>
+    <div class="w-48 max-w-[calc(100vw-3rem)] h-1 overflow-hidden rounded-full bg-[var(--sel)]" role="progressbar" aria-label="Carga inicial" aria-valuetext="Cargando la aplicación"><span class="block w-[34%] h-full rounded-[inherit] bg-[var(--accent)] animate-[initial-loading-sweep_1.25s_linear_infinite] motion-reduce:w-[42%] motion-reduce:ml-[29%] motion-reduce:animate-none"></span></div>
   </div>
-  <section id="initial-update-dialog" class="initial-update" role="dialog" aria-modal="true" aria-labelledby="initial-update-title" hidden>
-    <h1 id="initial-update-title">Actualización disponible</h1>
-    <p>Hay una nueva versión de TAI. ¿Quieres actualizar antes de entrar?</p>
-    <p id="initial-update-version" class="initial-update__version"></p>
-    <p id="initial-update-status" class="initial-update__status" aria-live="polite"></p>
-    <div class="initial-update__actions">
-      <button id="initial-update-confirm" class="initial-update__primary" type="button">Actualizar ahora</button>
-      <button id="initial-update-continue" type="button">Entrar sin actualizar</button>
+  <section id="initial-update-dialog" class="w-[min(28rem,calc(100vw-2rem))] p-6 border border-line rounded-lg bg-surface shadow-[0_1rem_3rem_rgb(0_0_0_/_18%)] text-start" role="dialog" aria-modal="true" aria-labelledby="initial-update-title" hidden>
+    <h1 id="initial-update-title" class="!mt-0 !mb-3 !text-[length:var(--fs-xl)] !font-[650] !leading-[1.2] !tracking-[-0.035em]">Actualización disponible</h1>
+    <p class="my-2">Hay una nueva versión de TAI. ¿Quieres actualizar antes de entrar?</p>
+    <p id="initial-update-version" class="my-2 text-muted text-[var(--fs-s)]"></p>
+    <p id="initial-update-status" class="my-2 min-h-[1.5em] text-muted text-[var(--fs-s)]" aria-live="polite"></p>
+    <div class="mt-5 flex flex-wrap gap-2.5">
+      <button id="initial-update-confirm" class="min-h-11 px-3.5 py-2.5 border border-ink rounded-md bg-ink text-canvas [font:inherit] cursor-pointer focus-visible:outline-[3px] focus-visible:outline-accent focus-visible:outline-offset-2 disabled:cursor-wait disabled:opacity-65" type="button">Actualizar ahora</button>
+      <button id="initial-update-continue" class="min-h-11 px-3.5 py-2.5 border border-[var(--control-line)] rounded-md bg-canvas text-ink [font:inherit] cursor-pointer focus-visible:outline-[3px] focus-visible:outline-accent focus-visible:outline-offset-2 disabled:cursor-wait disabled:opacity-65" type="button">Entrar sin actualizar</button>
     </div>
   </section>
 </div>

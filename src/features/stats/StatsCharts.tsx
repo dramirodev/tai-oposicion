@@ -32,6 +32,7 @@ const tooltipStyle: CSSProperties = {
 };
 const tooltipLabelStyle: CSSProperties = { color: 'var(--ink)', fontWeight: 600 };
 const axisTick = { fill: 'var(--mute)', fontSize: 'var(--fs-xs)' };
+const chartFrame = 'stats-chart my-3 min-w-0 w-full [&_.recharts-responsive-container]:[zoom:calc(1/var(--z,1))]';
 
 export function StatsTrendChart({
   points,
@@ -48,7 +49,7 @@ export function StatsTrendChart({
 }) {
   const data = points.map((point, index) => ({ ...point, position: points.length === 1 ? 0.5 : index }));
   const hasValues = data.some(point => point.value !== null);
-  if (!hasValues) return <p className="sub chart-empty">{emptyMessage}</p>;
+  if (!hasValues) return <p className="sub grid min-h-20 place-items-center text-center">{emptyMessage}</p>;
 
   const tickInterval = Math.max(0, Math.ceil(data.length / 6) - 1);
   const valueLabel = (value: unknown) => {
@@ -56,7 +57,7 @@ export function StatsTrendChart({
     const rounded = Number.isInteger(number) ? String(number) : number.toFixed(1);
     return `${rounded}${suffix}`;
   };
-  return <div className="stats-chart" role="group" aria-label={label}>
+  return <div className={`${chartFrame} h-[12.5rem] max-[30rem]:h-44`} role="group" aria-label={label}>
     <ResponsiveContainer width="100%" height="100%">
       <LineChart
         data={data}
@@ -124,7 +125,7 @@ export function QuestionEvolutionChart({ weeks }: { weeks: readonly QuestionEvol
   const data = weeks.map((week, index) => ({ ...week, position: index }));
   const tickInterval = Math.max(0, Math.ceil(data.length / 6) - 1);
   return <>
-    <div className="stats-chart stats-chart--evolution" role="group" aria-label="Evolución semanal de preguntas vistas, acertadas, falladas y marcadas como no lo sé">
+    <div className={`${chartFrame} stats-chart--evolution h-56 max-[30rem]:h-48`} role="group" aria-label="Evolución semanal de preguntas vistas, acertadas, falladas y marcadas como no lo sé">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={data}
@@ -170,7 +171,7 @@ export function QuestionEvolutionChart({ weeks }: { weeks: readonly QuestionEvol
         </LineChart>
       </ResponsiveContainer>
     </div>
-    <div className="evolution-legend">{evolutionSeries.map(series => <span className="evolution-key" key={series.key}><i style={{ backgroundColor: series.color }} />{series.label}</span>)}</div>
+    <div className="my-2.5 flex flex-wrap gap-x-4 gap-y-2.5 text-[length:var(--fs-s)]">{evolutionSeries.map(series => <span className="inline-flex items-center gap-1.5" key={series.key}><i className="size-2.5 rounded-full" style={{ backgroundColor: series.color }} />{series.label}</span>)}</div>
     <p className="legend">El historial detallado está disponible desde que se activó esta función; sesiones anteriores no se reconstruyen.</p>
   </>;
 }

@@ -128,6 +128,13 @@ for (const theme of ['light', 'dark']) {
     await prepare(page, theme);
     await page.setViewportSize({ width: 320, height: 720 });
     await page.goto('/#/stats');
+    const sections = page.getByRole('group', { name: 'Sección de progreso' });
+    const sectionStyle = await sections.evaluate(element => {
+      const style = getComputedStyle(element);
+      return { position: style.position, zIndex: style.zIndex, background: style.backgroundColor, bodyBackground: getComputedStyle(document.body).backgroundColor, borderBottomStyle: style.borderBottomStyle };
+    });
+    expect(sectionStyle).toMatchObject({ position: 'sticky', zIndex: '3', borderBottomStyle: 'solid' });
+    expect(sectionStyle.background).toBe(sectionStyle.bodyBackground);
     await expect(page.locator('.dmt')).toHaveCount(36);
     const dimensions = await page.evaluate(() => ({ width: document.documentElement.scrollWidth, viewport: innerWidth }));
     expect(dimensions.width).toBeLessThanOrEqual(dimensions.viewport);
@@ -421,7 +428,28 @@ test('el espaciado de texto conserva el reflujo con una sesión en curso', async
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
   }
   await page.locator('summary').filter({ hasText: 'Lectura y carga de repasos' }).click();
-  await expect(page.locator('.chart-scroll')).toBeVisible();
+  const chart = page.locator('.chart-scroll');
+  await expect(chart).toBeVisible();
+  const dimensions = await chart.evaluate(element => ({
+    overflow: getComputedStyle(element).overflowX,
+    client: element.clientWidth,
+    content: element.scrollWidth,
+    gridDisplay: getComputedStyle(element.firstElementChild!).display,
+    gridMinimum: element.firstElementChild!.scrollWidth,
+    page: document.documentElement.scrollWidth,
+    viewport: innerWidth,
+  }));
+  const barStyle = await chart.locator('[aria-hidden="true"]').first().evaluate(element => {
+    const style = getComputedStyle(element);
+    return { display: style.display, minHeight: style.minHeight, opacity: style.opacity, background: style.backgroundColor };
+  });
+  expect(dimensions.overflow).toBe('auto');
+  expect(dimensions.gridDisplay).toBe('flex');
+  expect(dimensions.content).toBeGreaterThan(dimensions.client);
+  expect(dimensions.gridMinimum).toBeGreaterThan(dimensions.client);
+  expect(dimensions.page).toBeLessThanOrEqual(dimensions.viewport);
+  expect(barStyle).toMatchObject({ display: 'block', minHeight: '2px', opacity: '0.85' });
+  expect(barStyle.background).not.toBe('rgba(0, 0, 0, 0)');
 });
 
 test('la sidebar conserva los destinos y el área de estudio al ampliar texto', async ({ page }) => {
