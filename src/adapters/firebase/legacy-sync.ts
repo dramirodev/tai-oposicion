@@ -143,7 +143,8 @@ export function retry(): void { status.error = ''; retryN = 0; if (uid) { status
 function listenErr(event: FirestoreError) {
   if (event.code !== 'permission-denied' && event.code !== 'unauthenticated') {
     status.state = 'reconectando…'; status.detail = (event.code || '') + ' ' + (event.message || ''); console.warn('Firestore:', event.code, event.message); emit();
-    clearTimeout(retryT); retryT = setTimeout(() => { if (uid) start(); }, Math.min(60000, 3000 * 2 ** retryN++));
+    // Los errores llegan en ráfaga (uno por listener caído): solo el primero programa el reintento y cuenta para la espera creciente.
+    if (retryT === undefined) retryT = setTimeout(() => { retryT = undefined; if (uid) start(); }, Math.min(60000, 3000 * 2 ** retryN++));
   } else { status.error = event.message; status.state = 'error'; emit(); }
 }
 function ok(): void { retryN = 0; status.error = ''; status.detail = ''; status.lastSync = Date.now(); status.state = 'sincronizado'; emit(); }

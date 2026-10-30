@@ -15,7 +15,7 @@ vi.mock('firebase/firestore', () => ({
   collection: (_db, ...parts) => ({ path: parts.join('/') }), query: ref => ref, orderBy: () => ({}), limit: () => ({}),
   documentId: () => '__name__', where: () => ({}), startAfter: () => ({}),
   getDoc: async () => ({ exists: () => false, data: () => undefined }), getDocs: async () => ({ docs: [] }),
-  onSnapshot: (ref, cb) => { boundary.snapshots.push({ ref, cb }); return () => {}; },
+  onSnapshot: (ref, cb, onError) => { boundary.snapshots.push({ ref, cb, onError }); return () => {}; },
   setDoc: async (ref, value) => { boundary.writes.push({ path: ref.path, value }); },
   deleteDoc: async ref => { boundary.writes.push({ path: ref.path, deleted: true }); },
 }));
@@ -64,6 +64,17 @@ it('sube la marca de borrado para impedir que reaparezca una tarjeta eliminada',
 
 const snap = (path, data) => boundary.snapshots.filter(x => x.ref.path === path).at(-1).cb({ exists: () => data !== null, data: () => data, id: path.split('/').pop() });
 const paths = () => boundary.snapshots.map(x => x.ref.path);
+it('tras una ráfaga de errores de varios listeners reintenta a los 3 s, sin acumular espera por cada uno', async () => {
+  await vi.advanceTimersByTimeAsync(4000);
+  const listeners = boundary.snapshots.filter(listener => listener.onError);
+  expect(listeners.length).toBeGreaterThan(5);
+  const before = boundary.snapshots.length;
+
+  for (const listener of listeners) listener.onError({ code: 'unavailable', message: 'offline' });
+  await vi.advanceTimersByTimeAsync(3100);
+
+  expect(boundary.snapshots.length).toBeGreaterThan(before);
+});
 it('el propietario sincroniza y escucha solicitudes y accesos', async () => {
   const { status } = await import('../src/adapters/firebase/sync-status-store.js');
   expect(status.access).toBe('propietario');
