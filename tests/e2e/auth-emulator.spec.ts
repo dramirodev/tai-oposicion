@@ -25,6 +25,8 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
 
   await page.goto('/#/settings');
   await signIn('dramiro@gmail.com');
+  // Sin tema semanal elegido el plan no ofrece contenido nuevo (como hacen los e2e de Planificación en css-ui.spec.ts).
+  await page.getByLabel('Tema que estás introduciendo esta semana').selectOption('T1.02');
   await page.goto('/#/planificacion');
   await page.getByRole('button', { name:'Comenzar sesión' }).click();
   await expect(page).toHaveURL(/#\/temario\?topic=T[1-4]\.\d{2}&dailyTraining=newContent/);
