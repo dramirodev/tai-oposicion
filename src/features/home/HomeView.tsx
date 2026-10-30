@@ -94,7 +94,6 @@ export function HomeView({ overview, access, run, pending, onNavigate, onQuickSe
       {access.full ? <FullAccessReview overview={overview} pending={pending} navigate={onNavigate} onStartReview={onStartReview} /> : <GuestAccess access={access} pending={pending} onLogin={onLogin} onRequestAccess={onRequestAccess} />}
     </div>
     <HomeMetrics overview={overview} full={access.full} />
-    <p className="home-intro home-intro--metrics">Tu estudio, con perspectiva. Un paso más en tu preparación.</p>
     <HomeDomain blocks={overview.blocks} full={access.full} />
     <SyncNote access={access} />
   </>;
