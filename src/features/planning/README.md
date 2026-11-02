@@ -67,6 +67,8 @@ La semana fechada muestra por día disponibilidad/excepciones, repasos manuales 
 
 **Verificación de esta rebanada:** `npm run check` pasa (arquitectura sin deuda nueva, lint, ignore-growth, TypeScript; 170 archivos Vitest pasaron/1 omitido, 846 pruebas pasaron/22 omitidas), con el aviso conocido `window.scrollTo` de jsdom. `npm run build` pasa con avisos conocidos de comentarios Zod/Rollup y chunks >500 kB. E2E de pausa persistida/recarga/reanudación: 2/2 Chromium/WebKit; excepción de calendario: 2/2; programación y reprogramación confirmadas con recarga: 4/4; inicio de sesión en planificación: 2/2. `git diff --check` pasa. No hay verificación Firebase remota; no se ha recorrido la UI manualmente en móvil físico/escritorio.
 
+Commit local: `be70031` (`Añade pausas reanudables y agenda semanal fechada`). El informe de auditoría continúa untracked y excluido. Sin push, tag, release ni despliegue.
+
 **Siguiente paso:** cerrar `npm run check`, repetir pruebas de sesión/Ajustes tras la última edición y completar build/E2E si proceden; luego integrar hitos con simulacros versionados y política de puntuación explícita. Agenda futura persistida y recuperación distribuida de pendientes quedan abiertas.
 
 Commit local de código, pruebas y este handoff: `2933b0f` (`Integra horizonte y semana en la planificación`). El informe de auditoría está sin seguimiento y quedó fuera del commit. La rama `feat/study-plan-through-exam` sigue solo local: no se hizo push, tag, release ni despliegue.
