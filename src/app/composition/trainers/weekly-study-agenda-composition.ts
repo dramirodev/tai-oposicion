@@ -1,5 +1,5 @@
 import { mergeRemoteWeeklyStudyAgenda, readWeeklyStudyAgenda, saveWeeklyStudyAgenda } from '../../../adapters/local/weekly-study-agenda.js';
-import { applyWeeklyAgendaRecovery, isWeeklyAgendaItem, replaceWeeklyAgendaWeek, updateWeeklyAgendaItemStatus, type WeeklyAgendaItem, type WeeklyAgendaRecoveryProposal, type WeeklyAgendaStatus, type WeeklyStudyAgenda } from '../../../core/domain/study-weekly-agenda.js';
+import { applyWeeklyAgendaPlan, applyWeeklyAgendaRecovery, isWeeklyAgendaItem, replaceWeeklyAgendaWeek, updateWeeklyAgendaItemStatus, type WeeklyAgendaItem, type WeeklyAgendaPlanProposal, type WeeklyAgendaRecoveryProposal, type WeeklyAgendaStatus, type WeeklyStudyAgenda } from '../../../core/domain/study-weekly-agenda.js';
 
 /** Account-scoped local checkpoint for confirmed weekly proposals with optional private cloud sync. */
 export function createWeeklyStudyAgendaComposition(dependencies: {
@@ -24,6 +24,11 @@ export function createWeeklyStudyAgendaComposition(dependencies: {
     },
     recover(proposal: WeeklyAgendaRecoveryProposal): WeeklyStudyAgenda | null {
       const next = applyWeeklyAgendaRecovery(get(), proposal, dependencies.now());
+      if (!next || !persist(next)) return null;
+      return get();
+    },
+    addPlan(proposal: WeeklyAgendaPlanProposal): WeeklyStudyAgenda | null {
+      const next = applyWeeklyAgendaPlan(get(), proposal, dependencies.now());
       if (!next || !persist(next)) return null;
       return get();
     },

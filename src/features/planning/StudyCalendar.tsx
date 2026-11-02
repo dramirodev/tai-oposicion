@@ -6,7 +6,7 @@ import { proposeStudyActivity, proposeStudyActivityReschedule, type ScheduleDeci
 import type { TrainingPreferences } from '../../core/domain/entities.js';
 import { resolveTrainingDay } from '../../core/domain/study-training-events.js';
 import type { DailyTrainingSession, TrainingSessionHistoryEntry } from '../../core/domain/study-training-session.js';
-import { proposeWeeklyAgendaRecovery, weekStartForStudyDate, type WeeklyAgendaItem, type WeeklyAgendaKind, type WeeklyAgendaRecoveryProposal, type WeeklyStudyAgenda } from '../../core/domain/study-weekly-agenda.js';
+import { proposeWeeklyAgendaRecovery, weekStartForStudyDate, type WeeklyAgendaItem, type WeeklyAgendaKind, type WeeklyAgendaPlanProposal, type WeeklyAgendaRecoveryProposal, type WeeklyStudyAgenda } from '../../core/domain/study-weekly-agenda.js';
 
 const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 const focusLabels = { rest: 'Descanso', 'new-content': 'Contenido nuevo', consolidation: 'Recuperación y consolidación' } as const;
@@ -15,6 +15,7 @@ const fullDateFormatter = new Intl.DateTimeFormat('es-ES', { weekday:'long', day
 const dayKey = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 const activityNames: Record<ScheduledStudyActivityKind, string> = { activeRecall:'Tarjetas de repaso', topicTest:'Test por tema' };
 const weeklyActivityNames: Record<WeeklyAgendaKind, string> = { newContent:'Tema nuevo', activeRecall:'Recuperación activa', topicTest:'Test por tema', mixedTopicTest:'Test variado', failures:'Errores pendientes', spacedReviews:'Repasos vencidos' };
+const weeklyReasonLabels: Record<WeeklyAgendaKind, string> = { newContent:'siguiente tema en el orden de academia', activeRecall:'recuperación activa de temas vistos', topicTest:'práctica según las reglas diarias y los datos disponibles', mixedTopicTest:'recuperación acumulativa de temas vistos', failures:'errores guardados de temas vistos', spacedReviews:'repasos vencidos de temas vistos' };
 const reasonLabels: Record<string, string> = {
   'invalid-date':'Elige una fecha válida.', 'past-date':'Solo puedes planificar días futuros.', 'too-far':'La fecha debe estar dentro de los próximos seis meses.',
   'rest-day':'Ese día está configurado como descanso. Cambia primero tu disponibilidad en Ajustes.', 'unseen-topic':'Solo se pueden planificar temas marcados como vistos.',
@@ -30,7 +31,7 @@ function decisionText(decision: ScheduleDecision | { ok:false; reason:'storage-f
   return decision.ok ? null : reasonLabels[decision.reason] || 'No se pudo validar el cambio.';
 }
 
-export function StudyCalendar({ preferences, now, history, activeSession, topics, catalogTopics = topics, seenTopicIds = topics.map(topic => topic.id), activities, weeklyItems = [], weeklyAgenda, onSchedule, onReschedule, onOpenActivity, onSaveWeeklyAgenda, onRecoverWeeklyAgenda, onSetWeeklyAgendaStatus }: {
+export function StudyCalendar({ preferences, now, history, activeSession, topics, catalogTopics = topics, seenTopicIds = topics.map(topic => topic.id), activities, weeklyItems = [], weeklyAgenda, onSchedule, onReschedule, onOpenActivity, onSaveWeeklyAgenda, onRecoverWeeklyAgenda, onProposeWeeklyAgenda, onAddWeeklyAgendaPlan, onSetWeeklyAgendaStatus }: {
   preferences: TrainingPreferences; now: Date; history: readonly TrainingSessionHistoryEntry[];
   activeSession?: DailyTrainingSession | null;
   topics: readonly { id:string; name:string }[]; activities: readonly ScheduledStudyActivity[];
@@ -41,6 +42,8 @@ export function StudyCalendar({ preferences, now, history, activeSession, topics
   onOpenActivity(activity: ScheduledStudyActivity): void;
   onSaveWeeklyAgenda?(weekStart: string, items: readonly WeeklyAgendaItem[]): boolean;
   onRecoverWeeklyAgenda?(proposal: WeeklyAgendaRecoveryProposal): boolean;
+  onProposeWeeklyAgenda?(weekStart: string): WeeklyAgendaPlanProposal | null;
+  onAddWeeklyAgendaPlan?(proposal: WeeklyAgendaPlanProposal): boolean;
   onSetWeeklyAgendaStatus?(id: string, status: 'completed' | 'skipped'): boolean;
 }) {
   const [view, setView] = useState<'week' | 'month'>('week');
@@ -60,6 +63,7 @@ export function StudyCalendar({ preferences, now, history, activeSession, topics
   const [agendaMinutes, setAgendaMinutes] = useState(35);
   const [agendaProposal, setAgendaProposal] = useState<{ weekStart:string; item:WeeklyAgendaItem } | null>(null);
   const [recoveryProposal, setRecoveryProposal] = useState<WeeklyAgendaRecoveryProposal | null>(null);
+  const [weeklyPlanProposal, setWeeklyPlanProposal] = useState<WeeklyAgendaPlanProposal | null>(null);
   const monthTitle = monthTitleFormatter.format(month);
   const firstDayOffset = (new Date(month.getFullYear(), month.getMonth(), 1).getDay() + 6) % 7;
   const daysInMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate();
@@ -111,9 +115,9 @@ export function StudyCalendar({ preferences, now, history, activeSession, topics
     </div>
     {view === 'week' ? <>
       <div className="mt-3 flex items-center gap-2" aria-label="Navegar semanas">
-        <button className="btn sec min-h-11" type="button" aria-label="Semana anterior" onClick={() => { setWeekOffset(value => value - 1); setAgendaProposal(null); }}>Semana anterior</button>
-        <button className="btn sec min-h-11" type="button" aria-label="Semana actual" onClick={() => { setWeekOffset(0); setAgendaDate(agendaMinDate); setAgendaProposal(null); }}>Esta semana</button>
-        <button className="btn sec min-h-11" type="button" aria-label="Semana siguiente" onClick={() => { setWeekOffset(value => value + 1); setAgendaDate(dayKey(new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + 8))); setAgendaProposal(null); }}>Semana siguiente</button>
+        <button className="btn sec min-h-11" type="button" aria-label="Semana anterior" onClick={() => { setWeekOffset(value => value - 1); setAgendaProposal(null); setWeeklyPlanProposal(null); setRecoveryProposal(null); }}>Semana anterior</button>
+        <button className="btn sec min-h-11" type="button" aria-label="Semana actual" onClick={() => { setWeekOffset(0); setAgendaDate(agendaMinDate); setAgendaProposal(null); setWeeklyPlanProposal(null); setRecoveryProposal(null); }}>Esta semana</button>
+        <button className="btn sec min-h-11" type="button" aria-label="Semana siguiente" onClick={() => { setWeekOffset(value => value + 1); setAgendaDate(dayKey(new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + 8))); setAgendaProposal(null); setWeeklyPlanProposal(null); setRecoveryProposal(null); }}>Semana siguiente</button>
       </div>
       <ol className="mt-4 mb-0 grid grid-cols-7 gap-2 p-0 list-none max-[840px]:grid-cols-4 max-[520px]:grid-cols-2">{[1, 2, 3, 4, 5, 6, 0].map(day => {
         const date = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + (day === 0 ? 6 : day - 1));
@@ -136,6 +140,22 @@ export function StudyCalendar({ preferences, now, history, activeSession, topics
       <section className="planning-calendar-editor mt-4 min-w-0 rounded-[var(--r-m)] border border-line bg-[var(--surface-soft)] p-4" aria-labelledby="weekly-agenda-title">
         <h4 className="m-0 text-[length:var(--fs-m)]" id="weekly-agenda-title">Preparar esta semana</h4>
         <p className="mt-[.4rem] mb-3 text-muted">Añade actividades y confirma cada cambio. Un tema nuevo puede estar pendiente; los repasos requieren un tema visto. La agenda se guarda en este dispositivo y se sincroniza en la cuenta cuando hay conexión y acceso aprobado.</p>
+        {!weeklyPlanProposal ? <button className="btn sec min-h-11 mb-3" type="button" disabled={!catalogTopics.length} onClick={() => {
+          const proposal = onProposeWeeklyAgenda?.(currentWeekKey);
+          if (!proposal) { setError('No se pudo preparar la semana. Comprueba la fecha y vuelve a intentarlo.'); return; }
+          setWeeklyPlanProposal(proposal); setError('');
+        }}>Proponer semana según tu plan</button> : <div className="mb-3 grid gap-2 rounded-[var(--r-s)] border border-line bg-[var(--card)] p-3" role="group" aria-label="Propuesta semanal pendiente de confirmación">
+          <b>{weeklyPlanProposal.items.length} actividades · {weeklyPlanProposal.items.reduce((sum, item) => sum + item.minutes, 0)} min propuestos</b>
+          {weeklyPlanProposal.plannedNewTopicIds.length > 0 && <p className="m-0">Contenido nuevo en el orden configurado: {weeklyPlanProposal.plannedNewTopicIds.join(' → ')}. Programarlo no marca los temas como estudiados.</p>}
+          {!!weeklyPlanProposal.items.length && <ul className="m-0 ps-5">{weeklyPlanProposal.items.map(item => <li key={item.id}>{item.dateKey} · {weeklyActivityNames[item.kind]} · {item.topicIds.join(', ')} · {item.minutes} min · {weeklyReasonLabels[item.kind]}</li>)}</ul>}
+          {!!weeklyPlanProposal.missingTopicIds.length && <p className="m-0" role="status">Hay IDs de la secuencia que no aparecen en el catálogo actual: {weeklyPlanProposal.missingTopicIds.join(', ')}. Se conservan en Ajustes y no se inventa su contenido.</p>}
+          {weeklyPlanProposal.skippedDays.length > 0 && <details><summary className="min-h-11 inline-flex cursor-pointer items-center underline underline-offset-2">Días sin propuesta ({weeklyPlanProposal.skippedDays.length})</summary><ul className="my-1 ps-5">{weeklyPlanProposal.skippedDays.map(day => <li key={day.dateKey}>{day.dateKey} · {day.reason === 'past' ? 'ya pasó o es hoy' : day.reason === 'rest' ? 'descanso o ausencia' : day.reason === 'no-capacity' ? 'sin capacidad libre' : 'sin actividad sustentada por los datos'}</li>)}</ul></details>}
+          <p className="m-0 text-muted text-[length:var(--fs-s)]">La propuesta se suma a las actividades ya planificadas y conserva completadas y omitidas. Los minutos son tiempo de estudio enfocado; planifica las pausas fuera de ese total. No se estima duración ni probabilidad de aprobar.</p>
+          <div className="flex flex-wrap gap-2"><button className="btn min-h-11" type="button" disabled={!weeklyPlanProposal.items.length} onClick={() => {
+            if (!onAddWeeklyAgendaPlan?.(weeklyPlanProposal)) { setError('La agenda cambió o no se pudo guardar. Vuelve a generar la propuesta antes de confirmar.'); setWeeklyPlanProposal(null); return; }
+            setWeeklyPlanProposal(null); setError('');
+          }}>Confirmar semana</button><button className="btn sec min-h-11" type="button" onClick={() => setWeeklyPlanProposal(null)}>Cancelar</button></div>
+        </div>}
         {!!weeklyAgenda?.items.some(item => item.status === 'planned' && item.dateKey < dayKey(now)) && <div className="mb-3 rounded-[var(--r-s)] border border-line bg-[var(--card)] p-3">
           <p className="mt-0 mb-2">Hay actividades pasadas aún pendientes. Puedes distribuirlas en los días futuros con espacio de esta semana; el plan no las moverá automáticamente.</p>
           {!recoveryProposal ? <button className="btn sec min-h-11" type="button" onClick={() => {

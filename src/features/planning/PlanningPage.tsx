@@ -6,7 +6,7 @@ import type { DailyTrainingSession, TrainingSessionStep } from '../../core/domai
 import { needsPaperRecallFollowUp, type PaperRecallAssessment, type PaperRecallRating } from '../../core/domain/paper-recall-assessment.js';
 import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
 import type { ScheduledStudyActivity, ScheduledStudyActivityKind } from '../../core/domain/study-training-calendar.js';
-import { dailyTrainingPlanFromAgenda, type WeeklyAgendaItem, type WeeklyAgendaRecoveryProposal } from '../../core/domain/study-weekly-agenda.js';
+import { dailyTrainingPlanFromAgenda, proposeWeeklyAgendaPlan, type WeeklyAgendaItem, type WeeklyAgendaPlanProposal, type WeeklyAgendaRecoveryProposal } from '../../core/domain/study-weekly-agenda.js';
 import { useStudyService, type HomeOverview, type HomeServices, type SettingsSnapshot } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { useActionLifetime } from '../../shared/ui/use-action-lifetime.js';
@@ -407,6 +407,23 @@ export function PlanningPage() {
     setReload(value => value + 1);
     return true;
   };
+  const generateWeeklyAgendaPlan = (weekStart: string) => {
+    if (!weeklyAgenda || !planningOverview) return null;
+    return proposeWeeklyAgendaPlan({
+      agenda:weeklyAgenda, targetWeekStart:weekStart, todayKey, preferences:settings.training,
+      catalogTopics:(settings.index?.topics ?? []).map(topic => ({ id:topic.id, name:topic.name })),
+      studiedTopicIds:seenTopicIds, dueCount:planningOverview.trainingDue.questions, cardDueCount:planningOverview.trainingDue.cards,
+      failureCount:planningOverview.trainingFailures ?? 0, weakTopicCount:planningOverview.weakTopics, weakTopicIds:planningOverview.weakTopicIds ?? [],
+      topicReviewEvidence:planningOverview.topicReviewEvidence ?? [], scheduledActivities,
+    });
+  };
+  const addWeeklyAgendaPlan = (proposal: WeeklyAgendaPlanProposal) => {
+    const saved = services.addWeeklyStudyAgendaPlan?.(proposal);
+    if (!saved) return false;
+    setCalendarRevision(value => value + 1);
+    setReload(value => value + 1);
+    return true;
+  };
   const setWeeklyAgendaStatus = (id: string, status: 'completed' | 'skipped') => {
     const saved = services.setWeeklyStudyAgendaItemStatus?.(id, status);
     if (!saved) return false;
@@ -435,7 +452,7 @@ export function PlanningPage() {
     <StudyCalendar preferences={settings.training} now={now} history={planningOverview.trainingHistory ?? []} activeSession={planningOverview.trainingSession}
       topics={planningOverview.studiedTopicDetails ?? []} catalogTopics={settings.index?.topics?.map(topic => ({ id:topic.id, name:topic.name })) ?? []} seenTopicIds={seenTopicIds}
       activities={scheduledActivities} weeklyItems={weeklyAgenda?.items ?? []} weeklyAgenda={weeklyAgenda} onSchedule={scheduleActivity} onReschedule={rescheduleActivity} onOpenActivity={openScheduledActivity}
-      onSaveWeeklyAgenda={saveWeeklyAgenda} onRecoverWeeklyAgenda={recoverWeeklyAgenda} onSetWeeklyAgendaStatus={setWeeklyAgendaStatus} />
+      onSaveWeeklyAgenda={saveWeeklyAgenda} onRecoverWeeklyAgenda={recoverWeeklyAgenda} onProposeWeeklyAgenda={generateWeeklyAgendaPlan} onAddWeeklyAgendaPlan={addWeeklyAgendaPlan} onSetWeeklyAgendaStatus={setWeeklyAgendaStatus} />
     <PlanningHistory overview={planningOverview} />
     <PlanningEvidence overview={planningOverview} />
   </main>;

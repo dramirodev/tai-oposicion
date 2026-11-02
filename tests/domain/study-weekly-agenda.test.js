@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createWeeklyStudyAgendaComposition } from '../../src/app/composition/trainers/weekly-study-agenda-composition.ts';
-import { applyWeeklyAgendaRecovery, dailyTrainingPlanFromAgenda, emptyWeeklyStudyAgenda, findMatchingPlannedAgendaItem, isWeeklyStudyAgenda, mergeWeeklyStudyAgenda, proposeWeeklyAgendaRecovery, replaceWeeklyAgendaWeek, updateWeeklyAgendaItemStatus, weekStartForStudyDate } from '../../src/core/domain/study-weekly-agenda.ts';
+import { applyWeeklyAgendaPlan, applyWeeklyAgendaRecovery, dailyTrainingPlanFromAgenda, emptyWeeklyStudyAgenda, findMatchingPlannedAgendaItem, isWeeklyStudyAgenda, mergeWeeklyStudyAgenda, proposeWeeklyAgendaPlan, proposeWeeklyAgendaRecovery, replaceWeeklyAgendaWeek, updateWeeklyAgendaItemStatus, weekStartForStudyDate } from '../../src/core/domain/study-weekly-agenda.ts';
 import { readWeeklyStudyAgenda } from '../../src/adapters/local/weekly-study-agenda.ts';
 import { DEFAULT_TRAINING_PREFERENCES } from '../../src/core/domain/study-training-plan.ts';
 
@@ -75,6 +75,30 @@ describe('propuesta semanal persistida', () => {
     ]));
     expect(isWeeklyStudyAgenda(recovered)).toBe(true);
     expect(isWeeklyStudyAgenda({ ...agenda, items:[{ ...overdue, status:'rescheduled' }] })).toBe(false);
+  });
+
+  it('genera borrador semanal en orden de academia, mezcla actividad y respeta eventos y capacidad existente', () => {
+    const existing = item({ id:'manual-tue', weekStart:'2026-11-09', dateKey:'2026-11-10', kind:'activeRecall', topicIds:['T2.01'], minutes:20 });
+    const agenda = { ...emptyWeeklyStudyAgenda(), revision:5, updatedAt:100, items:[existing] };
+    const preferences = { ...DEFAULT_TRAINING_PREFERENCES, academyTopicOrderIds:['T1.01', 'T19.01', 'T99.01', 'T20.01'], calendarEvents:[{ id:'class-morning', kind:'unavailable', title:'Ausencia', startDate:'2026-11-11', endDate:'2026-11-11', createdAt:1, updatedAt:1 }] };
+    const proposal = proposeWeeklyAgendaPlan({ agenda, targetWeekStart:'2026-11-09', todayKey:'2026-11-02', preferences,
+      catalogTopics:[{ id:'T1.01', name:'Primero' }, { id:'T19.01', name:'Futuro 19' }, { id:'T20.01', name:'Futuro 20' }, { id:'T2.01', name:'Visto' }], studiedTopicIds:['T2.01'], dueCount:5, cardDueCount:2, failureCount:3, weakTopicCount:1, weakTopicIds:['T2.01'], topicReviewEvidence:[], scheduledActivities:[] });
+    expect(proposal?.plannedNewTopicIds).toEqual(['T1.01', 'T19.01', 'T20.01']);
+    expect(proposal?.missingTopicIds).toEqual(['T99.01']);
+    expect(proposal?.skippedDays).toContainEqual({ dateKey:'2026-11-11', reason:'rest' });
+    expect(proposal?.items.some(item => item.kind === 'spacedReviews')).toBe(true);
+    expect(proposal?.items.every(item => item.dateKey > '2026-11-02' && item.weekStart === '2026-11-09' && item.minutes >= 5)).toBe(true);
+    expect(proposal?.items.filter(item => item.dateKey === existing.dateKey).reduce((sum, item) => sum + item.minutes, existing.minutes)).toBeLessThanOrEqual(120);
+  });
+
+  it('añade el borrador sin borrar actividades existentes y rechaza cambios concurrentes', () => {
+    const existing = item({ id:'already-confirmed', weekStart:'2026-11-09', dateKey:'2026-11-10', kind:'activeRecall', topicIds:['T2.01'] });
+    const agenda = { ...emptyWeeklyStudyAgenda(), revision:3, updatedAt:100, items:[existing] };
+    const proposal = { baseRevision:3, targetWeekStart:'2026-11-09', items:[item({ id:'generated', weekStart:'2026-11-09', dateKey:'2026-11-12' })], skippedDays:[], missingTopicIds:[], plannedNewTopicIds:[] };
+    expect(applyWeeklyAgendaPlan({ ...agenda, revision:4 }, proposal, 120)).toBeNull();
+    const added = applyWeeklyAgendaPlan(agenda, proposal, 120);
+    expect(added?.items).toEqual(expect.arrayContaining([existing, expect.objectContaining({ id:'generated', createdAt:120, updatedAt:120 })]));
+    expect(isWeeklyStudyAgenda(added)).toBe(true);
   });
 
   it('informa del fallo de escritura sin devolver una propuesta como persistida', () => {

@@ -9,7 +9,8 @@ import type { ObservedStudyTime } from '../../core/domain/attempts/observed-stud
 import type { ExplanationLookup } from '../../core/domain/explanations.js';
 import type { SelfAssessment } from '../../core/domain/attempts/transitions.js';
 import type { SimulationScoringPolicy } from '../../core/domain/simulation-scoring.js';
-import type { WeeklyAgendaItem, WeeklyAgendaRecoveryProposal, WeeklyStudyAgenda } from '../../core/domain/study-weekly-agenda.js';
+import type { WeeklyAgendaItem, WeeklyAgendaPlanProposal, WeeklyAgendaRecoveryProposal, WeeklyStudyAgenda } from '../../core/domain/study-weekly-agenda.js';
+import type { TopicReviewEvidence } from '../../core/domain/study-review-intervention.js';
 export type { StatsComparison, StatsDomainTopic, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 export interface ActiveStudy { title: string; position: number; total: number }
 export interface HomeBlock { name: string; total: number; mastered: number; assessed: number }
@@ -18,12 +19,15 @@ export interface HomeOverview {
   seen: number; total: number; answers: number; streak: number; daysToExam: number | null;
   due: number; cardsDue: number; quickCount: number; slowCount: number; failures: number;
   trainingDue: { questions: number; cards: number };
+  trainingFailures?: number;
   studiedTopicDetails?: readonly { id: string; name: string }[];
   nextNewTopic?: { id: string; name: string };
   studiedTopics: number; topicCount: number; assessedTopics: number; weakTopics: number; masteredTopics: number;
   trainingPlan: DailyTrainingPlan; trainingSession: DailyTrainingSession | null;
   trainingHistory?: readonly TrainingSessionHistoryEntry[];
   paperRecallAssessments?: readonly PaperRecallAssessment[];
+  weakTopicIds?: readonly string[];
+  topicReviewEvidence?: readonly TopicReviewEvidence[];
 }
 export interface AccessOverview {
   full: boolean; level: string; greeting: string; state: string; configured: boolean;
@@ -52,6 +56,7 @@ export interface HomeServices {
   weeklyStudyAgenda?(): WeeklyStudyAgenda;
   replaceWeeklyStudyAgendaWeek?(weekStart: string, items: readonly WeeklyAgendaItem[]): WeeklyStudyAgenda | null;
   recoverWeeklyStudyAgenda?(proposal: WeeklyAgendaRecoveryProposal): WeeklyStudyAgenda | null;
+  addWeeklyStudyAgendaPlan?(proposal: WeeklyAgendaPlanProposal): WeeklyStudyAgenda | null;
   setWeeklyStudyAgendaItemStatus?(id: string, status: 'completed' | 'skipped'): WeeklyStudyAgenda | null;
   setTrainingReviewMode(topicId: string, mode: StudyReviewMode | null): void;
   openMenu(): void;

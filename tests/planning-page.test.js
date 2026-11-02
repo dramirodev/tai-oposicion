@@ -92,6 +92,23 @@ it('propone recuperar una actividad vencida y solo la aplica tras confirmación,
   expect(recoverWeeklyStudyAgenda).toHaveBeenCalledWith(expect.objectContaining({ baseRevision:3, moves:[expect.objectContaining({ sourceId:'missed-topic-review', target:expect.objectContaining({ kind:'topicTest', topicIds:['T1.01'], status:'planned' }) })] }));
 });
 
+it('previsualiza una semana según el orden de academia y no la guarda hasta confirmar', async () => {
+  const user = userEvent.setup();
+  const addWeeklyStudyAgendaPlan = vi.fn(proposal => ({ schemaVersion:1, revision:1, updatedAt:Date.now(), items:proposal.items }));
+  const preferences = { ...DEFAULT_TRAINING_PREFERENCES, academyTopicOrderIds:['T19.01', 'T20.01'] };
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(), {
+    home:{ weeklyStudyAgenda:() => ({ schemaVersion:1, revision:0, updatedAt:0, items:[] }), addWeeklyStudyAgendaPlan },
+    settings:{ getSnapshot:() => ({ training:preferences, exam:'', index:{ topics:[{ id:'T19.01', name:'Tema diecinueve' }, { id:'T20.01', name:'Tema veinte' }] } }) },
+  }) });
+  await screen.findByRole('heading', { name:'Planificación de estudio' });
+  await user.click(screen.getByRole('button', { name:'Semana siguiente' }));
+  await user.click(screen.getByRole('button', { name:'Proponer semana según tu plan' }));
+  expect(await screen.findByText(/Contenido nuevo en el orden configurado: T19\.01/)).toBeInTheDocument();
+  expect(addWeeklyStudyAgendaPlan).not.toHaveBeenCalled();
+  await user.click(screen.getByRole('button', { name:'Confirmar semana' }));
+  expect(addWeeklyStudyAgendaPlan).toHaveBeenCalledWith(expect.objectContaining({ targetWeekStart:expect.any(String), items:expect.arrayContaining([expect.objectContaining({ kind:'newContent', topicIds:['T19.01'] })]) }));
+});
+
 it('usa la actividad semanal confirmada de hoy al crear el checkpoint diario', async () => {
   const user = userEvent.setup();
   const today = new Date();

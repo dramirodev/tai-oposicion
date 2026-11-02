@@ -670,9 +670,10 @@ export const studyServices: StudyServices = {
       };
       const studiedCardDueCount = Object.entries(cardReviews).filter(([id, record]) => record.dueAt <= studyQuestionCatalog.now()
         && studiedTopicSet.has(topicForCard(id) || '')).length;
+      const topicReviewEvidence = studiedMastery.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: true, distinctQuestionsAttempted: topic.seen, questionCoverageOfTarget: topic.cob, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias }));
       const now = Date.now();
       const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date(now).getDay(), dateKey: localTrainingDateKey(now), dueCount: studiedDueCount, cardDueCount: studiedCardDueCount, failureCount: studiedFailureCount, weakTopicCount: weakTopicIds.length, weakTopicIds, studiedTopicIds, nextNewTopic: nextNewTopic ? { topicId: nextNewTopic.id, topicName: nextNewTopic.nombre } : undefined,
-        topicReviewEvidence: studiedMastery.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: true, distinctQuestionsAttempted: topic.seen, questionCoverageOfTarget: topic.cob, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias })) });
+        topicReviewEvidence });
       return { seen: progress.seen, total: index.n, answers: progress.answers, streak, daysToExam, due,
         completedSessions: localStudyProgressGateway.getSessions().length,
         blocks: BLOQUES.map(([code, name]) => {
@@ -681,14 +682,14 @@ export const studyServices: StudyServices = {
             assessed: topics.filter(topic => topic.est !== 'n').length };
         }),
         cardsDue: cardDueCount,
-        trainingDue: { questions: studiedDueCount, cards: studiedCardDueCount },
+        trainingDue: { questions: studiedDueCount, cards: studiedCardDueCount }, trainingFailures:studiedFailureCount,
         quickCount: progress.quickCount, slowCount: progress.slowCount, failures: failureCount,
         studiedTopics: seenTopics.length, topicCount: index.temas.length,
         studiedTopicDetails: index.temas.filter(topic => studiedTopicSet.has(topic.id)).map(topic => ({ id: topic.id, name: topic.nombre })),
         nextNewTopic: nextNewTopic ? { id: nextNewTopic.id, name: nextNewTopic.nombre } : undefined,
         assessedTopics: studiedMastery.filter(topic => topic.est !== 'n').length,
         weakTopics: studiedWeakTopics.length,
-        masteredTopics: studiedMastery.filter(topic => topic.est === 'g').length, trainingPlan, trainingSession: trainingSession.getSession(), trainingHistory: trainingSession.getHistory(), paperRecallAssessments: recallAssessments,
+        masteredTopics: studiedMastery.filter(topic => topic.est === 'g').length, trainingPlan, trainingSession: trainingSession.getSession(), trainingHistory: trainingSession.getHistory(), paperRecallAssessments: recallAssessments, weakTopicIds, topicReviewEvidence,
       };
     },
     startTrainingSession(plan) { return trainingSession.start(plan); },
@@ -713,6 +714,7 @@ export const studyServices: StudyServices = {
     weeklyStudyAgenda() { return weeklyStudyAgenda.get(); },
     replaceWeeklyStudyAgendaWeek(weekStart, items) { return weeklyStudyAgenda.replaceWeek(weekStart, items); },
     recoverWeeklyStudyAgenda(proposal) { return weeklyStudyAgenda.recover(proposal); },
+    addWeeklyStudyAgendaPlan(proposal) { return weeklyStudyAgenda.addPlan(proposal); },
     setWeeklyStudyAgendaItemStatus(id, status) { return weeklyStudyAgenda.setStatus(id, status); },
     setTrainingReviewMode(topicId: string, mode: StudyReviewMode | null) {
       const preferences = normalizeTrainingPreferences(localStudyProgressGateway.getPreferences().training);
