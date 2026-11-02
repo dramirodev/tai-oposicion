@@ -39,6 +39,8 @@ Estado de auditoría inicial (antes del arreglo P0): `npm run check` (804 passed
 
 P0 completado localmente el 2026-11-02: `startup-theme.js` se incluyó tanto en `public/sw.js:SHELL` como en la lista de shell que `vite.config.mjs` genera para `dist/sw.js`; caché de shell `tai-v79`, manteniendo `tai-data`. Se amplió el E2E de shell para comprobar el recurso precargado. `npm run check`: 804 pasadas/21 omitidas; `npm run test:e2e`: 226 pasadas/2 omitidas. Los cuatro fallos offline previos pasan en Chromium y WebKit. Sin deploy ni escrituras de producción. Siguiente tarea concreta: Fase 1A — versionar el ciclo de sesión y enlazar intentos/corrección al checkpoint con IDs idempotentes, preservando DTO históricos. Antes de integrar contenidos del programa completo, confirmar convocatoria objetivo y material de academia por apartado.
 
+Aclaración posterior sobre fecha: el estudiante confirma que la app ya tiene marcada una fecha en junio. Planificación debe usar ese objetivo configurado y no el fallback del 30/6/2027. El día/año exactos no fueron leídos de la cuenta en esta tarea, y la fecha personal no confirma convocatoria oficial; ver nota añadida al informe.
+
 ## Referencias
 
 - Dunlosky, J. et al. (2013). [Improving Students' Learning With Effective Learning Techniques: Promising Directions From Cognitive and Educational Psychology](https://doi.org/10.1177/1529100612453266). La revisión clasifica práctica de recuperación y práctica distribuida con alta utilidad general; la relectura aislada tiene utilidad limitada y contextual.
