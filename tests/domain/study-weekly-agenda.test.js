@@ -173,6 +173,31 @@ describe('propuesta semanal persistida', () => {
     expect(already.sectionRecallSummary.alreadyIncluded).toBe(1);
   });
 
+  it('conserva una comprobación omitida y permite reproponerla con otro ID; rechaza la revisión concurrente', () => {
+    const source = { id:'source-check-0003', topicId:'T1.01', sectionId:'ci-0123456789abcdefabcd', materialPath:'T1.01/Temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64), occurredAt:10, kind:'self-check', timing:'immediate', rating:'partial' };
+    const followUp = { ...source, id:'follow-up-0003', occurredAt:20, kind:'follow-up', followUpId:source.id, sourceSelfCheckEventId:source.id, dueDateKey:'2026-11-10', status:'scheduled' };
+    const selection = { topicId:'T1.01', materials:[{ path:source.materialPath, sourceHash:source.sourceHash, outlineFingerprint:source.outlineFingerprint, outlineStructureFingerprint:'c'.repeat(64), role:'syllabus' }], revision:1, updatedAt:1 };
+    const materialIndex = { 'T1.01':[{ path:source.materialPath, kind:'syllabus', sha256:source.sourceHash, outlineFingerprint:source.outlineFingerprint, outlineStructureFingerprint:'c'.repeat(64) }] };
+    const preferences = { ...DEFAULT_TRAINING_PREFERENCES, minutesByDay:[120, 120, 120, 120, 120, 0, 0] };
+    const proposal = { baseRevision:0, targetWeekStart:'2026-11-09', items:[], skippedDays:[], missingTopicIds:[], plannedNewTopicIds:[], contentInventoryStatus:'manifest', omittedContentActivities:[], horizonCapacityGapBefore:null, acceleratedNewTopicIds:[], horizonCapacityGapAfter:null, sectionRecallSummary:{ added:0, stale:0, noCapacity:0, alreadyIncluded:0 } };
+    const first = addSectionRecallFollowUpsToWeeklyProposal({ proposal, agenda:emptyWeeklyStudyAgenda(), todayKey:'2026-11-09', preferences, scheduledActivities:[], selections:[selection], events:[source, followUp], materialIndex });
+    const firstItem = first.items[0];
+    const skippedAgenda = updateWeeklyAgendaItemStatus({ ...emptyWeeklyStudyAgenda(), revision:1, updatedAt:100, items:[{ ...firstItem, createdAt:100, updatedAt:100 }] }, firstItem.id, 'skipped', 110);
+    const secondProposal = { ...proposal, baseRevision:skippedAgenda.revision };
+    const second = addSectionRecallFollowUpsToWeeklyProposal({ proposal:secondProposal, agenda:skippedAgenda, todayKey:'2026-11-09', preferences, scheduledActivities:[], selections:[selection], events:[source, followUp], materialIndex });
+    expect(second.items).toHaveLength(1);
+    expect(second.items[0]).toMatchObject({ kind:'sectionRecall', status:'planned', sectionRecall:{ followUpId:source.id } });
+    expect(second.items[0].id).not.toBe(firstItem.id);
+    const saved = applyWeeklyAgendaPlan(skippedAgenda, second, 120);
+    expect(saved?.items).toEqual(expect.arrayContaining([expect.objectContaining({ id:firstItem.id, status:'skipped' }), expect.objectContaining({ id:second.items[0].id, status:'planned' })]));
+    expect(applyWeeklyAgendaPlan({ ...skippedAgenda, revision:skippedAgenda.revision + 1 }, second, 130)).toBeNull();
+
+    const cancelled = { ...followUp, id:'follow-up-cancelled', occurredAt:30, status:'cancelled' };
+    const afterCancellation = addSectionRecallFollowUpsToWeeklyProposal({ proposal:secondProposal, agenda:skippedAgenda, todayKey:'2026-11-09', preferences, scheduledActivities:[], selections:[selection], events:[source, followUp, cancelled], materialIndex });
+    expect(afterCancellation.items).toEqual([]);
+    expect(afterCancellation.sectionRecallSummary.added).toBe(0);
+  });
+
   it('enlaza el cierre del paso con una única actividad pendiente de la fecha y no vuelve a marcar una repetición', () => {
     const planned = item({ id:'closing', kind:'newContent', topicIds:['T19.01'] });
     const agenda = { ...emptyWeeklyStudyAgenda(), revision:1, updatedAt:100, items:[planned] };
