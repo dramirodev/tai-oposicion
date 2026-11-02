@@ -27,7 +27,7 @@ export interface StatsSnapshot {
   failureCount: number;
   weakTopics: readonly TopicProgress[];
   topics: readonly TopicProgress[];
-  sessions: readonly { id: string; ts: number; kind: string; n: number; a: number; nota: number; secs: number }[];
+  sessions: readonly { id: string; ts: number; kind: string; n: number; a: number; nota: number; secs: number; scorePending?: boolean }[];
   reviewLoad: readonly number[];
   predictedCardRetention: { reviewedCards: number; points: readonly { days: 7 | 14 | 30; recallProbability: number }[] } | null;
   failureReasons: readonly number[];
@@ -37,7 +37,7 @@ export interface StatsSnapshot {
   origins: readonly { label: string; answers: number; accuracy: number }[];
   types: readonly { id: string; label: string; answers: number; accuracy: number }[];
   domains: readonly StatsDomainTopic[];
-  simulations: readonly { id: string; ts: number; nota: number; part: string; dNota: number | null; a: number; f: number; b: number; secs: number }[];
+  simulations: readonly { id: string; ts: number; nota: number; part: string; dNota: number | null; a: number; f: number; b: number; secs: number; scoringPolicy?: SimulationScoringPolicy }[];
   slow: readonly { id: string; averageSeconds: number; attempts: number; correct: number; lastOutcome: number | null }[];
 }
 
@@ -57,3 +57,4 @@ export interface StatsWeek {
   accuracy: number | null;
   secondsPerQuestion: number | null;
 }
+import type { SimulationScoringPolicy } from '../../domain/simulation-scoring.js';

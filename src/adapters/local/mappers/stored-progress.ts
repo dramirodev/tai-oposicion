@@ -1,4 +1,5 @@
 import { failureStreak as deriveFailureStreak } from '../../../core/domain/spaced-repetition.js';
+import { isSimulationScoringPolicy } from '../../../core/domain/simulation-scoring.js';
 import type {
   CardMap,
   CardRec,
@@ -179,6 +180,9 @@ export function cleanSession(value: unknown): Session | null {
     titulo: typeof value.titulo === 'string' ? value.titulo.slice(0, 80) : '',
     ...(value.interrupted === true ? { interrupted: true } : {}),
     ...(value.porTiempo === true ? { porTiempo: true } : {}),
+    ...(value.scorePending === true ? { scorePending: true } : {}),
+    ...(isSimulationScoringPolicy(value.scoringPolicy) ? { scoringPolicy: { ...value.scoringPolicy } } : {}),
+    ...(typeof value.milestoneEventId === 'string' && /^[A-Za-z0-9_.:-]{1,100}$/.test(value.milestoneEventId) ? { milestoneEventId: value.milestoneEventId } : {}),
   };
 }
 

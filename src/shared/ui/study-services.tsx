@@ -8,6 +8,7 @@ import type { ScheduleDecision, ScheduledStudyActivity, ScheduledStudyActivityKi
 import type { ObservedStudyTime } from '../../core/domain/attempts/observed-study-time.js';
 import type { ExplanationLookup } from '../../core/domain/explanations.js';
 import type { SelfAssessment } from '../../core/domain/attempts/transitions.js';
+import type { SimulationScoringPolicy } from '../../core/domain/simulation-scoring.js';
 export type { StatsComparison, StatsDomainTopic, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 export interface ActiveStudy { title: string; position: number; total: number }
 export interface HomeBlock { name: string; total: number; mastered: number; assessed: number }
@@ -168,7 +169,8 @@ export interface ScenarioChoice { id: string; text: string }
 export interface SimulationReviewServices { loadChoices(): Promise<readonly ScenarioChoice[]>; start(id: string): 'started' | 'unavailable'; }
 export interface SimulationNavigationServices { openExams(): void }
 export type SimulationTab = 'completo' | 'examen' | 'tema';
-export interface SimulationConfiguration { count: 40 | 80; minutes: 45 | 60 | 90 | 120; scope: 'vistos' | 'todos'; origins: readonly ('O' | 'A' | 'G')[]; includeSecondPart: boolean }
+export interface SimulationConfiguration { count: number; minutes: number; scope: 'vistos' | 'todos'; origins: readonly ('O' | 'A' | 'G')[]; includeSecondPart: boolean }
+export interface SimulationMilestoneRunOptions { scoringPolicy: import('../../core/domain/simulation-scoring.js').SimulationScoringPolicy; optionsPerQuestion: number; eventId: string; title: string }
 export interface SimulationExam { id: string; name: string; questionCount: number; attempts: number; latest: number | null; best: number | null }
 export interface SimulationExamGroups { official: readonly SimulationExam[]; academy: readonly SimulationExam[]; topicTests: readonly SimulationExam[] }
 export interface SimulationServices {
@@ -178,12 +180,12 @@ export interface SimulationServices {
   seenTopics(): readonly string[];
   loadExamGroups(): Promise<SimulationExamGroups>;
   getSelectedExam(): string | null; selectExam(id: string): void;
-  startConfigured(configuration: SimulationConfiguration): Promise<'started' | 'empty' | 'account-changed'>;
+  startConfigured(configuration: SimulationConfiguration, milestone?: SimulationMilestoneRunOptions): Promise<'started' | 'empty' | 'account-changed'>;
   startExam(id: string, mode: 'study' | 'exam'): Promise<'started' | 'empty' | 'account-changed'>;
 }
 export interface ResultHighlight { id: string; field: 'statement' | `option:${number}`; start: number; end: number; text: string; before: string; after: string; category: 'key' | 'doubt'; contentRevision: string; createdAt: number; timing: 'before-answer' | 'after-answer' | 'after-reveal'; stale?: boolean }
 export interface ResultItem { id: string; attemptId?: string; topicId: string; topicName: string; statement: string; options: readonly string[]; correctIndex: number; answer?: number; outcome: 'correct' | 'wrong' | 'blank' | 'revealed'; notice: string; source: string; citation?: string; note?: string; confidence?: 'sure' | 'betweenTwo' | 'guess'; discardedOptions: readonly number[]; highlights: readonly ResultHighlight[]; contentRevision: string; retryAvailable: boolean }
-export interface ResultSnapshot { score: number; correct: number; wrong: number; blank: number; consulted: number; accuracy: number | null; seconds: number; title: string; interrupted: boolean; kind: 'sim' | 'rev' | 'test'; exposureKind?: 'ordinary' | 'immediate-retry'; porTiempo: boolean; analysis: string; secondPartAvailable: boolean; topics: readonly { id: string; name: string; correct: number; total: number }[]; items: readonly ResultItem[] }
+export interface ResultSnapshot { score: number | null; scorePending?: boolean; scoringPolicy?: SimulationScoringPolicy; correct: number; wrong: number; blank: number; consulted: number; accuracy: number | null; seconds: number; title: string; interrupted: boolean; kind: 'sim' | 'rev' | 'test'; exposureKind?: 'ordinary' | 'immediate-retry'; porTiempo: boolean; analysis: string; secondPartAvailable: boolean; topics: readonly { id: string; name: string; correct: number; total: number }[]; items: readonly ResultItem[] }
 export interface ResultReport { reason: string; note: string; state: ErrorReportRecord['state'] }
 export interface ResultServices {
   getSnapshot(): ResultSnapshot | null; subscribe(listener: () => void): () => void;

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router';
-import { useStudyService, type SimulationConfiguration, type SimulationExam, type SimulationTab } from '../../shared/ui/study-services.js';
+import { Link, useSearchParams } from 'react-router';
+import { useStudyService, type SimulationConfiguration, type SimulationExam, type SimulationMilestoneRunOptions, type SimulationTab, type SettingsSnapshot } from '../../shared/ui/study-services.js';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
 
@@ -8,9 +8,16 @@ const tabs: readonly [SimulationTab, string][] = [['completo', 'Completo'], ['ex
 const origins = [['G', 'Generadas'], ['O', 'Oficiales'], ['A', 'Academia']] as const;
 type SimulationGroups = { official: readonly SimulationExam[]; academy: readonly SimulationExam[]; topicTests: readonly SimulationExam[] };
 
-function CompleteSimulationForm({ configuration, seen, starting, update, onBegin }: { configuration: SimulationConfiguration; seen: readonly string[]; starting: boolean; update: (change: Partial<SimulationConfiguration>) => void; onBegin: () => void }) {
+function CompleteSimulationForm({ configuration, seen, starting, update, onBegin, milestone, milestoneRequested }: { configuration: SimulationConfiguration; seen: readonly string[]; starting: boolean; update: (change: Partial<SimulationConfiguration>) => void; onBegin: () => void; milestone?: NonNullable<SettingsSnapshot['training']['calendarEvents']>[number]; milestoneRequested: boolean }) {
   return <>
-    <section className="card">
+    {milestoneRequested && !milestone?.simulation ? <p className="note" role="status">Cargando o validando la configuración del hito…</p> : milestone?.simulation ? <section className="card" aria-label="Configuración del hito">
+      <h2 className="h3">{milestone.title}</h2>
+      <p>{milestone.simulation.questionCount} preguntas · {milestone.simulation.durationMinutes} minutos · {milestone.simulation.optionsPerQuestion} opciones por pregunta.</p>
+      <p>Temas marcados como vistos: {seen.length}. Se usarán preguntas del catálogo que coincidan con el número de opciones configurado.</p>
+      <p>{milestone.simulation.scoring.wrongPenalty === null
+        ? 'La penalización por fallo no está confirmada. El resultado mostrará aciertos, errores y blancos, sin nota neta.'
+        : `Regla guardada v${milestone.simulation.version}: +${milestone.simulation.scoring.correctPoints} por acierto, −${milestone.simulation.scoring.wrongPenalty} por fallo, ${milestone.simulation.scoring.blankPoints} por blanco.`}</p>
+    </section> : <section className="card">
       <h2 className="h3">Parte 1 · conocimientos</h2>
       <div className="seg" role="group" aria-label="Número de preguntas">{([40, 80] as const).map(count => <button key={count} className={configuration.count === count ? 'on' : ''} aria-pressed={configuration.count === count} onClick={() => {
         const minutes = count === 40 && configuration.minutes > 60 ? 45 : count === 80 && configuration.minutes < 90 ? 90 : configuration.minutes;
@@ -30,9 +37,9 @@ function CompleteSimulationForm({ configuration, seen, starting, update, onBegin
         const selected = new Set(configuration.origins); if (selected.has(origin)) selected.delete(origin); else selected.add(origin); if (!selected.size) selected.add(origin); update({ origins: [...selected] });
       }}>{label}</button>)}</div>
       <label className="chk"><input type="checkbox" checked={configuration.includeSecondPart} onChange={event => update({ includeSecondPart: event.target.checked })} /> Después, parte 2: elegir 1 de 2 supuestos prácticos (20 preguntas)</label>
-    </section>
-    <div className="note">Reparto por temas calcado a los exámenes oficiales. Cada fallo resta 1/3 de acierto; en blanco no resta. No hay corrección hasta el final.</div>
-    <div className="bar2"><button className="btn" disabled={starting} onClick={onBegin}>{starting ? 'Preparando…' : 'Empezar simulacro'}</button></div>
+    </section>}
+    {!(milestoneRequested && !milestone?.simulation) && <div className="note">{milestone?.simulation ? 'Simulacro con corrección al final. La nota no se compara entre reglas de puntuación distintas.' : 'Reparto por temas calcado a los exámenes oficiales. Cada fallo resta 1/3 de acierto; en blanco no resta. No hay corrección hasta el final.'}</div>}
+    {!(milestoneRequested && !milestone?.simulation) && <div className="bar2"><button className="btn" disabled={starting} onClick={onBegin}>{starting ? 'Preparando…' : milestone ? 'Empezar este hito' : 'Empezar simulacro'}</button></div>}
   </>;
 }
 
@@ -63,17 +70,30 @@ function ExamBrowser({ tab, loading, starting, filteredGroups, visibleSelection,
 
 export function SimulationPage() {
   const simulation = useStudyService('simulation');
-  const [tab, setTab] = useState(() => simulation.getTab());
+  const settings = useStudyService('settings');
+  const [searchParams] = useSearchParams();
+  const milestoneId = searchParams.get('milestone');
+  const [settingsSnapshot, setSettingsSnapshot] = useState<SettingsSnapshot>(() => settings.getSnapshot());
+  const [tab, setTab] = useState(() => milestoneId ? 'completo' : simulation.getTab());
   const [configuration, setConfiguration] = useState(() => simulation.getConfiguration());
   const [groups, setGroups] = useState<SimulationGroups | null>(null);
   const [selection, setSelection] = useState(() => simulation.getSelectedExam());
   const [originFilter, setOriginFilter] = useState('all');
   const [turnFilter, setTurnFilter] = useState('all');
   const [yearFilter, setYearFilter] = useState('');
-  const [loading, setLoading] = useState(() => simulation.getTab() !== 'completo');
+  const [loading, setLoading] = useState(() => !milestoneId && simulation.getTab() !== 'completo');
   const [starting, setStarting] = useState(false);
   const [message, setMessage] = useState('');
   const seen = simulation.seenTopics();
+  const milestone = milestoneId ? settingsSnapshot.training.calendarEvents?.find(event => event.id === milestoneId && event.kind === 'milestone') : undefined;
+
+  useEffect(() => {
+    let active = true;
+    const refresh = () => { if (active) setSettingsSnapshot(settings.getSnapshot()); };
+    const unsubscribe = settings.subscribe(refresh);
+    void settings.load().then(refresh).catch(() => {});
+    return () => { active = false; unsubscribe(); };
+  }, [settings]);
 
   useEffect(() => {
     if (tab === 'completo' || groups) return;
@@ -109,10 +129,10 @@ export function SimulationPage() {
     simulation.saveConfiguration(next); setConfiguration(next); setMessage('');
   };
   const openTab = (next: SimulationTab) => { setTab(next); simulation.setTab(next); setMessage(''); if (next !== 'completo' && !groups) setLoading(true); };
-  const begin = async (run: () => Promise<'started' | 'empty' | 'account-changed'>) => {
+  const begin = async (run: () => Promise<'started' | 'empty' | 'account-changed'>, emptyMessage = 'No hay preguntas disponibles con estos filtros.') => {
     setStarting(true); setMessage('');
     try { const result = await run();
-      if (result === 'empty') setMessage('No hay preguntas disponibles con estos filtros.');
+      if (result === 'empty') setMessage(emptyMessage);
       if (result === 'account-changed') setMessage('La cuenta cambió mientras se preparaba el simulacro. Vuelve a intentarlo.');
     } catch { setMessage('No se pudo preparar el simulacro. Comprueba la conexión e inténtalo de nuevo.'); }
     finally { setStarting(false); }
@@ -120,10 +140,17 @@ export function SimulationPage() {
 
   return <>
     <h1>Simulacros <HelpIconLink topic="simulacros" label="Ayuda sobre navegación y corrección de simulacros" /></h1>
-    <div className="seg tabs" role="tablist" aria-label="Tipo de simulacro">
+    {!milestoneId && <div className="seg tabs" role="tablist" aria-label="Tipo de simulacro">
       {tabs.map(([id, label]) => <button key={id} role="tab" className={tab === id ? 'on' : ''} aria-selected={tab === id} onClick={() => openTab(id)}>{label}</button>)}
-    </div>
-    {tab === 'completo' ? <CompleteSimulationForm configuration={configuration} seen={seen} starting={starting} update={update} onBegin={() => { void begin(() => simulation.startConfigured(configuration)); }} /> : <ExamBrowser tab={tab} loading={loading} starting={starting} filteredGroups={filteredGroups} visibleSelection={visibleSelection} years={years} originFilter={originFilter} turnFilter={turnFilter} yearFilter={yearFilter} setOriginFilter={setOriginFilter} setTurnFilter={setTurnFilter} setYearFilter={setYearFilter} onSelect={id => { simulation.selectExam(id); setSelection(id); }} onStudy={() => { if (visibleSelection) void begin(() => simulation.startExam(visibleSelection, 'study')); }} onExam={() => { if (visibleSelection) void begin(() => simulation.startExam(visibleSelection, 'exam')); }} />}
+    </div>}
+    {milestoneId && !milestone && <p className="note" role="alert">No se encuentra el hito o no tiene un perfil de simulacro válido. Vuelve a Planificación o configura el evento en Ajustes.</p>}
+    {tab === 'completo' ? <CompleteSimulationForm configuration={configuration} seen={seen} starting={starting} update={update} milestone={milestone} milestoneRequested={!!milestoneId} onBegin={() => {
+      if (milestone?.simulation) {
+        const options: SimulationMilestoneRunOptions = { scoringPolicy: milestone.simulation.scoring, optionsPerQuestion: milestone.simulation.optionsPerQuestion, eventId: milestone.id, title: milestone.title };
+        const profile = { ...configuration, count: milestone.simulation.questionCount, minutes: milestone.simulation.durationMinutes, scope: 'vistos' as const, includeSecondPart: false };
+        void begin(() => simulation.startConfigured(profile, options), 'No hay suficientes preguntas del catálogo con el número de opciones configurado y los temas marcados como vistos.');
+      } else void begin(() => simulation.startConfigured(configuration));
+    }} /> : <ExamBrowser tab={tab} loading={loading} starting={starting} filteredGroups={filteredGroups} visibleSelection={visibleSelection} years={years} originFilter={originFilter} turnFilter={turnFilter} yearFilter={yearFilter} setOriginFilter={setOriginFilter} setTurnFilter={setTurnFilter} setYearFilter={setYearFilter} onSelect={id => { simulation.selectExam(id); setSelection(id); }} onStudy={() => { if (visibleSelection) void begin(() => simulation.startExam(visibleSelection, 'study')); }} onExam={() => { if (visibleSelection) void begin(() => simulation.startExam(visibleSelection, 'exam')); }} />}
     {message && <p className="card" role="alert">{message}</p>}
   </>;
 }

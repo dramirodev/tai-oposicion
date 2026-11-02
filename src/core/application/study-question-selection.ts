@@ -175,11 +175,13 @@ export function createStudyQuestionSelection(
     allowedOrigins: ReadonlySet<Question['o']>,
     count: number,
     random: () => number = Math.random,
+    acceptQuestion: (question: Question) => boolean = () => true,
   ): Promise<Question[]> {
     const questionsByTopic = await Promise.all(topics.map(topic => catalog.getTopicQuestions(topic.id)));
     const pools = Object.fromEntries(topics.map((topic, index) => {
       const available = shuffleItems(
         questionsByTopic[index].filter(question => questionAllowed(question, allowedOrigins)
+          && acceptQuestion(question)
           && (question.o !== 'G' || question.v === 0)
           && question.np !== 1
           && question.p !== 1),

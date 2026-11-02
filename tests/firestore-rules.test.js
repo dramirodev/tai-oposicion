@@ -377,6 +377,10 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
       await assertSucceeds(setDoc(doc(db, 'users/student/sessions/s1'), base));
       await assertFails(setDoc(doc(db, 'users/student/sessions/s2'), { ...base, id:'s2', extra:true }));
       await assertFails(setDoc(doc(db, 'users/student/sessions/s3'), { ...base, id:'s3', kind:'otro' }));
+      const unknownPenalty = { version:1, correctPoints:1, wrongPenalty:null, blankPoints:0 };
+      await assertSucceeds(setDoc(doc(db, 'users/student/sessions/milestone-pending'), { ...base, id:'milestone-pending', kind:'sim', scorePending:true, scoringPolicy:unknownPenalty, milestoneEventId:'milestone-2026' }));
+      await assertFails(setDoc(doc(db, 'users/student/sessions/milestone-invalid'), { ...base, id:'milestone-invalid', kind:'sim', scoringPolicy:unknownPenalty }));
+      await assertFails(setDoc(doc(db, 'users/student/sessions/milestone-bad-rule'), { ...base, id:'milestone-bad-rule', kind:'sim', scorePending:true, scoringPolicy:{ ...unknownPenalty, wrongPenalty:-1 } }));
       await assertFails(setDoc(doc(db, 'users/student/cfg/attempts'), { schemaVersion:1, deletedAt:1, revision:0 }));
       await assertSucceeds(setDoc(doc(db, 'users/student/cfg/attempts'), { schemaVersion:1, deletedAt:1, revision:1 }));
     });

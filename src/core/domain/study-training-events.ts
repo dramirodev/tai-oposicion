@@ -1,4 +1,5 @@
 import type { TrainingCalendarEvent, TrainingDayFocus, TrainingPreferences } from './entities.js';
+import { isTrainingMilestoneSimulation } from './simulation-scoring.js';
 
 export const MAX_TRAINING_CALENDAR_EVENTS = 200;
 const kinds = new Set<TrainingCalendarEvent['kind']>(['unavailable', 'study-window', 'class', 'milestone']);
@@ -30,7 +31,8 @@ export function isTrainingCalendarEvent(value: unknown): value is TrainingCalend
     || (event.source !== undefined && (typeof event.source !== 'string' || event.source.length > 200))
     || !isTrainingDateKey(event.startDate) || !isTrainingDateKey(event.endDate) || event.endDate < event.startDate
     || !Number.isFinite(event.createdAt) || event.createdAt! < 0
-    || !Number.isFinite(event.updatedAt) || event.updatedAt! < event.createdAt!) return false;
+    || !Number.isFinite(event.updatedAt) || event.updatedAt! < event.createdAt!
+    || (event.simulation !== undefined && (event.kind !== 'milestone' || !isTrainingMilestoneSimulation(event.simulation)))) return false;
   if (event.kind === 'study-window') {
     if (!Number.isInteger(event.studyMinutes) || event.studyMinutes! < 15 || event.studyMinutes! > 360) return false;
     if (event.focus !== undefined && !focuses.has(event.focus)) return false;

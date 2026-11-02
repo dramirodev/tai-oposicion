@@ -71,6 +71,51 @@ test('las excepciones de calendario se guardan, afectan solo las fechas indicada
   await expect(page.getByRole('list', { name:'Próximos eventos' })).toHaveCount(0);
 });
 
+test('un hito versionado crea un simulacro con su política explícita y queda enlazado desde Planificación', async ({ page }) => {
+  await prepare(page, 'light', 0, true);
+  await page.setViewportSize({ width:390, height:844 });
+  await page.clock.setFixedTime(new Date('2026-11-02T12:00:00+01:00'));
+  await page.goto('/#/settings');
+  await page.getByLabel('Tipo de evento').selectOption('milestone');
+  await page.getByLabel('Nombre del evento').fill('Simulacro de referencia');
+  await page.getByLabel('Inicio del evento').fill('2026-11-02');
+  await page.getByLabel('Fin del evento').fill('2026-11-02');
+  await page.getByLabel('Preguntas del hito').fill('3');
+  await page.getByLabel('Duración del hito').fill('10');
+  await page.getByRole('button', { name:'Guardar evento' }).click();
+  await expect(page.getByRole('list', { name:'Eventos guardados' })).toContainText('Simulacro · 3 preguntas/10 min · penalización desconocida');
+
+  await page.goto('/#/planificacion');
+  const event = page.getByRole('list', { name:'Próximos eventos' });
+  await expect(event).toContainText('Simulacro de referencia');
+  await event.getByRole('link', { name:'Preparar hito' }).click();
+  await expect(page).toHaveURL(/#\/sim\?milestone=/);
+  await expect(page.getByRole('heading', { name:'Simulacro de referencia' })).toBeVisible();
+  await expect(page.getByText(/sin nota neta/)).toBeVisible();
+  await expect(page.getByRole('tablist', { name:'Tipo de simulacro' })).toHaveCount(0);
+  await expect(page.getByRole('button', { name:'Empezar este hito' })).toBeEnabled();
+  await page.getByRole('button', { name:'Empezar este hito' }).click();
+  await expect.poll(async () => page.evaluate(() => location.hash)).toMatch(/#\/quiz/);
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  await page.locator('.opt').first().click();
+  await page.reload();
+  await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
+  await page.locator('.overlay [data-v="1"]').click();
+  for (let index = 0; index < 3; index++) {
+    if (index > 0) await page.locator('.opt').first().click();
+    await page.locator('#next').click();
+  }
+  await expect(page.locator('#app h1')).toHaveText('Resultado');
+  await expect(page.getByText('Puntuación neta pendiente')).toBeVisible();
+  const savedSession = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.v1:guest') || 'null')?.sessions?.at(-1));
+  expect(savedSession).toMatchObject({ scorePending:true, scoringPolicy:{ version:1, correctPoints:1, wrongPenalty:null, blankPoints:0 }, milestoneEventId:expect.any(String) });
+  expect(savedSession.nota).toBe(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+  await page.setViewportSize({ width:1440, height:960 });
+  await page.goto('/#/planificacion');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(1440);
+});
+
 for (const theme of ['light', 'dark']) {
   test(`los bloques de código conservan formato y tema mientras cargan · ${theme}`, async ({ page }) => {
     await prepare(page, theme, 0);

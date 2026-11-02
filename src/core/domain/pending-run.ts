@@ -1,6 +1,7 @@
 import type { Highlight, SelfAssessment } from './attempts/transitions.js';
 import type { TrainingActivity } from './entities.js';
 import type { TrainingActivityReference } from './study-training-session.js';
+import type { SimulationScoringPolicy } from './simulation-scoring.js';
 
 /** Persisted fields needed to restore an interrupted bank-backed study session. */
 export interface SavedRunSnapshot {
@@ -28,4 +29,6 @@ export interface SavedRunSnapshot {
   trainingActivityReference?: TrainingActivityReference;
   exposureKind?: 'ordinary' | 'immediate-retry';
   retryOfAttemptId?: string;
+  scoringPolicy?: SimulationScoringPolicy;
+  milestoneEventId?: string;
 }

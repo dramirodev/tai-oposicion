@@ -42,3 +42,16 @@ it('recomienda revisar errores rápidos y demasiadas respuestas en blanco', () =
 it('devuelve ritmo cero si faltan preguntas o límite de tiempo', () => {
   expect(simulationPace(0, 0, 0, 5)).toBe(0);
 });
+
+it('deja sin puntuar y no recomienda estrategias de respuesta si la penalización es desconocida', async () => {
+  const { DEFAULT_SIMULATION_SCORING_POLICY, calculateRubricScore, isTrainingMilestoneSimulation } = await import('../../src/core/domain/simulation-scoring.ts');
+  const unknownPolicy = { ...DEFAULT_SIMULATION_SCORING_POLICY, wrongPenalty: null };
+  const result = analyzeSimulation({
+    correct: [0, 1, 2, 3], answers: [0, 2, -1, -1], limitSeconds: 400, elapsedSeconds: 300, scoringPolicy: unknownPolicy,
+  });
+  expect(calculateRubricScore({ correct: 1, wrong: 1, blank: 2, questionCount: 4, policy: unknownPolicy })).toBeNull();
+  expect(result.pointsLostToWrongAnswers).toBeNull();
+  expect(recommendSimulationStudy(result)).toContainEqual({ kind: 'many-blank-answers', count: 2 });
+  expect(isTrainingMilestoneSimulation({ version: 1, questionCount: 100, durationMinutes: 90, optionsPerQuestion: 4, scoring: unknownPolicy })).toBe(true);
+  expect(isTrainingMilestoneSimulation({ version: 1, questionCount: 100, durationMinutes: 90, optionsPerQuestion: 4, scoring: { ...unknownPolicy, wrongPenalty: -1 } })).toBe(false);
+});

@@ -37,11 +37,11 @@ export function createStatsServices(actions: StatsActions, progressRepository: P
       const progress = await getProgressStatistics(progressRepository, metadata, index.temas.map(topic => ({ id: topic.id, name: topic.nombre, total: topic.n })), studyQuestionCatalog.now());
       if (account !== studyProgress.accountId()) throw new Error('La cuenta cambió mientras se cargaban las estadísticas.');
       sessionsForComparison = domainSessions.map(toLegacyStatsSession);
-      const sessions = sessionsForComparison.slice(0, 12);
+      const sessions = sessionsForComparison.slice(0, 12).map(session => ({ ...session, scorePending: session.scorePending }));
       const predictedCardRetention = forecastCardRetention(Object.values(cardReviews), studyQuestionCatalog.now());
       const speed = progress.speed;
       const domains = (await dominioTemas(index)).map(topic => ({ id: topic.id, name: topic.nombre, accuracy: topic.prec, days: topic.dias, status: topic.est as StatsSnapshot['domains'][number]['status'], reason: topic.why, due: topic.due, score: topic.score }));
-      const simulations = simHistory(sessionsForComparison).map(session => ({ id: session.id, ts: session.ts, nota: session.nota, part: session.part, dNota: session.dNota, a: session.a, f: session.f, b: session.b, secs: session.secs }));
+      const simulations = simHistory(sessionsForComparison).map(session => ({ id: session.id, ts: session.ts, nota: session.nota, part: session.part, dNota: session.dNota, a: session.a, f: session.f, b: session.b, secs: session.secs, ...(session.scoringPolicy ? { scoringPolicy: session.scoringPolicy } : {}) }));
       return { generatedAt: studyQuestionCatalog.now(), answers: progress.answers, correct: progress.correct, accuracy: progress.accuracy, topics: progress.topics, weakTopics: progress.weakTopics, failureCount: falladasIds().length, sessions, reviewLoad: progress.reviewLoad, predictedCardRetention, failureReasons: progress.failureReasons, lucky: progress.lucky, speed: { count: speed.count, total: speed.total, percent: speed.percent },
         trapRates: Object.entries(progress.traps).filter(([, row]) => row[0] >= 5).map(([id, row]) => ({ id, label: TRAMPAS[id] || id, attempts: row[0], failures: row[1], rate: percentage(row[1], row[0]) })).sort((a, b) => b.rate - a.rate),
         origins: Object.entries(progress.origins).map(([id, row]) => ({ label: ORIGEN[id] || id, answers: row[0], accuracy: percentage(row[1], row[0]) })),

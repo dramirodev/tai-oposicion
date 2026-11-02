@@ -3,6 +3,7 @@ import type { Confidence, Highlight, SelfAssessment } from '../domain/attempts/t
 import type { ExposureKind } from '../domain/attempts/transitions.js';
 import type { QuestionRecord } from '../domain/question-record.js';
 import type { TrainingActivityReference } from '../domain/study-training-session.js';
+import type { SimulationScoringPolicy } from '../domain/simulation-scoring.js';
 
 export interface RunCfg {
   kind: SessionKind;
@@ -14,6 +15,8 @@ export interface RunCfg {
   supTexto?: string;
   exposureKind?: ExposureKind;
   retryOfAttemptId?: string;
+  scoringPolicy?: SimulationScoringPolicy;
+  milestoneEventId?: string;
 }
 
 export interface Run extends RunCfg {
@@ -62,6 +65,9 @@ export interface CompletedStudyRun {
   tipos: Record<string, [number, number]>;
   fails: string[];
   titulo: string;
+  scorePending?: boolean;
+  scoringPolicy?: SimulationScoringPolicy;
+  milestoneEventId?: string;
 }
 
 export interface LastResult {
@@ -77,6 +83,7 @@ export interface LastResult {
   confidences?: Confidence[];
   discardedOptions?: number[][];
   highlights?: Highlight[][];
+  scoringPolicy?: SimulationScoringPolicy;
 }
 
 export interface EngineSnapshot {

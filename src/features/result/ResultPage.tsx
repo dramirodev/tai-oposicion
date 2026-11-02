@@ -116,8 +116,11 @@ export function ResultPage() {
     <h1>Resultado</h1>
     {snapshot.exposureKind === 'immediate-retry' && <div className="note" role="status"><b>Resultado de práctica inmediata</b><p className="my-1.5">Ya habías visto esta corrección. Este resultado no mide recuerdo diferido ni modifica tus estadísticas o repasos.</p></div>}
     {snapshot.interrupted && <div className="note result-status"><b>Sesión interrumpida</b><p className="my-1.5">{snapshot.correct + snapshot.wrong} de {snapshot.items.length} preguntas respondidas. La puntuación global mantiene las no contestadas como blancos.</p></div>}
-    <div className="card big text-center"><p className="score-label mb-2 mt-0 text-[length:var(--fs-m)] text-muted">Puntuación global <HelpIconLink topic="puntuacion" label="Ayuda sobre cómo se calcula la puntuación" /></p>
-      <div className="score" data-count={snapshot.score}>{snapshot.score}<small>/100</small></div><div className="legend">100 × (aciertos − fallos/3) / total de preguntas</div>
+    <div className="card big text-center"><p className="score-label mb-2 mt-0 text-[length:var(--fs-m)] text-muted">{snapshot.scorePending ? 'Puntuación neta pendiente' : 'Puntuación global'} <HelpIconLink topic="puntuacion" label="Ayuda sobre cómo se calcula la puntuación" /></p>
+      {snapshot.scorePending ? <div className="legend" role="status">No se calcula una nota neta porque la penalización por error aún no está configurada.</div>
+        : <><div className="score" data-count={snapshot.score}>{snapshot.score}<small>/100</small></div><div className="legend">{snapshot.scoringPolicy
+          ? `100 × (aciertos × ${snapshot.scoringPolicy.correctPoints} − fallos × ${snapshot.scoringPolicy.wrongPenalty} + blancos × ${snapshot.scoringPolicy.blankPoints}) / (preguntas × ${snapshot.scoringPolicy.correctPoints})`
+          : '100 × (aciertos − fallos/3) / total de preguntas'}</div></>}
       <div className="trio"><div className="g"><b>{snapshot.correct}</b>Aciertos</div><div className="r"><b>{snapshot.wrong}</b>Fallos</div><div><b>{snapshot.blank}</b>Blanco</div></div>
       {snapshot.consulted > 0 && <div className="legend" id="consulted-count">{snapshot.consulted} {snapshot.consulted === 1 ? 'solución consultada' : 'soluciones consultadas'} · contadas como blanco, sin acierto ni fallo</div>}
       <div className="legend">{snapshot.accuracy === null ? 'Sin respuestas evaluables' : `${snapshot.accuracy} % de acierto sobre lo contestado`} · {Math.floor(snapshot.seconds / 60)}:{String(snapshot.seconds % 60).padStart(2, '0')}</div>

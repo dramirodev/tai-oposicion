@@ -18,6 +18,16 @@ service cloud.firestore {
     // Pueden leer y escribir sus propios datos el propietario y los aprobados.
     function canUse(uid) { return isOwner(uid) || isApproved(uid); }
 
+    function validScoringPolicy(policy) {
+      return policy is map
+        && policy.keys().hasOnly(['version', 'correctPoints', 'wrongPenalty', 'blankPoints'])
+        && policy.keys().hasAll(['version', 'correctPoints', 'wrongPenalty', 'blankPoints'])
+        && policy.version == 1
+        && policy.correctPoints is number && policy.correctPoints > 0 && policy.correctPoints <= 100
+        && (policy.wrongPenalty == null || (policy.wrongPenalty is number && policy.wrongPenalty >= 0 && policy.wrongPenalty <= 100))
+        && policy.blankPoints is number && policy.blankPoints >= 0 && policy.blankPoints <= policy.correctPoints;
+    }
+
     function validAttempt(attemptId) {
       let d = request.resource.data;
       return d.keys().hasOnly([
@@ -242,7 +252,7 @@ service cloud.firestore {
     match /users/{uid}/sessions/{sessionId} {
       allow read: if canUse(uid);
       allow create, update: if canUse(uid)
-        && request.resource.data.keys().hasOnly(['id', 'ts', 'kind', 'n', 'a', 'f', 'b', 'secs', 'nota', 'temas', 'tipos', 'fails', 'titulo', 'porTiempo', 'interrupted'])
+        && request.resource.data.keys().hasOnly(['id', 'ts', 'kind', 'n', 'a', 'f', 'b', 'secs', 'nota', 'temas', 'tipos', 'fails', 'titulo', 'porTiempo', 'interrupted', 'scorePending', 'scoringPolicy', 'milestoneEventId'])
         && request.resource.data.id is string
         && request.resource.data.ts is number
         && request.resource.data.kind in ['sim', 'rev', 'test']
@@ -253,6 +263,9 @@ service cloud.firestore {
         && request.resource.data.temas is map && request.resource.data.temas.size() <= 200
         && (!('porTiempo' in request.resource.data) || request.resource.data.porTiempo is bool)
         && (!('interrupted' in request.resource.data) || request.resource.data.interrupted is bool)
+        && (!('scorePending' in request.resource.data) || request.resource.data.scorePending is bool)
+        && (!('scoringPolicy' in request.resource.data) || (validScoringPolicy(request.resource.data.scoringPolicy) && (request.resource.data.scoringPolicy.wrongPenalty != null || request.resource.data.scorePending == true)))
+        && (!('milestoneEventId' in request.resource.data) || (request.resource.data.milestoneEventId is string && request.resource.data.milestoneEventId.matches('^[A-Za-z0-9_.:-]{1,100}$')))
         && request.resource.data.tipos is map && request.resource.data.tipos.size() <= 100
         && request.resource.data.fails is list && request.resource.data.fails.size() <= 5000
         && request.resource.data.titulo is string && request.resource.data.titulo.size() <= 500;

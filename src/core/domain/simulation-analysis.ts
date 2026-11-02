@@ -1,9 +1,12 @@
+import { DEFAULT_SIMULATION_SCORING_POLICY, type SimulationScoringPolicy } from './simulation-scoring.js';
+
 export interface SimulationAnalysisInput {
   correct: number[];
   answers: (number | undefined)[];
   times?: (number | undefined)[];
   limitSeconds: number;
   elapsedSeconds: number;
+  scoringPolicy?: SimulationScoringPolicy;
 }
 
 export interface SimulationAnalysis {
@@ -16,7 +19,7 @@ export interface SimulationAnalysis {
   slowQuestions: { index: number; seconds: number; correct: boolean }[];
   fastWrongAnswers: number;
   scoreWithoutPenalty: number;
-  pointsLostToWrongAnswers: number;
+  pointsLostToWrongAnswers: number | null;
   timeUsedPercent: number;
 }
 
@@ -32,6 +35,7 @@ export function analyzeSimulation({
   times = [],
   limitSeconds,
   elapsedSeconds,
+  scoringPolicy = DEFAULT_SIMULATION_SCORING_POLICY,
 }: SimulationAnalysisInput): SimulationAnalysis {
   const questionCount = correct.length;
   let correctCount = 0;
@@ -69,8 +73,9 @@ export function analyzeSimulation({
     averageAnswerSeconds,
     slowQuestions,
     fastWrongAnswers,
-    scoreWithoutPenalty: questionCount ? Math.round(1000 * correctCount / questionCount) / 10 : 0,
-    pointsLostToWrongAnswers: questionCount ? Math.round(1000 * (wrongCount / 3) / questionCount) / 10 : 0,
+    scoreWithoutPenalty: questionCount ? Math.round(1000 * (correctCount * scoringPolicy.correctPoints + blankCount * scoringPolicy.blankPoints) / (questionCount * scoringPolicy.correctPoints)) / 10 : 0,
+    pointsLostToWrongAnswers: scoringPolicy.wrongPenalty === null ? null
+      : questionCount ? Math.round(1000 * (wrongCount * scoringPolicy.wrongPenalty) / (questionCount * scoringPolicy.correctPoints)) / 10 : 0,
     timeUsedPercent: limitSeconds ? Math.round(100 * Math.min(elapsedSeconds, limitSeconds) / limitSeconds) : 0,
   };
 }

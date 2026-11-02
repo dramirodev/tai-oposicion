@@ -1,4 +1,5 @@
 import type { Preferences } from '../../core/domain/entities.js';
+import type { SimulationScoringPolicy } from '../../core/domain/simulation-scoring.js';
 
 /** Persisted and synchronized answer value: 1 correct, 0 wrong, 2 blank. */
 export type Res = 0 | 1 | 2;
@@ -15,6 +16,9 @@ export type SessionKind = 'sim' | 'rev' | 'test';
 export interface Session {
   interrupted?: boolean;
   porTiempo?: boolean;
+  scorePending?: boolean;
+  scoringPolicy?: SimulationScoringPolicy;
+  milestoneEventId?: string;
   id: string;
   ts: number;
   kind: SessionKind;

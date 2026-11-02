@@ -195,9 +195,9 @@ let simulationRunConfiguration: SimulationRunConfiguration | null = null;
 let reviewScenarioQuestions = new Map<string, Question[]>();
 let reviewScenarioTexts = new Map<string, string>();
 let reviewScenarioAccount: string | null = null;
-async function selectSimulationQuestions(index: Awaited<ReturnType<typeof getIndex>>, origins: ReadonlySet<Origin>, count: number, onlyTopics: ReadonlySet<string> | null) {
+async function selectSimulationQuestions(index: Awaited<ReturnType<typeof getIndex>>, origins: ReadonlySet<Origin>, count: number, onlyTopics: ReadonlySet<string> | null, optionsPerQuestion?: number) {
   const topics = index.temas.filter(topic => !onlyTopics || onlyTopics.has(topic.id));
-  return selectWeightedSimulationQuestions(topics.map(topic => ({ id: topic.id, weight: topic.w })), origins, count);
+  return selectWeightedSimulationQuestions(topics.map(topic => ({ id: topic.id, weight: topic.w })), origins, count, Math.random, question => optionsPerQuestion === undefined || question.a.length === optionsPerQuestion);
 }
 // Parte 2 tras la parte 1: ofrece 2 supuestos
 // Las pantallas comparten navegación y limpieza; cada módulo conserva su estado de sesión.
@@ -432,10 +432,10 @@ export const studyServices: StudyServices = {
     getSnapshot() {
       const last = getLastResult(); if (!last) return null;
       const { ses, items, ans, studyStates = [], highlights = [], confidences = [], discardedOptions = [], attemptIds = [] } = last;
-      return { score: ses.nota, correct: ses.a, wrong: ses.f, blank: ses.b, consulted: studyStates.filter(state => state === 'revealed').length,
+      return { score: ses.scorePending ? null : ses.nota, scorePending: !!ses.scorePending, ...(last.scoringPolicy ? { scoringPolicy: last.scoringPolicy } : {}), correct: ses.a, wrong: ses.f, blank: ses.b, consulted: studyStates.filter(state => state === 'revealed').length,
         accuracy: ses.a + ses.f ? pct(ses.a, ses.a + ses.f) : null, seconds: ses.secs, title: ses.titulo || '', interrupted: !!ses.interrupted, kind: ses.kind,
         ...(last.exposureKind ? { exposureKind: last.exposureKind } : {}),
-        porTiempo: !!ses.porTiempo, analysis: last.limit && !ses.porTiempo ? createSimulationAnalysisView({ correctIndices: last.items.map(question => question.c), answers: last.ans, answerSeconds: last.times, timeLimitMinutes: last.limit, elapsedSeconds: ses.secs }) : '',
+        porTiempo: !!ses.porTiempo, analysis: last.limit && !ses.porTiempo ? createSimulationAnalysisView({ correctIndices: last.items.map(question => question.c), answers: last.ans, answerSeconds: last.times, timeLimitMinutes: last.limit, elapsedSeconds: ses.secs, scoringPolicy: last.scoringPolicy }) : '',
         secondPartAvailable: (ses.titulo || '').includes('Parte 1') && !!simulationRunConfiguration?.includeSecondPart,
         topics: Object.entries(ses.temas).sort(([left], [right]) => left.localeCompare(right)).map(([id, [correct, total]]) => ({ id, name: studyQuestionCatalog.getTopicName(id), correct, total })),
         items: items.map((question, index) => {
@@ -496,15 +496,16 @@ export const studyServices: StudyServices = {
     },
     getSelectedExam() { return localStudyProgressGateway.getPreferences().exsel || null; },
     selectExam(id) { localStudyProgressGateway.updatePreferences(current => ({ ...current, exsel: id })); },
-    async startConfigured(configuration) {
+    async startConfigured(configuration, milestone) {
       const account = localStudyProgressGateway.accountId(), index = await getIndex(); await getMeta();
       const seen = localStudyProgressGateway.getSeenTopics(), only = configuration.scope !== 'todos' && seen.length ? new Set(seen) : null;
+      if (milestone && !seen.length) return 'empty';
       const origins = new Set(configuration.origins);
-      const items = await selectSimulationQuestions(index, origins, configuration.count, only);
+      const items = await selectSimulationQuestions(index, origins, configuration.count, only, milestone?.optionsPerQuestion);
       if (account !== localStudyProgressGateway.accountId()) return 'account-changed';
-      if (!items.length) return 'empty';
+      if (!items.length || (milestone && items.length < configuration.count)) return 'empty';
       simulationRunConfiguration = { includeSecondPart: configuration.includeSecondPart, secondPartMinutes: Math.round(configuration.minutes * 0.45) };
-      return startRun({ kind: 'sim', feedback: false, items, limit: configuration.minutes, titulo: 'Simulacro · Parte 1' }) ? 'started' : 'empty';
+      return startRun({ kind: 'sim', feedback: false, items, limit: configuration.minutes, titulo: milestone ? `Hito · ${milestone.title}` : 'Simulacro · Parte 1', ...(milestone ? { scoringPolicy: milestone.scoringPolicy, milestoneEventId: milestone.eventId } : {}) }) ? 'started' : 'empty';
     },
     async startExam(id, mode) {
       const account = localStudyProgressGateway.accountId(), metadata = await studyQuestionCatalog.getMetadata();

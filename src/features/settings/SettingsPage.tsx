@@ -153,6 +153,12 @@ function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsSer
   const [eventStartTime, setEventStartTime] = useState('08:00');
   const [eventEndTime, setEventEndTime] = useState('15:00');
   const [eventFocus, setEventFocus] = useState<TrainingDayFocus | ''>('');
+  const [milestoneQuestions, setMilestoneQuestions] = useState('100');
+  const [milestoneMinutes, setMilestoneMinutes] = useState('90');
+  const [milestoneOptions, setMilestoneOptions] = useState('4');
+  const [milestoneCorrectPoints, setMilestoneCorrectPoints] = useState('1');
+  const [milestoneWrongPenalty, setMilestoneWrongPenalty] = useState('');
+  const [milestoneBlankPoints, setMilestoneBlankPoints] = useState('0');
   const [eventError, setEventError] = useState('');
   const academyTopicOrderIds = snapshot.training.academyTopicOrderIds ?? [];
   const calendarEvents = normalizeTrainingCalendarEvents(snapshot.training.calendarEvents);
@@ -189,6 +195,10 @@ function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsSer
         studyMinutes: Number(eventMinutes), startTime: eventStartTime, endTime: eventEndTime,
         ...(eventFocus ? { focus: eventFocus } : {}),
       } : {}),
+      ...(eventKind === 'milestone' ? { simulation: {
+        version: 1 as const, questionCount: Number(milestoneQuestions), durationMinutes: Number(milestoneMinutes), optionsPerQuestion: Number(milestoneOptions),
+        scoring: { version: 1 as const, correctPoints: Number(milestoneCorrectPoints), wrongPenalty: milestoneWrongPenalty === '' ? null : Number(milestoneWrongPenalty), blankPoints: Number(milestoneBlankPoints) },
+      } } : {}),
     });
     if (calendarEvents.length >= MAX_TRAINING_CALENDAR_EVENTS) { setEventError(`Has alcanzado el límite de ${MAX_TRAINING_CALENDAR_EVENTS} eventos. Elimina alguno antes de añadir otro.`); return; }
     if (!event) { setEventError('Revisa el nombre, las fechas y los datos de disponibilidad.'); return; }
@@ -271,12 +281,21 @@ function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsSer
           <label className="grid min-w-0 gap-1">Ventana desde<input aria-label="Hora inicial de disponibilidad" type="time" value={eventStartTime} onChange={event => setEventStartTime(event.target.value)} /></label>
           <label className="grid min-w-0 gap-1">Ventana hasta<input aria-label="Hora final de disponibilidad" type="time" value={eventEndTime} onChange={event => setEventEndTime(event.target.value)} /></label>
         </>}
+        {eventKind === 'milestone' && <>
+          <p className="col-span-full text-muted">Este perfil configura un simulacro generado con preguntas del catálogo y temas vistos. Si desconoces la penalización, déjala vacía: la aplicación mostrará aciertos, fallos y blancos, sin calcular nota neta.</p>
+          <label className="grid min-w-0 gap-1">Preguntas<input aria-label="Preguntas del hito" type="number" min="1" max="300" value={milestoneQuestions} onChange={event => setMilestoneQuestions(event.target.value)} /></label>
+          <label className="grid min-w-0 gap-1">Duración (min)<input aria-label="Duración del hito" type="number" min="1" max="240" value={milestoneMinutes} onChange={event => setMilestoneMinutes(event.target.value)} /></label>
+          <label className="grid min-w-0 gap-1">Opciones por pregunta<input aria-label="Opciones por pregunta del hito" type="number" min="2" max="8" value={milestoneOptions} onChange={event => setMilestoneOptions(event.target.value)} /></label>
+          <label className="grid min-w-0 gap-1">Puntos por acierto<input aria-label="Puntos por acierto" type="number" min="0.01" max="100" step="0.01" value={milestoneCorrectPoints} onChange={event => setMilestoneCorrectPoints(event.target.value)} /></label>
+          <label className="grid min-w-0 gap-1">Penalización por error (vacío si se desconoce)<input aria-label="Penalización por error" type="number" min="0" max="100" step="0.01" value={milestoneWrongPenalty} onChange={event => setMilestoneWrongPenalty(event.target.value)} /></label>
+          <label className="grid min-w-0 gap-1">Puntos por blanco<input aria-label="Puntos por blanco" type="number" min="0" max="100" step="0.01" value={milestoneBlankPoints} onChange={event => setMilestoneBlankPoints(event.target.value)} /></label>
+        </>}
       </div>
       <button className="btn sec min-h-11 mt-3" type="button" disabled={!eventTitle.trim() || !eventStart} onClick={saveCalendarEvent}>Guardar evento</button>
       {eventError && <p role="alert">{eventError}</p>}
       {calendarEvents.length ? <ul aria-label="Eventos guardados" className="grid gap-2 pl-5">{calendarEvents.map(event => {
         const status = event.endDate < todayKey ? 'Pasado' : event.startDate > todayKey ? 'Próximo' : 'En curso';
-        const typeLabel = event.kind === 'unavailable' ? 'Sin estudio' : event.kind === 'study-window' ? `${event.studyMinutes} min de estudio${event.startTime ? ` · ${event.startTime}–${event.endTime}` : ''}` : event.kind === 'class' ? 'Clase informativa' : 'Hito informativo';
+        const typeLabel = event.kind === 'unavailable' ? 'Sin estudio' : event.kind === 'study-window' ? `${event.studyMinutes} min de estudio${event.startTime ? ` · ${event.startTime}–${event.endTime}` : ''}` : event.kind === 'class' ? 'Clase informativa' : event.simulation ? `Simulacro · ${event.simulation.questionCount} preguntas/${event.simulation.durationMinutes} min · penalización ${event.simulation.scoring.wrongPenalty ?? 'desconocida'}` : 'Hito informativo';
         return <li key={event.id} className="flex flex-wrap items-center justify-between gap-2"><span><b>{event.title}</b> · {event.startDate === event.endDate ? event.startDate : `${event.startDate} a ${event.endDate}`} · {typeLabel} · {status}{event.source ? ` · ${event.source}` : ''}</span><button className="btn sec min-h-11" type="button" aria-label={`Eliminar evento ${event.title}`} onClick={() => removeCalendarEvent(event.id)}>Eliminar</button></li>;
       })}</ul> : <p className="sm">Aún no hay eventos guardados.</p>}
     </fieldset>

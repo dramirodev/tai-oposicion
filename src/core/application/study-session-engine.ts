@@ -1,6 +1,7 @@
 // Motor de preguntas: estado de la sesión en curso, guardado y reanudación, registro de respuestas, cierre con nota
 // y selección de preguntas (sesión rápida, repaso, trampas). Sin DOM: la interfaz solo pinta y llama a estas funciones.
 import { calculateExamScore } from '../domain/scoring.js';
+import { calculateRubricScore } from '../domain/simulation-scoring.js';
 import { filterScoringQuestions } from '../domain/selection.js';
 import type { Confidence, Highlight, SelfAssessment } from '../domain/attempts/transitions.js';
 import { questionContentRevision } from '../domain/attempts/highlights.js';
@@ -224,6 +225,8 @@ function savedRunSnapshot(run: Run): SavedRunSnapshot {
     ...(run.trainingActivityReference ? { trainingActivityReference: run.trainingActivityReference } : {}),
     ...(run.exposureKind ? { exposureKind: run.exposureKind } : {}),
     ...(run.retryOfAttemptId ? { retryOfAttemptId: run.retryOfAttemptId } : {}),
+    ...(run.scoringPolicy ? { scoringPolicy: { ...run.scoringPolicy } } : {}),
+    ...(run.milestoneEventId ? { milestoneEventId: run.milestoneEventId } : {}),
   };
 }
 
@@ -337,6 +340,8 @@ function createResumedRun(saved: SavedRunSnapshot, items: QuestionRecord[], answ
     ...(saved.trainingActivity ? { trainingActivity: saved.trainingActivity } : {}),
     ...(saved.trainingActivityReference ? { trainingActivityReference: saved.trainingActivityReference } : {}),
     ...(saved.exposureKind === 'immediate-retry' && saved.retryOfAttemptId ? { exposureKind: saved.exposureKind, retryOfAttemptId: saved.retryOfAttemptId } : {}),
+    ...(saved.scoringPolicy ? { scoringPolicy: { ...saved.scoringPolicy } } : {}),
+    ...(saved.milestoneEventId ? { milestoneEventId: saved.milestoneEventId } : {}),
   };
   return run;
 }
@@ -557,18 +562,28 @@ function completedSessionRecords(run: Run, reason: 'complete' | 'interrupted' | 
   const itemCount = items.length;
   const id = 's' + completedAt.toString(36);
   const { correct, wrong, blank } = totals.results;
-  const score = calculateExamScore(correct, wrong, itemCount);
+  const rubricScore = run.scoringPolicy
+    ? calculateRubricScore({ correct, wrong, blank, questionCount: itemCount, policy: run.scoringPolicy })
+    : calculateExamScore(correct, wrong, itemCount);
+  const scorePending = rubricScore === null;
+  const score = rubricScore ?? 0;
   const durationSeconds = run.porTiempo ? Math.min(run.secs, (run.limit ?? 0) * 60) : run.secs;
   const session: SessionResult = {
     id, completedAt, kind: run.kind, questionCount: itemCount, correctCount: correct, wrongCount: wrong,
     blankCount: blank, durationSeconds, score, topicResults: totals.topics, typeResults: totals.types,
     failedQuestionIds: totals.failures, title: run.titulo || '',
+    ...(scorePending ? { scorePending: true } : {}),
+    ...(run.scoringPolicy ? { scoringPolicy: { ...run.scoringPolicy } } : {}),
+    ...(run.milestoneEventId ? { milestoneEventId: run.milestoneEventId } : {}),
     ...(reason === 'interrupted' ? { interrupted: true } : {}),
     ...(run.porTiempo ? { timeLimited: true } : {}),
   };
   const legacySession: LastResult['ses'] = {
     id, ts: completedAt, kind: run.kind, n: itemCount, a: correct, f: wrong, b: blank,
     secs: durationSeconds, nota: score, temas: totals.topics, tipos: totals.types, fails: totals.failures, titulo: run.titulo || '',
+    ...(scorePending ? { scorePending: true } : {}),
+    ...(run.scoringPolicy ? { scoringPolicy: { ...run.scoringPolicy } } : {}),
+    ...(run.milestoneEventId ? { milestoneEventId: run.milestoneEventId } : {}),
     ...(reason === 'interrupted' ? { interrupted: true } : {}),
     ...(run.porTiempo ? { porTiempo: true } : {}),
   };
@@ -580,6 +595,8 @@ function lastResult(run: Run, items: QuestionRecord[], session: LastResult['ses'
     ses: session, items, ans: [...run.ans], times: [...(run.times || [])], limit: run.limit || 0,
     feedback: run.feedback,
     ...(run.exposureKind ? { exposureKind: run.exposureKind } : {}),
+    ...(run.scoringPolicy ? { scoringPolicy: { ...run.scoringPolicy } } : {}),
+    ...(run.milestoneEventId ? { milestoneEventId: run.milestoneEventId } : {}),
     ...(run.attemptIds ? { attemptIds: [...run.attemptIds] } : {}),
     ...(run.studyStates ? { studyStates: [...run.studyStates] } : {}),
     confidences: [...(run.confidences || [])],
