@@ -104,6 +104,22 @@ test('el tema recomendado muestra su material de academia en móvil y escritorio
   expect(errors).toEqual([]);
 });
 
+test('inicia una práctica objetiva del tema desde su material y abre una pregunta de Quiz', async ({ page }) => {
+  const errors = await setup(page, 'light');
+  await page.goto('/#/temario?topic=T1.01');
+  await page.getByRole('checkbox', { name:/T1\.01 Constitución Española/ }).check();
+  const material = page.locator('#app details').filter({ has: page.getByText(/Material de academia ·/) });
+  await material.locator('summary').filter({ hasText:/Material de academia/ }).click();
+  await expect(material.getByText(/clasificadas por tema, no por este apartado/)).toBeVisible();
+  await material.getByRole('link', { name:'Practicar preguntas del tema' }).click();
+  await expect(page.locator('#app h1')).toContainText('Test por tema');
+  await expect(page.getByLabel(/T1\.01 Constitución Española/)).toBeChecked();
+  await page.getByRole('button', { name:'Empezar' }).click();
+  await expect(page.locator('#app')).toContainText('pregunta 1');
+  await expect(page.locator('#app .opt')).not.toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
 test.describe('service worker real', () => {
  test.use({ serviceWorkers: 'allow' });
  test('shell de Vite, CSP y arranque sin conexión', async ({ page, context }) => {

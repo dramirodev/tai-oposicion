@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
+import { Link } from 'react-router';
 import type { AcademyCurriculumSection, AcademyCurriculumTopic } from '../../core/domain/academy-curriculum-types.js';
 import { academyCurriculumTopicLoaders } from '../../core/domain/academy-curriculum.generated.js';
 import { useStudyService } from '../../shared/ui/study-services.js';
@@ -108,7 +109,7 @@ function SectionStudyUnit({
   </details>;
 }
 
-export function AcademyCurriculumPanel({ topicId, sessionId, activityId }: { topicId: string; sessionId?: string; activityId?: string }) {
+export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, activityId }: { topicId: string; hasStudyMarker: boolean; sessionId?: string; activityId?: string }) {
   const [draft, setDraft] = useState<{ topicId: string; paths: string[] } | null>(null);
   const [notice, setNotice] = useState('');
   const academyProgress = useStudyService('academyStudyProgress');
@@ -201,6 +202,10 @@ export function AcademyCurriculumPanel({ topicId, sessionId, activityId }: { top
   return <details className="mt-3 rounded-[var(--r-s)] border border-line p-3">
     <summary className="min-h-11 cursor-pointer content-center font-semibold">Material de academia · {topic.sections.length} referencias de índice</summary>
     <p className="mt-2 mb-3 text-sm text-muted">{message} Los documentos permanecen en tu carpeta de Drive y no están copiados ni se abren desde la aplicación. Usa la ruta indicada para consultarlos.</p>
+    {hasStudyMarker && <div className="my-3 rounded-md bg-surface-soft p-3">
+      <p className="my-0 mb-2 text-sm">Las preguntas disponibles están clasificadas por tema, no por este apartado. La práctica siguiente registra respuestas y correcciones del tema completo.</p>
+      <Link className="btn" to={`/test?topic=${encodeURIComponent(topicId)}`}>Practicar preguntas del tema</Link>
+    </div>}
     {materials.length > 0 && <ul className="my-0 mb-3 list-disc ps-5 text-sm">
       {materials.map(file => <li key={file.path}><b>{materialLabels[file.kind] ?? 'Material'}</b>: <code className="break-all">{file.path}</code></li>)}
     </ul>}

@@ -52,6 +52,16 @@ it('preselecciona el tema del plan y usa preguntas mezcladas para reforzarlo', a
   expect(screen.getByLabelText(/T1.01 Organización/)).toBeChecked();
 });
 
+it('permite iniciar una práctica del tema marcado como visto aunque todavía no tenga respuestas', async () => {
+  test.loadTopics.mockResolvedValue([{ id:'T2.01', name:'Informática', total:10, attempted:0, correct:0, answerCount:0 }]);
+  test.seenTopics.mockReturnValue(['T2.01']);
+  await render(['/test?topic=T2.01']);
+  expect(await screen.findByText(/Tema para reforzar: T2\.01/)).toBeInTheDocument();
+  expect(screen.getByLabelText(/T2\.01 Informática/)).toBeChecked();
+  await userEvent.setup().click(screen.getByRole('button', { name:/empezar/i }));
+  expect(test.start).toHaveBeenCalledWith(expect.objectContaining({ all:false, selected:['T2.01'], mode:'aleatorio' }));
+});
+
 it('vuelve a comprobar los temas vistos justo antes de iniciar un entrenamiento', async () => {
   test.seenTopics.mockReturnValueOnce(['T1.01', 'T2.01']).mockReturnValue(['T1.01']);
   await render(['/test?trainingTopics=T1.01%2CT2.01']);

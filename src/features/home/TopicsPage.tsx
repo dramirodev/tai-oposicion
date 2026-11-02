@@ -50,7 +50,7 @@ export function TopicsPage() {
       <h2 className="m-0 mb-[.35rem] text-[length:var(--fs-l)]" id="planned-topic-title">Estudio inicial · {topics.find(topic => topic.id === requestedTopic)?.name ?? requestedTopic}</h2>
       <p className="m-0 text-muted">Estudia el tema en papel. Antes de consultar los apuntes, intenta recordar sus ideas principales. Al marcarlo como visto, volverás a Planificación para indicar cuánto recordaste; esta autoevaluación no es un resultado de examen.</p>
     </section>}
-    {requestedTopic && <Suspense fallback={<p className="mt-2 text-sm text-muted" role="status">Cargando índice de materiales…</p>}><AcademyCurriculumPanel topicId={requestedTopic} sessionId={sessionId ?? undefined} activityId={activityId ?? undefined} /></Suspense>}
+    {requestedTopic && <Suspense fallback={<p className="mt-2 text-sm text-muted" role="status">Cargando índice de materiales…</p>}><AcademyCurriculumPanel topicId={requestedTopic} hasStudyMarker={selected.has(requestedTopic)} sessionId={sessionId ?? undefined} activityId={activityId ?? undefined} /></Suspense>}
     <TopicsView topics={topics} visible={visible} selected={selected} query={query} open={open}
     onQueryChange={value => setQueryOverride({ routeTopic: requestedTopic, value })} onToggle={toggle} onToggleBlock={toggleBlock}
     onSelectAll={() => services.setStudied(topics.map(topic => topic.id))}

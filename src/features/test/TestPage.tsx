@@ -41,7 +41,7 @@ export function TestPage() {
       const eligibleTopics = trainingTopicIds ? value.filter(topic => trainingTopicSet?.has(topic.id)) : value;
       setTopics(eligibleTopics); setLoading(false);
       if (suggestedTopicId) {
-        const suggestedTopic = eligibleTopics.find(topic => topic.id === suggestedTopicId && (trainingTopicIds || topic.answerCount > 0));
+        const suggestedTopic = eligibleTopics.find(topic => topic.id === suggestedTopicId && (trainingTopicIds || topic.answerCount > 0 || test.seenTopics().includes(topic.id)));
         if (!suggestedTopic) {
           setRecommendationMessage(trainingTopicIds
             ? 'El tema recomendado no está entre tus temas vistos. Elige uno de los materiales que ya has marcado.'

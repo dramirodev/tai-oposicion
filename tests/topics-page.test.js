@@ -55,6 +55,7 @@ it('enlaza el tema recomendado con el índice y los ficheros exactos del Drive d
   renderApp(createElement(TopicsPage), { services: { topics, home:{ completeTrainingActivity:vi.fn() } }, initialEntries: ['/temario?topic=T1.01&dailyTraining=newContent'] });
   const panel = await screen.findByText(/Material de academia · \d+ referencias de índice/);
   await user.click(panel);
+  expect(screen.queryByRole('link', { name:'Practicar preguntas del tema' })).not.toBeInTheDocument();
   expect(screen.getAllByText(/T1\.01 Constitución Española - Temario\.pdf/).length).toBeGreaterThan(1);
   expect(screen.getAllByText(/INTRODUCCIÓN/).length).toBeGreaterThan(0);
   expect(screen.getAllByText(/p\. 3/).length).toBeGreaterThan(0);
@@ -91,6 +92,16 @@ it('requiere seleccionar un material antes de registrar cobertura parcial por ap
   expect(progress.selection.materials).toHaveLength(1);
   expect(progress.events[0]).toMatchObject({ kind:'coverage', coverage:'partial', topicId:'T1.01' });
   expect(screen.getAllByText(/cobertura parcial/).length).toBeGreaterThan(0);
+});
+
+it('ofrece práctica objetiva del tema visto y aclara que no se vincula a un epígrafe', async () => {
+  const topics={accountId:() => null,getStudied:() => ['T1.01'],subscribe:() => () => {},setStudied:() => {},loadTopics:async () => [
+    { id:'T1.01',name:'Constitución Española',total:10,answered:0,accuracy:null },
+  ]};
+  renderApp(createElement(TopicsPage), { services:{ topics }, initialEntries:['/temario?topic=T1.01'] });
+  const link = await screen.findByRole('link', { name:'Practicar preguntas del tema' });
+  expect(link).toHaveAttribute('href', '/test?topic=T1.01');
+  expect(screen.getByText(/clasificadas por tema, no por este apartado/)).toBeInTheDocument();
 });
 
 it('no inventa secciones de materiales para un tema futuro sin carpeta fuente', async () => {
