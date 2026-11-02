@@ -32,6 +32,8 @@ describe('propuesta semanal persistida', () => {
 
     const calendar = createWeeklyStudyAgendaComposition({ accountId:()=>'student-a', now:()=>130, push:vi.fn() });
     expect(calendar.replaceWeek('2026-11-02', [item()])?.items).toHaveLength(1);
+    calendar.replaceWeek('2026-11-02', [item({ id:'updated-proposal' })]);
+    expect(calendar.get().items.map(entry => entry.id)).toEqual(['updated-proposal']);
     expect(readWeeklyStudyAgenda('student-b').items).toEqual([]);
     expect(createWeeklyStudyAgendaComposition({ accountId:()=>'student-a', now:()=>130 }).get().items).toHaveLength(1);
   });
@@ -42,6 +44,8 @@ describe('propuesta semanal persistida', () => {
     expect(completed?.items[0]).toMatchObject({ status:'completed', updatedAt:105 });
     expect(mergeWeeklyStudyAgenda(current, completed)).toEqual(completed);
     expect(updateWeeklyAgendaItemStatus(current, 'missing', 'skipped', 106)).toBeNull();
+    expect(updateWeeklyAgendaItemStatus(completed, item().id, 'planned', 110)).toBeNull();
+    expect(updateWeeklyAgendaItemStatus(completed, item().id, 'skipped', 110)).toBeNull();
   });
 
   it('informa del fallo de escritura sin devolver una propuesta como persistida', () => {

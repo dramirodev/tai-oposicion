@@ -111,7 +111,8 @@ export function replaceWeeklyAgendaWeek(current: WeeklyStudyAgenda, weekStart: s
 export function updateWeeklyAgendaItemStatus(current: WeeklyStudyAgenda, id: string, status: WeeklyAgendaStatus, now: number): WeeklyStudyAgenda | null {
   if (!Number.isFinite(now) || !statuses.has(status)) return null;
   const item = current.items.find(candidate => candidate.id === id);
-  if (!item) return null;
+  if (!item || (item.status !== 'planned' && item.status !== status)) return null;
+  if (item.status === status) return current;
   const updatedAt = Math.max(now, item.updatedAt + 1);
   return {
     ...current,

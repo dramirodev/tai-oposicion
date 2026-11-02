@@ -13,9 +13,7 @@ export function readWeeklyStudyAgenda(accountId: string | null): WeeklyStudyAgen
 
 export function saveWeeklyStudyAgenda(accountId: string | null, agenda: WeeklyStudyAgenda): boolean {
   if (!isWeeklyStudyAgenda(agenda)) return false;
-  const current = readWeeklyStudyAgenda(accountId);
-  const merged = mergeWeeklyStudyAgenda(current, agenda);
-  try { localStorage.setItem(storageKey(accountId), JSON.stringify(merged)); return true; }
+  try { localStorage.setItem(storageKey(accountId), JSON.stringify(agenda)); return true; }
   catch { return false; }
 }
 
