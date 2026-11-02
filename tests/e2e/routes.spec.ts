@@ -96,8 +96,7 @@ test('el tema recomendado muestra su material de academia en móvil y escritorio
   await resumedSection.locator('select[name="timing"]').selectOption('delayed');
   await resumedSection.getByRole('button', { name:'Guardar comprobación' }).click();
   await expect(resumedMaterial).toContainText('Autoevaluación guardada');
-  const due = new Date(); due.setDate(due.getDate() + 3);
-  const dueKey = `${due.getFullYear()}-${String(due.getMonth() + 1).padStart(2, '0')}-${String(due.getDate()).padStart(2, '0')}`;
+  const dueKey = await page.evaluate(() => { const due = new Date(); due.setDate(due.getDate() + 3); return `${due.getFullYear()}-${String(due.getMonth() + 1).padStart(2, '0')}-${String(due.getDate()).padStart(2, '0')}`; });
   await resumedSection.getByLabel('Fecha de próxima comprobación').fill(dueKey);
   await resumedSection.getByRole('button', { name:'Programar desde la última autoevaluación' }).click();
   await expect(resumedMaterial).toContainText(`Comprobación programada para el ${dueKey}`);
@@ -109,6 +108,27 @@ test('el tema recomendado muestra su material de academia en móvil y escritorio
   await expect(followedSection).toContainText(`${dueKey} · pendiente`);
   await followedSection.getByRole('button', { name:'Marcar realizada' }).click();
   await expect(followedSection).toContainText(`${dueKey} · realizada`);
+
+  await followedSection.locator('select[name="timing"]').selectOption('immediate');
+  await followedSection.getByRole('button', { name:'Guardar comprobación' }).click();
+  const agendaDueKey = await page.evaluate(() => { const agendaDue = new Date(); agendaDue.setDate(agendaDue.getDate() + 4); return `${agendaDue.getFullYear()}-${String(agendaDue.getMonth() + 1).padStart(2, '0')}-${String(agendaDue.getDate()).padStart(2, '0')}`; });
+  await followedSection.getByLabel('Fecha de próxima comprobación').fill(agendaDueKey);
+  await followedSection.getByRole('button', { name:'Programar desde la última autoevaluación' }).click();
+  await page.goto('/#/planificacion');
+  await page.getByRole('button', { name:'Semana siguiente' }).click();
+  await page.getByRole('button', { name:'Proponer semana según tu plan' }).click();
+  await expect(page.getByRole('group', { name:'Propuesta semanal pendiente de confirmación' })).toContainText('Comprobación de apartado');
+  await expect(page.getByRole('group', { name:'Propuesta semanal pendiente de confirmación' })).toContainText('1. INTRODUCCIÓN');
+  await page.getByRole('button', { name:'Confirmar semana' }).click();
+  const agenda = page.getByRole('list', { name:'Actividades de la agenda semanal' });
+  await expect(agenda).toContainText('1. INTRODUCCIÓN');
+  await agenda.getByRole('button', { name:'Abrir apartado' }).click();
+  await expect(page).toHaveURL(/sectionId=ci-/);
+  await expect(page.locator('#app details').filter({ hasText:'1. INTRODUCCIÓN' }).first()).toBeVisible();
+  await page.goto('/#/planificacion');
+  await page.getByRole('button', { name:'Semana siguiente' }).click();
+  await page.getByRole('list', { name:'Actividades de la agenda semanal' }).getByRole('button', { name:'Marcar comprobación realizada' }).click();
+  await expect(page.getByRole('list', { name:'Actividades de la agenda semanal' })).toContainText('Completada');
 
   for (const width of [393, 1440]) {
     await page.setViewportSize({ width, height: 900 });

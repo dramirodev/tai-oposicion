@@ -180,7 +180,7 @@ service cloud.firestore {
 
     function validAcademySectionEvent(eventId) {
       let d = request.resource.data;
-      return d.keys().hasOnly(['id', 'topicId', 'sectionId', 'materialPath', 'sourceHash', 'outlineFingerprint', 'kind', 'coverage', 'timing', 'rating', 'followUpId', 'sourceSelfCheckEventId', 'dueDateKey', 'status', 'occurredAt', 'trainingSessionId', 'trainingActivityId'])
+      return d.keys().hasOnly(['id', 'topicId', 'sectionId', 'materialPath', 'sourceHash', 'outlineFingerprint', 'kind', 'coverage', 'timing', 'rating', 'followUpId', 'sourceSelfCheckEventId', 'dueDateKey', 'status', 'sectionTitle', 'printedPage', 'occurredAt', 'trainingSessionId', 'trainingActivityId'])
         && d.keys().hasAll(['id', 'topicId', 'sectionId', 'materialPath', 'sourceHash', 'outlineFingerprint', 'kind', 'occurredAt'])
         && d.id == eventId && eventId.matches('^[A-Za-z0-9_-]{8,128}$')
         && d.topicId.matches('^T[0-9]+\\.[0-9]{2}$')
@@ -198,6 +198,8 @@ service cloud.firestore {
             : d.kind == 'follow-up'
               ? d.followUpId.matches('^[A-Za-z0-9_-]{8,128}$') && d.sourceSelfCheckEventId.matches('^[A-Za-z0-9_-]{8,128}$')
                 && d.dueDateKey.matches('^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$') && d.status in ['scheduled', 'completed', 'cancelled']
+                && (!('sectionTitle' in d) || (d.sectionTitle is string && d.sectionTitle.size() <= 500))
+                && (!('printedPage' in d) || (d.printedPage is int && d.printedPage >= 0))
                 && !('coverage' in d) && !('timing' in d) && !('rating' in d)
               : false);
     }

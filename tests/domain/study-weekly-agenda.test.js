@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createWeeklyStudyAgendaComposition } from '../../src/app/composition/trainers/weekly-study-agenda-composition.ts';
-import { applyWeeklyAgendaPlan, applyWeeklyAgendaRecovery, dailyTrainingPlanFromAgenda, emptyWeeklyStudyAgenda, findMatchingPlannedAgendaItem, isWeeklyStudyAgenda, mergeWeeklyStudyAgenda, proposeWeeklyAgendaPlan, proposeWeeklyAgendaRecovery, replaceWeeklyAgendaWeek, updateWeeklyAgendaItemStatus, weekStartForStudyDate } from '../../src/core/domain/study-weekly-agenda.ts';
+import { addSectionRecallFollowUpsToWeeklyProposal, applyWeeklyAgendaPlan, applyWeeklyAgendaRecovery, dailyTrainingPlanFromAgenda, emptyWeeklyStudyAgenda, findMatchingPlannedAgendaItem, isWeeklyStudyAgenda, mergeWeeklyStudyAgenda, proposeWeeklyAgendaPlan, proposeWeeklyAgendaRecovery, replaceWeeklyAgendaWeek, updateWeeklyAgendaItemStatus, weekStartForStudyDate } from '../../src/core/domain/study-weekly-agenda.ts';
 import { readWeeklyStudyAgenda } from '../../src/adapters/local/weekly-study-agenda.ts';
 import { DEFAULT_TRAINING_PREFERENCES } from '../../src/core/domain/study-training-plan.ts';
 
@@ -142,6 +142,32 @@ describe('propuesta semanal persistida', () => {
     const resolved = dailyTrainingPlanFromAgenda({ plan, agenda, dateKey:'2026-11-02', studiedTopicIds:['T1.01'] });
     expect(resolved.activities).toEqual([{ activity:'newContent', minutes:45, reason:'new-content-day', topicId:'T19.01' }]);
     expect(dailyTrainingPlanFromAgenda({ plan, agenda, dateKey:'2026-11-02', studiedTopicIds:[] })).toEqual(resolved);
+  });
+
+  it('añade un seguimiento solo desde evento explícito y material principal todavía vigente', () => {
+    const source = { id:'source-check-0001', topicId:'T1.01', sectionId:'ci-0123456789abcdefabcd', materialPath:'T1.01/Temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64), occurredAt:10, kind:'self-check', timing:'immediate', rating:'partial' };
+    const followUp = { ...source, id:'follow-up-0001', occurredAt:20, kind:'follow-up', followUpId:source.id, sourceSelfCheckEventId:source.id, dueDateKey:'2026-11-10', status:'scheduled', sectionTitle:'1. INTRODUCCIÓN', printedPage:3 };
+    const selection = { topicId:'T1.01', materials:[{ path:source.materialPath, sourceHash:source.sourceHash, outlineFingerprint:source.outlineFingerprint, outlineStructureFingerprint:'c'.repeat(64), role:'syllabus' }], revision:1, updatedAt:1 };
+    const proposal = { baseRevision:0, targetWeekStart:'2026-11-09', items:[], skippedDays:[], missingTopicIds:[], plannedNewTopicIds:[], contentInventoryStatus:'manifest', omittedContentActivities:[], horizonCapacityGapBefore:null, acceleratedNewTopicIds:[], horizonCapacityGapAfter:null, sectionRecallSummary:{ added:0, stale:0, noCapacity:0, alreadyIncluded:0 } };
+    const added = addSectionRecallFollowUpsToWeeklyProposal({ proposal, agenda:emptyWeeklyStudyAgenda(), todayKey:'2026-11-09',
+      preferences:{ ...DEFAULT_TRAINING_PREFERENCES, minutesByDay:[120, 120, 120, 120, 120, 0, 0] }, scheduledActivities:[], selections:[selection], events:[source, followUp],
+      materialIndex:{ 'T1.01':[{ path:source.materialPath, kind:'syllabus', sha256:source.sourceHash, outlineFingerprint:source.outlineFingerprint, outlineStructureFingerprint:'c'.repeat(64) }] },
+    });
+    expect(added.items).toEqual([expect.objectContaining({ kind:'sectionRecall', dateKey:'2026-11-10', minutes:25, topicIds:['T1.01'], sectionRecall:expect.objectContaining({ followUpId:source.id, sectionId:source.sectionId, sectionTitle:'1. INTRODUCCIÓN', dueDateKey:'2026-11-10' }) })]);
+    expect(added.sectionRecallSummary).toEqual({ added:1, stale:0, noCapacity:0, alreadyIncluded:0 });
+    expect(isWeeklyStudyAgenda({ ...emptyWeeklyStudyAgenda(), revision:1, updatedAt:1, items:added.items })).toBe(true);
+    expect(dailyTrainingPlanFromAgenda({ plan:{ weekday:2, minutes:120, restDay:false, activities:[] }, agenda:{ ...emptyWeeklyStudyAgenda(), items:added.items }, dateKey:'2026-11-10', studiedTopicIds:['T1.01'] }).activities).toEqual([]);
+  });
+
+  it('deja fuera de propuesta el recuerdo antiguo, las versiones obsoletas y lo ya planificado', () => {
+    const source = { id:'source-check-0002', topicId:'T1.01', sectionId:'ci-0123456789abcdefabcd', materialPath:'T1.01/Temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64), occurredAt:10, kind:'self-check', timing:'delayed', rating:'partial' };
+    const followUp = { ...source, id:'follow-up-0002', occurredAt:20, kind:'follow-up', followUpId:source.id, sourceSelfCheckEventId:source.id, dueDateKey:'2026-11-10', status:'scheduled' };
+    const selection = { topicId:'T1.01', materials:[{ path:source.materialPath, sourceHash:source.sourceHash, outlineFingerprint:source.outlineFingerprint, outlineStructureFingerprint:'c'.repeat(64), role:'syllabus' }], revision:1, updatedAt:1 };
+    const proposal = { baseRevision:0, targetWeekStart:'2026-11-09', items:[], skippedDays:[], missingTopicIds:[], plannedNewTopicIds:[], contentInventoryStatus:'manifest', omittedContentActivities:[], horizonCapacityGapBefore:null, acceleratedNewTopicIds:[], horizonCapacityGapAfter:null, sectionRecallSummary:{ added:0, stale:0, noCapacity:0, alreadyIncluded:0 } };
+    const stale = addSectionRecallFollowUpsToWeeklyProposal({ proposal, agenda:emptyWeeklyStudyAgenda(), todayKey:'2026-11-09', preferences:DEFAULT_TRAINING_PREFERENCES, scheduledActivities:[], selections:[selection], events:[source, followUp], materialIndex:{ 'T1.01':[{ path:source.materialPath, kind:'syllabus', sha256:'d'.repeat(64), outlineFingerprint:'b'.repeat(64), outlineStructureFingerprint:'c'.repeat(64) }] } });
+    expect(stale.sectionRecallSummary.stale).toBe(1);
+    const already = addSectionRecallFollowUpsToWeeklyProposal({ proposal, agenda:{ ...emptyWeeklyStudyAgenda(), items:[item({ id:`section-follow-up:${source.id}:2026-11-09`, weekStart:'2026-11-09', dateKey:'2026-11-10', kind:'sectionRecall', topicIds:['T1.01'], sectionRecall:{ followUpId:source.id, sourceSelfCheckEventId:source.id, sectionId:source.sectionId, materialPath:source.materialPath, sourceHash:source.sourceHash, outlineFingerprint:source.outlineFingerprint, dueDateKey:followUp.dueDateKey } })] }, todayKey:'2026-11-09', preferences:DEFAULT_TRAINING_PREFERENCES, scheduledActivities:[], selections:[selection], events:[source, followUp], materialIndex:{ 'T1.01':[{ path:source.materialPath, kind:'syllabus', sha256:source.sourceHash, outlineFingerprint:source.outlineFingerprint, outlineStructureFingerprint:'c'.repeat(64) }] } });
+    expect(already.sectionRecallSummary.alreadyIncluded).toBe(1);
   });
 
   it('enlaza el cierre del paso con una única actividad pendiente de la fecha y no vuelve a marcar una repetición', () => {

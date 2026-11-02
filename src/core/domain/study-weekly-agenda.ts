@@ -6,11 +6,13 @@ import type { TrainingPreferences } from './entities.js';
 import type { ScheduledStudyActivity } from './study-training-calendar.js';
 import { resolveTrainingDay } from './study-training-events.js';
 import type { TopicReviewEvidence } from './study-review-intervention.js';
+import { sectionFollowUps, type AcademyMaterialSelection, type AcademySectionStudyEvent } from './academy-study-progress.js';
+import type { AcademyCurriculumMaterialIdentity } from './academy-curriculum-types.js';
 
 export const WEEKLY_AGENDA_SCHEMA_VERSION = 1 as const;
 export const MAX_WEEKLY_AGENDA_ITEMS = 70;
 
-export type WeeklyAgendaKind = 'newContent' | 'activeRecall' | 'topicTest' | 'mixedTopicTest' | 'failures' | 'spacedReviews';
+export type WeeklyAgendaKind = 'newContent' | 'activeRecall' | 'topicTest' | 'mixedTopicTest' | 'failures' | 'spacedReviews' | 'sectionRecall';
 export type WeeklyAgendaStatus = 'planned' | 'completed' | 'skipped' | 'rescheduled';
 
 /** A dated, user-confirmed activity. New content is not a review and may target an unstudied topic. */
@@ -28,6 +30,18 @@ export interface WeeklyAgendaItem {
   recoveryOf?: string;
   /** Original date retained on the closed record when a pending item is moved. */
   rescheduledTo?: string;
+  /** Exact material-bound self-check follow-up; only present for `sectionRecall`. */
+  sectionRecall?: {
+    followUpId: string;
+    sourceSelfCheckEventId: string;
+    sectionId: string;
+    materialPath: string;
+    sourceHash: string;
+    outlineFingerprint: string;
+    dueDateKey: string;
+    sectionTitle?: string;
+    printedPage?: number;
+  };
 }
 
 export interface WeeklyStudyAgenda {
@@ -37,7 +51,7 @@ export interface WeeklyStudyAgenda {
   items: readonly WeeklyAgendaItem[];
 }
 
-const kinds = new Set<WeeklyAgendaKind>(['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']);
+const kinds = new Set<WeeklyAgendaKind>(['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews', 'sectionRecall']);
 const statuses = new Set<WeeklyAgendaStatus>(['planned', 'completed', 'skipped', 'rescheduled']);
 
 export function isMondayStudyDate(dateKey: unknown): dateKey is string {
@@ -56,11 +70,23 @@ export function isWeeklyAgendaItem(value: unknown): value is WeeklyAgendaItem {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
   const item = value as Partial<WeeklyAgendaItem>;
   const weekStart = weekStartForStudyDate(item.dateKey ?? '');
+  const sectionRecallValid = item.kind === 'sectionRecall'
+    ? !!item.sectionRecall && typeof item.sectionRecall === 'object'
+      && /^[a-zA-Z0-9_-]{8,128}$/.test(item.sectionRecall.followUpId)
+      && /^[a-zA-Z0-9_-]{8,128}$/.test(item.sectionRecall.sourceSelfCheckEventId)
+      && /^ci-[a-f0-9]{20}$/i.test(item.sectionRecall.sectionId)
+      && typeof item.sectionRecall.materialPath === 'string' && item.sectionRecall.materialPath.length > 0 && item.sectionRecall.materialPath.length <= 500
+      && /^[a-f0-9]{64}$/i.test(item.sectionRecall.sourceHash) && /^[a-f0-9]{64}$/i.test(item.sectionRecall.outlineFingerprint)
+      && isStudyDateKey(item.sectionRecall.dueDateKey)
+      && (item.sectionRecall.sectionTitle === undefined || (typeof item.sectionRecall.sectionTitle === 'string' && item.sectionRecall.sectionTitle.length <= 500))
+      && (item.sectionRecall.printedPage === undefined || (Number.isInteger(item.sectionRecall.printedPage) && item.sectionRecall.printedPage >= 0))
+    : item.sectionRecall === undefined;
   return typeof item.id === 'string' && item.id.length > 0 && item.id.length <= 128
     && isMondayStudyDate(item.weekStart) && weekStart === item.weekStart
     && isStudyDateKey(item.dateKey) && kinds.has(item.kind as WeeklyAgendaKind)
     && Array.isArray(item.topicIds) && item.topicIds.length <= 20 && item.topicIds.every(isStudyTopicId)
-    && (item.kind === 'newContent' ? item.topicIds.length === 1 : item.topicIds.length >= 1)
+    && (item.kind === 'newContent' || item.kind === 'sectionRecall' ? item.topicIds.length === 1 : item.topicIds.length >= 1)
+    && sectionRecallValid
     && Number.isInteger(item.minutes) && item.minutes! >= 5 && item.minutes! <= 240
     && statuses.has(item.status as WeeklyAgendaStatus)
     && (item.recoveryOf === undefined || (typeof item.recoveryOf === 'string' && item.recoveryOf.length > 0 && item.recoveryOf.length <= 128))
@@ -155,6 +181,7 @@ export interface WeeklyAgendaPlanProposal {
   horizonCapacityGapBefore: number | null;
   acceleratedNewTopicIds: readonly string[];
   horizonCapacityGapAfter: number | null;
+  sectionRecallSummary: { added: number; stale: number; noCapacity: number; alreadyIncluded: number };
 }
 
 /** Builds a reviewable weekly draft from the existing daily rules and real study/catalog evidence. */
@@ -288,7 +315,79 @@ export function proposeWeeklyAgendaPlan(input: {
   const contentInventoryStatus = !input.contentInventory ? 'not-checked' : inventoryStatuses.every(status => status === 'manifest') ? 'manifest' : inventoryStatuses.every(status => status === 'unavailable') ? 'unavailable' : 'partial';
   const horizonCapacityGapBefore = Number.isInteger(input.horizonCapacityGap) && (input.horizonCapacityGap ?? -1) >= 0 ? input.horizonCapacityGap! : null;
   const horizonCapacityGapAfter = horizonCapacityGapBefore === null ? null : Math.max(0, horizonCapacityGapBefore - acceleratedNewTopicIds.length);
-  return { baseRevision:input.agenda.revision, targetWeekStart:input.targetWeekStart, items, skippedDays, missingTopicIds, plannedNewTopicIds, contentInventoryStatus, omittedContentActivities, horizonCapacityGapBefore, acceleratedNewTopicIds, horizonCapacityGapAfter };
+  return { baseRevision:input.agenda.revision, targetWeekStart:input.targetWeekStart, items, skippedDays, missingTopicIds, plannedNewTopicIds, contentInventoryStatus, omittedContentActivities, horizonCapacityGapBefore, acceleratedNewTopicIds, horizonCapacityGapAfter, sectionRecallSummary:{ added:0, stale:0, noCapacity:0, alreadyIncluded:0 } };
+}
+
+/** Adds only current, explicitly dated section follow-ups to a reviewable weekly draft. */
+export function addSectionRecallFollowUpsToWeeklyProposal(input: {
+  proposal: WeeklyAgendaPlanProposal;
+  agenda: WeeklyStudyAgenda;
+  todayKey: string;
+  preferences: TrainingPreferences;
+  scheduledActivities: readonly ScheduledStudyActivity[];
+  selections: readonly AcademyMaterialSelection[];
+  events: readonly AcademySectionStudyEvent[];
+  materialIndex: Readonly<Record<string, readonly AcademyCurriculumMaterialIdentity[]>>;
+}): WeeklyAgendaPlanProposal {
+  const { proposal, agenda } = input;
+  const weekEnd = addStudyDays(proposal.targetWeekStart, 6);
+  if (!weekEnd || !isStudyDateKey(input.todayKey)) return proposal;
+  const eventById = new Map(input.events.map(event => [event.id, event]));
+  const selectionByTopic = new Map(input.selections.map(selection => [selection.topicId, selection]));
+  const plannedFollowUpIds = new Set(agenda.items.flatMap(item => item.sectionRecall && (item.status === 'planned' || item.status === 'completed') ? [item.sectionRecall.followUpId] : []));
+  const occupied = new Map<string, number>();
+  for (const item of agenda.items) if (item.weekStart === proposal.targetWeekStart && item.status === 'planned') occupied.set(item.dateKey, (occupied.get(item.dateKey) ?? 0) + item.minutes);
+  for (const item of proposal.items) occupied.set(item.dateKey, (occupied.get(item.dateKey) ?? 0) + item.minutes);
+  for (const activity of input.scheduledActivities) occupied.set(activity.dateKey, (occupied.get(activity.dateKey) ?? 0) + activity.minutes);
+  let added = 0, stale = 0, noCapacity = 0, alreadyIncluded = 0;
+  const followUps = sectionFollowUps(input.events).filter(item => item.status === 'scheduled')
+    .sort((a, b) => a.dueDateKey.localeCompare(b.dueDateKey) || a.id.localeCompare(b.id));
+  const items = [...proposal.items];
+  for (const followUp of followUps) {
+    if (followUp.dueDateKey > weekEnd || (followUp.dueDateKey < proposal.targetWeekStart && followUp.dueDateKey > input.todayKey)) continue;
+    if (plannedFollowUpIds.has(followUp.followUpId)) { alreadyIncluded++; continue; }
+    const source = eventById.get(followUp.sourceSelfCheckEventId);
+    const selection = selectionByTopic.get(followUp.topicId);
+    const selectedMaterial = selection?.materials.find(material => material.role === 'syllabus' && material.path === followUp.materialPath
+      && material.sourceHash === followUp.sourceHash && material.outlineFingerprint === followUp.outlineFingerprint);
+    const currentMaterial = (input.materialIndex[followUp.topicId] ?? []).find(material => material.path === followUp.materialPath && material.kind === 'syllabus');
+    const selectionStillCurrent = !!selectedMaterial && !!currentMaterial && currentMaterial.sha256 === selectedMaterial.sourceHash
+      && currentMaterial.outlineFingerprint === selectedMaterial.outlineFingerprint
+      && currentMaterial.outlineStructureFingerprint === selectedMaterial.outlineStructureFingerprint;
+    if (!source || source.kind !== 'self-check' || source.topicId !== followUp.topicId || source.sectionId !== followUp.sectionId
+      || source.materialPath !== followUp.materialPath || source.sourceHash !== followUp.sourceHash || source.outlineFingerprint !== followUp.outlineFingerprint || !selectionStillCurrent
+      || currentMaterial?.sha256 !== followUp.sourceHash || currentMaterial.outlineFingerprint !== followUp.outlineFingerprint) { stale++; continue; }
+
+    let dateKey = followUp.dueDateKey;
+    if (dateKey < input.todayKey) {
+      dateKey = '';
+      for (let offset = 0; offset < 7; offset++) {
+        const candidate = addStudyDays(proposal.targetWeekStart, offset);
+        if (!candidate || candidate <= input.todayKey || candidate > weekEnd) continue;
+        const day = resolveTrainingDay({ dateKey:candidate, preferences:input.preferences });
+        if (day.minutes >= 25 && (occupied.get(candidate) ?? 0) + 25 <= day.minutes) { dateKey = candidate; break; }
+      }
+    }
+    const day = dateKey ? resolveTrainingDay({ dateKey, preferences:input.preferences }) : null;
+    if (!dateKey || !day?.minutes || day.focus === 'rest' || dateKey < input.todayKey
+      || (occupied.get(dateKey) ?? 0) + 25 > day.minutes || items.length + agenda.items.length >= MAX_WEEKLY_AGENDA_ITEMS
+      || agenda.items.filter(item => item.weekStart === proposal.targetWeekStart).length + items.filter(item => item.weekStart === proposal.targetWeekStart).length >= 35) { noCapacity++; continue; }
+
+    const idBase = `section-follow-up:${followUp.followUpId}:${proposal.targetWeekStart}`;
+    let id = idBase;
+    let suffix = 1;
+    while (agenda.items.some(item => item.id === id) || items.some(item => item.id === id)) id = `${idBase}:${++suffix}`;
+    items.push({ id, weekStart:proposal.targetWeekStart, dateKey, kind:'sectionRecall', topicIds:[followUp.topicId], minutes:25,
+      status:'planned', createdAt:agenda.updatedAt, updatedAt:agenda.updatedAt,
+      sectionRecall:{ followUpId:followUp.followUpId, sourceSelfCheckEventId:followUp.sourceSelfCheckEventId, sectionId:followUp.sectionId,
+        materialPath:followUp.materialPath, sourceHash:followUp.sourceHash, outlineFingerprint:followUp.outlineFingerprint,
+        dueDateKey:followUp.dueDateKey, ...(followUp.sectionTitle ? { sectionTitle:followUp.sectionTitle } : {}),
+        ...(followUp.printedPage !== undefined ? { printedPage:followUp.printedPage } : {}) } });
+    plannedFollowUpIds.add(followUp.followUpId);
+    occupied.set(dateKey, (occupied.get(dateKey) ?? 0) + 25);
+    added++;
+  }
+  return { ...proposal, items, sectionRecallSummary:{ added, stale, noCapacity, alreadyIncluded } };
 }
 
 export function applyWeeklyAgendaPlan(current: WeeklyStudyAgenda, proposal: WeeklyAgendaPlanProposal, now: number): WeeklyStudyAgenda | null {
@@ -388,7 +487,7 @@ export function dailyTrainingPlanFromAgenda(input: {
 }): DailyTrainingPlan {
   if (input.plan.restDay) return input.plan;
   const studied = new Set(input.studiedTopicIds);
-  const items = input.agenda.items.filter(item => item.dateKey === input.dateKey && item.status === 'planned'
+  const items = input.agenda.items.filter((item): item is WeeklyAgendaItem & { kind: Exclude<WeeklyAgendaKind, 'sectionRecall'> } => item.dateKey === input.dateKey && item.status === 'planned' && item.kind !== 'sectionRecall'
     && (item.kind === 'newContent' || item.topicIds.every(topicId => studied.has(topicId))));
   if (!items.length) return input.plan;
   const activities: PlannedTrainingActivity[] = items.map(item => {

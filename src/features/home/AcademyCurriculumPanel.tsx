@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import type { AcademyCurriculumSection, AcademyCurriculumTopic } from '../../core/domain/academy-curriculum-types.js';
 import { academyCurriculumTopicLoaders } from '../../core/domain/academy-curriculum.generated.js';
 import { useStudyService } from '../../shared/ui/study-services.js';
@@ -31,13 +31,14 @@ function createEventId(): string {
 }
 
 function SectionStudyUnit({
-  section, events, sessionId, activityId, record,
+  section, events, sessionId, activityId, record, targetSectionId,
 }: {
   section: AcademyCurriculumSection;
   events: readonly AcademySectionStudyEvent[];
   sessionId?: string;
   activityId?: string;
   record(event: AcademySectionStudyEvent): boolean;
+  targetSectionId?: string | null;
 }) {
   const matching = events.filter(event => event.sectionId === section.id && event.sourceHash === section.sourceHash && event.materialPath === section.materialPath);
   const coverage = sectionCoverage(matching);
@@ -47,7 +48,13 @@ function SectionStudyUnit({
     return `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`;
   });
   const saving = useRef(false);
+  const sectionElement = useRef<HTMLDetailsElement>(null);
   const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    if (targetSectionId !== section.id || !sectionElement.current) return;
+    sectionElement.current.open = true;
+    window.requestAnimationFrame(() => sectionElement.current?.scrollIntoView({ behavior:'smooth', block:'center' }));
+  }, [targetSectionId, section.id]);
   const base = () => ({
     id: createEventId(), topicId: section.topicId, sectionId: section.id, materialPath: section.materialPath,
     sourceHash: section.sourceHash, outlineFingerprint: section.outlineFingerprint, occurredAt: Math.max(Date.now(), ...matching.map(item => item.occurredAt + 1)),
@@ -81,7 +88,7 @@ function SectionStudyUnit({
     if (saving.current || !canScheduleSectionFollowUp(matching, sourceSelfCheckEventId)) return;
     saving.current = true; setBusy(true);
     try {
-      const saved = record({ ...base(), kind: 'follow-up', followUpId: sourceSelfCheckEventId, sourceSelfCheckEventId, dueDateKey, status: 'scheduled' });
+      const saved = record({ ...base(), kind: 'follow-up', followUpId: sourceSelfCheckEventId, sourceSelfCheckEventId, dueDateKey, status: 'scheduled', sectionTitle:section.title, printedPage:section.printedPage });
       setMessage(saved ? `Comprobación programada para el ${dueDateKey}. La fecha es una elección tuya, no un intervalo automático.` : 'No se pudo guardar la comprobación en este dispositivo.');
     } finally { saving.current = false; setBusy(false); }
   };
@@ -91,7 +98,7 @@ function SectionStudyUnit({
     if (!current) return;
     saving.current = true; setBusy(true);
     try {
-      const saved = record({ ...base(), kind: 'follow-up', followUpId, sourceSelfCheckEventId: current.sourceSelfCheckEventId, dueDateKey: current.dueDateKey, status });
+      const saved = record({ ...base(), kind: 'follow-up', followUpId, sourceSelfCheckEventId: current.sourceSelfCheckEventId, dueDateKey: current.dueDateKey, status, ...(current.sectionTitle ? { sectionTitle:current.sectionTitle } : {}), ...(current.printedPage !== undefined ? { printedPage:current.printedPage } : {}) });
       setMessage(saved ? (status === 'completed' ? 'Comprobación marcada como realizada.' : 'Comprobación cancelada; el historial se conserva.') : 'No se pudo actualizar la comprobación.');
     } finally { saving.current = false; setBusy(false); }
   };
@@ -100,7 +107,7 @@ function SectionStudyUnit({
   const coverageLabel = coverage === 'covered' ? 'cubierto' : coverage === 'partial' ? 'parcial' : 'sin iniciar';
   const timingLabel = { assisted: 'con ayuda', immediate: 'inmediato', delayed: 'diferido' };
   const ratingLabel = { 'not-recalled': 'no lo recordé', partial: 'lo recordé parcialmente', recalled: 'lo recordé' };
-  return <details className="my-1 rounded-md border border-line px-2 py-1">
+  return <details ref={sectionElement} id={section.id} className="my-1 rounded-md border border-line px-2 py-1">
     <summary className="min-h-10 cursor-pointer content-center">{section.title} <span className="text-muted">(p. {section.printedPage} · cobertura {coverageLabel})</span></summary>
     <div className="pb-2 ps-1">
       <p className="my-1 text-sm text-muted">Registra lo que has cubierto por tu cuenta. La cobertura no acredita comprensión ni recuerdo.</p>
@@ -143,6 +150,9 @@ function SectionStudyUnit({
 export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, activityId }: { topicId: string; hasStudyMarker: boolean; sessionId?: string; activityId?: string }) {
   const [draft, setDraft] = useState<{ topicId: string; paths: string[] } | null>(null);
   const [notice, setNotice] = useState('');
+  const [searchParams] = useSearchParams();
+  const targetSectionId = searchParams.get('sectionId');
+  const materialPanel = useRef<HTMLDetailsElement>(null);
   const academyProgress = useStudyService('academyStudyProgress');
   const progressResource = useMemo(() => ({
     accountId: academyProgress.accountId,
@@ -162,6 +172,12 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
     });
     return () => { active = false; };
   }, [loader, topicId]);
+  useEffect(() => {
+    if (targetSectionId && loaded?.topicId === topicId && materialPanel.current) {
+      materialPanel.current.open = true;
+      window.requestAnimationFrame(() => document.getElementById(targetSectionId)?.scrollIntoView({ behavior:'smooth', block:'center' }));
+    }
+  }, [targetSectionId, loaded, topicId]);
 
   if (!loader) return <p className="mt-2 mb-0 text-sm text-muted">No hay materiales de academia indexados para {topicId} en esta versión del catálogo.</p>;
   if (!loaded || loaded.topicId !== topicId) return <p className="mt-2 mb-0 text-sm text-muted" role="status">Cargando índice de materiales…</p>;
@@ -223,14 +239,14 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
         <h4 className="mb-1 text-sm font-medium"><code className="break-all">{materialPath}</code></h4>
         {matchingOutlineMessage(materialPath) && <p className="my-1 text-sm text-muted">{matchingOutlineMessage(materialPath)}</p>}
         {draftPaths.includes(materialPath) ? <div className="mt-2">
-          {sections.filter(section => section.materialPath === materialPath).map(section => <SectionStudyUnit key={section.id} section={section} events={progress.events} sessionId={sessionId} activityId={activityId} record={recordEvent} />)}
-        </div> : <ul className="my-0 list-disc ps-5 text-sm">{sections.filter(section => section.materialPath === materialPath).map(section => <li key={section.id}>{section.title} <span className="text-muted">(p. {section.printedPage})</span></li>)}</ul>}
+          {sections.filter(section => section.materialPath === materialPath).map(section => <SectionStudyUnit key={section.id} section={section} events={progress.events} sessionId={sessionId} activityId={activityId} record={recordEvent} targetSectionId={targetSectionId} />)}
+        </div> : <ul className="my-0 list-disc ps-5 text-sm">{sections.filter(section => section.materialPath === materialPath).map(section => <li id={section.id} key={section.id}>{section.title} <span className="text-muted">(p. {section.printedPage})</span></li>)}</ul>}
       </div>)}
       <p className="mt-2 mb-0 text-sm text-muted">{context}</p>
     </section>;
   };
 
-  return <details className="mt-3 rounded-[var(--r-s)] border border-line p-3">
+  return <details ref={materialPanel} className="mt-3 rounded-[var(--r-s)] border border-line p-3">
     <summary className="min-h-11 cursor-pointer content-center font-semibold">Material de academia · {topic.sections.length} referencias de índice</summary>
     <p className="mt-2 mb-3 text-sm text-muted">{message} Los documentos permanecen en tu carpeta de Drive y no están copiados ni se abren desde la aplicación. Usa la ruta indicada para consultarlos.</p>
     {hasStudyMarker && <div className="my-3 rounded-md bg-surface-soft p-3">
@@ -242,6 +258,7 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
     </ul>}
     {!!progressError && <p className="my-2 text-sm text-muted" role="alert">No se pudo leer el progreso local de este tema. Puedes consultar el índice; el progreso no se ha modificado.</p>}
     {staleSelection && <p className="my-2 text-sm text-muted" role="status">Cambió la versión de algún material seleccionado. El historial anterior se conserva separado; revisa y guarda de nuevo los archivos actuales para continuar el seguimiento.</p>}
+    {targetSectionId && !topic.sections.some(section => section.id === targetSectionId) && <p className="my-2 text-sm text-muted" role="status">Este apartado ya no aparece en el índice de la versión actual. El seguimiento anterior se conserva; revisa la selección de material antes de volver a programarlo.</p>}
     {(curriculumSections.length + supplementalSections.length > 0) && <fieldset className="my-3 rounded-md border border-line p-3">
       <legend className="px-1 text-sm font-semibold">Elegir material para registrar cobertura</legend>
       <p className="my-1 text-sm text-muted">La selección queda ligada al hash del archivo. El material complementario no se presenta como temario completo.</p>

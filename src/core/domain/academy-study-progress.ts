@@ -37,7 +37,7 @@ interface SectionEventBase {
 export type AcademySectionStudyEvent = SectionEventBase & (
   | { kind: 'coverage'; coverage: SectionCoverage }
   | { kind: 'self-check'; timing: SectionRecallTiming; rating: SectionRecallRating }
-  | { kind: 'follow-up'; followUpId: string; sourceSelfCheckEventId: string; dueDateKey: string; status: SectionFollowUpStatus }
+  | { kind: 'follow-up'; followUpId: string; sourceSelfCheckEventId: string; dueDateKey: string; status: SectionFollowUpStatus; sectionTitle?: string; printedPage?: number }
 );
 
 export interface AcademyTopicProgressSnapshot {
@@ -92,7 +92,9 @@ export function isAcademySectionStudyEvent(value: unknown): value is AcademySect
   if (value.kind === 'self-check') return timings.has(value.timing as SectionRecallTiming) && ratings.has(value.rating as SectionRecallRating);
   if (value.kind === 'follow-up') return eventIdPattern.test(String(value.followUpId ?? ''))
     && eventIdPattern.test(String(value.sourceSelfCheckEventId ?? ''))
-    && isStudyDateKey(value.dueDateKey) && followUpStatuses.has(value.status as SectionFollowUpStatus);
+    && isStudyDateKey(value.dueDateKey) && followUpStatuses.has(value.status as SectionFollowUpStatus)
+    && (value.sectionTitle === undefined || (typeof value.sectionTitle === 'string' && value.sectionTitle.length <= 500))
+    && (value.printedPage === undefined || (Number.isInteger(value.printedPage) && (value.printedPage as number) >= 0));
   return false;
 }
 

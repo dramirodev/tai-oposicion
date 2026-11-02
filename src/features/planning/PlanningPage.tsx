@@ -6,7 +6,9 @@ import type { DailyTrainingSession, TrainingSessionStep } from '../../core/domai
 import { needsPaperRecallFollowUp, type PaperRecallAssessment, type PaperRecallRating } from '../../core/domain/paper-recall-assessment.js';
 import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
 import type { ScheduledStudyActivity, ScheduledStudyActivityKind } from '../../core/domain/study-training-calendar.js';
-import { dailyTrainingPlanFromAgenda, proposeWeeklyAgendaPlan, type WeeklyAgendaItem, type WeeklyAgendaPlanProposal, type WeeklyAgendaRecoveryProposal } from '../../core/domain/study-weekly-agenda.js';
+import { addSectionRecallFollowUpsToWeeklyProposal, dailyTrainingPlanFromAgenda, proposeWeeklyAgendaPlan, type WeeklyAgendaItem, type WeeklyAgendaPlanProposal, type WeeklyAgendaRecoveryProposal } from '../../core/domain/study-weekly-agenda.js';
+import { academyCurriculumMaterialIndex } from '../../core/domain/academy-curriculum.generated.js';
+import { sectionFollowUps, type AcademySectionStudyEvent } from '../../core/domain/academy-study-progress.js';
 import { useStudyService, type HomeOverview, type HomeServices, type SettingsSnapshot } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { useActionLifetime } from '../../shared/ui/use-action-lifetime.js';
@@ -412,9 +414,12 @@ export function PlanningPage() {
     setReload(value => value + 1);
     return true;
   };
-  const generateWeeklyAgendaPlan = (weekStart: string) => {
+  const generateWeeklyAgendaPlan = async (weekStart: string) => {
     if (!weeklyAgenda || !planningOverview) return null;
-    return proposeWeeklyAgendaPlan({
+    let currentProgress;
+    try { currentProgress = await academyProgressService.loadProgressOverview(); }
+    catch { services.notify('No se pudo leer el seguimiento por apartado. No se preparó la propuesta semanal.'); return null; }
+    const proposal = proposeWeeklyAgendaPlan({
       agenda:weeklyAgenda, targetWeekStart:weekStart, todayKey, preferences:settings.training,
       catalogTopics:(settings.index?.topics ?? []).map(topic => ({ id:topic.id, name:topic.name })),
       studiedTopicIds:seenTopicIds, dueCount:planningOverview.trainingDue.questions, cardDueCount:planningOverview.trainingDue.cards,
@@ -426,8 +431,29 @@ export function PlanningPage() {
         plannedNewContentItems:weeklyAgenda.items.filter(item => item.kind === 'newContent'),
       }).topicSessionGap,
     });
+    if (!proposal) return proposal;
+    return addSectionRecallFollowUpsToWeeklyProposal({
+      proposal, agenda:weeklyAgenda, todayKey, preferences:settings.training, scheduledActivities,
+      selections:currentProgress.selections, events:currentProgress.events, materialIndex:academyCurriculumMaterialIndex,
+    });
   };
-  const addWeeklyAgendaPlan = (proposal: WeeklyAgendaPlanProposal) => {
+  const addWeeklyAgendaPlan = async (proposal: WeeklyAgendaPlanProposal) => {
+    if (!weeklyAgenda) return false;
+    let currentProgress;
+    try { currentProgress = await academyProgressService.loadProgressOverview(); }
+    catch { services.notify('No se pudo comprobar el progreso actual. No se guardó la propuesta; vuelve a intentarlo.'); return false; }
+    const proposalWithoutFollowUps: WeeklyAgendaPlanProposal = { ...proposal, items:proposal.items.filter(item => item.kind !== 'sectionRecall'), sectionRecallSummary:{ added:0, stale:0, noCapacity:0, alreadyIncluded:0 } };
+    const currentProposal = addSectionRecallFollowUpsToWeeklyProposal({
+      proposal:proposalWithoutFollowUps, agenda:weeklyAgenda, todayKey, preferences:settings.training, scheduledActivities,
+      selections:currentProgress.selections, events:currentProgress.events, materialIndex:academyCurriculumMaterialIndex,
+    });
+    const sectionPlan = (items: readonly WeeklyAgendaItem[]) => items.filter(item => item.kind === 'sectionRecall')
+      .map(item => ({ id:item.id, dateKey:item.dateKey, minutes:item.minutes, sectionRecall:item.sectionRecall }))
+      .sort((first, second) => first.id.localeCompare(second.id));
+    if (JSON.stringify(sectionPlan(proposal.items)) !== JSON.stringify(sectionPlan(currentProposal.items))) {
+      services.notify('Cambió una comprobación o la versión del material. Revisa una propuesta semanal nueva antes de confirmar.');
+      return false;
+    }
     const saved = services.addWeeklyStudyAgendaPlan?.(proposal);
     if (!saved) return false;
     setCalendarRevision(value => value + 1);
@@ -435,6 +461,39 @@ export function PlanningPage() {
     return true;
   };
   const setWeeklyAgendaStatus = (id: string, status: 'completed' | 'skipped') => {
+    const item = weeklyAgenda?.items.find(candidate => candidate.id === id);
+    if (status === 'completed' && item?.kind === 'sectionRecall' && item.sectionRecall) {
+      void academyProgressService.loadProgressOverview().then(snapshot => {
+        const followUp = sectionFollowUps(snapshot.events).find(candidate => candidate.followUpId === item.sectionRecall!.followUpId);
+        if (!followUp || followUp.status === 'cancelled') { services.notify('La comprobación ya no está pendiente. Actualiza la planificación antes de cerrar esta actividad.'); return; }
+        if (followUp?.status === 'scheduled') {
+          const selection = snapshot.selections.find(candidate => candidate.topicId === item.topicIds[0]);
+          const selected = selection?.materials.find(material => material.role === 'syllabus' && material.path === followUp.materialPath
+            && material.sourceHash === followUp.sourceHash && material.outlineFingerprint === followUp.outlineFingerprint);
+          const current = (academyCurriculumMaterialIndex[item.topicIds[0]] ?? []).find(material => material.path === followUp.materialPath && material.kind === 'syllabus');
+          if (!selected || !current || current.sha256 !== selected.sourceHash || current.outlineFingerprint !== selected.outlineFingerprint
+            || current.outlineStructureFingerprint !== selected.outlineStructureFingerprint || current.sha256 !== item.sectionRecall!.sourceHash
+            || current.outlineFingerprint !== item.sectionRecall!.outlineFingerprint) {
+            services.notify('Cambió la versión del temario. El seguimiento antiguo se conserva, pero esta actividad no se puede cerrar como actual.'); return;
+          }
+          const related = snapshot.events.filter(event => event.kind === 'follow-up' && event.followUpId === followUp.followUpId);
+          const next: AcademySectionStudyEvent = {
+            id:crypto.randomUUID(), topicId:item.topicIds[0], sectionId:item.sectionRecall!.sectionId,
+            materialPath:item.sectionRecall!.materialPath, sourceHash:item.sectionRecall!.sourceHash,
+            outlineFingerprint:item.sectionRecall!.outlineFingerprint,
+            occurredAt:Math.max(Date.now(), ...related.map(event => event.occurredAt + 1)), kind:'follow-up',
+            followUpId:followUp.followUpId, sourceSelfCheckEventId:followUp.sourceSelfCheckEventId,
+            dueDateKey:followUp.dueDateKey, status:'completed', ...(followUp.sectionTitle ? { sectionTitle:followUp.sectionTitle } : {}),
+            ...(followUp.printedPage !== undefined ? { printedPage:followUp.printedPage } : {}),
+          };
+          if (!academyProgressService.record(next)) { services.notify('La agenda quedó abierta porque no se pudo guardar la comprobación realizada.'); return; }
+        }
+        const saved = services.setWeeklyStudyAgendaItemStatus?.(id, status);
+        if (!saved) { services.notify('El seguimiento se guardó, pero no se pudo cerrar la actividad de agenda. Puedes reintentar el cierre.'); return; }
+        setCalendarRevision(value => value + 1);
+      }).catch(() => services.notify('No se pudo actualizar el seguimiento. Reintenta con conexión o más tarde.'));
+      return true;
+    }
     const saved = services.setWeeklyStudyAgendaItemStatus?.(id, status);
     if (!saved) return false;
     setCalendarRevision(value => value + 1);
@@ -448,6 +507,12 @@ export function PlanningPage() {
     const scoped = scopeTrainingRouteToSeenTopics(route, services.seenTopics());
     if (!scoped) { services.notify('Ese tema ya no está marcado como visto. Actualiza la agenda antes de iniciar el repaso.'); return; }
     void navigate(`/${scoped}`);
+  };
+  const openSectionRecall = (item: WeeklyAgendaItem) => {
+    if (!item.sectionRecall) return;
+    const topic = encodeURIComponent(item.topicIds[0]);
+    const section = encodeURIComponent(item.sectionRecall.sectionId);
+    void navigate(`/temario?topic=${topic}&sectionId=${section}`);
   };
   return <main className="planning-page mx-auto w-full max-w-[68rem] pt-6 pb-12 max-[520px]:pt-4">
     <header className="planning-header mb-6 flex items-start justify-between gap-4 max-[520px]:flex-col">
@@ -463,7 +528,7 @@ export function PlanningPage() {
     <StudyCalendar preferences={settings.training} now={now} history={planningOverview.trainingHistory ?? []} activeSession={planningOverview.trainingSession}
       topics={planningOverview.studiedTopicDetails ?? []} catalogTopics={settings.index?.topics?.map(topic => ({ id:topic.id, name:topic.name })) ?? []} seenTopicIds={seenTopicIds}
       activities={scheduledActivities} weeklyItems={weeklyAgenda?.items ?? []} weeklyAgenda={weeklyAgenda} onSchedule={scheduleActivity} onReschedule={rescheduleActivity} onOpenActivity={openScheduledActivity}
-      onSaveWeeklyAgenda={saveWeeklyAgenda} onRecoverWeeklyAgenda={recoverWeeklyAgenda} onProposeWeeklyAgenda={generateWeeklyAgendaPlan} onAddWeeklyAgendaPlan={addWeeklyAgendaPlan} onSetWeeklyAgendaStatus={setWeeklyAgendaStatus} />
+      onSaveWeeklyAgenda={saveWeeklyAgenda} onRecoverWeeklyAgenda={recoverWeeklyAgenda} onProposeWeeklyAgenda={generateWeeklyAgendaPlan} onAddWeeklyAgendaPlan={addWeeklyAgendaPlan} onSetWeeklyAgendaStatus={setWeeklyAgendaStatus} onOpenSectionRecall={openSectionRecall} />
     <PlanningHistory overview={planningOverview} />
     <PlanningEvidence overview={planningOverview} />
   </main>;
