@@ -104,16 +104,17 @@ const dominioTemas = createTopicMasteryComposition({ progressRepository: localPr
 const progressPorTema = createTopicProgressComposition({ progressRepository: localProgressRepository, accountId: localStudyProgressGateway.accountId, questionIdsForTopic: topicId => studyQuestionCatalog.getMetadataSnapshot()?._by[topicId] || [] });
 const trainingSession = createTrainingSessionComposition({ accountId: localStudyProgressGateway.accountId, now: studyQuestionCatalog.now, push: session => { void sync.pushTrainingSession(session); } });
 const paperRecall = createPaperRecallComposition({ accountId: localStudyProgressGateway.accountId, now: studyQuestionCatalog.now, push: () => { void sync.pushPaperRecallAssessments(); } });
+const weeklyStudyAgenda = createWeeklyStudyAgendaComposition({
+  accountId: localStudyProgressGateway.accountId,
+  now: studyQuestionCatalog.now,
+  push: () => { void sync.pushWeeklyStudyAgenda(); },
+});
 const trainingCalendar = createTrainingCalendarComposition({
   accountId: localStudyProgressGateway.accountId,
   now: studyQuestionCatalog.now,
   getSeenTopics: localStudyProgressGateway.getSeenTopics,
   getPreferences: () => normalizeTrainingPreferences(localStudyProgressGateway.getPreferences().training),
   push: activities => { void sync.pushTrainingCalendar(activities); },
-});
-const weeklyStudyAgenda = createWeeklyStudyAgendaComposition({
-  accountId: localStudyProgressGateway.accountId,
-  now: studyQuestionCatalog.now,
 });
 let routeReady: () => void;
 const firstReactRouteReady = new Promise<void>(resolve => { routeReady = resolve; });
@@ -424,7 +425,7 @@ export function bootAppServices(): () => void {
     prefetchBank: prefetchBanco,
     loadMetadataAndInitializeSync: async () => {
       try { await getMeta(); } catch (error) { console.error(error); }
-      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getAllQuestionIdsForTopic }, progressStore, trainingSession, paperRecall, trainingCalendar); } catch (error) { console.error(error); }
+      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getAllQuestionIdsForTopic }, progressStore, trainingSession, paperRecall, trainingCalendar, weeklyStudyAgenda); } catch (error) { console.error(error); }
     },
   });
 }

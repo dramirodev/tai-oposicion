@@ -11,8 +11,10 @@ import { applyAttemptAction } from '../src/core/domain/attempts/transitions.ts';
 import { createTrainingSessionSyncAdapter } from '../src/adapters/firebase/training-session-sync.ts';
 import { createPaperRecallSyncAdapter } from '../src/adapters/firebase/paper-recall-sync.ts';
 import { createTrainingCalendarSyncAdapter } from '../src/adapters/firebase/training-calendar-sync.ts';
+import { createWeeklyStudyAgendaSyncAdapter } from '../src/adapters/firebase/weekly-study-agenda-sync.ts';
 import { mergePaperRecallAssessments } from '../src/core/domain/paper-recall-assessment.ts';
 import { mergeScheduledStudyActivities } from '../src/core/domain/study-training-calendar.ts';
+import { emptyWeeklyStudyAgenda, mergeWeeklyStudyAgenda } from '../src/core/domain/study-weekly-agenda.ts';
 
 const projectId = 'demo-tai-training-rules';
 let testEnv;
@@ -93,6 +95,47 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
     await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:activity.updatedAt, activities:Array.from({ length:91 }, (_, index) => ({ ...activity, id:`${activity.id}:${index}` })) }));
     await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:activity.updatedAt, activities:[], unexpected:true }));
     await assertFails(setDoc(doc(testEnv.unauthenticatedContext().firestore(), 'users/student/cfg/trainingCalendar'), { schemaVersion:1, updatedAt:activity.updatedAt, activities:[activity] }));
+  });
+
+  it('aísla la agenda semanal versionada por cuenta y limita su tamaño', async () => {
+    const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const other = testEnv.authenticatedContext('other', { email:'other@example.test', email_verified:true }).firestore();
+    const dateKey = '2026-11-02';
+    const item = { id:'agenda-new-1', weekStart:dateKey, dateKey, kind:'newContent', topicIds:['T12.01'], minutes:40, status:'planned', createdAt:1_793_280_000_000, updatedAt:1_793_280_000_000 };
+    const agenda = { schemaVersion:1, revision:1, updatedAt:item.updatedAt, items:[item] };
+    const reference = doc(db, 'users/student/cfg/weeklyStudyAgenda');
+    await assertSucceeds(setDoc(reference, { schemaVersion:1, updatedAt:item.updatedAt, agenda }));
+    await assertFails(getDoc(doc(other, 'users/student/cfg/weeklyStudyAgenda')));
+    await assertFails(setDoc(reference, { schemaVersion:2, updatedAt:item.updatedAt, agenda }));
+    await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:item.updatedAt, agenda:{ ...agenda, items:Array.from({ length:71 }, (_, index) => ({ ...item, id:`agenda-${index}` })) } }));
+    await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:item.updatedAt, agenda, unexpected:true }));
+    await assertFails(setDoc(doc(testEnv.unauthenticatedContext().firestore(), 'users/student/cfg/weeklyStudyAgenda'), { schemaVersion:1, updatedAt:item.updatedAt, agenda }));
+  });
+
+  it('sincroniza y combina la agenda semanal sin usar el documento de calendario anterior', async () => {
+    const firstDb = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const secondDb = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const dateKey = '2026-11-02';
+    const item = { id:'agenda-new-1', weekStart:dateKey, dateKey, kind:'newContent', topicIds:['T12.01'], minutes:40, status:'planned', createdAt:1_793_280_000_000, updatedAt:1_793_280_000_000 };
+    const makeStore = () => {
+      let agenda = emptyWeeklyStudyAgenda();
+      return { get:() => agenda, mergeRemote(value) { const merged = mergeWeeklyStudyAgenda(agenda, value); const changed = JSON.stringify(merged) !== JSON.stringify(agenda); agenda = merged; return changed; }, set:value => { agenda = value; } };
+    };
+    const firstStore = makeStore(), secondStore = makeStore();
+    firstStore.set({ schemaVersion:1, revision:1, updatedAt:item.updatedAt, items:[item] });
+    let active = true;
+    const onError = error => { throw error; };
+    const first = createWeeklyStudyAgendaSyncAdapter({ db:firstDb, uid:'student', store:firstStore, isActive:() => active, onSynced:() => {}, onWriteError:onError });
+    const second = createWeeklyStudyAgendaSyncAdapter({ db:secondDb, uid:'student', store:secondStore, isActive:() => active, onSynced:() => {}, onWriteError:onError });
+    const stopFirst = first.listen(onError), stopSecond = second.listen(onError);
+    const waitFor = async predicate => { for (let attempt = 0; attempt < 50 && !predicate(); attempt++) await new Promise(resolveWait => setTimeout(resolveWait, 20)); expect(predicate()).toBe(true); };
+    try {
+      await first.push();
+      await waitFor(() => secondStore.get().items[0]?.id === item.id);
+      expect((await getDoc(doc(firstDb, 'users/student/cfg/weeklyStudyAgenda'))).data()?.agenda.items[0].topicIds).toEqual(['T12.01']);
+      expect((await getDoc(doc(firstDb, 'users/student/cfg/trainingCalendar'))).exists()).toBe(false);
+      await assertFails(getDoc(doc(testEnv.authenticatedContext('other', { email:'other@example.test', email_verified:true }).firestore(), 'users/student/cfg/weeklyStudyAgenda')));
+    } finally { active = false; stopFirst(); stopSecond(); }
   });
 
   it('permite revelar una respuesta con un nuevo evento terminal válido aunque su id sea lexicográficamente mayor', async () => {

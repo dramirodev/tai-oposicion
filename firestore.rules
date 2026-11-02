@@ -158,6 +158,16 @@ service cloud.firestore {
         && d.activities is list && d.activities.size() <= 90;
     }
 
+    function validWeeklyStudyAgenda(agenda) {
+      return agenda is map
+        && agenda.keys().hasOnly(['schemaVersion', 'revision', 'updatedAt', 'items'])
+        && agenda.keys().hasAll(['schemaVersion', 'revision', 'updatedAt', 'items'])
+        && agenda.schemaVersion == 1
+        && agenda.revision is int && agenda.revision >= 0
+        && agenda.updatedAt is number && agenda.updatedAt >= 0
+        && agenda.items is list && agenda.items.size() <= 70;
+    }
+
     function validAttemptEvent(eventId, attemptId) {
       let d = request.resource.data;
       let p = d.payload;
@@ -343,6 +353,17 @@ service cloud.firestore {
     match /users/{uid}/cfg/trainingCalendar {
       allow read: if canUse(uid);
       allow create, update: if canUse(uid) && validTrainingCalendar();
+      allow delete: if false;
+    }
+    // Propuesta semanal separada para que clientes antiguos no reescriban un formato que no conocen.
+    match /users/{uid}/cfg/weeklyStudyAgenda {
+      allow read: if canUse(uid);
+      allow create, update: if canUse(uid)
+        && request.resource.data.keys().hasOnly(['schemaVersion', 'updatedAt', 'agenda'])
+        && request.resource.data.keys().hasAll(['schemaVersion', 'updatedAt', 'agenda'])
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.updatedAt is number
+        && validWeeklyStudyAgenda(request.resource.data.agenda);
       allow delete: if false;
     }
     // Informes de errores del banco

@@ -25,7 +25,7 @@ export function setAttemptRepository(repository: AttemptRepository): void {
 }
 // Si el módulo ya está cargado se llama de forma síncrona: signInWithPopup necesita ejecutarse dentro del gesto del usuario.
 const call = <R>(callback: (metadata: Mod) => R): R | Promise<R> => (mod ? callback(mod) : load().then(callback));
-export const init = (metadata: Parameters<Mod['init']>[0], progressStore: ProgressSyncStore, trainingSessionStore?: Parameters<Mod['init']>[2], paperRecallStore?: Parameters<Mod['init']>[3], trainingCalendarStore?: Parameters<Mod['init']>[4]) => load().then(value => value.init(metadata, progressStore, trainingSessionStore, paperRecallStore, trainingCalendarStore));
+export const init = (metadata: Parameters<Mod['init']>[0], progressStore: ProgressSyncStore, trainingSessionStore?: Parameters<Mod['init']>[2], paperRecallStore?: Parameters<Mod['init']>[3], trainingCalendarStore?: Parameters<Mod['init']>[4], weeklyStudyAgendaStore?: Parameters<Mod['init']>[5]) => load().then(value => value.init(metadata, progressStore, trainingSessionStore, paperRecallStore, trainingCalendarStore, weeklyStudyAgendaStore));
 export const login = () => call(metadata => metadata.login());
 export const logout = () => call(metadata => metadata.logout());
 export const retry = () => call(metadata => metadata.retry());
@@ -36,3 +36,4 @@ export const revoke = (id: string) => call(metadata => metadata.revoke(id));
 export const pushTrainingSession = (session: import('../../core/domain/study-training-session.js').DailyTrainingSession) => call(metadata => metadata.pushTrainingSession(session));
 export const pushPaperRecallAssessments = () => call(metadata => metadata.pushPaperRecallAssessments());
 export const pushTrainingCalendar = (activities?: readonly import('../../core/domain/study-training-calendar.js').ScheduledStudyActivity[]) => call(metadata => metadata.pushTrainingCalendar(activities));
+export const pushWeeklyStudyAgenda = () => call(metadata => metadata.pushWeeklyStudyAgenda());
