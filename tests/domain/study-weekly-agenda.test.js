@@ -162,6 +162,35 @@ describe('propuesta semanal persistida', () => {
     ]);
   });
 
+  it('no propone más de doce pasos diarios al añadir repasos de apartado', () => {
+    const source = { id:'source-check-cap', topicId:'T1.01', sectionId:'ci-0123456789abcdefabcd', materialPath:'T1.01/Temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64), occurredAt:10, kind:'self-check', timing:'immediate', rating:'partial' };
+    const followUp = { ...source, id:'follow-up-cap', occurredAt:20, kind:'follow-up', followUpId:source.id, sourceSelfCheckEventId:source.id, dueDateKey:'2026-11-10', status:'scheduled' };
+    const selection = { topicId:'T1.01', materials:[{ path:source.materialPath, sourceHash:source.sourceHash, outlineFingerprint:source.outlineFingerprint, outlineStructureFingerprint:'c'.repeat(64), role:'syllabus' }], revision:1, updatedAt:1 };
+    const baseItems = Array.from({ length:12 }, (_, index) => item({ id:`planned-${index}`, weekStart:'2026-11-09', dateKey:'2026-11-10', minutes:5 }));
+    const agenda = { ...emptyWeeklyStudyAgenda(), revision:1, updatedAt:100, items:baseItems };
+    const proposal = { baseRevision:1, targetWeekStart:'2026-11-09', items:[], skippedDays:[], missingTopicIds:[], plannedNewTopicIds:[], contentInventoryStatus:'manifest', omittedContentActivities:[], horizonCapacityGapBefore:null, acceleratedNewTopicIds:[], horizonCapacityGapAfter:null, sectionRecallSummary:{ added:0, stale:0, noCapacity:0, alreadyIncluded:0 } };
+    const result = addSectionRecallFollowUpsToWeeklyProposal({ proposal, agenda, todayKey:'2026-11-09', preferences:DEFAULT_TRAINING_PREFERENCES, scheduledActivities:[], selections:[selection], events:[source, followUp], materialIndex:{ 'T1.01':[{ path:source.materialPath, kind:'syllabus', sha256:source.sourceHash, outlineFingerprint:source.outlineFingerprint, outlineStructureFingerprint:'c'.repeat(64) }] } });
+    expect(result.items).toEqual([]);
+    expect(result.sectionRecallSummary).toMatchObject({ added:0, noCapacity:1 });
+  });
+
+  it('deja sin ubicar recuperaciones cuando la fecha ya tiene doce actividades', () => {
+    const fullDay = Array.from({ length:60 }, (_, index) => item({ id:`day-${index}`, weekStart:'2026-11-09', dateKey:`2026-11-${String(10 + Math.floor(index / 12)).padStart(2, '0')}`, minutes:5 }));
+    const overdue = item({ id:'overdue-overflow', weekStart:'2026-11-02', dateKey:'2026-11-08', kind:'topicTest', topicIds:['T1.01'], minutes:5 });
+    const agenda = { ...emptyWeeklyStudyAgenda(), items:[...fullDay, overdue] };
+    const proposal = proposeWeeklyAgendaRecovery({ agenda, targetWeekStart:'2026-11-09', todayKey:'2026-11-09', preferences:DEFAULT_TRAINING_PREFERENCES, seenTopicIds:['T1.01'], scheduledActivities:[] });
+    expect(proposal?.moves).toEqual([]);
+    expect(proposal?.unplacedIds).toEqual(['overdue-overflow']);
+  });
+
+  it('rechaza una propuesta confirmable que exceda el límite diario aunque llegue alterada', () => {
+    const overLimit = Array.from({ length:13 }, (_, index) => item({ id:`over-limit-${index}`, weekStart:'2026-11-09', dateKey:'2026-11-10', minutes:5 }));
+    const agenda = emptyWeeklyStudyAgenda();
+    const proposal = { baseRevision:0, targetWeekStart:'2026-11-09', items:overLimit };
+    expect(applyWeeklyAgendaPlan(agenda, proposal, 100)).toBeNull();
+    expect(replaceWeeklyAgendaWeek(agenda, '2026-11-09', overLimit, 100)).toBeNull();
+  });
+
   it('deja fuera de propuesta el recuerdo antiguo, las versiones obsoletas y lo ya planificado', () => {
     const source = { id:'source-check-0002', topicId:'T1.01', sectionId:'ci-0123456789abcdefabcd', materialPath:'T1.01/Temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64), occurredAt:10, kind:'self-check', timing:'delayed', rating:'partial' };
     const followUp = { ...source, id:'follow-up-0002', occurredAt:20, kind:'follow-up', followUpId:source.id, sourceSelfCheckEventId:source.id, dueDateKey:'2026-11-10', status:'scheduled' };

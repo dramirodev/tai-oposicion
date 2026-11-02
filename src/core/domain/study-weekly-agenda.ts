@@ -1,7 +1,7 @@
 import { isStudyDateKey } from './study-training-calendar.js';
 import { isStudyTopicId } from './topic-id.js';
 import { buildDailyTrainingPlan, selectNextAcademyTopic, type DailyTrainingPlan, type PlannedTrainingActivity, type TrainingPlanReason } from './study-training-plan.js';
-import type { TrainingSessionStep } from './study-training-session.js';
+import { MAX_DAILY_TRAINING_ACTIVITIES, type TrainingSessionStep } from './study-training-session.js';
 import type { TrainingPreferences } from './entities.js';
 import type { ScheduledStudyActivity } from './study-training-calendar.js';
 import { resolveTrainingDay } from './study-training-events.js';
@@ -133,7 +133,8 @@ export function mergeWeeklyStudyAgenda(current: WeeklyStudyAgenda, incoming: unk
 
 export function replaceWeeklyAgendaWeek(current: WeeklyStudyAgenda, weekStart: string, items: readonly WeeklyAgendaItem[], now: number): WeeklyStudyAgenda | null {
   if (!isMondayStudyDate(weekStart) || !Number.isFinite(now) || !items.every(isWeeklyAgendaItem)
-    || items.some(item => item.weekStart !== weekStart) || items.length > 35) return null;
+    || items.some(item => item.weekStart !== weekStart) || items.length > 35
+    || exceedsDailySessionLimit([...current.items.filter(item => item.weekStart !== weekStart || item.status !== 'planned'), ...items])) return null;
   const retained = current.items.filter(item => item.weekStart !== weekStart || item.status !== 'planned');
   const retainedIds = new Set(retained.map(item => item.id));
   if (items.some(item => retainedIds.has(item.id))) return null;
@@ -336,8 +337,11 @@ export function addSectionRecallFollowUpsToWeeklyProposal(input: {
   const selectionByTopic = new Map(input.selections.map(selection => [selection.topicId, selection]));
   const plannedFollowUpIds = new Set(agenda.items.flatMap(item => item.sectionRecall && (item.status === 'planned' || item.status === 'completed') ? [item.sectionRecall.followUpId] : []));
   const occupied = new Map<string, number>();
+  const activitiesPerDay = new Map<string, number>();
   for (const item of agenda.items) if (item.weekStart === proposal.targetWeekStart && item.status === 'planned') occupied.set(item.dateKey, (occupied.get(item.dateKey) ?? 0) + item.minutes);
+  for (const item of agenda.items) if (item.weekStart === proposal.targetWeekStart && item.status === 'planned') activitiesPerDay.set(item.dateKey, (activitiesPerDay.get(item.dateKey) ?? 0) + 1);
   for (const item of proposal.items) occupied.set(item.dateKey, (occupied.get(item.dateKey) ?? 0) + item.minutes);
+  for (const item of proposal.items) activitiesPerDay.set(item.dateKey, (activitiesPerDay.get(item.dateKey) ?? 0) + 1);
   for (const activity of input.scheduledActivities) occupied.set(activity.dateKey, (occupied.get(activity.dateKey) ?? 0) + activity.minutes);
   let added = 0, stale = 0, noCapacity = 0, alreadyIncluded = 0;
   const recallMinutes = input.preferences.focusBlockMinutes ?? 35;
@@ -366,13 +370,15 @@ export function addSectionRecallFollowUpsToWeeklyProposal(input: {
         const candidate = addStudyDays(proposal.targetWeekStart, offset);
         if (!candidate || candidate <= input.todayKey || candidate > weekEnd) continue;
         const day = resolveTrainingDay({ dateKey:candidate, preferences:input.preferences });
-        if (day.minutes >= recallMinutes && (occupied.get(candidate) ?? 0) + recallMinutes <= day.minutes) { dateKey = candidate; break; }
+        if (day.minutes >= recallMinutes && (occupied.get(candidate) ?? 0) + recallMinutes <= day.minutes
+          && (activitiesPerDay.get(candidate) ?? 0) < MAX_DAILY_TRAINING_ACTIVITIES) { dateKey = candidate; break; }
       }
     }
     const day = dateKey ? resolveTrainingDay({ dateKey, preferences:input.preferences }) : null;
     if (!dateKey || !day?.minutes || day.focus === 'rest' || dateKey < input.todayKey
       || (occupied.get(dateKey) ?? 0) + recallMinutes > day.minutes || items.length + agenda.items.length >= MAX_WEEKLY_AGENDA_ITEMS
-      || agenda.items.filter(item => item.weekStart === proposal.targetWeekStart).length + items.filter(item => item.weekStart === proposal.targetWeekStart).length >= 35) { noCapacity++; continue; }
+      || agenda.items.filter(item => item.weekStart === proposal.targetWeekStart).length + items.filter(item => item.weekStart === proposal.targetWeekStart).length >= 35
+      || (activitiesPerDay.get(dateKey) ?? 0) >= MAX_DAILY_TRAINING_ACTIVITIES) { noCapacity++; continue; }
 
     const idBase = `section-follow-up:${followUp.followUpId}:${proposal.targetWeekStart}`;
     let id = idBase;
@@ -386,6 +392,7 @@ export function addSectionRecallFollowUpsToWeeklyProposal(input: {
         ...(followUp.printedPage !== undefined ? { printedPage:followUp.printedPage } : {}) } });
     plannedFollowUpIds.add(followUp.followUpId);
     occupied.set(dateKey, (occupied.get(dateKey) ?? 0) + recallMinutes);
+    activitiesPerDay.set(dateKey, (activitiesPerDay.get(dateKey) ?? 0) + 1);
     added++;
   }
   return { ...proposal, items, sectionRecallSummary:{ added, stale, noCapacity, alreadyIncluded } };
@@ -394,7 +401,8 @@ export function addSectionRecallFollowUpsToWeeklyProposal(input: {
 export function applyWeeklyAgendaPlan(current: WeeklyStudyAgenda, proposal: WeeklyAgendaPlanProposal, now: number): WeeklyStudyAgenda | null {
   if (!Number.isFinite(now) || current.revision !== proposal.baseRevision || !isMondayStudyDate(proposal.targetWeekStart)
     || !proposal.items.length || current.items.length + proposal.items.length > MAX_WEEKLY_AGENDA_ITEMS
-    || current.items.filter(item => item.weekStart === proposal.targetWeekStart).length + proposal.items.length > 35) return null;
+    || current.items.filter(item => item.weekStart === proposal.targetWeekStart).length + proposal.items.length > 35
+    || exceedsDailySessionLimit([...current.items.filter(item => item.status === 'planned'), ...proposal.items])) return null;
   const ids = new Set(current.items.map(item => item.id));
   if (proposal.items.some(item => !isWeeklyAgendaItem(item) || item.status !== 'planned' || item.weekStart !== proposal.targetWeekStart || ids.has(item.id))) return null;
   const timestamp = Math.max(now, current.updatedAt + 1);
@@ -406,6 +414,17 @@ export function applyWeeklyAgendaPlan(current: WeeklyStudyAgenda, proposal: Week
 function weeklyKindForTrainingActivity(activity: PlannedTrainingActivity['activity']): WeeklyAgendaKind | null {
   return activity === 'newContent' || activity === 'activeRecall' || activity === 'topicTest' || activity === 'mixedTopicTest' || activity === 'failures' || activity === 'spacedReviews'
     ? activity : null;
+}
+
+function exceedsDailySessionLimit(items: readonly WeeklyAgendaItem[]): boolean {
+  const counts = new Map<string, number>();
+  for (const item of items) {
+    if (item.status !== 'planned') continue;
+    const count = (counts.get(item.dateKey) ?? 0) + 1;
+    if (count > MAX_DAILY_TRAINING_ACTIVITIES) return true;
+    counts.set(item.dateKey, count);
+  }
+  return false;
 }
 
 /** Proposes a bounded recovery into the selected week's future capacity; it never mutates the agenda. */
@@ -427,7 +446,9 @@ export function proposeWeeklyAgendaRecovery(input: {
   const targetWeekItems = input.agenda.items.filter(item => item.weekStart === input.targetWeekStart);
   const maxMoves = Math.max(0, Math.min(MAX_WEEKLY_AGENDA_ITEMS - input.agenda.items.length, 35 - targetWeekItems.length));
   const allocated = new Map<string, number>();
+  const activitiesPerDay = new Map<string, number>();
   for (const item of targetWeekItems) if (item.status === 'planned') allocated.set(item.dateKey, (allocated.get(item.dateKey) ?? 0) + item.minutes);
+  for (const item of targetWeekItems) if (item.status === 'planned') activitiesPerDay.set(item.dateKey, (activitiesPerDay.get(item.dateKey) ?? 0) + 1);
   for (const activity of input.scheduledActivities) if (targetDays.includes(activity.dateKey)) allocated.set(activity.dateKey, (allocated.get(activity.dateKey) ?? 0) + activity.minutes);
   const moves: { sourceId: string; sourceUpdatedAt: number; target: WeeklyAgendaItem }[] = [];
   const unplacedIds: string[] = [];
@@ -437,13 +458,15 @@ export function proposeWeeklyAgendaRecovery(input: {
     if (moves.length >= maxMoves) { unplacedIds.push(source.id); continue; }
     const dateKey = targetDays.find(day => {
       const available = resolveTrainingDay({ dateKey:day, preferences:input.preferences }).minutes;
-      return available > 0 && (allocated.get(day) ?? 0) + source.minutes <= available;
+      return available > 0 && (allocated.get(day) ?? 0) + source.minutes <= available
+        && (activitiesPerDay.get(day) ?? 0) < MAX_DAILY_TRAINING_ACTIVITIES;
     });
     if (!dateKey) { unplacedIds.push(source.id); continue; }
     const id = `${source.id.slice(0, 80)}:recovery:${dateKey}`;
     if (input.agenda.items.some(item => item.id === id)) { unplacedIds.push(source.id); continue; }
     const used = allocated.get(dateKey) ?? 0;
     allocated.set(dateKey, used + source.minutes);
+    activitiesPerDay.set(dateKey, (activitiesPerDay.get(dateKey) ?? 0) + 1);
     moves.push({ sourceId:source.id, sourceUpdatedAt:source.updatedAt, target:{ ...source, id, weekStart:input.targetWeekStart, dateKey, status:'planned', createdAt:input.agenda.updatedAt, updatedAt:input.agenda.updatedAt, recoveryOf:source.id, rescheduledTo:undefined } });
   }
   return { baseRevision:input.agenda.revision, targetWeekStart:input.targetWeekStart, moves, unplacedIds };
@@ -453,7 +476,8 @@ export function proposeWeeklyAgendaRecovery(input: {
 export function applyWeeklyAgendaRecovery(current: WeeklyStudyAgenda, proposal: WeeklyAgendaRecoveryProposal, now: number): WeeklyStudyAgenda | null {
   if (!Number.isFinite(now) || current.revision !== proposal.baseRevision || !isMondayStudyDate(proposal.targetWeekStart)
     || !proposal.moves.length || current.items.length + proposal.moves.length > MAX_WEEKLY_AGENDA_ITEMS
-    || current.items.filter(item => item.weekStart === proposal.targetWeekStart).length + proposal.moves.length > 35) return null;
+    || current.items.filter(item => item.weekStart === proposal.targetWeekStart).length + proposal.moves.length > 35
+    || exceedsDailySessionLimit([...current.items.filter(item => item.status === 'planned'), ...proposal.moves.map(move => move.target)])) return null;
   const byId = new Map(current.items.map(item => [item.id, item]));
   for (const move of proposal.moves) {
     const source = byId.get(move.sourceId);

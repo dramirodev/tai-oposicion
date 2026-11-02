@@ -436,7 +436,7 @@ La prueba E2E del recorrido de apartado cubre también dos cambios entre propues
 
 **Verificación de esta fase:** `npm run typecheck` pasó; Vitest de `study-weekly-agenda` 17/17; E2E del recorrido de Temario/agenda/sesión 2/2 (Chromium y WebKit), con cambio de versión, revisión concurrente, omisión/repropuesta, apertura exacta, pausa, recarga, reanudación y cierre. La primera corrida de E2E no pudo enlazar el servidor local por `EPERM` en el sandbox; al repetir con permiso para el puerto local, pasó en ambos motores. No se alteró el código de producción ni se accedió a Firebase. Falta volver a ejecutar el check completo después de estos cambios de pruebas/documentación.
 
-**Pendiente de producto:** la autovaloración sigue siendo subjetiva y no comprueba por sí sola exactitud o retención diferida. El mapa editorial pregunta→apartado continúa vacío para los casos cotejados; no alimentar estadísticas por apartado con preguntas sin vínculos revisados. La propuesta semanal limita capacidad por minutos, pero las reglas de sesión permiten como máximo 12 pasos; validar casos de agenda excepcionalmente fragmentada antes de aumentar ese límite.
+**Pendiente de producto:** la autovaloración sigue siendo subjetiva y no comprueba por sí sola exactitud o retención diferida. El mapa editorial pregunta→apartado continúa vacío para los casos cotejados; no alimentar estadísticas por apartado con preguntas sin vínculos revisados. La generación y confirmación de agenda ya limitan cada fecha a los 12 pasos admitidos por el checkpoint; los repasos o recuperaciones que excedan ese espacio se conservan como no ubicados para otra propuesta.
 
 ## Señal técnica de texto disponible en materiales (2026-11-02)
 
@@ -494,3 +494,13 @@ El test E2E temporal con ruta absoluta se retiró y no forma parte del suite. En
 **Pendiente externo:** validar apertura y recuperación en un móvil iOS o Android real. Este host no dispone de `simctl` ni `adb`; Chromium/WebKit a 320 px son emulación de viewport, no prueba del visor nativo móvil. No se hizo búsqueda web ni se seleccionó biblioteca PDF externa. Hasta contar con dispositivo, la rebanada de persistencia local está implementada y comprobada en navegadores de escritorio y motores automatizados, pero el comportamiento del visor nativo móvil sigue sin verificar.
 
 **Código de esta rebanada:** commit local `b84ed8b` (`feat(curriculum): allow verified local PDF selection`) en `feat/study-plan-through-exam`. Incluye selector/hash/Blob temporal y ajuste de la expectativa visible; el spike Playwright fue temporal y se eliminó. El informe de auditoría permanece untracked y excluido.
+
+## Límite diario de actividades y checkpoint (2026-11-02)
+
+La sesión diaria y su adaptador solo admiten 12 actividades. La revisión del flujo identificó que los repasos por apartado (`sectionRecall`) y la recuperación semanal de pendientes podían reservar más actividades en una fecha con una ventana de estudio excepcionalmente amplia, aunque todavía quedaran minutos. Al confirmar, ese plan podía no representarse como un checkpoint válido.
+
+Ahora la propuesta semanal y la recuperación gradual cuentan actividades planificadas por fecha además de minutos: no agregan pasos después del doceavo y dejan el exceso en los contadores existentes de capacidad/no ubicados. Los comandos de confirmación de plan, recuperación y reemplazo vuelven a validar el tope; una propuesta alterada no guarda una agenda imposible. La carga histórica completada conserva su historial y no consume cupos de la sesión diaria.
+
+**Pruebas:** `tests/domain/study-weekly-agenda.test.js` prueba seguimientos que no caben por número aunque quepan por minutos, recuperación distribuida a una semana con todos los días al límite, y rechazo de confirmaciones con 13 pasos en una fecha. El foco del dominio pasó 20/20; `npm run typecheck` pasó; `npm run check` pasó con 177 archivos correctos/1 omitido, 909 pruebas pasadas/26 omitidas; `npm run build` pasó con avisos existentes Zod/Rollup y chunks >500 kB. Se mantiene el aviso existente de `window.scrollTo` no implementado por jsdom.
+
+**Alcance:** no se amplía el límite contractual de 12 ni se divide automáticamente una sesión en otra fecha; los pasos excedentes permanecen pendientes para una propuesta futura y revisable. Sin sincronización Firebase real ni despliegue.
