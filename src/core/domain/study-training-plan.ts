@@ -63,6 +63,16 @@ export interface PlannedTrainingActivity {
   topicId?: string;
   topicIds?: readonly string[];
   reviewIntervention?: ReturnType<typeof recommendTopicIntervention>;
+  sectionRecall?: {
+    agendaItemId: string;
+    followUpId: string;
+    sectionId: string;
+    materialPath: string;
+    sourceHash: string;
+    outlineFingerprint: string;
+    sectionTitle?: string;
+    printedPage?: number;
+  };
 }
 export interface DailyTrainingPlan {
   weekday: number;

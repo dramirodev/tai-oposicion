@@ -29,6 +29,13 @@ it('conserva el alcance de temas vistos dentro del checkpoint diario', () => {
   expect(readTrainingSession('owner-a', timestamp)?.activities[0].topicIds).toEqual(['T1.01', 'T12.03']);
 });
 
+it('persiste la referencia de apartado en checkpoints locales y permite varias comprobaciones en el mismo día', () => {
+  const sectionRecall = (agendaItemId, sectionId) => ({ activity:'activeRecall', minutes:20, reason:'active-recall', topicId:'T1.01', topicIds:['T1.01'], sectionRecall:{ agendaItemId, followUpId:`follow-up-${agendaItemId}`, sectionId, materialPath:'T1.01/Temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64) } });
+  const planned = { ...session, activities:[sectionRecall('agenda-item-01', 'ci-0123456789abcdefabcd'), sectionRecall('agenda-item-02', 'ci-1123456789abcdefabcd')] };
+  saveTrainingSession('owner-a', planned);
+  expect(readTrainingSession('owner-a', timestamp)?.activities.map(step => step.sectionRecall?.agendaItemId)).toEqual(['agenda-item-01', 'agenda-item-02']);
+});
+
 it('recupera checkpoints v1 anteriores que aún no guardaban motivo ni tema', () => {
   const old = { dateKey:'2026-10-28', activities:[{ activity:'activeRecall', minutes:10 }], currentIndex:0, currentStartedAt:timestamp, startedAt:timestamp, completedAt:null };
   localStorage.setItem('tai.training-session.v1.owner-a', JSON.stringify(old));

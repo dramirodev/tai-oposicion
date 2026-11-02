@@ -58,6 +58,16 @@ const timings = new Set<SectionRecallTiming>(['assisted', 'immediate', 'delayed'
 const ratings = new Set<SectionRecallRating>(['not-recalled', 'partial', 'recalled']);
 const followUpStatuses = new Set<SectionFollowUpStatus>(['scheduled', 'completed', 'cancelled']);
 
+/** Stable per-follow-up close event ID so retries cannot append duplicate completion evidence. */
+export function sectionFollowUpCompletionEventId(followUpId: string): string {
+  let hash = 14695981039346656037n;
+  for (let index = 0; index < followUpId.length; index++) {
+    hash ^= BigInt(followUpId.charCodeAt(index));
+    hash = (hash * 1099511628211n) & 0xffffffffffffffffn;
+  }
+  return `section_done_${hash.toString(16).padStart(16, '0')}`;
+}
+
 const isRecord = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
 
 export function isAcademyMaterialReference(value: unknown): value is AcademyMaterialReference {

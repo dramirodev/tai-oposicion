@@ -1,10 +1,18 @@
 import { describe, expect, it } from 'vitest';
 import { summarizeAcademySectionProgress } from '../../src/core/domain/academy-section-progress-summary.ts';
+import { sectionFollowUpCompletionEventId } from '../../src/core/domain/academy-study-progress.ts';
 
 const syllabus = { path:'T1.01/Temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64), outlineStructureFingerprint:'c'.repeat(64), role:'syllabus' };
 const materialIndex = { 'T1.01': [{ path:syllabus.path, sha256:syllabus.sourceHash, outlineFingerprint:syllabus.outlineFingerprint, outlineStructureFingerprint:syllabus.outlineStructureFingerprint, kind:'syllabus' }] };
 const coverage = (id, value, occurredAt, overrides = {}) => ({ id, topicId:'T1.01', sectionId:'ci-0123456789abcdefabcd', materialPath:syllabus.path, sourceHash:syllabus.sourceHash, outlineFingerprint:syllabus.outlineFingerprint, occurredAt, kind:'coverage', coverage:value, ...overrides });
 const selfCheck = (id, timing, rating, occurredAt, overrides = {}) => ({ id, topicId:'T1.01', sectionId:'ci-0123456789abcdefabcd', materialPath:syllabus.path, sourceHash:syllabus.sourceHash, outlineFingerprint:syllabus.outlineFingerprint, occurredAt, kind:'self-check', timing, rating, ...overrides });
+
+it('deriva un ID estable y válido para que reintentar el cierre no duplique su evento', () => {
+  const first = sectionFollowUpCompletionEventId('follow-up-123456');
+  expect(first).toBe(sectionFollowUpCompletionEventId('follow-up-123456'));
+  expect(first).toMatch(/^[a-zA-Z0-9_-]{8,128}$/);
+  expect(first).not.toBe(sectionFollowUpCompletionEventId('follow-up-654321'));
+});
 
 describe('resumen de progreso por apartados', () => {
   it('cuenta solo cobertura declarada sobre el temario principal seleccionado y vigente', () => {

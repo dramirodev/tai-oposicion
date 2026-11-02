@@ -156,7 +156,10 @@ describe('propuesta semanal persistida', () => {
     expect(added.items).toEqual([expect.objectContaining({ kind:'sectionRecall', dateKey:'2026-11-10', minutes:35, topicIds:['T1.01'], sectionRecall:expect.objectContaining({ followUpId:source.id, sectionId:source.sectionId, sectionTitle:'1. INTRODUCCIÓN', dueDateKey:'2026-11-10' }) })]);
     expect(added.sectionRecallSummary).toEqual({ added:1, stale:0, noCapacity:0, alreadyIncluded:0 });
     expect(isWeeklyStudyAgenda({ ...emptyWeeklyStudyAgenda(), revision:1, updatedAt:1, items:added.items })).toBe(true);
-    expect(dailyTrainingPlanFromAgenda({ plan:{ weekday:2, minutes:120, restDay:false, activities:[] }, agenda:{ ...emptyWeeklyStudyAgenda(), items:added.items }, dateKey:'2026-11-10', studiedTopicIds:['T1.01'] }).activities).toEqual([]);
+    expect(dailyTrainingPlanFromAgenda({ plan:{ weekday:2, minutes:120, restDay:false, activities:[] }, agenda:{ ...emptyWeeklyStudyAgenda(), items:added.items }, dateKey:'2026-11-10', studiedTopicIds:['T1.01'] }).activities).toEqual([
+      expect.objectContaining({ activity:'activeRecall', reason:'active-recall', topicId:'T1.01', minutes:35,
+        sectionRecall:expect.objectContaining({ agendaItemId:added.items[0].id, followUpId:source.id, sectionId:source.sectionId }) }),
+    ]);
   });
 
   it('deja fuera de propuesta el recuerdo antiguo, las versiones obsoletas y lo ya planificado', () => {
@@ -177,5 +180,13 @@ describe('propuesta semanal persistida', () => {
     expect(findMatchingPlannedAgendaItem(agenda, '2026-11-02', step)).toEqual(planned);
     const completed = updateWeeklyAgendaItemStatus(agenda, planned.id, 'completed', 110);
     expect(findMatchingPlannedAgendaItem(completed, '2026-11-02', step)).toBeUndefined();
+  });
+
+  it('empareja el checkpoint sectionRecall por agenda y seguimiento exactos', () => {
+    const scheduled = item({ id:'section-follow-up:source-check-001:2026-11-02', kind:'sectionRecall', topicIds:['T1.01'], sectionRecall:{ followUpId:'source-check-001', sourceSelfCheckEventId:'source-check-001', sectionId:'ci-0123456789abcdefabcd', materialPath:'T1.01/Temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64), dueDateKey:'2026-11-02' } });
+    const step = { id:'training:2026-11-02:activity:1', activity:'activeRecall', minutes:35, reason:'active-recall', topicId:'T1.01', topicIds:['T1.01'], sectionRecall:{ agendaItemId:scheduled.id, followUpId:'source-check-001', sectionId:'ci-0123456789abcdefabcd', materialPath:'T1.01/Temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64) } };
+    const agenda = { ...emptyWeeklyStudyAgenda(), items:[scheduled] };
+    expect(findMatchingPlannedAgendaItem(agenda, '2026-11-02', step)).toEqual(scheduled);
+    expect(findMatchingPlannedAgendaItem(agenda, '2026-11-02', { ...step, sectionRecall:{ ...step.sectionRecall, agendaItemId:'another-item' } })).toBeUndefined();
   });
 });

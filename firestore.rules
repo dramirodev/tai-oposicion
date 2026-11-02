@@ -96,14 +96,31 @@ service cloud.firestore {
 
     function validTrainingStep(step) {
       return step is map
-        && step.keys().hasOnly(['activity', 'minutes', 'reason', 'topicId', 'topicIds', 'reviewMode'])
+        && step.keys().hasOnly(['id', 'activity', 'minutes', 'reason', 'topicId', 'topicIds', 'reviewMode', 'attemptSessionIds', 'sectionRecall'])
         && step.keys().hasAll(['activity', 'minutes', 'reason'])
         && step.activity in ['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']
         && step.minutes is int && step.minutes >= 1 && step.minutes <= 240
         && step.reason in ['active-recall', 'new-content-day', 'new-topic-day', 'weak-topics', 'coverage', 'recurring-failures', 'due-reviews']
         && (!('topicId' in step) || (step.topicId is string && step.topicId.matches('T[0-9]+\\.[0-9]{2}')))
         && (!('topicIds' in step) || (step.topicIds is list && step.topicIds.size() <= 500))
-        && (!('reviewMode' in step) || step.reviewMode in ['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading']);
+        && (!('reviewMode' in step) || step.reviewMode in ['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading'])
+        && (!('id' in step) || (step.id is string && step.id.size() <= 180))
+        && (!('attemptSessionIds' in step) || (step.attemptSessionIds is list && step.attemptSessionIds.size() <= 500))
+        && (!('sectionRecall' in step) || validSectionRecallStep(step.sectionRecall));
+    }
+
+    function validSectionRecallStep(recall) {
+      return recall is map
+        && recall.keys().hasOnly(['agendaItemId', 'followUpId', 'sectionId', 'materialPath', 'sourceHash', 'outlineFingerprint', 'sectionTitle', 'printedPage'])
+        && recall.keys().hasAll(['agendaItemId', 'followUpId', 'sectionId', 'materialPath', 'sourceHash', 'outlineFingerprint'])
+        && recall.agendaItemId is string && recall.agendaItemId.size() >= 1 && recall.agendaItemId.size() <= 128
+        && recall.followUpId is string && recall.followUpId.matches('[a-zA-Z0-9_-]{8,128}')
+        && recall.sectionId is string && recall.sectionId.matches('ci-[a-fA-F0-9]{20}')
+        && recall.materialPath is string && recall.materialPath.size() >= 1 && recall.materialPath.size() <= 500
+        && recall.sourceHash is string && recall.sourceHash.matches('[a-fA-F0-9]{64}')
+        && recall.outlineFingerprint is string && recall.outlineFingerprint.matches('[a-fA-F0-9]{64}')
+        && (!('sectionTitle' in recall) || (recall.sectionTitle is string && recall.sectionTitle.size() <= 500))
+        && (!('printedPage' in recall) || (recall.printedPage is int && recall.printedPage >= 0));
     }
 
     function validTrainingHistory(history) {
@@ -120,27 +137,43 @@ service cloud.firestore {
         && (d.schemaVersion == 1 ? !('history' in d) : d.schemaVersion == 2 && 'history' in d && validTrainingHistory(d.history))
         && d.updatedAt is number
         && s is map
-        && s.keys().hasOnly(['dateKey', 'activities', 'currentIndex', 'currentStartedAt', 'elapsedSecondsByActivity', 'updatedAt', 'startedAt', 'completedAt'])
+        && s.keys().hasOnly(['schemaVersion', 'id', 'dateKey', 'activities', 'currentIndex', 'currentStartedAt', 'breakStartedAt', 'breakDurationMinutes', 'elapsedSecondsByActivity', 'updatedAt', 'startedAt', 'completedAt'])
         && s.keys().hasAll(['dateKey', 'activities', 'currentIndex', 'currentStartedAt', 'startedAt', 'completedAt'])
         && s.dateKey is string && s.dateKey.matches('20[0-9]{2}-[0-9]{2}-[0-9]{2}')
-        && s.activities is list && s.activities.size() >= 1 && s.activities.size() <= 6
+        && (!('schemaVersion' in s) || s.schemaVersion == 2)
+        && (!('id' in s) || (s.id is string && s.id.size() <= 180))
+        && s.activities is list && s.activities.size() >= 1 && s.activities.size() <= 12
         && s.activities[0] is map && validTrainingStep(s.activities[0])
         && (s.activities.size() < 2 || validTrainingStep(s.activities[1]))
         && (s.activities.size() < 3 || validTrainingStep(s.activities[2]))
         && (s.activities.size() < 4 || validTrainingStep(s.activities[3]))
         && (s.activities.size() < 5 || validTrainingStep(s.activities[4]))
         && (s.activities.size() < 6 || validTrainingStep(s.activities[5]))
+        && (s.activities.size() < 7 || validTrainingStep(s.activities[6]))
+        && (s.activities.size() < 8 || validTrainingStep(s.activities[7]))
+        && (s.activities.size() < 9 || validTrainingStep(s.activities[8]))
+        && (s.activities.size() < 10 || validTrainingStep(s.activities[9]))
+        && (s.activities.size() < 11 || validTrainingStep(s.activities[10]))
+        && (s.activities.size() < 12 || validTrainingStep(s.activities[11]))
         && s.currentIndex is int && s.currentIndex >= 0 && s.currentIndex <= s.activities.size()
         && (s.currentStartedAt == null || s.currentStartedAt is number)
+        && (!('breakStartedAt' in s) || s.breakStartedAt == null || s.breakStartedAt is number)
+        && (!('breakDurationMinutes' in s) || (s.breakDurationMinutes is int && s.breakDurationMinutes >= 3 && s.breakDurationMinutes <= 15))
         && (!('elapsedSecondsByActivity' in s) || (s.elapsedSecondsByActivity is list
           && s.elapsedSecondsByActivity.size() == s.activities.size()
-          && s.elapsedSecondsByActivity.size() <= 6
+          && s.elapsedSecondsByActivity.size() <= 12
           && s.elapsedSecondsByActivity[0] is int && s.elapsedSecondsByActivity[0] >= 0 && s.elapsedSecondsByActivity[0] <= 86400
           && (s.elapsedSecondsByActivity.size() < 2 || (s.elapsedSecondsByActivity[1] is int && s.elapsedSecondsByActivity[1] >= 0 && s.elapsedSecondsByActivity[1] <= 86400))
           && (s.elapsedSecondsByActivity.size() < 3 || (s.elapsedSecondsByActivity[2] is int && s.elapsedSecondsByActivity[2] >= 0 && s.elapsedSecondsByActivity[2] <= 86400))
           && (s.elapsedSecondsByActivity.size() < 4 || (s.elapsedSecondsByActivity[3] is int && s.elapsedSecondsByActivity[3] >= 0 && s.elapsedSecondsByActivity[3] <= 86400))
           && (s.elapsedSecondsByActivity.size() < 5 || (s.elapsedSecondsByActivity[4] is int && s.elapsedSecondsByActivity[4] >= 0 && s.elapsedSecondsByActivity[4] <= 86400))
-          && (s.elapsedSecondsByActivity.size() < 6 || (s.elapsedSecondsByActivity[5] is int && s.elapsedSecondsByActivity[5] >= 0 && s.elapsedSecondsByActivity[5] <= 86400))))
+          && (s.elapsedSecondsByActivity.size() < 6 || (s.elapsedSecondsByActivity[5] is int && s.elapsedSecondsByActivity[5] >= 0 && s.elapsedSecondsByActivity[5] <= 86400))
+          && (s.elapsedSecondsByActivity.size() < 7 || (s.elapsedSecondsByActivity[6] is int && s.elapsedSecondsByActivity[6] >= 0 && s.elapsedSecondsByActivity[6] <= 86400))
+          && (s.elapsedSecondsByActivity.size() < 8 || (s.elapsedSecondsByActivity[7] is int && s.elapsedSecondsByActivity[7] >= 0 && s.elapsedSecondsByActivity[7] <= 86400))
+          && (s.elapsedSecondsByActivity.size() < 9 || (s.elapsedSecondsByActivity[8] is int && s.elapsedSecondsByActivity[8] >= 0 && s.elapsedSecondsByActivity[8] <= 86400))
+          && (s.elapsedSecondsByActivity.size() < 10 || (s.elapsedSecondsByActivity[9] is int && s.elapsedSecondsByActivity[9] >= 0 && s.elapsedSecondsByActivity[9] <= 86400))
+          && (s.elapsedSecondsByActivity.size() < 11 || (s.elapsedSecondsByActivity[10] is int && s.elapsedSecondsByActivity[10] >= 0 && s.elapsedSecondsByActivity[10] <= 86400))
+          && (s.elapsedSecondsByActivity.size() < 12 || (s.elapsedSecondsByActivity[11] is int && s.elapsedSecondsByActivity[11] >= 0 && s.elapsedSecondsByActivity[11] <= 86400))))
         && (!('updatedAt' in s) || s.updatedAt is number)
         && s.startedAt is number
         && (s.completedAt == null || s.completedAt is number)

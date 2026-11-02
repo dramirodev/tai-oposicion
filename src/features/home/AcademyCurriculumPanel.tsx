@@ -31,7 +31,7 @@ function createEventId(): string {
 }
 
 function SectionStudyUnit({
-  section, events, sessionId, activityId, record, targetSectionId,
+  section, events, sessionId, activityId, record, targetSectionId, onCompleteSectionRecall,
 }: {
   section: AcademyCurriculumSection;
   events: readonly AcademySectionStudyEvent[];
@@ -39,6 +39,7 @@ function SectionStudyUnit({
   activityId?: string;
   record(event: AcademySectionStudyEvent): boolean;
   targetSectionId?: string | null;
+  onCompleteSectionRecall?: () => Promise<void>;
 }) {
   const matching = events.filter(event => event.sectionId === section.id && event.sourceHash === section.sourceHash && event.materialPath === section.materialPath);
   const coverage = sectionCoverage(matching);
@@ -131,6 +132,10 @@ function SectionStudyUnit({
       </form>
       <p className="my-1 text-xs text-muted">“Días después” describe una comprobación que ya hiciste. Para elegir cuándo volver, usa la fecha de próxima comprobación tras guardar.</p>
       {message && <p className="my-2 text-sm" role="status">{message}</p>}
+      {onCompleteSectionRecall && targetSectionId === section.id && sessionId && activityId && <div className="mt-3 rounded-md border border-brand/40 p-3">
+        <p className="my-1 text-sm">Primero intenta explicar este apartado sin mirar. Consulta el material solo para resolver dudas y cierra la comprobación al terminar.</p>
+        <button className="btn" type="button" disabled={busy} onClick={async () => { if (saving.current) return; saving.current = true; setBusy(true); try { await onCompleteSectionRecall(); } finally { saving.current = false; setBusy(false); } }}>Terminar comprobación y volver a la sesión</button>
+      </div>}
       {followUps.length > 0 && <div className="mt-2 text-sm"><p className="my-1 font-semibold">Comprobaciones posteriores</p><ul className="my-1 list-disc ps-5">{followUps.map(item => <li key={item.followUpId}>{item.dueDateKey} · {item.status === 'scheduled' ? 'pendiente' : item.status === 'completed' ? 'realizada' : 'cancelada'}{item.status === 'scheduled' && <span className="ms-2 inline-flex flex-wrap gap-2"><button className="text-link underline" type="button" disabled={busy} onClick={() => changeFollowUpStatus(item.followUpId, 'completed')}>Marcar realizada</button><button className="text-link underline" type="button" disabled={busy} onClick={() => changeFollowUpStatus(item.followUpId, 'cancelled')}>Cancelar</button></span>}</li>)}</ul></div>}
       {history.filter(item => canScheduleSectionFollowUp(matching, item.id)).at(-1) && <form className="mt-2 flex flex-wrap items-end gap-2" onSubmit={event => { event.preventDefault(); const latest = [...history].reverse().find(item => canScheduleSectionFollowUp(matching, item.id)); if (latest) scheduleFollowUp(latest.id); }}>
         <label className="grid gap-1 text-sm">Próxima comprobación · fecha elegida
@@ -147,7 +152,7 @@ function SectionStudyUnit({
   </details>;
 }
 
-export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, activityId }: { topicId: string; hasStudyMarker: boolean; sessionId?: string; activityId?: string }) {
+export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, activityId, onCompleteSectionRecall }: { topicId: string; hasStudyMarker: boolean; sessionId?: string; activityId?: string; onCompleteSectionRecall?: () => Promise<void> }) {
   const [draft, setDraft] = useState<{ topicId: string; paths: string[] } | null>(null);
   const [notice, setNotice] = useState('');
   const [searchParams] = useSearchParams();
@@ -239,7 +244,7 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
         <h4 className="mb-1 text-sm font-medium"><code className="break-all">{materialPath}</code></h4>
         {matchingOutlineMessage(materialPath) && <p className="my-1 text-sm text-muted">{matchingOutlineMessage(materialPath)}</p>}
         {draftPaths.includes(materialPath) ? <div className="mt-2">
-          {sections.filter(section => section.materialPath === materialPath).map(section => <SectionStudyUnit key={section.id} section={section} events={progress.events} sessionId={sessionId} activityId={activityId} record={recordEvent} targetSectionId={targetSectionId} />)}
+          {sections.filter(section => section.materialPath === materialPath).map(section => <SectionStudyUnit key={section.id} section={section} events={progress.events} sessionId={sessionId} activityId={activityId} record={recordEvent} targetSectionId={targetSectionId} onCompleteSectionRecall={onCompleteSectionRecall} />)}
         </div> : <ul className="my-0 list-disc ps-5 text-sm">{sections.filter(section => section.materialPath === materialPath).map(section => <li id={section.id} key={section.id}>{section.title} <span className="text-muted">(p. {section.printedPage})</span></li>)}</ul>}
       </div>)}
       <p className="mt-2 mb-0 text-sm text-muted">{context}</p>

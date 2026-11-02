@@ -12,6 +12,17 @@ export interface TrainingSessionStep {
   reviewMode?: StudyReviewMode;
   /** Detailed question-session IDs produced while this planned activity was active. */
   attemptSessionIds?: readonly string[];
+  /** Exact agenda follow-up represented as active retrieval, never as a generic card/test. */
+  sectionRecall?: {
+    agendaItemId: string;
+    followUpId: string;
+    sectionId: string;
+    materialPath: string;
+    sourceHash: string;
+    outlineFingerprint: string;
+    sectionTitle?: string;
+    printedPage?: number;
+  };
 }
 
 export interface DailyTrainingSession {
@@ -45,6 +56,7 @@ export interface TrainingSessionHistoryEntry {
 }
 
 export const MAX_TRAINING_SESSION_HISTORY = 30;
+export const MAX_DAILY_TRAINING_ACTIVITIES = 12;
 
 export interface TrainingActivityReference { sessionId: string; activityId: string }
 
@@ -62,7 +74,10 @@ export function toTrainingSessionHistoryEntry(session: DailyTrainingSession): Tr
     startedAt: session.startedAt,
     completedAt: session.completedAt,
     plannedMinutes: session.activities.reduce((sum, activity) => sum + activity.minutes, 0),
-    activities: session.activities.map(activity => ({ ...activity, ...(activity.topicIds ? { topicIds: [...activity.topicIds] } : {}) })),
+    activities: session.activities.map(activity => ({ ...activity,
+      ...(activity.topicIds ? { topicIds: [...activity.topicIds] } : {}),
+      ...(activity.sectionRecall ? { sectionRecall: { ...activity.sectionRecall } } : {}),
+    })),
     elapsedSecondsByActivity: session.activities.map((_, index) => session.elapsedSecondsByActivity?.[index] ?? 0),
   };
 }
@@ -89,7 +104,7 @@ export function createDailyTrainingSession(plan: DailyTrainingPlan, timestamp: n
     schemaVersion: 2,
     id,
     dateKey,
-    activities: plan.activities.map(({ activity, minutes, reason, topicId, topicIds, reviewIntervention }, index) => ({ id: `${id}:activity:${index + 1}`, activity, minutes, reason, ...(topicId ? { topicId } : {}), ...(topicIds ? { topicIds: [...topicIds] } : {}), ...(reviewIntervention ? { reviewMode: reviewIntervention.mode } : {}) })),
+    activities: plan.activities.map(({ activity, minutes, reason, topicId, topicIds, reviewIntervention, sectionRecall }, index) => ({ id: `${id}:activity:${index + 1}`, activity, minutes, reason, ...(topicId ? { topicId } : {}), ...(topicIds ? { topicIds: [...topicIds] } : {}), ...(reviewIntervention ? { reviewMode: reviewIntervention.mode } : {}), ...(sectionRecall ? { sectionRecall: { ...sectionRecall } } : {}) })),
     currentIndex: 0,
     currentStartedAt: null,
     elapsedSecondsByActivity: plan.activities.map(() => 0),

@@ -8,7 +8,7 @@ import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js
 import type { ScheduledStudyActivity, ScheduledStudyActivityKind } from '../../core/domain/study-training-calendar.js';
 import { addSectionRecallFollowUpsToWeeklyProposal, dailyTrainingPlanFromAgenda, proposeWeeklyAgendaPlan, type WeeklyAgendaItem, type WeeklyAgendaPlanProposal, type WeeklyAgendaRecoveryProposal } from '../../core/domain/study-weekly-agenda.js';
 import { academyCurriculumMaterialIndex } from '../../core/domain/academy-curriculum.generated.js';
-import { sectionFollowUps, type AcademySectionStudyEvent } from '../../core/domain/academy-study-progress.js';
+import { sectionFollowUps, sectionFollowUpCompletionEventId, type AcademySectionStudyEvent } from '../../core/domain/academy-study-progress.js';
 import { useStudyService, type HomeOverview, type HomeServices, type SettingsSnapshot } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { useActionLifetime } from '../../shared/ui/use-action-lifetime.js';
@@ -88,6 +88,7 @@ function activityState(session: DailyTrainingSession | null, index: number) {
 }
 
 function activityResourcePath(step: TrainingSessionStep): string {
+  if (step.sectionRecall) return `/temario?topic=${encodeURIComponent(step.topicId ?? '')}&sectionId=${encodeURIComponent(step.sectionRecall.sectionId)}`;
   if (step.activity === 'newContent') return `/temario?topic=${encodeURIComponent(step.topicId ?? '')}&dailyTraining=newContent`;
   if (step.activity === 'activeRecall' || step.activity === 'spacedReviews') return '/cards';
   if (step.activity === 'topicTest' || step.activity === 'mixedTopicTest') return '/test';
@@ -129,7 +130,10 @@ function PlanningActivity({ step, index, session, topicName, elapsedSeconds, run
   elapsedSeconds: number; running: boolean; now: number; recallAssessment?: PaperRecallAssessment;
   onRecallAssessment?(topicId: string, rating: PaperRecallRating): void;
 }) {
-  const presentation = activityPresentation[step.activity];
+  const presentation = step.sectionRecall ? {
+    title:'Comprobación de apartado', objective:`Recupera lo que sabes de ${step.sectionRecall.sectionTitle ?? 'este apartado'} antes de consultar el material.`,
+    instruction:'Intenta explicar la idea con tus palabras o resolver un ejemplo. Consulta solo la laguna y, al acabar, cierra la actividad desde el apartado.', resource:'Apartado del temario seleccionado',
+  } : activityPresentation[step.activity];
   const state = activityState(session, index);
   const topic = topicName ? `${step.topicId} · ${topicName}` : step.topicId;
   return <li className={`${state.className} relative grid min-w-0 grid-cols-[2rem_minmax(0,1fr)] gap-3.5 pb-4 max-[520px]:grid-cols-[1.75rem_minmax(0,1fr)] max-[520px]:gap-2.5`} aria-current={state.current ? 'step' : undefined}>
@@ -478,7 +482,7 @@ export function PlanningPage() {
           }
           const related = snapshot.events.filter(event => event.kind === 'follow-up' && event.followUpId === followUp.followUpId);
           const next: AcademySectionStudyEvent = {
-            id:crypto.randomUUID(), topicId:item.topicIds[0], sectionId:item.sectionRecall!.sectionId,
+            id:sectionFollowUpCompletionEventId(followUp.followUpId), topicId:item.topicIds[0], sectionId:item.sectionRecall!.sectionId,
             materialPath:item.sectionRecall!.materialPath, sourceHash:item.sectionRecall!.sourceHash,
             outlineFingerprint:item.sectionRecall!.outlineFingerprint,
             occurredAt:Math.max(Date.now(), ...related.map(event => event.occurredAt + 1)), kind:'follow-up',

@@ -125,9 +125,27 @@ test('el tema recomendado muestra su material de academia en móvil y escritorio
   await agenda.getByRole('button', { name:'Abrir apartado' }).click();
   await expect(page).toHaveURL(/sectionId=ci-/);
   await expect(page.locator('#app details').filter({ hasText:'1. INTRODUCCIÓN' }).first()).toBeVisible();
+  await page.clock.setFixedTime(new Date('2026-10-28T12:00:00+02:00'));
   await page.goto('/#/planificacion');
-  await page.getByRole('button', { name:'Semana siguiente' }).click();
-  await page.getByRole('list', { name:'Actividades de la agenda semanal' }).getByRole('button', { name:'Marcar comprobación realizada' }).click();
+  await expect(page.locator('.planning-activity h3').filter({ hasText:'Comprobación de apartado' })).toBeVisible();
+  await page.getByRole('button', { name:/Comenzar sesión/ }).click();
+  await expect(page).toHaveURL(/dailyTraining=sectionRecall/);
+  const activeSection = page.locator('#app details').filter({ hasText:'1. INTRODUCCIÓN' }).first();
+  await activeSection.getByRole('button', { name:'Terminar comprobación y volver a la sesión' }).waitFor({ state:'visible' });
+  await page.goto('/#/planificacion');
+  await page.getByRole('button', { name:'Pausar tiempo' }).click();
+  await page.reload();
+  await expect(page.getByRole('button', { name:/Continuar actividad/ })).toBeVisible();
+  await page.getByRole('button', { name:/Continuar actividad/ }).click();
+  await expect(page).toHaveURL(/dailyTraining=sectionRecall/);
+  const resumedSectionId = await page.evaluate(() => new URLSearchParams(location.hash.split('?')[1] ?? '').get('sectionId'));
+  expect(resumedSectionId).toMatch(/^ci-/);
+  const reenteredSection = page.locator(`#${resumedSectionId}`);
+  await reenteredSection.locator('select[name="timing"]').selectOption('immediate');
+  await reenteredSection.getByRole('button', { name:'Guardar comprobación' }).click();
+  await expect(reenteredSection).toContainText('Autoevaluación guardada');
+  await reenteredSection.getByRole('button', { name:'Terminar comprobación y volver a la sesión' }).click();
+  await expect(page).toHaveURL(/#\/planificacion/);
   await expect(page.getByRole('list', { name:'Actividades de la agenda semanal' })).toContainText('Completada');
 
   for (const width of [393, 1440]) {

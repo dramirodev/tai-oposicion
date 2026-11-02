@@ -488,17 +488,27 @@ export function dailyTrainingPlanFromAgenda(input: {
 }): DailyTrainingPlan {
   if (input.plan.restDay) return input.plan;
   const studied = new Set(input.studiedTopicIds);
-  const items = input.agenda.items.filter((item): item is WeeklyAgendaItem & { kind: Exclude<WeeklyAgendaKind, 'sectionRecall'> } => item.dateKey === input.dateKey && item.status === 'planned' && item.kind !== 'sectionRecall'
-    && (item.kind === 'newContent' || item.topicIds.every(topicId => studied.has(topicId))));
+  const items = input.agenda.items.filter(item => item.dateKey === input.dateKey && item.status === 'planned'
+    && (item.kind === 'sectionRecall' || item.kind === 'newContent' || item.topicIds.every(topicId => studied.has(topicId))));
   if (!items.length) return input.plan;
-  const activities: PlannedTrainingActivity[] = items.map(item => {
+  const activities: PlannedTrainingActivity[] = items.flatMap((item): PlannedTrainingActivity[] => {
+    if (item.kind === 'sectionRecall') {
+      if (!item.sectionRecall) return [];
+      return [{
+      activity:'activeRecall', minutes:item.minutes, reason:'active-recall', topicId:item.topicIds[0], topicIds:[...item.topicIds],
+      sectionRecall:{ agendaItemId:item.id, followUpId:item.sectionRecall.followUpId, sectionId:item.sectionRecall.sectionId,
+        materialPath:item.sectionRecall.materialPath, sourceHash:item.sectionRecall.sourceHash, outlineFingerprint:item.sectionRecall.outlineFingerprint,
+        ...(item.sectionRecall.sectionTitle ? { sectionTitle:item.sectionRecall.sectionTitle } : {}),
+        ...(item.sectionRecall.printedPage !== undefined ? { printedPage:item.sectionRecall.printedPage } : {}) },
+      }];
+    }
     const reason: TrainingPlanReason = item.kind === 'newContent' ? 'new-content-day'
       : item.kind === 'activeRecall' ? 'active-recall'
         : item.kind === 'failures' ? 'recurring-failures'
           : item.kind === 'spacedReviews' ? 'due-reviews' : 'coverage';
-    return { activity:item.kind, minutes:item.minutes, reason,
+    return [{ activity:item.kind, minutes:item.minutes, reason,
       ...(item.kind === 'newContent' ? { topicId:item.topicIds[0] } : undefined),
-      ...(item.kind !== 'newContent' ? { topicIds:[...item.topicIds], ...(item.topicIds.length === 1 ? { topicId:item.topicIds[0] } : {}) } : undefined) };
+      ...(item.kind !== 'newContent' ? { topicIds:[...item.topicIds], ...(item.topicIds.length === 1 ? { topicId:item.topicIds[0] } : {}) } : undefined) }];
   });
   const totalMinutes = activities.reduce((sum, activity) => sum + activity.minutes, 0);
   if (totalMinutes > input.plan.minutes) return input.plan;
@@ -507,6 +517,8 @@ export function dailyTrainingPlanFromAgenda(input: {
 
 export function findMatchingPlannedAgendaItem(agenda: WeeklyStudyAgenda, dateKey: string, step: TrainingSessionStep): WeeklyAgendaItem | undefined {
   const stepTopics = step.topicIds ?? (step.topicId ? [step.topicId] : []);
+  if (step.sectionRecall) return agenda.items.find(item => item.id === step.sectionRecall?.agendaItemId && item.dateKey === dateKey
+    && item.status === 'planned' && item.kind === 'sectionRecall' && item.sectionRecall?.followUpId === step.sectionRecall?.followUpId);
   return agenda.items.find(item => item.dateKey === dateKey && item.status === 'planned'
     && item.kind === step.activity && item.minutes === step.minutes && item.topicIds.join('|') === stepTopics.join('|'));
 }

@@ -39,6 +39,15 @@ describe('sesión diaria guiada', () => {
     expect(completeTrainingSessionActivity(linked, 'activeRecall', now + 4, { ...reference, sessionId:'stale' })).toBe(linked);
   });
 
+  it('conserva la identidad de un apartado desde el plan hasta el historial de sesión', () => {
+    const now = new Date(2026, 10, 2, 12).getTime();
+    const sectionRecall = { agendaItemId:'agenda-section-001', followUpId:'follow-up-001', sectionId:'ci-0123456789abcdefabcd', materialPath:'T1.01/Temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64) };
+    const created = createDailyTrainingSession({ ...plan, activities:[{ ...plan.activities[0], sectionRecall }] }, now);
+    expect(created.activities[0].sectionRecall).toEqual(sectionRecall);
+    const finished = completeTrainingSessionActivity(startTrainingSessionActivity(created, now + 1), 'activeRecall', now + 5_001);
+    expect(toTrainingSessionHistoryEntry(finished)?.activities[0].sectionRecall).toEqual(sectionRecall);
+  });
+
   it('mantiene las marcas de tiempo válidas si el reloj del dispositivo retrocede', () => {
     const now = 1_800_000_000_000;
     const created = createDailyTrainingSession({ ...plan, activities: [plan.activities[0]] }, now);
