@@ -112,6 +112,25 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
     await assertFails(setDoc(doc(testEnv.unauthenticatedContext().firestore(), 'users/student/cfg/weeklyStudyAgenda'), { schemaVersion:1, updatedAt:item.updatedAt, agenda }));
   });
 
+  it('aísla selección de materiales y eventos inmutables por apartado', async () => {
+    const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const other = testEnv.authenticatedContext('other', { email:'other@example.test', email_verified:true }).firestore();
+    const material = { path:'T1.01/Temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64), outlineStructureFingerprint:'c'.repeat(64), role:'syllabus' };
+    const selection = { topicId:'T1.01', materials:[material], revision:1, updatedAt:1_793_280_000_000 };
+    const selectedDoc = doc(db, 'users/student/academyStudyMaterials/T1.01');
+    await assertSucceeds(setDoc(selectedDoc, selection));
+    await assertFails(getDoc(doc(other, 'users/student/academyStudyMaterials/T1.01')));
+    await assertFails(setDoc(doc(testEnv.unauthenticatedContext().firestore(), 'users/student/academyStudyMaterials/T1.01'), selection));
+    await assertFails(setDoc(doc(db, 'users/student/academyStudyMaterials/T1.01'), { ...selection, unexpected:true }));
+
+    const event = { id:'event-00000001', topicId:'T1.01', sectionId:'ci-0123456789abcdefabcd', materialPath:material.path, sourceHash:material.sourceHash, outlineFingerprint:material.outlineFingerprint, kind:'self-check', timing:'delayed', rating:'partial', occurredAt:1_793_280_000_000 };
+    const eventDoc = doc(db, `users/student/academySectionEvents/${event.id}`);
+    await assertSucceeds(setDoc(eventDoc, event));
+    await assertFails(getDoc(doc(other, `users/student/academySectionEvents/${event.id}`)));
+    await assertFails(setDoc(eventDoc, { ...event, rating:'recalled' }));
+    await assertFails(setDoc(doc(db, `users/student/academySectionEvents/${event.id}-bad`), event));
+  });
+
   it('sincroniza y combina la agenda semanal sin usar el documento de calendario anterior', async () => {
     const firstDb = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
     const secondDb = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();

@@ -11,6 +11,7 @@ import type { SelfAssessment } from '../../core/domain/attempts/transitions.js';
 import type { SimulationScoringPolicy } from '../../core/domain/simulation-scoring.js';
 import type { WeeklyAgendaItem, WeeklyAgendaPlanProposal, WeeklyAgendaRecoveryProposal, WeeklyStudyAgenda } from '../../core/domain/study-weekly-agenda.js';
 import type { TopicReviewEvidence } from '../../core/domain/study-review-intervention.js';
+import type { AcademyMaterialReference, AcademySectionStudyEvent, AcademyTopicProgressSnapshot } from '../../core/domain/academy-study-progress.js';
 export type { StatsComparison, StatsDomainTopic, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 export interface ActiveStudy { title: string; position: number; total: number }
 export interface HomeBlock { name: string; total: number; mastered: number; assessed: number }
@@ -76,6 +77,13 @@ export interface TopicServices {
   setStudied(ids: readonly string[]): void;
   accountId(): string | null;
   subscribe(listener: () => void): () => void;
+}
+export interface AcademyStudyProgressServices {
+  accountId(): string | null;
+  subscribe(listener: () => void): () => void;
+  loadTopicProgress(topicId: string): Promise<AcademyTopicProgressSnapshot>;
+  selectMaterials(topicId: string, materials: readonly AcademyMaterialReference[]): boolean;
+  record(event: AcademySectionStudyEvent): boolean;
 }
 export interface StudyCard {
   id: string; t: string; q: string; a: string; nota?: string; ref?: string; tipo?: string; src?: string;
@@ -251,7 +259,7 @@ export interface SettingsServices {
   buildAiExport(input: { from: number; to: number; modes: readonly ('practice' | 'simulation')[]; sessionIds: readonly string[] }): Promise<unknown>;
   deleteAiHistory(): Promise<{ accountSyncPending: boolean }>;
 }
-export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; cards: CardsServices; errors: ErrorServices; failures: FailureServices; lightning: LightningServices; traps: TrapsServices; reading: ReadingServices; test: TestServices; simulation: SimulationServices; simulationReview: SimulationReviewServices; result: ResultServices; quiz: QuizServices; stats: StatsServices; settings: SettingsServices; markReady(): void }
+export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; academyStudyProgress: AcademyStudyProgressServices; cards: CardsServices; errors: ErrorServices; failures: FailureServices; lightning: LightningServices; traps: TrapsServices; reading: ReadingServices; test: TestServices; simulation: SimulationServices; simulationReview: SimulationReviewServices; result: ResultServices; quiz: QuizServices; stats: StatsServices; settings: SettingsServices; markReady(): void }
 const Context = createContext<StudyServices | null>(null);
 export const AppServicesProvider = Context.Provider;
 function useOptionalStudyServices(): StudyServices | null { return useContext(Context); }

@@ -4,9 +4,18 @@ import { MemoryRouter } from 'react-router';
 import { AppServicesProvider } from '../../src/shared/ui/study-services.tsx';
 
 export function renderApp(ui, { services = {}, initialEntries = ['/'] } = {}) {
+  const defaults = {
+    academyStudyProgress: {
+      accountId:() => null,
+      subscribe:() => () => {},
+      loadTopicProgress:async () => ({ selection:null, events:[] }),
+      selectMaterials:() => false,
+      record:() => false,
+    },
+  };
   return render(React.createElement(
     MemoryRouter,
     { initialEntries },
-    React.createElement(AppServicesProvider, { value: services }, ui),
+    React.createElement(AppServicesProvider, { value: { ...defaults, ...services } }, ui),
   ));
 }

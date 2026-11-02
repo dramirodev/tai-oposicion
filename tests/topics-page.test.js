@@ -63,6 +63,36 @@ it('enlaza el tema recomendado con el índice y los ficheros exactos del Drive d
   expect(screen.getByText(/permanecen en tu carpeta de Drive y no están copiados ni se abren desde la aplicación/)).toBeInTheDocument();
 });
 
+it('requiere seleccionar un material antes de registrar cobertura parcial por apartado', async () => {
+  const user = userEvent.setup();
+  let progress = { selection:null, events:[] };
+  const listeners = new Set();
+  const academyStudyProgress = {
+    accountId:() => null,
+    subscribe:listener => { listeners.add(listener); return () => listeners.delete(listener); },
+    loadTopicProgress:async () => progress,
+    selectMaterials:(topicId, materials) => {
+      progress = { ...progress, selection:{ topicId, materials, revision:1, updatedAt:Date.now() } };
+      listeners.forEach(listener => listener());
+      return true;
+    },
+    record:event => { progress = { ...progress, events:[...progress.events, event] }; listeners.forEach(listener => listener()); return true; },
+  };
+  renderApp(createElement(TopicsPage), { services:{
+    topics:{ accountId:() => null, getStudied:() => [], subscribe:() => () => {}, setStudied:() => {}, loadTopics:async () => [{ id:'T1.01', name:'Constitución Española', total:0, answered:0, accuracy:null }] },
+    academyStudyProgress,
+  }, initialEntries:['/temario?topic=T1.01'] });
+  await user.click(await screen.findByText(/Material de academia/));
+  const checkbox = await screen.findByRole('checkbox', { name:/T1\.01 Constitución Española - Temario\.pdf/ });
+  await user.click(checkbox);
+  await user.click(screen.getByRole('button', { name:'Guardar materiales elegidos' }));
+  const partial = await screen.findAllByRole('button', { name:'Marcar parcial' });
+  await user.click(partial[0]);
+  expect(progress.selection.materials).toHaveLength(1);
+  expect(progress.events[0]).toMatchObject({ kind:'coverage', coverage:'partial', topicId:'T1.01' });
+  expect(screen.getAllByText(/cobertura parcial/).length).toBeGreaterThan(0);
+});
+
 it('no inventa secciones de materiales para un tema futuro sin carpeta fuente', async () => {
   const topics={accountId:()=>null,getStudied:()=>[],subscribe:()=>()=>{},setStudied:()=>{},loadTopics:async()=>[
     {id:'T5.19',name:'Tema recién incorporado',total:0,answered:0,accuracy:null},

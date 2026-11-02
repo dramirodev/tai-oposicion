@@ -23,6 +23,7 @@ import { sessionStatePort } from './session-state-store.js';
 import { clearRun, pendingRun, saveRun } from './composition/study/pending-run-composition.js';
 import { createTopicMasteryComposition } from './composition/topics/topic-mastery-composition.js';
 import { createTopicProgressComposition } from './composition/topics/topic-progress-composition.js';
+import { createAcademyStudyProgressComposition } from './composition/topics/academy-study-progress-composition.js';
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
 import type { Origin, QuestionStats, StudyReviewMode, TrainingActivity, TrainingCalendarEvent, TrainingPreferences } from '../core/domain/entities.js';
@@ -108,6 +109,13 @@ const weeklyStudyAgenda = createWeeklyStudyAgendaComposition({
   accountId: localStudyProgressGateway.accountId,
   now: studyQuestionCatalog.now,
   push: () => { void sync.pushWeeklyStudyAgenda(); },
+});
+const academyStudyProgress = createAcademyStudyProgressComposition({
+  accountId: localStudyProgressGateway.accountId,
+  now: studyQuestionCatalog.now,
+  onAccountChange: localStudyProgressGateway.onAccountChange,
+  pushMaterialSelection: selection => { void sync.pushAcademyMaterialSelection(selection); },
+  pushSectionEvent: event => { void sync.pushAcademySectionStudyEvent(event); },
 });
 const trainingCalendar = createTrainingCalendarComposition({
   accountId: localStudyProgressGateway.accountId,
@@ -425,7 +433,7 @@ export function bootAppServices(): () => void {
     prefetchBank: prefetchBanco,
     loadMetadataAndInitializeSync: async () => {
       try { await getMeta(); } catch (error) { console.error(error); }
-      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getAllQuestionIdsForTopic }, progressStore, trainingSession, paperRecall, trainingCalendar, weeklyStudyAgenda); } catch (error) { console.error(error); }
+      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getAllQuestionIdsForTopic }, progressStore, trainingSession, paperRecall, trainingCalendar, weeklyStudyAgenda, academyStudyProgress); } catch (error) { console.error(error); }
     },
   });
 }
@@ -435,6 +443,18 @@ async function prefetchBanco() { await prefetchQuestionBank(await getIndex()); }
 
 /** Temporary composition only: the React views own rendering and events. */
 export const studyServices: StudyServices = {
+  academyStudyProgress: {
+    accountId: localStudyProgressGateway.accountId,
+    subscribe: academyStudyProgress.subscribe,
+    async loadTopicProgress(topicId) {
+      const account = localStudyProgressGateway.accountId();
+      const snapshot = academyStudyProgress.getTopicProgress(topicId);
+      if (account !== localStudyProgressGateway.accountId()) throw new Error('La cuenta cambió al cargar el progreso del apartado.');
+      return snapshot;
+    },
+    selectMaterials(topicId, materials) { return !!academyStudyProgress.selectMaterials(topicId, materials); },
+    record(event) { return !!academyStudyProgress.record(event); },
+  },
   result: {
     getSnapshot() {
       const last = getLastResult(); if (!last) return null;

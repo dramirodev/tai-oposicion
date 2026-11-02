@@ -81,6 +81,18 @@ test('el tema recomendado muestra su material de academia en móvil y escritorio
   await expect(material).toContainText('Solo se comparan títulos y páginas');
   await expect(material).toContainText('ni se abren desde la aplicación');
 
+  await material.getByRole('checkbox', { name:/T1\.01 Constitución Española - Temario\.pdf/ }).check();
+  await material.getByRole('button', { name:'Guardar materiales elegidos' }).click();
+  await material.locator('summary').filter({ hasText:'1. INTRODUCCIÓN' }).click();
+  await material.getByRole('button', { name:'Marcar parcial' }).first().click();
+  await expect(material).toContainText('Cobertura guardada.');
+  await page.reload();
+  const resumedMaterial = page.locator('#app details').filter({ has: page.getByText(/Material de academia ·/) });
+  await resumedMaterial.locator('summary').filter({ hasText:/Material de academia/ }).click();
+  await expect(resumedMaterial.getByRole('checkbox', { name:/T1\.01 Constitución Española - Temario\.pdf/ })).toBeChecked();
+  await resumedMaterial.locator('summary').filter({ hasText:'1. INTRODUCCIÓN' }).click();
+  await expect(resumedMaterial).toContainText('cobertura parcial');
+
   for (const width of [393, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     const dimensions = await page.locator('#app').evaluate(element => ({
