@@ -21,7 +21,7 @@ it('maps current settings and normalizes the stored training and UI preferences'
   expect(snapshot.training).toEqual({
     minutesByDay: [0, 10, 20, 30, 40, 50, 60],
     focusByDay: ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'],
-    introductionDay: 3, activityVersion: 3, activities: ['topicTest', 'mixedTopicTest', 'newContent'],
+    introductionDay: 3, focusBlockMinutes: 35, activityVersion: 3, activities: ['topicTest', 'mixedTopicTest', 'newContent'],
   });
   expect(snapshot.progress).toEqual({ questions: 9, topics: 2, sessions: 3, openReports: 1 });
   expect(snapshot.exam).toBe('2027-06-01');
@@ -35,7 +35,7 @@ it('provides safe defaults for old or malformed preferences and exam values', ()
   expect(snapshot.training).toEqual({
     minutesByDay: [0, 120, 120, 120, 120, 120, 120],
     focusByDay: ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'],
-    introductionDay: 4, activityVersion: 3, activities: ['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'],
+    introductionDay: 4, focusBlockMinutes: 35, activityVersion: 3, activities: ['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'],
   });
   expect(snapshot.exam).toBe('');
 });

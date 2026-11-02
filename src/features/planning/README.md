@@ -55,7 +55,19 @@ Los datos `training.calendarEvents` son opcionales y pasan por el esquema compar
 
 **Verificación local:** `npm run check` (170 archivos pasaron, 1 omitido; 844 pasadas/22 omitidas; arquitectura, lint, ignore-growth y typecheck correctos), `npm run build` correcto con avisos conocidos Zod/Rollup y chunks >500 kB; E2E de vacaciones/ausencia, efecto en sesión y semana, recarga, conservación como histórico y retorno al plan ordinario el 6/11 pasó Chromium/WebKit (2/2); pruebas focalizadas de preferencias/calendario/dominio/UI: 70 pasadas. `git diff --check` limpio. Sin acceso ni escritura Firebase, sin push/tag/release/despliegue.
 
-Commit local de implementación, pruebas y handoff: `3008631` (`Integra excepciones de calendario en la planificación`). El informe de auditoría sigue local y fuera del commit. Próxima fase recomendada: bloques de foco y pausas dentro de una ventana especial, luego convertir hitos en simulacros versionados con reglas de corrección incompletas explícitas. Rama local `feat/study-plan-through-exam`; no push, tag, release ni despliegue.
+Commit local de implementación, pruebas y handoff: `3008631` (`Integra excepciones de calendario en la planificación`). El informe de auditoría sigue local y fuera del commit. Rama local `feat/study-plan-through-exam`; no push, tag, release ni despliegue.
+
+## Continuidad: bloques de concentración y semana fechada (2026-11-02)
+
+La preferencia opcional `training.focusBlockMinutes` admite 25, 30, 35, 40 o 45 minutos y tiene fallback a 35 para usuarios anteriores. Se guarda mediante el esquema `cleanCfg` y se configura en Ajustes. La Planificación muestra una sugerencia al alcanzar ese tiempo; no detiene ni divide una actividad ni modifica su duración pedagógica.
+
+La pausa explícita de cinco minutos se registra como `breakStartedAt`/`breakDurationMinutes` en el checkpoint diario. Al comenzar pausa se cierra el cronómetro de foco, se conserva `currentIndex` y no se crea otro paso; el checkpoint permite continuar la misma actividad tras recarga. La pausa es voluntaria y se puede terminar antes/después del tiempo orientativo. El tiempo de descanso no se suma al tiempo enfocado. Los campos opcionales mantienen compatibilidad con checkpoints antiguos.
+
+La semana fechada muestra por día disponibilidad/excepciones, repasos manuales ya programados y sesiones que constan como completadas en historial. Reprogramar un repaso pendiente sigue siendo una acción revisada y confirmada en el editor de agenda. Una sesión de hoy iniciada se mantiene congelada por el checkpoint existente. La semana aún no persiste una agenda propuesta completa para días futuros ni redistribuye automáticamente sesiones perdidas: la disponibilidad/eventos se aplica al cálculo diario cuando se abre ese día.
+
+**Verificación de esta rebanada:** `npm run check` pasa (arquitectura sin deuda nueva, lint, ignore-growth, TypeScript; 170 archivos Vitest pasaron/1 omitido, 846 pruebas pasaron/22 omitidas), con el aviso conocido `window.scrollTo` de jsdom. `npm run build` pasa con avisos conocidos de comentarios Zod/Rollup y chunks >500 kB. E2E de pausa persistida/recarga/reanudación: 2/2 Chromium/WebKit; excepción de calendario: 2/2; programación y reprogramación confirmadas con recarga: 4/4; inicio de sesión en planificación: 2/2. `git diff --check` pasa. No hay verificación Firebase remota; no se ha recorrido la UI manualmente en móvil físico/escritorio.
+
+**Siguiente paso:** cerrar `npm run check`, repetir pruebas de sesión/Ajustes tras la última edición y completar build/E2E si proceden; luego integrar hitos con simulacros versionados y política de puntuación explícita. Agenda futura persistida y recuperación distribuida de pendientes quedan abiertas.
 
 Commit local de código, pruebas y este handoff: `2933b0f` (`Integra horizonte y semana en la planificación`). El informe de auditoría está sin seguimiento y quedó fuera del commit. La rama `feat/study-plan-through-exam` sigue solo local: no se hizo push, tag, release ni despliegue.
 

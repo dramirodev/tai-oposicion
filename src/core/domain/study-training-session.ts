@@ -21,6 +21,9 @@ export interface DailyTrainingSession {
   activities: readonly TrainingSessionStep[];
   currentIndex: number;
   currentStartedAt: number | null;
+  /** A timed rest checkpoint; current activity stays selected and is never duplicated. */
+  breakStartedAt?: number | null;
+  breakDurationMinutes?: number;
   /** Measured foreground study time per activity, retained when paused. */
   elapsedSecondsByActivity?: readonly number[];
   /** Monotonic-ish local checkpoint time used to resolve cross-device updates. */
@@ -97,7 +100,7 @@ export function createDailyTrainingSession(plan: DailyTrainingPlan, timestamp: n
 }
 
 export function startTrainingSessionActivity(session: DailyTrainingSession, timestamp: number): DailyTrainingSession {
-  if (session.completedAt !== null || session.currentIndex >= session.activities.length || session.currentStartedAt !== null) return session;
+  if (session.completedAt !== null || session.currentIndex >= session.activities.length || session.currentStartedAt !== null || session.breakStartedAt != null) return session;
   return { ...session, currentStartedAt: Math.max(timestamp, session.startedAt), updatedAt: timestamp };
 }
 
@@ -107,6 +110,18 @@ export function pauseTrainingSessionActivity(session: DailyTrainingSession, time
   const elapsedSecondsByActivity = [...(session.elapsedSecondsByActivity ?? session.activities.map(() => 0))];
   elapsedSecondsByActivity[session.currentIndex] += Math.max(0, Math.floor((timestamp - startedAt) / 1000));
   return { ...session, currentStartedAt: null, elapsedSecondsByActivity, updatedAt: timestamp };
+}
+
+export function beginTrainingSessionBreak(session: DailyTrainingSession, timestamp: number, durationMinutes = 5): DailyTrainingSession {
+  if (session.completedAt !== null || session.currentIndex >= session.activities.length || session.breakStartedAt != null
+    || !Number.isInteger(durationMinutes) || durationMinutes < 3 || durationMinutes > 15) return session;
+  const paused = pauseTrainingSessionActivity(session, timestamp);
+  return { ...paused, breakStartedAt: timestamp, breakDurationMinutes: durationMinutes, updatedAt: timestamp };
+}
+
+export function endTrainingSessionBreak(session: DailyTrainingSession, timestamp: number): DailyTrainingSession {
+  if (session.breakStartedAt == null) return session;
+  return { ...session, breakStartedAt: null, updatedAt: timestamp };
 }
 
 export function completeTrainingSessionActivity(

@@ -29,3 +29,8 @@ it('persiste únicamente eventos de calendario con forma válida', () => {
   expect(cleanCfgSetting('training', { calendarEvents })).toMatchObject({ calendarEvents });
   expect(cleanCfgSetting('training', { calendarEvents:[{ ...calendarEvents[0], startDate:'2026-02-30' }] })).not.toHaveProperty('calendarEvents');
 });
+
+it('conserva duraciones de foco admitidas y descarta valores ajenos al selector', () => {
+  expect(cleanCfgSetting('training', { focusBlockMinutes: 45 })).toEqual({ focusBlockMinutes: 45 });
+  expect(cleanCfgSetting('training', { focusBlockMinutes: 20 })).toEqual({});
+});

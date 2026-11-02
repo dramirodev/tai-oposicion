@@ -162,6 +162,7 @@ interface PlanningViewModel {
   completedCount: number;
   activeIndex: number;
   activeSeconds: number;
+  breakRemainingSeconds: number;
   totalElapsed: number;
   progress: number;
   state: 'completed' | 'rest' | 'activities' | 'missing-new-topic' | 'empty';
@@ -178,6 +179,8 @@ function buildPlanningViewModel(overview: HomeOverview, settings: SettingsSnapsh
   const activeSecondsBase = session?.elapsedSecondsByActivity?.[activeIndex] ?? 0;
   const currentElapsed = session?.currentStartedAt !== null && session?.currentStartedAt !== undefined ? Math.max(0, Math.floor((clock - session.currentStartedAt) / 1000)) : 0;
   const activeSeconds = activeSecondsBase + currentElapsed;
+  const breakRemainingSeconds = session?.breakStartedAt != null
+    ? Math.max(0, (session.breakDurationMinutes ?? 5) * 60 - Math.floor((clock - session.breakStartedAt) / 1000)) : 0;
   const totalElapsed = (session?.elapsedSecondsByActivity ?? []).reduce((sum, value) => sum + value, 0) + currentElapsed;
   const topicNames = new Map((overview.studiedTopicDetails ?? []).map(topic => [topic.id, topic.name]));
   if (overview.nextNewTopic) topicNames.set(overview.nextNewTopic.id, overview.nextNewTopic.name);
@@ -197,14 +200,14 @@ function buildPlanningViewModel(overview: HomeOverview, settings: SettingsSnapsh
     : plan.restDay ? 'Hoy es descanso. El trabajo pendiente no se acumula.'
       : hasPlannedActivities ? focus === 'consolidation' ? 'Hoy toca recuperar conocimientos y consolidar lo que ya has estudiado.' : 'Hoy avanzarás en el tema nuevo y practicarás el material de temas vistos que necesite revisión.'
         : 'No hay actividades justificadas con la información disponible.';
-  const actionLabel = session?.currentStartedAt ? 'Continuar actividad' : session?.currentIndex ? 'Continuar sesión' : 'Comenzar sesión';
+  const actionLabel = !session ? 'Comenzar sesión' : session.currentStartedAt !== null ? 'Continuar actividad' : session.currentIndex ? 'Continuar sesión' : 'Continuar actividad';
   return {
     plan, session, activities, topicNames, weekday, focus, title, purpose,
     examDistance: examDays === null ? 'Fecha objetivo sin configurar' : `${examDays} días · fecha objetivo`,
     timeLabel: activities.length ? 'Tiempo previsto' : 'Tiempo disponible',
     recordedTime: session ? formatMinutes(totalElapsed) : 'Aún no iniciado',
     topicCount: new Set(activities.flatMap(step => step.topicIds ?? (step.topicId ? [step.topicId] : []))).size,
-    completedCount, activeIndex, activeSeconds, totalElapsed,
+    completedCount, activeIndex, activeSeconds, breakRemainingSeconds, totalElapsed,
     progress: activities.length ? Math.min(100, Math.round(completedCount * 100 / activities.length)) : 0,
     state,
     emptyMessage: !overview.nextNewTopic && focus === 'new-content' && settings.training.academyTopicOrderIds?.length ? 'sequence-exhausted'
@@ -249,22 +252,28 @@ function usePlanningSessionActions(services: HomeServices, overview: HomeOvervie
   };
 
   const pauseSession = () => { services.pauseTrainingActivity(); refresh(); };
+  const beginBreak = () => { services.beginTrainingBreak(5); refresh(); };
+  const endBreak = () => { services.endTrainingBreak(); refresh(); };
   const recordRecallAssessment = (topicId: string, rating: PaperRecallRating) => {
     if (!services.recordPaperRecall) return;
     if (services.recordPaperRecall(topicId, rating)) refresh();
     else services.notify('No se pudo guardar la autoevaluación en este dispositivo. Comprueba el espacio disponible e inténtalo de nuevo.');
   };
-  return { startSession, pauseSession, recordRecallAssessment };
+  return { startSession, pauseSession, beginBreak, endBreak, recordRecallAssessment };
 }
 
-function SessionActionArea({ model, activeStudy, onStart, onPause }: {
-  model: PlanningViewModel; activeStudy: boolean; onStart(): void; onPause(): void;
+function SessionActionArea({ model, activeStudy, onStart, onPause, onBeginBreak, onEndBreak, focusBlockMinutes }: {
+  model: PlanningViewModel; activeStudy: boolean; onStart(): void; onPause(): void; onBeginBreak(): void; onEndBreak(): void; focusBlockMinutes: number;
 }) {
   if (model.state === 'completed') return <p className="planning-session-complete my-4" role="status">Sesión finalizada · {model.completedCount} actividades · {formatMinutes(model.totalElapsed)} registrados.</p>;
   if (model.state === 'rest') return <p className="planning-session-complete my-4">Día de descanso · no se trasladan tareas a mañana.</p>;
   if (model.state === 'activities') return <div className="planning-session-actions mt-4 flex flex-wrap items-center gap-2.5">
-    <button className="btn inline-flex items-center justify-center gap-2" onClick={onStart} disabled={activeStudy}><Play size="1rem" aria-hidden="true" />{model.actionLabel}</button>
+    {model.session?.breakStartedAt != null ? <><p className="basis-full" role="status">Pausa en curso · {model.breakRemainingSeconds ? `${formatMinutes(model.breakRemainingSeconds)} orientativos` : 'tiempo orientativo cumplido'}. Puedes retomarla cuando quieras; la actividad queda guardada.</p><button className="btn inline-flex items-center justify-center gap-2" onClick={onEndBreak}><Play size="1rem" aria-hidden="true" />Terminar pausa</button></>
+      : <><button className="btn inline-flex items-center justify-center gap-2" onClick={onStart} disabled={activeStudy}><Play size="1rem" aria-hidden="true" />{model.actionLabel}</button>
     {model.session?.currentStartedAt !== null && model.session?.currentStartedAt !== undefined && <button className="btn sec inline-flex items-center justify-center gap-2" onClick={onPause}><Pause size="1rem" aria-hidden="true" />Pausar tiempo</button>}
+    {model.session?.currentStartedAt !== null && model.session?.currentStartedAt !== undefined && <button className="btn sec inline-flex items-center justify-center gap-2" onClick={onBeginBreak}><Pause size="1rem" aria-hidden="true" />Tomar pausa de 5 min</button>}
+    </>}
+    {model.activeSeconds >= focusBlockMinutes * 60 && model.session?.breakStartedAt == null && <p className="basis-full text-muted" role="status">Has alcanzado el bloque orientativo de {focusBlockMinutes} min. Puedes pausar y descansar; el bloque se ajusta en Ajustes.</p>}
     <p className="mt-[.15rem] mb-0 flex-[1_1_100%] text-muted text-[length:var(--fs-s)]">Las actividades se abren ya preparadas; al terminar, vuelves aquí para seguir con el paso siguiente.</p>
   </div>;
   if (model.state === 'missing-new-topic') return <p>No se ha podido preparar el siguiente tema. <Link to="/temario">Revisa el temario</Link>.</p>;
@@ -273,8 +282,8 @@ function SessionActionArea({ model, activeStudy, onStart, onPause }: {
   return <p>{model.emptyMessage === 'no-content' ? 'No hay contenido pendiente para las modalidades elegidas.' : <>Primero marca el siguiente tema que vas a estudiar. <Link to="/temario">Abrir temario</Link></>}</p>;
 }
 
-function PlanningTodayCard({ model, overview, activeStudy, onStart, onPause }: {
-  model: PlanningViewModel; overview: HomeOverview; activeStudy: boolean; onStart(): void; onPause(): void;
+function PlanningTodayCard({ model, overview, activeStudy, onStart, onPause, onBeginBreak, onEndBreak, focusBlockMinutes }: {
+  model: PlanningViewModel; overview: HomeOverview; activeStudy: boolean; onStart(): void; onPause(): void; onBeginBreak(): void; onEndBreak(): void; focusBlockMinutes: number;
 }) {
   const { activities } = model;
   return <section className="planning-today my-5 min-w-0 rounded-[var(--r-xl)] border border-line py-5 px-[clamp(1rem,3vw,1.75rem)] max-[520px]:p-4 [background:var(--card)]" aria-labelledby="planning-today-title">
@@ -288,7 +297,7 @@ function PlanningTodayCard({ model, overview, activeStudy, onStart, onPause }: {
         <div className="min-w-0 border-e border-line px-3 py-3.5 first:ps-0 last:border-e-0"><dt className="text-muted text-[length:var(--fs-xs)]">Temas implicados</dt><dd className="mt-1 mb-0 text-[clamp(1.1rem,2vw,1.45rem)] [font-variant-numeric:tabular-nums] [overflow-wrap:anywhere]">{model.topicCount}</dd></div>
         <div className="min-w-0 border-e border-line px-3 py-3.5 first:ps-0 last:border-e-0"><dt className="text-muted text-[length:var(--fs-xs)]">Repasos vencidos</dt><dd className="mt-1 mb-0 text-[clamp(1.1rem,2vw,1.45rem)] [font-variant-numeric:tabular-nums] [overflow-wrap:anywhere]">{overview.trainingDue.cards + overview.trainingDue.questions}</dd></div>
       </dl>
-      <SessionActionArea model={model} activeStudy={activeStudy} onStart={onStart} onPause={onPause} />
+      <SessionActionArea model={model} activeStudy={activeStudy} onStart={onStart} onPause={onPause} onBeginBreak={onBeginBreak} onEndBreak={onEndBreak} focusBlockMinutes={focusBlockMinutes} />
       {activities.length > 0 && <div className="planning-progress mt-5 h-[.3rem] overflow-hidden rounded-[99px] bg-[var(--surface-soft)]" aria-label={`Progreso: ${model.completedCount} de ${activities.length} actividades`}><span className="block h-full rounded-[inherit] bg-brand motion-safe:[transition:width_.25s_ease]" style={{ width: `${model.progress}%` }} /></div>}
     </div>
   </section>;
@@ -392,9 +401,10 @@ export function PlanningPage() {
     </header>
     <PlanningHorizon targetDate={settings.exam} today={now} preferences={settings.training}
       catalogTopicIds={settings.index?.topics?.map(topic => topic.id) ?? []} studiedTopicIds={services.seenTopics()} />
-    <PlanningTodayCard model={model} overview={overview} activeStudy={!!services.getActiveStudy()} onStart={actions.startSession} onPause={actions.pauseSession} />
+    <PlanningTodayCard model={model} overview={overview} activeStudy={!!services.getActiveStudy()} onStart={actions.startSession} onPause={actions.pauseSession}
+      onBeginBreak={actions.beginBreak} onEndBreak={actions.endBreak} focusBlockMinutes={settings.training.focusBlockMinutes ?? 35} />
     <PlanningActivityList model={model} assessments={overview.paperRecallAssessments ?? []} now={now.getTime()} onRecallAssessment={actions.recordRecallAssessment} />
-    <StudyCalendar preferences={settings.training} weekday={model.weekday} now={now} history={overview.trainingHistory ?? []}
+    <StudyCalendar preferences={settings.training} weekday={model.weekday} now={now} history={overview.trainingHistory ?? []} activeSession={overview.trainingSession}
       topics={overview.studiedTopicDetails ?? []} activities={scheduledActivities} onSchedule={scheduleActivity} onReschedule={rescheduleActivity} onOpenActivity={openScheduledActivity} />
     <PlanningHistory overview={overview} />
     <PlanningEvidence overview={overview} />

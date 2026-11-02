@@ -212,6 +212,12 @@ function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsSer
         {trainingDays.map(day => <option key={day.index} value={day.index}>{day.name}</option>)}
       </select>
     </label>
+    <label className="training-intro">Duración orientativa del bloque de concentración
+      <select aria-label="Duración del bloque de concentración" value={snapshot.training.focusBlockMinutes ?? 35} onChange={event => settings.setTrainingPreferences({ ...snapshot.training, focusBlockMinutes: Number(event.target.value) as 25 | 30 | 35 | 40 | 45 })}>
+        {[25, 30, 35, 40, 45].map(value => <option key={value} value={value}>{value} minutos</option>)}
+      </select>
+    </label>
+    <p className="sm">Al alcanzar este tiempo, TAI te sugiere una pausa. Es orientativo y puedes pausar o continuar según te convenga.</p>
     <label className="training-intro">Tema que estás introduciendo esta semana
       <select value={snapshot.training.introductionTopicId ?? ''} onChange={event => {
         const introductionTopicId = event.target.value || undefined;

@@ -36,7 +36,7 @@ const schemas: Record<string, { defaults: Record<string, unknown>; fields: Recor
   } },
   simc: { defaults: {}, fields: { a: integer(0, 299), b: integer(0, 299) } },
   slow: { defaults: {}, fields: { ok: bool } },
-  training: { defaults: {}, fields: { minutesByDay: trainingMinutes, focusByDay: trainingFocus, introductionDay: integer(0, 6), introductionTopicId: trainingTopicId, academyTopicOrderIds: trainingTopicOrder, activities: trainingActivities, activityVersion: oneOf([2, 3]), reviewModesByTopic: trainingReviewModes, calendarEvents: trainingCalendarEvents } },
+  training: { defaults: {}, fields: { minutesByDay: trainingMinutes, focusByDay: trainingFocus, introductionDay: integer(0, 6), focusBlockMinutes: oneOf([25, 30, 35, 40, 45]), introductionTopicId: trainingTopicId, academyTopicOrderIds: trainingTopicOrder, activities: trainingActivities, activityVersion: oneOf([2, 3]), reviewModesByTopic: trainingReviewModes, calendarEvents: trainingCalendarEvents } },
 };
 function cleanValue(itemValue: unknown, depth = 0): unknown {
   if (itemValue === null || typeof itemValue === 'boolean') return itemValue;

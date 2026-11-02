@@ -40,6 +40,8 @@ export interface HomeServices {
   startTrainingSession(plan: DailyTrainingPlan): DailyTrainingSession | null;
   startTrainingActivity(): DailyTrainingSession | null;
   pauseTrainingActivity(): DailyTrainingSession | null;
+  beginTrainingBreak(minutes?: number): DailyTrainingSession | null;
+  endTrainingBreak(): DailyTrainingSession | null;
   completeTrainingActivity(activity: TrainingActivity, reference?: import('../../core/domain/study-training-session.js').TrainingActivityReference): DailyTrainingSession | null;
   recordPaperRecall?(topicId: string, rating: PaperRecallRating): PaperRecallAssessment | null;
   scheduledStudyActivities?(): readonly ScheduledStudyActivity[];

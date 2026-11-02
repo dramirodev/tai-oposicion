@@ -47,7 +47,7 @@ it('permite iniciar el paso de tema nuevo aunque todavía no haya temas vistos',
   const services = servicesFor(planned);
   renderApp(createElement(Fragment, null, createElement(PlanningPage), createElement(CurrentPath)), { services });
   await screen.findByRole('heading', { name:'Planificación de estudio' });
-  await user.click(screen.getByRole('button', { name:/Comenzar sesión/ }));
+  await user.click(screen.getByRole('button', { name:/Continuar actividad/ }));
   expect(services.home.startTrainingSession).toHaveBeenCalledWith(newTopicPlan);
   expect(await screen.findByTestId('current-path')).toHaveTextContent(`/temario?topic=T1.01&dailyTraining=newContent&trainingSessionId=${encodeURIComponent(`training:${planned.trainingSession.dateKey}`)}&trainingActivityId=${encodeURIComponent(`training:${planned.trainingSession.dateKey}:activity:1`)}`);
 });

@@ -2,6 +2,8 @@ import type { TrainingActivity } from '../../../core/domain/entities.js';
 import type { DailyTrainingPlan } from '../../../core/domain/study-training-plan.js';
 import {
   completeTrainingSessionActivity,
+  beginTrainingSessionBreak,
+  endTrainingSessionBreak,
   attachTrainingAttemptSession,
   createDailyTrainingSession,
   pauseTrainingSessionActivity,
@@ -54,6 +56,18 @@ export function createTrainingSessionComposition(dependencies: {
       if (!session) return null;
       const paused = pauseTrainingSessionActivity(session, dependencies.now());
       return paused !== session ? save(paused) : paused;
+    },
+    beginBreak(durationMinutes = 5): DailyTrainingSession | null {
+      const session = getSession();
+      if (!session) return null;
+      const updated = beginTrainingSessionBreak(session, dependencies.now(), durationMinutes);
+      return updated !== session ? save(updated) : updated;
+    },
+    endBreak(): DailyTrainingSession | null {
+      const session = getSession();
+      if (!session) return null;
+      const updated = endTrainingSessionBreak(session, dependencies.now());
+      return updated !== session ? save(updated) : updated;
     },
     completeActivity(activity: TrainingActivity, expected?: TrainingActivityReference): DailyTrainingSession | null {
       const session = getSession();

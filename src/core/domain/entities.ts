@@ -74,6 +74,8 @@ export interface TrainingPreferences {
   /** Sunday-first intent for the weekly study rhythm; an engineering default, not a proven optimum. */
   focusByDay?: [TrainingDayFocus, TrainingDayFocus, TrainingDayFocus, TrainingDayFocus, TrainingDayFocus, TrainingDayFocus, TrainingDayFocus];
   introductionDay: number;
+  /** Adjustable focus interval used to suggest a checkpointed pause; defaults to 35 minutes. */
+  focusBlockMinutes?: 25 | 30 | 35 | 40 | 45;
   /** Optional weekly topic selected by the student or academy. */
   introductionTopicId?: string;
   /** Explicit academy sequence. Empty/omitted means no verified order is configured. */

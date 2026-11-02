@@ -5,7 +5,7 @@ import type { ScheduledStudyActivity, ScheduledStudyActivityKind } from '../../c
 import { proposeStudyActivity, proposeStudyActivityReschedule, type ScheduleDecision } from '../../core/domain/study-training-calendar.js';
 import type { TrainingPreferences } from '../../core/domain/entities.js';
 import { resolveTrainingDay } from '../../core/domain/study-training-events.js';
-import type { TrainingSessionHistoryEntry } from '../../core/domain/study-training-session.js';
+import type { DailyTrainingSession, TrainingSessionHistoryEntry } from '../../core/domain/study-training-session.js';
 
 const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 const focusLabels = { rest: 'Descanso', 'new-content': 'Contenido nuevo', consolidation: 'Recuperación y consolidación' } as const;
@@ -28,8 +28,9 @@ function decisionText(decision: ScheduleDecision | { ok:false; reason:'storage-f
   return decision.ok ? null : reasonLabels[decision.reason] || 'No se pudo validar el cambio.';
 }
 
-export function StudyCalendar({ preferences, weekday, now, history, topics, activities, onSchedule, onReschedule, onOpenActivity }: {
+export function StudyCalendar({ preferences, weekday, now, history, activeSession, topics, activities, onSchedule, onReschedule, onOpenActivity }: {
   preferences: TrainingPreferences; weekday: number; now: Date; history: readonly TrainingSessionHistoryEntry[];
+  activeSession?: DailyTrainingSession | null;
   topics: readonly { id:string; name:string }[]; activities: readonly ScheduledStudyActivity[];
   onSchedule(input: { dateKey:string; activity:ScheduledStudyActivityKind; topicId:string; minutes:number }): ScheduleDecision | { ok:false; reason:'storage-failed' };
   onReschedule(input: { id:string; dateKey:string }): ScheduleDecision | { ok:false; reason:'storage-failed' };
@@ -94,12 +95,18 @@ export function StudyCalendar({ preferences, weekday, now, history, topics, acti
       <ol className="mt-4 mb-0 grid grid-cols-7 gap-2 p-0 list-none max-[840px]:grid-cols-4 max-[520px]:grid-cols-2">{[1, 2, 3, 4, 5, 6, 0].map(day => {
         const date = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + (day === 0 ? 6 : day - 1));
         const dateValue = dayKey(date), resolved = resolveTrainingDay({ dateKey: dateValue, preferences });
+        const scheduled = activitiesByDate.get(dateValue) ?? [];
+        const completed = completedDays.has(dateValue);
+        const inProgress = activeSession?.dateKey === dateValue && activeSession.completedAt === null;
         return <li key={day} className={`planning-week-day grid min-h-24 min-w-0 content-start gap-[.35rem] rounded-[var(--r-m)] border border-line p-3${day === weekday ? ' !border-brand ![box-shadow:inset_0_0_0_1px_var(--brand)]' : ''}`} aria-current={day === weekday ? 'date' : undefined}>
           <b className="text-[length:var(--fs-s)]">{dayNames[day]} · {date.getDate()}</b><span className="text-lg [font-variant-numeric:tabular-nums]">{resolved.minutes ? `${resolved.minutes} min` : '0 min'}</span><small className="leading-[1.35] text-muted [overflow-wrap:anywhere]">{focusLabels[resolved.focus]}{day === preferences.introductionDay && !resolved.override ? ' · academia' : ''}</small>
           {resolved.events.map(event => <small key={event.id} className="text-brand leading-[1.25] [overflow-wrap:anywhere]">{event.title}{event.kind === 'class' ? ' · clase' : event.kind === 'milestone' ? ' · hito' : event.kind === 'unavailable' ? ' · sin estudio' : ` · ${event.studyMinutes} min especiales`}</small>)}
+          {scheduled.map(activity => <small key={activity.id} className="leading-[1.25] [overflow-wrap:anywhere]">{activityNames[activity.activity]} · {activity.topicId} · {activity.minutes} min</small>)}
+          {completed && <small className="font-[650] text-brand">Sesión diaria completada</small>}
+          {inProgress && <small className="font-[650] text-brand">Sesión diaria en curso · guardada</small>}
         </li>;
       })}</ol>
-      <p className="planning-week-note mt-3.5 mb-0 text-muted text-[length:var(--fs-s)]">El reparto refleja tus preferencias editables, no una distribución demostrada como óptima.</p>
+      <p className="planning-week-note mt-3.5 mb-0 text-muted text-[length:var(--fs-s)]">La semana muestra fechas, disponibilidad, eventos y repasos que has programado. La sesión de hoy se conserva como checkpoint; los cambios de disponibilidad afectan a días futuros, no reescriben una sesión iniciada. El reparto refleja tus preferencias editables, no una distribución demostrada como óptima.</p>
     </> : <div className="planning-month mt-4">
       <div className="planning-month-heading mb-3 flex items-center justify-between gap-3"><button className="grid min-w-11 min-h-11 place-items-center rounded-[var(--r-m)] border border-line bg-[var(--card)] p-1 text-ink [font:inherit] [cursor:pointer]" type="button" aria-label="Mes anterior" onClick={() => setMonth(value => new Date(value.getFullYear(), value.getMonth() - 1, 1))}><ChevronLeft aria-hidden="true" /></button><h3 className="m-0 text-[length:var(--fs-m)] capitalize">{monthTitle}</h3><button className="grid min-w-11 min-h-11 place-items-center rounded-[var(--r-m)] border border-line bg-[var(--card)] p-1 text-ink [font:inherit] [cursor:pointer]" type="button" aria-label="Mes siguiente" onClick={() => setMonth(value => new Date(value.getFullYear(), value.getMonth() + 1, 1))}><ChevronRight aria-hidden="true" /></button></div>
       <div className="planning-month-grid grid grid-cols-7 gap-[.35rem] max-[520px]:gap-[.2rem]" role="group" aria-label={`Disponibilidad de estudio en ${monthTitle}`}>

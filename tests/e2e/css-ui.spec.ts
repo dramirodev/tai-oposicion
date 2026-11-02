@@ -293,6 +293,35 @@ test('Planificación prepara la sesión fuera de Inicio y permite comenzar el pa
   await expect(page).toHaveURL(/#\/temario\?topic=T1\.02&dailyTraining=newContent/);
 });
 
+test('la pausa de foco se guarda, sobrevive a recarga y continúa el mismo paso', async ({ page }) => {
+  await prepare(page, 'light', 0, true);
+  await page.clock.setFixedTime(new Date('2026-11-02T12:00:00+01:00'));
+  await page.goto('/#/home');
+  const session = await page.evaluate(() => {
+    const now = Date.now();
+    const dateKey = `${new Date(now).getFullYear()}-${String(new Date(now).getMonth() + 1).padStart(2, '0')}-${String(new Date(now).getDate()).padStart(2, '0')}`;
+    const id = `training:${dateKey}`;
+    const value = { schemaVersion:2, id, dateKey, activities:[{ id:`${id}:activity:1`, activity:'activeRecall', minutes:30, reason:'active-recall' }], currentIndex:0, currentStartedAt:now - 36 * 60_000, elapsedSecondsByActivity:[0], updatedAt:now, startedAt:now - 40 * 60_000, completedAt:null };
+    localStorage.setItem(`tai.training-session.v1.${encodeURIComponent('guest')}`, JSON.stringify(value));
+    return value;
+  });
+  await page.goto('/#/planificacion');
+  await expect(page.getByText(/Has alcanzado el bloque orientativo de 35 min/)).toBeVisible();
+  await page.getByRole('button', { name:'Tomar pausa de 5 min' }).click();
+  await expect(page.getByRole('status').filter({ hasText:'Pausa en curso' })).toBeVisible();
+  const paused = await page.evaluate(() => JSON.parse(localStorage.getItem(`tai.training-session.v1.${encodeURIComponent('guest')}`) || 'null'));
+  expect(paused).toMatchObject({ currentIndex:0, currentStartedAt:null, breakStartedAt:expect.any(Number), breakDurationMinutes:5 });
+  expect(paused.elapsedSecondsByActivity[0]).toBeGreaterThanOrEqual(2159);
+
+  await page.reload();
+  await expect(page.getByRole('status').filter({ hasText:'Pausa en curso' })).toBeVisible();
+  await page.getByRole('button', { name:'Terminar pausa' }).click();
+  const resumed = await page.evaluate(() => JSON.parse(localStorage.getItem(`tai.training-session.v1.${encodeURIComponent('guest')}`) || 'null'));
+  expect(resumed).toMatchObject({ currentIndex:0, currentStartedAt:null, breakStartedAt:null, activities:[{ id:session.activities[0].id }] });
+  await page.getByRole('button', { name:'Continuar actividad' }).click();
+  await expect(page).toHaveURL(/#\/cards/);
+});
+
 test('registra el recuerdo del tema en papel y prioriza su comprobación el día siguiente', async ({ page }) => {
   await prepare(page, 'light', 0, true);
   await selectIntroductionTopic(page, 'T1.02');

@@ -98,6 +98,9 @@ function isDailyTrainingSession(value: unknown, timestamp: number): value is Sto
     || !Number.isFinite(session.startedAt) || session.startedAt! < 0
     || (session.updatedAt !== undefined && (!Number.isFinite(session.updatedAt) || session.updatedAt < session.startedAt!))
     || (session.currentStartedAt !== null && (!Number.isFinite(session.currentStartedAt) || session.currentStartedAt! < session.startedAt!))
+    || (session.breakStartedAt !== undefined && session.breakStartedAt !== null && (!Number.isFinite(session.breakStartedAt) || session.breakStartedAt < session.startedAt!))
+    || (session.breakDurationMinutes !== undefined && (!Number.isInteger(session.breakDurationMinutes) || session.breakDurationMinutes < 3 || session.breakDurationMinutes > 15))
+    || (session.breakStartedAt != null && session.currentStartedAt !== null)
     || (session.completedAt !== null && (!Number.isFinite(session.completedAt) || session.completedAt! < session.startedAt!))) return false;
   if (session.completedAt !== null && session.currentIndex !== session.activities.length) return false;
   if (session.completedAt === null && session.currentIndex === session.activities.length) return false;

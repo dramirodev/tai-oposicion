@@ -8,6 +8,7 @@ export const DEFAULT_TRAINING_PREFERENCES: TrainingPreferences = {
   minutesByDay: [0, 120, 120, 120, 120, 120, 120],
   focusByDay: ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'],
   introductionDay: 4,
+  focusBlockMinutes: 35,
   activities: ['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'],
   activityVersion: 3,
 };
@@ -39,6 +40,9 @@ export function normalizeTrainingPreferences(value: unknown): TrainingPreference
   const introductionDay = Number.isInteger(candidate.introductionDay) && candidate.introductionDay! >= 0 && candidate.introductionDay! <= 6
     ? candidate.introductionDay!
     : DEFAULT_TRAINING_PREFERENCES.introductionDay;
+  const supportedFocusBlocks = [25, 30, 35, 40, 45] as const;
+  const focusBlockMinutes = supportedFocusBlocks.includes(candidate.focusBlockMinutes as typeof supportedFocusBlocks[number])
+    ? candidate.focusBlockMinutes as typeof supportedFocusBlocks[number] : 35;
   const introductionTopicId = isStudyTopicId(candidate.introductionTopicId)
     ? candidate.introductionTopicId : undefined;
   const academyTopicOrderIds = Array.isArray(candidate.academyTopicOrderIds)
@@ -48,7 +52,7 @@ export function normalizeTrainingPreferences(value: unknown): TrainingPreference
     ? Object.fromEntries(Object.entries(candidate.reviewModesByTopic).filter(([topicId, mode]) => isStudyTopicId(topicId) && supportedReviewModes.has(mode as StudyReviewMode))) as Record<string, StudyReviewMode>
     : undefined;
   const calendarEvents = normalizeTrainingCalendarEvents(candidate.calendarEvents);
-  return { minutesByDay, focusByDay, introductionDay, activities, activityVersion: 3, ...(introductionTopicId ? { introductionTopicId } : {}), ...(academyTopicOrderIds.length ? { academyTopicOrderIds } : {}), ...(reviewModesByTopic && Object.keys(reviewModesByTopic).length ? { reviewModesByTopic } : {}), ...(calendarEvents.length ? { calendarEvents } : {}) };
+  return { minutesByDay, focusByDay, introductionDay, focusBlockMinutes, activities, activityVersion: 3, ...(introductionTopicId ? { introductionTopicId } : {}), ...(academyTopicOrderIds.length ? { academyTopicOrderIds } : {}), ...(reviewModesByTopic && Object.keys(reviewModesByTopic).length ? { reviewModesByTopic } : {}), ...(calendarEvents.length ? { calendarEvents } : {}) };
 }
 
 export type TrainingPlanReason = 'active-recall' | 'new-content-day' | 'new-topic-day' | 'weak-topics' | 'coverage' | 'recurring-failures' | 'due-reviews';

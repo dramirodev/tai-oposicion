@@ -686,6 +686,8 @@ export const studyServices: StudyServices = {
     startTrainingSession(plan) { return trainingSession.start(plan); },
     startTrainingActivity() { return trainingSession.startCurrentActivity(); },
     pauseTrainingActivity() { return trainingSession.pauseCurrentActivity(); },
+    beginTrainingBreak(minutes) { return trainingSession.beginBreak(minutes); },
+    endTrainingBreak() { return trainingSession.endBreak(); },
     completeTrainingActivity(activity: TrainingActivity, reference?: TrainingActivityReference) { return trainingSession.completeActivity(activity, reference); },
     recordPaperRecall(topicId: string, rating: PaperRecallRating) { return paperRecall.record(topicId, rating); },
     scheduledStudyActivities() { return trainingCalendar.get(); },
