@@ -74,4 +74,18 @@ describe('proyección del horizonte de estudio', () => {
     });
     expect(summary).toMatchObject({ availableNewTopicSessions: 3, calendarOverrideDays: 2, topicSessionGap: 0 });
   });
+
+  it('cuenta una introducción confirmada en un día de consolidación como capacidad adicional sin duplicar días habituales', () => {
+    const consolidationAvailable = { ...preferences, minutesByDay:[0, 30, 30, 30, 30, 0, 0] };
+    const summary = buildStudyHorizonSummary({
+      todayDateKey:'2026-11-02', targetDate:'2026-11-20', academyTopicOrderIds:order,
+      catalogTopicIds:catalog, studiedTopicIds:['T3.02'], preferences:consolidationAvailable,
+      plannedNewContentItems:[
+        { dateKey:'2026-11-04', topicIds:['T12.01'], status:'planned' },
+        { dateKey:'2026-11-05', topicIds:['T20.01'], status:'planned' },
+        { dateKey:'2026-11-11', topicIds:['T20.01'], status:'completed' },
+      ],
+    });
+    expect(summary).toMatchObject({ availableNewTopicSessions:10, plannedExtraNewTopicSessions:1, topicSessionGap:0 });
+  });
 });

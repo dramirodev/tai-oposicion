@@ -109,6 +109,30 @@ it('previsualiza una semana según el orden de academia y no la guarda hasta con
   expect(addWeeklyStudyAgendaPlan).toHaveBeenCalledWith(expect.objectContaining({ targetWeekStart:expect.any(String), items:expect.arrayContaining([expect.objectContaining({ kind:'newContent', topicIds:['T19.01'] })]) }));
 });
 
+it('muestra cómo la semana propuesta reduce una brecha global solo tras confirmación', async () => {
+  const user = userEvent.setup();
+  const today = new Date();
+  const target = new Date(today); target.setDate(target.getDate() + 30);
+  const targetDate = `${target.getFullYear()}-${String(target.getMonth() + 1).padStart(2, '0')}-${String(target.getDate()).padStart(2, '0')}`;
+  const topicIds = Array.from({ length:30 }, (_, index) => `T99.${String(index + 1).padStart(2, '0')}`);
+  const addWeeklyStudyAgendaPlan = vi.fn(proposal => ({ schemaVersion:1, revision:1, updatedAt:Date.now(), items:proposal.items }));
+  const preferences = { ...DEFAULT_TRAINING_PREFERENCES, academyTopicOrderIds:topicIds };
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(), {
+    home:{ weeklyStudyAgenda:() => ({ schemaVersion:1, revision:0, updatedAt:0, items:[] }), addWeeklyStudyAgendaPlan },
+    settings:{ getSnapshot:() => ({ training:preferences, exam:targetDate, index:{ topics:topicIds.map(id => ({ id, name:id })) } }) },
+  }) });
+  await screen.findByRole('heading', { name:'Horizonte y semana' });
+  await user.click(screen.getByRole('button', { name:'Semana siguiente' }));
+  await user.click(screen.getByRole('button', { name:'Proponer semana según tu plan' }));
+  expect(await screen.findByText(/El horizonte detecta una brecha optimista/)).toBeInTheDocument();
+  expect(addWeeklyStudyAgendaPlan).not.toHaveBeenCalled();
+  await user.click(screen.getByRole('button', { name:'Confirmar semana' }));
+  expect(addWeeklyStudyAgendaPlan).toHaveBeenCalledWith(expect.objectContaining({
+    horizonCapacityGapBefore:expect.any(Number), acceleratedNewTopicIds:expect.arrayContaining([expect.any(String)]),
+    horizonCapacityGapAfter:expect.any(Number),
+  }));
+});
+
 it('usa la actividad semanal confirmada de hoy al crear el checkpoint diario', async () => {
   const user = userEvent.setup();
   const today = new Date();

@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import type { TrainingPreferences } from '../../core/domain/entities.js';
+import type { WeeklyAgendaItem } from '../../core/domain/study-weekly-agenda.js';
 import { buildStudyHorizonSummary, type StudyHorizonSummary } from '../../core/domain/study-planning-horizon.js';
 
 const weekDays = [
@@ -30,17 +31,19 @@ function statusMessage(summary: StudyHorizonSummary): string {
   return `Quedan ${topics} de la secuencia sin marca y hay ${slots} de contenido nuevo hasta el objetivo. Es un máximo optimista de un tema por espacio, no una estimación del tiempo para comprenderlos.`;
 }
 
-export function PlanningHorizon({ targetDate, today, preferences, catalogTopicIds, studiedTopicIds }: {
+export function PlanningHorizon({ targetDate, today, preferences, catalogTopicIds, studiedTopicIds, weeklyItems = [] }: {
   targetDate: string;
   today: Date;
   preferences: TrainingPreferences;
   catalogTopicIds: readonly string[];
   studiedTopicIds: readonly string[];
+  weeklyItems?: readonly WeeklyAgendaItem[];
 }) {
   const summary = buildStudyHorizonSummary({
     todayDateKey: localDateKey(today), targetDate,
     academyTopicOrderIds: preferences.academyTopicOrderIds,
     catalogTopicIds, studiedTopicIds, preferences,
+    plannedNewContentItems:weeklyItems.filter(item => item.kind === 'newContent'),
   });
   const focusByDay = preferences.focusByDay ?? defaultFocus;
   const targetLabel = targetDate && summary.daysUntilObjective !== null
@@ -62,6 +65,7 @@ export function PlanningHorizon({ targetDate, today, preferences, catalogTopicId
         {summary.unsequencedCatalogTopicCount > 0 && <p className="mb-2 text-muted">{summary.unsequencedCatalogTopicCount} {summary.unsequencedCatalogTopicCount === 1 ? 'tema del catálogo todavía no está' : 'temas del catálogo todavía no están'} en la secuencia de academia; no se les asigna un orden automáticamente.</p>}
         {summary.orderedTopicMissingFromCatalogCount > 0 && <p className="mb-2 text-muted">{summary.orderedTopicMissingFromCatalogCount} {summary.orderedTopicMissingFromCatalogCount === 1 ? 'entrada de la secuencia no aparece' : 'entradas de la secuencia no aparecen'} en el catálogo actual y no {summary.orderedTopicMissingFromCatalogCount === 1 ? 'puede' : 'pueden'} planificarse.</p>}
         <p className="m-0 text-muted text-sm">La marca de «estudiado» registra cobertura declarada, no demuestra comprensión o recuerdo. La proyección estima espacios para introducir temas según el horario habitual y las excepciones guardadas; no estima horas necesarias ni probabilidad de aprobar.</p>
+        {summary.plannedExtraNewTopicSessions > 0 && <p className="mt-2 mb-0 text-muted text-sm" role="status">La agenda confirmada añade {summary.plannedExtraNewTopicSessions} espacio(s) de contenido nuevo en día(s) que habitualmente son de consolidación. Se cuentan aparte y solo para las fechas/temas aún pendientes.</p>}
       </section>
       <section aria-labelledby="planning-week-title" className="min-w-0">
         <h3 id="planning-week-title" className="mb-2 text-base">Semana habitual</h3>

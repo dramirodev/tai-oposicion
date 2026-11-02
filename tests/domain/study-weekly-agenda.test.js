@@ -103,6 +103,18 @@ describe('propuesta semanal persistida', () => {
     expect(proposal?.omittedContentActivities.some(item => item.kind === 'activeRecall' && item.topicIds.includes('T1.01'))).toBe(true);
   });
 
+  it('usa la brecha global para proponer una introducción extra en consolidación, sin cambiar la rutina guardada', () => {
+    const preferences = { ...DEFAULT_TRAINING_PREFERENCES, academyTopicOrderIds:['T1.01', 'T19.01', 'T20.01'] };
+    const proposal = proposeWeeklyAgendaPlan({ agenda:emptyWeeklyStudyAgenda(), targetWeekStart:'2026-11-09', todayKey:'2026-11-02', preferences,
+      catalogTopics:[{ id:'T1.01', name:'Primero' }, { id:'T19.01', name:'Futuro 19' }, { id:'T20.01', name:'Futuro 20' }, { id:'T2.01', name:'Visto' }], studiedTopicIds:['T2.01'], dueCount:0, cardDueCount:0, failureCount:0, weakTopicCount:0, weakTopicIds:[], topicReviewEvidence:[], scheduledActivities:[], horizonCapacityGap:1,
+    });
+    expect(proposal?.acceleratedNewTopicIds).toEqual(['T20.01']);
+    expect(proposal?.horizonCapacityGapBefore).toBe(1);
+    expect(proposal?.horizonCapacityGapAfter).toBe(0);
+    expect(proposal?.items).toContainEqual(expect.objectContaining({ dateKey:'2026-11-11', kind:'newContent', topicIds:['T20.01'] }));
+    expect(preferences.focusByDay).toEqual(DEFAULT_TRAINING_PREFERENCES.focusByDay);
+  });
+
   it('añade el borrador sin borrar actividades existentes y rechaza cambios concurrentes', () => {
     const existing = item({ id:'already-confirmed', weekStart:'2026-11-09', dateKey:'2026-11-10', kind:'activeRecall', topicIds:['T2.01'] });
     const agenda = { ...emptyWeeklyStudyAgenda(), revision:3, updatedAt:100, items:[existing] };

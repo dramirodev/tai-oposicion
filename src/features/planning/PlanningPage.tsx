@@ -18,6 +18,7 @@ import { PageMessage } from '../../shared/ui/PageMessage.js';
 import { resolvePlannedActivityAction } from './planning-controller.js';
 import { StudyCalendar } from './StudyCalendar.js';
 import { PlanningHorizon } from './PlanningHorizon.js';
+import { buildStudyHorizonSummary } from '../../core/domain/study-planning-horizon.js';
 
 const activityPresentation: Record<TrainingActivity, { title: string; objective: string; instruction: string; resource: string }> = {
   newContent: {
@@ -415,6 +416,11 @@ export function PlanningPage() {
       studiedTopicIds:seenTopicIds, dueCount:planningOverview.trainingDue.questions, cardDueCount:planningOverview.trainingDue.cards,
       failureCount:planningOverview.trainingFailures ?? 0, weakTopicCount:planningOverview.weakTopics, weakTopicIds:planningOverview.weakTopicIds ?? [],
       topicReviewEvidence:planningOverview.topicReviewEvidence ?? [], scheduledActivities, contentInventory:planningOverview.studyContentInventory,
+      horizonCapacityGap:buildStudyHorizonSummary({
+        todayDateKey:todayKey, targetDate:settings.exam, academyTopicOrderIds:settings.training.academyTopicOrderIds,
+        catalogTopicIds:(settings.index?.topics ?? []).map(topic => topic.id), studiedTopicIds:seenTopicIds, preferences:settings.training,
+        plannedNewContentItems:weeklyAgenda.items.filter(item => item.kind === 'newContent'),
+      }).topicSessionGap,
     });
   };
   const addWeeklyAgendaPlan = (proposal: WeeklyAgendaPlanProposal) => {
@@ -445,7 +451,7 @@ export function PlanningPage() {
       <Link className="planning-settings-link min-h-11 inline-flex flex-none items-center max-[520px]:self-start" to="/settings">Configurar semana</Link>
     </header>
     <PlanningHorizon targetDate={settings.exam} today={now} preferences={settings.training}
-      catalogTopicIds={settings.index?.topics?.map(topic => topic.id) ?? []} studiedTopicIds={services.seenTopics()} />
+      catalogTopicIds={settings.index?.topics?.map(topic => topic.id) ?? []} studiedTopicIds={seenTopicIds} weeklyItems={weeklyAgenda?.items ?? []} />
     <PlanningTodayCard model={model} overview={planningOverview} activeStudy={!!services.getActiveStudy()} onStart={actions.startSession} onPause={actions.pauseSession}
       onBeginBreak={actions.beginBreak} onEndBreak={actions.endBreak} focusBlockMinutes={settings.training.focusBlockMinutes ?? 35} />
     <PlanningActivityList model={model} assessments={planningOverview.paperRecallAssessments ?? []} now={now.getTime()} onRecallAssessment={actions.recordRecallAssessment} />

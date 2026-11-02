@@ -152,6 +152,9 @@ export interface WeeklyAgendaPlanProposal {
   plannedNewTopicIds: readonly string[];
   contentInventoryStatus: 'manifest' | 'partial' | 'unavailable' | 'not-checked';
   omittedContentActivities: readonly { dateKey: string; kind: WeeklyAgendaKind; topicIds: readonly string[] }[];
+  horizonCapacityGapBefore: number | null;
+  acceleratedNewTopicIds: readonly string[];
+  horizonCapacityGapAfter: number | null;
 }
 
 /** Builds a reviewable weekly draft from the existing daily rules and real study/catalog evidence. */
@@ -171,6 +174,8 @@ export function proposeWeeklyAgendaPlan(input: {
   scheduledActivities: readonly ScheduledStudyActivity[];
   /** Topic-level availability from loaded manifests; it is not proof of official syllabus coverage. */
   contentInventory?: { questionTopicIds: readonly string[] | null; cardTopicIds: readonly string[] | null };
+  /** Remaining optimistic topic-slot deficit from the global horizon; null means unknown. */
+  horizonCapacityGap?: number | null;
 }): WeeklyAgendaPlanProposal | null {
   if (!isMondayStudyDate(input.targetWeekStart) || !isStudyDateKey(input.todayKey)) return null;
   const dates = Array.from({ length:7 }, (_, index) => addStudyDays(input.targetWeekStart, index)).filter((date): date is string => !!date);
@@ -180,9 +185,11 @@ export function proposeWeeklyAgendaPlan(input: {
   const plannedItems = agendaItems.filter(item => item.status === 'planned');
   const plannedNewTopicIds: string[] = [];
   const reservedNewTopicIds = agendaItems.filter(item => item.kind === 'newContent').flatMap(item => item.topicIds);
+  const reservedNewContentDates = new Set(agendaItems.filter(item => item.kind === 'newContent' && item.status === 'planned').map(item => item.dateKey));
   const missingTopicIds = (input.preferences.academyTopicOrderIds ?? []).filter(id => !topicById.has(id) && !studied.includes(id));
   const items: WeeklyAgendaItem[] = [];
   const omittedContentActivities: { dateKey: string; kind: WeeklyAgendaKind; topicIds: readonly string[] }[] = [];
+  const acceleratedNewTopicIds: string[] = [];
   const skippedDays: { dateKey: string; reason: 'past' | 'rest' | 'unavailable' | 'no-capacity' | 'no-activities' | 'no-content' }[] = [];
   let dueCount = Math.max(0, input.dueCount), cardDueCount = Math.max(0, input.cardDueCount), failureCount = Math.max(0, input.failureCount);
   let idSequence = 0;
@@ -203,12 +210,16 @@ export function proposeWeeklyAgendaPlan(input: {
     const preferredId = input.preferences.academyTopicOrderIds?.length ? undefined : input.preferences.introductionTopicId;
     const orderedIds = pendingOrder.length ? pendingOrder : preferredId && !plannedNewTopicIds.includes(preferredId) && !reservedNewTopicIds.includes(preferredId) ? [preferredId] : [];
     const nextTopic = selectNextAcademyTopic(orderedIds, input.catalogTopics, studied);
+    const accelerateNewContent = day.focus === 'consolidation'
+      && Number.isInteger(input.horizonCapacityGap) && (input.horizonCapacityGap ?? 0) > acceleratedNewTopicIds.length
+      && !reservedNewContentDates.has(dateKey);
+    const effectiveFocus = accelerateNewContent ? 'new-content' : day.focus;
     const dayPreferences: TrainingPreferences = {
       ...input.preferences,
       minutesByDay:[...input.preferences.minutesByDay] as TrainingPreferences['minutesByDay'],
       calendarEvents:[...(input.preferences.calendarEvents ?? []), {
         id:`weekly-plan-capacity-${dateKey}`, kind:'study-window', title:'Capacidad restante de propuesta',
-        startDate:dateKey, endDate:dateKey, studyMinutes:remaining, focus:day.focus,
+        startDate:dateKey, endDate:dateKey, studyMinutes:remaining, focus:effectiveFocus,
         createdAt:0, updatedAt:Math.max(0, ...(input.preferences.calendarEvents ?? []).map(event => event.updatedAt)) + 1,
       }],
       ...(nextTopic ? { academyTopicOrderIds:orderedIds, introductionTopicId:undefined } : { academyTopicOrderIds:[], introductionTopicId:undefined }),
@@ -266,13 +277,18 @@ export function proposeWeeklyAgendaPlan(input: {
     if (items.length + uniqueMapped.length > availableItemSlots) { skippedDays.push({ dateKey, reason:'no-capacity' }); continue; }
     items.push(...uniqueMapped);
     const newTopic = dailyPlan.activities.find(activity => activity.activity === 'newContent')?.topicId;
-    if (newTopic) plannedNewTopicIds.push(newTopic);
+    if (newTopic && uniqueMapped.some(item => item.kind === 'newContent' && item.topicIds[0] === newTopic)) {
+      plannedNewTopicIds.push(newTopic);
+      if (accelerateNewContent) acceleratedNewTopicIds.push(newTopic);
+    }
     if (uniqueMapped.some(item => item.kind === 'spacedReviews')) { dueCount = 0; cardDueCount = 0; }
     if (uniqueMapped.some(item => item.kind === 'failures')) failureCount = 0;
   }
   const inventoryStatuses = input.contentInventory ? [input.contentInventory.questionTopicIds, input.contentInventory.cardTopicIds].map(value => value === null ? 'unavailable' : 'manifest') : [];
   const contentInventoryStatus = !input.contentInventory ? 'not-checked' : inventoryStatuses.every(status => status === 'manifest') ? 'manifest' : inventoryStatuses.every(status => status === 'unavailable') ? 'unavailable' : 'partial';
-  return { baseRevision:input.agenda.revision, targetWeekStart:input.targetWeekStart, items, skippedDays, missingTopicIds, plannedNewTopicIds, contentInventoryStatus, omittedContentActivities };
+  const horizonCapacityGapBefore = Number.isInteger(input.horizonCapacityGap) && (input.horizonCapacityGap ?? -1) >= 0 ? input.horizonCapacityGap! : null;
+  const horizonCapacityGapAfter = horizonCapacityGapBefore === null ? null : Math.max(0, horizonCapacityGapBefore - acceleratedNewTopicIds.length);
+  return { baseRevision:input.agenda.revision, targetWeekStart:input.targetWeekStart, items, skippedDays, missingTopicIds, plannedNewTopicIds, contentInventoryStatus, omittedContentActivities, horizonCapacityGapBefore, acceleratedNewTopicIds, horizonCapacityGapAfter };
 }
 
 export function applyWeeklyAgendaPlan(current: WeeklyStudyAgenda, proposal: WeeklyAgendaPlanProposal, now: number): WeeklyStudyAgenda | null {
