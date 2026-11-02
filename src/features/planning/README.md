@@ -8,6 +8,8 @@ La selección de práctica y dominio se limita a temas marcados como vistos. En 
 
 La repetición espaciada continúa utilizando FSRS para las tarjetas que ya lo tienen configurado. La planificación diaria no crea un segundo calendario de FSRS. El checkpoint de una sesión tampoco constituye un historial pedagógico o una evaluación de retención.
 
+La página de Planificación ahora muestra una proyección inicial de horizonte y semana a partir de la fecha `exam`, el orden explícito de academia, el catálogo local, las marcas agregadas de temas vistos y las preferencias semanales. La proyección deja claro que «visto» es cobertura declarada y calcula únicamente un límite optimista de espacios de contenido nuevo (un tema por espacio), no una duración ni un pronóstico de aprendizaje. Muestra discrepancias entre catálogo y secuencia. No descuenta vacaciones, clases, festivos o ausencias; tampoco calcula aún cobertura por apartado ni horas necesarias. El objetivo es personal y la fecha oficial conserva su procedencia independiente.
+
 ## Evidencia y límites
 
 | Estrategia | Nivel de evidencia | Uso en TAI y límite |
@@ -25,13 +27,21 @@ La repetición espaciada continúa utilizando FSRS para las tarjetas que ya lo t
 - En un día de contenido nuevo, el plan propone el tema de introducción semanal seleccionado y no marcado como visto, y como máximo una actividad de refuerzo. Sin tema seleccionado no prepara contenido nuevo. Si hay repasos vencidos, prioriza esos repasos; después, fallos; después, tarjetas de Active Recall; por último, test del tema. La ponderación y el límite son heurísticas para reservar tiempo al temario y evitar llenar toda la sesión.
 - En días de consolidación se usan únicamente temas marcados como vistos. Los resultados y tarjetas vencidas pueden priorizarse; cualquier clasificación de dominio hereda las limitaciones de los datos y no es una medición independiente de retención.
 - Si faltan datos no se inventan resultados: una persona sin temas vistos recibe un paso de estudio inicial solo cuando ha elegido un tema semanal; si no hay tema elegido, repasos o preguntas disponibles, el plan queda vacío y explica por qué.
-- El 30 de junio de 2027 se presenta solo como fecha estimada personal cuando el usuario no haya configurado una fecha objetivo. No se describe como fecha oficial del examen.
+- Sin fecha objetivo válida, la interfaz muestra «Fecha objetivo sin configurar» y no fabrica una fecha de junio de 2027. La fecha configurada se presenta como objetivo personal, nunca como fecha oficial sin fuente de convocatoria.
 
 ## Orden configurable de academia (2026-11-02)
 
 Se añadió `training.academyTopicOrderIds`, opcional, a preferencias existentes. Ajustes permite agregar temas del catálogo, reordenarlos con controles accesibles y quitarlos; no rellena la lista desde el catálogo. Sin orden configurado, siguen funcionando las preferencias semanales anteriores. Cuando la lista existe, el entrenador selecciona el primer tema de esa lista aún no marcado como visto y disponible en el catálogo, sin usar numeración/catálogo como fuente de orden. Los IDs temporalmente ausentes se conservan en la lista; el selector ofrece los temas actuales. El límite estructural de almacenamiento/configuración es 300 IDs, acorde al límite ya aplicado a arrays de configuración.
 
 Esta capacidad permite introducir el orden real cuando se disponga de la secuencia del estudiante, pero no demuestra que la lista de temas de la aplicación equivalga al programa oficial ni aporta contenido/materiales. Hasta configurar un orden fechado y su fuente, el catálogo/orden de academia siguen pendientes de validación. Verificación: `npm run check` pasa (829 pruebas aprobadas/22 omitidas; arquitectura, lint y TypeScript correctos); `npm run build` pasa con las advertencias conocidas de Zod/Rollup y chunks Firebase/C++ por encima de 500 kB; `git diff --check` pasa. La suite E2E completa (232 casos) encontró dos fallos equivalentes de desbordamiento en Ajustes con texto ampliado, Chromium y WebKit. La causa era el nuevo selector dentro del flex `.row`; se sustituyó por una cuadrícula flexible y el caso aislado de reflujo volvió a pasar en ambos motores (2/2). La suite completa no se repitió después de esta corrección. No se leyó ni escribió configuración de cuenta/Firebase; sin commit, push ni deploy.
+
+## Horizonte y semana (2026-11-02)
+
+`buildStudyHorizonSummary` en `src/core/domain/study-planning-horizon.ts` calcula cobertura declarada de la secuencia actual, temas de catálogo no secuenciados, IDs secuenciados que faltan del catálogo, minutos/días semanales y los espacios de contenido nuevo hasta el objetivo. `PlanningHorizon` en `src/features/planning/PlanningHorizon.tsx` presenta los datos antes de la sesión diaria y enlaza los controles existentes de Ajustes. `PlanningPage` deja de usar el fallback fijo del 30/6/2027. Si la secuencia está agotada, indica revisar la lista en lugar de pedir otra selección manual o elegir por orden del catálogo.
+
+La cuenta exacta no se consultó: se conserva el `exam` que entregue la configuración ya cargada por la aplicación. La prueba no escribió ni leyó Firebase. La proyección es estática frente a ausencias/vacaciones y solo usa marcas de tema; no genera una agenda semanal por fecha ni redistribuye la sesión. No incorpora aún el evento vacacional 2–5/11/2026 ni el hito de simulacro como reglas activas; al quedar atrás no debe persistir como excepción. Próxima dependencia de planificación: modelo aditivo de eventos de calendario (ausencia, vacaciones, clase, descanso e hito) con vigencia y procedencia, preservando historial y rutina semanal.
+
+**Verificación de esta rebanada:** pruebas focalizadas del dominio y página (17 pasadas), `npm run check` (836 pasadas/22 omitidas; arquitectura, lint y TypeScript correctos), `npm run build` y E2E de inicio de sesión de planificación y reflujo responsive (4 pasadas en Chromium/WebKit); `git diff --check` limpio. El build mantiene advertencias de anotaciones de Zod/Rollup y chunks mayores de 500 kB. No validado: excepción de calendario, datos remotos, contenido oficial por apartado ni persistencia en Firebase.
 
 ## Evaluación pendiente
 

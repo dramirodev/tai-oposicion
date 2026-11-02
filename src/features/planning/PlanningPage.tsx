@@ -16,6 +16,7 @@ import { PageLoading } from '../../shared/ui/PageLoading.js';
 import { PageMessage } from '../../shared/ui/PageMessage.js';
 import { resolvePlannedActivityAction } from './planning-controller.js';
 import { StudyCalendar } from './StudyCalendar.js';
+import { PlanningHorizon } from './PlanningHorizon.js';
 
 const activityPresentation: Record<TrainingActivity, { title: string; objective: string; instruction: string; resource: string }> = {
   newContent: {
@@ -164,7 +165,7 @@ interface PlanningViewModel {
   totalElapsed: number;
   progress: number;
   state: 'completed' | 'rest' | 'activities' | 'missing-new-topic' | 'empty';
-  emptyMessage: 'no-content' | 'mark-topic' | 'select-introduction-topic';
+  emptyMessage: 'no-content' | 'mark-topic' | 'select-introduction-topic' | 'sequence-exhausted';
   actionLabel: string;
 }
 
@@ -181,8 +182,7 @@ function buildPlanningViewModel(overview: HomeOverview, settings: SettingsSnapsh
   const topicNames = new Map((overview.studiedTopicDetails ?? []).map(topic => [topic.id, topic.name]));
   if (overview.nextNewTopic) topicNames.set(overview.nextNewTopic.id, overview.nextNewTopic.name);
   const weekday = now.getDay();
-  const estimatedExamDays = Math.max(0, Math.ceil((Date.UTC(2027, 5, 30) - Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) / 86_400_000));
-  const examDays = overview.daysToExam ?? estimatedExamDays;
+  const examDays = overview.daysToExam;
   const focus = (settings.training.focusByDay ?? ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'])[weekday];
   const completed = session?.completedAt !== null && session?.completedAt !== undefined;
   const hasPlannedActivities = activities.length > 0;
@@ -200,14 +200,15 @@ function buildPlanningViewModel(overview: HomeOverview, settings: SettingsSnapsh
   const actionLabel = session?.currentStartedAt ? 'Continuar actividad' : session?.currentIndex ? 'Continuar sesión' : 'Comenzar sesión';
   return {
     plan, session, activities, topicNames, weekday, focus, title, purpose,
-    examDistance: `${examDays} días · ${overview.daysToExam !== null ? 'fecha objetivo' : 'fecha estimada: 30 jun 2027'}`,
+    examDistance: examDays === null ? 'Fecha objetivo sin configurar' : `${examDays} días · fecha objetivo`,
     timeLabel: activities.length ? 'Tiempo previsto' : 'Tiempo disponible',
     recordedTime: session ? formatMinutes(totalElapsed) : 'Aún no iniciado',
     topicCount: new Set(activities.flatMap(step => step.topicIds ?? (step.topicId ? [step.topicId] : []))).size,
     completedCount, activeIndex, activeSeconds, totalElapsed,
     progress: activities.length ? Math.min(100, Math.round(completedCount * 100 / activities.length)) : 0,
     state,
-    emptyMessage: !overview.nextNewTopic && focus === 'new-content' ? 'select-introduction-topic'
+    emptyMessage: !overview.nextNewTopic && focus === 'new-content' && settings.training.academyTopicOrderIds?.length ? 'sequence-exhausted'
+      : !overview.nextNewTopic && focus === 'new-content' ? 'select-introduction-topic'
       : overview.studiedTopics ? 'no-content' : 'mark-topic',
     actionLabel,
   };
@@ -267,6 +268,7 @@ function SessionActionArea({ model, activeStudy, onStart, onPause }: {
     <p className="mt-[.15rem] mb-0 flex-[1_1_100%] text-muted text-[length:var(--fs-s)]">Las actividades se abren ya preparadas; al terminar, vuelves aquí para seguir con el paso siguiente.</p>
   </div>;
   if (model.state === 'missing-new-topic') return <p>No se ha podido preparar el siguiente tema. <Link to="/temario">Revisa el temario</Link>.</p>;
+  if (model.emptyMessage === 'sequence-exhausted') return <p>Los temas disponibles en tu secuencia ya están marcados como estudiados. Revisa si faltan temas en el <Link to="/settings#training-schedule">orden de academia</Link>; no se elige otro tema por el orden del catálogo.</p>;
   if (model.emptyMessage === 'select-introduction-topic') return <p>Elige el tema que vas a introducir esta semana en <Link to="/settings#training-schedule">Ajustes</Link> para preparar el contenido nuevo.</p>;
   return <p>{model.emptyMessage === 'no-content' ? 'No hay contenido pendiente para las modalidades elegidas.' : <>Primero marca el siguiente tema que vas a estudiar. <Link to="/temario">Abrir temario</Link></>}</p>;
 }
@@ -388,6 +390,8 @@ export function PlanningPage() {
       <div><p className="planning-kicker mb-1 text-muted text-[length:var(--fs-s)]">TAI · Plan de estudio</p><h1 className="mt-0.5 mb-2 text-[clamp(1.5rem,3vw,2rem)] tracking-[-.035em]">Planificación de estudio</h1><p className="planning-date m-0 flex items-center gap-2 text-muted"><CalendarDays size="1rem" aria-hidden="true" />{localDate(now)}</p></div>
       <Link className="planning-settings-link min-h-11 inline-flex flex-none items-center max-[520px]:self-start" to="/settings">Configurar semana</Link>
     </header>
+    <PlanningHorizon targetDate={settings.exam} today={now} preferences={settings.training}
+      catalogTopicIds={settings.index?.topics?.map(topic => topic.id) ?? []} studiedTopicIds={services.seenTopics()} />
     <PlanningTodayCard model={model} overview={overview} activeStudy={!!services.getActiveStudy()} onStart={actions.startSession} onPause={actions.pauseSession} />
     <PlanningActivityList model={model} assessments={overview.paperRecallAssessments ?? []} now={now.getTime()} onRecallAssessment={actions.recordRecallAssessment} />
     <StudyCalendar preferences={settings.training} weekday={model.weekday} now={now} history={overview.trainingHistory ?? []}

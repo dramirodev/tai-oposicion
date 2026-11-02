@@ -102,6 +102,34 @@ it('pide elegir el tema semanal en Ajustes cuando no hay tema asignado', async (
   expect(screen.getByText(/Elige el tema que vas a introducir esta semana/)).toBeInTheDocument();
 });
 
+it('integra el horizonte con la fecha objetivo guardada y la secuencia explícita, sin confundir marca y aprendizaje', async () => {
+  const target = new Date(); target.setDate(target.getDate() + 45);
+  const targetDate = `${target.getFullYear()}-${String(target.getMonth() + 1).padStart(2, '0')}-${String(target.getDate()).padStart(2, '0')}`;
+  const training = { ...DEFAULT_TRAINING_PREFERENCES, academyTopicOrderIds: ['T12.01', 'T3.02'] };
+  const planned = overview(newTopicPlan, { daysToExam:45, studiedTopics:1, studiedTopicDetails:[{ id:'T12.01', name:'Tema futuro' }] });
+  const settings = { getSnapshot:() => ({ training, exam:targetDate, index:{ topics:[{ id:'T12.01', name:'Tema futuro' }, { id:'T3.02', name:'Siguiente' }] } }) };
+  renderApp(createElement(PlanningPage), { services:servicesFor(planned, { settings }) });
+
+  expect(await screen.findByRole('heading', { name:'Horizonte y semana' })).toBeInTheDocument();
+  expect(screen.getByText('Secuencia de academia: 1 de 2 temas marcados como estudiados · 1 sin marca.')).toBeInTheDocument();
+  expect(screen.getByText(/Objetivo personal:.*No confirma una convocatoria oficial/)).toBeInTheDocument();
+  expect(screen.getByText(/La marca de «estudiado» registra cobertura declarada, no demuestra comprensión o recuerdo/)).toBeInTheDocument();
+  expect(screen.queryByText(/fecha estimada: 30 jun 2027/)).not.toBeInTheDocument();
+});
+
+it('no inventa fecha objetivo y explica cuando la secuencia configurada se agota', async () => {
+  const emptyPlan = { weekday:1, minutes:120, restDay:false, activities:[] };
+  const training = { ...DEFAULT_TRAINING_PREFERENCES, academyTopicOrderIds:['T1.01'] };
+  const planned = overview(emptyPlan, { nextNewTopic:undefined, studiedTopics:1, studiedTopicDetails:[{ id:'T1.01', name:'Constitución' }] });
+  const settings = { getSnapshot:() => ({ training, exam:'', index:{ topics:[{ id:'T1.01', name:'Constitución' }, { id:'T5.01', name:'Futuro' }] } }) };
+  renderApp(createElement(PlanningPage), { services:servicesFor(planned, { settings }) });
+
+  expect(await screen.findByText('Fecha objetivo sin configurar')).toBeInTheDocument();
+  expect(screen.getByText(/Los temas disponibles en tu secuencia ya están marcados/)).toBeInTheDocument();
+  expect(screen.getByText(/1 tema del catálogo todavía no está en la secuencia de academia/)).toBeInTheDocument();
+  expect(screen.queryByText(/fecha estimada: 30 jun 2027/)).not.toBeInTheDocument();
+});
+
 it('muestra en el historial solo la duración y las actividades de sesiones completadas recibidas', async () => {
   const startedAt = new Date(2026, 9, 28, 12).getTime();
   const sessionOverview = overview(newTopicPlan, { trainingHistory:[{
