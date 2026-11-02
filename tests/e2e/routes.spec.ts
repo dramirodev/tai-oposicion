@@ -79,9 +79,9 @@ test('el tema recomendado muestra su material de academia en móvil y escritorio
   await expect(material).toContainText('p. 3');
   await expect(material).toContainText('Índices extraídos de temarios');
   await expect(material).toContainText('PDF con texto extraíble');
-  await expect(material).toContainText('La aplicación conserva solo metadatos e índice, no el cuerpo del documento');
+  await expect(material).toContainText('El catálogo integrado conserva solo metadatos e índice; el PDF se guarda en este dispositivo únicamente si eliges guardarlo.');
   await expect(material).toContainText('Solo se comparan títulos y páginas');
-  await expect(material).toContainText('ni se abren desde la aplicación');
+  await expect(material).toContainText('No se cifra ni se sincroniza, y puedes eliminarla aquí.');
 
   await material.getByRole('checkbox', { name:/T1\.01 Constitución Española - Temario\.pdf/ }).check();
   await material.getByRole('button', { name:'Guardar materiales elegidos' }).click();

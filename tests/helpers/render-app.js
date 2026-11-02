@@ -12,6 +12,9 @@ export function renderApp(ui, { services = {}, initialEntries = ['/'] } = {}) {
       loadProgressOverview:async () => ({ selections:[], events:[] }),
       selectMaterials:() => false,
       record:() => false,
+      listLocalPdfs:async () => [],
+      saveLocalPdf:async () => {},
+      removeLocalPdf:async () => {},
     },
   };
   return render(React.createElement(

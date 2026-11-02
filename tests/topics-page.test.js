@@ -62,9 +62,9 @@ it('enlaza el tema recomendado con el índice y los ficheros exactos del Drive d
   expect(screen.getByText(/Índices extraídos de temarios/)).toBeInTheDocument();
   expect(screen.getAllByText(/PDF con texto extraíble/).length).toBeGreaterThan(0);
   expect(screen.getAllByText(/no verifica que el contenido sea explicativo, completo ni vigente/).length).toBeGreaterThan(0);
-  expect(screen.getAllByText(/La aplicación conserva solo metadatos e índice\./).length).toBeGreaterThan(0);
+  expect(screen.getAllByText(/El catálogo integrado conserva solo metadatos e índice/).length).toBeGreaterThan(0);
   expect(screen.getAllByText(/Otro archivo tiene los mismos títulos y páginas de índice/)).toHaveLength(2);
-  expect(screen.getByText(/abrirlo en otra pestaña\. No se sube ni se guarda/)).toBeInTheDocument();
+  expect(screen.getByText(/Por defecto solo se conserva en memoria; puedes optar por guardar una copia local/)).toBeInTheDocument();
 });
 
 it('requiere seleccionar un material antes de registrar cobertura parcial por apartado', async () => {
@@ -82,6 +82,7 @@ it('requiere seleccionar un material antes de registrar cobertura parcial por ap
       return true;
     },
     record:event => { progress = { ...progress, events:[...progress.events, event] }; listeners.forEach(listener => listener()); return true; },
+    listLocalPdfs:async () => [], saveLocalPdf:async () => {}, removeLocalPdf:async () => {},
   };
   renderApp(createElement(TopicsPage), { services:{
     topics:{ accountId:() => null, getStudied:() => [], subscribe:() => () => {}, setStudied:() => {}, loadTopics:async () => [{ id:'T1.01', name:'Constitución Española', total:0, answered:0, accuracy:null }] },

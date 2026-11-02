@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type FormEvent } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import type { AcademyCurriculumFile, AcademyCurriculumSection, AcademyCurriculumTopic } from '../../core/domain/academy-curriculum-types.js';
 import { academyCurriculumTopicLoaders } from '../../core/domain/academy-curriculum.generated.js';
 import { useStudyService } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { canScheduleSectionFollowUp, isCurrentAcademyMaterialSelection, sectionCoverage, sectionFollowUps, sectionRecallHistory, type AcademySectionStudyEvent, type AcademyTopicProgressSnapshot } from '../../core/domain/academy-study-progress.js';
+import type { AcademyMaterialPdfCopy } from '../../core/domain/academy-material-copy.js';
 
 interface LoadedTopic {
   topicId: string;
@@ -13,12 +14,16 @@ interface LoadedTopic {
 }
 
 interface LocalPdfSelection {
+  scope: string;
+  selectedAt: number;
   topicId: string;
   path: string;
   sourceHash: string;
   name: string;
   sizeBytes: number;
   url: string;
+  blob: Blob;
+  persisted: boolean;
 }
 
 const materialLabels: Record<string, string> = {
@@ -45,6 +50,11 @@ const sourceStatusMessages: Record<string, string> = {
 function createEventId(): string {
   try { return crypto.randomUUID(); }
   catch { return `${Date.now()}-${Math.random().toString(16).slice(2)}`; }
+}
+
+async function sha256(bytes: ArrayBuffer): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', bytes);
+  return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
 function SectionStudyUnit({
@@ -169,17 +179,29 @@ function SectionStudyUnit({
   </details>;
 }
 
-export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, activityId, onCompleteSectionRecall }: { topicId: string; hasStudyMarker: boolean; sessionId?: string; activityId?: string; onCompleteSectionRecall?: () => Promise<void> }) {
+type AcademyCurriculumPanelProps = { topicId: string; hasStudyMarker: boolean; sessionId?: string; activityId?: string; onCompleteSectionRecall?: () => Promise<void> };
+
+export function AcademyCurriculumPanel(props: AcademyCurriculumPanelProps) {
+  const academyProgress = useStudyService('academyStudyProgress');
+  const accountId = useSyncExternalStore(academyProgress.subscribe, academyProgress.accountId, academyProgress.accountId);
+  return <AcademyCurriculumPanelContent key={`${props.topicId}:${accountId ?? 'guest'}`} {...props} />;
+}
+
+function AcademyCurriculumPanelContent({ topicId, hasStudyMarker, sessionId, activityId, onCompleteSectionRecall }: AcademyCurriculumPanelProps) {
   const [draft, setDraft] = useState<{ topicId: string; paths: string[] } | null>(null);
   const [notice, setNotice] = useState('');
-  const [pdfSelection, setPdfSelection] = useState<LocalPdfSelection | null>(null);
+  const [pdfSelections, setPdfSelections] = useState<Record<string, LocalPdfSelection>>({});
+  const [savedPdfState, setSavedPdfState] = useState<{ scope:string; topicId:string; entries:AcademyMaterialPdfCopy[] }>({ scope:'', topicId:'', entries:[] });
   const [pdfNotice, setPdfNotice] = useState<{ topicId: string; path: string; text: string } | null>(null);
-  const pdfObjectUrl = useRef<string | null>(null);
+  const pdfObjectUrls = useRef(new Map<string, string>());
   const pdfGeneration = useRef(0);
   const [searchParams] = useSearchParams();
   const targetSectionId = searchParams.get('sectionId');
   const materialPanel = useRef<HTMLDetailsElement>(null);
   const academyProgress = useStudyService('academyStudyProgress');
+  const accountId = academyProgress.accountId();
+  const pdfScope = accountId ? `uid:${accountId}` : 'guest';
+  const savedPdfs = savedPdfState.scope === pdfScope && savedPdfState.topicId === topicId ? savedPdfState.entries : [];
   const progressResource = useMemo(() => ({
     accountId: academyProgress.accountId,
     subscribe: academyProgress.subscribe,
@@ -191,28 +213,28 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
   const loader = academyCurriculumTopicLoaders[topicId];
   useEffect(() => () => {
     pdfGeneration.current++;
-    if (pdfObjectUrl.current) URL.revokeObjectURL(pdfObjectUrl.current);
-    pdfObjectUrl.current = null;
-  }, [topicId]);
+    pdfObjectUrls.current.forEach(url => URL.revokeObjectURL(url));
+    pdfObjectUrls.current.clear();
+  }, [topicId, pdfScope]);
   const chooseLocalPdf = async (file: File | undefined, materialPath: string, expectedHash: string) => {
     const generation = ++pdfGeneration.current;
-    if (pdfObjectUrl.current) URL.revokeObjectURL(pdfObjectUrl.current);
-    pdfObjectUrl.current = null;
-    setPdfSelection(null);
+    const oldUrl = pdfObjectUrls.current.get(materialPath);
+    if (oldUrl) URL.revokeObjectURL(oldUrl);
+    pdfObjectUrls.current.delete(materialPath);
+    setPdfSelections(current => { const next = { ...current }; delete next[materialPath]; return next; });
     setPdfNotice({ topicId, path:materialPath, text:'Comprobando que el PDF coincide con esta versión…' });
     if (!file || !file.size) { setPdfNotice({ topicId, path:materialPath, text:'El archivo está vacío o no se pudo seleccionar.' }); return; }
     try {
       const fileBytes = await file.arrayBuffer();
       if (String.fromCharCode(...new Uint8Array(fileBytes.slice(0, 5))) !== '%PDF-') { setPdfNotice({ topicId, path:materialPath, text:'El archivo seleccionado no parece ser un PDF válido.' }); return; }
       if (!globalThis.crypto?.subtle) { setPdfNotice({ topicId, path:materialPath, text:'Este navegador no permite verificar el archivo localmente. No se abrió.' }); return; }
-      const digest = await crypto.subtle.digest('SHA-256', fileBytes);
-      const actualHash = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
+      const actualHash = await sha256(fileBytes);
       if (generation !== pdfGeneration.current) return;
       if (actualHash !== expectedHash.toLowerCase()) { setPdfNotice({ topicId, path:materialPath, text:'La versión del PDF no coincide con el catálogo actual. No se abrió.' }); return; }
       const url = URL.createObjectURL(file);
-      pdfObjectUrl.current = url;
-      setPdfSelection({ topicId, path:materialPath, sourceHash:actualHash, name:file.name, sizeBytes:file.size, url });
-      setPdfNotice({ topicId, path:materialPath, text:'PDF verificado. Se abrirá en una pestaña nueva; el archivo no se sube ni se guarda.' });
+      pdfObjectUrls.current.set(materialPath, url);
+      setPdfSelections(current => ({ ...current, [materialPath]: { scope:pdfScope, selectedAt:Date.now(), topicId, path:materialPath, sourceHash:actualHash, name:file.name, sizeBytes:file.size, url, blob:file, persisted:false } }));
+      setPdfNotice({ topicId, path:materialPath, text:'PDF verificado. Se abrirá en una pestaña nueva; todavía no se ha guardado.' });
     } catch {
       if (generation === pdfGeneration.current) setPdfNotice({ topicId, path:materialPath, text:'No se pudo leer o verificar el PDF. Puedes seguir usando el índice y abrir la ruta de Drive.' });
     }
@@ -226,6 +248,38 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
     });
     return () => { active = false; };
   }, [loader, topicId]);
+  useEffect(() => {
+    const generation = ++pdfGeneration.current;
+    let active = true;
+    const topic = loaded?.topicId === topicId ? loaded.topic : null;
+    if (!topic) return () => { active = false; };
+    void academyProgress.listLocalPdfs(topicId).then(async entries => {
+      if (!active || generation !== pdfGeneration.current || academyProgress.accountId() !== accountId) return;
+      setSavedPdfState({ scope:pdfScope, topicId, entries });
+      for (const entry of entries) {
+        const source = topic.files.find(file => file.path === entry.materialPath && file.sha256 === entry.sourceHash && file.extension === '.pdf');
+        const expectedHash = source?.sha256?.toLowerCase();
+        if (!source || !expectedHash) continue;
+        if (!globalThis.crypto?.subtle || Object.prototype.toString.call(entry.pdfBytes) !== '[object ArrayBuffer]' || entry.mimeType !== 'application/pdf' || entry.pdfBytes.byteLength !== entry.sizeBytes) {
+          setPdfNotice({ topicId, path:entry.materialPath, text:'No se pudo verificar esta copia local en el navegador. Puedes volver a elegir el archivo esperado o eliminar la copia guardada.' });
+          continue;
+        }
+        const bytes = entry.pdfBytes;
+        if (!active || generation !== pdfGeneration.current || academyProgress.accountId() !== accountId) return;
+        if (String.fromCharCode(...new Uint8Array(bytes.slice(0, 5))) !== '%PDF-' || await sha256(bytes) !== expectedHash) {
+          setPdfNotice({ topicId, path:entry.materialPath, text:'La copia guardada no supera la verificación del catálogo. Puedes eliminarla y volver a elegir el PDF.' });
+          continue;
+        }
+        const blob = new Blob([bytes], { type:'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        pdfObjectUrls.current.set(entry.materialPath, url);
+        setPdfSelections(current => ({ ...current, [entry.materialPath]: { scope:pdfScope, selectedAt:entry.importedAt, topicId, path:entry.materialPath, sourceHash:entry.sourceHash, name:entry.name, sizeBytes:entry.sizeBytes, url, blob, persisted:true } }));
+      }
+    }).catch(() => {
+      if (active && generation === pdfGeneration.current) setPdfNotice({ topicId, path:'', text:'No se pudieron consultar las copias PDF locales. Puedes elegir de nuevo el archivo; las copias no se han borrado.' });
+    });
+    return () => { active = false; };
+  }, [loaded?.topicId, loaded?.topic, topicId, pdfScope, accountId, academyProgress]);
   useEffect(() => {
     if (targetSectionId && loaded?.topicId === topicId && materialPanel.current) {
       materialPanel.current.open = true;
@@ -268,8 +322,46 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
     if (saved) setDraft(null);
   };
   const recordEvent = (event: AcademySectionStudyEvent) => academyProgress.record(event);
+  const saveLocalPdf = async (selection: LocalPdfSelection) => {
+    if (selection.scope !== pdfScope || academyProgress.accountId() !== accountId) {
+      setPdfNotice({ topicId, path:selection.path, text:'La cuenta ha cambiado. El PDF permanece solo en memoria y no se ha guardado.' });
+      return;
+    }
+    try {
+      const entry: AcademyMaterialPdfCopy = { topicId, materialPath:selection.path, sourceHash:selection.sourceHash,
+        name:selection.name, mimeType:'application/pdf', sizeBytes:selection.sizeBytes, importedAt:selection.selectedAt, pdfBytes:await selection.blob.arrayBuffer() };
+      await academyProgress.saveLocalPdf(entry);
+      if (academyProgress.accountId() !== accountId) return;
+      setSavedPdfState(current => ({ scope:pdfScope, topicId, entries:[...(current.scope === pdfScope && current.topicId === topicId ? current.entries : []).filter(item => item.materialPath !== entry.materialPath || item.sourceHash !== entry.sourceHash), entry] }));
+      setPdfSelections(current => ({ ...current, [entry.materialPath]: { ...selection, persisted:true } }));
+      setPdfNotice({ topicId, path:entry.materialPath, text:'Copia guardada solo en este dispositivo. No está cifrada ni se sincroniza con la cuenta.' });
+    } catch {
+      setPdfNotice({ topicId, path:selection.path, text:'No se pudo guardar la copia local (puede faltar espacio o estar bloqueado el almacenamiento). El PDF actual seguirá disponible hasta cerrar esta vista.' });
+    }
+  };
+  const removeLocalPdf = async (entry: AcademyMaterialPdfCopy) => {
+    if (academyProgress.accountId() !== accountId) return;
+    try {
+      await academyProgress.removeLocalPdf(entry.topicId, entry.materialPath, entry.sourceHash);
+      if (academyProgress.accountId() !== accountId) return;
+      setSavedPdfState(current => ({ scope:pdfScope, topicId, entries:(current.scope === pdfScope && current.topicId === topicId ? current.entries : []).filter(item => item.materialPath !== entry.materialPath || item.sourceHash !== entry.sourceHash) }));
+      const selected = pdfSelections[entry.materialPath];
+      if (selected?.sourceHash === entry.sourceHash) {
+        URL.revokeObjectURL(selected.url);
+        pdfObjectUrls.current.delete(entry.materialPath);
+      }
+      setPdfSelections(current => {
+        if (current[entry.materialPath]?.sourceHash !== entry.sourceHash) return current;
+        const next = { ...current };
+        delete next[entry.materialPath];
+        return next;
+      });
+      setPdfNotice({ topicId, path:entry.materialPath, text:'Copia local eliminada. El historial y el seguimiento de estudio no han cambiado.' });
+    } catch {
+      setPdfNotice({ topicId, path:entry.materialPath, text:'No se pudo eliminar la copia PDF local. Inténtalo de nuevo.' });
+    }
+  };
   const filesByPath = new Map(topic.files.map(file => [file.path, file]));
-  const currentPdfSelection = pdfSelection?.topicId === topicId ? pdfSelection : null;
   const currentPdfNotice = pdfNotice?.topicId === topicId ? pdfNotice : null;
   const outlineFingerprintFor = (path: string) => {
     const file = filesByPath.get(path);
@@ -290,14 +382,19 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
     const file = filesByPath.get(materialPath);
     if (!file) return null;
     return <>
-      <p className="my-1 text-sm text-muted">{extractionLabel(file) ?? 'Este archivo no es PDF; el catálogo conserva su ruta y metadatos.'}. La aplicación conserva solo metadatos e índice. La extracción técnica no verifica que el contenido sea explicativo, completo ni vigente.</p>
+      <p className="my-1 text-sm text-muted">{extractionLabel(file) ?? 'Este archivo no es PDF; el catálogo conserva su ruta y metadatos.'}. El catálogo integrado conserva solo metadatos e índice; el PDF se guarda en este dispositivo únicamente si eliges guardarlo. La extracción técnica no verifica que el contenido sea explicativo, completo ni vigente.</p>
       {file.extension === '.pdf' && file.sha256 && <div className="my-2 grid justify-items-start gap-2">
         <label className="btn sec min-h-11 cursor-pointer">Elegir este PDF desde Drive<input className="sr-only" type="file" accept="application/pdf,.pdf" aria-label={`Elegir PDF ${file.name}`} onChange={event => { const selected = event.currentTarget.files?.[0]; event.currentTarget.value = ''; void chooseLocalPdf(selected, materialPath, file.sha256!); }} /></label>
         {currentPdfNotice?.path === materialPath && <p className="m-0 text-sm text-muted" role="status">{currentPdfNotice.text}</p>}
-        {currentPdfSelection?.path === materialPath && currentPdfSelection.sourceHash === file.sha256 && <>
-          <p className="m-0 text-xs text-muted">{currentPdfSelection.name} · {(currentPdfSelection.sizeBytes / (1024 * 1024)).toFixed(2)} MiB · solo en memoria de esta vista</p>
-          <ul className="m-0 grid gap-1 ps-5">{sections.filter(section => section.materialPath === materialPath).map(section => <li key={section.id}><a className="text-link underline" href={`${currentPdfSelection.url}#page=${section.printedPage}`} target="_blank" rel="noopener noreferrer">Abrir {section.title} · página {section.printedPage}</a></li>)}</ul>
-        </>}
+        {pdfSelections[materialPath]?.topicId === topicId && pdfSelections[materialPath]?.scope === pdfScope && pdfSelections[materialPath]?.sourceHash === file.sha256 && (() => {
+          const selection = pdfSelections[materialPath];
+          return <>
+            <p className="m-0 text-xs text-muted">{selection.name} · {(selection.sizeBytes / (1024 * 1024)).toFixed(2)} MiB · {selection.persisted ? 'guardado en este dispositivo' : 'solo en memoria de esta vista'}</p>
+            {!selection.persisted ? <button className="btn sec" type="button" onClick={() => void saveLocalPdf(selection)}>Guardar PDF en este dispositivo para retomar</button>
+              : <p className="m-0 text-sm text-muted">Copia local no cifrada, separada de la sincronización de la cuenta.</p>}
+            <ul className="m-0 grid gap-1 ps-5">{sections.filter(section => section.materialPath === materialPath).map(section => <li key={section.id}><a className="text-link underline" href={`${selection.url}#page=${section.printedPage}`} target="_blank" rel="noopener noreferrer">Abrir {section.title} · página {section.printedPage}</a></li>)}</ul>
+          </>;
+        })()}
       </div>}
     </>;
   };
@@ -320,7 +417,8 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
 
   return <details ref={materialPanel} className="mt-3 rounded-[var(--r-s)] border border-line p-3">
     <summary className="min-h-11 cursor-pointer content-center font-semibold">Material de academia · {topic.sections.length} referencias de índice</summary>
-    <p className="mt-2 mb-3 text-sm text-muted">{message} Elige el PDF de tu carpeta Drive para verificarlo y abrirlo en otra pestaña. No se sube ni se guarda; al cerrar esta vista tendrás que volver a seleccionarlo. También puedes abrir la ruta indicada por separado.</p>
+    <p className="mt-2 mb-3 text-sm text-muted">{message} Elige el PDF de tu carpeta Drive para verificarlo y abrirlo en otra pestaña. Por defecto solo se conserva en memoria; puedes optar por guardar una copia local para retomar. No se cifra ni se sincroniza, y puedes eliminarla aquí.</p>
+    {currentPdfNotice?.path === '' && <p className="my-2 text-sm text-muted" role="alert">{currentPdfNotice.text}</p>}
     {hasStudyMarker && <div className="my-3 rounded-md bg-surface-soft p-3">
       <p className="my-0 mb-2 text-sm">Las preguntas disponibles están clasificadas por tema, no por este apartado. La práctica siguiente registra respuestas y correcciones del tema completo.</p>
       <Link className="btn" to={`/test?topic=${encodeURIComponent(topicId)}`}>Practicar preguntas del tema</Link>
@@ -347,6 +445,14 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
       </div>
       {notice && <p className="my-2 text-sm" role="status">{notice}</p>}
     </fieldset>}
+    {savedPdfs.length > 0 && <section className="my-3 rounded-md border border-line p-3" aria-label="Copias locales de PDF">
+      <h3 className="m-0 text-sm font-semibold">Copias guardadas en este dispositivo</h3>
+      <p className="my-1 text-xs text-muted">Solo accesibles desde esta cuenta lógica de la aplicación, sin cifrado: cualquier persona con acceso al navegador puede leerlas. No entran en el backup ni en Firebase.</p>
+      <ul className="m-0 grid gap-2 ps-5 text-sm">{savedPdfs.map(entry => {
+        const current = topic.files.some(file => file.path === entry.materialPath && file.sha256 === entry.sourceHash);
+        return <li key={`${entry.materialPath}:${entry.sourceHash}`}><code className="break-all">{entry.name}</code> · {(entry.sizeBytes / (1024 * 1024)).toFixed(2)} MiB · {current ? 'versión vigente' : 'versión antigua o material ausente'} <button className="ms-2 text-link underline" type="button" onClick={() => void removeLocalPdf(entry)}>Eliminar copia local</button></li>;
+      })}</ul>
+    </section>}
     {renderOutlineGroup(curriculumSections, 'Índices extraídos de temarios', 'Son candidatos a estructura del tema, pendientes de confirmar con la versión usada por la academia.')}
     {renderOutlineGroup(supplementalSections, 'Índices extraídos de material complementario', 'Estos índices describen el documento indicado; no prueban que sea el programa completo del tema.')}
     {materialPaths.length === 0 && <p className="m-0 text-sm text-muted">No se pudo extraer un índice. Consulta los documentos listados; la aplicación no inventa apartados.</p>}

@@ -6,6 +6,7 @@ import * as progressStore from '../adapters/local/local-progress-store.js';
 import { localCardProgressGateway, localProgressRepository, localQuizProgressGateway, localStudyProgressGateway } from '../adapters/local/progress-repository.js';
 import { localGuestQuestionHistoryRepository } from '../adapters/local/guest-question-history.js';
 import { localReadingQuestionHistoryRepository } from '../adapters/local/reading-question-history.js';
+import { localAcademyMaterialRepository } from '../adapters/local/academy-material-repository.js';
 import { percentage as pct } from '../shared/presentation/format.js';
 import { normalizeUiPreferences } from '../shared/presentation/ui-preferences.js';
 import { randomStudyOrder as shuffle } from '../shared/ui/study-random.js';
@@ -460,6 +461,21 @@ export const studyServices: StudyServices = {
     },
     selectMaterials(topicId, materials) { return !!academyStudyProgress.selectMaterials(topicId, materials); },
     record(event) { return !!academyStudyProgress.record(event); },
+    listLocalPdfs(topicId) {
+      const account = localStudyProgressGateway.accountId();
+      const scope = account ? `uid:${account}` : 'guest';
+      return localAcademyMaterialRepository.list(scope, topicId);
+    },
+    saveLocalPdf(copy) {
+      const account = localStudyProgressGateway.accountId();
+      const scope = account ? `uid:${account}` : 'guest';
+      return localAcademyMaterialRepository.save(scope, copy);
+    },
+    removeLocalPdf(topicId, materialPath, sourceHash) {
+      const account = localStudyProgressGateway.accountId();
+      const scope = account ? `uid:${account}` : 'guest';
+      return localAcademyMaterialRepository.remove(scope, topicId, materialPath, sourceHash);
+    },
   },
   result: {
     getSnapshot() {
