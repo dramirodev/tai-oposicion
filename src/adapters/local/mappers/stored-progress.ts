@@ -16,7 +16,7 @@ const boundedNumber = (value: unknown, minimum = 0, maximum = 1e13): number | nu
     ? Math.min(maximum, Math.max(minimum, value))
     : null;
 const ID_PATTERN = /^(?!__proto__$|constructor$|prototype$)[A-Za-z0-9._\-~]{1,48}$/;
-const TOPIC_ID_PATTERN = /^T\d\.\d\d$/;
+const TOPIC_ID_PATTERN = /^T\d+\.\d{2}$/;
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   !!value && typeof value === 'object' && !Array.isArray(value);
 const createDictionary = <Value = unknown>(): Record<string, Value> => Object.create(null);

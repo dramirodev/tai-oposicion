@@ -9,6 +9,7 @@ import { useStudyService, type FailureQuestion } from '../../shared/ui/study-ser
 import { selectFailures, type FailureFilter } from './failures-controller.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
 import { PageMessage } from '../../shared/ui/PageMessage.js';
+import { isStudyTopicId } from '../../core/domain/topic-id.js';
 
 const EMPTY_FILTER: FailureFilter = { query: '', topicId: '', syllabus: '', streak: '' };
 const dateLabel = (timestamp: number) => new Date(timestamp).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
@@ -32,7 +33,7 @@ export function FailuresPage() {
   const trainingTopicsValue = searchParams.get('trainingTopics');
   const dailyTraining = searchParams.get('dailyTraining') === 'failures';
   const requestedTrainingTopicIds = useMemo(() => trainingTopicsValue === null ? undefined
-    : new Set(trainingTopicsValue.split(',').filter(topicId => /^T[1-4]\.\d{2}$/.test(topicId))), [trainingTopicsValue]);
+    : new Set(trainingTopicsValue.split(',').filter(isStudyTopicId)), [trainingTopicsValue]);
   const seenTopicIds = useMemo(() => new Set(failures.seenTopics()), [failures]);
   const trainingTopicIds = useMemo(() => requestedTrainingTopicIds && new Set(
     [...requestedTrainingTopicIds].filter(topicId => seenTopicIds.has(topicId)),

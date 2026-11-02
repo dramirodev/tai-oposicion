@@ -1,16 +1,17 @@
 import { test, expect, type Page } from '@playwright/test';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-async function start(page: Page) {
+async function start(page: Page, fullAccess = false) {
   const errors: string[] = [];
   page.on('pageerror', e => errors.push(e.message));
   page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
   await page.route('**/firebase-config.json', r => r.fulfill({ json: {} }));
-  await page.addInitScript(() => {
+  await page.addInitScript(({ fullAccess }) => {
     Math.random = () => 0.5; // selección estable, como en las pruebas de rutas
     if (localStorage.getItem('tai.e2e.seeded')) return;
     localStorage.setItem('tai.e2e.seeded', '1'); localStorage.setItem('tai.dev', '1');
-  });
+    if (fullAccess) localStorage.setItem('tai.acc:guest', 'propietario');
+  }, { fullAccess });
   await page.goto('/#/home'); await expect(page.locator('#quick')).toBeVisible();
   return errors;
 }
@@ -40,6 +41,60 @@ test('el menú de inicio mantiene los iconos alineados con la navegación', asyn
   expect(menuColor).toBe(navigationColor);
   await expect(menu).toContainText('Entrenar un hábito');
   await expect(menu).toContainText('Seguimiento');
+  expect(errors).toEqual([]);
+});
+
+test('Planificación enlaza el intento al checkpoint y conserva la referencia al recargar el test', async ({ page }) => {
+  const errors = await start(page, true);
+  await page.goto('/#/temario');
+  await page.locator('[data-t="T1.01"]').click();
+  await expect.poll(async () => page.evaluate(() => (JSON.parse(localStorage.getItem('tai.v1:guest') || 'null')?.seen?.t || []).includes('T1.01'))).toBe(true);
+  const planned = await page.evaluate(() => {
+    const date = new Date();
+    const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    const sessionId = `training:${dateKey}`;
+    const activityId = `${sessionId}:activity:1`;
+    localStorage.setItem(`tai.training-session.v1.${encodeURIComponent('guest')}`, JSON.stringify({
+      schemaVersion:2, id:sessionId, dateKey,
+      activities:[{ id:activityId, activity:'topicTest', minutes:30, reason:'coverage', topicId:'T1.01', topicIds:['T1.01'] }],
+      currentIndex:0, currentStartedAt:null, elapsedSecondsByActivity:[0], updatedAt:Date.now(), startedAt:Date.now(), completedAt:null,
+    }));
+    return { sessionId, activityId };
+  });
+  await page.reload();
+  await expect(page.locator('#app h1')).toHaveText('Temas vistos');
+  await page.goto('/#/planificacion');
+  await page.getByRole('button', { name:'Comenzar sesión' }).click();
+  await expect(page).toHaveURL(/#\/quiz\?dailyTraining=topicTest&trainingSessionId=training%3A.*&trainingActivityId=training%3A.*%3Aactivity%3A1/);
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  const itemCount = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.run:guest') || 'null').ids.length as number);
+  await page.locator('.opt').first().click();
+  await page.reload();
+  await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
+  await page.locator('.overlay [data-v="1"]').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  const resumedCheckpoint = await page.evaluate(() => JSON.parse(localStorage.getItem(`tai.training-session.v1.${encodeURIComponent('guest')}`) || 'null'));
+  expect(resumedCheckpoint.currentStartedAt).not.toBeNull();
+  await page.locator('#next').click();
+  for (let index = 1; index < itemCount; index++) {
+    await page.locator('.opt').first().click();
+    await page.locator('#next').click();
+  }
+  await expect(page.locator('#app h1')).toHaveText('Resultado');
+  const checkpoint = await page.evaluate(() => JSON.parse(localStorage.getItem(`tai.training-session.v1.${encodeURIComponent('guest')}`) || 'null'));
+  expect(page.url()).toMatch(/#\/result\?.*trainingSessionId=training%3A.*trainingActivityId=training%3A.*%3Aactivity%3A1/);
+  expect(checkpoint).toMatchObject({ id:planned.sessionId, currentIndex:1, activities:[{ id:planned.activityId, attemptSessionIds:[expect.any(String)] }] });
+  const tracked = await page.evaluate(() => new Promise<string[]>((resolve, reject) => {
+    const request = indexedDB.open('tai-attempts', 2);
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => {
+      const tx = request.result.transaction('sessions', 'readonly');
+      const sessions = tx.objectStore('sessions').getAll();
+      tx.oncomplete = () => resolve(sessions.result.map((row: { value: { sourceSessionId?: string } }) => row.value.sourceSessionId || ''));
+      tx.onerror = () => reject(tx.error);
+    };
+  }));
+  expect(tracked).toContain(planned.sessionId);
   expect(errors).toEqual([]);
 });
 test('el diálogo de pausa se dimensiona respecto al viewport aunque viva dentro de #app', async ({ page }) => {
@@ -78,6 +133,19 @@ async function savedAttemptHistory(page: Page) {
         sessions: sessions.result.length,
         events: events.result.map((row: { value: { type: string } }) => row.value.type),
       });
+      tx.onerror = () => reject(tx.error);
+    };
+  }));
+}
+
+async function savedAttemptRecords(page: Page) {
+  return page.evaluate(() => new Promise<{ id: string; value: Record<string, unknown> }[]>((resolve, reject) => {
+    const request = indexedDB.open('tai-attempts', 2);
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => {
+      const tx = request.result.transaction('attempts', 'readonly');
+      const attempts = tx.objectStore('attempts').getAll();
+      tx.oncomplete = () => resolve(attempts.result.map((row: { id: string; value: Record<string, unknown> }) => ({ id: row.id, value: row.value })));
       tx.onerror = () => reject(tx.error);
     };
   }));
@@ -307,6 +375,7 @@ test('práctica permite volver a pendientes, bloquea respondidas y conserva cons
   await expect(page.locator('#app h1')).toContainText('pregunta 2');
   await page.locator('#reveal-solution').click();
   await expect(page.locator('.fb')).toContainText('Solución consultada · cuenta como blanco');
+  await expect(page.locator('.fb [role="status"]')).toContainText('No hay una explicación editorial vigente disponible');
   await expect(page.locator('.opt:disabled')).toHaveCount(4);
 
   await page.reload();
@@ -314,10 +383,34 @@ test('práctica permite volver a pendientes, bloquea respondidas y conserva cons
   await page.locator('.overlay [data-v="1"]').click();
   await expect(page.locator('#app h1')).toContainText('pregunta 2');
   await expect(page.locator('.fb')).toContainText('Solución consultada · cuenta como blanco');
+  await expect(page.locator('.fb [role="status"]')).toContainText('No hay una explicación editorial vigente disponible');
   await expect(page.locator('#reveal-solution')).toHaveCount(0);
   await page.locator('#prev').click();
   await expect(page.locator('#app h1')).toContainText('pregunta 1');
   await page.locator('.opt').first().click();
+  await page.evaluate(() => {
+    const original = Storage.prototype.setItem;
+    Object.defineProperty(window, '__taiOriginalStorageSetItem', { value: original, configurable: true });
+    Storage.prototype.setItem = function (key: string, value: string) {
+      if (key === 'tai.run:guest') throw new DOMException('quota', 'QuotaExceededError');
+      return original.call(this, key, value);
+    };
+  });
+  await page.getByRole('button', { name: 'Pude explicarlo' }).click();
+  await expect(page.getByRole('button', { name: 'Pude explicarlo' })).toHaveAttribute('aria-pressed', 'true');
+  await expect.poll(async () => (await savedAttemptHistory(page)).events.filter(type => type === 'self-assess')).toHaveLength(1);
+  await expect(page.locator('p[role="status"]').filter({ hasText: 'No se pudo guardar el progreso de la sesión' })).toBeVisible();
+  await page.evaluate(() => {
+    const host = window as Window & { __taiOriginalStorageSetItem?: Storage['setItem'] };
+    if (host.__taiOriginalStorageSetItem) Storage.prototype.setItem = host.__taiOriginalStorageSetItem;
+    delete host.__taiOriginalStorageSetItem;
+  });
+  await page.getByRole('button', { name: 'Reintentar guardado' }).click();
+  await expect(page.locator('p[role="status"]').filter({ hasText: 'Autoevaluación guardada' })).toBeVisible();
+  await page.reload();
+  await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
+  await page.locator('.overlay [data-v="1"]').click();
+  await expect(page.getByRole('button', { name: 'Pude explicarlo' })).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('.opt:disabled')).toHaveCount(4);
   await expect.poll(() => page.evaluate(() => Object.keys(JSON.parse(localStorage.getItem('tai.v1:guest') || '{}').stats || {}))).toHaveLength(1);
   await page.locator('.question-map summary').click();
@@ -328,6 +421,61 @@ test('práctica permite volver a pendientes, bloquea respondidas y conserva cons
   await expect(page.locator('.trio div:last-child')).toContainText('9');
   await expect(page.locator('.rv')).toHaveCount(10);
   await expect(page.locator('.rv .tag.warn').getByText('Solución consultada · blanco', { exact: true })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+test('reintento inmediato crea una exposición enlazada, reanudable y sin inflar estadísticas', async ({ page }) => {
+  const errors = await start(page, true);
+  await page.locator('#quick').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  const questionCount = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.run:guest') || 'null').ids.length as number);
+  for (let index = 0; index < questionCount; index++) {
+    await page.locator('.opt').first().click();
+    await page.locator('#next').click();
+  }
+  await expect(page.locator('#app h1')).toHaveText('Resultado');
+  const sourceReview = page.locator('.rv').filter({ has: page.locator('button').filter({ hasText: 'Reintentar como práctica inmediata' }) }).first();
+  await expect(sourceReview).toBeAttached();
+  await sourceReview.locator('summary').click();
+  const available = sourceReview.getByRole('button', { name: 'Reintentar como práctica inmediata' });
+  await expect(available).toBeVisible();
+  const sourceAttemptId = await sourceReview.getAttribute('data-attempt-id');
+  expect(sourceAttemptId).toBeTruthy();
+  const originalRecords = await savedAttemptRecords(page);
+  const original = originalRecords.find(record => record.id === sourceAttemptId);
+  expect(original).toBeDefined();
+  const before = await page.evaluate(() => {
+    const progress = JSON.parse(localStorage.getItem('tai.v1:guest') || '{}');
+    return { stats: progress.stats || {}, sessions: progress.sessions || [] };
+  });
+  const retryButton = sourceReview.getByRole('button', { name: 'Reintentar como práctica inmediata' });
+  await retryButton.evaluate(button => {
+    button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+  });
+  await expect(page).toHaveURL(/#\/quiz$/);
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  const retryCheckpoint = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.run:guest') || 'null'));
+  expect(retryCheckpoint).toMatchObject({ exposureKind: 'immediate-retry', retryOfAttemptId: sourceAttemptId });
+  expect(retryCheckpoint.ids).toHaveLength(1);
+  await page.reload();
+  await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
+  await page.locator('.overlay [data-v="1"]').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  await page.locator('.opt').first().click();
+  await page.locator('#next').click();
+  await expect(page.locator('#app h1')).toHaveText('Resultado');
+  await expect(page.locator('.note[role="status"]')).toContainText('no mide recuerdo diferido');
+  const afterProgress = await page.evaluate(() => {
+    const progress = JSON.parse(localStorage.getItem('tai.v1:guest') || '{}');
+    return { stats: progress.stats || {}, sessions: progress.sessions || [] };
+  });
+  expect(afterProgress.stats).toEqual(before.stats);
+  expect(afterProgress.sessions).toEqual(before.sessions);
+  const records = await savedAttemptRecords(page);
+  const retryRecords = records.filter(record => record.value.exposureKind === 'immediate-retry');
+  expect(retryRecords).toHaveLength(1);
+  expect(retryRecords[0].value).toMatchObject({ retryOfAttemptId: sourceAttemptId, questionId: retryCheckpoint.ids[0], state: 'answered' });
+  expect(records.find(record => record.id === sourceAttemptId)).toEqual(original);
   expect(errors).toEqual([]);
 });
 test('integra ayudas, navegación, bloqueo terminal y exportación del intento', async ({ page }) => {

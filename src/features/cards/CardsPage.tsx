@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Check, CircleHelp, Trash2, TriangleAlert } from 'lucide-react';
 import { Link, useNavigate, useSearchParams } from 'react-router';
 import { ERROR_REPORT_REASONS } from '../../shared/presentation/study-labels.js';
+import { isStudyTopicId } from '../../core/domain/topic-id.js';
 import { questionNotice, sourceHtml } from '../../shared/presentation/study-content.js';
 import { richHtml } from '../../shared/presentation/study-text.js';
 import { useStudyService, type CardsServices, type CardPreferences, type CardsPlan, type StudyCard } from '../../shared/ui/study-services.js';
@@ -197,11 +198,13 @@ export function CardsPage() {
   const [searchParams] = useSearchParams();
   const trainingTopicsValue = searchParams.get('trainingTopics');
   const dailyTrainingActivity = (['activeRecall', 'spacedReviews'] as const).find(value => value === searchParams.get('dailyTraining'));
+  const sessionId = searchParams.get('trainingSessionId'), activityId = searchParams.get('trainingActivityId');
+  const trainingActivityReference = sessionId && activityId ? { sessionId, activityId } : undefined;
   const home = useStudyService('home');
   const cards = useStudyService('cards');
   const seenTopicIds = useMemo(() => new Set(cards.seenTopics()), [cards]);
   const trainingTopicIds = useMemo(() => trainingTopicsValue === null ? undefined
-    : [...new Set(trainingTopicsValue.split(',').filter(topicId => /^T[1-4]\.\d{2}$/.test(topicId)
+    : [...new Set(trainingTopicsValue.split(',').filter(topicId => isStudyTopicId(topicId)
       && seenTopicIds.has(topicId)))], [seenTopicIds, trainingTopicsValue]);
   const trainingTopicSet = useMemo(() => trainingTopicIds ? new Set(trainingTopicIds) : null, [trainingTopicIds]);
   const initialPreferences = useMemo(() => cards.getPreferences(), [cards]);
@@ -245,7 +248,7 @@ export function CardsPage() {
 
   const onSessionComplete = () => { cards.clearSession(); refreshSession(value => value + 1); if (dailyTrainingActivity) void navigate('/planificacion'); else setPlanGeneration(value => value + 1); };
   const onSessionExit = () => { cards.clearSession(); void navigate('/home'); };
-  const onActivityFinished = () => { if (dailyTrainingActivity) home.completeTrainingActivity(dailyTrainingActivity); };
+  const onActivityFinished = () => { if (dailyTrainingActivity) home.completeTrainingActivity(dailyTrainingActivity, trainingActivityReference); };
   if (pageState !== 'plan') return <CardsPageStatus state={pageState} cards={cards} dailyTraining={!!dailyTrainingActivity} onSessionExit={onSessionExit} onSessionComplete={onSessionComplete} onActivityFinished={onActivityFinished} onRetry={() => setPlanGeneration(value => value + 1)} onHome={() => void navigate('/home')} />;
   if (!plan) return <PageLoading variant="legacy" />;
 

@@ -49,7 +49,7 @@ it('permite iniciar el paso de tema nuevo aunque todavía no haya temas vistos',
   await screen.findByRole('heading', { name:'Planificación de estudio' });
   await user.click(screen.getByRole('button', { name:/Comenzar sesión/ }));
   expect(services.home.startTrainingSession).toHaveBeenCalledWith(newTopicPlan);
-  expect(await screen.findByTestId('current-path')).toHaveTextContent('/temario?topic=T1.01&dailyTraining=newContent');
+  expect(await screen.findByTestId('current-path')).toHaveTextContent(`/temario?topic=T1.01&dailyTraining=newContent&trainingSessionId=${encodeURIComponent(`training:${planned.trainingSession.dateKey}`)}&trainingActivityId=${encodeURIComponent(`training:${planned.trainingSession.dateKey}:activity:1`)}`);
 });
 
 it('muestra desde el primer instante el tiempo real de una actividad en curso, no 0 hasta el primer tick', async () => {

@@ -17,7 +17,7 @@ let scenarios: Record<string, ScenarioEntry> | undefined;
 const supQuestions = new Map<string, Question>();
 const cache = new Map<string, Promise<Question[]>>();
 let scenariosLoading: Promise<Record<string, ScenarioEntry>> | undefined;
-const bankFileMatch = /^(data|cards|explanations)\/([\w.-]+)\.json$/, topicFileMatch = /^data\/(T\d\.\d\d)\.json$/;
+const bankFileMatch = /^(data|cards|explanations)\/([\w.-]+)\.json$/, topicFileMatch = /^data\/(T\d+\.\d{2})\.json$/;
 /** Nombre del fichero en `bank/f_<nombre>`: los de `cards/` y `explanations/` llevan prefijo para no chocar con `index`. */
 const bankName = (url: string): string | null => { const match = bankFileMatch.exec(url); return match ? (match[1] === 'data' ? match[2] : `${match[1]}_${match[2]}`) : null; };
 /** Resuelve un fichero del banco: datos de Firestore (solo aprobados), muestra pública (invitados) o URL estática. */

@@ -60,3 +60,30 @@ it('never drops a large single session and marks the part exceeding the preferre
   expect(result.manifest.parts[0].oversized).toBe(true);
   expect(result.parts[0].attempts).toHaveLength(1);
 });
+
+it('labels immediate retry exposures and preserves only anonymized source references in JSON', () => {
+  const original = attempt('original-private-id', 'original-session', 'Q1');
+  const retry = { ...attempt('retry-private-id', 'retry-session', 'Q1'), exposureKind: 'immediate-retry', retryOfAttemptId: original.id };
+  const input = {
+    archive: {
+      createdAt: 250,
+      sessions: [session('original-session'), session('retry-session')],
+      attempts: [original, retry],
+      events: [],
+    },
+    report: { ...report, excludedImmediateRetryCount: 1 },
+    questions: new Map([['Q1', question('Q1')]]), explanations: new Map(), generatedAt: 300,
+    filters: { from: 0, to: 300, modes: ['practice'], sessionIds: ['original-session', 'retry-session'] },
+  };
+  const result = buildAiStudyExport({ ...input, maxPartBytes: 100_000 });
+  const exportedAttempts = result.parts[0].attempts;
+  const exportedOriginal = exportedAttempts.find(item => item.exposureKind !== 'immediate-retry');
+  const exportedRetry = exportedAttempts.find(item => item.exposureKind === 'immediate-retry');
+  expect(exportedRetry?.retryOfAttemptRef).toBe(exportedOriginal?.id);
+  const json = JSON.stringify(result);
+  expect(json).not.toContain('original-private-id');
+  expect(json).not.toContain('retry-private-id');
+  const split = buildAiStudyExport({ ...input, maxPartBytes: 1 });
+  expect(split.parts).toHaveLength(2);
+  expect(split.parts.flatMap(part => part.attempts).find(item => item.exposureKind === 'immediate-retry')?.retryOfAttemptRef).toBeNull();
+});

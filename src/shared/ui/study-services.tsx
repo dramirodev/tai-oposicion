@@ -7,6 +7,7 @@ import type { PaperRecallAssessment, PaperRecallRating } from '../../core/domain
 import type { ScheduleDecision, ScheduledStudyActivity, ScheduledStudyActivityKind } from '../../core/domain/study-training-calendar.js';
 import type { ObservedStudyTime } from '../../core/domain/attempts/observed-study-time.js';
 import type { ExplanationLookup } from '../../core/domain/explanations.js';
+import type { SelfAssessment } from '../../core/domain/attempts/transitions.js';
 export type { StatsComparison, StatsDomainTopic, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 export interface ActiveStudy { title: string; position: number; total: number }
 export interface HomeBlock { name: string; total: number; mastered: number; assessed: number }
@@ -35,11 +36,11 @@ export interface HomeServices {
   getActiveStudy(): ActiveStudy | null;
   subscribe(listener: () => void): () => void;
   quickSession(): Promise<void>;
-  startReview(topicIds?: readonly string[], dailyTrainingActivity?: TrainingActivity): Promise<void>;
+  startReview(topicIds?: readonly string[], dailyTrainingActivity?: TrainingActivity, reference?: import('../../core/domain/study-training-session.js').TrainingActivityReference): Promise<void>;
   startTrainingSession(plan: DailyTrainingPlan): DailyTrainingSession | null;
   startTrainingActivity(): DailyTrainingSession | null;
   pauseTrainingActivity(): DailyTrainingSession | null;
-  completeTrainingActivity(activity: TrainingActivity): DailyTrainingSession | null;
+  completeTrainingActivity(activity: TrainingActivity, reference?: import('../../core/domain/study-training-session.js').TrainingActivityReference): DailyTrainingSession | null;
   recordPaperRecall?(topicId: string, rating: PaperRecallRating): PaperRecallAssessment | null;
   scheduledStudyActivities?(): readonly ScheduledStudyActivity[];
   scheduleStudyActivity?(input: { dateKey: string; activity: ScheduledStudyActivityKind; topicId: string; minutes: number }): ScheduleDecision | { ok:false; reason:'storage-failed' };
@@ -159,7 +160,7 @@ export interface TestServices {
   getConfiguration(): TestConfiguration;
   saveConfiguration(configuration: TestConfiguration): void;
   seenTopics(): readonly string[];
-  start(configuration: TestConfiguration, options?: { dailyTrainingActivity?: TrainingActivity }): Promise<'started' | 'empty' | 'account-changed'>;
+  start(configuration: TestConfiguration, options?: { dailyTrainingActivity?: TrainingActivity; trainingActivityReference?: import('../../core/domain/study-training-session.js').TrainingActivityReference }): Promise<'started' | 'empty' | 'account-changed'>;
 }
 export interface ScenarioChoice { id: string; text: string }
 export interface SimulationReviewServices { loadChoices(): Promise<readonly ScenarioChoice[]>; start(id: string): 'started' | 'unavailable'; }
@@ -179,12 +180,12 @@ export interface SimulationServices {
   startExam(id: string, mode: 'study' | 'exam'): Promise<'started' | 'empty' | 'account-changed'>;
 }
 export interface ResultHighlight { id: string; field: 'statement' | `option:${number}`; start: number; end: number; text: string; before: string; after: string; category: 'key' | 'doubt'; contentRevision: string; createdAt: number; timing: 'before-answer' | 'after-answer' | 'after-reveal'; stale?: boolean }
-export interface ResultItem { id: string; topicId: string; topicName: string; statement: string; options: readonly string[]; correctIndex: number; answer?: number; outcome: 'correct' | 'wrong' | 'blank' | 'revealed'; notice: string; source: string; citation?: string; note?: string; confidence?: 'sure' | 'betweenTwo' | 'guess'; discardedOptions: readonly number[]; highlights: readonly ResultHighlight[]; contentRevision: string }
-export interface ResultSnapshot { score: number; correct: number; wrong: number; blank: number; consulted: number; accuracy: number | null; seconds: number; title: string; interrupted: boolean; kind: 'sim' | 'rev' | 'test'; porTiempo: boolean; analysis: string; secondPartAvailable: boolean; topics: readonly { id: string; name: string; correct: number; total: number }[]; items: readonly ResultItem[] }
+export interface ResultItem { id: string; attemptId?: string; topicId: string; topicName: string; statement: string; options: readonly string[]; correctIndex: number; answer?: number; outcome: 'correct' | 'wrong' | 'blank' | 'revealed'; notice: string; source: string; citation?: string; note?: string; confidence?: 'sure' | 'betweenTwo' | 'guess'; discardedOptions: readonly number[]; highlights: readonly ResultHighlight[]; contentRevision: string; retryAvailable: boolean }
+export interface ResultSnapshot { score: number; correct: number; wrong: number; blank: number; consulted: number; accuracy: number | null; seconds: number; title: string; interrupted: boolean; kind: 'sim' | 'rev' | 'test'; exposureKind?: 'ordinary' | 'immediate-retry'; porTiempo: boolean; analysis: string; secondPartAvailable: boolean; topics: readonly { id: string; name: string; correct: number; total: number }[]; items: readonly ResultItem[] }
 export interface ResultReport { reason: string; note: string; state: ErrorReportRecord['state'] }
 export interface ResultServices {
   getSnapshot(): ResultSnapshot | null; subscribe(listener: () => void): () => void;
-  continuePartTwo(): void; repeatFailures(): boolean; goHome(): void;
+  continuePartTwo(): void; repeatFailures(): boolean; retryImmediately(questionId: string): boolean; goHome(): void;
   loadStrategy(): Promise<string>;
   loadExplanation(item: Pick<ResultItem, 'id' | 'statement' | 'options'>): Promise<ExplanationLookup>;
   getReport(id: string): ResultReport | undefined; saveReport(id: string, topicId: string, reason: string, note: string): void;
@@ -200,9 +201,9 @@ export interface StatsServices {
   practiceTopics(ids?: readonly string[]): void; reviewDue(): void; practiceFailures(): void; practiceTrap(id: string): Promise<'started' | 'empty'>; practiceSlow(onlyCorrect: boolean): Promise<'started' | 'empty'>;
 }
 export interface QuizPrompt { id: string; topicId: string; topicName: string; origin: 'O' | 'A' | 'G'; year?: string; statement: string; options: readonly string[]; correctIndex: number; context?: string; assumptionText?: string; hasAssumption: boolean; notice: string; citation?: string; source: string; traps: readonly string[]; provisional: boolean; mayExpire: boolean; variant: boolean; contentRevision: string }
-export interface QuizSnapshot { title: string; index: number; count: number; questionIds: readonly string[]; seconds: number; timeLimitSeconds: number | null; remainingSeconds: number | null; readingWaitSeconds: number; readingGateUntil: number; feedback: boolean; timed: boolean; paused: boolean; readingMode: number; prompt: QuizPrompt; answer?: number; studyState: 'unseen' | 'pending' | 'answered' | 'revealed'; review: readonly number[]; answers: readonly (number | undefined)[]; studyStates: readonly ('unseen' | 'pending' | 'answered' | 'revealed')[]; confidence?: 'sure' | 'betweenTwo' | 'guess'; discarded: readonly number[]; highlights: readonly ResultHighlight[]; scoreByLuck: number | null; recentAnswer: readonly [number, number] | null; flagged: boolean; failureReason: number | null; report?: ResultReport; cardExists: boolean }
+export interface QuizSnapshot { title: string; index: number; count: number; questionIds: readonly string[]; seconds: number; timeLimitSeconds: number | null; remainingSeconds: number | null; readingWaitSeconds: number; readingGateUntil: number; feedback: boolean; timed: boolean; paused: boolean; readingMode: number; prompt: QuizPrompt; answer?: number; studyState: 'unseen' | 'pending' | 'answered' | 'revealed'; review: readonly number[]; answers: readonly (number | undefined)[]; studyStates: readonly ('unseen' | 'pending' | 'answered' | 'revealed')[]; confidence?: 'sure' | 'betweenTwo' | 'guess'; selfAssessment?: SelfAssessment; discarded: readonly number[]; highlights: readonly ResultHighlight[]; scoreByLuck: number | null; recentAnswer: readonly [number, number] | null; flagged: boolean; failureReason: number | null; report?: ResultReport; cardExists: boolean }
 export type QuizFinishResult = 'finished' | 'cancelled' | 'empty';
-export interface QuizServices { getSnapshot(): QuizSnapshot | null; subscribe(listener: () => void): () => void; startCurrentQuestion(): void; persist(): void; tick(): void; setIndex(index: number): void; answer(index: number): void; toggleReview(): void; setConfidence(value: 'sure' | 'betweenTwo' | 'guess'): void; toggleDiscard(index: number): void; reveal(): boolean; markBlank(): void; toggleBlank(): void; setPaused(paused: boolean): void; finish(reason?: 'complete' | 'interrupted' | 'timeout'): Promise<QuizFinishResult>; exit(): Promise<void>; cancelConfirmation(): void; toggleFlag(): void; setFailureReason(reason: number): void; markDoubt(): void; markLuck(): void; toggleCard(): void; addHighlight(anchor: { field: 'statement' | `option:${number}`; sourceText: string; start: number; end: number }, category: 'key' | 'doubt'): boolean; removeHighlight(id: string): void; saveReport(reason: string, note: string): void; loadExplanation(): Promise<ExplanationLookup> }
+export interface QuizServices { getSnapshot(): QuizSnapshot | null; subscribe(listener: () => void): () => void; startCurrentQuestion(): void; persist(): boolean; tick(): void; setIndex(index: number): void; answer(index: number): void; toggleReview(): void; setConfidence(value: 'sure' | 'betweenTwo' | 'guess'): void; setSelfAssessment(value: SelfAssessment, retryHistory?: boolean): Promise<{ historySaved: boolean; checkpointSaved: boolean }>; toggleDiscard(index: number): void; reveal(): boolean; markBlank(): void; toggleBlank(): void; setPaused(paused: boolean): void; finish(reason?: 'complete' | 'interrupted' | 'timeout'): Promise<QuizFinishResult>; exit(): Promise<void>; cancelConfirmation(): void; toggleFlag(): void; setFailureReason(reason: number): void; markDoubt(): void; markLuck(): void; toggleCard(): void; addHighlight(anchor: { field: 'statement' | `option:${number}`; sourceText: string; start: number; end: number }, category: 'key' | 'doubt'): boolean; removeHighlight(id: string): void; saveReport(reason: string, note: string): void; loadExplanation(): Promise<ExplanationLookup> }
 export interface SettingsSnapshot {
   sync: { state: string; user: { name: string; email: string } | null; configured: boolean; lastSync: number; error: string; detail: string; host: string; authDomain: string; accessError: string; requests: readonly AccessMember[] };
   full: boolean; level: string; devMode: string | null; devRevealed: boolean; ui: { theme: string; size: number; lectura: number }; training: TrainingPreferences;

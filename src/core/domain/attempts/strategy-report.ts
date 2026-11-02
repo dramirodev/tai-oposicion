@@ -48,6 +48,7 @@ export interface AttemptStrategyReport {
   scoring: { reward: number; penalty: number; blankValue: number };
   completedSessionCount: number;
   excludedSessionCount: number;
+  excludedImmediateRetryCount: number;
   orphanAttemptCount: number;
   overall: StrategyMetrics;
   segments: StrategySegment[];
@@ -200,7 +201,10 @@ export function analyzeAttemptStrategy(input: AnalyzeAttemptStrategyInput): Atte
     list.push(event);
     eventsByAttempt.set(event.attemptId, list);
   }
+  const excludedImmediateRetryCount = input.attempts.filter(attempt => completed.has(attempt.sessionId)
+    && attempt.exposureKind === 'immediate-retry').length;
   const observations = input.attempts.flatMap(attempt => {
+    if (attempt.exposureKind === 'immediate-retry') return [];
     const session = completed.get(attempt.sessionId);
     if (!session) return [];
     const events = eventsByAttempt.get(attempt.id) || [];
@@ -239,6 +243,7 @@ export function analyzeAttemptStrategy(input: AnalyzeAttemptStrategyInput): Atte
     scoring: { reward: input.reward, penalty: input.penalty, blankValue: input.blankValue },
     completedSessionCount: completed.size,
     excludedSessionCount,
+    excludedImmediateRetryCount,
     orphanAttemptCount: input.attempts.filter(attempt => !input.sessions.some(session => session.id === attempt.sessionId)).length,
     overall,
     segments,

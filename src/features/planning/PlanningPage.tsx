@@ -218,14 +218,22 @@ function usePlanningSessionActions(services: HomeServices, overview: HomeOvervie
   const [controller] = useState(() => createPendingActionController(lifetime, services.notify));
 
   const openActivity = (session: DailyTrainingSession, source: HomeOverview) => {
+    const currentStep = session.activities[session.currentIndex];
+    if (!currentStep) return;
+    const sessionId = session.id ?? `training:${session.dateKey}`;
+    const reference = { sessionId, activityId: currentStep.id ?? `${sessionId}:activity:${session.currentIndex + 1}` };
     const action = resolvePlannedActivityAction(session, [...new Set(services.seenTopics())], source.trainingDue.cards);
     if (action.type === 'none') return;
     if (action.type === 'notify') { services.notify(action.message); return; }
     if (action.type === 'start-review') {
-      void controller.runAction('planning-review', () => services.startReview(action.topicIds, 'spacedReviews'));
+      void controller.runAction('planning-review', () => services.startReview(action.topicIds, 'spacedReviews', reference));
       return;
     }
-    void navigate(action.path);
+    const [path, query = ''] = action.path.split('?');
+    const params = new URLSearchParams(query);
+    params.set('trainingSessionId', reference.sessionId);
+    params.set('trainingActivityId', reference.activityId);
+    void navigate(`${path}?${params}`);
   };
 
   const startSession = () => {

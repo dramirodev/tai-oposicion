@@ -36,15 +36,23 @@ it('persiste la planificación semanal validada y mantiene legibles las preferen
 });
 
 it('conserva modalidades elegidas manualmente por tema y descarta valores ajenos al esquema', () => {
-  const training = { reviewModesByTopic: { 'T1.02': 'selective-reading', 'T9.99': 'invented' } };
+  const training = { reviewModesByTopic: { 'T1.02': 'selective-reading', 'T12.01': 'active-retrieval', 'T9.99': 'invented' } };
   expect(preferencesMapper.toDomain({ training })).toMatchObject({ ok: false });
-  expect(normalizeTrainingPreferences(training)).toMatchObject({ reviewModesByTopic: { 'T1.02': 'selective-reading' } });
+  expect(normalizeTrainingPreferences(training)).toMatchObject({ reviewModesByTopic: { 'T1.02': 'selective-reading', 'T12.01': 'active-retrieval' } });
   expect(preferencesMapper.toDomain({ training: { reviewModesByTopic: { 'T1.02': 'selective-reading' } } })).toMatchObject({ ok: true });
 });
 
 it('conserva el tema de introducción elegido y descarta identificadores con formato inválido', () => {
   expect(normalizeTrainingPreferences({ introductionTopicId: 'T3.02' })).toMatchObject({ introductionTopicId: 'T3.02' });
-  expect(normalizeTrainingPreferences({ introductionTopicId: 'T9.99' })).not.toHaveProperty('introductionTopicId');
+  expect(normalizeTrainingPreferences({ introductionTopicId: 'T12.01' })).toMatchObject({ introductionTopicId: 'T12.01' });
+  expect(normalizeTrainingPreferences({ introductionTopicId: 'T0.01' })).not.toHaveProperty('introductionTopicId');
+});
+
+it('mantiene compatible el orden de academia opcional en preferencias nuevas y antiguas', () => {
+  const training = { academyTopicOrderIds: ['T12.01', 'T3.02'] };
+  expect(preferencesMapper.toDomain({ training })).toMatchObject({ ok: true, value: { training } });
+  expect(normalizeTrainingPreferences(training)).toMatchObject({ academyTopicOrderIds: training.academyTopicOrderIds });
+  expect(normalizeTrainingPreferences({ academyTopicOrderIds: ['T12.01', 'T12.01', 'mal'] }).academyTopicOrderIds).toEqual(['T12.01']);
 });
 
 it('rechaza calendarios semanales incompletos o con minutos fuera de rango', () => {

@@ -141,6 +141,8 @@ const trainingActivities = [
 ] as const;
 
 function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsServices; snapshot: SettingsSnapshot }) {
+  const [topicToAdd, setTopicToAdd] = useState('');
+  const academyTopicOrderIds = snapshot.training.academyTopicOrderIds ?? [];
   const updateMinutes = (day: number, rawValue: string) => {
     const minutesByDay = [...snapshot.training.minutesByDay] as typeof snapshot.training.minutesByDay;
     const parsed = Number(rawValue);
@@ -160,6 +162,12 @@ function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsSer
       : snapshot.training.activities.filter(item => item !== activity);
     if (!activities.length) return;
     settings.setTrainingPreferences({ ...snapshot.training, activities });
+  };
+  const updateAcademyOrder = (nextOrder: string[]) => settings.setTrainingPreferences({ ...snapshot.training, academyTopicOrderIds: nextOrder });
+  const addAcademyTopic = () => {
+    if (!topicToAdd || academyTopicOrderIds.includes(topicToAdd)) return;
+    updateAcademyOrder([...academyTopicOrderIds, topicToAdd]);
+    setTopicToAdd('');
   };
   return <section className="card" id="training-schedule"><h2 className="h3">Entrenamiento semanal</h2>
     <p>Este tiempo forma parte de tus horas de estudio. Un día con 0 minutos es descanso; el entrenador no acumula su carga para mañana.</p>
@@ -184,6 +192,30 @@ function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsSer
       </select>
     </label>
     <p className="sm">Al elegir un tema, el entrenador puede sugerir un estudio inicial provisional si aún no hay una marca de estudio ni respuestas. El temario completo se consulta en tus apuntes.</p>
+    <fieldset className="training-activities"><legend>Orden de la academia</legend>
+      <p className="sm">Añade los temas en el orden real de tus clases. La aplicación no lo deduce del código ni del catálogo. Si la lista está vacía, se conserva la selección semanal de arriba. Los temas nuevos del catálogo no se añaden solos.</p>
+      <label htmlFor="academy-topic-order-add">Añadir tema al final</label>
+      <div className="training-topic-order-add">
+        <select id="academy-topic-order-add" value={topicToAdd} onChange={event => setTopicToAdd(event.target.value)}>
+          <option value="">Selecciona un tema</option>
+          {snapshot.index?.topics?.filter(topic => !academyTopicOrderIds.includes(topic.id)).map(topic => <option key={topic.id} value={topic.id}>{topic.id} · {topic.name}</option>)}
+        </select>
+        <button className="btn sec" type="button" disabled={!topicToAdd} onClick={addAcademyTopic}>Añadir</button>
+      </div>
+      {academyTopicOrderIds.length ? <ol aria-label="Orden de temas de la academia">{academyTopicOrderIds.map((topicId, index) => {
+        const topic = snapshot.index?.topics?.find(item => item.id === topicId);
+        return <li key={topicId}>
+          <span>{topic ? `${topic.id} · ${topic.name}` : `${topicId} · no disponible en el catálogo actual`}</span>{' '}
+          <button className="btn sec" type="button" aria-label={`Subir ${topicId}`} disabled={index === 0} onClick={() => {
+            const next = [...academyTopicOrderIds]; [next[index - 1], next[index]] = [next[index], next[index - 1]]; updateAcademyOrder(next);
+          }}>↑</button>{' '}
+          <button className="btn sec" type="button" aria-label={`Bajar ${topicId}`} disabled={index === academyTopicOrderIds.length - 1} onClick={() => {
+            const next = [...academyTopicOrderIds]; [next[index], next[index + 1]] = [next[index + 1], next[index]]; updateAcademyOrder(next);
+          }}>↓</button>{' '}
+          <button className="btn sec" type="button" aria-label={`Quitar ${topicId}`} onClick={() => updateAcademyOrder(academyTopicOrderIds.filter(id => id !== topicId))}>Quitar</button>
+        </li>;
+      })}</ol> : <p className="sm">Aún no has configurado un orden de academia.</p>}
+    </fieldset>
     <fieldset className="training-activities"><legend>Actividades disponibles</legend>
       {trainingActivities.map(([activity, label]) => <label key={activity}><input type="checkbox" checked={snapshot.training.activities.includes(activity)} disabled={snapshot.training.activities.length === 1 && snapshot.training.activities[0] === activity} onChange={event => updateActivity(activity, event.target.checked)} /> {label}</label>)}
     </fieldset>

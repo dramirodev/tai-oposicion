@@ -25,15 +25,17 @@ export function useQuizClock(quiz: QuizServices) {
 }
 
 export function useQuizExplanation(quiz: QuizServices, promptId: string | undefined, revealed: boolean, studyState: string | undefined, questionIndex: number | undefined): ExplanationLookup {
-  const [result, setResult] = useState<{ id: string; value: ExplanationLookup }>({ id: '', value: { status: 'missing' } });
+  const [result, setResult] = useState<{ id: string; value: ExplanationLookup }>({ id: '', value: { status: 'loading' } });
   useEffect(() => {
     if (!promptId || !revealed) return;
     let active = true;
     void quiz.loadExplanation().then(value => {
       if (!active) return;
-      setResult({ id: promptId, value: value.status === 'current' || value.status === 'outdated' ? value : { status: 'missing' } });
-    }).catch(() => {});
+      setResult({ id: promptId, value });
+    }).catch(() => {
+      if (active) setResult({ id: promptId, value: { status: 'unavailable' } });
+    });
     return () => { active = false; };
   }, [promptId, quiz, revealed, studyState, questionIndex]);
-  return result.id === promptId ? result.value : { status: 'missing' as const };
+  return result.id === promptId ? result.value : { status: 'loading' as const };
 }

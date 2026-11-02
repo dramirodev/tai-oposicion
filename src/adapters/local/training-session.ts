@@ -2,6 +2,7 @@ import { MAX_TRAINING_SESSION_HISTORY, toTrainingSessionHistoryEntry, type Daily
 import type { StudyReviewMode, TrainingActivity } from '../../core/domain/entities.js';
 import type { TrainingPlanReason } from '../../core/domain/study-training-plan.js';
 import { localTrainingDateKey } from '../../core/domain/study-training-session.js';
+import { isStudyTopicId } from '../../core/domain/topic-id.js';
 
 const activities = new Set<TrainingActivity>(['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']);
 const reasons = new Set<TrainingPlanReason>(['active-recall', 'new-content-day', 'new-topic-day', 'weak-topics', 'coverage', 'recurring-failures', 'due-reviews']);
@@ -10,7 +11,7 @@ const keyFor = (accountId: string | null) => `tai.training-session.v1.${encodeUR
 const historyKeyFor = (accountId: string | null) => `tai.training-history.v1.${encodeURIComponent(accountId || 'guest')}`;
 
 type StoredTrainingSessionStep = Pick<TrainingSessionStep, 'activity' | 'minutes'>
-  & Partial<Pick<TrainingSessionStep, 'reason' | 'topicId' | 'topicIds' | 'reviewMode'>>;
+  & Partial<Pick<TrainingSessionStep, 'id' | 'reason' | 'topicId' | 'topicIds' | 'reviewMode' | 'attemptSessionIds'>>;
 type StoredTrainingSession = Omit<DailyTrainingSession, 'activities'> & { activities: readonly StoredTrainingSessionStep[] };
 
 function isSessionStep(value: unknown): value is StoredTrainingSessionStep {
@@ -18,11 +19,15 @@ function isSessionStep(value: unknown): value is StoredTrainingSessionStep {
   const step = value as Partial<StoredTrainingSessionStep>;
   return activities.has(step.activity as TrainingActivity)
     && Number.isInteger(step.minutes) && step.minutes! > 0 && step.minutes! <= 240
+    && (step.id === undefined || (typeof step.id === 'string' && !!step.id.trim() && step.id.length <= 180))
+    && (step.attemptSessionIds === undefined || (Array.isArray(step.attemptSessionIds)
+      && step.attemptSessionIds.length <= 500
+      && step.attemptSessionIds.every(id => typeof id === 'string' && !!id.trim() && id.length <= 180)))
     && (step.reason === undefined || reasons.has(step.reason as TrainingPlanReason))
     && (step.reviewMode === undefined || reviewModes.has(step.reviewMode as StudyReviewMode))
-    && (step.topicId === undefined || (typeof step.topicId === 'string' && /^T[1-4]\.\d{2}$/.test(step.topicId)))
+    && (step.topicId === undefined || isStudyTopicId(step.topicId))
     && (step.topicIds === undefined || (Array.isArray(step.topicIds) && step.topicIds.length > 0
-      && step.topicIds.every(topicId => typeof topicId === 'string' && /^T[1-4]\.\d{2}$/.test(topicId))));
+      && step.topicIds.every(isStudyTopicId)));
 }
 
 function isTrainingHistoryEntry(value: unknown): value is TrainingSessionHistoryEntry {
@@ -83,6 +88,8 @@ function isDailyTrainingSession(value: unknown, timestamp: number): value is Sto
   const session = value as Partial<StoredTrainingSession>;
   if (session.dateKey !== localTrainingDateKey(timestamp) || !Array.isArray(session.activities)
     || !session.activities.length || session.activities.length > 6 || !session.activities.every(isSessionStep)
+    || (session.schemaVersion !== undefined && session.schemaVersion !== 2)
+    || (session.id !== undefined && (typeof session.id !== 'string' || !session.id.trim() || session.id.length > 180))
     || new Set(session.activities.map(step => step.activity)).size !== session.activities.length
     || !Number.isInteger(session.currentIndex) || session.currentIndex! < 0 || session.currentIndex! > session.activities.length
     || (session.elapsedSecondsByActivity !== undefined && (!Array.isArray(session.elapsedSecondsByActivity)
@@ -109,17 +116,24 @@ export function readTrainingSession(accountId: string | null, timestamp: number)
   if (!serialized) return null;
   try {
     const parsed: unknown = JSON.parse(serialized);
-    if (isDailyTrainingSession(parsed, timestamp)) return {
+    if (isDailyTrainingSession(parsed, timestamp)) {
+      const id = parsed.id ?? `training:${parsed.dateKey}`;
+      return {
       ...parsed,
-      activities: parsed.activities.map(step => ({
+      schemaVersion: 2,
+      id,
+      activities: parsed.activities.map((step, index) => ({
+        id: step.id ?? `${id}:activity:${index + 1}`,
         activity: step.activity,
         minutes: step.minutes,
         reason: step.reason ?? defaultReason[step.activity],
         ...(step.topicId ? { topicId: step.topicId } : {}),
         ...(step.topicIds ? { topicIds: [...step.topicIds] } : {}),
         ...(step.reviewMode ? { reviewMode: step.reviewMode } : {}),
+        ...(step.attemptSessionIds ? { attemptSessionIds: [...step.attemptSessionIds] } : {}),
       })),
-    };
+      };
+    }
   } catch { /* Invalid local checkpoints are removed below. */ }
   try { localStorage.removeItem(key); }
   catch { /* Storage may be unavailable in private browsing modes. */ }
@@ -139,16 +153,21 @@ export function mergeRemoteTrainingSession(accountId: string | null, timestamp: 
   const current = readTrainingSession(accountId, timestamp);
   if (current && (current.updatedAt ?? current.startedAt) >= updatedAt) return false;
   const incoming = value as StoredTrainingSession;
+  const id = incoming.id ?? `training:${incoming.dateKey}`;
   saveTrainingSession(accountId, {
     ...incoming,
+    schemaVersion: 2,
+    id,
     updatedAt,
-    activities: incoming.activities.map(step => ({
+    activities: incoming.activities.map((step, index) => ({
+      id: step.id ?? `${id}:activity:${index + 1}`,
       activity: step.activity,
       minutes: step.minutes,
       reason: step.reason ?? defaultReason[step.activity],
       ...(step.topicId ? { topicId: step.topicId } : {}),
       ...(step.topicIds ? { topicIds: [...step.topicIds] } : {}),
       ...(step.reviewMode ? { reviewMode: step.reviewMode } : {}),
+      ...(step.attemptSessionIds ? { attemptSessionIds: [...step.attemptSessionIds] } : {}),
     })),
   });
   return true;

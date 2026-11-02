@@ -49,6 +49,17 @@ describe('attempt strategy analysis', () => {
     });
   });
 
+  it('excludes immediate retries from strategy metrics and reports their count explicitly', () => {
+    const original = attempt('original', 'done', 0);
+    const retry = attempt('retry', 'done', 1, { exposureKind: 'immediate-retry', retryOfAttemptId: original.id });
+    const report = analyzeAttemptStrategy({
+      sessions: [session('done')], attempts: [original, retry], events: [],
+      questions: new Map([['Q-0', question('Q-0')], ['Q-1', question('Q-1')]]),
+      from: 0, to: 1000, reward: 1, penalty: 1 / 3, blankValue: 0,
+    });
+    expect(report).toMatchObject({ excludedImmediateRetryCount: 1, overall: { attempts: 1, correct: 1 } });
+  });
+
   it('requires 20 eligible answers in three sessions and calculates expected value from supplied scoring', () => {
     const sessions = [session('s1', 'completed', 100), session('s2', 'completed', 200), session('s3', 'completed', 300)];
     const attempts = Array.from({ length: 20 }, (_, index) => attempt(`a${index}`, `s${index % 3 + 1}`, index, {

@@ -122,7 +122,7 @@ it('incluye 24 preguntas editoriales resueltas con fuente verificable', () => {
   const index = load('index.json');
   const metadata = load('meta.json');
   for (const [id, answer] of reviewed) {
-    const topic = id.match(/^GEN-(T\d\.\d\d)-/)?.[1];
+    const topic = id.match(/^GEN-(T\d+\.\d{2})-/)?.[1];
     const question = topic && by(`${topic}.json`, id);
     expect(question, id).toBeDefined();
     expect(question.a[question.c], id).toBe(answer);

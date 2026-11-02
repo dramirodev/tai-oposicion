@@ -53,5 +53,5 @@ it('inicia las tarjetas preparadas y marca la actividad al terminar sin ocultar 
   fireEvent.click(screen.getByRole('button', { name: /Lo sabía/ }));
 
   expect(await screen.findByRole('heading', { name: 'Sesión terminada' })).toBeTruthy();
-  await waitFor(() => expect(home.completeTrainingActivity).toHaveBeenCalledWith('activeRecall'));
+  await waitFor(() => expect(home.completeTrainingActivity).toHaveBeenCalledWith('activeRecall', undefined));
 });

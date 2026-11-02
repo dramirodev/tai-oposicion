@@ -5,7 +5,21 @@ import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useLocation } from 'react-router';
 import { TopicsPage } from '../src/features/home/TopicsPage.tsx';
+import { groupTopics } from '../src/features/home/topics-controller.ts';
 function CurrentPath() { const location = useLocation(); return createElement('output', { 'data-testid':'current-path' }, location.pathname + location.search); }
+it('mantiene visibles y en orden de catálogo los temas de bloques aún no conocidos', () => {
+  const grouped = groupTopics([
+    { id:'T3.08', name:'Tema posterior', total:1, answered:0, accuracy:null },
+    { id:'T5.01', name:'Programa actualizado', total:2, answered:0, accuracy:null },
+    { id:'nuevo', name:'Sin bloque', total:0, answered:0, accuracy:null },
+    { id:'T5.02', name:'Siguiente epígrafe', total:3, answered:0, accuracy:null },
+  ]);
+  expect(grouped.map(group => group.id)).toEqual(['T3', 'T5', 'otros']);
+  expect(grouped[1].label).toBe('Bloque T5');
+  expect(grouped[1].topics.map(topic => topic.id)).toEqual(['T5.01', 'T5.02']);
+  expect(grouped[2].topics[0].id).toBe('nuevo');
+});
+
 it('marks only filtered topics in a block without losing input focus', async () => {
   const user = userEvent.setup();
   let studied=[];const listeners=new Set();
@@ -33,6 +47,20 @@ it('abre filtrado por el tema incluido en la recomendación del planificador', a
   expect(container.querySelector('[data-t="T3.02"]')).toBeInTheDocument();
 });
 
+it('muestra y permite marcar un tema de un bloque añadido al catálogo', async () => {
+  const user = userEvent.setup();
+  let studied=[];
+  const topics={accountId:()=>null,getStudied:()=>studied,subscribe:()=>()=>{},setStudied:ids=>{studied=[...ids];},loadTopics:async()=>[
+    {id:'T5.02',name:'Apartado posterior',total:4,answered:0,accuracy:null},
+  ]};
+  renderApp(createElement(TopicsPage), { services: { topics } });
+  const checkbox = await screen.findByRole('checkbox', { name:/T5\.02 Apartado posterior/ });
+  expect(checkbox).toBeInTheDocument();
+  expect(screen.getByText(/Bloque T5/)).toBeInTheDocument();
+  await user.click(checkbox);
+  expect(studied).toEqual(['T5.02']);
+});
+
 it('cierra el paso de contenido nuevo al marcar el tema estudiado y vuelve a Planificación', async () => {
   const user = userEvent.setup();
   const studied = [];
@@ -46,6 +74,6 @@ it('cierra el paso de contenido nuevo al marcar el tema estudiado y vuelve a Pla
   });
   await screen.findByRole('heading', { name:'Estudio inicial · Redes' });
   await user.click(screen.getByRole('checkbox', { name:/T1\.01 Redes/ }));
-  expect(completeTrainingActivity).toHaveBeenCalledWith('newContent');
+  expect(completeTrainingActivity).toHaveBeenCalledWith('newContent', undefined);
   expect(await screen.findByTestId('current-path')).toHaveTextContent('/planificacion');
 });

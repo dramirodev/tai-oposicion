@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { completeTrainingSessionActivity, createDailyTrainingSession, localDayStart, localTrainingDateKey, pauseTrainingSessionActivity, startTrainingSessionActivity, toTrainingSessionHistoryEntry } from '../../src/core/domain/study-training-session.ts';
+import { attachTrainingAttemptSession, completeTrainingSessionActivity, createDailyTrainingSession, localDayStart, localTrainingDateKey, pauseTrainingSessionActivity, startTrainingSessionActivity, toTrainingSessionHistoryEntry, trainingActivityReference } from '../../src/core/domain/study-training-session.ts';
 
 const plan = { weekday:2, minutes:30, restDay:false, activities:[
   { activity:'activeRecall', minutes:10, reason:'active-recall' },
@@ -24,6 +24,19 @@ describe('sesión diaria guiada', () => {
     const finished = completeTrainingSessionActivity(startTrainingSessionActivity(next, now + 5), 'topicTest', now + 6);
     expect(finished).toMatchObject({ currentIndex:2, completedAt:now + 6 });
     expect(completeTrainingSessionActivity(finished, 'topicTest', now + 7)).toBe(finished);
+  });
+
+  it('asigna identidad estable al checkpoint y a sus pasos, y enlaza intentos una sola vez', () => {
+    const now = new Date(2026, 10, 2, 12).getTime();
+    const created = createDailyTrainingSession(plan, now);
+    const started = startTrainingSessionActivity(created, now + 1);
+    const reference = trainingActivityReference(started);
+    expect(reference).toEqual({ sessionId:'training:2026-11-02', activityId:'training:2026-11-02:activity:1' });
+    const linked = attachTrainingAttemptSession(started, 'attempt-session-1', now + 2, reference);
+    expect(linked.activities[0].attemptSessionIds).toEqual(['attempt-session-1']);
+    expect(attachTrainingAttemptSession(linked, 'attempt-session-1', now + 3, reference)).toBe(linked);
+    expect(attachTrainingAttemptSession(linked, 'attempt-session-2', now + 3, { ...reference, activityId:'stale' })).toBe(linked);
+    expect(completeTrainingSessionActivity(linked, 'activeRecall', now + 4, { ...reference, sessionId:'stale' })).toBe(linked);
   });
 
   it('mantiene las marcas de tiempo válidas si el reloj del dispositivo retrocede', () => {

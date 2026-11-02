@@ -22,7 +22,7 @@ service cloud.firestore {
       let d = request.resource.data;
       return d.keys().hasOnly([
           'schemaVersion', 'id', 'sessionId', 'questionId', 'contentRevision', 'mode', 'position',
-          'exposure', 'state', 'response', 'outcome', 'confidence', 'discardedOptions', 'highlights',
+          'exposure', 'exposureKind', 'retryOfAttemptId', 'state', 'response', 'outcome', 'confidence', 'discardedOptions', 'highlights',
           'createdAt', 'completedAt', 'lastSequence', 'appliedEventIds', 'terminalEventId'
         ])
         && d.schemaVersion == 1
@@ -33,6 +33,9 @@ service cloud.firestore {
         && d.mode in ['practice', 'simulation']
         && d.position is int && d.position >= 0
         && d.exposure is int && d.exposure >= 1
+        && (!('exposureKind' in d) || d.exposureKind in ['ordinary', 'immediate-retry'])
+        && (!('retryOfAttemptId' in d) || (d.retryOfAttemptId is string && d.retryOfAttemptId.size() > 0 && d.retryOfAttemptId.size() <= 128 && d.retryOfAttemptId != d.id))
+        && (('exposureKind' in d && d.exposureKind == 'immediate-retry') ? 'retryOfAttemptId' in d : !('retryOfAttemptId' in d))
         && d.state in ['unseen', 'pending', 'answered', 'revealed']
         && (d.response == null || (d.response is int && d.response >= 0 && d.response <= 10))
         && (d.outcome == null || d.outcome in ['correct', 'wrong'])
@@ -88,8 +91,8 @@ service cloud.firestore {
         && step.activity in ['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']
         && step.minutes is int && step.minutes >= 1 && step.minutes <= 240
         && step.reason in ['active-recall', 'new-content-day', 'new-topic-day', 'weak-topics', 'coverage', 'recurring-failures', 'due-reviews']
-        && (!('topicId' in step) || (step.topicId is string && step.topicId.matches('T[1-4]\\.[0-9]{2}')))
-        && (!('topicIds' in step) || (step.topicIds is list && step.topicIds.size() <= 36))
+        && (!('topicId' in step) || (step.topicId is string && step.topicId.matches('T[0-9]+\\.[0-9]{2}')))
+        && (!('topicIds' in step) || (step.topicIds is list && step.topicIds.size() <= 500))
         && (!('reviewMode' in step) || step.reviewMode in ['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading']);
     }
 

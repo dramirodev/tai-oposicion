@@ -10,6 +10,8 @@ export interface AttemptSeed {
   contentRevision: string;
   position: number;
   exposure: number;
+  exposureKind?: 'ordinary' | 'immediate-retry';
+  retryOfAttemptId?: string;
 }
 
 export interface AttemptTrackingRef {
@@ -18,9 +20,9 @@ export interface AttemptTrackingRef {
 }
 
 export interface AttemptTracker {
-  beginSession(scope: string, mode: AttemptMode, startedAt: number, seeds: readonly AttemptSeed[], timeLimitSeconds?: number): AttemptTrackingRef;
+  beginSession(scope: string, mode: AttemptMode, startedAt: number, seeds: readonly AttemptSeed[], timeLimitSeconds?: number, sourceSessionId?: string): AttemptTrackingRef;
   resumeSession(scope: string, sessionId: string, attemptIds: readonly string[]): void;
-  record(scope: string, attemptId: string, intent: AttemptIntent): void;
+  record(scope: string, attemptId: string, intent: AttemptIntent): Promise<boolean>;
   closeSession(scope: string, sessionId: string, status: 'completed' | 'interrupted', endedAt: number, elapsedSeconds?: number): void;
   flush(): Promise<void>;
 }

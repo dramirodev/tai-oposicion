@@ -62,6 +62,15 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
     await assertSucceeds(setDoc(doc(db, 'users/student/cfg/training'), documentFor(2, [historyEntry])));
   });
 
+  it('acepta IDs de tema con bloques futuros en checkpoints sincronizados', async () => {
+    const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const futureStep = { ...step, topicId:'T12.01', topicIds:['T5.02', 'T12.01'] };
+    await assertSucceeds(setDoc(doc(db, 'users/student/cfg/training'), {
+      ...documentFor(2),
+      session:{ ...session, activities:[futureStep] },
+    }));
+  });
+
   it('aísla autoevaluaciones del temario en papel por usuario y limita el documento', async () => {
     const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
     const other = testEnv.authenticatedContext('other', { email:'other@example.test', email_verified:true }).firestore();

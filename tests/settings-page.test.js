@@ -52,6 +52,20 @@ it('permite asignar el tema nuevo de la semana en los ajustes', async () => {
  await user.selectOptions(screen.getByRole('combobox', { name: 'Tema que estás introduciendo esta semana' }), 'T3.02');
  expect(settings.setTrainingPreferences).toHaveBeenCalledWith(expect.objectContaining({ introductionTopicId: 'T3.02' }));
 });
+it('permite configurar, reordenar y quitar temas sin inferir el orden del catálogo', async () => {
+ fullAccess = true;
+ settings.getSnapshot = () => ({ ...snapshot(), index: { questions: 10, scenarios: 0, topics: [{ id: 'T3.02', name: 'Tema B' }, { id: 'T12.01', name: 'Tema A' }] } });
+ const user = userEvent.setup(); await renderSettings();
+ const select = screen.getByRole('combobox', { name: 'Añadir tema al final' });
+ await user.selectOptions(select, 'T3.02'); await user.click(screen.getByRole('button', { name: 'Añadir' }));
+ expect(settings.setTrainingPreferences).toHaveBeenLastCalledWith(expect.objectContaining({ academyTopicOrderIds: ['T3.02'] }));
+ await user.selectOptions(select, 'T12.01'); await user.click(screen.getByRole('button', { name: 'Añadir' }));
+ expect(settings.setTrainingPreferences).toHaveBeenLastCalledWith(expect.objectContaining({ academyTopicOrderIds: ['T3.02', 'T12.01'] }));
+ await user.click(screen.getByRole('button', { name: 'Subir T12.01' }));
+ expect(settings.setTrainingPreferences).toHaveBeenLastCalledWith(expect.objectContaining({ academyTopicOrderIds: ['T12.01', 'T3.02'] }));
+ await user.click(screen.getByRole('button', { name: 'Quitar T12.01' }));
+ expect(settings.setTrainingPreferences).toHaveBeenLastCalledWith(expect.objectContaining({ academyTopicOrderIds: ['T3.02'] }));
+});
 it('confirma antes de combinar una copia y muestra el resultado', async () => {
  const { ask } = await import('../src/shared/ui/dialog-actions.js'); await renderSettings();
  const input = screen.getByLabelText('Importar');

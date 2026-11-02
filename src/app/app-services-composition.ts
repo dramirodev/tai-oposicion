@@ -18,7 +18,7 @@ import { showMenu } from '../shared/ui/dialog-actions.js';
 import { BLOQUES, LETRAS_OPCION, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
 import { isFull, isOwner, accessLevel, devMode, setDevMode, devRevealed, revealDev } from './composition/access-composition.js';
-import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, createRun, resumeRun, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, dueQuestionIds, selectQuestionsForTopics, selectWeightedSimulationQuestions, studyQuestionCatalog } from './composition/study/study-engine-composition.js';
+import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, createRun, resumeRun, startImmediateRetryFromLastResult, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, dueQuestionIds, selectQuestionsForTopics, selectWeightedSimulationQuestions, studyQuestionCatalog } from './composition/study/study-engine-composition.js';
 import { sessionStatePort } from './session-state-store.js';
 import { clearRun, pendingRun, saveRun } from './composition/study/pending-run-composition.js';
 import { createTopicMasteryComposition } from './composition/topics/topic-mastery-composition.js';
@@ -26,10 +26,11 @@ import { createTopicProgressComposition } from './composition/topics/topic-progr
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
 import type { Origin, QuestionStats, StudyReviewMode, TrainingActivity, TrainingPreferences } from '../core/domain/entities.js';
+import type { TrainingActivityReference } from '../core/domain/study-training-session.js';
 import type { PaperRecallRating } from '../core/domain/paper-recall-assessment.js';
 import { daysUntilStudyDate, isStudyDateKey } from '../core/domain/study-training-calendar.js';
 import { latestPaperRecallByTopic, needsPaperRecallFollowUp } from '../core/domain/paper-recall-assessment.js';
-import { buildDailyTrainingPlan, normalizeTrainingPreferences } from '../core/domain/study-training-plan.js';
+import { buildDailyTrainingPlan, normalizeTrainingPreferences, selectNextAcademyTopic } from '../core/domain/study-training-plan.js';
 import { filterTopicMasteryToSeen } from '../core/domain/topic-mastery.js';
 import { questionContentRevision } from '../core/domain/attempts/highlights.js';
 import { findCodeExplanation } from './composition/explanations/explanation-composition.js';
@@ -100,14 +101,36 @@ const trainingCalendar = createTrainingCalendarComposition({
 let routeReady: () => void;
 const firstReactRouteReady = new Promise<void>(resolve => { routeReady = resolve; });
 const studyRunController = createStudyRunController({
-  createRun: configuration => createRun(configuration) !== null,
+  createRun: (configuration, reference, activity) => {
+    const run = createRun(configuration, reference?.sessionId);
+    if (run && reference) {
+      run.trainingActivityReference = reference;
+      if (activity) run.trainingActivity = activity;
+      if (run.attemptSessionId) trainingSession.attachAttemptSession(run.attemptSessionId, reference);
+    }
+    return run !== null;
+  },
   getPendingRun: fullAccess => pendingRun(fullAccess),
   isFullAccess: isFull,
   currentAccount: localStudyProgressGateway.accountId,
   ask,
-  resume: pending => resumeRun(pending) !== null,
+  resume: pending => {
+    const run = resumeRun(pending);
+    if (!run) return false;
+    const reference = run.trainingActivityReference;
+    const current = trainingSession.getCurrentActivityReference();
+    if (reference && current?.sessionId === reference.sessionId && current.activityId === reference.activityId) {
+      trainingSession.startCurrentActivity();
+    }
+    return true;
+  },
   clearPendingRun: clearRun,
-  navigateToQuiz: dailyTrainingActivity => go(hashPath('quiz') + (dailyTrainingActivity ? `?dailyTraining=${dailyTrainingActivity}` : '')),
+  navigateToQuiz: (dailyTrainingActivity, reference) => {
+    const params = new URLSearchParams();
+    if (dailyTrainingActivity) params.set('dailyTraining', dailyTrainingActivity);
+    if (reference) { params.set('trainingSessionId', reference.sessionId); params.set('trainingActivityId', reference.activityId); }
+    go(hashPath('quiz') + (params.size ? `?${params}` : ''));
+  },
   showEmptyRunMessage: () => toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.'),
   resumePrompt: pending => formatPendingRunPrompt({ title: pending.saved.titulo, index: pending.saved.idx, itemCount: pending.items.length, seconds: pending.saved.secs, limitMinutes: pending.saved.limit, timeLimited: pending.saved.pt }),
 });
@@ -295,8 +318,13 @@ const settingsServicesWithSubscription = {
 };
 const statsServices = createStatsServices({ go, startRun, startRepaso, trapTest }, localProgressRepository, localStudyProgressGateway);
 const quizServices = createQuizServices(go, hashPath('home'), () => {
-  const activity = new URLSearchParams(location.hash.split('?')[1] || '').get('dailyTraining');
-  return hashPath('result') + (activity && ['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'].includes(activity) ? `?dailyTraining=${activity}` : '');
+  const current = new URLSearchParams(location.hash.split('?')[1] || '');
+  const activity = current.get('dailyTraining');
+  const params = new URLSearchParams();
+  if (activity && ['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'].includes(activity)) params.set('dailyTraining', activity);
+  const sessionId = current.get('trainingSessionId'), activityId = current.get('trainingActivityId');
+  if (sessionId && activityId) { params.set('trainingSessionId', sessionId); params.set('trainingActivityId', activityId); }
+  return hashPath('result') + (params.size ? `?${params}` : '');
 }, localQuizProgressGateway);
 
 
@@ -391,23 +419,35 @@ export const studyServices: StudyServices = {
   result: {
     getSnapshot() {
       const last = getLastResult(); if (!last) return null;
-      const { ses, items, ans, studyStates = [], highlights = [], confidences = [], discardedOptions = [] } = last;
+      const { ses, items, ans, studyStates = [], highlights = [], confidences = [], discardedOptions = [], attemptIds = [] } = last;
       return { score: ses.nota, correct: ses.a, wrong: ses.f, blank: ses.b, consulted: studyStates.filter(state => state === 'revealed').length,
         accuracy: ses.a + ses.f ? pct(ses.a, ses.a + ses.f) : null, seconds: ses.secs, title: ses.titulo || '', interrupted: !!ses.interrupted, kind: ses.kind,
+        ...(last.exposureKind ? { exposureKind: last.exposureKind } : {}),
         porTiempo: !!ses.porTiempo, analysis: last.limit && !ses.porTiempo ? createSimulationAnalysisView({ correctIndices: last.items.map(question => question.c), answers: last.ans, answerSeconds: last.times, timeLimitMinutes: last.limit, elapsedSeconds: ses.secs }) : '',
         secondPartAvailable: (ses.titulo || '').includes('Parte 1') && !!simulationRunConfiguration?.includeSecondPart,
         topics: Object.entries(ses.temas).sort(([left], [right]) => left.localeCompare(right)).map(([id, [correct, total]]) => ({ id, name: studyQuestionCatalog.getTopicName(id), correct, total })),
         items: items.map((question, index) => {
           const answer = ans[index], revealed = studyStates[index] === 'revealed';
-          return { id: question.i, topicId: question.t, topicName: studyQuestionCatalog.getTopicName(question.t), statement: question.q, options: question.a, correctIndex: question.c,
+          return { id: question.i, ...(attemptIds[index] ? { attemptId: attemptIds[index] } : {}), topicId: question.t, topicName: studyQuestionCatalog.getTopicName(question.t), statement: question.q, options: question.a, correctIndex: question.c,
             ...(answer !== undefined ? { answer } : {}), outcome: revealed ? 'revealed' : answer === undefined || answer === -1 ? 'blank' : answer === question.c ? 'correct' : 'wrong',
             notice: questionNotice(question), source: sourceHtml(question, VERIFIED_SOURCES), ...(question.u ? { citation: question.u } : {}), ...(question.n ? { note: question.n } : {}),
             ...(confidences[index] ? { confidence: confidences[index] } : {}), discardedOptions: discardedOptions[index] || [], highlights: highlights[index] || [],
-            contentRevision: questionContentRevision(question.q, question.a) };
+            contentRevision: questionContentRevision(question.q, question.a),
+            retryAvailable: last.feedback === true && last.exposureKind !== 'immediate-retry' && !ses.interrupted
+              && !!attemptIds[index] && (studyStates[index] === 'answered' || studyStates[index] === 'revealed')
+              && !question.np && (Boolean(question.u?.trim()) || Boolean(sourceHtml(question, VERIFIED_SOURCES)))
+              && Number.isInteger(question.c) && question.c >= 0 && question.c < question.a.length && question.a.length >= 2 };
         }) };
     },
     subscribe(listener) { const offEngine = subscribeEngine(listener), offStore = localProgressRepository.subscribe(listener); return () => { offEngine(); offStore(); }; },
     continuePartTwo() { go(hashPath('simulationReview')); },
+    retryImmediately(questionId: string) {
+      const question = getLastResult()?.items.find(item => item.i === questionId);
+      const sourceAvailable = !!question && Boolean(question.u?.trim() || sourceHtml(question, VERIFIED_SOURCES));
+      if (!sourceAvailable || !startImmediateRetryFromLastResult(questionId, sourceAvailable)) return false;
+      go(hashPath('quiz'));
+      return true;
+    },
     repeatFailures() {
       const last = getLastResult(); if (!last) return false;
       return startRun({ kind: 'rev', feedback: true, items: shuffle(last.items.filter((question, index) => last.ans[index] !== question.c)), titulo: 'Repetición de falladas' });
@@ -511,12 +551,12 @@ export const studyServices: StudyServices = {
         const result = await trapTest(configuration.timed ? 300 : configuration.count, undefined, selected.length ? selected : undefined);
         if (account !== localStudyProgressGateway.accountId()) return 'account-changed';
         if (!result.items.length) return 'empty';
-        return startRun({ kind: 'test', feedback: true, items: result.items, titulo: 'Mis trampas · ' + result.targets.map(key => TRAMPAS[key] || key).join(', '), ...(configuration.timed ? { limit: configuration.minutes, porTiempo: true } : {}) }, options?.dailyTrainingActivity) ? 'started' : 'empty';
+        return startRun({ kind: 'test', feedback: true, items: result.items, titulo: 'Mis trampas · ' + result.targets.map(key => TRAMPAS[key] || key).join(', '), ...(configuration.timed ? { limit: configuration.minutes, porTiempo: true } : {}) }, options?.dailyTrainingActivity, options?.trainingActivityReference) ? 'started' : 'empty';
       }
       const items = await selectQuestionsForTopics({ topics, origins: new Set(configuration.origins), mode: configuration.mode, count: configuration.timed ? 300 : configuration.count });
       if (account !== localStudyProgressGateway.accountId()) return 'account-changed';
       if (!items.length) return 'empty';
-      return startRun({ kind: 'test', feedback: true, items, titulo: selected.length === 1 ? studyQuestionCatalog.getTopicName(selected[0]) + (configuration.timed ? ` · ${configuration.minutes} min` : '') : 'Test' + (configuration.timed ? ` · ${configuration.minutes} min` : ''), ...(configuration.timed ? { limit: configuration.minutes, porTiempo: true } : {}) }, options?.dailyTrainingActivity) ? 'started' : 'empty';
+      return startRun({ kind: 'test', feedback: true, items, titulo: selected.length === 1 ? studyQuestionCatalog.getTopicName(selected[0]) + (configuration.timed ? ` · ${configuration.minutes} min` : '') : 'Test' + (configuration.timed ? ` · ${configuration.minutes} min` : ''), ...(configuration.timed ? { limit: configuration.minutes, porTiempo: true } : {}) }, options?.dailyTrainingActivity, options?.trainingActivityReference) ? 'started' : 'empty';
     },
   },
   cards: cardsServices,
@@ -589,9 +629,11 @@ export const studyServices: StudyServices = {
       const seenTopics = localStudyProgressGateway.getSeenTopics();
       const studiedTopicSet = new Set(seenTopics);
       const studiedTopicIds = [...studiedTopicSet];
-      const nextNewTopicEntry = trainingPreferences.introductionTopicId && !studiedTopicSet.has(trainingPreferences.introductionTopicId)
-        ? index.temas.find(topic => topic.id === trainingPreferences.introductionTopicId)
-        : undefined;
+      const nextNewTopicEntry = trainingPreferences.academyTopicOrderIds?.length
+        ? selectNextAcademyTopic(trainingPreferences.academyTopicOrderIds, index.temas, seenTopics)
+        : trainingPreferences.introductionTopicId && !studiedTopicSet.has(trainingPreferences.introductionTopicId)
+          ? index.temas.find(topic => topic.id === trainingPreferences.introductionTopicId)
+          : undefined;
       const nextNewTopic = nextNewTopicEntry;
       const studiedMastery = filterTopicMasteryToSeen(mastery, studiedTopicIds);
       const studiedWeakTopics = studiedMastery.filter(topic => topic.est === 'r').sort((left, right) => left.score - right.score);
@@ -602,7 +644,7 @@ export const studyServices: StudyServices = {
       const studiedDueCount = dueIds.filter(id => studiedTopicSet.has(studyQuestionCatalog.getTopicForQuestion(id) || '')).length;
       const studiedFailureCount = failureIds.filter(id => studiedTopicSet.has(studyQuestionCatalog.getTopicForQuestion(id) || '')).length;
       const topicForCard = (id: string): string | undefined => {
-        const curatedTopic = /^FC-(T[1-4]\.\d{2})-/.exec(id)?.[1];
+        const curatedTopic = /^FC-(T\d+\.\d{2})-/.exec(id)?.[1];
         if (curatedTopic) return curatedTopic;
         return id.startsWith('FC-Q-') ? studyQuestionCatalog.getTopicForQuestion(id.slice('FC-Q-'.length)) || undefined : undefined;
       };
@@ -631,7 +673,7 @@ export const studyServices: StudyServices = {
     startTrainingSession(plan) { return trainingSession.start(plan); },
     startTrainingActivity() { return trainingSession.startCurrentActivity(); },
     pauseTrainingActivity() { return trainingSession.pauseCurrentActivity(); },
-    completeTrainingActivity(activity: TrainingActivity) { return trainingSession.completeActivity(activity); },
+    completeTrainingActivity(activity: TrainingActivity, reference?: TrainingActivityReference) { return trainingSession.completeActivity(activity, reference); },
     recordPaperRecall(topicId: string, rating: PaperRecallRating) { return paperRecall.record(topicId, rating); },
     scheduledStudyActivities() { return trainingCalendar.get(); },
     scheduleStudyActivity(input: Parameters<typeof trainingCalendar.schedule>[0]) { return trainingCalendar.schedule(input); },
@@ -643,7 +685,7 @@ export const studyServices: StudyServices = {
       else delete reviewModesByTopic[topicId];
       localStudyProgressGateway.updatePreferences(current => ({ ...current, training: { ...preferences, reviewModesByTopic } }));
     },
-    quickSession, startReview: (topicIds, dailyTrainingActivity) => startRepaso(topicIds, dailyTrainingActivity), openMenu,
+    quickSession, startReview: (topicIds, dailyTrainingActivity, reference) => startRepaso(topicIds, dailyTrainingActivity, reference), openMenu,
     login: sync.login, requestAccess: async () => await sync.requestAccess(), notify: toast,
   },
   topics: {

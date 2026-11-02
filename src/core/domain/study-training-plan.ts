@@ -1,6 +1,7 @@
 import type { StudyReviewMode, TrainingActivity, TrainingDayFocus, TrainingPreferences } from './entities.js';
 import { recommendTopicIntervention } from './study-review-intervention.js';
 import type { TopicReviewEvidence } from './study-review-intervention.js';
+import { isStudyTopicId } from './topic-id.js';
 
 export const DEFAULT_TRAINING_PREFERENCES: TrainingPreferences = {
   minutesByDay: [0, 120, 120, 120, 120, 120, 120],
@@ -37,12 +38,15 @@ export function normalizeTrainingPreferences(value: unknown): TrainingPreference
   const introductionDay = Number.isInteger(candidate.introductionDay) && candidate.introductionDay! >= 0 && candidate.introductionDay! <= 6
     ? candidate.introductionDay!
     : DEFAULT_TRAINING_PREFERENCES.introductionDay;
-  const introductionTopicId = typeof candidate.introductionTopicId === 'string' && /^T[1-4]\.\d{2}$/.test(candidate.introductionTopicId)
+  const introductionTopicId = isStudyTopicId(candidate.introductionTopicId)
     ? candidate.introductionTopicId : undefined;
+  const academyTopicOrderIds = Array.isArray(candidate.academyTopicOrderIds)
+    ? [...new Set(candidate.academyTopicOrderIds.filter(isStudyTopicId))].slice(0, 300)
+    : [];
   const reviewModesByTopic = candidate.reviewModesByTopic && typeof candidate.reviewModesByTopic === 'object' && !Array.isArray(candidate.reviewModesByTopic)
-    ? Object.fromEntries(Object.entries(candidate.reviewModesByTopic).filter(([topicId, mode]) => /^T[1-4]\.\d{2}$/.test(topicId) && supportedReviewModes.has(mode as StudyReviewMode))) as Record<string, StudyReviewMode>
+    ? Object.fromEntries(Object.entries(candidate.reviewModesByTopic).filter(([topicId, mode]) => isStudyTopicId(topicId) && supportedReviewModes.has(mode as StudyReviewMode))) as Record<string, StudyReviewMode>
     : undefined;
-  return { minutesByDay, focusByDay, introductionDay, activities, activityVersion: 3, ...(introductionTopicId ? { introductionTopicId } : {}), ...(reviewModesByTopic && Object.keys(reviewModesByTopic).length ? { reviewModesByTopic } : {}) };
+  return { minutesByDay, focusByDay, introductionDay, activities, activityVersion: 3, ...(introductionTopicId ? { introductionTopicId } : {}), ...(academyTopicOrderIds.length ? { academyTopicOrderIds } : {}), ...(reviewModesByTopic && Object.keys(reviewModesByTopic).length ? { reviewModesByTopic } : {}) };
 }
 
 export type TrainingPlanReason = 'active-recall' | 'new-content-day' | 'new-topic-day' | 'weak-topics' | 'coverage' | 'recurring-failures' | 'due-reviews';
@@ -59,6 +63,21 @@ export interface DailyTrainingPlan {
   minutes: number;
   restDay: boolean;
   activities: readonly PlannedTrainingActivity[];
+}
+
+/** Resolves the first available, not-yet-marked topic in an explicitly supplied academy order. */
+export function selectNextAcademyTopic<T extends { id: string }>(
+  orderedTopicIds: readonly string[],
+  topics: readonly T[],
+  studiedTopicIds: readonly string[],
+): T | undefined {
+  const topicById = new Map(topics.map(topic => [topic.id, topic]));
+  const studied = new Set(studiedTopicIds);
+  for (const topicId of orderedTopicIds) {
+    const topic = topicById.get(topicId);
+    if (topic && !studied.has(topicId)) return topic;
+  }
+  return undefined;
 }
 
 const activityWeight: Record<TrainingActivity, number> = {
@@ -125,8 +144,10 @@ export function buildDailyTrainingPlan(input: {
 
   const studiedTopicIds = input.studiedTopicIds === undefined ? undefined : [...new Set(input.studiedTopicIds)];
   const studiedTopicSet = studiedTopicIds ? new Set(studiedTopicIds) : undefined;
-  const preferredTopic = preferences.introductionTopicId && !studiedTopicSet?.has(preferences.introductionTopicId)
-    ? preferences.introductionTopicId : undefined;
+  const preferredTopic = preferences.academyTopicOrderIds?.length
+    ? input.nextNewTopic?.topicId
+    : preferences.introductionTopicId && !studiedTopicSet?.has(preferences.introductionTopicId)
+      ? preferences.introductionTopicId : undefined;
   const newTopicId = preferredTopic && input.nextNewTopic?.topicId === preferredTopic
     && !studiedTopicSet?.has(preferredTopic) ? preferredTopic : undefined;
   const canStudyNewContent = preferences.focusByDay?.[weekday] === 'new-content' && !!newTopicId;

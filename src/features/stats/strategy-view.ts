@@ -39,7 +39,7 @@ export function renderStrategyReport(report: AttemptStrategyReport): string {
     </div>`).join('')}</div>`;
   }).join('');
   return `<section class="strategy-report" aria-label="Informe de estrategia">
-    <p>Periodo: ${from}–${to}. Se incluyen sesiones completadas; ${report.excludedSessionCount} sesiones activas o interrumpidas se excluyeron. ${report.orphanAttemptCount} intentos no asociados a sesiones conocidas. La confianza declarada no se interpreta como probabilidad y las sugerencias no prueban causalidad.</p>
+    <p>Periodo: ${from}–${to}. Se incluyen sesiones completadas; ${report.excludedSessionCount} sesiones activas o interrumpidas se excluyeron. Se excluyeron ${report.excludedImmediateRetryCount} reintentos inmediatos de los indicadores estratégicos porque siguen a una corrección. ${report.orphanAttemptCount} intentos no asociados a sesiones conocidas. La confianza declarada no se interpreta como probabilidad y las sugerencias no prueban causalidad.</p>
     <p>Resumen: ${report.overall.correct} aciertos, ${report.overall.wrong} fallos, ${report.overall.blankPending} pendientes, ${report.overall.blankConsulted} soluciones consultadas y ${report.overall.blankUnanswered} sin visitar. Valoración descriptiva, no causal.</p>
     ${segments || '<p class="sub">No hay intentos detallados suficientes en el periodo.</p>'}
   </section>`;

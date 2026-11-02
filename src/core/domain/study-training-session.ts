@@ -2,15 +2,21 @@ import type { StudyReviewMode, TrainingActivity } from './entities.js';
 import type { DailyTrainingPlan, TrainingPlanReason } from './study-training-plan.js';
 
 export interface TrainingSessionStep {
+  /** Stable within its parent checkpoint; legacy steps are derived from dateKey and position. */
+  id?: string;
   activity: TrainingActivity;
   minutes: number;
   reason: TrainingPlanReason;
   topicId?: string;
   topicIds?: readonly string[];
   reviewMode?: StudyReviewMode;
+  /** Detailed question-session IDs produced while this planned activity was active. */
+  attemptSessionIds?: readonly string[];
 }
 
 export interface DailyTrainingSession {
+  schemaVersion: 2;
+  id: string;
   dateKey: string;
   activities: readonly TrainingSessionStep[];
   currentIndex: number;
@@ -26,6 +32,7 @@ export interface DailyTrainingSession {
 /** Immutable summary of one completed daily training session. */
 export interface TrainingSessionHistoryEntry {
   id: string;
+  sessionId?: string;
   dateKey: string;
   startedAt: number;
   completedAt: number;
@@ -36,10 +43,18 @@ export interface TrainingSessionHistoryEntry {
 
 export const MAX_TRAINING_SESSION_HISTORY = 30;
 
+export interface TrainingActivityReference { sessionId: string; activityId: string }
+
+export function trainingActivityReference(session: DailyTrainingSession): TrainingActivityReference | null {
+  const activity = session.activities[session.currentIndex];
+  return activity ? { sessionId: session.id, activityId: activity.id ?? `${session.id}:activity:${session.currentIndex + 1}` } : null;
+}
+
 export function toTrainingSessionHistoryEntry(session: DailyTrainingSession): TrainingSessionHistoryEntry | null {
   if (session.completedAt === null || session.currentIndex !== session.activities.length || !session.activities.length) return null;
   return {
     id: session.dateKey,
+    sessionId: session.id,
     dateKey: session.dateKey,
     startedAt: session.startedAt,
     completedAt: session.completedAt,
@@ -65,9 +80,13 @@ export function localDayStart(dateKey: string, offsetDays = 0): number {
 
 export function createDailyTrainingSession(plan: DailyTrainingPlan, timestamp: number): DailyTrainingSession | null {
   if (plan.restDay || !plan.activities.length) return null;
+  const dateKey = localTrainingDateKey(timestamp);
+  const id = `training:${dateKey}`;
   return {
-    dateKey: localTrainingDateKey(timestamp),
-    activities: plan.activities.map(({ activity, minutes, reason, topicId, topicIds, reviewIntervention }) => ({ activity, minutes, reason, ...(topicId ? { topicId } : {}), ...(topicIds ? { topicIds: [...topicIds] } : {}), ...(reviewIntervention ? { reviewMode: reviewIntervention.mode } : {}) })),
+    schemaVersion: 2,
+    id,
+    dateKey,
+    activities: plan.activities.map(({ activity, minutes, reason, topicId, topicIds, reviewIntervention }, index) => ({ id: `${id}:activity:${index + 1}`, activity, minutes, reason, ...(topicId ? { topicId } : {}), ...(topicIds ? { topicIds: [...topicIds] } : {}), ...(reviewIntervention ? { reviewMode: reviewIntervention.mode } : {}) })),
     currentIndex: 0,
     currentStartedAt: null,
     elapsedSecondsByActivity: plan.activities.map(() => 0),
@@ -94,9 +113,11 @@ export function completeTrainingSessionActivity(
   session: DailyTrainingSession,
   activity: TrainingActivity,
   timestamp: number,
+  expected?: TrainingActivityReference,
 ): DailyTrainingSession {
   if (session.completedAt !== null || session.currentStartedAt === null
     || session.activities[session.currentIndex]?.activity !== activity) return session;
+  if (expected && (expected.sessionId !== session.id || expected.activityId !== (session.activities[session.currentIndex]?.id ?? `${session.id}:activity:${session.currentIndex + 1}`))) return session;
   const currentIndex = session.currentIndex + 1;
   const isComplete = currentIndex >= session.activities.length;
   const elapsedSecondsByActivity = [...(session.elapsedSecondsByActivity ?? session.activities.map(() => 0))];
@@ -109,4 +130,20 @@ export function completeTrainingSessionActivity(
     updatedAt: timestamp,
     completedAt: isComplete ? Math.max(timestamp, session.currentStartedAt, session.startedAt) : null,
   };
+}
+
+/** Links a question-attempt session to the active planned step exactly once. */
+export function attachTrainingAttemptSession(
+  session: DailyTrainingSession,
+  attemptSessionId: string,
+  timestamp: number,
+  expected?: TrainingActivityReference,
+): DailyTrainingSession {
+  const activity = session.activities[session.currentIndex];
+  if (session.completedAt !== null || session.currentStartedAt === null || !activity || !attemptSessionId.trim()) return session;
+  if (expected && (expected.sessionId !== session.id || expected.activityId !== (activity.id ?? `${session.id}:activity:${session.currentIndex + 1}`))) return session;
+  if (activity.attemptSessionIds?.includes(attemptSessionId)) return session;
+  const activities = [...session.activities];
+  activities[session.currentIndex] = { ...activity, attemptSessionIds: [...(activity.attemptSessionIds ?? []), attemptSessionId] };
+  return { ...session, activities, updatedAt: timestamp };
 }

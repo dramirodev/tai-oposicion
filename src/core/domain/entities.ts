@@ -58,6 +58,8 @@ export interface TrainingPreferences {
   introductionDay: number;
   /** Optional weekly topic selected by the student or academy. */
   introductionTopicId?: string;
+  /** Explicit academy sequence. Empty/omitted means no verified order is configured. */
+  academyTopicOrderIds?: string[];
   activities: TrainingActivity[];
   /** Marks preference migrations so removed activities stay disabled after saving. */
   activityVersion?: 2 | 3;

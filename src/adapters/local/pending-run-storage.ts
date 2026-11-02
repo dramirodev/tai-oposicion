@@ -7,8 +7,8 @@ export function readPendingRun(account: string | null): SavedRunSnapshot | null 
   catch { return null; }
 }
 
-export function writePendingRun(account: string | null, snapshot: SavedRunSnapshot): void {
-  try { localStorage.setItem(key(account), JSON.stringify(snapshot)); } catch {}
+export function writePendingRun(account: string | null, snapshot: SavedRunSnapshot): boolean {
+  try { localStorage.setItem(key(account), JSON.stringify(snapshot)); return true; } catch { return false; }
 }
 
 export function clearPendingRun(account: string | null): void {

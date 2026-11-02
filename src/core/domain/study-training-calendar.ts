@@ -1,5 +1,6 @@
 import type { TrainingActivity, TrainingPreferences } from './entities.js';
 import { localTrainingDateKey } from './study-training-session.js';
+import { isStudyTopicId } from './topic-id.js';
 
 export type ScheduledStudyActivityKind = Extract<TrainingActivity, 'activeRecall' | 'topicTest'>;
 export const MAX_SCHEDULED_STUDY_ACTIVITIES = 90;
@@ -22,7 +23,7 @@ export type ScheduleDecision =
 const DAY_MS = 86_400_000;
 const MAX_SCHEDULE_DAYS = 180;
 const validActivity = (value: unknown): value is ScheduledStudyActivityKind => value === 'activeRecall' || value === 'topicTest';
-const validTopicId = (value: unknown): value is string => typeof value === 'string' && /^T[1-4]\.\d{2}$/.test(value);
+const validTopicId = isStudyTopicId;
 
 export function isStudyDateKey(value: unknown): value is string {
   if (typeof value !== 'string' || !/^20\d{2}-\d{2}-\d{2}$/.test(value)) return false;

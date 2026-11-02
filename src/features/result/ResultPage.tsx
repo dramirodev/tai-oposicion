@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ExplanationLookup } from '../../core/domain/explanations.js';
 import { CodeExplanationView } from '../../shared/ui/CodeExplanationView.js';
 import { Check, TriangleAlert } from 'lucide-react';
@@ -55,6 +55,7 @@ function ReviewDetails({ item, explanation }: { item: ResultItem; explanation: E
 function ReviewItem({ item, index, report, interrupted }: { item: ResultItem; index: number; report: ResultReport | undefined; interrupted: boolean }) {
   const result = useStudyService('result');
   const [explanation, setExplanation] = useState<ExplanationLookup>({ status: 'missing' });
+  const [retryError, setRetryError] = useState(false);
   const { style, label } = outcomePresentation[item.outcome];
 
   useEffect(() => {
@@ -84,8 +85,9 @@ function ReviewItem({ item, index, report, interrupted }: { item: ResultItem; in
     }
   }, [index, item]);
 
-  return <details className={`rv block border-b border-line py-2 text-[length:var(--fs-b)] ${style === 'g' ? '[&>summary>i]:bg-[var(--ok)]' : style === 'r' ? '[&>summary>i]:bg-[var(--bad)]' : ''}`} data-review={index}><summary className="flex cursor-pointer items-start gap-2"><i className="mt-[.4375rem] size-2.5 shrink-0 rounded-full bg-muted" /><span className="sr">{label}: </span>{item.outcome === 'revealed' && <span className="tag warn">Solución consultada · blanco</span>} {item.statement.slice(0, 110)}{item.statement.length > 110 ? '…' : ''}</summary>
+  return <details className={`rv block border-b border-line py-2 text-[length:var(--fs-b)] ${style === 'g' ? '[&>summary>i]:bg-[var(--ok)]' : style === 'r' ? '[&>summary>i]:bg-[var(--bad)]' : ''}`} data-review={index} data-question-id={item.id} data-attempt-id={item.attemptId}><summary className="flex cursor-pointer items-start gap-2"><i className="mt-[.4375rem] size-2.5 shrink-0 rounded-full bg-muted" /><span className="sr">{label}: </span>{item.outcome === 'revealed' && <span className="tag warn">Solución consultada · blanco</span>} {item.statement.slice(0, 110)}{item.statement.length > 110 ? '…' : ''}</summary>
     <ReviewDetails item={item} explanation={explanation} />
+    {item.retryAvailable && <div className="mt-2"><p className="sub">La corrección de arriba ya se mostró. Este reintento se guarda aparte y no cambia tus estadísticas ni el repaso programado.</p><button type="button" className="btn sec" onClick={() => { if (!result.retryImmediately(item.id)) setRetryError(true); }}>Reintentar como práctica inmediata</button>{retryError && <p role="alert" className="sub">No se pudo iniciar el reintento. Esta revisión sigue disponible; vuelve a intentarlo.</p>}</div>}
     <ReviewReport item={item} index={index} report={report} />
   </details>;
 }
@@ -98,6 +100,8 @@ export function ResultPage() {
   const navigate = useNavigate();
   const advancedDailyActivity = useRef(false);
   const dailyTrainingActivity = searchParams.get('dailyTraining');
+  const sessionId = searchParams.get('trainingSessionId'), activityId = searchParams.get('trainingActivityId');
+  const trainingActivityReference = useMemo(() => sessionId && activityId ? { sessionId, activityId } : undefined, [sessionId, activityId]);
   const [strategy, setStrategy] = useState('');
   const [strategyLoading, setStrategyLoading] = useState(false);
   useEffect(() => {
@@ -105,11 +109,12 @@ export function ResultPage() {
     if (advancedDailyActivity.current || !snapshot || snapshot.interrupted
       || !['topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'].includes(activity || '')) return;
     advancedDailyActivity.current = true;
-    home.completeTrainingActivity(activity as 'topicTest' | 'mixedTopicTest' | 'failures' | 'spacedReviews');
-  }, [dailyTrainingActivity, home, snapshot]);
+    home.completeTrainingActivity(activity as 'topicTest' | 'mixedTopicTest' | 'failures' | 'spacedReviews', trainingActivityReference);
+  }, [dailyTrainingActivity, home, snapshot, trainingActivityReference]);
   if (!snapshot) return <><h1>Resultado</h1><p className="note">No hay un resultado disponible. <Link to="/home">Volver al inicio</Link></p></>;
   return <>
     <h1>Resultado</h1>
+    {snapshot.exposureKind === 'immediate-retry' && <div className="note" role="status"><b>Resultado de práctica inmediata</b><p className="my-1.5">Ya habías visto esta corrección. Este resultado no mide recuerdo diferido ni modifica tus estadísticas o repasos.</p></div>}
     {snapshot.interrupted && <div className="note result-status"><b>Sesión interrumpida</b><p className="my-1.5">{snapshot.correct + snapshot.wrong} de {snapshot.items.length} preguntas respondidas. La puntuación global mantiene las no contestadas como blancos.</p></div>}
     <div className="card big text-center"><p className="score-label mb-2 mt-0 text-[length:var(--fs-m)] text-muted">Puntuación global <HelpIconLink topic="puntuacion" label="Ayuda sobre cómo se calcula la puntuación" /></p>
       <div className="score" data-count={snapshot.score}>{snapshot.score}<small>/100</small></div><div className="legend">100 × (aciertos − fallos/3) / total de preguntas</div>

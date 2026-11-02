@@ -110,7 +110,7 @@ describe('preguntas con referencia a un ejemplo', () => {
   it('si el enunciado dice «ese ejemplo», «esa consulta», «el trigger anterior»… debe llevar contexto (cp)', () => {
     const re = /\b(ese|esa)\s+(mismo\s+)?(ejemplo|consulta)\b|\b(trigger|función|consulta|código)\s+anterior\b|\ben el ejemplo,|\ben ese ejemplo\b/i;
     const mal = [];
-    for (const f of _rd('public/data').filter(x => /^T\d\.\d\d\.json$/.test(x)))
+    for (const f of _rd('public/data').filter(x => /^T\d+\.\d{2}\.json$/.test(x)))
       for (const q of JSON.parse(_rf('public/data/' + f, 'utf8'))) if (re.test(q.q) && !q.cp) mal.push(q.i);
     expect(mal).toEqual([]);
   });

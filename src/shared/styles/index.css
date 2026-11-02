@@ -1522,6 +1522,16 @@ main:has([data-screen=quiz]) .bar2,main:has([data-screen=lectura]) .bar2,main:ha
   margin-block: 1rem;
   & select { min-height: 2.75rem; width: 100%; }
 }
+@utility training-topic-order-add {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+  gap: 0.5rem;
+  width: 100%;
+  min-width: 0;
+  & select { width: 100%; min-width: 0; }
+  & button { min-width: 0; white-space: normal; }
+}
 @utility training-activities {
   display: grid;
   gap: 0.75rem;

@@ -1,10 +1,11 @@
 export type AttemptStateDto = 'unseen' | 'pending' | 'answered' | 'revealed';
 export type AttemptModeDto = 'practice' | 'simulation';
 export type AttemptOutcomeDto = 'correct' | 'wrong';
+export type SelfAssessmentDto = 'could-explain' | 'needs-help';
 export type AttemptConfidenceDto = 'sure' | 'betweenTwo' | 'guess' | null;
 export type AttemptEventTypeDto =
   | 'open' | 'leave' | 'mark-pending' | 'answer' | 'reveal' | 'pause' | 'resume'
-  | 'set-confidence' | 'discard-option' | 'restore-option' | 'add-highlight' | 'remove-highlight' | 'close';
+  | 'self-assess' | 'set-confidence' | 'discard-option' | 'restore-option' | 'add-highlight' | 'remove-highlight' | 'close';
 
 export interface HighlightDto {
   id: string;
@@ -30,9 +31,12 @@ export interface QuestionAttemptDto {
   mode: AttemptModeDto;
   position: number;
   exposure: number;
+  exposureKind?: 'ordinary' | 'immediate-retry';
+  retryOfAttemptId?: string;
   state: AttemptStateDto;
   response: number | null;
   outcome: AttemptOutcomeDto | null;
+  selfAssessment?: SelfAssessmentDto;
   terminalEventId?: string;
   confidence: AttemptConfidenceDto;
   discardedOptions: number[];
@@ -44,7 +48,7 @@ export interface QuestionAttemptDto {
 }
 
 export interface AttemptEventDto {
-  schemaVersion: 1;
+  schemaVersion: 1 | 2;
   id: string;
   attemptId: string;
   sequence: number;

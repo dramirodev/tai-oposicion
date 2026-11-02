@@ -13,6 +13,8 @@ export function TopicsPage() {
   const [searchParams] = useSearchParams();
   const requestedTopic = searchParams.get('topic') ?? '';
   const dailyNewContent = searchParams.get('dailyTraining') === 'newContent';
+  const sessionId = searchParams.get('trainingSessionId'), activityId = searchParams.get('trainingActivityId');
+  const trainingActivityReference = sessionId && activityId ? { sessionId, activityId } : undefined;
   const completedPlannedStudy = useRef(false);
   const resource = useMemo(() => ({ accountId: services.accountId, subscribe: services.subscribe, load: () => services.loadTopics() }), [services]);
   const { value: topics, error } = useAccountResource(resource);
@@ -29,7 +31,7 @@ export function TopicsPage() {
     services.setStudied(next);
     if (dailyNewContent && requestedTopic && next.includes(requestedTopic) && !completedPlannedStudy.current) {
       completedPlannedStudy.current = true;
-      home.completeTrainingActivity('newContent');
+      home.completeTrainingActivity('newContent', trainingActivityReference);
       void navigate('/planificacion');
     }
   };

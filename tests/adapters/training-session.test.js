@@ -8,7 +8,10 @@ const session = { dateKey:'2026-10-28', activities:[{ activity:'topicTest', minu
 
 it('aísla el checkpoint por cuenta y elimina sesiones de días anteriores', () => {
   saveTrainingSession('owner-a', session);
-  expect(readTrainingSession('owner-a', timestamp)).toEqual(session);
+  expect(readTrainingSession('owner-a', timestamp)).toMatchObject({
+    ...session, schemaVersion:2, id:'training:2026-10-28',
+    activities:[{ ...session.activities[0], id:'training:2026-10-28:activity:1' }],
+  });
   expect(readTrainingSession('owner-b', timestamp)).toBeNull();
   expect(readTrainingSession('owner-a', timestamp + 86_400_000)).toBeNull();
   expect(localStorage.getItem('tai.training-session.v1.owner-a')).toBeNull();
@@ -21,9 +24,9 @@ it('conserva el tipo de intervención al recuperar una sesión del día', () => 
 });
 
 it('conserva el alcance de temas vistos dentro del checkpoint diario', () => {
-  const scoped = { ...session, activities:[{ ...session.activities[0], topicIds:['T1.01', 'T2.03'] }] };
+  const scoped = { ...session, activities:[{ ...session.activities[0], topicIds:['T1.01', 'T12.03'] }] };
   saveTrainingSession('owner-a', scoped);
-  expect(readTrainingSession('owner-a', timestamp)?.activities[0].topicIds).toEqual(['T1.01', 'T2.03']);
+  expect(readTrainingSession('owner-a', timestamp)?.activities[0].topicIds).toEqual(['T1.01', 'T12.03']);
 });
 
 it('recupera checkpoints v1 anteriores que aún no guardaban motivo ni tema', () => {

@@ -1,28 +1,29 @@
 import type { PendingRun } from '../../../core/application/runs/pending-run.js';
 import type { RunCfg } from '../../../core/application/session-model.js';
 import type { TrainingActivity } from '../../../core/domain/entities.js';
+import type { TrainingActivityReference } from '../../../core/domain/study-training-session.js';
 
 interface StudyRunControllerDependencies {
-  createRun(configuration: RunCfg): boolean;
+  createRun(configuration: RunCfg, reference?: TrainingActivityReference, activity?: TrainingActivity): boolean;
   getPendingRun(fullAccess: boolean): Promise<PendingRun | null>;
   isFullAccess(): boolean;
   currentAccount(): string | null;
   ask(message: string, confirmLabel: string): Promise<boolean>;
   resume(run: PendingRun): boolean;
   clearPendingRun(): void;
-  navigateToQuiz(dailyTrainingActivity?: TrainingActivity): void;
+  navigateToQuiz(dailyTrainingActivity?: TrainingActivity, reference?: TrainingActivityReference): void;
   showEmptyRunMessage(): void;
   resumePrompt(run: PendingRun): string;
 }
 
 /** Coordinates starting and restoring a study run without owning its storage or renderer. */
 export function createStudyRunController(dependencies: StudyRunControllerDependencies) {
-  function startRun(configuration: RunCfg, dailyTrainingActivity?: TrainingActivity): boolean {
-    if (!dependencies.createRun(configuration)) {
+  function startRun(configuration: RunCfg, dailyTrainingActivity?: TrainingActivity, reference?: TrainingActivityReference): boolean {
+    if (!dependencies.createRun(configuration, reference, dailyTrainingActivity)) {
       dependencies.showEmptyRunMessage();
       return false;
     }
-    dependencies.navigateToQuiz(dailyTrainingActivity);
+    dependencies.navigateToQuiz(dailyTrainingActivity, reference);
     return true;
   }
 
@@ -35,7 +36,7 @@ export function createStudyRunController(dependencies: StudyRunControllerDepende
       dependencies.clearPendingRun();
       return;
     }
-    if (dependencies.resume(pending)) dependencies.navigateToQuiz();
+    if (dependencies.resume(pending)) dependencies.navigateToQuiz(pending.saved.trainingActivity, pending.saved.trainingActivityReference);
   }
 
   return { startRun, resumeSaved };

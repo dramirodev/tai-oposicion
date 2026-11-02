@@ -1,4 +1,5 @@
 import { localTrainingDateKey } from './study-training-session.js';
+import { isStudyTopicId } from './topic-id.js';
 
 export type PaperRecallRating = 'remembered' | 'partial' | 'not-remembered';
 
@@ -20,7 +21,7 @@ const validRatings = new Set<PaperRecallRating>(['remembered', 'partial', 'not-r
 export function isPaperRecallAssessment(value: unknown): value is PaperRecallAssessment {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
   const assessment = value as Partial<PaperRecallAssessment>;
-  return typeof assessment.topicId === 'string' && /^T[1-4]\.\d{2}$/.test(assessment.topicId)
+  return isStudyTopicId(assessment.topicId)
     && typeof assessment.dateKey === 'string' && /^20\d{2}-\d{2}-\d{2}$/.test(assessment.dateKey)
     && assessment.id === `${assessment.dateKey}:${assessment.topicId}`
     && Number.isFinite(assessment.ratedAt) && assessment.ratedAt! >= 0
@@ -32,7 +33,7 @@ export function createPaperRecallAssessment(
   rating: PaperRecallRating,
   timestamp: number,
 ): PaperRecallAssessment | null {
-  if (!/^T[1-4]\.\d{2}$/.test(topicId) || !validRatings.has(rating) || !Number.isFinite(timestamp) || timestamp < 0) return null;
+  if (!isStudyTopicId(topicId) || !validRatings.has(rating) || !Number.isFinite(timestamp) || timestamp < 0) return null;
   const dateKey = localTrainingDateKey(timestamp);
   return { id: `${dateKey}:${topicId}`, topicId, dateKey, ratedAt: timestamp, rating };
 }

@@ -28,7 +28,7 @@ describe('createAttemptTracker', () => {
     });
     const created = tracker.beginSession('account-1', 'practice', now, [
       { questionId: 'q-1', contentRevision: '', position: 0, exposure: 1 },
-    ], 45);
+    ], 45, 'training:2026-11-02');
     const attempt = created.attempts[0];
     tracker.record('account-1', attempt.id, { type: 'open' });
     now += 1000;
@@ -38,7 +38,7 @@ describe('createAttemptTracker', () => {
     await tracker.flush();
 
     expect(await repository.getSession('account-1', created.session.id)).toMatchObject({
-      status: 'completed', endedAt: now, lastSequence: 1, timeLimitSeconds: 45, elapsedSeconds: 31,
+      status: 'completed', endedAt: now, lastSequence: 1, timeLimitSeconds: 45, elapsedSeconds: 31, sourceSessionId:'training:2026-11-02',
     });
     expect(await repository.getAttempt('account-1', attempt.id)).toMatchObject({
       state: 'answered', response: 2, outcome: 'correct', lastSequence: 2,
@@ -62,5 +62,48 @@ describe('createAttemptTracker', () => {
     await tracker.flush();
     expect(errors).toHaveLength(1);
     expect(errors[0].message).toBe('quota');
+  });
+
+  it('devuelve el resultado del evento y permite seguir usando la cola tras un fallo', async () => {
+    const errors = [];
+    const tracker = createAttemptTracker({
+      repository,
+      createId: nextId,
+      now: () => now,
+      monotonicNow: () => monotonicNow,
+      onError: error => errors.push(error),
+    });
+    const created = tracker.beginSession('account-1', 'practice', now, [
+      { questionId: 'q-1', contentRevision: '', position: 0, exposure: 1 },
+    ]);
+    const attempt = created.attempts[0];
+    await tracker.flush();
+    const saveTransition = repository.saveTransition.bind(repository);
+    let writeCount = 0;
+    repository.saveTransition = async (...args) => {
+      if (writeCount++ === 0) throw new Error('quota');
+      return saveTransition(...args);
+    };
+
+    await expect(tracker.record('account-1', attempt.id, { type: 'open' })).resolves.toBe(false);
+    expect(errors).toHaveLength(1);
+    await expect(tracker.record('account-1', attempt.id, { type: 'open' })).resolves.toBe(true);
+    expect((await repository.getEvents('account-1', attempt.id)).events.map(event => event.type)).toEqual(['open']);
+  });
+
+  it('usa identificadores estables y no duplica la sesión al iniciar dos veces el mismo reintento', async () => {
+    const tracker = createAttemptTracker({ repository, createId: nextId, now: () => now, monotonicNow: () => monotonicNow });
+    const seed = { questionId: 'q-1', contentRevision: 'rev-1', position: 0, exposure: 2, exposureKind: 'immediate-retry', retryOfAttemptId: 'attempt-original' };
+    const first = tracker.beginSession('account-1', 'practice', now, [seed]);
+    const second = tracker.beginSession('account-1', 'practice', now + 100, [seed]);
+    await tracker.flush();
+
+    expect(second.session.id).toBe(first.session.id);
+    expect(second.attempts[0].id).toBe(first.attempts[0].id);
+    expect(await repository.getSession('account-1', first.session.id)).toMatchObject({ id: first.session.id });
+    expect(await repository.getAttempt('account-1', first.attempts[0].id)).toMatchObject({
+      exposureKind: 'immediate-retry', retryOfAttemptId: 'attempt-original', questionId: 'q-1',
+    });
+    expect((await repository.getScopePage('account-1', null, 10)).attempts.filter(item => item.id.startsWith('retry-attempt:'))).toHaveLength(1);
   });
 });

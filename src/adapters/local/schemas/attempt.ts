@@ -4,6 +4,7 @@ const index = z.number().int().min(0).max(Number.MAX_SAFE_INTEGER);
 const timestamp = z.number().finite().nonnegative();
 const mode = z.enum(['practice', 'simulation']);
 const outcome = z.enum(['correct', 'wrong']);
+const selfAssessment = z.enum(['could-explain', 'needs-help']);
 const confidence = z.enum(['sure', 'betweenTwo', 'guess']).nullable();
 
 export const highlightSchema = z.object({
@@ -34,9 +35,12 @@ export const questionAttemptSchema = z.object({
   mode,
   position: index,
   exposure: index,
+  exposureKind: z.enum(['ordinary', 'immediate-retry']).optional(),
+  retryOfAttemptId: z.string().optional(),
   state: z.enum(['unseen', 'pending', 'answered', 'revealed']),
   response: index.nullable(),
   outcome: outcome.nullable(),
+  selfAssessment: selfAssessment.optional(),
   terminalEventId: z.string().optional(),
   confidence,
   discardedOptions: z.array(index),
@@ -45,6 +49,13 @@ export const questionAttemptSchema = z.object({
   completedAt: timestamp.optional(),
   lastSequence: index,
   appliedEventIds: z.array(z.string()),
+}).superRefine((attempt, context) => {
+  if (attempt.exposureKind === 'immediate-retry' && (!attempt.retryOfAttemptId || attempt.retryOfAttemptId === attempt.id)) {
+    context.addIssue({ code: 'custom', path: ['retryOfAttemptId'], message: 'immediate retries must reference a different original attempt' });
+  }
+  if (attempt.exposureKind !== 'immediate-retry' && attempt.retryOfAttemptId !== undefined) {
+    context.addIssue({ code: 'custom', path: ['exposureKind'], message: 'only immediate retries may reference an original attempt' });
+  }
 });
 
 const empty = z.object({});
@@ -64,9 +75,20 @@ const event = <Type extends string, Payload extends z.ZodType>(type: Type, paylo
   monotonicAt: timestamp.optional(),
   payload,
 });
+const selfAssessmentEvent = z.object({
+  schemaVersion: z.literal(2),
+  id: z.string(),
+  attemptId: z.string(),
+  sequence: index,
+  type: z.literal('self-assess'),
+  at: timestamp,
+  monotonicAt: timestamp.optional(),
+  payload: z.object({ value: selfAssessment }),
+});
 
 export const attemptEventSchema = z.discriminatedUnion('type', [
   event('open', empty), event('leave', empty), event('mark-pending', empty), event('reveal', empty),
+  selfAssessmentEvent,
   event('pause', empty), event('resume', empty), event('close', empty),
   event('answer', answerPayload), event('set-confidence', confidencePayload),
   event('discard-option', optionPayload), event('restore-option', optionPayload),

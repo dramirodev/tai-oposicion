@@ -32,6 +32,7 @@ export function buildQuestionEvolution(archive: AttemptArchive, weeks: number, n
   const sessions = new Map(archive.sessions.map(session => [session.id, session]));
   for (const attempt of archive.attempts) {
     const session = sessions.get(attempt.sessionId);
+    if (attempt.exposureKind === 'immediate-retry') continue;
     if (session?.status !== 'completed' || attempt.state === 'unseen') continue;
     if (session.startedAt < result[0].start || session.startedAt >= end) continue;
     let index = count - 1;

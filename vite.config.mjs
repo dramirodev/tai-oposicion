@@ -32,5 +32,16 @@ export default defineConfig({
     },
   }],
   define: { __APP_VERSION__: JSON.stringify(version), __APP_BUILD__: JSON.stringify(buildId) },
-  build: { target: 'safari15', outDir: 'dist', emptyOutDir: true },
+  build: {
+    target: 'safari15', outDir: 'dist', emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (/[/\\]node_modules[/\\](?:react|react-dom|scheduler)[/\\]/.test(id)) return 'react-vendor';
+          if (/[/\\]node_modules[/\\]react-router[/\\]/.test(id)) return 'router-vendor';
+          if (/[/\\]node_modules[/\\](?:firebase|@firebase)[/\\]/.test(id)) return 'firebase-vendor';
+        },
+      },
+    },
+  },
 });

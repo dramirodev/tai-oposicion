@@ -8,7 +8,8 @@ describe('autoevaluación del recuerdo del temario en papel', () => {
     expect(createPaperRecallAssessment('T1.01', 'partial', timestamp)).toMatchObject({
       id:'2026-10-29:T1.01', topicId:'T1.01', dateKey:'2026-10-29', rating:'partial', ratedAt:timestamp,
     });
-    expect(createPaperRecallAssessment('T9.01', 'partial', timestamp)).toBeNull();
+    expect(createPaperRecallAssessment('T12.01', 'partial', timestamp)).toMatchObject({ topicId:'T12.01', id:'2026-10-29:T12.01' });
+    expect(createPaperRecallAssessment('T0.01', 'partial', timestamp)).toBeNull();
     expect(createPaperRecallAssessment('T1.01', 'wrong', timestamp)).toBeNull();
   });
 
