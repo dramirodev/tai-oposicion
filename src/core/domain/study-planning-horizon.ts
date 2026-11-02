@@ -1,5 +1,6 @@
 import type { TrainingDayFocus, TrainingPreferences } from './entities.js';
 import { isStudyDateKey } from './study-training-calendar.js';
+import { normalizeTrainingCalendarEvents, resolveTrainingDay } from './study-training-events.js';
 
 const defaultFocus: readonly TrainingDayFocus[] = ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'];
 
@@ -17,6 +18,8 @@ export interface StudyHorizonSummary {
   daysUntilObjective: number | null;
   availableNewTopicSessions: number | null;
   topicSessionGap: number | null;
+  calendarOverrideDays: number;
+  calendarEvents: TrainingPreferences['calendarEvents'];
 }
 
 function ordinal(dateKey: string): number {
@@ -34,7 +37,7 @@ export function buildStudyHorizonSummary(input: {
   academyTopicOrderIds?: readonly string[];
   catalogTopicIds: readonly string[];
   studiedTopicIds: readonly string[];
-  preferences: Pick<TrainingPreferences, 'minutesByDay' | 'focusByDay'>;
+  preferences: Pick<TrainingPreferences, 'minutesByDay' | 'focusByDay' | 'calendarEvents'>;
 }): StudyHorizonSummary {
   const orderedTopicIds = [...new Set(input.academyTopicOrderIds ?? [])];
   const ordered = new Set(orderedTopicIds);
@@ -52,14 +55,16 @@ export function buildStudyHorizonSummary(input: {
   const todayIsValid = isStudyDateKey(input.todayDateKey);
   const daysUntilObjective = objectiveIsValid && todayIsValid ? ordinal(input.targetDate) - ordinal(input.todayDateKey) : null;
   let availableNewTopicSessions: number | null = null;
+  let calendarOverrideDays = 0;
   if (daysUntilObjective !== null && daysUntilObjective > 0) {
-    const completeWeeks = Math.floor(daysUntilObjective / 7);
-    const remainingDays = daysUntilObjective % 7;
-    availableNewTopicSessions = completeWeeks * weeklyNewContentDays;
     const [year, month, day] = input.todayDateKey.split('-').map(Number);
-    for (let offset = 0; offset < remainingDays; offset++) {
-      const weekday = new Date(Date.UTC(year, month - 1, day + completeWeeks * 7 + offset)).getUTCDay();
-      if (focusByDay[weekday] === 'new-content' && input.preferences.minutesByDay[weekday] > 0) availableNewTopicSessions++;
+    availableNewTopicSessions = 0;
+    for (let offset = 0; offset < daysUntilObjective; offset++) {
+      const date = new Date(Date.UTC(year, month - 1, day + offset));
+      const dateKey = `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}-${String(date.getUTCDate()).padStart(2, '0')}`;
+      const resolved = resolveTrainingDay({ dateKey, preferences: input.preferences });
+      if (resolved.events.some(event => event.kind === 'unavailable' || event.kind === 'study-window')) calendarOverrideDays++;
+      if (resolved.minutes > 0 && resolved.focus === 'new-content') availableNewTopicSessions++;
     }
   }
   const topicSessionGap = availableNewTopicSessions === null ? null : Math.max(0, pendingOrderedTopicCount - availableNewTopicSessions);
@@ -80,5 +85,7 @@ export function buildStudyHorizonSummary(input: {
     daysUntilObjective,
     availableNewTopicSessions,
     topicSessionGap,
+    calendarOverrideDays,
+    calendarEvents: normalizeTrainingCalendarEvents(input.preferences.calendarEvents),
   };
 }

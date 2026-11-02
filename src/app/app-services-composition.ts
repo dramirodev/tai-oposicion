@@ -25,12 +25,14 @@ import { createTopicMasteryComposition } from './composition/topics/topic-master
 import { createTopicProgressComposition } from './composition/topics/topic-progress-composition.js';
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
-import type { Origin, QuestionStats, StudyReviewMode, TrainingActivity, TrainingPreferences } from '../core/domain/entities.js';
+import type { Origin, QuestionStats, StudyReviewMode, TrainingActivity, TrainingCalendarEvent, TrainingPreferences } from '../core/domain/entities.js';
 import type { TrainingActivityReference } from '../core/domain/study-training-session.js';
 import type { PaperRecallRating } from '../core/domain/paper-recall-assessment.js';
 import { daysUntilStudyDate, isStudyDateKey } from '../core/domain/study-training-calendar.js';
 import { latestPaperRecallByTopic, needsPaperRecallFollowUp } from '../core/domain/paper-recall-assessment.js';
 import { buildDailyTrainingPlan, normalizeTrainingPreferences, selectNextAcademyTopic } from '../core/domain/study-training-plan.js';
+import { buildTrainingCalendarEvent } from '../core/domain/study-training-events.js';
+import { localTrainingDateKey } from '../core/domain/study-training-session.js';
 import { filterTopicMasteryToSeen } from '../core/domain/topic-mastery.js';
 import { questionContentRevision } from '../core/domain/attempts/highlights.js';
 import { findCodeExplanation } from './composition/explanations/explanation-composition.js';
@@ -48,6 +50,15 @@ import { createLightningComposition } from './composition/trainers/lightning-com
 import { createTrapsComposition } from './composition/trainers/traps-composition.js';
 import { createQuizServices } from './composition/quiz/quiz-composition.js';
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
+
+let trainingEventSequence = 0;
+function createTrainingCalendarEvent(input: Omit<TrainingCalendarEvent, 'id' | 'createdAt' | 'updatedAt'>): TrainingCalendarEvent | null {
+  const now = Date.now();
+  let randomId = '';
+  try { randomId = globalThis.crypto?.randomUUID?.() ?? ''; } catch { /* fallback local id below */ }
+  const id = randomId ? `event-${randomId}` : `event-${now}-${trainingEventSequence++}`;
+  return buildTrainingCalendarEvent(input, id, now);
+}
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './composition/exports/ai-study-export-composition.js';
 import { inspectOffline, downloadOffline, prefetchQuestionBank } from '../adapters/offline/cache.js';
 import { notifyAccessChange } from './access-events.js';
@@ -249,6 +260,7 @@ const settingsServices = {
   setTrainingPreferences(value: TrainingPreferences) {
     localStudyProgressGateway.updatePreferences(current => ({ ...current, training: normalizeTrainingPreferences(value) }));
   },
+  createTrainingCalendarEvent,
   setExam(value: string) {
     if (isStudyDateKey(value)) localStudyProgressGateway.updatePreferences(current => ({ ...current, exam: value }));
   },
@@ -650,7 +662,8 @@ export const studyServices: StudyServices = {
       };
       const studiedCardDueCount = Object.entries(cardReviews).filter(([id, record]) => record.dueAt <= studyQuestionCatalog.now()
         && studiedTopicSet.has(topicForCard(id) || '')).length;
-      const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date().getDay(), dueCount: studiedDueCount, cardDueCount: studiedCardDueCount, failureCount: studiedFailureCount, weakTopicCount: weakTopicIds.length, weakTopicIds, studiedTopicIds, nextNewTopic: nextNewTopic ? { topicId: nextNewTopic.id, topicName: nextNewTopic.nombre } : undefined,
+      const now = Date.now();
+      const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date(now).getDay(), dateKey: localTrainingDateKey(now), dueCount: studiedDueCount, cardDueCount: studiedCardDueCount, failureCount: studiedFailureCount, weakTopicCount: weakTopicIds.length, weakTopicIds, studiedTopicIds, nextNewTopic: nextNewTopic ? { topicId: nextNewTopic.id, topicName: nextNewTopic.nombre } : undefined,
         topicReviewEvidence: studiedMastery.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: true, distinctQuestionsAttempted: topic.seen, questionCoverageOfTarget: topic.cob, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias })) });
       return { seen: progress.seen, total: index.n, answers: progress.answers, streak, daysToExam, due,
         completedSessions: localStudyProgressGateway.getSessions().length,

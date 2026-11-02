@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { localDayStart } from '../../core/domain/study-training-session.js';
+import type { TrainingCalendarEventKind, TrainingDayFocus } from '../../core/domain/entities.js';
+import { MAX_TRAINING_CALENDAR_EVENTS, normalizeTrainingCalendarEvents } from '../../core/domain/study-training-events.js';
 import { ask, toast } from '../../shared/ui/dialog-actions.js';
 import { saveExportFile } from '../../shared/ui/download-file.js';
 import { useStudyService, type SettingsServices, type SettingsSnapshot } from '../../shared/ui/study-services.js';
@@ -142,7 +144,18 @@ const trainingActivities = [
 
 function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsServices; snapshot: SettingsSnapshot }) {
   const [topicToAdd, setTopicToAdd] = useState('');
+  const [eventKind, setEventKind] = useState<TrainingCalendarEventKind>('unavailable');
+  const [eventTitle, setEventTitle] = useState('');
+  const [eventSource, setEventSource] = useState('');
+  const [eventStart, setEventStart] = useState('');
+  const [eventEnd, setEventEnd] = useState('');
+  const [eventMinutes, setEventMinutes] = useState('120');
+  const [eventStartTime, setEventStartTime] = useState('08:00');
+  const [eventEndTime, setEventEndTime] = useState('15:00');
+  const [eventFocus, setEventFocus] = useState<TrainingDayFocus | ''>('');
+  const [eventError, setEventError] = useState('');
   const academyTopicOrderIds = snapshot.training.academyTopicOrderIds ?? [];
+  const calendarEvents = normalizeTrainingCalendarEvents(snapshot.training.calendarEvents);
   const updateMinutes = (day: number, rawValue: string) => {
     const minutesByDay = [...snapshot.training.minutesByDay] as typeof snapshot.training.minutesByDay;
     const parsed = Number(rawValue);
@@ -169,6 +182,23 @@ function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsSer
     updateAcademyOrder([...academyTopicOrderIds, topicToAdd]);
     setTopicToAdd('');
   };
+  const saveCalendarEvent = () => {
+    const event = settings.createTrainingCalendarEvent({
+      kind: eventKind, title: eventTitle.trim(), ...(eventSource.trim() ? { source: eventSource.trim() } : {}), startDate: eventStart, endDate: eventEnd || eventStart,
+      ...(eventKind === 'study-window' ? {
+        studyMinutes: Number(eventMinutes), startTime: eventStartTime, endTime: eventEndTime,
+        ...(eventFocus ? { focus: eventFocus } : {}),
+      } : {}),
+    });
+    if (calendarEvents.length >= MAX_TRAINING_CALENDAR_EVENTS) { setEventError(`Has alcanzado el límite de ${MAX_TRAINING_CALENDAR_EVENTS} eventos. Elimina alguno antes de añadir otro.`); return; }
+    if (!event) { setEventError('Revisa el nombre, las fechas y los datos de disponibilidad.'); return; }
+    settings.setTrainingPreferences({ ...snapshot.training, calendarEvents: [...calendarEvents, event] });
+    setEventTitle(''); setEventSource(''); setEventError('');
+  };
+  const removeCalendarEvent = (eventId: string) => settings.setTrainingPreferences({
+    ...snapshot.training, calendarEvents: calendarEvents.filter(event => event.id !== eventId),
+  });
+  const todayKey = localDate(new Date());
   return <section className="card" id="training-schedule"><h2 className="h3">Entrenamiento semanal</h2>
     <p>Este tiempo forma parte de tus horas de estudio. Un día con 0 minutos es descanso; el entrenador no acumula su carga para mañana.</p>
     <div className="training-schedule">{trainingDays.map(day => <div className="training-day" key={day.index}>
@@ -218,6 +248,31 @@ function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsSer
     </fieldset>
     <fieldset className="training-activities"><legend>Actividades disponibles</legend>
       {trainingActivities.map(([activity, label]) => <label key={activity}><input type="checkbox" checked={snapshot.training.activities.includes(activity)} disabled={snapshot.training.activities.length === 1 && snapshot.training.activities[0] === activity} onChange={event => updateActivity(activity, event.target.checked)} /> {label}</label>)}
+    </fieldset>
+    <fieldset className="training-activities" aria-describedby="training-calendar-events-help"><legend>Eventos y excepciones</legend>
+      <p id="training-calendar-events-help" className="sm">Afectan solo a las fechas indicadas. Una ausencia fuerza 0 minutos; una disponibilidad sustituye el tiempo diario de estudio. El horario 08:00–15:00 incluye pausas: indica aparte los minutos de estudio enfocado. Clases e hitos son informativos. Si varias ventanas se solapan, prevalece la guardada más recientemente; una ausencia siempre prevalece. Los eventos pasados se conservan como historial. La procedencia es una nota personal, no una verificación oficial.</p>
+      <div className="grid min-w-0 grid-cols-2 items-end gap-3 max-[520px]:grid-cols-1">
+        <label className="grid min-w-0 gap-1">Tipo<select aria-label="Tipo de evento" value={eventKind} onChange={event => setEventKind(event.target.value as TrainingCalendarEventKind)}>
+          <option value="unavailable">Ausencia o vacaciones</option><option value="study-window">Disponibilidad especial</option><option value="class">Clase</option><option value="milestone">Hito o simulacro</option>
+        </select></label>
+        <label className="grid min-w-0 gap-1">Nombre<input aria-label="Nombre del evento" maxLength={100} value={eventTitle} onChange={event => setEventTitle(event.target.value)} placeholder="Vacaciones, clase…" /></label>
+        <label className="grid min-w-0 gap-1">Procedencia o nota (opcional)<input aria-label="Procedencia del evento" maxLength={200} value={eventSource} onChange={event => setEventSource(event.target.value)} placeholder="Calendario personal, academia…" /></label>
+        <label className="grid min-w-0 gap-1">Desde<input aria-label="Inicio del evento" type="date" value={eventStart} onChange={event => { setEventStart(event.target.value); if (!eventEnd) setEventEnd(event.target.value); }} /></label>
+        <label className="grid min-w-0 gap-1">Hasta (incluido)<input aria-label="Fin del evento" type="date" value={eventEnd} onChange={event => setEventEnd(event.target.value)} /></label>
+        {eventKind === 'study-window' && <>
+          <label className="grid min-w-0 gap-1">Estudio enfocado por día (min)<input aria-label="Minutos de estudio enfocado" type="number" min="15" max="360" step="15" value={eventMinutes} onChange={event => setEventMinutes(event.target.value)} /></label>
+          <label className="grid min-w-0 gap-1">Enfoque<select aria-label="Enfoque del evento" value={eventFocus} onChange={event => setEventFocus(event.target.value as TrainingDayFocus | '')}><option value="">Mantener el habitual</option><option value="new-content">Tema nuevo</option><option value="consolidation">Repaso</option><option value="rest">Descanso</option></select></label>
+          <label className="grid min-w-0 gap-1">Ventana desde<input aria-label="Hora inicial de disponibilidad" type="time" value={eventStartTime} onChange={event => setEventStartTime(event.target.value)} /></label>
+          <label className="grid min-w-0 gap-1">Ventana hasta<input aria-label="Hora final de disponibilidad" type="time" value={eventEndTime} onChange={event => setEventEndTime(event.target.value)} /></label>
+        </>}
+      </div>
+      <button className="btn sec min-h-11 mt-3" type="button" disabled={!eventTitle.trim() || !eventStart} onClick={saveCalendarEvent}>Guardar evento</button>
+      {eventError && <p role="alert">{eventError}</p>}
+      {calendarEvents.length ? <ul aria-label="Eventos guardados" className="grid gap-2 pl-5">{calendarEvents.map(event => {
+        const status = event.endDate < todayKey ? 'Pasado' : event.startDate > todayKey ? 'Próximo' : 'En curso';
+        const typeLabel = event.kind === 'unavailable' ? 'Sin estudio' : event.kind === 'study-window' ? `${event.studyMinutes} min de estudio${event.startTime ? ` · ${event.startTime}–${event.endTime}` : ''}` : event.kind === 'class' ? 'Clase informativa' : 'Hito informativo';
+        return <li key={event.id} className="flex flex-wrap items-center justify-between gap-2"><span><b>{event.title}</b> · {event.startDate === event.endDate ? event.startDate : `${event.startDate} a ${event.endDate}`} · {typeLabel} · {status}{event.source ? ` · ${event.source}` : ''}</span><button className="btn sec min-h-11" type="button" aria-label={`Eliminar evento ${event.title}`} onClick={() => removeCalendarEvent(event.id)}>Eliminar</button></li>;
+      })}</ul> : <p className="sm">Aún no hay eventos guardados.</p>}
     </fieldset>
   </section>;
 }

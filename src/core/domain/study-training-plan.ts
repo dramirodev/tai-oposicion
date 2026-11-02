@@ -2,6 +2,7 @@ import type { StudyReviewMode, TrainingActivity, TrainingDayFocus, TrainingPrefe
 import { recommendTopicIntervention } from './study-review-intervention.js';
 import type { TopicReviewEvidence } from './study-review-intervention.js';
 import { isStudyTopicId } from './topic-id.js';
+import { normalizeTrainingCalendarEvents, resolveTrainingDay } from './study-training-events.js';
 
 export const DEFAULT_TRAINING_PREFERENCES: TrainingPreferences = {
   minutesByDay: [0, 120, 120, 120, 120, 120, 120],
@@ -46,7 +47,8 @@ export function normalizeTrainingPreferences(value: unknown): TrainingPreference
   const reviewModesByTopic = candidate.reviewModesByTopic && typeof candidate.reviewModesByTopic === 'object' && !Array.isArray(candidate.reviewModesByTopic)
     ? Object.fromEntries(Object.entries(candidate.reviewModesByTopic).filter(([topicId, mode]) => isStudyTopicId(topicId) && supportedReviewModes.has(mode as StudyReviewMode))) as Record<string, StudyReviewMode>
     : undefined;
-  return { minutesByDay, focusByDay, introductionDay, activities, activityVersion: 3, ...(introductionTopicId ? { introductionTopicId } : {}), ...(academyTopicOrderIds.length ? { academyTopicOrderIds } : {}), ...(reviewModesByTopic && Object.keys(reviewModesByTopic).length ? { reviewModesByTopic } : {}) };
+  const calendarEvents = normalizeTrainingCalendarEvents(candidate.calendarEvents);
+  return { minutesByDay, focusByDay, introductionDay, activities, activityVersion: 3, ...(introductionTopicId ? { introductionTopicId } : {}), ...(academyTopicOrderIds.length ? { academyTopicOrderIds } : {}), ...(reviewModesByTopic && Object.keys(reviewModesByTopic).length ? { reviewModesByTopic } : {}), ...(calendarEvents.length ? { calendarEvents } : {}) };
 }
 
 export type TrainingPlanReason = 'active-recall' | 'new-content-day' | 'new-topic-day' | 'weak-topics' | 'coverage' | 'recurring-failures' | 'due-reviews';
@@ -135,12 +137,15 @@ export function buildDailyTrainingPlan(input: {
   studiedTopicIds?: readonly string[];
   /** First not-yet-marked topic, in syllabus order, with its real catalogue name. */
   nextNewTopic?: { topicId: string; topicName: string };
+  /** Local calendar date used to apply date-specific availability overrides. */
+  dateKey?: string;
   topicReviewEvidence?: readonly TopicReviewEvidence[];
 }): DailyTrainingPlan {
   const weekday = Number.isInteger(input.weekday) && input.weekday >= 0 && input.weekday <= 6 ? input.weekday : 0;
   const preferences = normalizeTrainingPreferences(input.preferences);
-  const minutes = preferences.minutesByDay[weekday];
-  if (!minutes) return { weekday, minutes: 0, restDay: true, activities: [] };
+  const day = input.dateKey ? resolveTrainingDay({ dateKey: input.dateKey, preferences }) : undefined;
+  const minutes = day?.minutes ?? preferences.minutesByDay[weekday];
+  if (!minutes || day?.focus === 'rest') return { weekday, minutes: 0, restDay: true, activities: [] };
 
   const studiedTopicIds = input.studiedTopicIds === undefined ? undefined : [...new Set(input.studiedTopicIds)];
   const studiedTopicSet = studiedTopicIds ? new Set(studiedTopicIds) : undefined;
@@ -150,7 +155,7 @@ export function buildDailyTrainingPlan(input: {
       ? preferences.introductionTopicId : undefined;
   const newTopicId = preferredTopic && input.nextNewTopic?.topicId === preferredTopic
     && !studiedTopicSet?.has(preferredTopic) ? preferredTopic : undefined;
-  const canStudyNewContent = preferences.focusByDay?.[weekday] === 'new-content' && !!newTopicId;
+  const canStudyNewContent = (day?.focus ?? preferences.focusByDay?.[weekday]) === 'new-content' && !!newTopicId;
 
   const cardDueCount = Number.isFinite(input.cardDueCount) ? Math.max(0, input.cardDueCount ?? 0) : 0;
   const evidencedTopics = input.topicReviewEvidence?.filter(item => item.hasStudyMarker || item.distinctQuestionsAttempted > 0).length ?? 0;

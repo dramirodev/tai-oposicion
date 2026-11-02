@@ -43,6 +43,34 @@ test('Ajustes mantiene completas las etiquetas del horario semanal en escritorio
   }
 });
 
+test('las excepciones de calendario se guardan, afectan solo las fechas indicadas y sobreviven a recarga', async ({ page }) => {
+  await prepare(page, 'light', 0, true);
+  await page.clock.setFixedTime(new Date('2026-11-02T12:00:00+01:00'));
+  await selectIntroductionTopic(page, 'T1.02');
+  await page.getByLabel('Tipo de evento').selectOption('unavailable');
+  await page.getByLabel('Nombre del evento').fill('Vacaciones');
+  await page.getByLabel('Inicio del evento').fill('2026-11-02');
+  await page.getByLabel('Fin del evento').fill('2026-11-05');
+  await page.getByRole('button', { name:'Guardar evento' }).click();
+  await expect(page.getByText('Vacaciones', { exact:true })).toBeVisible();
+  await expect(page.getByLabel('Lunes: minutos de entrenamiento')).toHaveValue('120');
+
+  await page.goto('/#/planificacion');
+  await expect(page.getByRole('list', { name:'Próximos eventos' })).toContainText('Vacaciones');
+  await expect(page.locator('.planning-week ol li').filter({ hasText:'Lunes · 2' })).toContainText('Vacaciones');
+  await expect(page.locator('.planning-activity')).toHaveCount(0);
+  await page.reload();
+  await expect(page.getByRole('list', { name:'Próximos eventos' })).toContainText('Vacaciones');
+
+  await page.clock.setFixedTime(new Date('2026-11-06T12:00:00+01:00'));
+  await page.reload();
+  await page.goto('/#/settings');
+  await expect(page.getByText('Vacaciones', { exact:true }).locator('..')).toContainText('Pasado');
+  await page.goto('/#/planificacion');
+  await expect(page.locator('.planning-activity')).toHaveCount(2);
+  await expect(page.getByRole('list', { name:'Próximos eventos' })).toHaveCount(0);
+});
+
 for (const theme of ['light', 'dark']) {
   test(`los bloques de código conservan formato y tema mientras cargan · ${theme}`, async ({ page }) => {
     await prepare(page, theme, 0);

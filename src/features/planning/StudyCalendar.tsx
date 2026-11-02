@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import type { ScheduledStudyActivity, ScheduledStudyActivityKind } from '../../core/domain/study-training-calendar.js';
 import { proposeStudyActivity, proposeStudyActivityReschedule, type ScheduleDecision } from '../../core/domain/study-training-calendar.js';
 import type { TrainingPreferences } from '../../core/domain/entities.js';
+import { resolveTrainingDay } from '../../core/domain/study-training-events.js';
 import type { TrainingSessionHistoryEntry } from '../../core/domain/study-training-session.js';
 
 const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -44,7 +45,6 @@ export function StudyCalendar({ preferences, weekday, now, history, topics, acti
   // La fecha pendiente de cada repaso se guarda por separado: una sola compartida se copiaba a todas las filas.
   const [moveDates, setMoveDates] = useState<Record<string, string>>({});
   const [error, setError] = useState('');
-  const focus = preferences.focusByDay ?? ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'];
   const monthTitle = monthTitleFormatter.format(month);
   const firstDayOffset = (new Date(month.getFullYear(), month.getMonth(), 1).getDay() + 6) % 7;
   const daysInMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate();
@@ -52,6 +52,7 @@ export function StudyCalendar({ preferences, weekday, now, history, topics, acti
   const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
   const maxDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 180);
   const dateForInput = dateKey || dayKey(tomorrow);
+  const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - ((now.getDay() + 6) % 7));
 
   const prepareCreation = () => {
     const decision = proposeStudyActivity({ dateKey:dateForInput, activity:kind, topicId, minutes, now:now.getTime(), preferences, seenTopicIds:topics.map(topic => topic.id), existing:activities });
@@ -90,9 +91,14 @@ export function StudyCalendar({ preferences, weekday, now, history, topics, acti
       <button className={`min-w-11 min-h-11 rounded-[var(--r-m)] border border-line bg-[var(--card)] px-3 py-[.45rem] text-ink [font:inherit] [cursor:pointer]${view === 'month' ? ' !border-ink !bg-[var(--surface-soft)] !font-bold' : ''}`} type="button" aria-pressed={view === 'month'} onClick={() => setView('month')}>Mes</button>
     </div>
     {view === 'week' ? <>
-      <ol className="mt-4 mb-0 grid grid-cols-7 gap-2 p-0 list-none max-[840px]:grid-cols-4 max-[520px]:grid-cols-2">{[1, 2, 3, 4, 5, 6, 0].map(day => <li key={day} className={`planning-week-day grid min-h-24 min-w-0 content-start gap-[.35rem] rounded-[var(--r-m)] border border-line p-3${day === weekday ? ' !border-brand ![box-shadow:inset_0_0_0_1px_var(--brand)]' : ''}`} aria-current={day === weekday ? 'date' : undefined}>
-        <b className="text-[length:var(--fs-s)]">{dayNames[day]}</b><span className="text-lg [font-variant-numeric:tabular-nums]">{preferences.minutesByDay[day] ? `${preferences.minutesByDay[day]} min` : '0 min'}</span><small className="leading-[1.35] text-muted [overflow-wrap:anywhere]">{focusLabels[focus[day]]}{day === preferences.introductionDay ? ' · academia' : ''}</small>
-      </li>)}</ol>
+      <ol className="mt-4 mb-0 grid grid-cols-7 gap-2 p-0 list-none max-[840px]:grid-cols-4 max-[520px]:grid-cols-2">{[1, 2, 3, 4, 5, 6, 0].map(day => {
+        const date = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + (day === 0 ? 6 : day - 1));
+        const dateValue = dayKey(date), resolved = resolveTrainingDay({ dateKey: dateValue, preferences });
+        return <li key={day} className={`planning-week-day grid min-h-24 min-w-0 content-start gap-[.35rem] rounded-[var(--r-m)] border border-line p-3${day === weekday ? ' !border-brand ![box-shadow:inset_0_0_0_1px_var(--brand)]' : ''}`} aria-current={day === weekday ? 'date' : undefined}>
+          <b className="text-[length:var(--fs-s)]">{dayNames[day]} · {date.getDate()}</b><span className="text-lg [font-variant-numeric:tabular-nums]">{resolved.minutes ? `${resolved.minutes} min` : '0 min'}</span><small className="leading-[1.35] text-muted [overflow-wrap:anywhere]">{focusLabels[resolved.focus]}{day === preferences.introductionDay && !resolved.override ? ' · academia' : ''}</small>
+          {resolved.events.map(event => <small key={event.id} className="text-brand leading-[1.25] [overflow-wrap:anywhere]">{event.title}{event.kind === 'class' ? ' · clase' : event.kind === 'milestone' ? ' · hito' : event.kind === 'unavailable' ? ' · sin estudio' : ` · ${event.studyMinutes} min especiales`}</small>)}
+        </li>;
+      })}</ol>
       <p className="planning-week-note mt-3.5 mb-0 text-muted text-[length:var(--fs-s)]">El reparto refleja tus preferencias editables, no una distribución demostrada como óptima.</p>
     </> : <div className="planning-month mt-4">
       <div className="planning-month-heading mb-3 flex items-center justify-between gap-3"><button className="grid min-w-11 min-h-11 place-items-center rounded-[var(--r-m)] border border-line bg-[var(--card)] p-1 text-ink [font:inherit] [cursor:pointer]" type="button" aria-label="Mes anterior" onClick={() => setMonth(value => new Date(value.getFullYear(), value.getMonth() - 1, 1))}><ChevronLeft aria-hidden="true" /></button><h3 className="m-0 text-[length:var(--fs-m)] capitalize">{monthTitle}</h3><button className="grid min-w-11 min-h-11 place-items-center rounded-[var(--r-m)] border border-line bg-[var(--card)] p-1 text-ink [font:inherit] [cursor:pointer]" type="button" aria-label="Mes siguiente" onClick={() => setMonth(value => new Date(value.getFullYear(), value.getMonth() + 1, 1))}><ChevronRight aria-hidden="true" /></button></div>
@@ -102,12 +108,15 @@ export function StudyCalendar({ preferences, weekday, now, history, topics, acti
         {Array.from({ length:daysInMonth }, (_, index) => {
           const date = new Date(month.getFullYear(), month.getMonth(), index + 1);
           const day = date.getDay(), dateValue = dayKey(date), dayActivities = activitiesByDate.get(dateValue) ?? [];
-          const isToday = dateValue === dayKey(now), completed = completedDays.has(dateValue), minutesAvailable = preferences.minutesByDay[day];
+          const resolved = resolveTrainingDay({ dateKey: dateValue, preferences });
+          const isToday = dateValue === dayKey(now), completed = completedDays.has(dateValue), minutesAvailable = resolved.minutes;
           const academy = day === preferences.introductionDay;
-          const description = `${dayNames[day]} ${index + 1}: ${minutesAvailable ? `${minutesAvailable} minutos disponibles, ${focusLabels[focus[day]]}${academy ? ', academia' : ''}` : 'descanso'}${completed ? ', sesión completada' : ''}${dayActivities.length ? `, ${dayActivities.length} repasos planificados` : ''}${isToday ? ', hoy' : ''}`;
+          const eventNames = resolved.events.map(event => event.title);
+          const description = `${dayNames[day]} ${index + 1}: ${minutesAvailable ? `${minutesAvailable} minutos disponibles, ${focusLabels[resolved.focus]}${academy && !resolved.override ? ', academia' : ''}` : 'descanso'}${eventNames.length ? `, eventos: ${eventNames.join(', ')}` : ''}${completed ? ', sesión completada' : ''}${dayActivities.length ? `, ${dayActivities.length} repasos planificados` : ''}${isToday ? ', hoy' : ''}`;
           return <div role="group" className={`planning-month-day grid min-w-0 min-h-20 content-start gap-[.2rem] rounded-[var(--r-s)] border border-line p-[.35rem] [overflow-wrap:anywhere] max-[520px]:min-h-[4.5rem] max-[520px]:p-1${isToday ? ' !border-brand ![box-shadow:inset_0_0_0_1px_var(--brand)]' : ''}${completed ? ' !bg-[var(--surface-soft)]' : ''}${dayActivities.length ? ' has-planned-activities' : ''}`} aria-label={description} key={dateValue}>
             <b className="text-[length:var(--fs-s)]">{index + 1}</b>
-            {minutesAvailable ? <><span className="planning-month-time text-[length:var(--fs-xs)] leading-[1.25]"><span className="planning-month-time-wide max-[520px]:hidden">{minutesAvailable} min</span><span className="planning-month-time-narrow hidden max-[520px]:inline">{minutesAvailable}m</span></span><small className="text-[length:var(--fs-xs)] leading-[1.25] text-muted max-[520px]:hidden">{academy ? 'Academia' : focusLabels[focus[day]]}</small></> : <small className="text-[length:var(--fs-xs)] leading-[1.25] text-muted max-[520px]:hidden">Descanso</small>}
+            {minutesAvailable ? <><span className="planning-month-time text-[length:var(--fs-xs)] leading-[1.25]"><span className="planning-month-time-wide max-[520px]:hidden">{minutesAvailable} min</span><span className="planning-month-time-narrow hidden max-[520px]:inline">{minutesAvailable}m</span></span><small className="text-[length:var(--fs-xs)] leading-[1.25] text-muted max-[520px]:hidden">{resolved.override ? (resolved.override.kind === 'study-window' ? 'Disponibilidad especial' : 'Horario ajustado') : academy ? 'Academia' : focusLabels[resolved.focus]}</small></> : <small className="text-[length:var(--fs-xs)] leading-[1.25] text-muted max-[520px]:hidden">Descanso</small>}
+            {!!resolved.events.length && <small className="text-[length:var(--fs-xs)] leading-[1.15] text-brand max-[520px]:hidden">{resolved.events.map(event => event.title).join(', ')}</small>}
             {!!dayActivities.length && <strong className="text-[length:var(--fs-xs)] leading-[1.25] text-brand font-bold">{dayActivities.length} {dayActivities.length === 1 ? 'repaso' : 'repasos'}</strong>}
             {completed && <strong className="text-[length:var(--fs-xs)] leading-[1.25] text-brand font-bold">Completada</strong>}{isToday && <strong className="text-[length:var(--fs-xs)] leading-[1.25] text-brand font-bold">Hoy</strong>}
           </div>;

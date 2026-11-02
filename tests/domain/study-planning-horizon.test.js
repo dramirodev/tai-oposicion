@@ -64,4 +64,14 @@ describe('proyección del horizonte de estudio', () => {
       expect(summary.availableNewTopicSessions).toBeNull();
     }
   });
+
+  it('resta ausencias y usa la disponibilidad especial al proyectar los espacios hasta el objetivo', () => {
+    const unavailable = { id: 'leave', kind: 'unavailable', title: 'Ausencia', startDate: '2026-11-02', endDate: '2026-11-02', createdAt: 1, updatedAt: 1 };
+    const window = { id: 'extra', kind: 'study-window', title: 'Vacaciones', startDate: '2026-11-04', endDate: '2026-11-04', studyMinutes: 240, startTime: '08:00', endTime: '15:00', focus: 'new-content', createdAt: 1, updatedAt: 1 };
+    const summary = buildStudyHorizonSummary({
+      todayDateKey: '2026-11-02', targetDate: '2026-11-06', academyTopicOrderIds: order,
+      catalogTopicIds: catalog, studiedTopicIds: [], preferences: { ...preferences, calendarEvents: [unavailable, window] },
+    });
+    expect(summary).toMatchObject({ availableNewTopicSessions: 3, calendarOverrideDays: 2, topicSessionGap: 0 });
+  });
 });

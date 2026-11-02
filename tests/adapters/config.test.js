@@ -23,3 +23,9 @@ it('persiste un orden de academia explícito con IDs futuros y rechaza formas in
   expect(cleanCfgSetting('training', { academyTopicOrderIds: ['T12.01', 'T3.02'] })).toMatchObject({ academyTopicOrderIds: ['T12.01', 'T3.02'] });
   expect(cleanCfgSetting('training', { academyTopicOrderIds: ['T12.01', 'invalid'] })).not.toHaveProperty('academyTopicOrderIds');
 });
+
+it('persiste únicamente eventos de calendario con forma válida', () => {
+  const calendarEvents = [{ id:'event-1', kind:'study-window', title:'Vacaciones', startDate:'2026-11-02', endDate:'2026-11-05', studyMinutes:240, startTime:'08:00', endTime:'15:00', focus:'new-content', createdAt:1, updatedAt:1 }];
+  expect(cleanCfgSetting('training', { calendarEvents })).toMatchObject({ calendarEvents });
+  expect(cleanCfgSetting('training', { calendarEvents:[{ ...calendarEvents[0], startDate:'2026-02-30' }] })).not.toHaveProperty('calendarEvents');
+});

@@ -49,6 +49,24 @@ export interface Preferences {
 }
 export type TrainingActivity = 'newContent' | 'activeRecall' | 'topicTest' | 'mixedTopicTest' | 'failures' | 'spacedReviews';
 export type TrainingDayFocus = 'rest' | 'new-content' | 'consolidation';
+export type TrainingCalendarEventKind = 'unavailable' | 'study-window' | 'class' | 'milestone';
+/** Local calendar exception or information marker; date range endpoints are inclusive. */
+export interface TrainingCalendarEvent {
+  id: string;
+  kind: TrainingCalendarEventKind;
+  title: string;
+  /** Human-entered provenance or context, never assumed to be an official source. */
+  source?: string;
+  startDate: string;
+  endDate: string;
+  /** Daily focused-study budget for a study-window event. Breaks are not counted here. */
+  studyMinutes?: number;
+  startTime?: string;
+  endTime?: string;
+  focus?: TrainingDayFocus;
+  createdAt: number;
+  updatedAt: number;
+}
 export type StudyReviewMode = 'initial-study' | 'active-retrieval' | 'selective-reading' | 'broad-reading';
 export interface TrainingPreferences {
   /** Sunday-first local calendar: Sunday, Monday, ..., Saturday. */
@@ -65,5 +83,7 @@ export interface TrainingPreferences {
   activityVersion?: 2 | 3;
   /** User choices are retained per topic and take precedence over automatic guidance. */
   reviewModesByTopic?: Record<string, StudyReviewMode>;
+  /** Date-specific events override the recurring weekly pattern only for affected dates. */
+  calendarEvents?: TrainingCalendarEvent[];
 }
 export interface UserProgress { statistics: Record<string, QuestionStats>; sessions: SessionResult[]; preferences: Preferences; seenTopics: string[]; seenAt: number; reports: Record<string, ErrorReport>; cardReviews: Record<string, CardReview> }

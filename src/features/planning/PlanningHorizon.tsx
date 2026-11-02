@@ -46,6 +46,7 @@ export function PlanningHorizon({ targetDate, today, preferences, catalogTopicId
   const targetLabel = targetDate && summary.daysUntilObjective !== null
     ? new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(`${targetDate}T12:00:00`))
     : null;
+  const upcomingEvents = (summary.calendarEvents ?? []).filter(event => event.endDate >= localDateKey(today)).slice(0, 5);
 
   return <section className="my-5 grid min-w-0 gap-4 rounded-[var(--r-xl)] border border-line p-4 sm:p-5 [background:var(--card)]" aria-labelledby="planning-horizon-title">
     <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -60,7 +61,7 @@ export function PlanningHorizon({ targetDate, today, preferences, catalogTopicId
         <p className="mb-2" role="status">{statusMessage(summary)}</p>
         {summary.unsequencedCatalogTopicCount > 0 && <p className="mb-2 text-muted">{summary.unsequencedCatalogTopicCount} {summary.unsequencedCatalogTopicCount === 1 ? 'tema del catálogo todavía no está' : 'temas del catálogo todavía no están'} en la secuencia de academia; no se les asigna un orden automáticamente.</p>}
         {summary.orderedTopicMissingFromCatalogCount > 0 && <p className="mb-2 text-muted">{summary.orderedTopicMissingFromCatalogCount} {summary.orderedTopicMissingFromCatalogCount === 1 ? 'entrada de la secuencia no aparece' : 'entradas de la secuencia no aparecen'} en el catálogo actual y no {summary.orderedTopicMissingFromCatalogCount === 1 ? 'puede' : 'pueden'} planificarse.</p>}
-        <p className="m-0 text-muted text-sm">La marca de «estudiado» registra cobertura declarada, no demuestra comprensión o recuerdo. La proyección solo estima espacios para introducir temas según el horario semanal: no estima horas necesarias ni probabilidad de aprobar, y tampoco resta vacaciones o ausencias aún no registradas.</p>
+        <p className="m-0 text-muted text-sm">La marca de «estudiado» registra cobertura declarada, no demuestra comprensión o recuerdo. La proyección estima espacios para introducir temas según el horario habitual y las excepciones guardadas; no estima horas necesarias ni probabilidad de aprobar.</p>
       </section>
       <section aria-labelledby="planning-week-title" className="min-w-0">
         <h3 id="planning-week-title" className="mb-2 text-base">Semana habitual</h3>
@@ -77,7 +78,9 @@ export function PlanningHorizon({ targetDate, today, preferences, catalogTopicId
             </li>;
           })}
         </ul>
-        <p className="mt-2 mb-0 text-muted text-xs">Patrón repetido de Ajustes; al cambiarlo, la vista se actualiza. No es una agenda con clases o vacaciones.</p>
+        <p className="mt-2 mb-0 text-muted text-xs">Patrón habitual de Ajustes; las excepciones cambian solo sus fechas y no se acumulan después.</p>
+        {summary.calendarOverrideDays > 0 && <p className="mt-2 mb-0 text-muted text-sm">{summary.calendarOverrideDays} día(s) del horizonte tienen una excepción de disponibilidad aplicada.</p>}
+        {upcomingEvents.length > 0 && <ul aria-label="Próximos eventos" className="mt-3 mb-0 grid gap-1 pl-5 text-sm">{upcomingEvents.map(event => <li key={event.id}><b>{event.title}</b> · {event.startDate === event.endDate ? event.startDate : `${event.startDate}–${event.endDate}`} · {event.kind === 'unavailable' ? 'sin estudio' : event.kind === 'study-window' ? `${event.studyMinutes} min/día${event.startTime ? `, ${event.startTime}–${event.endTime}` : ''}` : event.kind === 'class' ? 'clase informativa' : 'hito informativo'}{event.source ? ` · ${event.source}` : ''}</li>)}</ul>}
       </section>
     </div>
   </section>;

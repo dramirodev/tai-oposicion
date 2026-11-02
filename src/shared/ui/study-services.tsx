@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 import type { StatsComparison, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
-import type { StudyReviewMode, TrainingActivity, TrainingPreferences } from '../../core/domain/entities.js';
+import type { StudyReviewMode, TrainingActivity, TrainingCalendarEvent, TrainingPreferences } from '../../core/domain/entities.js';
 import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
 import type { DailyTrainingSession, TrainingSessionHistoryEntry } from '../../core/domain/study-training-session.js';
 import type { PaperRecallAssessment, PaperRecallRating } from '../../core/domain/paper-recall-assessment.js';
@@ -217,6 +217,7 @@ export interface SettingsServices {
   load(): Promise<void>;
   setPreference(key: 'theme' | 'size' | 'lectura', value: string | number): void;
   setTrainingPreferences(value: TrainingPreferences): void;
+  createTrainingCalendarEvent(input: Omit<TrainingCalendarEvent, 'id' | 'createdAt' | 'updatedAt'>): TrainingCalendarEvent | null;
   setExam(value: string): void;
   setDevMode(value: string | null): void;
   revealDev(): boolean;

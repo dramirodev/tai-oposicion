@@ -1,5 +1,6 @@
 // Preferencias externas: límites de tamaño, claves seguras y formas que admiten las pantallas.
 import { isStudyTopicId } from '../../core/domain/topic-id.js';
+import { isTrainingCalendarEvent, MAX_TRAINING_CALENDAR_EVENTS } from '../../core/domain/study-training-events.js';
 const safeKey = (key: string) => /^[A-Za-z0-9_.-]{1,40}$/.test(key) && !['__proto__', 'constructor', 'prototype'].includes(key);
 const own = (obj: object, key: string) => Object.prototype.hasOwnProperty.call(obj, key);
 const object = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
@@ -16,6 +17,7 @@ const trainingTopicId = isStudyTopicId;
 const trainingTopicOrder = (value: unknown) => Array.isArray(value) && value.length <= 300 && value.every(isStudyTopicId);
 const trainingReviewModes = (value: unknown) => object(value) && Object.keys(value).length <= 500
   && Object.entries(value).every(([topicId, mode]) => isStudyTopicId(topicId) && ['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading'].includes(String(mode)));
+const trainingCalendarEvents = (value: unknown) => Array.isArray(value) && value.length <= MAX_TRAINING_CALENDAR_EVENTS && value.every(isTrainingCalendarEvent);
 const scope = oneOf(['vistos', 'todos']);
 const copyDefaults = (defaults: Record<string, unknown>): Record<string, unknown> =>
   Object.fromEntries(Object.entries(defaults).map(([key, value]) => [key, Array.isArray(value) ? [...value] : value]));
@@ -34,7 +36,7 @@ const schemas: Record<string, { defaults: Record<string, unknown>; fields: Recor
   } },
   simc: { defaults: {}, fields: { a: integer(0, 299), b: integer(0, 299) } },
   slow: { defaults: {}, fields: { ok: bool } },
-  training: { defaults: {}, fields: { minutesByDay: trainingMinutes, focusByDay: trainingFocus, introductionDay: integer(0, 6), introductionTopicId: trainingTopicId, academyTopicOrderIds: trainingTopicOrder, activities: trainingActivities, activityVersion: oneOf([2, 3]), reviewModesByTopic: trainingReviewModes } },
+  training: { defaults: {}, fields: { minutesByDay: trainingMinutes, focusByDay: trainingFocus, introductionDay: integer(0, 6), introductionTopicId: trainingTopicId, academyTopicOrderIds: trainingTopicOrder, activities: trainingActivities, activityVersion: oneOf([2, 3]), reviewModesByTopic: trainingReviewModes, calendarEvents: trainingCalendarEvents } },
 };
 function cleanValue(itemValue: unknown, depth = 0): unknown {
   if (itemValue === null || typeof itemValue === 'boolean') return itemValue;
