@@ -85,6 +85,7 @@ test.describe('service worker real', () => {
     const key = (await caches.keys()).find(k => /^tai-v/.test(k))!;
     return (await (await caches.open(key)).keys()).map(r => new URL(r.url).pathname);
   });
+  expect(shell).toContain('/startup-theme.js');
   const assets = (await page.request.get('/index.html')).text();
   const html = await assets;
   const entry = html.match(/src="(\.\/assets\/[^\"]+\.js)"/)?.[1];
