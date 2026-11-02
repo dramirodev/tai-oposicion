@@ -153,7 +153,7 @@ describe('propuesta semanal persistida', () => {
       preferences:{ ...DEFAULT_TRAINING_PREFERENCES, minutesByDay:[120, 120, 120, 120, 120, 0, 0] }, scheduledActivities:[], selections:[selection], events:[source, followUp],
       materialIndex:{ 'T1.01':[{ path:source.materialPath, kind:'syllabus', sha256:source.sourceHash, outlineFingerprint:source.outlineFingerprint, outlineStructureFingerprint:'c'.repeat(64) }] },
     });
-    expect(added.items).toEqual([expect.objectContaining({ kind:'sectionRecall', dateKey:'2026-11-10', minutes:25, topicIds:['T1.01'], sectionRecall:expect.objectContaining({ followUpId:source.id, sectionId:source.sectionId, sectionTitle:'1. INTRODUCCIÓN', dueDateKey:'2026-11-10' }) })]);
+    expect(added.items).toEqual([expect.objectContaining({ kind:'sectionRecall', dateKey:'2026-11-10', minutes:35, topicIds:['T1.01'], sectionRecall:expect.objectContaining({ followUpId:source.id, sectionId:source.sectionId, sectionTitle:'1. INTRODUCCIÓN', dueDateKey:'2026-11-10' }) })]);
     expect(added.sectionRecallSummary).toEqual({ added:1, stale:0, noCapacity:0, alreadyIncluded:0 });
     expect(isWeeklyStudyAgenda({ ...emptyWeeklyStudyAgenda(), revision:1, updatedAt:1, items:added.items })).toBe(true);
     expect(dailyTrainingPlanFromAgenda({ plan:{ weekday:2, minutes:120, restDay:false, activities:[] }, agenda:{ ...emptyWeeklyStudyAgenda(), items:added.items }, dateKey:'2026-11-10', studiedTopicIds:['T1.01'] }).activities).toEqual([]);

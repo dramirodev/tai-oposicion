@@ -340,6 +340,7 @@ export function addSectionRecallFollowUpsToWeeklyProposal(input: {
   for (const item of proposal.items) occupied.set(item.dateKey, (occupied.get(item.dateKey) ?? 0) + item.minutes);
   for (const activity of input.scheduledActivities) occupied.set(activity.dateKey, (occupied.get(activity.dateKey) ?? 0) + activity.minutes);
   let added = 0, stale = 0, noCapacity = 0, alreadyIncluded = 0;
+  const recallMinutes = input.preferences.focusBlockMinutes ?? 35;
   const followUps = sectionFollowUps(input.events).filter(item => item.status === 'scheduled')
     .sort((a, b) => a.dueDateKey.localeCompare(b.dueDateKey) || a.id.localeCompare(b.id));
   const items = [...proposal.items];
@@ -365,26 +366,26 @@ export function addSectionRecallFollowUpsToWeeklyProposal(input: {
         const candidate = addStudyDays(proposal.targetWeekStart, offset);
         if (!candidate || candidate <= input.todayKey || candidate > weekEnd) continue;
         const day = resolveTrainingDay({ dateKey:candidate, preferences:input.preferences });
-        if (day.minutes >= 25 && (occupied.get(candidate) ?? 0) + 25 <= day.minutes) { dateKey = candidate; break; }
+        if (day.minutes >= recallMinutes && (occupied.get(candidate) ?? 0) + recallMinutes <= day.minutes) { dateKey = candidate; break; }
       }
     }
     const day = dateKey ? resolveTrainingDay({ dateKey, preferences:input.preferences }) : null;
     if (!dateKey || !day?.minutes || day.focus === 'rest' || dateKey < input.todayKey
-      || (occupied.get(dateKey) ?? 0) + 25 > day.minutes || items.length + agenda.items.length >= MAX_WEEKLY_AGENDA_ITEMS
+      || (occupied.get(dateKey) ?? 0) + recallMinutes > day.minutes || items.length + agenda.items.length >= MAX_WEEKLY_AGENDA_ITEMS
       || agenda.items.filter(item => item.weekStart === proposal.targetWeekStart).length + items.filter(item => item.weekStart === proposal.targetWeekStart).length >= 35) { noCapacity++; continue; }
 
     const idBase = `section-follow-up:${followUp.followUpId}:${proposal.targetWeekStart}`;
     let id = idBase;
     let suffix = 1;
     while (agenda.items.some(item => item.id === id) || items.some(item => item.id === id)) id = `${idBase}:${++suffix}`;
-    items.push({ id, weekStart:proposal.targetWeekStart, dateKey, kind:'sectionRecall', topicIds:[followUp.topicId], minutes:25,
+    items.push({ id, weekStart:proposal.targetWeekStart, dateKey, kind:'sectionRecall', topicIds:[followUp.topicId], minutes:recallMinutes,
       status:'planned', createdAt:agenda.updatedAt, updatedAt:agenda.updatedAt,
       sectionRecall:{ followUpId:followUp.followUpId, sourceSelfCheckEventId:followUp.sourceSelfCheckEventId, sectionId:followUp.sectionId,
         materialPath:followUp.materialPath, sourceHash:followUp.sourceHash, outlineFingerprint:followUp.outlineFingerprint,
         dueDateKey:followUp.dueDateKey, ...(followUp.sectionTitle ? { sectionTitle:followUp.sectionTitle } : {}),
         ...(followUp.printedPage !== undefined ? { printedPage:followUp.printedPage } : {}) } });
     plannedFollowUpIds.add(followUp.followUpId);
-    occupied.set(dateKey, (occupied.get(dateKey) ?? 0) + 25);
+    occupied.set(dateKey, (occupied.get(dateKey) ?? 0) + recallMinutes);
     added++;
   }
   return { ...proposal, items, sectionRecallSummary:{ added, stale, noCapacity, alreadyIncluded } };
