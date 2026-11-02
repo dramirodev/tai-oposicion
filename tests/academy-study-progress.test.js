@@ -4,6 +4,8 @@ import {
   isAcademyMaterialSelection,
   isAcademySectionStudyEvent,
   sectionCoverage,
+  canScheduleSectionFollowUp,
+  sectionFollowUps,
   sectionRecallHistory,
 } from '../src/core/domain/academy-study-progress.ts';
 import {
@@ -44,6 +46,25 @@ describe('progreso de apartados del temario', () => {
     const events = [event({ id:'event-00000002', occurredAt:200, kind:'coverage', coverage:'partial' }), event({ id:'event-00000001', occurredAt:100, kind:'coverage', coverage:'covered' }), event({ id:'event-00000003', occurredAt:300, timing:'immediate', rating:'partial' })];
     expect(sectionCoverage(events)).toBe('partial');
     expect(sectionRecallHistory(events).map(item => item.id)).toEqual(['event-00000003']);
+  });
+
+  it('separa un vencimiento elegido de la etiqueta histórica diferida y conserva estados append-only', () => {
+    const source = event({ id:'event-source-0001', timing:'immediate' });
+    const scheduled = { ...source, id:'event-follow-0001', kind:'follow-up', followUpId:source.id, sourceSelfCheckEventId:source.id, dueDateKey:'2026-11-12', status:'scheduled' };
+    const completed = { ...scheduled, id:'event-follow-0002', occurredAt:200, status:'completed' };
+    expect(isAcademySectionStudyEvent(scheduled)).toBe(true);
+    expect(isAcademySectionStudyEvent({ ...scheduled, dueDateKey:'2026-02-30' })).toBe(false);
+    expect(canScheduleSectionFollowUp([source], source.id)).toBe(true);
+    expect(canScheduleSectionFollowUp([source, scheduled], source.id)).toBe(false);
+    expect(sectionFollowUps([source, scheduled, completed])).toEqual([completed]);
+    expect(sectionFollowUps([event({ timing:'delayed' })])).toEqual([]);
+  });
+
+  it('evita duplicar la programación local para una misma autoevaluación aunque cambie el ID del evento', () => {
+    const source = event({ id:'event-source-0002' });
+    const scheduled = { ...source, id:'event-follow-0010', kind:'follow-up', followUpId:source.id, sourceSelfCheckEventId:source.id, dueDateKey:'2026-11-12', status:'scheduled' };
+    expect(saveAcademySectionStudyEvent('owner-a', scheduled)).toBe(true);
+    expect(saveAcademySectionStudyEvent('owner-a', { ...scheduled, id:'event-follow-0011' })).toBe(false);
   });
 
   it('mantiene cuenta activa al cambiar y sincroniza solo la cuenta capturada por operación', () => {

@@ -90,8 +90,25 @@ test('el tema recomendado muestra su material de academia en móvil y escritorio
   const resumedMaterial = page.locator('#app details').filter({ has: page.getByText(/Material de academia ·/) });
   await resumedMaterial.locator('summary').filter({ hasText:/Material de academia/ }).click();
   await expect(resumedMaterial.getByRole('checkbox', { name:/T1\.01 Constitución Española - Temario\.pdf/ })).toBeChecked();
-  await resumedMaterial.locator('summary').filter({ hasText:'1. INTRODUCCIÓN' }).click();
+  const resumedSection = resumedMaterial.locator('details').filter({ hasText:'1. INTRODUCCIÓN' }).first();
+  await resumedSection.locator('summary').first().click();
   await expect(resumedMaterial).toContainText('cobertura parcial');
+  await resumedSection.locator('select[name="timing"]').selectOption('delayed');
+  await resumedSection.getByRole('button', { name:'Guardar comprobación' }).click();
+  await expect(resumedMaterial).toContainText('Autoevaluación guardada');
+  const due = new Date(); due.setDate(due.getDate() + 3);
+  const dueKey = `${due.getFullYear()}-${String(due.getMonth() + 1).padStart(2, '0')}-${String(due.getDate()).padStart(2, '0')}`;
+  await resumedSection.getByLabel('Fecha de próxima comprobación').fill(dueKey);
+  await resumedSection.getByRole('button', { name:'Programar desde la última autoevaluación' }).click();
+  await expect(resumedMaterial).toContainText(`Comprobación programada para el ${dueKey}`);
+  await page.reload();
+  const followedMaterial = page.locator('#app details').filter({ has: page.getByText(/Material de academia ·/) });
+  await followedMaterial.locator('summary').filter({ hasText:/Material de academia/ }).click();
+  const followedSection = followedMaterial.locator('details').filter({ hasText:'1. INTRODUCCIÓN' }).first();
+  await followedSection.locator('summary').first().click();
+  await expect(followedSection).toContainText(`${dueKey} · pendiente`);
+  await followedSection.getByRole('button', { name:'Marcar realizada' }).click();
+  await expect(followedSection).toContainText(`${dueKey} · realizada`);
 
   for (const width of [393, 1440]) {
     await page.setViewportSize({ width, height: 900 });

@@ -59,7 +59,7 @@ export function summarizeAcademySectionProgress(input: {
       const existing = coverageBySection.get(key) ?? [];
       existing.push(event);
       coverageBySection.set(key, existing);
-    } else if (event.timing === 'delayed') {
+    } else if (event.kind === 'self-check' && event.timing === 'delayed') {
       delayedSelfChecks.add(key);
     }
   }

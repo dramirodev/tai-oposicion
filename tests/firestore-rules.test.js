@@ -129,6 +129,9 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
     await assertFails(getDoc(doc(other, `users/student/academySectionEvents/${event.id}`)));
     await assertFails(setDoc(eventDoc, { ...event, rating:'recalled' }));
     await assertFails(setDoc(doc(db, `users/student/academySectionEvents/${event.id}-bad`), event));
+    const followUp = { id:'event-follow-0001', topicId:'T1.01', sectionId:'ci-0123456789abcdefabcd', materialPath:material.path, sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64), kind:'follow-up', followUpId:event.id, sourceSelfCheckEventId:event.id, dueDateKey:'2026-11-12', status:'scheduled', occurredAt:1_793_280_000_001 };
+    await assertSucceeds(setDoc(doc(db, `users/student/academySectionEvents/${followUp.id}`), followUp));
+    await assertFails(setDoc(doc(db, 'users/student/academySectionEvents/event-follow-0002'), { ...followUp, unexpected:true }));
   });
 
   it('sincroniza y combina la agenda semanal sin usar el documento de calendario anterior', async () => {

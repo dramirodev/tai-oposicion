@@ -4,7 +4,7 @@ import type { AcademyCurriculumSection, AcademyCurriculumTopic } from '../../cor
 import { academyCurriculumTopicLoaders } from '../../core/domain/academy-curriculum.generated.js';
 import { useStudyService } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
-import { isCurrentAcademyMaterialSelection, sectionCoverage, sectionRecallHistory, type AcademySectionStudyEvent, type AcademyTopicProgressSnapshot } from '../../core/domain/academy-study-progress.js';
+import { canScheduleSectionFollowUp, isCurrentAcademyMaterialSelection, sectionCoverage, sectionFollowUps, sectionRecallHistory, type AcademySectionStudyEvent, type AcademyTopicProgressSnapshot } from '../../core/domain/academy-study-progress.js';
 
 interface LoadedTopic {
   topicId: string;
@@ -42,11 +42,15 @@ function SectionStudyUnit({
   const matching = events.filter(event => event.sectionId === section.id && event.sourceHash === section.sourceHash && event.materialPath === section.materialPath);
   const coverage = sectionCoverage(matching);
   const [message, setMessage] = useState('');
+  const [dueDateKey, setDueDateKey] = useState(() => {
+    const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+    return `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`;
+  });
   const saving = useRef(false);
   const [busy, setBusy] = useState(false);
   const base = () => ({
     id: createEventId(), topicId: section.topicId, sectionId: section.id, materialPath: section.materialPath,
-    sourceHash: section.sourceHash, outlineFingerprint: section.outlineFingerprint, occurredAt: Date.now(),
+    sourceHash: section.sourceHash, outlineFingerprint: section.outlineFingerprint, occurredAt: Math.max(Date.now(), ...matching.map(item => item.occurredAt + 1)),
     ...(sessionId ? { trainingSessionId: sessionId } : {}), ...(activityId ? { trainingActivityId: activityId } : {}),
   });
   const addCoverage = (value: 'not-started' | 'partial' | 'covered') => {
@@ -73,7 +77,26 @@ function SectionStudyUnit({
       formElement.reset();
     } finally { saving.current = false; setBusy(false); }
   };
+  const scheduleFollowUp = (sourceSelfCheckEventId: string) => {
+    if (saving.current || !canScheduleSectionFollowUp(matching, sourceSelfCheckEventId)) return;
+    saving.current = true; setBusy(true);
+    try {
+      const saved = record({ ...base(), kind: 'follow-up', followUpId: sourceSelfCheckEventId, sourceSelfCheckEventId, dueDateKey, status: 'scheduled' });
+      setMessage(saved ? `Comprobación programada para el ${dueDateKey}. La fecha es una elección tuya, no un intervalo automático.` : 'No se pudo guardar la comprobación en este dispositivo.');
+    } finally { saving.current = false; setBusy(false); }
+  };
+  const changeFollowUpStatus = (followUpId: string, status: 'completed' | 'cancelled') => {
+    if (saving.current) return;
+    const current = sectionFollowUps(matching).find(item => item.followUpId === followUpId && item.status === 'scheduled');
+    if (!current) return;
+    saving.current = true; setBusy(true);
+    try {
+      const saved = record({ ...base(), kind: 'follow-up', followUpId, sourceSelfCheckEventId: current.sourceSelfCheckEventId, dueDateKey: current.dueDateKey, status });
+      setMessage(saved ? (status === 'completed' ? 'Comprobación marcada como realizada.' : 'Comprobación cancelada; el historial se conserva.') : 'No se pudo actualizar la comprobación.');
+    } finally { saving.current = false; setBusy(false); }
+  };
   const history = sectionRecallHistory(matching);
+  const followUps = sectionFollowUps(matching);
   const coverageLabel = coverage === 'covered' ? 'cubierto' : coverage === 'partial' ? 'parcial' : 'sin iniciar';
   const timingLabel = { assisted: 'con ayuda', immediate: 'inmediato', delayed: 'diferido' };
   const ratingLabel = { 'not-recalled': 'no lo recordé', partial: 'lo recordé parcialmente', recalled: 'lo recordé' };
@@ -89,7 +112,7 @@ function SectionStudyUnit({
       <form className="mt-2 flex flex-wrap items-end gap-2" onSubmit={addSelfCheck}>
         <label className="grid gap-1 text-sm">Comprobación
           <select name="timing" defaultValue="immediate" className="min-h-10 rounded-md border border-line bg-surface px-2">
-            <option value="assisted">Con ayuda</option><option value="immediate">Al terminar</option><option value="delayed">Días después</option>
+            <option value="assisted">Con ayuda</option><option value="immediate">Al terminar</option><option value="delayed">Días después (ya comprobado)</option>
           </select>
         </label>
         <label className="grid gap-1 text-sm">Autoevaluación
@@ -99,7 +122,15 @@ function SectionStudyUnit({
         </label>
         <button className="btn" type="submit" disabled={busy}>Guardar comprobación</button>
       </form>
+      <p className="my-1 text-xs text-muted">“Días después” describe una comprobación que ya hiciste. Para elegir cuándo volver, usa la fecha de próxima comprobación tras guardar.</p>
       {message && <p className="my-2 text-sm" role="status">{message}</p>}
+      {followUps.length > 0 && <div className="mt-2 text-sm"><p className="my-1 font-semibold">Comprobaciones posteriores</p><ul className="my-1 list-disc ps-5">{followUps.map(item => <li key={item.followUpId}>{item.dueDateKey} · {item.status === 'scheduled' ? 'pendiente' : item.status === 'completed' ? 'realizada' : 'cancelada'}{item.status === 'scheduled' && <span className="ms-2 inline-flex flex-wrap gap-2"><button className="text-link underline" type="button" disabled={busy} onClick={() => changeFollowUpStatus(item.followUpId, 'completed')}>Marcar realizada</button><button className="text-link underline" type="button" disabled={busy} onClick={() => changeFollowUpStatus(item.followUpId, 'cancelled')}>Cancelar</button></span>}</li>)}</ul></div>}
+      {history.filter(item => canScheduleSectionFollowUp(matching, item.id)).at(-1) && <form className="mt-2 flex flex-wrap items-end gap-2" onSubmit={event => { event.preventDefault(); const latest = [...history].reverse().find(item => canScheduleSectionFollowUp(matching, item.id)); if (latest) scheduleFollowUp(latest.id); }}>
+        <label className="grid gap-1 text-sm">Próxima comprobación · fecha elegida
+          <input aria-label="Fecha de próxima comprobación" type="date" min={(() => { const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1); return `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`; })()} value={dueDateKey} onChange={event => setDueDateKey(event.currentTarget.value)} className="min-h-10 rounded-md border border-line bg-surface px-2" />
+        </label>
+        <button className="btn sec" type="submit" disabled={busy || !dueDateKey}>Programar desde la última autoevaluación</button>
+      </form>}
       <details className="mt-2">
         <summary className="min-h-9 cursor-pointer content-center text-sm">Historial de autoevaluaciones · {history.length}</summary>
         {history.length ? <ul className="my-1 list-disc ps-5 text-sm">{history.map(item => <li key={item.id}>{new Date(item.occurredAt).toLocaleString()} · {timingLabel[item.timing]} · {ratingLabel[item.rating]} · autoevaluación</li>)}</ul>

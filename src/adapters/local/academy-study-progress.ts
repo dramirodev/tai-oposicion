@@ -68,6 +68,8 @@ export function saveAcademySectionStudyEvent(accountId: string | null, event: Ac
   if (!isAcademySectionStudyEvent(event)) return false;
   const data = read(accountId);
   if (data.events[event.id]) return false;
+  if (event.kind === 'follow-up' && event.status === 'scheduled'
+    && Object.values(data.events).some(candidate => candidate.kind === 'follow-up' && candidate.followUpId === event.followUpId)) return false;
   data.events[event.id] = event;
   return write(accountId, data);
 }

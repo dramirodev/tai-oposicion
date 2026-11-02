@@ -20,6 +20,7 @@ export interface AcademyMaterialSelection {
 export type SectionCoverage = 'not-started' | 'partial' | 'covered';
 export type SectionRecallTiming = 'assisted' | 'immediate' | 'delayed';
 export type SectionRecallRating = 'not-recalled' | 'partial' | 'recalled';
+export type SectionFollowUpStatus = 'scheduled' | 'completed' | 'cancelled';
 
 interface SectionEventBase {
   id: string;
@@ -36,6 +37,7 @@ interface SectionEventBase {
 export type AcademySectionStudyEvent = SectionEventBase & (
   | { kind: 'coverage'; coverage: SectionCoverage }
   | { kind: 'self-check'; timing: SectionRecallTiming; rating: SectionRecallRating }
+  | { kind: 'follow-up'; followUpId: string; sourceSelfCheckEventId: string; dueDateKey: string; status: SectionFollowUpStatus }
 );
 
 export interface AcademyTopicProgressSnapshot {
@@ -54,6 +56,7 @@ const eventIdPattern = /^[a-zA-Z0-9_-]{8,128}$/;
 const coverages = new Set<SectionCoverage>(['not-started', 'partial', 'covered']);
 const timings = new Set<SectionRecallTiming>(['assisted', 'immediate', 'delayed']);
 const ratings = new Set<SectionRecallRating>(['not-recalled', 'partial', 'recalled']);
+const followUpStatuses = new Set<SectionFollowUpStatus>(['scheduled', 'completed', 'cancelled']);
 
 const isRecord = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
 
@@ -87,6 +90,9 @@ export function isAcademySectionStudyEvent(value: unknown): value is AcademySect
     || (value.trainingActivityId !== undefined && (typeof value.trainingActivityId !== 'string' || value.trainingActivityId.length > 128))) return false;
   if (value.kind === 'coverage') return coverages.has(value.coverage as SectionCoverage);
   if (value.kind === 'self-check') return timings.has(value.timing as SectionRecallTiming) && ratings.has(value.rating as SectionRecallRating);
+  if (value.kind === 'follow-up') return eventIdPattern.test(String(value.followUpId ?? ''))
+    && eventIdPattern.test(String(value.sourceSelfCheckEventId ?? ''))
+    && isStudyDateKey(value.dueDateKey) && followUpStatuses.has(value.status as SectionFollowUpStatus);
   return false;
 }
 
@@ -111,4 +117,28 @@ export function sectionCoverage(events: readonly AcademySectionStudyEvent[]): Se
 export function sectionRecallHistory(events: readonly AcademySectionStudyEvent[]): readonly (AcademySectionStudyEvent & { kind: 'self-check' })[] {
   return events.filter((event): event is AcademySectionStudyEvent & { kind: 'self-check' } => event.kind === 'self-check')
     .sort((first, second) => first.occurredAt - second.occurredAt || first.id.localeCompare(second.id));
+}
+
+/** Latest append-only state per explicit follow-up ID; legacy `timing: delayed` events are not schedules. */
+export function sectionFollowUps(events: readonly AcademySectionStudyEvent[]): readonly (AcademySectionStudyEvent & { kind: 'follow-up' })[] {
+  const latest = new Map<string, AcademySectionStudyEvent & { kind: 'follow-up' }>();
+  for (const event of events) {
+    if (event.kind !== 'follow-up') continue;
+    const previous = latest.get(event.followUpId);
+    if (!previous || event.occurredAt > previous.occurredAt
+      || (event.occurredAt === previous.occurredAt && event.id.localeCompare(previous.id) > 0)) latest.set(event.followUpId, event);
+  }
+  return [...latest.values()].sort((a, b) => a.dueDateKey.localeCompare(b.dueDateKey) || a.id.localeCompare(b.id));
+}
+
+export function canScheduleSectionFollowUp(events: readonly AcademySectionStudyEvent[], sourceSelfCheckEventId: string): boolean {
+  const source = events.find(event => event.id === sourceSelfCheckEventId && event.kind === 'self-check');
+  return !!source && !events.some(event => event.kind === 'follow-up' && event.followUpId === sourceSelfCheckEventId);
+}
+
+function isStudyDateKey(value: unknown): value is string {
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T12:00:00`);
+  return Number.isFinite(date.getTime())
+    && [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-') === value;
 }

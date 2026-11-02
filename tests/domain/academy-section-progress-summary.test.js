@@ -43,4 +43,15 @@ describe('resumen de progreso por apartados', () => {
     expect(summary).not.toHaveProperty('totalSectionCount');
     expect(summary).not.toHaveProperty('masteryPercentage');
   });
+
+  it('no cuenta los seguimientos programados como autoevaluaciones diferidas realizadas', () => {
+    const summary = summarizeAcademySectionProgress({
+      selections:[{ topicId:'T1.01', materials:[syllabus], revision:1, updatedAt:1 }],
+      events:[{ ...selfCheck('event-00000001', 'immediate', 'partial', 10), id:'event-00000001' }, {
+        ...coverage('event-00000002', 'partial', 20), kind:'follow-up', followUpId:'event-00000001', sourceSelfCheckEventId:'event-00000001', dueDateKey:'2026-11-12', status:'scheduled',
+      }],
+      materialIndex,
+    });
+    expect(summary.delayedSelfCheckSectionCount).toBe(0);
+  });
 });
