@@ -8,20 +8,11 @@ export const academyCurriculumTopic = {
   "appCatalogName": "Transparencia",
   "sourceStatus": "outline-extracted-needs-review",
   "sourceFileCounts": {
-    "test": 3,
     "review": 1,
-    "syllabus": 1
+    "syllabus": 1,
+    "test": 2
   },
   "files": [
-    {
-      "path": "T1.04 Transparencia/T1.04 Transparencia - Preguntas CTBG (100).pdf",
-      "name": "T1.04 Transparencia - Preguntas CTBG (100).pdf",
-      "kind": "test",
-      "extension": ".pdf",
-      "sizeBytes": 1077497,
-      "sha256": "1c6f5cb5f585b9ea5719703ba7395eb26149121d3b138e2f9152e2755f143d6a",
-      "outlineStatus": "not-extracted-test"
-    },
     {
       "path": "T1.04 Transparencia/T1.04 Transparencia - Repaso.pdf",
       "name": "T1.04 Transparencia - Repaso.pdf",

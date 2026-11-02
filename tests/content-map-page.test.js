@@ -34,7 +34,7 @@ it('creates a local reviewed link when the Drive test topic differs from the que
   await user.selectOptions(await screen.findByLabelText('Pregunta'), 'academy-q1');
   const testSelect = screen.getByLabelText('PDF de test de Drive');
   await waitFor(() => expect(testSelect.options.length).toBeGreaterThan(1));
-  await user.selectOptions(testSelect, 'T1.04 Transparencia/T1.04 Transparencia - Preguntas CTBG (100).pdf');
+  await user.selectOptions(testSelect, 'T1.04 Transparencia/T1.04 Transparencia - Test 1.pdf');
   const sectionSelect = screen.getByLabelText('Epígrafe del temario');
   await user.selectOptions(sectionSelect, sectionSelect.options[1].value);
   await user.type(screen.getByLabelText('Página del test'), '2');
@@ -47,7 +47,7 @@ it('creates a local reviewed link when the Drive test topic differs from the que
   expect(isAcademyQuestionSectionManifest(saved)).toBe(true);
   expect(saved.links).toHaveLength(1);
   expect(saved.links[0]).toMatchObject({ questionId:'academy-q1', questionTopicId:'T3.01', testMaterialTopicId:'T1.04', sectionTopicId:'T3.01', reviewer:'revisor-local', rationale:'La pregunta evalúa el concepto indicado en el epígrafe del temario.' });
-  expect(saved.links[0].testEvidence).toMatchObject({ page:2, sourceHash:expect.any(String), path:'T1.04 Transparencia/T1.04 Transparencia - Preguntas CTBG (100).pdf' });
+  expect(saved.links[0].testEvidence).toMatchObject({ page:2, sourceHash:expect.any(String), path:'T1.04 Transparencia/T1.04 Transparencia - Test 1.pdf' });
   expect(saved.links[0].sectionEvidence).toMatchObject({ page:expect.any(Number), sourceHash:expect.any(String), outlineFingerprint:expect.any(String) });
   expect(await screen.findByText(/Se guarda solo en este dispositivo y cuenta/)).toBeInTheDocument();
 });
