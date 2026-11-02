@@ -55,6 +55,8 @@ Los datos `training.calendarEvents` son opcionales y pasan por el esquema compar
 
 **Verificación local:** `npm run check` (170 archivos pasaron, 1 omitido; 844 pasadas/22 omitidas; arquitectura, lint, ignore-growth y typecheck correctos), `npm run build` correcto con avisos conocidos Zod/Rollup y chunks >500 kB; E2E de vacaciones/ausencia, efecto en sesión y semana, recarga, conservación como histórico y retorno al plan ordinario el 6/11 pasó Chromium/WebKit (2/2); pruebas focalizadas de preferencias/calendario/dominio/UI: 70 pasadas. `git diff --check` limpio. Sin acceso ni escritura Firebase, sin push/tag/release/despliegue.
 
+Commit local de implementación, pruebas y handoff: `3008631` (`Integra excepciones de calendario en la planificación`). El informe de auditoría sigue local y fuera del commit. Próxima fase recomendada: bloques de foco y pausas dentro de una ventana especial, luego convertir hitos en simulacros versionados con reglas de corrección incompletas explícitas. Rama local `feat/study-plan-through-exam`; no push, tag, release ni despliegue.
+
 Commit local de código, pruebas y este handoff: `2933b0f` (`Integra horizonte y semana en la planificación`). El informe de auditoría está sin seguimiento y quedó fuera del commit. La rama `feat/study-plan-through-exam` sigue solo local: no se hizo push, tag, release ni despliegue.
 
 ## Evaluación pendiente
