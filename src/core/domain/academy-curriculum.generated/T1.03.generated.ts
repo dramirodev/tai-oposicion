@@ -97,6 +97,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
       "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
       "outlineEntryCount": 23
+    },
+    {
+      "path": "T1.03 Gobierno/T1.03 Gobierno - Test.pdf",
+      "name": "T1.03 Gobierno - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 268042,
+      "sha256": "81640be02a1a14367694ae3a732ca11059755e53062fbe849758a7c81f19321d",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

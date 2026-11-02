@@ -33,6 +33,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "279a6c00f75a9e4c122eba9c0e443e5553e8a06592ef67fb449a4a1ffae3ea8c",
       "outlineFingerprint": "9d50643129e36b891fd28f7f233f613a665664c489107f61feda03ba28c70175",
       "outlineEntryCount": 13
+    },
+    {
+      "path": "T2.02 Periféricos/T2.02 Periféricos - Test.pdf",
+      "name": "T2.02 Periféricos - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 248909,
+      "sha256": "c480521376b3c6cf868221ebcb454a6ec5fb05928b23437ca7e55058fbff7037",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

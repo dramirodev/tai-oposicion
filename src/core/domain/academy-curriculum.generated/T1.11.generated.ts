@@ -43,6 +43,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "608a07e977869f8be11a5bbbe1c4dd8911bb88f0967462d223ebd3366d3c24f5",
       "outlineFingerprint": "bef7b466ca27712129f720ee35c4b34db27991a03e77c029eb7c202d1abc07c7",
       "outlineEntryCount": 17
+    },
+    {
+      "path": "T1.11 Instrumentos de Acceso Electrónico/T1.11 Instrumentos de Acceso Electrónico - Test.pdf",
+      "name": "T1.11 Instrumentos de Acceso Electrónico - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 429500,
+      "sha256": "8613744ddfafb4b88859e53ad39f3968dd238aef7a84ddb13e7bcd027fcd9a02",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

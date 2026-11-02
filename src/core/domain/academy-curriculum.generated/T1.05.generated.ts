@@ -33,6 +33,24 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "8e7947ed8f7cc3e05a72fd638b1326aa2e886962b86a980dd32fed9fc6dbcb70",
       "outlineFingerprint": "dfd9fd282db530bbec971ae7f4249888cc963eb70911df8c721528cea4ca8482",
       "outlineEntryCount": 18
+    },
+    {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Test 1.pdf",
+      "name": "T1.05 TREBEP - Test 1.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 449817,
+      "sha256": "6c132bb691384f0e4aba6d7c9f7e572b8ab7696bcbd1cd334c0c565e3fd4af3b",
+      "outlineStatus": "not-extracted-test"
+    },
+    {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Test 2.pdf",
+      "name": "T1.05 TREBEP - Test 2.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 414959,
+      "sha256": "98400f135be81a4a8fadff65e9e6f4ff4667c71faf9ddea5ddbac73edabd0a62",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

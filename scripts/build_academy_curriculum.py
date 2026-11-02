@@ -130,12 +130,12 @@ def build_catalog(source_root: Path, app_index_path: Path, pdftotext: str) -> di
             kind = material_kind(path)
             extracted: list[dict[str, Any]] = []
             issue: str | None = None
-            if path.suffix.casefold() == ".pdf":
+            if path.suffix.casefold() == ".pdf" and kind != "test":
                 extracted, issue = extract_outline(path, pdftotext)
                 if extracted and kind == "other":
                     kind = "syllabus"
             file_counts[kind] = file_counts.get(kind, 0) + 1
-            if kind not in {"syllabus", "review", "notes", "exercise", "audio"}:
+            if kind not in {"syllabus", "review", "notes", "exercise", "audio", "test"}:
                 continue
             entry: dict[str, Any] = {
                 "path": relative_path,
@@ -144,11 +144,11 @@ def build_catalog(source_root: Path, app_index_path: Path, pdftotext: str) -> di
                 "extension": path.suffix.casefold(),
                 "sizeBytes": path.stat().st_size,
             }
-            if kind in {"syllabus", "review", "notes", "exercise"}:
+            if kind in {"syllabus", "review", "notes", "exercise", "test"}:
                 entry["sha256"] = sha256_file(path)
 
             if path.suffix.casefold() == ".pdf":
-                entry["outlineStatus"] = "extracted" if extracted else issue
+                entry["outlineStatus"] = "not-extracted-test" if kind == "test" else ("extracted" if extracted else issue)
                 if extracted:
                     entry["outlineStructureFingerprint"], entry["outlineFingerprint"] = outline_fingerprints(extracted)
                     if kind == "syllabus":

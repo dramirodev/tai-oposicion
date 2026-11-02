@@ -68,6 +68,14 @@ class AcademyCurriculumBuildTests(unittest.TestCase):
         self.assertEqual(topic["files"][0]["kind"], "notes")
         self.assertEqual(topic["sourceStatus"], "no-syllabus-file")
 
+    def test_indexes_test_pdf_metadata_and_hash_without_creating_sections(self):
+        self.topic_folder("T1.01 Tema app", ["Test 50 preguntas.pdf"])
+        topic = build_catalog(self.source, self.app_index, str(self.pdftotext))["topics"][0]
+        test_file = topic["files"][0]
+        self.assertEqual(test_file["kind"], "test")
+        self.assertEqual(test_file["sha256"], "6ffe571c73cfbee7931afb6f08bc6bbb20ed82a2191f205a86b1bbfd190d42af")
+        self.assertEqual(topic["sections"], [])
+
 
 if __name__ == "__main__":
     unittest.main()

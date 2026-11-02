@@ -52,6 +52,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "83a1af874e12672cbb197604524db4dd1276475cf72a429ef6558c45b0cc92d8",
       "outlineFingerprint": "4a00d1167ea8029dff485b1d8ca74716c739bf36ca5a5dc9ba61ade4a3047b79",
       "outlineEntryCount": 27
+    },
+    {
+      "path": "T2.03 Estructuras de Datos/T2.03 Estructuras de Datos - Test.pdf",
+      "name": "T2.03 Estructuras de Datos - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 270051,
+      "sha256": "7dc22dd18cf63b258566278d9d7271cbfbc086fe0cd91915d45b5a68276a3a58",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

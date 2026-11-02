@@ -45,6 +45,24 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "57a38a526bf7863c7ed8d313707c05fcdd5efcf4dbecbed0f880e9c42fa73ece",
       "outlineFingerprint": "1c6166ca60d522e5db6d3a047cbb5a75c78d9608c4db4e1a264097d12637d754",
       "outlineEntryCount": 18
+    },
+    {
+      "path": "T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Test 2.pdf",
+      "name": "T1.10 Acceso Electrónico - Test 2.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 302717,
+      "sha256": "16c7cb8d8a8da45870b2526be672a4e8f30d45f95729456c7c2b4ce1927dc72d",
+      "outlineStatus": "not-extracted-test"
+    },
+    {
+      "path": "T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Test.pdf",
+      "name": "T1.10 Acceso Electrónico - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 346018,
+      "sha256": "fe17d51565fa7a50b28719845b8b64a5b5ee9b583aa5e303297ad9727936ef67",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

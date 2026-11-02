@@ -33,6 +33,15 @@ export const academyCurriculumTopic = {
       "sizeBytes": 552703,
       "sha256": "f7e0ee4d782909682dd2842a8773001411c15b7a6ae90e7e13a552497e8a721c",
       "outlineStatus": "index-not-found"
+    },
+    {
+      "path": "T3.05 POO/T3.05 POO - Test.pdf",
+      "name": "T3.05 POO - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 322215,
+      "sha256": "508a50f571460835d6b08e682382bc7d7b3447061942823960f5a0dd778c9d03",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

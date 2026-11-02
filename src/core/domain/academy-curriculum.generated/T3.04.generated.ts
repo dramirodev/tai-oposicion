@@ -68,6 +68,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "8b850a12986e22c85cabb9217995f42619a50009a4afd9a6cf5c67f50a22d7db",
       "outlineFingerprint": "e1ba2f01fb94391ed6d0091f5bb76aeeb1ad6edcfd61f047c52771c3ca6f80a0",
       "outlineEntryCount": 10
+    },
+    {
+      "path": "T3.04 SQL/T3.04 SQL - Test.pdf",
+      "name": "T3.04 SQL - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 288540,
+      "sha256": "cec98903cc38c0c677860052518c1ec30438958841d0f49e4406861526b1c634",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

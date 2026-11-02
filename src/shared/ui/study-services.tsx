@@ -183,6 +183,7 @@ export interface TestTopic { id: string; name: string; total: number; attempted:
 export interface TestConfiguration { all: boolean; selected: readonly string[]; count: 10 | 15 | 25 | 40; mode: TestMode; origins: readonly ('O' | 'A' | 'G')[]; timed: boolean; minutes: 10 | 20 | 30 | 45 | 60 }
 export interface TestServices {
   loadTopics(): Promise<readonly TestTopic[]>;
+  loadTopicQuestions(topicId: string): Promise<import('../../core/domain/question-record.js').QuestionRecord[]>;
   getConfiguration(): TestConfiguration;
   saveConfiguration(configuration: TestConfiguration): void;
   seenTopics(): readonly string[];

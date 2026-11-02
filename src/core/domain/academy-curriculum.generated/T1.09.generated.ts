@@ -33,6 +33,24 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "852b4bbc130d94d03e8afd9f50192dc2d7e021dbcef211557bc700b1265279d5",
       "outlineFingerprint": "fb3ec5635322077d07baf2f7f77934ea95600d70d97700d5003e7a412d929f7a",
       "outlineEntryCount": 24
+    },
+    {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Test (version alternativa).pdf",
+      "name": "T1.09 Protección de Datos - Test (version alternativa).pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 453633,
+      "sha256": "ed274d70ffb14687701cb067db7671f72d026ea34dea30c687c49aa15fd1805b",
+      "outlineStatus": "not-extracted-test"
+    },
+    {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Test.pdf",
+      "name": "T1.09 Protección de Datos - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 224706,
+      "sha256": "df6b2ecc341821760d3a977f96649f75de8768911cdb4de45af062cde9bdcbe4",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

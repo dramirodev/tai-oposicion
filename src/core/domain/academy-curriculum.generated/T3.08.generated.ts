@@ -232,6 +232,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "a4d6c34de457aa07bf64a9644d7a08950c4dfd7ab4b3d20e2a621b3314364c89",
       "outlineFingerprint": "4603476b57cedb14c38fd4d8f543abf0bcdc44f81c07d8f6da372e29ebf1a1e6",
       "outlineEntryCount": 29
+    },
+    {
+      "path": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Test.pdf",
+      "name": "T3.08 Aplicaciones Web - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 289209,
+      "sha256": "1c6679413f6808002b9da8e789bd95f747aaaf645978912cae5cecd07138f913",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

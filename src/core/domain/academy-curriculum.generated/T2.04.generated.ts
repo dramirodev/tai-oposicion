@@ -51,6 +51,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "a81074a4a2ad3b4006ab5893bac2460f11f73fd430b79ed5e121f98416659d61",
       "outlineFingerprint": "4324cbc9274c4ff5e2c9bd352782f10bcfc140a446a95a9b9fea4e2024c27de6",
       "outlineEntryCount": 55
+    },
+    {
+      "path": "T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Test.pdf",
+      "name": "T2.04 Sistemas Operativos - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 260096,
+      "sha256": "24330431f62ab169901de54de77ad2a3ecc7d3c76620487453abb14d44250532",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

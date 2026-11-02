@@ -33,6 +33,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "c0da6a2c330d92f5c8ffd376d8e3e63fe2724566d796a1754225827ae7ff9969",
       "outlineFingerprint": "47127eea8c380fb9e426aeea088a1331ee4b23847ab2a65a483be373011b7c08",
       "outlineEntryCount": 22
+    },
+    {
+      "path": "T4.03 Administración del Correo/T4.03 Administración del Correo - Test.pdf",
+      "name": "T4.03 Administración del Correo - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 237325,
+      "sha256": "03d64720faf2a3eb43329fe81256ba6433d2e2fb8a41d0bd8aeef87c04c13c22",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

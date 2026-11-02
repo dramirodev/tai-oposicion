@@ -42,6 +42,15 @@ export const academyCurriculumTopic = {
       "extension": ".txt",
       "sizeBytes": 773,
       "sha256": "bebe7c2c8a6c65e4786caf5b1b3a500e8ea87256e401a3ee703a06afa63ca8c0"
+    },
+    {
+      "path": "T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Test.pdf",
+      "name": "T3.03 Lenguajes de Programación - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 269031,
+      "sha256": "883fabc4592f25b412d1e2bf1ede8426d9c7d7f189f620db6479ea4f2f6f13e0",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

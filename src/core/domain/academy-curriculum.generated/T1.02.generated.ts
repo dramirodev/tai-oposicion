@@ -92,6 +92,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "0df12cef0b6d1805f499af4478559fb76933c9dd0ee1bc038df7ae788d5b8305",
       "outlineFingerprint": "e01cb5d7d9f262d66583513f2e5f7a3c656104e6c2ba66a90d101de772ea480e",
       "outlineEntryCount": 41
+    },
+    {
+      "path": "T1.02 Cortes Generales/T1.02 Cortes Generales - Test.pdf",
+      "name": "T1.02 Cortes Generales - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 279763,
+      "sha256": "aa77c6693cb6cb0c371c802736429788f7bd3288fc935b4fb27bbe6663d7ae0e",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

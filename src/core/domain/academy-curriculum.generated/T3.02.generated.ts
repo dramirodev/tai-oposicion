@@ -43,6 +43,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "5533c3ee02da3ea3052d081a10d9ce89b54b71c6f25e040cc70436d62771a73d",
       "outlineFingerprint": "632d9bdf545a8f830efd728057faacc9a9c65b4a7280826214aa769771704c7f",
       "outlineEntryCount": 21
+    },
+    {
+      "path": "T3.02 Diseño de BD/T3.02 Diseño de BD - Test.pdf",
+      "name": "T3.02 Diseño de BD - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 333783,
+      "sha256": "09d3fcafff73c30e9791c17c3c39f42fed9ae55cb129068adf5bf954ec32729d",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

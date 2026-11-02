@@ -33,6 +33,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "dad1ab0ffeefccf7d8007840aa07e4c8ab4916283bc7f9a1d5981eb0d2314ea1",
       "outlineFingerprint": "e3fb52939feb2235837cc8e315a9e021a3de761cc691c88d57c543d8efd38093",
       "outlineEntryCount": 46
+    },
+    {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Test.pdf",
+      "name": "T3.10 Metodologías de Pruebas y Colaboración - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 324795,
+      "sha256": "077260953615fab2a4e8fb435d9aa87c19cd4d09794396bf32bbbd69c5526a04",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

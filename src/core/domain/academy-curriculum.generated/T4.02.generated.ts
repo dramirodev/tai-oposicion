@@ -52,6 +52,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "587c270bc23bb2f29d781a518115c0b4d3f5aec22983c4877980a371e66b3059",
       "outlineFingerprint": "8f9d8949113629b211075ef52f29007a69d494b9fe7f63119d03532cc7306d25",
       "outlineEntryCount": 33
+    },
+    {
+      "path": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Test.pdf",
+      "name": "T4.02 Administración de BD y Virtualización - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 255664,
+      "sha256": "ee4ac9af74224261ee631a5e4010420f17a2125c016e57d20a14b686b947d9ed",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

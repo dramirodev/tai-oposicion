@@ -64,6 +64,15 @@ export const academyCurriculumTopic = {
       "extension": ".txt",
       "sizeBytes": 2907,
       "sha256": "8d1ae9b44c5f4061db598bce0940c186bc2d0cc984593612ebaa49bbaededf45"
+    },
+    {
+      "path": "T2.01 Informática Básica/T2.01 Informática Básica - Test.pdf",
+      "name": "T2.01 Informática Básica - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 323228,
+      "sha256": "6f62443b0ac92fbe37730edaf417caedad685fec10f02f424d774e6f6c9adc44",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

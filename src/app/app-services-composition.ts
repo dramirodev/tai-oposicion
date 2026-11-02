@@ -572,6 +572,7 @@ export const studyServices: StudyServices = {
       const summaries = await progressPorTema(index.temas.map(topic => ({ id: topic.id, name: topic.nombre, total: topic.n })));
       return summaries.map(({ id, name, total, attempted, correct, answerCount }) => ({ id, name, total, attempted, correct, answerCount }));
     },
+    loadTopicQuestions: (topicId: string) => studyQuestionCatalog.getTopicQuestions(topicId),
     getConfiguration() {
       const saved = localStudyProgressGateway.getPreferences().test || {};
       return { all: typeof saved.all === 'boolean' ? saved.all : !(saved.sel || []).length, selected: saved.sel || [], count: ([10, 15, 25, 40].includes(saved.n ?? 0) ? saved.n : 15) as TestConfiguration['count'],

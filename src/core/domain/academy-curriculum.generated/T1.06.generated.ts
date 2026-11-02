@@ -33,6 +33,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "2faaa7ae220d34c99a4e05e03189be02f32c83fa1984dea2798e18299ae36385",
       "outlineFingerprint": "735a1600181b7ba1cf11f58f1bcd02854890bd49ad88c20555200ce11d1ee201",
       "outlineEntryCount": 23
+    },
+    {
+      "path": "T1.06 Fuentes del Derecho/T1.06 Fuentes del Derecho - Test.pdf",
+      "name": "T1.06 Fuentes del Derecho - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 288943,
+      "sha256": "c0621f6f0eba11bc811a01535920effbe42dd9825aecd74a5428b451d7d647d5",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

@@ -14,6 +14,15 @@ export const academyCurriculumTopic = {
   },
   "files": [
     {
+      "path": "T1.04 Transparencia/T1.04 Transparencia - Preguntas CTBG (100).pdf",
+      "name": "T1.04 Transparencia - Preguntas CTBG (100).pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 1077497,
+      "sha256": "1c6f5cb5f585b9ea5719703ba7395eb26149121d3b138e2f9152e2755f143d6a",
+      "outlineStatus": "not-extracted-test"
+    },
+    {
       "path": "T1.04 Transparencia/T1.04 Transparencia - Repaso.pdf",
       "name": "T1.04 Transparencia - Repaso.pdf",
       "kind": "review",
@@ -33,6 +42,24 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "621d35174b1e9875b21febf510d7d9b5f6300c8be80b002825bb32205dfb9809",
       "outlineFingerprint": "c9ddeb961ebf7fcbf4516c9f873ec7779fc42855263169c1dfe99bad71685f62",
       "outlineEntryCount": 10
+    },
+    {
+      "path": "T1.04 Transparencia/T1.04 Transparencia - Test 1.pdf",
+      "name": "T1.04 Transparencia - Test 1.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 371956,
+      "sha256": "0288d1851e5ac8bdf10904de83ee17147de77ce00e93c5eee63865357e33a767",
+      "outlineStatus": "not-extracted-test"
+    },
+    {
+      "path": "T1.04 Transparencia/T1.04 Transparencia - Test 2.pdf",
+      "name": "T1.04 Transparencia - Test 2.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 282669,
+      "sha256": "c7b04a48645d32034396878900e9dfdc63182cc1b23b10ac3bffe51c160c46c1",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

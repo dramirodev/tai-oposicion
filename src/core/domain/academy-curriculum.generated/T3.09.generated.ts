@@ -33,6 +33,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "b828fb185c05d5bb3515304e501dae4b1b3633178bc586b79b4767c8e1d4e354",
       "outlineFingerprint": "3b140fcf1ce9460d6c8eb8691041494a2c7682eebbedb50bd4f95ab19bf811ac",
       "outlineEntryCount": 28
+    },
+    {
+      "path": "T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Test.pdf",
+      "name": "T3.09 Accesibilidad y Seguridad - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 247610,
+      "sha256": "67c13c545b63b5dd31d7ebe8d147062cdee6b6884d4945caf26ffc23cca7acc6",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

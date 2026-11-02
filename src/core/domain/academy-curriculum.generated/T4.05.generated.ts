@@ -33,6 +33,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "5d032a5e50462eb85d4097b3b479825dd023d89dfad5a19959bf30dac15ff250",
       "outlineFingerprint": "d8a6a1fda189d0054a4788de3510feb0c02ec9cd129d6500c7e819797d4509c0",
       "outlineEntryCount": 23
+    },
+    {
+      "path": "T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Test.pdf",
+      "name": "T4.05 Seguridad CPD y Criptografía - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 264027,
+      "sha256": "13605ce2fa44f8de20d95d5f6fd3dbe0decc05379ded92aac38566b5ca3bdf9b",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

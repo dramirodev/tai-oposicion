@@ -33,6 +33,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "3660a4bde239e741a65031f08a6846e07fb32676f4bc0e47e58c430d10fb93ef",
       "outlineFingerprint": "8de20f13bad5fb0dc16481c5bb5a35c96ca7b0e80a40f6fd7dfc72558dc81135",
       "outlineEntryCount": 25
+    },
+    {
+      "path": "T4.08 Internet/T4.08 Internet - Test.pdf",
+      "name": "T4.08 Internet - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 232337,
+      "sha256": "c641134ff0b65dbbf65a09cbe7e88e822695cb26002c0b2d38223e783d77914e",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

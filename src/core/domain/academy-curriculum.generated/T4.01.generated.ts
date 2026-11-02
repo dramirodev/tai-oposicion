@@ -61,6 +61,15 @@ export const academyCurriculumTopic = {
       "sizeBytes": 225691,
       "sha256": "830785b3be7c2f7d946930a151261b43598861d4639ef66c897af5c2384deff2",
       "outlineStatus": "index-not-found"
+    },
+    {
+      "path": "T4.01 Administración de SO/T4.01 Administración de SO - Test.pdf",
+      "name": "T4.01 Administración de SO - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 217306,
+      "sha256": "802fb1e564b92e7baf510fd0588032b6b1d617b7841d21ea80e276f2c41e0280",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

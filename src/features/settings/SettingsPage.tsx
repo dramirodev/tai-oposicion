@@ -76,7 +76,7 @@ function accountMessage(sync: SettingsSnapshot['sync']): string {
 }
 
 function AccessStatus({ snapshot, requesting, onRequest }: { snapshot: SettingsSnapshot; requesting: boolean; onRequest(): void }) {
-  if (snapshot.level === 'propietario') return <p><small>Propietario · acceso completo.</small> <Link to="/acceso">Gestionar accesos{snapshot.sync.requests.length ? ` (${snapshot.sync.requests.length} pendientes)` : ''}</Link></p>;
+  if (snapshot.level === 'propietario') return <p><small>Propietario · acceso completo.</small> <Link to="/acceso">Gestionar accesos{snapshot.sync.requests.length ? ` (${snapshot.sync.requests.length} pendientes)` : ''}</Link> · <Link to="/curar-contenido">Curar vínculos a epígrafes</Link></p>;
   if (snapshot.level === 'aprobado') return <p><small>Acceso completo aprobado.</small></p>;
   if (snapshot.level === 'pendiente') return <p><small>Acceso pendiente de aprobación. Puedes continuar con la sesión rápida; la cuenta se actualizará al recibir la aprobación.</small></p>;
   if (!snapshot.sync.user) return null;

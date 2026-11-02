@@ -33,6 +33,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "3c3d7f2438d7a98691a64d5ccc15ffd9f84c63a7609d9243f447d737185a041c",
       "outlineFingerprint": "bd87026a190c9000b37938ecf3237366209c170f54ef67dbcc54545a86f1ac07",
       "outlineEntryCount": 20
+    },
+    {
+      "path": "T4.06 Comunicaciones y Redes/T4.06 Comunicaciones y Redes - Test.pdf",
+      "name": "T4.06 Comunicaciones y Redes - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 265245,
+      "sha256": "e3872f52734639f44f405e0026dcb427150f12eb5ecb1c096880dc153558922c",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

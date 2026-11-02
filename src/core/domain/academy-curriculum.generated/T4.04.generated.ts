@@ -33,6 +33,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "1eb6bd24d2bcabb3641a4537c8277cf9a7a850a91c92da229f30b9903beb70a6",
       "outlineFingerprint": "ce5bad1f772607b2d4abc3492e430046ce3d6e5a9612447634b5b32567b30501",
       "outlineEntryCount": 17
+    },
+    {
+      "path": "T4.04 Administración de LAN/T4.04 Administración de LAN - Test.pdf",
+      "name": "T4.04 Administración de LAN - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 335822,
+      "sha256": "b71664750100c824c43846288311e86fbb9d3686c623cad43203a6665b43eb40",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

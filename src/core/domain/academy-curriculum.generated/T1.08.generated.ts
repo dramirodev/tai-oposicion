@@ -33,6 +33,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "395851f2250463bc1655ba39bb153398df26c14de2920167ff480b468813bc97",
       "outlineFingerprint": "2ea44a96eb5af2df6487c56435b04f21815923943d8bb5a4df05225c719e6991",
       "outlineEntryCount": 33
+    },
+    {
+      "path": "T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Test.pdf",
+      "name": "T1.08 Sociedad de la Información - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 276317,
+      "sha256": "809b9cee6c1f331ba105fe77b0676a6ed0fe51918f2afcd995f818df33b1d9fd",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

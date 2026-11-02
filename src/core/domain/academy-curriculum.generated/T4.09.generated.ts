@@ -33,6 +33,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "b8b3d36fa68a14cccf8c1b92bf95af38509c4f584e9652cd42e7cacd79b192ca",
       "outlineFingerprint": "f19cda0043d5a9e05aef6d4e3e882dcfbf4af40ac19d5f3f85334d2e4a784289",
       "outlineEntryCount": 17
+    },
+    {
+      "path": "T4.09 Seguridad en Redes/T4.09 Seguridad en Redes - Test.pdf",
+      "name": "T4.09 Seguridad en Redes - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 323997,
+      "sha256": "57bfbb20afe2f2b6ee65fb7f52b6c03463f6fd2c3ed74948b07c93a8dbf1189f",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

@@ -28,6 +28,7 @@ export interface AcademyQuestionSectionLink {
   sectionId: string;
   testEvidence: TestMaterialEvidence;
   sectionEvidence: SectionMaterialEvidence;
+  rationale: string;
   reviewedAt: number;
   reviewer: string;
 }
@@ -67,6 +68,7 @@ export function isAcademyQuestionSectionLink(value: unknown): value is AcademyQu
     || !isStudyTopicId(value.topicId)
     || typeof value.sectionId !== 'string' || !sectionIdPattern.test(value.sectionId)
     || !validTestEvidence(value.testEvidence) || !validSectionEvidence(value.sectionEvidence)
+    || typeof value.rationale !== 'string' || value.rationale.trim().length < 10 || value.rationale.length > 1000
     || !Number.isFinite(value.reviewedAt) || (value.reviewedAt as number) <= 0
     || typeof value.reviewer !== 'string' || !value.reviewer.trim() || value.reviewer.length > 200) return false;
   return true;

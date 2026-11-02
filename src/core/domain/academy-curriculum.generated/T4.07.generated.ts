@@ -88,6 +88,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "4f60bb356285d0e05df2b8e3e9bd25744b3209e0429c0b1873535eac2bde938f",
       "outlineFingerprint": "a0cbcd61c19a7aa8a0c557757757f622843edbb171be5e76d70fa6fd36a1a52a",
       "outlineEntryCount": 22
+    },
+    {
+      "path": "T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Test.pdf",
+      "name": "T4.07 Modelo TCP y OSI - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 251116,
+      "sha256": "e601dc576ba7f2c1fad87225dd13b971e01ceec49a3e37b97c6d23be4ca00280",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

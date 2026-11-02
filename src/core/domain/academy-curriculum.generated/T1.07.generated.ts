@@ -33,6 +33,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "20de43efd8414897dc2db2f39ef56807cdb225efcf053d3f1f408b108f37dfc5",
       "outlineFingerprint": "1f9c913499b40e769b7b5b3d8cd7ba2a5d63db78d2317790177fcf59aa78fcf2",
       "outlineEntryCount": 41
+    },
+    {
+      "path": "T1.07 Políticas de Igualdad/T1.07 Políticas de Igualdad - Test.pdf",
+      "name": "T1.07 Políticas de Igualdad - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 408087,
+      "sha256": "2f1da969434d95c9e94965408007261c11d765818578a0da7839608d772e7343",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

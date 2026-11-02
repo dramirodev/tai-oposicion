@@ -17,6 +17,7 @@ const link = {
   topicId: question.topicId, sectionId: section.id,
   testEvidence: { path: 'T3.01/test.pdf', sourceHash: hash('d'), page: 3, questionNumber: 2 },
   sectionEvidence: { path: section.materialPath, sourceHash: section.sourceHash, outlineFingerprint: section.outlineFingerprint, page: section.printedPage },
+  rationale: 'El enunciado evalúa este concepto concreto.',
   reviewedAt: 100, reviewer: 'editor-1',
 };
 

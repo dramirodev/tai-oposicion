@@ -52,6 +52,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "d892d548005b0107f833982af045f9df9174c3dcd8f6a7679b372c3bb1355f29",
       "outlineFingerprint": "86d199cfb8da58c5905dd268682b255b96adae308bd836db6f80af2183d35a63",
       "outlineEntryCount": 21
+    },
+    {
+      "path": "T4.10 Redes Locales/T4.10 Redes Locales - Test.pdf",
+      "name": "T4.10 Redes Locales - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 307835,
+      "sha256": "99831540d3f5c0f8b2d46fc2cd57e4dd59b5e77d0962803e666a87de255e6076",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

@@ -52,6 +52,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "d7c025bd9ebfc9f999ce9585f3209cf51f850495a24d84dc8775c4d3de0b5e34",
       "outlineFingerprint": "85a1dda584e1c20a51af36c332cd83f93033d06197625b157a802594fedb297b",
       "outlineEntryCount": 9
+    },
+    {
+      "path": "T3.01 Modelo Entidad-Relación/T3.01 Modelo Entidad-Relación - Test.pdf",
+      "name": "T3.01 Modelo Entidad-Relación - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 266196,
+      "sha256": "13ecadb8d0446e3f17e17bfc650b66a80204c90cbbda37f3a3f766777052ecca",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [

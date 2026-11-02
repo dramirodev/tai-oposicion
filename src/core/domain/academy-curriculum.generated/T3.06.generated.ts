@@ -180,6 +180,15 @@ export const academyCurriculumTopic = {
       "outlineStructureFingerprint": "9b0c3513f27fbbc225f6ea9bdcdde94cb2041b222c23190fe96e012c30a47d93",
       "outlineFingerprint": "0d2220646137e1f6d3a5b53b8260ecf4f21926581a467acdbc4739f4e164134e",
       "outlineEntryCount": 57
+    },
+    {
+      "path": "T3.06 Java y .NET/T3.06 Java y .NET - Test.pdf",
+      "name": "T3.06 Java y .NET - Test.pdf",
+      "kind": "test",
+      "extension": ".pdf",
+      "sizeBytes": 398522,
+      "sha256": "40095c0a267748e9b301b8180b47f93e6d1e1d76c8acc33d37c36a5be6214d74",
+      "outlineStatus": "not-extracted-test"
     }
   ],
   "sections": [
