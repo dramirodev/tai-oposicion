@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useMemo, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { BLOQUES } from '../../shared/presentation/labels.js';
 import { useStudyService } from '../../shared/ui/study-services.js';
@@ -7,6 +7,7 @@ import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { TopicsView } from './TopicsView.js';
 import { filterTopics, toggleTopicSelection } from './topics-controller.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
+const AcademyCurriculumPanel = lazy(() => import('./AcademyCurriculumPanel.js').then(module => ({ default: module.AcademyCurriculumPanel })));
 export function TopicsPage() {
   const services = useStudyService('topics'), navigate = useNavigate();
   const home = useStudyService('home');
@@ -49,6 +50,7 @@ export function TopicsPage() {
       <h2 className="m-0 mb-[.35rem] text-[length:var(--fs-l)]" id="planned-topic-title">Estudio inicial · {topics.find(topic => topic.id === requestedTopic)?.name ?? requestedTopic}</h2>
       <p className="m-0 text-muted">Estudia el tema en papel. Antes de consultar los apuntes, intenta recordar sus ideas principales. Al marcarlo como visto, volverás a Planificación para indicar cuánto recordaste; esta autoevaluación no es un resultado de examen.</p>
     </section>}
+    {requestedTopic && <Suspense fallback={<p className="mt-2 text-sm text-muted" role="status">Cargando índice de materiales…</p>}><AcademyCurriculumPanel topicId={requestedTopic} /></Suspense>}
     <TopicsView topics={topics} visible={visible} selected={selected} query={query} open={open}
     onQueryChange={value => setQueryOverride({ routeTopic: requestedTopic, value })} onToggle={toggle} onToggleBlock={toggleBlock}
     onSelectAll={() => services.setStudied(topics.map(topic => topic.id))}

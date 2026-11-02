@@ -68,6 +68,28 @@ test('simulacros por tema deja el skeleton y muestra los tests disponibles', asy
   await expect(page.locator('.page-loading')).toHaveCount(0);
 });
 
+test('el tema recomendado muestra su material de academia en móvil y escritorio', async ({ page }) => {
+  const errors = await setup(page, 'light');
+  await page.goto('/#/temario?topic=T1.01&dailyTraining=newContent');
+  const material = page.locator('#app details').filter({ has: page.getByText(/Material de academia ·/) });
+  await expect(material).toBeVisible();
+  await material.locator('summary').click();
+  await expect(material).toContainText('T1.01 Constitución Española - Temario.pdf');
+  await expect(material).toContainText('1. INTRODUCCIÓN');
+  await expect(material).toContainText('p. 3');
+  await expect(material).toContainText('ni se abren desde la aplicación');
+
+  for (const width of [393, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    const dimensions = await page.locator('#app').evaluate(element => ({
+      scrollWidth: element.scrollWidth,
+      clientWidth: element.clientWidth,
+    }));
+    expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth);
+  }
+  expect(errors).toEqual([]);
+});
+
 test.describe('service worker real', () => {
  test.use({ serviceWorkers: 'allow' });
  test('shell de Vite, CSP y arranque sin conexión', async ({ page, context }) => {

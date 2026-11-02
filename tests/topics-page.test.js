@@ -47,6 +47,29 @@ it('abre filtrado por el tema incluido en la recomendación del planificador', a
   expect(container.querySelector('[data-t="T3.02"]')).toBeInTheDocument();
 });
 
+it('enlaza el tema recomendado con el índice y los ficheros exactos del Drive de academia', async () => {
+  const user = userEvent.setup();
+  const topics={accountId:()=>null,getStudied:()=>[],subscribe:()=>()=>{},setStudied:()=>{},loadTopics:async()=>[
+    {id:'T1.01',name:'Constitución Española',total:10,answered:0,accuracy:null},
+  ]};
+  renderApp(createElement(TopicsPage), { services: { topics, home:{ completeTrainingActivity:vi.fn() } }, initialEntries: ['/temario?topic=T1.01&dailyTraining=newContent'] });
+  const panel = await screen.findByText(/Material de academia · \d+ referencias de índice/);
+  await user.click(panel);
+  expect(screen.getAllByText(/T1\.01 Constitución Española - Temario\.pdf/).length).toBeGreaterThan(1);
+  expect(screen.getAllByText(/INTRODUCCIÓN/).length).toBeGreaterThan(0);
+  expect(screen.getAllByText(/p\. 3/).length).toBeGreaterThan(0);
+  expect(screen.getByText(/permanecen en tu carpeta de Drive y no están copiados ni se abren desde la aplicación/)).toBeInTheDocument();
+});
+
+it('no inventa secciones de materiales para un tema futuro sin carpeta fuente', async () => {
+  const topics={accountId:()=>null,getStudied:()=>[],subscribe:()=>()=>{},setStudied:()=>{},loadTopics:async()=>[
+    {id:'T5.19',name:'Tema recién incorporado',total:0,answered:0,accuracy:null},
+  ]};
+  renderApp(createElement(TopicsPage), { services: { topics }, initialEntries: ['/temario?topic=T5.19'] });
+  expect(await screen.findByText(/No hay materiales de academia indexados para T5\.19/)).toBeInTheDocument();
+  expect(screen.queryByText(/Material de academia ·/)).not.toBeInTheDocument();
+});
+
 it('muestra y permite marcar un tema de un bloque añadido al catálogo', async () => {
   const user = userEvent.setup();
   let studied=[];
