@@ -93,6 +93,18 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
     await assertFails(setDoc(doc(testEnv.unauthenticatedContext().firestore(), 'users/student/cfg/trainingRecall'), { schemaVersion:1, updatedAt:assessment.ratedAt, assessments:[assessment] }));
   });
 
+  it('aísla el registro agregado de tests en papel y limita su tamaño', async () => {
+    const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const other = testEnv.authenticatedContext('other', { email:'other@example.test', email_verified:true }).firestore();
+    const reference = doc(db, 'users/student/cfg/paperTestLog');
+    const segment = { id:'attempt-001:segment:1', attemptId:'attempt-001', segment:1, dateKey:'2026-11-02', startedAt:1_793_280_000_000, completedAt:1_793_280_060_000, updatedAt:1_793_280_060_000, questionCount:20, answeredCount:18, correctCount:12, incorrectCount:6, blankCount:2, doubtfulCount:3, correctionStatus:'answer-key-only' };
+    await assertSucceeds(setDoc(reference, { schemaVersion:1, updatedAt:segment.updatedAt, segments:[segment] }));
+    await assertFails(getDoc(doc(other, 'users/student/cfg/paperTestLog')));
+    await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:segment.updatedAt, segments:Array.from({ length:301 }, (_, index) => ({ ...segment, id:`${segment.id}:${index}` })) }));
+    await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:segment.updatedAt, segments:[], unexpected:true }));
+    await assertFails(setDoc(doc(testEnv.unauthenticatedContext().firestore(), 'users/student/cfg/paperTestLog'), { schemaVersion:1, updatedAt:segment.updatedAt, segments:[segment] }));
+  });
+
   it('aísla la agenda de repasos por cuenta y limita su documento', async () => {
     const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
     const other = testEnv.authenticatedContext('other', { email:'other@example.test', email_verified:true }).firestore();

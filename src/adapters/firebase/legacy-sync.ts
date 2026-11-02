@@ -26,6 +26,7 @@ import { syncAttemptHistory } from './attempt-sync.js';
 import { configureStudyBankSource } from './study-bank-source.js';
 import { createTrainingSessionSyncAdapter, type TrainingSessionSyncStore } from './training-session-sync.js';
 import { createPaperRecallSyncAdapter, type PaperRecallSyncStore } from './paper-recall-sync.js';
+import { createPaperTestAttemptSyncAdapter, type PaperTestAttemptSyncStore } from './paper-test-attempt-sync.js';
 import { createTrainingCalendarSyncAdapter, type TrainingCalendarSyncStore } from './training-calendar-sync.js';
 import type { ScheduledStudyActivity } from '../../core/domain/study-training-calendar.js';
 import { createWeeklyStudyAgendaSyncAdapter, type WeeklyStudyAgendaSyncStore } from './weekly-study-agenda-sync.js';
@@ -39,6 +40,7 @@ let attemptRepository: AttemptRepository | null = null;
 let progressStore: ProgressSyncStore | null = null;
 let trainingSessionStore: TrainingSessionSyncStore | null = null;
 let paperRecallStore: PaperRecallSyncStore | null = null;
+let paperTestAttemptStore: PaperTestAttemptSyncStore | null = null;
 let trainingCalendarStore: TrainingCalendarSyncStore | null = null;
 let weeklyStudyAgendaStore: WeeklyStudyAgendaSyncStore | null = null;
 let academyStudyProgressStore: AcademyStudyProgressSyncStore | null = null;
@@ -65,6 +67,7 @@ export async function init(
   localTrainingCalendar?: TrainingCalendarSyncStore,
   localWeeklyStudyAgenda?: WeeklyStudyAgendaSyncStore,
   localAcademyStudyProgress?: AcademyStudyProgressSyncStore,
+  localPaperTestAttempts?: PaperTestAttemptSyncStore,
 ): Promise<void> {
   progressStore = localProgress;
   trainingSessionStore = localTrainingSession ?? null;
@@ -72,6 +75,7 @@ export async function init(
   trainingCalendarStore = localTrainingCalendar ?? null;
   weeklyStudyAgendaStore = localWeeklyStudyAgenda ?? null;
   academyStudyProgressStore = localAcademyStudyProgress ?? null;
+  paperTestAttemptStore = localPaperTestAttempts ?? null;
   temaOf = metaFns.temaOf; idsOfTema = metaFns.idsOfTema;
   status.authResolved = false;
   const { config: firebaseConfig, loaded: leida } = await loadFirebaseConfig();
@@ -174,6 +178,10 @@ function start(): void {
   }
   if (paperRecallStore) {
     const adapter = createPaperRecallSyncAdapter({ db, uid:me, store:paperRecallStore, isActive:active, onSynced:ok, onWriteError:writeErr });
+    unsubs.push(adapter.listen(error));
+  }
+  if (paperTestAttemptStore) {
+    const adapter = createPaperTestAttemptSyncAdapter({ db, uid:me, store:paperTestAttemptStore, isActive:active, onSynced:ok, onWriteError:writeErr });
     unsubs.push(adapter.listen(error));
   }
   if (trainingCalendarStore) {
@@ -298,6 +306,15 @@ export function pushPaperRecallAssessments(): void {
   const targetUid = uid;
   const adapter = createPaperRecallSyncAdapter({
     db, uid:targetUid, store:paperRecallStore, isActive:() => uid === targetUid && canSync(), onSynced:ok, onWriteError:writeErr,
+  });
+  void adapter.push();
+}
+
+export function pushPaperTestAttempts(): void {
+  if (!canSync() || !uid || !paperTestAttemptStore) return;
+  const targetUid = uid;
+  const adapter = createPaperTestAttemptSyncAdapter({
+    db, uid:targetUid, store:paperTestAttemptStore, isActive:() => uid === targetUid && canSync(), onSynced:ok, onWriteError:writeErr,
   });
   void adapter.push();
 }

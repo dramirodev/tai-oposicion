@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
+import { useEffect, useMemo, useState, useSyncExternalStore, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { CalendarDays, Check, CircleHelp, Clock3, Pause, Play } from 'lucide-react';
 import type { TrainingActivity } from '../../core/domain/entities.js';
 import type { DailyTrainingSession, TrainingSessionStep } from '../../core/domain/study-training-session.js';
 import { needsPaperRecallFollowUp, type PaperRecallAssessment, type PaperRecallRating } from '../../core/domain/paper-recall-assessment.js';
 import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
+import type { PaperTestAttemptSegment, PaperTestCorrectionStatus, PaperTestSelfRating } from '../../core/domain/paper-test-attempt.js';
 import type { ScheduledStudyActivity, ScheduledStudyActivityKind } from '../../core/domain/study-training-calendar.js';
 import { addSectionRecallFollowUpsToWeeklyProposal, dailyTrainingPlanFromAgenda, proposeWeeklyAgendaPlan, type WeeklyAgendaItem, type WeeklyAgendaPlanProposal, type WeeklyAgendaRecoveryProposal } from '../../core/domain/study-weekly-agenda.js';
 import { academyCurriculumMaterialIndex } from '../../core/domain/academy-curriculum.generated.js';
@@ -337,6 +338,62 @@ function PlanningEvidence({ overview }: { overview: HomeOverview }) {
   </section>;
 }
 
+function PaperTestLog({ overview, onRecord }: { overview: HomeOverview; onRecord(input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'>): boolean }) {
+  const [open, setOpen] = useState(false);
+  const [notice, setNotice] = useState('');
+  const [attemptId, setAttemptId] = useState('');
+  const [sourceLabel, setSourceLabel] = useState('');
+  const [topicId, setTopicId] = useState('');
+  const [sectionIds, setSectionIds] = useState('');
+  const [questionCount, setQuestionCount] = useState('');
+  const [answeredCount, setAnsweredCount] = useState('');
+  const [correctCount, setCorrectCount] = useState('');
+  const [incorrectCount, setIncorrectCount] = useState('');
+  const [blankCount, setBlankCount] = useState('');
+  const [doubtfulCount, setDoubtfulCount] = useState('');
+  const [correctionStatus, setCorrectionStatus] = useState<PaperTestCorrectionStatus>('unavailable');
+  const [selfRating, setSelfRating] = useState<PaperTestSelfRating | ''>('');
+  const segments = overview.paperTestAttempts ?? [];
+  const submit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const parseCount = (value: string): number | undefined => value.trim() === '' ? undefined : Number(value);
+    const question = parseCount(questionCount), answered = parseCount(answeredCount);
+    const correct = parseCount(correctCount), incorrect = parseCount(incorrectCount), blank = parseCount(blankCount), doubtful = parseCount(doubtfulCount);
+    const end = Date.now();
+    const input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'> = {
+      attemptId: attemptId.trim() || `paper-test-${end}`,
+      segment: segments.filter(item => item.attemptId === attemptId.trim()).length + 1,
+      startedAt: end, completedAt: end,
+      ...(topicId.trim() ? { topicId: topicId.trim() } : {}),
+      ...(sectionIds.trim() ? { sectionIds: [...new Set(sectionIds.split(',').map(value => value.trim()).filter(Boolean))] } : {}),
+      ...(sourceLabel.trim() ? { sourceLabel: sourceLabel.trim() } : {}),
+      ...(question !== undefined ? { questionCount:question } : {}), ...(answered !== undefined ? { answeredCount:answered } : {}),
+      ...(correct !== undefined ? { correctCount:correct } : {}), ...(incorrect !== undefined ? { incorrectCount:incorrect } : {}),
+      ...(blank !== undefined ? { blankCount:blank } : {}), ...(doubtful !== undefined ? { doubtfulCount:doubtful } : {}),
+      correctionStatus, ...(selfRating ? { selfRating } : {}),
+    };
+    if (!onRecord(input)) return;
+    setNotice('Tramo guardado como recuento agregado; no modifica tus resultados de preguntas.');
+    setQuestionCount(''); setAnsweredCount(''); setCorrectCount(''); setIncorrectCount(''); setBlankCount(''); setDoubtfulCount('');
+  };
+  return <section className="my-5 min-w-0 rounded-[var(--r-xl)] border border-line p-5 max-[520px]:p-4 [background:var(--card)]" aria-labelledby="paper-test-log-title">
+    <div className="flex flex-wrap items-center justify-between gap-3"><div><p className="planning-kicker mb-1 text-muted text-[length:var(--fs-s)]">Práctica fuera de TAI</p><h2 id="paper-test-log-title" className="m-0 text-[clamp(1.25rem,3vw,1.65rem)]">Tests en papel</h2></div><button className="btn min-h-11" type="button" onClick={() => setOpen(value => !value)} aria-expanded={open}>{open ? 'Cerrar registro' : 'Registrar tramo'}</button></div>
+    <p className="mt-3 mb-0 text-muted text-[length:var(--fs-s)]">Anota solo lo útil para planificar. No hace falta copiar preguntas; estos recuentos no se mezclan con aciertos evaluados por TAI.</p>
+    {notice && <p role="status" className="mt-2 mb-0">{notice}</p>}
+    {open && <form className="mt-4 grid grid-cols-2 gap-3 max-[520px]:grid-cols-1" onSubmit={submit}>
+      <label className="grid gap-1">Identificador libre del test o intento<input className="input min-h-11" maxLength={128} value={attemptId} onChange={event => setAttemptId(event.target.value)} placeholder="Opcional; no se deduce cuál test es" /></label>
+      <label className="grid gap-1">Material o procedencia<input className="input min-h-11" maxLength={160} value={sourceLabel} onChange={event => setSourceLabel(event.target.value)} placeholder="Etiqueta libre" /></label>
+      <label className="grid gap-1">Tema (código)<input className="input min-h-11" value={topicId} onChange={event => setTopicId(event.target.value)} placeholder="Opcional" /></label>
+      <label className="grid gap-1">Apartados (IDs, separados por comas)<input className="input min-h-11" value={sectionIds} onChange={event => setSectionIds(event.target.value)} placeholder="Opcional" /></label>
+      {([['questionCount','Preguntas del tramo',questionCount,setQuestionCount],['answeredCount','Contestadas',answeredCount,setAnsweredCount],['correctCount','Correctas según plantilla',correctCount,setCorrectCount],['incorrectCount','Incorrectas según plantilla',incorrectCount,setIncorrectCount],['blankCount','En blanco',blankCount,setBlankCount],['doubtfulCount','Contestadas con duda',doubtfulCount,setDoubtfulCount]] as const).map(([name,label,value,set]) => <label className="grid gap-1" key={name}>{label}<input className="input min-h-11" type="number" min="0" max="1000" inputMode="numeric" value={value} onChange={event => set(event.target.value)} /></label>)}
+      <label className="grid gap-1">Corrección disponible<select className="input min-h-11" value={correctionStatus} onChange={event => setCorrectionStatus(event.target.value as PaperTestCorrectionStatus)}><option value="unavailable">Sin plantilla</option><option value="answer-key-only">Solo opción correcta</option><option value="reviewed">Revisado y corregido</option></select></label>
+      <label className="grid gap-1">Recuerdo del tramo (autoevaluación)<select className="input min-h-11" value={selfRating} onChange={event => setSelfRating(event.target.value as PaperTestSelfRating | '')}><option value="">Sin valorar</option><option value="remembered">Lo recordé</option><option value="partial">Parcialmente</option><option value="not-remembered">No lo recordé</option></select></label>
+      <button className="btn min-h-11 col-span-full justify-self-start" type="submit">Guardar tramo</button>
+    </form>}
+    {segments.length > 0 && <ul className="mt-4 mb-0 grid gap-2 pl-5">{segments.slice(0,5).map(item => <li key={item.id}>{new Date(item.completedAt).toLocaleDateString('es-ES')} · {item.sourceLabel || 'Test en papel'}{item.questionCount !== undefined ? ` · ${item.questionCount} preguntas` : ''}{item.topicId ? ` · ${item.topicId}` : ''} · {item.correctionStatus === 'reviewed' ? 'corregido' : item.correctionStatus === 'answer-key-only' ? 'plantilla disponible' : 'sin plantilla'}</li>)}</ul>}
+  </section>;
+}
+
 function PlanningHistory({ overview }: { overview: HomeOverview }) {
   const [showAll, setShowAll] = useState(false);
   const sessions = (overview.trainingHistory ?? []).slice(0, 5);
@@ -387,6 +444,11 @@ export function PlanningPage() {
     trainingPlan: dailyTrainingPlanFromAgenda({ plan:overview.trainingPlan, agenda:weeklyAgenda, dateKey:todayKey, studiedTopicIds:seenTopicIds }),
   } : overview;
   const actions = usePlanningSessionActions(services, planningOverview, navigate, () => setReload(value => value + 1));
+  const recordPaperTestSegment = (input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'>): boolean => {
+    if (services.recordPaperTestSegment?.(input)) { setReload(value => value + 1); return true; }
+    services.notify('No se pudo guardar este tramo en el dispositivo. Comprueba el espacio disponible y que los recuentos sean coherentes.');
+    return false;
+  };
   const scheduledActivities = services.scheduledStudyActivities?.() ?? [];
   if (!authResolved || (!overview && !error)) return <PageLoading variant="home" />;
   if (error) return <PageMessage role="alert" title="No se pudo cargar la planificación"><p>Inténtalo de nuevo. Si no tienes conexión, los datos de la cuenta todavía pueden no estar disponibles en este dispositivo.</p><button className="btn" onClick={() => setReload(value => value + 1)}>Reintentar</button></PageMessage>;
@@ -534,6 +596,7 @@ export function PlanningPage() {
       activities={scheduledActivities} weeklyItems={weeklyAgenda?.items ?? []} weeklyAgenda={weeklyAgenda} onSchedule={scheduleActivity} onReschedule={rescheduleActivity} onOpenActivity={openScheduledActivity}
       onSaveWeeklyAgenda={saveWeeklyAgenda} onRecoverWeeklyAgenda={recoverWeeklyAgenda} onProposeWeeklyAgenda={generateWeeklyAgendaPlan} onAddWeeklyAgendaPlan={addWeeklyAgendaPlan} onSetWeeklyAgendaStatus={setWeeklyAgendaStatus} onOpenSectionRecall={openSectionRecall} />
     <PlanningHistory overview={planningOverview} />
+    <PaperTestLog overview={planningOverview} onRecord={recordPaperTestSegment} />
     <PlanningEvidence overview={planningOverview} />
   </main>;
 }

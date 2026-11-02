@@ -418,6 +418,18 @@ service cloud.firestore {
         && request.resource.data.assessments.size() <= 90;
       allow delete: if false;
     }
+    // Recuentos agregados de tests en papel; no guarda respuestas ni puntúa el banco objetivo.
+    match /users/{uid}/cfg/paperTestLog {
+      allow read: if canUse(uid);
+      allow create, update: if canUse(uid)
+        && request.resource.data.keys().hasOnly(['schemaVersion', 'updatedAt', 'segments'])
+        && request.resource.data.keys().hasAll(['schemaVersion', 'updatedAt', 'segments'])
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.updatedAt is number
+        && request.resource.data.segments is list
+        && request.resource.data.segments.size() <= 300;
+      allow delete: if false;
+    }
     // Actividades de repaso confirmadas por el usuario, separadas por cuenta.
     match /users/{uid}/cfg/trainingCalendar {
       allow read: if canUse(uid);

@@ -76,6 +76,7 @@ import { createAppUpdateController } from './composition/updates/app-update-cont
 import { createCardsComposition } from './composition/cards/cards-composition.js';
 import { createTrainingSessionComposition } from './composition/trainers/training-session-composition.js';
 import { createPaperRecallComposition } from './composition/trainers/paper-recall-composition.js';
+import { createPaperTestAttemptComposition } from './composition/trainers/paper-test-attempt-composition.js';
 import { createTrainingCalendarComposition } from './composition/trainers/training-calendar-composition.js';
 import { createWeeklyStudyAgendaComposition } from './composition/trainers/weekly-study-agenda-composition.js';
 import { findMatchingPlannedAgendaItem } from '../core/domain/study-weekly-agenda.js';
@@ -106,6 +107,7 @@ const dominioTemas = createTopicMasteryComposition({ progressRepository: localPr
 const progressPorTema = createTopicProgressComposition({ progressRepository: localProgressRepository, accountId: localStudyProgressGateway.accountId, questionIdsForTopic: topicId => studyQuestionCatalog.getMetadataSnapshot()?._by[topicId] || [] });
 const trainingSession = createTrainingSessionComposition({ accountId: localStudyProgressGateway.accountId, now: studyQuestionCatalog.now, push: session => { void sync.pushTrainingSession(session); } });
 const paperRecall = createPaperRecallComposition({ accountId: localStudyProgressGateway.accountId, now: studyQuestionCatalog.now, push: () => { void sync.pushPaperRecallAssessments(); } });
+const paperTestAttempts = createPaperTestAttemptComposition({ accountId: localStudyProgressGateway.accountId, now: studyQuestionCatalog.now, push: () => { void sync.pushPaperTestAttempts(); } });
 const weeklyStudyAgenda = createWeeklyStudyAgendaComposition({
   accountId: localStudyProgressGateway.accountId,
   now: studyQuestionCatalog.now,
@@ -434,7 +436,7 @@ export function bootAppServices(): () => void {
     prefetchBank: prefetchBanco,
     loadMetadataAndInitializeSync: async () => {
       try { await getMeta(); } catch (error) { console.error(error); }
-      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getAllQuestionIdsForTopic }, progressStore, trainingSession, paperRecall, trainingCalendar, weeklyStudyAgenda, academyStudyProgress); } catch (error) { console.error(error); }
+      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getAllQuestionIdsForTopic }, progressStore, trainingSession, paperRecall, trainingCalendar, weeklyStudyAgenda, academyStudyProgress, paperTestAttempts); } catch (error) { console.error(error); }
     },
   });
 }
@@ -746,7 +748,7 @@ export const studyServices: StudyServices = {
         nextNewTopic: nextNewTopic ? { id: nextNewTopic.id, name: nextNewTopic.nombre } : undefined,
         assessedTopics: studiedMastery.filter(topic => topic.est !== 'n').length,
         weakTopics: studiedWeakTopics.length,
-        masteredTopics: studiedMastery.filter(topic => topic.est === 'g').length, trainingPlan, trainingSession: trainingSession.getSession(), trainingHistory: trainingSession.getHistory(), paperRecallAssessments: recallAssessments, weakTopicIds, topicReviewEvidence, studyContentInventory,
+        masteredTopics: studiedMastery.filter(topic => topic.est === 'g').length, trainingPlan, trainingSession: trainingSession.getSession(), trainingHistory: trainingSession.getHistory(), paperRecallAssessments: recallAssessments, paperTestAttempts: paperTestAttempts.get(), weakTopicIds, topicReviewEvidence, studyContentInventory,
       };
     },
     startTrainingSession(plan) { return trainingSession.start(plan); },
@@ -765,6 +767,7 @@ export const studyServices: StudyServices = {
       return completed;
     },
     recordPaperRecall(topicId: string, rating: PaperRecallRating) { return paperRecall.record(topicId, rating); },
+    recordPaperTestSegment(input: Parameters<typeof paperTestAttempts.record>[0]) { return paperTestAttempts.record(input); },
     scheduledStudyActivities() { return trainingCalendar.get(); },
     scheduleStudyActivity(input: Parameters<typeof trainingCalendar.schedule>[0]) { return trainingCalendar.schedule(input); },
     rescheduleStudyActivity(input: Parameters<typeof trainingCalendar.reschedule>[0]) { return trainingCalendar.reschedule(input); },

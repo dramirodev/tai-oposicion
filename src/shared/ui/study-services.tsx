@@ -4,6 +4,7 @@ import type { StudyReviewMode, TrainingActivity, TrainingCalendarEvent, Training
 import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
 import type { DailyTrainingSession, TrainingSessionHistoryEntry } from '../../core/domain/study-training-session.js';
 import type { PaperRecallAssessment, PaperRecallRating } from '../../core/domain/paper-recall-assessment.js';
+import type { PaperTestAttemptSegment } from '../../core/domain/paper-test-attempt.js';
 import type { ScheduleDecision, ScheduledStudyActivity, ScheduledStudyActivityKind } from '../../core/domain/study-training-calendar.js';
 import type { ObservedStudyTime } from '../../core/domain/attempts/observed-study-time.js';
 import type { ExplanationLookup } from '../../core/domain/explanations.js';
@@ -32,6 +33,7 @@ export interface HomeOverview {
   trainingPlan: DailyTrainingPlan; trainingSession: DailyTrainingSession | null;
   trainingHistory?: readonly TrainingSessionHistoryEntry[];
   paperRecallAssessments?: readonly PaperRecallAssessment[];
+  paperTestAttempts?: readonly PaperTestAttemptSegment[];
   weakTopicIds?: readonly string[];
   topicReviewEvidence?: readonly TopicReviewEvidence[];
   studyContentInventory?: StudyContentInventory;
@@ -57,6 +59,7 @@ export interface HomeServices {
   endTrainingBreak(): DailyTrainingSession | null;
   completeTrainingActivity(activity: TrainingActivity, reference?: import('../../core/domain/study-training-session.js').TrainingActivityReference): DailyTrainingSession | null;
   recordPaperRecall?(topicId: string, rating: PaperRecallRating): PaperRecallAssessment | null;
+  recordPaperTestSegment?(input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'>): PaperTestAttemptSegment | null;
   scheduledStudyActivities?(): readonly ScheduledStudyActivity[];
   scheduleStudyActivity?(input: { dateKey: string; activity: ScheduledStudyActivityKind; topicId: string; minutes: number }): ScheduleDecision | { ok:false; reason:'storage-failed' };
   rescheduleStudyActivity?(input: { id: string; dateKey: string }): ScheduleDecision | { ok:false; reason:'storage-failed' };

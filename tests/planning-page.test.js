@@ -41,6 +41,23 @@ it('presenta el contenido nuevo del temario real sin simular un resumen que TAI 
   expect(screen.getAllByText('120 min').length).toBeGreaterThan(0);
 });
 
+it('registra un tramo de test en papel como evidencia agregada sin transcribir preguntas', async () => {
+  const user = userEvent.setup();
+  const recordPaperTestSegment = vi.fn(() => ({ id:'attempt:segment:1' }));
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(), { home:{ recordPaperTestSegment } }) });
+  await user.click(await screen.findByRole('button', { name:'Registrar tramo' }));
+  await user.type(screen.getByLabelText('Identificador libre del test o intento'), 'test-personal-1');
+  await user.type(screen.getByLabelText('Preguntas del tramo'), '20');
+  await user.type(screen.getByLabelText('Contestadas'), '18');
+  await user.type(screen.getByLabelText('Correctas según plantilla'), '12');
+  await user.type(screen.getByLabelText('Incorrectas según plantilla'), '6');
+  await user.type(screen.getByLabelText('En blanco'), '2');
+  await user.selectOptions(screen.getByLabelText('Corrección disponible'), 'answer-key-only');
+  await user.click(screen.getByRole('button', { name:'Guardar tramo' }));
+  expect(recordPaperTestSegment).toHaveBeenCalledWith(expect.objectContaining({ attemptId:'test-personal-1', segment:1, questionCount:20, answeredCount:18, correctCount:12, incorrectCount:6, blankCount:2, correctionStatus:'answer-key-only' }));
+  expect(await screen.findByText(/no modifica tus resultados de preguntas/)).toBeInTheDocument();
+});
+
 it('permite iniciar el paso de tema nuevo aunque todavía no haya temas vistos', async () => {
   const user = userEvent.setup();
   const planned = overview(newTopicPlan);
