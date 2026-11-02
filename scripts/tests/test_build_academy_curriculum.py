@@ -52,6 +52,21 @@ class AcademyCurriculumBuildTests(unittest.TestCase):
         self.assertEqual(len(first["sections"]), 2)
         self.assertNotEqual(first["sections"][0]["id"], first["sections"][1]["id"])
         self.assertEqual(first["sections"][0]["id"], second["sections"][0]["id"])
+        self.assertEqual(first["sections"][0]["outlineStructureFingerprint"], first["sections"][1]["outlineStructureFingerprint"])
+        self.assertEqual(first["sections"][0]["outlineFingerprint"], first["sections"][1]["outlineFingerprint"])
+
+    def test_indexes_supplementary_pdf_without_calling_it_a_syllabus(self):
+        self.topic_folder("T3.06 Tema app", ["Resumen - Java.pdf"])
+        topic = build_catalog(self.source, self.app_index, str(self.pdftotext))["topics"][0]
+        self.assertEqual(topic["sourceStatus"], "no-syllabus-file")
+        self.assertEqual(topic["sections"][0]["materialKind"], "review")
+        self.assertEqual(topic["sections"][0]["title"], "1. APARTADO DE PRUEBA")
+
+    def test_plain_text_named_temario_is_not_counted_as_a_syllabus_pdf(self):
+        self.topic_folder("T1.01 Tema app", ["Temario.txt"])
+        topic = build_catalog(self.source, self.app_index, str(self.pdftotext))["topics"][0]
+        self.assertEqual(topic["files"][0]["kind"], "notes")
+        self.assertEqual(topic["sourceStatus"], "no-syllabus-file")
 
 
 if __name__ == "__main__":

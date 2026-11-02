@@ -1,0 +1,403 @@
+// Generado con scripts/build_academy_curriculum.py; no editar manualmente.
+import type { AcademyCurriculumTopic } from '../academy-curriculum-types.js';
+export const academyCurriculumTopic = {
+  "id": "T1.03",
+  "name": "Gobierno",
+  "folder": "T1.03 Gobierno",
+  "appCatalogMatch": true,
+  "appCatalogName": "Gobierno",
+  "sourceStatus": "outline-extracted-needs-review",
+  "sourceFileCounts": {
+    "audio": 9,
+    "review": 1,
+    "syllabus": 1,
+    "test": 1
+  },
+  "files": [
+    {
+      "path": "T1.03 Gobierno/AUDIOS/010_RELACIONES_GOBIERNO_OTROS.m4a",
+      "name": "010_RELACIONES_GOBIERNO_OTROS.m4a",
+      "kind": "audio",
+      "extension": ".m4a",
+      "sizeBytes": 31593309
+    },
+    {
+      "path": "T1.03 Gobierno/AUDIOS/02_EL_GOBIERNO.m4a",
+      "name": "02_EL_GOBIERNO.m4a",
+      "kind": "audio",
+      "extension": ".m4a",
+      "sizeBytes": 31048486
+    },
+    {
+      "path": "T1.03 Gobierno/AUDIOS/03_COMPOSICION_DEL_GOBIERNO.m4a",
+      "name": "03_COMPOSICION_DEL_GOBIERNO.m4a",
+      "kind": "audio",
+      "extension": ".m4a",
+      "sizeBytes": 36707897
+    },
+    {
+      "path": "T1.03 Gobierno/AUDIOS/04_ORGANOS_DE_COLABORACION.m4a",
+      "name": "04_ORGANOS_DE_COLABORACION.m4a",
+      "kind": "audio",
+      "extension": ".m4a",
+      "sizeBytes": 53280887
+    },
+    {
+      "path": "T1.03 Gobierno/AUDIOS/05_ESTATUTO_JURIDICO.m4a",
+      "name": "05_ESTATUTO_JURIDICO.m4a",
+      "kind": "audio",
+      "extension": ".m4a",
+      "sizeBytes": 28782653
+    },
+    {
+      "path": "T1.03 Gobierno/AUDIOS/06_NOMBRAMIENTO_Y_CESE.m4a",
+      "name": "06_NOMBRAMIENTO_Y_CESE.m4a",
+      "kind": "audio",
+      "extension": ".m4a",
+      "sizeBytes": 46917650
+    },
+    {
+      "path": "T1.03 Gobierno/AUDIOS/07_FUNCIONES_DEL_GOBIERNO.m4a",
+      "name": "07_FUNCIONES_DEL_GOBIERNO.m4a",
+      "kind": "audio",
+      "extension": ".m4a",
+      "sizeBytes": 45754047
+    },
+    {
+      "path": "T1.03 Gobierno/AUDIOS/08_ORGANOS_TITULARES.m4a",
+      "name": "08_ORGANOS_TITULARES.m4a",
+      "kind": "audio",
+      "extension": ".m4a",
+      "sizeBytes": 27332187
+    },
+    {
+      "path": "T1.03 Gobierno/AUDIOS/09_RELACIONES_ENTRE_GOB_LAS_CORTES.m4a",
+      "name": "09_RELACIONES_ENTRE_GOB_LAS_CORTES.m4a",
+      "kind": "audio",
+      "extension": ".m4a",
+      "sizeBytes": 37262316
+    },
+    {
+      "path": "T1.03 Gobierno/T1.03 Gobierno - Repaso.pdf",
+      "name": "T1.03 Gobierno - Repaso.pdf",
+      "kind": "review",
+      "extension": ".pdf",
+      "sizeBytes": 783668,
+      "sha256": "b8d898ccee6b61c350fbd88bd1ed4f6198bbb0a598049abc03190edceb9e84e6",
+      "outlineStatus": "index-not-found"
+    },
+    {
+      "path": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "name": "T1.03 Gobierno - Temario OPO.pdf",
+      "kind": "syllabus",
+      "extension": ".pdf",
+      "sizeBytes": 1774218,
+      "sha256": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "outlineStatus": "extracted",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "outlineEntryCount": 23
+    }
+  ],
+  "sections": [
+    {
+      "id": "ci-ad073ccf1372a12b97f2",
+      "topicId": "T1.03",
+      "title": "1. INTRODUCCIÓN",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 3,
+      "sourceOrdinal": 1,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-924ee4062c2edc05953f",
+      "topicId": "T1.03",
+      "title": "2. EL GOBIERNO",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 5,
+      "sourceOrdinal": 2,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-36acd93efa080afd44c1",
+      "topicId": "T1.03",
+      "title": "3. COMPOSICIÓN DEL GOBIERNO",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 6,
+      "sourceOrdinal": 3,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-87ea8c643341408ae5fe",
+      "topicId": "T1.03",
+      "title": "1. Órganos de Gobierno UNIPERSONALES",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 6,
+      "sourceOrdinal": 4,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-8187eace6c59c1ca0b6d",
+      "topicId": "T1.03",
+      "title": "2. Órganos de Gobierno COLEGIADOS",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 7,
+      "sourceOrdinal": 5,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-10a4b25f5a448baa995e",
+      "topicId": "T1.03",
+      "title": "4. ÓRGANOS DE COLABORACIÓN Y APOYO",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 8,
+      "sourceOrdinal": 6,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-2b9d6cddc6456c76a5d0",
+      "topicId": "T1.03",
+      "title": "5. ESTATUTO JURÍDICO E INCOMPATIBILIDADES DE LOS MIEMBROS DEL GOBIERNO",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 11,
+      "sourceOrdinal": 7,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-9515b9224237610f1f46",
+      "topicId": "T1.03",
+      "title": "1. Estatuto de los miembros del Gobierno",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 11,
+      "sourceOrdinal": 8,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-c28ffdb8e3bdde2ccba1",
+      "topicId": "T1.03",
+      "title": "2. Régimen de incompatibilidades de los miembros del Gobierno",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 12,
+      "sourceOrdinal": 9,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-5773af98d7a96e8d296e",
+      "topicId": "T1.03",
+      "title": "6. NOMBRAMIENTO Y CESE",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 13,
+      "sourceOrdinal": 10,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-2bf212970ee30f9cef76",
+      "topicId": "T1.03",
+      "title": "7. LAS FUNCIONES DEL GOBIERNO",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 16,
+      "sourceOrdinal": 11,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-9b1083a289190dda92eb",
+      "topicId": "T1.03",
+      "title": "1. Presidente del Gobierno",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 17,
+      "sourceOrdinal": 12,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-362b4b3eb006d03b3e57",
+      "topicId": "T1.03",
+      "title": "2. Vicepresidente/s del Gobierno",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 18,
+      "sourceOrdinal": 13,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-0fa991fa89f3e87507af",
+      "topicId": "T1.03",
+      "title": "3. Ministros",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 18,
+      "sourceOrdinal": 14,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-6599824873453dfc72c0",
+      "topicId": "T1.03",
+      "title": "4. Consejo de Ministros",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 18,
+      "sourceOrdinal": 15,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-84f10bc3907a422b7a80",
+      "topicId": "T1.03",
+      "title": "5. Comisiones Delegadas del Gobierno",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 19,
+      "sourceOrdinal": 16,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-428d2a2945fe5d321782",
+      "topicId": "T1.03",
+      "title": "6. Gobierno en funciones",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 20,
+      "sourceOrdinal": 17,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-3cac25c4de897222333d",
+      "topicId": "T1.03",
+      "title": "8. ÓRGANOS VS TITULARES",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 21,
+      "sourceOrdinal": 18,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-f7fb850f834b077d9e1d",
+      "topicId": "T1.03",
+      "title": "9. RELACIONES ENTRE EL GOBIERNO Y LAS CORTES GENERALES",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 22,
+      "sourceOrdinal": 19,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-f8c9a81c9d60bd2d9e61",
+      "topicId": "T1.03",
+      "title": "1. Cortes Generales",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 22,
+      "sourceOrdinal": 20,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-7e1deedfa4b8f8e5180e",
+      "topicId": "T1.03",
+      "title": "2. Gobierno",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 23,
+      "sourceOrdinal": 21,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-c6fe0d1480a79ee0b2f0",
+      "topicId": "T1.03",
+      "title": "3. Estados de alarma, excepción y sitio",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 24,
+      "sourceOrdinal": 22,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    },
+    {
+      "id": "ci-ed8f45c7f12a398c85b5",
+      "topicId": "T1.03",
+      "title": "10. RELACIONES DEL GOBIERNO CON OTROS",
+      "materialPath": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
+      "printedPage": 26,
+      "sourceOrdinal": 23,
+      "sourceHash": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
+      "materialKind": "syllabus",
+      "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
+      "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
+      "verification": "extracted-needs-review"
+    }
+  ]
+} as const satisfies AcademyCurriculumTopic;

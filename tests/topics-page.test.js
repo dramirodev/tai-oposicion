@@ -58,6 +58,8 @@ it('enlaza el tema recomendado con el índice y los ficheros exactos del Drive d
   expect(screen.getAllByText(/T1\.01 Constitución Española - Temario\.pdf/).length).toBeGreaterThan(1);
   expect(screen.getAllByText(/INTRODUCCIÓN/).length).toBeGreaterThan(0);
   expect(screen.getAllByText(/p\. 3/).length).toBeGreaterThan(0);
+  expect(screen.getByText(/Índices extraídos de temarios/)).toBeInTheDocument();
+  expect(screen.getAllByText(/Otro archivo tiene los mismos títulos y páginas de índice/)).toHaveLength(2);
   expect(screen.getByText(/permanecen en tu carpeta de Drive y no están copiados ni se abren desde la aplicación/)).toBeInTheDocument();
 });
 
@@ -68,6 +70,18 @@ it('no inventa secciones de materiales para un tema futuro sin carpeta fuente', 
   renderApp(createElement(TopicsPage), { services: { topics }, initialEntries: ['/temario?topic=T5.19'] });
   expect(await screen.findByText(/No hay materiales de academia indexados para T5\.19/)).toBeInTheDocument();
   expect(screen.queryByText(/Material de academia ·/)).not.toBeInTheDocument();
+});
+
+it('distingue índices de resúmenes de los índices de temario', async () => {
+  const topics={accountId:()=>null,getStudied:()=>[],subscribe:()=>()=>{},setStudied:()=>{},loadTopics:async()=>[
+    {id:'T3.06',name:'Java y .NET',total:0,answered:0,accuracy:null},
+  ]};
+  renderApp(createElement(TopicsPage), { services: { topics }, initialEntries: ['/temario?topic=T3.06'] });
+  await userEvent.click(await screen.findByText(/Material de academia/));
+  expect(await screen.findByText(/No se encontró un archivo identificado como temario/)).toBeInTheDocument();
+  expect(screen.getByText(/Índices extraídos de material complementario/)).toBeInTheDocument();
+  expect(screen.getByText(/no prueban que sea el programa completo del tema/)).toBeInTheDocument();
+  expect(screen.queryByText(/Índices extraídos de temarios/)).not.toBeInTheDocument();
 });
 
 it('muestra y permite marcar un tema de un bloque añadido al catálogo', async () => {

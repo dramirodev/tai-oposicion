@@ -35,6 +35,8 @@ def sha256_file(path: Path) -> str:
 
 def material_kind(path: Path) -> str:
     name = path.stem.casefold()
+    if path.suffix.casefold() in {".md", ".txt"}:
+        return "notes"
     if "temario" in name:
         return "syllabus"
     if "repaso" in name or "resumen" in name:
@@ -45,8 +47,6 @@ def material_kind(path: Path) -> str:
         return "exercise"
     if path.suffix.casefold() in {".m4a", ".mp3", ".wav", ".ogg"}:
         return "audio"
-    if path.suffix.casefold() in {".md", ".txt"}:
-        return "notes"
     return "other"
 
 
@@ -83,6 +83,22 @@ def extract_outline(path: Path, pdftotext: str) -> tuple[list[dict[str, Any]], s
     return sections, None if sections else "index-has-no-extractable-entries"
 
 
+def outline_fingerprints(sections: list[dict[str, Any]]) -> tuple[str, str]:
+    """Fingerprint extracted headings and headings plus pages, never document body."""
+    headings: list[str] = []
+    canonical: list[list[Any]] = []
+    for section in sections:
+        title = re.sub(r"\s+", " ", section["title"]).strip().casefold()
+        if re.sub(r"\s+", "", title) in {"índice", "indice"}:
+            continue
+        headings.append(title)
+        canonical.append([title, section["printedPage"]])
+    return (
+        hashlib.sha256(json.dumps(headings, ensure_ascii=False, separators=(",", ":")).encode("utf-8")).hexdigest(),
+        hashlib.sha256(json.dumps(canonical, ensure_ascii=False, separators=(",", ":")).encode("utf-8")).hexdigest(),
+    )
+
+
 def build_catalog(source_root: Path, app_index_path: Path, pdftotext: str) -> dict[str, Any]:
     if not source_root.is_dir():
         raise ValueError(f"No existe la carpeta de temario: {source_root}")
@@ -114,9 +130,9 @@ def build_catalog(source_root: Path, app_index_path: Path, pdftotext: str) -> di
             kind = material_kind(path)
             extracted: list[dict[str, Any]] = []
             issue: str | None = None
-            if path.suffix.casefold() == ".pdf" and kind == "other":
+            if path.suffix.casefold() == ".pdf":
                 extracted, issue = extract_outline(path, pdftotext)
-                if extracted:
+                if extracted and kind == "other":
                     kind = "syllabus"
             file_counts[kind] = file_counts.get(kind, 0) + 1
             if kind not in {"syllabus", "review", "notes", "exercise", "audio"}:
@@ -131,12 +147,12 @@ def build_catalog(source_root: Path, app_index_path: Path, pdftotext: str) -> di
             if kind in {"syllabus", "review", "notes", "exercise"}:
                 entry["sha256"] = sha256_file(path)
 
-            if path.suffix.casefold() == ".pdf" and kind == "syllabus":
-                if issue is None and not extracted:
-                    extracted, issue = extract_outline(path, pdftotext)
+            if path.suffix.casefold() == ".pdf":
                 entry["outlineStatus"] = "extracted" if extracted else issue
                 if extracted:
-                    outline_documents += 1
+                    entry["outlineStructureFingerprint"], entry["outlineFingerprint"] = outline_fingerprints(extracted)
+                    if kind == "syllabus":
+                        outline_documents += 1
                     entry["outlineEntryCount"] = len(extracted)
                     for ordinal, section in enumerate(extracted, start=1):
                         stable_text = "|".join((topic_id, relative_path, str(section["printedPage"]), section["title"].casefold()))
@@ -149,6 +165,9 @@ def build_catalog(source_root: Path, app_index_path: Path, pdftotext: str) -> di
                             "printedPage": section["printedPage"],
                             "sourceOrdinal": ordinal,
                             "sourceHash": entry["sha256"],
+                            "materialKind": kind,
+                            "outlineStructureFingerprint": entry["outlineStructureFingerprint"],
+                            "outlineFingerprint": entry["outlineFingerprint"],
                             "verification": "extracted-needs-review",
                         })
             files.append(entry)
@@ -206,9 +225,27 @@ def main() -> int:
         return 1
 
     arguments.output.parent.mkdir(parents=True, exist_ok=True)
+    topic_output = arguments.output.parent / arguments.output.stem
+    topic_output.mkdir(parents=True, exist_ok=True)
+    for topic in catalog["topics"]:
+        topic_file = topic_output / f"{topic['id']}.generated.ts"
+        topic_file.write_text(
+            "// Generado con scripts/build_academy_curriculum.py; no editar manualmente.\n"
+            "import type { AcademyCurriculumTopic } from '../academy-curriculum-types.js';\n"
+            "export const academyCurriculumTopic = " + json.dumps(topic, ensure_ascii=False, indent=2)
+            + " as const satisfies AcademyCurriculumTopic;\n",
+            encoding="utf-8",
+        )
+    loaders = "\n".join(
+        f'  "{topic["id"]}": () => import("./{topic_output.name}/{topic["id"]}.generated.js"),'
+        for topic in catalog["topics"]
+    )
     arguments.output.write_text(
         "// Generado con scripts/build_academy_curriculum.py; no editar manualmente.\n"
-        "export const academyCurriculum = " + json.dumps(catalog, ensure_ascii=False, indent=2) + " as const;\n",
+        "import type { AcademyCurriculumTopic } from './academy-curriculum-types.js';\n"
+        "type AcademyCurriculumModule = { academyCurriculumTopic: AcademyCurriculumTopic };\n"
+        "export const academyCurriculumTopicLoaders: Record<string, () => Promise<AcademyCurriculumModule>> = {\n"
+        f"{loaders}\n}};\n",
         encoding="utf-8",
     )
     matched = sum(topic["appCatalogMatch"] for topic in catalog["topics"])
