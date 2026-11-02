@@ -36,3 +36,12 @@ export interface AcademyCurriculumTopic {
   files: AcademyCurriculumFile[];
   sections: AcademyCurriculumSection[];
 }
+
+/** Compact identity catalogue for checking saved progress without loading every topic module. */
+export interface AcademyCurriculumMaterialIdentity {
+  path: string;
+  kind: string;
+  sha256: string;
+  outlineFingerprint: string;
+  outlineStructureFingerprint: string;
+}

@@ -452,6 +452,12 @@ export const studyServices: StudyServices = {
       if (account !== localStudyProgressGateway.accountId()) throw new Error('La cuenta cambió al cargar el progreso del apartado.');
       return snapshot;
     },
+    async loadProgressOverview() {
+      const account = localStudyProgressGateway.accountId();
+      const snapshot = academyStudyProgress.getProgressOverview();
+      if (account !== localStudyProgressGateway.accountId()) throw new Error('La cuenta cambió al cargar el progreso por apartados.');
+      return snapshot;
+    },
     selectMaterials(topicId, materials) { return !!academyStudyProgress.selectMaterials(topicId, materials); },
     record(event) { return !!academyStudyProgress.record(event); },
   },

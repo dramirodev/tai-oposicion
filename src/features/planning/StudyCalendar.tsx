@@ -114,7 +114,7 @@ export function StudyCalendar({ preferences, now, history, activeSession, topics
       <button className={`min-w-11 min-h-11 rounded-[var(--r-m)] border border-line bg-[var(--card)] px-3 py-[.45rem] text-ink [font:inherit] [cursor:pointer]${view === 'month' ? ' !border-ink !bg-[var(--surface-soft)] !font-bold' : ''}`} type="button" aria-pressed={view === 'month'} onClick={() => setView('month')}>Mes</button>
     </div>
     {view === 'week' ? <>
-      <div className="mt-3 flex items-center gap-2" aria-label="Navegar semanas">
+      <div className="mt-3 flex flex-wrap gap-2" aria-label="Navegar semanas">
         <button className="btn sec min-h-11" type="button" aria-label="Semana anterior" onClick={() => { setWeekOffset(value => value - 1); setAgendaProposal(null); setWeeklyPlanProposal(null); setRecoveryProposal(null); }}>Semana anterior</button>
         <button className="btn sec min-h-11" type="button" aria-label="Semana actual" onClick={() => { setWeekOffset(0); setAgendaDate(agendaMinDate); setAgendaProposal(null); setWeeklyPlanProposal(null); setRecoveryProposal(null); }}>Esta semana</button>
         <button className="btn sec min-h-11" type="button" aria-label="Semana siguiente" onClick={() => { setWeekOffset(value => value + 1); setAgendaDate(dayKey(new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + 8))); setAgendaProposal(null); setWeeklyPlanProposal(null); setRecoveryProposal(null); }}>Semana siguiente</button>

@@ -2,6 +2,9 @@ import { Link } from 'react-router';
 import type { TrainingPreferences } from '../../core/domain/entities.js';
 import type { WeeklyAgendaItem } from '../../core/domain/study-weekly-agenda.js';
 import { buildStudyHorizonSummary, type StudyHorizonSummary } from '../../core/domain/study-planning-horizon.js';
+import { summarizeAcademySectionProgress } from '../../core/domain/academy-section-progress-summary.js';
+import type { AcademyStudyProgressOverviewSnapshot } from '../../core/domain/academy-study-progress.js';
+import { academyCurriculumMaterialIndex } from '../../core/domain/academy-curriculum.generated.js';
 
 const weekDays = [
   { weekday: 1, label: 'Lun' }, { weekday: 2, label: 'Mar' }, { weekday: 3, label: 'Mié' },
@@ -31,13 +34,16 @@ function statusMessage(summary: StudyHorizonSummary): string {
   return `Quedan ${topics} de la secuencia sin marca y hay ${slots} de contenido nuevo hasta el objetivo. Es un máximo optimista de un tema por espacio, no una estimación del tiempo para comprenderlos.`;
 }
 
-export function PlanningHorizon({ targetDate, today, preferences, catalogTopicIds, studiedTopicIds, weeklyItems = [] }: {
+export function PlanningHorizon({ targetDate, today, preferences, catalogTopicIds, studiedTopicIds, weeklyItems = [], sectionProgress, sectionProgressError = false, onRetrySectionProgress }: {
   targetDate: string;
   today: Date;
   preferences: TrainingPreferences;
   catalogTopicIds: readonly string[];
   studiedTopicIds: readonly string[];
   weeklyItems?: readonly WeeklyAgendaItem[];
+  sectionProgress?: AcademyStudyProgressOverviewSnapshot;
+  sectionProgressError?: boolean;
+  onRetrySectionProgress?(): void;
 }) {
   const summary = buildStudyHorizonSummary({
     todayDateKey: localDateKey(today), targetDate,
@@ -50,6 +56,7 @@ export function PlanningHorizon({ targetDate, today, preferences, catalogTopicId
     ? new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(`${targetDate}T12:00:00`))
     : null;
   const upcomingEvents = (summary.calendarEvents ?? []).filter(event => event.endDate >= localDateKey(today)).slice(0, 5);
+  const sectionSummary = sectionProgress && summarizeAcademySectionProgress({ ...sectionProgress, materialIndex:academyCurriculumMaterialIndex });
 
   return <section className="my-5 grid min-w-0 gap-4 rounded-[var(--r-xl)] border border-line p-4 sm:p-5 [background:var(--card)]" aria-labelledby="planning-horizon-title">
     <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -65,6 +72,18 @@ export function PlanningHorizon({ targetDate, today, preferences, catalogTopicId
         {summary.unsequencedCatalogTopicCount > 0 && <p className="mb-2 text-muted">{summary.unsequencedCatalogTopicCount} {summary.unsequencedCatalogTopicCount === 1 ? 'tema del catálogo todavía no está' : 'temas del catálogo todavía no están'} en la secuencia de academia; no se les asigna un orden automáticamente.</p>}
         {summary.orderedTopicMissingFromCatalogCount > 0 && <p className="mb-2 text-muted">{summary.orderedTopicMissingFromCatalogCount} {summary.orderedTopicMissingFromCatalogCount === 1 ? 'entrada de la secuencia no aparece' : 'entradas de la secuencia no aparecen'} en el catálogo actual y no {summary.orderedTopicMissingFromCatalogCount === 1 ? 'puede' : 'pueden'} planificarse.</p>}
         <p className="m-0 text-muted text-sm">La marca de «estudiado» registra cobertura declarada, no demuestra comprensión o recuerdo. La proyección estima espacios para introducir temas según el horario habitual y las excepciones guardadas; no estima horas necesarias ni probabilidad de aprobar.</p>
+        <section className="mt-3 rounded-md border border-line p-3" aria-labelledby="planning-section-progress-title">
+          <h4 id="planning-section-progress-title" className="m-0 text-sm font-semibold">Avance declarado por apartados</h4>
+          {sectionProgressError ? <div className="mt-2" role="alert"><p className="my-0 text-sm">No se pudo leer el progreso local por apartados.</p>{onRetrySectionProgress && <button className="btn sec mt-2" type="button" onClick={onRetrySectionProgress}>Reintentar</button>}</div>
+            : !sectionSummary ? <p className="mt-2 mb-0 text-sm text-muted" role="status">Cargando progreso guardado…</p>
+              : sectionSummary.selectedSyllabusTopicCount === 0 ? <p className="mt-2 mb-0 text-sm text-muted">Aún no hay un temario principal seleccionado para registrar este avance. Puedes elegirlo en Temario → tema → Material de academia.</p>
+                : <>
+                  <p className="mt-2 mb-1 text-sm">{sectionSummary.selectedSyllabusTopicCount} {sectionSummary.selectedSyllabusTopicCount === 1 ? 'tema tiene' : 'temas tienen'} un temario principal seleccionado · {sectionSummary.trackedSectionCount} {sectionSummary.trackedSectionCount === 1 ? 'apartado tiene' : 'apartados tienen'} un estado de cobertura guardado.</p>
+                  <p className="my-1 text-sm text-muted">Declarados cubiertos: {sectionSummary.coveredSectionCount} · parciales: {sectionSummary.partialSectionCount} · reiniciados a «sin iniciar»: {sectionSummary.resetSectionCount} · con autoevaluación diferida: {sectionSummary.delayedSelfCheckSectionCount}.</p>
+                  {sectionSummary.staleSyllabusTopicCount > 0 && <p className="my-1 text-sm text-muted" role="status">Se excluye el progreso de {sectionSummary.staleSyllabusTopicCount} tema(s) cuya selección corresponde a otra versión de material. Revísala en Temario.</p>}
+                  <p className="m-0 text-xs text-muted">Son registros de apartados con actividad, no el total del programa ni una medida de dominio. Las autoevaluaciones son personales; los índices extraídos requieren revisión.</p>
+                </>}
+        </section>
         {summary.plannedExtraNewTopicSessions > 0 && <p className="mt-2 mb-0 text-muted text-sm" role="status">La agenda confirmada añade {summary.plannedExtraNewTopicSessions} espacio(s) de contenido nuevo en día(s) que habitualmente son de consolidación. Se cuentan aparte y solo para las fechas/temas aún pendientes.</p>}
       </section>
       <section aria-labelledby="planning-week-title" className="min-w-0">

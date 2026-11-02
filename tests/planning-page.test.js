@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 import { useLocation } from 'react-router';
 import { PlanningPage } from '../src/features/planning/PlanningPage.tsx';
 import { DEFAULT_TRAINING_PREFERENCES } from '../src/core/domain/study-training-plan.js';
+import { academyCurriculumTopicLoaders } from '../src/core/domain/academy-curriculum.generated.js';
 
 function CurrentPath() { const location = useLocation(); return createElement('output', { 'data-testid':'current-path' }, location.pathname + location.search); }
 const newTopicPlan = { weekday:1, minutes:120, restDay:false, activities:[{ activity:'newContent', minutes:120, reason:'new-content-day', topicId:'T1.01' }] };
@@ -214,6 +215,28 @@ it('integra el horizonte con la fecha objetivo guardada y la secuencia explícit
   expect(screen.getByText(/Objetivo personal:.*No confirma una convocatoria oficial/)).toBeInTheDocument();
   expect(screen.getByText(/La marca de «estudiado» registra cobertura declarada, no demuestra comprensión o recuerdo/)).toBeInTheDocument();
   expect(screen.queryByText(/fecha estimada: 30 jun 2027/)).not.toBeInTheDocument();
+});
+
+it('integra en el horizonte la cobertura declarada de apartados de un temario vigente', async () => {
+  const topic = (await academyCurriculumTopicLoaders['T1.01']()).academyCurriculumTopic;
+  const section = topic.sections[0];
+  const file = topic.files.find(item => item.path === section.materialPath);
+  const material = { path:file.path, sourceHash:file.sha256, outlineFingerprint:file.outlineFingerprint, outlineStructureFingerprint:file.outlineStructureFingerprint, role:'syllabus' };
+  const academyStudyProgress = {
+    accountId:() => 'user1', subscribe:() => () => {},
+    loadProgressOverview:async() => ({
+      selections:[{ topicId:topic.id, materials:[material], revision:1, updatedAt:1 }],
+      events:[
+        { id:'event-00000001', topicId:topic.id, sectionId:section.id, materialPath:section.materialPath, sourceHash:section.sourceHash, outlineFingerprint:section.outlineFingerprint, occurredAt:10, kind:'coverage', coverage:'covered' },
+        { id:'event-00000002', topicId:topic.id, sectionId:section.id, materialPath:section.materialPath, sourceHash:section.sourceHash, outlineFingerprint:section.outlineFingerprint, occurredAt:20, kind:'self-check', timing:'delayed', rating:'recalled' },
+      ],
+    }),
+  };
+  renderApp(createElement(PlanningPage), { services:{ ...servicesFor(overview()), academyStudyProgress } });
+  expect(await screen.findByRole('heading', { name:'Avance declarado por apartados' })).toBeInTheDocument();
+  expect(screen.getByText(/1 tema tiene un temario principal seleccionado · 1 apartado tiene un estado de cobertura guardado/)).toBeInTheDocument();
+  expect(screen.getByText(/Declarados cubiertos: 1 · parciales: 0 · reiniciados a «sin iniciar»: 0 · con autoevaluación diferida: 1/)).toBeInTheDocument();
+  expect(screen.getByText(/no el total del programa ni una medida de dominio/)).toBeInTheDocument();
 });
 
 it('no inventa fecha objetivo y explica cuando la secuencia configurada se agota', async () => {

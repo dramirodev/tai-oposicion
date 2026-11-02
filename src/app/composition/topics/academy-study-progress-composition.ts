@@ -4,6 +4,7 @@ import {
   type AcademyMaterialReference,
   type AcademyMaterialSelection,
   type AcademySectionStudyEvent,
+  type AcademyStudyProgressOverviewSnapshot,
   type AcademyTopicProgressSnapshot,
 } from '../../../core/domain/academy-study-progress.js';
 import {
@@ -35,6 +36,15 @@ export function createAcademyStudyProgressComposition(dependencies: {
       const account = dependencies.accountId();
       const snapshot = readAcademyTopicProgress(account, topicId);
       if (account !== dependencies.accountId()) return { selection: null, events: [] };
+      return snapshot;
+    },
+    getProgressOverview(): AcademyStudyProgressOverviewSnapshot {
+      const account = dependencies.accountId();
+      const snapshot = {
+        selections: listAcademyMaterialSelections(account),
+        events: listAcademySectionStudyEvents(account),
+      };
+      if (account !== dependencies.accountId()) return { selections: [], events: [] };
       return snapshot;
     },
     listSelections() { return listAcademyMaterialSelections(dependencies.accountId()); },

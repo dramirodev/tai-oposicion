@@ -9,6 +9,7 @@ export function renderApp(ui, { services = {}, initialEntries = ['/'] } = {}) {
       accountId:() => null,
       subscribe:() => () => {},
       loadTopicProgress:async () => ({ selection:null, events:[] }),
+      loadProgressOverview:async () => ({ selections:[], events:[] }),
       selectMaterials:() => false,
       record:() => false,
     },

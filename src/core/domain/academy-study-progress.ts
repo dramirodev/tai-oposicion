@@ -43,6 +43,11 @@ export interface AcademyTopicProgressSnapshot {
   events: readonly AcademySectionStudyEvent[];
 }
 
+export interface AcademyStudyProgressOverviewSnapshot {
+  selections: readonly AcademyMaterialSelection[];
+  events: readonly AcademySectionStudyEvent[];
+}
+
 const hashPattern = /^[a-f0-9]{64}$/i;
 const sectionIdPattern = /^ci-[a-f0-9]{20}$/i;
 const eventIdPattern = /^[a-zA-Z0-9_-]{8,128}$/;

@@ -42,6 +42,8 @@ class AcademyCurriculumBuildTests(unittest.TestCase):
         self.assertFalse(topic["appCatalogMatch"])
         self.assertEqual(topic["sourceStatus"], "outline-extracted-needs-review")
         self.assertEqual(topic["sections"][0]["title"], "1. APARTADO DE PRUEBA")
+        self.assertEqual(result["materialIndex"]["T5.19"][0]["path"], "T5.19 Tema nuevo/documento.pdf")
+        self.assertEqual(result["materialIndex"]["T5.19"][0]["kind"], "syllabus")
         self.assertEqual(result["sourceTopicIdsMissingFromAppCatalog"], ["T5.19"])
 
     def test_keeps_multiple_volumes_separate_and_section_ids_stable(self):

@@ -56,4 +56,15 @@ describe('progreso de apartados del temario', () => {
     expect(push).toHaveBeenCalledTimes(1);
     store.dispose();
   });
+
+  it('expone un resumen local completo de progreso y lo aísla al cambiar de cuenta', () => {
+    let account = 'owner-a';
+    const store = createAcademyStudyProgressComposition({ accountId:() => account, now:() => 500 });
+    store.selectMaterials('T99.01', [material]);
+    store.record(event());
+    expect(store.getProgressOverview()).toMatchObject({ selections:[{ topicId:'T99.01' }], events:[{ topicId:'T99.01' }] });
+    account = 'owner-b';
+    expect(store.getProgressOverview()).toEqual({ selections:[], events:[] });
+    store.dispose();
+  });
 });

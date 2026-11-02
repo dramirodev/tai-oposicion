@@ -11,7 +11,7 @@ import type { SelfAssessment } from '../../core/domain/attempts/transitions.js';
 import type { SimulationScoringPolicy } from '../../core/domain/simulation-scoring.js';
 import type { WeeklyAgendaItem, WeeklyAgendaPlanProposal, WeeklyAgendaRecoveryProposal, WeeklyStudyAgenda } from '../../core/domain/study-weekly-agenda.js';
 import type { TopicReviewEvidence } from '../../core/domain/study-review-intervention.js';
-import type { AcademyMaterialReference, AcademySectionStudyEvent, AcademyTopicProgressSnapshot } from '../../core/domain/academy-study-progress.js';
+import type { AcademyMaterialReference, AcademySectionStudyEvent, AcademyStudyProgressOverviewSnapshot, AcademyTopicProgressSnapshot } from '../../core/domain/academy-study-progress.js';
 export type { StatsComparison, StatsDomainTopic, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 export interface ActiveStudy { title: string; position: number; total: number }
 export interface HomeBlock { name: string; total: number; mastered: number; assessed: number }
@@ -82,6 +82,7 @@ export interface AcademyStudyProgressServices {
   accountId(): string | null;
   subscribe(listener: () => void): () => void;
   loadTopicProgress(topicId: string): Promise<AcademyTopicProgressSnapshot>;
+  loadProgressOverview(): Promise<AcademyStudyProgressOverviewSnapshot>;
   selectMaterials(topicId: string, materials: readonly AcademyMaterialReference[]): boolean;
   record(event: AcademySectionStudyEvent): boolean;
 }

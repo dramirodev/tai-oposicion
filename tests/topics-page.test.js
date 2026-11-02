@@ -72,6 +72,7 @@ it('requiere seleccionar un material antes de registrar cobertura parcial por ap
     accountId:() => null,
     subscribe:listener => { listeners.add(listener); return () => listeners.delete(listener); },
     loadTopicProgress:async () => progress,
+    loadProgressOverview:async () => ({ selections:[], events:[] }),
     selectMaterials:(topicId, materials) => {
       progress = { ...progress, selection:{ topicId, materials, revision:1, updatedAt:Date.now() } };
       listeners.forEach(listener => listener());

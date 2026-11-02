@@ -200,12 +200,28 @@ def build_catalog(source_root: Path, app_index_path: Path, pdftotext: str) -> di
             "sections": sections,
         })
 
+    material_index = {
+        topic["id"]: [
+            {
+                "path": file["path"],
+                "kind": file["kind"],
+                "sha256": file["sha256"],
+                "outlineFingerprint": file["outlineFingerprint"],
+                "outlineStructureFingerprint": file["outlineStructureFingerprint"],
+            }
+            for file in topic["files"]
+            if file.get("sha256") and file.get("outlineFingerprint") and file.get("outlineStructureFingerprint")
+        ]
+        for topic in topics
+    }
+
     return {
         "schemaVersion": 1,
         "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "authority": "Google Drive/TEMARIO_OPOSICION/01_Temario",
         "extraction": "Poppler pdftotext -layout; only PDF index lines are copied, never document body text",
         "topics": topics,
+        "materialIndex": material_index,
         "unmatchedAppTopicIds": sorted(set(app_topics) - seen_codes),
         "sourceTopicIdsMissingFromAppCatalog": sorted(seen_codes - set(app_topics)),
     }
@@ -242,10 +258,13 @@ def main() -> int:
     )
     arguments.output.write_text(
         "// Generado con scripts/build_academy_curriculum.py; no editar manualmente.\n"
-        "import type { AcademyCurriculumTopic } from './academy-curriculum-types.js';\n"
+        "import type { AcademyCurriculumMaterialIdentity, AcademyCurriculumTopic } from './academy-curriculum-types.js';\n"
         "type AcademyCurriculumModule = { academyCurriculumTopic: AcademyCurriculumTopic };\n"
         "export const academyCurriculumTopicLoaders: Record<string, () => Promise<AcademyCurriculumModule>> = {\n"
-        f"{loaders}\n}};\n",
+        f"{loaders}\n}};\n"
+        "export const academyCurriculumMaterialIndex: Record<string, readonly AcademyCurriculumMaterialIdentity[]> = "
+        + json.dumps(catalog["materialIndex"], ensure_ascii=False, indent=2)
+        + ";\n",
         encoding="utf-8",
     )
     matched = sum(topic["appCatalogMatch"] for topic in catalog["topics"])

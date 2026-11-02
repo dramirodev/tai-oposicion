@@ -355,11 +355,15 @@ function PlanningHistory({ overview }: { overview: HomeOverview }) {
 
 export function PlanningPage() {
   const services = useStudyService('home');
+  const academyProgressService = useStudyService('academyStudyProgress');
   const authResolved = useSyncExternalStore(services.subscribe, services.authResolved, () => false);
   const [reload, setReload] = useState(0);
+  const [sectionProgressRetry, setSectionProgressRetry] = useState(0);
   const [, setCalendarRevision] = useState(0);
   const resource = useMemo(() => ({ accountId: services.accountId, subscribe: services.subscribe, load: () => services.loadOverview() }), [services]);
   const { value: overview, error } = useAccountResource(resource, reload);
+  const sectionProgressResource = useMemo(() => ({ accountId:academyProgressService.accountId, subscribe:academyProgressService.subscribe, load:() => academyProgressService.loadProgressOverview() }), [academyProgressService]);
+  const { value: sectionProgress, error: sectionProgressError } = useAccountResource(sectionProgressResource, sectionProgressRetry);
   const weeklyAgenda = services.weeklyStudyAgenda?.();
   const seenTopicIds = services.seenTopics();
   const settings = useSettingsSnapshot();
@@ -451,7 +455,8 @@ export function PlanningPage() {
       <Link className="planning-settings-link min-h-11 inline-flex flex-none items-center max-[520px]:self-start" to="/settings">Configurar semana</Link>
     </header>
     <PlanningHorizon targetDate={settings.exam} today={now} preferences={settings.training}
-      catalogTopicIds={settings.index?.topics?.map(topic => topic.id) ?? []} studiedTopicIds={seenTopicIds} weeklyItems={weeklyAgenda?.items ?? []} />
+      catalogTopicIds={settings.index?.topics?.map(topic => topic.id) ?? []} studiedTopicIds={seenTopicIds} weeklyItems={weeklyAgenda?.items ?? []}
+      sectionProgress={sectionProgress} sectionProgressError={!!sectionProgressError} onRetrySectionProgress={() => setSectionProgressRetry(value => value + 1)} />
     <PlanningTodayCard model={model} overview={planningOverview} activeStudy={!!services.getActiveStudy()} onStart={actions.startSession} onPause={actions.pauseSession}
       onBeginBreak={actions.beginBreak} onEndBreak={actions.endBreak} focusBlockMinutes={settings.training.focusBlockMinutes ?? 35} />
     <PlanningActivityList model={model} assessments={planningOverview.paperRecallAssessments ?? []} now={now.getTime()} onRecallAssessment={actions.recordRecallAssessment} />
