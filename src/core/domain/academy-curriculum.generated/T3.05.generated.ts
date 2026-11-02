@@ -21,6 +21,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 7401400,
       "sha256": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 68,
+      "extractableTextCharacters": 106772,
       "outlineStructureFingerprint": "087888a8921b1ecbd3edc4f5ceed6dbcd63bfe88d28776f270528439b51d4a59",
       "outlineFingerprint": "0298e92b4e64abc180a457ca03043070705ad4837ad0b64affee6a46b3ea5b8e",
       "outlineEntryCount": 28
@@ -32,7 +35,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 552703,
       "sha256": "f7e0ee4d782909682dd2842a8773001411c15b7a6ae90e7e13a552497e8a721c",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 4,
+      "extractableTextCharacters": 4916
     },
     {
       "path": "T3.05 POO/T3.05 POO - Test.pdf",
@@ -41,7 +47,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 322215,
       "sha256": "508a50f571460835d6b08e682382bc7d7b3447061942823960f5a0dd778c9d03",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 11,
+      "extractableTextCharacters": 13372
     }
   ],
   "sections": [

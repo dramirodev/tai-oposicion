@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 489017,
       "sha256": "f82a89484cf682209870d42266ebdd72fad8bd8a08007597a36c557998b5cd92",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 5,
+      "extractableTextCharacters": 5473
     },
     {
       "path": "T1.06 Fuentes del Derecho/T1.06 Fuentes del Derecho - Temario OPO.pdf",
@@ -30,6 +33,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 1645814,
       "sha256": "4a2f6932755a6d48a2bd0d8d179707b9cacab6dcd466e7bfd2654a5d27170c1d",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 29,
+      "extractableTextCharacters": 47447,
       "outlineStructureFingerprint": "2faaa7ae220d34c99a4e05e03189be02f32c83fa1984dea2798e18299ae36385",
       "outlineFingerprint": "735a1600181b7ba1cf11f58f1bcd02854890bd49ad88c20555200ce11d1ee201",
       "outlineEntryCount": 23
@@ -41,7 +47,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 288943,
       "sha256": "c0621f6f0eba11bc811a01535920effbe42dd9825aecd74a5428b451d7d647d5",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 9,
+      "extractableTextCharacters": 11230
     }
   ],
   "sections": [

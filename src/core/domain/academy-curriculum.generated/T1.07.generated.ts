@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 159061,
       "sha256": "ab44c0a4ef8536694c14dfa399ddfae5232fd2b83a6636f5e89061cb59a7a146",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 5,
+      "extractableTextCharacters": 5072
     },
     {
       "path": "T1.07 Políticas de Igualdad/T1.07 Políticas de Igualdad - Temario.pdf",
@@ -30,6 +33,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 3192828,
       "sha256": "87083522e2f662659e2f016cc5fbd2a68f0bad091543d640ab88bdcac34dfa9a",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 164,
+      "extractableTextCharacters": 361166,
       "outlineStructureFingerprint": "20de43efd8414897dc2db2f39ef56807cdb225efcf053d3f1f408b108f37dfc5",
       "outlineFingerprint": "1f9c913499b40e769b7b5b3d8cd7ba2a5d63db78d2317790177fcf59aa78fcf2",
       "outlineEntryCount": 41
@@ -41,7 +47,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 408087,
       "sha256": "2f1da969434d95c9e94965408007261c11d765818578a0da7839608d772e7343",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 24,
+      "extractableTextCharacters": 47314
     }
   ],
   "sections": [

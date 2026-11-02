@@ -21,7 +21,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 311998,
       "sha256": "9687d6394f25f7ba79a92895a02c35ab54b4408febced72734c8c2484c51dcc3",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 9,
+      "extractableTextCharacters": 7046
     },
     {
       "path": "T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Ejercicios (soluciones) 2.pdf",
@@ -30,7 +33,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 1434201,
       "sha256": "720d80b229a938f8170a25003a69ff999a80d6dafa5b8383ec341d317d3d0af2",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 8,
+      "extractableTextCharacters": 5790
     },
     {
       "path": "T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Ejercicios (soluciones) 3.pdf",
@@ -39,7 +45,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 282553,
       "sha256": "dce6d285170a03cb7106f60805f4cbe11291ea2527ad0f7e90e6a731e3599180",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 8,
+      "extractableTextCharacters": 3834
     },
     {
       "path": "T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Ejercicios 1.pdf",
@@ -48,7 +57,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 278828,
       "sha256": "693679f711cd5b7114163fbe3161ee66d386fb8fae9f3b54e1cc0ed216ffff26",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 7,
+      "extractableTextCharacters": 2632
     },
     {
       "path": "T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Ejercicios 2.pdf",
@@ -57,7 +69,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 509326,
       "sha256": "e87f63429835e0165a69d8daa434d15c220b7cfd171cb57866f13b762f038330",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 6,
+      "extractableTextCharacters": 3377
     },
     {
       "path": "T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Ejercicios 3.pdf",
@@ -66,7 +81,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 269294,
       "sha256": "0aa5c6ce2e3293f615735b200b6d09366183c6434bf91bfd2b90a719a0bbcfd4",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 6,
+      "extractableTextCharacters": 2164
     },
     {
       "path": "T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Repaso.pdf",
@@ -75,7 +93,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 218165,
       "sha256": "324b79264806652caa0c09da9816a24088401da1025c5e39f74361b02cf77e13",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 7,
+      "extractableTextCharacters": 7879
     },
     {
       "path": "T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Temario.pdf",
@@ -85,6 +106,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 5310414,
       "sha256": "8c96987feee2c1ddade9129a46a22faf3166f37a58524261b7ec3818e5f1fb58",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 64,
+      "extractableTextCharacters": 95876,
       "outlineStructureFingerprint": "4f60bb356285d0e05df2b8e3e9bd25744b3209e0429c0b1873535eac2bde938f",
       "outlineFingerprint": "a0cbcd61c19a7aa8a0c557757757f622843edbb171be5e76d70fa6fd36a1a52a",
       "outlineEntryCount": 22
@@ -96,7 +120,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 251116,
       "sha256": "e601dc576ba7f2c1fad87225dd13b971e01ceec49a3e37b97c6d23be4ca00280",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 13,
+      "extractableTextCharacters": 14445
     }
   ],
   "sections": [

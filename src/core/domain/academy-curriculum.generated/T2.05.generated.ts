@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 168253,
       "sha256": "c8c0776bbd70f484abb8f0fd67d5ddb8b609f725eac5c62fd467ddb9d0d8a8b6",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 6,
+      "extractableTextCharacters": 6354
     },
     {
       "path": "T2.05 SGBD/T2.05 SGBD - Temario.pdf",
@@ -30,6 +33,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 2120374,
       "sha256": "0b059be5a4bca8dc8ecf2dbffd7a73005d58b493c4adb42574533760e755c4a0",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 30,
+      "extractableTextCharacters": 48305,
       "outlineStructureFingerprint": "87956f4d12d6a60940b018258d522eb3051b37d08156b642cbc90c028bdfa31e",
       "outlineFingerprint": "6e15bae5953c7f7eebcdb55abc2f55131b0dfd4619b1e9b04bd2d104957721c3",
       "outlineEntryCount": 24
@@ -41,7 +47,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 226820,
       "sha256": "b6ff07d957d16585c0b1532720f25a831c2c996a48241e45c6f5703e08ea04ef",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 9,
+      "extractableTextCharacters": 11346
     }
   ],
   "sections": [

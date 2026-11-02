@@ -21,7 +21,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 717529,
       "sha256": "9edfe4527d9c2af8c11a21b0e8cebafea294a33cf1b0c32f93c64c27e25e47ba",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 5,
+      "extractableTextCharacters": 1933
     },
     {
       "path": "T3.02 Diseño de BD/T3.02 Diseño de BD - Repaso.pdf",
@@ -30,7 +33,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 147815,
       "sha256": "b789ec4535146ed8e2a59bb543d46e381df21065cb1fcb2a413841c1f3efbb4c",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 4,
+      "extractableTextCharacters": 3837
     },
     {
       "path": "T3.02 Diseño de BD/T3.02 Diseño de BD - Temario.pdf",
@@ -40,6 +46,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 3217453,
       "sha256": "8e5f7ef02ccdae019b422c205c7a5b774efe690a03dc232069106bce975f3185",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 36,
+      "extractableTextCharacters": 46688,
       "outlineStructureFingerprint": "5533c3ee02da3ea3052d081a10d9ce89b54b71c6f25e040cc70436d62771a73d",
       "outlineFingerprint": "632d9bdf545a8f830efd728057faacc9a9c65b4a7280826214aa769771704c7f",
       "outlineEntryCount": 21
@@ -51,7 +60,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 333783,
       "sha256": "09d3fcafff73c30e9791c17c3c39f42fed9ae55cb129068adf5bf954ec32729d",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 13,
+      "extractableTextCharacters": 16169
     }
   ],
   "sections": [

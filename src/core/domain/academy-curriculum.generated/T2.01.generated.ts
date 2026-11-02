@@ -22,7 +22,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 411203,
       "sha256": "65cbd380f137dd386f330581bdbdfd9123cef12ae0c28d6de84754302d65abbf",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 6,
+      "extractableTextCharacters": 3323
     },
     {
       "path": "T2.01 Informática Básica/T2.01 Informática Básica - Repaso.pdf",
@@ -31,7 +34,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 170586,
       "sha256": "0748e03461cc52929f9892161b3e1f8c92ce5421eafd2886f4b37814505d9675",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 7,
+      "extractableTextCharacters": 6797
     },
     {
       "path": "T2.01 Informática Básica/T2.01 Informática Básica - Temario (version alternativa).pdf",
@@ -41,6 +47,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 3801861,
       "sha256": "f970a0610c42027752deff031e57ff88c8266330e31549b84422e1fca1651606",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 52,
+      "extractableTextCharacters": 85357,
       "outlineStructureFingerprint": "fa1b1ec6a21d63b63b0c4e10e5dc24e2f2dd1b6415c7646d3f9bc387d5d68fd6",
       "outlineFingerprint": "61ab6bc592b43ec0c687ad55e6ce521513c4fb21c5a7f512c99117274bd936b7",
       "outlineEntryCount": 17
@@ -53,6 +62,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 1796687,
       "sha256": "f569674274fbe378727b5cc4073872ef5273b2e93e94d51912dd322852e9b437",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 52,
+      "extractableTextCharacters": 87808,
       "outlineStructureFingerprint": "fa1b1ec6a21d63b63b0c4e10e5dc24e2f2dd1b6415c7646d3f9bc387d5d68fd6",
       "outlineFingerprint": "3d096d8ebb7a6c4c8f495c4484c064a39a8ab5e635130579bb7b6aa5acb6fd6a",
       "outlineEntryCount": 17
@@ -72,7 +84,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 323228,
       "sha256": "6f62443b0ac92fbe37730edaf417caedad685fec10f02f424d774e6f6c9adc44",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 12,
+      "extractableTextCharacters": 13706
     }
   ],
   "sections": [

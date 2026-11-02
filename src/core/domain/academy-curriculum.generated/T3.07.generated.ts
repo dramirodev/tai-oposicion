@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 72403,
       "sha256": "aefffc9f3e4b7f4d4fe7e32c17e8fc19861ae95f02cea3b28b2f971865eb836a",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 7,
+      "extractableTextCharacters": 6841
     },
     {
       "path": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
@@ -30,6 +33,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 6310297,
       "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 57,
+      "extractableTextCharacters": 99414,
       "outlineStructureFingerprint": "15133bfcc13f3c9506d6f55e03ab0459e7ac90493c80d965e1471f87c9f32d67",
       "outlineFingerprint": "2989f27de67e70a3b1b9901f952dd2e755068af55923d2cb32c46dbd4819ac59",
       "outlineEntryCount": 26
@@ -41,7 +47,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 270029,
       "sha256": "ebdf790d22ea0f6a9e65705723632a8273adef99f9ff1c9be1470c107dfdc10c",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 13,
+      "extractableTextCharacters": 17368
     }
   ],
   "sections": [

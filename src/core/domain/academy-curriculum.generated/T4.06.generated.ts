@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 714575,
       "sha256": "82364bb88d4d2bf195f14ae096499467a7295db72af6177c30d9fd17fde3d1bf",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 5,
+      "extractableTextCharacters": 6076
     },
     {
       "path": "T4.06 Comunicaciones y Redes/T4.06 Comunicaciones y Redes - Temario.pdf",
@@ -30,6 +33,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 9178322,
       "sha256": "cc73bc044bdfdb53d6c6776f87a79f0fe690f1c5c1a2ee9c4749bb98f9bcf3eb",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 66,
+      "extractableTextCharacters": 115710,
       "outlineStructureFingerprint": "3c3d7f2438d7a98691a64d5ccc15ffd9f84c63a7609d9243f447d737185a041c",
       "outlineFingerprint": "bd87026a190c9000b37938ecf3237366209c170f54ef67dbcc54545a86f1ac07",
       "outlineEntryCount": 20
@@ -41,7 +47,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 265245,
       "sha256": "e3872f52734639f44f405e0026dcb427150f12eb5ecb1c096880dc153558922c",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 11,
+      "extractableTextCharacters": 12410
     }
   ],
   "sections": [

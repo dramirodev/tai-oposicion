@@ -60,6 +60,9 @@ it('enlaza el tema recomendado con el índice y los ficheros exactos del Drive d
   expect(screen.getAllByText(/INTRODUCCIÓN/).length).toBeGreaterThan(0);
   expect(screen.getAllByText(/p\. 3/).length).toBeGreaterThan(0);
   expect(screen.getByText(/Índices extraídos de temarios/)).toBeInTheDocument();
+  expect(screen.getAllByText(/PDF con texto extraíble/).length).toBeGreaterThan(0);
+  expect(screen.getAllByText(/no verifica que el contenido sea explicativo, completo ni vigente/).length).toBeGreaterThan(0);
+  expect(screen.getAllByText(/La aplicación conserva solo metadatos e índice, no el cuerpo del documento/).length).toBeGreaterThan(0);
   expect(screen.getAllByText(/Otro archivo tiene los mismos títulos y páginas de índice/)).toHaveLength(2);
   expect(screen.getByText(/permanecen en tu carpeta de Drive y no están copiados ni se abren desde la aplicación/)).toBeInTheDocument();
 });

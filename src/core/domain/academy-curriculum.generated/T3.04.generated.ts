@@ -37,7 +37,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 455820,
       "sha256": "4871286463329a48240444f950fc18e4d48f466ef84bcbee0baa7ebbe1ceaad2",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 14,
+      "extractableTextCharacters": 12772
     },
     {
       "path": "T3.04 SQL/T3.04 SQL - Ejercicios.pdf",
@@ -46,7 +49,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 337574,
       "sha256": "c33d3ea8747ecafb9727eadb4028bf3592d131ead62917092e0a9ce292b3c3e2",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 10,
+      "extractableTextCharacters": 8509
     },
     {
       "path": "T3.04 SQL/T3.04 SQL - Repaso.pdf",
@@ -55,7 +61,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 166136,
       "sha256": "8ebc20c214f7a80c571a736756f6ef56d4d3b840ef3ab2218587fddec784fa02",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 5,
+      "extractableTextCharacters": 4949
     },
     {
       "path": "T3.04 SQL/T3.04 SQL - Temario.pdf",
@@ -65,6 +74,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 2501175,
       "sha256": "b99989c34d1326722c0dacc4aa425a947c6b8be180a834f2939525a9ccac4b25",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 40,
+      "extractableTextCharacters": 50146,
       "outlineStructureFingerprint": "8b850a12986e22c85cabb9217995f42619a50009a4afd9a6cf5c67f50a22d7db",
       "outlineFingerprint": "e1ba2f01fb94391ed6d0091f5bb76aeeb1ad6edcfd61f047c52771c3ca6f80a0",
       "outlineEntryCount": 10
@@ -76,7 +88,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 288540,
       "sha256": "cec98903cc38c0c677860052518c1ec30438958841d0f49e4406861526b1c634",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 16,
+      "extractableTextCharacters": 21952
     }
   ],
   "sections": [

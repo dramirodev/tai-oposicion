@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 75358,
       "sha256": "8433539866d9df3458d1c42772a2792546992c258c8d45e5ce7e8b854575a813",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 6,
+      "extractableTextCharacters": 4903
     },
     {
       "path": "T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf",
@@ -30,6 +33,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 3340574,
       "sha256": "5f258b7cc3f23f39e1f8f4dbdf0679f85d8ff3c499df62a43cf011dcf27e391f",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 114,
+      "extractableTextCharacters": 243282,
       "outlineStructureFingerprint": "395851f2250463bc1655ba39bb153398df26c14de2920167ff480b468813bc97",
       "outlineFingerprint": "2ea44a96eb5af2df6487c56435b04f21815923943d8bb5a4df05225c719e6991",
       "outlineEntryCount": 33
@@ -41,7 +47,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 276317,
       "sha256": "809b9cee6c1f331ba105fe77b0676a6ed0fe51918f2afcd995f818df33b1d9fd",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 14,
+      "extractableTextCharacters": 22934
     }
   ],
   "sections": [

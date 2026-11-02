@@ -50,7 +50,7 @@ def material_kind(path: Path) -> str:
     return "other"
 
 
-def extract_outline(path: Path, pdftotext: str) -> tuple[list[dict[str, Any]], str | None]:
+def extract_document_text(path: Path, pdftotext: str) -> tuple[str, int, int, str | None, str]:
     result = subprocess.run(
         [pdftotext, "-layout", str(path), "-"],
         check=False,
@@ -60,9 +60,18 @@ def extract_outline(path: Path, pdftotext: str) -> tuple[list[dict[str, Any]], s
         errors="replace",
     )
     if result.returncode:
-        return [], "pdftotext-error"
+        return "error", 0, 0, "pdftotext-error", ""
 
-    lines = result.stdout.splitlines()
+    text = result.stdout
+    pages_with_text = sum(bool(page.strip()) for page in text.split("\f"))
+    character_count = sum(not character.isspace() for character in text)
+    status = "extractable" if character_count else "empty"
+    return status, pages_with_text, character_count, None, text
+
+
+def extract_outline(text: str) -> tuple[list[dict[str, Any]], str | None]:
+
+    lines = text.splitlines()
     index_at = next((i for i, line in enumerate(lines) if line.strip().casefold() in {"índice", "indice"}), None)
     if index_at is None:
         return [], "index-not-found"
@@ -130,8 +139,13 @@ def build_catalog(source_root: Path, app_index_path: Path, pdftotext: str) -> di
             kind = material_kind(path)
             extracted: list[dict[str, Any]] = []
             issue: str | None = None
-            if path.suffix.casefold() == ".pdf" and kind != "test":
-                extracted, issue = extract_outline(path, pdftotext)
+            text_status: str | None = None
+            text_pages = 0
+            text_characters = 0
+            if path.suffix.casefold() == ".pdf":
+                text_status, text_pages, text_characters, issue, document_text = extract_document_text(path, pdftotext)
+                if kind != "test" and text_status != "error":
+                    extracted, issue = extract_outline(document_text)
                 if extracted and kind == "other":
                     kind = "syllabus"
             file_counts[kind] = file_counts.get(kind, 0) + 1
@@ -149,6 +163,9 @@ def build_catalog(source_root: Path, app_index_path: Path, pdftotext: str) -> di
 
             if path.suffix.casefold() == ".pdf":
                 entry["outlineStatus"] = "not-extracted-test" if kind == "test" else ("extracted" if extracted else issue)
+                entry["textExtractionStatus"] = text_status
+                entry["extractableTextPages"] = text_pages
+                entry["extractableTextCharacters"] = text_characters
                 if extracted:
                     entry["outlineStructureFingerprint"], entry["outlineFingerprint"] = outline_fingerprints(extracted)
                     if kind == "syllabus":

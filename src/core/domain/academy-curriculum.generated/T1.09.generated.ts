@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 227405,
       "sha256": "7498f7f90887fcbfa87dad6eaa6061a9c47083ab5191692e67ecfdf2ccf7f56f",
-      "outlineStatus": "index-has-no-extractable-entries"
+      "outlineStatus": "index-has-no-extractable-entries",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 9,
+      "extractableTextCharacters": 9516
     },
     {
       "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
@@ -30,6 +33,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 1543817,
       "sha256": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 76,
+      "extractableTextCharacters": 171653,
       "outlineStructureFingerprint": "852b4bbc130d94d03e8afd9f50192dc2d7e021dbcef211557bc700b1265279d5",
       "outlineFingerprint": "fb3ec5635322077d07baf2f7f77934ea95600d70d97700d5003e7a412d929f7a",
       "outlineEntryCount": 24
@@ -41,7 +47,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 453633,
       "sha256": "ed274d70ffb14687701cb067db7671f72d026ea34dea30c687c49aa15fd1805b",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 15,
+      "extractableTextCharacters": 25330
     },
     {
       "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Test.pdf",
@@ -50,7 +59,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 224706,
       "sha256": "df6b2ecc341821760d3a977f96649f75de8768911cdb4de45af062cde9bdcbe4",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 8,
+      "extractableTextCharacters": 11441
     }
   ],
   "sections": [

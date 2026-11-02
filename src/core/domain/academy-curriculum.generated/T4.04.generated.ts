@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 168652,
       "sha256": "9539fdd1e6fdf2f9c866c4966867fc4b4f31c6d11b5f0ff54679d6e18abf921d",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 5,
+      "extractableTextCharacters": 4976
     },
     {
       "path": "T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
@@ -30,6 +33,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 1956005,
       "sha256": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 51,
+      "extractableTextCharacters": 77608,
       "outlineStructureFingerprint": "1eb6bd24d2bcabb3641a4537c8277cf9a7a850a91c92da229f30b9903beb70a6",
       "outlineFingerprint": "ce5bad1f772607b2d4abc3492e430046ce3d6e5a9612447634b5b32567b30501",
       "outlineEntryCount": 17
@@ -41,7 +47,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 335822,
       "sha256": "b71664750100c824c43846288311e86fbb9d3686c623cad43203a6665b43eb40",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 11,
+      "extractableTextCharacters": 11322
     }
   ],
   "sections": [

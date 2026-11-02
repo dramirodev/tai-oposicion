@@ -79,7 +79,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 159890,
       "sha256": "cde5c060f62a5489a79117cbbf3f26d36dbc7e4a004b0e75579d2c4e8be4f3d1",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 5,
+      "extractableTextCharacters": 5303
     },
     {
       "path": "T1.02 Cortes Generales/T1.02 Cortes Generales - Temario.pdf",
@@ -89,6 +92,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 1442333,
       "sha256": "a826e75d13d409bfd8af8c56def14f629a1242c26c0ad09f5c67de7981fb1783",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 21,
+      "extractableTextCharacters": 33308,
       "outlineStructureFingerprint": "0df12cef0b6d1805f499af4478559fb76933c9dd0ee1bc038df7ae788d5b8305",
       "outlineFingerprint": "e01cb5d7d9f262d66583513f2e5f7a3c656104e6c2ba66a90d101de772ea480e",
       "outlineEntryCount": 41
@@ -100,7 +106,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 279763,
       "sha256": "aa77c6693cb6cb0c371c802736429788f7bd3288fc935b4fb27bbe6663d7ae0e",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 14,
+      "extractableTextCharacters": 21032
     }
   ],
   "sections": [

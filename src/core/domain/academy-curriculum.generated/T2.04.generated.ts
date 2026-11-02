@@ -29,7 +29,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 378472,
       "sha256": "9b6b546b1f0fdd36ff56d412ded5ff86d2afeaf993bcacffca96a81241d3fdaa",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 10,
+      "extractableTextCharacters": 4849
     },
     {
       "path": "T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Repaso.pdf",
@@ -38,7 +41,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 157256,
       "sha256": "55e7c7d6e52a4252d218d39f1c9c078b63865fef6b17b5b655a0bb7a344f33c8",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 7,
+      "extractableTextCharacters": 5873
     },
     {
       "path": "T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf",
@@ -48,6 +54,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 3558592,
       "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 89,
+      "extractableTextCharacters": 145271,
       "outlineStructureFingerprint": "a81074a4a2ad3b4006ab5893bac2460f11f73fd430b79ed5e121f98416659d61",
       "outlineFingerprint": "4324cbc9274c4ff5e2c9bd352782f10bcfc140a446a95a9b9fea4e2024c27de6",
       "outlineEntryCount": 55
@@ -59,7 +68,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 260096,
       "sha256": "24330431f62ab169901de54de77ad2a3ecc7d3c76620487453abb14d44250532",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 12,
+      "extractableTextCharacters": 12997
     }
   ],
   "sections": [

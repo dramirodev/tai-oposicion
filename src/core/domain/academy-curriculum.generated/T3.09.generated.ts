@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 222818,
       "sha256": "fc68215ea6a8b0908a52f3314cd5dfd2b8411320f211ea164f5ca09c5144a652",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 8,
+      "extractableTextCharacters": 9724
     },
     {
       "path": "T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Temario.pdf",
@@ -30,6 +33,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 4056482,
       "sha256": "0539d2f33ba827890a48a438cbb574e3beddf60dbff135d65bdf023737471146",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 91,
+      "extractableTextCharacters": 182274,
       "outlineStructureFingerprint": "b828fb185c05d5bb3515304e501dae4b1b3633178bc586b79b4767c8e1d4e354",
       "outlineFingerprint": "3b140fcf1ce9460d6c8eb8691041494a2c7682eebbedb50bd4f95ab19bf811ac",
       "outlineEntryCount": 28
@@ -41,7 +47,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 247610,
       "sha256": "67c13c545b63b5dd31d7ebe8d147062cdee6b6884d4945caf26ffc23cca7acc6",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 12,
+      "extractableTextCharacters": 16867
     }
   ],
   "sections": [

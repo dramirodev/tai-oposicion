@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 201759,
       "sha256": "bc08e1676677437f378f6e5d4bbf319225cfddc6259f219c21cdc6e1622cda47",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 8,
+      "extractableTextCharacters": 7295
     },
     {
       "path": "T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
@@ -30,6 +33,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 11987809,
       "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 68,
+      "extractableTextCharacters": 118440,
       "outlineStructureFingerprint": "5d032a5e50462eb85d4097b3b479825dd023d89dfad5a19959bf30dac15ff250",
       "outlineFingerprint": "d8a6a1fda189d0054a4788de3510feb0c02ec9cd129d6500c7e819797d4509c0",
       "outlineEntryCount": 23
@@ -41,7 +47,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 264027,
       "sha256": "13605ce2fa44f8de20d95d5f6fd3dbe0decc05379ded92aac38566b5ca3bdf9b",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 13,
+      "extractableTextCharacters": 14754
     }
   ],
   "sections": [

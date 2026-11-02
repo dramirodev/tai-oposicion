@@ -21,7 +21,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 188252,
       "sha256": "2589ac03ba132a6473f993357a2ec640d104d1f3c2388baecb61cc18ddd1ec7b",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 5,
+      "extractableTextCharacters": 5804
     },
     {
       "path": "T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
@@ -31,6 +34,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 1413834,
       "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 37,
+      "extractableTextCharacters": 58589,
       "outlineStructureFingerprint": "2b190dd602c76e9676a859821b99ebaab7131d7580e82ec4de015fef1a1707ea",
       "outlineFingerprint": "47bb743d79a3f03ce24ce89eae7cc077c3fa4b984c95bee9c28ba10cfd1c3434",
       "outlineEntryCount": 13
@@ -50,7 +56,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 269031,
       "sha256": "883fabc4592f25b412d1e2bf1ede8426d9c7d7f189f620db6479ea4f2f6f13e0",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 13,
+      "extractableTextCharacters": 14676
     }
   ],
   "sections": [

@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 327650,
       "sha256": "b5895c4b56316a76b73316d614d8de011d593dff9fb2b892d1c6424cbe4f50ab",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 11,
+      "extractableTextCharacters": 8300
     },
     {
       "path": "T3.06 Java y .NET/T3.06 Java y .NET - Ejercicios (soluciones) 2.pdf",
@@ -29,7 +32,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 322267,
       "sha256": "38bd65aa21e27447654e9de7de60d0fbab48be6aa4be1ece0ca8847ed5d20f1e",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 14,
+      "extractableTextCharacters": 13136
     },
     {
       "path": "T3.06 Java y .NET/T3.06 Java y .NET - Ejercicios (soluciones) 3.pdf",
@@ -38,7 +44,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 506823,
       "sha256": "1f84614107edd2284b2d59136e557291d880d23c83d589976ac8ed6a6af50451",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 17,
+      "extractableTextCharacters": 14720
     },
     {
       "path": "T3.06 Java y .NET/T3.06 Java y .NET - Ejercicios 1.pdf",
@@ -47,7 +56,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 322635,
       "sha256": "558dedc3a5651b858204c9b30dccfe1a364a42859dffb568c943361e3bc0b77d",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 6,
+      "extractableTextCharacters": 3493
     },
     {
       "path": "T3.06 Java y .NET/T3.06 Java y .NET - Ejercicios 2.pdf",
@@ -56,7 +68,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 297648,
       "sha256": "9bff1dbda0e2abb03e440db101176ea63ca94def1431d331c222b8b2cffb3227",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 6,
+      "extractableTextCharacters": 4123
     },
     {
       "path": "T3.06 Java y .NET/T3.06 Java y .NET - Ejercicios 3.pdf",
@@ -65,7 +80,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 360894,
       "sha256": "57af1177a3f91a6fa6a0a33b872f74dfd347c0ac6a841d2978302278d2e8a6dd",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 7,
+      "extractableTextCharacters": 5316
     },
     {
       "path": "T3.06 Java y .NET/T3.06 Java y .NET - Repaso - JAVA NET.pdf",
@@ -74,7 +92,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 175901,
       "sha256": "e61fbd6481de236d71cd8e064162967ec92d50decd0e73d715c57bc57334c61e",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 8,
+      "extractableTextCharacters": 7630
     },
     {
       "path": "T3.06 Java y .NET/T3.06 Java y .NET - Repaso - Java.pdf",
@@ -83,7 +104,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 159442,
       "sha256": "ca9f4ff6049f690c9c10faca1b41450fbacdc7b1ae573177df2af6025e0a9037",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 6,
+      "extractableTextCharacters": 5216
     },
     {
       "path": "T3.06 Java y .NET/T3.06 Java y .NET - Repaso - c++.pdf",
@@ -92,7 +116,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 128270,
       "sha256": "4cb2f23db0b2ed3c22e42c33e00e0c6625fb80aeb04f5cb48d263c9b84725338",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 4,
+      "extractableTextCharacters": 4476
     },
     {
       "path": "T3.06 Java y .NET/T3.06 Java y .NET - Repaso - sharp C#.pdf",
@@ -101,7 +128,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 179458,
       "sha256": "a78683acf66f2e5cf4e56c1b5a4b328386620ea061da9a3eb07eabade3fa1f81",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 5,
+      "extractableTextCharacters": 4675
     },
     {
       "path": "T3.06 Java y .NET/T3.06 Java y .NET - Repaso - tema c.pdf",
@@ -110,7 +140,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 52773,
       "sha256": "f8b6e8c8ecd61dda7a938fe20f3cb7b11c0e0f25a901ecb527b9b5eb31eba36e",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 3,
+      "extractableTextCharacters": 3481
     },
     {
       "path": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C plus.pdf",
@@ -120,6 +153,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 882516,
       "sha256": "9243bafe5bb5be43ae4e14d28154cbad8fe5c110587560fbd782438e41abf0ff",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 19,
+      "extractableTextCharacters": 26373,
       "outlineStructureFingerprint": "cbcd99468bd2bae2ee0cbce42a2d48282020fd0f4a776c857eb409caa5bda4dc",
       "outlineFingerprint": "c5b9b11a9a18090487d0c383fe76c6154f107f1f5d914d548530269da37c83c1",
       "outlineEntryCount": 28
@@ -132,6 +168,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 1185095,
       "sha256": "563da7491d1e448f1e37bd58ed145ff1c6dd9539c9abb619e203ef333b593d78",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 38,
+      "extractableTextCharacters": 45779,
       "outlineStructureFingerprint": "182aab740a1434ed76888d3ae5f24d3815a3f4efb7eac108baba29742019c02c",
       "outlineFingerprint": "e70a328903693275a978c94097d979e03a298802363d0e568df978dcd399621f",
       "outlineEntryCount": 38
@@ -144,6 +183,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 883229,
       "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 26,
+      "extractableTextCharacters": 30078,
       "outlineStructureFingerprint": "b78232dbd03f2ff803092ecc934bccd4e69bfe27530767177d11b4815e4b169d",
       "outlineFingerprint": "3c92e980eba0b7cec3561083385cfb73f8fa95a1f60f16098d47510ce4c4fef1",
       "outlineEntryCount": 22
@@ -155,7 +197,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 148509,
       "sha256": "94165b9e15f815e16bc2f38f1e49fe94a112a454c0c08f98cf794843612c3173",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 1,
+      "extractableTextCharacters": 1380
     },
     {
       "path": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
@@ -165,6 +210,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 5582373,
       "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 86,
+      "extractableTextCharacters": 141966,
       "outlineStructureFingerprint": "bdea284ed760e86a919d516e0b1a12438ec2367d2ddf730de2d66ebe2f2ba763",
       "outlineFingerprint": "fcaab4029357777fd6d3e3ed2af47dcba890ce8af3848bb7ad378ebe8c4118b1",
       "outlineEntryCount": 16
@@ -177,6 +225,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 1893499,
       "sha256": "e483f61444e926dc88182f2ea4f80e72943cb95f626cc55e665cd95b9714b620",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 49,
+      "extractableTextCharacters": 59152,
       "outlineStructureFingerprint": "9b0c3513f27fbbc225f6ea9bdcdde94cb2041b222c23190fe96e012c30a47d93",
       "outlineFingerprint": "0d2220646137e1f6d3a5b53b8260ecf4f21926581a467acdbc4739f4e164134e",
       "outlineEntryCount": 57
@@ -188,7 +239,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 398522,
       "sha256": "40095c0a267748e9b301b8180b47f93e6d1e1d76c8acc33d37c36a5be6214d74",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 16,
+      "extractableTextCharacters": 19908
     }
   ],
   "sections": [

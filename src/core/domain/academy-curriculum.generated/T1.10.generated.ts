@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 138043,
       "sha256": "365e4045bb6a17c640ff158ee36f07bb66bba1039fd9373996cefbf9bbea6cb1",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 5,
+      "extractableTextCharacters": 4517
     },
     {
       "path": "T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte1.pdf",
@@ -30,6 +33,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 7438846,
       "sha256": "65544a91022ee92fcf4b81dbdfe5bd23ad28da9e0ef048a8d2094f6fd2bb7598",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 134,
+      "extractableTextCharacters": 281660,
       "outlineStructureFingerprint": "b7b74ca0955d93af6438412d8e04dc2fe5bd693ecfeeacba12e8c36b2d6e5c45",
       "outlineFingerprint": "65523bb6acb40c7174f30b1a83e8d83cb51605e319d070cd3ad39e1d701566c1",
       "outlineEntryCount": 57
@@ -42,6 +48,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 8147382,
       "sha256": "6ee41d275d37973d7eb3e8cfef14c01ccdebc34b82d9a3281aaaf9ced288685a",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 42,
+      "extractableTextCharacters": 54205,
       "outlineStructureFingerprint": "57a38a526bf7863c7ed8d313707c05fcdd5efcf4dbecbed0f880e9c42fa73ece",
       "outlineFingerprint": "1c6166ca60d522e5db6d3a047cbb5a75c78d9608c4db4e1a264097d12637d754",
       "outlineEntryCount": 18
@@ -53,7 +62,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 302717,
       "sha256": "16c7cb8d8a8da45870b2526be672a4e8f30d45f95729456c7c2b4ce1927dc72d",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 17,
+      "extractableTextCharacters": 30826
     },
     {
       "path": "T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Test.pdf",
@@ -62,7 +74,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 346018,
       "sha256": "fe17d51565fa7a50b28719845b8b64a5b5ee9b583aa5e303297ad9727936ef67",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 22,
+      "extractableTextCharacters": 42572
     }
   ],
   "sections": [

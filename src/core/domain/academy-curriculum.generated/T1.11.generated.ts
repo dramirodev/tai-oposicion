@@ -21,7 +21,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 241087,
       "sha256": "f053ab1c3e3e76698320489b608858dcc38c01bb6615e11e6f608cd3c8013227",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 3,
+      "extractableTextCharacters": 4589
     },
     {
       "path": "T1.11 Instrumentos de Acceso Electrónico/T1.11 Instrumentos de Acceso Electrónico - Repaso - v1 2026.pdf",
@@ -30,7 +33,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 240032,
       "sha256": "3e361e59608c3d8ad3cb74e7bf98130872bacf16eddac7e3096e3feaf846b7ee",
-      "outlineStatus": "index-has-no-extractable-entries"
+      "outlineStatus": "index-has-no-extractable-entries",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 8,
+      "extractableTextCharacters": 8508
     },
     {
       "path": "T1.11 Instrumentos de Acceso Electrónico/T1.11 Instrumentos de Acceso Electrónico - Temario.pdf",
@@ -40,6 +46,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 11206537,
       "sha256": "090809ed96a6a340cc2052292870108310e85e1cd99294d403149be27ba4c51a",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 90,
+      "extractableTextCharacters": 153482,
       "outlineStructureFingerprint": "608a07e977869f8be11a5bbbe1c4dd8911bb88f0967462d223ebd3366d3c24f5",
       "outlineFingerprint": "bef7b466ca27712129f720ee35c4b34db27991a03e77c029eb7c202d1abc07c7",
       "outlineEntryCount": 17
@@ -51,7 +60,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 429500,
       "sha256": "8613744ddfafb4b88859e53ad39f3968dd238aef7a84ddb13e7bcd027fcd9a02",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 13,
+      "extractableTextCharacters": 15935
     }
   ],
   "sections": [

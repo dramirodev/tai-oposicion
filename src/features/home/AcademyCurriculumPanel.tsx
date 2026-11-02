@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import { Link, useSearchParams } from 'react-router';
-import type { AcademyCurriculumSection, AcademyCurriculumTopic } from '../../core/domain/academy-curriculum-types.js';
+import type { AcademyCurriculumFile, AcademyCurriculumSection, AcademyCurriculumTopic } from '../../core/domain/academy-curriculum-types.js';
 import { academyCurriculumTopicLoaders } from '../../core/domain/academy-curriculum.generated.js';
 import { useStudyService } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
@@ -15,6 +15,14 @@ interface LoadedTopic {
 const materialLabels: Record<string, string> = {
   syllabus: 'Temario', review: 'Repaso o resumen', notes: 'Notas', exercise: 'Ejercicios', audio: 'Audio',
 };
+
+function extractionLabel(file: AcademyCurriculumFile): string | null {
+  if (file.extension !== '.pdf') return null;
+  if (file.textExtractionStatus === 'extractable') return `PDF con texto extraíble · ${file.extractableTextPages ?? 0} páginas con texto · ${file.extractableTextCharacters ?? 0} caracteres`;
+  if (file.textExtractionStatus === 'empty') return 'PDF sin texto extraíble en esta inspección';
+  if (file.textExtractionStatus === 'error') return 'No se pudo inspeccionar el texto del PDF';
+  return 'Extracción de texto no disponible para esta versión del catálogo';
+}
 
 const sourceStatusMessages: Record<string, string> = {
   'outline-extracted-needs-review': 'Se ha extraído el índice del temario. Aún requiere revisión humana antes de tratarlo como estructura validada.',
@@ -235,6 +243,11 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
       ? 'Otro archivo tiene los mismos títulos y páginas de índice. Solo se comparan títulos y páginas; el contenido del documento no se ha comparado y no se elige una edición.'
       : 'Otro archivo tiene los mismos títulos en el mismo orden, pero cambia la paginación. Solo se comparan índices; el contenido del documento no se ha comparado y no se elige una edición.';
   };
+  const materialInspection = (materialPath: string) => {
+    const file = filesByPath.get(materialPath);
+    if (!file) return null;
+    return <p className="my-1 text-sm text-muted">{extractionLabel(file) ?? 'Este archivo no es PDF; el catálogo conserva su ruta y metadatos.'}. La aplicación conserva solo metadatos e índice, no el cuerpo del documento. La extracción técnica no verifica que el contenido sea explicativo, completo ni vigente.</p>;
+  };
   const renderOutlineGroup = (sections: typeof topic.sections, heading: string, context: string) => {
     const paths = [...new Set(sections.map(section => section.materialPath))];
     if (!paths.length) return null;
@@ -243,6 +256,7 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
       {paths.map(materialPath => <div className="mt-2" key={materialPath}>
         <h4 className="mb-1 text-sm font-medium"><code className="break-all">{materialPath}</code></h4>
         {matchingOutlineMessage(materialPath) && <p className="my-1 text-sm text-muted">{matchingOutlineMessage(materialPath)}</p>}
+        {materialInspection(materialPath)}
         {draftPaths.includes(materialPath) ? <div className="mt-2">
           {sections.filter(section => section.materialPath === materialPath).map(section => <SectionStudyUnit key={section.id} section={section} events={progress.events} sessionId={sessionId} activityId={activityId} record={recordEvent} targetSectionId={targetSectionId} onCompleteSectionRecall={onCompleteSectionRecall} />)}
         </div> : <ul className="my-0 list-disc ps-5 text-sm">{sections.filter(section => section.materialPath === materialPath).map(section => <li id={section.id} key={section.id}>{section.title} <span className="text-muted">(p. {section.printedPage})</span></li>)}</ul>}
@@ -259,7 +273,7 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
       <Link className="btn" to={`/test?topic=${encodeURIComponent(topicId)}`}>Practicar preguntas del tema</Link>
     </div>}
     {materials.length > 0 && <ul className="my-0 mb-3 list-disc ps-5 text-sm">
-      {materials.map(file => <li key={file.path}><b>{materialLabels[file.kind] ?? 'Material'}</b>: <code className="break-all">{file.path}</code></li>)}
+      {materials.map(file => <li key={file.path}><b>{materialLabels[file.kind] ?? 'Material'}</b>: <code className="break-all">{file.path}</code>{extractionLabel(file) && <span className="text-muted"> · {extractionLabel(file)}</span>}</li>)}
     </ul>}
     {!!progressError && <p className="my-2 text-sm text-muted" role="alert">No se pudo leer el progreso local de este tema. Puedes consultar el índice; el progreso no se ha modificado.</p>}
     {staleSelection && <p className="my-2 text-sm text-muted" role="status">Cambió la versión de algún material seleccionado. El historial anterior se conserva separado; revisa y guarda de nuevo los archivos actuales para continuar el seguimiento.</p>}

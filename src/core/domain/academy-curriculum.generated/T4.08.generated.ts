@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 70034,
       "sha256": "a16a248886db87fdf7ebe5b6845c3ec86ebe40c9616f390270da8ca395ae4498",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 7,
+      "extractableTextCharacters": 5714
     },
     {
       "path": "T4.08 Internet/T4.08 Internet - Temario.pdf",
@@ -30,6 +33,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 4324415,
       "sha256": "2a460897d6652d005ebb5160190b24a80d3bdfa9b16cd61bca16bba5b7688060",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 61,
+      "extractableTextCharacters": 106123,
       "outlineStructureFingerprint": "3660a4bde239e741a65031f08a6846e07fb32676f4bc0e47e58c430d10fb93ef",
       "outlineFingerprint": "8de20f13bad5fb0dc16481c5bb5a35c96ca7b0e80a40f6fd7dfc72558dc81135",
       "outlineEntryCount": 25
@@ -41,7 +47,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 232337,
       "sha256": "c641134ff0b65dbbf65a09cbe7e88e822695cb26002c0b2d38223e783d77914e",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 11,
+      "extractableTextCharacters": 10596
     }
   ],
   "sections": [

@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 167492,
       "sha256": "a7e7a13ca351dd5dfca6f6f8d5fd0be3452df4fe6997802435bb86297916b93f",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 5,
+      "extractableTextCharacters": 6965
     },
     {
       "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
@@ -30,6 +33,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 7415864,
       "sha256": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 61,
+      "extractableTextCharacters": 98162,
       "outlineStructureFingerprint": "dad1ab0ffeefccf7d8007840aa07e4c8ab4916283bc7f9a1d5981eb0d2314ea1",
       "outlineFingerprint": "e3fb52939feb2235837cc8e315a9e021a3de761cc691c88d57c543d8efd38093",
       "outlineEntryCount": 46
@@ -41,7 +47,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 324795,
       "sha256": "077260953615fab2a4e8fb435d9aa87c19cd4d09794396bf32bbbd69c5526a04",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 13,
+      "extractableTextCharacters": 14584
     }
   ],
   "sections": [

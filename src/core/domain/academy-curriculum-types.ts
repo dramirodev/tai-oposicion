@@ -9,6 +9,10 @@ export interface AcademyCurriculumFile {
   outlineFingerprint?: string;
   outlineStructureFingerprint?: string;
   outlineEntryCount?: number;
+  /** Technical text-extraction signal only; it does not certify useful body content. */
+  textExtractionStatus?: 'extractable' | 'empty' | 'error';
+  extractableTextPages?: number;
+  extractableTextCharacters?: number;
 }
 
 export interface AcademyCurriculumSection {

@@ -34,7 +34,9 @@ it('creates a local reviewed link when the Drive test topic differs from the que
   await user.selectOptions(await screen.findByLabelText('Pregunta'), 'academy-q1');
   const testSelect = screen.getByLabelText('PDF de test de Drive');
   await waitFor(() => expect(testSelect.options.length).toBeGreaterThan(1));
+  expect(Array.from(testSelect.options).some(option => /texto extraíble \(no integrado en la app\)/.test(option.text))).toBe(true);
   await user.selectOptions(testSelect, 'T1.04 Transparencia/T1.04 Transparencia - Test 1.pdf');
+  expect(await screen.findByText(/la aplicación no incorpora su cuerpo/)).toBeInTheDocument();
   const sectionSelect = screen.getByLabelText('Epígrafe del temario');
   await user.selectOptions(sectionSelect, sectionSelect.options[1].value);
   await user.type(screen.getByLabelText('Página del test'), '2');

@@ -21,7 +21,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 494972,
       "sha256": "e9f349aa819d6a0769147f7a53653b6a193eb50687c6d12076a8a24f7cd77227",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 5,
+      "extractableTextCharacters": 4406
     },
     {
       "path": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Ejercicios.pdf",
@@ -30,7 +33,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 217219,
       "sha256": "63232397dec1ed8dfba1cfa63da8c53765b5c1911dbdc8d8b122e060a1da7b3a",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 3,
+      "extractableTextCharacters": 3441
     },
     {
       "path": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Repaso.pdf",
@@ -39,7 +45,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 130519,
       "sha256": "88734c81f4363261865e4c908ca3d97f9cca444315b49c66746b1ec089cd4a76",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 5,
+      "extractableTextCharacters": 3812
     },
     {
       "path": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
@@ -49,6 +58,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 6278945,
       "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 109,
+      "extractableTextCharacters": 181499,
       "outlineStructureFingerprint": "587c270bc23bb2f29d781a518115c0b4d3f5aec22983c4877980a371e66b3059",
       "outlineFingerprint": "8f9d8949113629b211075ef52f29007a69d494b9fe7f63119d03532cc7306d25",
       "outlineEntryCount": 33
@@ -60,7 +72,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 255664,
       "sha256": "ee4ac9af74224261ee631a5e4010420f17a2125c016e57d20a14b686b947d9ed",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 11,
+      "extractableTextCharacters": 11280
     }
   ],
   "sections": [

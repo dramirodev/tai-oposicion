@@ -21,7 +21,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 2587394,
       "sha256": "80c20c78496dba159395393a70f5ae4a9be66718a1248d782595c350d4418c19",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 15,
+      "extractableTextCharacters": 5771
     },
     {
       "path": "T4.10 Redes Locales/T4.10 Redes Locales - Ejercicios.pdf",
@@ -30,7 +33,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 1381859,
       "sha256": "90e96dcd8719730bffb5da5ddc7e6c6c25a17608be682cc758430051f05bf08b",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 10,
+      "extractableTextCharacters": 2713
     },
     {
       "path": "T4.10 Redes Locales/T4.10 Redes Locales - Repaso.pdf",
@@ -39,7 +45,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 64733,
       "sha256": "aed031db4f8b08290a61a243d9fcc1116ffda942bac6d36bd6a84404de0f9cef",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 4,
+      "extractableTextCharacters": 4841
     },
     {
       "path": "T4.10 Redes Locales/T4.10 Redes Locales - Temario.pdf",
@@ -49,6 +58,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 2093230,
       "sha256": "7a360f7f2f0279b47691155a5cdda67a5394114a70718a162878ac4414c8a710",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 44,
+      "extractableTextCharacters": 69723,
       "outlineStructureFingerprint": "d892d548005b0107f833982af045f9df9174c3dcd8f6a7679b372c3bb1355f29",
       "outlineFingerprint": "86d199cfb8da58c5905dd268682b255b96adae308bd836db6f80af2183d35a63",
       "outlineEntryCount": 21
@@ -60,7 +72,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 307835,
       "sha256": "99831540d3f5c0f8b2d46fc2cd57e4dd59b5e77d0962803e666a87de255e6076",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 10,
+      "extractableTextCharacters": 12469
     }
   ],
   "sections": [

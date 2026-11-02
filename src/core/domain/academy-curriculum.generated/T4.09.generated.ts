@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 152985,
       "sha256": "099fc67f6c6578d705e0b4e93bc54a5378b2cefbc93509f9b59e410195ef1fa3",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 6,
+      "extractableTextCharacters": 6145
     },
     {
       "path": "T4.09 Seguridad en Redes/T4.09 Seguridad en Redes - Temario.pdf",
@@ -30,6 +33,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 5101807,
       "sha256": "38ebb19d13455c4a1570159b22f6b3a550d7920fd21bbb519f76c7b1d9fb52c1",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 61,
+      "extractableTextCharacters": 111447,
       "outlineStructureFingerprint": "b8b3d36fa68a14cccf8c1b92bf95af38509c4f584e9652cd42e7cacd79b192ca",
       "outlineFingerprint": "f19cda0043d5a9e05aef6d4e3e882dcfbf4af40ac19d5f3f85334d2e4a784289",
       "outlineEntryCount": 17
@@ -41,7 +47,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 323997,
       "sha256": "57bfbb20afe2f2b6ee65fb7f52b6c03463f6fd2c3ed74948b07c93a8dbf1189f",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 12,
+      "extractableTextCharacters": 17224
     }
   ],
   "sections": [

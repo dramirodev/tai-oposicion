@@ -94,7 +94,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 166813,
       "sha256": "6696f0716ae405b8b9e8c244699eb67b0498b4dbb73984db6c4fadc06c71245d",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 4,
+      "extractableTextCharacters": 4547
     },
     {
       "path": "T1.01 Constitución Española/T1.01 Constitución Española - Temario (version alternativa).pdf",
@@ -104,6 +107,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 867558,
       "sha256": "4eba1a47e754a3c13d896670c6884c46c24827375836418fb7536d2e1de35b67",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 30,
+      "extractableTextCharacters": 44790,
       "outlineStructureFingerprint": "4ce4bfcb37c1d1f6fde1878c1d216d394730fc09036571510a8c1a4a940ddff9",
       "outlineFingerprint": "bfdc3440f91a7cda74aa98f7e7ce161fbfb253f7de3f0a443e0ae7a6569344d8",
       "outlineEntryCount": 14
@@ -116,6 +122,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 1311199,
       "sha256": "a69d661e50cf8cce3f6f43dbaea156e5ee4bcef1162f9bad2f9a200278f57f5b",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 30,
+      "extractableTextCharacters": 44089,
       "outlineStructureFingerprint": "4ce4bfcb37c1d1f6fde1878c1d216d394730fc09036571510a8c1a4a940ddff9",
       "outlineFingerprint": "bfdc3440f91a7cda74aa98f7e7ce161fbfb253f7de3f0a443e0ae7a6569344d8",
       "outlineEntryCount": 14
@@ -127,7 +136,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 254392,
       "sha256": "b2c88b501402f3a92fa037f3fb4407ce792655eed93b4af68813f32b2e3fabac",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 13,
+      "extractableTextCharacters": 17845
     },
     {
       "path": "T1.01 Constitución Española/T1.01 Constitución Española - Test 2.pdf",
@@ -136,7 +148,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 273382,
       "sha256": "52e3b89c195710c9a50f960697f3d1ad6a79230376f365f9ff599268913127ec",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 15,
+      "extractableTextCharacters": 20086
     },
     {
       "path": "T1.01 Constitución Española/Tema1_Constitucion_Española_corregido.md",

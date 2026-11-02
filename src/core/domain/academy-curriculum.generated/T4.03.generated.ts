@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 142380,
       "sha256": "aca4048f43b4e1cec9e196d7f67d41791de1f22b9b8327451a281b90f01618f6",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 5,
+      "extractableTextCharacters": 4388
     },
     {
       "path": "T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
@@ -30,6 +33,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 1792056,
       "sha256": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 43,
+      "extractableTextCharacters": 76376,
       "outlineStructureFingerprint": "c0da6a2c330d92f5c8ffd376d8e3e63fe2724566d796a1754225827ae7ff9969",
       "outlineFingerprint": "47127eea8c380fb9e426aeea088a1331ee4b23847ab2a65a483be373011b7c08",
       "outlineEntryCount": 22
@@ -41,7 +47,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 237325,
       "sha256": "03d64720faf2a3eb43329fe81256ba6433d2e2fb8a41d0bd8aeef87c04c13c22",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 8,
+      "extractableTextCharacters": 8089
     }
   ],
   "sections": [

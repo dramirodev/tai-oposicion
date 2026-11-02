@@ -21,7 +21,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 276921,
       "sha256": "e0d5e17286f41f1ae9380fdaae7a16ccf7524108da08387b06abf42c0788a494",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 4,
+      "extractableTextCharacters": 2811
     },
     {
       "path": "T4.01 Administración de SO/T4.01 Administración de SO - Ejercicios.pdf",
@@ -30,7 +33,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 242402,
       "sha256": "09f9355aa408fc323939e7af4415d9715d1db536a4d8df6fe0f9054eafef007d",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 3,
+      "extractableTextCharacters": 1838
     },
     {
       "path": "T4.01 Administración de SO/T4.01 Administración de SO - Repaso.pdf",
@@ -39,7 +45,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 151680,
       "sha256": "a6bb7ba66546e0026d243ce72cbb9e65aa4d9ad93123c1202cb557b858fe9368",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 4,
+      "extractableTextCharacters": 4672
     },
     {
       "path": "T4.01 Administración de SO/T4.01 Administración de SO - Temario (version alternativa).pdf",
@@ -49,6 +58,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 2766240,
       "sha256": "f7c99562cca2c5d2b7923505c7faced04877e46def902faa38faa149ea2c575e",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 82,
+      "extractableTextCharacters": 128897,
       "outlineStructureFingerprint": "7b52f636b797a10f2e44df6bda839217be63acb4f6bbb73236a3633c4f1093e9",
       "outlineFingerprint": "3efa8c4f8d7741b3750356fa91863f7d655a48079752af02b4959fa493c520f5",
       "outlineEntryCount": 42
@@ -60,7 +72,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 225691,
       "sha256": "830785b3be7c2f7d946930a151261b43598861d4639ef66c897af5c2384deff2",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 4,
+      "extractableTextCharacters": 3142
     },
     {
       "path": "T4.01 Administración de SO/T4.01 Administración de SO - Test.pdf",
@@ -69,7 +84,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 217306,
       "sha256": "802fb1e564b92e7baf510fd0588032b6b1d617b7841d21ea80e276f2c41e0280",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 9,
+      "extractableTextCharacters": 7675
     }
   ],
   "sections": [

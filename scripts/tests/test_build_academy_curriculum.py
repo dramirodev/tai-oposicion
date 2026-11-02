@@ -42,6 +42,9 @@ class AcademyCurriculumBuildTests(unittest.TestCase):
         self.assertFalse(topic["appCatalogMatch"])
         self.assertEqual(topic["sourceStatus"], "outline-extracted-needs-review")
         self.assertEqual(topic["sections"][0]["title"], "1. APARTADO DE PRUEBA")
+        self.assertEqual(topic["files"][0]["textExtractionStatus"], "extractable")
+        self.assertGreater(topic["files"][0]["extractableTextCharacters"], 0)
+        self.assertEqual(topic["files"][0]["extractableTextPages"], 1)
         self.assertEqual(result["materialIndex"]["T5.19"][0]["path"], "T5.19 Tema nuevo/documento.pdf")
         self.assertEqual(result["materialIndex"]["T5.19"][0]["kind"], "syllabus")
         self.assertEqual(result["sourceTopicIdsMissingFromAppCatalog"], ["T5.19"])
@@ -76,7 +79,19 @@ class AcademyCurriculumBuildTests(unittest.TestCase):
         test_file = topic["files"][0]
         self.assertEqual(test_file["kind"], "test")
         self.assertEqual(test_file["sha256"], "6ffe571c73cfbee7931afb6f08bc6bbb20ed82a2191f205a86b1bbfd190d42af")
+        self.assertEqual(test_file["textExtractionStatus"], "extractable")
+        self.assertEqual(test_file["outlineStatus"], "not-extracted-test")
         self.assertEqual(topic["sections"], [])
+
+    def test_marks_pdf_without_extractable_text_without_claiming_ocr(self):
+        self.topic_folder("T1.01 Tema app", ["Temario escaneado.pdf"])
+        self.pdftotext.write_text("#!/usr/bin/env python3\nprint('   ')\n", encoding="utf-8")
+        self.pdftotext.chmod(0o755)
+        topic = build_catalog(self.source, self.app_index, str(self.pdftotext))["topics"][0]
+        file = topic["files"][0]
+        self.assertEqual(file["textExtractionStatus"], "empty")
+        self.assertEqual(file["extractableTextCharacters"], 0)
+        self.assertEqual(file["extractableTextPages"], 0)
 
 
 if __name__ == "__main__":

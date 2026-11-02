@@ -20,7 +20,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 396785,
       "sha256": "803e4c94b330d9d4ffeb5cb7ffee6ba417fabb5c21f2deb16b406e87b2e8ef66",
-      "outlineStatus": "index-has-no-extractable-entries"
+      "outlineStatus": "index-has-no-extractable-entries",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 15,
+      "extractableTextCharacters": 13355
     },
     {
       "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
@@ -30,6 +33,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 3545354,
       "sha256": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 94,
+      "extractableTextCharacters": 179987,
       "outlineStructureFingerprint": "8e7947ed8f7cc3e05a72fd638b1326aa2e886962b86a980dd32fed9fc6dbcb70",
       "outlineFingerprint": "dfd9fd282db530bbec971ae7f4249888cc963eb70911df8c721528cea4ca8482",
       "outlineEntryCount": 18
@@ -41,7 +47,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 449817,
       "sha256": "6c132bb691384f0e4aba6d7c9f7e572b8ab7696bcbd1cd334c0c565e3fd4af3b",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 14,
+      "extractableTextCharacters": 25105
     },
     {
       "path": "T1.05 TREBEP/T1.05 TREBEP - Test 2.pdf",
@@ -50,7 +59,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 414959,
       "sha256": "98400f135be81a4a8fadff65e9e6f4ff4667c71faf9ddea5ddbac73edabd0a62",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 14,
+      "extractableTextCharacters": 22773
     }
   ],
   "sections": [

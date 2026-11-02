@@ -84,7 +84,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 783668,
       "sha256": "b8d898ccee6b61c350fbd88bd1ed4f6198bbb0a598049abc03190edceb9e84e6",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 4,
+      "extractableTextCharacters": 4515
     },
     {
       "path": "T1.03 Gobierno/T1.03 Gobierno - Temario OPO.pdf",
@@ -94,6 +97,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 1774218,
       "sha256": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 26,
+      "extractableTextCharacters": 36419,
       "outlineStructureFingerprint": "f68edbeec42045a6ac062d9a5d25a7c7def6c629239dfe9f6d7f87b42890ace8",
       "outlineFingerprint": "6932428b5773b5f336e94e304eec89801ed2c74938848a4b91c995d5bff89d77",
       "outlineEntryCount": 23
@@ -105,7 +111,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 268042,
       "sha256": "81640be02a1a14367694ae3a732ca11059755e53062fbe849758a7c81f19321d",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 14,
+      "extractableTextCharacters": 17747
     }
   ],
   "sections": [

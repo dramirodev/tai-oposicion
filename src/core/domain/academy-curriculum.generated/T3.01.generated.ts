@@ -21,7 +21,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 576944,
       "sha256": "396715a8ea96ffa74545a4be179e47292a3425ba770f279bb542946a3edce5bf",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 6,
+      "extractableTextCharacters": 7038
     },
     {
       "path": "T3.01 Modelo Entidad-Relación/T3.01 Modelo Entidad-Relación - Ejercicios.pdf",
@@ -30,7 +33,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 383867,
       "sha256": "191a8ada9ddbc7b4a82f3d1d638ee693bf89be27e9fb453ddeb7a1a9ab44b720",
-      "outlineStatus": "index-not-found"
+      "outlineStatus": "index-not-found",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 6,
+      "extractableTextCharacters": 7018
     },
     {
       "path": "T3.01 Modelo Entidad-Relación/T3.01 Modelo Entidad-Relación - Resumen.pdf",
@@ -39,7 +45,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 2307658,
       "sha256": "8cd73270db2252819fa9580cdf27fc442a2baa47e718bf46173714781a7246d7",
-      "outlineStatus": "index-has-no-extractable-entries"
+      "outlineStatus": "index-has-no-extractable-entries",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 10,
+      "extractableTextCharacters": 6568
     },
     {
       "path": "T3.01 Modelo Entidad-Relación/T3.01 Modelo Entidad-Relación - Temario.pdf",
@@ -49,6 +58,9 @@ export const academyCurriculumTopic = {
       "sizeBytes": 1499731,
       "sha256": "8387ad4087fdfbfc2b78acbb97f0fd3b58bb034d732cfa06e5791e4b5ac7785a",
       "outlineStatus": "extracted",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 17,
+      "extractableTextCharacters": 21217,
       "outlineStructureFingerprint": "d7c025bd9ebfc9f999ce9585f3209cf51f850495a24d84dc8775c4d3de0b5e34",
       "outlineFingerprint": "85a1dda584e1c20a51af36c332cd83f93033d06197625b157a802594fedb297b",
       "outlineEntryCount": 9
@@ -60,7 +72,10 @@ export const academyCurriculumTopic = {
       "extension": ".pdf",
       "sizeBytes": 266196,
       "sha256": "13ecadb8d0446e3f17e17bfc650b66a80204c90cbbda37f3a3f766777052ecca",
-      "outlineStatus": "not-extracted-test"
+      "outlineStatus": "not-extracted-test",
+      "textExtractionStatus": "extractable",
+      "extractableTextPages": 10,
+      "extractableTextCharacters": 13293
     }
   ],
   "sections": [
