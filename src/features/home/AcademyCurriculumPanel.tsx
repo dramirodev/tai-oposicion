@@ -12,6 +12,15 @@ interface LoadedTopic {
   failed: boolean;
 }
 
+interface LocalPdfSelection {
+  topicId: string;
+  path: string;
+  sourceHash: string;
+  name: string;
+  sizeBytes: number;
+  url: string;
+}
+
 const materialLabels: Record<string, string> = {
   syllabus: 'Temario', review: 'Repaso o resumen', notes: 'Notas', exercise: 'Ejercicios', audio: 'Audio',
 };
@@ -163,6 +172,10 @@ function SectionStudyUnit({
 export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, activityId, onCompleteSectionRecall }: { topicId: string; hasStudyMarker: boolean; sessionId?: string; activityId?: string; onCompleteSectionRecall?: () => Promise<void> }) {
   const [draft, setDraft] = useState<{ topicId: string; paths: string[] } | null>(null);
   const [notice, setNotice] = useState('');
+  const [pdfSelection, setPdfSelection] = useState<LocalPdfSelection | null>(null);
+  const [pdfNotice, setPdfNotice] = useState<{ topicId: string; path: string; text: string } | null>(null);
+  const pdfObjectUrl = useRef<string | null>(null);
+  const pdfGeneration = useRef(0);
   const [searchParams] = useSearchParams();
   const targetSectionId = searchParams.get('sectionId');
   const materialPanel = useRef<HTMLDetailsElement>(null);
@@ -176,6 +189,34 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
   const progress: AcademyTopicProgressSnapshot = progressResourceState.value ?? { selection: null, events: [] };
   const [loaded, setLoaded] = useState<LoadedTopic | null>(null);
   const loader = academyCurriculumTopicLoaders[topicId];
+  useEffect(() => () => {
+    pdfGeneration.current++;
+    if (pdfObjectUrl.current) URL.revokeObjectURL(pdfObjectUrl.current);
+    pdfObjectUrl.current = null;
+  }, [topicId]);
+  const chooseLocalPdf = async (file: File | undefined, materialPath: string, expectedHash: string) => {
+    const generation = ++pdfGeneration.current;
+    if (pdfObjectUrl.current) URL.revokeObjectURL(pdfObjectUrl.current);
+    pdfObjectUrl.current = null;
+    setPdfSelection(null);
+    setPdfNotice({ topicId, path:materialPath, text:'Comprobando que el PDF coincide con esta versión…' });
+    if (!file || !file.size) { setPdfNotice({ topicId, path:materialPath, text:'El archivo está vacío o no se pudo seleccionar.' }); return; }
+    try {
+      const fileBytes = await file.arrayBuffer();
+      if (String.fromCharCode(...new Uint8Array(fileBytes.slice(0, 5))) !== '%PDF-') { setPdfNotice({ topicId, path:materialPath, text:'El archivo seleccionado no parece ser un PDF válido.' }); return; }
+      if (!globalThis.crypto?.subtle) { setPdfNotice({ topicId, path:materialPath, text:'Este navegador no permite verificar el archivo localmente. No se abrió.' }); return; }
+      const digest = await crypto.subtle.digest('SHA-256', fileBytes);
+      const actualHash = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
+      if (generation !== pdfGeneration.current) return;
+      if (actualHash !== expectedHash.toLowerCase()) { setPdfNotice({ topicId, path:materialPath, text:'La versión del PDF no coincide con el catálogo actual. No se abrió.' }); return; }
+      const url = URL.createObjectURL(file);
+      pdfObjectUrl.current = url;
+      setPdfSelection({ topicId, path:materialPath, sourceHash:actualHash, name:file.name, sizeBytes:file.size, url });
+      setPdfNotice({ topicId, path:materialPath, text:'PDF verificado. Se abrirá en una pestaña nueva; el archivo no se sube ni se guarda.' });
+    } catch {
+      if (generation === pdfGeneration.current) setPdfNotice({ topicId, path:materialPath, text:'No se pudo leer o verificar el PDF. Puedes seguir usando el índice y abrir la ruta de Drive.' });
+    }
+  };
   useEffect(() => {
     let active = true;
     if (loader) void loader().then(module => {
@@ -228,6 +269,8 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
   };
   const recordEvent = (event: AcademySectionStudyEvent) => academyProgress.record(event);
   const filesByPath = new Map(topic.files.map(file => [file.path, file]));
+  const currentPdfSelection = pdfSelection?.topicId === topicId ? pdfSelection : null;
+  const currentPdfNotice = pdfNotice?.topicId === topicId ? pdfNotice : null;
   const outlineFingerprintFor = (path: string) => {
     const file = filesByPath.get(path);
     return file && 'outlineFingerprint' in file ? file.outlineFingerprint : undefined;
@@ -243,10 +286,20 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
       ? 'Otro archivo tiene los mismos títulos y páginas de índice. Solo se comparan títulos y páginas; el contenido del documento no se ha comparado y no se elige una edición.'
       : 'Otro archivo tiene los mismos títulos en el mismo orden, pero cambia la paginación. Solo se comparan índices; el contenido del documento no se ha comparado y no se elige una edición.';
   };
-  const materialInspection = (materialPath: string) => {
+  const materialInspection = (materialPath: string, sections: readonly AcademyCurriculumSection[]) => {
     const file = filesByPath.get(materialPath);
     if (!file) return null;
-    return <p className="my-1 text-sm text-muted">{extractionLabel(file) ?? 'Este archivo no es PDF; el catálogo conserva su ruta y metadatos.'}. La aplicación conserva solo metadatos e índice, no el cuerpo del documento. La extracción técnica no verifica que el contenido sea explicativo, completo ni vigente.</p>;
+    return <>
+      <p className="my-1 text-sm text-muted">{extractionLabel(file) ?? 'Este archivo no es PDF; el catálogo conserva su ruta y metadatos.'}. La aplicación conserva solo metadatos e índice. La extracción técnica no verifica que el contenido sea explicativo, completo ni vigente.</p>
+      {file.extension === '.pdf' && file.sha256 && <div className="my-2 grid justify-items-start gap-2">
+        <label className="btn sec min-h-11 cursor-pointer">Elegir este PDF desde Drive<input className="sr-only" type="file" accept="application/pdf,.pdf" aria-label={`Elegir PDF ${file.name}`} onChange={event => { const selected = event.currentTarget.files?.[0]; event.currentTarget.value = ''; void chooseLocalPdf(selected, materialPath, file.sha256!); }} /></label>
+        {currentPdfNotice?.path === materialPath && <p className="m-0 text-sm text-muted" role="status">{currentPdfNotice.text}</p>}
+        {currentPdfSelection?.path === materialPath && currentPdfSelection.sourceHash === file.sha256 && <>
+          <p className="m-0 text-xs text-muted">{currentPdfSelection.name} · {(currentPdfSelection.sizeBytes / (1024 * 1024)).toFixed(2)} MiB · solo en memoria de esta vista</p>
+          <ul className="m-0 grid gap-1 ps-5">{sections.filter(section => section.materialPath === materialPath).map(section => <li key={section.id}><a className="text-link underline" href={`${currentPdfSelection.url}#page=${section.printedPage}`} target="_blank" rel="noopener noreferrer">Abrir {section.title} · página {section.printedPage}</a></li>)}</ul>
+        </>}
+      </div>}
+    </>;
   };
   const renderOutlineGroup = (sections: typeof topic.sections, heading: string, context: string) => {
     const paths = [...new Set(sections.map(section => section.materialPath))];
@@ -256,7 +309,7 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
       {paths.map(materialPath => <div className="mt-2" key={materialPath}>
         <h4 className="mb-1 text-sm font-medium"><code className="break-all">{materialPath}</code></h4>
         {matchingOutlineMessage(materialPath) && <p className="my-1 text-sm text-muted">{matchingOutlineMessage(materialPath)}</p>}
-        {materialInspection(materialPath)}
+        {materialInspection(materialPath, sections)}
         {draftPaths.includes(materialPath) ? <div className="mt-2">
           {sections.filter(section => section.materialPath === materialPath).map(section => <SectionStudyUnit key={section.id} section={section} events={progress.events} sessionId={sessionId} activityId={activityId} record={recordEvent} targetSectionId={targetSectionId} onCompleteSectionRecall={onCompleteSectionRecall} />)}
         </div> : <ul className="my-0 list-disc ps-5 text-sm">{sections.filter(section => section.materialPath === materialPath).map(section => <li id={section.id} key={section.id}>{section.title} <span className="text-muted">(p. {section.printedPage})</span></li>)}</ul>}
@@ -267,7 +320,7 @@ export function AcademyCurriculumPanel({ topicId, hasStudyMarker, sessionId, act
 
   return <details ref={materialPanel} className="mt-3 rounded-[var(--r-s)] border border-line p-3">
     <summary className="min-h-11 cursor-pointer content-center font-semibold">Material de academia · {topic.sections.length} referencias de índice</summary>
-    <p className="mt-2 mb-3 text-sm text-muted">{message} Los documentos permanecen en tu carpeta de Drive y no están copiados ni se abren desde la aplicación. Usa la ruta indicada para consultarlos.</p>
+    <p className="mt-2 mb-3 text-sm text-muted">{message} Elige el PDF de tu carpeta Drive para verificarlo y abrirlo en otra pestaña. No se sube ni se guarda; al cerrar esta vista tendrás que volver a seleccionarlo. También puedes abrir la ruta indicada por separado.</p>
     {hasStudyMarker && <div className="my-3 rounded-md bg-surface-soft p-3">
       <p className="my-0 mb-2 text-sm">Las preguntas disponibles están clasificadas por tema, no por este apartado. La práctica siguiente registra respuestas y correcciones del tema completo.</p>
       <Link className="btn" to={`/test?topic=${encodeURIComponent(topicId)}`}>Practicar preguntas del tema</Link>
