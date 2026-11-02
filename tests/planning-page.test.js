@@ -71,6 +71,27 @@ it('permite revisar y confirmar una actividad semanal de un tema pendiente sin c
   expect(replaceWeeklyStudyAgendaWeek).toHaveBeenCalledWith(expect.any(String), [expect.objectContaining({ kind:'newContent', dateKey, topicIds:['T19.01'], status:'planned' })]);
 });
 
+it('propone recuperar una actividad vencida y solo la aplica tras confirmación, conservando el origen', async () => {
+  const user = userEvent.setup();
+  const today = new Date();
+  const dateKey = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  const overdueDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+  const monday = new Date(overdueDate.getFullYear(), overdueDate.getMonth(), overdueDate.getDate() - ((overdueDate.getDay() + 6) % 7));
+  const weekStart = dateKey(monday);
+  const agenda = { schemaVersion:1, revision:3, updatedAt:100, items:[{
+    id:'missed-topic-review', weekStart, dateKey:dateKey(overdueDate), kind:'topicTest', topicIds:['T1.01'], minutes:30, status:'planned', createdAt:1, updatedAt:1,
+  }] };
+  const recoverWeeklyStudyAgenda = vi.fn(() => ({ ...agenda, revision:4 }));
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(), {
+    home:{ weeklyStudyAgenda:() => agenda, recoverWeeklyStudyAgenda, seenTopics:() => ['T1.01'] },
+  }) });
+  await user.click(await screen.findByRole('button', { name:'Proponer recuperación gradual' }));
+  expect(await screen.findByText(/Se conserva cada fecha original en el historial/)).toBeInTheDocument();
+  expect(recoverWeeklyStudyAgenda).not.toHaveBeenCalled();
+  await user.click(screen.getByRole('button', { name:'Confirmar recuperación' }));
+  expect(recoverWeeklyStudyAgenda).toHaveBeenCalledWith(expect.objectContaining({ baseRevision:3, moves:[expect.objectContaining({ sourceId:'missed-topic-review', target:expect.objectContaining({ kind:'topicTest', topicIds:['T1.01'], status:'planned' }) })] }));
+});
+
 it('usa la actividad semanal confirmada de hoy al crear el checkpoint diario', async () => {
   const user = userEvent.setup();
   const today = new Date();

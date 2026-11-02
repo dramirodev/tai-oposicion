@@ -1,7 +1,7 @@
 import { mergeRemoteWeeklyStudyAgenda, readWeeklyStudyAgenda, saveWeeklyStudyAgenda } from '../../../adapters/local/weekly-study-agenda.js';
-import { isWeeklyAgendaItem, replaceWeeklyAgendaWeek, updateWeeklyAgendaItemStatus, type WeeklyAgendaItem, type WeeklyAgendaStatus, type WeeklyStudyAgenda } from '../../../core/domain/study-weekly-agenda.js';
+import { applyWeeklyAgendaRecovery, isWeeklyAgendaItem, replaceWeeklyAgendaWeek, updateWeeklyAgendaItemStatus, type WeeklyAgendaItem, type WeeklyAgendaRecoveryProposal, type WeeklyAgendaStatus, type WeeklyStudyAgenda } from '../../../core/domain/study-weekly-agenda.js';
 
-/** Account-scoped local checkpoint for confirmed weekly proposals; remote sync is intentionally not connected yet. */
+/** Account-scoped local checkpoint for confirmed weekly proposals with optional private cloud sync. */
 export function createWeeklyStudyAgendaComposition(dependencies: {
   accountId(): string | null;
   now(): number;
@@ -19,6 +19,11 @@ export function createWeeklyStudyAgendaComposition(dependencies: {
     mergeRemote(value: unknown): boolean { return mergeRemoteWeeklyStudyAgenda(dependencies.accountId(), value); },
     replaceWeek(weekStart: string, items: readonly WeeklyAgendaItem[]): WeeklyStudyAgenda | null {
       const next = replaceWeeklyAgendaWeek(get(), weekStart, items, dependencies.now());
+      if (!next || !persist(next)) return null;
+      return get();
+    },
+    recover(proposal: WeeklyAgendaRecoveryProposal): WeeklyStudyAgenda | null {
+      const next = applyWeeklyAgendaRecovery(get(), proposal, dependencies.now());
       if (!next || !persist(next)) return null;
       return get();
     },

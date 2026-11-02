@@ -712,6 +712,7 @@ export const studyServices: StudyServices = {
     rescheduleStudyActivity(input: Parameters<typeof trainingCalendar.reschedule>[0]) { return trainingCalendar.reschedule(input); },
     weeklyStudyAgenda() { return weeklyStudyAgenda.get(); },
     replaceWeeklyStudyAgendaWeek(weekStart, items) { return weeklyStudyAgenda.replaceWeek(weekStart, items); },
+    recoverWeeklyStudyAgenda(proposal) { return weeklyStudyAgenda.recover(proposal); },
     setWeeklyStudyAgendaItemStatus(id, status) { return weeklyStudyAgenda.setStatus(id, status); },
     setTrainingReviewMode(topicId: string, mode: StudyReviewMode | null) {
       const preferences = normalizeTrainingPreferences(localStudyProgressGateway.getPreferences().training);

@@ -9,7 +9,7 @@ import type { ObservedStudyTime } from '../../core/domain/attempts/observed-stud
 import type { ExplanationLookup } from '../../core/domain/explanations.js';
 import type { SelfAssessment } from '../../core/domain/attempts/transitions.js';
 import type { SimulationScoringPolicy } from '../../core/domain/simulation-scoring.js';
-import type { WeeklyAgendaItem, WeeklyStudyAgenda } from '../../core/domain/study-weekly-agenda.js';
+import type { WeeklyAgendaItem, WeeklyAgendaRecoveryProposal, WeeklyStudyAgenda } from '../../core/domain/study-weekly-agenda.js';
 export type { StatsComparison, StatsDomainTopic, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 export interface ActiveStudy { title: string; position: number; total: number }
 export interface HomeBlock { name: string; total: number; mastered: number; assessed: number }
@@ -51,6 +51,7 @@ export interface HomeServices {
   rescheduleStudyActivity?(input: { id: string; dateKey: string }): ScheduleDecision | { ok:false; reason:'storage-failed' };
   weeklyStudyAgenda?(): WeeklyStudyAgenda;
   replaceWeeklyStudyAgendaWeek?(weekStart: string, items: readonly WeeklyAgendaItem[]): WeeklyStudyAgenda | null;
+  recoverWeeklyStudyAgenda?(proposal: WeeklyAgendaRecoveryProposal): WeeklyStudyAgenda | null;
   setWeeklyStudyAgendaItemStatus?(id: string, status: 'completed' | 'skipped'): WeeklyStudyAgenda | null;
   setTrainingReviewMode(topicId: string, mode: StudyReviewMode | null): void;
   openMenu(): void;

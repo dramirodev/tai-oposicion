@@ -6,7 +6,7 @@ import { proposeStudyActivity, proposeStudyActivityReschedule, type ScheduleDeci
 import type { TrainingPreferences } from '../../core/domain/entities.js';
 import { resolveTrainingDay } from '../../core/domain/study-training-events.js';
 import type { DailyTrainingSession, TrainingSessionHistoryEntry } from '../../core/domain/study-training-session.js';
-import { weekStartForStudyDate, type WeeklyAgendaItem, type WeeklyAgendaKind } from '../../core/domain/study-weekly-agenda.js';
+import { proposeWeeklyAgendaRecovery, weekStartForStudyDate, type WeeklyAgendaItem, type WeeklyAgendaKind, type WeeklyAgendaRecoveryProposal, type WeeklyStudyAgenda } from '../../core/domain/study-weekly-agenda.js';
 
 const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 const focusLabels = { rest: 'Descanso', 'new-content': 'Contenido nuevo', consolidation: 'Recuperación y consolidación' } as const;
@@ -30,15 +30,17 @@ function decisionText(decision: ScheduleDecision | { ok:false; reason:'storage-f
   return decision.ok ? null : reasonLabels[decision.reason] || 'No se pudo validar el cambio.';
 }
 
-export function StudyCalendar({ preferences, now, history, activeSession, topics, catalogTopics = topics, seenTopicIds = topics.map(topic => topic.id), activities, weeklyItems = [], onSchedule, onReschedule, onOpenActivity, onSaveWeeklyAgenda, onSetWeeklyAgendaStatus }: {
+export function StudyCalendar({ preferences, now, history, activeSession, topics, catalogTopics = topics, seenTopicIds = topics.map(topic => topic.id), activities, weeklyItems = [], weeklyAgenda, onSchedule, onReschedule, onOpenActivity, onSaveWeeklyAgenda, onRecoverWeeklyAgenda, onSetWeeklyAgendaStatus }: {
   preferences: TrainingPreferences; now: Date; history: readonly TrainingSessionHistoryEntry[];
   activeSession?: DailyTrainingSession | null;
   topics: readonly { id:string; name:string }[]; activities: readonly ScheduledStudyActivity[];
   catalogTopics?: readonly { id:string; name:string }[]; seenTopicIds?: readonly string[]; weeklyItems?: readonly WeeklyAgendaItem[];
+  weeklyAgenda?: WeeklyStudyAgenda;
   onSchedule(input: { dateKey:string; activity:ScheduledStudyActivityKind; topicId:string; minutes:number }): ScheduleDecision | { ok:false; reason:'storage-failed' };
   onReschedule(input: { id:string; dateKey:string }): ScheduleDecision | { ok:false; reason:'storage-failed' };
   onOpenActivity(activity: ScheduledStudyActivity): void;
   onSaveWeeklyAgenda?(weekStart: string, items: readonly WeeklyAgendaItem[]): boolean;
+  onRecoverWeeklyAgenda?(proposal: WeeklyAgendaRecoveryProposal): boolean;
   onSetWeeklyAgendaStatus?(id: string, status: 'completed' | 'skipped'): boolean;
 }) {
   const [view, setView] = useState<'week' | 'month'>('week');
@@ -57,6 +59,7 @@ export function StudyCalendar({ preferences, now, history, activeSession, topics
   const [agendaTopicId, setAgendaTopicId] = useState(catalogTopics[0]?.id ?? '');
   const [agendaMinutes, setAgendaMinutes] = useState(35);
   const [agendaProposal, setAgendaProposal] = useState<{ weekStart:string; item:WeeklyAgendaItem } | null>(null);
+  const [recoveryProposal, setRecoveryProposal] = useState<WeeklyAgendaRecoveryProposal | null>(null);
   const monthTitle = monthTitleFormatter.format(month);
   const firstDayOffset = (new Date(month.getFullYear(), month.getMonth(), 1).getDay() + 6) % 7;
   const daysInMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate();
@@ -124,7 +127,7 @@ export function StudyCalendar({ preferences, now, history, activeSession, topics
           <b className="text-[length:var(--fs-s)]">{dayNames[day]} · {date.getDate()}</b><span className="text-lg [font-variant-numeric:tabular-nums]">{resolved.minutes ? `${resolved.minutes} min` : '0 min'}</span><small className="leading-[1.35] text-muted [overflow-wrap:anywhere]">{focusLabels[resolved.focus]}{day === preferences.introductionDay && !resolved.override ? ' · academia' : ''}{isToday ? ' · hoy' : ''}</small>
           {resolved.events.map(event => <span key={event.id} className="grid gap-1 text-brand leading-[1.25] [overflow-wrap:anywhere]"><small>{event.title}{event.kind === 'class' ? ' · clase' : event.kind === 'milestone' ? ' · simulacro' : event.kind === 'unavailable' ? ' · sin estudio' : ` · ${event.studyMinutes} min especiales`}</small>{event.kind === 'milestone' && event.simulation && <Link className="min-h-8 inline-flex items-center text-link underline underline-offset-2" to={`/sim?milestone=${encodeURIComponent(event.id)}`}>Preparar hito</Link>}</span>)}
           {scheduled.map(activity => <small key={activity.id} className="leading-[1.25] [overflow-wrap:anywhere]">{activityNames[activity.activity]} · {activity.topicId} · {activity.minutes} min</small>)}
-          {weekly.map(item => <small key={item.id} className="leading-[1.25] [overflow-wrap:anywhere]">{weeklyActivityNames[item.kind]} · {item.topicIds.join(', ')} · {item.minutes} min · {item.status === 'planned' ? 'planificada' : item.status === 'completed' ? 'completada' : 'omitida'}</small>)}
+          {weekly.map(item => <small key={item.id} className="leading-[1.25] [overflow-wrap:anywhere]">{weeklyActivityNames[item.kind]} · {item.topicIds.join(', ')} · {item.minutes} min · {item.status === 'planned' ? 'planificada' : item.status === 'completed' ? 'completada' : item.status === 'rescheduled' ? `reprogramada al ${item.rescheduledTo}` : 'omitida'}</small>)}
           {completed && <small className="font-[650] text-brand">Sesión diaria completada</small>}
           {inProgress && <small className="font-[650] text-brand">Sesión diaria en curso · guardada</small>}
         </li>;
@@ -132,7 +135,23 @@ export function StudyCalendar({ preferences, now, history, activeSession, topics
       <p className="planning-week-note mt-3.5 mb-0 text-muted text-[length:var(--fs-s)]">La semana muestra fechas, disponibilidad, eventos y repasos que has programado. La sesión de hoy se conserva como checkpoint; los cambios de disponibilidad afectan a días futuros, no reescriben una sesión iniciada. El reparto refleja tus preferencias editables, no una distribución demostrada como óptima.</p>
       <section className="planning-calendar-editor mt-4 min-w-0 rounded-[var(--r-m)] border border-line bg-[var(--surface-soft)] p-4" aria-labelledby="weekly-agenda-title">
         <h4 className="m-0 text-[length:var(--fs-m)]" id="weekly-agenda-title">Preparar esta semana</h4>
-        <p className="mt-[.4rem] mb-3 text-muted">Añade actividades a la propuesta y confirma cada cambio. Un tema nuevo puede estar pendiente; los repasos requieren un tema visto. Por ahora la agenda se guarda en este dispositivo y no se sincroniza entre dispositivos.</p>
+        <p className="mt-[.4rem] mb-3 text-muted">Añade actividades y confirma cada cambio. Un tema nuevo puede estar pendiente; los repasos requieren un tema visto. La agenda se guarda en este dispositivo y se sincroniza en la cuenta cuando hay conexión y acceso aprobado.</p>
+        {!!weeklyAgenda?.items.some(item => item.status === 'planned' && item.dateKey < dayKey(now)) && <div className="mb-3 rounded-[var(--r-s)] border border-line bg-[var(--card)] p-3">
+          <p className="mt-0 mb-2">Hay actividades pasadas aún pendientes. Puedes distribuirlas en los días futuros con espacio de esta semana; el plan no las moverá automáticamente.</p>
+          {!recoveryProposal ? <button className="btn sec min-h-11" type="button" onClick={() => {
+            if (!weeklyAgenda) return;
+            const next = proposeWeeklyAgendaRecovery({ agenda:weeklyAgenda, targetWeekStart:currentWeekKey, todayKey:dayKey(now), preferences, seenTopicIds, scheduledActivities:activities });
+            if (!next?.moves.length) { setError('No hay pendientes que quepan en los días disponibles de esta semana. Los temas de repaso que ya no constan como vistos se conservan sin reprogramar.'); return; }
+            setRecoveryProposal(next); setError('');
+          }}>Proponer recuperación gradual</button> : <div className="grid gap-2">
+            <p className="m-0">Propuesta: {recoveryProposal.moves.length} {recoveryProposal.moves.length === 1 ? 'actividad' : 'actividades'}; {recoveryProposal.unplacedIds.length} quedarán pendientes para otra revisión. Se conserva cada fecha original en el historial.</p>
+            <ul className="m-0 ps-5">{recoveryProposal.moves.map(move => <li key={move.sourceId}>{move.target.topicIds.join(', ')} · {move.target.minutes} min · {move.target.dateKey}</li>)}</ul>
+            <div className="flex flex-wrap gap-2"><button className="btn min-h-11" type="button" onClick={() => {
+              if (!onRecoverWeeklyAgenda?.(recoveryProposal)) { setError('La agenda cambió o no se pudo guardar. Revisa de nuevo la propuesta antes de confirmar.'); setRecoveryProposal(null); return; }
+              setRecoveryProposal(null); setError('');
+            }}>Confirmar recuperación</button><button className="btn sec min-h-11" type="button" onClick={() => setRecoveryProposal(null)}>Cancelar</button></div>
+          </div>}
+        </div>}
         {!catalogTopics.length ? <p role="status" className="text-muted">No se ha cargado el catálogo de temas; puedes consultar la semana, pero no añadir actividades todavía.</p> : <div className="grid grid-cols-4 items-end gap-3 max-[520px]:grid-cols-2">
           <label className="grid min-w-0 gap-[.3rem] text-muted text-[length:var(--fs-s)]">Fecha<input aria-label="Fecha de actividad semanal" className="box-border w-full min-w-0 min-h-11 rounded-[var(--r-s)] border border-[var(--line-strong,var(--line))] bg-[var(--card)] p-2 text-ink [font:inherit]" type="date" value={agendaDate} min={agendaMinDate} max={agendaMaxDate} onChange={event => { setAgendaDate(event.target.value); setAgendaProposal(null); setError(''); }} /></label>
           <label className="grid min-w-0 gap-[.3rem] text-muted text-[length:var(--fs-s)]">Actividad<select aria-label="Actividad semanal" className="box-border w-full min-w-0 min-h-11 rounded-[var(--r-s)] border border-[var(--line-strong,var(--line))] bg-[var(--card)] p-2 text-ink [font:inherit]" value={agendaKind} onChange={event => { setAgendaKind(event.target.value as WeeklyAgendaKind); setAgendaProposal(null); setError(''); }}>
@@ -170,7 +189,7 @@ export function StudyCalendar({ preferences, now, history, activeSession, topics
           <button className="btn sec" type="button" onClick={() => setAgendaProposal(null)}>Cancelar</button>
         </div>}
         {!!visibleWeeklyItems.length && <ul className="mt-3 mb-0 grid gap-2 p-0 list-none" aria-label="Actividades de la agenda semanal">{visibleWeeklyItems.map(item => <li key={item.id} className="flex flex-wrap items-center justify-between gap-2 rounded-[var(--r-s)] bg-[var(--card)] p-3">
-          <span>{item.dateKey} · {weeklyActivityNames[item.kind]} · {item.topicIds.join(', ')} · {item.minutes} min · {item.status === 'planned' ? 'Planificada' : item.status === 'completed' ? 'Completada' : 'Omitida'}</span>
+          <span>{item.dateKey} · {weeklyActivityNames[item.kind]} · {item.topicIds.join(', ')} · {item.minutes} min · {item.status === 'planned' ? 'Planificada' : item.status === 'completed' ? 'Completada' : item.status === 'rescheduled' ? `Reprogramada al ${item.rescheduledTo}` : 'Omitida'}</span>
           {item.status === 'planned' && <button className="btn sec min-h-11" type="button" onClick={() => { if (!onSetWeeklyAgendaStatus?.(item.id, 'skipped')) setError('No se pudo registrar el cambio.'); }}>Marcar como omitida</button>}
         </li>)}</ul>}
       </section>

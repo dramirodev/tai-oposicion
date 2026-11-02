@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createWeeklyStudyAgendaComposition } from '../../src/app/composition/trainers/weekly-study-agenda-composition.ts';
-import { dailyTrainingPlanFromAgenda, emptyWeeklyStudyAgenda, findMatchingPlannedAgendaItem, isWeeklyStudyAgenda, mergeWeeklyStudyAgenda, replaceWeeklyAgendaWeek, updateWeeklyAgendaItemStatus, weekStartForStudyDate } from '../../src/core/domain/study-weekly-agenda.ts';
+import { applyWeeklyAgendaRecovery, dailyTrainingPlanFromAgenda, emptyWeeklyStudyAgenda, findMatchingPlannedAgendaItem, isWeeklyStudyAgenda, mergeWeeklyStudyAgenda, proposeWeeklyAgendaRecovery, replaceWeeklyAgendaWeek, updateWeeklyAgendaItemStatus, weekStartForStudyDate } from '../../src/core/domain/study-weekly-agenda.ts';
 import { readWeeklyStudyAgenda } from '../../src/adapters/local/weekly-study-agenda.ts';
+import { DEFAULT_TRAINING_PREFERENCES } from '../../src/core/domain/study-training-plan.ts';
 
 const item = (overrides = {}) => ({
   id:'2026-11-02:newContent:T19.01', weekStart:'2026-11-02', dateKey:'2026-11-02', kind:'newContent', topicIds:['T19.01'],
@@ -46,6 +47,34 @@ describe('propuesta semanal persistida', () => {
     expect(updateWeeklyAgendaItemStatus(current, 'missing', 'skipped', 106)).toBeNull();
     expect(updateWeeklyAgendaItemStatus(completed, item().id, 'planned', 110)).toBeNull();
     expect(updateWeeklyAgendaItemStatus(completed, item().id, 'skipped', 110)).toBeNull();
+  });
+
+  it('propone recuperar solo pendientes vencidos en huecos futuros y conserva los no ubicables', () => {
+    const overdue = item({ id:'overdue-review', dateKey:'2026-10-27', weekStart:'2026-10-26', kind:'topicTest', topicIds:['T1.01'], minutes:30 });
+    const unseen = item({ id:'unseen-review', dateKey:'2026-10-28', weekStart:'2026-10-26', kind:'topicTest', topicIds:['T19.01'], minutes:20 });
+    const closed = item({ id:'closed', dateKey:'2026-10-28', weekStart:'2026-10-26', status:'completed' });
+    const agenda = { ...emptyWeeklyStudyAgenda(), revision:4, updatedAt:120, items:[overdue, unseen, closed] };
+    const preferences = { ...DEFAULT_TRAINING_PREFERENCES, calendarEvents:[{ id:'unavailable-thu', kind:'unavailable', title:'Ausencia', startDate:'2026-11-05', endDate:'2026-11-05', createdAt:1, updatedAt:1 }] };
+    const proposal = proposeWeeklyAgendaRecovery({ agenda, targetWeekStart:'2026-11-02', todayKey:'2026-11-04', preferences, seenTopicIds:['T1.01'], scheduledActivities:[{ id:'scheduled-fri', dateKey:'2026-11-06', activity:'topicTest', topicId:'T1.02', minutes:100, createdAt:1, updatedAt:1 }] });
+    expect(proposal?.moves).toHaveLength(1);
+    expect(proposal?.moves[0]).toMatchObject({ sourceId:overdue.id, target:{ dateKey:'2026-11-07', weekStart:'2026-11-02', kind:'topicTest', topicIds:['T1.01'], status:'planned', recoveryOf:overdue.id } });
+    expect(proposal?.unplacedIds).toEqual([unseen.id]);
+    expect(agenda.items.find(entry => entry.id === overdue.id)).toEqual(overdue);
+  });
+
+  it('confirma recuperación preservando la fecha e historial de origen y rechaza una propuesta obsoleta', () => {
+    const overdue = item({ id:'overdue', dateKey:'2026-10-27', weekStart:'2026-10-26', kind:'topicTest', topicIds:['T1.01'] });
+    const agenda = { ...emptyWeeklyStudyAgenda(), revision:2, updatedAt:100, items:[overdue] };
+    const proposal = proposeWeeklyAgendaRecovery({ agenda, targetWeekStart:'2026-11-02', todayKey:'2026-11-04', preferences:DEFAULT_TRAINING_PREFERENCES, seenTopicIds:['T1.01'], scheduledActivities:[] });
+    expect(proposal?.moves).toHaveLength(1);
+    expect(applyWeeklyAgendaRecovery({ ...agenda, revision:3 }, proposal, 130)).toBeNull();
+    const recovered = applyWeeklyAgendaRecovery(agenda, proposal, 130);
+    expect(recovered?.items).toEqual(expect.arrayContaining([
+      expect.objectContaining({ id:'overdue', dateKey:'2026-10-27', status:'rescheduled', rescheduledTo:proposal.moves[0].target.dateKey }),
+      expect.objectContaining({ recoveryOf:'overdue', dateKey:proposal.moves[0].target.dateKey, status:'planned', topicIds:['T1.01'] }),
+    ]));
+    expect(isWeeklyStudyAgenda(recovered)).toBe(true);
+    expect(isWeeklyStudyAgenda({ ...agenda, items:[{ ...overdue, status:'rescheduled' }] })).toBe(false);
   });
 
   it('informa del fallo de escritura sin devolver una propuesta como persistida', () => {
