@@ -633,8 +633,22 @@ export const studyServices: StudyServices = {
     subscribe(listener) { const offStore = localProgressRepository.subscribe(listener), offSync = sync.onStatus(listener), offEngine = subscribeEngine(listener); return () => { offStore(); offSync(); offEngine(); }; },
     async loadOverview() {
       await recover(); const account = localStudyProgressGateway.accountId(); const index = await getIndex(); await getMeta();
-      const progress = await getHomeProgressSummary(localProgressRepository);
+      const [progress, cardManifest] = await Promise.all([
+        getHomeProgressSummary(localProgressRepository),
+        fetchJson<{ temas?: Record<string, number> }>('cards/index.json').catch(() => null),
+      ]);
       if (account !== localStudyProgressGateway.accountId()) throw new Error('La cuenta cambió mientras se cargaba el resumen de inicio.');
+      const metadata = studyQuestionCatalog.getMetadataSnapshot();
+      const questionTopicIds = metadata ? index.temas.filter(topic =>
+        studyQuestionCatalog.getQuestionIdsForTopic(topic.id).some(id => (metadata[id]?.[3] || []).length > 0),
+      ).map(topic => topic.id) : null;
+      const cardTopics = cardManifest?.temas;
+      const validCardManifest = cardTopics && typeof cardTopics === 'object' && !Array.isArray(cardTopics)
+        && Object.values(cardTopics).every(count => Number.isInteger(count) && count >= 0);
+      const cardTopicIds = validCardManifest
+        ? Object.entries(cardTopics).filter(([, count]) => count > 0).map(([topicId]) => topicId)
+        : null;
+      const studyContentInventory = { questionTopicIds, cardTopicIds };
       const dueIds = await dueQuestionIds();
       const due = dueIds.length;
       const cardReviews = localCardProgressGateway.getCardReviews();
@@ -689,7 +703,7 @@ export const studyServices: StudyServices = {
         nextNewTopic: nextNewTopic ? { id: nextNewTopic.id, name: nextNewTopic.nombre } : undefined,
         assessedTopics: studiedMastery.filter(topic => topic.est !== 'n').length,
         weakTopics: studiedWeakTopics.length,
-        masteredTopics: studiedMastery.filter(topic => topic.est === 'g').length, trainingPlan, trainingSession: trainingSession.getSession(), trainingHistory: trainingSession.getHistory(), paperRecallAssessments: recallAssessments, weakTopicIds, topicReviewEvidence,
+        masteredTopics: studiedMastery.filter(topic => topic.est === 'g').length, trainingPlan, trainingSession: trainingSession.getSession(), trainingHistory: trainingSession.getHistory(), paperRecallAssessments: recallAssessments, weakTopicIds, topicReviewEvidence, studyContentInventory,
       };
     },
     startTrainingSession(plan) { return trainingSession.start(plan); },

@@ -91,6 +91,18 @@ describe('propuesta semanal persistida', () => {
     expect(proposal?.items.filter(item => item.dateKey === existing.dateKey).reduce((sum, item) => sum + item.minutes, existing.minutes)).toBeLessThanOrEqual(120);
   });
 
+  it('no programa práctica cuya modalidad no figura en el manifiesto y conserva contenido nuevo', () => {
+    const preferences = { ...DEFAULT_TRAINING_PREFERENCES, academyTopicOrderIds:['T19.01'] };
+    const proposal = proposeWeeklyAgendaPlan({ agenda:emptyWeeklyStudyAgenda(), targetWeekStart:'2026-11-09', todayKey:'2026-11-02', preferences,
+      catalogTopics:[{ id:'T19.01', name:'Tema futuro' }, { id:'T1.01', name:'Tema visto' }], studiedTopicIds:['T1.01'], dueCount:4, cardDueCount:2, failureCount:2, weakTopicCount:1, weakTopicIds:['T1.01'], topicReviewEvidence:[], scheduledActivities:[],
+      contentInventory:{ questionTopicIds:[], cardTopicIds:null },
+    });
+    expect(proposal?.contentInventoryStatus).toBe('partial');
+    expect(proposal?.items.some(item => item.kind === 'newContent' && item.topicIds[0] === 'T19.01')).toBe(true);
+    expect(proposal?.items.every(item => item.kind === 'newContent')).toBe(true);
+    expect(proposal?.omittedContentActivities.some(item => item.kind === 'activeRecall' && item.topicIds.includes('T1.01'))).toBe(true);
+  });
+
   it('añade el borrador sin borrar actividades existentes y rechaza cambios concurrentes', () => {
     const existing = item({ id:'already-confirmed', weekStart:'2026-11-09', dateKey:'2026-11-10', kind:'activeRecall', topicIds:['T2.01'] });
     const agenda = { ...emptyWeeklyStudyAgenda(), revision:3, updatedAt:100, items:[existing] };

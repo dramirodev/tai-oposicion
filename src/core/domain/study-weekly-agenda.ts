@@ -147,9 +147,11 @@ export interface WeeklyAgendaPlanProposal {
   baseRevision: number;
   targetWeekStart: string;
   items: readonly WeeklyAgendaItem[];
-  skippedDays: readonly { dateKey: string; reason: 'past' | 'rest' | 'unavailable' | 'no-capacity' | 'no-activities' }[];
+  skippedDays: readonly { dateKey: string; reason: 'past' | 'rest' | 'unavailable' | 'no-capacity' | 'no-activities' | 'no-content' }[];
   missingTopicIds: readonly string[];
   plannedNewTopicIds: readonly string[];
+  contentInventoryStatus: 'manifest' | 'partial' | 'unavailable' | 'not-checked';
+  omittedContentActivities: readonly { dateKey: string; kind: WeeklyAgendaKind; topicIds: readonly string[] }[];
 }
 
 /** Builds a reviewable weekly draft from the existing daily rules and real study/catalog evidence. */
@@ -167,6 +169,8 @@ export function proposeWeeklyAgendaPlan(input: {
   weakTopicIds: readonly string[];
   topicReviewEvidence: readonly TopicReviewEvidence[];
   scheduledActivities: readonly ScheduledStudyActivity[];
+  /** Topic-level availability from loaded manifests; it is not proof of official syllabus coverage. */
+  contentInventory?: { questionTopicIds: readonly string[] | null; cardTopicIds: readonly string[] | null };
 }): WeeklyAgendaPlanProposal | null {
   if (!isMondayStudyDate(input.targetWeekStart) || !isStudyDateKey(input.todayKey)) return null;
   const dates = Array.from({ length:7 }, (_, index) => addStudyDays(input.targetWeekStart, index)).filter((date): date is string => !!date);
@@ -178,7 +182,8 @@ export function proposeWeeklyAgendaPlan(input: {
   const reservedNewTopicIds = agendaItems.filter(item => item.kind === 'newContent').flatMap(item => item.topicIds);
   const missingTopicIds = (input.preferences.academyTopicOrderIds ?? []).filter(id => !topicById.has(id) && !studied.includes(id));
   const items: WeeklyAgendaItem[] = [];
-  const skippedDays: { dateKey: string; reason: 'past' | 'rest' | 'unavailable' | 'no-capacity' | 'no-activities' }[] = [];
+  const omittedContentActivities: { dateKey: string; kind: WeeklyAgendaKind; topicIds: readonly string[] }[] = [];
+  const skippedDays: { dateKey: string; reason: 'past' | 'rest' | 'unavailable' | 'no-capacity' | 'no-activities' | 'no-content' }[] = [];
   let dueCount = Math.max(0, input.dueCount), cardDueCount = Math.max(0, input.cardDueCount), failureCount = Math.max(0, input.failureCount);
   let idSequence = 0;
   const reviewTopics = [...new Set([...input.weakTopicIds, ...studied])].slice(0, 20);
@@ -215,18 +220,41 @@ export function proposeWeeklyAgendaPlan(input: {
       nextNewTopic:nextTopic ? { topicId:nextTopic.id, topicName:nextTopic.name } : undefined,
       topicReviewEvidence:input.topicReviewEvidence,
     });
+    let skippedForContent = false;
     const mapped = dailyPlan.activities.flatMap(activity => {
       if (activity.minutes < 5) return [];
       const kind = weeklyKindForTrainingActivity(activity.activity);
       if (!kind) return [];
-      const topicIds = activity.activity === 'newContent' && activity.topicId ? [activity.topicId]
+      let topicIds = activity.activity === 'newContent' && activity.topicId ? [activity.topicId]
         : activity.activity === 'topicTest' && activity.topicId ? [activity.topicId]
           : (activity.topicIds?.length ? activity.topicIds : reviewTopics).slice(0, 20);
+      if (input.contentInventory) {
+        const available = activity.activity === 'activeRecall' ? input.contentInventory.cardTopicIds
+          : activity.activity === 'newContent' ? null
+            : activity.activity === 'topicTest' || activity.activity === 'mixedTopicTest' || activity.activity === 'failures'
+              ? input.contentInventory.questionTopicIds
+              : input.contentInventory.questionTopicIds === null || input.contentInventory.cardTopicIds === null
+                ? null : [...new Set([...input.contentInventory.questionTopicIds, ...input.contentInventory.cardTopicIds])];
+        if (available === null && activity.activity !== 'newContent') {
+          skippedForContent = true;
+          omittedContentActivities.push({ dateKey, kind, topicIds });
+          return [];
+        }
+        if (available) {
+          const requestedTopicIds = topicIds;
+          topicIds = requestedTopicIds.filter(topicId => available.includes(topicId));
+          const omittedTopicIds = requestedTopicIds.filter(topicId => !available.includes(topicId));
+          if (omittedTopicIds.length) {
+            skippedForContent = true;
+            omittedContentActivities.push({ dateKey, kind, topicIds:omittedTopicIds });
+          }
+        }
+      }
       if (!topicIds.length) return [];
       const id = `weekly-plan:${input.targetWeekStart}:${dateKey}:${idSequence++}`;
       return [{ id, weekStart:input.targetWeekStart, dateKey, kind, topicIds, minutes:activity.minutes, status:'planned' as const, createdAt:input.agenda.updatedAt, updatedAt:input.agenda.updatedAt }];
     });
-    if (!mapped.length) { skippedDays.push({ dateKey, reason:'no-activities' }); continue; }
+    if (!mapped.length) { skippedDays.push({ dateKey, reason:skippedForContent ? 'no-content' : 'no-activities' }); continue; }
     const duplicate = (item: Pick<WeeklyAgendaItem, 'kind' | 'topicIds'>) => {
       const topicsKey = [...item.topicIds].sort().join('|');
       return agendaItems.some(existing => existing.dateKey === dateKey && existing.kind === item.kind && [...existing.topicIds].sort().join('|') === topicsKey)
@@ -239,10 +267,12 @@ export function proposeWeeklyAgendaPlan(input: {
     items.push(...uniqueMapped);
     const newTopic = dailyPlan.activities.find(activity => activity.activity === 'newContent')?.topicId;
     if (newTopic) plannedNewTopicIds.push(newTopic);
-    if (dailyPlan.activities.some(activity => activity.activity === 'spacedReviews')) { dueCount = 0; cardDueCount = 0; }
-    if (dailyPlan.activities.some(activity => activity.activity === 'failures')) failureCount = 0;
+    if (uniqueMapped.some(item => item.kind === 'spacedReviews')) { dueCount = 0; cardDueCount = 0; }
+    if (uniqueMapped.some(item => item.kind === 'failures')) failureCount = 0;
   }
-  return { baseRevision:input.agenda.revision, targetWeekStart:input.targetWeekStart, items, skippedDays, missingTopicIds, plannedNewTopicIds };
+  const inventoryStatuses = input.contentInventory ? [input.contentInventory.questionTopicIds, input.contentInventory.cardTopicIds].map(value => value === null ? 'unavailable' : 'manifest') : [];
+  const contentInventoryStatus = !input.contentInventory ? 'not-checked' : inventoryStatuses.every(status => status === 'manifest') ? 'manifest' : inventoryStatuses.every(status => status === 'unavailable') ? 'unavailable' : 'partial';
+  return { baseRevision:input.agenda.revision, targetWeekStart:input.targetWeekStart, items, skippedDays, missingTopicIds, plannedNewTopicIds, contentInventoryStatus, omittedContentActivities };
 }
 
 export function applyWeeklyAgendaPlan(current: WeeklyStudyAgenda, proposal: WeeklyAgendaPlanProposal, now: number): WeeklyStudyAgenda | null {

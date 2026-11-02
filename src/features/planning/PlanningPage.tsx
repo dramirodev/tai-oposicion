@@ -414,7 +414,7 @@ export function PlanningPage() {
       catalogTopics:(settings.index?.topics ?? []).map(topic => ({ id:topic.id, name:topic.name })),
       studiedTopicIds:seenTopicIds, dueCount:planningOverview.trainingDue.questions, cardDueCount:planningOverview.trainingDue.cards,
       failureCount:planningOverview.trainingFailures ?? 0, weakTopicCount:planningOverview.weakTopics, weakTopicIds:planningOverview.weakTopicIds ?? [],
-      topicReviewEvidence:planningOverview.topicReviewEvidence ?? [], scheduledActivities,
+      topicReviewEvidence:planningOverview.topicReviewEvidence ?? [], scheduledActivities, contentInventory:planningOverview.studyContentInventory,
     });
   };
   const addWeeklyAgendaPlan = (proposal: WeeklyAgendaPlanProposal) => {

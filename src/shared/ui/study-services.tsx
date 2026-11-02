@@ -14,6 +14,10 @@ import type { TopicReviewEvidence } from '../../core/domain/study-review-interve
 export type { StatsComparison, StatsDomainTopic, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 export interface ActiveStudy { title: string; position: number; total: number }
 export interface HomeBlock { name: string; total: number; mastered: number; assessed: number }
+export interface StudyContentInventory {
+  questionTopicIds: readonly string[] | null;
+  cardTopicIds: readonly string[] | null;
+}
 export interface HomeOverview {
   completedSessions: number; blocks: HomeBlock[];
   seen: number; total: number; answers: number; streak: number; daysToExam: number | null;
@@ -28,6 +32,7 @@ export interface HomeOverview {
   paperRecallAssessments?: readonly PaperRecallAssessment[];
   weakTopicIds?: readonly string[];
   topicReviewEvidence?: readonly TopicReviewEvidence[];
+  studyContentInventory?: StudyContentInventory;
 }
 export interface AccessOverview {
   full: boolean; level: string; greeting: string; state: string; configured: boolean;
