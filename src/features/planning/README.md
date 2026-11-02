@@ -43,6 +43,8 @@ La cuenta exacta no se consultó: se conserva el `exam` que entregue la configur
 
 **Verificación de esta rebanada:** pruebas focalizadas del dominio y página (17 pasadas), `npm run check` (836 pasadas/22 omitidas; arquitectura, lint y TypeScript correctos), `npm run build` y E2E de inicio de sesión de planificación y reflujo responsive (4 pasadas en Chromium/WebKit); `git diff --check` limpio. El build mantiene advertencias de anotaciones de Zod/Rollup y chunks mayores de 500 kB. No validado: excepción de calendario, datos remotos, contenido oficial por apartado ni persistencia en Firebase.
 
+Commit local de código, pruebas y este handoff: `2933b0f` (`Integra horizonte y semana en la planificación`). El informe de auditoría está sin seguimiento y quedó fuera del commit. La rama `feat/study-plan-through-exam` sigue solo local: no se hizo push, tag, release ni despliegue.
+
 ## Evaluación pendiente
 
 Las pruebas automatizadas verifican las reglas de selección y el checkpoint, no que una distribución concreta cause mejores resultados de oposición. Para evaluar el efecto pedagógico hacen falta datos de uso reales y longitudinales, consentimiento y medidas diferenciadas: recuperación en material nuevo, retención diferida, cobertura y resultados de simulacro. `npm run measure:attempts` genera datos sintéticos y no puede usarse como evidencia de aprendizaje real.
