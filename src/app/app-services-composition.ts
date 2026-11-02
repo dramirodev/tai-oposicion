@@ -75,6 +75,8 @@ import { createCardsComposition } from './composition/cards/cards-composition.js
 import { createTrainingSessionComposition } from './composition/trainers/training-session-composition.js';
 import { createPaperRecallComposition } from './composition/trainers/paper-recall-composition.js';
 import { createTrainingCalendarComposition } from './composition/trainers/training-calendar-composition.js';
+import { createWeeklyStudyAgendaComposition } from './composition/trainers/weekly-study-agenda-composition.js';
+import { findMatchingPlannedAgendaItem } from '../core/domain/study-weekly-agenda.js';
 import { getHomeProgressSummary } from '../core/application/stats/get-home-progress-summary.js';
 import type { QuestionRecord as Question } from '../core/domain/question-record.js';
 import { createReadingComposition } from './composition/trainers/reading-composition.js';
@@ -108,6 +110,10 @@ const trainingCalendar = createTrainingCalendarComposition({
   getSeenTopics: localStudyProgressGateway.getSeenTopics,
   getPreferences: () => normalizeTrainingPreferences(localStudyProgressGateway.getPreferences().training),
   push: activities => { void sync.pushTrainingCalendar(activities); },
+});
+const weeklyStudyAgenda = createWeeklyStudyAgendaComposition({
+  accountId: localStudyProgressGateway.accountId,
+  now: studyQuestionCatalog.now,
 });
 let routeReady: () => void;
 const firstReactRouteReady = new Promise<void>(resolve => { routeReady = resolve; });
@@ -689,11 +695,23 @@ export const studyServices: StudyServices = {
     pauseTrainingActivity() { return trainingSession.pauseCurrentActivity(); },
     beginTrainingBreak(minutes) { return trainingSession.beginBreak(minutes); },
     endTrainingBreak() { return trainingSession.endBreak(); },
-    completeTrainingActivity(activity: TrainingActivity, reference?: TrainingActivityReference) { return trainingSession.completeActivity(activity, reference); },
+    completeTrainingActivity(activity: TrainingActivity, reference?: TrainingActivityReference) {
+      const before = trainingSession.getSession();
+      const completed = trainingSession.completeActivity(activity, reference);
+      const step = before?.activities[before.currentIndex];
+      if (before && completed && completed.currentIndex > before.currentIndex && step) {
+        const matchingAgendaItem = findMatchingPlannedAgendaItem(weeklyStudyAgenda.get(), before.dateKey, step);
+        if (matchingAgendaItem) weeklyStudyAgenda.setStatus(matchingAgendaItem.id, 'completed');
+      }
+      return completed;
+    },
     recordPaperRecall(topicId: string, rating: PaperRecallRating) { return paperRecall.record(topicId, rating); },
     scheduledStudyActivities() { return trainingCalendar.get(); },
     scheduleStudyActivity(input: Parameters<typeof trainingCalendar.schedule>[0]) { return trainingCalendar.schedule(input); },
     rescheduleStudyActivity(input: Parameters<typeof trainingCalendar.reschedule>[0]) { return trainingCalendar.reschedule(input); },
+    weeklyStudyAgenda() { return weeklyStudyAgenda.get(); },
+    replaceWeeklyStudyAgendaWeek(weekStart, items) { return weeklyStudyAgenda.replaceWeek(weekStart, items); },
+    setWeeklyStudyAgendaItemStatus(id, status) { return weeklyStudyAgenda.setStatus(id, status); },
     setTrainingReviewMode(topicId: string, mode: StudyReviewMode | null) {
       const preferences = normalizeTrainingPreferences(localStudyProgressGateway.getPreferences().training);
       const reviewModesByTopic = { ...preferences.reviewModesByTopic };

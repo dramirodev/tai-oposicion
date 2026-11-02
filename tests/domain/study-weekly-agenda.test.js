@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createWeeklyStudyAgendaComposition } from '../../src/app/composition/trainers/weekly-study-agenda-composition.ts';
-import { emptyWeeklyStudyAgenda, isWeeklyStudyAgenda, mergeWeeklyStudyAgenda, replaceWeeklyAgendaWeek, updateWeeklyAgendaItemStatus, weekStartForStudyDate } from '../../src/core/domain/study-weekly-agenda.ts';
+import { dailyTrainingPlanFromAgenda, emptyWeeklyStudyAgenda, findMatchingPlannedAgendaItem, isWeeklyStudyAgenda, mergeWeeklyStudyAgenda, replaceWeeklyAgendaWeek, updateWeeklyAgendaItemStatus, weekStartForStudyDate } from '../../src/core/domain/study-weekly-agenda.ts';
 import { readWeeklyStudyAgenda } from '../../src/adapters/local/weekly-study-agenda.ts';
 
 const item = (overrides = {}) => ({
@@ -53,5 +53,26 @@ describe('propuesta semanal persistida', () => {
     const calendar = createWeeklyStudyAgendaComposition({ accountId:()=>'student-a', now:()=>130 });
     expect(calendar.replaceWeek('2026-11-02', [item()])).toBeNull();
     expect(calendar.get().items).toEqual([]);
+  });
+
+  it('convierte las actividades confirmadas de hoy al checkpoint diario y no presenta un tema nuevo como repaso', () => {
+    const plan = { weekday:1, minutes:120, restDay:false, activities:[{ activity:'newContent', minutes:70, reason:'new-content-day', topicId:'T1.01' }] };
+    const agenda = { ...emptyWeeklyStudyAgenda(), revision:1, updatedAt:100, items:[
+      item({ id:'new', kind:'newContent', topicIds:['T19.01'] }),
+      item({ id:'review', dateKey:'2026-11-03', kind:'topicTest', topicIds:['T1.01'] }),
+      item({ id:'future-topic-review', kind:'topicTest', topicIds:['T19.01'] }),
+    ] };
+    const resolved = dailyTrainingPlanFromAgenda({ plan, agenda, dateKey:'2026-11-02', studiedTopicIds:['T1.01'] });
+    expect(resolved.activities).toEqual([{ activity:'newContent', minutes:45, reason:'new-content-day', topicId:'T19.01' }]);
+    expect(dailyTrainingPlanFromAgenda({ plan, agenda, dateKey:'2026-11-02', studiedTopicIds:[] })).toEqual(resolved);
+  });
+
+  it('enlaza el cierre del paso con una única actividad pendiente de la fecha y no vuelve a marcar una repetición', () => {
+    const planned = item({ id:'closing', kind:'newContent', topicIds:['T19.01'] });
+    const agenda = { ...emptyWeeklyStudyAgenda(), revision:1, updatedAt:100, items:[planned] };
+    const step = { id:'training:2026-11-02:activity:1', activity:'newContent', minutes:45, reason:'new-content-day', topicId:'T19.01' };
+    expect(findMatchingPlannedAgendaItem(agenda, '2026-11-02', step)).toEqual(planned);
+    const completed = updateWeeklyAgendaItemStatus(agenda, planned.id, 'completed', 110);
+    expect(findMatchingPlannedAgendaItem(completed, '2026-11-02', step)).toBeUndefined();
   });
 });

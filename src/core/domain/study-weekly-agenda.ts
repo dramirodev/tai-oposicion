@@ -1,5 +1,7 @@
 import { isStudyDateKey } from './study-training-calendar.js';
 import { isStudyTopicId } from './topic-id.js';
+import type { DailyTrainingPlan, PlannedTrainingActivity, TrainingPlanReason } from './study-training-plan.js';
+import type { TrainingSessionStep } from './study-training-session.js';
 
 export const WEEKLY_AGENDA_SCHEMA_VERSION = 1 as const;
 export const MAX_WEEKLY_AGENDA_ITEMS = 70;
@@ -120,4 +122,36 @@ export function updateWeeklyAgendaItemStatus(current: WeeklyStudyAgenda, id: str
     updatedAt: Math.max(updatedAt, current.updatedAt + 1),
     items: current.items.map(candidate => candidate.id === id ? { ...candidate, status, updatedAt } : candidate),
   };
+}
+
+/** Resolves today's confirmed items to the existing daily checkpoint format without touching an active checkpoint. */
+export function dailyTrainingPlanFromAgenda(input: {
+  plan: DailyTrainingPlan;
+  agenda: WeeklyStudyAgenda;
+  dateKey: string;
+  studiedTopicIds: readonly string[];
+}): DailyTrainingPlan {
+  if (input.plan.restDay) return input.plan;
+  const studied = new Set(input.studiedTopicIds);
+  const items = input.agenda.items.filter(item => item.dateKey === input.dateKey && item.status === 'planned'
+    && (item.kind === 'newContent' || item.topicIds.every(topicId => studied.has(topicId))));
+  if (!items.length) return input.plan;
+  const activities: PlannedTrainingActivity[] = items.map(item => {
+    const reason: TrainingPlanReason = item.kind === 'newContent' ? 'new-content-day'
+      : item.kind === 'activeRecall' ? 'active-recall'
+        : item.kind === 'failures' ? 'recurring-failures'
+          : item.kind === 'spacedReviews' ? 'due-reviews' : 'coverage';
+    return { activity:item.kind, minutes:item.minutes, reason,
+      ...(item.kind === 'newContent' ? { topicId:item.topicIds[0] } : undefined),
+      ...(item.kind !== 'newContent' ? { topicIds:[...item.topicIds], ...(item.topicIds.length === 1 ? { topicId:item.topicIds[0] } : {}) } : undefined) };
+  });
+  const totalMinutes = activities.reduce((sum, activity) => sum + activity.minutes, 0);
+  if (totalMinutes > input.plan.minutes) return input.plan;
+  return { ...input.plan, restDay:false, minutes:totalMinutes, activities };
+}
+
+export function findMatchingPlannedAgendaItem(agenda: WeeklyStudyAgenda, dateKey: string, step: TrainingSessionStep): WeeklyAgendaItem | undefined {
+  const stepTopics = step.topicIds ?? (step.topicId ? [step.topicId] : []);
+  return agenda.items.find(item => item.dateKey === dateKey && item.status === 'planned'
+    && item.kind === step.activity && item.minutes === step.minutes && item.topicIds.join('|') === stepTopics.join('|'));
 }

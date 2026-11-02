@@ -338,6 +338,36 @@ test('Planificación prepara la sesión fuera de Inicio y permite comenzar el pa
   await expect(page).toHaveURL(/#\/temario\?topic=T1\.02&dailyTraining=newContent/);
 });
 
+test('la agenda semanal confirma, persiste y alimenta el checkpoint de la fecha al llegar', async ({ page }) => {
+  await prepare(page, 'light', 0, true);
+  await page.clock.setFixedTime(new Date('2026-11-02T12:00:00+01:00'));
+  await page.goto('/#/home');
+  await expect(page.locator('#app h1')).toContainText('Hola');
+  await page.goto('/#/planificacion');
+  await expect(page.locator('#app h1')).toHaveText('Planificación de estudio');
+  await expect(page.locator('main.planning-page')).toBeVisible();
+  await page.getByLabel('Fecha de actividad semanal').fill('2026-11-03');
+  await page.getByLabel('Actividad semanal', { exact:true }).selectOption('newContent');
+  await page.getByLabel('Tema de actividad semanal', { exact:true }).selectOption('T1.02');
+  await page.getByLabel('Duración de actividad semanal', { exact:true }).selectOption('35');
+  await page.getByRole('button', { name:'Revisar propuesta' }).click();
+  await expect(page.getByRole('group', { name:'Propuesta de semana pendiente de confirmación' })).toContainText('Añadir Tema nuevo · T1.02 · 35 min');
+  await expect(page.getByRole('list', { name:'Actividades de la agenda semanal' })).toHaveCount(0);
+  await page.getByRole('button', { name:'Confirmar actividad semanal' }).click();
+  await expect(page.getByRole('list', { name:'Actividades de la agenda semanal' })).toContainText('Tema nuevo · T1.02 · 35 min · Planificada');
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('tai.weekly-study-agenda.v1.guest') || 'null'))).toMatchObject({
+    schemaVersion:1, items:[{ dateKey:'2026-11-03', kind:'newContent', topicIds:['T1.02'], minutes:35, status:'planned' }],
+  });
+
+  await page.reload();
+  await expect(page.getByRole('list', { name:'Actividades de la agenda semanal' })).toContainText('Tema nuevo · T1.02 · 35 min · Planificada');
+  await page.clock.setFixedTime(new Date('2026-11-03T12:00:00+01:00'));
+  await page.reload();
+  await expect(page.locator('.planning-activity')).toContainText('T1.02');
+  await page.getByRole('button', { name:'Comenzar sesión' }).click();
+  await expect(page).toHaveURL(/#\/temario\?topic=T1\.02&dailyTraining=newContent/);
+});
+
 test('la pausa de foco se guarda, sobrevive a recarga y continúa el mismo paso', async ({ page }) => {
   await prepare(page, 'light', 0, true);
   await page.clock.setFixedTime(new Date('2026-11-02T12:00:00+01:00'));

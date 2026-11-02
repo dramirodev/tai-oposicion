@@ -52,6 +52,43 @@ it('permite iniciar el paso de tema nuevo aunque todavía no haya temas vistos',
   expect(await screen.findByTestId('current-path')).toHaveTextContent(`/temario?topic=T1.01&dailyTraining=newContent&trainingSessionId=${encodeURIComponent(`training:${planned.trainingSession.dateKey}`)}&trainingActivityId=${encodeURIComponent(`training:${planned.trainingSession.dateKey}:activity:1`)}`);
 });
 
+it('permite revisar y confirmar una actividad semanal de un tema pendiente sin clasificarla como repaso', async () => {
+  const user = userEvent.setup();
+  const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+  const dateKey = `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`;
+  const replaceWeeklyStudyAgendaWeek = vi.fn((weekStart, items) => ({ schemaVersion:1, revision:1, updatedAt:Date.now(), items }));
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(), {
+    home:{ weeklyStudyAgenda:() => ({ schemaVersion:1, revision:0, updatedAt:0, items:[] }), replaceWeeklyStudyAgendaWeek },
+    settings:{ getSnapshot:() => ({ training:DEFAULT_TRAINING_PREFERENCES, exam:'', index:{ topics:[{ id:'T19.01', name:'Tema futuro' }] } }) },
+  }) });
+  await screen.findByRole('heading', { name:'Planificación de estudio' });
+  await user.selectOptions(screen.getByLabelText('Actividad semanal'), 'newContent');
+  await user.selectOptions(screen.getByLabelText('Tema de actividad semanal'), 'T19.01');
+  fireEvent.change(screen.getByLabelText('Fecha de actividad semanal'), { target:{ value:dateKey } });
+  await user.click(screen.getByRole('button', { name:'Revisar propuesta' }));
+  expect(await screen.findByText(/Añadir Tema nuevo · T19.01/)).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name:'Confirmar actividad semanal' }));
+  expect(replaceWeeklyStudyAgendaWeek).toHaveBeenCalledWith(expect.any(String), [expect.objectContaining({ kind:'newContent', dateKey, topicIds:['T19.01'], status:'planned' })]);
+});
+
+it('usa la actividad semanal confirmada de hoy al crear el checkpoint diario', async () => {
+  const user = userEvent.setup();
+  const today = new Date();
+  const dateKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+  const agenda = { schemaVersion:1, revision:1, updatedAt:Date.now(), items:[{
+    id:'agenda-today-new', weekStart:(() => { const monday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - ((today.getDay() + 6) % 7)); return `${monday.getFullYear()}-${String(monday.getMonth() + 1).padStart(2, '0')}-${String(monday.getDate()).padStart(2, '0')}`; })(),
+    dateKey, kind:'newContent', topicIds:['T19.01'], minutes:35, status:'planned', createdAt:Date.now(), updatedAt:Date.now(),
+  }] };
+  const startTrainingSession = vi.fn(() => null);
+  const services = servicesFor(overview(), { home:{
+    weeklyStudyAgenda:() => agenda, startTrainingSession,
+  }, settings:{ getSnapshot:() => ({ training:DEFAULT_TRAINING_PREFERENCES, exam:'', index:{ topics:[{ id:'T19.01', name:'Tema futuro' }] } }) } });
+  renderApp(createElement(PlanningPage), { services });
+  await screen.findByRole('heading', { name:'Planificación de estudio' });
+  await user.click(screen.getByRole('button', { name:/Comenzar sesión/ }));
+  expect(startTrainingSession).toHaveBeenCalledWith(expect.objectContaining({ activities:[expect.objectContaining({ activity:'newContent', topicId:'T19.01', minutes:35 })] }));
+});
+
 it('muestra desde el primer instante el tiempo real de una actividad en curso, no 0 hasta el primer tick', async () => {
   const startedAt = Date.now() - 125_000;
   const running = overview(newTopicPlan);

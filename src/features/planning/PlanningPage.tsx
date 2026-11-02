@@ -6,6 +6,7 @@ import type { DailyTrainingSession, TrainingSessionStep } from '../../core/domai
 import { needsPaperRecallFollowUp, type PaperRecallAssessment, type PaperRecallRating } from '../../core/domain/paper-recall-assessment.js';
 import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
 import type { ScheduledStudyActivity, ScheduledStudyActivityKind } from '../../core/domain/study-training-calendar.js';
+import { dailyTrainingPlanFromAgenda, type WeeklyAgendaItem } from '../../core/domain/study-weekly-agenda.js';
 import { useStudyService, type HomeOverview, type HomeServices, type SettingsSnapshot } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { useActionLifetime } from '../../shared/ui/use-action-lifetime.js';
@@ -358,6 +359,8 @@ export function PlanningPage() {
   const [, setCalendarRevision] = useState(0);
   const resource = useMemo(() => ({ accountId: services.accountId, subscribe: services.subscribe, load: () => services.loadOverview() }), [services]);
   const { value: overview, error } = useAccountResource(resource, reload);
+  const weeklyAgenda = services.weeklyStudyAgenda?.();
+  const seenTopicIds = services.seenTopics();
   const settings = useSettingsSnapshot();
   const [clock, setClock] = useState(() => Date.now()); // con 0, el cronómetro de una actividad en curso mostraba 0 s hasta el primer tick
   useEffect(() => {
@@ -366,15 +369,20 @@ export function PlanningPage() {
   }, []);
   usePageReady(authResolved && (!!overview || !!error));
   const navigate = useNavigate();
-  const actions = usePlanningSessionActions(services, overview, navigate, () => setReload(value => value + 1));
+  const today = new Date();
+  const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+  const planningOverview = overview && weeklyAgenda ? {
+    ...overview,
+    trainingPlan: dailyTrainingPlanFromAgenda({ plan:overview.trainingPlan, agenda:weeklyAgenda, dateKey:todayKey, studiedTopicIds:seenTopicIds }),
+  } : overview;
+  const actions = usePlanningSessionActions(services, planningOverview, navigate, () => setReload(value => value + 1));
   const scheduledActivities = services.scheduledStudyActivities?.() ?? [];
-
   if (!authResolved || (!overview && !error)) return <PageLoading variant="home" />;
   if (error) return <PageMessage role="alert" title="No se pudo cargar la planificación"><p>Inténtalo de nuevo. Si no tienes conexión, los datos de la cuenta todavía pueden no estar disponibles en este dispositivo.</p><button className="btn" onClick={() => setReload(value => value + 1)}>Reintentar</button></PageMessage>;
-  if (!overview) return <PageLoading variant="home" />;
+  if (!planningOverview) return <PageLoading variant="home" />;
 
-  const now = new Date();
-  const model = buildPlanningViewModel(overview, settings, now, clock, services.seenTopics());
+  const now = today;
+  const model = buildPlanningViewModel(planningOverview, settings, now, clock, seenTopicIds);
   const scheduleActivity = (input: { dateKey:string; activity:ScheduledStudyActivityKind; topicId:string; minutes:number }) => {
     const result = services.scheduleStudyActivity?.(input) ?? { ok:false as const, reason:'storage-failed' as const };
     if (result.ok) setCalendarRevision(value => value + 1);
@@ -384,6 +392,19 @@ export function PlanningPage() {
     const result = services.rescheduleStudyActivity?.(input) ?? { ok:false as const, reason:'storage-failed' as const };
     if (result.ok) setCalendarRevision(value => value + 1);
     return result;
+  };
+  const saveWeeklyAgenda = (weekStart: string, items: readonly WeeklyAgendaItem[]) => {
+    const saved = services.replaceWeeklyStudyAgendaWeek?.(weekStart, items);
+    if (!saved) { services.notify('No se pudo guardar la agenda semanal en este dispositivo.'); return false; }
+    setCalendarRevision(value => value + 1);
+    setReload(value => value + 1);
+    return true;
+  };
+  const setWeeklyAgendaStatus = (id: string, status: 'completed' | 'skipped') => {
+    const saved = services.setWeeklyStudyAgendaItemStatus?.(id, status);
+    if (!saved) return false;
+    setCalendarRevision(value => value + 1);
+    return true;
   };
   const openScheduledActivity = (activity: ScheduledStudyActivity) => {
     const topic = encodeURIComponent(activity.topicId);
@@ -401,12 +422,14 @@ export function PlanningPage() {
     </header>
     <PlanningHorizon targetDate={settings.exam} today={now} preferences={settings.training}
       catalogTopicIds={settings.index?.topics?.map(topic => topic.id) ?? []} studiedTopicIds={services.seenTopics()} />
-    <PlanningTodayCard model={model} overview={overview} activeStudy={!!services.getActiveStudy()} onStart={actions.startSession} onPause={actions.pauseSession}
+    <PlanningTodayCard model={model} overview={planningOverview} activeStudy={!!services.getActiveStudy()} onStart={actions.startSession} onPause={actions.pauseSession}
       onBeginBreak={actions.beginBreak} onEndBreak={actions.endBreak} focusBlockMinutes={settings.training.focusBlockMinutes ?? 35} />
-    <PlanningActivityList model={model} assessments={overview.paperRecallAssessments ?? []} now={now.getTime()} onRecallAssessment={actions.recordRecallAssessment} />
-    <StudyCalendar preferences={settings.training} weekday={model.weekday} now={now} history={overview.trainingHistory ?? []} activeSession={overview.trainingSession}
-      topics={overview.studiedTopicDetails ?? []} activities={scheduledActivities} onSchedule={scheduleActivity} onReschedule={rescheduleActivity} onOpenActivity={openScheduledActivity} />
-    <PlanningHistory overview={overview} />
-    <PlanningEvidence overview={overview} />
+    <PlanningActivityList model={model} assessments={planningOverview.paperRecallAssessments ?? []} now={now.getTime()} onRecallAssessment={actions.recordRecallAssessment} />
+    <StudyCalendar preferences={settings.training} now={now} history={planningOverview.trainingHistory ?? []} activeSession={planningOverview.trainingSession}
+      topics={planningOverview.studiedTopicDetails ?? []} catalogTopics={settings.index?.topics?.map(topic => ({ id:topic.id, name:topic.name })) ?? []} seenTopicIds={seenTopicIds}
+      activities={scheduledActivities} weeklyItems={weeklyAgenda?.items ?? []} onSchedule={scheduleActivity} onReschedule={rescheduleActivity} onOpenActivity={openScheduledActivity}
+      onSaveWeeklyAgenda={saveWeeklyAgenda} onSetWeeklyAgendaStatus={setWeeklyAgendaStatus} />
+    <PlanningHistory overview={planningOverview} />
+    <PlanningEvidence overview={planningOverview} />
   </main>;
 }
