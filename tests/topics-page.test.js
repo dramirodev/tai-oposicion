@@ -1,11 +1,64 @@
 import { expect, it, vi } from 'vitest';
 import { createElement } from 'react';
 import { renderApp } from './helpers/render-app.js';
-import { screen, within } from '@testing-library/react';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useLocation } from 'react-router';
 import { TopicsPage } from '../src/features/home/TopicsPage.tsx';
 import { groupTopics } from '../src/features/home/topics-controller.ts';
+import { academyCurriculumTopic } from '../src/core/domain/academy-curriculum.generated/T1.01.generated.ts';
+
+function sectionRecallHarness({ account = 'account-a', loadOverview, failAgendaOnce = false } = {}) {
+  const section = academyCurriculumTopic.sections.find(item => item.title === '1. INTRODUCCIÓN');
+  const file = academyCurriculumTopic.files.find(item => item.path === section.materialPath);
+  const selection = { topicId:'T1.01', materials:[{ path:file.path, sourceHash:file.sha256, outlineFingerprint:file.outlineFingerprint,
+    outlineStructureFingerprint:file.outlineStructureFingerprint, role:'syllabus' }], revision:1, updatedAt:500 };
+  const eventBase = { topicId:'T1.01', sectionId:section.id, materialPath:section.materialPath, sourceHash:section.sourceHash, outlineFingerprint:section.outlineFingerprint };
+  const source = { ...eventBase, id:'source-check-123', occurredAt:100, kind:'self-check', timing:'immediate', rating:'partial' };
+  const followUp = { ...eventBase, id:'scheduled-event-123', occurredAt:200, kind:'follow-up', followUpId:source.id,
+    sourceSelfCheckEventId:source.id, dueDateKey:'2026-11-02', status:'scheduled' };
+  const linked = { ...eventBase, id:'linked-check-123', occurredAt:450, kind:'self-check', timing:'delayed', rating:'partial', followUpId:source.id,
+    trainingSessionId:'training-session-123', trainingActivityId:'training-activity-123' };
+  let events = [source, followUp, linked];
+  const agendaItem = { id:'agenda-item-123', weekStart:'2026-11-02', dateKey:'2026-11-03', kind:'sectionRecall',
+    topicIds:['T1.01'], minutes:20, status:'planned', createdAt:500, updatedAt:500,
+    sectionRecall:{ followUpId:source.id, sourceSelfCheckEventId:source.id, sectionId:section.id, materialPath:section.materialPath,
+      sourceHash:section.sourceHash, outlineFingerprint:section.outlineFingerprint, dueDateKey:'2026-11-02', sectionTitle:section.title, printedPage:section.printedPage } };
+  let agenda = { schemaVersion:1, revision:1, updatedAt:500, items:[agendaItem] };
+  const session = { schemaVersion:2, id:'training-session-123', dateKey:'2026-11-03', startedAt:400, completedAt:null,
+    currentIndex:0, currentStartedAt:400, elapsedSecondsByActivity:[0], activities:[{ id:'training-activity-123', activity:'activeRecall',
+      minutes:20, reason:'active-recall', topicId:'T1.01', sectionRecall:{ agendaItemId:agendaItem.id, followUpId:source.id,
+        sectionId:section.id, materialPath:section.materialPath, sourceHash:section.sourceHash, outlineFingerprint:section.outlineFingerprint,
+        sectionTitle:section.title, printedPage:section.printedPage } }] };
+  const accountId = () => account;
+  const notify = vi.fn();
+  const completeTrainingActivity = vi.fn(() => ({ ...session, currentIndex:1 }));
+  const loadProgressOverview = vi.fn(async () => ({ selections:[selection], events, materialOpenEvents:[] }));
+  const loadSessionOverview = loadOverview ?? vi.fn(async () => ({ trainingSession:session }));
+  const setWeeklyStudyAgendaItemStatus = vi.fn((_id, status) => {
+    if (failAgendaOnce) { failAgendaOnce = false; return null; }
+    agenda = { ...agenda, revision:agenda.revision + 1, items:agenda.items.map(item => ({ ...item, status })) };
+    return agenda;
+  });
+  const home = { accountId, loadOverview:loadSessionOverview, notify,
+    weeklyStudyAgenda:() => agenda, setWeeklyStudyAgendaItemStatus, completeTrainingActivity };
+  const academyStudyProgress = { accountId, subscribe:() => () => {},
+    loadTopicProgress:async () => ({ selection, events, materialOpenEvents:[] }),
+    loadProgressOverview,
+    record:event => { events = [...events, event]; return true; }, recordMaterialOpen:() => true,
+    listLocalPdfs:async () => [], saveLocalPdf:async () => {}, removeLocalPdf:async () => {} };
+  const topics = { accountId, getStudied:() => [], subscribe:() => () => {}, setStudied:() => {},
+    loadTopics:async () => [{ id:'T1.01', name:'Constitución Española', total:0, answered:0, accuracy:null }] };
+  const route = `/temario?topic=T1.01&dailyTraining=sectionRecall&trainingSessionId=${session.id}&trainingActivityId=${session.activities[0].id}`
+    + `&agendaItemId=${agendaItem.id}&sectionId=${section.id}&followUpId=${source.id}`;
+  return { accountId, setAccount(value) { account = value; }, home, academyStudyProgress, topics, route, section,
+    notify, completeTrainingActivity, setWeeklyStudyAgendaItemStatus,
+    loadProgressOverview, loadSessionOverview,
+    record:vi.spyOn(academyStudyProgress, 'record').mockImplementation(event => {
+      if (event.kind === 'follow-up' && event.status === 'completed') { events = [...events, event]; return false; }
+      events = [...events, event]; return true;
+    }) };
+}
 function CurrentPath() { const location = useLocation(); return createElement('output', { 'data-testid':'current-path' }, location.pathname + location.search); }
 it('mantiene visibles y en orden de catálogo los temas de bloques aún no conocidos', () => {
   const grouped = groupTopics([
@@ -160,4 +213,45 @@ it('cierra el paso de contenido nuevo al marcar el tema estudiado y vuelve a Pla
   await user.click(screen.getByRole('checkbox', { name:/T1\.01 Redes/ }));
   expect(completeTrainingActivity).toHaveBeenCalledWith('newContent', undefined);
   expect(await screen.findByTestId('current-path')).toHaveTextContent('/planificacion');
+});
+
+it('ignora el cierre pendiente si cambia la cuenta y bloquea un doble envío', async () => {
+  Element.prototype.scrollIntoView = () => {};
+  let resolveOverview;
+  const pendingOverview = new Promise(resolve => { resolveOverview = resolve; });
+  const loadOverview = vi.fn(() => pendingOverview);
+  const harness = sectionRecallHarness({ loadOverview });
+  renderApp(createElement(TopicsPage), { services:{ topics:harness.topics, home:harness.home, academyStudyProgress:harness.academyStudyProgress }, initialEntries:[harness.route] });
+  const finish = await screen.findByRole('button', { name:'Terminar comprobación y volver a la sesión' });
+  fireEvent.click(finish);
+  fireEvent.click(finish);
+  expect(loadOverview).toHaveBeenCalledTimes(1);
+
+  harness.setAccount('account-b');
+  resolveOverview({ trainingSession:null });
+  await waitFor(() => expect(harness.notify).toHaveBeenCalledWith(expect.stringContaining('La cuenta cambió durante la comprobación.')));
+  expect(harness.loadProgressOverview).not.toHaveBeenCalled();
+  expect(harness.record).not.toHaveBeenCalled();
+  expect(harness.setWeeklyStudyAgendaItemStatus).not.toHaveBeenCalled();
+  expect(harness.completeTrainingActivity).not.toHaveBeenCalled();
+});
+
+it('reanuda el cierre tras un guardado parcial sin duplicar el evento de seguimiento', async () => {
+  Element.prototype.scrollIntoView = () => {};
+  const harness = sectionRecallHarness({ failAgendaOnce:true });
+  renderApp(createElement(TopicsPage), { services:{ topics:harness.topics, home:harness.home, academyStudyProgress:harness.academyStudyProgress }, initialEntries:[harness.route] });
+  const finish = await screen.findByRole('button', { name:'Terminar comprobación y volver a la sesión' });
+
+  fireEvent.click(finish);
+  await waitFor(() => expect(harness.loadSessionOverview).toHaveBeenCalledTimes(1));
+  await waitFor(() => expect(harness.setWeeklyStudyAgendaItemStatus).toHaveBeenCalledTimes(1));
+  expect(harness.notify).toHaveBeenCalledWith(expect.stringContaining('La comprobación quedó guardada, pero no se pudo cerrar su actividad semanal.'));
+  expect(harness.record).toHaveBeenCalledTimes(1);
+  expect(harness.completeTrainingActivity).not.toHaveBeenCalled();
+
+  fireEvent.click(finish);
+  await waitFor(() => expect(harness.completeTrainingActivity).toHaveBeenCalledTimes(1));
+  expect(harness.record).toHaveBeenCalledTimes(1);
+  expect(harness.setWeeklyStudyAgendaItemStatus).toHaveBeenCalledTimes(2);
+  expect(harness.completeTrainingActivity).toHaveBeenCalledWith('activeRecall', { sessionId:'training-session-123', activityId:'training-activity-123' });
 });
