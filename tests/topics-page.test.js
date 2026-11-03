@@ -69,19 +69,20 @@ it('enlaza el tema recomendado con el índice y los ficheros exactos del Drive d
 
 it('requiere seleccionar un material antes de registrar cobertura parcial por apartado', async () => {
   const user = userEvent.setup();
-  let progress = { selection:null, events:[] };
+  let progress = { selection:null, events:[], materialOpenEvents:[] };
   const listeners = new Set();
   const academyStudyProgress = {
     accountId:() => null,
     subscribe:listener => { listeners.add(listener); return () => listeners.delete(listener); },
     loadTopicProgress:async () => progress,
-    loadProgressOverview:async () => ({ selections:[], events:[] }),
+    loadProgressOverview:async () => ({ selections:[], events:[], materialOpenEvents:[] }),
     selectMaterials:(topicId, materials) => {
       progress = { ...progress, selection:{ topicId, materials, revision:1, updatedAt:Date.now() } };
       listeners.forEach(listener => listener());
       return true;
     },
     record:event => { progress = { ...progress, events:[...progress.events, event] }; listeners.forEach(listener => listener()); return true; },
+    recordMaterialOpen:() => true,
     listLocalPdfs:async () => [], saveLocalPdf:async () => {}, removeLocalPdf:async () => {},
   };
   renderApp(createElement(TopicsPage), { services:{

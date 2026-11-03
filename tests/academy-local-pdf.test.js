@@ -18,13 +18,15 @@ it('guarda el PDF solo por elección, lo recupera al remontar y lo elimina sin r
   const bytes = new TextEncoder().encode('%PDF-fixture').buffer;
   const repository = createAcademyMaterialRepository(`academy-ui-test-${crypto.randomUUID()}`);
   const record = vi.fn(() => false);
+  const recordMaterialOpen = vi.fn(() => true);
   const localFiles = {
     accountId:() => null,
     subscribe:() => () => {},
-    loadTopicProgress:async () => ({ selection:null, events:[] }),
-    loadProgressOverview:async () => ({ selections:[], events:[] }),
+    loadTopicProgress:async () => ({ selection:null, events:[], materialOpenEvents:[] }),
+    loadProgressOverview:async () => ({ selections:[], events:[], materialOpenEvents:[] }),
     selectMaterials:() => false,
     record,
+    recordMaterialOpen,
     listLocalPdfs:topicId => repository.list('guest', topicId),
     saveLocalPdf:copy => repository.save('guest', copy),
     removeLocalPdf:(topicId, materialPath, hash) => repository.remove('guest', topicId, materialPath, hash),
@@ -52,7 +54,12 @@ it('guarda el PDF solo por elección, lo recupera al remontar y lo elimina sin r
   view = renderApp(createElement(TopicsPage), { services, initialEntries:['/temario?topic=T1.01'] });
   await user.click(await screen.findByText(/Material de academia/));
   expect(await screen.findByText('Copias guardadas en este dispositivo')).toBeInTheDocument();
-  expect(await screen.findByRole('link', { name:/Abrir .*página 3/i })).toHaveAttribute('href', 'blob:local-test#page=3');
+  const openLink = await screen.findByRole('link', { name:/Abrir .*página 3/i });
+  expect(openLink).toHaveAttribute('href', 'blob:local-test#page=3');
+  await user.click(openLink);
+  expect(await screen.findByText(/Apertura de la página 3 registrada/)).toBeInTheDocument();
+  const section = topic.sections.find(item => item.materialPath === fileReference.path);
+  expect(recordMaterialOpen).toHaveBeenCalledWith(expect.objectContaining({ topicId:'T1.01', sectionId:section.id, materialPath:fileReference.path, sourceHash:expectedHash, page:3 }));
   await user.click(screen.getByRole('button', { name:'Eliminar copia local' }));
   expect(await screen.findByText(/Copia local eliminada/)).toBeInTheDocument();
   expect(await repository.list('guest', 'T1.01')).toHaveLength(0);

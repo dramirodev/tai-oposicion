@@ -4,7 +4,7 @@ import type { AcademyCurriculumFile, AcademyCurriculumSection, AcademyCurriculum
 import { academyCurriculumTopicLoaders } from '../../core/domain/academy-curriculum.generated.js';
 import { useStudyService } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
-import { canScheduleSectionFollowUp, isCurrentAcademyMaterialSelection, sectionCoverage, sectionFollowUps, sectionRecallHistory, type AcademySectionStudyEvent, type AcademyTopicProgressSnapshot } from '../../core/domain/academy-study-progress.js';
+import { canScheduleSectionFollowUp, isCurrentAcademyMaterialSelection, sectionCoverage, sectionFollowUps, sectionRecallHistory, type AcademyMaterialOpenEvent, type AcademySectionStudyEvent, type AcademyTopicProgressSnapshot } from '../../core/domain/academy-study-progress.js';
 import type { AcademyMaterialPdfCopy } from '../../core/domain/academy-material-copy.js';
 
 interface LoadedTopic {
@@ -58,10 +58,11 @@ async function sha256(bytes: ArrayBuffer): Promise<string> {
 }
 
 function SectionStudyUnit({
-  section, events, sessionId, activityId, record, targetSectionId, onCompleteSectionRecall,
+  section, events, materialOpenEvents, sessionId, activityId, record, targetSectionId, onCompleteSectionRecall,
 }: {
   section: AcademyCurriculumSection;
   events: readonly AcademySectionStudyEvent[];
+  materialOpenEvents: readonly AcademyMaterialOpenEvent[];
   sessionId?: string;
   activityId?: string;
   record(event: AcademySectionStudyEvent): boolean;
@@ -69,6 +70,8 @@ function SectionStudyUnit({
   onCompleteSectionRecall?: () => Promise<void>;
 }) {
   const matching = events.filter(event => event.sectionId === section.id && event.sourceHash === section.sourceHash && event.materialPath === section.materialPath);
+  const matchingOpens = materialOpenEvents.filter(event => event.sectionId === section.id && event.sourceHash === section.sourceHash && event.materialPath === section.materialPath)
+    .sort((first, second) => first.occurredAt - second.occurredAt || first.id.localeCompare(second.id));
   const coverage = sectionCoverage(matching);
   const [message, setMessage] = useState('');
   const [dueDateKey, setDueDateKey] = useState(() => {
@@ -139,6 +142,7 @@ function SectionStudyUnit({
     <summary className="min-h-10 cursor-pointer content-center">{section.title} <span className="text-muted">(p. {section.printedPage} · cobertura {coverageLabel})</span></summary>
     <div className="pb-2 ps-1">
       <p className="my-1 text-sm text-muted">Registra lo que has cubierto por tu cuenta. La cobertura no acredita comprensión ni recuerdo.</p>
+      {matchingOpens.length > 0 && <p className="my-1 text-xs text-muted">Aperturas solicitadas de este PDF: {matchingOpens.length}; última: {new Date(matchingOpens.at(-1)!.occurredAt).toLocaleString()}. Esto no confirma lectura.</p>}
       <div className="flex flex-wrap gap-2">
         <button className="btn sec" type="button" disabled={busy} onClick={() => addCoverage('partial')}>Marcar parcial</button>
         <button className="btn sec" type="button" disabled={busy} onClick={() => addCoverage('covered')}>Marcar cubierto</button>
@@ -208,7 +212,7 @@ function AcademyCurriculumPanelContent({ topicId, hasStudyMarker, sessionId, act
     load: () => academyProgress.loadTopicProgress(topicId),
   }), [academyProgress, topicId]);
   const progressResourceState = useAccountResource(progressResource);
-  const progress: AcademyTopicProgressSnapshot = progressResourceState.value ?? { selection: null, events: [] };
+  const progress: AcademyTopicProgressSnapshot = progressResourceState.value ?? { selection: null, events: [], materialOpenEvents: [] };
   const [loaded, setLoaded] = useState<LoadedTopic | null>(null);
   const loader = academyCurriculumTopicLoaders[topicId];
   useEffect(() => () => {
@@ -322,6 +326,17 @@ function AcademyCurriculumPanelContent({ topicId, hasStudyMarker, sessionId, act
     if (saved) setDraft(null);
   };
   const recordEvent = (event: AcademySectionStudyEvent) => academyProgress.record(event);
+  const recordMaterialOpen = (section: AcademyCurriculumSection, occurredAt: number) => {
+    const event: AcademyMaterialOpenEvent = {
+      id:createEventId(), topicId:section.topicId, sectionId:section.id, materialPath:section.materialPath,
+      sourceHash:section.sourceHash, outlineFingerprint:section.outlineFingerprint, page:section.printedPage,
+      occurredAt, ...(sessionId ? { trainingSessionId:sessionId } : {}), ...(activityId ? { trainingActivityId:activityId } : {}),
+    };
+    const saved = academyProgress.recordMaterialOpen(event);
+    setPdfNotice({ topicId, path:section.materialPath, text:saved
+      ? `Apertura de la página ${section.printedPage} registrada; esto no acredita lectura ni cobertura.`
+      : 'El PDF se abrirá, pero no se pudo registrar esta apertura en el historial.' });
+  };
   const saveLocalPdf = async (selection: LocalPdfSelection) => {
     if (selection.scope !== pdfScope || academyProgress.accountId() !== accountId) {
       setPdfNotice({ topicId, path:selection.path, text:'La cuenta ha cambiado. El PDF permanece solo en memoria y no se ha guardado.' });
@@ -392,7 +407,7 @@ function AcademyCurriculumPanelContent({ topicId, hasStudyMarker, sessionId, act
             <p className="m-0 text-xs text-muted">{selection.name} · {(selection.sizeBytes / (1024 * 1024)).toFixed(2)} MiB · {selection.persisted ? 'guardado en este dispositivo' : 'solo en memoria de esta vista'}</p>
             {!selection.persisted ? <button className="btn sec" type="button" onClick={() => void saveLocalPdf(selection)}>Guardar PDF en este dispositivo para retomar</button>
               : <p className="m-0 text-sm text-muted">Copia local no cifrada, separada de la sincronización de la cuenta.</p>}
-            <ul className="m-0 grid gap-1 ps-5">{sections.filter(section => section.materialPath === materialPath).map(section => <li key={section.id}><a className="text-link underline" href={`${selection.url}#page=${section.printedPage}`} target="_blank" rel="noopener noreferrer">Abrir {section.title} · página {section.printedPage}</a></li>)}</ul>
+            <ul className="m-0 grid gap-1 ps-5">{sections.filter(section => section.materialPath === materialPath).map(section => <li key={section.id}><a className="text-link underline" href={`${selection.url}#page=${section.printedPage}`} target="_blank" rel="noopener noreferrer" onClick={() => recordMaterialOpen(section, Date.now())}>Abrir {section.title} · página {section.printedPage}</a></li>)}</ul>
           </>;
         })()}
       </div>}
@@ -408,7 +423,7 @@ function AcademyCurriculumPanelContent({ topicId, hasStudyMarker, sessionId, act
         {matchingOutlineMessage(materialPath) && <p className="my-1 text-sm text-muted">{matchingOutlineMessage(materialPath)}</p>}
         {materialInspection(materialPath, sections)}
         {draftPaths.includes(materialPath) ? <div className="mt-2">
-          {sections.filter(section => section.materialPath === materialPath).map(section => <SectionStudyUnit key={section.id} section={section} events={progress.events} sessionId={sessionId} activityId={activityId} record={recordEvent} targetSectionId={targetSectionId} onCompleteSectionRecall={onCompleteSectionRecall} />)}
+          {sections.filter(section => section.materialPath === materialPath).map(section => <SectionStudyUnit key={section.id} section={section} events={progress.events} materialOpenEvents={progress.materialOpenEvents} sessionId={sessionId} activityId={activityId} record={recordEvent} targetSectionId={targetSectionId} onCompleteSectionRecall={onCompleteSectionRecall} />)}
         </div> : <ul className="my-0 list-disc ps-5 text-sm">{sections.filter(section => section.materialPath === materialPath).map(section => <li id={section.id} key={section.id}>{section.title} <span className="text-muted">(p. {section.printedPage})</span></li>)}</ul>}
       </div>)}
       <p className="mt-2 mb-0 text-sm text-muted">{context}</p>

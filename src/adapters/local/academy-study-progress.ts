@@ -1,8 +1,10 @@
 import {
   ACADEMY_STUDY_PROGRESS_VERSION,
   isAcademyMaterialSelection,
+  isAcademyMaterialOpenEvent,
   isAcademySectionStudyEvent,
   type AcademyMaterialSelection,
+  type AcademyMaterialOpenEvent,
   type AcademySectionStudyEvent,
   type AcademyTopicProgressSnapshot,
 } from '../../core/domain/academy-study-progress.js';
@@ -44,7 +46,47 @@ export function readAcademyTopicProgress(accountId: string | null, topicId: stri
     selection: data.selections[topicId] ?? null,
     events: Object.values(data.events).filter(event => event.topicId === topicId)
       .sort((first, second) => first.occurredAt - second.occurredAt || first.id.localeCompare(second.id)),
+    materialOpenEvents: listAcademyMaterialOpenEvents(accountId, topicId),
   };
+}
+
+interface StoredAcademyMaterialOpenEvents { version: 1; events: Record<string, AcademyMaterialOpenEvent> }
+const materialOpenStorageKey = (accountId: string | null) => `tai.academy-material-open-events.v1.${encodeURIComponent(accountId || 'guest')}`;
+function readMaterialOpenEvents(accountId: string | null): StoredAcademyMaterialOpenEvents {
+  try {
+    const raw = localStorage.getItem(materialOpenStorageKey(accountId));
+    if (!raw) return { version:1, events:{} };
+    const parsed: unknown = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return { version:1, events:{} };
+    const value = parsed as Partial<StoredAcademyMaterialOpenEvents>;
+    if (value.version !== 1 || !value.events || typeof value.events !== 'object' || Array.isArray(value.events)) return { version:1, events:{} };
+    return { version:1, events:Object.fromEntries(Object.entries(value.events).filter(([, event]) => isAcademyMaterialOpenEvent(event))) };
+  } catch { return { version:1, events:{} }; }
+}
+function writeMaterialOpenEvents(accountId: string | null, data: StoredAcademyMaterialOpenEvents): boolean {
+  try { localStorage.setItem(materialOpenStorageKey(accountId), JSON.stringify(data)); }
+  catch { return false; }
+  listeners.forEach(listener => listener());
+  return true;
+}
+export function listAcademyMaterialOpenEvents(accountId: string | null, topicId?: string): readonly AcademyMaterialOpenEvent[] {
+  return Object.values(readMaterialOpenEvents(accountId).events)
+    .filter(event => !topicId || event.topicId === topicId)
+    .sort((first, second) => first.occurredAt - second.occurredAt || first.id.localeCompare(second.id));
+}
+export function saveAcademyMaterialOpenEvent(accountId: string | null, event: AcademyMaterialOpenEvent): boolean {
+  if (!isAcademyMaterialOpenEvent(event)) return false;
+  const data = readMaterialOpenEvents(accountId);
+  if (data.events[event.id]) return false;
+  data.events[event.id] = event;
+  return writeMaterialOpenEvents(accountId, data);
+}
+export function mergeAcademyMaterialOpenEvent(accountId: string | null, value: unknown): boolean {
+  if (!isAcademyMaterialOpenEvent(value)) return false;
+  const data = readMaterialOpenEvents(accountId);
+  if (data.events[value.id]) return false;
+  data.events[value.id] = value;
+  return writeMaterialOpenEvents(accountId, data);
 }
 
 export function listAcademyMaterialSelections(accountId: string | null): readonly AcademyMaterialSelection[] {

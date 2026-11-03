@@ -1,8 +1,10 @@
 import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
 import type { Firestore, FirestoreError, Unsubscribe } from 'firebase/firestore';
 import {
+  isAcademyMaterialOpenEvent,
   isAcademyMaterialSelection,
   isAcademySectionStudyEvent,
+  type AcademyMaterialOpenEvent,
   type AcademyMaterialSelection,
   type AcademySectionStudyEvent,
 } from '../../core/domain/academy-study-progress.js';
@@ -10,8 +12,10 @@ import {
 export interface AcademyStudyProgressSyncStore {
   listSelections(): readonly AcademyMaterialSelection[];
   listEvents(): readonly AcademySectionStudyEvent[];
+  listMaterialOpenEvents(): readonly AcademyMaterialOpenEvent[];
   mergeRemoteSelection(value: unknown): boolean;
   mergeRemoteEvent(value: unknown): boolean;
+  mergeRemoteMaterialOpenEvent(value: unknown): boolean;
 }
 
 /** Syncs material choices and immutable section-study events inside the signed-in user's namespace. */
@@ -25,6 +29,7 @@ export function createAcademyStudyProgressSyncAdapter(input: {
 }) {
   const materials = collection(input.db, 'users', input.uid, 'academyStudyMaterials');
   const events = collection(input.db, 'users', input.uid, 'academySectionEvents');
+  const materialOpens = collection(input.db, 'users', input.uid, 'academyMaterialOpenEvents');
 
   async function pushMaterialSelection(selection: AcademyMaterialSelection): Promise<void> {
     if (!input.isActive() || !isAcademyMaterialSelection(selection)) return;
@@ -38,6 +43,14 @@ export function createAcademyStudyProgressSyncAdapter(input: {
     if (!input.isActive() || !isAcademySectionStudyEvent(event)) return;
     try {
       await setDoc(doc(events, event.id), event);
+      if (input.isActive()) input.onSynced();
+    } catch (error) { if (input.isActive()) input.onWriteError(error); }
+  }
+
+  async function pushMaterialOpenEvent(event: AcademyMaterialOpenEvent): Promise<void> {
+    if (!input.isActive() || !isAcademyMaterialOpenEvent(event)) return;
+    try {
+      await setDoc(doc(materialOpens, event.id), event);
       if (input.isActive()) input.onSynced();
     } catch (error) { if (input.isActive()) input.onWriteError(error); }
   }
@@ -76,8 +89,22 @@ export function createAcademyStudyProgressSyncAdapter(input: {
         if (!remoteIds.has(event.id)) void pushSectionEvent(event);
       }
     }, error => { if (input.isActive()) onError(error); });
-    return () => { unsubMaterials(); unsubEvents(); };
+    const unsubMaterialOpens = onSnapshot(materialOpens, snapshot => {
+      if (!input.isActive()) return;
+      const remoteIds = new Set<string>();
+      snapshot.forEach(document => {
+        const value = document.data();
+        if (isAcademyMaterialOpenEvent(value)) {
+          remoteIds.add(value.id);
+          input.store.mergeRemoteMaterialOpenEvent(value);
+        }
+      });
+      for (const event of input.store.listMaterialOpenEvents()) {
+        if (!remoteIds.has(event.id)) void pushMaterialOpenEvent(event);
+      }
+    }, error => { if (input.isActive()) onError(error); });
+    return () => { unsubMaterials(); unsubEvents(); unsubMaterialOpens(); };
   }
 
-  return { listen, pushMaterialSelection, pushSectionEvent };
+  return { listen, pushMaterialSelection, pushSectionEvent, pushMaterialOpenEvent };
 }

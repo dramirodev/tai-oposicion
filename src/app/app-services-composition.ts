@@ -120,6 +120,7 @@ const academyStudyProgress = createAcademyStudyProgressComposition({
   onAccountChange: localStudyProgressGateway.onAccountChange,
   pushMaterialSelection: selection => { void sync.pushAcademyMaterialSelection(selection); },
   pushSectionEvent: event => { void sync.pushAcademySectionStudyEvent(event); },
+  pushMaterialOpenEvent: event => { void sync.pushAcademyMaterialOpenEvent(event); },
 });
 const trainingCalendar = createTrainingCalendarComposition({
   accountId: localStudyProgressGateway.accountId,
@@ -464,6 +465,7 @@ export const studyServices: StudyServices = {
     },
     selectMaterials(topicId, materials) { return !!academyStudyProgress.selectMaterials(topicId, materials); },
     record(event) { return !!academyStudyProgress.record(event); },
+    recordMaterialOpen(event) { return !!academyStudyProgress.recordMaterialOpen(event); },
     listLocalPdfs(topicId) {
       const account = localStudyProgressGateway.accountId();
       const scope = account ? `uid:${account}` : 'guest';

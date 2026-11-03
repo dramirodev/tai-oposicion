@@ -3,7 +3,7 @@ import { status, onStatus, emit } from './sync-status-store.js';
 import type { AccessRequest } from '../../core/domain/entities.js';
 import type { ProgressSyncStore } from '../contracts/progress-sync.js';
 import type { AttemptRepository } from '../../core/ports/AttemptRepository.js';
-import type { AcademyMaterialSelection, AcademySectionStudyEvent } from '../../core/domain/academy-study-progress.js';
+import type { AcademyMaterialOpenEvent, AcademyMaterialSelection, AcademySectionStudyEvent } from '../../core/domain/academy-study-progress.js';
 import type { AcademyStudyProgressSyncStore } from './academy-study-progress-sync.js';
 export { status, onStatus };
 type Mod = typeof import('./legacy-sync.js');
@@ -42,3 +42,4 @@ export const pushTrainingCalendar = (activities?: readonly import('../../core/do
 export const pushWeeklyStudyAgenda = () => call(metadata => metadata.pushWeeklyStudyAgenda());
 export const pushAcademyMaterialSelection = (selection: AcademyMaterialSelection) => call(metadata => metadata.pushAcademyMaterialSelection(selection));
 export const pushAcademySectionStudyEvent = (event: AcademySectionStudyEvent) => call(metadata => metadata.pushAcademySectionStudyEvent(event));
+export const pushAcademyMaterialOpenEvent = (event: AcademyMaterialOpenEvent) => call(metadata => metadata.pushAcademyMaterialOpenEvent(event));

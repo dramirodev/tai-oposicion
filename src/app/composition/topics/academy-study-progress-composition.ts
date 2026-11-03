@@ -1,19 +1,24 @@
 import {
   isAcademyMaterialSelection,
+  isAcademyMaterialOpenEvent,
   isAcademySectionStudyEvent,
   type AcademyMaterialReference,
   type AcademyMaterialSelection,
+  type AcademyMaterialOpenEvent,
   type AcademySectionStudyEvent,
   type AcademyStudyProgressOverviewSnapshot,
   type AcademyTopicProgressSnapshot,
 } from '../../../core/domain/academy-study-progress.js';
 import {
   listAcademyMaterialSelections,
+  listAcademyMaterialOpenEvents,
+  mergeAcademyMaterialOpenEvent,
   listAcademySectionStudyEvents,
   mergeAcademyMaterialSelection,
   mergeAcademySectionStudyEvent,
   readAcademyTopicProgress,
   saveAcademyMaterialSelection,
+  saveAcademyMaterialOpenEvent,
   saveAcademySectionStudyEvent,
   subscribeAcademyStudyProgress,
 } from '../../../adapters/local/academy-study-progress.js';
@@ -25,6 +30,7 @@ export function createAcademyStudyProgressComposition(dependencies: {
   onAccountChange?(listener: () => void): () => void;
   pushMaterialSelection?(selection: AcademyMaterialSelection): void;
   pushSectionEvent?(event: AcademySectionStudyEvent): void;
+  pushMaterialOpenEvent?(event: AcademyMaterialOpenEvent): void;
 }) {
   const listeners = new Set<() => void>();
   const notify = () => listeners.forEach(listener => listener());
@@ -35,7 +41,7 @@ export function createAcademyStudyProgressComposition(dependencies: {
     getTopicProgress(topicId: string): AcademyTopicProgressSnapshot {
       const account = dependencies.accountId();
       const snapshot = readAcademyTopicProgress(account, topicId);
-      if (account !== dependencies.accountId()) return { selection: null, events: [] };
+      if (account !== dependencies.accountId()) return { selection: null, events: [], materialOpenEvents: [] };
       return snapshot;
     },
     getProgressOverview(): AcademyStudyProgressOverviewSnapshot {
@@ -43,12 +49,14 @@ export function createAcademyStudyProgressComposition(dependencies: {
       const snapshot = {
         selections: listAcademyMaterialSelections(account),
         events: listAcademySectionStudyEvents(account),
+        materialOpenEvents: listAcademyMaterialOpenEvents(account),
       };
-      if (account !== dependencies.accountId()) return { selections: [], events: [] };
+      if (account !== dependencies.accountId()) return { selections: [], events: [], materialOpenEvents: [] };
       return snapshot;
     },
     listSelections() { return listAcademyMaterialSelections(dependencies.accountId()); },
     listEvents() { return listAcademySectionStudyEvents(dependencies.accountId()); },
+    listMaterialOpenEvents() { return listAcademyMaterialOpenEvents(dependencies.accountId()); },
     subscribe(listener: () => void) { listeners.add(listener); return () => { listeners.delete(listener); }; },
     selectMaterials(topicId: string, materials: readonly AcademyMaterialReference[]): AcademyMaterialSelection | null {
       const account = dependencies.accountId();
@@ -72,8 +80,17 @@ export function createAcademyStudyProgressComposition(dependencies: {
       dependencies.pushSectionEvent?.(normalized);
       return normalized;
     },
+    recordMaterialOpen(event: AcademyMaterialOpenEvent): AcademyMaterialOpenEvent | null {
+      const account = dependencies.accountId();
+      const normalized = { ...event, occurredAt: Math.max(event.occurredAt, dependencies.now()) };
+      if (!isAcademyMaterialOpenEvent(normalized) || account !== dependencies.accountId()
+        || !saveAcademyMaterialOpenEvent(account, normalized)) return null;
+      dependencies.pushMaterialOpenEvent?.(normalized);
+      return normalized;
+    },
     mergeRemoteSelection(value: unknown): boolean { return mergeAcademyMaterialSelection(dependencies.accountId(), value); },
     mergeRemoteEvent(value: unknown): boolean { return mergeAcademySectionStudyEvent(dependencies.accountId(), value); },
+    mergeRemoteMaterialOpenEvent(value: unknown): boolean { return mergeAcademyMaterialOpenEvent(dependencies.accountId(), value); },
     dispose() { unsubscribeStore(); unsubscribeAccount?.(); listeners.clear(); },
   };
 }

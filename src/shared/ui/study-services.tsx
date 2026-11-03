@@ -12,7 +12,7 @@ import type { SelfAssessment } from '../../core/domain/attempts/transitions.js';
 import type { SimulationScoringPolicy } from '../../core/domain/simulation-scoring.js';
 import type { WeeklyAgendaItem, WeeklyAgendaPlanProposal, WeeklyAgendaRecoveryProposal, WeeklyStudyAgenda } from '../../core/domain/study-weekly-agenda.js';
 import type { TopicReviewEvidence } from '../../core/domain/study-review-intervention.js';
-import type { AcademyMaterialReference, AcademySectionStudyEvent, AcademyStudyProgressOverviewSnapshot, AcademyTopicProgressSnapshot } from '../../core/domain/academy-study-progress.js';
+import type { AcademyMaterialOpenEvent, AcademyMaterialReference, AcademySectionStudyEvent, AcademyStudyProgressOverviewSnapshot, AcademyTopicProgressSnapshot } from '../../core/domain/academy-study-progress.js';
 import type { AcademyMaterialPdfCopy } from '../../core/domain/academy-material-copy.js';
 export type { StatsComparison, StatsDomainTopic, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 export interface ActiveStudy { title: string; position: number; total: number }
@@ -90,6 +90,7 @@ export interface AcademyStudyProgressServices {
   loadProgressOverview(): Promise<AcademyStudyProgressOverviewSnapshot>;
   selectMaterials(topicId: string, materials: readonly AcademyMaterialReference[]): boolean;
   record(event: AcademySectionStudyEvent): boolean;
+  recordMaterialOpen(event: AcademyMaterialOpenEvent): boolean;
   listLocalPdfs(topicId: string): Promise<AcademyMaterialPdfCopy[]>;
   saveLocalPdf(copy: AcademyMaterialPdfCopy): Promise<void>;
   removeLocalPdf(topicId: string, materialPath: string, sourceHash: string): Promise<void>;

@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   isCurrentAcademyMaterialSelection,
+  isAcademyMaterialOpenEvent,
   isAcademyMaterialSelection,
   isAcademySectionStudyEvent,
   sectionCoverage,
@@ -10,13 +11,16 @@ import {
 } from '../src/core/domain/academy-study-progress.ts';
 import {
   listAcademySectionStudyEvents,
+  listAcademyMaterialOpenEvents,
   readAcademyTopicProgress,
+  saveAcademyMaterialOpenEvent,
   saveAcademySectionStudyEvent,
 } from '../src/adapters/local/academy-study-progress.ts';
 import { createAcademyStudyProgressComposition } from '../src/app/composition/topics/academy-study-progress-composition.ts';
 
 const material = { path:'T99/temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64), outlineStructureFingerprint:'c'.repeat(64), role:'syllabus' };
 const event = (overrides = {}) => ({ id:'event-00000001', topicId:'T99.01', sectionId:'ci-0123456789abcdefabcd', materialPath:material.path, sourceHash:material.sourceHash, outlineFingerprint:material.outlineFingerprint, occurredAt:100, kind:'self-check', timing:'delayed', rating:'recalled', ...overrides });
+const materialOpen = (overrides = {}) => ({ id:'open-event-0001', topicId:'T99.01', sectionId:'ci-0123456789abcdefabcd', materialPath:material.path, sourceHash:material.sourceHash, outlineFingerprint:material.outlineFingerprint, page:3, occurredAt:150, ...overrides });
 
 afterEach(() => localStorage.clear());
 
@@ -25,6 +29,12 @@ describe('progreso de apartados del temario', () => {
     expect(isAcademyMaterialSelection({ topicId:'T99.01', materials:[material], revision:1, updatedAt:10 })).toBe(true);
     expect(isAcademySectionStudyEvent(event())).toBe(true);
     expect(isAcademySectionStudyEvent(event({ rating:'correct' }))).toBe(false);
+  });
+
+  it('valida aperturas como eventos distintos que nunca equivalen a lectura o cobertura', () => {
+    expect(isAcademyMaterialOpenEvent(materialOpen())).toBe(true);
+    expect(isAcademyMaterialOpenEvent(materialOpen({ page:0 }))).toBe(false);
+    expect(isAcademyMaterialOpenEvent(materialOpen({ unexpected:true }))).toBe(false);
   });
 
   it('conserva selección vacía como válida y separa progreso de una edición cuyo hash cambió', () => {
@@ -40,6 +50,14 @@ describe('progreso de apartados del temario', () => {
     expect(readAcademyTopicProgress('owner-a', 'T99.01').events).toHaveLength(1);
     expect(readAcademyTopicProgress('owner-b', 'T99.01').events).toHaveLength(0);
     expect(listAcademySectionStudyEvents('owner-b')).toHaveLength(0);
+  });
+
+  it('guarda y deduplica aperturas en una clave propia sin alterar la cobertura existente', () => {
+    expect(saveAcademyMaterialOpenEvent('owner-a', materialOpen())).toBe(true);
+    expect(saveAcademyMaterialOpenEvent('owner-a', materialOpen())).toBe(false);
+    expect(readAcademyTopicProgress('owner-a', 'T99.01').materialOpenEvents).toEqual([materialOpen()]);
+    expect(readAcademyTopicProgress('owner-a', 'T99.01').events).toHaveLength(0);
+    expect(listAcademyMaterialOpenEvents('owner-b')).toHaveLength(0);
   });
 
   it('deriva cobertura por el evento más reciente y mantiene cronología de autoevaluaciones', () => {
@@ -78,14 +96,25 @@ describe('progreso de apartados del temario', () => {
     store.dispose();
   });
 
+  it('sincroniza aperturas con alcance de cuenta y referencias de sesión opcionales', () => {
+    let account = 'owner-a';
+    const push = vi.fn();
+    const store = createAcademyStudyProgressComposition({ accountId:() => account, now:() => 500, pushMaterialOpenEvent:push });
+    expect(store.recordMaterialOpen(materialOpen({ trainingSessionId:'session-1', trainingActivityId:'activity-1' }))).toMatchObject({ occurredAt:500 });
+    account = 'owner-b';
+    expect(store.getTopicProgress('T99.01').materialOpenEvents).toHaveLength(0);
+    expect(push).toHaveBeenCalledTimes(1);
+    store.dispose();
+  });
+
   it('expone un resumen local completo de progreso y lo aísla al cambiar de cuenta', () => {
     let account = 'owner-a';
     const store = createAcademyStudyProgressComposition({ accountId:() => account, now:() => 500 });
     store.selectMaterials('T99.01', [material]);
     store.record(event());
-    expect(store.getProgressOverview()).toMatchObject({ selections:[{ topicId:'T99.01' }], events:[{ topicId:'T99.01' }] });
+    expect(store.getProgressOverview()).toMatchObject({ selections:[{ topicId:'T99.01' }], events:[{ topicId:'T99.01' }], materialOpenEvents:[] });
     account = 'owner-b';
-    expect(store.getProgressOverview()).toEqual({ selections:[], events:[] });
+    expect(store.getProgressOverview()).toEqual({ selections:[], events:[], materialOpenEvents:[] });
     store.dispose();
   });
 });

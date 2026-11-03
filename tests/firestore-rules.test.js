@@ -152,6 +152,14 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
     const followUp = { id:'event-follow-0001', topicId:'T1.01', sectionId:'ci-0123456789abcdefabcd', materialPath:material.path, sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64), kind:'follow-up', followUpId:event.id, sourceSelfCheckEventId:event.id, dueDateKey:'2026-11-12', status:'scheduled', sectionTitle:'1. INTRODUCCIÓN', printedPage:3, occurredAt:1_793_280_000_001 };
     await assertSucceeds(setDoc(doc(db, `users/student/academySectionEvents/${followUp.id}`), followUp));
     await assertFails(setDoc(doc(db, 'users/student/academySectionEvents/event-follow-0002'), { ...followUp, unexpected:true }));
+
+    const openEvent = { id:'material-open-0001', topicId:'T1.01', sectionId:'ci-0123456789abcdefabcd', materialPath:material.path, sourceHash:material.sourceHash, outlineFingerprint:material.outlineFingerprint, page:3, occurredAt:1_793_280_000_002, trainingSessionId:'session-1', trainingActivityId:'activity-1' };
+    const openRef = doc(db, `users/student/academyMaterialOpenEvents/${openEvent.id}`);
+    await assertSucceeds(setDoc(openRef, openEvent));
+    await assertFails(getDoc(doc(other, `users/student/academyMaterialOpenEvents/${openEvent.id}`)));
+    await assertFails(setDoc(doc(db, 'users/student/academyMaterialOpenEvents/material-open-0002'), { ...openEvent, page:0 }));
+    await assertFails(setDoc(doc(db, 'users/student/academyMaterialOpenEvents/material-open-0003'), { ...openEvent, unexpected:true }));
+    await assertFails(setDoc(openRef, { ...openEvent, page:4 }));
   });
 
   it('sincroniza y combina la agenda semanal sin usar el documento de calendario anterior', async () => {

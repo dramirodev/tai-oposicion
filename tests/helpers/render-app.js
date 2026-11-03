@@ -8,10 +8,11 @@ export function renderApp(ui, { services = {}, initialEntries = ['/'] } = {}) {
     academyStudyProgress: {
       accountId:() => null,
       subscribe:() => () => {},
-      loadTopicProgress:async () => ({ selection:null, events:[] }),
-      loadProgressOverview:async () => ({ selections:[], events:[] }),
+      loadTopicProgress:async () => ({ selection:null, events:[], materialOpenEvents:[] }),
+      loadProgressOverview:async () => ({ selections:[], events:[], materialOpenEvents:[] }),
       selectMaterials:() => false,
       record:() => false,
+      recordMaterialOpen:() => false,
       listLocalPdfs:async () => [],
       saveLocalPdf:async () => {},
       removeLocalPdf:async () => {},

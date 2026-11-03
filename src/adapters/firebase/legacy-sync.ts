@@ -31,7 +31,7 @@ import { createTrainingCalendarSyncAdapter, type TrainingCalendarSyncStore } fro
 import type { ScheduledStudyActivity } from '../../core/domain/study-training-calendar.js';
 import { createWeeklyStudyAgendaSyncAdapter, type WeeklyStudyAgendaSyncStore } from './weekly-study-agenda-sync.js';
 import { createAcademyStudyProgressSyncAdapter, type AcademyStudyProgressSyncStore } from './academy-study-progress-sync.js';
-import type { AcademyMaterialSelection, AcademySectionStudyEvent } from '../../core/domain/academy-study-progress.js';
+import type { AcademyMaterialOpenEvent, AcademyMaterialSelection, AcademySectionStudyEvent } from '../../core/domain/academy-study-progress.js';
 
 let auth: Auth, db: Firestore, uid: string | null = null, timer: ReturnType<typeof setTimeout> | undefined, cardsT: ReturnType<typeof setTimeout> | undefined, retryT: ReturnType<typeof setTimeout> | undefined, retryN = 0, syncEpoch = 0, unsubs: Unsubscribe[] = [];
 let temaOf: (id: string) => string | null = () => null; // id -> tema
@@ -353,6 +353,15 @@ export function pushAcademySectionStudyEvent(event: AcademySectionStudyEvent): v
     db, uid:targetUid, store:academyStudyProgressStore, isActive:() => uid === targetUid && canSync(), onSynced:ok, onWriteError:writeErr,
   });
   void adapter.pushSectionEvent(event);
+}
+
+export function pushAcademyMaterialOpenEvent(event: AcademyMaterialOpenEvent): void {
+  if (!canSync() || !uid || !academyStudyProgressStore) return;
+  const targetUid = uid;
+  const adapter = createAcademyStudyProgressSyncAdapter({
+    db, uid:targetUid, store:academyStudyProgressStore, isActive:() => uid === targetUid && canSync(), onSynced:ok, onWriteError:writeErr,
+  });
+  void adapter.pushMaterialOpenEvent(event);
 }
 
 export function pushSeen(data: SeenDoc): void {

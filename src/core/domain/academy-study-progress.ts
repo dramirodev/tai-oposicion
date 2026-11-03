@@ -40,14 +40,30 @@ export type AcademySectionStudyEvent = SectionEventBase & (
   | { kind: 'follow-up'; followUpId: string; sourceSelfCheckEventId: string; dueDateKey: string; status: SectionFollowUpStatus; sectionTitle?: string; printedPage?: number }
 );
 
+/** A user explicitly requested opening a verified PDF at a section page; it does not prove reading. */
+export interface AcademyMaterialOpenEvent {
+  id: string;
+  topicId: string;
+  sectionId: string;
+  materialPath: string;
+  sourceHash: string;
+  outlineFingerprint: string;
+  page: number;
+  occurredAt: number;
+  trainingSessionId?: string;
+  trainingActivityId?: string;
+}
+
 export interface AcademyTopicProgressSnapshot {
   selection: AcademyMaterialSelection | null;
   events: readonly AcademySectionStudyEvent[];
+  materialOpenEvents: readonly AcademyMaterialOpenEvent[];
 }
 
 export interface AcademyStudyProgressOverviewSnapshot {
   selections: readonly AcademyMaterialSelection[];
   events: readonly AcademySectionStudyEvent[];
+  materialOpenEvents: readonly AcademyMaterialOpenEvent[];
 }
 
 const hashPattern = /^[a-f0-9]{64}$/i;
@@ -106,6 +122,19 @@ export function isAcademySectionStudyEvent(value: unknown): value is AcademySect
     && (value.sectionTitle === undefined || (typeof value.sectionTitle === 'string' && value.sectionTitle.length <= 500))
     && (value.printedPage === undefined || (Number.isInteger(value.printedPage) && (value.printedPage as number) >= 0));
   return false;
+}
+
+export function isAcademyMaterialOpenEvent(value: unknown): value is AcademyMaterialOpenEvent {
+  if (!isRecord(value) || !eventIdPattern.test(String(value.id ?? '')) || !isStudyTopicId(value.topicId)
+    || typeof value.sectionId !== 'string' || !sectionIdPattern.test(value.sectionId)
+    || typeof value.materialPath !== 'string' || value.materialPath.length === 0 || value.materialPath.length > 500
+    || typeof value.sourceHash !== 'string' || !hashPattern.test(value.sourceHash)
+    || typeof value.outlineFingerprint !== 'string' || !hashPattern.test(value.outlineFingerprint)
+    || !Number.isInteger(value.page) || (value.page as number) < 1
+    || !Number.isFinite(value.occurredAt) || (value.occurredAt as number) < 0
+    || (value.trainingSessionId !== undefined && (typeof value.trainingSessionId !== 'string' || value.trainingSessionId.length > 128))
+    || (value.trainingActivityId !== undefined && (typeof value.trainingActivityId !== 'string' || value.trainingActivityId.length > 128))) return false;
+  return Object.keys(value).every(key => ['id', 'topicId', 'sectionId', 'materialPath', 'sourceHash', 'outlineFingerprint', 'page', 'occurredAt', 'trainingSessionId', 'trainingActivityId'].includes(key));
 }
 
 export function isCurrentAcademyMaterialSelection(topic: {
