@@ -9,13 +9,13 @@ function fakeCaches() {
  const entries = new Map(); const cache = {match: vi.fn(async u => entries.get(String(u))?.clone()), put: vi.fn(async (u,r) => entries.set(String(u),r.clone()))};
  vi.stubGlobal('caches', {open: async () => cache}); return {cache, entries};
 }
-it('comprueba cada archivo de tarjetas y no confunde el índice con una descarga completa', async () => {
+it('no requiere archivos de tarjetas para declarar disponible el modo sin conexión', async () => {
  const {entries} = fakeCaches();
  for (const p of ['data/index.json','data/meta.json','data/supuestos.json','data/T1.01.json']) entries.set(p,new Response('{}'));
  entries.set('cards/index.json',new Response(JSON.stringify({temas:{'T1.01':3}})));
  const {inspectOffline} = await import('../src/adapters/offline/cache.js');
  const state = await inspectOffline({temas:[{id:'T1.01'}]});
- expect(state.complete).toBe(false); expect(state.missing).toContain('cards/T1.01.json'); expect(state.completedAt).toBeNull();
+ expect(state.complete).toBe(false); expect(state.missing).toContain('explanations/index.json'); expect(state.missing).not.toContain('cards/T1.01.json'); expect(state.completedAt).toBeNull();
 });
 it('un error HTTP no marca una descarga como completa ni escribe una fecha', async () => {
  fakeCaches(); vi.stubGlobal('fetch', async () => new Response('no', {status:503}));
@@ -33,15 +33,17 @@ it('valida una copia antes de tocar el progreso y conserva los registros locales
  expect(imported.stats).toHaveProperty('nuevo'); expect(imported.stats).not.toHaveProperty('mal');
  expect(store.rec('nuevo')).toBeUndefined(); expect(store.rec('local')).toBeDefined();
 });
-it('verifica la descarga completa de banco y tarjetas antes de guardar la fecha', async () => {
+it('descarga bancos y explicaciones sin solicitar archivos de tarjetas', async () => {
  const {entries} = fakeCaches();
- vi.stubGlobal('fetch', async u => new Response(JSON.stringify(u === 'cards/index.json' ? {temas:{'T1.01':1}} : u === 'data/index.json' ? {temas:[{id:'T1.01'}]} : [])));
+ const fetched=[];
+ vi.stubGlobal('fetch', async u => { fetched.push(String(u)); return new Response(JSON.stringify(u === 'data/index.json' ? {temas:[{id:'T1.01'}]} : [])); });
  const {downloadOffline, inspectOffline} = await import('../src/adapters/offline/cache.js');
  const idx={temas:[{id:'T1.01'}]}; const saved=await downloadOffline(idx);
  expect(saved.complete).toBe(true); expect(saved.completedAt).toBeGreaterThan(0);
  expect(entries.has('explanations/index.json')).toBe(true);
  expect((await inspectOffline(idx)).completedAt).toBe(saved.completedAt);
- entries.delete('cards/T1.01.json');
+ expect(fetched.some(path => path.startsWith('cards/'))).toBe(false);
+ entries.delete('data/T1.01.json');
  const damaged=await inspectOffline(idx); expect(damaged.complete).toBe(false); expect(damaged.completedAt).toBeNull();
 });
 it('descarga los archivos independientes con concurrencia limitada a dos', async () => {
@@ -50,7 +52,7 @@ it('descarga los archivos independientes con concurrencia limitada a dos', async
    active++; maximum = Math.max(maximum, active);
    await new Promise(resolve => setTimeout(resolve, 5));
    active--;
-   const body = path === 'cards/index.json' ? {temas:{'T1.01':1,'T1.02':1}} : path === 'data/index.json' ? {temas:[{id:'T1.01'},{id:'T1.02'}]} : path === 'explanations/index.json' ? [] : [];
+   const body = path === 'data/index.json' ? {temas:[{id:'T1.01'},{id:'T1.02'}]} : [];
    return new Response(JSON.stringify(body));
  });
  const {downloadOffline} = await import('../src/adapters/offline/cache.js');
@@ -60,8 +62,7 @@ it('descarga los archivos independientes con concurrencia limitada a dos', async
 });
 it.each(['<html>Error</html>','{"unfinished":','null'])('rechaza recursos offline dañados: %s',async body=>{
  const {entries}=fakeCaches();
- for(const p of ['data/index.json','data/meta.json','data/supuestos.json','data/T1.01.json','cards/T1.01.json']) entries.set(p,new Response('{}'));
- entries.set('cards/index.json',new Response(JSON.stringify({temas:{'T1.01':1}})));
+ for(const p of ['data/index.json','data/meta.json','data/supuestos.json','explanations/index.json','data/T1.01.json']) entries.set(p,new Response('{}'));
  entries.set('data/T1.01.json',new Response(body));
  const {inspectOffline}=await import('../src/adapters/offline/cache.js');
  const state=await inspectOffline({temas:[{id:'T1.01'}]});
@@ -72,7 +73,6 @@ it('limita a cuatro las lecturas offline y conserva el orden de los archivos aus
  const {cache} = fakeCaches();
  let active = 0, maximum = 0;
  cache.match.mockImplementation(async u => {
-   if (u === 'cards/index.json') return new Response(JSON.stringify({temas:{'T1.01':1}}));
    active++; maximum = Math.max(maximum, active);
    await new Promise(resolve => setTimeout(resolve, u === 'data/index.json' ? 15 : 1));
    active--;
@@ -82,6 +82,6 @@ it('limita a cuatro las lecturas offline y conserva el orden de los archivos aus
  const state = await inspectOffline({temas:[{id:'T1.01'}]});
  expect(maximum).toBe(4);
  expect(active).toBe(0);
- expect(state.missing).toEqual(['data/index.json','data/meta.json','data/supuestos.json','explanations/index.json','data/T1.01.json','cards/T1.01.json']);
+ expect(state.missing).toEqual(['data/index.json','data/meta.json','data/supuestos.json','explanations/index.json','data/T1.01.json']);
  expect(state.complete).toBe(false);
 });

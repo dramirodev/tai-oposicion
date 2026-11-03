@@ -48,7 +48,7 @@ describe('planificación diaria de estudio', () => {
     expect(DEFAULT_TRAINING_PREFERENCES.minutesByDay).toEqual([0, 120, 120, 120, 120, 120, 120]);
     expect(plan.minutes).toBe(40);
     expect(plan.activities.map(({ activity, minutes }) => [activity, minutes])).toEqual([
-      ['activeRecall', 8], ['topicTest', 12], ['mixedTopicTest', 8], ['failures', 8], ['spacedReviews', 4],
+      ['topicTest', 15], ['mixedTopicTest', 10], ['failures', 10], ['spacedReviews', 5],
     ]);
     expect(plan.activities.map(item => item.minutes).reduce((total, minutes) => total + minutes, 0)).toBe(plan.minutes);
   });
@@ -95,7 +95,7 @@ describe('planificación diaria de estudio', () => {
       studiedTopicIds:['T1.01'],
       nextNewTopic:{ topicId:'T1.02', topicName:'Tema siguiente' },
     });
-    expect(plan.activities.map(item => item.activity)).toEqual(['activeRecall', 'topicTest', 'mixedTopicTest']);
+    expect(plan.activities.map(item => item.activity)).toEqual(['topicTest', 'mixedTopicTest']);
     expect(plan.activities.find(item => item.activity === 'topicTest')).toMatchObject({ reason:'weak-topics', topicId:'T1.01', topicIds:['T1.01'] });
   });
 
@@ -106,7 +106,7 @@ describe('planificación diaria de estudio', () => {
 
   it('omite actividades sin contenido y reparte todo el tiempo disponible entre las demás', () => {
     const plan = buildDailyTrainingPlan({ preferences: testPreferences, weekday: 1, dueCount: 0, failureCount: 0, weakTopicCount: 0, studiedTopicIds: ['T1.01'] });
-    expect(plan.activities.map(item => item.activity)).toEqual(['activeRecall', 'topicTest', 'mixedTopicTest']);
+    expect(plan.activities.map(item => item.activity)).toEqual(['topicTest', 'mixedTopicTest']);
     expect(plan.activities.map(item => item.minutes).reduce((total, minutes) => total + minutes, 0)).toBe(35);
     expect(plan.activities.every(item => item.minutes > 0)).toBe(true);
   });
@@ -148,8 +148,7 @@ describe('planificación diaria de estudio', () => {
       failureCount: 9,
       weakTopicCount: 2,
     });
-    expect(plan.activities.map(item => item.activity)).toEqual(['activeRecall']);
-    expect(plan.activities[0].minutes).toBe(60);
+    expect(plan.activities).toEqual([]);
   });
 
   it('adjunta el tema débil prioritario a la actividad de test', () => {
@@ -209,7 +208,7 @@ describe('planificación diaria de estudio', () => {
     });
   });
 
-  it('incluye las tarjetas FSRS vencidas aunque no haya repasos de preguntas pendientes', () => {
+  it('no programa repasos por vencimientos de tarjetas', () => {
     const plan = buildDailyTrainingPlan({
       preferences: { ...testPreferences, activities: ['spacedReviews'] },
       weekday: 6,
@@ -219,7 +218,7 @@ describe('planificación diaria de estudio', () => {
       weakTopicCount: 0,
       studiedTopicIds: ['T1.01'],
     });
-    expect(plan.activities).toEqual([{ activity: 'spacedReviews', minutes: 60, reason: 'due-reviews', topicIds: ['T1.01'] }]);
+    expect(plan.activities).toEqual([]);
   });
 
   it('limita cada actividad diaria a los temas marcados y nunca recomienda temas no estudiados', () => {
@@ -237,7 +236,7 @@ describe('planificación diaria de estudio', () => {
         { topicId:'T3.02', topicName:'Tribunal', hasStudyMarker:false, distinctQuestionsAttempted:8, questionCoverageOfTarget:50, latestAnswerAccuracy:20, daysSinceLastQuestionAttempt:1 },
       ],
     });
-    expect(plan.activities.map(item => item.activity)).toEqual(['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']);
+    expect(plan.activities.map(item => item.activity)).toEqual(['topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']);
     expect(plan.activities.every(item => item.topicIds?.length && item.topicIds.every(topicId => topicId === 'T1.01'))).toBe(true);
     expect(plan.activities.find(item => item.activity === 'topicTest')).toMatchObject({ reason:'weak-topics', topicId:'T1.01' });
   });

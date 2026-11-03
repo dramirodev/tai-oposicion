@@ -191,17 +191,16 @@ async function openMenu() {
   if (document.getElementById('menuov')) return;
   const account = localStudyProgressGateway.accountId();
   await getMeta();
-  const [due, statistics, cards, reports] = await Promise.all([
+  const [due, statistics, reports] = await Promise.all([
     dueQuestionIds().then(ids => ids.length), localProgressRepository.getStats().catch((): Readonly<Record<string, QuestionStats>> => ({})),
-    localProgressRepository.getCardReviews(), localProgressRepository.getReports(),
+    localProgressRepository.getReports(),
   ]);
-  const nCards = Object.values(cards).filter(card => card.dueAt <= studyQuestionCatalog.now()).length;
   if (account !== localStudyProgressGateway.accountId()) return;
   const speed = summarizeReadingSpeedFailures(Object.entries(statistics).map(([id, record]) => ({ id, lastOutcome: record.lastResult ?? -1, lastReasonCode: record.errorReason })));
   const nErr = Object.values(reports).filter(report => report.state === 'abierto').length;
   const aqui = location.hash || hashPath('home');
   const groups = createStudyMenuGroups({
-    fullAccess: isFull(), owner: isOwner(), pendingQuestions: due, pendingCards: nCards,
+    fullAccess: isFull(), owner: isOwner(), pendingQuestions: due,
     readingSpeedFailures: speed.count, openReports: nErr, seenTopics: localStudyProgressGateway.getSeenTopics().length,
     failedQuestions: falladasIds().length, accessRequests: sync.status.reqs.length,
     updateAvailable: !!appUpdates.getAvailableUpdate(), actions: { quickSession, startReview: startRepaso },

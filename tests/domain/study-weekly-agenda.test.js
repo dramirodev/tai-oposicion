@@ -97,10 +97,11 @@ describe('propuesta semanal persistida', () => {
       catalogTopics:[{ id:'T19.01', name:'Tema futuro' }, { id:'T1.01', name:'Tema visto' }], studiedTopicIds:['T1.01'], dueCount:4, cardDueCount:2, failureCount:2, weakTopicCount:1, weakTopicIds:['T1.01'], topicReviewEvidence:[], scheduledActivities:[],
       contentInventory:{ questionTopicIds:[], cardTopicIds:null },
     });
-    expect(proposal?.contentInventoryStatus).toBe('partial');
+    expect(proposal?.contentInventoryStatus).toBe('manifest');
     expect(proposal?.items.some(item => item.kind === 'newContent' && item.topicIds[0] === 'T19.01')).toBe(true);
     expect(proposal?.items.every(item => item.kind === 'newContent')).toBe(true);
-    expect(proposal?.omittedContentActivities.some(item => item.kind === 'activeRecall' && item.topicIds.includes('T1.01'))).toBe(true);
+    expect(proposal?.items.some(item => item.kind === 'activeRecall')).toBe(false);
+    expect(proposal?.omittedContentActivities.every(item => item.kind !== 'activeRecall')).toBe(true);
   });
 
   it('usa la brecha global para proponer una introducción extra en consolidación, sin cambiar la rutina guardada', () => {

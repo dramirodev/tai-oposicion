@@ -8,7 +8,6 @@ const destinations: Destination[] = [
   { route: 'home', label: 'Inicio', icon: navigationIcons.home },
   { route: 'test', label: 'Test por tema', icon: navigationIcons.test },
   { route: 'sim', label: 'Simulacros', icon: navigationIcons.sim },
-  { route: 'cards', label: 'Tarjetas', icon: navigationIcons.cards },
   { route: 'falladas', label: 'Preguntas falladas', icon: navigationIcons.failures },
   { route: 'lectura', label: 'Lectura atenta', icon: navigationIcons.reading },
   { route: 'trampas', label: 'Detective de trampas', icon: navigationIcons.traps },
@@ -21,7 +20,7 @@ const destinations: Destination[] = [
   { route: 'acceso', label: 'Accesos', icon: navigationIcons.access },
 ];
 const groups = [
-  ['Practicar', ['test', 'sim', 'cards']],
+  ['Practicar', ['test', 'sim']],
   ['Afianzar', ['falladas', 'temario', 'planificacion', 'stats']],
   ['Entrenamientos', ['lectura', 'trampas', 'relampago']],
   ['Tu espacio', ['ayuda', 'settings', 'acceso']],

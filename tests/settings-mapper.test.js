@@ -35,7 +35,7 @@ it('provides safe defaults for old or malformed preferences and exam values', ()
   expect(snapshot.training).toEqual({
     minutesByDay: [0, 120, 120, 120, 120, 120, 120],
     focusByDay: ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'],
-    introductionDay: 4, focusBlockMinutes: 35, activityVersion: 3, activities: ['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'],
+    introductionDay: 4, focusBlockMinutes: 35, activityVersion: 3, activities: ['newContent', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'],
   });
   expect(snapshot.exam).toBe('');
 });

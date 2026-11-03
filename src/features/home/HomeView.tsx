@@ -51,16 +51,16 @@ function QuickSessionButton({ overview, access, pending, onQuickSession }: { ove
 function GuestAccess({ access, pending, onLogin, onRequestAccess }: {
   access: AccessOverview; pending: ReadonlySet<string>; onLogin(): void; onRequestAccess(): void;
 }) {
-  return <div className="card guest" id="guest"><h2 className="h3">{!access.signedIn ? 'Sesión sin iniciar' : access.level === 'pendiente' ? 'Acceso pendiente' : 'Solicita acceso completo'}</h2><p>Sin acceso completo solo puedes hacer la sesión rápida de 5 minutos. El resto (test por tema, simulacros, tarjetas, estadísticas…) lo desbloquea el propietario de la app.</p>
+  return <div className="card guest" id="guest"><h2 className="h3">{!access.signedIn ? 'Sesión sin iniciar' : access.level === 'pendiente' ? 'Acceso pendiente' : 'Solicita acceso completo'}</h2><p>Sin acceso completo solo puedes hacer la sesión rápida de 5 minutos. El resto (test por tema, simulacros, progreso y entrenamientos…) lo desbloquea el propietario de la app.</p>
     {!access.signedIn ? (access.configured || access.state === 'iniciando' || access.state === 'comprobando sesión…' ? <button className="btn" id="gin" onClick={onLogin}>Entrar con Google</button> : null) : access.level === 'pendiente' ? <p><b>Solicitud enviada.</b> Cuando se apruebe se desbloqueará todo; esta pantalla se actualiza sola.</p> : <button className="btn" id="greq" disabled={pending.has('request')} onClick={onRequestAccess}>{pending.has('request') ? 'Enviando…' : 'Pedir acceso completo'}</button>}
   </div>;
 }
 
-function HomeMetrics({ overview, full }: { overview: HomeOverview; full: boolean }) {
+function HomeMetrics({ overview }: { overview: HomeOverview }) {
   return <dl className="home-metrics mt-2 mb-7 grid grid-cols-3 gap-0 border-y border-line py-5" aria-label="Tu preparación">
     <div className="min-w-0 border-e border-line px-6 first:ps-0 last:border-e-0 max-[600px]:px-3"><dt className="mb-2 text-[length:var(--fs-s)] text-muted">Preguntas vistas</dt><dd className="m-0 text-[length:var(--fs-stat)] font-[450] leading-[1.3] [font-variant-numeric:tabular-nums] max-[600px]:whitespace-nowrap max-[600px]:text-[1.375rem]">{overview.seen.toLocaleString('es-ES')} <small className="whitespace-nowrap text-[length:var(--fs-m)] max-[600px]:m-0 max-[600px]:inline max-[600px]:text-sm">/ {overview.total.toLocaleString('es-ES')}</small></dd></div>
     <div className="min-w-0 border-e border-line px-6 first:ps-0 last:border-e-0 max-[600px]:px-3"><dt className="mb-2 text-[length:var(--fs-s)] text-muted">Temas estudiados</dt><dd className="m-0 text-[length:var(--fs-stat)] font-[450] leading-[1.3] [font-variant-numeric:tabular-nums] max-[600px]:whitespace-nowrap max-[600px]:text-[1.375rem]">{overview.studiedTopics} <small className="whitespace-nowrap text-[length:var(--fs-m)] max-[600px]:m-0 max-[600px]:inline max-[600px]:text-sm">/ {overview.topicCount}</small></dd></div>
-    <div className="min-w-0 border-e border-line px-6 first:ps-0 last:border-e-0 max-[600px]:px-3"><dt className="mb-2 text-[length:var(--fs-s)] text-muted">{full ? 'Tarjetas pendientes' : 'Sesiones completadas'}</dt><dd className="m-0 text-[length:var(--fs-stat)] font-[450] leading-[1.3] [font-variant-numeric:tabular-nums] max-[600px]:whitespace-nowrap max-[600px]:text-[1.375rem]">{full ? overview.cardsDue : overview.completedSessions}</dd></div>
+    <div className="min-w-0 border-e border-line px-6 first:ps-0 last:border-e-0 max-[600px]:px-3"><dt className="mb-2 text-[length:var(--fs-s)] text-muted">Sesiones completadas</dt><dd className="m-0 text-[length:var(--fs-stat)] font-[450] leading-[1.3] [font-variant-numeric:tabular-nums] max-[600px]:whitespace-nowrap max-[600px]:text-[1.375rem]">{overview.completedSessions}</dd></div>
   </dl>;
 }
 function HomeDomain({ blocks, full }: { blocks: HomeBlock[]; full: boolean }) {
@@ -87,7 +87,7 @@ export interface HomeViewProps {
 export function HomeView({ overview, access, run, pending, onNavigate, onQuickSession, onStartReview, onOpenMenu, onLogin, onRequestAccess }: HomeViewProps) {
   return <>
     <HomeHeader access={access} overview={overview} onOpenMenu={onOpenMenu} />
-    <HomeMetrics overview={overview} full={access.full} />
+    <HomeMetrics overview={overview} />
     <QuickSessionButton overview={overview} access={access} pending={pending} onQuickSession={onQuickSession} />
     {access.full && <section className="home-planning-shortcut mt-4 mb-7 flex flex-wrap items-center gap-x-4 gap-y-2 border-y border-line py-4 max-[520px]:items-start" aria-labelledby="home-planning-title"><h2 className="section-title !m-0 !flex-[1_1_100%]" id="home-planning-title">Tu estudio de hoy</h2><p className="m-0 flex-[1_1_22rem] text-muted">La sesión preparada, los temas y el calendario semanal están en Planificación.</p><Link className="btn" to="/planificacion">Abrir Planificación de estudio</Link></section>}
     <div className={`home-workspace grid grid-cols-1 items-start gap-6${run ? ' has-active-session min-[840px]:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] min-[840px]:gap-8' : ''}`}>

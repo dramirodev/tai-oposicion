@@ -95,15 +95,9 @@ it('el mapa distingue respuestas y revisión y conserva las respuestas al saltar
  engine.saveRun();engine.clearActiveRun();const pending=await recovery.pendingRun(true);engine.resumeRun(pending);
  expect(engine.getSnapshot().run.review).toEqual([0]);expect(engine.getSnapshot().run.ans[0]).toBe(qs[0].c);
 });
-it('anticipa el número efectivo de tarjetas y su próximo repaso sin valorarlas',async()=>{
- const q=JSON.parse(readFileSync('public/data/T1.01.json','utf8'))[0];store.addFallo(q.i);
- await navigate('cards','Tarjetas de repaso');
- await vi.waitFor(()=>expect(document.querySelector('#card-plan')?.textContent).toContain('11 tarjetas'));
- const before=JSON.stringify(store.getCards());document.querySelector('#go').click();await waitText('Mostrar respuesta');document.querySelector('#show').click();
- await vi.waitFor(()=>expect(document.querySelector('[data-g="0"]')).not.toBeNull());
- expect(document.querySelector('[data-g="0"]').textContent).toContain('1 minuto');
- expect(JSON.stringify(store.getCards())).toBe(before);
- document.querySelector('#exit').click();await waitText('Sesión rápida');
+it('redirige el acceso directo antiguo de tarjetas a Inicio',async()=>{
+ await navigate('cards','Sesión rápida');
+ expect(document.querySelector('#app').textContent).not.toMatch(/Tarjetas de repaso|Mostrar respuesta/);
 });
 it('confirma el cierre desde el mapa si quedan preguntas sin responder',async()=>{
  const qs=JSON.parse(readFileSync('public/data/T1.01.json','utf8')).slice(0,3);
@@ -149,13 +143,4 @@ it('el mapa y la marca de revisión conservan un destino de foco útil',async()=
  await vi.waitFor(()=>expect(document.activeElement).toBe(document.querySelector('#app h1')));
  document.querySelector('#next').click();await vi.waitFor(()=>expect(document.activeElement).toBe(document.querySelector('#app h1')));
  document.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowLeft',bubbles:true}));expect(document.activeElement).toBe(document.querySelector('#app h1'));
-});
-it('abrir el supuesto de una tarjeta no revela la respuesta y el avance conserva el foco',async()=>{
- store.addFallo('TAI2024B-S1-01');await navigate('cards','Tarjetas de repaso');
- document.querySelector('#go').click();await waitText('Mostrar respuesta');
- expect(document.activeElement).toBe(document.querySelector('#app h1'));
- const summary=document.querySelector('#fc details summary');expect(summary).not.toBeNull();summary.click();
- expect(document.querySelector('#show')).not.toBeNull();expect(document.querySelector('.card-answer')).toBeNull();
- document.querySelector('#show').click();await vi.waitFor(()=>expect(document.querySelector('.card-answer')).not.toBeNull());expect(document.activeElement).toBe(document.querySelector('.card-answer'));
- document.querySelector('[data-g="2"]').click();await vi.waitFor(()=>expect(document.activeElement).toBe(document.querySelector('#app h1')));
 });

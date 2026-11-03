@@ -12,7 +12,7 @@ vi.mock('../src/adapters/firebase/sync-facade.js', () => ({
 }));
 let unmountApp;
 afterEach(() => { unmountApp?.(); unmountApp = undefined; vi.unstubAllGlobals(); });
-it('navega por las pantallas y conserva una valoración de tarjeta al salir y volver', async () => {
+it('navega por las pantallas y oculta la ruta de tarjetas sin afectar al resto', async () => {
   document.documentElement.innerHTML = readFileSync('index.html', 'utf8');
   localStorage.clear();
   vi.stubGlobal('matchMedia', () => ({ matches: true }));
@@ -94,24 +94,12 @@ it('navega por las pantallas y conserva una valoración de tarjeta al salir y vo
   expect(document.querySelector('#app').textContent).toContain('Últimas sesiones');
   delayed.mockRestore();
 
-  await navigate('settings', 'Exportar tarjetas a Anki');
+  await navigate('settings', 'Ajustes');
+  expect(document.querySelector('#app').textContent).not.toContain('Exportar tarjetas a Anki');
   [...document.querySelectorAll('[aria-label="Tema"] button')].find(button => button.textContent === 'Oscuro').click();
   expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
-  await navigate('temario', 'Temas vistos');
-  await navigate('cards', 'Tarjetas de repaso');
-  document.querySelector('#go').click();
-  await waitText('Mostrar respuesta');
-  document.querySelector('#show').click();
-  await vi.waitFor(() => expect(document.querySelector('[data-g="2"]')).not.toBeNull());
-  const gradeEnter = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
-  document.querySelector('[data-g="2"]').dispatchEvent(gradeEnter);
-  expect(gradeEnter.defaultPrevented).toBe(false);
-  document.querySelector('[data-g="2"]').click();
-  expect(Object.values(store.getCards()).filter(r => r[0] === 1 && r[1] === 1 && r[5] === 2)).toHaveLength(1);
-  document.querySelector('#exit').click();
-  await waitText('Sesión rápida');
-  await navigate('cards', 'Tarjetas de repaso');
-  expect(Object.keys(store.getCards())).toHaveLength(1);
+  await navigate('cards', 'Sesión rápida');
+  expect(document.querySelector('#app').textContent).not.toContain('Tarjetas de repaso');
   await navigate('trampas', 'Detective de trampas');
   await navigate('lectura', 'Lectura atenta');
   await navigate('relampago', 'Pregunta relámpago');

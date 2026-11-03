@@ -30,7 +30,7 @@ const activityPresentation: Record<TrainingActivity, { title: string; objective:
   },
   activeRecall: {
     title: 'Recuperación activa', objective: 'Recordar antes de volver a mirar la respuesta.',
-    instruction: 'Intenta responder cada tarjeta sin consultar la solución; después compárala y valora cómo te fue.', resource: 'Tarjetas de repaso',
+    instruction: 'Responde preguntas de los temas que ya has visto y revisa cada corrección.', resource: 'Test por tema',
   },
   topicTest: {
     title: 'Preguntas del tema prioritario', objective: 'Comprobar un tema visto que necesita práctica.',
@@ -45,8 +45,8 @@ const activityPresentation: Record<TrainingActivity, { title: string; objective:
     instruction: 'Vuelve a responder preguntas falladas de temas vistos y lee el feedback antes de continuar.', resource: 'Preguntas falladas',
   },
   spacedReviews: {
-    title: 'Repasos programados', objective: 'Recuperar tarjetas o preguntas que ya vencieron.',
-    instruction: 'Completa el material cuyo repaso está pendiente. Las tarjetas conservan el calendario FSRS existente.', resource: 'Tarjetas o preguntas pendientes',
+    title: 'Repasos programados', objective: 'Recuperar preguntas que ya han llegado a su fecha de repaso.',
+    instruction: 'Responde las preguntas pendientes y revisa la corrección antes de continuar.', resource: 'Preguntas pendientes',
   },
 };
 
@@ -57,7 +57,7 @@ const reasonText: Record<DailyTrainingPlan['activities'][number]['reason'], stri
   'weak-topics': 'Prioridad basada en resultados de preguntas y en la última autoevaluación de tests en papel de temas vistos; esta señal personal dura hasta 30 días y no es una medida de dominio.',
   coverage: 'Amplía la práctica de los temas que has marcado como vistos.',
   'recurring-failures': 'Hay preguntas falladas de temas vistos que aún requieren repaso.',
-  'due-reviews': 'Hay tarjetas o preguntas de temas vistos con repaso pendiente.',
+  'due-reviews': 'Hay preguntas de temas vistos con repaso pendiente.',
 };
 
 const focusLabels = { rest: 'Descanso', 'new-content': 'Contenido nuevo', consolidation: 'Recuperación y consolidación' } as const;
@@ -91,7 +91,7 @@ function activityState(session: DailyTrainingSession | null, index: number) {
 function activityResourcePath(step: TrainingSessionStep): string {
   if (step.sectionRecall) return `/temario?topic=${encodeURIComponent(step.topicId ?? '')}&sectionId=${encodeURIComponent(step.sectionRecall.sectionId)}`;
   if (step.activity === 'newContent') return `/temario?topic=${encodeURIComponent(step.topicId ?? '')}&dailyTraining=newContent`;
-  if (step.activity === 'activeRecall' || step.activity === 'spacedReviews') return '/cards';
+  if (step.activity === 'activeRecall' || step.activity === 'spacedReviews') return '/test';
   if (step.activity === 'topicTest' || step.activity === 'mixedTopicTest') return '/test';
   return '/falladas';
 }
@@ -232,12 +232,12 @@ function usePlanningSessionActions(services: HomeServices, overview: HomeOvervie
   const lifetime = useActionLifetime(services.accountId);
   const [controller] = useState(() => createPendingActionController(lifetime, services.notify));
 
-  const openActivity = (session: DailyTrainingSession, source: HomeOverview) => {
+  const openActivity = (session: DailyTrainingSession) => {
     const currentStep = session.activities[session.currentIndex];
     if (!currentStep) return;
     const sessionId = session.id ?? `training:${session.dateKey}`;
     const reference = { sessionId, activityId: currentStep.id ?? `${sessionId}:activity:${session.currentIndex + 1}` };
-    const action = resolvePlannedActivityAction(session, [...new Set(services.seenTopics())], source.trainingDue.cards);
+    const action = resolvePlannedActivityAction(session, [...new Set(services.seenTopics())]);
     if (action.type === 'none') return;
     if (action.type === 'notify') { services.notify(action.message); return; }
     if (action.type === 'start-review') {
@@ -259,7 +259,7 @@ function usePlanningSessionActions(services: HomeServices, overview: HomeOvervie
     }
     const session = services.startTrainingSession(overview.trainingPlan);
     const started = services.startTrainingActivity() ?? session;
-    if (started) openActivity(started, overview);
+    if (started) openActivity(started);
   };
 
   const pauseSession = () => { services.pauseTrainingActivity(); refresh(); };
@@ -306,7 +306,7 @@ function PlanningTodayCard({ model, overview, activeStudy, onStart, onPause, onB
         <div className="min-w-0 border-e border-line px-3 py-3.5 first:ps-0 last:border-e-0"><dt className="text-muted text-[length:var(--fs-xs)]">Tiempo registrado</dt><dd className="mt-1 mb-0 text-[clamp(1.1rem,2vw,1.45rem)] [font-variant-numeric:tabular-nums] [overflow-wrap:anywhere]">{model.recordedTime}</dd></div>
         <div className="min-w-0 border-e border-line px-3 py-3.5 first:ps-0 last:border-e-0"><dt className="text-muted text-[length:var(--fs-xs)]">Actividades</dt><dd className="mt-1 mb-0 text-[clamp(1.1rem,2vw,1.45rem)] [font-variant-numeric:tabular-nums] [overflow-wrap:anywhere]">{activities.length}</dd></div>
         <div className="min-w-0 border-e border-line px-3 py-3.5 first:ps-0 last:border-e-0"><dt className="text-muted text-[length:var(--fs-xs)]">Temas implicados</dt><dd className="mt-1 mb-0 text-[clamp(1.1rem,2vw,1.45rem)] [font-variant-numeric:tabular-nums] [overflow-wrap:anywhere]">{model.topicCount}</dd></div>
-        <div className="min-w-0 border-e border-line px-3 py-3.5 first:ps-0 last:border-e-0"><dt className="text-muted text-[length:var(--fs-xs)]">Repasos vencidos</dt><dd className="mt-1 mb-0 text-[clamp(1.1rem,2vw,1.45rem)] [font-variant-numeric:tabular-nums] [overflow-wrap:anywhere]">{overview.trainingDue.cards + overview.trainingDue.questions}</dd></div>
+        <div className="min-w-0 border-e border-line px-3 py-3.5 first:ps-0 last:border-e-0"><dt className="text-muted text-[length:var(--fs-xs)]">Repasos vencidos</dt><dd className="mt-1 mb-0 text-[clamp(1.1rem,2vw,1.45rem)] [font-variant-numeric:tabular-nums] [overflow-wrap:anywhere]">{overview.trainingDue.questions}</dd></div>
       </dl>
       <SessionActionArea model={model} activeStudy={activeStudy} onStart={onStart} onPause={onPause} onBeginBreak={onBeginBreak} onEndBreak={onEndBreak} focusBlockMinutes={focusBlockMinutes} />
       {activities.length > 0 && <div className="planning-progress mt-5 h-[.3rem] overflow-hidden rounded-[99px] bg-[var(--surface-soft)]" aria-label={`Progreso: ${model.completedCount} de ${activities.length} actividades`}><span className="block h-full rounded-[inherit] bg-brand motion-safe:[transition:width_.25s_ease]" style={{ width: `${model.progress}%` }} /></div>}
@@ -604,7 +604,7 @@ export function PlanningPage() {
     const topic = encodeURIComponent(activity.topicId);
     const route = activity.activity === 'topicTest'
       ? `test?dailyTraining=topicTest&trainingTopics=${topic}&topic=${topic}`
-      : `cards?dailyTraining=activeRecall&trainingTopics=${topic}`;
+      : `test?dailyTraining=activeRecall&trainingTopics=${topic}`;
     const scoped = scopeTrainingRouteToSeenTopics(route, services.seenTopics());
     if (!scoped) { services.notify('Ese tema ya no está marcado como visto. Actualiza la agenda antes de iniciar el repaso.'); return; }
     void navigate(`/${scoped}`);

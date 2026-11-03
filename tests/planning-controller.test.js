@@ -46,9 +46,11 @@ describe('resolvePlannedActivityAction', () => {
       .toEqual({ type: 'start-review', topicIds: ['T1.02'] });
   });
 
-  it('opens cards directly when there are due cards and ignores completed sessions', () => {
+  it('continues old card review activities through questions and ignores completed sessions', () => {
     expect(resolvePlannedActivityAction(session(step('spacedReviews')), ['T1.02'], 2))
-      .toMatchObject({ type: 'navigate', path: expect.stringContaining('/cards?') });
+      .toEqual({ type: 'start-review', topicIds: ['T1.02'] });
+    expect(resolvePlannedActivityAction(session(step('activeRecall', { topicIds:['T1.02'] })), ['T1.02']))
+      .toMatchObject({ type: 'navigate', path: '/test?dailyTraining=activeRecall&trainingTopics=T1.02' });
     expect(resolvePlannedActivityAction(session(step('activeRecall'), { completedAt: 100 }), ['T1.02'], 0))
       .toEqual({ type: 'none' });
   });

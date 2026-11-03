@@ -24,7 +24,7 @@ function ObservedStudyTimeSummary({ value, loaded }: { value: ObservedStudyTime 
     {!loaded ? <p role="status">Calculando el tiempo registrado…</p> : !value ? <p role="status">No se pudo cargar el tiempo registrado. El resto del progreso sigue disponible.</p> : value.questionAttempts === 0 ? <p>Aún no hay sesiones con tiempo registrado.</p> : <>
       <div className="stats-grid"><div className="stat"><b>{value.observedMilliseconds > 0 ? formatObservedDuration(value.observedMilliseconds) : 'Sin tiempo medible'}</b><span>Tiempo acumulado observado en preguntas</span></div></div>
       <p>{value.completeAttempts + value.partialAttempts} preguntas con tiempo observado: {value.completeAttempts} completas y {value.partialAttempts} parciales. {value.unavailableAttempts ? `${value.unavailableAttempts} sin datos de tiempo.` : ''}</p>
-      <p className="legend">Cuenta solo los intervalos en que una pregunta estuvo abierta y la aplicación visible. No incluye lectura ni tarjetas, y no reconstruye actividad antigua sin datos.</p>
+      <p className="legend">Cuenta solo los intervalos en que una pregunta estuvo abierta y la aplicación visible. No incluye lectura ni reconstruye actividad antigua sin datos.</p>
     </>}
   </section>;
 }
