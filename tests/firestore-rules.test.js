@@ -68,7 +68,7 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
     const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
     const futureStep = { ...step, topicId:'T12.01', topicIds:['T5.02', 'T12.01'] };
     await assertSucceeds(setDoc(doc(db, 'users/student/cfg/training'), {
-      ...documentFor(2),
+      ...documentFor(2, []),
       session:{ ...session, activities:[futureStep] },
     }));
   });
@@ -77,8 +77,8 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
     const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
     const sectionRecall = { agendaItemId:'agenda-section-001', followUpId:'follow-up-001', sectionId:'ci-0123456789abcdefabcd', materialPath:'T1.01/Temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64), sectionTitle:'1. INTRODUCCIÓN', printedPage:3 };
     const validStep = { ...step, id:'training:2026-10-29:activity:1', sectionRecall };
-    await assertSucceeds(setDoc(doc(db, 'users/student/cfg/training'), { ...documentFor(2), session:{ ...session, currentIndex:0, completedAt:null, activities:[validStep] } }));
-    await assertFails(setDoc(doc(db, 'users/student/cfg/training'), { ...documentFor(2), session:{ ...session, currentIndex:0, completedAt:null, activities:[{ ...validStep, sectionRecall:{ ...sectionRecall, sourceHash:'stale' } }] } }));
+    await assertSucceeds(setDoc(doc(db, 'users/student/cfg/training'), { ...documentFor(2, []), session:{ ...session, currentIndex:0, completedAt:null, activities:[validStep] } }));
+    await assertFails(setDoc(doc(db, 'users/student/cfg/training'), { ...documentFor(2, []), session:{ ...session, currentIndex:0, completedAt:null, activities:[{ ...validStep, sectionRecall:{ ...sectionRecall, sourceHash:'stale' } }] } }));
   });
 
   it('aísla autoevaluaciones del temario en papel por usuario y limita el documento', async () => {

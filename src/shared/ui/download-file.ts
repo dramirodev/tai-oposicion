@@ -1,6 +1,10 @@
 /** Keep the URL alive long enough for the browser to start saving, then release its Blob. */
 export function saveExportFile(fileName: string, content: string, type: string): void {
-  const url = URL.createObjectURL(new Blob([content], { type }));
+  saveExportBlob(fileName, new Blob([content], { type }));
+}
+
+export function saveExportBlob(fileName: string, blob: Blob): void {
+  const url = URL.createObjectURL(blob);
   const anchor = document.createElement('a');
   anchor.href = url;
   anchor.download = fileName;

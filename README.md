@@ -61,7 +61,7 @@ Las funcionalidades se agrupan por el momento del estudio en que resultan útile
 - **Cuenta y accesos:** usar el modo disponible como invitado o iniciar sesión con Google. Las personas autorizadas pueden gestionar solicitudes y accesos desde la pantalla correspondiente.
 - **Ayuda:** consultar las instrucciones de uso y orientación sobre las pantallas de estudio.
 - **Sincronización:** con Firebase configurado, sincronizar progreso, sesiones, tarjetas, temas vistos, avisos, planificación y otros datos compatibles por cuenta.
-- **Importar y exportar:** crear una copia de progreso, recuperar una copia anterior, gestionar el historial detallado y exportar tarjetas a Anki en texto tabulado. También hay una exportación de manifiesto, sesiones e informe para análisis asistido; se descarga bajo petición y no envía datos automáticamente.
+- **Importar y exportar:** crear una copia de progreso, recuperar una copia anterior, gestionar el historial detallado y exportar tarjetas a Anki en texto tabulado. El análisis asistido se descarga como un único ZIP con manifiesto, informe y partes JSON; se prepara bajo petición y no envía datos automáticamente.
 - **Preferencias:** elegir tema claro, oscuro o automático, tamaño de letra, fecha objetivo, temas de estudio y opciones de práctica.
 - **Actualizaciones:** consultar la versión y aplicar una actualización de la PWA conservando la sesión en curso.
 
