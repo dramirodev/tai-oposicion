@@ -52,10 +52,26 @@ it('registra un tramo de test en papel como evidencia agregada sin transcribir p
   await user.type(screen.getByLabelText('Correctas según plantilla'), '12');
   await user.type(screen.getByLabelText('Incorrectas según plantilla'), '6');
   await user.type(screen.getByLabelText('En blanco'), '2');
+  await user.type(screen.getByLabelText('Duración aproximada en minutos'), '30');
   await user.selectOptions(screen.getByLabelText('Corrección disponible'), 'answer-key-only');
   await user.click(screen.getByRole('button', { name:'Guardar tramo' }));
-  expect(recordPaperTestSegment).toHaveBeenCalledWith(expect.objectContaining({ attemptId:'test-personal-1', segment:1, questionCount:20, answeredCount:18, correctCount:12, incorrectCount:6, blankCount:2, correctionStatus:'answer-key-only' }));
+  expect(recordPaperTestSegment).toHaveBeenCalledWith(expect.objectContaining({ attemptId:'test-personal-1', segment:1, questionCount:20, answeredCount:18, correctCount:12, incorrectCount:6, blankCount:2, correctionStatus:'answer-key-only', startedAt:expect.any(Number), completedAt:expect.any(Number) }));
+  const saved = recordPaperTestSegment.mock.calls[0][0];
+  expect(saved.completedAt - saved.startedAt).toBe(30 * 60_000);
   expect(await screen.findByText(/no modifica tus resultados de preguntas/)).toBeInTheDocument();
+});
+
+it('explica y no guarda recuentos contradictorios del test en papel', async () => {
+  const user = userEvent.setup();
+  const recordPaperTestSegment = vi.fn(() => ({ id:'attempt:segment:1' }));
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(), { home:{ recordPaperTestSegment } }) });
+  await user.click(await screen.findByRole('button', { name:'Registrar tramo' }));
+  await user.type(screen.getByLabelText('Preguntas del tramo'), '20');
+  await user.type(screen.getByLabelText('Contestadas'), '18');
+  await user.type(screen.getByLabelText('En blanco'), '1');
+  await user.click(screen.getByRole('button', { name:'Guardar tramo' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Contestadas y en blanco deben sumar');
+  expect(recordPaperTestSegment).not.toHaveBeenCalled();
 });
 
 it('permite iniciar el paso de tema nuevo aunque todavía no haya temas vistos', async () => {
