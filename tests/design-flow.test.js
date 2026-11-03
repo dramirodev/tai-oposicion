@@ -102,12 +102,18 @@ it('redirige el acceso directo antiguo de tarjetas a Inicio',async()=>{
 it('confirma el cierre desde el mapa si quedan preguntas sin responder',async()=>{
  const qs=JSON.parse(readFileSync('public/data/T1.01.json','utf8')).slice(0,3);
  const run=engine.createRun({kind:'sim',feedback:false,items:qs});await navigate('quiz','pregunta 1');
- document.querySelector('[data-jump="2"]').click();document.querySelector(`.opt[data-i="${qs[2].c}"]`).click();document.querySelector('#next').click();
- await vi.waitFor(()=>expect(document.querySelector('.overlay')?.textContent).toContain('sin responder'));
- document.querySelector('.overlay [data-v="0"]').click();expect(engine.getSnapshot().run.sessionKey).toBe(run.sessionKey);await Promise.resolve();
+ document.querySelector('[data-jump="2"]').click();document.querySelector(`.opt[data-i="${qs[2].c}"]`).click();
+ await act(async()=>{document.querySelector('#next').click();await Promise.resolve();});
+ await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull());
+ expect(document.querySelector('.overlay').textContent).toContain('sin responder');
+ await act(async()=>{document.querySelector('.overlay [data-v="0"]').click();await Promise.resolve();});
+ expect(engine.getSnapshot().run.sessionKey).toBe(run.sessionKey);
  expect(engine.getSnapshot().run.idx).toBe(2);
  document.querySelector('.opt[data-i="0"]').click();await vi.waitFor(()=>expect(engine.getSnapshot().run.ans[2]).toBe(0));expect(engine.getSnapshot().run.ans[3]).toBeUndefined();
- document.querySelector('#next').click();await vi.waitFor(()=>expect(document.querySelector('.overlay')?.textContent).toContain('sin responder'));document.querySelector('.overlay [data-v="1"]').click();
+ await act(async()=>{document.querySelector('#next').click();await Promise.resolve();});
+ await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull());
+ expect(document.querySelector('.overlay').textContent).toContain('sin responder');
+ await act(async()=>{document.querySelector('.overlay [data-v="1"]').click();await Promise.resolve();});
  await waitText('Sesión interrumpida');expect(store.getSessions()[0].interrupted).toBe(true);
 });
 
