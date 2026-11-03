@@ -4,7 +4,8 @@ import { localDayStart } from '../../core/domain/study-training-session.js';
 import type { TrainingCalendarEventKind, TrainingDayFocus } from '../../core/domain/entities.js';
 import { MAX_TRAINING_CALENDAR_EVENTS, normalizeTrainingCalendarEvents } from '../../core/domain/study-training-events.js';
 import { ask, toast } from '../../shared/ui/dialog-actions.js';
-import { saveExportFile } from '../../shared/ui/download-file.js';
+import { saveExportBlob, saveExportFile } from '../../shared/ui/download-file.js';
+import { createAiStudyExportZip } from '../../shared/presentation/ai-study-export-zip.js';
 import { useStudyService, type SettingsServices, type SettingsSnapshot } from '../../shared/ui/study-services.js';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 
@@ -377,13 +378,13 @@ function useAiStudyExport(settings: SettingsServices) {
 
 function AiStudyExportSection({ settings }: { settings: SettingsServices }) {
   const ai = useAiStudyExport(settings);
-  return <section className="card" id="ai-study-export"><h2 className="h3">Exportar análisis para IA</h2><p>Prepara archivos locales para revisarlos o compartirlos manualmente. No se envía nada. El JSON puede contener preguntas y soluciones de examen. Las explicaciones incluidas deben estar revisadas.</p>
+  return <section className="card" id="ai-study-export"><h2 className="h3">Exportar análisis para IA</h2><p>Prepara un ZIP local para compartirlo con una IA. No se envía nada. El archivo puede contener preguntas y soluciones de examen. Las explicaciones incluidas deben estar revisadas.</p>
     <div className="row"><label>Desde <input type="date" value={ai.from} onChange={event => ai.setFrom(event.target.value)} /></label><label>Hasta <input type="date" value={ai.to} onChange={event => ai.setTo(event.target.value)} /></label></div>
     <AiModes value={ai.modes} onChange={ai.setModes} />
     <button className="btn sec" onClick={() => void ai.findSessions()}>Buscar sesiones completadas</button>
     <AiSessionChoices choices={ai.choices} selectedIds={ai.selectedIds} onChange={ai.setSelectedIds} />
-    <button className="btn" disabled={!ai.choices?.length} onClick={() => void ai.buildExport()}>Preparar vista previa y archivos</button><p role="status" aria-live="polite">{ai.message}</p>
-    {ai.artifact && <AiExportPreview artifact={ai.artifact} onDownload={(name, content, type) => saveExportFile(name, content, type)} />}
+    <button className="btn" disabled={!ai.choices?.length} onClick={() => void ai.buildExport()}>Preparar análisis para descargar</button><p role="status" aria-live="polite">{ai.message}</p>
+    {ai.artifact && <AiExportPreview artifact={ai.artifact} />}
     <hr /><p>El borrado afecta al historial detallado de este ámbito en el dispositivo y crea una marca para que las copias antiguas no lo restauren. Conserva estadísticas agregadas, falladas, sesiones históricas y el progreso de estudio. Las copias ya descargadas no se borran.</p><button className="btn danger" onClick={() => void ai.deleteHistory()}>Borrar historial detallado</button>
   </section>;
 }
@@ -458,14 +459,27 @@ function offlineDescription(snapshot: SettingsSnapshot): string {
   return `Descarga incompleta: faltan ${offline.missing.length} de ${offline.total} archivos. ${offline.missing.slice(0, 4).join(', ')}${offline.missing.length > 4 ? '…' : ''}`;
 }
 
-function AiExportPreview({ artifact, onDownload }: { artifact: AiExport; onDownload(name: string, content: string, type: string): void }) {
+function AiExportPreview({ artifact }: { artifact: AiExport }) {
+  const [zipPending, setZipPending] = useState(false);
   const sessions = artifact.manifest.parts.reduce((sum, part) => sum + part.sessionCount, 0);
   const attempts = artifact.manifest.parts.reduce((sum, part) => sum + part.attemptCount, 0);
   const events = artifact.manifest.parts.reduce((sum, part) => sum + part.eventCount, 0);
+  const downloadZip = async () => {
+    setZipPending(true);
+    try {
+      const archive = await createAiStudyExportZip(artifact);
+      const archiveBytes = new Uint8Array(archive.byteLength);
+      archiveBytes.set(archive);
+      saveExportBlob('tai-estudio-analisis.zip', new Blob([archiveBytes.buffer], { type: 'application/zip' }));
+    } catch {
+      toast('No se pudo preparar el ZIP del análisis.');
+    } finally {
+      setZipPending(false);
+    }
+  };
   return <div className="card ai-export-preview"><p>Vista previa: {count(artifact.manifest.partCount, 'parte JSON', 'partes JSON')} · {count(sessions, 'sesión', 'sesiones')} · {count(attempts, 'intento', 'intentos')} · {events} eventos · {(artifact.totalBytes / 1024).toLocaleString('es-ES', { maximumFractionDigits: 1 })} KB en total.</p>
     <ul>{artifact.manifest.parts.map(part => <li key={part.fileName}>{part.fileName}: {part.sessionCount} sesiones, {part.attemptCount} intentos, {part.eventCount} eventos · {part.sizeBytes.toLocaleString('es-ES')} bytes{part.oversized ? ' · supera el tamaño preferido y se conserva completa' : ''}</li>)}</ul>
     <p>Incluye métricas, tiempos y calidad, estados, confianza, descartes, marcas, contenido disponible de la misma revisión y explicaciones revisadas.</p>
-    <button className="btn sec" onClick={() => onDownload('tai-estudio-manifiesto.json', artifact.manifestText, 'application/json;charset=utf-8')}>Descargar manifiesto JSON</button> <button className="btn sec" onClick={() => onDownload('tai-estudio-informe.md', artifact.markdown, 'text/markdown;charset=utf-8')}>Descargar informe Markdown</button>
-    {artifact.partFiles.map(part => <button className="btn sec" key={part.fileName} onClick={() => onDownload(part.fileName, part.content, 'application/json;charset=utf-8')}>Descargar {part.fileName}</button>)}
+    <button className="btn" type="button" disabled={zipPending} onClick={() => void downloadZip()}>{zipPending ? 'Preparando ZIP…' : 'Descargar análisis completo en ZIP'}</button>
   </div>;
 }
