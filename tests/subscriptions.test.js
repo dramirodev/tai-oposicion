@@ -37,6 +37,27 @@ it('engine notifica creación, respuestas, reloj, navegación, revisión, pausa 
   off(); const before = seen.length; engine.clearLastResult();
   expect(seen).toHaveLength(before);
 });
+it('el reloj de una prueba no cuenta el tiempo que pasa con el diálogo de pausa abierto', () => {
+  const questions = JSON.parse(readFileSync('public/data/T1.01.json', 'utf8')).slice(0, 1);
+  const startedAt = 1_800_000_000_000;
+  const clock = vi.spyOn(Date, 'now').mockReturnValue(startedAt);
+  try {
+    engine.createRun({ kind:'test', feedback:false, items:questions, limit:10 });
+    engine.tickCurrentRun(startedAt + 1_000);
+    engine.tickCurrentRun(startedAt + 7_000);
+    clock.mockReturnValue(startedAt + 9_000);
+    engine.setRunPaused(true);
+    expect(engine.getSnapshot().run).toMatchObject({ paused:true, secs:8, since:null, base:8 });
+
+    engine.tickCurrentRun(startedAt + 20_000);
+    expect(engine.getSnapshot().run).toMatchObject({ paused:true, secs:8 });
+
+    clock.mockReturnValue(startedAt + 30_000);
+    engine.setRunPaused(false);
+    engine.tickCurrentRun(startedAt + 35_000);
+    expect(engine.getSnapshot().run).toMatchObject({ paused:false, secs:13, since:startedAt + 30_000, base:8 });
+  } finally { clock.mockRestore(); }
+});
 it('cada actualización conserva el snapshot anterior de la sesión', () => {
   const qs = JSON.parse(readFileSync('public/data/T1.01.json', 'utf8')).slice(0, 1);
   engine.createRun({ kind: 'sim', feedback: false, items: qs });

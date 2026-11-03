@@ -18,7 +18,7 @@ import { scopeTrainingRouteToSeenTopics } from '../../shared/navigation/training
 import { createPendingActionController } from '../../shared/ui/pending-action-controller.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
 import { PageMessage } from '../../shared/ui/PageMessage.js';
-import { resolvePlannedActivityAction } from './planning-controller.js';
+import { openPlannedTrainingActivity } from '../../shared/navigation/planned-training-activity.js';
 import { StudyCalendar } from './StudyCalendar.js';
 import { PlanningHorizon } from './PlanningHorizon.js';
 import { buildStudyHorizonSummary } from '../../core/domain/study-planning-horizon.js';
@@ -233,22 +233,11 @@ function usePlanningSessionActions(services: HomeServices, overview: HomeOvervie
   const [controller] = useState(() => createPendingActionController(lifetime, services.notify));
 
   const openActivity = (session: DailyTrainingSession) => {
-    const currentStep = session.activities[session.currentIndex];
-    if (!currentStep) return;
-    const sessionId = session.id ?? `training:${session.dateKey}`;
-    const reference = { sessionId, activityId: currentStep.id ?? `${sessionId}:activity:${session.currentIndex + 1}` };
-    const action = resolvePlannedActivityAction(session, [...new Set(services.seenTopics())]);
-    if (action.type === 'none') return;
-    if (action.type === 'notify') { services.notify(action.message); return; }
-    if (action.type === 'start-review') {
-      void controller.runAction('planning-review', () => services.startReview(action.topicIds, 'spacedReviews', reference));
-      return;
-    }
-    const [path, query = ''] = action.path.split('?');
-    const params = new URLSearchParams(query);
-    params.set('trainingSessionId', reference.sessionId);
-    params.set('trainingActivityId', reference.activityId);
-    void navigate(`${path}?${params}`);
+    openPlannedTrainingActivity(session, [...new Set(services.seenTopics())], {
+      navigate: path => { void navigate(path); },
+      startReview: (topicIds, activity, reference) => { void controller.runAction('planning-review', () => services.startReview(topicIds, activity, reference)); },
+      notify: services.notify,
+    });
   };
 
   const startSession = () => {

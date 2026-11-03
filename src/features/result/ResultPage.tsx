@@ -10,6 +10,7 @@ import { canonicalText, paintTextHighlight } from '../../shared/ui/text-highligh
 import { StudyMarkup } from '../../shared/ui/StudyMarkup.js';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 import { useStudyService, type ResultItem, type ResultReport } from '../../shared/ui/study-services.js';
+import { openPlannedTrainingActivity } from '../../shared/navigation/planned-training-activity.js';
 
 function useResultSnapshot() {
   const result = useStudyService('result');
@@ -99,6 +100,7 @@ export function ResultPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const advancedDailyActivity = useRef(false);
+  const [dailyActivityAdvanced, setDailyActivityAdvanced] = useState(false);
   const dailyTrainingActivity = searchParams.get('dailyTraining');
   const sessionId = searchParams.get('trainingSessionId'), activityId = searchParams.get('trainingActivityId');
   const trainingActivityReference = useMemo(() => sessionId && activityId ? { sessionId, activityId } : undefined, [sessionId, activityId]);
@@ -109,8 +111,18 @@ export function ResultPage() {
     if (advancedDailyActivity.current || !snapshot || snapshot.interrupted
       || !['topicTest', 'mixedTopicTest', 'failures', 'spacedReviews', 'activeRecall'].includes(activity || '')) return;
     advancedDailyActivity.current = true;
-    home.completeTrainingActivity(activity as 'topicTest' | 'mixedTopicTest' | 'failures' | 'spacedReviews', trainingActivityReference);
+    setDailyActivityAdvanced(!!home.completeTrainingActivity(activity as 'topicTest' | 'mixedTopicTest' | 'failures' | 'spacedReviews' | 'activeRecall', trainingActivityReference));
   }, [dailyTrainingActivity, home, snapshot, trainingActivityReference]);
+  const continueFromResult = () => {
+    if (!dailyTrainingActivity) { result.goHome(); return; }
+    if (!dailyActivityAdvanced) { void navigate('/planificacion'); return; }
+    const session = home.startTrainingActivity();
+    if (!session || !openPlannedTrainingActivity(session, [...new Set(home.seenTopics())], {
+      navigate: path => { void navigate(path); },
+      startReview: (topicIds, activity, reference) => { void home.startReview(topicIds, activity, reference); },
+      notify: home.notify,
+    })) void navigate('/planificacion');
+  };
   if (!snapshot) return <><h1>Resultado</h1><p className="note">No hay un resultado disponible. <Link to="/home">Volver al inicio</Link></p></>;
   return <>
     <h1>Resultado</h1>
@@ -125,7 +137,7 @@ export function ResultPage() {
       {snapshot.consulted > 0 && <div className="legend" id="consulted-count">{snapshot.consulted} {snapshot.consulted === 1 ? 'solución consultada' : 'soluciones consultadas'} · contadas como blanco, sin acierto ni fallo</div>}
       <div className="legend">{snapshot.accuracy === null ? 'Sin respuestas evaluables' : `${snapshot.accuracy} % de acierto sobre lo contestado`} · {Math.floor(snapshot.seconds / 60)}:{String(snapshot.seconds % 60).padStart(2, '0')}</div>
     </div>
-    <div className="row">{snapshot.secondPartAvailable && <button className="btn" onClick={() => result.continuePartTwo()}>Seguir con la parte 2 (supuesto)</button>}{snapshot.wrong > 0 && <button className="btn" onClick={() => result.repeatFailures()}>Repetir las falladas</button>}<button className="btn sec" onClick={() => dailyTrainingActivity ? void navigate('/planificacion') : result.goHome()}>{dailyTrainingActivity ? 'Continuar con el entrenamiento' : 'Inicio'}</button></div>
+    <div className="row">{snapshot.secondPartAvailable && <button className="btn" onClick={() => result.continuePartTwo()}>Seguir con la parte 2 (supuesto)</button>}{snapshot.wrong > 0 && <button className="btn" onClick={() => result.repeatFailures()}>Repetir las falladas</button>}<button className="btn sec" onClick={continueFromResult}>{dailyTrainingActivity ? dailyActivityAdvanced ? 'Continuar con el siguiente paso' : 'Volver a Planificación' : 'Inicio'}</button></div>
     {snapshot.analysis && <StudyMarkup html={snapshot.analysis} />}
     {snapshot.kind === 'sim' && !snapshot.interrupted && <section className="strategy-result mt-4"><h2>Analítica de estrategia</h2><p className="sub">Análisis del historial completado; las sesiones incompletas se excluyen y la muestra pequeña no genera recomendación.</p><button className="btn sec" disabled={strategyLoading} onClick={() => { setStrategyLoading(true); void result.loadStrategy().then(setStrategy).catch(() => setStrategy('No se pudo leer el historial detallado. El resultado de esta sesión sigue disponible.')).finally(() => setStrategyLoading(false)); }}>{strategyLoading ? 'Calculando…' : 'Calcular informe del último año'}</button>{strategy && <div aria-live="polite"><StudyMarkup html={strategy} /></div>}</section>}
     <h2>Por tema</h2><div className="card">{snapshot.topics.map(topic => <div className="line" key={topic.id}><span>{topic.id} {topic.name}</span><span>{topic.correct}/{topic.total}</span></div>)}</div>

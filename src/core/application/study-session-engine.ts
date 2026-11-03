@@ -123,8 +123,16 @@ export function toggleReviewQuestion(): boolean {
 export function setRunPaused(paused: boolean): boolean {
   const run = getSnapshot().run;
   if (!run) return false;
-  if (run.paused !== paused) recordAttempt(run, { type: paused ? 'pause' : 'resume' });
-  if (run.paused !== paused) updateActiveRun(nextRun => { nextRun.paused = paused; }, run.sessionKey);
+  if (run.paused === paused) return true;
+  const timestamp = Date.now();
+  const current = paused ? tickRun(run, timestamp) : run;
+  recordAttempt(run, { type: paused ? 'pause' : 'resume' });
+  updateActiveRun(nextRun => {
+    nextRun.secs = current.secs;
+    nextRun.base = current.secs;
+    nextRun.since = paused ? null : timestamp;
+    nextRun.paused = paused;
+  }, run.sessionKey);
   return true;
 }
 export function toggleDeferredBlank(): boolean {
