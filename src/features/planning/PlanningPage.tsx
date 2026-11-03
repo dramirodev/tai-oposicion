@@ -26,7 +26,7 @@ import { buildStudyHorizonSummary } from '../../core/domain/study-planning-horiz
 const activityPresentation: Record<TrainingActivity, { title: string; objective: string; instruction: string; resource: string }> = {
   newContent: {
     title: 'Estudio de tema nuevo', objective: 'Avanzar en el temario sin perder el hilo.',
-    instruction: 'Estudia el tema en papel. Antes de mirar los apuntes, intenta reconstruir lo que recuerdes; después marca el tema como visto y registra cómo te fue.', resource: 'Temario',
+    instruction: 'Abre el temario del tema y empieza por comprender un apartado con el material disponible; si no se entiende, consulta la explicación de ese material y trabaja un ejemplo. Después cierra el material, explica la idea con tus palabras y registra solo la cobertura que hayas hecho. TAI no aporta una explicación verificada cuando el material no la contiene.', resource: 'Temario y material de academia',
   },
   activeRecall: {
     title: 'Recuperación activa', objective: 'Recordar antes de volver a mirar la respuesta.',
@@ -334,7 +334,7 @@ function PlanningEvidence({ overview }: { overview: HomeOverview }) {
       ['Comprensión', 'No se mide directamente todavía; TAI no infiere comprensión de una marca de lectura.'],
       ['Examen', 'Los resultados de test y simulacros se muestran por separado en Progreso.'],
     ].map(([label, detail]) => <p className="m-0 grid content-start gap-[.3rem] border-t border-line pt-3" key={label}><b>{label}</b><span className="text-muted text-[length:var(--fs-s)]">{detail}</span></p>)}</div>
-    <p className="planning-caveat mt-4 mb-0 flex items-start gap-2 text-muted text-[length:var(--fs-s)]"><CircleHelp className="mt-[.15rem] flex-none" size="1rem" aria-hidden="true" /> La lectura de resúmenes y esquemas ocurre con tus materiales externos. TAI no dispone aquí de esos documentos ni registra su lectura; por eso la actividad pide recuperar primero y usar el material solo para corregir lagunas.</p>
+    <p className="planning-caveat mt-4 mb-0 flex items-start gap-2 text-muted text-[length:var(--fs-s)]"><CircleHelp className="mt-[.15rem] flex-none" size="1rem" aria-hidden="true" /> Para un tema nuevo, consulta primero el temario o material de academia disponible y declara solo la cobertura realizada; TAI no verifica la lectura ni añade explicaciones que no estén revisadas. En contenido ya estudiado, intenta recuperar antes de consultar para corregir una laguna.</p>
   </section>;
 }
 

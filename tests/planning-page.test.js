@@ -33,10 +33,14 @@ const overview = (trainingPlan = newTopicPlan, extra = {}) => ({
 });
 
 it('presenta el contenido nuevo del temario real sin simular un resumen que TAI no tiene', async () => {
+  const user = userEvent.setup();
   renderApp(createElement(PlanningPage), { services:servicesFor(overview(newTopicPlan)) });
   expect(await screen.findByRole('heading', { name:'Planificación de estudio' })).toBeInTheDocument();
   expect(screen.getByText('T1.01 · Organización del Estado')).toBeInTheDocument();
-  expect(screen.getByText(/TAI no dispone aquí de esos documentos/)).toBeInTheDocument();
+  expect(screen.getByText(/Para un tema nuevo, consulta primero el temario o material de academia disponible/)).toBeInTheDocument();
+  await user.click(screen.getByText('Instrucciones y motivo'));
+  expect(screen.getByText(/empieza por comprender un apartado con el material disponible/)).toBeInTheDocument();
+  expect(screen.queryByText(/Antes de mirar los apuntes, intenta reconstruir/)).not.toBeInTheDocument();
   expect(screen.getByRole('button', { name:/Comenzar sesión/ })).toBeInTheDocument();
   expect(screen.getAllByText('120 min').length).toBeGreaterThan(0);
 });
