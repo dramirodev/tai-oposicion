@@ -338,8 +338,9 @@ function PlanningEvidence({ overview }: { overview: HomeOverview }) {
   </section>;
 }
 
-function PaperTestLog({ overview, onRecord }: { overview: HomeOverview; onRecord(input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'>): boolean }) {
+function PaperTestLog({ overview, onRecord }: { overview: HomeOverview; onRecord(input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'>, existingId?: string): boolean }) {
   const [open, setOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [notice, setNotice] = useState('');
   const [attemptId, setAttemptId] = useState('');
   const [sourceLabel, setSourceLabel] = useState('');
@@ -367,10 +368,13 @@ function PaperTestLog({ overview, onRecord }: { overview: HomeOverview; onRecord
     if (doubtful !== undefined && answered !== undefined && doubtful > answered) { setFormError('Las respuestas con duda no pueden superar las contestadas.'); return; }
     if (duration !== undefined && (!Number.isInteger(duration) || duration < 1 || duration > 360)) { setFormError('La duración debe estar entre 1 y 360 minutos.'); return; }
     const end = Date.now();
+    const original = editingId ? segments.find(item => item.id === editingId) : undefined;
+    const completedAt = original?.completedAt ?? end;
     const input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'> = {
       attemptId: attemptId.trim() || `paper-test-${end}`,
-      segment: segments.filter(item => item.attemptId === attemptId.trim()).length + 1,
-      startedAt: end - (duration ?? 0) * 60_000, completedAt: end,
+      segment: editingId ? segments.find(item => item.id === editingId)?.segment ?? 1 : segments.filter(item => item.attemptId === attemptId.trim()).length + 1,
+      startedAt: original ? (duration !== undefined ? completedAt - duration * 60_000 : original.startedAt) : end - (duration ?? 0) * 60_000,
+      completedAt,
       ...(topicId.trim() ? { topicId: topicId.trim() } : {}),
       ...(sectionIds.trim() ? { sectionIds: [...new Set(sectionIds.split(',').map(value => value.trim()).filter(Boolean))] } : {}),
       ...(sourceLabel.trim() ? { sourceLabel: sourceLabel.trim() } : {}),
@@ -380,10 +384,19 @@ function PaperTestLog({ overview, onRecord }: { overview: HomeOverview; onRecord
       correctionStatus, ...(selfRating ? { selfRating } : {}),
     };
     setFormError('');
-    if (!onRecord(input)) return;
+    if (!onRecord(input, editingId ?? undefined)) return;
     setNotice('Tramo guardado como recuento agregado; no modifica tus resultados de preguntas.');
-    setQuestionCount(''); setAnsweredCount(''); setCorrectCount(''); setIncorrectCount(''); setBlankCount(''); setDoubtfulCount(''); setDurationMinutes('');
+    setEditingId(null); setAttemptId(''); setSourceLabel(''); setTopicId(''); setSectionIds(''); setQuestionCount(''); setAnsweredCount(''); setCorrectCount(''); setIncorrectCount(''); setBlankCount(''); setDoubtfulCount(''); setDurationMinutes(''); setCorrectionStatus('unavailable'); setSelfRating('');
   };
+  const edit = (item: PaperTestAttemptSegment) => {
+    setOpen(true); setEditingId(item.id); setAttemptId(item.attemptId); setSourceLabel(item.sourceLabel ?? ''); setTopicId(item.topicId ?? '');
+    setSectionIds(item.sectionIds?.join(', ') ?? ''); setQuestionCount(item.questionCount?.toString() ?? ''); setAnsweredCount(item.answeredCount?.toString() ?? '');
+    setCorrectCount(item.correctCount?.toString() ?? ''); setIncorrectCount(item.incorrectCount?.toString() ?? ''); setBlankCount(item.blankCount?.toString() ?? '');
+    setDoubtfulCount(item.doubtfulCount?.toString() ?? '');
+    const duration = Math.round((item.completedAt - item.startedAt) / 60_000); setDurationMinutes(duration > 0 ? duration.toString() : '');
+    setCorrectionStatus(item.correctionStatus); setSelfRating(item.selfRating ?? ''); setFormError('');
+  };
+  const cancelEdit = () => { setEditingId(null); setAttemptId(''); setSourceLabel(''); setTopicId(''); setSectionIds(''); setQuestionCount(''); setAnsweredCount(''); setCorrectCount(''); setIncorrectCount(''); setBlankCount(''); setDoubtfulCount(''); setDurationMinutes(''); setCorrectionStatus('unavailable'); setSelfRating(''); setFormError(''); };
   return <section className="my-5 min-w-0 rounded-[var(--r-xl)] border border-line p-5 max-[520px]:p-4 [background:var(--card)]" aria-labelledby="paper-test-log-title">
     <div className="flex flex-wrap items-center justify-between gap-3"><div><p className="planning-kicker mb-1 text-muted text-[length:var(--fs-s)]">Práctica fuera de TAI</p><h2 id="paper-test-log-title" className="m-0 text-[clamp(1.25rem,3vw,1.65rem)]">Tests en papel</h2></div><button className="btn min-h-11" type="button" onClick={() => setOpen(value => !value)} aria-expanded={open}>{open ? 'Cerrar registro' : 'Registrar tramo'}</button></div>
     <p className="mt-3 mb-0 text-muted text-[length:var(--fs-s)]">Anota solo lo útil para planificar. No hace falta copiar preguntas; estos recuentos no se mezclan con aciertos evaluados por TAI.</p>
@@ -398,9 +411,10 @@ function PaperTestLog({ overview, onRecord }: { overview: HomeOverview; onRecord
       <label className="grid gap-1">Corrección disponible<select className="input min-h-11" value={correctionStatus} onChange={event => setCorrectionStatus(event.target.value as PaperTestCorrectionStatus)}><option value="unavailable">Sin plantilla</option><option value="answer-key-only">Solo opción correcta</option><option value="reviewed">Revisado y corregido</option></select></label>
       <label className="grid gap-1">Recuerdo del tramo (autoevaluación)<select className="input min-h-11" value={selfRating} onChange={event => setSelfRating(event.target.value as PaperTestSelfRating | '')}><option value="">Sin valorar</option><option value="remembered">Lo recordé</option><option value="partial">Parcialmente</option><option value="not-remembered">No lo recordé</option></select></label>
       {formError && <p role="alert" className="col-span-full m-0">{formError}</p>}
-      <button className="btn min-h-11 col-span-full justify-self-start" type="submit">Guardar tramo</button>
+      {editingId && <p className="col-span-full m-0" role="status">Editando un tramo existente; se conserva su ID.</p>}
+      <div className="col-span-full flex flex-wrap gap-2"><button className="btn min-h-11" type="submit">{editingId ? 'Guardar cambios' : 'Guardar tramo'}</button>{editingId && <button className="btn min-h-11" type="button" onClick={cancelEdit}>Cancelar edición</button>}</div>
     </form>}
-    {segments.length > 0 && <ul className="mt-4 mb-0 grid gap-2 pl-5">{segments.slice(0,5).map(item => <li key={item.id}>{new Date(item.completedAt).toLocaleDateString('es-ES')} · {item.sourceLabel || 'Test en papel'}{item.questionCount !== undefined ? ` · ${item.questionCount} preguntas` : ''}{item.topicId ? ` · ${item.topicId}` : ''} · {item.correctionStatus === 'reviewed' ? 'corregido' : item.correctionStatus === 'answer-key-only' ? 'plantilla disponible' : 'sin plantilla'}</li>)}</ul>}
+    {segments.length > 0 && <ul className="mt-4 mb-0 grid gap-2 pl-5">{segments.slice(0,5).map(item => <li className="flex flex-wrap items-center justify-between gap-2" key={item.id}><span>{new Date(item.completedAt).toLocaleDateString('es-ES')} · {item.sourceLabel || 'Test en papel'}{item.questionCount !== undefined ? ` · ${item.questionCount} preguntas` : ''}{item.topicId ? ` · ${item.topicId}` : ''} · {item.correctionStatus === 'reviewed' ? 'corregido' : item.correctionStatus === 'answer-key-only' ? 'plantilla disponible' : 'sin plantilla'}{item.selfRating ? ` · recuerdo: ${item.selfRating === 'remembered' ? 'sí' : item.selfRating === 'partial' ? 'parcial' : 'no'}` : ''}</span><button type="button" className="btn min-h-11" onClick={() => edit(item)} aria-label={`Editar tramo ${item.segment} de ${item.sourceLabel || item.attemptId}`}>Editar</button></li>)}</ul>}
   </section>;
 }
 
@@ -454,8 +468,8 @@ export function PlanningPage() {
     trainingPlan: dailyTrainingPlanFromAgenda({ plan:overview.trainingPlan, agenda:weeklyAgenda, dateKey:todayKey, studiedTopicIds:seenTopicIds }),
   } : overview;
   const actions = usePlanningSessionActions(services, planningOverview, navigate, () => setReload(value => value + 1));
-  const recordPaperTestSegment = (input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'>): boolean => {
-    if (services.recordPaperTestSegment?.(input)) { setReload(value => value + 1); return true; }
+  const recordPaperTestSegment = (input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'>, existingId?: string): boolean => {
+    if (services.recordPaperTestSegment?.(input, existingId)) { setReload(value => value + 1); return true; }
     services.notify('No se pudo guardar este tramo en el dispositivo. Comprueba el espacio disponible y que los recuentos sean coherentes.');
     return false;
   };

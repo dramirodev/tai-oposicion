@@ -55,7 +55,7 @@ it('registra un tramo de test en papel como evidencia agregada sin transcribir p
   await user.type(screen.getByLabelText('Duración aproximada en minutos'), '30');
   await user.selectOptions(screen.getByLabelText('Corrección disponible'), 'answer-key-only');
   await user.click(screen.getByRole('button', { name:'Guardar tramo' }));
-  expect(recordPaperTestSegment).toHaveBeenCalledWith(expect.objectContaining({ attemptId:'test-personal-1', segment:1, questionCount:20, answeredCount:18, correctCount:12, incorrectCount:6, blankCount:2, correctionStatus:'answer-key-only', startedAt:expect.any(Number), completedAt:expect.any(Number) }));
+  expect(recordPaperTestSegment).toHaveBeenCalledWith(expect.objectContaining({ attemptId:'test-personal-1', segment:1, questionCount:20, answeredCount:18, correctCount:12, incorrectCount:6, blankCount:2, correctionStatus:'answer-key-only', startedAt:expect.any(Number), completedAt:expect.any(Number) }), undefined);
   const saved = recordPaperTestSegment.mock.calls[0][0];
   expect(saved.completedAt - saved.startedAt).toBe(30 * 60_000);
   expect(await screen.findByText(/no modifica tus resultados de preguntas/)).toBeInTheDocument();
@@ -72,6 +72,19 @@ it('explica y no guarda recuentos contradictorios del test en papel', async () =
   await user.click(screen.getByRole('button', { name:'Guardar tramo' }));
   expect(await screen.findByRole('alert')).toHaveTextContent('Contestadas y en blanco deben sumar');
   expect(recordPaperTestSegment).not.toHaveBeenCalled();
+});
+
+it('edita el tramo existente conservando su identidad y fecha original', async () => {
+  const user = userEvent.setup();
+  const completedAt = Date.now() - 3_600_000;
+  const segment = { id:'attempt-1:segment:1', attemptId:'attempt-1', segment:1, dateKey:new Date(completedAt).toLocaleDateString('en-CA'), startedAt:completedAt - 20 * 60_000, completedAt, updatedAt:completedAt, sourceLabel:'Test en papel', questionCount:10, answeredCount:10, correctCount:7, incorrectCount:3, correctionStatus:'reviewed' };
+  const recordPaperTestSegment = vi.fn(() => ({ ...segment, sourceLabel:'Test revisado' }));
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(newTopicPlan, { paperTestAttempts:[segment] }), { home:{ recordPaperTestSegment } }) });
+  await user.click(await screen.findByRole('button', { name:'Editar tramo 1 de Test en papel' }));
+  await user.clear(screen.getByLabelText('Material o procedencia'));
+  await user.type(screen.getByLabelText('Material o procedencia'), 'Test revisado');
+  await user.click(screen.getByRole('button', { name:'Guardar cambios' }));
+  expect(recordPaperTestSegment).toHaveBeenCalledWith(expect.objectContaining({ attemptId:'attempt-1', segment:1, completedAt, sourceLabel:'Test revisado' }), segment.id);
 });
 
 it('permite iniciar el paso de tema nuevo aunque todavía no haya temas vistos', async () => {

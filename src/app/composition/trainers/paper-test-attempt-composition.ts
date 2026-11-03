@@ -15,10 +15,12 @@ export function createPaperTestAttemptComposition(dependencies: {
     mergeRemote(value: unknown): boolean {
       return Array.isArray(value) && mergePaperTestAttemptSegmentRecords(dependencies.accountId(), value);
     },
-    record(input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'>): PaperTestAttemptSegment | null {
+    record(input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'>, existingId?: string): PaperTestAttemptSegment | null {
       const now = dependencies.now();
-      const segment = createPaperTestAttemptSegment({ ...input, id:`${input.attemptId}:segment:${input.segment}` }, now);
-      if (!segment || !recordPaperTestAttemptSegment(dependencies.accountId(), segment)) return null;
+      const accountId = dependencies.accountId();
+      if (existingId && !get().some(item => item.id === existingId)) return null;
+      const segment = createPaperTestAttemptSegment({ ...input, id:existingId ?? `${input.attemptId}:segment:${input.segment}` }, now);
+      if (!segment || !recordPaperTestAttemptSegment(accountId, segment, !!existingId)) return null;
       dependencies.push?.(get());
       return segment;
     },

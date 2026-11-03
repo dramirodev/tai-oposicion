@@ -20,10 +20,11 @@ export function mergePaperTestAttemptSegmentRecords(accountId: string | null, in
   return true;
 }
 
-export function recordPaperTestAttemptSegment(accountId: string | null, segment: PaperTestAttemptSegment): boolean {
+export function recordPaperTestAttemptSegment(accountId: string | null, segment: PaperTestAttemptSegment, allowUpdate = false): boolean {
   if (!isPaperTestAttemptSegment(segment)) return false;
   const current = readPaperTestAttemptSegments(accountId);
-  if (current.some(item => item.id === segment.id)) return false;
+  const previous = current.find(item => item.id === segment.id);
+  if (previous) return allowUpdate && segment.updatedAt > previous.updatedAt && mergePaperTestAttemptSegmentRecords(accountId, [segment]);
   if (current.length >= MAX_PAPER_TEST_SEGMENTS) return false;
   return mergePaperTestAttemptSegmentRecords(accountId, [segment]);
 }

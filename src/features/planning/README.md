@@ -521,6 +521,12 @@ El formulario ahora permite anotar duración aproximada (1–360 minutos), repre
 
 La prueba de sincronización fue añadida en `tests/sync.test.js`; el check completo posterior pasó con 916 pruebas/27 omitidas (179 archivos pasaron/1 omitido). Se mantiene la misma limitación de Emulator por Java y ausencia de validación remota.
 
+### Edición segura de tramos (2026-11-03)
+
+Se pueden corregir los campos de cualquiera de los cinco tramos recientes. La operación conserva ID estable y fecha de realización, aumenta `updatedAt`, sincroniza la versión más reciente y exige que el tramo exista antes de aceptar una edición; no se transforma un ID desconocido en alta. La UI muestra explícitamente que se está editando, conserva el registro de fecha y permite cancelar limpiando el formulario. La duración, si se edita, sigue siendo aproximada. El listado muestra el autoinforme como tal.
+
+Pruebas: composición verifica actualización por ID único/fecha original y rechazo de ID inexistente; prueba de Planificación cubre cargar, editar y guardar el mismo segmento. Foco composición/página/adaptador/sync: 46/46. `npm run check` pasa con 920 pruebas/27 omitidas (180 archivos/1 omitido); `npm run build` y `git diff --check` pasan. Persistencia sigue limitada a 300 segmentos y aún no hay borrado individual; no se toca historial objetivo. Los avisos existentes de `window.scrollTo` en jsdom, anotaciones Zod/Rollup y chunks Firebase/C++ >500 kB permanecen.
+
 ### Uso limitado de la autoevaluación en papel para priorizar (2026-11-03)
 
 Planificación incluye como señal de refuerzo la última autoevaluación asociada a un tema en los segmentos del registro en papel, solo si ese tema está marcado como estudiado. `partial` y `not-remembered` pueden elevar su prioridad por hasta 30 días; una autoevaluación posterior `remembered` la sustituye, y una fecha futura/no válida no se considera. Los recuentos de respuestas y la mera existencia del registro no influyen. La señal comparte la ventana heurística ya usada por `PaperRecallAssessment`, se comunica como autoinforme y no cambia cobertura, dominio, estadísticas objetivas ni produce una nota. Es una priorización de producto que deberá observarse con uso real, no una recomendación científica ni un repaso fechado: sigue limitada por las actividades disponibles y por las reglas del plan.
