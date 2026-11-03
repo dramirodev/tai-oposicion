@@ -36,6 +36,23 @@ def question_revision(statement: str, options: list[str]) -> str:
     return f"fnv1a-{value:08x}"
 
 
+def is_exact_question_on_pages(statement: str, options: list[str], page_texts: list[str], page_index: int) -> bool:
+    """Require the full stem and all options in order near the stem's physical page."""
+    first_page = max(0, page_index - 1)
+    last_page = min(len(page_texts), page_index + 2)
+    text = "".join(page_texts[first_page:last_page])
+    stem_index = text.find(normalized_stem(statement))
+    if stem_index < 0:
+        return False
+    cursor = stem_index + len(normalized_stem(statement))
+    for option in options:
+        option_index = text.find(normalized_stem(option), cursor)
+        if option_index < 0:
+            return False
+        cursor = option_index + len(normalized_stem(option))
+    return True
+
+
 def build_candidates(
     curriculum: dict[str, Any], question_root: Path, source_root: Path, pdftotext: str,
 ) -> dict[str, Any]:
@@ -93,7 +110,8 @@ def build_candidates(
                 "contentRevision": revision, "sources": [],
             })
             for source in sources:
-                pages = [index + 1 for index, text in enumerate(source["pageText"]) if stem in text]
+                pages = [index + 1 for index, text in enumerate(source["pageText"])
+                         if stem in text and is_exact_question_on_pages(statement, options, source["pageText"], index)]
                 if pages:
                     candidate["sources"].append({
                         "testMaterialTopicId": source["topicId"], "path": source["path"],
@@ -122,7 +140,7 @@ def build_candidates(
             output[question_id] = compact_matches
     return {
         "schemaVersion": 1,
-        "matching": "exact question statement after NFKC/casefold/whitespace removal; punctuation retained",
+        "matching": "exact question statement plus every option in order after NFKC/casefold/whitespace removal; punctuation retained; options may continue on adjacent physical pages",
         "materials": material_references,
         "questions": output,
         "testMaterialCount": test_material_count,

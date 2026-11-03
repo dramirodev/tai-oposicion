@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.build_academy_question_sources import build_candidates, normalized_stem, question_revision
+from scripts.build_academy_question_sources import build_candidates, is_exact_question_on_pages, normalized_stem, question_revision
 
 
 class AcademyQuestionSourceCandidateTests(unittest.TestCase):
@@ -19,7 +19,7 @@ class AcademyQuestionSourceCandidateTests(unittest.TestCase):
         self.pdftotext = self.root / "pdftotext"
         self.pdftotext.write_text(
             "#!/usr/bin/env python3\n"
-            "print('Portada\\fIndique el número de veces: for (i=0; i>0;)\\fIndique el número de veces: for (i=0; i>0;)')\n",
+            "print('Portada\\fIndique el número de veces: for (i=0; i>0;) a) 0 b) 1\\fIndique el número de veces: for (i=0; i>0;) a) 0 b) 1')\n",
             encoding="utf-8",
         )
         self.pdftotext.chmod(0o755)
@@ -36,6 +36,15 @@ class AcademyQuestionSourceCandidateTests(unittest.TestCase):
             "Indique el número de veces que se ejecuta el cuerpo del siguiente bucle: int salto = 3; for (int i=0; i>0; i*=salto) System.out.println(i);",
             ["16.", "17.", "0.", "18."],
         ), "fnv1a-293085aa")
+
+    def test_rejects_reused_generic_stem_when_options_do_not_match(self):
+        pages = ["", normalized_stem("Señale la respuesta correcta: a) Opción X b) Opción Y"), ""]
+        self.assertFalse(is_exact_question_on_pages("Señale la respuesta correcta:", ["Otra opción A", "Otra opción B"], pages, 1))
+        self.assertTrue(is_exact_question_on_pages("Señale la respuesta correcta:", ["Opción X", "Opción Y"], pages, 1))
+
+    def test_accepts_exact_options_continuing_on_adjacent_physical_page(self):
+        pages = ["", normalized_stem("¿Qué resultado? a) Uno"), normalized_stem("b) Dos"), ""]
+        self.assertTrue(is_exact_question_on_pages("¿Qué resultado?", ["Uno", "Dos"], pages, 1))
 
     def test_records_all_exact_pages_and_material_hash_without_section_assignment(self):
         question = {"i": "q-1", "t": "T3.03", "q": "Indique el número de veces: for (i=0; i>0;)", "a": ["0", "1"]}
