@@ -18,11 +18,39 @@ import { forecastCardRetention } from '../../../adapters/local/fsrs-card-schedul
 import type { StudyQuestionMetaEntry } from '../../../core/domain/study-catalog.js';
 import type { LegacySession } from '../../../features/stats/analytics-mapper.js';
 import { toLegacyStatsSession } from '../../../features/stats/stats-session-mapper.js';
+import { localAttemptRepository } from '../../../adapters/local/attempt-repository.js';
+import type { AttemptRepository } from '../../../core/ports/AttemptRepository.js';
+import { academyCurriculumTopicLoaders } from '../../../core/domain/academy-curriculum.generated.js';
+import { publishedAcademyQuestionSectionManifest } from '../../../core/domain/academy-question-section-map.published.js';
+import { isAcademyQuestionSectionManifest } from '../../../core/domain/academy-question-section-map.js';
+import { loadAcademySectionPerformance } from '../../../core/application/stats/load-academy-section-performance.js';
+import type { AcademyCurriculumTopic } from '../../../core/domain/academy-curriculum-types.js';
+import type { Question } from '../../../core/domain/entities.js';
+
+interface AcademySectionPerformanceOptions {
+  repository?: Pick<AttemptRepository, 'getScopePage'>;
+  manifest?: unknown;
+  loadQuestions?: (ids: readonly string[]) => Promise<readonly Question[]>;
+  loadTopic?: (topicId: string) => Promise<AcademyCurriculumTopic | undefined>;
+}
 
 interface StatsActions { go(path: string): void; startRun(run: RunCfg): boolean; startRepaso(): void; trapTest(count: number, traps: number[]): Promise<{ items: QuestionRecord[] }>; }
 
-export function createStatsServices(actions: StatsActions, progressRepository: ProgressRepository, studyProgress: StudyProgressGateway): StatsServices {
+export function createStatsServices(actions: StatsActions, progressRepository: ProgressRepository, studyProgress: StudyProgressGateway, sectionPerformanceOptions: AcademySectionPerformanceOptions = {}): StatsServices {
   const dominioTemas = createTopicMasteryComposition({ progressRepository, accountId: studyProgress.accountId, questionIdsForTopic: topicId => studyQuestionCatalog.getMetadataSnapshot()?._by[topicId] || [], now: studyQuestionCatalog.now });
+  const publishedManifest = sectionPerformanceOptions.manifest ?? publishedAcademyQuestionSectionManifest;
+  const loadSectionPerformance = () => loadAcademySectionPerformance({
+    manifest: publishedManifest,
+    accountId: studyProgress.accountId,
+    repository: sectionPerformanceOptions.repository ?? localAttemptRepository,
+    loadQuestions: sectionPerformanceOptions.loadQuestions ?? (async ids => (await studyQuestionCatalog.getQuestions([...ids])).flatMap(row => [{
+      id:row.i, topicId:row.t, origin:row.o, statement:row.q, options:row.a, correctIndex:row.c,
+    }])),
+    loadTopic: sectionPerformanceOptions.loadTopic ?? (async topicId => {
+      const loader = academyCurriculumTopicLoaders[topicId];
+      return loader ? (await loader()).academyCurriculumTopic : undefined;
+    }),
+  });
   let sessionsForComparison: LegacySession[] = [];
   return {
     async load(): Promise<StatsSnapshot> {
@@ -69,6 +97,8 @@ export function createStatsServices(actions: StatsActions, progressRepository: P
       const questions = await studyQuestionCatalog.getQuestions([...new Set(questionIds)]);
       return questions.map(question => ({ id: question.i, statement: question.q }));
     },
+    getApprovedSectionLinkCount() { return isAcademyQuestionSectionManifest(publishedManifest) ? publishedManifest.links.length : -1; },
+    loadAcademySectionPerformance: loadSectionPerformance,
     async loadWeekly(filter) { const sessions = (await progressRepository.getSessions()).map(toLegacyStatsSession); return aggregateWeeks(sessions, { tema: filter.topic, tipo: filter.type, weeks: filter.weeks, now: studyQuestionCatalog.now() }).map(week => ({ start: week.start, n: week.n, ok: week.ok, secs: week.secs, sessions: week.ses, accuracy: week.acierto, secondsPerQuestion: week.segPreg })); },
     loadStudyActivity,
     async loadStrategy(days) { return renderStrategyReport(await loadStrategyReportForPeriod(days)); },

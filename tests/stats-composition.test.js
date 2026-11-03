@@ -25,6 +25,7 @@ vi.mock('../src/app/composition/stats/strategy-composition.js', () => ({
 vi.mock('../src/features/stats/strategy-view.js', () => ({ renderStrategyReport: mocks.renderStrategyReport }));
 
 import { createStatsServices } from '../src/app/composition/stats/stats-composition.js';
+import { publishedAcademyQuestionSectionManifest } from '../src/core/domain/academy-question-section-map.published.js';
 
 describe('stats composition boundaries', () => {
   beforeEach(() => {
@@ -77,5 +78,19 @@ describe('stats composition boundaries', () => {
     services.savePreference('evolution', { mode: 'tiempo', filter: 'g', weeks: 8, table: true });
 
     expect(preferences).toEqual({ dmord: 'frios', evo: { m: 'tiempo', f: 'g', w: 8, tabla: true }, training: { introductionDay: 4 } });
+  });
+
+  it('keeps section statistics explicitly empty until the shared editorial manifest has approved links', async () => {
+    const getScopePage = vi.fn();
+    const services = createStatsServices(
+      { go: vi.fn(), startRun: vi.fn(), startRepaso: vi.fn(), trapTest: vi.fn() },
+      {},
+      { accountId: () => 'user-1', getPreferences: () => ({}), updatePreferences: () => {} },
+      { repository: { getScopePage }, manifest: publishedAcademyQuestionSectionManifest },
+    );
+
+    expect(services.getApprovedSectionLinkCount()).toBe(0);
+    await expect(services.loadAcademySectionPerformance()).resolves.toEqual({ status: 'no-approved-links', rows: [] });
+    expect(getScopePage).not.toHaveBeenCalled();
   });
 });

@@ -234,6 +234,8 @@ export interface StatsServices {
   compareSimulations(firstId: string, secondId: string): StatsComparison | null;
   loadWeekly(filter: { topic?: string; type?: string; weeks: number }): Promise<readonly StatsWeek[]>;
   loadQuestionStatements(questionIds: readonly string[]): Promise<readonly { id: string; statement: string }[]>;
+  getApprovedSectionLinkCount(): number;
+  loadAcademySectionPerformance(): Promise<import('../../core/application/stats/academy-section-performance.js').AcademySectionPerformanceResult>;
   loadStudyActivity(weeks: number): Promise<{ questionEvolution: readonly { start: number; seen: number; correct: number; wrong: number; unknown: number }[]; observedStudyTime: ObservedStudyTime }>;
   loadStrategy(days: number): Promise<string>;
   practiceTopics(ids?: readonly string[]): void; reviewDue(): void; practiceFailures(): void; practiceTrap(id: string): Promise<'started' | 'empty'>; practiceSlow(onlyCorrect: boolean): Promise<'started' | 'empty'>;
