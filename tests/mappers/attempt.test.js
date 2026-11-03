@@ -21,6 +21,14 @@ describe('attemptMapper', () => {
     expect(attemptMapper.toDto(domain.value)).toEqual(dto);
   });
 
+  it('roundtrips immediate retry linkage while keeping legacy attempts compatible', () => {
+    const retry = { ...attempt, id: 'retry-attempt:attempt-1', sessionId: 'retry-session:attempt-1', exposureKind: 'immediate-retry', retryOfAttemptId: attempt.id };
+    const dto = attemptMapper.toDto(retry);
+    expect(attemptMapper.toDomain(JSON.parse(JSON.stringify(dto)))).toEqual({ ok: true, value: retry });
+    const { exposureKind: _exposureKind, retryOfAttemptId: _retryOfAttemptId, ...legacy } = attempt;
+    expect(attemptMapper.toDomain({ schemaVersion: 1, ...legacy })).toEqual({ ok: true, value: legacy });
+  });
+
   it('roundtrips typed event payloads and optional monotonic timestamps', () => {
     const event = {
       id: 'event-5', attemptId: 'attempt-1', sequence: 5, type: 'add-highlight', at: 200, monotonicAt: 80,
@@ -30,6 +38,19 @@ describe('attemptMapper', () => {
     const domain = attemptMapper.eventToDomain(JSON.parse(JSON.stringify(dto)));
     expect(domain).toEqual({ ok: true, value: event });
     expect(attemptMapper.eventToDto(domain.value)).toEqual(dto);
+  });
+
+  it('roundtrips the post-correction self-assessment event', () => {
+    const event = { id: 'event-6', attemptId: 'attempt-1', sequence: 6, type: 'self-assess', at: 250, payload: { value: 'could-explain' } };
+    const dto = attemptMapper.eventToDto(event);
+    expect(attemptMapper.eventToDomain(JSON.parse(JSON.stringify(dto)))).toEqual({ ok: true, value: event });
+  });
+
+  it('reads legacy attempt DTOs without the optional self-assessment', () => {
+    const { selfAssessment: _selfAssessment, ...legacy } = { ...attempt, selfAssessment: 'needs-help' };
+    expect(attemptMapper.toDomain({ schemaVersion: 1, ...legacy })).toEqual({ ok: true, value: attempt });
+    const assessed = { ...attempt, selfAssessment: 'needs-help' };
+    expect(attemptMapper.toDomain({ schemaVersion: 1, ...assessed })).toEqual({ ok: true, value: assessed });
   });
 
   it('returns an explicit mapping failure for invalid state and event payloads', () => {

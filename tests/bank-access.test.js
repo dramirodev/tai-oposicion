@@ -6,7 +6,7 @@ import { SAMPLE_SIZE, buildSample, pickSample } from '../scripts/build_sample.mj
 import { loadLocal } from '../scripts/publish_bank.mjs';
 
 const read = file => JSON.parse(readFileSync(file, 'utf8'));
-const topicFiles = readdirSync('public/data').filter(file => /^T\d\.\d\d\.json$/.test(file)).sort();
+const topicFiles = readdirSync('public/data').filter(file => /^T\d+\.\d{2}\.json$/.test(file)).sort();
 const globToRegExp = glob => new RegExp('^' + glob.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*\*/g, '\0').replace(/\*/g, '[^/]*').replace(/\0/g, '.*') + '$');
 const hostingIgnored = path => read('firebase.json').hosting.ignore.some(glob => globToRegExp(glob).test(path));
 

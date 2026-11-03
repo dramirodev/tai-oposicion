@@ -59,6 +59,31 @@ describe('transiciones de intentos', () => {
     expect(answer.attempt.response).toBeNull();
   });
 
+  it('guarda autoevaluación después de corregir sin alterar la respuesta ni el resultado puntuado', () => {
+    const answered = applyAttemptAction(attempt(), { ...action('answer'), optionIndex: 2, outcome: 'wrong' });
+    const assessed = applyAttemptAction(answered.attempt, { ...action('self-assess', 2), value: 'needs-help' });
+    expect(assessed).toMatchObject({ accepted: true, progressEffect: 'none', event: { type: 'self-assess', payload: { value: 'needs-help' } } });
+    expect(assessed.attempt).toMatchObject({ state: 'answered', response: 2, outcome: 'wrong', selfAssessment: 'needs-help' });
+    expect(assessed.attempt.terminalEventId).toBe(answered.attempt.terminalEventId);
+    const revised = applyAttemptAction(assessed.attempt, { ...action('self-assess', 3), value: 'could-explain' });
+    expect(revised.attempt.selfAssessment).toBe('could-explain');
+    expect(revised.progressEffect).toBe('none');
+  });
+
+  it('registra un reintento inmediato como respuesta sin efecto de progreso', () => {
+    const retry = { ...attempt(), exposureKind: 'immediate-retry', retryOfAttemptId: 'attempt-original' };
+    const answered = applyAttemptAction(retry, { ...action('answer'), optionIndex: 1, outcome: 'correct' });
+    expect(answered).toMatchObject({ accepted: true, progressEffect: 'none' });
+    expect(answered.attempt).toMatchObject({ exposureKind: 'immediate-retry', retryOfAttemptId: 'attempt-original', state: 'answered' });
+    expect(answered.attempt.terminalEventId).toBe('event-1');
+  });
+
+  it('rechaza autoevaluación antes de corregir o en modo simulacro', () => {
+    expect(applyAttemptAction(attempt(), { ...action('self-assess'), value: 'could-explain' })).toMatchObject({ accepted: false, reason: 'action-not-available', progressEffect: 'none' });
+    const simulation = applyAttemptAction(attempt('simulation'), { ...action('answer'), optionIndex: 1, outcome: 'correct' });
+    expect(applyAttemptAction(simulation.attempt, { ...action('self-assess', 2), value: 'could-explain' })).toMatchObject({ accepted: false, reason: 'action-not-available', progressEffect: 'none' });
+  });
+
   it('no permite revelar la solución de una pregunta de simulacro ni una ya respondida', () => {
     const simulation = applyAttemptAction(attempt('simulation'), action('mark-pending'));
     const deniedSimulation = applyAttemptAction(simulation.attempt, action('reveal', 2));

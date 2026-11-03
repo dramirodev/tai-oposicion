@@ -27,6 +27,8 @@ export interface CodeExplanation {
 }
 
 export type ExplanationLookup =
+  | { status: 'loading' }
   | { status: 'current'; explanation: CodeExplanation }
   | { status: 'outdated' }
-  | { status: 'missing' };
+  | { status: 'missing' }
+  | { status: 'unavailable' };

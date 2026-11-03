@@ -8,7 +8,7 @@ export function scopeTrainingRouteToSeenTopics(route: string, seenTopics: readon
 
   const seen = new Set(seenTopics);
   const allowedTopics = [...new Set((params.get('trainingTopics') || '').split(',')
-    .filter(topicId => /^T[1-4]\.\d{2}$/.test(topicId) && seen.has(topicId)))];
+    .filter(topicId => !!topicId && seen.has(topicId)))];
   if (!allowedTopics.length) return null;
 
   params.set('trainingTopics', allowedTopics.join(','));

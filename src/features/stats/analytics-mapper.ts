@@ -2,10 +2,13 @@ import { countReviewsByDay } from '../../core/domain/spaced-repetition.js';
 import { estimateQuickQuestionCount } from '../../core/domain/selection.js';
 import { countFailureReasons, countLuckyCorrectAnswers, summarizeReadingSpeedFailures } from '../../core/domain/question-performance.js';
 import { aggregateWeeklyStudy, buildSimulationHistory, compareStudySessions, slowestQuestions, type StudySessionSummary } from '../../core/domain/study-analytics.js';
+import type { SimulationScoringPolicy } from '../../core/domain/simulation-scoring.js';
 
 type LegacyStats = Readonly<Record<string, readonly number[]>>;
 export interface LegacySession {
   id: string; ts: number; kind: 'sim' | 'rev' | 'test'; n: number; a: number; f: number; b: number; secs: number; nota: number;
+  scorePending?: boolean;
+  scoringPolicy?: SimulationScoringPolicy;
   temas?: Readonly<Record<string, readonly [number, number]>>;
   tipos?: Readonly<Record<string, readonly [number, number]>>;
   titulo?: string;
@@ -23,6 +26,8 @@ function toStudySession(session: LegacySession): StudySessionSummary {
     questionCount: session.n,
     correctCount: session.a,
     score: session.nota,
+    ...(session.scorePending ? { scorePending: true } : {}),
+    ...(session.scoringPolicy ? { scoringPolicyKey: `v${session.scoringPolicy.version}:${JSON.stringify([session.scoringPolicy.correctPoints, session.scoringPolicy.wrongPenalty, session.scoringPolicy.blankPoints])}` } : {}),
     durationSeconds: session.secs,
     byTopic: breakdown(session.temas),
     byQuestionType: breakdown(session.tipos),

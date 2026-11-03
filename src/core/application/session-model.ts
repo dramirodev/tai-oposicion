@@ -1,6 +1,9 @@
 import type { SessionKind } from '../domain/entities.js';
-import type { Confidence, Highlight } from '../domain/attempts/transitions.js';
+import type { Confidence, Highlight, SelfAssessment } from '../domain/attempts/transitions.js';
+import type { ExposureKind } from '../domain/attempts/transitions.js';
 import type { QuestionRecord } from '../domain/question-record.js';
+import type { TrainingActivityReference } from '../domain/study-training-session.js';
+import type { SimulationScoringPolicy } from '../domain/simulation-scoring.js';
 
 export interface RunCfg {
   kind: SessionKind;
@@ -10,6 +13,10 @@ export interface RunCfg {
   limit?: number;
   porTiempo?: boolean;
   supTexto?: string;
+  exposureKind?: ExposureKind;
+  retryOfAttemptId?: string;
+  scoringPolicy?: SimulationScoringPolicy;
+  milestoneEventId?: string;
 }
 
 export interface Run extends RunCfg {
@@ -22,6 +29,7 @@ export interface Run extends RunCfg {
   paused: boolean;
   studyStates?: ('unseen' | 'pending' | 'answered' | 'revealed')[];
   confidences?: Confidence[];
+  selfAssessments?: (SelfAssessment | undefined)[];
   discardedOptions?: number[][];
   highlights?: Highlight[][];
   since?: number | null;
@@ -37,6 +45,8 @@ export interface Run extends RunCfg {
   attemptSessionId?: string;
   attemptIds?: string[];
   attemptTrackingPaused?: boolean;
+  trainingActivityReference?: TrainingActivityReference;
+  trainingActivity?: import('../domain/entities.js').TrainingActivity;
 }
 
 export interface CompletedStudyRun {
@@ -55,11 +65,17 @@ export interface CompletedStudyRun {
   tipos: Record<string, [number, number]>;
   fails: string[];
   titulo: string;
+  scorePending?: boolean;
+  scoringPolicy?: SimulationScoringPolicy;
+  milestoneEventId?: string;
 }
 
 export interface LastResult {
   ses: CompletedStudyRun;
   items: QuestionRecord[];
+  feedback?: boolean;
+  exposureKind?: ExposureKind;
+  attemptIds?: string[];
   ans: (number | undefined)[];
   times: (number | undefined)[];
   limit: number;
@@ -67,6 +83,7 @@ export interface LastResult {
   confidences?: Confidence[];
   discardedOptions?: number[][];
   highlights?: Highlight[][];
+  scoringPolicy?: SimulationScoringPolicy;
 }
 
 export interface EngineSnapshot {

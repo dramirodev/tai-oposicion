@@ -29,7 +29,7 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
   await page.getByLabel('Tema que estás introduciendo esta semana').selectOption('T1.02');
   await page.goto('/#/planificacion');
   await page.getByRole('button', { name:'Comenzar sesión' }).click();
-  await expect(page).toHaveURL(/#\/temario\?topic=T[1-4]\.\d{2}&dailyTraining=newContent/);
+  await expect(page).toHaveURL(/#\/temario\?topic=T\d+\.\d{2}&dailyTraining=newContent/);
   const firstTopic = new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('topic');
   expect(firstTopic).toBeTruthy();
   await page.locator(`[data-t="${firstTopic}"]`).click({ noWaitAfter:true });

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { isSimulationScoringPolicy } from '../../../core/domain/simulation-scoring.js';
 
 const numericValue = z.unknown().refine((value): value is number => typeof value === 'number');
 
@@ -19,4 +20,7 @@ export const sessionRecordSchema = z.strictObject({
   titulo: z.string(),
   interrupted: z.unknown().optional(),
   porTiempo: z.unknown().optional(),
+  scorePending: z.boolean().optional(),
+  scoringPolicy: z.custom(isSimulationScoringPolicy).optional(),
+  milestoneEventId: z.string().regex(/^[A-Za-z0-9_.:-]{1,100}$/).optional(),
 });

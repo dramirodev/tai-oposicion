@@ -2,10 +2,14 @@ import type { TrainingActivity } from '../../../core/domain/entities.js';
 import type { DailyTrainingPlan } from '../../../core/domain/study-training-plan.js';
 import {
   completeTrainingSessionActivity,
+  beginTrainingSessionBreak,
+  endTrainingSessionBreak,
+  attachTrainingAttemptSession,
   createDailyTrainingSession,
   pauseTrainingSessionActivity,
   startTrainingSessionActivity,
   type DailyTrainingSession,
+  type TrainingActivityReference,
   type TrainingSessionHistoryEntry,
 } from '../../../core/domain/study-training-session.js';
 import { mergeRemoteTrainingSession, mergeRemoteTrainingSessionHistory, readTrainingSession, readTrainingSessionHistory, saveTrainingSession } from '../../../adapters/local/training-session.js';
@@ -53,11 +57,37 @@ export function createTrainingSessionComposition(dependencies: {
       const paused = pauseTrainingSessionActivity(session, dependencies.now());
       return paused !== session ? save(paused) : paused;
     },
-    completeActivity(activity: TrainingActivity): DailyTrainingSession | null {
+    beginBreak(durationMinutes = 5): DailyTrainingSession | null {
       const session = getSession();
       if (!session) return null;
-      const completed = completeTrainingSessionActivity(session, activity, dependencies.now());
+      const updated = beginTrainingSessionBreak(session, dependencies.now(), durationMinutes);
+      return updated !== session ? save(updated) : updated;
+    },
+    endBreak(): DailyTrainingSession | null {
+      const session = getSession();
+      if (!session) return null;
+      const updated = endTrainingSessionBreak(session, dependencies.now());
+      return updated !== session ? save(updated) : updated;
+    },
+    completeActivity(activity: TrainingActivity, expected?: TrainingActivityReference): DailyTrainingSession | null {
+      const session = getSession();
+      if (!session) return null;
+      const completed = completeTrainingSessionActivity(session, activity, dependencies.now(), expected);
       return completed !== session ? save(completed) : completed;
+    },
+    attachAttemptSession(attemptSessionId: string, expected?: TrainingActivityReference): DailyTrainingSession | null {
+      const session = getSession();
+      if (!session) return null;
+      const updated = attachTrainingAttemptSession(session, attemptSessionId, dependencies.now(), expected);
+      return updated !== session ? save(updated) : updated;
+    },
+    getCurrentActivityReference(): TrainingActivityReference | null {
+      const session = getSession();
+      if (!session) return null;
+      const activity = session.activities[session.currentIndex];
+      return activity
+        ? { sessionId: session.id, activityId: activity.id ?? `${session.id}:activity:${session.currentIndex + 1}` }
+        : null;
     },
   };
 }

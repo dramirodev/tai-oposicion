@@ -219,6 +219,15 @@ describe('historial de simulacros', () => {
   it('diferencia de nota respecto al intento anterior de la misma parte', () => {
     const h = simHistory(L); expect(h.map(x => x.dNota)).toEqual([null, 10, null, 6.5]);
   });
+  it('no calcula tendencia de nota entre intentos con reglas de puntuación distintas', () => {
+    const policy = { version:1, correctPoints:1, wrongPenalty:0.25, blankPoints:0 };
+    const history = simHistory([S('legacy', 1, 60, 'Simulacro · Parte 1'), S('weighted', 2, 60, 'Hito · referencia', {}, { scoringPolicy:policy })]);
+    expect(history.map(item => item.dNota)).toEqual([null, null]);
+    const unknown = simHistory([S('legacy', 1, 60, 'Simulacro · Parte 1'), S('pending', 2, 0, 'Hito · referencia', {}, { scorePending:true, scoringPolicy:{ ...policy, wrongPenalty:null } })]);
+    expect(unknown.map(item => item.id)).toEqual(['legacy']);
+    const comparison = compareSessions(S('standard', 1, 60, 'Simulacro · Parte 1'), S('weighted', 2, 60, 'Hito · referencia', {}, { scoringPolicy:policy }));
+    expect(comparison.dNota).toBeNull();
+  });
   it('compara por tema con diferencias y huecos', () => {
     const a = S('a', 1, 50, 'p', { 'T1.01': [5, 10], 'T1.02': [2, 4] }), b = S('b', 2, 62.5, 'p', { 'T1.01': [8, 10], 'T1.03': [1, 2] });
     const c = compareSessions(a, b);

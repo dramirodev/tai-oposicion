@@ -4,6 +4,7 @@ import { FAILURE_REASONS } from '../../shared/presentation/study-labels.js';
 import type { StatsServices } from '../../shared/ui/study-services.js';
 import type { StatsDomainTopic, StatsSnapshot } from '../../core/application/stats/statistics-model.js';
 import { MobileDisclosure } from './MobileDisclosure.js';
+import { AcademySectionPerformancePanel } from './AcademySectionPerformancePanel.js';
 
 const date = (time: number) => new Date(time).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
 const domainTone: Record<string, { dot: string; border: string }> = {
@@ -62,5 +63,6 @@ export function StatsTopicsSection({ snapshot, stats, topics, domainOrder, setDo
     <MobileDisclosure title="Mapa de dominio"><DomainMap snapshot={snapshot} stats={stats} topics={topics} domainOrder={domainOrder} setDomainOrder={setDomainOrder} formattedDays={formattedDays} /></MobileDisclosure>
     <MobileDisclosure title="Lectura y carga de repasos"><ReadingAndReviewInsights snapshot={snapshot} /></MobileDisclosure>
     <MobileDisclosure title="Rendimiento por tema"><TopicPerformance snapshot={snapshot} stats={stats} setMessage={setMessage} /></MobileDisclosure>
+    <MobileDisclosure title="Resultados por apartado"><AcademySectionPerformancePanel stats={stats} /></MobileDisclosure>
   </section>;
 }

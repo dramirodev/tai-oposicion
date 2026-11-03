@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildDailyTrainingPlan, DEFAULT_TRAINING_PREFERENCES } from '../../src/core/domain/study-training-plan.ts';
+import { buildDailyTrainingPlan, DEFAULT_TRAINING_PREFERENCES, normalizeTrainingPreferences, selectNextAcademyTopic } from '../../src/core/domain/study-training-plan.ts';
 
 const testPreferences = {
   ...DEFAULT_TRAINING_PREFERENCES,
@@ -10,6 +10,32 @@ const testPreferences = {
 };
 
 describe('planificación diaria de estudio', () => {
+  it('sigue el orden configurado por la academia y omite temas ya vistos o ausentes sin inferir el siguiente', () => {
+    const topics = [{ id: 'T12.01', name: 'A' }, { id: 'T3.02', name: 'B' }, { id: 'T20.01', name: 'C' }];
+    expect(selectNextAcademyTopic(['T12.01', 'T99.01', 'T20.01', 'T3.02'], topics, ['T12.01'])).toEqual(topics[2]);
+    expect(selectNextAcademyTopic(['T12.01'], topics, ['T12.01'])).toBeUndefined();
+    expect(selectNextAcademyTopic([], topics, [])).toBeUndefined();
+  });
+
+  it('normaliza el orden sin duplicados, conserva IDs futuros y no convierte el catálogo entero en orden', () => {
+    expect(normalizeTrainingPreferences({ academyTopicOrderIds: ['T12.01', 'T3.02', 'T12.01', 'bad'] }).academyTopicOrderIds)
+      .toEqual(['T12.01', 'T3.02']);
+    expect(normalizeTrainingPreferences({})).not.toHaveProperty('academyTopicOrderIds');
+  });
+
+  it('genera una actividad de contenido nuevo desde el orden de academia sin exigir selección semanal manual', () => {
+    const plan = buildDailyTrainingPlan({
+      preferences: { ...DEFAULT_TRAINING_PREFERENCES, academyTopicOrderIds: ['T12.01'] },
+      weekday: 1,
+      dueCount: 0,
+      failureCount: 0,
+      weakTopicCount: 0,
+      studiedTopicIds: [],
+      nextNewTopic: { topicId: 'T12.01', topicName: 'Tema futuro' },
+    });
+    expect(plan.activities[0]).toMatchObject({ activity: 'newContent', topicId: 'T12.01' });
+  });
+
   it('divide una sesión de referencia de 40 minutos en actividades equilibradas', () => {
     const plan = buildDailyTrainingPlan({
       preferences: testPreferences,

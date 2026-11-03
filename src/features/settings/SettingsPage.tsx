@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { localDayStart } from '../../core/domain/study-training-session.js';
+import type { TrainingCalendarEventKind, TrainingDayFocus } from '../../core/domain/entities.js';
+import { MAX_TRAINING_CALENDAR_EVENTS, normalizeTrainingCalendarEvents } from '../../core/domain/study-training-events.js';
 import { ask, toast } from '../../shared/ui/dialog-actions.js';
 import { saveExportFile } from '../../shared/ui/download-file.js';
 import { useStudyService, type SettingsServices, type SettingsSnapshot } from '../../shared/ui/study-services.js';
@@ -57,11 +59,11 @@ function AccountSection({ settings, snapshot }: { settings: SettingsServices; sn
     finally { setRequesting(false); }
   };
   return <section className="card"><h2 className="h3">Cuenta y sincronización</h2><p>{message}</p>
-    {snapshot.sync.user && <p><small>{snapshot.sync.state}{snapshot.sync.lastSync ? ` · ${new Date(snapshot.sync.lastSync).toLocaleTimeString('es-ES')}` : ''}</small></p>}
+    {snapshot.sync.user && <p><small>{snapshot.sync.error && snapshot.sync.state === 'sincronizado' ? 'Datos recibidos' : snapshot.sync.state}{snapshot.sync.lastSync ? ` · último dato recibido ${new Date(snapshot.sync.lastSync).toLocaleTimeString('es-ES')}` : ''}</small></p>}
     {snapshot.sync.user ? <button className="btn sec" onClick={() => void settings.logout()}>Cerrar sesión</button> : snapshot.sync.configured && <button className="btn" onClick={() => void settings.login()}>Entrar con Google</button>}
     <AccessStatus snapshot={snapshot} requesting={requesting} onRequest={() => void requestAccess()} />
     {snapshot.sync.error && <p className="r"><small>{snapshot.sync.error}</small></p>}
-    {snapshot.sync.user && snapshot.full && snapshot.sync.state !== 'sincronizado' && snapshot.sync.state !== 'sincronizando…' && <><p>{snapshot.sync.detail && <small>{snapshot.sync.detail}</small>}</p><button className="btn sec" onClick={() => void settings.retrySync()}>Reintentar sincronización</button></>}
+    {snapshot.sync.user && snapshot.full && (snapshot.sync.error || (snapshot.sync.state !== 'sincronizado' && snapshot.sync.state !== 'sincronizando…')) && <><p>{snapshot.sync.detail && <small>{snapshot.sync.detail}</small>}</p><button className="btn sec" onClick={() => void settings.retrySync()}>Reintentar sincronización</button></>}
     <p><small>En este dispositivo: {count(snapshot.progress.questions, 'pregunta vista', 'preguntas vistas')} · {count(snapshot.progress.topics, 'tema visto', 'temas vistos')} · {count(snapshot.progress.sessions, 'sesión', 'sesiones')}</small></p>
   </section>;
 }
@@ -74,7 +76,7 @@ function accountMessage(sync: SettingsSnapshot['sync']): string {
 }
 
 function AccessStatus({ snapshot, requesting, onRequest }: { snapshot: SettingsSnapshot; requesting: boolean; onRequest(): void }) {
-  if (snapshot.level === 'propietario') return <p><small>Propietario · acceso completo.</small> <Link to="/acceso">Gestionar accesos{snapshot.sync.requests.length ? ` (${snapshot.sync.requests.length} pendientes)` : ''}</Link></p>;
+  if (snapshot.level === 'propietario') return <p><small>Propietario · acceso completo.</small> <Link to="/acceso">Gestionar accesos{snapshot.sync.requests.length ? ` (${snapshot.sync.requests.length} pendientes)` : ''}</Link> · <Link to="/curar-contenido">Curar vínculos a epígrafes</Link></p>;
   if (snapshot.level === 'aprobado') return <p><small>Acceso completo aprobado.</small></p>;
   if (snapshot.level === 'pendiente') return <p><small>Acceso pendiente de aprobación. Puedes continuar con la sesión rápida; la cuenta se actualizará al recibir la aprobación.</small></p>;
   if (!snapshot.sync.user) return null;
@@ -141,6 +143,25 @@ const trainingActivities = [
 ] as const;
 
 function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsServices; snapshot: SettingsSnapshot }) {
+  const [topicToAdd, setTopicToAdd] = useState('');
+  const [eventKind, setEventKind] = useState<TrainingCalendarEventKind>('unavailable');
+  const [eventTitle, setEventTitle] = useState('');
+  const [eventSource, setEventSource] = useState('');
+  const [eventStart, setEventStart] = useState('');
+  const [eventEnd, setEventEnd] = useState('');
+  const [eventMinutes, setEventMinutes] = useState('120');
+  const [eventStartTime, setEventStartTime] = useState('08:00');
+  const [eventEndTime, setEventEndTime] = useState('15:00');
+  const [eventFocus, setEventFocus] = useState<TrainingDayFocus | ''>('');
+  const [milestoneQuestions, setMilestoneQuestions] = useState('100');
+  const [milestoneMinutes, setMilestoneMinutes] = useState('90');
+  const [milestoneOptions, setMilestoneOptions] = useState('4');
+  const [milestoneCorrectPoints, setMilestoneCorrectPoints] = useState('1');
+  const [milestoneWrongPenalty, setMilestoneWrongPenalty] = useState('');
+  const [milestoneBlankPoints, setMilestoneBlankPoints] = useState('0');
+  const [eventError, setEventError] = useState('');
+  const academyTopicOrderIds = snapshot.training.academyTopicOrderIds ?? [];
+  const calendarEvents = normalizeTrainingCalendarEvents(snapshot.training.calendarEvents);
   const updateMinutes = (day: number, rawValue: string) => {
     const minutesByDay = [...snapshot.training.minutesByDay] as typeof snapshot.training.minutesByDay;
     const parsed = Number(rawValue);
@@ -161,6 +182,33 @@ function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsSer
     if (!activities.length) return;
     settings.setTrainingPreferences({ ...snapshot.training, activities });
   };
+  const updateAcademyOrder = (nextOrder: string[]) => settings.setTrainingPreferences({ ...snapshot.training, academyTopicOrderIds: nextOrder });
+  const addAcademyTopic = () => {
+    if (!topicToAdd || academyTopicOrderIds.includes(topicToAdd)) return;
+    updateAcademyOrder([...academyTopicOrderIds, topicToAdd]);
+    setTopicToAdd('');
+  };
+  const saveCalendarEvent = () => {
+    const event = settings.createTrainingCalendarEvent({
+      kind: eventKind, title: eventTitle.trim(), ...(eventSource.trim() ? { source: eventSource.trim() } : {}), startDate: eventStart, endDate: eventEnd || eventStart,
+      ...(eventKind === 'study-window' ? {
+        studyMinutes: Number(eventMinutes), startTime: eventStartTime, endTime: eventEndTime,
+        ...(eventFocus ? { focus: eventFocus } : {}),
+      } : {}),
+      ...(eventKind === 'milestone' ? { simulation: {
+        version: 1 as const, questionCount: Number(milestoneQuestions), durationMinutes: Number(milestoneMinutes), optionsPerQuestion: Number(milestoneOptions),
+        scoring: { version: 1 as const, correctPoints: Number(milestoneCorrectPoints), wrongPenalty: milestoneWrongPenalty === '' ? null : Number(milestoneWrongPenalty), blankPoints: Number(milestoneBlankPoints) },
+      } } : {}),
+    });
+    if (calendarEvents.length >= MAX_TRAINING_CALENDAR_EVENTS) { setEventError(`Has alcanzado el límite de ${MAX_TRAINING_CALENDAR_EVENTS} eventos. Elimina alguno antes de añadir otro.`); return; }
+    if (!event) { setEventError('Revisa el nombre, las fechas y los datos de disponibilidad.'); return; }
+    settings.setTrainingPreferences({ ...snapshot.training, calendarEvents: [...calendarEvents, event] });
+    setEventTitle(''); setEventSource(''); setEventError('');
+  };
+  const removeCalendarEvent = (eventId: string) => settings.setTrainingPreferences({
+    ...snapshot.training, calendarEvents: calendarEvents.filter(event => event.id !== eventId),
+  });
+  const todayKey = localDate(new Date());
   return <section className="card" id="training-schedule"><h2 className="h3">Entrenamiento semanal</h2>
     <p>Este tiempo forma parte de tus horas de estudio. Un día con 0 minutos es descanso; el entrenador no acumula su carga para mañana.</p>
     <div className="training-schedule">{trainingDays.map(day => <div className="training-day" key={day.index}>
@@ -174,6 +222,12 @@ function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsSer
         {trainingDays.map(day => <option key={day.index} value={day.index}>{day.name}</option>)}
       </select>
     </label>
+    <label className="training-intro">Duración orientativa del bloque de concentración
+      <select aria-label="Duración del bloque de concentración" value={snapshot.training.focusBlockMinutes ?? 35} onChange={event => settings.setTrainingPreferences({ ...snapshot.training, focusBlockMinutes: Number(event.target.value) as 25 | 30 | 35 | 40 | 45 })}>
+        {[25, 30, 35, 40, 45].map(value => <option key={value} value={value}>{value} minutos</option>)}
+      </select>
+    </label>
+    <p className="sm">Al alcanzar este tiempo, TAI te sugiere una pausa. Es orientativo y puedes pausar o continuar según te convenga.</p>
     <label className="training-intro">Tema que estás introduciendo esta semana
       <select value={snapshot.training.introductionTopicId ?? ''} onChange={event => {
         const introductionTopicId = event.target.value || undefined;
@@ -184,8 +238,66 @@ function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsSer
       </select>
     </label>
     <p className="sm">Al elegir un tema, el entrenador puede sugerir un estudio inicial provisional si aún no hay una marca de estudio ni respuestas. El temario completo se consulta en tus apuntes.</p>
+    <fieldset className="training-activities"><legend>Orden de la academia</legend>
+      <p className="sm">Añade los temas en el orden real de tus clases. La aplicación no lo deduce del código ni del catálogo. Si la lista está vacía, se conserva la selección semanal de arriba. Los temas nuevos del catálogo no se añaden solos.</p>
+      <label htmlFor="academy-topic-order-add">Añadir tema al final</label>
+      <div className="training-topic-order-add">
+        <select id="academy-topic-order-add" value={topicToAdd} onChange={event => setTopicToAdd(event.target.value)}>
+          <option value="">Selecciona un tema</option>
+          {snapshot.index?.topics?.filter(topic => !academyTopicOrderIds.includes(topic.id)).map(topic => <option key={topic.id} value={topic.id}>{topic.id} · {topic.name}</option>)}
+        </select>
+        <button className="btn sec" type="button" disabled={!topicToAdd} onClick={addAcademyTopic}>Añadir</button>
+      </div>
+      {academyTopicOrderIds.length ? <ol aria-label="Orden de temas de la academia">{academyTopicOrderIds.map((topicId, index) => {
+        const topic = snapshot.index?.topics?.find(item => item.id === topicId);
+        return <li key={topicId}>
+          <span>{topic ? `${topic.id} · ${topic.name}` : `${topicId} · no disponible en el catálogo actual`}</span>{' '}
+          <button className="btn sec" type="button" aria-label={`Subir ${topicId}`} disabled={index === 0} onClick={() => {
+            const next = [...academyTopicOrderIds]; [next[index - 1], next[index]] = [next[index], next[index - 1]]; updateAcademyOrder(next);
+          }}>↑</button>{' '}
+          <button className="btn sec" type="button" aria-label={`Bajar ${topicId}`} disabled={index === academyTopicOrderIds.length - 1} onClick={() => {
+            const next = [...academyTopicOrderIds]; [next[index], next[index + 1]] = [next[index + 1], next[index]]; updateAcademyOrder(next);
+          }}>↓</button>{' '}
+          <button className="btn sec" type="button" aria-label={`Quitar ${topicId}`} onClick={() => updateAcademyOrder(academyTopicOrderIds.filter(id => id !== topicId))}>Quitar</button>
+        </li>;
+      })}</ol> : <p className="sm">Aún no has configurado un orden de academia.</p>}
+    </fieldset>
     <fieldset className="training-activities"><legend>Actividades disponibles</legend>
       {trainingActivities.map(([activity, label]) => <label key={activity}><input type="checkbox" checked={snapshot.training.activities.includes(activity)} disabled={snapshot.training.activities.length === 1 && snapshot.training.activities[0] === activity} onChange={event => updateActivity(activity, event.target.checked)} /> {label}</label>)}
+    </fieldset>
+    <fieldset className="training-activities" aria-describedby="training-calendar-events-help"><legend>Eventos y excepciones</legend>
+      <p id="training-calendar-events-help" className="sm">Afectan solo a las fechas indicadas. Una ausencia fuerza 0 minutos; una disponibilidad sustituye el tiempo diario de estudio. El horario 08:00–15:00 incluye pausas: indica aparte los minutos de estudio enfocado. Clases e hitos son informativos. Si varias ventanas se solapan, prevalece la guardada más recientemente; una ausencia siempre prevalece. Los eventos pasados se conservan como historial. La procedencia es una nota personal, no una verificación oficial.</p>
+      <div className="grid min-w-0 grid-cols-2 items-end gap-3 max-[520px]:grid-cols-1">
+        <label className="grid min-w-0 gap-1">Tipo<select aria-label="Tipo de evento" value={eventKind} onChange={event => setEventKind(event.target.value as TrainingCalendarEventKind)}>
+          <option value="unavailable">Ausencia o vacaciones</option><option value="study-window">Disponibilidad especial</option><option value="class">Clase</option><option value="milestone">Hito o simulacro</option>
+        </select></label>
+        <label className="grid min-w-0 gap-1">Nombre<input aria-label="Nombre del evento" maxLength={100} value={eventTitle} onChange={event => setEventTitle(event.target.value)} placeholder="Vacaciones, clase…" /></label>
+        <label className="grid min-w-0 gap-1">Procedencia o nota (opcional)<input aria-label="Procedencia del evento" maxLength={200} value={eventSource} onChange={event => setEventSource(event.target.value)} placeholder="Calendario personal, academia…" /></label>
+        <label className="grid min-w-0 gap-1">Desde<input aria-label="Inicio del evento" type="date" value={eventStart} onChange={event => { setEventStart(event.target.value); if (!eventEnd) setEventEnd(event.target.value); }} /></label>
+        <label className="grid min-w-0 gap-1">Hasta (incluido)<input aria-label="Fin del evento" type="date" value={eventEnd} onChange={event => setEventEnd(event.target.value)} /></label>
+        {eventKind === 'study-window' && <>
+          <label className="grid min-w-0 gap-1">Estudio enfocado por día (min)<input aria-label="Minutos de estudio enfocado" type="number" min="15" max="360" step="15" value={eventMinutes} onChange={event => setEventMinutes(event.target.value)} /></label>
+          <label className="grid min-w-0 gap-1">Enfoque<select aria-label="Enfoque del evento" value={eventFocus} onChange={event => setEventFocus(event.target.value as TrainingDayFocus | '')}><option value="">Mantener el habitual</option><option value="new-content">Tema nuevo</option><option value="consolidation">Repaso</option><option value="rest">Descanso</option></select></label>
+          <label className="grid min-w-0 gap-1">Ventana desde<input aria-label="Hora inicial de disponibilidad" type="time" value={eventStartTime} onChange={event => setEventStartTime(event.target.value)} /></label>
+          <label className="grid min-w-0 gap-1">Ventana hasta<input aria-label="Hora final de disponibilidad" type="time" value={eventEndTime} onChange={event => setEventEndTime(event.target.value)} /></label>
+        </>}
+        {eventKind === 'milestone' && <>
+          <p className="col-span-full text-muted">Este perfil configura un simulacro generado con preguntas del catálogo y temas vistos. Si desconoces la penalización, déjala vacía: la aplicación mostrará aciertos, fallos y blancos, sin calcular nota neta.</p>
+          <label className="grid min-w-0 gap-1">Preguntas<input aria-label="Preguntas del hito" type="number" min="1" max="300" value={milestoneQuestions} onChange={event => setMilestoneQuestions(event.target.value)} /></label>
+          <label className="grid min-w-0 gap-1">Duración (min)<input aria-label="Duración del hito" type="number" min="1" max="240" value={milestoneMinutes} onChange={event => setMilestoneMinutes(event.target.value)} /></label>
+          <label className="grid min-w-0 gap-1">Opciones por pregunta<input aria-label="Opciones por pregunta del hito" type="number" min="2" max="8" value={milestoneOptions} onChange={event => setMilestoneOptions(event.target.value)} /></label>
+          <label className="grid min-w-0 gap-1">Puntos por acierto<input aria-label="Puntos por acierto" type="number" min="0.01" max="100" step="0.01" value={milestoneCorrectPoints} onChange={event => setMilestoneCorrectPoints(event.target.value)} /></label>
+          <label className="grid min-w-0 gap-1">Penalización por error (vacío si se desconoce)<input aria-label="Penalización por error" type="number" min="0" max="100" step="0.01" value={milestoneWrongPenalty} onChange={event => setMilestoneWrongPenalty(event.target.value)} /></label>
+          <label className="grid min-w-0 gap-1">Puntos por blanco<input aria-label="Puntos por blanco" type="number" min="0" max="100" step="0.01" value={milestoneBlankPoints} onChange={event => setMilestoneBlankPoints(event.target.value)} /></label>
+        </>}
+      </div>
+      <button className="btn sec min-h-11 mt-3" type="button" disabled={!eventTitle.trim() || !eventStart} onClick={saveCalendarEvent}>Guardar evento</button>
+      {eventError && <p role="alert">{eventError}</p>}
+      {calendarEvents.length ? <ul aria-label="Eventos guardados" className="grid gap-2 pl-5">{calendarEvents.map(event => {
+        const status = event.endDate < todayKey ? 'Pasado' : event.startDate > todayKey ? 'Próximo' : 'En curso';
+        const typeLabel = event.kind === 'unavailable' ? 'Sin estudio' : event.kind === 'study-window' ? `${event.studyMinutes} min de estudio${event.startTime ? ` · ${event.startTime}–${event.endTime}` : ''}` : event.kind === 'class' ? 'Clase informativa' : event.simulation ? `Simulacro · ${event.simulation.questionCount} preguntas/${event.simulation.durationMinutes} min · penalización ${event.simulation.scoring.wrongPenalty ?? 'desconocida'}` : 'Hito informativo';
+        return <li key={event.id} className="flex flex-wrap items-center justify-between gap-2"><span><b>{event.title}</b> · {event.startDate === event.endDate ? event.startDate : `${event.startDate} a ${event.endDate}`} · {typeLabel} · {status}{event.source ? ` · ${event.source}` : ''}</span><button className="btn sec min-h-11" type="button" aria-label={`Eliminar evento ${event.title}`} onClick={() => removeCalendarEvent(event.id)}>Eliminar</button></li>;
+      })}</ul> : <p className="sm">Aún no hay eventos guardados.</p>}
     </fieldset>
   </section>;
 }
@@ -336,7 +448,7 @@ function ResetSection({ settings }: { settings: SettingsServices }) {
 }
 
 function DiagnosticsSection({ snapshot }: { snapshot: SettingsSnapshot }) {
-  return <><details className="card"><summary>Diagnóstico técnico</summary><p>Versión: {snapshot.version} ({snapshot.build})</p><p>Dominio: {snapshot.sync.host || 'no disponible'} · autenticación: {snapshot.sync.authDomain || 'no disponible'}</p><p>Estado: {snapshot.sync.state}</p></details>{snapshot.index && <p className="sub">Banco: {snapshot.index.questions} preguntas + {snapshot.index.scenarios} de supuestos.</p>}</>;
+  return <><details className="card"><summary>Diagnóstico técnico</summary><p>Versión: {snapshot.version} ({snapshot.build})</p><p>Dominio: {snapshot.sync.host || 'no disponible'} · autenticación: {snapshot.sync.authDomain || 'no disponible'}</p><p>Estado de recepción: {snapshot.sync.state}</p></details>{snapshot.index && <p className="sub">Banco: {snapshot.index.questions} preguntas + {snapshot.index.scenarios} de supuestos.</p>}</>;
 }
 
 function PreferenceGroup({ title, current, values, onChange }: { title: string; current: string; values: readonly (readonly [string, string])[]; onChange(value: string): void }) {

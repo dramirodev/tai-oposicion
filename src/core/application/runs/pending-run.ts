@@ -1,4 +1,5 @@
 import { filterScoringQuestions } from '../../domain/selection.js';
+import { isSimulationScoringPolicy } from '../../domain/simulation-scoring.js';
 import type { QuestionRecord } from '../../domain/question-record.js';
 import type { SavedRunSnapshot } from '../../domain/pending-run.js';
 export type { SavedRunSnapshot } from '../../domain/pending-run.js';
@@ -25,6 +26,7 @@ export async function loadPendingRun(full: boolean, repository: PendingRunReposi
   const account = repository.currentAccount();
   const saved = repository.read(account);
   if (!saved || repository.hasActiveRun()) return null;
+  if (saved.scoringPolicy !== undefined && !isSimulationScoringPolicy(saved.scoringPolicy)) { repository.clear(account); return null; }
   if (!full && saved.kind !== 'rev') { repository.clear(account); return null; }
   if (!Array.isArray(saved.ids) || !saved.ids.length || Date.now() - (saved.savedAt || 0) > MAX_AGE) {
     repository.clear(account);

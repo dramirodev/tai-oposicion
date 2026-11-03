@@ -1,3 +1,5 @@
+import type { TrainingMilestoneSimulation } from './simulation-scoring.js';
+
 export type MappingResult<T> = { ok: true; value: T } | { ok: false; reason: string };
 export type Origin = 'O' | 'A' | 'G';
 export type AnswerResult = 0 | 1 | 2;
@@ -7,7 +9,7 @@ export type ReportState = 'abierto' | 'resuelto' | 'quitado';
 export interface QuestionSource { url: string; title?: string; page?: number; verified: boolean }
 export interface Question { id: string; topicId: string; origin: Origin; statement: string; options: string[]; correctIndex: number; kind?: string; traps?: number[]; difficulty?: number|null; note?: string; year?: string; citation?: string; nonScoring?: number; source?: QuestionSource; context?: string; assumptionId?: string; provisional?: number; expiresAfter?: number; verificationStatus?: number; family?: string; reserved?: number; topicUncertain?: number }
 export interface QuestionStats { attempts: number; correct: number; lastSeenAt: number; intervalStep?: number; dueAt?: number; lastResult?: AnswerResult; doubtful?: boolean; secondsStudied?: number; timedAnswers?: number; errorReason?: number; failureStreak?: number; syllabusReviewed?: boolean; syllabusReviewedAt?: number }
-export interface SessionResult { id: string; completedAt: number; kind: SessionKind; questionCount: number; correctCount: number; wrongCount: number; blankCount: number; durationSeconds: number; score: number; topicResults: Record<string, [number, number]>; typeResults: Record<string, [number, number]>; failedQuestionIds: string[]; title: string; interrupted?: boolean; timeLimited?: boolean }
+export interface SessionResult { id: string; completedAt: number; kind: SessionKind; questionCount: number; correctCount: number; wrongCount: number; blankCount: number; durationSeconds: number; score: number; scorePending?: boolean; scoringPolicy?: import('./simulation-scoring.js').SimulationScoringPolicy; milestoneEventId?: string; topicResults: Record<string, [number, number]>; typeResults: Record<string, [number, number]>; failedQuestionIds: string[]; title: string; interrupted?: boolean; timeLimited?: boolean }
 export interface Session { id: string; kind: SessionKind; questionIds: string[]; answers: Record<string, number | null>; currentIndex: number; startedAt: number; title: string }
 export interface FsrsCardState {
   schemaVersion: 1;
@@ -49,6 +51,26 @@ export interface Preferences {
 }
 export type TrainingActivity = 'newContent' | 'activeRecall' | 'topicTest' | 'mixedTopicTest' | 'failures' | 'spacedReviews';
 export type TrainingDayFocus = 'rest' | 'new-content' | 'consolidation';
+export type TrainingCalendarEventKind = 'unavailable' | 'study-window' | 'class' | 'milestone';
+/** Local calendar exception or information marker; date range endpoints are inclusive. */
+export interface TrainingCalendarEvent {
+  id: string;
+  kind: TrainingCalendarEventKind;
+  title: string;
+  /** Human-entered provenance or context, never assumed to be an official source. */
+  source?: string;
+  startDate: string;
+  endDate: string;
+  /** Daily focused-study budget for a study-window event. Breaks are not counted here. */
+  studyMinutes?: number;
+  startTime?: string;
+  endTime?: string;
+  focus?: TrainingDayFocus;
+  /** Optional versioned rubric and shape for an actual simulation milestone. */
+  simulation?: TrainingMilestoneSimulation;
+  createdAt: number;
+  updatedAt: number;
+}
 export type StudyReviewMode = 'initial-study' | 'active-retrieval' | 'selective-reading' | 'broad-reading';
 export interface TrainingPreferences {
   /** Sunday-first local calendar: Sunday, Monday, ..., Saturday. */
@@ -56,12 +78,18 @@ export interface TrainingPreferences {
   /** Sunday-first intent for the weekly study rhythm; an engineering default, not a proven optimum. */
   focusByDay?: [TrainingDayFocus, TrainingDayFocus, TrainingDayFocus, TrainingDayFocus, TrainingDayFocus, TrainingDayFocus, TrainingDayFocus];
   introductionDay: number;
+  /** Adjustable focus interval used to suggest a checkpointed pause; defaults to 35 minutes. */
+  focusBlockMinutes?: 25 | 30 | 35 | 40 | 45;
   /** Optional weekly topic selected by the student or academy. */
   introductionTopicId?: string;
+  /** Explicit academy sequence. Empty/omitted means no verified order is configured. */
+  academyTopicOrderIds?: string[];
   activities: TrainingActivity[];
   /** Marks preference migrations so removed activities stay disabled after saving. */
   activityVersion?: 2 | 3;
   /** User choices are retained per topic and take precedence over automatic guidance. */
   reviewModesByTopic?: Record<string, StudyReviewMode>;
+  /** Date-specific events override the recurring weekly pattern only for affected dates. */
+  calendarEvents?: TrainingCalendarEvent[];
 }
 export interface UserProgress { statistics: Record<string, QuestionStats>; sessions: SessionResult[]; preferences: Preferences; seenTopics: string[]; seenAt: number; reports: Record<string, ErrorReport>; cardReviews: Record<string, CardReview> }

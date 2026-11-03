@@ -1,19 +1,23 @@
 // Preferencias externas: límites de tamaño, claves seguras y formas que admiten las pantallas.
+import { isStudyTopicId } from '../../core/domain/topic-id.js';
+import { isTrainingCalendarEvent, MAX_TRAINING_CALENDAR_EVENTS } from '../../core/domain/study-training-events.js';
 const safeKey = (key: string) => /^[A-Za-z0-9_.-]{1,40}$/.test(key) && !['__proto__', 'constructor', 'prototype'].includes(key);
 const own = (obj: object, key: string) => Object.prototype.hasOwnProperty.call(obj, key);
 const object = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
 const integer = (lo: number, hi: number) => (value: unknown): boolean => typeof value === 'number' && Number.isInteger(value) && value >= lo && value <= hi;
 const oneOf = (values: readonly unknown[]) => (value: unknown): boolean => values.includes(value);
 const bool = (value: unknown) => typeof value === 'boolean';
-const temas = (value: unknown) => Array.isArray(value) && value.every(value => typeof value === 'string' && /^T\d\.\d\d$/.test(value));
+const temas = (value: unknown) => Array.isArray(value) && value.every(isStudyTopicId);
 const origins = (value: unknown) => Array.isArray(value) && value.every(value => ['O', 'A', 'G'].includes(value));
 const trainingMinutes = (value: unknown) => Array.isArray(value) && value.length === 7 && value.every(integer(0, 240));
 const trainingFocus = (value: unknown) => Array.isArray(value) && value.length === 7 && value.every(oneOf(['rest', 'new-content', 'consolidation']));
 const trainingActivities = (value: unknown) => Array.isArray(value) && value.length >= 1 && value.length <= 6 && new Set(value).size === value.length
   && value.every(oneOf(['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']));
-const trainingTopicId = (value: unknown) => typeof value === 'string' && /^T[1-4]\.\d{2}$/.test(value);
-const trainingReviewModes = (value: unknown) => object(value) && Object.keys(value).length <= 36
-  && Object.entries(value).every(([topicId, mode]) => /^T[1-4]\.\d{2}$/.test(topicId) && ['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading'].includes(String(mode)));
+const trainingTopicId = isStudyTopicId;
+const trainingTopicOrder = (value: unknown) => Array.isArray(value) && value.length <= 300 && value.every(isStudyTopicId);
+const trainingReviewModes = (value: unknown) => object(value) && Object.keys(value).length <= 500
+  && Object.entries(value).every(([topicId, mode]) => isStudyTopicId(topicId) && ['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading'].includes(String(mode)));
+const trainingCalendarEvents = (value: unknown) => Array.isArray(value) && value.length <= MAX_TRAINING_CALENDAR_EVENTS && value.every(isTrainingCalendarEvent);
 const scope = oneOf(['vistos', 'todos']);
 const copyDefaults = (defaults: Record<string, unknown>): Record<string, unknown> =>
   Object.fromEntries(Object.entries(defaults).map(([key, value]) => [key, Array.isArray(value) ? [...value] : value]));
@@ -28,11 +32,11 @@ const schemas: Record<string, { defaults: Record<string, unknown>; fields: Recor
   } },
   cardsc: { defaults: { n: 20, scope: 'vistos' }, fields: { n: oneOf([10, 20, 30]), scope } },
   evo: { defaults: { m: 'acierto', f: 'g', w: 12, tabla: false }, fields: {
-    m: oneOf(['acierto', 'tiempo']), f: (value: unknown) => typeof value === 'string' && /^(g|t:T\d\.\d\d|k:[DICK])$/.test(value), w: oneOf([8, 12, 26]), tabla: bool,
+    m: oneOf(['acierto', 'tiempo']), f: (value: unknown) => typeof value === 'string' && /^(g|t:T\d+\.\d{2}|k:[DICK])$/.test(value), w: oneOf([8, 12, 26]), tabla: bool,
   } },
   simc: { defaults: {}, fields: { a: integer(0, 299), b: integer(0, 299) } },
   slow: { defaults: {}, fields: { ok: bool } },
-  training: { defaults: {}, fields: { minutesByDay: trainingMinutes, focusByDay: trainingFocus, introductionDay: integer(0, 6), introductionTopicId: trainingTopicId, activities: trainingActivities, activityVersion: oneOf([2, 3]), reviewModesByTopic: trainingReviewModes } },
+  training: { defaults: {}, fields: { minutesByDay: trainingMinutes, focusByDay: trainingFocus, introductionDay: integer(0, 6), focusBlockMinutes: oneOf([25, 30, 35, 40, 45]), introductionTopicId: trainingTopicId, academyTopicOrderIds: trainingTopicOrder, activities: trainingActivities, activityVersion: oneOf([2, 3]), reviewModesByTopic: trainingReviewModes, calendarEvents: trainingCalendarEvents } },
 };
 function cleanValue(itemValue: unknown, depth = 0): unknown {
   if (itemValue === null || typeof itemValue === 'boolean') return itemValue;

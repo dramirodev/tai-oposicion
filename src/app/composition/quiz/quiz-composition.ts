@@ -1,4 +1,4 @@
-import { getCurrentRun, subscribe as subscribeEngine, startCurrentQuestion, tickCurrentRun, currentSecondsRemaining, setQuestionIndex, answerCurrentQuestion, answerDeferred, toggleReviewQuestion, setCurrentConfidence, toggleCurrentDiscardedOption, revealCurrentSolution, toggleDeferredBlank, setRunPaused, finishCurrentRun, clearActiveRun, addCurrentHighlight, removeCurrentHighlight, studyQuestionCatalog } from '../study/study-engine-composition.js';
+import { getCurrentRun, subscribe as subscribeEngine, startCurrentQuestion, tickCurrentRun, currentSecondsRemaining, setQuestionIndex, answerCurrentQuestion, answerDeferred, toggleReviewQuestion, setCurrentConfidence, setCurrentSelfAssessment, toggleCurrentDiscardedOption, revealCurrentSolution, toggleDeferredBlank, setRunPaused, finishCurrentRun, clearActiveRun, addCurrentHighlight, removeCurrentHighlight, studyQuestionCatalog } from '../study/study-engine-composition.js';
 import { clearRun, saveRun } from '../study/pending-run-composition.js';
 import { createHighlight, questionContentRevision } from '../../../core/domain/attempts/highlights.js';
 import { minimumReadingSeconds } from '../../../core/domain/reading-strategy.js';
@@ -26,7 +26,7 @@ export function createQuizServices(go: (path: string) => void, homePath: string,
       return { title: run.titulo || 'Práctica', index: run.idx, count: run.items.length, questionIds: run.items.map(item => item.i), seconds: run.secs, timeLimitSeconds: run.limit ? run.limit * 60 : null, remainingSeconds: run.limit ? currentSecondsRemaining() : null, readingWaitSeconds, readingGateUntil: run.qT0 ? run.qT0 + readingWaitSeconds * 1000 : 0, feedback: run.feedback, timed: !!run.porTiempo, paused: run.paused,
         readingMode: normalizeUiPreferences(progress.getUiPreferences()).lectura, prompt: { id: question.i, topicId: question.t, topicName: studyQuestionCatalog.getTopicName(question.t), origin: question.o, ...(question.y ? { year: question.y } : {}), statement: question.q, options: question.a, correctIndex: question.c, ...(question.cp ? { context: question.cp } : {}), ...(question.supTexto ? { assumptionText: question.supTexto } : {}), hasAssumption: !!question.s,
           notice: questionNotice(question), ...(question.u ? { citation: question.u } : {}), source: sourceHtml(question, VERIFIED_SOURCES), traps: (question.x || []).map(id => String(id)), provisional: !!question.p, mayExpire: !!question.w, variant: question.o === 'G' && !!question.v, contentRevision: revision },
-        ...(run.ans[run.idx] !== undefined ? { answer: run.ans[run.idx] } : {}), studyState: state, review: run.review || [], answers: run.ans, studyStates: run.studyStates || [], ...(confidence ? { confidence } : {}), discarded: run.discardedOptions?.[run.idx] || [], highlights: run.highlights?.[run.idx] || [], scoreByLuck: run.luck?.[run.idx] ?? null,
+        ...(run.ans[run.idx] !== undefined ? { answer: run.ans[run.idx] } : {}), studyState: state, review: run.review || [], answers: run.ans, studyStates: run.studyStates || [], ...(confidence ? { confidence } : {}), ...(run.selfAssessments?.[run.idx] ? { selfAssessment: run.selfAssessments[run.idx] } : {}), discarded: run.discardedOptions?.[run.idx] || [], highlights: run.highlights?.[run.idx] || [], scoreByLuck: run.luck?.[run.idx] ?? null,
         recentAnswer: run.fast?.[run.idx] || null, flagged: !!record?.doubtful, failureReason, ...(report ? { report: { reason: report.reason, note: report.note, state: report.state } } : {}), cardExists: progress.hasFailureCard(question.i) };
     },
     subscribe(listener) { const offEngine = subscribeEngine(listener), offStore = progress.subscribe(listener); return () => { offEngine(); offStore(); }; },
@@ -35,7 +35,13 @@ export function createQuizServices(go: (path: string) => void, homePath: string,
     tick() { tickCurrentRun(); },
     setIndex(index) { setQuestionIndex(index); },
     answer(index) { const run = getCurrentRun(), question = run?.items[run.idx]; if (!run || !question) return; if (!run.feedback) { answerDeferred(run, index); return; } const state = run.studyStates?.[run.idx] || 'unseen'; if (state === 'answered' || state === 'revealed') return; answerCurrentQuestion(index, minimumReadingSeconds({ context: question.cp, statement: question.q, options: question.a })); },
-    toggleReview() { toggleReviewQuestion(); }, setConfidence(value) { setCurrentConfidence(value); }, toggleDiscard(index) { toggleCurrentDiscardedOption(index); }, reveal: revealCurrentSolution,
+    toggleReview() { toggleReviewQuestion(); }, setConfidence(value) { setCurrentConfidence(value); }, async setSelfAssessment(value, retryHistory = false) {
+      const before = getCurrentRun();
+      const alreadyRecorded = before?.selfAssessments?.[before.idx] === value;
+      const historySaved = alreadyRecorded && !retryHistory ? true : await setCurrentSelfAssessment(value, retryHistory);
+      const checkpointSaved = saveRun();
+      return { historySaved, checkpointSaved };
+    }, toggleDiscard(index) { toggleCurrentDiscardedOption(index); }, reveal: revealCurrentSolution,
     markBlank() { const run = getCurrentRun(); if (!run || run.ans[run.idx] !== undefined) return; this.answer(-1); if (run.idx < run.items.length - 1) this.setIndex(run.idx + 1); },
     toggleBlank() { toggleDeferredBlank(); }, setPaused(paused) { setRunPaused(paused); },
     async finish(reason = 'complete') {

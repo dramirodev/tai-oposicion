@@ -18,11 +18,21 @@ service cloud.firestore {
     // Pueden leer y escribir sus propios datos el propietario y los aprobados.
     function canUse(uid) { return isOwner(uid) || isApproved(uid); }
 
+    function validScoringPolicy(policy) {
+      return policy is map
+        && policy.keys().hasOnly(['version', 'correctPoints', 'wrongPenalty', 'blankPoints'])
+        && policy.keys().hasAll(['version', 'correctPoints', 'wrongPenalty', 'blankPoints'])
+        && policy.version == 1
+        && policy.correctPoints is number && policy.correctPoints > 0 && policy.correctPoints <= 100
+        && (policy.wrongPenalty == null || (policy.wrongPenalty is number && policy.wrongPenalty >= 0 && policy.wrongPenalty <= 100))
+        && policy.blankPoints is number && policy.blankPoints >= 0 && policy.blankPoints <= policy.correctPoints;
+    }
+
     function validAttempt(attemptId) {
       let d = request.resource.data;
       return d.keys().hasOnly([
           'schemaVersion', 'id', 'sessionId', 'questionId', 'contentRevision', 'mode', 'position',
-          'exposure', 'state', 'response', 'outcome', 'confidence', 'discardedOptions', 'highlights',
+          'exposure', 'exposureKind', 'retryOfAttemptId', 'state', 'response', 'outcome', 'confidence', 'discardedOptions', 'highlights',
           'createdAt', 'completedAt', 'lastSequence', 'appliedEventIds', 'terminalEventId'
         ])
         && d.schemaVersion == 1
@@ -33,6 +43,9 @@ service cloud.firestore {
         && d.mode in ['practice', 'simulation']
         && d.position is int && d.position >= 0
         && d.exposure is int && d.exposure >= 1
+        && (!('exposureKind' in d) || d.exposureKind in ['ordinary', 'immediate-retry'])
+        && (!('retryOfAttemptId' in d) || (d.retryOfAttemptId is string && d.retryOfAttemptId.size() > 0 && d.retryOfAttemptId.size() <= 128 && d.retryOfAttemptId != d.id))
+        && (('exposureKind' in d && d.exposureKind == 'immediate-retry') ? 'retryOfAttemptId' in d : !('retryOfAttemptId' in d))
         && d.state in ['unseen', 'pending', 'answered', 'revealed']
         && (d.response == null || (d.response is int && d.response >= 0 && d.response <= 10))
         && (d.outcome == null || d.outcome in ['correct', 'wrong'])
@@ -83,14 +96,31 @@ service cloud.firestore {
 
     function validTrainingStep(step) {
       return step is map
-        && step.keys().hasOnly(['activity', 'minutes', 'reason', 'topicId', 'topicIds', 'reviewMode'])
+        && step.keys().hasOnly(['id', 'activity', 'minutes', 'reason', 'topicId', 'topicIds', 'reviewMode', 'attemptSessionIds', 'sectionRecall'])
         && step.keys().hasAll(['activity', 'minutes', 'reason'])
         && step.activity in ['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']
         && step.minutes is int && step.minutes >= 1 && step.minutes <= 240
         && step.reason in ['active-recall', 'new-content-day', 'new-topic-day', 'weak-topics', 'coverage', 'recurring-failures', 'due-reviews']
-        && (!('topicId' in step) || (step.topicId is string && step.topicId.matches('T[1-4]\\.[0-9]{2}')))
-        && (!('topicIds' in step) || (step.topicIds is list && step.topicIds.size() <= 36))
-        && (!('reviewMode' in step) || step.reviewMode in ['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading']);
+        && (!('topicId' in step) || (step.topicId is string && step.topicId.matches('T[0-9]+\\.[0-9]{2}')))
+        && (!('topicIds' in step) || (step.topicIds is list && step.topicIds.size() <= 500))
+        && (!('reviewMode' in step) || step.reviewMode in ['initial-study', 'active-retrieval', 'selective-reading', 'broad-reading'])
+        && (!('id' in step) || (step.id is string && step.id.size() <= 180))
+        && (!('attemptSessionIds' in step) || (step.attemptSessionIds is list && step.attemptSessionIds.size() <= 500))
+        && (!('sectionRecall' in step) || validSectionRecallStep(step.sectionRecall));
+    }
+
+    function validSectionRecallStep(recall) {
+      return recall is map
+        && recall.keys().hasOnly(['agendaItemId', 'followUpId', 'sectionId', 'materialPath', 'sourceHash', 'outlineFingerprint', 'sectionTitle', 'printedPage'])
+        && recall.keys().hasAll(['agendaItemId', 'followUpId', 'sectionId', 'materialPath', 'sourceHash', 'outlineFingerprint'])
+        && recall.agendaItemId is string && recall.agendaItemId.size() >= 1 && recall.agendaItemId.size() <= 128
+        && recall.followUpId is string && recall.followUpId.matches('[a-zA-Z0-9_-]{8,128}')
+        && recall.sectionId is string && recall.sectionId.matches('ci-[a-fA-F0-9]{20}')
+        && recall.materialPath is string && recall.materialPath.size() >= 1 && recall.materialPath.size() <= 500
+        && recall.sourceHash is string && recall.sourceHash.matches('[a-fA-F0-9]{64}')
+        && recall.outlineFingerprint is string && recall.outlineFingerprint.matches('[a-fA-F0-9]{64}')
+        && (!('sectionTitle' in recall) || (recall.sectionTitle is string && recall.sectionTitle.size() <= 500))
+        && (!('printedPage' in recall) || (recall.printedPage is int && recall.printedPage >= 0));
     }
 
     function validTrainingHistory(history) {
@@ -107,27 +137,43 @@ service cloud.firestore {
         && (d.schemaVersion == 1 ? !('history' in d) : d.schemaVersion == 2 && 'history' in d && validTrainingHistory(d.history))
         && d.updatedAt is number
         && s is map
-        && s.keys().hasOnly(['dateKey', 'activities', 'currentIndex', 'currentStartedAt', 'elapsedSecondsByActivity', 'updatedAt', 'startedAt', 'completedAt'])
+        && s.keys().hasOnly(['schemaVersion', 'id', 'dateKey', 'activities', 'currentIndex', 'currentStartedAt', 'breakStartedAt', 'breakDurationMinutes', 'elapsedSecondsByActivity', 'updatedAt', 'startedAt', 'completedAt'])
         && s.keys().hasAll(['dateKey', 'activities', 'currentIndex', 'currentStartedAt', 'startedAt', 'completedAt'])
         && s.dateKey is string && s.dateKey.matches('20[0-9]{2}-[0-9]{2}-[0-9]{2}')
-        && s.activities is list && s.activities.size() >= 1 && s.activities.size() <= 6
+        && (!('schemaVersion' in s) || s.schemaVersion == 2)
+        && (!('id' in s) || (s.id is string && s.id.size() <= 180))
+        && s.activities is list && s.activities.size() >= 1 && s.activities.size() <= 12
         && s.activities[0] is map && validTrainingStep(s.activities[0])
         && (s.activities.size() < 2 || validTrainingStep(s.activities[1]))
         && (s.activities.size() < 3 || validTrainingStep(s.activities[2]))
         && (s.activities.size() < 4 || validTrainingStep(s.activities[3]))
         && (s.activities.size() < 5 || validTrainingStep(s.activities[4]))
         && (s.activities.size() < 6 || validTrainingStep(s.activities[5]))
+        && (s.activities.size() < 7 || validTrainingStep(s.activities[6]))
+        && (s.activities.size() < 8 || validTrainingStep(s.activities[7]))
+        && (s.activities.size() < 9 || validTrainingStep(s.activities[8]))
+        && (s.activities.size() < 10 || validTrainingStep(s.activities[9]))
+        && (s.activities.size() < 11 || validTrainingStep(s.activities[10]))
+        && (s.activities.size() < 12 || validTrainingStep(s.activities[11]))
         && s.currentIndex is int && s.currentIndex >= 0 && s.currentIndex <= s.activities.size()
         && (s.currentStartedAt == null || s.currentStartedAt is number)
+        && (!('breakStartedAt' in s) || s.breakStartedAt == null || s.breakStartedAt is number)
+        && (!('breakDurationMinutes' in s) || (s.breakDurationMinutes is int && s.breakDurationMinutes >= 3 && s.breakDurationMinutes <= 15))
         && (!('elapsedSecondsByActivity' in s) || (s.elapsedSecondsByActivity is list
           && s.elapsedSecondsByActivity.size() == s.activities.size()
-          && s.elapsedSecondsByActivity.size() <= 6
+          && s.elapsedSecondsByActivity.size() <= 12
           && s.elapsedSecondsByActivity[0] is int && s.elapsedSecondsByActivity[0] >= 0 && s.elapsedSecondsByActivity[0] <= 86400
           && (s.elapsedSecondsByActivity.size() < 2 || (s.elapsedSecondsByActivity[1] is int && s.elapsedSecondsByActivity[1] >= 0 && s.elapsedSecondsByActivity[1] <= 86400))
           && (s.elapsedSecondsByActivity.size() < 3 || (s.elapsedSecondsByActivity[2] is int && s.elapsedSecondsByActivity[2] >= 0 && s.elapsedSecondsByActivity[2] <= 86400))
           && (s.elapsedSecondsByActivity.size() < 4 || (s.elapsedSecondsByActivity[3] is int && s.elapsedSecondsByActivity[3] >= 0 && s.elapsedSecondsByActivity[3] <= 86400))
           && (s.elapsedSecondsByActivity.size() < 5 || (s.elapsedSecondsByActivity[4] is int && s.elapsedSecondsByActivity[4] >= 0 && s.elapsedSecondsByActivity[4] <= 86400))
-          && (s.elapsedSecondsByActivity.size() < 6 || (s.elapsedSecondsByActivity[5] is int && s.elapsedSecondsByActivity[5] >= 0 && s.elapsedSecondsByActivity[5] <= 86400))))
+          && (s.elapsedSecondsByActivity.size() < 6 || (s.elapsedSecondsByActivity[5] is int && s.elapsedSecondsByActivity[5] >= 0 && s.elapsedSecondsByActivity[5] <= 86400))
+          && (s.elapsedSecondsByActivity.size() < 7 || (s.elapsedSecondsByActivity[6] is int && s.elapsedSecondsByActivity[6] >= 0 && s.elapsedSecondsByActivity[6] <= 86400))
+          && (s.elapsedSecondsByActivity.size() < 8 || (s.elapsedSecondsByActivity[7] is int && s.elapsedSecondsByActivity[7] >= 0 && s.elapsedSecondsByActivity[7] <= 86400))
+          && (s.elapsedSecondsByActivity.size() < 9 || (s.elapsedSecondsByActivity[8] is int && s.elapsedSecondsByActivity[8] >= 0 && s.elapsedSecondsByActivity[8] <= 86400))
+          && (s.elapsedSecondsByActivity.size() < 10 || (s.elapsedSecondsByActivity[9] is int && s.elapsedSecondsByActivity[9] >= 0 && s.elapsedSecondsByActivity[9] <= 86400))
+          && (s.elapsedSecondsByActivity.size() < 11 || (s.elapsedSecondsByActivity[10] is int && s.elapsedSecondsByActivity[10] >= 0 && s.elapsedSecondsByActivity[10] <= 86400))
+          && (s.elapsedSecondsByActivity.size() < 12 || (s.elapsedSecondsByActivity[11] is int && s.elapsedSecondsByActivity[11] >= 0 && s.elapsedSecondsByActivity[11] <= 86400))))
         && (!('updatedAt' in s) || s.updatedAt is number)
         && s.startedAt is number
         && (s.completedAt == null || s.completedAt is number)
@@ -143,6 +189,69 @@ service cloud.firestore {
         && d.schemaVersion == 1
         && d.updatedAt is number
         && d.activities is list && d.activities.size() <= 90;
+    }
+
+    function validWeeklyStudyAgenda(agenda) {
+      return agenda is map
+        && agenda.keys().hasOnly(['schemaVersion', 'revision', 'updatedAt', 'items'])
+        && agenda.keys().hasAll(['schemaVersion', 'revision', 'updatedAt', 'items'])
+        && agenda.schemaVersion == 1
+        && agenda.revision is int && agenda.revision >= 0
+        && agenda.updatedAt is number && agenda.updatedAt >= 0
+        && agenda.items is list && agenda.items.size() <= 70;
+    }
+
+    function validAcademyMaterialSelection(topicId) {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['topicId', 'materials', 'revision', 'updatedAt'])
+        && d.keys().hasAll(['topicId', 'materials', 'revision', 'updatedAt'])
+        && d.topicId == topicId && topicId.matches('^T[0-9]+\\.[0-9]{2}$')
+        && d.materials is list && d.materials.size() <= 30
+        && d.revision is int && d.revision >= 1
+        && d.updatedAt is number && d.updatedAt >= 0;
+    }
+
+    function validAcademySectionEvent(eventId) {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['id', 'topicId', 'sectionId', 'materialPath', 'sourceHash', 'outlineFingerprint', 'kind', 'coverage', 'timing', 'rating', 'followUpId', 'sourceSelfCheckEventId', 'dueDateKey', 'status', 'sectionTitle', 'printedPage', 'occurredAt', 'trainingSessionId', 'trainingActivityId'])
+        && d.keys().hasAll(['id', 'topicId', 'sectionId', 'materialPath', 'sourceHash', 'outlineFingerprint', 'kind', 'occurredAt'])
+        && d.id == eventId && eventId.matches('^[A-Za-z0-9_-]{8,128}$')
+        && d.topicId.matches('^T[0-9]+\\.[0-9]{2}$')
+        && d.sectionId.matches('^ci-[a-fA-F0-9]{20}$')
+        && d.materialPath is string && d.materialPath.size() > 0 && d.materialPath.size() <= 500
+        && d.sourceHash.matches('^[a-fA-F0-9]{64}$')
+        && d.outlineFingerprint.matches('^[a-fA-F0-9]{64}$')
+        && d.occurredAt is number && d.occurredAt >= 0
+        && (!('trainingSessionId' in d) || (d.trainingSessionId is string && d.trainingSessionId.size() <= 128))
+        && (!('trainingActivityId' in d) || (d.trainingActivityId is string && d.trainingActivityId.size() <= 128))
+        && (d.kind == 'coverage'
+          ? d.coverage in ['not-started', 'partial', 'covered'] && !('timing' in d) && !('rating' in d) && !('followUpId' in d)
+          : d.kind == 'self-check'
+            ? d.timing in ['assisted', 'immediate', 'delayed'] && d.rating in ['not-recalled', 'partial', 'recalled'] && !('coverage' in d)
+              && (!('followUpId' in d) || (d.timing == 'delayed' && d.followUpId is string && d.followUpId.matches('^[A-Za-z0-9_-]{8,128}$')))
+            : d.kind == 'follow-up'
+              ? d.followUpId.matches('^[A-Za-z0-9_-]{8,128}$') && d.sourceSelfCheckEventId.matches('^[A-Za-z0-9_-]{8,128}$')
+                && d.dueDateKey.matches('^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$') && d.status in ['scheduled', 'completed', 'cancelled']
+                && (!('sectionTitle' in d) || (d.sectionTitle is string && d.sectionTitle.size() <= 500))
+                && (!('printedPage' in d) || (d.printedPage is int && d.printedPage >= 0))
+                && !('coverage' in d) && !('timing' in d) && !('rating' in d)
+              : false);
+    }
+
+    function validAcademyMaterialOpenEvent(eventId) {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['id', 'topicId', 'sectionId', 'materialPath', 'sourceHash', 'outlineFingerprint', 'page', 'occurredAt', 'trainingSessionId', 'trainingActivityId'])
+        && d.keys().hasAll(['id', 'topicId', 'sectionId', 'materialPath', 'sourceHash', 'outlineFingerprint', 'page', 'occurredAt'])
+        && d.id == eventId && eventId.matches('^[A-Za-z0-9_-]{8,128}$')
+        && d.topicId.matches('^T[0-9]+\\.[0-9]{2}$')
+        && d.sectionId.matches('^ci-[a-fA-F0-9]{20}$')
+        && d.materialPath is string && d.materialPath.size() > 0 && d.materialPath.size() <= 500
+        && d.sourceHash.matches('^[a-fA-F0-9]{64}$')
+        && d.outlineFingerprint.matches('^[a-fA-F0-9]{64}$')
+        && d.page is int && d.page >= 1
+        && d.occurredAt is number && d.occurredAt >= 0
+        && (!('trainingSessionId' in d) || (d.trainingSessionId is string && d.trainingSessionId.size() <= 128))
+        && (!('trainingActivityId' in d) || (d.trainingActivityId is string && d.trainingActivityId.size() <= 128));
     }
 
     function validAttemptEvent(eventId, attemptId) {
@@ -239,7 +348,7 @@ service cloud.firestore {
     match /users/{uid}/sessions/{sessionId} {
       allow read: if canUse(uid);
       allow create, update: if canUse(uid)
-        && request.resource.data.keys().hasOnly(['id', 'ts', 'kind', 'n', 'a', 'f', 'b', 'secs', 'nota', 'temas', 'tipos', 'fails', 'titulo', 'porTiempo', 'interrupted'])
+        && request.resource.data.keys().hasOnly(['id', 'ts', 'kind', 'n', 'a', 'f', 'b', 'secs', 'nota', 'temas', 'tipos', 'fails', 'titulo', 'porTiempo', 'interrupted', 'scorePending', 'scoringPolicy', 'milestoneEventId'])
         && request.resource.data.id is string
         && request.resource.data.ts is number
         && request.resource.data.kind in ['sim', 'rev', 'test']
@@ -250,6 +359,9 @@ service cloud.firestore {
         && request.resource.data.temas is map && request.resource.data.temas.size() <= 200
         && (!('porTiempo' in request.resource.data) || request.resource.data.porTiempo is bool)
         && (!('interrupted' in request.resource.data) || request.resource.data.interrupted is bool)
+        && (!('scorePending' in request.resource.data) || request.resource.data.scorePending is bool)
+        && (!('scoringPolicy' in request.resource.data) || (validScoringPolicy(request.resource.data.scoringPolicy) && (request.resource.data.scoringPolicy.wrongPenalty != null || request.resource.data.scorePending == true)))
+        && (!('milestoneEventId' in request.resource.data) || (request.resource.data.milestoneEventId is string && request.resource.data.milestoneEventId.matches('^[A-Za-z0-9_.:-]{1,100}$')))
         && request.resource.data.tipos is map && request.resource.data.tipos.size() <= 100
         && request.resource.data.fails is list && request.resource.data.fails.size() <= 5000
         && request.resource.data.titulo is string && request.resource.data.titulo.size() <= 500;
@@ -323,11 +435,50 @@ service cloud.firestore {
         && request.resource.data.assessments.size() <= 90;
       allow delete: if false;
     }
+    // Recuentos agregados de tests en papel; no guarda respuestas ni puntúa el banco objetivo.
+    match /users/{uid}/cfg/paperTestLog {
+      allow read: if canUse(uid);
+      allow create, update: if canUse(uid)
+        && request.resource.data.keys().hasOnly(['schemaVersion', 'updatedAt', 'segments'])
+        && request.resource.data.keys().hasAll(['schemaVersion', 'updatedAt', 'segments'])
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.updatedAt is number
+        && request.resource.data.segments is list
+        && request.resource.data.segments.size() <= 300;
+      allow delete: if false;
+    }
     // Actividades de repaso confirmadas por el usuario, separadas por cuenta.
     match /users/{uid}/cfg/trainingCalendar {
       allow read: if canUse(uid);
       allow create, update: if canUse(uid) && validTrainingCalendar();
       allow delete: if false;
+    }
+    // Propuesta semanal separada para que clientes antiguos no reescriban un formato que no conocen.
+    match /users/{uid}/cfg/weeklyStudyAgenda {
+      allow read: if canUse(uid);
+      allow create, update: if canUse(uid)
+        && request.resource.data.keys().hasOnly(['schemaVersion', 'updatedAt', 'agenda'])
+        && request.resource.data.keys().hasAll(['schemaVersion', 'updatedAt', 'agenda'])
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.updatedAt is number
+        && validWeeklyStudyAgenda(request.resource.data.agenda);
+      allow delete: if false;
+    }
+    // Selección explícita de archivos curriculares y eventos inmutables por apartado.
+    match /users/{uid}/academyStudyMaterials/{topicId} {
+      allow read: if canUse(uid);
+      allow create, update: if canUse(uid) && validAcademyMaterialSelection(topicId);
+      allow delete: if false;
+    }
+    match /users/{uid}/academySectionEvents/{eventId} {
+      allow read: if canUse(uid);
+      allow create: if canUse(uid) && validAcademySectionEvent(eventId);
+      allow update, delete: if false;
+    }
+    match /users/{uid}/academyMaterialOpenEvents/{eventId} {
+      allow read: if canUse(uid);
+      allow create: if canUse(uid) && validAcademyMaterialOpenEvent(eventId);
+      allow update, delete: if false;
     }
     // Informes de errores del banco
     match /users/{uid}/cfg/cards {

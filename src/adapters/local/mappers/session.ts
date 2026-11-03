@@ -1,7 +1,7 @@
 import type {MappingResult,SessionResult} from '../../../core/domain/entities.js';
 import type {SessionDto} from '../dto/progress.js';
 import { sessionRecordSchema } from '../schemas/session.js';
-const map:Record<string,string>={id:'id',ts:'completedAt',kind:'kind',n:'questionCount',a:'correctCount',f:'wrongCount',b:'blankCount',secs:'durationSeconds',nota:'score',temas:'topicResults',tipos:'typeResults',fails:'failedQuestionIds',titulo:'title',interrupted:'interrupted',porTiempo:'timeLimited'};
+const map:Record<string,string>={id:'id',ts:'completedAt',kind:'kind',n:'questionCount',a:'correctCount',f:'wrongCount',b:'blankCount',secs:'durationSeconds',nota:'score',temas:'topicResults',tipos:'typeResults',fails:'failedQuestionIds',titulo:'title',interrupted:'interrupted',porTiempo:'timeLimited',scorePending:'scorePending',scoringPolicy:'scoringPolicy',milestoneEventId:'milestoneEventId'};
 const back=Object.fromEntries(Object.entries(map).map(([textValue,textValueItem])=>[textValueItem,textValue]));
 export const sessionMapper={toDomain(dto:unknown):MappingResult<SessionResult>{
  const parsed=sessionRecordSchema.safeParse(dto);

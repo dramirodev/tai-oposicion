@@ -18,6 +18,7 @@ describe('buildQuestionEvolution', () => {
         attempt('wrong', 'answered', 'wrong'),
         attempt('unknown-pending', 'pending'),
         attempt('unknown-revealed', 'revealed'),
+        { ...attempt('immediate-retry-correct', 'answered', 'correct'), exposureKind: 'immediate-retry', retryOfAttemptId: 'correct' },
         attempt('unseen', 'unseen'),
       ],
       events: [],

@@ -2,6 +2,8 @@ export type QuestionAttemptState = 'unseen' | 'pending' | 'answered' | 'revealed
 export type AttemptMode = 'practice' | 'simulation';
 export type AttemptOutcome = 'correct' | 'wrong';
 export type Confidence = 'sure' | 'betweenTwo' | 'guess' | null;
+export type SelfAssessment = 'could-explain' | 'needs-help';
+export type ExposureKind = 'ordinary' | 'immediate-retry';
 export type HighlightCategory = 'key' | 'doubt';
 export type AttemptSessionStatus = 'active' | 'completed' | 'interrupted';
 
@@ -42,9 +44,12 @@ export interface QuestionAttempt {
   mode: AttemptMode;
   position: number;
   exposure: number;
+  exposureKind?: ExposureKind;
+  retryOfAttemptId?: string;
   state: QuestionAttemptState;
   response: number | null;
   outcome: AttemptOutcome | null;
+  selfAssessment?: SelfAssessment;
   terminalEventId?: string;
   confidence: Confidence;
   discardedOptions: number[];
@@ -67,6 +72,7 @@ export type AttemptAction =
   | (ActionMetadata & { type: 'mark-pending' })
   | (ActionMetadata & { type: 'answer'; optionIndex: number; outcome: AttemptOutcome })
   | (ActionMetadata & { type: 'reveal' })
+  | (ActionMetadata & { type: 'self-assess'; value: SelfAssessment })
   | (ActionMetadata & { type: 'set-confidence'; value: Exclude<Confidence, null> })
   | (ActionMetadata & { type: 'discard-option'; optionIndex: number })
   | (ActionMetadata & { type: 'restore-option'; optionIndex: number })
@@ -124,6 +130,7 @@ const payloadMappers: PayloadMappers = {
   open: () => ({}), leave: () => ({}), 'mark-pending': () => ({}), reveal: () => ({}),
   pause: () => ({}), resume: () => ({}), close: () => ({}),
   answer: action => ({ optionIndex: action.optionIndex, outcome: action.outcome }),
+  'self-assess': action => ({ value: action.value }),
   'set-confidence': action => ({ value: action.value }),
   'discard-option': action => ({ optionIndex: action.optionIndex }),
   'restore-option': action => ({ optionIndex: action.optionIndex }),
@@ -159,10 +166,13 @@ const actionHandlers: ActionHandlers = {
   answer: (attempt, next, action) => attempt.state === 'revealed' || (attempt.state === 'answered' && attempt.mode === 'practice')
     ? rejectedAction('practice-answer-locked')
     : acceptedAction({ ...next, state: 'answered', response: action.optionIndex, outcome: action.outcome, terminalEventId: action.id },
-      attempt.mode === 'practice' ? 'record-practice-answer' : 'defer-to-session-finish'),
+      attempt.exposureKind === 'immediate-retry' ? 'none' : attempt.mode === 'practice' ? 'record-practice-answer' : 'defer-to-session-finish'),
   reveal: (attempt, next, action) => attempt.mode !== 'practice' || attempt.state !== 'pending'
     ? rejectedAction('solution-not-available')
     : acceptedAction({ ...next, state: 'revealed', response: null, outcome: null, terminalEventId: action.id }),
+  'self-assess': (attempt, next, action) => attempt.mode !== 'practice' || (attempt.state !== 'answered' && attempt.state !== 'revealed')
+    ? rejectedAction('action-not-available')
+    : acceptedAction({ ...next, selfAssessment: action.value }),
   'set-confidence': (attempt, next, action) => attempt.state === 'answered' || attempt.state === 'revealed'
     ? rejectedAction('action-not-available')
     : acceptedAction({ ...next, confidence: action.value }),

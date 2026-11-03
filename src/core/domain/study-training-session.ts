@@ -2,19 +2,39 @@ import type { StudyReviewMode, TrainingActivity } from './entities.js';
 import type { DailyTrainingPlan, TrainingPlanReason } from './study-training-plan.js';
 
 export interface TrainingSessionStep {
+  /** Stable within its parent checkpoint; legacy steps are derived from dateKey and position. */
+  id?: string;
   activity: TrainingActivity;
   minutes: number;
   reason: TrainingPlanReason;
   topicId?: string;
   topicIds?: readonly string[];
   reviewMode?: StudyReviewMode;
+  /** Detailed question-session IDs produced while this planned activity was active. */
+  attemptSessionIds?: readonly string[];
+  /** Exact agenda follow-up represented as active retrieval, never as a generic card/test. */
+  sectionRecall?: {
+    agendaItemId: string;
+    followUpId: string;
+    sectionId: string;
+    materialPath: string;
+    sourceHash: string;
+    outlineFingerprint: string;
+    sectionTitle?: string;
+    printedPage?: number;
+  };
 }
 
 export interface DailyTrainingSession {
+  schemaVersion: 2;
+  id: string;
   dateKey: string;
   activities: readonly TrainingSessionStep[];
   currentIndex: number;
   currentStartedAt: number | null;
+  /** A timed rest checkpoint; current activity stays selected and is never duplicated. */
+  breakStartedAt?: number | null;
+  breakDurationMinutes?: number;
   /** Measured foreground study time per activity, retained when paused. */
   elapsedSecondsByActivity?: readonly number[];
   /** Monotonic-ish local checkpoint time used to resolve cross-device updates. */
@@ -26,6 +46,7 @@ export interface DailyTrainingSession {
 /** Immutable summary of one completed daily training session. */
 export interface TrainingSessionHistoryEntry {
   id: string;
+  sessionId?: string;
   dateKey: string;
   startedAt: number;
   completedAt: number;
@@ -35,16 +56,28 @@ export interface TrainingSessionHistoryEntry {
 }
 
 export const MAX_TRAINING_SESSION_HISTORY = 30;
+export const MAX_DAILY_TRAINING_ACTIVITIES = 12;
+
+export interface TrainingActivityReference { sessionId: string; activityId: string }
+
+export function trainingActivityReference(session: DailyTrainingSession): TrainingActivityReference | null {
+  const activity = session.activities[session.currentIndex];
+  return activity ? { sessionId: session.id, activityId: activity.id ?? `${session.id}:activity:${session.currentIndex + 1}` } : null;
+}
 
 export function toTrainingSessionHistoryEntry(session: DailyTrainingSession): TrainingSessionHistoryEntry | null {
   if (session.completedAt === null || session.currentIndex !== session.activities.length || !session.activities.length) return null;
   return {
     id: session.dateKey,
+    sessionId: session.id,
     dateKey: session.dateKey,
     startedAt: session.startedAt,
     completedAt: session.completedAt,
     plannedMinutes: session.activities.reduce((sum, activity) => sum + activity.minutes, 0),
-    activities: session.activities.map(activity => ({ ...activity, ...(activity.topicIds ? { topicIds: [...activity.topicIds] } : {}) })),
+    activities: session.activities.map(activity => ({ ...activity,
+      ...(activity.topicIds ? { topicIds: [...activity.topicIds] } : {}),
+      ...(activity.sectionRecall ? { sectionRecall: { ...activity.sectionRecall } } : {}),
+    })),
     elapsedSecondsByActivity: session.activities.map((_, index) => session.elapsedSecondsByActivity?.[index] ?? 0),
   };
 }
@@ -65,9 +98,13 @@ export function localDayStart(dateKey: string, offsetDays = 0): number {
 
 export function createDailyTrainingSession(plan: DailyTrainingPlan, timestamp: number): DailyTrainingSession | null {
   if (plan.restDay || !plan.activities.length) return null;
+  const dateKey = localTrainingDateKey(timestamp);
+  const id = `training:${dateKey}`;
   return {
-    dateKey: localTrainingDateKey(timestamp),
-    activities: plan.activities.map(({ activity, minutes, reason, topicId, topicIds, reviewIntervention }) => ({ activity, minutes, reason, ...(topicId ? { topicId } : {}), ...(topicIds ? { topicIds: [...topicIds] } : {}), ...(reviewIntervention ? { reviewMode: reviewIntervention.mode } : {}) })),
+    schemaVersion: 2,
+    id,
+    dateKey,
+    activities: plan.activities.map(({ activity, minutes, reason, topicId, topicIds, reviewIntervention, sectionRecall }, index) => ({ id: `${id}:activity:${index + 1}`, activity, minutes, reason, ...(topicId ? { topicId } : {}), ...(topicIds ? { topicIds: [...topicIds] } : {}), ...(reviewIntervention ? { reviewMode: reviewIntervention.mode } : {}), ...(sectionRecall ? { sectionRecall: { ...sectionRecall } } : {}) })),
     currentIndex: 0,
     currentStartedAt: null,
     elapsedSecondsByActivity: plan.activities.map(() => 0),
@@ -78,7 +115,7 @@ export function createDailyTrainingSession(plan: DailyTrainingPlan, timestamp: n
 }
 
 export function startTrainingSessionActivity(session: DailyTrainingSession, timestamp: number): DailyTrainingSession {
-  if (session.completedAt !== null || session.currentIndex >= session.activities.length || session.currentStartedAt !== null) return session;
+  if (session.completedAt !== null || session.currentIndex >= session.activities.length || session.currentStartedAt !== null || session.breakStartedAt != null) return session;
   return { ...session, currentStartedAt: Math.max(timestamp, session.startedAt), updatedAt: timestamp };
 }
 
@@ -90,13 +127,27 @@ export function pauseTrainingSessionActivity(session: DailyTrainingSession, time
   return { ...session, currentStartedAt: null, elapsedSecondsByActivity, updatedAt: timestamp };
 }
 
+export function beginTrainingSessionBreak(session: DailyTrainingSession, timestamp: number, durationMinutes = 5): DailyTrainingSession {
+  if (session.completedAt !== null || session.currentIndex >= session.activities.length || session.breakStartedAt != null
+    || !Number.isInteger(durationMinutes) || durationMinutes < 3 || durationMinutes > 15) return session;
+  const paused = pauseTrainingSessionActivity(session, timestamp);
+  return { ...paused, breakStartedAt: timestamp, breakDurationMinutes: durationMinutes, updatedAt: timestamp };
+}
+
+export function endTrainingSessionBreak(session: DailyTrainingSession, timestamp: number): DailyTrainingSession {
+  if (session.breakStartedAt == null) return session;
+  return { ...session, breakStartedAt: null, updatedAt: timestamp };
+}
+
 export function completeTrainingSessionActivity(
   session: DailyTrainingSession,
   activity: TrainingActivity,
   timestamp: number,
+  expected?: TrainingActivityReference,
 ): DailyTrainingSession {
   if (session.completedAt !== null || session.currentStartedAt === null
     || session.activities[session.currentIndex]?.activity !== activity) return session;
+  if (expected && (expected.sessionId !== session.id || expected.activityId !== (session.activities[session.currentIndex]?.id ?? `${session.id}:activity:${session.currentIndex + 1}`))) return session;
   const currentIndex = session.currentIndex + 1;
   const isComplete = currentIndex >= session.activities.length;
   const elapsedSecondsByActivity = [...(session.elapsedSecondsByActivity ?? session.activities.map(() => 0))];
@@ -109,4 +160,20 @@ export function completeTrainingSessionActivity(
     updatedAt: timestamp,
     completedAt: isComplete ? Math.max(timestamp, session.currentStartedAt, session.startedAt) : null,
   };
+}
+
+/** Links a question-attempt session to the active planned step exactly once. */
+export function attachTrainingAttemptSession(
+  session: DailyTrainingSession,
+  attemptSessionId: string,
+  timestamp: number,
+  expected?: TrainingActivityReference,
+): DailyTrainingSession {
+  const activity = session.activities[session.currentIndex];
+  if (session.completedAt !== null || session.currentStartedAt === null || !activity || !attemptSessionId.trim()) return session;
+  if (expected && (expected.sessionId !== session.id || expected.activityId !== (activity.id ?? `${session.id}:activity:${session.currentIndex + 1}`))) return session;
+  if (activity.attemptSessionIds?.includes(attemptSessionId)) return session;
+  const activities = [...session.activities];
+  activities[session.currentIndex] = { ...activity, attemptSessionIds: [...(activity.attemptSessionIds ?? []), attemptSessionId] };
+  return { ...session, activities, updatedAt: timestamp };
 }

@@ -1,4 +1,5 @@
 import { failureStreak as deriveFailureStreak } from '../../../core/domain/spaced-repetition.js';
+import { isSimulationScoringPolicy } from '../../../core/domain/simulation-scoring.js';
 import type {
   CardMap,
   CardRec,
@@ -16,7 +17,7 @@ const boundedNumber = (value: unknown, minimum = 0, maximum = 1e13): number | nu
     ? Math.min(maximum, Math.max(minimum, value))
     : null;
 const ID_PATTERN = /^(?!__proto__$|constructor$|prototype$)[A-Za-z0-9._\-~]{1,48}$/;
-const TOPIC_ID_PATTERN = /^T\d\.\d\d$/;
+const TOPIC_ID_PATTERN = /^T\d+\.\d{2}$/;
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   !!value && typeof value === 'object' && !Array.isArray(value);
 const createDictionary = <Value = unknown>(): Record<string, Value> => Object.create(null);
@@ -179,6 +180,9 @@ export function cleanSession(value: unknown): Session | null {
     titulo: typeof value.titulo === 'string' ? value.titulo.slice(0, 80) : '',
     ...(value.interrupted === true ? { interrupted: true } : {}),
     ...(value.porTiempo === true ? { porTiempo: true } : {}),
+    ...(value.scorePending === true ? { scorePending: true } : {}),
+    ...(isSimulationScoringPolicy(value.scoringPolicy) ? { scoringPolicy: { ...value.scoringPolicy } } : {}),
+    ...(typeof value.milestoneEventId === 'string' && /^[A-Za-z0-9_.:-]{1,100}$/.test(value.milestoneEventId) ? { milestoneEventId: value.milestoneEventId } : {}),
   };
 }
 

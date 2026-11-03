@@ -49,6 +49,17 @@ describe('attempt strategy analysis', () => {
     });
   });
 
+  it('excludes immediate retries from strategy metrics and reports their count explicitly', () => {
+    const original = attempt('original', 'done', 0);
+    const retry = attempt('retry', 'done', 1, { exposureKind: 'immediate-retry', retryOfAttemptId: original.id });
+    const report = analyzeAttemptStrategy({
+      sessions: [session('done')], attempts: [original, retry], events: [],
+      questions: new Map([['Q-0', question('Q-0')], ['Q-1', question('Q-1')]]),
+      from: 0, to: 1000, reward: 1, penalty: 1 / 3, blankValue: 0,
+    });
+    expect(report).toMatchObject({ excludedImmediateRetryCount: 1, overall: { attempts: 1, correct: 1 } });
+  });
+
   it('requires 20 eligible answers in three sessions and calculates expected value from supplied scoring', () => {
     const sessions = [session('s1', 'completed', 100), session('s2', 'completed', 200), session('s3', 'completed', 300)];
     const attempts = Array.from({ length: 20 }, (_, index) => attempt(`a${index}`, `s${index % 3 + 1}`, index, {
@@ -67,6 +78,21 @@ describe('attempt strategy analysis', () => {
       from: 0, to: 1000, reward: 1, penalty: 1 / 3, blankValue: 0,
     });
     expect(tooFew.segments.find(segment => segment.dimension === 'mode' && segment.value === 'simulation')?.recommendation).toBeNull();
+  });
+
+  it('distinguishes insufficient data, non-simulation practice, and a tie with leaving blank', () => {
+    const sessions = [session('s1'), session('s2'), session('s3')];
+    const attempts = Array.from({ length:20 }, (_, index) => attempt(`a${index}`, `s${index % 3 + 1}`, index, {
+      questionId:`Q-${index}`, outcome:index < 10 ? 'correct' : 'wrong', response:index < 10 ? 0 : 1,
+    }));
+    const questions = new Map(attempts.map(item => [item.questionId, question(item.questionId)]));
+    const tie = analyzeAttemptStrategy({ sessions, attempts, events:[], questions, from:0, to:1000, reward:1, penalty:1, blankValue:0 });
+    expect(tie.segments.find(segment => segment.dimension === 'mode' && segment.value === 'simulation')).toMatchObject({ recommendation:null, recommendationReason:'matches-blank-value', expectedValuePerQuestion:0 });
+
+    const practiceSessions = sessions.map(item => ({ ...item, mode:'practice' }));
+    const practiceAttempts = attempts.map(item => ({ ...item, mode:'practice' }));
+    const practice = analyzeAttemptStrategy({ sessions:practiceSessions, attempts:practiceAttempts, events:[], questions, from:0, to:1000, reward:1, penalty:1 / 3, blankValue:0 });
+    expect(practice.segments.find(segment => segment.dimension === 'mode' && segment.value === 'practice')).toMatchObject({ recommendation:null, recommendationReason:'not-simulation-only' });
   });
 
   it('uses explicit difficulty only and reports active-time quality and percentile distribution', () => {

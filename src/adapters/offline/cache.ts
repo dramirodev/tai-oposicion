@@ -1,4 +1,5 @@
 // Verificación de CacheStorage: las cachés en memoria de los lectores no prueban uso sin red.
+import { isStudyTopicId } from '../../core/domain/topic-id.js';
 const OFFLINE_DATA_CACHE_NAME = 'tai-data', OFFLINE_VERIFICATION_KEY = 'tai.offline-verified';
 type Index = { temas: { id: string }[] };
 type CardIndex = { temas: Record<string, unknown> };
@@ -44,7 +45,7 @@ function isCardIndex(value: unknown): value is CardIndex {
 function getCardFiles(cardIndex: unknown): string[] {
   if (!isCardIndex(cardIndex)) throw new Error('Índice de tarjetas no válido');
   const topicIds = Object.keys(cardIndex.temas);
-  if (!topicIds.length || topicIds.some(topicId => !/^T\d\.\d\d$/.test(topicId))) throw new Error('Índice de tarjetas no válido');
+  if (!topicIds.length || topicIds.some(topicId => !isStudyTopicId(topicId))) throw new Error('Índice de tarjetas no válido');
   return topicIds.map(topicId => `cards/${topicId}.json`);
 }
 export async function inspectOffline(bankIndex: Index): Promise<OfflineState> {
@@ -65,7 +66,7 @@ export async function inspectOffline(bankIndex: Index): Promise<OfflineState> {
         if (!cachedResponse?.ok) throw new Error('Archivo no disponible');
         const responseBody = await cachedResponse.json();
         if (!responseBody || typeof responseBody !== 'object') throw new Error('JSON no válido');
-        if (/^(data|cards)\/T\d\.\d\d\.json$/.test(filePath) && !Array.isArray(responseBody)) throw new Error('Lista no válida');
+        if (/^(data|cards)\/T\d+\.\d{2}\.json$/.test(filePath) && !Array.isArray(responseBody)) throw new Error('Lista no válida');
         if (filePath === 'explanations/index.json' && !Array.isArray(responseBody)) throw new Error('Índice de explicaciones no válido');
         if (filePath === 'data/index.json' && !Array.isArray(responseBody.temas)) throw new Error('Índice no válido');
         if (filePath === 'cards/index.json' && !validCards) throw new Error('Índice de tarjetas no válido');

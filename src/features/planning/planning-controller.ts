@@ -25,6 +25,10 @@ function selectStudiedTopics(step: TrainingSessionStep, studiedTopicIds: readonl
 }
 
 function buildActivityRoute(step: TrainingSessionStep, topicIds: readonly string[]): string | null {
+  if (step.sectionRecall) {
+    const parameters = new URLSearchParams({ dailyTraining:'sectionRecall', topic:step.topicId ?? topicIds[0] ?? '', sectionId:step.sectionRecall.sectionId, agendaItemId:step.sectionRecall.agendaItemId, followUpId:step.sectionRecall.followUpId });
+    return `/temario?${parameters.toString()}`;
+  }
   const parameters = new URLSearchParams({ dailyTraining: step.activity, trainingTopics: topicIds.join(',') });
   if (step.activity === 'topicTest' && step.topicId && topicIds.includes(step.topicId)) parameters.set('topic', step.topicId);
   return scopeTrainingRouteToSeenTopics(`${destinations[step.activity]}?${parameters.toString()}`, topicIds);
@@ -43,6 +47,7 @@ export function resolvePlannedActivityAction(
     if (!step.topicId) return { type: 'notify', message: 'No se ha encontrado un tema nuevo disponible.' };
     return { type: 'navigate', path: `/temario?topic=${encodeURIComponent(step.topicId)}&dailyTraining=newContent` };
   }
+  if (step.sectionRecall) return { type:'navigate', path:buildActivityRoute(step, step.topicIds ?? (step.topicId ? [step.topicId] : []))! };
   const available = [...new Set(studiedTopicIds)];
   if (!available.length) return { type: 'notify', message: 'Marca temas vistos antes de iniciar actividades de recuperación.' };
   const topicIds = selectStudiedTopics(step, available);

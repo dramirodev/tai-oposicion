@@ -1,5 +1,7 @@
 import type { TrainingActivity, TrainingPreferences } from './entities.js';
 import { localTrainingDateKey } from './study-training-session.js';
+import { isStudyTopicId } from './topic-id.js';
+import { resolveTrainingDay } from './study-training-events.js';
 
 export type ScheduledStudyActivityKind = Extract<TrainingActivity, 'activeRecall' | 'topicTest'>;
 export const MAX_SCHEDULED_STUDY_ACTIVITIES = 90;
@@ -22,7 +24,7 @@ export type ScheduleDecision =
 const DAY_MS = 86_400_000;
 const MAX_SCHEDULE_DAYS = 180;
 const validActivity = (value: unknown): value is ScheduledStudyActivityKind => value === 'activeRecall' || value === 'topicTest';
-const validTopicId = (value: unknown): value is string => typeof value === 'string' && /^T[1-4]\.\d{2}$/.test(value);
+const validTopicId = isStudyTopicId;
 
 export function isStudyDateKey(value: unknown): value is string {
   if (typeof value !== 'string' || !/^20\d{2}-\d{2}-\d{2}$/.test(value)) return false;
@@ -66,8 +68,7 @@ function validateTarget(input: {
   if (!validActivity(input.activity) || !validTopicId(input.topicId)) return { ok: false, reason: 'unseen-topic' };
   if (!input.seenTopicIds.includes(input.topicId)) return { ok: false, reason: 'unseen-topic' };
   if (!Number.isInteger(input.minutes) || input.minutes < 5 || input.minutes > 120) return { ok: false, reason: 'invalid-duration' };
-  const weekday = new Date(`${input.dateKey}T12:00:00`).getDay();
-  const available = input.preferences.minutesByDay[weekday];
+  const available = resolveTrainingDay({ dateKey: input.dateKey, preferences: input.preferences }).minutes;
   if (!available) return { ok: false, reason: 'rest-day' };
   const sameDay = input.existing.filter(item => item.dateKey === input.dateKey && item.id !== input.ignoredId);
   if (sameDay.some(item => item.activity === input.activity && item.topicId === input.topicId)) return { ok: false, reason: 'duplicate' };

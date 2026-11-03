@@ -135,6 +135,25 @@ describe('study question selection', () => {
     expect(practice.map(question => question.i).sort()).toEqual(['generated-full', 'generated-partial', 'official', 'official-provisional']);
   });
 
+  it('aplica la forma del hito antes del reparto ponderado y completa el cupo con opciones compatibles', async () => {
+    const questions = { A: [
+      { i:'two-options', o:'O', np:0, a:['a','b'] },
+      { i:'four-options-1', o:'O', np:0, a:['a','b','c','d'] },
+      { i:'four-options-2', o:'O', np:0, a:['a','b','c','d'] },
+    ] };
+    const progress = {
+      getPreferences:() => ({}), getAllQuestionStats:() => ({}), getQuestionStats:() => undefined,
+      getSeenTopics:() => [], accountId:() => null, onAccountChange:() => () => {}, recordAnswer:() => {}, addSession:() => {},
+    };
+    const catalog = { getTopicQuestions:async topicId => questions[topicId], getTopicForQuestion:() => null,
+      getIndex:async () => ({ n:0, nsup:0, temas:[] }), getMetadata:async () => ({ _by:{} }),
+      getMetadataSnapshot:() => ({ _by:{} }), getQuestions:async () => [], now:() => 0 };
+    const selection = createStudyQuestionSelection(progress, catalog);
+    const chosen = await selection.selectWeightedSimulationQuestions([{ id:'A' }], new Set(['O']), 2, () => 0, question => question.a.length === 4);
+    expect(chosen.map(item => item.i)).toHaveLength(2);
+    expect(chosen.every(item => item.a.length === 4)).toBe(true);
+  });
+
   it('does not select two generated variants from the same family across topics', async () => {
     const questions = {
       A: [{ i: 'variant-a', o: 'G', v: 0, f: 'same-family' }, { i: 'other-a', o: 'G', v: 0, f: 'family-a' }],

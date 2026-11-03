@@ -13,6 +13,8 @@ export function toLegacyStatsSession(session: SessionResult): LegacySession {
     b: session.blankCount,
     secs: session.durationSeconds,
     nota: session.score,
+    ...(session.scorePending ? { scorePending: true } : {}),
+    ...(session.scoringPolicy ? { scoringPolicy: session.scoringPolicy } : {}),
     temas: session.topicResults,
     tipos: session.typeResults,
     titulo: session.title,

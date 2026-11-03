@@ -43,6 +43,79 @@ test('Ajustes mantiene completas las etiquetas del horario semanal en escritorio
   }
 });
 
+test('las excepciones de calendario se guardan, afectan solo las fechas indicadas y sobreviven a recarga', async ({ page }) => {
+  await prepare(page, 'light', 0, true);
+  await page.clock.setFixedTime(new Date('2026-11-02T12:00:00+01:00'));
+  await selectIntroductionTopic(page, 'T1.02');
+  await page.getByLabel('Tipo de evento').selectOption('unavailable');
+  await page.getByLabel('Nombre del evento').fill('Vacaciones');
+  await page.getByLabel('Inicio del evento').fill('2026-11-02');
+  await page.getByLabel('Fin del evento').fill('2026-11-05');
+  await page.getByRole('button', { name:'Guardar evento' }).click();
+  await expect(page.getByText('Vacaciones', { exact:true })).toBeVisible();
+  await expect(page.getByLabel('Lunes: minutos de entrenamiento')).toHaveValue('120');
+
+  await page.goto('/#/planificacion');
+  await expect(page.getByRole('list', { name:'Próximos eventos' })).toContainText('Vacaciones');
+  await expect(page.locator('.planning-week ol li').filter({ hasText:'Lunes · 2' })).toContainText('Vacaciones');
+  await expect(page.locator('.planning-activity')).toHaveCount(0);
+  await page.reload();
+  await expect(page.getByRole('list', { name:'Próximos eventos' })).toContainText('Vacaciones');
+
+  await page.clock.setFixedTime(new Date('2026-11-06T12:00:00+01:00'));
+  await page.reload();
+  await page.goto('/#/settings');
+  await expect(page.getByText('Vacaciones', { exact:true }).locator('..')).toContainText('Pasado');
+  await page.goto('/#/planificacion');
+  await expect(page.locator('.planning-activity')).toHaveCount(2);
+  await expect(page.getByRole('list', { name:'Próximos eventos' })).toHaveCount(0);
+});
+
+test('un hito versionado crea un simulacro con su política explícita y queda enlazado desde Planificación', async ({ page }) => {
+  await prepare(page, 'light', 0, true);
+  await page.setViewportSize({ width:390, height:844 });
+  await page.clock.setFixedTime(new Date('2026-11-02T12:00:00+01:00'));
+  await page.goto('/#/settings');
+  await page.getByLabel('Tipo de evento').selectOption('milestone');
+  await page.getByLabel('Nombre del evento').fill('Simulacro de referencia');
+  await page.getByLabel('Inicio del evento').fill('2026-11-02');
+  await page.getByLabel('Fin del evento').fill('2026-11-02');
+  await page.getByLabel('Preguntas del hito').fill('3');
+  await page.getByLabel('Duración del hito').fill('10');
+  await page.getByRole('button', { name:'Guardar evento' }).click();
+  await expect(page.getByRole('list', { name:'Eventos guardados' })).toContainText('Simulacro · 3 preguntas/10 min · penalización desconocida');
+
+  await page.goto('/#/planificacion');
+  const event = page.getByRole('list', { name:'Próximos eventos' });
+  await expect(event).toContainText('Simulacro de referencia');
+  await event.getByRole('link', { name:'Preparar hito' }).click();
+  await expect(page).toHaveURL(/#\/sim\?milestone=/);
+  await expect(page.getByRole('heading', { name:'Simulacro de referencia' })).toBeVisible();
+  await expect(page.getByText(/sin nota neta/)).toBeVisible();
+  await expect(page.getByRole('tablist', { name:'Tipo de simulacro' })).toHaveCount(0);
+  await expect(page.getByRole('button', { name:'Empezar este hito' })).toBeEnabled();
+  await page.getByRole('button', { name:'Empezar este hito' }).click();
+  await expect.poll(async () => page.evaluate(() => location.hash)).toMatch(/#\/quiz/);
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
+  await page.locator('.opt').first().click();
+  await page.reload();
+  await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
+  await page.locator('.overlay [data-v="1"]').click();
+  for (let index = 0; index < 3; index++) {
+    if (index > 0) await page.locator('.opt').first().click();
+    await page.locator('#next').click();
+  }
+  await expect(page.locator('#app h1')).toHaveText('Resultado');
+  await expect(page.getByText('Puntuación neta pendiente')).toBeVisible();
+  const savedSession = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.v1:guest') || 'null')?.sessions?.at(-1));
+  expect(savedSession).toMatchObject({ scorePending:true, scoringPolicy:{ version:1, correctPoints:1, wrongPenalty:null, blankPoints:0 }, milestoneEventId:expect.any(String) });
+  expect(savedSession.nota).toBe(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+  await page.setViewportSize({ width:1440, height:960 });
+  await page.goto('/#/planificacion');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(1440);
+});
+
 for (const theme of ['light', 'dark']) {
   test(`los bloques de código conservan formato y tema mientras cargan · ${theme}`, async ({ page }) => {
     await prepare(page, theme, 0);
@@ -263,6 +336,65 @@ test('Planificación prepara la sesión fuera de Inicio y permite comenzar el pa
   await expect(page.locator('.planning-activity')).toHaveCount(2);
   await page.getByRole('button', { name: 'Comenzar sesión' }).click();
   await expect(page).toHaveURL(/#\/temario\?topic=T1\.02&dailyTraining=newContent/);
+});
+
+test('la agenda semanal confirma, persiste y alimenta el checkpoint de la fecha al llegar', async ({ page }) => {
+  await prepare(page, 'light', 0, true);
+  await page.clock.setFixedTime(new Date('2026-11-02T12:00:00+01:00'));
+  await page.goto('/#/home');
+  await expect(page.locator('#app h1')).toContainText('Hola');
+  await page.goto('/#/planificacion');
+  await expect(page.locator('#app h1')).toHaveText('Planificación de estudio');
+  await expect(page.locator('main.planning-page')).toBeVisible();
+  await page.getByLabel('Fecha de actividad semanal').fill('2026-11-03');
+  await page.getByLabel('Actividad semanal', { exact:true }).selectOption('newContent');
+  await page.getByLabel('Tema de actividad semanal', { exact:true }).selectOption('T1.02');
+  await page.getByLabel('Duración de actividad semanal', { exact:true }).selectOption('35');
+  await page.getByRole('button', { name:'Revisar propuesta' }).click();
+  await expect(page.getByRole('group', { name:'Propuesta de semana pendiente de confirmación' })).toContainText('Añadir Tema nuevo · T1.02 · 35 min');
+  await expect(page.getByRole('list', { name:'Actividades de la agenda semanal' })).toHaveCount(0);
+  await page.getByRole('button', { name:'Confirmar actividad semanal' }).click();
+  await expect(page.getByRole('list', { name:'Actividades de la agenda semanal' })).toContainText('Tema nuevo · T1.02 · 35 min · Planificada');
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('tai.weekly-study-agenda.v1.guest') || 'null'))).toMatchObject({
+    schemaVersion:1, items:[{ dateKey:'2026-11-03', kind:'newContent', topicIds:['T1.02'], minutes:35, status:'planned' }],
+  });
+
+  await page.reload();
+  await expect(page.getByRole('list', { name:'Actividades de la agenda semanal' })).toContainText('Tema nuevo · T1.02 · 35 min · Planificada');
+  await page.clock.setFixedTime(new Date('2026-11-03T12:00:00+01:00'));
+  await page.reload();
+  await expect(page.locator('.planning-activity')).toContainText('T1.02');
+  await page.getByRole('button', { name:'Comenzar sesión' }).click();
+  await expect(page).toHaveURL(/#\/temario\?topic=T1\.02&dailyTraining=newContent/);
+});
+
+test('la pausa de foco se guarda, sobrevive a recarga y continúa el mismo paso', async ({ page }) => {
+  await prepare(page, 'light', 0, true);
+  await page.clock.setFixedTime(new Date('2026-11-02T12:00:00+01:00'));
+  await page.goto('/#/home');
+  const session = await page.evaluate(() => {
+    const now = Date.now();
+    const dateKey = `${new Date(now).getFullYear()}-${String(new Date(now).getMonth() + 1).padStart(2, '0')}-${String(new Date(now).getDate()).padStart(2, '0')}`;
+    const id = `training:${dateKey}`;
+    const value = { schemaVersion:2, id, dateKey, activities:[{ id:`${id}:activity:1`, activity:'activeRecall', minutes:30, reason:'active-recall' }], currentIndex:0, currentStartedAt:now - 36 * 60_000, elapsedSecondsByActivity:[0], updatedAt:now, startedAt:now - 40 * 60_000, completedAt:null };
+    localStorage.setItem(`tai.training-session.v1.${encodeURIComponent('guest')}`, JSON.stringify(value));
+    return value;
+  });
+  await page.goto('/#/planificacion');
+  await expect(page.getByText(/Has alcanzado el bloque orientativo de 35 min/)).toBeVisible();
+  await page.getByRole('button', { name:'Tomar pausa de 5 min' }).click();
+  await expect(page.getByRole('status').filter({ hasText:'Pausa en curso' })).toBeVisible();
+  const paused = await page.evaluate(() => JSON.parse(localStorage.getItem(`tai.training-session.v1.${encodeURIComponent('guest')}`) || 'null'));
+  expect(paused).toMatchObject({ currentIndex:0, currentStartedAt:null, breakStartedAt:expect.any(Number), breakDurationMinutes:5 });
+  expect(paused.elapsedSecondsByActivity[0]).toBeGreaterThanOrEqual(2159);
+
+  await page.reload();
+  await expect(page.getByRole('status').filter({ hasText:'Pausa en curso' })).toBeVisible();
+  await page.getByRole('button', { name:'Terminar pausa' }).click();
+  const resumed = await page.evaluate(() => JSON.parse(localStorage.getItem(`tai.training-session.v1.${encodeURIComponent('guest')}`) || 'null'));
+  expect(resumed).toMatchObject({ currentIndex:0, currentStartedAt:null, breakStartedAt:null, activities:[{ id:session.activities[0].id }] });
+  await page.getByRole('button', { name:'Continuar actividad' }).click();
+  await expect(page).toHaveURL(/#\/cards/);
 });
 
 test('registra el recuerdo del tema en papel y prioriza su comprobación el día siguiente', async ({ page }) => {

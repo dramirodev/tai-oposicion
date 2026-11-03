@@ -15,6 +15,11 @@ describe('agenda de estudio futura', () => {
     if (decision.ok) expect(decision.activity).toMatchObject({ dateKey:'2026-10-30', activity:'topicTest', topicId:'T1.01', minutes:30 });
   });
 
+  it('programa temas de bloques futuros si están en la lista de temas vistos', () => {
+    const decision = proposeStudyActivity(input({ topicId:'T12.01', seenTopicIds:['T12.01'] }));
+    expect(decision).toMatchObject({ ok:true, activity:{ topicId:'T12.01' } });
+  });
+
   it.each([
     ['fecha imposible', { dateKey:'2026-02-30' }, 'invalid-date'],
     ['fecha pasada o de hoy', { dateKey:'2026-10-29' }, 'past-date'],
@@ -31,6 +36,13 @@ describe('agenda de estudio futura', () => {
     expect(proposeStudyActivity(input({ existing, minutes:30 }))).toEqual({ ok:false, reason:'day-capacity' });
     const duplicate = [{ ...existing[0], activity:'topicTest', topicId:'T1.01', minutes:15 }];
     expect(proposeStudyActivity(input({ existing:duplicate, minutes:15 }))).toEqual({ ok:false, reason:'duplicate' });
+  });
+
+  it('valida las actividades futuras con la excepción de disponibilidad de esa fecha', () => {
+    const preferences = { ...DEFAULT_TRAINING_PREFERENCES, calendarEvents:[{ id:'event-leave', kind:'unavailable', title:'Ausencia', startDate:'2026-10-30', endDate:'2026-10-30', createdAt:1, updatedAt:1 }] };
+    expect(proposeStudyActivity(input({ preferences }))).toEqual({ ok:false, reason:'rest-day' });
+    const studyWindow = { ...preferences, calendarEvents:[{ id:'event-window', kind:'study-window', title:'Ventana', startDate:'2026-10-30', endDate:'2026-10-30', studyMinutes:20, startTime:'08:00', endTime:'12:00', createdAt:1, updatedAt:1 }] };
+    expect(proposeStudyActivity(input({ preferences:studyWindow, minutes:30 }))).toEqual({ ok:false, reason:'day-capacity' });
   });
 
   it('no acepta una nueva actividad cuando alcanzó el límite sincronizable', () => {
@@ -52,7 +64,8 @@ describe('agenda de estudio futura', () => {
     const first = { id:'schedule-1', dateKey:'2026-10-30', activity:'topicTest', topicId:'T1.01', minutes:30, createdAt:1, updatedAt:1 };
     const newer = { ...first, dateKey:'2026-10-31', updatedAt:2 };
     expect(isScheduledStudyActivity(first)).toBe(true);
-    expect(isScheduledStudyActivity({ ...first, topicId:'T9.99' })).toBe(false);
+    expect(isScheduledStudyActivity({ ...first, topicId:'T12.01' })).toBe(true);
+    expect(isScheduledStudyActivity({ ...first, topicId:'T0.01' })).toBe(false);
     expect(mergeScheduledStudyActivities([first], [newer, { ...first, id:'bad', minutes:500 }])).toEqual([newer]);
   });
 

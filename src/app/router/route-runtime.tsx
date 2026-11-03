@@ -21,6 +21,7 @@ const LightningPage = lazy(() => import('../../features/trainers/LightningPage.j
 const TrapsPage = lazy(() => import('../../features/trainers/TrapsPage.js').then(module => ({ default: module.TrapsPage })));
 const ReadingPage = lazy(() => import('../../features/trainers/ReadingPage.js').then(module => ({ default: module.ReadingPage })));
 const SettingsPage = lazy(() => import('../../features/settings/SettingsPage.js').then(module => ({ default: module.SettingsPage })));
+const AcademyQuestionSectionMapPage = lazy(() => import('../../features/content-map/AcademyQuestionSectionMapPage.js').then(module => ({ default: module.AcademyQuestionSectionMapPage })));
 const TestPage = lazy(() => import('../../features/test/TestPage.js').then(module => ({ default: module.TestPage })));
 const SimulationReviewPage = lazy(() => import('../../features/simulation/SimulationReviewPage.js').then(module => ({ default: module.SimulationReviewPage })));
 const SimulationPage = lazy(() => import('../../features/simulation/SimulationPage.js').then(module => ({ default: module.SimulationPage })));
@@ -84,6 +85,7 @@ export const router = createHashRouter([{ ErrorBoundary: RouteError, element: <L
   { path: `${routeSegment(paths.traps)}/*`, element: screen(<TrapsPage />, { restricted: true }) },
   { path: `${routeSegment(paths.reading)}/*`, element: screen(<ReadingPage />, { restricted: true }) },
   { path: `${routeSegment(paths.settings)}/*`, element: screen(<SettingsPage />) },
+  { path: 'curar-contenido/*', element: screen(<AcademyQuestionSectionMapPage />, { restricted: true }) },
   { path: `${routeSegment(paths.test)}/*`, element: screen(<TestPage />, { restricted: true }) },
   { path: `${routeSegment(paths.simulation)}/*`, element: screen(<SimulationPage />, { restricted: true }) },
   { path: `${routeSegment(paths.simulationReview)}/*`, element: screen(<SimulationReviewPage />, { restricted: true }) },

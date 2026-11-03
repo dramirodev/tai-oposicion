@@ -7,7 +7,7 @@ it('explica muestras, datos ausentes, penalización y límites del análisis sin
     filters: { from: 1, to: 2, modes: ['simulation'], sessionCount: 2 },
     report: {
       period: { from: 1, to: 2 }, scoring: { reward: 1, penalty: 0.333, blankValue: 0 },
-      completedSessionCount: 2, excludedSessionCount: 1, orphanAttemptCount: 0,
+      completedSessionCount: 2, excludedSessionCount: 1, excludedImmediateRetryCount: 1, orphanAttemptCount: 0,
       overall: { attempts: 5, answered: 3, correct: 2, wrong: 1, blankPending: 1, blankConsulted: 0, blankUnanswered: 1, sessionCount: 2, changedAnswerAttempts: 0, discardedOptions: 2, confidence: { sure: 1, betweenTwo: 0, guess: 1, unset: 1 }, highlights: { beforeAnswer: 1, afterAnswer: 0, afterReveal: 0 }, activeTime: { observedMilliseconds: 100, completeAttempts: 2, partialAttempts: 1, unavailableAttempts: 2, p50Milliseconds: 40, p75Milliseconds: 60 } },
       segments: [{ dimension: 'mode', value: 'practice', correct: 1, answered: 1, sessionCount: 1,
         observedAccuracy: 1, recommendation: null,
@@ -22,6 +22,8 @@ it('explica muestras, datos ausentes, penalización y límites del análisis sin
   expect(markdown).toContain('No conviertas valores ausentes en cero');
   expect(markdown).toContain('puede contener soluciones de examen');
   expect(markdown).toContain('identificadores anonimizados');
+  expect(markdown).toContain('Reintentos inmediatos registrados: 1');
+  expect(markdown).toContain('ni representan recuerdo diferido');
   expect(markdown).not.toMatch(/"(?:uid|email|token|firebaseConfig)"\s*:/i);
 });
 
@@ -31,7 +33,7 @@ it('usa el singular cuando el informe contiene una sola respuesta', () => {
     filters: { modes: [], sessionCount: 1 },
     report: {
       period: { from: 1, to: 2 }, scoring: { reward: 1, penalty: 0, blankValue: 0 },
-      completedSessionCount: 1, excludedSessionCount: 0, orphanAttemptCount: 0,
+      completedSessionCount: 1, excludedSessionCount: 0, excludedImmediateRetryCount: 0, orphanAttemptCount: 0,
       overall: { correct: 1, answered: 1, wrong: 0, blankPending: 0, blankConsulted: 0, blankUnanswered: 0,
         confidence: { sure: 0, betweenTwo: 0, guess: 0, unset: 0 }, discardedOptions: 0, changedAnswerAttempts: 0,
         highlights: { beforeAnswer: 0, afterAnswer: 0, afterReveal: 0 },

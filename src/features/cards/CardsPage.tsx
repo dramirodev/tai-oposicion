@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Check, CircleHelp, Trash2, TriangleAlert } from 'lucide-react';
 import { Link, useNavigate, useSearchParams } from 'react-router';
 import { ERROR_REPORT_REASONS } from '../../shared/presentation/study-labels.js';
+import { isStudyTopicId } from '../../core/domain/topic-id.js';
 import { questionNotice, sourceHtml } from '../../shared/presentation/study-content.js';
 import { richHtml } from '../../shared/presentation/study-text.js';
 import { useStudyService, type CardsServices, type CardPreferences, type CardsPlan, type StudyCard } from '../../shared/ui/study-services.js';
@@ -52,7 +53,7 @@ function CompletedSession({ services, onExit, onComplete, headingRef, dailyTrain
   const nextDue = getNextDueDate(services);
   return <>
     <h1 ref={headingRef} tabIndex={-1}>Sesión terminada</h1>
-    <div className="stats-grid"><div className="stat"><b>{known}</b><span>lo sabía</span></div><div className="stat"><b>{unsure}</b><span>dudaba</span></div><div className="stat"><b>{failed}</b><span>fallé</span></div><div className="stat"><b>{count ? Math.round(known * 100 / count) : 0}%</b><span>marqué «lo sabía»</span></div></div>
+    <div className="stats-grid"><div className="stat"><b>{known}</b><span>lo sabía</span></div><div className="stat"><b>{unsure}</b><span>dudaba</span></div><div className="stat"><b>{failed}</b><span>fallé</span></div><div className="stat"><b>{count ? Math.round(known * 100 / count) : 0}%</b><span>de tarjetas valoradas como «lo sabía»</span></div></div>
     <p className="sub">{failed + unsure ? 'Las valoraciones se han usado para calcular el siguiente repaso.' : '¡Todas recordadas!'}{nextDue ? ` Próximo repaso: ${nextDue.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short' })}.` : ''}</p>
     {dailyTraining ? <button className="btn" id="otra" onClick={onComplete}>Continuar con el entrenamiento</button> : <button className="btn" id="otra" onClick={onComplete}>Otra sesión</button>} <button className="btn sec" id="ini" onClick={onExit}>Inicio</button>
   </>;
@@ -197,12 +198,19 @@ export function CardsPage() {
   const [searchParams] = useSearchParams();
   const trainingTopicsValue = searchParams.get('trainingTopics');
   const dailyTrainingActivity = (['activeRecall', 'spacedReviews'] as const).find(value => value === searchParams.get('dailyTraining'));
+  const sessionId = searchParams.get('trainingSessionId'), activityId = searchParams.get('trainingActivityId');
+  const trainingActivityReference = sessionId && activityId ? { sessionId, activityId } : undefined;
   const home = useStudyService('home');
   const cards = useStudyService('cards');
   const seenTopicIds = useMemo(() => new Set(cards.seenTopics()), [cards]);
   const trainingTopicIds = useMemo(() => trainingTopicsValue === null ? undefined
-    : [...new Set(trainingTopicsValue.split(',').filter(topicId => /^T[1-4]\.\d{2}$/.test(topicId)
+    : [...new Set(trainingTopicsValue.split(',').filter(topicId => isStudyTopicId(topicId)
       && seenTopicIds.has(topicId)))], [seenTopicIds, trainingTopicsValue]);
+  const activeRecallFallback = useMemo(() => {
+    const params = new URLSearchParams({ dailyTraining: 'activeRecall', trainingTopics: (trainingTopicIds ?? []).join(',') });
+    if (sessionId && activityId) { params.set('trainingSessionId', sessionId); params.set('trainingActivityId', activityId); }
+    return `/test?${params.toString()}`;
+  }, [activityId, sessionId, trainingTopicIds]);
   const trainingTopicSet = useMemo(() => trainingTopicIds ? new Set(trainingTopicIds) : null, [trainingTopicIds]);
   const initialPreferences = useMemo(() => cards.getPreferences(), [cards]);
   const [preferences, setPreferences] = useState<CardPreferences>(initialPreferences);
@@ -245,8 +253,8 @@ export function CardsPage() {
 
   const onSessionComplete = () => { cards.clearSession(); refreshSession(value => value + 1); if (dailyTrainingActivity) void navigate('/planificacion'); else setPlanGeneration(value => value + 1); };
   const onSessionExit = () => { cards.clearSession(); void navigate('/home'); };
-  const onActivityFinished = () => { if (dailyTrainingActivity) home.completeTrainingActivity(dailyTrainingActivity); };
-  if (pageState !== 'plan') return <CardsPageStatus state={pageState} cards={cards} dailyTraining={!!dailyTrainingActivity} onSessionExit={onSessionExit} onSessionComplete={onSessionComplete} onActivityFinished={onActivityFinished} onRetry={() => setPlanGeneration(value => value + 1)} onHome={() => void navigate('/home')} />;
+  const onActivityFinished = () => { if (dailyTrainingActivity) home.completeTrainingActivity(dailyTrainingActivity, trainingActivityReference); };
+  if (pageState !== 'plan') return <CardsPageStatus state={pageState} cards={cards} dailyTraining={!!dailyTrainingActivity} activeRecallFallback={activeRecallFallback} onSessionExit={onSessionExit} onSessionComplete={onSessionComplete} onActivityFinished={onActivityFinished} onRetry={() => setPlanGeneration(value => value + 1)} onHome={() => void navigate('/home')} />;
   if (!plan) return <PageLoading variant="legacy" />;
 
   const changePreferences = (next: CardPreferences) => { cards.savePreferences(next); setPreferences(next); };
@@ -257,10 +265,11 @@ export function CardsPage() {
   return <CardsPlanView plan={plan} preferences={preferences} trainingTopicIds={trainingTopicIds} changePreferences={changePreferences} begin={begin} />;
 }
 
-function CardsPageStatus({ state, cards, dailyTraining, onSessionExit, onSessionComplete, onActivityFinished, onRetry, onHome }: {
+function CardsPageStatus({ state, cards, dailyTraining, activeRecallFallback, onSessionExit, onSessionComplete, onActivityFinished, onRetry, onHome }: {
   state: Exclude<ReturnType<typeof resolveCardsPageState>, 'plan'>;
   cards: CardsServices;
   dailyTraining: boolean;
+  activeRecallFallback: string;
   onSessionExit(): void;
   onSessionComplete(): void;
   onActivityFinished(): void;
@@ -271,7 +280,7 @@ function CardsPageStatus({ state, cards, dailyTraining, onSessionExit, onSession
     case 'topic-scope-mismatch': return <PageMessage role="status" titleLevel={1} title="La sesión de tarjetas anterior no coincide con tus temas vistos"><p>La sesión se conserva para no perder el progreso, pero este entrenamiento solo muestra tarjetas de los temas que has marcado. Puedes volver a Inicio para continuar con el plan de hoy.</p><div className="bar2"><button className="btn" onClick={onHome}>Volver al inicio</button></div></PageMessage>;
     case 'another-session-pending': return <PageMessage role="status" titleLevel={1} title="Hay otra sesión de tarjetas pendiente"><p>Se conserva para no perder tu avance. Termínala desde Tarjetas y después vuelve al plan de hoy.</p><div className="bar2"><button className="btn" onClick={onHome}>Volver al entrenamiento</button></div></PageMessage>;
     case 'load-error': return <PageMessage role="alert" titleLevel={1} title="No se pudo cargar"><p>{navigator.onLine === false ? 'Las tarjetas que aún no están guardadas en este dispositivo necesitan conexión.' : 'No se pudieron cargar las tarjetas. Inténtalo de nuevo.'}</p><button className="btn" onClick={onRetry}>Reintentar</button></PageMessage>;
-    case 'no-daily-cards': return <><h1>Entrenamiento de hoy</h1><PageMessage className="note" role="status">No hay tarjetas disponibles para esta actividad dentro de los temas vistos. Puedes volver al plan de hoy.</PageMessage><Link className="btn sec" to="/home">Volver al entrenamiento</Link></>;
+    case 'no-daily-cards': return <><h1>Entrenamiento de hoy</h1><PageMessage className="note" role="status">No hay tarjetas disponibles para esta actividad dentro de los temas vistos. Puedes recuperar preguntas de esos temas o volver al plan de hoy.</PageMessage><div className="bar2"><Link className="btn" to={activeRecallFallback}>Practicar preguntas</Link><Link className="btn sec" to="/planificacion">Volver al plan de hoy</Link></div></>;
     case 'daily-loading':
     case 'loading': return <PageLoading variant="legacy" />;
     case 'session': return <CardSession services={cards} onExit={onSessionExit} onComplete={onSessionComplete} onActivityFinished={onActivityFinished} dailyTraining={dailyTraining} />;

@@ -1,7 +1,8 @@
-import { MAX_TRAINING_SESSION_HISTORY, toTrainingSessionHistoryEntry, type DailyTrainingSession, type TrainingSessionHistoryEntry, type TrainingSessionStep } from '../../core/domain/study-training-session.js';
+import { MAX_DAILY_TRAINING_ACTIVITIES, MAX_TRAINING_SESSION_HISTORY, toTrainingSessionHistoryEntry, type DailyTrainingSession, type TrainingSessionHistoryEntry, type TrainingSessionStep } from '../../core/domain/study-training-session.js';
 import type { StudyReviewMode, TrainingActivity } from '../../core/domain/entities.js';
 import type { TrainingPlanReason } from '../../core/domain/study-training-plan.js';
 import { localTrainingDateKey } from '../../core/domain/study-training-session.js';
+import { isStudyTopicId } from '../../core/domain/topic-id.js';
 
 const activities = new Set<TrainingActivity>(['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews']);
 const reasons = new Set<TrainingPlanReason>(['active-recall', 'new-content-day', 'new-topic-day', 'weak-topics', 'coverage', 'recurring-failures', 'due-reviews']);
@@ -10,7 +11,7 @@ const keyFor = (accountId: string | null) => `tai.training-session.v1.${encodeUR
 const historyKeyFor = (accountId: string | null) => `tai.training-history.v1.${encodeURIComponent(accountId || 'guest')}`;
 
 type StoredTrainingSessionStep = Pick<TrainingSessionStep, 'activity' | 'minutes'>
-  & Partial<Pick<TrainingSessionStep, 'reason' | 'topicId' | 'topicIds' | 'reviewMode'>>;
+  & Partial<Pick<TrainingSessionStep, 'id' | 'reason' | 'topicId' | 'topicIds' | 'reviewMode' | 'attemptSessionIds' | 'sectionRecall'>>;
 type StoredTrainingSession = Omit<DailyTrainingSession, 'activities'> & { activities: readonly StoredTrainingSessionStep[] };
 
 function isSessionStep(value: unknown): value is StoredTrainingSessionStep {
@@ -18,11 +19,23 @@ function isSessionStep(value: unknown): value is StoredTrainingSessionStep {
   const step = value as Partial<StoredTrainingSessionStep>;
   return activities.has(step.activity as TrainingActivity)
     && Number.isInteger(step.minutes) && step.minutes! > 0 && step.minutes! <= 240
+    && (step.id === undefined || (typeof step.id === 'string' && !!step.id.trim() && step.id.length <= 180))
+    && (step.attemptSessionIds === undefined || (Array.isArray(step.attemptSessionIds)
+      && step.attemptSessionIds.length <= 500
+      && step.attemptSessionIds.every(id => typeof id === 'string' && !!id.trim() && id.length <= 180)))
     && (step.reason === undefined || reasons.has(step.reason as TrainingPlanReason))
     && (step.reviewMode === undefined || reviewModes.has(step.reviewMode as StudyReviewMode))
-    && (step.topicId === undefined || (typeof step.topicId === 'string' && /^T[1-4]\.\d{2}$/.test(step.topicId)))
+    && (step.topicId === undefined || isStudyTopicId(step.topicId))
     && (step.topicIds === undefined || (Array.isArray(step.topicIds) && step.topicIds.length > 0
-      && step.topicIds.every(topicId => typeof topicId === 'string' && /^T[1-4]\.\d{2}$/.test(topicId))));
+      && step.topicIds.every(isStudyTopicId)))
+    && (step.sectionRecall === undefined || (!!step.sectionRecall && typeof step.sectionRecall === 'object'
+      && typeof step.sectionRecall.agendaItemId === 'string' && step.sectionRecall.agendaItemId.length > 0 && step.sectionRecall.agendaItemId.length <= 128
+      && /^[a-zA-Z0-9_-]{8,128}$/.test(step.sectionRecall.followUpId)
+      && /^ci-[a-f0-9]{20}$/i.test(step.sectionRecall.sectionId)
+      && typeof step.sectionRecall.materialPath === 'string' && step.sectionRecall.materialPath.length > 0 && step.sectionRecall.materialPath.length <= 500
+      && /^[a-f0-9]{64}$/i.test(step.sectionRecall.sourceHash) && /^[a-f0-9]{64}$/i.test(step.sectionRecall.outlineFingerprint)
+      && (step.sectionRecall.sectionTitle === undefined || (typeof step.sectionRecall.sectionTitle === 'string' && step.sectionRecall.sectionTitle.length <= 500))
+      && (step.sectionRecall.printedPage === undefined || (Number.isInteger(step.sectionRecall.printedPage) && step.sectionRecall.printedPage >= 0))));
 }
 
 function isTrainingHistoryEntry(value: unknown): value is TrainingSessionHistoryEntry {
@@ -33,9 +46,9 @@ function isTrainingHistoryEntry(value: unknown): value is TrainingSessionHistory
     && Number.isFinite(entry.startedAt) && Number.isFinite(entry.completedAt)
     && entry.startedAt! >= 0 && entry.completedAt! >= entry.startedAt!
     && Number.isInteger(entry.plannedMinutes) && entry.plannedMinutes! > 0 && entry.plannedMinutes! <= 1440
-    && Array.isArray(entry.activities) && entry.activities.length > 0 && entry.activities.length <= 6
+    && Array.isArray(entry.activities) && entry.activities.length > 0 && entry.activities.length <= MAX_DAILY_TRAINING_ACTIVITIES
     && entry.activities.every(isSessionStep)
-    && new Set(entry.activities.map(activity => activity.activity)).size === entry.activities.length
+    && new Set(entry.activities.map(activity => activity.sectionRecall ? `sectionRecall:${activity.sectionRecall.agendaItemId}` : activity.activity)).size === entry.activities.length
     && Array.isArray(entry.elapsedSecondsByActivity)
     && entry.elapsedSecondsByActivity.length === entry.activities.length
     && entry.elapsedSecondsByActivity.every(seconds => Number.isInteger(seconds) && seconds >= 0 && seconds <= 86_400);
@@ -82,8 +95,10 @@ function isDailyTrainingSession(value: unknown, timestamp: number): value is Sto
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
   const session = value as Partial<StoredTrainingSession>;
   if (session.dateKey !== localTrainingDateKey(timestamp) || !Array.isArray(session.activities)
-    || !session.activities.length || session.activities.length > 6 || !session.activities.every(isSessionStep)
-    || new Set(session.activities.map(step => step.activity)).size !== session.activities.length
+    || !session.activities.length || session.activities.length > MAX_DAILY_TRAINING_ACTIVITIES || !session.activities.every(isSessionStep)
+    || (session.schemaVersion !== undefined && session.schemaVersion !== 2)
+    || (session.id !== undefined && (typeof session.id !== 'string' || !session.id.trim() || session.id.length > 180))
+    || new Set(session.activities.map(step => step.sectionRecall ? `sectionRecall:${step.sectionRecall.agendaItemId}` : step.activity)).size !== session.activities.length
     || !Number.isInteger(session.currentIndex) || session.currentIndex! < 0 || session.currentIndex! > session.activities.length
     || (session.elapsedSecondsByActivity !== undefined && (!Array.isArray(session.elapsedSecondsByActivity)
       || session.elapsedSecondsByActivity.length !== session.activities.length
@@ -91,6 +106,9 @@ function isDailyTrainingSession(value: unknown, timestamp: number): value is Sto
     || !Number.isFinite(session.startedAt) || session.startedAt! < 0
     || (session.updatedAt !== undefined && (!Number.isFinite(session.updatedAt) || session.updatedAt < session.startedAt!))
     || (session.currentStartedAt !== null && (!Number.isFinite(session.currentStartedAt) || session.currentStartedAt! < session.startedAt!))
+    || (session.breakStartedAt !== undefined && session.breakStartedAt !== null && (!Number.isFinite(session.breakStartedAt) || session.breakStartedAt < session.startedAt!))
+    || (session.breakDurationMinutes !== undefined && (!Number.isInteger(session.breakDurationMinutes) || session.breakDurationMinutes < 3 || session.breakDurationMinutes > 15))
+    || (session.breakStartedAt != null && session.currentStartedAt !== null)
     || (session.completedAt !== null && (!Number.isFinite(session.completedAt) || session.completedAt! < session.startedAt!))) return false;
   if (session.completedAt !== null && session.currentIndex !== session.activities.length) return false;
   if (session.completedAt === null && session.currentIndex === session.activities.length) return false;
@@ -109,17 +127,25 @@ export function readTrainingSession(accountId: string | null, timestamp: number)
   if (!serialized) return null;
   try {
     const parsed: unknown = JSON.parse(serialized);
-    if (isDailyTrainingSession(parsed, timestamp)) return {
+    if (isDailyTrainingSession(parsed, timestamp)) {
+      const id = parsed.id ?? `training:${parsed.dateKey}`;
+      return {
       ...parsed,
-      activities: parsed.activities.map(step => ({
+      schemaVersion: 2,
+      id,
+      activities: parsed.activities.map((step, index) => ({
+        id: step.id ?? `${id}:activity:${index + 1}`,
         activity: step.activity,
         minutes: step.minutes,
         reason: step.reason ?? defaultReason[step.activity],
         ...(step.topicId ? { topicId: step.topicId } : {}),
         ...(step.topicIds ? { topicIds: [...step.topicIds] } : {}),
         ...(step.reviewMode ? { reviewMode: step.reviewMode } : {}),
+        ...(step.attemptSessionIds ? { attemptSessionIds: [...step.attemptSessionIds] } : {}),
+        ...(step.sectionRecall ? { sectionRecall: { ...step.sectionRecall } } : {}),
       })),
-    };
+      };
+    }
   } catch { /* Invalid local checkpoints are removed below. */ }
   try { localStorage.removeItem(key); }
   catch { /* Storage may be unavailable in private browsing modes. */ }
@@ -139,16 +165,22 @@ export function mergeRemoteTrainingSession(accountId: string | null, timestamp: 
   const current = readTrainingSession(accountId, timestamp);
   if (current && (current.updatedAt ?? current.startedAt) >= updatedAt) return false;
   const incoming = value as StoredTrainingSession;
+  const id = incoming.id ?? `training:${incoming.dateKey}`;
   saveTrainingSession(accountId, {
     ...incoming,
+    schemaVersion: 2,
+    id,
     updatedAt,
-    activities: incoming.activities.map(step => ({
+    activities: incoming.activities.map((step, index) => ({
+      id: step.id ?? `${id}:activity:${index + 1}`,
       activity: step.activity,
       minutes: step.minutes,
       reason: step.reason ?? defaultReason[step.activity],
       ...(step.topicId ? { topicId: step.topicId } : {}),
       ...(step.topicIds ? { topicIds: [...step.topicIds] } : {}),
       ...(step.reviewMode ? { reviewMode: step.reviewMode } : {}),
+      ...(step.attemptSessionIds ? { attemptSessionIds: [...step.attemptSessionIds] } : {}),
+      ...(step.sectionRecall ? { sectionRecall: { ...step.sectionRecall } } : {}),
     })),
   });
   return true;

@@ -8,6 +8,9 @@ export interface StudySessionSummary {
   questionCount: number;
   correctCount: number;
   score: number;
+  scorePending?: boolean;
+  /** Stable scoring rule key; absent legacy sessions use the established 1/3 rule. */
+  scoringPolicyKey?: string;
   durationSeconds: number;
   byTopic?: Readonly<Record<string, SessionBreakdown>>;
   byQuestionType?: Readonly<Record<string, SessionBreakdown>>;
@@ -98,14 +101,18 @@ export function slowestQuestions(
 }
 
 export function buildSimulationHistory(sessions: readonly StudySessionSummary[]) {
-  const simulations = sessions.filter(session => session.mode === 'simulation').slice().sort((left, right) => left.startedAt - right.startedAt);
+  const simulations = sessions.filter(session => session.mode === 'simulation' && !session.scorePending).slice().sort((left, right) => left.startedAt - right.startedAt);
   const previousByPart = new Map<1 | 2, StudySessionSummary>();
   return simulations.map(session => {
     const part = session.practicePart || 1;
     const previous = previousByPart.get(part);
     previousByPart.set(part, session);
-    return { session, part, scoreDelta: previous ? Math.round((session.score - previous.score) * 10) / 10 : null };
+    return { session, part, scoreDelta: previous && scoringKey(previous) === scoringKey(session) ? Math.round((session.score - previous.score) * 10) / 10 : null };
   });
+}
+
+function scoringKey(session: StudySessionSummary): string {
+  return session.scoringPolicyKey || 'v1:[1,0.3333333333333333,0]';
 }
 
 export function compareStudySessions(first: StudySessionSummary, second: StudySessionSummary) {
@@ -126,7 +133,7 @@ export function compareStudySessions(first: StudySessionSummary, second: StudySe
   const rate = (correct: number, total: number) => total ? Math.round(100 * correct / total) : 0;
   return {
     topics,
-    scoreDelta: Math.round((second.score - first.score) * 10) / 10,
+    scoreDelta: scoringKey(first) === scoringKey(second) ? Math.round((second.score - first.score) * 10) / 10 : null,
     accuracyDelta: rate(second.correctCount, second.questionCount) - rate(first.correctCount, first.questionCount),
     secondsPerQuestionDelta: first.questionCount && second.questionCount
       ? Math.round(10 * (second.durationSeconds / second.questionCount - first.durationSeconds / first.questionCount)) / 10

@@ -1,26 +1,42 @@
 import { createContext, useContext } from 'react';
 import type { StatsComparison, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
-import type { StudyReviewMode, TrainingActivity, TrainingPreferences } from '../../core/domain/entities.js';
+import type { StudyReviewMode, TrainingActivity, TrainingCalendarEvent, TrainingPreferences } from '../../core/domain/entities.js';
 import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
 import type { DailyTrainingSession, TrainingSessionHistoryEntry } from '../../core/domain/study-training-session.js';
 import type { PaperRecallAssessment, PaperRecallRating } from '../../core/domain/paper-recall-assessment.js';
+import type { PaperTestAttemptSegment } from '../../core/domain/paper-test-attempt.js';
 import type { ScheduleDecision, ScheduledStudyActivity, ScheduledStudyActivityKind } from '../../core/domain/study-training-calendar.js';
 import type { ObservedStudyTime } from '../../core/domain/attempts/observed-study-time.js';
 import type { ExplanationLookup } from '../../core/domain/explanations.js';
+import type { SelfAssessment } from '../../core/domain/attempts/transitions.js';
+import type { SimulationScoringPolicy } from '../../core/domain/simulation-scoring.js';
+import type { WeeklyAgendaItem, WeeklyAgendaPlanProposal, WeeklyAgendaRecoveryProposal, WeeklyStudyAgenda } from '../../core/domain/study-weekly-agenda.js';
+import type { TopicReviewEvidence } from '../../core/domain/study-review-intervention.js';
+import type { AcademyMaterialOpenEvent, AcademyMaterialReference, AcademySectionStudyEvent, AcademyStudyProgressOverviewSnapshot, AcademyTopicProgressSnapshot } from '../../core/domain/academy-study-progress.js';
+import type { AcademyMaterialPdfCopy } from '../../core/domain/academy-material-copy.js';
 export type { StatsComparison, StatsDomainTopic, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 export interface ActiveStudy { title: string; position: number; total: number }
 export interface HomeBlock { name: string; total: number; mastered: number; assessed: number }
+export interface StudyContentInventory {
+  questionTopicIds: readonly string[] | null;
+  cardTopicIds: readonly string[] | null;
+}
 export interface HomeOverview {
   completedSessions: number; blocks: HomeBlock[];
   seen: number; total: number; answers: number; streak: number; daysToExam: number | null;
   due: number; cardsDue: number; quickCount: number; slowCount: number; failures: number;
   trainingDue: { questions: number; cards: number };
+  trainingFailures?: number;
   studiedTopicDetails?: readonly { id: string; name: string }[];
   nextNewTopic?: { id: string; name: string };
   studiedTopics: number; topicCount: number; assessedTopics: number; weakTopics: number; masteredTopics: number;
   trainingPlan: DailyTrainingPlan; trainingSession: DailyTrainingSession | null;
   trainingHistory?: readonly TrainingSessionHistoryEntry[];
   paperRecallAssessments?: readonly PaperRecallAssessment[];
+  paperTestAttempts?: readonly PaperTestAttemptSegment[];
+  weakTopicIds?: readonly string[];
+  topicReviewEvidence?: readonly TopicReviewEvidence[];
+  studyContentInventory?: StudyContentInventory;
 }
 export interface AccessOverview {
   full: boolean; level: string; greeting: string; state: string; configured: boolean;
@@ -35,15 +51,24 @@ export interface HomeServices {
   getActiveStudy(): ActiveStudy | null;
   subscribe(listener: () => void): () => void;
   quickSession(): Promise<void>;
-  startReview(topicIds?: readonly string[], dailyTrainingActivity?: TrainingActivity): Promise<void>;
+  startReview(topicIds?: readonly string[], dailyTrainingActivity?: TrainingActivity, reference?: import('../../core/domain/study-training-session.js').TrainingActivityReference): Promise<void>;
   startTrainingSession(plan: DailyTrainingPlan): DailyTrainingSession | null;
   startTrainingActivity(): DailyTrainingSession | null;
   pauseTrainingActivity(): DailyTrainingSession | null;
-  completeTrainingActivity(activity: TrainingActivity): DailyTrainingSession | null;
+  beginTrainingBreak(minutes?: number): DailyTrainingSession | null;
+  endTrainingBreak(): DailyTrainingSession | null;
+  completeTrainingActivity(activity: TrainingActivity, reference?: import('../../core/domain/study-training-session.js').TrainingActivityReference): DailyTrainingSession | null;
   recordPaperRecall?(topicId: string, rating: PaperRecallRating): PaperRecallAssessment | null;
+  recordPaperTestSegment?(input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'>, existingId?: string): PaperTestAttemptSegment | null;
+  voidPaperTestSegment?(id: string): PaperTestAttemptSegment | null;
   scheduledStudyActivities?(): readonly ScheduledStudyActivity[];
   scheduleStudyActivity?(input: { dateKey: string; activity: ScheduledStudyActivityKind; topicId: string; minutes: number }): ScheduleDecision | { ok:false; reason:'storage-failed' };
   rescheduleStudyActivity?(input: { id: string; dateKey: string }): ScheduleDecision | { ok:false; reason:'storage-failed' };
+  weeklyStudyAgenda?(): WeeklyStudyAgenda;
+  replaceWeeklyStudyAgendaWeek?(weekStart: string, items: readonly WeeklyAgendaItem[]): WeeklyStudyAgenda | null;
+  recoverWeeklyStudyAgenda?(proposal: WeeklyAgendaRecoveryProposal): WeeklyStudyAgenda | null;
+  addWeeklyStudyAgendaPlan?(proposal: WeeklyAgendaPlanProposal): WeeklyStudyAgenda | null;
+  setWeeklyStudyAgendaItemStatus?(id: string, status: 'completed' | 'skipped'): WeeklyStudyAgenda | null;
   setTrainingReviewMode(topicId: string, mode: StudyReviewMode | null): void;
   openMenu(): void;
   login(): Promise<unknown>;
@@ -57,6 +82,18 @@ export interface TopicServices {
   setStudied(ids: readonly string[]): void;
   accountId(): string | null;
   subscribe(listener: () => void): () => void;
+}
+export interface AcademyStudyProgressServices {
+  accountId(): string | null;
+  subscribe(listener: () => void): () => void;
+  loadTopicProgress(topicId: string): Promise<AcademyTopicProgressSnapshot>;
+  loadProgressOverview(): Promise<AcademyStudyProgressOverviewSnapshot>;
+  selectMaterials(topicId: string, materials: readonly AcademyMaterialReference[]): boolean;
+  record(event: AcademySectionStudyEvent): boolean;
+  recordMaterialOpen(event: AcademyMaterialOpenEvent): boolean;
+  listLocalPdfs(topicId: string): Promise<AcademyMaterialPdfCopy[]>;
+  saveLocalPdf(copy: AcademyMaterialPdfCopy): Promise<void>;
+  removeLocalPdf(topicId: string, materialPath: string, sourceHash: string): Promise<void>;
 }
 export interface StudyCard {
   id: string; t: string; q: string; a: string; nota?: string; ref?: string; tipo?: string; src?: string;
@@ -156,16 +193,18 @@ export interface TestTopic { id: string; name: string; total: number; attempted:
 export interface TestConfiguration { all: boolean; selected: readonly string[]; count: 10 | 15 | 25 | 40; mode: TestMode; origins: readonly ('O' | 'A' | 'G')[]; timed: boolean; minutes: 10 | 20 | 30 | 45 | 60 }
 export interface TestServices {
   loadTopics(): Promise<readonly TestTopic[]>;
+  loadTopicQuestions(topicId: string): Promise<import('../../core/domain/question-record.js').QuestionRecord[]>;
   getConfiguration(): TestConfiguration;
   saveConfiguration(configuration: TestConfiguration): void;
   seenTopics(): readonly string[];
-  start(configuration: TestConfiguration, options?: { dailyTrainingActivity?: TrainingActivity }): Promise<'started' | 'empty' | 'account-changed'>;
+  start(configuration: TestConfiguration, options?: { dailyTrainingActivity?: TrainingActivity; trainingActivityReference?: import('../../core/domain/study-training-session.js').TrainingActivityReference }): Promise<'started' | 'empty' | 'account-changed'>;
 }
 export interface ScenarioChoice { id: string; text: string }
 export interface SimulationReviewServices { loadChoices(): Promise<readonly ScenarioChoice[]>; start(id: string): 'started' | 'unavailable'; }
 export interface SimulationNavigationServices { openExams(): void }
 export type SimulationTab = 'completo' | 'examen' | 'tema';
-export interface SimulationConfiguration { count: 40 | 80; minutes: 45 | 60 | 90 | 120; scope: 'vistos' | 'todos'; origins: readonly ('O' | 'A' | 'G')[]; includeSecondPart: boolean }
+export interface SimulationConfiguration { count: number; minutes: number; scope: 'vistos' | 'todos'; origins: readonly ('O' | 'A' | 'G')[]; includeSecondPart: boolean }
+export interface SimulationMilestoneRunOptions { scoringPolicy: import('../../core/domain/simulation-scoring.js').SimulationScoringPolicy; optionsPerQuestion: number; eventId: string; title: string }
 export interface SimulationExam { id: string; name: string; questionCount: number; attempts: number; latest: number | null; best: number | null }
 export interface SimulationExamGroups { official: readonly SimulationExam[]; academy: readonly SimulationExam[]; topicTests: readonly SimulationExam[] }
 export interface SimulationServices {
@@ -175,16 +214,16 @@ export interface SimulationServices {
   seenTopics(): readonly string[];
   loadExamGroups(): Promise<SimulationExamGroups>;
   getSelectedExam(): string | null; selectExam(id: string): void;
-  startConfigured(configuration: SimulationConfiguration): Promise<'started' | 'empty' | 'account-changed'>;
+  startConfigured(configuration: SimulationConfiguration, milestone?: SimulationMilestoneRunOptions): Promise<'started' | 'empty' | 'account-changed'>;
   startExam(id: string, mode: 'study' | 'exam'): Promise<'started' | 'empty' | 'account-changed'>;
 }
 export interface ResultHighlight { id: string; field: 'statement' | `option:${number}`; start: number; end: number; text: string; before: string; after: string; category: 'key' | 'doubt'; contentRevision: string; createdAt: number; timing: 'before-answer' | 'after-answer' | 'after-reveal'; stale?: boolean }
-export interface ResultItem { id: string; topicId: string; topicName: string; statement: string; options: readonly string[]; correctIndex: number; answer?: number; outcome: 'correct' | 'wrong' | 'blank' | 'revealed'; notice: string; source: string; citation?: string; note?: string; confidence?: 'sure' | 'betweenTwo' | 'guess'; discardedOptions: readonly number[]; highlights: readonly ResultHighlight[]; contentRevision: string }
-export interface ResultSnapshot { score: number; correct: number; wrong: number; blank: number; consulted: number; accuracy: number | null; seconds: number; title: string; interrupted: boolean; kind: 'sim' | 'rev' | 'test'; porTiempo: boolean; analysis: string; secondPartAvailable: boolean; topics: readonly { id: string; name: string; correct: number; total: number }[]; items: readonly ResultItem[] }
+export interface ResultItem { id: string; attemptId?: string; topicId: string; topicName: string; statement: string; options: readonly string[]; correctIndex: number; answer?: number; outcome: 'correct' | 'wrong' | 'blank' | 'revealed'; notice: string; source: string; citation?: string; note?: string; confidence?: 'sure' | 'betweenTwo' | 'guess'; discardedOptions: readonly number[]; highlights: readonly ResultHighlight[]; contentRevision: string; retryAvailable: boolean }
+export interface ResultSnapshot { score: number | null; scorePending?: boolean; scoringPolicy?: SimulationScoringPolicy; correct: number; wrong: number; blank: number; consulted: number; accuracy: number | null; seconds: number; title: string; interrupted: boolean; kind: 'sim' | 'rev' | 'test'; exposureKind?: 'ordinary' | 'immediate-retry'; porTiempo: boolean; analysis: string; secondPartAvailable: boolean; topics: readonly { id: string; name: string; correct: number; total: number }[]; items: readonly ResultItem[] }
 export interface ResultReport { reason: string; note: string; state: ErrorReportRecord['state'] }
 export interface ResultServices {
   getSnapshot(): ResultSnapshot | null; subscribe(listener: () => void): () => void;
-  continuePartTwo(): void; repeatFailures(): boolean; goHome(): void;
+  continuePartTwo(): void; repeatFailures(): boolean; retryImmediately(questionId: string): boolean; goHome(): void;
   loadStrategy(): Promise<string>;
   loadExplanation(item: Pick<ResultItem, 'id' | 'statement' | 'options'>): Promise<ExplanationLookup>;
   getReport(id: string): ResultReport | undefined; saveReport(id: string, topicId: string, reason: string, note: string): void;
@@ -195,14 +234,16 @@ export interface StatsServices {
   compareSimulations(firstId: string, secondId: string): StatsComparison | null;
   loadWeekly(filter: { topic?: string; type?: string; weeks: number }): Promise<readonly StatsWeek[]>;
   loadQuestionStatements(questionIds: readonly string[]): Promise<readonly { id: string; statement: string }[]>;
+  getApprovedSectionLinkCount(): number;
+  loadAcademySectionPerformance(): Promise<import('../../core/application/stats/academy-section-performance.js').AcademySectionPerformanceResult>;
   loadStudyActivity(weeks: number): Promise<{ questionEvolution: readonly { start: number; seen: number; correct: number; wrong: number; unknown: number }[]; observedStudyTime: ObservedStudyTime }>;
   loadStrategy(days: number): Promise<string>;
   practiceTopics(ids?: readonly string[]): void; reviewDue(): void; practiceFailures(): void; practiceTrap(id: string): Promise<'started' | 'empty'>; practiceSlow(onlyCorrect: boolean): Promise<'started' | 'empty'>;
 }
 export interface QuizPrompt { id: string; topicId: string; topicName: string; origin: 'O' | 'A' | 'G'; year?: string; statement: string; options: readonly string[]; correctIndex: number; context?: string; assumptionText?: string; hasAssumption: boolean; notice: string; citation?: string; source: string; traps: readonly string[]; provisional: boolean; mayExpire: boolean; variant: boolean; contentRevision: string }
-export interface QuizSnapshot { title: string; index: number; count: number; questionIds: readonly string[]; seconds: number; timeLimitSeconds: number | null; remainingSeconds: number | null; readingWaitSeconds: number; readingGateUntil: number; feedback: boolean; timed: boolean; paused: boolean; readingMode: number; prompt: QuizPrompt; answer?: number; studyState: 'unseen' | 'pending' | 'answered' | 'revealed'; review: readonly number[]; answers: readonly (number | undefined)[]; studyStates: readonly ('unseen' | 'pending' | 'answered' | 'revealed')[]; confidence?: 'sure' | 'betweenTwo' | 'guess'; discarded: readonly number[]; highlights: readonly ResultHighlight[]; scoreByLuck: number | null; recentAnswer: readonly [number, number] | null; flagged: boolean; failureReason: number | null; report?: ResultReport; cardExists: boolean }
+export interface QuizSnapshot { title: string; index: number; count: number; questionIds: readonly string[]; seconds: number; timeLimitSeconds: number | null; remainingSeconds: number | null; readingWaitSeconds: number; readingGateUntil: number; feedback: boolean; timed: boolean; paused: boolean; readingMode: number; prompt: QuizPrompt; answer?: number; studyState: 'unseen' | 'pending' | 'answered' | 'revealed'; review: readonly number[]; answers: readonly (number | undefined)[]; studyStates: readonly ('unseen' | 'pending' | 'answered' | 'revealed')[]; confidence?: 'sure' | 'betweenTwo' | 'guess'; selfAssessment?: SelfAssessment; discarded: readonly number[]; highlights: readonly ResultHighlight[]; scoreByLuck: number | null; recentAnswer: readonly [number, number] | null; flagged: boolean; failureReason: number | null; report?: ResultReport; cardExists: boolean }
 export type QuizFinishResult = 'finished' | 'cancelled' | 'empty';
-export interface QuizServices { getSnapshot(): QuizSnapshot | null; subscribe(listener: () => void): () => void; startCurrentQuestion(): void; persist(): void; tick(): void; setIndex(index: number): void; answer(index: number): void; toggleReview(): void; setConfidence(value: 'sure' | 'betweenTwo' | 'guess'): void; toggleDiscard(index: number): void; reveal(): boolean; markBlank(): void; toggleBlank(): void; setPaused(paused: boolean): void; finish(reason?: 'complete' | 'interrupted' | 'timeout'): Promise<QuizFinishResult>; exit(): Promise<void>; cancelConfirmation(): void; toggleFlag(): void; setFailureReason(reason: number): void; markDoubt(): void; markLuck(): void; toggleCard(): void; addHighlight(anchor: { field: 'statement' | `option:${number}`; sourceText: string; start: number; end: number }, category: 'key' | 'doubt'): boolean; removeHighlight(id: string): void; saveReport(reason: string, note: string): void; loadExplanation(): Promise<ExplanationLookup> }
+export interface QuizServices { getSnapshot(): QuizSnapshot | null; subscribe(listener: () => void): () => void; startCurrentQuestion(): void; persist(): boolean; tick(): void; setIndex(index: number): void; answer(index: number): void; toggleReview(): void; setConfidence(value: 'sure' | 'betweenTwo' | 'guess'): void; setSelfAssessment(value: SelfAssessment, retryHistory?: boolean): Promise<{ historySaved: boolean; checkpointSaved: boolean }>; toggleDiscard(index: number): void; reveal(): boolean; markBlank(): void; toggleBlank(): void; setPaused(paused: boolean): void; finish(reason?: 'complete' | 'interrupted' | 'timeout'): Promise<QuizFinishResult>; exit(): Promise<void>; cancelConfirmation(): void; toggleFlag(): void; setFailureReason(reason: number): void; markDoubt(): void; markLuck(): void; toggleCard(): void; addHighlight(anchor: { field: 'statement' | `option:${number}`; sourceText: string; start: number; end: number }, category: 'key' | 'doubt'): boolean; removeHighlight(id: string): void; saveReport(reason: string, note: string): void; loadExplanation(): Promise<ExplanationLookup> }
 export interface SettingsSnapshot {
   sync: { state: string; user: { name: string; email: string } | null; configured: boolean; lastSync: number; error: string; detail: string; host: string; authDomain: string; accessError: string; requests: readonly AccessMember[] };
   full: boolean; level: string; devMode: string | null; devRevealed: boolean; ui: { theme: string; size: number; lectura: number }; training: TrainingPreferences;
@@ -216,6 +257,7 @@ export interface SettingsServices {
   load(): Promise<void>;
   setPreference(key: 'theme' | 'size' | 'lectura', value: string | number): void;
   setTrainingPreferences(value: TrainingPreferences): void;
+  createTrainingCalendarEvent(input: Omit<TrainingCalendarEvent, 'id' | 'createdAt' | 'updatedAt'>): TrainingCalendarEvent | null;
   setExam(value: string): void;
   setDevMode(value: string | null): void;
   revealDev(): boolean;
@@ -230,7 +272,7 @@ export interface SettingsServices {
   buildAiExport(input: { from: number; to: number; modes: readonly ('practice' | 'simulation')[]; sessionIds: readonly string[] }): Promise<unknown>;
   deleteAiHistory(): Promise<{ accountSyncPending: boolean }>;
 }
-export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; cards: CardsServices; errors: ErrorServices; failures: FailureServices; lightning: LightningServices; traps: TrapsServices; reading: ReadingServices; test: TestServices; simulation: SimulationServices; simulationReview: SimulationReviewServices; result: ResultServices; quiz: QuizServices; stats: StatsServices; settings: SettingsServices; markReady(): void }
+export interface StudyServices { access: AccessManagementServices; home: HomeServices; topics: TopicServices; academyStudyProgress: AcademyStudyProgressServices; cards: CardsServices; errors: ErrorServices; failures: FailureServices; lightning: LightningServices; traps: TrapsServices; reading: ReadingServices; test: TestServices; simulation: SimulationServices; simulationReview: SimulationReviewServices; result: ResultServices; quiz: QuizServices; stats: StatsServices; settings: SettingsServices; markReady(): void }
 const Context = createContext<StudyServices | null>(null);
 export const AppServicesProvider = Context.Provider;
 function useOptionalStudyServices(): StudyServices | null { return useContext(Context); }

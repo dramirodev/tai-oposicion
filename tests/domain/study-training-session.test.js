@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { completeTrainingSessionActivity, createDailyTrainingSession, localDayStart, localTrainingDateKey, pauseTrainingSessionActivity, startTrainingSessionActivity, toTrainingSessionHistoryEntry } from '../../src/core/domain/study-training-session.ts';
+import { attachTrainingAttemptSession, beginTrainingSessionBreak, completeTrainingSessionActivity, createDailyTrainingSession, endTrainingSessionBreak, localDayStart, localTrainingDateKey, pauseTrainingSessionActivity, startTrainingSessionActivity, toTrainingSessionHistoryEntry, trainingActivityReference } from '../../src/core/domain/study-training-session.ts';
 
 const plan = { weekday:2, minutes:30, restDay:false, activities:[
   { activity:'activeRecall', minutes:10, reason:'active-recall' },
@@ -26,6 +26,28 @@ describe('sesión diaria guiada', () => {
     expect(completeTrainingSessionActivity(finished, 'topicTest', now + 7)).toBe(finished);
   });
 
+  it('asigna identidad estable al checkpoint y a sus pasos, y enlaza intentos una sola vez', () => {
+    const now = new Date(2026, 10, 2, 12).getTime();
+    const created = createDailyTrainingSession(plan, now);
+    const started = startTrainingSessionActivity(created, now + 1);
+    const reference = trainingActivityReference(started);
+    expect(reference).toEqual({ sessionId:'training:2026-11-02', activityId:'training:2026-11-02:activity:1' });
+    const linked = attachTrainingAttemptSession(started, 'attempt-session-1', now + 2, reference);
+    expect(linked.activities[0].attemptSessionIds).toEqual(['attempt-session-1']);
+    expect(attachTrainingAttemptSession(linked, 'attempt-session-1', now + 3, reference)).toBe(linked);
+    expect(attachTrainingAttemptSession(linked, 'attempt-session-2', now + 3, { ...reference, activityId:'stale' })).toBe(linked);
+    expect(completeTrainingSessionActivity(linked, 'activeRecall', now + 4, { ...reference, sessionId:'stale' })).toBe(linked);
+  });
+
+  it('conserva la identidad de un apartado desde el plan hasta el historial de sesión', () => {
+    const now = new Date(2026, 10, 2, 12).getTime();
+    const sectionRecall = { agendaItemId:'agenda-section-001', followUpId:'follow-up-001', sectionId:'ci-0123456789abcdefabcd', materialPath:'T1.01/Temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64) };
+    const created = createDailyTrainingSession({ ...plan, activities:[{ ...plan.activities[0], sectionRecall }] }, now);
+    expect(created.activities[0].sectionRecall).toEqual(sectionRecall);
+    const finished = completeTrainingSessionActivity(startTrainingSessionActivity(created, now + 1), 'activeRecall', now + 5_001);
+    expect(toTrainingSessionHistoryEntry(finished)?.activities[0].sectionRecall).toEqual(sectionRecall);
+  });
+
   it('mantiene las marcas de tiempo válidas si el reloj del dispositivo retrocede', () => {
     const now = 1_800_000_000_000;
     const created = createDailyTrainingSession({ ...plan, activities: [plan.activities[0]] }, now);
@@ -43,6 +65,18 @@ describe('sesión diaria guiada', () => {
     const resumed = startTrainingSessionActivity(paused, now + 60_000);
     const completed = completeTrainingSessionActivity(resumed, 'activeRecall', now + 70_000);
     expect(completed).toMatchObject({ elapsedSecondsByActivity: [25], currentIndex: 1, completedAt: now + 70_000 });
+  });
+
+  it('registra pausa separada y reanuda la misma actividad desde el checkpoint', () => {
+    const now = 1_800_000_000_000;
+    const created = createDailyTrainingSession({ ...plan, activities: [plan.activities[0]] }, now);
+    const started = startTrainingSessionActivity(created, now + 1_000);
+    const resting = beginTrainingSessionBreak(started, now + 16_000, 5);
+    expect(resting).toMatchObject({ currentIndex: 0, currentStartedAt: null, breakStartedAt: now + 16_000, breakDurationMinutes: 5, elapsedSecondsByActivity: [15] });
+    expect(startTrainingSessionActivity(resting, now + 20_000)).toBe(resting);
+    const resumed = startTrainingSessionActivity(endTrainingSessionBreak(resting, now + 5 * 60_000), now + 6 * 60_000);
+    expect(resumed).toMatchObject({ currentIndex: 0, breakStartedAt: null, currentStartedAt: now + 6 * 60_000 });
+    expect(completeTrainingSessionActivity(resumed, 'activeRecall', now + 6 * 60_000 + 10_000).elapsedSecondsByActivity).toEqual([25]);
   });
 
   it('crea un resumen solo cuando la sesión completa está terminada', () => {

@@ -16,6 +16,8 @@ const actionLabels = {
 
 function recommendationText(segment: AttemptStrategyReport['segments'][number], scoring: AttemptStrategyReport['scoring']): string {
   if (!segment.recommendation) {
+    if (segment.recommendationReason === 'not-simulation-only') return 'Sin recomendación de examen: este segmento incluye práctica que no es simulacro cronometrado.';
+    if (segment.recommendationReason === 'matches-blank-value') return `Sin ventaja observada frente al blanco: el valor esperado (${segment.expectedValuePerQuestion?.toLocaleString('es-ES', { maximumFractionDigits: 3 })}) coincide con su valor (${scoring.blankValue.toLocaleString('es-ES')}).`;
     return `Muestra insuficiente para orientar una estrategia: ${segment.recommendationSample.answeredAttempts}/${segment.recommendationSample.minimumAttempts} respuestas elegibles y ${segment.recommendationSample.sessions}/${segment.recommendationSample.minimumSessions} sesiones.`;
   }
   return `${actionLabels[segment.recommendation]} Acierto observado: ${formatPercent(segment.observedAccuracy)} en ${segment.recommendationSample.answeredAttempts} respuestas de ${segment.recommendationSample.sessions} sesiones. Valor esperado por pregunta: ${segment.expectedValuePerQuestion?.toLocaleString('es-ES', { maximumFractionDigits: 3 })}, con ${scoring.reward.toLocaleString('es-ES')} puntos por acierto, penalización ${scoring.penalty.toLocaleString('es-ES')} y blanco ${scoring.blankValue.toLocaleString('es-ES')}. Es el promedio del segmento, no una probabilidad para una pregunta concreta; preguntas con enunciado, revisión o exposición distinta pueden comportarse de otra forma. Experimento: en las próximas tres sesiones comparables, registra la decisión y contrasta puntuación y blancos con sesiones similares. La confianza declarada no se usa como probabilidad.`;
@@ -39,7 +41,7 @@ export function renderStrategyReport(report: AttemptStrategyReport): string {
     </div>`).join('')}</div>`;
   }).join('');
   return `<section class="strategy-report" aria-label="Informe de estrategia">
-    <p>Periodo: ${from}–${to}. Se incluyen sesiones completadas; ${report.excludedSessionCount} sesiones activas o interrumpidas se excluyeron. ${report.orphanAttemptCount} intentos no asociados a sesiones conocidas. La confianza declarada no se interpreta como probabilidad y las sugerencias no prueban causalidad.</p>
+    <p>Periodo: ${from}–${to}. Se incluyen sesiones completadas; ${report.excludedSessionCount} sesiones activas o interrumpidas se excluyeron. Se excluyeron ${report.excludedImmediateRetryCount} reintentos inmediatos de los indicadores estratégicos porque siguen a una corrección. ${report.orphanAttemptCount} intentos no asociados a sesiones conocidas. La confianza declarada no se interpreta como probabilidad y las sugerencias no prueban causalidad.</p>
     <p>Resumen: ${report.overall.correct} aciertos, ${report.overall.wrong} fallos, ${report.overall.blankPending} pendientes, ${report.overall.blankConsulted} soluciones consultadas y ${report.overall.blankUnanswered} sin visitar. Valoración descriptiva, no causal.</p>
     ${segments || '<p class="sub">No hay intentos detallados suficientes en el periodo.</p>'}
   </section>`;

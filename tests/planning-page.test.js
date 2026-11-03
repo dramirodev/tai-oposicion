@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 import { useLocation } from 'react-router';
 import { PlanningPage } from '../src/features/planning/PlanningPage.tsx';
 import { DEFAULT_TRAINING_PREFERENCES } from '../src/core/domain/study-training-plan.js';
+import { academyCurriculumTopicLoaders } from '../src/core/domain/academy-curriculum.generated.js';
 
 function CurrentPath() { const location = useLocation(); return createElement('output', { 'data-testid':'current-path' }, location.pathname + location.search); }
 const newTopicPlan = { weekday:1, minutes:120, restDay:false, activities:[{ activity:'newContent', minutes:120, reason:'new-content-day', topicId:'T1.01' }] };
@@ -32,12 +33,86 @@ const overview = (trainingPlan = newTopicPlan, extra = {}) => ({
 });
 
 it('presenta el contenido nuevo del temario real sin simular un resumen que TAI no tiene', async () => {
+  const user = userEvent.setup();
   renderApp(createElement(PlanningPage), { services:servicesFor(overview(newTopicPlan)) });
   expect(await screen.findByRole('heading', { name:'Planificación de estudio' })).toBeInTheDocument();
   expect(screen.getByText('T1.01 · Organización del Estado')).toBeInTheDocument();
-  expect(screen.getByText(/TAI no dispone aquí de esos documentos/)).toBeInTheDocument();
+  expect(screen.getByText(/Para un tema nuevo, consulta primero el temario o material de academia disponible/)).toBeInTheDocument();
+  await user.click(screen.getByText('Instrucciones y motivo'));
+  expect(screen.getByText(/empieza por comprender un apartado con el material disponible/)).toBeInTheDocument();
+  expect(screen.queryByText(/Antes de mirar los apuntes, intenta reconstruir/)).not.toBeInTheDocument();
   expect(screen.getByRole('button', { name:/Comenzar sesión/ })).toBeInTheDocument();
   expect(screen.getAllByText('120 min').length).toBeGreaterThan(0);
+});
+
+it('describe las actividades que realmente incluye la sesión y no promete contenido nuevo ausente', async () => {
+  const plan = { weekday:2, minutes:30, restDay:false, activities:[{ activity:'activeRecall', minutes:30, reason:'active-recall', topicIds:['T1.01'] }] };
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(plan, { studiedTopicDetails:[{ id:'T1.01', name:'Constitución' }], studiedTopics:1 }), {
+    settings:{ getSnapshot:() => ({ training:{ ...DEFAULT_TRAINING_PREFERENCES, focusByDay:Array.from({ length:7 }, (_, day) => day === new Date().getDay() ? 'new-content' : 'rest') }, exam:'', index:null }) },
+  }) });
+  expect(await screen.findByText(/Hoy practicarás temas que ya has estudiado/)).toBeInTheDocument();
+  expect(screen.queryByText(/Hoy avanzarás en el tema nuevo/)).not.toBeInTheDocument();
+});
+
+it('registra un tramo de test en papel como evidencia agregada sin transcribir preguntas', async () => {
+  const user = userEvent.setup();
+  const recordPaperTestSegment = vi.fn(() => ({ id:'attempt:segment:1' }));
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(), { home:{ recordPaperTestSegment } }) });
+  await user.click(await screen.findByRole('button', { name:'Registrar tramo' }));
+  await user.type(screen.getByLabelText('Identificador libre del test o intento'), 'test-personal-1');
+  await user.type(screen.getByLabelText('Preguntas del tramo'), '20');
+  await user.type(screen.getByLabelText('Contestadas'), '18');
+  await user.type(screen.getByLabelText('Correctas según plantilla'), '12');
+  await user.type(screen.getByLabelText('Incorrectas según plantilla'), '6');
+  await user.type(screen.getByLabelText('En blanco'), '2');
+  await user.type(screen.getByLabelText('Duración aproximada en minutos'), '30');
+  await user.selectOptions(screen.getByLabelText('Corrección disponible'), 'answer-key-only');
+  await user.click(screen.getByRole('button', { name:'Guardar tramo' }));
+  expect(recordPaperTestSegment).toHaveBeenCalledWith(expect.objectContaining({ attemptId:'test-personal-1', segment:1, questionCount:20, answeredCount:18, correctCount:12, incorrectCount:6, blankCount:2, correctionStatus:'answer-key-only', startedAt:expect.any(Number), completedAt:expect.any(Number) }), undefined);
+  const saved = recordPaperTestSegment.mock.calls[0][0];
+  expect(saved.completedAt - saved.startedAt).toBe(30 * 60_000);
+  expect(await screen.findByText(/no modifica tus resultados de preguntas/)).toBeInTheDocument();
+});
+
+it('explica y no guarda recuentos contradictorios del test en papel', async () => {
+  const user = userEvent.setup();
+  const recordPaperTestSegment = vi.fn(() => ({ id:'attempt:segment:1' }));
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(), { home:{ recordPaperTestSegment } }) });
+  await user.click(await screen.findByRole('button', { name:'Registrar tramo' }));
+  await user.type(screen.getByLabelText('Preguntas del tramo'), '20');
+  await user.type(screen.getByLabelText('Contestadas'), '18');
+  await user.type(screen.getByLabelText('En blanco'), '1');
+  await user.click(screen.getByRole('button', { name:'Guardar tramo' }));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Contestadas y en blanco deben sumar');
+  expect(recordPaperTestSegment).not.toHaveBeenCalled();
+});
+
+it('edita el tramo existente conservando su identidad y fecha original', async () => {
+  const user = userEvent.setup();
+  const completedAt = Date.now() - 3_600_000;
+  const segment = { id:'attempt-1:segment:1', attemptId:'attempt-1', segment:1, dateKey:new Date(completedAt).toLocaleDateString('en-CA'), startedAt:completedAt - 20 * 60_000, completedAt, updatedAt:completedAt, sourceLabel:'Test en papel', questionCount:10, answeredCount:10, correctCount:7, incorrectCount:3, correctionStatus:'reviewed' };
+  const recordPaperTestSegment = vi.fn(() => ({ ...segment, sourceLabel:'Test revisado' }));
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(newTopicPlan, { paperTestAttempts:[segment] }), { home:{ recordPaperTestSegment } }) });
+  await user.click(await screen.findByRole('button', { name:'Editar tramo 1 de Test en papel' }));
+  await user.clear(screen.getByLabelText('Material o procedencia'));
+  await user.type(screen.getByLabelText('Material o procedencia'), 'Test revisado');
+  await user.click(screen.getByRole('button', { name:'Guardar cambios' }));
+  expect(recordPaperTestSegment).toHaveBeenCalledWith(expect.objectContaining({ attemptId:'attempt-1', segment:1, completedAt, sourceLabel:'Test revisado' }), segment.id);
+});
+
+it('pide confirmación antes de anular y mantiene el dato sin borrado físico', async () => {
+  const user = userEvent.setup();
+  const completedAt = Date.now() - 360_000;
+  const segment = { id:'attempt-1:segment:1', attemptId:'attempt-1', segment:1, dateKey:new Date(completedAt).toLocaleDateString('en-CA'), startedAt:completedAt, completedAt, updatedAt:completedAt, sourceLabel:'Test en papel', correctionStatus:'unavailable' };
+  const voidPaperTestSegment = vi.fn(() => ({ ...segment, voidedAt:Date.now() }));
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(newTopicPlan, { paperTestAttempts:[segment] }), { home:{ voidPaperTestSegment } }) });
+  await user.click(await screen.findByRole('button', { name:'Anular tramo 1 de Test en papel' }));
+  expect(await screen.findByText('¿Anular este tramo?')).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name:'Cancelar' }));
+  expect(voidPaperTestSegment).not.toHaveBeenCalled();
+  await user.click(screen.getByRole('button', { name:'Anular tramo 1 de Test en papel' }));
+  await user.click(screen.getByRole('button', { name:'Confirmar' }));
+  expect(voidPaperTestSegment).toHaveBeenCalledWith(segment.id);
 });
 
 it('permite iniciar el paso de tema nuevo aunque todavía no haya temas vistos', async () => {
@@ -47,9 +122,108 @@ it('permite iniciar el paso de tema nuevo aunque todavía no haya temas vistos',
   const services = servicesFor(planned);
   renderApp(createElement(Fragment, null, createElement(PlanningPage), createElement(CurrentPath)), { services });
   await screen.findByRole('heading', { name:'Planificación de estudio' });
-  await user.click(screen.getByRole('button', { name:/Comenzar sesión/ }));
+  await user.click(screen.getByRole('button', { name:/Continuar actividad/ }));
   expect(services.home.startTrainingSession).toHaveBeenCalledWith(newTopicPlan);
-  expect(await screen.findByTestId('current-path')).toHaveTextContent('/temario?topic=T1.01&dailyTraining=newContent');
+  expect(await screen.findByTestId('current-path')).toHaveTextContent(`/temario?topic=T1.01&dailyTraining=newContent&trainingSessionId=${encodeURIComponent(`training:${planned.trainingSession.dateKey}`)}&trainingActivityId=${encodeURIComponent(`training:${planned.trainingSession.dateKey}:activity:1`)}`);
+});
+
+it('permite revisar y confirmar una actividad semanal de un tema pendiente sin clasificarla como repaso', async () => {
+  const user = userEvent.setup();
+  const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+  const dateKey = `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`;
+  const replaceWeeklyStudyAgendaWeek = vi.fn((weekStart, items) => ({ schemaVersion:1, revision:1, updatedAt:Date.now(), items }));
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(), {
+    home:{ weeklyStudyAgenda:() => ({ schemaVersion:1, revision:0, updatedAt:0, items:[] }), replaceWeeklyStudyAgendaWeek },
+    settings:{ getSnapshot:() => ({ training:DEFAULT_TRAINING_PREFERENCES, exam:'', index:{ topics:[{ id:'T19.01', name:'Tema futuro' }] } }) },
+  }) });
+  await screen.findByRole('heading', { name:'Planificación de estudio' });
+  await user.selectOptions(screen.getByLabelText('Actividad semanal'), 'newContent');
+  await user.selectOptions(screen.getByLabelText('Tema de actividad semanal'), 'T19.01');
+  fireEvent.change(screen.getByLabelText('Fecha de actividad semanal'), { target:{ value:dateKey } });
+  await user.click(screen.getByRole('button', { name:'Revisar propuesta' }));
+  expect(await screen.findByText(/Añadir Tema nuevo · T19.01/)).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name:'Confirmar actividad semanal' }));
+  expect(replaceWeeklyStudyAgendaWeek).toHaveBeenCalledWith(expect.any(String), [expect.objectContaining({ kind:'newContent', dateKey, topicIds:['T19.01'], status:'planned' })]);
+});
+
+it('propone recuperar una actividad vencida y solo la aplica tras confirmación, conservando el origen', async () => {
+  const user = userEvent.setup();
+  const today = new Date();
+  const dateKey = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  const overdueDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+  const monday = new Date(overdueDate.getFullYear(), overdueDate.getMonth(), overdueDate.getDate() - ((overdueDate.getDay() + 6) % 7));
+  const weekStart = dateKey(monday);
+  const agenda = { schemaVersion:1, revision:3, updatedAt:100, items:[{
+    id:'missed-topic-review', weekStart, dateKey:dateKey(overdueDate), kind:'topicTest', topicIds:['T1.01'], minutes:30, status:'planned', createdAt:1, updatedAt:1,
+  }] };
+  const recoverWeeklyStudyAgenda = vi.fn(() => ({ ...agenda, revision:4 }));
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(), {
+    home:{ weeklyStudyAgenda:() => agenda, recoverWeeklyStudyAgenda, seenTopics:() => ['T1.01'] },
+  }) });
+  await user.click(await screen.findByRole('button', { name:'Proponer recuperación gradual' }));
+  expect(await screen.findByText(/Se conserva cada fecha original en el historial/)).toBeInTheDocument();
+  expect(recoverWeeklyStudyAgenda).not.toHaveBeenCalled();
+  await user.click(screen.getByRole('button', { name:'Confirmar recuperación' }));
+  expect(recoverWeeklyStudyAgenda).toHaveBeenCalledWith(expect.objectContaining({ baseRevision:3, moves:[expect.objectContaining({ sourceId:'missed-topic-review', target:expect.objectContaining({ kind:'topicTest', topicIds:['T1.01'], status:'planned' }) })] }));
+});
+
+it('previsualiza una semana según el orden de academia y no la guarda hasta confirmar', async () => {
+  const user = userEvent.setup();
+  const addWeeklyStudyAgendaPlan = vi.fn(proposal => ({ schemaVersion:1, revision:1, updatedAt:Date.now(), items:proposal.items }));
+  const preferences = { ...DEFAULT_TRAINING_PREFERENCES, academyTopicOrderIds:['T19.01', 'T20.01'] };
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(), {
+    home:{ weeklyStudyAgenda:() => ({ schemaVersion:1, revision:0, updatedAt:0, items:[] }), addWeeklyStudyAgendaPlan },
+    settings:{ getSnapshot:() => ({ training:preferences, exam:'', index:{ topics:[{ id:'T19.01', name:'Tema diecinueve' }, { id:'T20.01', name:'Tema veinte' }] } }) },
+  }) });
+  await screen.findByRole('heading', { name:'Planificación de estudio' });
+  await user.click(screen.getByRole('button', { name:'Semana siguiente' }));
+  await user.click(screen.getByRole('button', { name:'Proponer semana según tu plan' }));
+  expect(await screen.findByText(/Contenido nuevo en el orden configurado: T19\.01/)).toBeInTheDocument();
+  expect(addWeeklyStudyAgendaPlan).not.toHaveBeenCalled();
+  await user.click(screen.getByRole('button', { name:'Confirmar semana' }));
+  expect(addWeeklyStudyAgendaPlan).toHaveBeenCalledWith(expect.objectContaining({ targetWeekStart:expect.any(String), items:expect.arrayContaining([expect.objectContaining({ kind:'newContent', topicIds:['T19.01'] })]) }));
+});
+
+it('muestra cómo la semana propuesta reduce una brecha global solo tras confirmación', async () => {
+  const user = userEvent.setup();
+  const today = new Date();
+  const target = new Date(today); target.setDate(target.getDate() + 30);
+  const targetDate = `${target.getFullYear()}-${String(target.getMonth() + 1).padStart(2, '0')}-${String(target.getDate()).padStart(2, '0')}`;
+  const topicIds = Array.from({ length:30 }, (_, index) => `T99.${String(index + 1).padStart(2, '0')}`);
+  const addWeeklyStudyAgendaPlan = vi.fn(proposal => ({ schemaVersion:1, revision:1, updatedAt:Date.now(), items:proposal.items }));
+  const preferences = { ...DEFAULT_TRAINING_PREFERENCES, academyTopicOrderIds:topicIds };
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(), {
+    home:{ weeklyStudyAgenda:() => ({ schemaVersion:1, revision:0, updatedAt:0, items:[] }), addWeeklyStudyAgendaPlan },
+    settings:{ getSnapshot:() => ({ training:preferences, exam:targetDate, index:{ topics:topicIds.map(id => ({ id, name:id })) } }) },
+  }) });
+  await screen.findByRole('heading', { name:'Horizonte y semana' });
+  await user.click(screen.getByRole('button', { name:'Semana siguiente' }));
+  await user.click(screen.getByRole('button', { name:'Proponer semana según tu plan' }));
+  expect(await screen.findByText(/El horizonte detecta una brecha optimista/)).toBeInTheDocument();
+  expect(addWeeklyStudyAgendaPlan).not.toHaveBeenCalled();
+  await user.click(screen.getByRole('button', { name:'Confirmar semana' }));
+  expect(addWeeklyStudyAgendaPlan).toHaveBeenCalledWith(expect.objectContaining({
+    horizonCapacityGapBefore:expect.any(Number), acceleratedNewTopicIds:expect.arrayContaining([expect.any(String)]),
+    horizonCapacityGapAfter:expect.any(Number),
+  }));
+});
+
+it('usa la actividad semanal confirmada de hoy al crear el checkpoint diario', async () => {
+  const user = userEvent.setup();
+  const today = new Date();
+  const dateKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+  const agenda = { schemaVersion:1, revision:1, updatedAt:Date.now(), items:[{
+    id:'agenda-today-new', weekStart:(() => { const monday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - ((today.getDay() + 6) % 7)); return `${monday.getFullYear()}-${String(monday.getMonth() + 1).padStart(2, '0')}-${String(monday.getDate()).padStart(2, '0')}`; })(),
+    dateKey, kind:'newContent', topicIds:['T19.01'], minutes:35, status:'planned', createdAt:Date.now(), updatedAt:Date.now(),
+  }] };
+  const startTrainingSession = vi.fn(() => null);
+  const services = servicesFor(overview(), { home:{
+    weeklyStudyAgenda:() => agenda, startTrainingSession,
+  }, settings:{ getSnapshot:() => ({ training:DEFAULT_TRAINING_PREFERENCES, exam:'', index:{ topics:[{ id:'T19.01', name:'Tema futuro' }] } }) } });
+  renderApp(createElement(PlanningPage), { services });
+  await screen.findByRole('heading', { name:'Planificación de estudio' });
+  await user.click(screen.getByRole('button', { name:/Comenzar sesión/ }));
+  expect(startTrainingSession).toHaveBeenCalledWith(expect.objectContaining({ activities:[expect.objectContaining({ activity:'newContent', topicId:'T19.01', minutes:35 })] }));
 });
 
 it('muestra desde el primer instante el tiempo real de una actividad en curso, no 0 hasta el primer tick', async () => {
@@ -100,6 +274,56 @@ it('pide elegir el tema semanal en Ajustes cuando no hay tema asignado', async (
   renderApp(createElement(PlanningPage), { services:servicesFor(overview(emptyPlan, { nextNewTopic:undefined })) });
   expect(await screen.findByRole('link', { name:'Ajustes' })).toHaveAttribute('href', '/settings#training-schedule');
   expect(screen.getByText(/Elige el tema que vas a introducir esta semana/)).toBeInTheDocument();
+});
+
+it('integra el horizonte con la fecha objetivo guardada y la secuencia explícita, sin confundir marca y aprendizaje', async () => {
+  const target = new Date(); target.setDate(target.getDate() + 45);
+  const targetDate = `${target.getFullYear()}-${String(target.getMonth() + 1).padStart(2, '0')}-${String(target.getDate()).padStart(2, '0')}`;
+  const training = { ...DEFAULT_TRAINING_PREFERENCES, academyTopicOrderIds: ['T12.01', 'T3.02'] };
+  const planned = overview(newTopicPlan, { daysToExam:45, studiedTopics:1, studiedTopicDetails:[{ id:'T12.01', name:'Tema futuro' }] });
+  const settings = { getSnapshot:() => ({ training, exam:targetDate, index:{ topics:[{ id:'T12.01', name:'Tema futuro' }, { id:'T3.02', name:'Siguiente' }] } }) };
+  renderApp(createElement(PlanningPage), { services:servicesFor(planned, { settings }) });
+
+  expect(await screen.findByRole('heading', { name:'Horizonte y semana' })).toBeInTheDocument();
+  expect(screen.getByText('Secuencia de academia: 1 de 2 temas marcados como estudiados · 1 sin marca.')).toBeInTheDocument();
+  expect(screen.getByText(/Objetivo personal:.*No confirma una convocatoria oficial/)).toBeInTheDocument();
+  expect(screen.getByText(/La marca de «estudiado» registra cobertura declarada, no demuestra comprensión o recuerdo/)).toBeInTheDocument();
+  expect(screen.queryByText(/fecha estimada: 30 jun 2027/)).not.toBeInTheDocument();
+});
+
+it('integra en el horizonte la cobertura declarada de apartados de un temario vigente', async () => {
+  const topic = (await academyCurriculumTopicLoaders['T1.01']()).academyCurriculumTopic;
+  const section = topic.sections[0];
+  const file = topic.files.find(item => item.path === section.materialPath);
+  const material = { path:file.path, sourceHash:file.sha256, outlineFingerprint:file.outlineFingerprint, outlineStructureFingerprint:file.outlineStructureFingerprint, role:'syllabus' };
+  const academyStudyProgress = {
+    accountId:() => 'user1', subscribe:() => () => {},
+    loadProgressOverview:async() => ({
+      selections:[{ topicId:topic.id, materials:[material], revision:1, updatedAt:1 }],
+      events:[
+        { id:'event-00000001', topicId:topic.id, sectionId:section.id, materialPath:section.materialPath, sourceHash:section.sourceHash, outlineFingerprint:section.outlineFingerprint, occurredAt:10, kind:'coverage', coverage:'covered' },
+        { id:'event-00000002', topicId:topic.id, sectionId:section.id, materialPath:section.materialPath, sourceHash:section.sourceHash, outlineFingerprint:section.outlineFingerprint, occurredAt:20, kind:'self-check', timing:'delayed', rating:'recalled' },
+      ],
+    }),
+  };
+  renderApp(createElement(PlanningPage), { services:{ ...servicesFor(overview()), academyStudyProgress } });
+  expect(await screen.findByRole('heading', { name:'Avance declarado por apartados' })).toBeInTheDocument();
+  expect(screen.getByText(/1 tema tiene un temario principal seleccionado · 1 apartado tiene un estado de cobertura guardado/)).toBeInTheDocument();
+  expect(screen.getByText(/Declarados cubiertos: 1 · parciales: 0 · reiniciados a «sin iniciar»: 0 · con autoevaluación diferida: 1/)).toBeInTheDocument();
+  expect(screen.getByText(/no el total del programa ni una medida de dominio/)).toBeInTheDocument();
+});
+
+it('no inventa fecha objetivo y explica cuando la secuencia configurada se agota', async () => {
+  const emptyPlan = { weekday:1, minutes:120, restDay:false, activities:[] };
+  const training = { ...DEFAULT_TRAINING_PREFERENCES, academyTopicOrderIds:['T1.01'] };
+  const planned = overview(emptyPlan, { nextNewTopic:undefined, studiedTopics:1, studiedTopicDetails:[{ id:'T1.01', name:'Constitución' }] });
+  const settings = { getSnapshot:() => ({ training, exam:'', index:{ topics:[{ id:'T1.01', name:'Constitución' }, { id:'T5.01', name:'Futuro' }] } }) };
+  renderApp(createElement(PlanningPage), { services:servicesFor(planned, { settings }) });
+
+  expect(await screen.findByText('Fecha objetivo sin configurar')).toBeInTheDocument();
+  expect(screen.getByText(/Los temas disponibles en tu secuencia ya están marcados/)).toBeInTheDocument();
+  expect(screen.getByText(/1 tema del catálogo todavía no está en la secuencia de academia/)).toBeInTheDocument();
+  expect(screen.queryByText(/fecha estimada: 30 jun 2027/)).not.toBeInTheDocument();
 });
 
 it('muestra en el historial solo la duración y las actividades de sesiones completadas recibidas', async () => {

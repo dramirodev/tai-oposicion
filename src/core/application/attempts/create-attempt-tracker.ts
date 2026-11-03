@@ -13,14 +13,24 @@ interface CreateAttemptTrackerOptions {
 
 export function createAttemptTracker(options: CreateAttemptTrackerOptions): AttemptTracker {
   let queue = Promise.resolve();
-  const enqueue = (action: () => Promise<void>) => {
-    queue = queue.then(action).catch(error => { options.onError?.(error); });
+  const retryableEvents = new Map<string, { id: string; at: number; monotonicAt: number }>();
+  const enqueue = (action: () => Promise<void>): Promise<boolean> => {
+    const result = queue.then(action).then(() => true, error => {
+      try { options.onError?.(error); } catch { /* Error reporting must not poison the queue. */ }
+      return false;
+    });
+    queue = result.then(() => undefined);
+    return result;
   };
 
   return {
-    beginSession(scope: string, mode: AttemptMode, startedAt: number, seeds: readonly AttemptSeed[], timeLimitSeconds?: number): AttemptTrackingRef {
+    beginSession(scope: string, mode: AttemptMode, startedAt: number, seeds: readonly AttemptSeed[], timeLimitSeconds?: number, sourceSessionId?: string): AttemptTrackingRef {
+      const retrySeed = seeds.length === 1 && seeds[0].exposureKind === 'immediate-retry' && seeds[0].retryOfAttemptId
+        ? seeds[0] : undefined;
+      const retryKey = retrySeed ? encodeURIComponent(retrySeed.retryOfAttemptId!) : undefined;
       const session: QuestionAttemptSession = {
-        id: options.createId('session'),
+        id: retryKey ? `retry-session:${retryKey}` : options.createId('session'),
+        ...(sourceSessionId ? { sourceSessionId } : {}),
         mode,
         status: 'active',
         startedAt,
@@ -28,13 +38,16 @@ export function createAttemptTracker(options: CreateAttemptTrackerOptions): Atte
         lastSequence: 0,
       };
       const attempts: QuestionAttempt[] = seeds.map(seed => ({
-        id: options.createId('attempt'),
+        id: seed.exposureKind === 'immediate-retry' && seed.retryOfAttemptId
+          ? `retry-attempt:${encodeURIComponent(seed.retryOfAttemptId)}` : options.createId('attempt'),
         sessionId: session.id,
         questionId: seed.questionId,
         contentRevision: seed.contentRevision,
         mode,
         position: seed.position,
         exposure: seed.exposure,
+        ...(seed.exposureKind ? { exposureKind: seed.exposureKind } : {}),
+        ...(seed.retryOfAttemptId ? { retryOfAttemptId: seed.retryOfAttemptId } : {}),
         state: 'unseen',
         response: null,
         outcome: null,
@@ -59,13 +72,13 @@ export function createAttemptTracker(options: CreateAttemptTrackerOptions): Atte
       void scope;
     },
 
-    record(scope: string, attemptId: string, intent: AttemptIntent): void {
-      const eventMetadata = {
-        id: options.createId('event'),
-        at: options.now(),
-        monotonicAt: options.monotonicNow(),
+    record(scope: string, attemptId: string, intent: AttemptIntent): Promise<boolean> {
+      const retryKey = JSON.stringify([scope, attemptId, intent]);
+      const eventMetadata = retryableEvents.get(retryKey) || {
+        id: options.createId('event'), at: options.now(), monotonicAt: options.monotonicNow(),
       };
-      enqueue(async () => {
+      retryableEvents.set(retryKey, eventMetadata);
+      return enqueue(async () => {
         const result = await recordAttemptAction({
           repository: options.repository,
           scope,
@@ -79,6 +92,7 @@ export function createAttemptTracker(options: CreateAttemptTrackerOptions): Atte
         if (result.status === 'rejected') {
           throw new Error(`No se pudo registrar el evento del intento: ${result.reason}`);
         }
+        if (retryableEvents.get(retryKey) === eventMetadata) retryableEvents.delete(retryKey);
       });
     },
 

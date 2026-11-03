@@ -18,7 +18,7 @@ it('rechaza preguntas incompletas y conserva las válidas con campos desconocido
 
 it('hace ida y vuelta exacta de todas las preguntas en los 36 JSON de tema', () => {
   const allJson = readdirSync('public/data').filter(file => file.endsWith('.json'));
-  const files = allJson.filter(file => /^T\d\.\d\d\.json$/.test(file));
+  const files = allJson.filter(file => /^T\d+\.\d{2}\.json$/.test(file));
   expect(allJson).toHaveLength(39);
   expect(files).toHaveLength(36);
   for (const file of files) {

@@ -46,6 +46,8 @@ export interface AiStudyExportAttempt {
   mode: QuestionAttempt['mode'];
   position: number;
   exposure: number;
+  exposureKind?: 'immediate-retry';
+  retryOfAttemptRef?: string | null;
   state: QuestionAttempt['state'];
   response: number | null;
   outcome: QuestionAttempt['outcome'];
@@ -211,6 +213,10 @@ function mapPart(
     mode: attempt.mode,
     position: attempt.position,
     exposure: attempt.exposure,
+    ...(attempt.exposureKind === 'immediate-retry' ? {
+      exposureKind: 'immediate-retry' as const,
+      retryOfAttemptRef: attempt.retryOfAttemptId ? attemptRefs.get(attempt.retryOfAttemptId) || null : null,
+    } : {}),
     state: attempt.state,
     response: attempt.response,
     outcome: attempt.outcome,

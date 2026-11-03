@@ -6,6 +6,7 @@ import * as progressStore from '../adapters/local/local-progress-store.js';
 import { localCardProgressGateway, localProgressRepository, localQuizProgressGateway, localStudyProgressGateway } from '../adapters/local/progress-repository.js';
 import { localGuestQuestionHistoryRepository } from '../adapters/local/guest-question-history.js';
 import { localReadingQuestionHistoryRepository } from '../adapters/local/reading-question-history.js';
+import { localAcademyMaterialRepository } from '../adapters/local/academy-material-repository.js';
 import { percentage as pct } from '../shared/presentation/format.js';
 import { normalizeUiPreferences } from '../shared/presentation/ui-preferences.js';
 import { randomStudyOrder as shuffle } from '../shared/ui/study-random.js';
@@ -18,18 +19,23 @@ import { showMenu } from '../shared/ui/dialog-actions.js';
 import { BLOQUES, LETRAS_OPCION, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
 import { isFull, isOwner, accessLevel, devMode, setDevMode, devRevealed, revealDev } from './composition/access-composition.js';
-import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, createRun, resumeRun, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, dueQuestionIds, selectQuestionsForTopics, selectWeightedSimulationQuestions, studyQuestionCatalog } from './composition/study/study-engine-composition.js';
+import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, createRun, resumeRun, startImmediateRetryFromLastResult, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, dueQuestionIds, selectQuestionsForTopics, selectWeightedSimulationQuestions, studyQuestionCatalog } from './composition/study/study-engine-composition.js';
 import { sessionStatePort } from './session-state-store.js';
 import { clearRun, pendingRun, saveRun } from './composition/study/pending-run-composition.js';
 import { createTopicMasteryComposition } from './composition/topics/topic-mastery-composition.js';
 import { createTopicProgressComposition } from './composition/topics/topic-progress-composition.js';
+import { createAcademyStudyProgressComposition } from './composition/topics/academy-study-progress-composition.js';
 import { formatPendingRunPrompt } from '../shared/presentation/pending-run.ts';
 import { createAccountRecovery } from '../core/application/recover-account.js';
-import type { Origin, QuestionStats, StudyReviewMode, TrainingActivity, TrainingPreferences } from '../core/domain/entities.js';
+import type { Origin, QuestionStats, StudyReviewMode, TrainingActivity, TrainingCalendarEvent, TrainingPreferences } from '../core/domain/entities.js';
+import type { TrainingActivityReference } from '../core/domain/study-training-session.js';
 import type { PaperRecallRating } from '../core/domain/paper-recall-assessment.js';
 import { daysUntilStudyDate, isStudyDateKey } from '../core/domain/study-training-calendar.js';
 import { latestPaperRecallByTopic, needsPaperRecallFollowUp } from '../core/domain/paper-recall-assessment.js';
-import { buildDailyTrainingPlan, normalizeTrainingPreferences } from '../core/domain/study-training-plan.js';
+import { paperTestFollowUpTopicIds } from '../core/domain/paper-test-attempt.js';
+import { buildDailyTrainingPlan, normalizeTrainingPreferences, selectNextAcademyTopic } from '../core/domain/study-training-plan.js';
+import { buildTrainingCalendarEvent } from '../core/domain/study-training-events.js';
+import { localTrainingDateKey } from '../core/domain/study-training-session.js';
 import { filterTopicMasteryToSeen } from '../core/domain/topic-mastery.js';
 import { questionContentRevision } from '../core/domain/attempts/highlights.js';
 import { findCodeExplanation } from './composition/explanations/explanation-composition.js';
@@ -47,6 +53,15 @@ import { createLightningComposition } from './composition/trainers/lightning-com
 import { createTrapsComposition } from './composition/trainers/traps-composition.js';
 import { createQuizServices } from './composition/quiz/quiz-composition.js';
 import { renderStrategyReport } from '../features/stats/strategy-view.js';
+
+let trainingEventSequence = 0;
+function createTrainingCalendarEvent(input: Omit<TrainingCalendarEvent, 'id' | 'createdAt' | 'updatedAt'>): TrainingCalendarEvent | null {
+  const now = Date.now();
+  let randomId = '';
+  try { randomId = globalThis.crypto?.randomUUID?.() ?? ''; } catch { /* fallback local id below */ }
+  const id = randomId ? `event-${randomId}` : `event-${now}-${trainingEventSequence++}`;
+  return buildTrainingCalendarEvent(input, id, now);
+}
 import { createManualAiExport, deleteManualStudyHistory, listManualExportSessions } from './composition/exports/ai-study-export-composition.js';
 import { inspectOffline, downloadOffline, prefetchQuestionBank } from '../adapters/offline/cache.js';
 import { notifyAccessChange } from './access-events.js';
@@ -62,7 +77,10 @@ import { createAppUpdateController } from './composition/updates/app-update-cont
 import { createCardsComposition } from './composition/cards/cards-composition.js';
 import { createTrainingSessionComposition } from './composition/trainers/training-session-composition.js';
 import { createPaperRecallComposition } from './composition/trainers/paper-recall-composition.js';
+import { createPaperTestAttemptComposition } from './composition/trainers/paper-test-attempt-composition.js';
 import { createTrainingCalendarComposition } from './composition/trainers/training-calendar-composition.js';
+import { createWeeklyStudyAgendaComposition } from './composition/trainers/weekly-study-agenda-composition.js';
+import { findMatchingPlannedAgendaItem } from '../core/domain/study-weekly-agenda.js';
 import { getHomeProgressSummary } from '../core/application/stats/get-home-progress-summary.js';
 import type { QuestionRecord as Question } from '../core/domain/question-record.js';
 import { createReadingComposition } from './composition/trainers/reading-composition.js';
@@ -90,6 +108,20 @@ const dominioTemas = createTopicMasteryComposition({ progressRepository: localPr
 const progressPorTema = createTopicProgressComposition({ progressRepository: localProgressRepository, accountId: localStudyProgressGateway.accountId, questionIdsForTopic: topicId => studyQuestionCatalog.getMetadataSnapshot()?._by[topicId] || [] });
 const trainingSession = createTrainingSessionComposition({ accountId: localStudyProgressGateway.accountId, now: studyQuestionCatalog.now, push: session => { void sync.pushTrainingSession(session); } });
 const paperRecall = createPaperRecallComposition({ accountId: localStudyProgressGateway.accountId, now: studyQuestionCatalog.now, push: () => { void sync.pushPaperRecallAssessments(); } });
+const paperTestAttempts = createPaperTestAttemptComposition({ accountId: localStudyProgressGateway.accountId, now: studyQuestionCatalog.now, push: () => { void sync.pushPaperTestAttempts(); } });
+const weeklyStudyAgenda = createWeeklyStudyAgendaComposition({
+  accountId: localStudyProgressGateway.accountId,
+  now: studyQuestionCatalog.now,
+  push: () => { void sync.pushWeeklyStudyAgenda(); },
+});
+const academyStudyProgress = createAcademyStudyProgressComposition({
+  accountId: localStudyProgressGateway.accountId,
+  now: studyQuestionCatalog.now,
+  onAccountChange: localStudyProgressGateway.onAccountChange,
+  pushMaterialSelection: selection => { void sync.pushAcademyMaterialSelection(selection); },
+  pushSectionEvent: event => { void sync.pushAcademySectionStudyEvent(event); },
+  pushMaterialOpenEvent: event => { void sync.pushAcademyMaterialOpenEvent(event); },
+});
 const trainingCalendar = createTrainingCalendarComposition({
   accountId: localStudyProgressGateway.accountId,
   now: studyQuestionCatalog.now,
@@ -100,14 +132,36 @@ const trainingCalendar = createTrainingCalendarComposition({
 let routeReady: () => void;
 const firstReactRouteReady = new Promise<void>(resolve => { routeReady = resolve; });
 const studyRunController = createStudyRunController({
-  createRun: configuration => createRun(configuration) !== null,
+  createRun: (configuration, reference, activity) => {
+    const run = createRun(configuration, reference?.sessionId);
+    if (run && reference) {
+      run.trainingActivityReference = reference;
+      if (activity) run.trainingActivity = activity;
+      if (run.attemptSessionId) trainingSession.attachAttemptSession(run.attemptSessionId, reference);
+    }
+    return run !== null;
+  },
   getPendingRun: fullAccess => pendingRun(fullAccess),
   isFullAccess: isFull,
   currentAccount: localStudyProgressGateway.accountId,
   ask,
-  resume: pending => resumeRun(pending) !== null,
+  resume: pending => {
+    const run = resumeRun(pending);
+    if (!run) return false;
+    const reference = run.trainingActivityReference;
+    const current = trainingSession.getCurrentActivityReference();
+    if (reference && current?.sessionId === reference.sessionId && current.activityId === reference.activityId) {
+      trainingSession.startCurrentActivity();
+    }
+    return true;
+  },
   clearPendingRun: clearRun,
-  navigateToQuiz: dailyTrainingActivity => go(hashPath('quiz') + (dailyTrainingActivity ? `?dailyTraining=${dailyTrainingActivity}` : '')),
+  navigateToQuiz: (dailyTrainingActivity, reference) => {
+    const params = new URLSearchParams();
+    if (dailyTrainingActivity) params.set('dailyTraining', dailyTrainingActivity);
+    if (reference) { params.set('trainingSessionId', reference.sessionId); params.set('trainingActivityId', reference.activityId); }
+    go(hashPath('quiz') + (params.size ? `?${params}` : ''));
+  },
   showEmptyRunMessage: () => toast('No hay preguntas puntuables en esta selección. Puedes consultarlas en modo estudio.'),
   resumePrompt: pending => formatPendingRunPrompt({ title: pending.saved.titulo, index: pending.saved.idx, itemCount: pending.items.length, seconds: pending.saved.secs, limitMinutes: pending.saved.limit, timeLimited: pending.saved.pt }),
 });
@@ -161,9 +215,9 @@ let simulationRunConfiguration: SimulationRunConfiguration | null = null;
 let reviewScenarioQuestions = new Map<string, Question[]>();
 let reviewScenarioTexts = new Map<string, string>();
 let reviewScenarioAccount: string | null = null;
-async function selectSimulationQuestions(index: Awaited<ReturnType<typeof getIndex>>, origins: ReadonlySet<Origin>, count: number, onlyTopics: ReadonlySet<string> | null) {
+async function selectSimulationQuestions(index: Awaited<ReturnType<typeof getIndex>>, origins: ReadonlySet<Origin>, count: number, onlyTopics: ReadonlySet<string> | null, optionsPerQuestion?: number) {
   const topics = index.temas.filter(topic => !onlyTopics || onlyTopics.has(topic.id));
-  return selectWeightedSimulationQuestions(topics.map(topic => ({ id: topic.id, weight: topic.w })), origins, count);
+  return selectWeightedSimulationQuestions(topics.map(topic => ({ id: topic.id, weight: topic.w })), origins, count, Math.random, question => optionsPerQuestion === undefined || question.a.length === optionsPerQuestion);
 }
 // Parte 2 tras la parte 1: ofrece 2 supuestos
 // Las pantallas comparten navegación y limpieza; cada módulo conserva su estado de sesión.
@@ -226,6 +280,7 @@ const settingsServices = {
   setTrainingPreferences(value: TrainingPreferences) {
     localStudyProgressGateway.updatePreferences(current => ({ ...current, training: normalizeTrainingPreferences(value) }));
   },
+  createTrainingCalendarEvent,
   setExam(value: string) {
     if (isStudyDateKey(value)) localStudyProgressGateway.updatePreferences(current => ({ ...current, exam: value }));
   },
@@ -295,8 +350,13 @@ const settingsServicesWithSubscription = {
 };
 const statsServices = createStatsServices({ go, startRun, startRepaso, trapTest }, localProgressRepository, localStudyProgressGateway);
 const quizServices = createQuizServices(go, hashPath('home'), () => {
-  const activity = new URLSearchParams(location.hash.split('?')[1] || '').get('dailyTraining');
-  return hashPath('result') + (activity && ['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'].includes(activity) ? `?dailyTraining=${activity}` : '');
+  const current = new URLSearchParams(location.hash.split('?')[1] || '');
+  const activity = current.get('dailyTraining');
+  const params = new URLSearchParams();
+  if (activity && ['activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'].includes(activity)) params.set('dailyTraining', activity);
+  const sessionId = current.get('trainingSessionId'), activityId = current.get('trainingActivityId');
+  if (sessionId && activityId) { params.set('trainingSessionId', sessionId); params.set('trainingActivityId', activityId); }
+  return hashPath('result') + (params.size ? `?${params}` : '');
 }, localQuizProgressGateway);
 
 
@@ -378,7 +438,7 @@ export function bootAppServices(): () => void {
     prefetchBank: prefetchBanco,
     loadMetadataAndInitializeSync: async () => {
       try { await getMeta(); } catch (error) { console.error(error); }
-      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getAllQuestionIdsForTopic }, progressStore, trainingSession, paperRecall, trainingCalendar); } catch (error) { console.error(error); }
+      try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getAllQuestionIdsForTopic }, progressStore, trainingSession, paperRecall, trainingCalendar, weeklyStudyAgenda, academyStudyProgress, paperTestAttempts); } catch (error) { console.error(error); }
     },
   });
 }
@@ -388,26 +448,72 @@ async function prefetchBanco() { await prefetchQuestionBank(await getIndex()); }
 
 /** Temporary composition only: the React views own rendering and events. */
 export const studyServices: StudyServices = {
+  academyStudyProgress: {
+    accountId: localStudyProgressGateway.accountId,
+    subscribe: academyStudyProgress.subscribe,
+    async loadTopicProgress(topicId) {
+      const account = localStudyProgressGateway.accountId();
+      const snapshot = academyStudyProgress.getTopicProgress(topicId);
+      if (account !== localStudyProgressGateway.accountId()) throw new Error('La cuenta cambió al cargar el progreso del apartado.');
+      return snapshot;
+    },
+    async loadProgressOverview() {
+      const account = localStudyProgressGateway.accountId();
+      const snapshot = academyStudyProgress.getProgressOverview();
+      if (account !== localStudyProgressGateway.accountId()) throw new Error('La cuenta cambió al cargar el progreso por apartados.');
+      return snapshot;
+    },
+    selectMaterials(topicId, materials) { return !!academyStudyProgress.selectMaterials(topicId, materials); },
+    record(event) { return !!academyStudyProgress.record(event); },
+    recordMaterialOpen(event) { return !!academyStudyProgress.recordMaterialOpen(event); },
+    listLocalPdfs(topicId) {
+      const account = localStudyProgressGateway.accountId();
+      const scope = account ? `uid:${account}` : 'guest';
+      return localAcademyMaterialRepository.list(scope, topicId);
+    },
+    saveLocalPdf(copy) {
+      const account = localStudyProgressGateway.accountId();
+      const scope = account ? `uid:${account}` : 'guest';
+      return localAcademyMaterialRepository.save(scope, copy);
+    },
+    removeLocalPdf(topicId, materialPath, sourceHash) {
+      const account = localStudyProgressGateway.accountId();
+      const scope = account ? `uid:${account}` : 'guest';
+      return localAcademyMaterialRepository.remove(scope, topicId, materialPath, sourceHash);
+    },
+  },
   result: {
     getSnapshot() {
       const last = getLastResult(); if (!last) return null;
-      const { ses, items, ans, studyStates = [], highlights = [], confidences = [], discardedOptions = [] } = last;
-      return { score: ses.nota, correct: ses.a, wrong: ses.f, blank: ses.b, consulted: studyStates.filter(state => state === 'revealed').length,
+      const { ses, items, ans, studyStates = [], highlights = [], confidences = [], discardedOptions = [], attemptIds = [] } = last;
+      return { score: ses.scorePending ? null : ses.nota, scorePending: !!ses.scorePending, ...(last.scoringPolicy ? { scoringPolicy: last.scoringPolicy } : {}), correct: ses.a, wrong: ses.f, blank: ses.b, consulted: studyStates.filter(state => state === 'revealed').length,
         accuracy: ses.a + ses.f ? pct(ses.a, ses.a + ses.f) : null, seconds: ses.secs, title: ses.titulo || '', interrupted: !!ses.interrupted, kind: ses.kind,
-        porTiempo: !!ses.porTiempo, analysis: last.limit && !ses.porTiempo ? createSimulationAnalysisView({ correctIndices: last.items.map(question => question.c), answers: last.ans, answerSeconds: last.times, timeLimitMinutes: last.limit, elapsedSeconds: ses.secs }) : '',
+        ...(last.exposureKind ? { exposureKind: last.exposureKind } : {}),
+        porTiempo: !!ses.porTiempo, analysis: last.limit && !ses.porTiempo ? createSimulationAnalysisView({ correctIndices: last.items.map(question => question.c), answers: last.ans, answerSeconds: last.times, timeLimitMinutes: last.limit, elapsedSeconds: ses.secs, scoringPolicy: last.scoringPolicy }) : '',
         secondPartAvailable: (ses.titulo || '').includes('Parte 1') && !!simulationRunConfiguration?.includeSecondPart,
         topics: Object.entries(ses.temas).sort(([left], [right]) => left.localeCompare(right)).map(([id, [correct, total]]) => ({ id, name: studyQuestionCatalog.getTopicName(id), correct, total })),
         items: items.map((question, index) => {
           const answer = ans[index], revealed = studyStates[index] === 'revealed';
-          return { id: question.i, topicId: question.t, topicName: studyQuestionCatalog.getTopicName(question.t), statement: question.q, options: question.a, correctIndex: question.c,
+          return { id: question.i, ...(attemptIds[index] ? { attemptId: attemptIds[index] } : {}), topicId: question.t, topicName: studyQuestionCatalog.getTopicName(question.t), statement: question.q, options: question.a, correctIndex: question.c,
             ...(answer !== undefined ? { answer } : {}), outcome: revealed ? 'revealed' : answer === undefined || answer === -1 ? 'blank' : answer === question.c ? 'correct' : 'wrong',
             notice: questionNotice(question), source: sourceHtml(question, VERIFIED_SOURCES), ...(question.u ? { citation: question.u } : {}), ...(question.n ? { note: question.n } : {}),
             ...(confidences[index] ? { confidence: confidences[index] } : {}), discardedOptions: discardedOptions[index] || [], highlights: highlights[index] || [],
-            contentRevision: questionContentRevision(question.q, question.a) };
+            contentRevision: questionContentRevision(question.q, question.a),
+            retryAvailable: last.feedback === true && last.exposureKind !== 'immediate-retry' && !ses.interrupted
+              && !!attemptIds[index] && (studyStates[index] === 'answered' || studyStates[index] === 'revealed')
+              && !question.np && (Boolean(question.u?.trim()) || Boolean(sourceHtml(question, VERIFIED_SOURCES)))
+              && Number.isInteger(question.c) && question.c >= 0 && question.c < question.a.length && question.a.length >= 2 };
         }) };
     },
     subscribe(listener) { const offEngine = subscribeEngine(listener), offStore = localProgressRepository.subscribe(listener); return () => { offEngine(); offStore(); }; },
     continuePartTwo() { go(hashPath('simulationReview')); },
+    retryImmediately(questionId: string) {
+      const question = getLastResult()?.items.find(item => item.i === questionId);
+      const sourceAvailable = !!question && Boolean(question.u?.trim() || sourceHtml(question, VERIFIED_SOURCES));
+      if (!sourceAvailable || !startImmediateRetryFromLastResult(questionId, sourceAvailable)) return false;
+      go(hashPath('quiz'));
+      return true;
+    },
     repeatFailures() {
       const last = getLastResult(); if (!last) return false;
       return startRun({ kind: 'rev', feedback: true, items: shuffle(last.items.filter((question, index) => last.ans[index] !== question.c)), titulo: 'Repetición de falladas' });
@@ -444,15 +550,16 @@ export const studyServices: StudyServices = {
     },
     getSelectedExam() { return localStudyProgressGateway.getPreferences().exsel || null; },
     selectExam(id) { localStudyProgressGateway.updatePreferences(current => ({ ...current, exsel: id })); },
-    async startConfigured(configuration) {
+    async startConfigured(configuration, milestone) {
       const account = localStudyProgressGateway.accountId(), index = await getIndex(); await getMeta();
       const seen = localStudyProgressGateway.getSeenTopics(), only = configuration.scope !== 'todos' && seen.length ? new Set(seen) : null;
+      if (milestone && !seen.length) return 'empty';
       const origins = new Set(configuration.origins);
-      const items = await selectSimulationQuestions(index, origins, configuration.count, only);
+      const items = await selectSimulationQuestions(index, origins, configuration.count, only, milestone?.optionsPerQuestion);
       if (account !== localStudyProgressGateway.accountId()) return 'account-changed';
-      if (!items.length) return 'empty';
+      if (!items.length || (milestone && items.length < configuration.count)) return 'empty';
       simulationRunConfiguration = { includeSecondPart: configuration.includeSecondPart, secondPartMinutes: Math.round(configuration.minutes * 0.45) };
-      return startRun({ kind: 'sim', feedback: false, items, limit: configuration.minutes, titulo: 'Simulacro · Parte 1' }) ? 'started' : 'empty';
+      return startRun({ kind: 'sim', feedback: false, items, limit: configuration.minutes, titulo: milestone ? `Hito · ${milestone.title}` : 'Simulacro · Parte 1', ...(milestone ? { scoringPolicy: milestone.scoringPolicy, milestoneEventId: milestone.eventId } : {}) }) ? 'started' : 'empty';
     },
     async startExam(id, mode) {
       const account = localStudyProgressGateway.accountId(), metadata = await studyQuestionCatalog.getMetadata();
@@ -492,6 +599,7 @@ export const studyServices: StudyServices = {
       const summaries = await progressPorTema(index.temas.map(topic => ({ id: topic.id, name: topic.nombre, total: topic.n })));
       return summaries.map(({ id, name, total, attempted, correct, answerCount }) => ({ id, name, total, attempted, correct, answerCount }));
     },
+    loadTopicQuestions: (topicId: string) => studyQuestionCatalog.getTopicQuestions(topicId),
     getConfiguration() {
       const saved = localStudyProgressGateway.getPreferences().test || {};
       return { all: typeof saved.all === 'boolean' ? saved.all : !(saved.sel || []).length, selected: saved.sel || [], count: ([10, 15, 25, 40].includes(saved.n ?? 0) ? saved.n : 15) as TestConfiguration['count'],
@@ -511,12 +619,12 @@ export const studyServices: StudyServices = {
         const result = await trapTest(configuration.timed ? 300 : configuration.count, undefined, selected.length ? selected : undefined);
         if (account !== localStudyProgressGateway.accountId()) return 'account-changed';
         if (!result.items.length) return 'empty';
-        return startRun({ kind: 'test', feedback: true, items: result.items, titulo: 'Mis trampas · ' + result.targets.map(key => TRAMPAS[key] || key).join(', '), ...(configuration.timed ? { limit: configuration.minutes, porTiempo: true } : {}) }, options?.dailyTrainingActivity) ? 'started' : 'empty';
+        return startRun({ kind: 'test', feedback: true, items: result.items, titulo: 'Mis trampas · ' + result.targets.map(key => TRAMPAS[key] || key).join(', '), ...(configuration.timed ? { limit: configuration.minutes, porTiempo: true } : {}) }, options?.dailyTrainingActivity, options?.trainingActivityReference) ? 'started' : 'empty';
       }
       const items = await selectQuestionsForTopics({ topics, origins: new Set(configuration.origins), mode: configuration.mode, count: configuration.timed ? 300 : configuration.count });
       if (account !== localStudyProgressGateway.accountId()) return 'account-changed';
       if (!items.length) return 'empty';
-      return startRun({ kind: 'test', feedback: true, items, titulo: selected.length === 1 ? studyQuestionCatalog.getTopicName(selected[0]) + (configuration.timed ? ` · ${configuration.minutes} min` : '') : 'Test' + (configuration.timed ? ` · ${configuration.minutes} min` : ''), ...(configuration.timed ? { limit: configuration.minutes, porTiempo: true } : {}) }, options?.dailyTrainingActivity) ? 'started' : 'empty';
+      return startRun({ kind: 'test', feedback: true, items, titulo: selected.length === 1 ? studyQuestionCatalog.getTopicName(selected[0]) + (configuration.timed ? ` · ${configuration.minutes} min` : '') : 'Test' + (configuration.timed ? ` · ${configuration.minutes} min` : ''), ...(configuration.timed ? { limit: configuration.minutes, porTiempo: true } : {}) }, options?.dailyTrainingActivity, options?.trainingActivityReference) ? 'started' : 'empty';
     },
   },
   cards: cardsServices,
@@ -573,8 +681,22 @@ export const studyServices: StudyServices = {
     subscribe(listener) { const offStore = localProgressRepository.subscribe(listener), offSync = sync.onStatus(listener), offEngine = subscribeEngine(listener); return () => { offStore(); offSync(); offEngine(); }; },
     async loadOverview() {
       await recover(); const account = localStudyProgressGateway.accountId(); const index = await getIndex(); await getMeta();
-      const progress = await getHomeProgressSummary(localProgressRepository);
+      const [progress, cardManifest] = await Promise.all([
+        getHomeProgressSummary(localProgressRepository),
+        fetchJson<{ temas?: Record<string, number> }>('cards/index.json').catch(() => null),
+      ]);
       if (account !== localStudyProgressGateway.accountId()) throw new Error('La cuenta cambió mientras se cargaba el resumen de inicio.');
+      const metadata = studyQuestionCatalog.getMetadataSnapshot();
+      const questionTopicIds = metadata ? index.temas.filter(topic =>
+        studyQuestionCatalog.getQuestionIdsForTopic(topic.id).some(id => (metadata[id]?.[3] || []).length > 0),
+      ).map(topic => topic.id) : null;
+      const cardTopics = cardManifest?.temas;
+      const validCardManifest = cardTopics && typeof cardTopics === 'object' && !Array.isArray(cardTopics)
+        && Object.values(cardTopics).every(count => Number.isInteger(count) && count >= 0);
+      const cardTopicIds = validCardManifest
+        ? Object.entries(cardTopics).filter(([, count]) => count > 0).map(([topicId]) => topicId)
+        : null;
+      const studyContentInventory = { questionTopicIds, cardTopicIds };
       const dueIds = await dueQuestionIds();
       const due = dueIds.length;
       const cardReviews = localCardProgressGateway.getCardReviews();
@@ -589,27 +711,32 @@ export const studyServices: StudyServices = {
       const seenTopics = localStudyProgressGateway.getSeenTopics();
       const studiedTopicSet = new Set(seenTopics);
       const studiedTopicIds = [...studiedTopicSet];
-      const nextNewTopicEntry = trainingPreferences.introductionTopicId && !studiedTopicSet.has(trainingPreferences.introductionTopicId)
-        ? index.temas.find(topic => topic.id === trainingPreferences.introductionTopicId)
-        : undefined;
+      const nextNewTopicEntry = trainingPreferences.academyTopicOrderIds?.length
+        ? selectNextAcademyTopic(trainingPreferences.academyTopicOrderIds, index.temas, seenTopics)
+        : trainingPreferences.introductionTopicId && !studiedTopicSet.has(trainingPreferences.introductionTopicId)
+          ? index.temas.find(topic => topic.id === trainingPreferences.introductionTopicId)
+          : undefined;
       const nextNewTopic = nextNewTopicEntry;
       const studiedMastery = filterTopicMasteryToSeen(mastery, studiedTopicIds);
       const studiedWeakTopics = studiedMastery.filter(topic => topic.est === 'r').sort((left, right) => left.score - right.score);
       const recallAssessments = paperRecall.get().filter(item => studiedTopicSet.has(item.topicId));
       const latestRecall = latestPaperRecallByTopic(recallAssessments);
       const selfReportedWeakTopics = [...latestRecall.values()].filter(item => needsPaperRecallFollowUp(item, studyQuestionCatalog.now())).map(item => item.topicId);
-      const weakTopicIds = [...new Set([...studiedWeakTopics.map(topic => topic.id), ...selfReportedWeakTopics])];
+      const paperTestWeakTopics = paperTestFollowUpTopicIds(paperTestAttempts.get(), seenTopics, studyQuestionCatalog.now());
+      const weakTopicIds = [...new Set([...studiedWeakTopics.map(topic => topic.id), ...selfReportedWeakTopics, ...paperTestWeakTopics])];
       const studiedDueCount = dueIds.filter(id => studiedTopicSet.has(studyQuestionCatalog.getTopicForQuestion(id) || '')).length;
       const studiedFailureCount = failureIds.filter(id => studiedTopicSet.has(studyQuestionCatalog.getTopicForQuestion(id) || '')).length;
       const topicForCard = (id: string): string | undefined => {
-        const curatedTopic = /^FC-(T[1-4]\.\d{2})-/.exec(id)?.[1];
+        const curatedTopic = /^FC-(T\d+\.\d{2})-/.exec(id)?.[1];
         if (curatedTopic) return curatedTopic;
         return id.startsWith('FC-Q-') ? studyQuestionCatalog.getTopicForQuestion(id.slice('FC-Q-'.length)) || undefined : undefined;
       };
       const studiedCardDueCount = Object.entries(cardReviews).filter(([id, record]) => record.dueAt <= studyQuestionCatalog.now()
         && studiedTopicSet.has(topicForCard(id) || '')).length;
-      const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date().getDay(), dueCount: studiedDueCount, cardDueCount: studiedCardDueCount, failureCount: studiedFailureCount, weakTopicCount: weakTopicIds.length, weakTopicIds, studiedTopicIds, nextNewTopic: nextNewTopic ? { topicId: nextNewTopic.id, topicName: nextNewTopic.nombre } : undefined,
-        topicReviewEvidence: studiedMastery.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: true, distinctQuestionsAttempted: topic.seen, questionCoverageOfTarget: topic.cob, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias })) });
+      const topicReviewEvidence = studiedMastery.map(topic => ({ topicId: topic.id, topicName: topic.nombre, hasStudyMarker: true, distinctQuestionsAttempted: topic.seen, questionCoverageOfTarget: topic.cob, latestAnswerAccuracy: topic.seen ? topic.prec : null, daysSinceLastQuestionAttempt: topic.dias }));
+      const now = Date.now();
+      const trainingPlan = buildDailyTrainingPlan({ preferences: trainingPreferences, weekday: new Date(now).getDay(), dateKey: localTrainingDateKey(now), dueCount: studiedDueCount, cardDueCount: studiedCardDueCount, failureCount: studiedFailureCount, weakTopicCount: weakTopicIds.length, weakTopicIds, studiedTopicIds, nextNewTopic: nextNewTopic ? { topicId: nextNewTopic.id, topicName: nextNewTopic.nombre } : undefined,
+        topicReviewEvidence });
       return { seen: progress.seen, total: index.n, answers: progress.answers, streak, daysToExam, due,
         completedSessions: localStudyProgressGateway.getSessions().length,
         blocks: BLOQUES.map(([code, name]) => {
@@ -618,24 +745,42 @@ export const studyServices: StudyServices = {
             assessed: topics.filter(topic => topic.est !== 'n').length };
         }),
         cardsDue: cardDueCount,
-        trainingDue: { questions: studiedDueCount, cards: studiedCardDueCount },
+        trainingDue: { questions: studiedDueCount, cards: studiedCardDueCount }, trainingFailures:studiedFailureCount,
         quickCount: progress.quickCount, slowCount: progress.slowCount, failures: failureCount,
         studiedTopics: seenTopics.length, topicCount: index.temas.length,
         studiedTopicDetails: index.temas.filter(topic => studiedTopicSet.has(topic.id)).map(topic => ({ id: topic.id, name: topic.nombre })),
         nextNewTopic: nextNewTopic ? { id: nextNewTopic.id, name: nextNewTopic.nombre } : undefined,
         assessedTopics: studiedMastery.filter(topic => topic.est !== 'n').length,
         weakTopics: studiedWeakTopics.length,
-        masteredTopics: studiedMastery.filter(topic => topic.est === 'g').length, trainingPlan, trainingSession: trainingSession.getSession(), trainingHistory: trainingSession.getHistory(), paperRecallAssessments: recallAssessments,
+        masteredTopics: studiedMastery.filter(topic => topic.est === 'g').length, trainingPlan, trainingSession: trainingSession.getSession(), trainingHistory: trainingSession.getHistory(), paperRecallAssessments: recallAssessments, paperTestAttempts: paperTestAttempts.get(), weakTopicIds, topicReviewEvidence, studyContentInventory,
       };
     },
     startTrainingSession(plan) { return trainingSession.start(plan); },
     startTrainingActivity() { return trainingSession.startCurrentActivity(); },
     pauseTrainingActivity() { return trainingSession.pauseCurrentActivity(); },
-    completeTrainingActivity(activity: TrainingActivity) { return trainingSession.completeActivity(activity); },
+    beginTrainingBreak(minutes) { return trainingSession.beginBreak(minutes); },
+    endTrainingBreak() { return trainingSession.endBreak(); },
+    completeTrainingActivity(activity: TrainingActivity, reference?: TrainingActivityReference) {
+      const before = trainingSession.getSession();
+      const completed = trainingSession.completeActivity(activity, reference);
+      const step = before?.activities[before.currentIndex];
+      if (before && completed && completed.currentIndex > before.currentIndex && step) {
+        const matchingAgendaItem = findMatchingPlannedAgendaItem(weeklyStudyAgenda.get(), before.dateKey, step);
+        if (matchingAgendaItem) weeklyStudyAgenda.setStatus(matchingAgendaItem.id, 'completed');
+      }
+      return completed;
+    },
     recordPaperRecall(topicId: string, rating: PaperRecallRating) { return paperRecall.record(topicId, rating); },
+    recordPaperTestSegment(input: Parameters<typeof paperTestAttempts.record>[0], existingId?: string) { return paperTestAttempts.record(input, existingId); },
+    voidPaperTestSegment(id: string) { return paperTestAttempts.void(id); },
     scheduledStudyActivities() { return trainingCalendar.get(); },
     scheduleStudyActivity(input: Parameters<typeof trainingCalendar.schedule>[0]) { return trainingCalendar.schedule(input); },
     rescheduleStudyActivity(input: Parameters<typeof trainingCalendar.reschedule>[0]) { return trainingCalendar.reschedule(input); },
+    weeklyStudyAgenda() { return weeklyStudyAgenda.get(); },
+    replaceWeeklyStudyAgendaWeek(weekStart, items) { return weeklyStudyAgenda.replaceWeek(weekStart, items); },
+    recoverWeeklyStudyAgenda(proposal) { return weeklyStudyAgenda.recover(proposal); },
+    addWeeklyStudyAgendaPlan(proposal) { return weeklyStudyAgenda.addPlan(proposal); },
+    setWeeklyStudyAgendaItemStatus(id, status) { return weeklyStudyAgenda.setStatus(id, status); },
     setTrainingReviewMode(topicId: string, mode: StudyReviewMode | null) {
       const preferences = normalizeTrainingPreferences(localStudyProgressGateway.getPreferences().training);
       const reviewModesByTopic = { ...preferences.reviewModesByTopic };
@@ -643,7 +788,7 @@ export const studyServices: StudyServices = {
       else delete reviewModesByTopic[topicId];
       localStudyProgressGateway.updatePreferences(current => ({ ...current, training: { ...preferences, reviewModesByTopic } }));
     },
-    quickSession, startReview: (topicIds, dailyTrainingActivity) => startRepaso(topicIds, dailyTrainingActivity), openMenu,
+    quickSession, startReview: (topicIds, dailyTrainingActivity, reference) => startRepaso(topicIds, dailyTrainingActivity, reference), openMenu,
     login: sync.login, requestAccess: async () => await sync.requestAccess(), notify: toast,
   },
   topics: {

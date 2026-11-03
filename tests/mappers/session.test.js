@@ -18,3 +18,13 @@ it('conserva el rechazo de campos desconocidos y el contrato permisivo de datos 
   expect(sessionMapper.toDomain({ ...dto, extra: true })).toEqual({ ok: false, reason: 'Campo de sesión desconocido' });
   expect(sessionMapper.toDomain(dto)).toMatchObject({ ok: true, value: { kind: 'tipo-antiguo', failedQuestionIds: [3], timeLimited: 'legacy' } });
 });
+
+it('persiste el estado de puntuación pendiente y la versión de regla del hito', () => {
+  const policy = { version:1, correctPoints:1, wrongPenalty:null, blankPoints:0 };
+  const dto = { id:'smilestone', ts:1, kind:'sim', n:100, a:60, f:20, b:20, secs:5400, nota:0,
+    temas:{}, tipos:{}, fails:[], titulo:'Hito · simulacro', scorePending:true, scoringPolicy:policy, milestoneEventId:'milestone-2026' };
+  const mapped = sessionMapper.toDomain(dto);
+  expect(mapped).toMatchObject({ ok:true, value:{ scorePending:true, scoringPolicy:policy, milestoneEventId:'milestone-2026' } });
+  expect(sessionMapper.toDto(mapped.value)).toEqual(dto);
+  expect(sessionMapper.toDomain({ ...dto, scoringPolicy:{ ...policy, wrongPenalty:-1 } }).ok).toBe(false);
+});

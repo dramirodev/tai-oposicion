@@ -26,8 +26,12 @@ import { syncAttemptHistory } from './attempt-sync.js';
 import { configureStudyBankSource } from './study-bank-source.js';
 import { createTrainingSessionSyncAdapter, type TrainingSessionSyncStore } from './training-session-sync.js';
 import { createPaperRecallSyncAdapter, type PaperRecallSyncStore } from './paper-recall-sync.js';
+import { createPaperTestAttemptSyncAdapter, type PaperTestAttemptSyncStore } from './paper-test-attempt-sync.js';
 import { createTrainingCalendarSyncAdapter, type TrainingCalendarSyncStore } from './training-calendar-sync.js';
 import type { ScheduledStudyActivity } from '../../core/domain/study-training-calendar.js';
+import { createWeeklyStudyAgendaSyncAdapter, type WeeklyStudyAgendaSyncStore } from './weekly-study-agenda-sync.js';
+import { createAcademyStudyProgressSyncAdapter, type AcademyStudyProgressSyncStore } from './academy-study-progress-sync.js';
+import type { AcademyMaterialOpenEvent, AcademyMaterialSelection, AcademySectionStudyEvent } from '../../core/domain/academy-study-progress.js';
 
 let auth: Auth, db: Firestore, uid: string | null = null, timer: ReturnType<typeof setTimeout> | undefined, cardsT: ReturnType<typeof setTimeout> | undefined, retryT: ReturnType<typeof setTimeout> | undefined, retryN = 0, syncEpoch = 0, unsubs: Unsubscribe[] = [];
 let temaOf: (id: string) => string | null = () => null; // id -> tema
@@ -36,7 +40,10 @@ let attemptRepository: AttemptRepository | null = null;
 let progressStore: ProgressSyncStore | null = null;
 let trainingSessionStore: TrainingSessionSyncStore | null = null;
 let paperRecallStore: PaperRecallSyncStore | null = null;
+let paperTestAttemptStore: PaperTestAttemptSyncStore | null = null;
 let trainingCalendarStore: TrainingCalendarSyncStore | null = null;
+let weeklyStudyAgendaStore: WeeklyStudyAgendaSyncStore | null = null;
+let academyStudyProgressStore: AcademyStudyProgressSyncStore | null = null;
 const accessControl = createFirebaseAccessControl({
   auth: () => auth,
   database: () => db,
@@ -58,11 +65,17 @@ export async function init(
   localTrainingSession?: TrainingSessionSyncStore,
   localPaperRecall?: PaperRecallSyncStore,
   localTrainingCalendar?: TrainingCalendarSyncStore,
+  localWeeklyStudyAgenda?: WeeklyStudyAgendaSyncStore,
+  localAcademyStudyProgress?: AcademyStudyProgressSyncStore,
+  localPaperTestAttempts?: PaperTestAttemptSyncStore,
 ): Promise<void> {
   progressStore = localProgress;
   trainingSessionStore = localTrainingSession ?? null;
   paperRecallStore = localPaperRecall ?? null;
   trainingCalendarStore = localTrainingCalendar ?? null;
+  weeklyStudyAgendaStore = localWeeklyStudyAgenda ?? null;
+  academyStudyProgressStore = localAcademyStudyProgress ?? null;
+  paperTestAttemptStore = localPaperTestAttempts ?? null;
   temaOf = metaFns.temaOf; idsOfTema = metaFns.idsOfTema;
   status.authResolved = false;
   const { config: firebaseConfig, loaded: leida } = await loadFirebaseConfig();
@@ -167,8 +180,20 @@ function start(): void {
     const adapter = createPaperRecallSyncAdapter({ db, uid:me, store:paperRecallStore, isActive:active, onSynced:ok, onWriteError:writeErr });
     unsubs.push(adapter.listen(error));
   }
+  if (paperTestAttemptStore) {
+    const adapter = createPaperTestAttemptSyncAdapter({ db, uid:me, store:paperTestAttemptStore, isActive:active, onSynced:ok, onWriteError:writeErr });
+    unsubs.push(adapter.listen(error));
+  }
   if (trainingCalendarStore) {
     const adapter = createTrainingCalendarSyncAdapter({ db, uid:me, store:trainingCalendarStore, isActive:active, onSynced:ok, onWriteError:writeErr });
+    unsubs.push(adapter.listen(error));
+  }
+  if (weeklyStudyAgendaStore) {
+    const adapter = createWeeklyStudyAgendaSyncAdapter({ db, uid:me, store:weeklyStudyAgendaStore, isActive:active, onSynced:ok, onWriteError:writeErr });
+    unsubs.push(adapter.listen(error));
+  }
+  if (academyStudyProgressStore) {
+    const adapter = createAcademyStudyProgressSyncAdapter({ db, uid:me, store:academyStudyProgressStore, isActive:active, onSynced:ok, onWriteError:writeErr });
     unsubs.push(adapter.listen(error));
   }
   // estadísticas: un documento por tema
@@ -285,6 +310,15 @@ export function pushPaperRecallAssessments(): void {
   void adapter.push();
 }
 
+export function pushPaperTestAttempts(): void {
+  if (!canSync() || !uid || !paperTestAttemptStore) return;
+  const targetUid = uid;
+  const adapter = createPaperTestAttemptSyncAdapter({
+    db, uid:targetUid, store:paperTestAttemptStore, isActive:() => uid === targetUid && canSync(), onSynced:ok, onWriteError:writeErr,
+  });
+  void adapter.push();
+}
+
 export function pushTrainingCalendar(activities?: readonly ScheduledStudyActivity[]): void {
   if (!canSync() || !uid || !trainingCalendarStore) return;
   const targetUid = uid;
@@ -292,6 +326,42 @@ export function pushTrainingCalendar(activities?: readonly ScheduledStudyActivit
     db, uid:targetUid, store:trainingCalendarStore, isActive:() => uid === targetUid && canSync(), onSynced:ok, onWriteError:writeErr,
   });
   void adapter.push(activities);
+}
+
+export function pushWeeklyStudyAgenda(): void {
+  if (!canSync() || !uid || !weeklyStudyAgendaStore) return;
+  const targetUid = uid;
+  const adapter = createWeeklyStudyAgendaSyncAdapter({
+    db, uid:targetUid, store:weeklyStudyAgendaStore, isActive:() => uid === targetUid && canSync(), onSynced:ok, onWriteError:writeErr,
+  });
+  void adapter.push();
+}
+
+export function pushAcademyMaterialSelection(selection: AcademyMaterialSelection): void {
+  if (!canSync() || !uid || !academyStudyProgressStore) return;
+  const targetUid = uid;
+  const adapter = createAcademyStudyProgressSyncAdapter({
+    db, uid:targetUid, store:academyStudyProgressStore, isActive:() => uid === targetUid && canSync(), onSynced:ok, onWriteError:writeErr,
+  });
+  void adapter.pushMaterialSelection(selection);
+}
+
+export function pushAcademySectionStudyEvent(event: AcademySectionStudyEvent): void {
+  if (!canSync() || !uid || !academyStudyProgressStore) return;
+  const targetUid = uid;
+  const adapter = createAcademyStudyProgressSyncAdapter({
+    db, uid:targetUid, store:academyStudyProgressStore, isActive:() => uid === targetUid && canSync(), onSynced:ok, onWriteError:writeErr,
+  });
+  void adapter.pushSectionEvent(event);
+}
+
+export function pushAcademyMaterialOpenEvent(event: AcademyMaterialOpenEvent): void {
+  if (!canSync() || !uid || !academyStudyProgressStore) return;
+  const targetUid = uid;
+  const adapter = createAcademyStudyProgressSyncAdapter({
+    db, uid:targetUid, store:academyStudyProgressStore, isActive:() => uid === targetUid && canSync(), onSynced:ok, onWriteError:writeErr,
+  });
+  void adapter.pushMaterialOpenEvent(event);
 }
 
 export function pushSeen(data: SeenDoc): void {

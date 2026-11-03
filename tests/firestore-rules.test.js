@@ -11,8 +11,10 @@ import { applyAttemptAction } from '../src/core/domain/attempts/transitions.ts';
 import { createTrainingSessionSyncAdapter } from '../src/adapters/firebase/training-session-sync.ts';
 import { createPaperRecallSyncAdapter } from '../src/adapters/firebase/paper-recall-sync.ts';
 import { createTrainingCalendarSyncAdapter } from '../src/adapters/firebase/training-calendar-sync.ts';
+import { createWeeklyStudyAgendaSyncAdapter } from '../src/adapters/firebase/weekly-study-agenda-sync.ts';
 import { mergePaperRecallAssessments } from '../src/core/domain/paper-recall-assessment.ts';
 import { mergeScheduledStudyActivities } from '../src/core/domain/study-training-calendar.ts';
+import { emptyWeeklyStudyAgenda, mergeWeeklyStudyAgenda } from '../src/core/domain/study-weekly-agenda.ts';
 
 const projectId = 'demo-tai-training-rules';
 let testEnv;
@@ -62,6 +64,23 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
     await assertSucceeds(setDoc(doc(db, 'users/student/cfg/training'), documentFor(2, [historyEntry])));
   });
 
+  it('acepta IDs de tema con bloques futuros en checkpoints sincronizados', async () => {
+    const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const futureStep = { ...step, topicId:'T12.01', topicIds:['T5.02', 'T12.01'] };
+    await assertSucceeds(setDoc(doc(db, 'users/student/cfg/training'), {
+      ...documentFor(2),
+      session:{ ...session, activities:[futureStep] },
+    }));
+  });
+
+  it('acepta referencias de sectionRecall versionadas y rechaza huellas mal formadas', async () => {
+    const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const sectionRecall = { agendaItemId:'agenda-section-001', followUpId:'follow-up-001', sectionId:'ci-0123456789abcdefabcd', materialPath:'T1.01/Temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64), sectionTitle:'1. INTRODUCCIÓN', printedPage:3 };
+    const validStep = { ...step, id:'training:2026-10-29:activity:1', sectionRecall };
+    await assertSucceeds(setDoc(doc(db, 'users/student/cfg/training'), { ...documentFor(2), session:{ ...session, currentIndex:0, completedAt:null, activities:[validStep] } }));
+    await assertFails(setDoc(doc(db, 'users/student/cfg/training'), { ...documentFor(2), session:{ ...session, currentIndex:0, completedAt:null, activities:[{ ...validStep, sectionRecall:{ ...sectionRecall, sourceHash:'stale' } }] } }));
+  });
+
   it('aísla autoevaluaciones del temario en papel por usuario y limita el documento', async () => {
     const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
     const other = testEnv.authenticatedContext('other', { email:'other@example.test', email_verified:true }).firestore();
@@ -74,6 +93,18 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
     await assertFails(setDoc(doc(testEnv.unauthenticatedContext().firestore(), 'users/student/cfg/trainingRecall'), { schemaVersion:1, updatedAt:assessment.ratedAt, assessments:[assessment] }));
   });
 
+  it('aísla el registro agregado de tests en papel y limita su tamaño', async () => {
+    const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const other = testEnv.authenticatedContext('other', { email:'other@example.test', email_verified:true }).firestore();
+    const reference = doc(db, 'users/student/cfg/paperTestLog');
+    const segment = { id:'attempt-001:segment:1', attemptId:'attempt-001', segment:1, dateKey:'2026-11-02', startedAt:1_793_280_000_000, completedAt:1_793_280_060_000, updatedAt:1_793_280_060_000, questionCount:20, answeredCount:18, correctCount:12, incorrectCount:6, blankCount:2, doubtfulCount:3, correctionStatus:'answer-key-only' };
+    await assertSucceeds(setDoc(reference, { schemaVersion:1, updatedAt:segment.updatedAt, segments:[segment] }));
+    await assertFails(getDoc(doc(other, 'users/student/cfg/paperTestLog')));
+    await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:segment.updatedAt, segments:Array.from({ length:301 }, (_, index) => ({ ...segment, id:`${segment.id}:${index}` })) }));
+    await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:segment.updatedAt, segments:[], unexpected:true }));
+    await assertFails(setDoc(doc(testEnv.unauthenticatedContext().firestore(), 'users/student/cfg/paperTestLog'), { schemaVersion:1, updatedAt:segment.updatedAt, segments:[segment] }));
+  });
+
   it('aísla la agenda de repasos por cuenta y limita su documento', async () => {
     const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
     const other = testEnv.authenticatedContext('other', { email:'other@example.test', email_verified:true }).firestore();
@@ -84,6 +115,80 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
     await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:activity.updatedAt, activities:Array.from({ length:91 }, (_, index) => ({ ...activity, id:`${activity.id}:${index}` })) }));
     await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:activity.updatedAt, activities:[], unexpected:true }));
     await assertFails(setDoc(doc(testEnv.unauthenticatedContext().firestore(), 'users/student/cfg/trainingCalendar'), { schemaVersion:1, updatedAt:activity.updatedAt, activities:[activity] }));
+  });
+
+  it('aísla la agenda semanal versionada por cuenta y limita su tamaño', async () => {
+    const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const other = testEnv.authenticatedContext('other', { email:'other@example.test', email_verified:true }).firestore();
+    const dateKey = '2026-11-02';
+    const item = { id:'agenda-new-1', weekStart:dateKey, dateKey, kind:'newContent', topicIds:['T12.01'], minutes:40, status:'planned', createdAt:1_793_280_000_000, updatedAt:1_793_280_000_000 };
+    const agenda = { schemaVersion:1, revision:1, updatedAt:item.updatedAt, items:[item] };
+    const reference = doc(db, 'users/student/cfg/weeklyStudyAgenda');
+    await assertSucceeds(setDoc(reference, { schemaVersion:1, updatedAt:item.updatedAt, agenda }));
+    await assertFails(getDoc(doc(other, 'users/student/cfg/weeklyStudyAgenda')));
+    await assertFails(setDoc(reference, { schemaVersion:2, updatedAt:item.updatedAt, agenda }));
+    await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:item.updatedAt, agenda:{ ...agenda, items:Array.from({ length:71 }, (_, index) => ({ ...item, id:`agenda-${index}` })) } }));
+    await assertFails(setDoc(reference, { schemaVersion:1, updatedAt:item.updatedAt, agenda, unexpected:true }));
+    await assertFails(setDoc(doc(testEnv.unauthenticatedContext().firestore(), 'users/student/cfg/weeklyStudyAgenda'), { schemaVersion:1, updatedAt:item.updatedAt, agenda }));
+  });
+
+  it('aísla selección de materiales y eventos inmutables por apartado', async () => {
+    const db = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const other = testEnv.authenticatedContext('other', { email:'other@example.test', email_verified:true }).firestore();
+    const material = { path:'T1.01/Temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64), outlineStructureFingerprint:'c'.repeat(64), role:'syllabus' };
+    const selection = { topicId:'T1.01', materials:[material], revision:1, updatedAt:1_793_280_000_000 };
+    const selectedDoc = doc(db, 'users/student/academyStudyMaterials/T1.01');
+    await assertSucceeds(setDoc(selectedDoc, selection));
+    await assertFails(getDoc(doc(other, 'users/student/academyStudyMaterials/T1.01')));
+    await assertFails(setDoc(doc(testEnv.unauthenticatedContext().firestore(), 'users/student/academyStudyMaterials/T1.01'), selection));
+    await assertFails(setDoc(doc(db, 'users/student/academyStudyMaterials/T1.01'), { ...selection, unexpected:true }));
+
+    const event = { id:'event-00000001', topicId:'T1.01', sectionId:'ci-0123456789abcdefabcd', materialPath:material.path, sourceHash:material.sourceHash, outlineFingerprint:material.outlineFingerprint, kind:'self-check', timing:'delayed', rating:'partial', occurredAt:1_793_280_000_000 };
+    const eventDoc = doc(db, `users/student/academySectionEvents/${event.id}`);
+    await assertSucceeds(setDoc(eventDoc, event));
+    await assertFails(getDoc(doc(other, `users/student/academySectionEvents/${event.id}`)));
+    await assertFails(setDoc(eventDoc, { ...event, rating:'recalled' }));
+    await assertFails(setDoc(doc(db, `users/student/academySectionEvents/${event.id}-bad`), event));
+    const linkedCheck = { ...event, id:'event-delayed-0001', timing:'delayed', followUpId:event.id, occurredAt:1_793_280_000_100 };
+    await assertSucceeds(setDoc(doc(db, `users/student/academySectionEvents/${linkedCheck.id}`), linkedCheck));
+    await assertFails(setDoc(doc(db, 'users/student/academySectionEvents/event-delayed-0002'), { ...linkedCheck, timing:'immediate' }));
+    const followUp = { id:'event-follow-0001', topicId:'T1.01', sectionId:'ci-0123456789abcdefabcd', materialPath:material.path, sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64), kind:'follow-up', followUpId:event.id, sourceSelfCheckEventId:event.id, dueDateKey:'2026-11-12', status:'scheduled', sectionTitle:'1. INTRODUCCIÓN', printedPage:3, occurredAt:1_793_280_000_001 };
+    await assertSucceeds(setDoc(doc(db, `users/student/academySectionEvents/${followUp.id}`), followUp));
+    await assertFails(setDoc(doc(db, 'users/student/academySectionEvents/event-follow-0002'), { ...followUp, unexpected:true }));
+
+    const openEvent = { id:'material-open-0001', topicId:'T1.01', sectionId:'ci-0123456789abcdefabcd', materialPath:material.path, sourceHash:material.sourceHash, outlineFingerprint:material.outlineFingerprint, page:3, occurredAt:1_793_280_000_002, trainingSessionId:'session-1', trainingActivityId:'activity-1' };
+    const openRef = doc(db, `users/student/academyMaterialOpenEvents/${openEvent.id}`);
+    await assertSucceeds(setDoc(openRef, openEvent));
+    await assertFails(getDoc(doc(other, `users/student/academyMaterialOpenEvents/${openEvent.id}`)));
+    await assertFails(setDoc(doc(db, 'users/student/academyMaterialOpenEvents/material-open-0002'), { ...openEvent, page:0 }));
+    await assertFails(setDoc(doc(db, 'users/student/academyMaterialOpenEvents/material-open-0003'), { ...openEvent, unexpected:true }));
+    await assertFails(setDoc(openRef, { ...openEvent, page:4 }));
+  });
+
+  it('sincroniza y combina la agenda semanal sin usar el documento de calendario anterior', async () => {
+    const firstDb = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const secondDb = testEnv.authenticatedContext('student', { email:'student@example.test', email_verified:true }).firestore();
+    const dateKey = '2026-11-02';
+    const item = { id:'agenda-new-1', weekStart:dateKey, dateKey, kind:'newContent', topicIds:['T12.01'], minutes:40, status:'planned', createdAt:1_793_280_000_000, updatedAt:1_793_280_000_000 };
+    const makeStore = () => {
+      let agenda = emptyWeeklyStudyAgenda();
+      return { get:() => agenda, mergeRemote(value) { const merged = mergeWeeklyStudyAgenda(agenda, value); const changed = JSON.stringify(merged) !== JSON.stringify(agenda); agenda = merged; return changed; }, set:value => { agenda = value; } };
+    };
+    const firstStore = makeStore(), secondStore = makeStore();
+    firstStore.set({ schemaVersion:1, revision:1, updatedAt:item.updatedAt, items:[item] });
+    let active = true;
+    const onError = error => { throw error; };
+    const first = createWeeklyStudyAgendaSyncAdapter({ db:firstDb, uid:'student', store:firstStore, isActive:() => active, onSynced:() => {}, onWriteError:onError });
+    const second = createWeeklyStudyAgendaSyncAdapter({ db:secondDb, uid:'student', store:secondStore, isActive:() => active, onSynced:() => {}, onWriteError:onError });
+    const stopFirst = first.listen(onError), stopSecond = second.listen(onError);
+    const waitFor = async predicate => { for (let attempt = 0; attempt < 50 && !predicate(); attempt++) await new Promise(resolveWait => setTimeout(resolveWait, 20)); expect(predicate()).toBe(true); };
+    try {
+      await first.push();
+      await waitFor(() => secondStore.get().items[0]?.id === item.id);
+      expect((await getDoc(doc(firstDb, 'users/student/cfg/weeklyStudyAgenda'))).data()?.agenda.items[0].topicIds).toEqual(['T12.01']);
+      expect((await getDoc(doc(firstDb, 'users/student/cfg/trainingCalendar'))).exists()).toBe(false);
+      await assertFails(getDoc(doc(testEnv.authenticatedContext('other', { email:'other@example.test', email_verified:true }).firestore(), 'users/student/cfg/weeklyStudyAgenda')));
+    } finally { active = false; stopFirst(); stopSecond(); }
   });
 
   it('permite revelar una respuesta con un nuevo evento terminal válido aunque su id sea lexicográficamente mayor', async () => {
@@ -368,6 +473,10 @@ describeWithEmulator('reglas de Firestore para la planificación', () => {
       await assertSucceeds(setDoc(doc(db, 'users/student/sessions/s1'), base));
       await assertFails(setDoc(doc(db, 'users/student/sessions/s2'), { ...base, id:'s2', extra:true }));
       await assertFails(setDoc(doc(db, 'users/student/sessions/s3'), { ...base, id:'s3', kind:'otro' }));
+      const unknownPenalty = { version:1, correctPoints:1, wrongPenalty:null, blankPoints:0 };
+      await assertSucceeds(setDoc(doc(db, 'users/student/sessions/milestone-pending'), { ...base, id:'milestone-pending', kind:'sim', scorePending:true, scoringPolicy:unknownPenalty, milestoneEventId:'milestone-2026' }));
+      await assertFails(setDoc(doc(db, 'users/student/sessions/milestone-invalid'), { ...base, id:'milestone-invalid', kind:'sim', scoringPolicy:unknownPenalty }));
+      await assertFails(setDoc(doc(db, 'users/student/sessions/milestone-bad-rule'), { ...base, id:'milestone-bad-rule', kind:'sim', scorePending:true, scoringPolicy:{ ...unknownPenalty, wrongPenalty:-1 } }));
       await assertFails(setDoc(doc(db, 'users/student/cfg/attempts'), { schemaVersion:1, deletedAt:1, revision:0 }));
       await assertSucceeds(setDoc(doc(db, 'users/student/cfg/attempts'), { schemaVersion:1, deletedAt:1, revision:1 }));
     });

@@ -5,6 +5,7 @@ import type { AttemptEvent, QuestionAttempt, QuestionAttemptSession } from './tr
 
 export type StrategyDimension = 'mode' | 'exposure' | 'topic' | 'origin' | 'kind' | 'contentRevision' | 'difficulty';
 export type StrategyRecommendation = 'answer-now' | 'defer-second-round' | 'consider-blank-final';
+export type StrategyRecommendationReason = 'insufficient-sample' | 'not-simulation-only' | 'matches-blank-value' | null;
 
 export interface StrategyActiveTime {
   observedMilliseconds: number;
@@ -37,6 +38,7 @@ export interface StrategySegment extends StrategyMetrics {
   observedAccuracy: number | null;
   expectedValuePerQuestion: number | null;
   recommendation: StrategyRecommendation | null;
+  recommendationReason: StrategyRecommendationReason;
   recommendationSample: { answeredAttempts: number; sessions: number; minimumAttempts: number; minimumSessions: number };
   timingRecommendation: 'defer-second-round' | null;
   timingSample: { timedAttempts: number; sessionsWithTimer: number; medianSecondsPerBlank: number | null };
@@ -48,6 +50,7 @@ export interface AttemptStrategyReport {
   scoring: { reward: number; penalty: number; blankValue: number };
   completedSessionCount: number;
   excludedSessionCount: number;
+  excludedImmediateRetryCount: number;
   orphanAttemptCount: number;
   overall: StrategyMetrics;
   segments: StrategySegment[];
@@ -147,7 +150,11 @@ function strategyValues(attempts: readonly AttemptObservation[], reward: number,
     ? observedAccuracy * reward - (1 - observedAccuracy) * penalty
     : null;
   const simulation = attempts.every(item => item.attempt.mode === 'simulation');
-  const recommendation: StrategyRecommendation | null = !simulation || !enough || expectedValuePerQuestion === null
+  const recommendationReason: StrategyRecommendationReason = !enough || expectedValuePerQuestion === null
+    ? 'insufficient-sample'
+    : !simulation ? 'not-simulation-only'
+      : expectedValuePerQuestion === blankValue ? 'matches-blank-value' : null;
+  const recommendation: StrategyRecommendation | null = recommendationReason !== null || expectedValuePerQuestion === null
     ? null
     : expectedValuePerQuestion > blankValue ? 'answer-now'
       : expectedValuePerQuestion < blankValue ? 'consider-blank-final' : null;
@@ -155,6 +162,7 @@ function strategyValues(attempts: readonly AttemptObservation[], reward: number,
     observedAccuracy,
     expectedValuePerQuestion,
     recommendation,
+    recommendationReason,
     recommendationSample: { answeredAttempts: answered.length, sessions, minimumAttempts: RECOMMENDATION_MIN_ATTEMPTS, minimumSessions: RECOMMENDATION_MIN_SESSIONS },
   };
 }
@@ -200,7 +208,10 @@ export function analyzeAttemptStrategy(input: AnalyzeAttemptStrategyInput): Atte
     list.push(event);
     eventsByAttempt.set(event.attemptId, list);
   }
+  const excludedImmediateRetryCount = input.attempts.filter(attempt => completed.has(attempt.sessionId)
+    && attempt.exposureKind === 'immediate-retry').length;
   const observations = input.attempts.flatMap(attempt => {
+    if (attempt.exposureKind === 'immediate-retry') return [];
     const session = completed.get(attempt.sessionId);
     if (!session) return [];
     const events = eventsByAttempt.get(attempt.id) || [];
@@ -239,6 +250,7 @@ export function analyzeAttemptStrategy(input: AnalyzeAttemptStrategyInput): Atte
     scoring: { reward: input.reward, penalty: input.penalty, blankValue: input.blankValue },
     completedSessionCount: completed.size,
     excludedSessionCount,
+    excludedImmediateRetryCount,
     orphanAttemptCount: input.attempts.filter(attempt => !input.sessions.some(session => session.id === attempt.sessionId)).length,
     overall,
     segments,
