@@ -35,6 +35,16 @@ it('expone la versión visible completa en el nombre accesible del control de ve
  await renderSettings();
  expect(screen.getByRole('button', { name: 'Versión 1.1.3 (test)' })).toBeInTheDocument();
 });
+it('distingue la última sincronización correcta de un error posterior', async () => {
+ fullAccess = true;
+ settings.getSnapshot = () => ({ ...snapshot(), sync:{ state:'sincronizado', user:{ name:'A', email:'a@example.test' }, configured:true, lastSync:Date.now(), error:'No se pudo guardar en la nube (permission-denied)', detail:'', host:'', authDomain:'', accessError:'', requests:[] } });
+ await renderSettings();
+ expect(screen.getByText(/último dato recibido/)).toBeInTheDocument();
+ expect(screen.getByText(/Datos recibidos/)).toBeInTheDocument();
+ expect(screen.getByText(/permission-denied/)).toBeInTheDocument();
+ await userEvent.setup().click(screen.getByRole('button', { name:'Reintentar sincronización' }));
+ expect(settings.retrySync).toHaveBeenCalledOnce();
+});
 it('permite editar el presupuesto semanal y las modalidades del entrenador', async () => {
  fullAccess = true;
  const user = userEvent.setup();

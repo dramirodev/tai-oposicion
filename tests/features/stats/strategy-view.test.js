@@ -19,5 +19,6 @@ describe('strategy report presentation', () => {
     expect(html).toContain('Tiempo activo observado');
     expect(html).toContain('soluciones consultadas');
     expect(html).toContain('Muestra insuficiente');
+    expect(report.segments[0].recommendationReason).toBe('insufficient-sample');
   });
 });

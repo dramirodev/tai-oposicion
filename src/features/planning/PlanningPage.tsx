@@ -207,7 +207,9 @@ function buildPlanningViewModel(overview: HomeOverview, settings: SettingsSnapsh
   const title = completed ? 'Sesión completada' : session && session.currentIndex > 0 ? 'Continúa tu sesión' : 'Mi sesión de hoy';
   const purpose = completed ? 'Has llegado al final de las actividades preparadas para hoy.'
     : plan.restDay ? 'Hoy es descanso. El trabajo pendiente no se acumula.'
-      : hasPlannedActivities ? focus === 'consolidation' ? 'Hoy toca recuperar conocimientos y consolidar lo que ya has estudiado.' : 'Hoy avanzarás en el tema nuevo y practicarás el material de temas vistos que necesite revisión.'
+    : hasPlannedActivities ? activities.some(activity => activity.activity === 'newContent')
+      ? 'Hoy avanzarás en el tema nuevo y practicarás el material de temas vistos que necesite revisión.'
+      : 'Hoy practicarás temas que ya has estudiado, revisarás lagunas y consolidarás lo que necesite más atención.'
         : 'No hay actividades justificadas con la información disponible.';
   const actionLabel = !session ? 'Comenzar sesión' : session.currentStartedAt !== null ? 'Continuar actividad' : session.currentIndex ? 'Continuar sesión' : 'Continuar actividad';
   return {

@@ -22,6 +22,19 @@ it('no permite reanudar dentro del entrenamiento diario una sesión con temas no
   expect(screen.getByRole('button', { name: 'Volver al inicio' })).toBeTruthy();
 });
 
+it('ofrece recuperación por preguntas cuando la actividad diaria no tiene tarjetas', async () => {
+  const cards = {
+    seenTopics: () => ['T1.01'], getPreferences: () => ({ scope:'vistos', count:20 }), getSession:() => null,
+    loadPlan: vi.fn(async () => ({ cards:[], ids:[], reviews:0, summary:{ nuevas:0, enRepaso:0, dominadas:0, hoy:0 } })),
+  };
+  renderApp(React.createElement(CardsPage), { services:{ cards, home:{} }, initialEntries:['/cards?dailyTraining=activeRecall&trainingTopics=T1.01&trainingSessionId=s1&trainingActivityId=a1'] });
+  const fallback = await screen.findByRole('link', { name:'Practicar preguntas' });
+  expect(fallback.getAttribute('href')).toContain('/test?dailyTraining=activeRecall');
+  expect(fallback.getAttribute('href')).toContain('trainingTopics=T1.01');
+  expect(fallback.getAttribute('href')).toContain('trainingSessionId=s1');
+  expect(screen.getByRole('link', { name:'Volver al plan de hoy' })).toHaveAttribute('href', '/planificacion');
+});
+
 it('inicia las tarjetas preparadas y marca la actividad al terminar sin ocultar el resumen', async () => {
   const card = { id: 'card-seen', t: 'T1.01', q: '¿Qué contiene el registro de instrucción?', a: 'La instrucción que se va a ejecutar.' };
   const session = { account: null, items: [card], index: 0, revealed: false, results: [0, 0, 0] };

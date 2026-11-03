@@ -20,7 +20,7 @@ export function ReadingPage() {
   const progress = useSyncExternalStore(reading.subscribe, reading.getProgress, reading.getProgress);
   const [loading, setLoading] = useState(!progress);
   const [error, setError] = useState(false);
-  const [clock, setClock] = useState(0);
+  const [clock, setClock] = useState(() => Date.now());
 
   useEffect(() => {
     if (progress) return;

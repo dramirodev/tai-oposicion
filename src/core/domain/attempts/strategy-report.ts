@@ -5,6 +5,7 @@ import type { AttemptEvent, QuestionAttempt, QuestionAttemptSession } from './tr
 
 export type StrategyDimension = 'mode' | 'exposure' | 'topic' | 'origin' | 'kind' | 'contentRevision' | 'difficulty';
 export type StrategyRecommendation = 'answer-now' | 'defer-second-round' | 'consider-blank-final';
+export type StrategyRecommendationReason = 'insufficient-sample' | 'not-simulation-only' | 'matches-blank-value' | null;
 
 export interface StrategyActiveTime {
   observedMilliseconds: number;
@@ -37,6 +38,7 @@ export interface StrategySegment extends StrategyMetrics {
   observedAccuracy: number | null;
   expectedValuePerQuestion: number | null;
   recommendation: StrategyRecommendation | null;
+  recommendationReason: StrategyRecommendationReason;
   recommendationSample: { answeredAttempts: number; sessions: number; minimumAttempts: number; minimumSessions: number };
   timingRecommendation: 'defer-second-round' | null;
   timingSample: { timedAttempts: number; sessionsWithTimer: number; medianSecondsPerBlank: number | null };
@@ -148,7 +150,11 @@ function strategyValues(attempts: readonly AttemptObservation[], reward: number,
     ? observedAccuracy * reward - (1 - observedAccuracy) * penalty
     : null;
   const simulation = attempts.every(item => item.attempt.mode === 'simulation');
-  const recommendation: StrategyRecommendation | null = !simulation || !enough || expectedValuePerQuestion === null
+  const recommendationReason: StrategyRecommendationReason = !enough || expectedValuePerQuestion === null
+    ? 'insufficient-sample'
+    : !simulation ? 'not-simulation-only'
+      : expectedValuePerQuestion === blankValue ? 'matches-blank-value' : null;
+  const recommendation: StrategyRecommendation | null = recommendationReason !== null || expectedValuePerQuestion === null
     ? null
     : expectedValuePerQuestion > blankValue ? 'answer-now'
       : expectedValuePerQuestion < blankValue ? 'consider-blank-final' : null;
@@ -156,6 +162,7 @@ function strategyValues(attempts: readonly AttemptObservation[], reward: number,
     observedAccuracy,
     expectedValuePerQuestion,
     recommendation,
+    recommendationReason,
     recommendationSample: { answeredAttempts: answered.length, sessions, minimumAttempts: RECOMMENDATION_MIN_ATTEMPTS, minimumSessions: RECOMMENDATION_MIN_SESSIONS },
   };
 }

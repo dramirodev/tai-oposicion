@@ -59,11 +59,11 @@ function AccountSection({ settings, snapshot }: { settings: SettingsServices; sn
     finally { setRequesting(false); }
   };
   return <section className="card"><h2 className="h3">Cuenta y sincronización</h2><p>{message}</p>
-    {snapshot.sync.user && <p><small>{snapshot.sync.state}{snapshot.sync.lastSync ? ` · ${new Date(snapshot.sync.lastSync).toLocaleTimeString('es-ES')}` : ''}</small></p>}
+    {snapshot.sync.user && <p><small>{snapshot.sync.error && snapshot.sync.state === 'sincronizado' ? 'Datos recibidos' : snapshot.sync.state}{snapshot.sync.lastSync ? ` · último dato recibido ${new Date(snapshot.sync.lastSync).toLocaleTimeString('es-ES')}` : ''}</small></p>}
     {snapshot.sync.user ? <button className="btn sec" onClick={() => void settings.logout()}>Cerrar sesión</button> : snapshot.sync.configured && <button className="btn" onClick={() => void settings.login()}>Entrar con Google</button>}
     <AccessStatus snapshot={snapshot} requesting={requesting} onRequest={() => void requestAccess()} />
     {snapshot.sync.error && <p className="r"><small>{snapshot.sync.error}</small></p>}
-    {snapshot.sync.user && snapshot.full && snapshot.sync.state !== 'sincronizado' && snapshot.sync.state !== 'sincronizando…' && <><p>{snapshot.sync.detail && <small>{snapshot.sync.detail}</small>}</p><button className="btn sec" onClick={() => void settings.retrySync()}>Reintentar sincronización</button></>}
+    {snapshot.sync.user && snapshot.full && (snapshot.sync.error || (snapshot.sync.state !== 'sincronizado' && snapshot.sync.state !== 'sincronizando…')) && <><p>{snapshot.sync.detail && <small>{snapshot.sync.detail}</small>}</p><button className="btn sec" onClick={() => void settings.retrySync()}>Reintentar sincronización</button></>}
     <p><small>En este dispositivo: {count(snapshot.progress.questions, 'pregunta vista', 'preguntas vistas')} · {count(snapshot.progress.topics, 'tema visto', 'temas vistos')} · {count(snapshot.progress.sessions, 'sesión', 'sesiones')}</small></p>
   </section>;
 }
@@ -448,7 +448,7 @@ function ResetSection({ settings }: { settings: SettingsServices }) {
 }
 
 function DiagnosticsSection({ snapshot }: { snapshot: SettingsSnapshot }) {
-  return <><details className="card"><summary>Diagnóstico técnico</summary><p>Versión: {snapshot.version} ({snapshot.build})</p><p>Dominio: {snapshot.sync.host || 'no disponible'} · autenticación: {snapshot.sync.authDomain || 'no disponible'}</p><p>Estado: {snapshot.sync.state}</p></details>{snapshot.index && <p className="sub">Banco: {snapshot.index.questions} preguntas + {snapshot.index.scenarios} de supuestos.</p>}</>;
+  return <><details className="card"><summary>Diagnóstico técnico</summary><p>Versión: {snapshot.version} ({snapshot.build})</p><p>Dominio: {snapshot.sync.host || 'no disponible'} · autenticación: {snapshot.sync.authDomain || 'no disponible'}</p><p>Estado de recepción: {snapshot.sync.state}</p></details>{snapshot.index && <p className="sub">Banco: {snapshot.index.questions} preguntas + {snapshot.index.scenarios} de supuestos.</p>}</>;
 }
 
 function PreferenceGroup({ title, current, values, onChange }: { title: string; current: string; values: readonly (readonly [string, string])[]; onChange(value: string): void }) {

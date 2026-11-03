@@ -45,6 +45,15 @@ it('presenta el contenido nuevo del temario real sin simular un resumen que TAI 
   expect(screen.getAllByText('120 min').length).toBeGreaterThan(0);
 });
 
+it('describe las actividades que realmente incluye la sesión y no promete contenido nuevo ausente', async () => {
+  const plan = { weekday:2, minutes:30, restDay:false, activities:[{ activity:'activeRecall', minutes:30, reason:'active-recall', topicIds:['T1.01'] }] };
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(plan, { studiedTopicDetails:[{ id:'T1.01', name:'Constitución' }], studiedTopics:1 }), {
+    settings:{ getSnapshot:() => ({ training:{ ...DEFAULT_TRAINING_PREFERENCES, focusByDay:Array.from({ length:7 }, (_, day) => day === new Date().getDay() ? 'new-content' : 'rest') }, exam:'', index:null }) },
+  }) });
+  expect(await screen.findByText(/Hoy practicarás temas que ya has estudiado/)).toBeInTheDocument();
+  expect(screen.queryByText(/Hoy avanzarás en el tema nuevo/)).not.toBeInTheDocument();
+});
+
 it('registra un tramo de test en papel como evidencia agregada sin transcribir preguntas', async () => {
   const user = userEvent.setup();
   const recordPaperTestSegment = vi.fn(() => ({ id:'attempt:segment:1' }));

@@ -80,6 +80,15 @@ it('inicia automáticamente el test preparado desde Entrenamiento de hoy', async
   expect(screen.queryByRole('heading', { name:'Configuración del test' })).not.toBeInTheDocument();
 });
 
+it('usa el test por temas vistos como recuperación cuando el plan no tiene tarjetas', async () => {
+  await render(['/test?dailyTraining=activeRecall&trainingTopics=T1.01&trainingSessionId=session-1&trainingActivityId=activity-1']);
+  await vi.waitFor(() => expect(test.start).toHaveBeenCalledWith(
+    expect.objectContaining({ all:false, selected:['T1.01'], mode:'aleatorio' }),
+    { dailyTrainingActivity:'activeRecall', trainingActivityReference:{ sessionId:'session-1', activityId:'activity-1' } },
+  ));
+  expect(screen.queryByRole('heading', { name:'Configuración del test' })).not.toBeInTheDocument();
+});
+
 it('explica si no quedan temas nuevos y no cambia la configuración habitual', async () => {
   test.seenTopics.mockReturnValue(['T1.01', 'T2.01']);
   await render(['/test?recommendation=new-topic']);

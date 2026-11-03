@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router';
 import { useStudyService, type TestConfiguration, type TestTopic } from '../../shared/ui/study-services.js';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 import { isStudyTopicId } from '../../core/domain/topic-id.js';
+import type { TrainingActivity } from '../../core/domain/entities.js';
 import { topicsForTest, toggleTestTopics, updateTestConfiguration } from './test-controller.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
 
@@ -20,7 +21,7 @@ export function TestPage() {
   const dailyTrainingActivity = searchParams.get('dailyTraining');
   const sessionId = searchParams.get('trainingSessionId'), activityId = searchParams.get('trainingActivityId');
   const trainingActivityReference = useMemo(() => sessionId && activityId ? { sessionId, activityId } : undefined, [sessionId, activityId]);
-  const dailyTraining = dailyTrainingActivity === 'topicTest' || dailyTrainingActivity === 'mixedTopicTest';
+  const dailyTraining = dailyTrainingActivity === 'topicTest' || dailyTrainingActivity === 'mixedTopicTest' || dailyTrainingActivity === 'activeRecall';
   const trainingTopicIds = useMemo(() => trainingTopicsValue === null ? undefined
     : [...new Set(trainingTopicsValue.split(',').filter(topicId => isStudyTopicId(topicId)
       && test.seenTopics().includes(topicId)))], [trainingTopicsValue, test]);
@@ -84,7 +85,7 @@ export function TestPage() {
     const next = toggleTestTopics(configuration, ids);
     test.saveConfiguration(next); setConfiguration(next);
   };
-  const start = useCallback(async (activity?: 'topicTest' | 'mixedTopicTest') => {
+  const start = useCallback(async (activity?: TrainingActivity) => {
     setStarting(true); setMessage('');
     try {
       const currentSeenTopics = new Set(test.seenTopics());
@@ -112,11 +113,11 @@ export function TestPage() {
   useEffect(() => {
     if (!dailyTraining || loading || autoStarted.current) return;
     autoStarted.current = true;
-    void start(dailyTrainingActivity as 'topicTest' | 'mixedTopicTest');
+    void start(dailyTrainingActivity as TrainingActivity);
   }, [dailyTraining, dailyTrainingActivity, loading, start]);
 
   if (dailyTraining && (loading || starting || !message)) return <PageLoading variant="legacy" />;
-  if (dailyTraining && message) return <><h1>Entrenamiento de hoy</h1><div className="note" role="alert">{message}</div><Link className="btn sec" to="/home">Volver al entrenamiento</Link></>;
+  if (dailyTraining && message) return <><h1>Entrenamiento de hoy</h1><div className="note" role="alert">{message}</div><Link className="btn sec" to="/planificacion">Volver al plan de hoy</Link></>;
 
   const selected = new Set(configuration.selected);
   return <>
