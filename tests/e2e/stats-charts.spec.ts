@@ -65,3 +65,27 @@ test('la evolución explica el estado vacío cuando no hay datos para graficar',
   await expect(page.getByText('Aún no hay datos de evolución para el periodo seleccionado.')).toBeVisible();
   await expect(page.locator('.stats-chart')).toHaveCount(0);
 });
+
+test('Estadísticas explica que aún no hay vínculos por apartado en escritorio y móvil', async ({ page }) => {
+  await page.route('**/firebase-config.json', route => route.fulfill({ json: {} }));
+  await page.addInitScript(() => {
+    localStorage.setItem('tai.dev', '1');
+    localStorage.setItem('tai.acc:guest', 'propietario');
+    localStorage.setItem('tai.v1:guest', JSON.stringify({
+      stats: {}, sessions: [], cfg: { ui: { theme: 'light', size: 1 } }, seen: { t: [], ts: 0 }, cards: {}, reports: {},
+    }));
+  });
+
+  for (const width of [320, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/#/stats');
+    await expect(page.getByRole('heading', { name: 'Progreso' })).toBeVisible();
+    const disclosure = page.locator('details.mobile-progress-disclosure').filter({ has: page.getByText('Resultados por apartado', { exact: true }) });
+    if (width <= 640) await disclosure.locator('summary').click();
+    await expect(disclosure.getByRole('heading', { name: 'Resultados objetivos por apartado' })).toBeVisible();
+    await expect(disclosure).toContainText('Aún no hay vínculos editoriales aprobados en la publicación compartida.');
+    await expect(disclosure.getByRole('button', { name: 'Cargar evidencia por apartado' })).toHaveCount(0);
+    const dimensions = await page.evaluate(() => ({ document: document.documentElement.scrollWidth, viewport: innerWidth }));
+    expect(dimensions.document).toBeLessThanOrEqual(dimensions.viewport);
+  }
+});
