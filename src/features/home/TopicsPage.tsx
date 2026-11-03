@@ -44,8 +44,11 @@ export function TopicsPage() {
   const completeSectionRecall = async () => {
     if (completingSectionRecall.current || !trainingActivityReference || !requestedTopic) return;
     completingSectionRecall.current = true;
+    const requestAccount = home.accountId();
+    const accountIsCurrent = () => home.accountId() === requestAccount;
     try {
       const overview = await home.loadOverview();
+      if (!accountIsCurrent()) { home.notify('La cuenta cambió durante la comprobación. Vuelve a Planificación para continuar con la cuenta activa.'); return; }
       const session = overview.trainingSession;
       const step = session?.activities[session.currentIndex];
       const agendaId = searchParams.get('agendaItemId');
@@ -64,6 +67,7 @@ export function TopicsPage() {
         home.notify('La comprobación semanal cambió o se cerró. Actualiza Planificación antes de terminar este paso.'); return;
       }
       const snapshot = await academyProgress.loadProgressOverview();
+      if (!accountIsCurrent()) { home.notify('La cuenta cambió durante la comprobación. No se guardó ningún cierre; vuelve a Planificación para continuar.'); return; }
       const selfCheckRecorded = snapshot.events.some(event => event.kind === 'self-check' && event.topicId === requestedTopic
         && event.sectionId === step.sectionRecall!.sectionId && event.materialPath === step.sectionRecall!.materialPath
         && event.sourceHash === step.sectionRecall!.sourceHash && event.trainingSessionId === session.id
@@ -103,6 +107,7 @@ export function TopicsPage() {
         };
         if (!academyProgress.record(event)) {
           const latest = await academyProgress.loadProgressOverview();
+          if (!accountIsCurrent()) { home.notify('La cuenta cambió durante el guardado. Revisa la actividad desde Planificación.'); return; }
           if (sectionFollowUps(latest.events).find(candidate => candidate.followUpId === followUp.followUpId)?.status !== 'completed') {
             home.notify('No se pudo guardar la comprobación. La actividad sigue abierta; puedes reintentar.'); return;
           }
