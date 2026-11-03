@@ -19,7 +19,7 @@ vi.mock('firebase/firestore', () => ({
   setDoc: async (ref, value) => { boundary.writes.push({ path: ref.path, value }); },
   deleteDoc: async ref => { boundary.writes.push({ path: ref.path, deleted: true }); },
 }));
-let sync, store, trainingStore;
+let sync, store, trainingStore, paperTestStore;
 const user = (uid, email = 'dramiro@gmail.com') => { const u = { uid, email, displayName: 'Persona', emailVerified: true }; boundary.auth.currentUser = u; boundary.authChanged(u); };
 beforeEach(async () => {
   vi.resetModules(); vi.useFakeTimers(); localStorage.clear();
@@ -28,7 +28,8 @@ beforeEach(async () => {
   store = await import('../src/adapters/local/local-progress-store.js'); sync = await import('../src/adapters/firebase/legacy-sync.js');
   await import('../src/app/composition/access-composition.js');
   trainingStore = { getSession: vi.fn(() => null), getHistory: vi.fn(() => []), mergeRemote: vi.fn(() => false), mergeRemoteHistory: vi.fn(() => false) };
-  await sync.init({ temaOf: () => 'T1.01', idsOfTema: () => [] }, store, trainingStore); user('user1');
+  paperTestStore = { get:vi.fn(() => []), mergeRemote:vi.fn(() => false) };
+  await sync.init({ temaOf: () => 'T1.01', idsOfTema: () => [] }, store, trainingStore, undefined, undefined, undefined, undefined, paperTestStore); user('user1');
 });
 afterEach(() => { vi.clearAllTimers(); vi.useRealTimers(); vi.unstubAllGlobals(); });
 it('cancela una escritura de tarjetas pendiente al cerrar sesión', async () => {
@@ -175,6 +176,22 @@ it('vuelve a sincronizar el historial local ausente sin reemplazar el checkpoint
   expect(boundary.writes).toContainEqual({ path:'users/user1/cfg/training', value:{
     schemaVersion:2, updatedAt:timestamp, session:remoteSession, history,
   } });
+});
+it('sincroniza registros agregados de test en papel solo en el documento privado de la cuenta activa', async () => {
+  const segment = { id:'attempt-001:segment:1', attemptId:'attempt-001', segment:1, dateKey:'2026-11-02', startedAt:Date.now() - 60_000, completedAt:Date.now(), updatedAt:Date.now(), questionCount:10, answeredCount:9, correctCount:6, incorrectCount:3, blankCount:1, correctionStatus:'answer-key-only' };
+  paperTestStore.get.mockReturnValue([segment]);
+  const listener = boundary.snapshots.find(item => item.ref.path === 'users/user1/cfg/paperTestLog');
+  expect(listener).toBeTruthy();
+  listener.cb({ exists:() => false, data:() => null });
+  await Promise.resolve();
+  expect(boundary.writes).toContainEqual({ path:'users/user1/cfg/paperTestLog', value:{ schemaVersion:1, updatedAt:expect.any(Number), segments:[segment] } });
+  paperTestStore.mergeRemote.mockReturnValue(true);
+  listener.cb({ exists:() => true, data:() => ({ schemaVersion:1, updatedAt:segment.updatedAt, segments:[segment] }) });
+  expect(paperTestStore.mergeRemote).toHaveBeenCalledWith([segment]);
+  user('user2');
+  await sync.logout();
+  sync.pushPaperTestAttempts();
+  expect(boundary.writes.filter(item => item.path === 'users/user1/cfg/paperTestLog')).toHaveLength(1);
 });
 it('aprobar escribe el acceso y borra la solicitud; revocar lo borra', async () => {
   boundary.writes.length = 0;
