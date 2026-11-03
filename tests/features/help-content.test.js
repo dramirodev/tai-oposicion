@@ -11,7 +11,7 @@ describe('help content', () => {
 
   it('cubre las guías principales de la aplicación', () => {
     expect(HELP_SECTIONS.map(section => section.id)).toEqual([
-      'acceso', 'inicio', 'sesiones', 'puntuacion', 'simulacros', 'temario', 'repaso', 'tarjetas',
+      'acceso', 'inicio', 'sesiones', 'puntuacion', 'simulacros', 'temario', 'repaso',
       'entrenamientos', 'errores', 'progreso', 'evolucion', 'explicaciones', 'material-visual',
       'estrategia', 'ajustes', 'offline', 'copias',
     ]);

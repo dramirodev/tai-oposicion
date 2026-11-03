@@ -107,7 +107,7 @@ export function ResultPage() {
   useEffect(() => {
     const activity = dailyTrainingActivity;
     if (advancedDailyActivity.current || !snapshot || snapshot.interrupted
-      || !['topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'].includes(activity || '')) return;
+      || !['topicTest', 'mixedTopicTest', 'failures', 'spacedReviews', 'activeRecall'].includes(activity || '')) return;
     advancedDailyActivity.current = true;
     home.completeTrainingActivity(activity as 'topicTest' | 'mixedTopicTest' | 'failures' | 'spacedReviews', trainingActivityReference);
   }, [dailyTrainingActivity, home, snapshot, trainingActivityReference]);

@@ -60,7 +60,7 @@ export const FAILURE_HELP: readonly HelpTopic[] = [
 export const HELP_SECTIONS: readonly HelpSection[] = [
   {
     id: 'acceso', title: 'Acceso y cuenta', body: [
-      'Sin acceso completo puedes usar la sesión rápida de cinco minutos. Para abrir tests por tema, simulacros, tarjetas, progreso y entrenamientos, inicia sesión desde Ajustes y solicita acceso; el propietario debe aprobarlo.',
+      'Sin acceso completo puedes usar la sesión rápida de cinco minutos. Para abrir tests por tema, simulacros, progreso y entrenamientos, inicia sesión desde Ajustes y solicita acceso; el propietario debe aprobarlo.',
       'Si tienes acceso completo, tu progreso se guarda en este dispositivo. Al iniciar sesión con acceso aprobado también puede sincronizarse con tu cuenta para usarlo en otros dispositivos.',
       'Si eres el propietario, abre «Accesos» en el menú para aprobar o rechazar solicitudes y revocar después un acceso concedido.',
     ],
@@ -68,11 +68,11 @@ export const HELP_SECTIONS: readonly HelpSection[] = [
   {
     id: 'inicio', title: 'Inicio y tipos de práctica', body: [
       'Inicio muestra si tienes una sesión en curso, las preguntas pendientes de repaso, las falladas y un resumen de tu actividad. Pulsa «Continuar sesión» para volver donde estabas.',
-      'La sesión rápida incluye 10 preguntas y suele llevar unos cinco minutos; no tiene cronómetro. Con acceso completo también puedes elegir un test por tema, un simulacro, tarjetas o uno de los entrenamientos. «Temas vistos» sirve para marcar lo que ya has repasado.',
+      'La sesión rápida incluye 10 preguntas y suele llevar unos cinco minutos; no tiene cronómetro. Con acceso completo también puedes elegir un test por tema, un simulacro o uno de los entrenamientos. «Temas vistos» sirve para marcar lo que ya has repasado.',
       'Abre «Planificación de estudio» desde el menú para ver una sesión preparada, sus pasos ordenados, duración estimada y el motivo de cada recomendación. Los tests, repasos y preguntas se limitan a los temas que has marcado como vistos; en los días de contenido nuevo se propone el siguiente tema del temario sin convertirlo en visto automáticamente. Después de estudiar tus apuntes en papel, marca el tema como visto y, cuando la actividad aparezca como completada, indica si recordaste el contenido, solo una parte o nada.',
       'La valoración del recuerdo es una autoevaluación, no una nota de examen ni una comprobación objetiva. Si indicas «Parcialmente» o «No lo recordé», TAI puede dar prioridad a comprobar ese tema con preguntas en una sesión posterior. La aplicación conserva esas valoraciones por cuenta y no las mezcla con tus resultados de test.',
-      'En Planificación puedes abrir la vista «Mes» para programar una comprobación futura con tarjetas o un test de un tema ya marcado como visto. TAI verifica que la fecha no sea de descanso y que quepa en el tiempo disponible. Primero verás una propuesta; no se guarda hasta que pulses «Confirmar planificación». Para cambiar la fecha, elige una nueva en la actividad y confirma también la propuesta. El temario se consulta en papel: TAI no necesita ni enlaza PDFs.',
-      'La sesión se realiza paso a paso: al comenzar un test, tarjetas o repaso, TAI abre la actividad preparada; al completarla, vuelve a Planificación para continuar. Puedes pausarla manualmente. Si ocultas o cierras la aplicación, el tiempo en curso se pausa y queda guardado el checkpoint del día. El checkpoint se conserva en este dispositivo y se sincroniza con la cuenta cuando hay acceso aprobado y las reglas de Firebase publicadas permiten la escritura. Los días de descanso no acumulan actividades para mañana.',
+      'En Planificación puedes abrir la vista «Mes» para programar una comprobación futura con preguntas de un tema ya marcado como visto. TAI verifica que la fecha no sea de descanso y que quepa en el tiempo disponible. Primero verás una propuesta; no se guarda hasta que pulses «Confirmar planificación». Para cambiar la fecha, elige una nueva en la actividad y confirma también la propuesta. El temario se consulta en papel: TAI no necesita ni enlaza PDFs.',
+      'La sesión se realiza paso a paso: al comenzar un test o repaso, TAI abre la actividad preparada; al completarla, vuelve a Planificación para continuar. Puedes pausarla manualmente. Si ocultas o cierras la aplicación, el tiempo en curso se pausa y queda guardado el checkpoint del día. El checkpoint se conserva en este dispositivo y se sincroniza con la cuenta cuando hay acceso aprobado y las reglas de Firebase publicadas permiten la escritura. Los días de descanso no acumulan actividades para mañana.',
       'Planificación muestra las cinco sesiones completadas más recientes y permite desplegar hasta 30 sesiones guardadas en el historial de la cuenta. El tiempo corresponde al que quedó registrado en las actividades; las sesiones incompletas no aparecen en esta lista.',
       'TAI registra el tiempo de la sesión planificada, pero la lectura de apuntes o la reconstrucción mental no se observa directamente; para esas actividades el tiempo depende de que mantengas abierta la sesión. La marca «tema visto» registra cobertura, no comprensión ni fecha de lectura. El repaso activo y las preguntas sirven para comprobar qué recuerdas, pero los umbrales y el reparto de minutos son reglas iniciales del producto, no una fórmula demostrada como óptima.',
     ],
@@ -107,13 +107,7 @@ export const HELP_SECTIONS: readonly HelpSection[] = [
       'Una pregunta fallada permanece en la lista hasta que la aciertes tres veces seguidas. Otro fallo reinicia la racha; dejarla en blanco no cuenta como acierto ni como fallo. Marcar que repasaste su tema no la quita de la lista.',
       'En «Falladas» puedes buscar texto, filtrar por tema, por si has repasado el temario y por racha de aciertos. «Practicar estas» inicia una sesión con las preguntas que quedan en el filtro.',
       'Al marcar «Repasada en el temario» en una pregunta, TAI añade una comprobación de recuerdo dos días después. Si haces un intento antes de esa fecha, la comprobación diferida se conserva; un intento puntuado después de su fecha la completa. Si ya tenía otro vencimiento, se utiliza primero el que llegue antes. La marca no cambia respuestas ni puntuación.',
-      '«Repasar hoy» muestra las preguntas que han llegado a su fecha de repaso. El calendario de preguntas se basa en tus respuestas y en las marcas de repaso del temario; el de las tarjetas utiliza la valoración que indicas al revisarlas.',
-    ],
-  },
-  {
-    id: 'tarjetas', title: 'Tarjetas de repaso', body: [
-      'Primero intenta recordar la respuesta y luego pulsa «Mostrar respuesta». Después indica si fallaste, dudaste o lo sabías. Esa valoración programa cuándo volverá la tarjeta.',
-      'Las tarjetas pueden proceder del banco o de una pregunta que marcaste al fallar. En una tarjeta propia puedes quitarla de la sesión si ya no quieres repasarla.',
+      '«Repasar hoy» muestra las preguntas que han llegado a su fecha de repaso. El calendario de preguntas se basa en tus respuestas y en las marcas de repaso del temario.',
     ],
   },
   {
@@ -167,14 +161,14 @@ export const HELP_SECTIONS: readonly HelpSection[] = [
   },
   {
     id: 'offline', title: 'Uso sin conexión', body: [
-      'En Ajustes pulsa «Descargar para uso sin conexión» antes de desconectarte. La descarga prepara las preguntas, los supuestos y las tarjetas disponibles en este navegador; la pantalla indica si se completó o qué archivos faltan.',
+      'En Ajustes pulsa «Descargar para uso sin conexión» antes de desconectarte. La descarga prepara las preguntas y los supuestos disponibles en este navegador; la pantalla indica si se completó o qué archivos faltan.',
       'El acceso a la cuenta y la sincronización necesitan conexión. El progreso local sigue guardándose en el dispositivo y se sincroniza cuando vuelva la conexión.',
     ],
   },
   {
     id: 'copias', title: 'Copias, importación y exportación', body: [
       'En Ajustes puedes exportar un archivo JSON de progreso o importar una copia. Antes de importar, la app muestra un resumen; al combinarla conserva los registros actuales que no aparecen en la copia.',
-      'También puedes exportar tarjetas a un archivo de texto para Anki. La exportación de análisis para IA prepara archivos en el dispositivo para que decidas si los descargas o compartes; no los envía automáticamente. Pueden contener preguntas y soluciones, así que revisa los archivos antes de compartirlos.',
+      'La exportación de análisis para IA prepara archivos en el dispositivo para que decidas si los descargas o compartes; no los envía automáticamente. Pueden contener preguntas y soluciones, así que revisa los archivos antes de compartirlos.',
       'Borrar el historial detallado elimina esos eventos del ámbito actual, pero conserva las estadísticas agregadas, las preguntas falladas, las sesiones históricas y el progreso. Las copias descargadas previamente no se borran.',
     ],
   },

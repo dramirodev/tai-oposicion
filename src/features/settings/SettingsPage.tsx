@@ -30,7 +30,6 @@ export function SettingsPage() {
     {snapshot.full && <TrainingScheduleSection settings={settings} snapshot={snapshot} />}
     {snapshot.full && <ReportsSection snapshot={snapshot} onOpen={() => navigate('/errores')} />}
     <OfflineSection settings={settings} snapshot={snapshot} />
-    {snapshot.full && <AnkiSection settings={settings} />}
     <AiStudyExportSection settings={settings} />
     <BackupSection settings={settings} />
     <ResetSection settings={settings} />
@@ -137,7 +136,7 @@ const trainingDays = [
 ] as const;
 const trainingFocusLabels = { rest: 'Descanso', 'new-content': 'Contenido nuevo', consolidation: 'Recuperación y consolidación' } as const;
 const trainingActivities = [
-  ['newContent', 'Estudio de tema nuevo'], ['activeRecall', 'Active Recall con tarjetas'], ['topicTest', 'Preguntas de tema'],
+  ['newContent', 'Estudio de tema nuevo'], ['topicTest', 'Preguntas de tema'],
   ['mixedTopicTest', 'Preguntas variadas de temas vistos'],
   ['failures', 'Revisión de preguntas falladas'], ['spacedReviews', 'Repasos vencidos'],
 ] as const;
@@ -320,15 +319,7 @@ function OfflineSection({ settings, snapshot }: { settings: SettingsServices; sn
       if (active.current) { setProgress(''); toast(error instanceof Error ? error.message : 'No se pudo completar la descarga.'); }
     } finally { if (active.current) setDownloading(false); }
   };
-  return <section className="card"><h2 className="h3">Uso sin conexión</h2><p role="status" aria-live="polite">{progress || offlineDescription(snapshot)}</p><p className="sm">Se comprueban los archivos de preguntas, supuestos y tarjetas guardados en este navegador. El progreso permanece asociado a tu cuenta.</p><button className="btn sec" disabled={downloading} onClick={() => void download()}>{downloading ? 'Descargando…' : 'Descargar para uso sin conexión'}</button></section>;
-}
-
-function AnkiSection({ settings }: { settings: SettingsServices }) {
-  const exportCards = async () => {
-    try { saveExportFile('tai-tarjetas-anki.txt', await settings.exportAnki(), 'text/plain;charset=utf-8'); }
-    catch { toast('No se pudieron exportar las tarjetas.'); }
-  };
-  return <section className="card"><h2 className="h3">Tarjetas</h2><p>Exporta las tarjetas curadas (y tus fallos convertidos en tarjeta) a Anki: texto separado por tabuladores, importable con «Archivo → Importar».</p><button className="btn sec" onClick={() => void exportCards()}>Exportar tarjetas a Anki (.txt)</button></section>;
+  return <section className="card"><h2 className="h3">Uso sin conexión</h2><p role="status" aria-live="polite">{progress || offlineDescription(snapshot)}</p><p className="sm">Se comprueban los archivos de preguntas y supuestos guardados en este navegador. El progreso permanece asociado a tu cuenta.</p><button className="btn sec" disabled={downloading} onClick={() => void download()}>{downloading ? 'Descargando…' : 'Descargar para uso sin conexión'}</button></section>;
 }
 
 function useAiStudyExport(settings: SettingsServices) {
@@ -463,7 +454,7 @@ function DevButton({ value, current, label, onChange }: { value: string | null; 
 function offlineDescription(snapshot: SettingsSnapshot): string {
   const offline = snapshot.offline;
   if (!offline) return 'Comprobando archivos guardados…';
-  if (offline.complete) return `Banco, supuestos y tarjetas disponibles sin conexión (${offline.total} archivos).${offline.completedAt ? ` Descarga verificada: ${new Date(offline.completedAt).toLocaleString('es-ES')}.` : ' Fecha de descarga no registrada.'}`;
+  if (offline.complete) return `Banco y supuestos disponibles sin conexión (${offline.total} archivos).${offline.completedAt ? ` Descarga verificada: ${new Date(offline.completedAt).toLocaleString('es-ES')}.` : ' Fecha de descarga no registrada.'}`;
   return `Descarga incompleta: faltan ${offline.missing.length} de ${offline.total} archivos. ${offline.missing.slice(0, 4).join(', ')}${offline.missing.length > 4 ? '…' : ''}`;
 }
 

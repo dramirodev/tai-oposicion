@@ -9,11 +9,11 @@ export type PlannedActivityAction =
 
 const destinations: Record<TrainingSessionStep['activity'], string> = {
   newContent: 'temario',
-  activeRecall: 'cards',
+  activeRecall: 'test',
   topicTest: 'test',
   mixedTopicTest: 'test',
   failures: 'falladas',
-  spacedReviews: 'cards',
+  spacedReviews: 'test',
 };
 
 function selectStudiedTopics(step: TrainingSessionStep, studiedTopicIds: readonly string[]): string[] {
@@ -38,7 +38,6 @@ function buildActivityRoute(step: TrainingSessionStep, topicIds: readonly string
 export function resolvePlannedActivityAction(
   session: DailyTrainingSession,
   studiedTopicIds: readonly string[],
-  dueCardCount: number,
 ): PlannedActivityAction {
   if (session.completedAt !== null) return { type: 'none' };
   const step = session.activities[session.currentIndex];
@@ -51,7 +50,7 @@ export function resolvePlannedActivityAction(
   const available = [...new Set(studiedTopicIds)];
   if (!available.length) return { type: 'notify', message: 'Marca temas vistos antes de iniciar actividades de recuperación.' };
   const topicIds = selectStudiedTopics(step, available);
-  if (step.activity === 'spacedReviews' && !dueCardCount) return { type: 'start-review', topicIds };
+  if (step.activity === 'spacedReviews') return { type: 'start-review', topicIds };
   const route = buildActivityRoute(step, topicIds);
   return route ? { type: 'navigate', path: `/${route}` } : { type: 'notify', message: 'No se encontraron temas vistos válidos para esta actividad.' };
 }

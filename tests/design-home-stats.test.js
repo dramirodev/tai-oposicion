@@ -64,18 +64,17 @@ it('muestra las secciones de progreso y deja cambiar el detalle de evolución', 
   expect(weeks.value).toBe('26');
   expect(document.querySelector('#app').textContent).toContain('Últimas sesiones');
 });
-it('no presenta una previsión de retención sin estado de tarjetas FSRS', async()=> {
+it('no muestra una previsión de tarjetas en Progreso', async()=> {
   await routes.stats();
   rtl.fireEvent.click(document.querySelector('[aria-label="Sección de progreso"] button:nth-child(3)'));
-  expect(document.querySelector('#app').textContent).toContain('Datos insuficientes: todavía no hay tarjetas valoradas con estado FSRS.');
+  expect(document.querySelector('#app').textContent).not.toMatch(/retención prevista de tarjetas|FSRS-6 para .*tarjeta/i);
 });
-it('muestra la predicción del modelo separada de los resultados observados', async()=> {
+it('mantiene oculta la previsión aunque haya valoraciones guardadas', async()=> {
   store.gradeCard('FC-Q-T1.01-998', 2, Date.now() - 86_400_000);
   await routes.stats();
   rtl.fireEvent.click(document.querySelector('[aria-label="Sección de progreso"] button:nth-child(3)'));
-  await rtl.screen.findByText(/Estimación del modelo FSRS-6 para 1 tarjeta con una valoración registrada/);
-  expect(document.querySelector('[aria-label="Datos de retención prevista en tarjetas"] tbody tr')).not.toBeNull();
-  expect(document.querySelector('#app').textContent).toContain('no es un resultado observado ni representa todo el temario');
+  expect(document.querySelector('#app').textContent).not.toMatch(/retención prevista de tarjetas|FSRS-6 para .*tarjeta/i);
+  store.resetAll();
   store.resetAll();
 });
 it('buscar y navegar no modifica el progreso y una cuenta nueva no recibe la pantalla de la anterior', async()=> {

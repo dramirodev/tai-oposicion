@@ -7,7 +7,6 @@ export interface StudyMenuInput {
   fullAccess: boolean;
   owner: boolean;
   pendingQuestions: number;
-  pendingCards: number;
   readingSpeedFailures: number;
   openReports: number;
   seenTopics: number;
@@ -22,7 +21,6 @@ export function createStudyMenuGroups(input: StudyMenuInput): MenuGroup[] {
   const study: MenuGroup = ['Estudiar', [
     [menuActionIcons.quick, 'Sesión rápida', '10 preguntas en unos 5 minutos', input.actions.quickSession],
     [menuActionIcons.review, 'Repaso de fallos', input.pendingQuestions ? `${input.pendingQuestions} ${input.pendingQuestions === 1 ? 'pregunta toca repasar hoy' : 'preguntas toca repasar hoy'}` : 'Nada pendiente hoy', input.actions.startReview],
-    [navigationIcons.cards, 'Tarjetas de repaso', input.pendingCards ? `${input.pendingCards} ${input.pendingCards === 1 ? 'tarjeta vence hoy' : 'tarjetas vencen hoy'}` : 'Repetición espaciada', hashPath('cards')],
     [navigationIcons.test, 'Test por tema', '10–40 preguntas con corrección inmediata', hashPath('test')],
     [navigationIcons.sim, 'Simulacros', 'Completo, por examen o por tema', hashPath('simulation')],
   ]];

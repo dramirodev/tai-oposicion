@@ -95,25 +95,25 @@ it('el mapa distingue respuestas y revisión y conserva las respuestas al saltar
  engine.saveRun();engine.clearActiveRun();const pending=await recovery.pendingRun(true);engine.resumeRun(pending);
  expect(engine.getSnapshot().run.review).toEqual([0]);expect(engine.getSnapshot().run.ans[0]).toBe(qs[0].c);
 });
-it('anticipa el número efectivo de tarjetas y su próximo repaso sin valorarlas',async()=>{
- const q=JSON.parse(readFileSync('public/data/T1.01.json','utf8'))[0];store.addFallo(q.i);
- await navigate('cards','Tarjetas de repaso');
- await vi.waitFor(()=>expect(document.querySelector('#card-plan')?.textContent).toContain('11 tarjetas'));
- const before=JSON.stringify(store.getCards());document.querySelector('#go').click();await waitText('Mostrar respuesta');document.querySelector('#show').click();
- await vi.waitFor(()=>expect(document.querySelector('[data-g="0"]')).not.toBeNull());
- expect(document.querySelector('[data-g="0"]').textContent).toContain('1 minuto');
- expect(JSON.stringify(store.getCards())).toBe(before);
- document.querySelector('#exit').click();await waitText('Sesión rápida');
+it('redirige el acceso directo antiguo de tarjetas a Inicio',async()=>{
+ await navigate('cards','Sesión rápida');
+ expect(document.querySelector('#app').textContent).not.toMatch(/Tarjetas de repaso|Mostrar respuesta/);
 });
 it('confirma el cierre desde el mapa si quedan preguntas sin responder',async()=>{
  const qs=JSON.parse(readFileSync('public/data/T1.01.json','utf8')).slice(0,3);
  const run=engine.createRun({kind:'sim',feedback:false,items:qs});await navigate('quiz','pregunta 1');
- document.querySelector('[data-jump="2"]').click();document.querySelector(`.opt[data-i="${qs[2].c}"]`).click();document.querySelector('#next').click();
- await vi.waitFor(()=>expect(document.querySelector('.overlay')?.textContent).toContain('sin responder'));
- document.querySelector('.overlay [data-v="0"]').click();expect(engine.getSnapshot().run.sessionKey).toBe(run.sessionKey);await Promise.resolve();
+ document.querySelector('[data-jump="2"]').click();document.querySelector(`.opt[data-i="${qs[2].c}"]`).click();
+ await act(async()=>{document.querySelector('#next').click();await Promise.resolve();});
+ await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull());
+ expect(document.querySelector('.overlay').textContent).toContain('sin responder');
+ await act(async()=>{document.querySelector('.overlay [data-v="0"]').click();await Promise.resolve();});
+ expect(engine.getSnapshot().run.sessionKey).toBe(run.sessionKey);
  expect(engine.getSnapshot().run.idx).toBe(2);
  document.querySelector('.opt[data-i="0"]').click();await vi.waitFor(()=>expect(engine.getSnapshot().run.ans[2]).toBe(0));expect(engine.getSnapshot().run.ans[3]).toBeUndefined();
- document.querySelector('#next').click();await vi.waitFor(()=>expect(document.querySelector('.overlay')?.textContent).toContain('sin responder'));document.querySelector('.overlay [data-v="1"]').click();
+ await act(async()=>{document.querySelector('#next').click();await Promise.resolve();});
+ await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull());
+ expect(document.querySelector('.overlay').textContent).toContain('sin responder');
+ await act(async()=>{document.querySelector('.overlay [data-v="1"]').click();await Promise.resolve();});
  await waitText('Sesión interrumpida');expect(store.getSessions()[0].interrupted).toBe(true);
 });
 
@@ -149,13 +149,4 @@ it('el mapa y la marca de revisión conservan un destino de foco útil',async()=
  await vi.waitFor(()=>expect(document.activeElement).toBe(document.querySelector('#app h1')));
  document.querySelector('#next').click();await vi.waitFor(()=>expect(document.activeElement).toBe(document.querySelector('#app h1')));
  document.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowLeft',bubbles:true}));expect(document.activeElement).toBe(document.querySelector('#app h1'));
-});
-it('abrir el supuesto de una tarjeta no revela la respuesta y el avance conserva el foco',async()=>{
- store.addFallo('TAI2024B-S1-01');await navigate('cards','Tarjetas de repaso');
- document.querySelector('#go').click();await waitText('Mostrar respuesta');
- expect(document.activeElement).toBe(document.querySelector('#app h1'));
- const summary=document.querySelector('#fc details summary');expect(summary).not.toBeNull();summary.click();
- expect(document.querySelector('#show')).not.toBeNull();expect(document.querySelector('.card-answer')).toBeNull();
- document.querySelector('#show').click();await vi.waitFor(()=>expect(document.querySelector('.card-answer')).not.toBeNull());expect(document.activeElement).toBe(document.querySelector('.card-answer'));
- document.querySelector('[data-g="2"]').click();await vi.waitFor(()=>expect(document.activeElement).toBe(document.querySelector('#app h1')));
 });

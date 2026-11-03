@@ -9,7 +9,7 @@ export const DEFAULT_TRAINING_PREFERENCES: TrainingPreferences = {
   focusByDay: ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'],
   introductionDay: 4,
   focusBlockMinutes: 35,
-  activities: ['newContent', 'activeRecall', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'],
+  activities: ['newContent', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'],
   activityVersion: 3,
 };
 
@@ -105,11 +105,12 @@ const activityWeight: Record<TrainingActivity, number> = {
   spacedReviews: 1,
 };
 
-function enabledActivities(preferences: TrainingPreferences, dueCount: number, cardDueCount: number, failureCount: number, studiedTopicCount: number, canStudyNewContent: boolean): TrainingActivity[] {
+function enabledActivities(preferences: TrainingPreferences, dueCount: number, failureCount: number, studiedTopicCount: number, canStudyNewContent: boolean): TrainingActivity[] {
   return preferences.activities.filter(activity => {
+    if (activity === 'activeRecall') return false;
     if (activity === 'newContent') return canStudyNewContent;
     if (!studiedTopicCount) return false;
-    if (activity === 'spacedReviews') return dueCount > 0 || cardDueCount > 0;
+    if (activity === 'spacedReviews') return dueCount > 0;
     if (activity === 'failures') return failureCount > 0;
     if (activity === 'mixedTopicTest') return studiedTopicCount > 0;
     return studiedTopicCount > 0;
@@ -171,16 +172,14 @@ export function buildDailyTrainingPlan(input: {
     && !studiedTopicSet?.has(preferredTopic) ? preferredTopic : undefined;
   const canStudyNewContent = (day?.focus ?? preferences.focusByDay?.[weekday]) === 'new-content' && !!newTopicId;
 
-  const cardDueCount = Number.isFinite(input.cardDueCount) ? Math.max(0, input.cardDueCount ?? 0) : 0;
   const evidencedTopics = input.topicReviewEvidence?.filter(item => item.hasStudyMarker || item.distinctQuestionsAttempted > 0).length ?? 0;
   const studiedTopicCount = studiedTopicIds === undefined ? Math.max(input.weakTopicCount, evidencedTopics) : studiedTopicIds.length;
-  let candidates = enabledActivities(preferences, input.dueCount, cardDueCount, input.failureCount, studiedTopicCount, canStudyNewContent);
+  let candidates = enabledActivities(preferences, input.dueCount, input.failureCount, studiedTopicCount, canStudyNewContent);
   if (canStudyNewContent) {
     const reinforcement: TrainingActivity | undefined = candidates.includes('spacedReviews') ? 'spacedReviews'
       : candidates.includes('failures') ? 'failures'
         : (input.weakTopicIds ?? []).some(topicId => studiedTopicSet?.has(topicId)) && candidates.includes('topicTest') ? 'topicTest'
-        : candidates.includes('activeRecall') ? 'activeRecall'
-          : candidates.includes('topicTest') ? 'topicTest' : undefined;
+        : candidates.includes('topicTest') ? 'topicTest' : undefined;
     candidates = ['newContent', ...(reinforcement ? [reinforcement] : [])];
   }
   if (!candidates.length) return { weekday, minutes, restDay: false, activities: [] };

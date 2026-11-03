@@ -268,12 +268,7 @@ export function proposeWeeklyAgendaPlan(input: {
         : activity.activity === 'topicTest' && activity.topicId ? [activity.topicId]
           : (activity.topicIds?.length ? activity.topicIds : reviewTopics).slice(0, 20);
       if (input.contentInventory) {
-        const available = activity.activity === 'activeRecall' ? input.contentInventory.cardTopicIds
-          : activity.activity === 'newContent' ? null
-            : activity.activity === 'topicTest' || activity.activity === 'mixedTopicTest' || activity.activity === 'failures'
-              ? input.contentInventory.questionTopicIds
-              : input.contentInventory.questionTopicIds === null || input.contentInventory.cardTopicIds === null
-                ? null : [...new Set([...input.contentInventory.questionTopicIds, ...input.contentInventory.cardTopicIds])];
+        const available = activity.activity === 'newContent' ? null : input.contentInventory.questionTopicIds;
         if (available === null && activity.activity !== 'newContent') {
           skippedForContent = true;
           omittedContentActivities.push({ dateKey, kind, topicIds });
@@ -312,7 +307,7 @@ export function proposeWeeklyAgendaPlan(input: {
     if (uniqueMapped.some(item => item.kind === 'spacedReviews')) { dueCount = 0; cardDueCount = 0; }
     if (uniqueMapped.some(item => item.kind === 'failures')) failureCount = 0;
   }
-  const inventoryStatuses = input.contentInventory ? [input.contentInventory.questionTopicIds, input.contentInventory.cardTopicIds].map(value => value === null ? 'unavailable' : 'manifest') : [];
+  const inventoryStatuses = input.contentInventory ? [input.contentInventory.questionTopicIds].map(value => value === null ? 'unavailable' : 'manifest') : [];
   const contentInventoryStatus = !input.contentInventory ? 'not-checked' : inventoryStatuses.every(status => status === 'manifest') ? 'manifest' : inventoryStatuses.every(status => status === 'unavailable') ? 'unavailable' : 'partial';
   const horizonCapacityGapBefore = Number.isInteger(input.horizonCapacityGap) && (input.horizonCapacityGap ?? -1) >= 0 ? input.horizonCapacityGap! : null;
   const horizonCapacityGapAfter = horizonCapacityGapBefore === null ? null : Math.max(0, horizonCapacityGapBefore - acceleratedNewTopicIds.length);

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { ExplanationLookup } from '../../core/domain/explanations.js';
 import { CodeExplanationView } from '../../shared/ui/CodeExplanationView.js';
-import { Brain, Check, Clover, NotebookTabs, Star, TriangleAlert } from 'lucide-react';
+import { Brain, Check, Clover, Star, TriangleAlert } from 'lucide-react';
 import { TRAMPAS } from '../../shared/presentation/labels.js';
 import { FAILURE_REASONS } from '../../shared/presentation/study-labels.js';
 import { hiliteHtml } from '../../shared/presentation/study-text.js';
@@ -31,7 +31,6 @@ function FailedAnswerActions({ snapshot, prompt }: { snapshot: QuizSnapshot; pro
   if (snapshot.studyState === 'revealed' || snapshot.answer === prompt.correctIndex || snapshot.answer === -1) return null;
   return <div className="mot"><small>¿Por qué fallé? <HelpIconLink topic="motivos" label="Ayuda sobre los motivos del fallo" />{quick && snapshot.recentAnswer && <b className="r">Respondiste en {snapshot.recentAnswer[0]} s; leerla bien lleva ≈{snapshot.recentAnswer[1]} s. ¿Fue velocidad?</b>}</small>
     {[5, 7, 1, 2, 3, 4].map(reason => <button className={snapshot.failureReason === reason ? 'on' : reason === 7 && quick ? 'sug' : ''} data-m={reason} key={reason} onClick={() => quiz.setFailureReason(reason)}>{FAILURE_REASONS[reason]}</button>)}
-    {!(snapshot.failureReason === 4 && !snapshot.cardExists) && <button className="mk" id="mkcard" onClick={() => quiz.toggleCard()}><NotebookTabs size="1em" aria-hidden="true" /> {snapshot.cardExists ? <>Tarjeta creada <Check size="1em" aria-hidden="true" /></> : 'Hacer tarjeta'}</button>}
   </div>;
 }
 

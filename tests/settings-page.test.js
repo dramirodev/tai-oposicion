@@ -45,15 +45,16 @@ it('distingue la última sincronización correcta de un error posterior', async 
  await userEvent.setup().click(screen.getByRole('button', { name:'Reintentar sincronización' }));
  expect(settings.retrySync).toHaveBeenCalledOnce();
 });
-it('permite editar el presupuesto semanal y las modalidades del entrenador', async () => {
+it('oculta las tarjetas de las modalidades y permite editar el presupuesto semanal', async () => {
  fullAccess = true;
  const user = userEvent.setup();
  await renderSettings();
  const sundayMinutes = screen.getByRole('spinbutton', { name: 'Domingo: minutos de entrenamiento' });
  fireEvent.change(sundayMinutes, { target: { value: '25' } });
  expect(settings.setTrainingPreferences).toHaveBeenLastCalledWith(expect.objectContaining({ minutesByDay: [25, 120, 120, 120, 120, 120, 120], activityVersion: 3 }));
- await user.click(screen.getByRole('checkbox', { name: 'Active Recall con tarjetas' }));
- expect(settings.setTrainingPreferences).toHaveBeenLastCalledWith(expect.objectContaining({ activities: ['newContent', 'topicTest', 'mixedTopicTest', 'failures', 'spacedReviews'], activityVersion: 3, minutesByDay:[25,120,120,120,120,120,120] }));
+ expect(screen.queryByRole('checkbox', { name: /tarjeta|active recall/i })).not.toBeInTheDocument();
+ expect(screen.queryByRole('heading', { name: 'Tarjetas' })).not.toBeInTheDocument();
+ expect(DEFAULT_TRAINING_PREFERENCES.activities).not.toContain('activeRecall');
 });
 it('permite asignar el tema nuevo de la semana en los ajustes', async () => {
  fullAccess = true;
