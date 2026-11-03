@@ -9,10 +9,11 @@ import { isAcademyQuestionSectionManifest } from '../src/core/domain/academy-que
 
 function CurrentPath() { const location = useLocation(); return createElement('output', { 'data-testid':'current-path' }, location.pathname); }
 const question = { i:'academy-q1', t:'T3.01', o:'A', q:'En el modelo entidad relación, ¿qué representa el dominio?', a:['Valores permitidos','Una tabla','Una consulta','Un índice'], c:0 };
-function services(owner = true) {
+const matchedQuestion = { i:'AT303-P1-08', t:'T3.03', o:'A', q:'Indique el número de veces que se ejecuta el cuerpo del siguiente bucle: int salto = 3; for (int i=0; i>0; i*=salto) System.out.println(i);', a:['16.','17.','0.','18.'], c:2 };
+function services(owner = true, questions = [question]) {
   return {
     access:{ accountId:()=>'curator', subscribe:()=>()=>{}, load:async()=>({ owner, requests:[], grants:[] }) },
-    test:{ loadTopics:async()=>[{ id:'T3.01', name:'Modelo Entidad-Relación' }, { id:'T1.04', name:'Transparencia' }], loadTopicQuestions:vi.fn(async()=>[question]) },
+    test:{ loadTopics:async()=>[{ id:'T3.01', name:'Modelo Entidad-Relación' }, { id:'T1.04', name:'Transparencia' }, { id:'T3.03', name:'Lenguajes de Programación' }], loadTopicQuestions:vi.fn(async()=>questions) },
   };
 }
 
@@ -39,7 +40,7 @@ it('creates a local reviewed link when the Drive test topic differs from the que
   expect(await screen.findByText(/la aplicación no incorpora su cuerpo/)).toBeInTheDocument();
   const sectionSelect = screen.getByLabelText('Epígrafe del temario');
   await user.selectOptions(sectionSelect, sectionSelect.options[1].value);
-  await user.type(screen.getByLabelText('Página del test'), '2');
+  await user.type(screen.getByLabelText('Página física del PDF de test'), '2');
   await user.type(screen.getByLabelText('Por qué corresponde esta pregunta al epígrafe'), 'La pregunta evalúa el concepto indicado en el epígrafe del temario.');
   await user.type(screen.getByLabelText('Identificador del revisor'), 'revisor-local');
   await user.click(screen.getByRole('checkbox', { name:/He cotejado la pregunta/ }));
@@ -70,4 +71,20 @@ it('reads v1 local drafts as same-topic v2 links without deleting the legacy key
   expect(await screen.findByText('Borrador local · 1 vínculos')).toBeInTheDocument();
   expect(JSON.parse(window.localStorage.getItem('tai.academy-question-section-map:v1:curator'))).toEqual(legacy);
   expect(window.localStorage.getItem('tai.academy-question-section-map:v2:curator')).toBe('{invalid-json');
+});
+
+it('preselects only the exact current source candidate and leaves section approval manual', async () => {
+  const user = userEvent.setup();
+  window.localStorage.clear();
+  renderApp(createElement(AcademyQuestionSectionMapPage), { services:services(true, [matchedQuestion]), initialEntries:['/curar-contenido'] });
+  await user.selectOptions(await screen.findByLabelText('Tema de la pregunta'), 'T3.03');
+  await user.selectOptions(await screen.findByLabelText('Pregunta'), 'AT303-P1-08');
+  expect(await screen.findByText(/Coincidencias candidatas en tests de Drive/)).toBeInTheDocument();
+  const candidate = await screen.findByRole('button', { name:/Preseleccionar T3\.03 .* PDF p\. 3/ });
+  await user.click(candidate);
+  expect(screen.getByLabelText('Tema del PDF de origen')).toHaveValue('T3.03');
+  await waitFor(() => expect(screen.getByLabelText('PDF de test de Drive')).toHaveValue('T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Test.pdf'));
+  expect(screen.getByLabelText('Página física del PDF de test')).toHaveValue(3);
+  expect(screen.getByLabelText('Epígrafe del temario')).toHaveValue('');
+  expect(screen.getByRole('checkbox', { name:/He cotejado la pregunta/ })).not.toBeChecked();
 });

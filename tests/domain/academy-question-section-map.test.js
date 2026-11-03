@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { questionContentRevision } from '../../src/core/domain/attempts/highlights.js';
+import { currentQuestionSourceCandidates } from '../../src/core/domain/academy-question-source-candidates.ts';
 import {
   isAcademyQuestionSectionManifest,
   parseAcademyQuestionSectionManifest,
@@ -21,6 +22,13 @@ const link = {
   rationale: 'El enunciado evalúa este concepto concreto.',
   reviewedAt: 100, reviewer: 'editor-1',
 };
+
+it('uses source suggestions only for the exact current question revision and topic', () => {
+  const candidate = { questionTopicId:'T3.01', contentRevision:'fnv1a-01234567', sources:[] };
+  expect(currentQuestionSourceCandidates([candidate], { id:'q-1', topicId:'T3.01', contentRevision:'fnv1a-01234567' })).toEqual([candidate]);
+  expect(currentQuestionSourceCandidates([candidate], { id:'q-1', topicId:'T3.01', contentRevision:'fnv1a-76543210' })).toEqual([]);
+  expect(currentQuestionSourceCandidates([candidate], { id:'q-1', topicId:'T3.02', contentRevision:'fnv1a-01234567' })).toEqual([]);
+});
 
 describe('academy question to section editorial links', () => {
   it('accepts a v2 manifest with distinct question, test-source and destination topics', () => {
