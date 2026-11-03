@@ -36,7 +36,7 @@ interface SectionEventBase {
 
 export type AcademySectionStudyEvent = SectionEventBase & (
   | { kind: 'coverage'; coverage: SectionCoverage }
-  | { kind: 'self-check'; timing: SectionRecallTiming; rating: SectionRecallRating }
+  | { kind: 'self-check'; timing: SectionRecallTiming; rating: SectionRecallRating; followUpId?: string }
   | { kind: 'follow-up'; followUpId: string; sourceSelfCheckEventId: string; dueDateKey: string; status: SectionFollowUpStatus; sectionTitle?: string; printedPage?: number }
 );
 
@@ -114,8 +114,9 @@ export function isAcademySectionStudyEvent(value: unknown): value is AcademySect
     || !Number.isFinite(value.occurredAt) || (value.occurredAt as number) < 0
     || (value.trainingSessionId !== undefined && (typeof value.trainingSessionId !== 'string' || value.trainingSessionId.length > 128))
     || (value.trainingActivityId !== undefined && (typeof value.trainingActivityId !== 'string' || value.trainingActivityId.length > 128))) return false;
-  if (value.kind === 'coverage') return coverages.has(value.coverage as SectionCoverage);
-  if (value.kind === 'self-check') return timings.has(value.timing as SectionRecallTiming) && ratings.has(value.rating as SectionRecallRating);
+  if (value.kind === 'coverage') return coverages.has(value.coverage as SectionCoverage) && !('followUpId' in value);
+  if (value.kind === 'self-check') return timings.has(value.timing as SectionRecallTiming) && ratings.has(value.rating as SectionRecallRating)
+    && (value.followUpId === undefined || (value.timing === 'delayed' && eventIdPattern.test(String(value.followUpId))));
   if (value.kind === 'follow-up') return eventIdPattern.test(String(value.followUpId ?? ''))
     && eventIdPattern.test(String(value.sourceSelfCheckEventId ?? ''))
     && isStudyDateKey(value.dueDateKey) && followUpStatuses.has(value.status as SectionFollowUpStatus)
@@ -175,6 +176,17 @@ export function sectionFollowUps(events: readonly AcademySectionStudyEvent[]): r
 export function canScheduleSectionFollowUp(events: readonly AcademySectionStudyEvent[], sourceSelfCheckEventId: string): boolean {
   const source = events.find(event => event.id === sourceSelfCheckEventId && event.kind === 'self-check');
   return !!source && !events.some(event => event.kind === 'follow-up' && event.followUpId === sourceSelfCheckEventId);
+}
+
+/** A follow-up is only evidenced by a delayed self-check explicitly linked to that scheduled ID. */
+export function hasLinkedDelayedFollowUpCheck(
+  events: readonly AcademySectionStudyEvent[],
+  followUp: AcademySectionStudyEvent & { kind: 'follow-up' },
+): boolean {
+  return followUp.status === 'scheduled' && events.some(event => event.kind === 'self-check' && event.followUpId === followUp.followUpId
+    && event.timing === 'delayed' && event.topicId === followUp.topicId && event.sectionId === followUp.sectionId
+    && event.materialPath === followUp.materialPath && event.sourceHash === followUp.sourceHash
+    && event.outlineFingerprint === followUp.outlineFingerprint && event.occurredAt > followUp.occurredAt);
 }
 
 function isStudyDateKey(value: unknown): value is string {

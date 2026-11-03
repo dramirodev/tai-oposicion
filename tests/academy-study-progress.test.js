@@ -6,6 +6,7 @@ import {
   isAcademySectionStudyEvent,
   sectionCoverage,
   canScheduleSectionFollowUp,
+  hasLinkedDelayedFollowUpCheck,
   sectionFollowUps,
   sectionRecallHistory,
 } from '../src/core/domain/academy-study-progress.ts';
@@ -76,6 +77,17 @@ describe('progreso de apartados del temario', () => {
     expect(canScheduleSectionFollowUp([source, scheduled], source.id)).toBe(false);
     expect(sectionFollowUps([source, scheduled, completed])).toEqual([completed]);
     expect(sectionFollowUps([event({ timing:'delayed' })])).toEqual([]);
+  });
+
+  it('solo cuenta como comprobación futura una autoevaluación diferida vinculada al seguimiento y material exactos', () => {
+    const source = event({ id:'event-source-linked', occurredAt:100, timing:'immediate' });
+    const scheduled = { ...source, id:'event-follow-linked', occurredAt:200, kind:'follow-up', followUpId:source.id, sourceSelfCheckEventId:source.id, dueDateKey:'2026-11-12', status:'scheduled' };
+    const linked = event({ id:'event-check-linked', occurredAt:300, followUpId:source.id, timing:'delayed' });
+    expect(hasLinkedDelayedFollowUpCheck([source, scheduled, linked], scheduled)).toBe(true);
+    expect(hasLinkedDelayedFollowUpCheck([source, scheduled, event({ id:'event-check-unlinked', occurredAt:300, timing:'delayed' })], scheduled)).toBe(false);
+    expect(hasLinkedDelayedFollowUpCheck([source, scheduled, event({ id:'event-check-early', occurredAt:150, followUpId:source.id, timing:'delayed' })], scheduled)).toBe(false);
+    expect(hasLinkedDelayedFollowUpCheck([source, scheduled, event({ id:'event-check-wrong-source', occurredAt:300, followUpId:source.id, sourceHash:'d'.repeat(64), timing:'delayed' })], scheduled)).toBe(false);
+    expect(isAcademySectionStudyEvent(event({ followUpId:source.id, timing:'immediate' }))).toBe(false);
   });
 
   it('evita duplicar la programación local para una misma autoevaluación aunque cambie el ID del evento', () => {

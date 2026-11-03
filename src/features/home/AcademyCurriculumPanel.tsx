@@ -4,7 +4,7 @@ import type { AcademyCurriculumFile, AcademyCurriculumSection, AcademyCurriculum
 import { academyCurriculumTopicLoaders } from '../../core/domain/academy-curriculum.generated.js';
 import { useStudyService } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
-import { canScheduleSectionFollowUp, isCurrentAcademyMaterialSelection, sectionCoverage, sectionFollowUps, sectionRecallHistory, type AcademyMaterialOpenEvent, type AcademySectionStudyEvent, type AcademyTopicProgressSnapshot } from '../../core/domain/academy-study-progress.js';
+import { canScheduleSectionFollowUp, hasLinkedDelayedFollowUpCheck, isCurrentAcademyMaterialSelection, sectionCoverage, sectionFollowUps, sectionRecallHistory, type AcademyMaterialOpenEvent, type AcademySectionStudyEvent, type AcademyTopicProgressSnapshot } from '../../core/domain/academy-study-progress.js';
 import type { AcademyMaterialPdfCopy } from '../../core/domain/academy-material-copy.js';
 
 interface LoadedTopic {
@@ -58,13 +58,14 @@ async function sha256(bytes: ArrayBuffer): Promise<string> {
 }
 
 function SectionStudyUnit({
-  section, events, materialOpenEvents, sessionId, activityId, record, targetSectionId, onCompleteSectionRecall,
+  section, events, materialOpenEvents, sessionId, activityId, followUpId, record, targetSectionId, onCompleteSectionRecall,
 }: {
   section: AcademyCurriculumSection;
   events: readonly AcademySectionStudyEvent[];
   materialOpenEvents: readonly AcademyMaterialOpenEvent[];
   sessionId?: string;
   activityId?: string;
+  followUpId?: string;
   record(event: AcademySectionStudyEvent): boolean;
   targetSectionId?: string | null;
   onCompleteSectionRecall?: () => Promise<void>;
@@ -73,6 +74,10 @@ function SectionStudyUnit({
   const matchingOpens = materialOpenEvents.filter(event => event.sectionId === section.id && event.sourceHash === section.sourceHash && event.materialPath === section.materialPath)
     .sort((first, second) => first.occurredAt - second.occurredAt || first.id.localeCompare(second.id));
   const coverage = sectionCoverage(matching);
+  const linkedFollowUp = followUpId ? sectionFollowUps(matching).find(item => item.followUpId === followUpId
+    && item.status === 'scheduled' && item.topicId === section.topicId && item.sectionId === section.id
+    && item.materialPath === section.materialPath && item.sourceHash === section.sourceHash
+    && item.outlineFingerprint === section.outlineFingerprint) : undefined;
   const [message, setMessage] = useState('');
   const [dueDateKey, setDueDateKey] = useState(() => {
     const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
@@ -108,8 +113,9 @@ function SectionStudyUnit({
       const form = new FormData(formElement);
       const saved = record({
         ...base(), kind: 'self-check',
-        timing: form.get('timing') as 'assisted' | 'immediate' | 'delayed',
+        timing: linkedFollowUp ? 'delayed' : form.get('timing') as 'assisted' | 'immediate' | 'delayed',
         rating: form.get('rating') as 'not-recalled' | 'partial' | 'recalled',
+        ...(linkedFollowUp ? { followUpId:linkedFollowUp.followUpId } : {}),
       });
       setMessage(saved ? 'Autoevaluación guardada; no es una corrección objetiva.' : 'No se pudo guardar la autoevaluación en este dispositivo.');
       formElement.reset();
@@ -127,6 +133,10 @@ function SectionStudyUnit({
     if (saving.current) return;
     const current = sectionFollowUps(matching).find(item => item.followUpId === followUpId && item.status === 'scheduled');
     if (!current) return;
+    if (status === 'completed' && !hasLinkedDelayedFollowUpCheck(matching, current)) {
+      setMessage('Abre esta comprobación desde la agenda y registra primero el recuerdo diferido. La autoevaluación queda vinculada a este seguimiento.');
+      return;
+    }
     saving.current = true; setBusy(true);
     try {
       const saved = record({ ...base(), kind: 'follow-up', followUpId, sourceSelfCheckEventId: current.sourceSelfCheckEventId, dueDateKey: current.dueDateKey, status, ...(current.sectionTitle ? { sectionTitle:current.sectionTitle } : {}), ...(current.printedPage !== undefined ? { printedPage:current.printedPage } : {}) });
@@ -149,11 +159,12 @@ function SectionStudyUnit({
         {coverage !== 'not-started' && <button className="btn sec" type="button" disabled={busy} onClick={() => addCoverage('not-started')}>Volver a sin iniciar</button>}
       </div>
       <form className="mt-2 flex flex-wrap items-end gap-2" onSubmit={addSelfCheck}>
-        <label className="grid gap-1 text-sm">Comprobación
-          <select name="timing" defaultValue="immediate" className="min-h-10 rounded-md border border-line bg-surface px-2">
-            <option value="assisted">Con ayuda</option><option value="immediate">Al terminar</option><option value="delayed">Días después (ya comprobado)</option>
-          </select>
-        </label>
+        {linkedFollowUp ? <p className="m-0 text-sm">Comprobación diferida programada · resultado autoevaluado, no objetivo</p>
+          : <label className="grid gap-1 text-sm">Comprobación
+            <select name="timing" defaultValue="immediate" className="min-h-10 rounded-md border border-line bg-surface px-2">
+              <option value="assisted">Con ayuda</option><option value="immediate">Al terminar</option><option value="delayed">Días después (ya comprobado)</option>
+            </select>
+          </label>}
         <label className="grid gap-1 text-sm">Autoevaluación
           <select name="rating" defaultValue="partial" className="min-h-10 rounded-md border border-line bg-surface px-2">
             <option value="not-recalled">No lo recordé</option><option value="partial">Parcialmente</option><option value="recalled">Lo recordé</option>
@@ -161,7 +172,7 @@ function SectionStudyUnit({
         </label>
         <button className="btn" type="submit" disabled={busy}>Guardar comprobación</button>
       </form>
-      <p className="my-1 text-xs text-muted">“Días después” describe una comprobación que ya hiciste. Para elegir cuándo volver, usa la fecha de próxima comprobación tras guardar.</p>
+      <p className="my-1 text-xs text-muted">{linkedFollowUp ? 'Intenta recordar antes de consultar. Guarda tu valoración para vincularla a la comprobación programada; después podrás cerrar la actividad.' : '“Días después” describe una comprobación que ya hiciste. Para elegir cuándo volver, usa la fecha de próxima comprobación tras guardar.'}</p>
       {message && <p className="my-2 text-sm" role="status">{message}</p>}
       {onCompleteSectionRecall && targetSectionId === section.id && sessionId && activityId && <div className="mt-3 rounded-md border border-brand/40 p-3">
         <p className="my-1 text-sm">Primero intenta explicar este apartado sin mirar. Consulta el material solo para resolver dudas y cierra la comprobación al terminar.</p>
@@ -183,7 +194,7 @@ function SectionStudyUnit({
   </details>;
 }
 
-type AcademyCurriculumPanelProps = { topicId: string; hasStudyMarker: boolean; sessionId?: string; activityId?: string; onCompleteSectionRecall?: () => Promise<void> };
+type AcademyCurriculumPanelProps = { topicId: string; hasStudyMarker: boolean; sessionId?: string; activityId?: string; followUpId?: string; onCompleteSectionRecall?: () => Promise<void> };
 
 export function AcademyCurriculumPanel(props: AcademyCurriculumPanelProps) {
   const academyProgress = useStudyService('academyStudyProgress');
@@ -191,7 +202,7 @@ export function AcademyCurriculumPanel(props: AcademyCurriculumPanelProps) {
   return <AcademyCurriculumPanelContent key={`${props.topicId}:${accountId ?? 'guest'}`} {...props} />;
 }
 
-function AcademyCurriculumPanelContent({ topicId, hasStudyMarker, sessionId, activityId, onCompleteSectionRecall }: AcademyCurriculumPanelProps) {
+function AcademyCurriculumPanelContent({ topicId, hasStudyMarker, sessionId, activityId, followUpId, onCompleteSectionRecall }: AcademyCurriculumPanelProps) {
   const [draft, setDraft] = useState<{ topicId: string; paths: string[] } | null>(null);
   const [notice, setNotice] = useState('');
   const [pdfSelections, setPdfSelections] = useState<Record<string, LocalPdfSelection>>({});
@@ -423,7 +434,7 @@ function AcademyCurriculumPanelContent({ topicId, hasStudyMarker, sessionId, act
         {matchingOutlineMessage(materialPath) && <p className="my-1 text-sm text-muted">{matchingOutlineMessage(materialPath)}</p>}
         {materialInspection(materialPath, sections)}
         {draftPaths.includes(materialPath) ? <div className="mt-2">
-          {sections.filter(section => section.materialPath === materialPath).map(section => <SectionStudyUnit key={section.id} section={section} events={progress.events} materialOpenEvents={progress.materialOpenEvents} sessionId={sessionId} activityId={activityId} record={recordEvent} targetSectionId={targetSectionId} onCompleteSectionRecall={onCompleteSectionRecall} />)}
+          {sections.filter(section => section.materialPath === materialPath).map(section => <SectionStudyUnit key={section.id} section={section} events={progress.events} materialOpenEvents={progress.materialOpenEvents} sessionId={sessionId} activityId={activityId} followUpId={followUpId} record={recordEvent} targetSectionId={targetSectionId} onCompleteSectionRecall={onCompleteSectionRecall} />)}
         </div> : <ul className="my-0 list-disc ps-5 text-sm">{sections.filter(section => section.materialPath === materialPath).map(section => <li id={section.id} key={section.id}>{section.title} <span className="text-muted">(p. {section.printedPage})</span></li>)}</ul>}
       </div>)}
       <p className="mt-2 mb-0 text-sm text-muted">{context}</p>

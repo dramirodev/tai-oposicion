@@ -22,6 +22,7 @@ describe('resolvePlannedActivityAction', () => {
     expect(url.searchParams.get('topic')).toBe('T1.01');
     expect(url.searchParams.get('sectionId')).toBe('ci-0123456789abcdefabcd');
     expect(url.searchParams.get('agendaItemId')).toBe('agenda-section-01');
+    expect(url.searchParams.get('followUpId')).toBe('follow-up-01');
   });
 
   it('refuses recovery activities when there are no studied topics', () => {

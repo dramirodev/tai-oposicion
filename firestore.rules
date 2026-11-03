@@ -225,9 +225,10 @@ service cloud.firestore {
         && (!('trainingSessionId' in d) || (d.trainingSessionId is string && d.trainingSessionId.size() <= 128))
         && (!('trainingActivityId' in d) || (d.trainingActivityId is string && d.trainingActivityId.size() <= 128))
         && (d.kind == 'coverage'
-          ? d.coverage in ['not-started', 'partial', 'covered'] && !('timing' in d) && !('rating' in d)
+          ? d.coverage in ['not-started', 'partial', 'covered'] && !('timing' in d) && !('rating' in d) && !('followUpId' in d)
           : d.kind == 'self-check'
             ? d.timing in ['assisted', 'immediate', 'delayed'] && d.rating in ['not-recalled', 'partial', 'recalled'] && !('coverage' in d)
+              && (!('followUpId' in d) || (d.timing == 'delayed' && d.followUpId is string && d.followUpId.matches('^[A-Za-z0-9_-]{8,128}$')))
             : d.kind == 'follow-up'
               ? d.followUpId.matches('^[A-Za-z0-9_-]{8,128}$') && d.sourceSelfCheckEventId.matches('^[A-Za-z0-9_-]{8,128}$')
                 && d.dueDateKey.matches('^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$') && d.status in ['scheduled', 'completed', 'cancelled']

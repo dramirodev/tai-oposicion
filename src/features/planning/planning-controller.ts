@@ -26,7 +26,7 @@ function selectStudiedTopics(step: TrainingSessionStep, studiedTopicIds: readonl
 
 function buildActivityRoute(step: TrainingSessionStep, topicIds: readonly string[]): string | null {
   if (step.sectionRecall) {
-    const parameters = new URLSearchParams({ dailyTraining:'sectionRecall', topic:step.topicId ?? topicIds[0] ?? '', sectionId:step.sectionRecall.sectionId, agendaItemId:step.sectionRecall.agendaItemId });
+    const parameters = new URLSearchParams({ dailyTraining:'sectionRecall', topic:step.topicId ?? topicIds[0] ?? '', sectionId:step.sectionRecall.sectionId, agendaItemId:step.sectionRecall.agendaItemId, followUpId:step.sectionRecall.followUpId });
     return `/temario?${parameters.toString()}`;
   }
   const parameters = new URLSearchParams({ dailyTraining: step.activity, trainingTopics: topicIds.join(',') });

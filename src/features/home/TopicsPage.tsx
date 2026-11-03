@@ -7,7 +7,7 @@ import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { TopicsView } from './TopicsView.js';
 import { filterTopics, toggleTopicSelection } from './topics-controller.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
-import { isCurrentAcademyMaterialSelection, sectionFollowUps, sectionFollowUpCompletionEventId, type AcademySectionStudyEvent } from '../../core/domain/academy-study-progress.js';
+import { hasLinkedDelayedFollowUpCheck, isCurrentAcademyMaterialSelection, sectionFollowUps, sectionFollowUpCompletionEventId, type AcademySectionStudyEvent } from '../../core/domain/academy-study-progress.js';
 import { academyCurriculumMaterialIndex } from '../../core/domain/academy-curriculum.generated.js';
 const AcademyCurriculumPanel = lazy(() => import('./AcademyCurriculumPanel.js').then(module => ({ default: module.AcademyCurriculumPanel })));
 export function TopicsPage() {
@@ -17,6 +17,7 @@ export function TopicsPage() {
   const [searchParams] = useSearchParams();
   const requestedTopic = searchParams.get('topic') ?? '';
   const dailyNewContent = searchParams.get('dailyTraining') === 'newContent';
+  const followUpId = searchParams.get('followUpId') ?? undefined;
   const sessionId = searchParams.get('trainingSessionId'), activityId = searchParams.get('trainingActivityId');
   const trainingActivityReference = sessionId && activityId ? { sessionId, activityId } : undefined;
   const completedPlannedStudy = useRef(false);
@@ -66,10 +67,14 @@ export function TopicsPage() {
       const selfCheckRecorded = snapshot.events.some(event => event.kind === 'self-check' && event.topicId === requestedTopic
         && event.sectionId === step.sectionRecall!.sectionId && event.materialPath === step.sectionRecall!.materialPath
         && event.sourceHash === step.sectionRecall!.sourceHash && event.trainingSessionId === session.id
-        && event.trainingActivityId === step.id && event.occurredAt >= session.startedAt);
+        && event.trainingActivityId === step.id && event.followUpId === step.sectionRecall!.followUpId
+        && event.timing === 'delayed' && event.occurredAt >= session.startedAt);
       if (!selfCheckRecorded) { home.notify('Registra primero una autoevaluación de este apartado en la sesión; después podrás cerrar la actividad.'); return; }
       const followUp = sectionFollowUps(snapshot.events).find(candidate => candidate.followUpId === step.sectionRecall!.followUpId);
       if (!followUp || followUp.status === 'cancelled') { home.notify('Este seguimiento ya no está pendiente. Actualiza la planificación antes de cerrar la actividad.'); return; }
+      if (followUp.status === 'scheduled' && !hasLinkedDelayedFollowUpCheck(snapshot.events, followUp)) {
+        home.notify('Registra el recuerdo diferido vinculado a este seguimiento antes de cerrar la actividad.'); return;
+      }
       if (followUp.topicId !== requestedTopic || followUp.sectionId !== step.sectionRecall.sectionId
         || followUp.materialPath !== step.sectionRecall.materialPath || followUp.sourceHash !== step.sectionRecall.sourceHash
         || followUp.outlineFingerprint !== step.sectionRecall.outlineFingerprint
@@ -131,7 +136,7 @@ export function TopicsPage() {
       <h2 className="m-0 mb-[.35rem] text-[length:var(--fs-l)]" id="planned-topic-title">Estudio inicial · {topics.find(topic => topic.id === requestedTopic)?.name ?? requestedTopic}</h2>
       <p className="m-0 text-muted">Empieza por comprender un apartado del temario. En «Material de academia», elige el PDF de temario que estés usando, abre el epígrafe y, después de trabajarlo, registra si la cobertura fue parcial o completa. Esa marca se guarda ligada a esta sesión, pero no acredita comprensión. Cierra el material y explica la idea con tus palabras; marca el tema como visto solo cuando hayas decidido que ya lo has estudiado. Ese estado del tema y la cobertura de sus apartados se registran por separado.</p>
     </section>}
-    {requestedTopic && <Suspense fallback={<p className="mt-2 text-sm text-muted" role="status">Cargando índice de materiales…</p>}><AcademyCurriculumPanel topicId={requestedTopic} hasStudyMarker={selected.has(requestedTopic)} sessionId={sessionId ?? undefined} activityId={activityId ?? undefined} onCompleteSectionRecall={searchParams.get('dailyTraining') === 'sectionRecall' ? completeSectionRecall : undefined} /></Suspense>}
+    {requestedTopic && <Suspense fallback={<p className="mt-2 text-sm text-muted" role="status">Cargando índice de materiales…</p>}><AcademyCurriculumPanel topicId={requestedTopic} hasStudyMarker={selected.has(requestedTopic)} sessionId={sessionId ?? undefined} activityId={activityId ?? undefined} followUpId={followUpId} onCompleteSectionRecall={searchParams.get('dailyTraining') === 'sectionRecall' ? completeSectionRecall : undefined} /></Suspense>}
     <TopicsView topics={topics} visible={visible} selected={selected} query={query} open={open}
     onQueryChange={value => setQueryOverride({ routeTopic: requestedTopic, value })} onToggle={toggle} onToggleBlock={toggleBlock}
     onSelectAll={() => services.setStudied(topics.map(topic => topic.id))}

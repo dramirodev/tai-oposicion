@@ -9,7 +9,7 @@ import type { PaperTestAttemptSegment, PaperTestCorrectionStatus, PaperTestSelfR
 import type { ScheduledStudyActivity, ScheduledStudyActivityKind } from '../../core/domain/study-training-calendar.js';
 import { addSectionRecallFollowUpsToWeeklyProposal, dailyTrainingPlanFromAgenda, proposeWeeklyAgendaPlan, type WeeklyAgendaItem, type WeeklyAgendaPlanProposal, type WeeklyAgendaRecoveryProposal } from '../../core/domain/study-weekly-agenda.js';
 import { academyCurriculumMaterialIndex } from '../../core/domain/academy-curriculum.generated.js';
-import { sectionFollowUps, sectionFollowUpCompletionEventId, type AcademySectionStudyEvent } from '../../core/domain/academy-study-progress.js';
+import { hasLinkedDelayedFollowUpCheck, sectionFollowUps, sectionFollowUpCompletionEventId, type AcademySectionStudyEvent } from '../../core/domain/academy-study-progress.js';
 import { useStudyService, type HomeOverview, type HomeServices, type SettingsSnapshot } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { useActionLifetime } from '../../shared/ui/use-action-lifetime.js';
@@ -563,6 +563,9 @@ export function PlanningPage() {
         const followUp = sectionFollowUps(snapshot.events).find(candidate => candidate.followUpId === item.sectionRecall!.followUpId);
         if (!followUp || followUp.status === 'cancelled') { services.notify('La comprobación ya no está pendiente. Actualiza la planificación antes de cerrar esta actividad.'); return; }
         if (followUp?.status === 'scheduled') {
+          if (!hasLinkedDelayedFollowUpCheck(snapshot.events, followUp)) {
+            services.notify('Abre el apartado desde esta actividad y registra primero la comprobación de recuerdo diferido. No se marcará como realizada sin esa autoevaluación vinculada.'); return;
+          }
           const selection = snapshot.selections.find(candidate => candidate.topicId === item.topicIds[0]);
           const selected = selection?.materials.find(material => material.role === 'syllabus' && material.path === followUp.materialPath
             && material.sourceHash === followUp.sourceHash && material.outlineFingerprint === followUp.outlineFingerprint);
@@ -608,7 +611,8 @@ export function PlanningPage() {
     if (!item.sectionRecall) return;
     const topic = encodeURIComponent(item.topicIds[0]);
     const section = encodeURIComponent(item.sectionRecall.sectionId);
-    void navigate(`/temario?topic=${topic}&sectionId=${section}`);
+    const followUp = encodeURIComponent(item.sectionRecall.followUpId);
+    void navigate(`/temario?topic=${topic}&sectionId=${section}&followUpId=${followUp}&agendaItemId=${encodeURIComponent(item.id)}`);
   };
   return <main className="planning-page mx-auto w-full max-w-[68rem] pt-6 pb-12 max-[520px]:pt-4">
     <header className="planning-header mb-6 flex items-start justify-between gap-4 max-[520px]:flex-col">
