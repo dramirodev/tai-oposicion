@@ -64,7 +64,7 @@ test('Planificación enlaza el intento al checkpoint y conserva la referencia al
   await page.reload();
   await expect(page.locator('#app h1')).toHaveText('Temas vistos');
   await page.goto('/#/planificacion');
-  await page.getByRole('button', { name:'Comenzar sesión' }).click();
+  await page.getByRole('button', { name:'Continuar actividad' }).click();
   await expect(page).toHaveURL(/#\/quiz\?dailyTraining=topicTest&trainingSessionId=training%3A.*&trainingActivityId=training%3A.*%3Aactivity%3A1/);
   await expect(page.locator('#app h1')).toContainText('pregunta 1');
   const itemCount = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.run:guest') || 'null').ids.length as number);
@@ -97,6 +97,70 @@ test('Planificación enlaza el intento al checkpoint y conserva la referencia al
   expect(tracked).toContain(planned.sessionId);
   expect(errors).toEqual([]);
 });
+
+test('la sesión diaria avanza dos actividades de test en viewport móvil', async ({ page }) => {
+  await page.setViewportSize({ width:390, height:844 });
+  const errors = await start(page, true);
+  await page.goto('/#/temario');
+  await page.locator('[data-t="T1.01"]').click();
+  await expect.poll(() => page.evaluate(() => (JSON.parse(localStorage.getItem('tai.v1:guest') || 'null')?.seen?.t || []).includes('T1.01'))).toBe(true);
+  const planned = await page.evaluate(() => {
+    const date = new Date();
+    const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    const sessionId = `training:${dateKey}`;
+    const activities = [
+      { id:`${sessionId}:activity:1`, activity:'activeRecall', minutes:15, reason:'active-recall', topicIds:['T1.01'] },
+      { id:`${sessionId}:activity:2`, activity:'topicTest', minutes:15, reason:'coverage', topicId:'T1.01', topicIds:['T1.01'] },
+    ];
+    localStorage.setItem(`tai.training-session.v1.${encodeURIComponent('guest')}`, JSON.stringify({
+      schemaVersion:2, id:sessionId, dateKey, activities, currentIndex:0, currentStartedAt:null,
+      elapsedSecondsByActivity:[0, 0], updatedAt:Date.now(), startedAt:Date.now(), completedAt:null,
+    }));
+    return { sessionId, activityIds:activities.map(activity => activity.id) };
+  });
+  await page.goto('/#/planificacion');
+  await page.getByRole('button', { name:'Continuar actividad' }).click();
+  await expect(page).toHaveURL(/#\/quiz\?dailyTraining=activeRecall/);
+  const completeCurrentTest = async () => {
+    await expect(page.locator('#app h1')).toContainText('pregunta 1');
+    const itemCount = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.run:guest') || 'null').ids.length as number);
+    for (let index = 0; index < itemCount; index++) {
+      await page.locator('.opt').first().click();
+      await page.locator('#next').click();
+    }
+    await expect(page.locator('#app h1')).toHaveText('Resultado');
+    await page.getByRole('button', { name:'Continuar con el siguiente paso' }).click();
+  };
+  await completeCurrentTest();
+  await expect.poll(() => page.evaluate((id) => JSON.parse(localStorage.getItem(`tai.training-session.v1.${encodeURIComponent('guest')}`) || 'null')?.currentIndex, planned.sessionId)).toBe(1);
+  await expect(page).toHaveURL(/#\/quiz\?dailyTraining=topicTest/);
+  await completeCurrentTest();
+  await expect(page).toHaveURL(/#\/planificacion$/);
+  await expect.poll(() => page.evaluate((id) => {
+    const session = JSON.parse(localStorage.getItem(`tai.training-session.v1.${encodeURIComponent('guest')}`) || 'null');
+    return session?.id === id ? session : null;
+  }, planned.sessionId)).toMatchObject({ currentIndex:2, completedAt:expect.any(Number) });
+  const checkpoint = await page.evaluate(() => JSON.parse(localStorage.getItem(`tai.training-session.v1.${encodeURIComponent('guest')}`) || 'null'));
+  expect(checkpoint.activities.map((activity: { id:string }) => activity.id)).toEqual(planned.activityIds);
+  expect(errors).toEqual([]);
+});
+
+test('la CSP admite el Worker blob que requiere la compresión ZIP en móvil', async ({ page }) => {
+  await page.setViewportSize({ width:390, height:844 });
+  await page.goto('/');
+  const result = await page.evaluate(() => new Promise<string>((resolve, reject) => {
+    const policy = document.createElement('meta');
+    policy.httpEquiv = 'Content-Security-Policy';
+    policy.content = "worker-src 'self' blob:";
+    document.head.append(policy);
+    const url = URL.createObjectURL(new Blob(['postMessage("worker listo")'], { type:'text/javascript' }));
+    const worker = new Worker(url);
+    worker.onmessage = event => { worker.terminate(); URL.revokeObjectURL(url); resolve(event.data as string); };
+    worker.onerror = event => { worker.terminate(); URL.revokeObjectURL(url); reject(new Error(event.message)); };
+  }));
+  expect(result).toBe('worker listo');
+});
+
 test('el diálogo de pausa se dimensiona respecto al viewport aunque viva dentro de #app', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await start(page);
