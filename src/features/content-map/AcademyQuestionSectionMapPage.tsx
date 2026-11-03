@@ -53,6 +53,7 @@ export function AcademyQuestionSectionMapPage() {
   const [catalogError, setCatalogError] = useState(false);
   const [topicId, setTopicId] = useState(''), [testTopicId, setTestTopicId] = useState(''), [sectionTopicId, setSectionTopicId] = useState('');
   const [questionId, setQuestionId] = useState(''), [testPath, setTestPath] = useState(''), [sectionId, setSectionId] = useState('');
+  const [candidateQuery, setCandidateQuery] = useState(''), [candidatePage, setCandidatePage] = useState(0);
   const [testPage, setTestPage] = useState(''), [questionNumber, setQuestionNumber] = useState('');
   const [rationale, setRationale] = useState('');
   const [reviewer, setReviewer] = useState(''), [confirmed, setConfirmed] = useState(false);
@@ -92,7 +93,7 @@ export function AcademyQuestionSectionMapPage() {
   const currentQuestions = loadedQuestions?.id === topicId ? loadedQuestions : null;
   const currentTestTopic = loadedTestTopic?.id === testTopicId ? loadedTestTopic : null;
   const currentSectionTopic = loadedSectionTopic?.id === sectionTopicId ? loadedSectionTopic : null;
-  const questions = currentQuestions?.questions ?? [];
+  const questions = useMemo(() => currentQuestions?.questions ?? [], [currentQuestions]);
   const testTopic = currentTestTopic?.topic ?? null;
   const sectionTopic = currentSectionTopic?.topic ?? null;
   const question = questions.find(row => row.i === questionId);
@@ -102,6 +103,20 @@ export function AcademyQuestionSectionMapPage() {
   const sourceCandidates = question ? currentQuestionSourceCandidates(academyQuestionSourceCandidates.questions[question.i], {
     id:question.i, topicId:question.t, contentRevision:revision,
   }) : [];
+  const candidateQueue = useMemo(() => questions.flatMap(row => {
+    const rowRevision = questionContentRevision(row.q, row.a);
+    const candidates = currentQuestionSourceCandidates(academyQuestionSourceCandidates.questions[row.i], {
+      id: row.i, topicId: row.t, contentRevision: rowRevision,
+    });
+    if (!candidates.length || manifest.links.some(link => link.questionId === row.i && link.contentRevision === rowRevision)) return [];
+    const search = candidateQuery.trim().toLocaleLowerCase('es');
+    if (search && !`${row.i} ${row.q}`.toLocaleLowerCase('es').includes(search)) return [];
+    return [{ question: row, revision: rowRevision, candidates }];
+  }), [questions, manifest.links, candidateQuery]);
+  const candidatePageSize = 25;
+  const candidatePageCount = Math.ceil(candidateQueue.length / candidatePageSize);
+  const visibleCandidatePage = Math.min(candidatePage, Math.max(0, candidatePageCount - 1));
+  const visibleCandidateQueue = candidateQueue.slice(visibleCandidatePage * candidatePageSize, (visibleCandidatePage + 1) * candidatePageSize);
   const duplicate = !!question && manifest.links.some(link => link.questionId === question.i && link.contentRevision === revision);
   const validPages = Number.isInteger(Number(testPage)) && Number(testPage) > 0 && (!questionNumber || (Number.isInteger(Number(questionNumber)) && Number(questionNumber) > 0));
   const canSave = !!question && !!testFile && !!section && !!reviewer.trim() && rationale.trim().length >= 10 && confirmed && validPages && !duplicate;
@@ -160,7 +175,7 @@ export function AcademyQuestionSectionMapPage() {
     {catalogError ? <PageMessage role="alert" title="No se pudo cargar el catálogo">Comprueba la conexión y vuelve a intentarlo.</PageMessage> : <section className="card" aria-labelledby="map-form-title">
       <h2 className="h3" id="map-form-title">Revisar una asociación</h2>
       <p className="sm">El banco de la pregunta, el PDF de origen y el epígrafe de destino pueden pertenecer a temas distintos. Esto registra una revisión manual, no deduce una relación.</p>
-      <label className="grid gap-1">Tema de la pregunta<select className="min-h-11 rounded-md border border-line bg-surface px-2" value={topicId} onChange={event => { setTopicId(event.target.value); setQuestionId(''); }}><option value="">Selecciona un tema</option>{topics.map(row => <option key={row.id} value={row.id}>{row.id} · {row.name}</option>)}</select></label>
+      <label className="grid gap-1">Tema de la pregunta<select className="min-h-11 rounded-md border border-line bg-surface px-2" value={topicId} onChange={event => { setTopicId(event.target.value); setQuestionId(''); setCandidatePage(0); setCandidateQuery(''); }}><option value="">Selecciona un tema</option>{topics.map(row => <option key={row.id} value={row.id}>{row.id} · {row.name}</option>)}</select></label>
       <label className="mt-3 grid gap-1">Tema del PDF de origen<select className="min-h-11 rounded-md border border-line bg-surface px-2" value={testTopicId} onChange={event => { setTestTopicId(event.target.value); setTestPath(''); }}><option value="">Selecciona el tema de Drive</option>{topics.map(row => <option key={row.id} value={row.id}>{row.id} · {row.name}</option>)}</select></label>
       <label className="mt-3 grid gap-1">Tema del epígrafe de destino<select className="min-h-11 rounded-md border border-line bg-surface px-2" value={sectionTopicId} onChange={event => { setSectionTopicId(event.target.value); setSectionId(''); }}><option value="">Selecciona el tema del temario</option>{topics.map(row => <option key={row.id} value={row.id}>{row.id} · {row.name}</option>)}</select></label>
       {topicId && !currentQuestions && <p role="status">Cargando preguntas…</p>}
@@ -170,6 +185,10 @@ export function AcademyQuestionSectionMapPage() {
       {currentTestTopic?.failed && <p role="alert">No se pudieron cargar los documentos del tema de origen.</p>}
       {currentSectionTopic?.failed && <p role="alert">No se pudieron cargar los epígrafes del tema de destino.</p>}
       {currentQuestions && !currentQuestions.failed && <>
+        <fieldset className="mt-3 rounded-md border border-line p-3"><legend className="px-1 font-semibold">Cola de candidatos sin vínculo · {candidateQueue.length}</legend><p className="my-1 text-sm text-muted">Filtra por ID o texto y revisa las preguntas con páginas localizadas. Esta cola no determina un epígrafe; cada vínculo sigue requiriendo cotejo humano.</p><label className="grid gap-1">Buscar candidato<input className="min-h-11 rounded-md border border-line bg-surface px-2" type="search" value={candidateQuery} onChange={event => { setCandidateQuery(event.target.value); setCandidatePage(0); }} placeholder="ID o palabras del enunciado" /></label>{visibleCandidateQueue.length ? <ul className="mt-2 grid gap-2">{visibleCandidateQueue.map(item => {
+          const pageCount = item.candidates.reduce((sum, candidate) => sum + candidate.sources.reduce((count, source) => count + source.pages.length, 0), 0);
+          return <li className="rounded-md border border-line p-2" key={`${item.question.i}:${item.revision}`}><p className="text-sm"><b>{item.question.i}</b> · {item.question.q.replace(/\s+/g, ' ').slice(0, 180)} · {pageCount} localizador(es)</p><button className="btn sec mt-2" type="button" onClick={() => setQuestionId(item.question.i)}>Abrir para cotejar</button></li>;
+        })}</ul> : <p className="mt-2 text-sm">{candidateQueue.length === 0 ? 'No hay candidatos pendientes para este tema o filtro.' : 'No hay candidatos en esta página.'}</p>}{candidatePageCount > 1 && <nav className="mt-3 flex items-center gap-2" aria-label="Páginas de candidatos"><button className="btn sec" type="button" disabled={visibleCandidatePage === 0} onClick={() => setCandidatePage(page => Math.max(0, page - 1))}>Anterior</button><span aria-live="polite">Página {visibleCandidatePage + 1} de {candidatePageCount}</span><button className="btn sec" type="button" disabled={visibleCandidatePage + 1 >= candidatePageCount} onClick={() => setCandidatePage(page => Math.min(candidatePageCount - 1, page + 1))}>Siguiente</button></nav>}</fieldset>
         <label className="mt-3 grid gap-1">Pregunta<select className="min-h-11 rounded-md border border-line bg-surface px-2" value={questionId} onChange={event => setQuestionId(event.target.value)}><option value="">Selecciona pregunta ({questions.length})</option>{questions.map(row => <option key={row.i} value={row.i}>{row.i} · {row.q.replace(/\s+/g, ' ').slice(0, 100)}</option>)}</select></label>
         {question && <div className="my-2 rounded-md bg-[var(--surface-soft)] p-3"><p><b>{question.i}</b> · {question.o} · revisión {revision}</p><p>{question.q}</p>{question.a.map((option, index) => <p className="my-1" key={question.i + index}>{String.fromCharCode(65 + index)}. {option}{index === question.c ? ' · correcta en el banco' : ''}</p>)}</div>}
         {sourceCandidates.length > 0 && <fieldset className="mt-3 rounded-md border border-line p-3"><legend className="px-1 font-semibold">Coincidencias candidatas en tests de Drive · {sourceCandidates.reduce((sum, candidate) => sum + candidate.sources.reduce((count, source) => count + source.pages.length, 0), 0)}</legend><p className="my-1 text-sm text-muted">Coincidencia exacta del enunciado tras normalizar Unicode, mayúsculas y espacios. La página es física del PDF y puede repetirlo en otro contexto: coteja el documento. No propone ni aprueba un epígrafe.</p><div className="grid gap-2">{sourceCandidates.flatMap(candidate => candidate.sources.flatMap(match => {

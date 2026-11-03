@@ -88,3 +88,19 @@ it('preselects only the exact current source candidate and leaves section approv
   expect(screen.getByLabelText('Epígrafe del temario')).toHaveValue('');
   expect(screen.getByRole('checkbox', { name:/He cotejado la pregunta/ })).not.toBeChecked();
 });
+
+it('offers a searchable candidate queue and opens a question without proposing a destination', async () => {
+  const user = userEvent.setup();
+  window.localStorage.clear();
+  renderApp(createElement(AcademyQuestionSectionMapPage), { services:services(true, [matchedQuestion]), initialEntries:['/curar-contenido'] });
+  await user.selectOptions(await screen.findByLabelText('Tema de la pregunta'), 'T3.03');
+  expect(await screen.findByText(/Cola de candidatos sin vínculo · 1/)).toBeInTheDocument();
+  const openCandidate = await screen.findByRole('button', { name:'Abrir para cotejar' });
+  await user.click(openCandidate);
+  expect(await screen.findByText(/Coincidencias candidatas en tests de Drive/)).toBeInTheDocument();
+  expect(screen.getByLabelText('Pregunta')).toHaveValue('AT303-P1-08');
+  expect(screen.getByLabelText('Epígrafe del temario')).toHaveValue('');
+  expect(screen.getByRole('checkbox', { name:/He cotejado la pregunta/ })).not.toBeChecked();
+  await user.type(screen.getByLabelText('Buscar candidato'), 'no existe');
+  expect(screen.getByText('No hay candidatos pendientes para este tema o filtro.')).toBeInTheDocument();
+});
