@@ -54,7 +54,7 @@ const reasonText: Record<DailyTrainingPlan['activities'][number]['reason'], stri
   'active-recall': 'Practica recordar el contenido antes de consultar la respuesta.',
   'new-content-day': 'El enfoque de hoy reserva tiempo para el siguiente tema sin marcar como visto.',
   'new-topic-day': 'Hoy coincide con el día semanal configurado para introducir temas.',
-  'weak-topics': 'Prioridad basada en resultados de preguntas o autoevaluaciones de temas vistos; es una regla del producto, no una medida científica de dominio.',
+  'weak-topics': 'Prioridad basada en resultados de preguntas y en la última autoevaluación de tests en papel de temas vistos; esta señal personal dura hasta 30 días y no es una medida de dominio.',
   coverage: 'Amplía la práctica de los temas que has marcado como vistos.',
   'recurring-failures': 'Hay preguntas falladas de temas vistos que aún requieren repaso.',
   'due-reviews': 'Hay tarjetas o preguntas de temas vistos con repaso pendiente.',

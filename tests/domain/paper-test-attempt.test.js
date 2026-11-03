@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createPaperTestAttemptSegment, isPaperTestAttemptSegment, mergePaperTestAttemptSegments } from '../../src/core/domain/paper-test-attempt.ts';
+import { createPaperTestAttemptSegment, isPaperTestAttemptSegment, latestPaperTestSelfRatingByTopic, mergePaperTestAttemptSegments, needsPaperTestFollowUp, paperTestFollowUpTopicIds, PAPER_TEST_PRIORITY_WINDOW_MS } from '../../src/core/domain/paper-test-attempt.ts';
 
 describe('registro agregado de tests en papel', () => {
   const timestamp = Date.parse('2026-11-02T20:00:00Z');
@@ -27,5 +27,20 @@ describe('registro agregado de tests en papel', () => {
     const second = createPaperTestAttemptSegment({ ...base, id:'attempt-1:segment:2', segment:2, startedAt:timestamp + 3000, completedAt:timestamp + 4000 }, timestamp + 5000);
     expect(mergePaperTestAttemptSegments([], [first, first, second])).toHaveLength(2);
     expect(mergePaperTestAttemptSegments([first], [{ ...first, updatedAt:timestamp + 3000, sourceLabel:'Test de academia' }])[0].sourceLabel).toBe('Test de academia');
+  });
+
+  it('usa solo la última autoevaluación declarada como señal temporal y nunca los recuentos', () => {
+    const weak = createPaperTestAttemptSegment({ ...base, questionCount:50, answeredCount:50, correctCount:1, incorrectCount:49 }, timestamp + 2000);
+    const unassessedNewer = createPaperTestAttemptSegment({ ...base, id:'attempt-1:segment:2', segment:2, startedAt:timestamp + 3000, completedAt:timestamp + 4000, selfRating:undefined }, timestamp + 5000);
+    const latest = latestPaperTestSelfRatingByTopic([weak, unassessedNewer]);
+    expect(latest.get('T1.01')).toEqual(weak);
+    expect(needsPaperTestFollowUp(weak, weak.completedAt + 10)).toBe(true);
+    expect(needsPaperTestFollowUp(weak, weak.completedAt + PAPER_TEST_PRIORITY_WINDOW_MS + 1)).toBe(false);
+    const recovered = createPaperTestAttemptSegment({ ...base, id:'attempt-1:segment:3', segment:3, startedAt:timestamp + 6000, completedAt:timestamp + 7000, selfRating:'remembered' }, timestamp + 8000);
+    expect(latestPaperTestSelfRatingByTopic([weak, recovered]).get('T1.01')).toEqual(recovered);
+    expect(needsPaperTestFollowUp(recovered, recovered.completedAt + 1)).toBe(false);
+    expect(paperTestFollowUpTopicIds([weak, recovered], ['T1.01'], recovered.completedAt + 1)).toEqual([]);
+    expect(paperTestFollowUpTopicIds([weak], [], weak.completedAt + 1)).toEqual([]);
+    expect(paperTestFollowUpTopicIds([weak], ['T1.01'], weak.completedAt + 1)).toEqual(['T1.01']);
   });
 });

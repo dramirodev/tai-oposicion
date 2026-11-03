@@ -27,6 +27,8 @@ export interface PaperTestAttemptSegment {
 }
 
 export const MAX_PAPER_TEST_SEGMENTS = 300;
+/** Product heuristic shared with paper recall: a weak self-report can guide review for 30 days. */
+export const PAPER_TEST_PRIORITY_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
 const correctionStatuses = new Set<PaperTestCorrectionStatus>(['unavailable', 'answer-key-only', 'reviewed']);
 const selfRatings = new Set<PaperTestSelfRating>(['remembered', 'partial', 'not-remembered']);
 
@@ -74,4 +76,27 @@ export function mergePaperTestAttemptSegments(current: readonly PaperTestAttempt
     if (!previous || value.updatedAt > previous.updatedAt) byId.set(value.id, value);
   }
   return [...byId.values()].sort((a, b) => b.completedAt - a.completedAt || a.id.localeCompare(b.id)).slice(0, MAX_PAPER_TEST_SEGMENTS);
+}
+
+/** Latest optional self-rating per topic; counts and answer-key outcomes are intentionally ignored. */
+export function latestPaperTestSelfRatingByTopic(segments: readonly PaperTestAttemptSegment[]): ReadonlyMap<string, PaperTestAttemptSegment> {
+  const latest = new Map<string, PaperTestAttemptSegment>();
+  for (const segment of [...segments].sort((left, right) => right.completedAt - left.completedAt)) {
+    if (segment.topicId && segment.selfRating && !latest.has(segment.topicId)) latest.set(segment.topicId, segment);
+  }
+  return latest;
+}
+
+export function needsPaperTestFollowUp(segment: PaperTestAttemptSegment, timestamp: number): boolean {
+  return segment.selfRating !== undefined && segment.selfRating !== 'remembered'
+    && Number.isFinite(timestamp) && timestamp >= segment.completedAt
+    && timestamp - segment.completedAt <= PAPER_TEST_PRIORITY_WINDOW_MS;
+}
+
+/** Return only already-studied topics whose latest paper self-rating requests follow-up. */
+export function paperTestFollowUpTopicIds(segments: readonly PaperTestAttemptSegment[], studiedTopicIds: readonly string[], timestamp: number): string[] {
+  const studied = new Set(studiedTopicIds);
+  return [...latestPaperTestSelfRatingByTopic(segments).values()]
+    .filter(segment => !!segment.topicId && studied.has(segment.topicId) && needsPaperTestFollowUp(segment, timestamp))
+    .map(segment => segment.topicId!);
 }

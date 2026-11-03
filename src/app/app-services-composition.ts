@@ -32,6 +32,7 @@ import type { TrainingActivityReference } from '../core/domain/study-training-se
 import type { PaperRecallRating } from '../core/domain/paper-recall-assessment.js';
 import { daysUntilStudyDate, isStudyDateKey } from '../core/domain/study-training-calendar.js';
 import { latestPaperRecallByTopic, needsPaperRecallFollowUp } from '../core/domain/paper-recall-assessment.js';
+import { paperTestFollowUpTopicIds } from '../core/domain/paper-test-attempt.js';
 import { buildDailyTrainingPlan, normalizeTrainingPreferences, selectNextAcademyTopic } from '../core/domain/study-training-plan.js';
 import { buildTrainingCalendarEvent } from '../core/domain/study-training-events.js';
 import { localTrainingDateKey } from '../core/domain/study-training-session.js';
@@ -719,7 +720,8 @@ export const studyServices: StudyServices = {
       const recallAssessments = paperRecall.get().filter(item => studiedTopicSet.has(item.topicId));
       const latestRecall = latestPaperRecallByTopic(recallAssessments);
       const selfReportedWeakTopics = [...latestRecall.values()].filter(item => needsPaperRecallFollowUp(item, studyQuestionCatalog.now())).map(item => item.topicId);
-      const weakTopicIds = [...new Set([...studiedWeakTopics.map(topic => topic.id), ...selfReportedWeakTopics])];
+      const paperTestWeakTopics = paperTestFollowUpTopicIds(paperTestAttempts.get(), seenTopics, studyQuestionCatalog.now());
+      const weakTopicIds = [...new Set([...studiedWeakTopics.map(topic => topic.id), ...selfReportedWeakTopics, ...paperTestWeakTopics])];
       const studiedDueCount = dueIds.filter(id => studiedTopicSet.has(studyQuestionCatalog.getTopicForQuestion(id) || '')).length;
       const studiedFailureCount = failureIds.filter(id => studiedTopicSet.has(studyQuestionCatalog.getTopicForQuestion(id) || '')).length;
       const topicForCard = (id: string): string | undefined => {
