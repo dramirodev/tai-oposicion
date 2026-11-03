@@ -70,7 +70,10 @@ test('simulacros por tema deja el skeleton y muestra los tests disponibles', asy
 
 test('el tema recomendado muestra su material de academia en móvil y escritorio', async ({ page }) => {
   const errors = await setup(page, 'light');
-  await page.goto('/#/temario?topic=T1.01&dailyTraining=newContent');
+  await page.goto('/#/temario?topic=T1.01&dailyTraining=newContent&trainingSessionId=session-new-content-1&trainingActivityId=activity-new-content-1');
+  await expect(page.getByRole('heading', { name:'Estudio inicial · Constitución Española' })).toBeVisible();
+  await expect(page.getByText(/Empieza por comprender un apartado del temario/)).toBeVisible();
+  await expect(page.getByText(/Esa marca se guarda ligada a esta sesión, pero no acredita comprensión/)).toBeVisible();
   const material = page.locator('#app details').filter({ has: page.getByText(/Material de academia ·/) });
   await expect(material).toBeVisible();
   await material.locator('summary').click();
@@ -88,6 +91,9 @@ test('el tema recomendado muestra su material de academia en móvil y escritorio
   await material.locator('summary').filter({ hasText:'1. INTRODUCCIÓN' }).click();
   await material.getByRole('button', { name:'Marcar parcial' }).first().click();
   await expect(material).toContainText('Cobertura guardada.');
+  const recorded = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.academy-study-progress.v1.guest') ?? '{}') as { events?:Record<string, { kind?:string; trainingSessionId?:string; trainingActivityId?:string }> });
+  const sessionCoverage = Object.values(recorded.events ?? {}).find(event => event.kind === 'coverage' && event.trainingSessionId === 'session-new-content-1' && event.trainingActivityId === 'activity-new-content-1');
+  expect(sessionCoverage).toBeTruthy();
   await page.reload();
   const resumedMaterial = page.locator('#app details').filter({ has: page.getByText(/Material de academia ·/) });
   await resumedMaterial.locator('summary').filter({ hasText:/Material de academia/ }).click();

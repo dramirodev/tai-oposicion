@@ -129,7 +129,7 @@ export function TopicsPage() {
   return <>
     {dailyNewContent && <section className="planned-topic-study my-4 px-5 py-4 [border-inline-start:.2rem_solid_var(--brand)] bg-[var(--surface-soft)]" aria-labelledby="planned-topic-title">
       <h2 className="m-0 mb-[.35rem] text-[length:var(--fs-l)]" id="planned-topic-title">Estudio inicial · {topics.find(topic => topic.id === requestedTopic)?.name ?? requestedTopic}</h2>
-      <p className="m-0 text-muted">Estudia el tema en papel. Antes de consultar los apuntes, intenta recordar sus ideas principales. Al marcarlo como visto, volverás a Planificación para indicar cuánto recordaste; esta autoevaluación no es un resultado de examen.</p>
+      <p className="m-0 text-muted">Empieza por comprender un apartado del temario. En «Material de academia», elige el PDF de temario que estés usando, abre el epígrafe y, después de trabajarlo, registra si la cobertura fue parcial o completa. Esa marca se guarda ligada a esta sesión, pero no acredita comprensión. Cierra el material y explica la idea con tus palabras; marca el tema como visto solo cuando hayas decidido que ya lo has estudiado. Ese estado del tema y la cobertura de sus apartados se registran por separado.</p>
     </section>}
     {requestedTopic && <Suspense fallback={<p className="mt-2 text-sm text-muted" role="status">Cargando índice de materiales…</p>}><AcademyCurriculumPanel topicId={requestedTopic} hasStudyMarker={selected.has(requestedTopic)} sessionId={sessionId ?? undefined} activityId={activityId ?? undefined} onCompleteSectionRecall={searchParams.get('dailyTraining') === 'sectionRecall' ? completeSectionRecall : undefined} /></Suspense>}
     <TopicsView topics={topics} visible={visible} selected={selected} query={query} open={open}
