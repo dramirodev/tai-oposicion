@@ -87,6 +87,21 @@ it('edita el tramo existente conservando su identidad y fecha original', async (
   expect(recordPaperTestSegment).toHaveBeenCalledWith(expect.objectContaining({ attemptId:'attempt-1', segment:1, completedAt, sourceLabel:'Test revisado' }), segment.id);
 });
 
+it('pide confirmación antes de anular y mantiene el dato sin borrado físico', async () => {
+  const user = userEvent.setup();
+  const completedAt = Date.now() - 360_000;
+  const segment = { id:'attempt-1:segment:1', attemptId:'attempt-1', segment:1, dateKey:new Date(completedAt).toLocaleDateString('en-CA'), startedAt:completedAt, completedAt, updatedAt:completedAt, sourceLabel:'Test en papel', correctionStatus:'unavailable' };
+  const voidPaperTestSegment = vi.fn(() => ({ ...segment, voidedAt:Date.now() }));
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(newTopicPlan, { paperTestAttempts:[segment] }), { home:{ voidPaperTestSegment } }) });
+  await user.click(await screen.findByRole('button', { name:'Anular tramo 1 de Test en papel' }));
+  expect(await screen.findByText('¿Anular este tramo?')).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name:'Cancelar' }));
+  expect(voidPaperTestSegment).not.toHaveBeenCalled();
+  await user.click(screen.getByRole('button', { name:'Anular tramo 1 de Test en papel' }));
+  await user.click(screen.getByRole('button', { name:'Confirmar' }));
+  expect(voidPaperTestSegment).toHaveBeenCalledWith(segment.id);
+});
+
 it('permite iniciar el paso de tema nuevo aunque todavía no haya temas vistos', async () => {
   const user = userEvent.setup();
   const planned = overview(newTopicPlan);

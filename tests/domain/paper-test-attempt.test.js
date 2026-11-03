@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createPaperTestAttemptSegment, isPaperTestAttemptSegment, latestPaperTestSelfRatingByTopic, mergePaperTestAttemptSegments, needsPaperTestFollowUp, paperTestFollowUpTopicIds, PAPER_TEST_PRIORITY_WINDOW_MS } from '../../src/core/domain/paper-test-attempt.ts';
+import { createPaperTestAttemptSegment, isPaperTestAttemptSegment, latestPaperTestSelfRatingByTopic, mergePaperTestAttemptSegments, needsPaperTestFollowUp, paperTestFollowUpTopicIds, voidPaperTestAttemptSegment, PAPER_TEST_PRIORITY_WINDOW_MS } from '../../src/core/domain/paper-test-attempt.ts';
 
 describe('registro agregado de tests en papel', () => {
   const timestamp = Date.parse('2026-11-02T20:00:00Z');
@@ -42,5 +42,13 @@ describe('registro agregado de tests en papel', () => {
     expect(paperTestFollowUpTopicIds([weak, recovered], ['T1.01'], recovered.completedAt + 1)).toEqual([]);
     expect(paperTestFollowUpTopicIds([weak], [], weak.completedAt + 1)).toEqual([]);
     expect(paperTestFollowUpTopicIds([weak], ['T1.01'], weak.completedAt + 1)).toEqual(['T1.01']);
+  });
+
+  it('anula sin borrar, conserva la fecha de práctica y retira su señal de refuerzo', () => {
+    const segment = createPaperTestAttemptSegment(base, timestamp + 2000);
+    const voided = voidPaperTestAttemptSegment(segment, timestamp + 3000);
+    expect(voided).toMatchObject({ id:segment.id, completedAt:segment.completedAt, voidedAt:timestamp + 3000, updatedAt:timestamp + 3000 });
+    expect(needsPaperTestFollowUp(voided, timestamp + 4000)).toBe(false);
+    expect(voidPaperTestAttemptSegment(voided, timestamp + 4000)).toBeNull();
   });
 });

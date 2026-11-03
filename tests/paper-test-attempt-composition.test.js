@@ -22,4 +22,17 @@ describe('composición de registro en papel', () => {
     expect(store.record({ attemptId:'attempt-id-0001', segment:1, startedAt:100, completedAt:200, correctionStatus:'unavailable' }, 'unknown-id')).toBeNull();
     expect(store.get()).toEqual([]);
   });
+
+  it('anula el mismo registro de forma idempotente y sincroniza su estado', () => {
+    let now = Date.parse('2026-11-02T20:00:00Z');
+    const push = vi.fn();
+    const store = createPaperTestAttemptComposition({ accountId:() => 'student', now:() => now, createId:() => 'attempt-id-0001', push });
+    const created = store.record({ attemptId:'attempt-id-0001', segment:1, startedAt:now - 1000, completedAt:now, correctionStatus:'unavailable', topicId:'T1.01', selfRating:'partial' });
+    now += 1;
+    const voided = store.void(created.id);
+    expect(voided).toMatchObject({ id:created.id, completedAt:created.completedAt, voidedAt:now });
+    expect(store.get()).toEqual([voided]);
+    expect(store.void(created.id)).toBeNull();
+    expect(push).toHaveBeenCalledTimes(2);
+  });
 });

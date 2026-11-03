@@ -338,9 +338,10 @@ function PlanningEvidence({ overview }: { overview: HomeOverview }) {
   </section>;
 }
 
-function PaperTestLog({ overview, onRecord }: { overview: HomeOverview; onRecord(input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'>, existingId?: string): boolean }) {
+function PaperTestLog({ overview, onRecord, onVoid }: { overview: HomeOverview; onRecord(input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'>, existingId?: string): boolean; onVoid(id: string): boolean }) {
   const [open, setOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [voidingId, setVoidingId] = useState<string | null>(null);
   const [notice, setNotice] = useState('');
   const [attemptId, setAttemptId] = useState('');
   const [sourceLabel, setSourceLabel] = useState('');
@@ -414,7 +415,7 @@ function PaperTestLog({ overview, onRecord }: { overview: HomeOverview; onRecord
       {editingId && <p className="col-span-full m-0" role="status">Editando un tramo existente; se conserva su ID.</p>}
       <div className="col-span-full flex flex-wrap gap-2"><button className="btn min-h-11" type="submit">{editingId ? 'Guardar cambios' : 'Guardar tramo'}</button>{editingId && <button className="btn min-h-11" type="button" onClick={cancelEdit}>Cancelar edición</button>}</div>
     </form>}
-    {segments.length > 0 && <ul className="mt-4 mb-0 grid gap-2 pl-5">{segments.slice(0,5).map(item => <li className="flex flex-wrap items-center justify-between gap-2" key={item.id}><span>{new Date(item.completedAt).toLocaleDateString('es-ES')} · {item.sourceLabel || 'Test en papel'}{item.questionCount !== undefined ? ` · ${item.questionCount} preguntas` : ''}{item.topicId ? ` · ${item.topicId}` : ''} · {item.correctionStatus === 'reviewed' ? 'corregido' : item.correctionStatus === 'answer-key-only' ? 'plantilla disponible' : 'sin plantilla'}{item.selfRating ? ` · recuerdo: ${item.selfRating === 'remembered' ? 'sí' : item.selfRating === 'partial' ? 'parcial' : 'no'}` : ''}</span><button type="button" className="btn min-h-11" onClick={() => edit(item)} aria-label={`Editar tramo ${item.segment} de ${item.sourceLabel || item.attemptId}`}>Editar</button></li>)}</ul>}
+    {segments.length > 0 && <ul className="mt-4 mb-0 grid gap-2 pl-5">{segments.slice(0,5).map(item => <li className="flex flex-wrap items-center justify-between gap-2" key={item.id}><span>{new Date(item.completedAt).toLocaleDateString('es-ES')} · {item.sourceLabel || 'Test en papel'}{item.questionCount !== undefined ? ` · ${item.questionCount} preguntas` : ''}{item.topicId ? ` · ${item.topicId}` : ''} · {item.correctionStatus === 'reviewed' ? 'corregido' : item.correctionStatus === 'answer-key-only' ? 'plantilla disponible' : 'sin plantilla'}{item.selfRating ? ` · recuerdo: ${item.selfRating === 'remembered' ? 'sí' : item.selfRating === 'partial' ? 'parcial' : 'no'}` : ''}{item.voidedAt !== undefined ? ' · anulado, conservado en historial' : ''}</span><div className="flex flex-wrap gap-2">{item.voidedAt === undefined && <><button type="button" className="btn min-h-11" onClick={() => edit(item)} aria-label={`Editar tramo ${item.segment} de ${item.sourceLabel || item.attemptId}`}>Editar</button>{voidingId === item.id ? <span className="flex flex-wrap items-center gap-2" role="group" aria-label="Confirmar anulación"><span>¿Anular este tramo?</span><button type="button" className="btn min-h-11" onClick={() => { if (onVoid(item.id)) setVoidingId(null); }}>Confirmar</button><button type="button" className="btn min-h-11" onClick={() => setVoidingId(null)}>Cancelar</button></span> : <button type="button" className="btn min-h-11" onClick={() => setVoidingId(item.id)} aria-label={`Anular tramo ${item.segment} de ${item.sourceLabel || item.attemptId}`}>Anular</button>}</>}</div></li>)}</ul>}
   </section>;
 }
 
@@ -471,6 +472,11 @@ export function PlanningPage() {
   const recordPaperTestSegment = (input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'>, existingId?: string): boolean => {
     if (services.recordPaperTestSegment?.(input, existingId)) { setReload(value => value + 1); return true; }
     services.notify('No se pudo guardar este tramo en el dispositivo. Comprueba el espacio disponible y que los recuentos sean coherentes.');
+    return false;
+  };
+  const voidPaperTestSegment = (id: string): boolean => {
+    if (services.voidPaperTestSegment?.(id)) { setReload(value => value + 1); return true; }
+    services.notify('No se pudo anular el tramo. Puede haber cambiado en otro dispositivo; actualiza la planificación e inténtalo de nuevo.');
     return false;
   };
   const scheduledActivities = services.scheduledStudyActivities?.() ?? [];
@@ -620,7 +626,7 @@ export function PlanningPage() {
       activities={scheduledActivities} weeklyItems={weeklyAgenda?.items ?? []} weeklyAgenda={weeklyAgenda} onSchedule={scheduleActivity} onReschedule={rescheduleActivity} onOpenActivity={openScheduledActivity}
       onSaveWeeklyAgenda={saveWeeklyAgenda} onRecoverWeeklyAgenda={recoverWeeklyAgenda} onProposeWeeklyAgenda={generateWeeklyAgendaPlan} onAddWeeklyAgendaPlan={addWeeklyAgendaPlan} onSetWeeklyAgendaStatus={setWeeklyAgendaStatus} onOpenSectionRecall={openSectionRecall} />
     <PlanningHistory overview={planningOverview} />
-    <PaperTestLog overview={planningOverview} onRecord={recordPaperTestSegment} />
+    <PaperTestLog overview={planningOverview} onRecord={recordPaperTestSegment} onVoid={voidPaperTestSegment} />
     <PlanningEvidence overview={planningOverview} />
   </main>;
 }

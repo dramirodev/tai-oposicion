@@ -24,6 +24,8 @@ export interface PaperTestAttemptSegment {
   doubtfulCount?: number;
   correctionStatus: PaperTestCorrectionStatus;
   selfRating?: PaperTestSelfRating;
+  voidedAt?: number;
+  voidReason?: string;
 }
 
 export const MAX_PAPER_TEST_SEGMENTS = 300;
@@ -50,7 +52,9 @@ export function isPaperTestAttemptSegment(value: unknown): value is PaperTestAtt
     || (item.sectionIds !== undefined && (!Array.isArray(item.sectionIds) || item.sectionIds.length > 100 || item.sectionIds.some(id => typeof id !== 'string' || id.length < 4 || id.length > 160) || new Set(item.sectionIds).size !== item.sectionIds.length))
     || !optionalCount(item.questionCount) || !optionalCount(item.answeredCount) || !optionalCount(item.correctCount)
     || !optionalCount(item.incorrectCount) || !optionalCount(item.blankCount) || !optionalCount(item.doubtfulCount)
-    || (item.selfRating !== undefined && !selfRatings.has(item.selfRating))) return false;
+    || (item.selfRating !== undefined && !selfRatings.has(item.selfRating))
+    || (item.voidedAt !== undefined && (!Number.isFinite(item.voidedAt) || item.voidedAt < item.completedAt! || item.voidedAt > item.updatedAt!))
+    || (item.voidReason !== undefined && (typeof item.voidReason !== 'string' || item.voidReason.length > 160))) return false;
   if (item.answeredCount !== undefined && item.questionCount !== undefined && item.answeredCount > item.questionCount) return false;
   if (item.blankCount !== undefined && item.questionCount !== undefined && item.blankCount > item.questionCount) return false;
   if (item.answeredCount !== undefined && item.blankCount !== undefined && item.questionCount !== undefined
@@ -78,17 +82,23 @@ export function mergePaperTestAttemptSegments(current: readonly PaperTestAttempt
   return [...byId.values()].sort((a, b) => b.completedAt - a.completedAt || a.id.localeCompare(b.id)).slice(0, MAX_PAPER_TEST_SEGMENTS);
 }
 
+export function voidPaperTestAttemptSegment(segment: PaperTestAttemptSegment, now: number, reason = 'Registro anulado por el usuario'): PaperTestAttemptSegment | null {
+  if (!isPaperTestAttemptSegment(segment) || segment.voidedAt !== undefined || !Number.isFinite(now) || now < segment.completedAt || reason.length > 160) return null;
+  const result = { ...segment, voidedAt:now, voidReason:reason, updatedAt:now };
+  return isPaperTestAttemptSegment(result) ? result : null;
+}
+
 /** Latest optional self-rating per topic; counts and answer-key outcomes are intentionally ignored. */
 export function latestPaperTestSelfRatingByTopic(segments: readonly PaperTestAttemptSegment[]): ReadonlyMap<string, PaperTestAttemptSegment> {
   const latest = new Map<string, PaperTestAttemptSegment>();
-  for (const segment of [...segments].sort((left, right) => right.completedAt - left.completedAt)) {
+  for (const segment of [...segments].filter(item => item.voidedAt === undefined).sort((left, right) => right.completedAt - left.completedAt)) {
     if (segment.topicId && segment.selfRating && !latest.has(segment.topicId)) latest.set(segment.topicId, segment);
   }
   return latest;
 }
 
 export function needsPaperTestFollowUp(segment: PaperTestAttemptSegment, timestamp: number): boolean {
-  return segment.selfRating !== undefined && segment.selfRating !== 'remembered'
+  return segment.voidedAt === undefined && segment.selfRating !== undefined && segment.selfRating !== 'remembered'
     && Number.isFinite(timestamp) && timestamp >= segment.completedAt
     && timestamp - segment.completedAt <= PAPER_TEST_PRIORITY_WINDOW_MS;
 }

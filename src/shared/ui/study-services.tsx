@@ -60,6 +60,7 @@ export interface HomeServices {
   completeTrainingActivity(activity: TrainingActivity, reference?: import('../../core/domain/study-training-session.js').TrainingActivityReference): DailyTrainingSession | null;
   recordPaperRecall?(topicId: string, rating: PaperRecallRating): PaperRecallAssessment | null;
   recordPaperTestSegment?(input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'>, existingId?: string): PaperTestAttemptSegment | null;
+  voidPaperTestSegment?(id: string): PaperTestAttemptSegment | null;
   scheduledStudyActivities?(): readonly ScheduledStudyActivity[];
   scheduleStudyActivity?(input: { dateKey: string; activity: ScheduledStudyActivityKind; topicId: string; minutes: number }): ScheduleDecision | { ok:false; reason:'storage-failed' };
   rescheduleStudyActivity?(input: { id: string; dateKey: string }): ScheduleDecision | { ok:false; reason:'storage-failed' };
