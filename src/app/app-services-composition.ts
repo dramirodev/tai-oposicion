@@ -769,7 +769,7 @@ export const studyServices: StudyServices = {
       return completed;
     },
     recordPaperRecall(topicId: string, rating: PaperRecallRating) { return paperRecall.record(topicId, rating); },
-    recordPaperTestSegment(input: Parameters<typeof paperTestAttempts.record>[0]) { return paperTestAttempts.record(input); },
+    recordPaperTestSegment(input: Parameters<typeof paperTestAttempts.record>[0], existingId?: string) { return paperTestAttempts.record(input, existingId); },
     voidPaperTestSegment(id: string) { return paperTestAttempts.void(id); },
     scheduledStudyActivities() { return trainingCalendar.get(); },
     scheduleStudyActivity(input: Parameters<typeof trainingCalendar.schedule>[0]) { return trainingCalendar.schedule(input); },

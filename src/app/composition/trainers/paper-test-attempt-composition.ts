@@ -16,9 +16,10 @@ export function createPaperTestAttemptComposition(dependencies: {
       return Array.isArray(value) && mergePaperTestAttemptSegmentRecords(dependencies.accountId(), value);
     },
     record(input: Omit<PaperTestAttemptSegment, 'id' | 'dateKey' | 'updatedAt'>, existingId?: string): PaperTestAttemptSegment | null {
-      const now = dependencies.now();
       const accountId = dependencies.accountId();
-      if (existingId && !get().some(item => item.id === existingId)) return null;
+      const existing = existingId ? get().find(item => item.id === existingId) : undefined;
+      if (existingId && !existing) return null;
+      const now = Math.max(dependencies.now(), (existing?.updatedAt ?? 0) + 1);
       const segment = createPaperTestAttemptSegment({ ...input, id:existingId ?? `${input.attemptId}:segment:${input.segment}` }, now);
       if (!segment || !recordPaperTestAttemptSegment(accountId, segment, !!existingId)) return null;
       dependencies.push?.(get());
@@ -27,7 +28,7 @@ export function createPaperTestAttemptComposition(dependencies: {
     void(id: string, reason?: string): PaperTestAttemptSegment | null {
       const existing = get().find(item => item.id === id);
       if (!existing) return null;
-      const segment = voidPaperTestAttemptSegment(existing, dependencies.now(), reason);
+      const segment = voidPaperTestAttemptSegment(existing, Math.max(dependencies.now(), existing.updatedAt + 1), reason);
       if (!segment || !recordPaperTestAttemptSegment(dependencies.accountId(), segment, true)) return null;
       dependencies.push?.(get());
       return segment;
