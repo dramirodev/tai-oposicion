@@ -9,8 +9,16 @@ El [registro canónico de hallazgos](audit-findings.md) mantiene IDs, estados y 
 ### Verificación del baseline visual y regresión integral — 5 de noviembre de 2026
 
 - Actualizado `tests/e2e/baseline-ref.txt` al commit revisado `2420d1b58bc4385df51d7036643262988dedebd9`, que contiene las capturas candidatas verificadas. Se conserva el baseline histórico anterior en Git.
-- `npm run test:e2e:ci`: **72/72** pruebas de referencia en Chromium/WebKit y **296/296** pruebas candidatas aprobadas, **28 omitidas** (suites separadas de Auth/Firestore Emulator y EXTREME), sin fallos. Planificación y el foco tras navegación SPA pasaron en ambos motores.
+- `npm run test:e2e:ci`: **72/72** pruebas de referencia en Chromium/WebKit y **298/298** pruebas candidatas aprobadas, **28 omitidas** (suites separadas de Auth/Firestore Emulator y EXTREME), sin fallos. Planificación, corrección del recuerdo y el foco tras navegación SPA pasaron en ambos motores.
 - El runner local no prueba que GitHub Actions haya ejecutado el workflow remoto. ATE-006 sigue abierto; UX-009 sigue parcial y ATE-005 no declara cobertura exhaustiva.
+
+### ATE-005 — corrección del recuerdo en papel y planificación — 5 de noviembre de 2026
+
+- Se añadió una variante con perfil local sintético: el usuario cambia su autoevaluación del tema T1.02 de «Parcialmente» a «Lo recordé» el mismo día, y la persistencia conserva un solo registro con el valor corregido.
+- Tras avanzar el reloj al día siguiente y recargar, T1.02 no aparece como tema prioritario. El fixture conserva T1.01 preexistente, por eso el oráculo se limita a la relación entre T1.02 y su autoevaluación.
+- `npm run test:e2e -- tests/e2e/css-ui.spec.ts --grep 'recuerdo del tema en papel|recuerdo completo no activa'`: **4/4** Chromium/WebKit. Capturas inspeccionadas: `evidence/accessibility-2026-11-05/paper-recall-remembered-next-day-{chromium,webkit}.png`.
+- Esto verifica una frontera concreta de estado y no cierra ATE-005: quedan otros controles/estados dinámicos, sincronización y variantes adversariales.
+- Verificación de calidad del corte: `npm run check` pasó **962/989** (27 omitidas); la ejecución integral candidata corrió **326 pruebas**: 298 aprobadas, 28 omitidas y 0 fallidas, Chromium/WebKit. La prueba autenticada Emulator (**12/12**) y EXTREME (**2/2**) siguen siendo jobs locales separados y no se contaron en esos 326.
 
 ### Corte histórico: acceso privilegiado y primera suite E2E (4 de noviembre de 2026)
 
@@ -464,7 +472,7 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 
 - `npm run check`: **962 aprobadas/27 omitidas** (189 archivos aprobados/1 omitido); arquitectura, ESLint y TypeScript pasan. Sigue el aviso conocido de `window.scrollTo` en jsdom, sin fallo.
 - `npm run test:e2e -- tests/e2e/routes.spec.ts --update-snapshots`: **88/88** Chromium/WebKit; los 40 cambios de snapshots se revisaron y muestran únicamente el indicador de foco añadido en H1.
-- `npm run test:e2e`: **296/324**, 28 omitidas deliberadamente (Auth/Firestore Emulator y EXTREME) y cero fallos, Chromium/WebKit, 11,0 min.
+- `npm run test:e2e`: **298/326**, 28 omitidas deliberadamente (Auth/Firestore Emulator y EXTREME) y cero fallos, Chromium/WebKit, 11,3 min.
 - `npm run test:e2e:supertest`: **12/12**, Auth + Firestore Emulator `demo-tai-auth`; perfiles owner/normal/restricted/pending/anonymous, permisos, persistencia y recuperación. No se contactó Firebase de producción; errores `PERMISSION_DENIED` esperados verifican reglas.
 - `npm run test:e2e:extreme`: **2/2**, 1.000 acciones por motor, sin Gemini.
 - Evidencia autenticada: se ajustó `supertest-emulator.spec.ts` para esperar el H1 de Temario y dividir la captura de lectura y la de autoevaluación tras volver a Planificación; el Emulator pasó 12/12 después del cambio. Se inspeccionaron las dos capturas resultantes.

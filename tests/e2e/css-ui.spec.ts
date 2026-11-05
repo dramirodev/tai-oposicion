@@ -455,6 +455,36 @@ test('registra el recuerdo del tema en papel y prioriza su comprobación el día
   await expect(priorityActivity).toContainText('Tu autoevaluación de recuerdo en papel fue «Parcialmente» el 29 de octubre de 2026');
 });
 
+test('una autoevaluación de recuerdo completo no activa refuerzo prioritario al día siguiente', async ({ page, browserName }) => {
+  await prepare(page, 'light', 0, true);
+  await selectIntroductionTopic(page, 'T1.02');
+  await page.clock.setFixedTime(new Date('2026-10-29T12:00:00+02:00'));
+  await page.goto('/#/planificacion');
+  await page.getByRole('button', { name:'Comenzar sesión' }).click();
+  await expect(page).toHaveURL(/#\/temario\?topic=T1\.02&dailyTraining=newContent/);
+  await page.locator('[data-t="T1.02"]').click({ noWaitAfter:true });
+  await expect(page).toHaveURL(/#\/planificacion$/);
+
+  const assessment = page.getByRole('group', { name:'Después de estudiar en papel y cerrar los apuntes, ¿cuánto recordaste?' });
+  await assessment.getByRole('button', { name:'Parcialmente', exact:true }).click();
+  await expect(assessment.getByRole('button', { name:'Parcialmente', exact:true })).toHaveAttribute('aria-pressed', 'true');
+  await assessment.getByRole('button', { name:'Lo recordé', exact:true }).click();
+  await expect(assessment.getByRole('button', { name:'Lo recordé', exact:true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(assessment.getByText(/Autoevaluación guardada/)).toBeVisible();
+  const assessments = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.paper-recall.v1.guest') || '[]'));
+  expect(assessments).toHaveLength(1);
+  expect(assessments).toMatchObject([
+    { topicId:'T1.02', rating:'remembered', dateKey:'2026-10-29' },
+  ]);
+
+  await page.clock.setFixedTime(new Date('2026-10-30T12:00:00+02:00'));
+  await page.reload();
+  await expect(page.locator('#app h1')).toHaveText('Planificación de estudio');
+  const topicPriority = page.locator('.planning-activity').filter({ hasText:'Preguntas del tema prioritario' }).filter({ hasText:'T1.02' });
+  await expect(topicPriority).toHaveCount(0);
+  await page.screenshot({ path:`tests/e2e/evidence/accessibility-2026-11-05/paper-recall-remembered-next-day-${browserName}.png`, fullPage:true });
+});
+
 test('un día de consolidación sin temas vistos muestra tiempo disponible, no una duración de sesión inventada', async ({ page }) => {
   await prepare(page, 'light', 0);
   await page.clock.setFixedTime(new Date('2026-10-24T12:00:00+02:00'));

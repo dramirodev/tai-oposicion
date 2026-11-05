@@ -38,6 +38,7 @@
 - Capturas de Planificación para reflow a 320/640 CSS px en Chromium/WebKit: `evidence/accessibility-2026-11-05/planning-reflow-{320,640}px-{chromium,webkit}.png`.
 - El E2E autenticado de Auth/Firestore Emulator terminó 10/10; los dos recorridos nuevos conservan capturas `evidence/accessibility-2026-11-05/reading-options-timed-gate.png` y `content-curation-filter-empty.png`.
 - Las comprobaciones Playwright de teclado y árbol ARIA no son una sesión manual con VoiceOver/NVDA. No se pudo acceder al navegador gráfico del sistema en este entorno (host de acceso al navegador no disponible).
+- El 5 de noviembre se volvió a intentar enumerar superficies del navegador para seguir zoom y revisión manual; `cua.getState()` devolvió `Browsers: Error: The browser access host is unavailable`. No se cambió tamaño de zoom nativo ni se usó una emulación de viewport como sustituto.
 - Sin medición de contraste completa, lector de pantalla real, zoom nativo 200%/400%, objetivos táctiles y revisión criterio por criterio, **UX-009 permanece ANALIZADO / abierto**. No se declara WCAG 2.2 AA.
 
 ## Próxima revisión necesaria
