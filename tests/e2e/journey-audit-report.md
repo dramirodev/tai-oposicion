@@ -505,3 +505,9 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - Se cubrió desde el componente la selección de un archivo JSON v2 sintético válido y el rechazo de JSON malformado. El primer importado queda en almacenamiento local y permanece intacto tras el segundo intento fallido.
 - `npm test -- tests/content-map-page.test.js`: **7/7**. La prueba simula `File.text()` porque jsdom no lo implementa; la lógica del componente y la persistencia `localStorage` sí se ejercitan.
 - Esta evidencia no es una prueba visual ni una sesión con Firebase Emulator. No hubo escritura remota ni llamada a Gemini. ATE-005 continúa abierto para la cobertura dinámica y longitudinal restante.
+
+### ATE-005: descarga offline, error visible y reintento — 5 de noviembre de 2026
+
+- El E2E `tests/e2e/routes.spec.ts` inyecta un 503 sintético al descargar `data/index.json`, comprueba el mensaje de recuperación, que la descarga no se marque como completa y que el control vuelva a habilitarse. El siguiente intento descarga los archivos y deja el estado disponible offline.
+- Ejecución focal: **2/2**, Chromium y WebKit; suite completa `routes.spec.ts`: **90/90** en ambos motores. Capturas del error en `evidence/accessibility-2026-11-05/offline-download-retry-{chromium,webkit}.png`; la respuesta se simula en el navegador y no alcanza Firebase ni el proveedor Gemini.
+- Este caso cubre fallo y reintento del shell/cache offline; quedan pendientes combinaciones de offline con Auth caducado, sincronización y escritura de actividad en journeys longitudinales.
