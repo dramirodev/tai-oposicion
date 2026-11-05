@@ -4080,7 +4080,7 @@
             "x": 328,
             "y": 0,
             "width": 860,
-            "height": 717
+            "height": 687
           },
           "children": [
             {
@@ -4110,57 +4110,46 @@
                 "x": 368,
                 "y": 131,
                 "width": 780,
-                "height": 463
+                "height": 433
               },
               "children": [
-                "T3.10 · Metodologías de Pruebas y Colaboración",
-                {
-                  "role": "paragraph",
-                  "box": {
-                    "x": 368,
-                    "y": 180,
-                    "width": 780,
-                    "height": 20
-                  },
-                  "text": "Cita del temario disponible, sin enlace verificado al PDF."
-                },
-                "CheckStyle es un linter para:",
+                "T1.04 · Transparencia El Presidente del Consejo de Transparencia y Buen Gobierno:",
                 {
                   "role": "button",
-                  "name": "A JavaScript.",
+                  "name": "A Será nombrado por un periodo de 4 años renovable por una vez.",
                   "box": {
                     "x": 368,
-                    "y": 280,
+                    "y": 250,
                     "width": 780,
                     "height": 65
                   }
                 },
                 {
                   "role": "button",
-                  "name": "B Python.",
+                  "name": "B Será nombrado por un periodo de 5 años renovable por una vez.",
                   "box": {
                     "x": 368,
-                    "y": 355,
+                    "y": 325,
                     "width": 780,
                     "height": 65
                   }
                 },
                 {
                   "role": "button",
-                  "name": "C Java.",
+                  "name": "C Será nombrado por un periodo no renovable de 4 años.",
                   "box": {
                     "x": 368,
-                    "y": 430,
+                    "y": 400,
                     "width": 780,
                     "height": 65
                   }
                 },
                 {
                   "role": "button",
-                  "name": "D Ruby.",
+                  "name": "D Será nombrado por un periodo no renovable de 5 años.",
                   "box": {
                     "x": 368,
-                    "y": 505,
+                    "y": 475,
                     "width": 780,
                     "height": 65
                   }
@@ -4184,40 +4173,40 @@
       "controls": [
         {
           "role": "button",
-          "name": "A JavaScript.",
+          "name": "A Será nombrado por un periodo de 4 años renovable por una vez.",
           "box": {
             "x": 368,
-            "y": 280,
+            "y": 250,
             "width": 780,
             "height": 65
           }
         },
         {
           "role": "button",
-          "name": "B Python.",
+          "name": "B Será nombrado por un periodo de 5 años renovable por una vez.",
           "box": {
             "x": 368,
-            "y": 355,
+            "y": 325,
             "width": 780,
             "height": 65
           }
         },
         {
           "role": "button",
-          "name": "C Java.",
+          "name": "C Será nombrado por un periodo no renovable de 4 años.",
           "box": {
             "x": 368,
-            "y": 430,
+            "y": 400,
             "width": 780,
             "height": 65
           }
         },
         {
           "role": "button",
-          "name": "D Ruby.",
+          "name": "D Será nombrado por un periodo no renovable de 5 años.",
           "box": {
             "x": 368,
-            "y": 505,
+            "y": 475,
             "width": 780,
             "height": 65
           }
@@ -4246,7 +4235,7 @@
             "x": 328,
             "y": 0,
             "width": 860,
-            "height": 979
+            "height": 1177
           },
           "children": [
             {
@@ -4297,135 +4286,92 @@
                 "x": 368,
                 "y": 184,
                 "width": 780,
-                "height": 672
+                "height": 870
               },
               "children": [
-                "T4.02 · Administración de BD y Virtualización",
+                "T4.09 · Seguridad en Redes",
+                {
+                  "role": "complementary",
+                  "name": "Advertencia de la pregunta",
+                  "box": {
+                    "x": 368,
+                    "y": 235,
+                    "width": 780,
+                    "height": 75
+                  },
+                  "children": [
+                    "Nota de la pregunta",
+                    {
+                      "role": "paragraph",
+                      "box": {
+                        "x": 386,
+                        "y": 276,
+                        "width": 748,
+                        "height": 23
+                      },
+                      "text": "Pharming frente a phishing, keylogger, vishing."
+                    }
+                  ]
+                },
+                "Dentro de las amenazas dirigidas al puesto del usuario, ¿en qué consiste la técnica de \"Pharming\" para la obtención ilícita de credenciales? A En la alteración del proceso de resolución de nombres (fichero hosts o caché DNS) para redirigir al usuario a una página web",
+                {
+                  "role": "mark",
+                  "box": {
+                    "x": 634,
+                    "y": 469,
+                    "width": 40,
+                    "height": 21
+                  },
+                  "text": "falsa"
+                },
+                ", incluso si este escribe la dirección correcta en el navegador. B En el envío masivo de correos electrónicos suplantando la identidad de una entidad financiera para que el usuario pinche en un enlace malicioso. C En la instalación de un programa malicioso que registra todas las pulsaciones de teclas realizadas en un dispositivo infectado. D En el uso de técnicas de ingeniería social telefónica con las que se suplanta la identidad de una empresa, organización o persona de confianza, con el fin de obtener información personal y sensible.",
                 {
                   "role": "paragraph",
                   "box": {
                     "x": 368,
-                    "y": 233,
-                    "width": 780,
-                    "height": 20
-                  },
-                  "text": "Cita del temario disponible, sin enlace verificado al PDF."
-                },
-                "Con",
-                {
-                  "role": "mark",
-                  "box": {
-                    "x": 410,
-                    "y": 275,
-                    "width": 16,
-                    "height": 26
-                  },
-                  "text": "8"
-                },
-                "discos de",
-                {
-                  "role": "mark",
-                  "box": {
-                    "x": 523,
-                    "y": 275,
-                    "width": 12,
-                    "height": 26
-                  },
-                  "text": "1"
-                },
-                "TB en RAID",
-                {
-                  "role": "mark",
-                  "box": {
-                    "x": 646,
-                    "y": 275,
-                    "width": 16,
-                    "height": 26
-                  },
-                  "text": "6"
-                },
-                "E, la capacidad total es de: A",
-                {
-                  "role": "mark",
-                  "box": {
-                    "x": 427,
-                    "y": 352,
-                    "width": 14,
-                    "height": 21
-                  },
-                  "text": "5"
-                },
-                "TB. B",
-                {
-                  "role": "mark",
-                  "box": {
-                    "x": 427,
-                    "y": 427,
-                    "width": 14,
-                    "height": 21
-                  },
-                  "text": "4"
-                },
-                "TB. C",
-                {
-                  "role": "mark",
-                  "box": {
-                    "x": 427,
-                    "y": 502,
-                    "width": 14,
-                    "height": 21
-                  },
-                  "text": "6"
-                },
-                "TB. D",
-                {
-                  "role": "mark",
-                  "box": {
-                    "x": 427,
-                    "y": 577,
-                    "width": 12,
-                    "height": 21
-                  },
-                  "text": "7"
-                },
-                "TB.",
-                {
-                  "role": "paragraph",
-                  "box": {
-                    "x": 368,
-                    "y": 623,
+                    "y": 821,
                     "width": 780,
                     "height": 26
                   },
-                  "text": "¿Qué trampas ves aquí? Marca todas las que apliquen (hay varias posibles)."
-                },
-                {
-                  "role": "button",
-                  "name": "Absolutización",
-                  "box": {
-                    "x": 383,
-                    "y": 673,
-                    "width": 131,
-                    "height": 44
-                  }
+                  "text": "¿Qué trampas ves aquí? Marca todas las que apliquen (hay 1 posible)."
                 },
                 {
                   "role": "button",
                   "name": "Conceptos casi idénticos",
                   "box": {
-                    "x": 520,
-                    "y": 673,
+                    "x": 383,
+                    "y": 871,
                     "width": 201,
                     "height": 44
                   }
                 },
                 {
                   "role": "button",
-                  "name": "Orden invertido",
+                  "name": "Obligación/facultad",
                   "box": {
-                    "x": 727,
-                    "y": 673,
-                    "width": 135,
+                    "x": 590,
+                    "y": 871,
+                    "width": 166,
+                    "height": 44
+                  }
+                },
+                {
+                  "role": "button",
+                  "name": "Trampa del supuesto",
+                  "box": {
+                    "x": 763,
+                    "y": 871,
+                    "width": 173,
+                    "height": 44
+                  }
+                },
+                {
+                  "role": "button",
+                  "name": "Cierta pero no responde",
+                  "box": {
+                    "x": 383,
+                    "y": 921,
+                    "width": 194,
                     "height": 44
                   }
                 },
@@ -4433,19 +4379,19 @@
                   "role": "button",
                   "name": "Inventado que suena real",
                   "box": {
-                    "x": 868,
-                    "y": 673,
+                    "x": 583,
+                    "y": 921,
                     "width": 202,
                     "height": 44
                   }
                 },
                 {
                   "role": "button",
-                  "name": "Numeración de normas",
+                  "name": "Orden invertido",
                   "box": {
-                    "x": 383,
-                    "y": 723,
-                    "width": 188,
+                    "x": 791,
+                    "y": 921,
+                    "width": 135,
                     "height": 44
                   }
                 },
@@ -4453,19 +4399,9 @@
                   "role": "button",
                   "name": "Cambio de sujeto/órgano",
                   "box": {
-                    "x": 577,
-                    "y": 723,
+                    "x": 383,
+                    "y": 971,
                     "width": 204,
-                    "height": 44
-                  }
-                },
-                {
-                  "role": "button",
-                  "name": "Contaminación entre normas",
-                  "box": {
-                    "x": 787,
-                    "y": 723,
-                    "width": 228,
                     "height": 44
                   }
                 },
@@ -4473,8 +4409,8 @@
                   "role": "button",
                   "name": "Cifra o plazo vecino",
                   "box": {
-                    "x": 383,
-                    "y": 773,
+                    "x": 593,
+                    "y": 971,
                     "width": 164,
                     "height": 44
                   }
@@ -4507,31 +4443,41 @@
         },
         {
           "role": "button",
-          "name": "Absolutización",
-          "box": {
-            "x": 383,
-            "y": 673,
-            "width": 131,
-            "height": 44
-          }
-        },
-        {
-          "role": "button",
           "name": "Conceptos casi idénticos",
           "box": {
-            "x": 520,
-            "y": 673,
+            "x": 383,
+            "y": 871,
             "width": 201,
             "height": 44
           }
         },
         {
           "role": "button",
-          "name": "Orden invertido",
+          "name": "Obligación/facultad",
           "box": {
-            "x": 727,
-            "y": 673,
-            "width": 135,
+            "x": 590,
+            "y": 871,
+            "width": 166,
+            "height": 44
+          }
+        },
+        {
+          "role": "button",
+          "name": "Trampa del supuesto",
+          "box": {
+            "x": 763,
+            "y": 871,
+            "width": 173,
+            "height": 44
+          }
+        },
+        {
+          "role": "button",
+          "name": "Cierta pero no responde",
+          "box": {
+            "x": 383,
+            "y": 921,
+            "width": 194,
             "height": 44
           }
         },
@@ -4539,19 +4485,19 @@
           "role": "button",
           "name": "Inventado que suena real",
           "box": {
-            "x": 868,
-            "y": 673,
+            "x": 583,
+            "y": 921,
             "width": 202,
             "height": 44
           }
         },
         {
           "role": "button",
-          "name": "Numeración de normas",
+          "name": "Orden invertido",
           "box": {
-            "x": 383,
-            "y": 723,
-            "width": 188,
+            "x": 791,
+            "y": 921,
+            "width": 135,
             "height": 44
           }
         },
@@ -4559,19 +4505,9 @@
           "role": "button",
           "name": "Cambio de sujeto/órgano",
           "box": {
-            "x": 577,
-            "y": 723,
+            "x": 383,
+            "y": 971,
             "width": 204,
-            "height": 44
-          }
-        },
-        {
-          "role": "button",
-          "name": "Contaminación entre normas",
-          "box": {
-            "x": 787,
-            "y": 723,
-            "width": 228,
             "height": 44
           }
         },
@@ -4579,8 +4515,8 @@
           "role": "button",
           "name": "Cifra o plazo vecino",
           "box": {
-            "x": 383,
-            "y": 773,
+            "x": 593,
+            "y": 971,
             "width": 164,
             "height": 44
           }
@@ -4608,7 +4544,7 @@
             "x": 328,
             "y": 0,
             "width": 860,
-            "height": 550
+            "height": 584
           },
           "children": [
             {
@@ -4649,7 +4585,7 @@
                 "x": 368,
                 "y": 159,
                 "width": 780,
-                "height": 343
+                "height": 377
               },
               "children": [
                 {
@@ -4662,12 +4598,12 @@
                   },
                   "text": "Cita del temario disponible, sin enlace verificado al PDF."
                 },
-                "El sistema de impresión más general en las impresoras de inyección de tinta, que produce pequeñas gotas cuando se necesitan, es el:",
+                "Conforme al artículo 10.2 de la Constitución Española de 1978, los derechos fundamentales se interpretarán de acuerdo con la Declaración _____ de Derechos Humanos.",
                 {
                   "role": "paragraph",
                   "box": {
                     "x": 368,
-                    "y": 312,
+                    "y": 346,
                     "width": 780,
                     "height": 26
                   },
@@ -4678,7 +4614,7 @@
                   "name": "La opción CORRECTA / VERDADERA",
                   "box": {
                     "x": 368,
-                    "y": 338,
+                    "y": 372,
                     "width": 780,
                     "height": 65
                   }
@@ -4688,7 +4624,7 @@
                   "name": "La INCORRECTA / FALSA / la excepción",
                   "box": {
                     "x": 368,
-                    "y": 413,
+                    "y": 447,
                     "width": 780,
                     "height": 65
                   }
@@ -4714,7 +4650,7 @@
           "name": "La opción CORRECTA / VERDADERA",
           "box": {
             "x": 368,
-            "y": 338,
+            "y": 372,
             "width": 780,
             "height": 65
           }
@@ -4724,7 +4660,7 @@
           "name": "La INCORRECTA / FALSA / la excepción",
           "box": {
             "x": 368,
-            "y": 413,
+            "y": 447,
             "width": 780,
             "height": 65
           }
@@ -8625,7 +8561,7 @@
                 "height": 22
               }
             },
-            "Debido a la pandemia ocasionada por el SARS-CoV-2, más conocido como Coronavirus, las Administraciones Publicas se han visto obligadas a impulsar el teletrabajo y a cambiar su estrategia en el ámbito de las TIC. En este sentido ha sido asignado en la integración de dos organismos en su departamento, los cuales no tienen capacidad para asumir las nuevas demandas de servicios y conexiones. Uno de los centros es la Demarcación de Carreteras de Madrid (DCM) y el otro es la Confederación Hidrográfica del Tajo (CHT). La DCM tiene máquinas físicas RedHat Enterprise Linux (RHEL). Su estructura consiste en tres áreas y en cada una de ellas trabajan 20 personas. La CHT tiene máquinas físicas Solaris. …",
+            "Usted forma parte de un grupo de funcionarios de nuevo ingreso que se acaban de incorporar a una Subdirección General de Tecnologías de la Información y Comunicaciones de un ministerio y una de las primeras tareas que se les encomienda es continuar el desarrollo de una aplicación que empezó un funcionario que ya no está en la subdirección. La aplicación se compone de un frontend desarrollado con Angular 21 que se comunica con dos APIs: • API de persistencia: Desarrollada en ASP.NET 10 con C# 14, expone servicios REST para realizar operaciones de consulta, escritura y borrado en una base de datos SQL Server 2025. Además, utiliza Nunit 3.0 para pruebas. • API de integración con servicios…",
             {
               "role": "button",
               "name": "Elegir este supuesto",
@@ -8647,7 +8583,7 @@
                 "height": 22
               }
             },
-            "El Ministerio de Educación, Formación Profesional y Deportes tiene una red asignada en el Plan de Direccionamiento de la AGE 10.9.0.0/16 y ha creado un organismo para la enseñanza online de formadores, OEOF (en adelante nos referiremos en este supuesto sólo como “organismo”), al que le ha correspondido la última de las subredes de las 16 en las que se ha dividido la red ministerial. El sistema de enseñanza online de formadores se fundamenta en un servidor de formación accesible también desde Internet en la URL https://www.profesores.es. Los servidores de este sistema (web, http, DNS, DHCP, LDAP), se van a instalar con sistema operativo Linux Ubuntu. El portal web está montado usando Apache T…",
+            "Debido a la pandemia ocasionada por el SARS-CoV-2, más conocido como Coronavirus, las Administraciones Publicas se han visto obligadas a impulsar el teletrabajo y a cambiar su estrategia en el ámbito de las TIC. En este sentido ha sido asignado en la integración de dos organismos en su departamento, los cuales no tienen capacidad para asumir las nuevas demandas de servicios y conexiones. Uno de los centros es la Demarcación de Carreteras de Madrid (DCM) y el otro es la Confederación Hidrográfica del Tajo (CHT). La DCM tiene máquinas físicas RedHat Enterprise Linux (RHEL). Su estructura consiste en tres áreas y en cada una de ellas trabajan 20 personas. La CHT tiene máquinas físicas Solaris. …",
             {
               "role": "button",
               "name": "Elegir este supuesto",
@@ -11800,7 +11736,7 @@
                 "width": 721,
                 "height": 26
               },
-              "text": "sincronizado · último dato recibido 19:20:20"
+              "text": "sincronizado · último dato recibido 20:05:15"
             },
             {
               "role": "button",
@@ -12080,11 +12016,11 @@
             },
             {
               "role": "button",
-              "name": "Versión 1.1.12 (543cc25)",
+              "name": "Versión 1.1.12 (cb69188)",
               "box": {
                 "x": 301,
                 "y": 896,
-                "width": 164,
+                "width": 161,
                 "height": 44
               }
             },
@@ -14209,11 +14145,11 @@
         },
         {
           "role": "button",
-          "name": "Versión 1.1.12 (543cc25)",
+          "name": "Versión 1.1.12 (cb69188)",
           "box": {
             "x": 301,
             "y": 896,
-            "width": 164,
+            "width": 161,
             "height": 44
           }
         },

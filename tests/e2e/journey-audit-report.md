@@ -18,7 +18,8 @@ El [registro canónico de hallazgos](audit-findings.md) mantiene IDs, estados y 
 - Tras avanzar el reloj al día siguiente y recargar, T1.02 no aparece como tema prioritario. El fixture conserva T1.01 preexistente, por eso el oráculo se limita a la relación entre T1.02 y su autoevaluación.
 - `npm run test:e2e -- tests/e2e/css-ui.spec.ts --grep 'recuerdo del tema en papel|recuerdo completo no activa'`: **4/4** Chromium/WebKit. Capturas inspeccionadas: `evidence/accessibility-2026-11-05/paper-recall-remembered-next-day-{chromium,webkit}.png`.
 - Esto verifica una frontera concreta de estado y no cierra ATE-005: quedan otros controles/estados dinámicos, sincronización y variantes adversariales.
-- Verificación de calidad del corte: `npm run check` pasó **962/989** (27 omitidas); la ejecución integral candidata corrió **326 pruebas**: 298 aprobadas, 28 omitidas y 0 fallidas, Chromium/WebKit. La prueba autenticada Emulator (**12/12**) y EXTREME (**2/2**) siguen siendo jobs locales separados y no se contaron en esos 326.
+- Verificación de calidad del corte: `npm run check` pasó **962/989** (27 omitidas); la ejecución integral candidata corrió **326 pruebas**: 298 aprobadas, 28 omitidas y 0 fallidas, Chromium/WebKit. Repetición posterior: Auth/Firestore Emulator `demo-tai-auth` **12/12** y EXTREME **2/2**, con 1.000 acciones por motor. No se accedió a Firebase productivo ni se usó Gemini.
+- Revalidación de continuidad de Planificación: los recorridos de inicio desde Planificación, agenda semanal persistida y pausa de foco tras reload pasaron **6/6** en Chromium/WebKit. La pausa conserva el índice de actividad, y al terminarla el botón «Continuar actividad» vuelve al test de Active Recall esperado. Esta prueba focal no sustituye el recorrido autenticado ni cubre sincronización entre dispositivos.
 
 ### Corte histórico: acceso privilegiado y primera suite E2E (4 de noviembre de 2026)
 

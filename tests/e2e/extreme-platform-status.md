@@ -3,7 +3,7 @@
 ## Revalidación integral de baseline — 5 de noviembre de 2026
 
 - `tests/e2e/baseline-ref.txt` ahora apunta al commit revisado `2420d1b58bc4385df51d7036643262988dedebd9`; el baseline histórico permanece disponible en Git.
-- `npm run test:e2e:ci` pasó las pruebas de referencia **72/72** (Chromium/WebKit) y candidata **298/298**, con **28 omitidas** deliberadamente para Emulator y EXTREME, sin fallos. `npm run check` pasó **962 aprobadas/27 omitidas**.
+- `npm run test:e2e:ci` pasó las pruebas de referencia **72/72** (Chromium/WebKit) y candidata **298/298**, con **28 omitidas** deliberadamente para Emulator y EXTREME, sin fallos. `npm run check` pasó **962 aprobadas/27 omitidas**; repetición de Emulator **12/12** y EXTREME **2/2** (1.000 acciones/motor).
 - Es verificación local, no evidencia de ejecución GitHub Actions. ATE-005 continúa parcial; UX-009 aún requiere comprobaciones con tecnología asistiva/zoom/contraste; ATE-006 remoto continúa abierto hasta que haya ejecución del workflow desde el repositorio.
 
 Registro compartido de hallazgos/correcciones: [audit-findings.md](audit-findings.md). Los hallazgos de plataforma/ATE se mantienen con IDs estables y se enlazan desde este estado; no se duplican aquí.
