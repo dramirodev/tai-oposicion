@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { createElement } from 'react';
 import { renderApp } from './helpers/render-app.js';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DEFAULT_TRAINING_PREFERENCES } from '../src/core/domain/study-training-plan.js';
 vi.mock('../src/shared/ui/dialog-actions.js', () => ({ ask: vi.fn(async () => true), toast: vi.fn() }));
@@ -44,6 +44,59 @@ it('distingue la última sincronización correcta de un error posterior', async 
  expect(screen.getByText(/permission-denied/)).toBeInTheDocument();
  await userEvent.setup().click(screen.getByRole('button', { name:'Reintentar sincronización' }));
  expect(settings.retrySync).toHaveBeenCalledOnce();
+});
+it('anuncia progreso sin conexión, cancela por cambio de cuenta y permite reintentar', async () => {
+ const { toast } = await import('../src/shared/ui/dialog-actions.js');
+ let reportProgress, isCurrent, rejectPending;
+ settings.downloadOffline.mockImplementationOnce((progress, current) => {
+  reportProgress = progress; isCurrent = current;
+  return new Promise((_, reject) => { rejectPending = reject; });
+ });
+ await renderSettings();
+ const offline = screen.getByRole('heading', { name: 'Uso sin conexión' }).closest('section');
+ const user = userEvent.setup();
+ const button = within(offline).getByRole('button', { name: 'Descargar para uso sin conexión' });
+ const status = within(offline).getByRole('status');
+ await user.click(button);
+ expect(button).toBeDisabled();
+ expect(status).toHaveTextContent('Preparando descarga…');
+ reportProgress(1, 4);
+ await waitFor(() => expect(status).toHaveTextContent('Descargando… 1/4 archivos'));
+ account = 'cuenta-b';
+ expect(isCurrent()).toBe(false);
+ rejectPending(new Error('Descarga cancelada al salir de Ajustes o cambiar de cuenta.'));
+ await waitFor(() => expect(button).toBeEnabled());
+ expect(status).not.toHaveTextContent('Descargando…');
+ expect(toast).toHaveBeenCalledWith('Descarga cancelada al salir de Ajustes o cambiar de cuenta.');
+
+ account = 'cuenta-a';
+ settings.downloadOffline.mockImplementationOnce(async progress => {
+  progress(4, 4);
+  return { complete: true, missing: [], total: 4, completedAt: 1000 };
+ });
+ await user.click(button);
+ await waitFor(() => expect(toast).toHaveBeenCalledWith('Descarga sin conexión completada.'));
+ expect(button).toBeEnabled();
+ expect(settings.downloadOffline).toHaveBeenCalledTimes(2);
+});
+it('explica un fallo de descarga sin conexión y permite reintentar', async () => {
+ const { toast } = await import('../src/shared/ui/dialog-actions.js');
+ settings.downloadOffline
+  .mockRejectedValueOnce(new Error('No se pudo descargar data/T1.01.json. Reintenta cuando tengas conexión.'))
+  .mockResolvedValueOnce({ complete: true, missing: [], total: 4, completedAt: 2000 });
+ await renderSettings();
+ const offline = screen.getByRole('heading', { name: 'Uso sin conexión' }).closest('section');
+ const user = userEvent.setup();
+ const button = within(offline).getByRole('button', { name: 'Descargar para uso sin conexión' });
+ const status = within(offline).getByRole('status');
+ await user.click(button);
+ await waitFor(() => expect(button).toBeEnabled());
+ expect(toast).toHaveBeenCalledWith('No se pudo descargar data/T1.01.json. Reintenta cuando tengas conexión.');
+ expect(status).not.toHaveTextContent('Descarga sin conexión completada');
+ await user.click(button);
+ await waitFor(() => expect(toast).toHaveBeenCalledWith('Descarga sin conexión completada.'));
+ expect(settings.downloadOffline).toHaveBeenCalledTimes(2);
+ expect(button).toBeEnabled();
 });
 it('oculta las tarjetas de las modalidades y permite editar el presupuesto semanal', async () => {
  fullAccess = true;

@@ -86,6 +86,15 @@ Estados: **Verificado**, **Parcial**, **Pendiente**, **Bloqueado**. “Verificad
 - ATE-005 sigue **EN CORRECCIÓN**: quedan pendientes filtros con resultados, error/reintento de carga, otros estados dinámicos y recorridos adversariales; no se afirma cobertura completa. No se utilizó Firebase ni Gemini.
 - **Siguiente paso:** ejercitar Falladas con preguntas sintéticas existentes (búsqueda, tema, repaso, racha y acción habilitada/deshabilitada), comprobar efecto visible y persistencia de la marca solo si el fixture de prueba permite aislarla con seguridad.
 
+## Continuación ATE-005 — error y reintento de descarga offline (5 de noviembre de 2026)
+
+- `settings-page.test.js` ahora cubre Ajustes → descarga en curso/progreso → cambio de cuenta/cancelación → recuperación y reintento, y el caso de error de descarga → toast con recurso fallido → control habilitado → reintento satisfactorio. Resultado: **11/11**.
+- El recorrido real de service worker/CacheStorage en `routes.spec.ts --grep 'shell de Vite, CSP y arranque sin conexión'` pasó **2/2** Chromium/WebKit. Corta la red y vuelve a cargar Inicio, verificando acceso a contenido cacheado.
+- `npm run check` pasó **962 tests / 27 omitidos**, 189 archivos aprobados/1 omitido; arquitectura, ESLint y TypeScript completaron. El aviso de jsdom `window.scrollTo` en el test de tarjetas persiste y no causa fallo.
+- El primer `npm run check` del corte tuvo un fallo en el test de aislamiento de `design-home-stats`; el archivo pasó **7/7** aislado y dos ejecuciones globales posteriores pasaron (961/27 y 962/27). No se alteró la prueba ni el producto. Se conserva como señal intermitente sin causa reproducida.
+- Estado de auditoría: ATE-005 sigue parcial; UX-009 aún necesita verificaciones con tecnología asistiva, zoom nativo y contraste integral; ATE-006 remoto no se ha podido validar sin el workflow en la rama por defecto. No se usaron Firebase producción ni Gemini.
+- **Siguiente paso:** continuar inventariando transiciones dinámicas de Planificación/Temario con fixtures sintéticos y aserciones de persistencia; investigar por separado la señal intermitente solo si vuelve a reproducirse.
+
 ## Revalidación ATE-005 — Falladas pobladas, recuperación y reflow (5 de noviembre de 2026)
 
 - `npm run test:e2e -- tests/e2e/failures-empty-state-journey.spec.ts`: **8/8** Chromium/WebKit a 320/1440 px. Recorre estado vacío → ayuda y pregunta sintética → búsqueda/no coincidencia → filtros tema/temario/racha → marcar temario → reload → filtro revisada → practicar misma pregunta. Comprueba también que `scrollWidth ≤ 320 CSS px` y que el objetivo completo de la marca mide al menos 24×24 CSS px.
