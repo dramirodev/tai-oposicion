@@ -492,3 +492,10 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - `npm run check` inicialmente intentó cargar `tests/e2e/evidence/auditoria-preguntas-2026-11-05/evidencia-tecnica/auditoria-tecnica-repro.test.js`, que el handoff de esa evidencia instruye copiar a `tests/` para ejecutarlo. Vitest resolvía sus imports relativos desde el subdirectorio archivado y fallaba. `vitest.config.mjs` ahora excluye `tests/e2e/evidence/**` sin alterar ni retirar los documentos/test archivados.
 - Verificación posterior: `npm run check` **189 archivos aprobados / 1 omitido; 962 tests aprobados / 27 omitidos**. Una primera repetición presentó fallos transitorios de arranque en dos pruebas de UI; pasaron **2/2** focalmente y el rerun completo quedó en verde. `git diff --check` limpio.
 - La auditoría sigue abierta: ATE-005 no es exhaustiva; UX-009 requiere tecnología asistiva, zoom nativo y contraste; ATE-006 necesita una ejecución Actions remota desde la rama por defecto.
+
+### Aislamiento del borrador curatorial por cuenta y contador singular — 5 de noviembre de 2026
+
+- Se añadió una prueba con dos perfiles sintéticos: comienza con un borrador vacío, cambia al perfil con un manifiesto local, muestra su vínculo, vuelve al perfil inicial y confirma que el borrador de la otra cuenta desaparece de la vista. La key persistida sigue siendo específica de cuenta; no hay modificación de Firebase ni sincronización editorial.
+- La prueba reprodujo «1 vínculos». Se cambió únicamente el copy para usar «1 vínculo» en singular; el estado cero conserva «0 vínculos».
+- `npm test -- tests/content-map-page.test.js`: **6/6**. Esta evidencia cubre el cambio de perfil dentro del servicio mockeado, no una sesión Auth Emulator adicional; ATE-005 sigue abierto para los demás estados y controles.
+- Regresión general tras los cambios locales de esta iteración: `npm run check` aprobó arquitectura, lint, typecheck y **963 tests / 27 omitidos**; `git diff --check` permanece limpio. El aviso jsdom de `window.scrollTo` es conocido y no hace fallar la suite.

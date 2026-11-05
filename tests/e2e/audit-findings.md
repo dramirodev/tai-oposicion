@@ -381,14 +381,23 @@ Estados válidos: `DETECTADO`, `ANALIZADO`, `PRIORIZADO`, `EN CORRECCIÓN`, `COR
 - **Solución aplicada:** Excluir `tests/e2e/evidence/**` de la búsqueda de Vitest; las caracterizaciones siguen ejecutables al copiarlas explícitamente a la ubicación descrita por su informe.
 - **Archivos afectados:** `vitest.config.mjs`, este registro y el informe de auditoría.
 - **Estado de implementación:** CORREGIDO Y VERIFICADO.
-- **Pruebas de verificación:** Tras añadir `exclude: ['tests/e2e/evidence/**']`, `npm run check` terminó con **189 archivos aprobados / 1 omitido y 962 tests aprobados / 27 omitidos**. La primera repetición posterior tuvo dos fallos transitorios de arranque (`app.test.js`, `finish-ui.test.js`); ambos pasaron focalmente **2/2** y `npm run check` volvió a pasar completo. El test del flujo curatorial pasó focalmente **5/5**. `git diff --check` limpio.
+- **Pruebas de verificación:** Tras añadir `exclude: ['tests/e2e/evidence/**']`, `npm run check` terminó con **189 archivos aprobados / 1 omitido y 962 tests aprobados / 27 omitidos**. La primera repetición posterior tuvo dos fallos transitorios de arranque (`app.test.js`, `finish-ui.test.js`); ambos pasaron focalmente **2/2** y `npm run check` volvió a pasar completo. El test del flujo curatorial pasó focalmente **6/6**. `git diff --check` limpio.
 - **Resultado final:** Vitest ya no recoge caracterizaciones archivadas como evidencia; las suites normales quedan verificadas. No se modificaron el fixture ni la auditoría documental externa.
+
+### UX-019 — El contador del borrador editorial usa plural con una asociación
+
+- **Categoría / funcionalidad:** Microcopy / borrador local de Curar vínculos a epígrafes.
+- **Descripción:** Con una asociación guardada, el título presentaba «Borrador local · 1 vínculos».
+- **Evidencia:** El test sintético de cambio de cuenta inspeccionó el título tras cargar el manifiesto de otra cuenta; la primera aserción esperaba singular y reprodujo el plural incorrecto.
+- **Severidad / prioridad:** P2 / baja; no bloquea la tarea, pero reduce claridad y corrección del estado.
+- **Causa identificada:** El sustantivo «vínculos» estaba escrito como constante, sin depender del contador.
+- **Comportamiento actual / propuesto / consecuencias:** Actual: número variable y sustantivo siempre plural. Propuesto: «1 vínculo» y plural para 0 o varios; solo cambia el texto mostrado.
+- **Solución aplicada:** Condicionar «vínculo/vínculos» a `manifest.links.length === 1`.
+- **Archivos afectados:** `src/features/content-map/AcademyQuestionSectionMapPage.tsx`, `tests/content-map-page.test.js`.
+- **Estado de implementación:** CORREGIDO Y VERIFICADO.
+- **Pruebas de verificación:** `npm test -- tests/content-map-page.test.js` pasó **6/6**; incluye estado sin asociaciones, singular, cambio de cuenta ida/vuelta y ausencia de vínculos de la otra cuenta al regresar. `npm run check` pasó con **963 tests aprobados / 27 omitidos**; arquitectura, lint y TypeScript correctos.
+- **Resultado final:** El contador muestra concordancia correcta y la regresión comprueba aislamiento entre perfiles.
 
 ## Registro y cierre
 
 Un hallazgo solo pasa a `CORREGIDO Y VERIFICADO` con referencia a evidencia ejecutada. Los hallazgos históricos no se eliminan; si una hipótesis no se confirma, se cambia a `DESCARTADO, CON JUSTIFICACIÓN` y se conserva la evidencia. Actualizar este registro y los informes vinculados tras cada unidad significativa.
-
-
-### Auditoría documental y semántica TAI · 2026-11-05
-
-Se incorporan los IDs TAI-AUD-TEC-01 a 08, TAI-AUD-ED-01 a 06, TAI-AUD-DOC-01/02 y los dictámenes individuales Q-* mediante el [registro de hallazgos del banco](evidence/auditoria-preguntas-2026-11-05/10-registro-de-hallazgos.md). Contiene prioridades, evidencias, estado y pruebas de cierre. Los [resultados técnicos](evidence/auditoria-preguntas-2026-11-05/07-tests-simulacros-y-arquitectura.md) distinguen reproducciones de correcciones. No se ejecutaron correcciones operativas en esta fase.

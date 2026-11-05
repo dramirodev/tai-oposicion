@@ -75,9 +75,40 @@ it('reads v1 local drafts as same-topic v2 links without deleting the legacy key
   window.localStorage.setItem('tai.academy-question-section-map:v1:curator', JSON.stringify(legacy));
   window.localStorage.setItem('tai.academy-question-section-map:v2:curator', '{invalid-json');
   renderApp(createElement(AcademyQuestionSectionMapPage), { services:services(), initialEntries:['/curar-contenido'] });
-  expect(await screen.findByText('Borrador local · 1 vínculos')).toBeInTheDocument();
+  expect(await screen.findByText('Borrador local · 1 vínculo')).toBeInTheDocument();
   expect(JSON.parse(window.localStorage.getItem('tai.academy-question-section-map:v1:curator'))).toEqual(legacy);
   expect(window.localStorage.getItem('tai.academy-question-section-map:v2:curator')).toBe('{invalid-json');
+});
+
+it('keeps editorial drafts isolated when the active account changes', async () => {
+  window.localStorage.clear();
+  const otherManifest = {
+    schemaVersion:2, revision:'other-account-draft', links:[{
+      status:'approved', questionId:'academy-q1', contentRevision:'fnv1a-12345678',
+      questionTopicId:'T3.01', testMaterialTopicId:'T1.04', sectionTopicId:'T3.01', sectionId:'ci-0123456789abcdefabcd',
+      testEvidence:{ path:'test.pdf', sourceHash:'a'.repeat(64), page:1 },
+      sectionEvidence:{ path:'section.pdf', sourceHash:'b'.repeat(64), outlineFingerprint:'c'.repeat(64), page:1 },
+      rationale:'Vínculo sintético de otra cuenta para verificar aislamiento.', reviewedAt:1, reviewer:'fixture',
+    }],
+  };
+  window.localStorage.setItem('tai.academy-question-section-map:v2:other', JSON.stringify(otherManifest));
+  const configured = services();
+  const activeAccount = { id:'curator' };
+  configured.access.accountId = () => activeAccount.id;
+  const listeners = new Set();
+  configured.access.subscribe = listener => { listeners.add(listener); return () => listeners.delete(listener); };
+  const changeAccount = id => { activeAccount.id = id; listeners.forEach(listener => listener()); };
+  renderApp(createElement(AcademyQuestionSectionMapPage), { services:configured, initialEntries:['/curar-contenido'] });
+  expect(await screen.findByText('Borrador local · 0 vínculos')).toBeInTheDocument();
+
+  changeAccount('other');
+  expect(await screen.findByText('Borrador local · 1 vínculo')).toBeInTheDocument();
+  await userEvent.setup().selectOptions(await screen.findByLabelText('Tema de la pregunta'), 'T3.01');
+  expect(screen.getByRole('article')).toHaveTextContent('academy-q1 · pregunta T3.01');
+
+  changeAccount('curator');
+  expect(await screen.findByText('Borrador local · 0 vínculos')).toBeInTheDocument();
+  expect(screen.queryByRole('article')).not.toBeInTheDocument();
 });
 
 it('preselects only the exact current source candidate and leaves section approval manual', async () => {
