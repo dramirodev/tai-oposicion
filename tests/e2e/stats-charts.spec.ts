@@ -6,6 +6,8 @@ for (const theme of ['light', 'dark']) {
     await page.route('**/firebase-config.json', (route) => route.fulfill({ json: {} }));
     await page.clock.setFixedTime(new Date('2026-10-24T12:00:00+02:00'));
     await page.addInitScript((themeName) => {
+      // Preserve application writes when the test reloads to verify preference persistence.
+      if (localStorage.getItem('tai.v1:guest')) return;
       const sessions = [
         {
           id: 'sim-1',
@@ -94,6 +96,26 @@ for (const theme of ['light', 'dark']) {
         viewport: innerWidth,
       }));
       expect(dimensions.document).toBeLessThanOrEqual(dimensions.viewport);
+    }
+
+    await page.getByRole('button', { name: 'Evolución' }).click();
+    await page.getByRole('button', { name: 'Tiempo por pregunta' }).click();
+    await page.getByLabel('Número de semanas').selectOption('8');
+    await page.getByRole('button', { name: 'Ver tabla' }).click();
+    await expect(page.getByRole('table', { name: 'Evolución semanal' })).toBeVisible();
+
+    await page.reload();
+    await expect(page.getByRole('heading', { name: 'Progreso' })).toBeVisible();
+    await page.getByRole('button', { name: 'Evolución' }).click();
+    await expect(page.getByRole('button', { name: 'Tiempo por pregunta' })).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.getByLabel('Número de semanas')).toHaveValue('8');
+    await expect(page.getByRole('button', { name: 'Ocultar tabla' })).toBeVisible();
+    await expect(page.getByRole('table', { name: 'Evolución semanal' })).toBeVisible();
+    await expect(page.locator('.stats-chart').last().locator('.recharts-dot')).toHaveCount(2);
+    if (theme === 'light') {
+      const evidenceDir = 'tests/e2e/evidence/accessibility-2026-11-05';
+      mkdirSync(evidenceDir, { recursive: true });
+      await page.screenshot({ path: `${evidenceDir}/stats-evolution-preferences-restored.png`, fullPage: true });
     }
   });
 }
