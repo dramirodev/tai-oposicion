@@ -1,5 +1,7 @@
 // Motor de preguntas: estado de la sesión en curso, guardado y reanudación, registro de respuestas, cierre con nota
 // y selección de preguntas (sesión rápida, repaso, trampas). Sin DOM: la interfaz solo pinta y llama a estas funciones.
+import { applyEditorialScoring } from '../domain/question-review-overrides.js';
+import { officialExamSessionId, scoreOfficialExam } from '../domain/simulation-scenarios.js';
 import { calculateExamScore } from '../domain/scoring.js';
 import { calculateRubricScore } from '../domain/simulation-scoring.js';
 import { filterScoringQuestions } from '../domain/selection.js';
@@ -14,10 +16,10 @@ import type { AttemptTracker } from '../ports/AttemptTracker.js';
 import type { StudyProgressGateway } from '../ports/StudyProgressGateway.js';
 import type { StudyQuestionCatalog } from '../ports/StudyQuestionCatalog.js';
 import type { PendingRun } from './runs/pending-run.js';
-import type { SavedRunSnapshot } from '../domain/pending-run.js';
+import { canAccessStudyRun, elapsedOfficialExamSeconds, gradingRevision, matchesOfficialExam, matchesSavedQuestions, type SavedRunSnapshot } from '../domain/pending-run.js';
 
 type Question = QuestionRecord;
-export interface StudyEngineDependencies { progress: StudyProgressGateway; catalog: StudyQuestionCatalog }
+export interface StudyEngineDependencies { progress: StudyProgressGateway; catalog: StudyQuestionCatalog; fullAccess?(): boolean }
 let dependencies: StudyEngineDependencies | null = null;
 let stopListeningToAccount: (() => void) | undefined;
 function getDependencies(): StudyEngineDependencies {
@@ -123,6 +125,7 @@ export function toggleReviewQuestion(): boolean {
 export function setRunPaused(paused: boolean): boolean {
   const run = getSnapshot().run;
   if (!run) return false;
+  if (paused && run.officialExam) return false;
   if (run.paused === paused) return true;
   const timestamp = Date.now();
   const current = paused ? tickRun(run, timestamp) : run;
@@ -137,7 +140,7 @@ export function setRunPaused(paused: boolean): boolean {
 }
 export function toggleDeferredBlank(): boolean {
   const run = getSnapshot().run;
-  if (!run || run.feedback || run.paused) return false;
+  if (!run || run.feedback || run.paused || expiredOfficialExam(run)) return false;
   const blank = run.ans[run.idx] !== -1;
   updateActiveRun(nextRun => { nextRun.ans[nextRun.idx] = blank ? -1 : undefined; }, run.sessionKey);
   if (blank) recordAttempt(run, { type: 'mark-pending' });
@@ -175,19 +178,23 @@ export function finishCurrentRun(reason: 'complete' | 'interrupted' | 'timeout' 
 
 /** Crea la sesión; devuelve null si no hay preguntas puntuables. No navega: eso lo decide la interfaz. */
 export function createRun(cfg: RunCfg, sourceSessionId?: string): Run | null {
-  const items = filterScoringQuestions(cfg.items, cfg.feedback, question => question.np);
+  if (!canAccessStudyRun(getDependencies().fullAccess?.() ?? true, progress().accountId(), cfg)) return null;
+  const items = filterScoringQuestions(cfg.items.map(applyEditorialScoring), cfg.feedback, question => question.np);
   if (!items.length) return null;
   const createdAt = catalog().now();
+  if (cfg.officialExam && (cfg.porTiempo || cfg.officialExam.deadlineAt <= createdAt
+    || !matchesOfficialExam(cfg.officialExam, cfg, items, createdAt))) return null;
   const metadata = catalog().getMetadataSnapshot();
   const run = { ...cfg, sessionKey: nextSessionKey++, items, idx: 0, ans: [], confidences: Array.from({ length: items.length }, () => null), discardedOptions: items.map(() => []), highlights: items.map(() => []), ...(cfg.feedback ? { studyStates: Array.from({ length: items.length }, () => 'unseen' as const) } : {}), t0: createdAt, secs: 0, paused: false } as Run;
   if (cfg.feedback) run.selfAssessments = Array.from({ length: items.length }, () => undefined);
-  if (attemptTracker && items.every(question => question.i && metadata?.[question.i])) {
+  const scorable = items.map((question, position) => ({ question, position })).filter(({ question }) => question.np !== 1);
+  if (attemptTracker && scorable.length && scorable.every(({ question }) => question.i && (metadata?.[question.i] || (cfg.officialExam || question.s && question.supTexto) && catalog().getTopicForQuestion(question.i)))) {
     const scope = progress().accountId() || 'guest';
     const tracking = attemptTracker.beginSession(
       scope,
       cfg.kind === 'sim' ? 'simulation' : 'practice',
       createdAt,
-      items.map((question, position) => ({
+      scorable.map(({ question, position }) => ({
         questionId: question.i,
         contentRevision: questionContentRevision(question.q, question.a),
         position,
@@ -195,12 +202,13 @@ export function createRun(cfg: RunCfg, sourceSessionId?: string): Run | null {
         ...(cfg.exposureKind ? { exposureKind: cfg.exposureKind } : {}),
         ...(cfg.retryOfAttemptId ? { retryOfAttemptId: cfg.retryOfAttemptId } : {}),
       })),
-      cfg.limit,
+      cfg.limit ? cfg.limit * 60 : undefined,
       sourceSessionId,
     );
     run.attemptScope = scope;
     run.attemptSessionId = tracking.session.id;
-    run.attemptIds = tracking.attempts.map(attempt => attempt.id);
+    run.attemptIds = items.map(() => '');
+    tracking.attempts.forEach(attempt => { run.attemptIds![attempt.position] = attempt.id; });
   }
   sessionStateStore.setState({ run });
   return run;
@@ -208,24 +216,38 @@ export function createRun(cfg: RunCfg, sourceSessionId?: string): Run | null {
 
 export interface PendingRunStorage {
   write(account: string | null, snapshot: SavedRunSnapshot): boolean;
-  clear(account: string | null): void;
+  clear(account: string | null, publicSample?: boolean): void;
 }
 let pendingRunStorage: PendingRunStorage | null = null;
 export function setPendingRunStorage(storage: PendingRunStorage | null): void { pendingRunStorage = storage; }
-export function clearRun(): void { pendingRunStorage?.clear(progress().accountId()); }
+export function clearRun(publicSample = getCurrentRun()?.publicSample): void {
+  pendingRunStorage?.clear(progress().accountId(), publicSample);
+}
+
+/** Preserve the account checkpoint without finalizing its attempt or adding any score. */
+export function suspendPrivateRun(): boolean {
+  const run = getCurrentRun();
+  if (!run || canAccessStudyRun(false, progress().accountId(), run)) return false;
+  setAttemptTrackingVisible(false);
+  saveRun();
+  sessionStateStore.setState({ run: null });
+  return true;
+}
 function canPersistRun(run: Run, metadata: ReturnType<StudyQuestionCatalog['getMetadataSnapshot']>): boolean {
-  return !run.supTexto && run.items.every(item => !!item.i && !!metadata?.[item.i]);
+  return !run.supTexto && run.items.every(item => !!item.i && (!!metadata?.[item.i] || (run.officialExam || item.s && item.supTexto) && !!catalog().getTopicForQuestion(item.i)));
 }
 
 function savedRunSnapshot(run: Run): SavedRunSnapshot {
   const { kind, feedback, titulo, limit, idx, ans, times, secs, porTiempo, review } = run;
   return {
     kind, feedback, titulo, limit, idx, ans: [...ans], times: times ? [...times] : [], secs, pt: !!porTiempo,
-    ids: run.items.map(item => item.i), review: review || [],
+    ids: run.items.map(item => item.i), gradingRevisions: run.items.map(gradingRevision), review: review || [],
     ...(feedback && run.studyStates ? { studyStates: [...run.studyStates] } : {}),
     confidences: run.confidences || [], discardedOptions: run.discardedOptions || [], highlights: run.highlights || [],
     ...(run.selfAssessments ? { selfAssessments: run.selfAssessments.map(value => value ?? null) } : {}),
     savedAt: Date.now(),
+    ...(run.publicSample ? { publicSample: true } : {}),
+    ...(run.officialExam ? { officialExam: { ...run.officialExam } } : {}),
     ...(run.attemptScope ? { attemptScope: run.attemptScope } : {}),
     ...(run.attemptSessionId ? { attemptSessionId: run.attemptSessionId } : {}),
     ...(run.attemptIds ? { attemptIds: run.attemptIds } : {}),
@@ -262,6 +284,7 @@ export function startImmediateRetryFromLastResult(questionId: string, sourceAvai
 
   const retryConfiguration: RunCfg = {
     kind: 'rev', feedback: true, items: [question], titulo: `Reintento inmediato · ${last.ses.titulo || 'Práctica'}`,
+    ...(last.publicSample ? { publicSample: true } : {}),
     exposureKind: 'immediate-retry', retryOfAttemptId: last.attemptIds[index],
   };
   if (!createRun(retryConfiguration)) return false;
@@ -326,6 +349,7 @@ function createResumedRun(saved: SavedRunSnapshot, items: QuestionRecord[], answ
   const states = restoreStudyStates(saved, answers, items.length);
   const run: Run = {
     kind: saved.kind,
+    ...(saved.publicSample ? { publicSample: true } : {}),
     sessionKey: nextSessionKey++,
     feedback: !!saved.feedback,
     titulo: saved.titulo,
@@ -336,7 +360,8 @@ function createResumedRun(saved: SavedRunSnapshot, items: QuestionRecord[], answ
     ans: answers,
     times: restoreOptionalValues(saved.times),
     t0: catalog().now(),
-    secs: saved.secs || 0,
+    secs: saved.officialExam ? elapsedOfficialExamSeconds(saved.officialExam, Date.now()) : saved.secs || 0,
+    ...(saved.officialExam ? { officialExam: { ...saved.officialExam } } : {}),
     paused: false,
     confidences: restoreConfidences(saved, items),
     ...(saved.feedback ? { selfAssessments: items.map((_item, index) => saved.selfAssessments?.[index] === 'could-explain' || saved.selfAssessments?.[index] === 'needs-help' ? saved.selfAssessments[index]! : undefined) } : {}),
@@ -344,7 +369,7 @@ function createResumedRun(saved: SavedRunSnapshot, items: QuestionRecord[], answ
     highlights: restoreHighlights(saved, items),
     review: restoreReview(saved, items.length),
     ...(states ? { studyStates: states } : {}),
-    ...(hasTracking ? { attemptScope: saved.attemptScope, attemptSessionId: saved.attemptSessionId, attemptIds: saved.attemptIds!.slice() } : {}),
+    ...(hasTracking ? { attemptScope: saved.attemptScope, attemptSessionId: saved.attemptSessionId, attemptIds: items.map((item, index) => item.np === 1 ? '' : saved.attemptIds![index]) } : {}),
     ...(saved.trainingActivity ? { trainingActivity: saved.trainingActivity } : {}),
     ...(saved.trainingActivityReference ? { trainingActivityReference: saved.trainingActivityReference } : {}),
     ...(saved.exposureKind === 'immediate-retry' && saved.retryOfAttemptId ? { exposureKind: saved.exposureKind, retryOfAttemptId: saved.retryOfAttemptId } : {}),
@@ -355,11 +380,13 @@ function createResumedRun(saved: SavedRunSnapshot, items: QuestionRecord[], answ
 }
 
 export function resumeRun({ saved: savedRun, items, account }: PendingRun): Run | null {
-  if (account !== progress().accountId()) return null;
+  items = items.map(applyEditorialScoring);
+  if (!canAccessStudyRun(getDependencies().fullAccess?.() ?? true, account, savedRun) || account !== progress().accountId() || !matchesSavedQuestions(savedRun, items)
+    || !savedRun.feedback && items.some(item => item.np === 1)) return null;
   const restoredAnswers = restoreOptionalValues(savedRun.ans);
   const answers = Array.from({ length: items.length }, (_value, index) => restoredAnswers[index]);
   const run = createResumedRun(savedRun, items, answers, account);
-  if (run.attemptSessionId && run.attemptScope && run.attemptIds) attemptTracker?.resumeSession(run.attemptScope, run.attemptSessionId, run.attemptIds);
+  if (run.attemptSessionId && run.attemptScope && run.attemptIds) attemptTracker?.resumeSession(run.attemptScope, run.attemptSessionId, run.attemptIds.filter(Boolean));
   sessionStateStore.setState({ run });
   return run;
 }
@@ -367,6 +394,10 @@ export function resumeRun({ saved: savedRun, items, account }: PendingRun): Run 
 // ───────── tiempo y respuestas ─────────
 /** El tiempo sale de la hora real (no de contar ticks): iOS frena los timers con la pantalla bloqueada. */
 export function tickRun(run: Run, timestamp = Date.now()): Run {
+  if (run.officialExam) {
+    const secs = elapsedOfficialExamSeconds(run.officialExam, timestamp);
+    return secs === run.secs ? run : { ...run, secs };
+  }
   if (run.paused) return run.since === null ? run : { ...run, since: null };
   const since = run.since ?? timestamp;
   const base = run.since == null ? run.secs : run.base;
@@ -374,7 +405,8 @@ export function tickRun(run: Run, timestamp = Date.now()): Run {
   return secs === run.secs && since === run.since && base === run.base ? run : { ...run, since, base, secs };
 }
 /** Segundos que quedan; con límite 0 devuelve Infinity. */
-export const segundosRestantes = (run: Run): number => run.limit ? run.limit * 60 - run.secs : Infinity;
+export const segundosRestantes = (run: Run): number => run.limit ? run.limit * 60 - (run.officialExam ? elapsedOfficialExamSeconds(run.officialExam, Date.now()) : run.secs) : Infinity;
+function expiredOfficialExam(run: Run): boolean { return !!run.officialExam && Date.now() >= run.officialExam.deadlineAt; }
 /** Anota en el progreso la respuesta de una pregunta con corrección inmediata (i = -1: «no lo sé»). */
 function saveUncorrectedAnswer(run: Run, question: Question, index: number, minimumReadingSeconds: number): void {
   run.ans[run.idx] = index;
@@ -411,11 +443,12 @@ function canAnswerStudyQuestion(run: Run, index: number): boolean {
 export function answerQuestion(run: Run, question: Question, index: number, minLect: number): void {
   const activeRun = getSnapshot().run;
   if (!activeRun || activeRun.sessionKey !== run.sessionKey) return;
-  if (!canAnswerStudyQuestion(activeRun, index)) return;
+  const currentQuestion = activeRun.items[activeRun.idx];
+  if (question.i !== currentQuestion.i || currentQuestion.np === 1 || expiredOfficialExam(activeRun) || !canAnswerStudyQuestion(activeRun, index)) return;
   updateActiveRun(nextRun => {
-    if (!nextRun.feedback) saveUncorrectedAnswer(nextRun, question, index, minLect);
+    if (!nextRun.feedback) saveUncorrectedAnswer(nextRun, currentQuestion, index, minLect);
     else if (index === -1) savePendingStudyAnswer(nextRun);
-    else saveCorrectedStudyAnswer(nextRun, question, index, minLect);
+    else saveCorrectedStudyAnswer(nextRun, currentQuestion, index, minLect);
   }, activeRun.sessionKey);
 }
 /** Reveals only a previously deferred practice question; consultation has no score effect. */
@@ -490,6 +523,7 @@ export function answerDeferred(run: Run, index: number): void {
   const activeRun = getSnapshot().run;
   if (!activeRun || activeRun.sessionKey !== run.sessionKey) return;
   updateActiveRun(nextRun => {
+    if (expiredOfficialExam(nextRun) || nextRun.items[nextRun.idx].np === 1) return;
     nextRun.ans[nextRun.idx] = index;
     (nextRun.times ||= [])[nextRun.idx] = Math.max(1, nextRun.secs - (nextRun.q0 ?? 0));
     const question = nextRun.items[nextRun.idx];
@@ -539,6 +573,7 @@ function applyAnswerResult(run: Run, item: QuestionRecord, index: number, totals
 }
 
 function addAnswerToTotals(run: Run, item: QuestionRecord, index: number, totals: SessionBreakdown): void {
+  if (item.np === 1) return;
   const topic = totals.topics[item.t] ||= [0, 0];
   topic[1]++;
   const questionType = catalog().getMetadataSnapshot()?.[item.i]?.[2];
@@ -564,13 +599,13 @@ function closeAttemptSession(run: Run, reason: 'complete' | 'interrupted' | 'tim
   attemptTracker.closeSession(run.attemptScope, run.attemptSessionId, reason === 'interrupted' ? 'interrupted' : 'completed', catalog().now(), run.secs);
 }
 
-function completedSessionRecords(run: Run, reason: 'complete' | 'interrupted' | 'timeout', items: QuestionRecord[], totals: SessionBreakdown, completedAt: number): {
+function completedSessionRecords(run: Run, reason: 'complete' | 'interrupted' | 'timeout', totals: SessionBreakdown, completedAt: number): {
   session: SessionResult; legacySession: LastResult['ses']
 } {
-  const itemCount = items.length;
-  const id = 's' + completedAt.toString(36);
+  const id = run.officialExam ? officialExamSessionId(run.officialExam, completedAt) : 's' + completedAt.toString(36);
   const { correct, wrong, blank } = totals.results;
-  const rubricScore = run.scoringPolicy
+  const itemCount = correct + wrong + blank;
+  const rubricScore = run.officialExam ? scoreOfficialExam(run.officialExam, run.items, run.ans).total : run.scoringPolicy
     ? calculateRubricScore({ correct, wrong, blank, questionCount: itemCount, policy: run.scoringPolicy })
     : calculateExamScore(correct, wrong, itemCount);
   const scorePending = rubricScore === null;
@@ -600,6 +635,8 @@ function completedSessionRecords(run: Run, reason: 'complete' | 'interrupted' | 
 
 function lastResult(run: Run, items: QuestionRecord[], session: LastResult['ses']): LastResult {
   return {
+    ...(run.publicSample ? { publicSample: true } : {}),
+    ...(run.officialExam ? { officialExam: { ...run.officialExam } } : {}),
     ses: session, items, ans: [...run.ans], times: [...(run.times || [])], limit: run.limit || 0,
     feedback: run.feedback,
     ...(run.exposureKind ? { exposureKind: run.exposureKind } : {}),
@@ -617,7 +654,7 @@ function lastResult(run: Run, items: QuestionRecord[], session: LastResult['ses'
 export function finishRun(run: Run, reason: 'complete' | 'interrupted' | 'timeout' = 'complete'): LastResult | null {
   const activeRun = getSnapshot().run;
   if (!activeRun || activeRun.sessionKey !== run.sessionKey) return null;
-  run = activeRun as Run;
+  run = activeRun.officialExam ? tickRun(activeRun) : activeRun;
   clearRun();
   closeAttemptSession(run, reason);
   // «por tiempo»: solo cuentan las preguntas que llegaste a contestar (la que estaba abierta al acabar el tiempo no)
@@ -626,8 +663,8 @@ export function finishRun(run: Run, reason: 'complete' | 'interrupted' | 'timeou
   const items = run.items.slice(0, completed);
   const totals = summarizeSession(run, items);
   const completedAt = catalog().now();
-  const { session, legacySession } = completedSessionRecords(run, reason, items, totals, completedAt);
-  if (run.exposureKind !== 'immediate-retry') progress().addSession(session);
+  const { session, legacySession } = completedSessionRecords(run, reason, totals, completedAt);
+  if (session.questionCount && run.exposureKind !== 'immediate-retry') progress().addSession(session);
   sessionStateStore.setState({ run: null });
   const result = lastResult(run, items, legacySession);
   sessionStateStore.setState({ last: result });

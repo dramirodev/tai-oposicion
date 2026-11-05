@@ -1,0 +1,44 @@
+{
+  count: 40,
+  origins: [ 'O' ],
+  official: 16000,
+  generated: 0,
+  minO: 40,
+  maxO: 40,
+  minTopics: 36,
+  concurrentDuplicates: 0,
+  failed: 0
+}
+{
+  count: 40,
+  origins: [ 'O', 'G' ],
+  official: 7987,
+  generated: 8013,
+  minO: 13,
+  maxO: 28,
+  minTopics: 36,
+  concurrentDuplicates: 0,
+  failed: 0
+}
+{
+  count: 80,
+  origins: [ 'O' ],
+  official: 32000,
+  generated: 0,
+  minO: 80,
+  maxO: 80,
+  minTopics: 36,
+  concurrentDuplicates: 0,
+  failed: 0
+}
+{
+  count: 80,
+  origins: [ 'O', 'G' ],
+  official: 16009,
+  generated: 15991,
+  minO: 33,
+  maxO: 48,
+  minTopics: 36,
+  concurrentDuplicates: 0,
+  failed: 0
+}

@@ -1,3 +1,4 @@
+import type { OfficialExamResult, OfficialExamRun, OfficialScenarioId } from '../../core/domain/simulation-scenarios.js';
 import { createContext, useContext } from 'react';
 import type { StatsComparison, StatsSnapshot, StatsWeek, TopicProgress } from '../../core/application/stats/statistics-model.js';
 import type { StudyReviewMode, TrainingActivity, TrainingCalendarEvent, TrainingPreferences } from '../../core/domain/entities.js';
@@ -39,7 +40,7 @@ export interface HomeOverview {
   studyContentInventory?: StudyContentInventory;
 }
 export interface AccessOverview {
-  full: boolean; level: string; greeting: string; state: string; configured: boolean;
+  full: boolean; resolved?: boolean; level: string; greeting: string; state: string; configured: boolean;
   signedIn: boolean; pendingRequests: number;
 }
 export interface HomeServices {
@@ -199,16 +200,20 @@ export interface TestServices {
   seenTopics(): readonly string[];
   start(configuration: TestConfiguration, options?: { dailyTrainingActivity?: TrainingActivity; trainingActivityReference?: import('../../core/domain/study-training-session.js').TrainingActivityReference }): Promise<'started' | 'empty' | 'account-changed'>;
 }
-export interface ScenarioChoice { id: string; text: string }
+export interface ScenarioChoice { id: string; text: string; block?: 'III' | 'IV' }
 export interface SimulationReviewServices { loadChoices(): Promise<readonly ScenarioChoice[]>; start(id: string): 'started' | 'unavailable'; }
 export interface SimulationNavigationServices { openExams(): void }
-export type SimulationTab = 'completo' | 'examen' | 'tema';
+export type SimulationTab = 'completo' | 'oficial2025' | 'examen' | 'tema';
 export interface SimulationConfiguration { count: number; minutes: number; scope: 'vistos' | 'todos'; origins: readonly ('O' | 'A' | 'G')[]; includeSecondPart: boolean }
 export interface SimulationMilestoneRunOptions { scoringPolicy: import('../../core/domain/simulation-scoring.js').SimulationScoringPolicy; optionsPerQuestion: number; eventId: string; title: string }
 export interface SimulationExam { id: string; name: string; questionCount: number; attempts: number; latest: number | null; best: number | null }
 export interface SimulationExamGroups { official: readonly SimulationExam[]; academy: readonly SimulationExam[]; topicTests: readonly SimulationExam[] }
 export interface SimulationServices {
   openExams(): void;
+  getOfficialDeadline(): number | null;
+  openOfficialBooklet(): number | null;
+  loadOfficialChoices(): Promise<readonly { id: OfficialScenarioId; text: string }[]>;
+  startOfficialExam(scenarioId: OfficialScenarioId, quota: OfficialExamRun['quota']): Promise<'started' | 'empty' | 'account-changed'>;
   getTab(): SimulationTab; setTab(tab: SimulationTab): void;
   getConfiguration(): SimulationConfiguration; saveConfiguration(configuration: SimulationConfiguration): void;
   seenTopics(): readonly string[];
@@ -218,8 +223,8 @@ export interface SimulationServices {
   startExam(id: string, mode: 'study' | 'exam'): Promise<'started' | 'empty' | 'account-changed'>;
 }
 export interface ResultHighlight { id: string; field: 'statement' | `option:${number}`; start: number; end: number; text: string; before: string; after: string; category: 'key' | 'doubt'; contentRevision: string; createdAt: number; timing: 'before-answer' | 'after-answer' | 'after-reveal'; stale?: boolean }
-export interface ResultItem { id: string; attemptId?: string; topicId: string; topicName: string; statement: string; options: readonly string[]; correctIndex: number; answer?: number; outcome: 'correct' | 'wrong' | 'blank' | 'revealed'; notice: string; source: string; citation?: string; note?: string; confidence?: 'sure' | 'betweenTwo' | 'guess'; discardedOptions: readonly number[]; highlights: readonly ResultHighlight[]; contentRevision: string; retryAvailable: boolean }
-export interface ResultSnapshot { score: number | null; scorePending?: boolean; scoringPolicy?: SimulationScoringPolicy; correct: number; wrong: number; blank: number; consulted: number; accuracy: number | null; seconds: number; title: string; interrupted: boolean; kind: 'sim' | 'rev' | 'test'; exposureKind?: 'ordinary' | 'immediate-retry'; porTiempo: boolean; analysis: string; secondPartAvailable: boolean; topics: readonly { id: string; name: string; correct: number; total: number }[]; items: readonly ResultItem[] }
+export interface ResultItem { id: string; attemptId?: string; topicId: string; topicName: string; statement: string; options: readonly string[]; correctIndex: number; answer?: number; outcome: 'correct' | 'wrong' | 'blank' | 'revealed' | 'non-scoring'; notice: string; source: string; citation?: string; note?: string; confidence?: 'sure' | 'betweenTwo' | 'guess'; discardedOptions: readonly number[]; highlights: readonly ResultHighlight[]; contentRevision: string; retryAvailable: boolean }
+export interface ResultSnapshot { officialResult?: OfficialExamResult; score: number | null; scorePending?: boolean; scoringPolicy?: SimulationScoringPolicy; correct: number; wrong: number; blank: number; consulted: number; accuracy: number | null; seconds: number; title: string; interrupted: boolean; kind: 'sim' | 'rev' | 'test'; exposureKind?: 'ordinary' | 'immediate-retry'; porTiempo: boolean; analysis: string; secondPartAvailable: boolean; topics: readonly { id: string; name: string; correct: number; total: number }[]; items: readonly ResultItem[] }
 export interface ResultReport { reason: string; note: string; state: ErrorReportRecord['state'] }
 export interface ResultServices {
   getSnapshot(): ResultSnapshot | null; subscribe(listener: () => void): () => void;
@@ -240,8 +245,8 @@ export interface StatsServices {
   loadStrategy(days: number): Promise<string>;
   practiceTopics(ids?: readonly string[]): void; reviewDue(): void; practiceFailures(): void; practiceTrap(id: string): Promise<'started' | 'empty'>; practiceSlow(onlyCorrect: boolean): Promise<'started' | 'empty'>;
 }
-export interface QuizPrompt { id: string; topicId: string; topicName: string; origin: 'O' | 'A' | 'G'; year?: string; statement: string; options: readonly string[]; correctIndex: number; context?: string; assumptionText?: string; hasAssumption: boolean; notice: string; citation?: string; source: string; traps: readonly string[]; provisional: boolean; mayExpire: boolean; variant: boolean; contentRevision: string }
-export interface QuizSnapshot { title: string; index: number; count: number; questionIds: readonly string[]; seconds: number; timeLimitSeconds: number | null; remainingSeconds: number | null; readingWaitSeconds: number; readingGateUntil: number; feedback: boolean; timed: boolean; paused: boolean; readingMode: number; prompt: QuizPrompt; answer?: number; studyState: 'unseen' | 'pending' | 'answered' | 'revealed'; review: readonly number[]; answers: readonly (number | undefined)[]; studyStates: readonly ('unseen' | 'pending' | 'answered' | 'revealed')[]; confidence?: 'sure' | 'betweenTwo' | 'guess'; selfAssessment?: SelfAssessment; discarded: readonly number[]; highlights: readonly ResultHighlight[]; scoreByLuck: number | null; recentAnswer: readonly [number, number] | null; flagged: boolean; failureReason: number | null; report?: ResultReport; cardExists: boolean }
+export interface QuizPrompt { nonScoring?: boolean; id: string; topicId: string; topicName: string; origin: 'O' | 'A' | 'G'; year?: string; statement: string; options: readonly string[]; correctIndex: number; context?: string; assumptionText?: string; hasAssumption: boolean; notice: string; citation?: string; source: string; traps: readonly string[]; provisional: boolean; mayExpire: boolean; variant: boolean; contentRevision: string }
+export interface QuizSnapshot { fixedDeadline?: boolean; title: string; index: number; count: number; questionIds: readonly string[]; seconds: number; timeLimitSeconds: number | null; remainingSeconds: number | null; readingWaitSeconds: number; readingGateUntil: number; feedback: boolean; timed: boolean; paused: boolean; readingMode: number; prompt: QuizPrompt; answer?: number; studyState: 'unseen' | 'pending' | 'answered' | 'revealed'; review: readonly number[]; answers: readonly (number | undefined)[]; studyStates: readonly ('unseen' | 'pending' | 'answered' | 'revealed')[]; confidence?: 'sure' | 'betweenTwo' | 'guess'; selfAssessment?: SelfAssessment; discarded: readonly number[]; highlights: readonly ResultHighlight[]; scoreByLuck: number | null; recentAnswer: readonly [number, number] | null; flagged: boolean; failureReason: number | null; report?: ResultReport; cardExists: boolean }
 export type QuizFinishResult = 'finished' | 'cancelled' | 'empty';
 export interface QuizServices { getSnapshot(): QuizSnapshot | null; subscribe(listener: () => void): () => void; startCurrentQuestion(): void; persist(): boolean; tick(): void; setIndex(index: number): void; answer(index: number): void; toggleReview(): void; setConfidence(value: 'sure' | 'betweenTwo' | 'guess'): void; setSelfAssessment(value: SelfAssessment, retryHistory?: boolean): Promise<{ historySaved: boolean; checkpointSaved: boolean }>; toggleDiscard(index: number): void; reveal(): boolean; markBlank(): void; toggleBlank(): void; setPaused(paused: boolean): void; finish(reason?: 'complete' | 'interrupted' | 'timeout'): Promise<QuizFinishResult>; exit(): Promise<void>; cancelConfirmation(): void; toggleFlag(): void; setFailureReason(reason: number): void; markDoubt(): void; markLuck(): void; toggleCard(): void; addHighlight(anchor: { field: 'statement' | `option:${number}`; sourceText: string; start: number; end: number }, category: 'key' | 'doubt'): boolean; removeHighlight(id: string): void; saveReport(reason: string, note: string): void; loadExplanation(): Promise<ExplanationLookup> }
 export interface SettingsSnapshot {

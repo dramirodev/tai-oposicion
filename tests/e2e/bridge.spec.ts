@@ -1,6 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { strFromU8, unzipSync } from 'fflate';
 async function start(page: Page, fullAccess = false) {
   const errors: string[] = [];
   page.on('pageerror', e => errors.push(e.message));
@@ -542,6 +543,21 @@ test('reintento inmediato crea una exposición enlazada, reanudable y sin inflar
   expect(records.find(record => record.id === sourceAttemptId)).toEqual(original);
   expect(errors).toEqual([]);
 });
+async function downloadStudyArchive(page: Page) {
+  await page.getByRole('button', { name: 'Preparar análisis para descargar' }).click();
+  await expect(page.locator('.ai-export-preview')).toContainText('1 parte JSON');
+  const [download] = await Promise.all([
+    page.waitForEvent('download'),
+    page.getByRole('button', { name: 'Descargar análisis completo en ZIP' }).click(),
+  ]);
+  expect(download.suggestedFilename()).toBe('tai-estudio-analisis.zip');
+  const archivePath = await download.path();
+  if (!archivePath) throw new Error('No se recibió el ZIP del análisis.');
+  const files = unzipSync(readFileSync(archivePath));
+  expect(Object.keys(files).sort()).toEqual(['tai-estudio-informe.md', 'tai-estudio-manifiesto.json', 'tai-estudio-parte-001.json']);
+  return files;
+}
+
 test('integra ayudas, navegación, bloqueo terminal y exportación del intento', async ({ page }) => {
   const errors = await start(page);
   await page.locator('#quick').click();
@@ -600,12 +616,8 @@ test('integra ayudas, navegación, bloqueo terminal y exportación del intento',
   await page.goto('/#/settings');
   await page.getByRole('button', { name: 'Buscar sesiones completadas' }).click();
   await expect(page.locator('.ai-export-session')).toHaveCount(1);
-  await page.getByRole('button', { name: 'Preparar vista previa y archivos' }).click();
-  await expect(page.locator('.ai-export-preview')).toContainText('1 parte JSON');
-  const [download] = await Promise.all([
-    page.waitForEvent('download'), page.getByRole('button', { name: 'Descargar tai-estudio-parte-001.json' }).click(),
-  ]);
-  const exported = JSON.parse(readFileSync(await download.path(), 'utf8'));
+  const files = await downloadStudyArchive(page);
+  const exported = JSON.parse(strFromU8(files['tai-estudio-parte-001.json']));
   expect(exported.attempts).toHaveLength(10);
   expect(exported.attempts.filter((attempt: { state: string }) => attempt.state === 'revealed')).toHaveLength(2);
   expect(exported.attempts.filter((attempt: { state: string }) => attempt.state === 'answered')).toHaveLength(1);
@@ -748,22 +760,12 @@ test('exporta sesiones manualmente en partes versionadas y borra el detalle sin 
   await page.goto('/#/settings');
   await page.getByRole('button', { name: 'Buscar sesiones completadas' }).click();
   await expect(page.locator('.ai-export-session')).toHaveCount(1);
-  await page.getByRole('button', { name: 'Preparar vista previa y archivos' }).click();
-  await expect(page.locator('.ai-export-preview')).toContainText('1 parte JSON');
-
-  const [manifestDownload] = await Promise.all([
-    page.waitForEvent('download'), page.getByRole('button', { name: 'Descargar manifiesto JSON' }).click(),
-  ]);
-  expect(manifestDownload.suggestedFilename()).toBe('tai-estudio-manifiesto.json');
-  const manifest = JSON.parse(readFileSync(await manifestDownload.path(), 'utf8'));
+  const files = await downloadStudyArchive(page);
+  const manifest = JSON.parse(strFromU8(files['tai-estudio-manifiesto.json']));
   expect(manifest).toMatchObject({ format: 'tai-study-ai-export', schemaVersion: 1, filters: { sessionCount: 1 } });
   expect(JSON.stringify(manifest)).not.toMatch(/"(?:uid|email|token|firebaseConfig)"\s*:/i);
 
-  const [partDownload] = await Promise.all([
-    page.waitForEvent('download'), page.getByRole('button', { name: 'Descargar tai-estudio-parte-001.json' }).click(),
-  ]);
-  expect(partDownload.suggestedFilename()).toBe('tai-estudio-parte-001.json');
-  const partText = readFileSync(await partDownload.path(), 'utf8');
+  const partText = strFromU8(files['tai-estudio-parte-001.json']);
   const part = JSON.parse(partText);
   expect(part).toMatchObject({ format: 'tai-study-ai-export-part', schemaVersion: 1, sessions: [{ id: 'part-001-session-001' }] });
   const partBytes = Buffer.byteLength(partText, 'utf8');
@@ -772,10 +774,7 @@ test('exporta sesiones manualmente en partes versionadas y borra el detalle sin 
   expect(part.attempts[0].questionId).toEqual(expect.any(String));
   expect(JSON.stringify(part)).not.toContain('guest');
 
-  const [markdownDownload] = await Promise.all([
-    page.waitForEvent('download'), page.getByRole('button', { name: 'Descargar informe Markdown' }).click(),
-  ]);
-  const markdown = readFileSync(await markdownDownload.path(), 'utf8');
+  const markdown = strFromU8(files['tai-estudio-informe.md']);
   expect(markdown).toContain(`tamaño total de partes: ${partBytes} bytes`);
 
   await page.getByRole('button', { name: 'Borrar historial detallado' }).click();
@@ -911,5 +910,48 @@ test('el diálogo personalizado mantiene Tab y Shift+Tab dentro del menú', asyn
   await expect(buttons.last()).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(page.locator('#menu')).toBeFocused();
+  expect(errors).toEqual([]);
+});
+
+test('oficial 2025 conserva el supuesto, los 100 IDs y el plazo al reanudar y aplica el mínimo por parte', async ({ page }) => {
+  const errors = await start(page, true);
+  await page.goto('/#/sim');
+  await page.getByRole('tab', { name: 'Oficial 2025' }).click();
+  await page.getByLabel('Baremo de calificación').selectOption('norma13');
+  const openedAt = await page.evaluate(() => Date.now());
+  await page.getByRole('button', { name: 'Abrir cuaderno e iniciar los 120 minutos' }).click();
+  const previewDeadline = await page.evaluate(() => Number(localStorage.getItem('tai.official-booklet.v1:guest')));
+  await page.reload();
+  await expect(page.getByText('Hora límite:', { exact: false })).toBeVisible();
+  await page.getByLabel('Baremo de calificación').selectOption('norma13');
+  await page.getByRole('radio', { name: /Bloque IV/ }).check();
+  await page.getByRole('button', { name: 'Responder el examen' }).click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 1 de 100');
+  await expect(page.getByRole('button', { name: 'Pausar' })).toHaveCount(0);
+  await expect(page.locator('.question-notice,.tag.warn').filter({ hasText: /Nota de la pregunta|Respuesta provisional/ })).toHaveCount(0);
+  await page.locator('.opt').first().click();
+  const state = () => page.evaluate(() => JSON.parse(localStorage.getItem('tai.run:guest') || 'null'));
+  const first = await state();
+  expect(first.officialExam.deadlineAt).toBe(previewDeadline);
+  expect(first.officialExam.deadlineAt).toBeGreaterThanOrEqual(openedAt + 120 * 60_000);
+  expect(first.ids).toHaveLength(100);
+  expect(first.ids).not.toContain('L2025A-P1-20');
+  expect(first.ids.slice(79, 82)).toEqual(['L2025A-P1-R-01', 'L2025A-S2-01', 'L2025A-S2-02']);
+  expect(first.officialExam).toMatchObject({ scenarioId: 'L2025A-S2', quota: 'norma13' });
+  await page.reload();
+  await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
+  await page.locator('.overlay [data-v="1"]').click();
+  await expect(page.locator('#app h1')).toContainText('pregunta 1 de 100');
+  expect((await state()).officialExam.deadlineAt).toBe(first.officialExam.deadlineAt);
+  await page.locator('.question-map summary').click();
+  await page.locator('[data-jump="99"]').click();
+  await expect(page.locator('#app h1')).toContainText('Supuesto práctico');
+  await page.getByText('Enunciado del supuesto', { exact: true }).click();
+  await expect(page.locator('.scenario-context .pre')).toContainText('La Subdirección General de Tecnologías de la Información');
+  await page.locator('.opt').first().click();
+  await page.locator('#next').click();
+  await page.locator('.overlay [data-v="1"]').click();
+  await expect(page.locator('#app h1')).toHaveText('Resultado');
+  await expect(page.getByRole('status').filter({ hasText: 'El supuesto queda sin calificar' })).toBeVisible();
   expect(errors).toEqual([]);
 });

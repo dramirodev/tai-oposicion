@@ -1,11 +1,12 @@
 import 'fake-indexeddb/auto';
+import { IDBFactory } from 'fake-indexeddb';
 import { beforeEach, afterEach, it, expect, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 vi.mock('../src/adapters/firebase/sync-facade.js', () => ({ status: { user:null,state:'sin sesión',configured:false,authResolved:true,reqs:[] }, setAttemptRepository:()=>{}, onStatus:()=>()=>{}, login:async()=>{}, requestAccess:async()=>true }));
 let routes, store, engine, activeView, rtl;
 beforeEach(async () => {
-  vi.resetModules(); localStorage.clear();
+  vi.resetModules(); localStorage.clear(); vi.stubGlobal('indexedDB', new IDBFactory());
   document.body.innerHTML = '<main id="app"></main>';
   vi.stubGlobal('scrollTo', vi.fn()); vi.stubGlobal('matchMedia',()=>({matches:false}));
   vi.stubGlobal('fetch', async url => ({ ok:true, json:async()=>JSON.parse(readFileSync(path.join('public',String(url)), 'utf8')) }));
@@ -21,7 +22,7 @@ beforeEach(async () => {
   const mount=async (Page, waitForReady=true) => { activeView?.unmount(); const container = document.createElement('div'); document.querySelector('#app').append(container); activeView = rtl.render(React.createElement(MemoryRouter,null,React.createElement(AppServicesProvider,{value:studyServices},React.createElement(Page))), { container }); if (waitForReady) await rtl.screen.findByRole('heading', { level: 1 }); };
   routes.home=(options)=>mount(HomePage, options?.waitForReady ?? true); routes.temario=()=>mount(TopicsPage); routes.stats=()=>mount(StatsPage);
 });
-afterEach(()=> { activeView?.unmount(); activeView=undefined; vi.unstubAllGlobals(); });
+afterEach(async()=> { activeView?.unmount(); activeView=undefined; await store.flushNow(); vi.unstubAllGlobals(); });
 it('prioriza retomar, repasar y falladas, agrupa entrenamientos y no presenta una fecha oficial inventada', async()=> {
   const question=JSON.parse(readFileSync('public/data/T1.01.json','utf8'))[0];
   engine.createRun({kind:'test',feedback:true,items:[question]});
@@ -74,8 +75,6 @@ it('mantiene oculta la previsión aunque haya valoraciones guardadas', async()=>
   await routes.stats();
   rtl.fireEvent.click(document.querySelector('[aria-label="Sección de progreso"] button:nth-child(3)'));
   expect(document.querySelector('#app').textContent).not.toMatch(/retención prevista de tarjetas|FSRS-6 para .*tarjeta/i);
-  store.resetAll();
-  store.resetAll();
 });
 it('buscar y navegar no modifica el progreso y una cuenta nueva no recibe la pantalla de la anterior', async()=> {
   store.setSeen(['T1.01']);

@@ -1,3 +1,4 @@
+import { officialSessionQuota } from '../../core/domain/simulation-scenarios.js';
 import { countReviewsByDay } from '../../core/domain/spaced-repetition.js';
 import { estimateQuickQuestionCount } from '../../core/domain/selection.js';
 import { countFailureReasons, countLuckyCorrectAnswers, summarizeReadingSpeedFailures } from '../../core/domain/question-performance.js';
@@ -15,6 +16,7 @@ export interface LegacySession {
 }
 
 function toStudySession(session: LegacySession): StudySessionSummary {
+  const officialQuota = officialSessionQuota(session.id);
   const breakdown = (values?: Readonly<Record<string, readonly [number, number]>>) => values
     ? Object.fromEntries(Object.entries(values).map(([key, [correct, total]]) => [key, { correct, total }]))
     : undefined;
@@ -22,12 +24,13 @@ function toStudySession(session: LegacySession): StudySessionSummary {
     id: session.id,
     startedAt: session.ts,
     mode: session.kind === 'sim' ? 'simulation' : 'practice',
-    ...(session.kind === 'sim' ? { practicePart: /Parte 2/.test(session.titulo || '') ? 2 as const : 1 as const } : {}),
+    ...(session.kind === 'sim' ? { practicePart: officialQuota ? 'both' as const : /Parte 2/.test(session.titulo || '') ? 2 as const : 1 as const } : {}),
     questionCount: session.n,
     correctCount: session.a,
     score: session.nota,
     ...(session.scorePending ? { scorePending: true } : {}),
     ...(session.scoringPolicy ? { scoringPolicyKey: `v${session.scoringPolicy.version}:${JSON.stringify([session.scoringPolicy.correctPoints, session.scoringPolicy.wrongPenalty, session.scoringPolicy.blankPoints])}` } : {}),
+    ...(officialQuota ? { scoringPolicyKey: `tai-li-2025:${officialQuota}` } : {}),
     durationSeconds: session.secs,
     byTopic: breakdown(session.temas),
     byQuestionType: breakdown(session.tipos),
@@ -48,7 +51,7 @@ export function slowList(stats: LegacyStats, { soloAcertadas = false, min = 1, l
 
 export function simHistory(sessions: readonly LegacySession[]) {
   return buildSimulationHistory(sessions.map(toStudySession)).map(({ session, part, scoreDelta }) => ({
-    ...sessions.find(item => item.id === session.id)!, part: part === 2 ? 'p2' : 'p1', dNota: scoreDelta,
+    ...sessions.find(item => item.id === session.id)!, part: part === 'both' ? 'both' : part === 2 ? 'p2' : 'p1', dNota: scoreDelta,
   }));
 }
 

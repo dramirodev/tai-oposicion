@@ -14,8 +14,13 @@ vi.mock('firebase/firestore', () => ({
   doc: (_db, ...parts) => { if (parts.some(x => typeof x !== 'string')) throw new Error('ruta con uid inválido'); return { path: parts.join('/') }; },
   collection: (_db, ...parts) => ({ path: parts.join('/') }), query: ref => ref, orderBy: () => ({}), limit: () => ({}),
   documentId: () => '__name__', where: () => ({}), startAfter: () => ({}),
+  getDocFromServer: async () => ({ exists: () => false }),
   getDoc: async () => ({ exists: () => false, data: () => undefined }), getDocs: async () => ({ docs: [] }),
-  onSnapshot: (ref, cb, onError) => { boundary.snapshots.push({ ref, cb, onError }); return () => {}; },
+  onSnapshot: (ref, ...args) => {
+    const [cb, onError] = typeof args[0] === 'function' ? args : args.slice(1);
+    boundary.snapshots.push({ ref, cb, onError });
+    return () => {};
+  },
   setDoc: async (ref, value) => { boundary.writes.push({ path: ref.path, value }); },
   deleteDoc: async ref => { boundary.writes.push({ path: ref.path, deleted: true }); },
 }));
@@ -290,4 +295,15 @@ it('conserva el segundo intento si falla la primera petición de configuración'
   expect(fetch).toHaveBeenCalledTimes(2);
   expect(errorJson).not.toHaveBeenCalled();
   expect(status.configured).toBe(true);
+});
+
+it('espera la concesión real cuando ni la caché ni la solicitud confirman el permiso', async () => {
+  const { status } = await import('../src/adapters/firebase/sync-status-store.js');
+  user('student', 'student@example.test');
+  const grant = boundary.snapshots.find(listener => listener.ref.path === 'access/student');
+  grant.cb({ metadata: { fromCache: true }, exists: () => false });
+  snap('requests/student', null);
+  expect(status.accessResolved).toBe(false);
+  snap('access/student', { ok: true });
+  expect(status).toMatchObject({ accessResolved: true, access: 'aprobado' });
 });

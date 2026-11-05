@@ -32,11 +32,11 @@ function QuestionOptions({ snapshot, prompt, rootRef, revealed, responseLocked, 
   const discardedOptions = new Set(snapshot.discarded);
   return <div className="opts">{prompt.options.map((option, index) => {
     const selected = snapshot.answer === index;
-    const correct = revealed && index === prompt.correctIndex;
-    const wrong = revealed && selected && index !== prompt.correctIndex;
+    const correct = !prompt.nonScoring && revealed && index === prompt.correctIndex;
+    const wrong = !prompt.nonScoring && revealed && selected && index !== prompt.correctIndex;
     const discarded = discardedOptions.has(index);
     return <div className="option-control" key={`${prompt.id}-${'ABCD'[index]}`}>
-      <button type="button" className={`opt${discarded ? ' discarded' : ''}${correct ? ' ok' : wrong ? ' bad' : selected ? ' sel' : ''}${revealed ? ' dis' : ''}`} data-i={index} aria-pressed={selected} disabled={revealed || snapshot.paused || gateRemaining > 0} onClick={() => {
+      <button type="button" className={`opt${discarded ? ' discarded' : ''}${correct ? ' ok' : wrong ? ' bad' : selected ? ' sel' : ''}${revealed ? ' dis' : ''}`} data-i={index} aria-pressed={selected} disabled={prompt.nonScoring || revealed || snapshot.paused || gateRemaining > 0} onClick={() => {
         const currentSelection = window.getSelection();
         if (currentSelection && !currentSelection.isCollapsed && (rootRef.current?.querySelector(`.opt[data-i="${index}"]`)?.contains(currentSelection.anchorNode) || rootRef.current?.querySelector(`.opt[data-i="${index}"]`)?.contains(currentSelection.focusNode))) return;
         quiz.answer(index);
@@ -61,6 +61,7 @@ export function QuizQuestionCard({ snapshot, prompt, rootRef, sourceLabel, respo
     <QuestionOptions snapshot={snapshot} prompt={prompt} rootRef={rootRef} revealed={revealed} responseLocked={responseLocked} gateRemaining={gateRemaining} />
     <p className="sub stale-highlight" id="stale-highlight" hidden>Una marca no coincide con el texto actual y no se ha movido.</p>
     {gateRemaining > 0 && <div className="gate" id="gate" role="status"><Eye size="1em" aria-hidden="true" /> Lee con calma: podrás responder en {gateRemaining} s. ¿Qué te piden? ¿Hay NO, SALVO, cifras?</div>}
-    {revealed && <QuizFeedback snapshot={snapshot} prompt={prompt} explanation={explanation} />}
+    {prompt.nonScoring && prompt.source && <StudyMarkup html={prompt.source} languageContext={prompt.statement} />}
+    {!prompt.nonScoring && revealed && <QuizFeedback snapshot={snapshot} prompt={prompt} explanation={explanation} />}
   </div>;
 }

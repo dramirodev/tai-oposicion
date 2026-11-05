@@ -21,12 +21,16 @@ it('comunica la selección al cambiar la cantidad del test',async()=>{
  await vi.waitFor(()=>expect([...document.querySelectorAll('[aria-label="Número de preguntas"] button')].find(item=>item.textContent==='10').getAttribute('aria-pressed')).toBe('true'));
  expect([...document.querySelectorAll('[aria-label="Número de preguntas"] button')].find(item=>item.textContent==='15').getAttribute('aria-pressed')).toBe('false');
 });
-it('muestra la advertencia histórica antes de permitir contestar',async()=>{
+it('permite consultar una pregunta histórica sin corregir ni guardar una nota',async()=>{
  const q=JSON.parse(readFileSync('public/data/T3.09.json','utf8')).find(q=>q.i==='AT309-P1-12');
  engine.createRun({kind:'test',feedback:true,items:[q]});await navigate('quiz','pregunta 1');
  expect(document.querySelector('#app').textContent).toContain('Solo estudio');
  expect(document.querySelector('#app').textContent).toContain('original ambiguo');
- expect(store.rec(q.i)).toBeUndefined();
+ expect([...document.querySelectorAll('.opt')].every(option => option.disabled)).toBe(true);
+ document.querySelector('#next').click();await waitText('Solo consulta · sin preguntas puntuables');
+ expect(document.querySelector('.score')).toBeNull();
+ expect(document.querySelector('[data-review] summary').textContent).toContain('Solo consulta');
+ expect(store.rec(q.i)).toBeUndefined();expect(store.getSessions()).toHaveLength(0);
 });
 it('selecciona por separado los motivos de un acierto y actualiza el repaso',async()=>{
  const q=JSON.parse(readFileSync('public/data/T1.01.json','utf8'))[0];

@@ -198,3 +198,16 @@ describe('study question selection', () => {
     expect(items.map(question => question.i)).toEqual(['partial']);
   });
 });
+
+it('intercala orígenes en simulacros sin perder prioridad de preguntas nuevas', async () => {
+  const generated = Array.from({ length: 40 }, (_, n) => ({ i: 'g' + n, o: 'G', v: 0 }));
+  const officials = Array.from({ length: 5 }, (_, n) => ({ i: 'o' + n, o: 'O' }));
+  const selection = createStudyQuestionSelection(
+    { getQuestionStats: id => id === 'o4' ? { attempts: 1 } : undefined },
+    { getTopicQuestions: async () => [...generated, ...officials] },
+  );
+  const chosen = await selection.selectWeightedSimulationQuestions([{ id: 'A' }], new Set(['G', 'O']), 10, () => 0.5);
+  expect(chosen).toHaveLength(10);
+  expect(chosen.filter(q => q.o === 'O')).toHaveLength(4);
+  expect(chosen.map(q => q.i)).not.toContain('o4');
+});

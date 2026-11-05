@@ -68,7 +68,7 @@ export function createReadingComposition(dependencies: ReadingCompositionDepende
       const ids = dependencies.mixQuestionIds([[fastIds, 3], [failedIds, 2]], rest, 40, recentIds, dependencies.shuffle);
       const loaded = await dependencies.loadQuestionsById(ids);
       if (requestOwner !== dependencies.accountId()) return null;
-      const available = new Map(loaded.filter(question => !question.s && !question.cp).map(question => [question.i, question]));
+      const available = new Map(loaded.filter(question => question.np !== 1 && !question.s && !question.cp).map(question => [question.i, question]));
       batch = dependencies.shuffle(ids.map(id => available.get(id)).filter((question): question is QuestionRecord => !!question).slice(0, 8)).map(question => ({
         ...toFailureQuestionView(question, dependencies.sourceFallbacks),
         asksForNegative: asksForNegativeOption(question.q),

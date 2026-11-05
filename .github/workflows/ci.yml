@@ -18,6 +18,12 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Validar candidatos y fuentes editoriales
+        run: python3 -m unittest discover -s tools/question-editorial -p "test_*.py"
+      - name: Aislamiento Auth y Firestore de sesiones
+        run: npx --yes firebase-tools@13.35.1 emulators:exec --only auth,firestore --project demo-tai-auth "npx vitest run tests/astra-auth-firestore.test.js"
+      - name: Publicación atómica y concurrente en emulador
+        run: npx --yes firebase-tools@13.35.1 emulators:exec --only firestore --project demo-tai-bank-atomic "npx vitest run tests/publish-bank-emulator.test.js"
       - name: Arquitectura, lint, tipos y pruebas
         run: npm run check
         env:
@@ -26,5 +32,7 @@ jobs:
       - run: npm run build
       - run: node scripts/validate_cards.mjs
       - run: npx playwright install --with-deps chromium webkit
+      - name: Recarga y cierre de sesión con Auth real en emuladores
+        run: npx --yes firebase-tools@13.35.1 emulators:exec --only auth,firestore --project demo-tai-auth "TAI_AUTH_EMULATOR=1 npx playwright test --config=playwright.astra-auth.config.ts"
       - name: Reconstruir referencia visual y verificar Chromium y WebKit
         run: npm run test:e2e:ci

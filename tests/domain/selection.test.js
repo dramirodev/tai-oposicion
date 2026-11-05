@@ -71,3 +71,16 @@ it('selecciona una pregunta por tema priorizando no vistas y evitando la sesión
   const result = pickGuestQuestions(pools, 2, question => question.id, id => id === 'seen', new Set(['old']), () => 0);
   expect(result.map(question => question.id)).toEqual(['other', 'fresh']);
 });
+
+it('cubre también un tema de bajo peso y respeta la proporción cuando ya es suficiente', () => {
+  const pools = { A: Array.from({ length: 100 }, (_, i) => 'a' + i), B: ['b'], C: ['c'] };
+  const result = composeWeightedQuestions([{ id: 'A', weight: 100 }, { id: 'B' }, { id: 'C' }], pools, 40, () => 0.5);
+  expect(result).toHaveLength(40);
+  expect(result).toEqual(expect.arrayContaining(['b', 'c']));
+});
+
+it('reasigna una familia compartida para cubrir un tema que carece de alternativa', () => {
+  const pools = { A: ['shared:A', 'other:A'], B: ['shared:B'] };
+  const selected = composeWeightedQuestions([{ id: 'A', weight: 10 }, { id: 'B' }], pools, 2, () => 0, q => q.split(':')[0]);
+  expect(selected.sort()).toEqual(['other:A', 'shared:B']);
+});

@@ -1,3 +1,4 @@
+import { applyEditorialScoring } from '../../core/domain/question-review-overrides.js';
 import { diagnoseQuestionDtos } from './question-diagnostics.js';
 import type { StudyCatalogIndex as Index, StudyQuestionMetadata as Meta } from '../../core/domain/study-catalog.js';
 import type { QuestionRecord as Question } from '../../core/domain/question-record.js';
@@ -60,7 +61,7 @@ export const getMetadataSnapshot = (): Meta | undefined => questionMetadata;
 export const getTopicForQuestion = (questionId: string): string | null => questionMetadata?.[questionId]?.[0] || supQuestions.get(questionId)?.t || null;
 export const getQuestionIdsForTopic = (topicId: string): string[] => [...(questionMetadata?._by[topicId] || []), ...[...supQuestions.values()].filter(question => question.t === topicId).map(question => question.i)];
 export const getAllQuestionIdsForTopic = (topicId: string): string[] => [...getQuestionIdsForTopic(topicId), ...Object.entries(questionMetadata || {}).filter(([, entry]) => entry?.[0] === topicId && entry[5]).map(([id]) => id)];
-export async function getTopicQuestions(topicId: string): Promise<Question[]> { const key = topicCacheKey(topicId); if (!cache.has(key)) cache.set(key, fetchJson<Question[]>(`data/${topicId}.json`).then(questionRows => { diagnoseQuestionDtos(questionRows); return questionRows; }).catch(error => { cache.delete(key); throw error; })); return cache.get(key)!; }
+export async function getTopicQuestions(topicId: string): Promise<Question[]> { const key = topicCacheKey(topicId); if (!cache.has(key)) cache.set(key, fetchJson<Question[]>(`data/${topicId}.json`).then(questionRows => { diagnoseQuestionDtos(questionRows); return questionRows.map(applyEditorialScoring); }).catch(error => { cache.delete(key); throw error; })); return cache.get(key)!; }
 export async function getScenarios(): Promise<Record<string, ScenarioEntry>> {
   if (scenarios) return scenarios;
   if (!scenariosLoading) scenariosLoading = fetchJson<Record<string, ScenarioEntry>>('data/supuestos.json').then(data => {
@@ -80,11 +81,11 @@ export async function getQuestions(ids: string[]): Promise<Question[]> {
   await getMetadata();
   const canonicalIds = ids.map(questionId => questionMetadata?.[questionId]?.[5] || questionId);
   const requiredTopics = new Set(canonicalIds.map(questionId => questionMetadata?.[questionId]?.[0]).filter((topicId): topicId is string => Boolean(topicId)));
-  const questionsById = new Map<string, Question>(supQuestions);
+  const questionsById = new Map<string, Question>(sampleOnly() ? [] : supQuestions);
   for (const topicQuestions of await Promise.all([...requiredTopics].map(getTopicQuestions))) for (const question of topicQuestions) questionsById.set(question.i, question);
   return canonicalIds.flatMap((canonicalId, index) => {
     const question = questionsById.get(canonicalId);
-    return question ? [{ ...question, i: ids[index] }] : [];
+    return question ? [applyEditorialScoring({ ...question, i: ids[index] })] : [];
   });
 }
 

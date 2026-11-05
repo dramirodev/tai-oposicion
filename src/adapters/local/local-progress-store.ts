@@ -22,6 +22,7 @@ import {
   readMirroredProgress,
   preserveUnusableProgressSnapshot,
   readProgressSnapshot,
+  readResetGeneration, writeResetGeneration,
   unscopedProgressStorageKey,
   writeActiveAccount,
   writeMirroredProgress,
@@ -58,6 +59,7 @@ export {
 //   due=timestamp ms del próximo repaso, lastRes=1/0/2(blanco), flag=1 dudosa
 // Extensión opcional: [10]=racha tras fallo (-1 nunca/ya fuera del historial antiguo, 0..3); [11]=temario repasado (0/1); [12]=fecha del cambio de marca.
 let account: string | null = readActiveAccount();
+let mirrorGeneration: string | undefined;
 const stateKey = () => progressStorageKey(account);
 const mirrorKey = () => mirrorStorageKey(account);
 export const accountId = () => account;
@@ -74,16 +76,19 @@ const createDictionary = <T = unknown>(): Record<string, T> => Object.create(nul
 const isObjectRecord = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
 export const getReports = (): ReportMap => appState.reports || {};
 export function addReport(id: string, tema: string, motivo: string, nota = ''): void {
+  refreshAfterExternalReset();
   appState.reports = appState.reports || createDictionary();
   appState.reports[id] = cleanReports({ [id]: { ts: Date.now(), tema, motivo, nota, st: 'abierto' } })[id];
   persist(); emit(); if (syncer && syncer.pushReports) syncer.pushReports(appState.reports);
 }
 export function setReportState(id: string, st: ReportState): void {
+  refreshAfterExternalReset();
   const result = (appState.reports || {})[id]; if (!result || !REPORT_STATES.includes(st)) return;
   appState.reports[id] = { ...result, st, ts: Date.now() };
   persist(); emit(); if (syncer && syncer.pushReports) syncer.pushReports(appState.reports);
 }
 export function mergeReports(m0: unknown): boolean {
+  refreshAfterExternalReset();
   const incomingReports = cleanReports(m0);
   appState.reports = appState.reports || createDictionary();
   const toDomain = (reports: ReportMap) => Object.entries(reports).flatMap(([questionId, report]) => {
@@ -110,12 +115,16 @@ let dirty = new Set<string>();
 let syncer: Syncer | null = null;
 
 function load(key = stateKey()): AppState {
+  mirrorGeneration = readResetGeneration(key);
   try {
     const parsedData = readProgressSnapshot(key) as Partial<AppState> | null;
     if (parsedData && parsedData.stats) return { stats: cleanStats(parsedData.stats), sessions: cleanSessions(parsedData.sessions).slice(0, MAX_SESIONES), cfg: cleanCfg(parsedData.cfg), seen: cleanSeen(parsedData.seen), reports: cleanReports(parsedData.reports), cards: cleanCards(parsedData.cards) };
   } catch {}
   // Si había un texto guardado que no se pudo usar, el estado vacío de abajo lo sobrescribirá en el próximo guardado.
   preserveUnusableProgressSnapshot(key);
+  return emptyProgress();
+}
+function emptyProgress(): AppState {
   return { stats: createDictionary(), sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: createDictionary(), cards: createDictionary() };
 }
 // La copia antigua queda intacta; solo el propietario puede adoptarla.
@@ -133,12 +142,32 @@ export function switchAccount(next: string | null, adoptLegacy = false): void {
   dirty.clear(); persist();
   accountListeners.forEach(fn => fn()); emit();
 }
+// A local erase starts a new generation. Its previous IndexedDB copy stays ineligible
+// even if the page reloads before the replacement transaction completes.
+function refreshAfterExternalReset(): void {
+  const generation = readResetGeneration(stateKey());
+  if (!generation || generation === mirrorGeneration) return;
+  appState = load();
+  dirty.clear();
+  progressStore.setState({ progress: appState });
+}
+if (typeof window !== 'undefined') window.addEventListener('storage', event => {
+  if (event.key === stateKey() + '.generation' || event.key === stateKey()) refreshAfterExternalReset();
+});
+function storageSnapshot() {
+  refreshAfterExternalReset();
+  return appState;
+}
 let persistWarned = false;
-function persist() {
+function writePrimaryProgress() {
   if (!writeProgressSnapshot(stateKey(), appState)) {
     // sin espacio o sin permiso: avisar una vez (la copia de IndexedDB sigue intentándose)
     if (!persistWarned) { persistWarned = true; try { dispatchEvent(new Event('tai-persist-error')); } catch {} }
   }
+}
+function persist() {
+  refreshAfterExternalReset();
+  writePrimaryProgress();
   mirror();
 }
 // Copia de seguridad en IndexedDB: en iOS, localStorage puede perder las últimas escrituras si se cierra la app enseguida.
@@ -147,12 +176,17 @@ function mirror() { clearTimeout(mirrorTimer); mirrorTimer = setTimeout(flushMir
 export async function flushMirror(): Promise<void> {
   clearTimeout(mirrorTimer);
   try {
-    await writeMirroredProgress(mirrorKey(), appState);
+    const snapshot = storageSnapshot();
+    await writeMirroredProgress(mirrorKey(), mirrorGeneration ? { ...snapshot, mirrorGeneration } : snapshot);
   } catch {}
 }
 function mergeMirroredCopy(text: string): boolean {
   const parsedData = JSON.parse(text);
-  if (!parsedData || typeof parsedData !== 'object') return false;
+  if (!parsedData || typeof parsedData !== 'object' || mirrorGeneration && parsedData.mirrorGeneration !== mirrorGeneration) return false;
+  if (!mirrorGeneration && typeof parsedData.mirrorGeneration === 'string') {
+    mirrorGeneration = parsedData.mirrorGeneration;
+    writeResetGeneration(stateKey(), parsedData.mirrorGeneration);
+  }
   let recovered = mergeRemote(parsedData.stats);
   recovered = mergeSessions(parsedData.sessions) || recovered;
   recovered = mergeSeen(parsedData.seen) || recovered;
@@ -171,9 +205,11 @@ function mergeMirroredCopy(text: string): boolean {
 export async function recover(): Promise<boolean> {
   try {
     const key = mirrorKey();
+    const stateAtStart = appState;
     const legacy = hasPendingLegacyAdoption(account);
     const copies = await readMirroredProgress([key, ...(legacy ? ['state'] : [])]);
-    if (key !== mirrorKey()) return false;
+    refreshAfterExternalReset();
+    if (key !== mirrorKey() || appState !== stateAtStart) return false;
     let recoveredProgress = false;
     for (const text of copies) if (text) recoveredProgress = mergeMirroredCopy(text) || recoveredProgress;
     if (recoveredProgress) { persist(); emit(); }
@@ -181,7 +217,7 @@ export async function recover(): Promise<boolean> {
     return recoveredProgress;
   } catch { return false; }
 }
-export function flushNow(): Promise<void> { writeProgressSnapshot(stateKey(), appState); return flushMirror(); }
+export function flushNow(): Promise<void> { writeProgressSnapshot(stateKey(), storageSnapshot()); return flushMirror(); }
 export function onChange(fn: () => void): () => void { return progressStore.subscribe(() => fn()); }
 export const subscribe: (fn: () => void) => () => void = onChange;
 function emit() { progressStore.setState(state => ({ revision: state.revision + 1 })); }
@@ -193,22 +229,26 @@ export const getCfg = (): Cfg => appState.cfg;
 export const getSeen = (): string[] => (appState.seen && appState.seen.t) || [];
 export const getSeenDoc = (): SeenDoc => appState.seen || { t: [], ts: 0 };
 export function setSeen(arr: Iterable<string>): void {
+  refreshAfterExternalReset();
   appState.seen = { t: [...arr].sort(), ts: Date.now() };
   persist(); emit();
   if (syncer && syncer.pushSeen) syncer.pushSeen(appState.seen);
 }
 export function mergeSeen(r0: unknown): boolean {
+  refreshAfterExternalReset();
   if (!isObjectRecord(r0) || !Array.isArray(r0.t)) return false;
   const result = cleanSeen(r0);
   if (!appState.seen || (result.ts || 0) > (appState.seen.ts || 0)) { appState.seen = { t: result.t, ts: result.ts || 0 }; persist(); emit(); return true; }
   return false;
 }
 export function setCfg(key: string, itemValue: unknown): void {
+  refreshAfterExternalReset();
   const value = cleanCfgSetting(key, itemValue);
   if (value === undefined) return;
   appState.cfg[key] = value; persist(); emit();
 }
 export function replaceCfg(cfg: unknown): void {
+  refreshAfterExternalReset();
   appState.cfg = cleanCfg(cfg);
   persist(); emit();
 }
@@ -225,6 +265,7 @@ export function markDirty(tema: string): void { dirty.add(tema); }
 // Aplica un resultado: res = 1 acierto, 0 fallo, 2 blanco
 // secs (opcional): segundos que tardó en contestar; se acumulan para detectar preguntas lentas
 export function record(id: string, tema: string, res: Res, now = Date.now(), secs?: number): void {
+  refreshAfterExternalReset();
   const persistedRecord = appState.stats[id];
   const mapped = persistedRecord ? statsMapper.toDomain(persistedRecord) : null;
   const statistics = recordQuestionAnswer(mapped?.ok ? mapped.value : undefined, res, now, secs);
@@ -238,6 +279,7 @@ export function record(id: string, tema: string, res: Res, now = Date.now(), sec
 }
 // «Acerté dudando»: el acierto ya está registrado; la pregunta entra (o vuelve) a la cola a +2 días.
 export function doubt(id: string, tema: string, now = Date.now()): void {
+  refreshAfterExternalReset();
   const statRecord = appState.stats[id]; if (!statRecord) return;
   const mapped = statsMapper.toDomain(statRecord);
   if (!mapped.ok) return;
@@ -249,6 +291,7 @@ export function doubt(id: string, tema: string, now = Date.now()): void {
 }
 // Motivo del último fallo: 1 contenido, 2 trampa, 3 duda entre dos, 4 despiste (saca la pregunta de la cola), 5 no lo sabía
 export function setMotivo(id: string, tema: string, reasonCode: number, now = Date.now()): void {
+  refreshAfterExternalReset();
   const statRecord = appState.stats[id]; if (!statRecord) return;
   const mapped = statsMapper.toDomain(statRecord);
   if (!mapped.ok) return;
@@ -260,6 +303,7 @@ export function setMotivo(id: string, tema: string, reasonCode: number, now = Da
 }
 // «Fue suerte»: acierto sin saberlo; entra (o vuelve) a la cola a +1 día y debe acertarse 2 veces seguidas para quitar la marca y queda anotado (r[9] = 6)
 export function suerte(id: string, tema: string, now = Date.now()): void {
+  refreshAfterExternalReset();
   const statRecord = appState.stats[id]; if (!statRecord) return;
   const mapped = statsMapper.toDomain(statRecord);
   if (!mapped.ok) return;
@@ -270,6 +314,7 @@ export function suerte(id: string, tema: string, now = Date.now()): void {
   if (syncer) syncer.schedule();
 }
 export function toggleFlag(id: string, tema: string): number {
+  refreshAfterExternalReset();
   const statRecord = appState.stats[id] || [0, 0, Date.now(), -1, 0, 0, 0, 0, 0];
   statRecord[6] = statRecord[6] ? 0 : 1; statRecord[2] = Date.now();
   appState.stats[id] = statRecord; dirty.add(tema); persist(); emit();
@@ -278,6 +323,7 @@ export function toggleFlag(id: string, tema: string): number {
 }
 // La marca no altera respuestas ni vencimientos guardados; genera una comprobación diferida derivada al seleccionar repasos.
 export function setReviewed(id: string, tema: string, value: boolean): void {
+  refreshAfterExternalReset();
   const statRecord = appState.stats[id]; if (!statRecord || typeof value !== 'boolean') return;
   const mapped = statsMapper.toDomain(statRecord);
   if (!mapped.ok) return;
@@ -288,6 +334,7 @@ export function setReviewed(id: string, tema: string, value: boolean): void {
   if (syncer) syncer.schedule();
 }
 export function addSession(newSession: Session): void {
+  refreshAfterExternalReset();
   appState.sessions.unshift(newSession);
   appState.sessions = appState.sessions.slice(0, MAX_SESIONES);
   persist(); emit();
@@ -305,6 +352,7 @@ export const needsSync = (local: StatRec, remote?: StatRec) => {
 };
 // Mezcla registros remotos (gana el más reciente por pregunta). Devuelve true si cambió algo local.
 export function mergeRemote(map0: unknown): boolean {
+  refreshAfterExternalReset();
   const map = cleanStats(map0);
   let changed = false;
   for (const id of Object.keys(map)) {
@@ -319,6 +367,7 @@ export function mergeRemote(map0: unknown): boolean {
   return changed;
 }
 export function mergeSessions(list0: unknown): boolean {
+  refreshAfterExternalReset();
   const list = cleanSessions(list0);
   const merged = mergeSessionHistory(appState.sessions, list, MAX_SESIONES);
   if (merged.changed) { appState.sessions = [...merged.sessions]; persist(); emit(); }
@@ -343,6 +392,7 @@ function preserveFsrsOnLegacyCardUpdate(stored: CardRec, incoming: CardRec, orig
   return cardMapper.toDto(migrated);
 }
 export function mergeCards(m0: unknown): boolean {
+  refreshAfterExternalReset();
   const incomingCards = cleanCards(m0); appState.cards = appState.cards || createDictionary(); let changed = false;
   for (const cardId of Object.keys(incomingCards)) {
     const storedCard = appState.cards[cardId], incomingCard = incomingCards[cardId];
@@ -359,6 +409,7 @@ export function mergeCards(m0: unknown): boolean {
 }
 // Crea la tarjeta de un fallo (vence hoy). Si ya existe, no la toca. Devuelve true si la creó.
 export function addFallo(qid: string, now = Date.now()): boolean {
+  refreshAfterExternalReset();
   const id = 'FC-Q-' + qid; if (!CARD_RE.test(id)) return false;
   appState.cards = appState.cards || createDictionary(); if (cardRec(id)) return false;
   if (Object.keys(appState.cards).length >= MAX_CARDS) return false;
@@ -366,12 +417,14 @@ export function addFallo(qid: string, now = Date.now()): boolean {
   persist(); emit(); if (syncer && syncer.pushCards) syncer.pushCards(appState.cards); return true;
 }
 export function removeCard(id: string): void {
+  refreshAfterExternalReset();
   const result = cardRec(id); if (!result) return;
   appState.cards[id] = [0, 0, Math.max(Date.now(), result[2] + 1), -1, 0, -1];
   persist(); emit(); if (syncer && syncer.pushCards) syncer.pushCards(appState.cards);
 }
 // Valora una tarjeta con FSRS: 0 fallé · 1 dudaba · 2 lo sabía.
 export function gradeCard(id: string, grade: number, now = Date.now()): CardRec | null {
+  refreshAfterExternalReset();
   if (!CARD_RE.test(id) || ![0, 1, 2].includes(grade)) return null;
   appState.cards = appState.cards || createDictionary();
   const current = cardRec(id);
@@ -381,7 +434,7 @@ export function gradeCard(id: string, grade: number, now = Date.now()): CardRec 
   appState.cards[id] = cardRecord; persist(); emit(); if (syncer && syncer.pushCards) syncer.pushCards(appState.cards);
   return cardRecord;
 }
-export function exportAll(): string { return JSON.stringify(appState); }
+export function exportAll(): string { refreshAfterExternalReset(); return JSON.stringify(appState); }
 function parseImportedProgress(txt: unknown): Record<string, unknown> {
   if (typeof txt !== 'string' || txt.length > 20e6) throw new Error('Archivo no válido');
   const parsedData = JSON.parse(txt);
@@ -389,6 +442,7 @@ function parseImportedProgress(txt: unknown): Record<string, unknown> {
   return parsedData;
 }
 export function importAll(txt: unknown): void {
+  refreshAfterExternalReset();
   const parsedData = parseImportedProgress(txt);
   mergeRemote(parsedData.stats);
   mergeSessions(parsedData.sessions || []);
@@ -398,4 +452,14 @@ export function importAll(txt: unknown): void {
   if (parsedData.cfg) { appState.cfg = { ...appState.cfg, ...cleanCfg(parsedData.cfg) }; persist(); emit(); }
   syncer?.pushImport?.();
 }
-export function resetAll(): void { appState = { stats: createDictionary(), sessions: [], cfg: {}, seen: { t: [], ts: 0 }, reports: createDictionary(), cards: createDictionary() }; progressStore.setState({ progress: appState }); persist(); emit(); }
+export function resetAll(): void {
+  mirrorGeneration = globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`;
+  appState = emptyProgress();
+  // Publish the empty DTO before notifying other tabs of the new generation.
+  writePrimaryProgress();
+  writeResetGeneration(stateKey(), mirrorGeneration);
+  dirty.clear();
+  void flushMirror();
+  progressStore.setState({ progress: appState });
+  emit();
+}

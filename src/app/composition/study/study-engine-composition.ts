@@ -1,3 +1,4 @@
+import { isFull } from '../access-composition.js';
 import { configureStudyEngine } from '../../../core/application/study-session-engine.js';
 import { createStudyQuestionSelection } from '../../../core/application/study-question-selection.js';
 import { localStudyProgressGateway } from '../../../adapters/local/progress-repository.js';
@@ -5,7 +6,7 @@ import { httpStudyQuestionCatalog } from '../../../adapters/http/study-question-
 
 export const studyQuestionCatalog = httpStudyQuestionCatalog;
 
-configureStudyEngine({ progress: localStudyProgressGateway, catalog: studyQuestionCatalog });
+configureStudyEngine({ progress: localStudyProgressGateway, catalog: studyQuestionCatalog, fullAccess: isFull });
 
 const studyQuestionSelection = createStudyQuestionSelection(localStudyProgressGateway, studyQuestionCatalog);
 export const { dueQuestionIds, falladasIds, quickItems, repasoItems, selectQuestionsForTopics, selectWeightedSimulationQuestions, trapTest } = studyQuestionSelection;
