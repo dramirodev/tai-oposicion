@@ -28,7 +28,7 @@ it('creates a local reviewed link when the Drive test topic differs from the que
   const user = userEvent.setup();
   window.localStorage.clear();
   const configured = services();
-  renderApp(createElement(AcademyQuestionSectionMapPage), { services:configured, initialEntries:['/curar-contenido'] });
+  const view = renderApp(createElement(AcademyQuestionSectionMapPage), { services:configured, initialEntries:['/curar-contenido'] });
   await user.selectOptions(await screen.findByLabelText('Tema de la pregunta'), 'T3.01');
   await user.selectOptions(await screen.findByLabelText('Tema del PDF de origen'), 'T1.04');
   await user.selectOptions(await screen.findByLabelText('Tema del epígrafe de destino'), 'T3.01');
@@ -53,6 +53,13 @@ it('creates a local reviewed link when the Drive test topic differs from the que
   expect(saved.links[0].testEvidence).toMatchObject({ page:2, sourceHash:expect.any(String), path:'T1.04 Transparencia/T1.04 Transparencia - Test 1.pdf' });
   expect(saved.links[0].sectionEvidence).toMatchObject({ page:expect.any(Number), sourceHash:expect.any(String), outlineFingerprint:expect.any(String) });
   expect(await screen.findByText(/Se guarda solo en este dispositivo y cuenta/)).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name:'Retirar del borrador local' }));
+  expect(JSON.parse(window.localStorage.getItem('tai.academy-question-section-map:v2:curator')).links).toHaveLength(0);
+  expect(await screen.findByText('Vínculo retirado del borrador local.')).toBeInTheDocument();
+  expect(screen.getByText('Aún no hay vínculos para este tema.')).toBeInTheDocument();
+  view.unmount();
+  renderApp(createElement(AcademyQuestionSectionMapPage), { services:configured, initialEntries:['/curar-contenido'] });
+  expect(await screen.findByText('Borrador local · 0 vínculos')).toBeInTheDocument();
 });
 
 it('reads v1 local drafts as same-topic v2 links without deleting the legacy key', async () => {
