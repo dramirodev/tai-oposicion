@@ -347,12 +347,20 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - **Evidencia:** capturas poblada y persistida revisadas: `evidence/accessibility-2026-11-05/failures-populated-{320px,1440px}.png` y `failures-reviewed-restored-{320px,1440px}.png`.
 - **Límite:** es una verificación de estos controles/estados, no una inspección WCAG exhaustiva. VoiceOver/NVDA, zoom nativo 200%/400%, contraste integral, pantallas restantes y sincronización remota siguen fuera de la evidencia local; UX-009 queda abierto y ATE-005 permanece EN CORRECCIÓN.
 
+### Reflow automatizado de rutas (5 de noviembre de 2026)
+
+- Se amplió `tests/e2e/routes.spec.ts`: cada uno de los 18 destinos, en tema claro y oscuro, comprueba que el documento no excede el viewport a 320 y 640 CSS px. La prueba conserva sus capturas a tamaño original y ejecuta ambos motores.
+- **Verificación:** `npm run test:e2e -- tests/e2e/routes.spec.ts` pasó **86/86** en Chromium y WebKit (incluye journeys adicionales de la suite). No se detectó overflow horizontal en las aserciones añadidas. Se guardan capturas de Planificación a 320/640 CSS px por motor en `evidence/accessibility-2026-11-05/planning-reflow-*`.
+- **Alcance:** son anchos de viewport CSS; 640 px no demuestra zoom nativo al 200%. Tampoco se infiere ausencia universal de clipping vertical, solapamiento, contraste insuficiente o barreras con lector de pantalla.
+- ATE-005 gana comprobación de reflow reproducible para rutas iniciales; la asociación de todos los controles dinámicos con resultados observables sigue incompleta. UX-009 permanece abierto.
+
 ## Estado operativo vigente — 5 de noviembre de 2026
 
 - UX-007 continúa cerrado según sus regresiones previas en Chromium/WebKit; este corte no lo reabre.
 - UX-012 quedó **CORREGIDO Y VERIFICADO**; el diff de producto solo afecta al singular/plural del contador de Falladas. El test de página verifica también el camino de error y recuperación.
 - ATE-005 avanza con controles poblados de Falladas, persistencia tras reload, acción de práctica, recuperación de error y mediciones responsive. Esto amplía, pero no completa, la cobertura total de rutas/controladores.
 - Verificaciones vigentes de este corte: Playwright Falladas **8/8**, Vitest componente Falladas **2/2**, `npm run check` **960 aprobadas/27 omitidas**. Capturas se conservan en `evidence/accessibility-2026-11-05/`.
+- Reflow de 18 destinos: `npm run test:e2e -- tests/e2e/routes.spec.ts` **86/86** Chromium/WebKit; cada ruta/tema mide overflow a 320 y 640 CSS px.
 - UX-009 sigue abierto: se verificó teclado y algunos estados ARIA con browser automatizado, así como reflow y un objetivo táctil de Falladas; siguen sin realizarse lector de pantalla real, zoom nativo 200%/400%, contraste exhaustivo y revisión WCAG completa.
 - ATE-006 sigue sin ejecución remota observable; la rama aún no ha llegado al default branch y no se creó una PR en este corte. QUICK/INTENSIVE/EXTREME permanecen disponibles localmente; EXTREME no se ejecuta en cada PR.
 - Regresión global después de la ampliación: `npm run test:e2e` terminó en **270 pasadas/28 omitidas/0 fallidas** en Chromium/WebKit (298 planificadas, 9,8 min). La prueba autenticada de Emulator se ejecutó aparte y pasó **12/12**; las dos EXTREME se ejecutaron aparte y pasaron **2/2** con 1.000 acciones por motor. `npm run check` pasó con **960 aprobadas/27 omitidas** (189 archivos aprobados/1 omitido); persiste el aviso conocido `window.scrollTo` de jsdom en Cards.

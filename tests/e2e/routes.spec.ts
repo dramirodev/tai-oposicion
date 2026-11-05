@@ -22,7 +22,7 @@ async function quick(page: Page) {
   await expect(page.locator('#app')).toContainText('pregunta 1');
 }
 for (const theme of ['light', 'dark']) {
-  for (const route of routes) test(`${route} · ${theme}`, async ({ page }) => {
+  for (const route of routes) test(`${route} · ${theme}`, async ({ page, browserName }) => {
     const errors = await setup(page, theme);
     if (route === 'quiz' || route === 'result') {
       await quick(page);
@@ -45,6 +45,16 @@ for (const theme of ['light', 'dark']) {
     await page.waitForTimeout(400);
     await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
     if (route !== 'cards') await expect(page).toHaveScreenshot(`${route}-${theme}.png`, { fullPage: false, mask: [page.locator("#ver small")] });
+    for (const width of [320, 640]) {
+      await page.setViewportSize({ width, height: 900 });
+      const documentWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+      expect(documentWidth, `${route} · ${theme} overflows at ${width}px`).toBeLessThanOrEqual(width);
+      if (route === 'planificacion' && theme === 'light') {
+        await page.screenshot({
+          path: `tests/e2e/evidence/accessibility-2026-11-05/planning-reflow-${width}px-${browserName}.png`,
+        });
+      }
+    }
     expect(errors).toEqual([]);
   });
   test(`invitado completa sesión rápida · ${theme}`, async ({ page }) => {
