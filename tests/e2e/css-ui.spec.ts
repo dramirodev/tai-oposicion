@@ -394,7 +394,8 @@ test('la pausa de foco se guarda, sobrevive a recarga y continúa el mismo paso'
   const resumed = await page.evaluate(() => JSON.parse(localStorage.getItem(`tai.training-session.v1.${encodeURIComponent('guest')}`) || 'null'));
   expect(resumed).toMatchObject({ currentIndex:0, currentStartedAt:null, breakStartedAt:null, activities:[{ id:session.activities[0].id }] });
   await page.getByRole('button', { name:'Continuar actividad' }).click();
-  await expect(page).toHaveURL(/#\/cards/);
+  await expect(page).toHaveURL(/#\/quiz\?dailyTraining=activeRecall&trainingSessionId=/);
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
 });
 
 test('registra el recuerdo del tema en papel y prioriza su comprobación el día siguiente', async ({ page }) => {
@@ -421,11 +422,11 @@ test('registra el recuerdo del tema en papel y prioriza su comprobación el día
   await expect(page.locator('#app h1')).toHaveText('Planificación de estudio');
   await expect(page.getByText(/2 de \d+ temas marcados como vistos/)).toBeVisible();
   const nextDayActivities = page.locator('.planning-activity');
-  await expect(nextDayActivities).toHaveCount(3);
-  await expect(nextDayActivities.nth(1)).toContainText('Preguntas del tema prioritario');
-  await expect(nextDayActivities.nth(1)).toContainText('T1.02');
-  await nextDayActivities.nth(1).getByText('Instrucciones y motivo').click();
-  await expect(nextDayActivities.nth(1)).toContainText('Tu autoevaluación de recuerdo en papel fue «Parcialmente» el 29 de octubre de 2026');
+  const priorityActivity = nextDayActivities.filter({ hasText:'Preguntas del tema prioritario' });
+  await expect(priorityActivity).toHaveCount(1);
+  await expect(priorityActivity).toContainText('T1.02');
+  await priorityActivity.getByText('Instrucciones y motivo').click();
+  await expect(priorityActivity).toContainText('Tu autoevaluación de recuerdo en papel fue «Parcialmente» el 29 de octubre de 2026');
 });
 
 test('un día de consolidación sin temas vistos muestra tiempo disponible, no una duración de sesión inventada', async ({ page }) => {

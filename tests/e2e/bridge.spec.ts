@@ -1,6 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { strFromU8, unzipSync } from 'fflate';
 async function start(page: Page, fullAccess = false) {
   const errors: string[] = [];
   page.on('pageerror', e => errors.push(e.message));
@@ -542,6 +543,21 @@ test('reintento inmediato crea una exposición enlazada, reanudable y sin inflar
   expect(records.find(record => record.id === sourceAttemptId)).toEqual(original);
   expect(errors).toEqual([]);
 });
+async function downloadStudyArchive(page: Page) {
+  await page.getByRole('button', { name: 'Preparar análisis para descargar' }).click();
+  await expect(page.locator('.ai-export-preview')).toContainText('1 parte JSON');
+  const [download] = await Promise.all([
+    page.waitForEvent('download'),
+    page.getByRole('button', { name: 'Descargar análisis completo en ZIP' }).click(),
+  ]);
+  expect(download.suggestedFilename()).toBe('tai-estudio-analisis.zip');
+  const archivePath = await download.path();
+  if (!archivePath) throw new Error('No se recibió el ZIP del análisis.');
+  const files = unzipSync(readFileSync(archivePath));
+  expect(Object.keys(files).sort()).toEqual(['tai-estudio-informe.md', 'tai-estudio-manifiesto.json', 'tai-estudio-parte-001.json']);
+  return files;
+}
+
 test('integra ayudas, navegación, bloqueo terminal y exportación del intento', async ({ page }) => {
   const errors = await start(page);
   await page.locator('#quick').click();
@@ -600,12 +616,8 @@ test('integra ayudas, navegación, bloqueo terminal y exportación del intento',
   await page.goto('/#/settings');
   await page.getByRole('button', { name: 'Buscar sesiones completadas' }).click();
   await expect(page.locator('.ai-export-session')).toHaveCount(1);
-  await page.getByRole('button', { name: 'Preparar vista previa y archivos' }).click();
-  await expect(page.locator('.ai-export-preview')).toContainText('1 parte JSON');
-  const [download] = await Promise.all([
-    page.waitForEvent('download'), page.getByRole('button', { name: 'Descargar tai-estudio-parte-001.json' }).click(),
-  ]);
-  const exported = JSON.parse(readFileSync(await download.path(), 'utf8'));
+  const files = await downloadStudyArchive(page);
+  const exported = JSON.parse(strFromU8(files['tai-estudio-parte-001.json']));
   expect(exported.attempts).toHaveLength(10);
   expect(exported.attempts.filter((attempt: { state: string }) => attempt.state === 'revealed')).toHaveLength(2);
   expect(exported.attempts.filter((attempt: { state: string }) => attempt.state === 'answered')).toHaveLength(1);
@@ -748,22 +760,12 @@ test('exporta sesiones manualmente en partes versionadas y borra el detalle sin 
   await page.goto('/#/settings');
   await page.getByRole('button', { name: 'Buscar sesiones completadas' }).click();
   await expect(page.locator('.ai-export-session')).toHaveCount(1);
-  await page.getByRole('button', { name: 'Preparar vista previa y archivos' }).click();
-  await expect(page.locator('.ai-export-preview')).toContainText('1 parte JSON');
-
-  const [manifestDownload] = await Promise.all([
-    page.waitForEvent('download'), page.getByRole('button', { name: 'Descargar manifiesto JSON' }).click(),
-  ]);
-  expect(manifestDownload.suggestedFilename()).toBe('tai-estudio-manifiesto.json');
-  const manifest = JSON.parse(readFileSync(await manifestDownload.path(), 'utf8'));
+  const files = await downloadStudyArchive(page);
+  const manifest = JSON.parse(strFromU8(files['tai-estudio-manifiesto.json']));
   expect(manifest).toMatchObject({ format: 'tai-study-ai-export', schemaVersion: 1, filters: { sessionCount: 1 } });
   expect(JSON.stringify(manifest)).not.toMatch(/"(?:uid|email|token|firebaseConfig)"\s*:/i);
 
-  const [partDownload] = await Promise.all([
-    page.waitForEvent('download'), page.getByRole('button', { name: 'Descargar tai-estudio-parte-001.json' }).click(),
-  ]);
-  expect(partDownload.suggestedFilename()).toBe('tai-estudio-parte-001.json');
-  const partText = readFileSync(await partDownload.path(), 'utf8');
+  const partText = strFromU8(files['tai-estudio-parte-001.json']);
   const part = JSON.parse(partText);
   expect(part).toMatchObject({ format: 'tai-study-ai-export-part', schemaVersion: 1, sessions: [{ id: 'part-001-session-001' }] });
   const partBytes = Buffer.byteLength(partText, 'utf8');
@@ -772,10 +774,7 @@ test('exporta sesiones manualmente en partes versionadas y borra el detalle sin 
   expect(part.attempts[0].questionId).toEqual(expect.any(String));
   expect(JSON.stringify(part)).not.toContain('guest');
 
-  const [markdownDownload] = await Promise.all([
-    page.waitForEvent('download'), page.getByRole('button', { name: 'Descargar informe Markdown' }).click(),
-  ]);
-  const markdown = readFileSync(await markdownDownload.path(), 'utf8');
+  const markdown = strFromU8(files['tai-estudio-informe.md']);
   expect(markdown).toContain(`tamaño total de partes: ${partBytes} bytes`);
 
   await page.getByRole('button', { name: 'Borrar historial detallado' }).click();
