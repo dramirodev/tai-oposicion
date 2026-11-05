@@ -10,7 +10,8 @@ import { join, dirname } from 'node:path';
 
 export const PROJECT = 'tai-oposicion';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const base = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents/bank`;
+const documents = `projects/${PROJECT}/databases/(default)/documents`;
+const endpoint = 'https://firestore.googleapis.com/v1/' + documents;
 
 /** Empaqueta un fichero: hash del contenido y gzip. */
 export function pack(buf) { return { sha256: createHash('sha256').update(buf).digest('hex'), h: createHash('sha1').update(buf).digest('hex').slice(0, 16), z: gzipSync(buf, { level: 9 }) }; }
@@ -46,35 +47,59 @@ export function verifyApprovedBank(files, manifest) {
 }
 
 async function api(method, path, token, body) {
-  const response = await fetch(base + path, { method, headers: { authorization: 'Bearer ' + token, 'content-type': 'application/json' }, body: body && JSON.stringify(body) });
+  const response = await fetch(endpoint + path, {
+    method, headers: { authorization: 'Bearer ' + token, 'content-type': 'application/json' }, body,
+  });
   if (response.status === 404 && method === 'GET') return null;
   if (!response.ok) throw new Error(`${method} ${path}: ${response.status} ${(await response.text()).slice(0, 200)}`);
   return response.json();
 }
+
+export async function publish(local, token, dry = false) {
+  if (!token && !dry) throw new Error('Falta ACCESS_TOKEN (gcloud auth print-access-token).');
+  const hashes = Object.fromEntries(Object.entries(local).map(([name, packed]) => [name, packed.h]));
+  const metadata = token ? await api('GET', '/bank/meta', token) : null;
+  if (metadata && !metadata.updateTime) throw new Error('Falta updateTime en el documento bank/meta.');
+  const remote = Object.fromEntries(Object.entries(metadata?.fields.files?.mapValue?.fields || {})
+    .map(([name, hash]) => [name, hash.stringValue]));
+  const { up, del } = plan(hashes, remote);
+  const kb = up.reduce((bytes, name) => bytes + local[name].z.length, 0) / 1024;
+  console.log(`${Object.keys(local).length} ficheros · a subir ${up.length} (${kb.toFixed(0)} KB comprimidos) · a borrar ${del.length}${dry ? ' · (simulación)' : ''}`);
+  if (!up.length && !del.length) return;
+  if (up.length + del.length + 1 > 500) throw new Error('El commit supera 500 escrituras, incluido bank/meta.');
+
+  const filePath = name => {
+    if (!name || name.includes('/')) throw new Error('Nombre de fichero de banco inválido.');
+    return documents + '/bank/f_' + name;
+  };
+  const writes = up.map(name => {
+    const { z, h } = local[name];
+    if (z.length > 900_000) throw new Error(`${name} comprimido ocupa ${z.length} B: no cabe en un documento`);
+    return { update: { name: filePath(name), fields: {
+      n: { stringValue: name }, h: { stringValue: h }, z: { bytesValue: z.toString('base64') },
+    } } };
+  });
+  for (const name of del) writes.push({ delete: filePath(name) });
+
+  const version = Number(metadata?.fields.v?.integerValue ?? 0) + 1;
+  if (!Number.isSafeInteger(version) || version < 1) throw new Error('Versión de bank/meta inválida.');
+  writes.push({
+    update: { name: documents + '/bank/meta', fields: {
+      v: { integerValue: String(version) }, ts: { integerValue: String(Date.now()) },
+      files: { mapValue: { fields: Object.fromEntries(Object.entries(hashes).map(([name, hash]) => [name, { stringValue: hash }])) } },
+    } },
+    currentDocument: metadata ? { updateTime: metadata.updateTime } : { exists: false },
+  });
+  const body = JSON.stringify({ writes });
+  if (Buffer.byteLength(body) > 10 * 1024 * 1024) throw new Error('El commit supera 10 MiB.');
+  if (dry) return;
+  await api('POST', ':commit', token, body);
+  console.log('meta v' + version + ' publicada');
+}
+
 async function main() {
-  const token = process.env.ACCESS_TOKEN, dry = process.argv.includes('--dry');
-  if (!token && !dry) { console.error('Falta ACCESS_TOKEN (gcloud auth print-access-token).'); process.exit(1); }
   const manifest = JSON.parse(readFileSync(join(root, 'scripts', 'bank-editorial', 'release.json'), 'utf8'));
   const local = loadLocal(undefined, undefined, undefined, manifest);
-  const hashes = Object.fromEntries(Object.entries(local).map(([name, packed]) => [name, packed.h]));
-  let remote = {}, remoteVersion = 0;
-  if (token) {
-    const metadata = await api('GET', '/meta', token);
-    if (metadata) { remoteVersion = +(metadata.fields.v?.integerValue || 0); for (const [name, hashField] of Object.entries(metadata.fields.files?.mapValue?.fields || {})) remote[name] = hashField.stringValue; }
-  }
-  const { up, del } = plan(hashes, remote);
-  const kb = up.reduce((compressedBytes, fileName) => compressedBytes + local[fileName].z.length, 0) / 1024;
-  console.log(`${Object.keys(local).length} ficheros · a subir ${up.length} (${kb.toFixed(0)} KB comprimidos) · a borrar ${del.length}${dry ? ' · (simulación)' : ''}`);
-  for (const nameItem of up) { const bytes = local[nameItem].z; if (bytes.length > 900_000) throw new Error(`${nameItem} comprimido ocupa ${bytes.length} B: no cabe en un documento`); }
-  if (dry || (!up.length && !del.length)) return;
-  for (const nameEntry of up) {
-    await api('PATCH', '/f_' + nameEntry, token, { fields: { n: { stringValue: nameEntry }, h: { stringValue: local[nameEntry].h }, z: { bytesValue: local[nameEntry].z.toString('base64') } } });
-    console.log('  subido', nameEntry);
-  }
-  for (const nameValue of del) { await api('DELETE', '/f_' + nameValue, token); console.log('  borrado', nameValue); }
-  // meta al final: los clientes no ven hashes nuevos hasta que los ficheros ya están subidos
-  await api('PATCH', '/meta', token, { fields: { v: { integerValue: String(remoteVersion + 1) }, ts: { integerValue: String(Date.now()) },
-    files: { mapValue: { fields: Object.fromEntries(Object.entries(hashes).map(([name, hash]) => [name, { stringValue: hash }])) } } } });
-  console.log('meta v' + (remoteVersion + 1) + ' publicada');
+  await publish(local, process.env.ACCESS_TOKEN, process.argv.includes('--dry'));
 }
 if (process.argv[1] && existsSync(process.argv[1]) && realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch(error => { console.error(error.message); process.exit(1); });
