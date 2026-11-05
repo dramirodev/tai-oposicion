@@ -143,6 +143,68 @@ test.describe('Firebase Auth Emulator supertest', () => {
       await expect(page.getByRole('heading', { name: heading, exact: true })).toBeVisible({ timeout: 15_000 });
     }
   });
+  test('una sesión autenticada se recupera tras pagehide y recarga sin perder respuestas', async ({ page }) => {
+    test.setTimeout(120_000);
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.clock.install({ time: new Date('2026-10-29T12:00:00+01:00') });
+    await signInSynthetic(page, identities.owner.email);
+
+    await page.goto('/#/settings');
+    await page.getByLabel('Tema que estás introduciendo esta semana').selectOption('T1.02');
+    await page.goto('/#/planificacion');
+    await page.getByRole('button', { name: 'Comenzar sesión' }).click();
+    await expect(page).toHaveURL(/#\/temario\?topic=/);
+    const topic = new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('topic');
+    await page.locator(`[data-t="${topic}"]`).click({ noWaitAfter: true });
+
+    await page.goto('/#/settings');
+    await page.getByLabel('Tipo de evento').selectOption('milestone');
+    await page.getByLabel('Nombre del evento').fill('Recuperación sintética');
+    await page.getByLabel('Inicio del evento').fill('2026-10-29');
+    await page.getByLabel('Fin del evento').fill('2026-10-29');
+    await page.getByLabel('Preguntas del hito').fill('3');
+    await page.getByLabel('Duración del hito').fill('10');
+    await page.getByRole('button', { name: 'Guardar evento' }).click();
+
+    await page.goto('/#/planificacion');
+    await page.getByRole('list', { name: 'Próximos eventos' }).getByRole('link', { name: 'Preparar hito' }).click();
+    await page.getByRole('button', { name: 'Empezar este hito' }).click();
+    await expect(page.getByRole('heading', { name: /pregunta 1/i })).toBeVisible();
+    const firstAnswer = page.locator('.opt').first();
+    await firstAnswer.click();
+    await page.locator('#next').click();
+    await expect(page.getByRole('heading', { name: /pregunta 2/i })).toBeVisible();
+
+    const checkpoint = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.run:tai-supertest') || 'null'));
+    expect(checkpoint).not.toBeNull();
+    expect(checkpoint.idx).toBe(1);
+    expect(checkpoint.ans[0]).toEqual(expect.any(Number));
+    const evidenceDir = 'tests/e2e/evidence/accessibility-2026-11-05';
+    mkdirSync(evidenceDir, { recursive: true });
+    await page.screenshot({ path: `${evidenceDir}/authenticated-run-before-reload.png`, fullPage: true });
+    await page.reload();
+    const resumeDialog = page.getByRole('dialog');
+    await expect(resumeDialog).toContainText('Tienes sin terminar');
+    await expect(resumeDialog).toContainText('2/3');
+    await page.screenshot({ path: `${evidenceDir}/authenticated-run-resume-prompt.png`, fullPage: true });
+    await resumeDialog.getByRole('button', { name: 'Continuar' }).click();
+    await expect(page).toHaveURL(/#\/quiz$/);
+    await expect(page.getByRole('heading', { name: /pregunta 2/i })).toBeVisible();
+    await page.screenshot({ path: `${evidenceDir}/authenticated-run-resumed.png`, fullPage: true });
+
+    const resumed = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.run:tai-supertest') || 'null'));
+    expect(resumed.ids).toEqual(checkpoint.ids);
+    expect(resumed.idx).toBe(checkpoint.idx);
+    expect(resumed.ans[0]).toBe(checkpoint.ans[0]);
+    await page.getByRole('button', { name: 'Salir', exact: true }).click();
+    const confirmation = page.getByRole('dialog');
+    await expect(confirmation).toContainText('Lo respondido se guardará como sesión interrumpida');
+    await confirmation.getByRole('button', { name: 'Salir', exact: true }).click();
+    await expect(page).toHaveURL(/#\/result$/);
+    await expect(page.getByRole('heading', { name: 'Resultado' })).toBeVisible();
+    await expect(page.getByText('Sesión interrumpida')).toBeVisible();
+    expect(await page.evaluate(() => localStorage.getItem('tai.run:tai-supertest'))).toBeNull();
+  });
   test('Lectura atenta recorre sus tres pasos, avanza y permite salir', async ({ page }) => {
     test.setTimeout(90_000);
     await page.setViewportSize({ width: 1280, height: 900 });

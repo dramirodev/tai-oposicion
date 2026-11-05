@@ -60,6 +60,13 @@ Estados: **Verificado**, **Parcial**, **Pendiente**, **Bloqueado**. “Verificad
 - La matriz ahora refleja los dos recorridos y mantiene ATE-005 **EN CORRECCIÓN**. Continúan sin probarse sistemáticamente controles de todos los estados dinámicos, sesiones concurrentes, pérdida de red, y round-trip de edición/curación.
 - UX-009 sigue abierto. El checklist `tests/e2e/accessibility-manual-review.md` distingue resultados de teclado/ARIA demostrados por Playwright de lo no comprobado: VoiceOver/NVDA, zoom nativo 200%/400%, contraste integral y medición de objetivos WCAG 2.2.
 
+## Revalidación de recuperación autenticada — 5 de noviembre de 2026
+
+- `npm run test:e2e:supertest`: **12/12** en Chromium, con Auth y Firestore Emulator `demo-tai-auth`. Se añadió el recorrido owner de checkpoint → pagehide/reload → prompt → reanudación → cierre interrumpido.
+- El test demuestra `idx = 1`, la respuesta previa y la cuenta local `tai-supertest` antes y después de la recarga; muestra Resultado de sesión interrumpida y comprueba la limpieza del checkpoint al salir.
+- Capturas sintéticas: `evidence/accessibility-2026-11-05/authenticated-run-before-reload.png`, `authenticated-run-resume-prompt.png`, `authenticated-run-resumed.png`. No representan sincronización entre dispositivos.
+- La evidencia amplía ATE-005, que sigue abierto por controles y estados dinámicos restantes, concurrencia/offline/cambio de cuenta y cobertura funcional exhaustiva. UX-009 y la integración remota de ATE-006 permanecen abiertas.
+
 ## Revalidación 5 de noviembre de 2026
 
 - **UX-007 cerrado en pruebas locales**: readiness del `InitialAppLoadingProvider` se difiere dos frames; regresión inicial 4/4 Chromium/WebKit × claro/oscuro, flujo de programar/reprogramar 8/8, `routes.spec.ts` 86/86. Se conservaron las capturas posteriores en `tests/e2e/evidence/ux-audit-2026-11-04/planning-visible-*`. Ver ledger para mecanismo, alcance y fuente WebKit relacionada.
