@@ -14025,7 +14025,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "localVerification": "26 pruebas, replay y rollback byte por byte",
+    "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
+    "change": "scripts/bank-editorial/reviewed-*.json"
   },
   {
     "id": "ITEM-GEN-T3.08-58",
@@ -15138,7 +15141,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "localVerification": "26 pruebas, replay y rollback byte por byte",
+    "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
+    "change": "scripts/bank-editorial/reviewed-*.json"
   },
   {
     "id": "ITEM-GEN-T3.08-317",
@@ -15558,7 +15564,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "localVerification": "26 pruebas, replay y rollback byte por byte",
+    "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
+    "change": "scripts/bank-editorial/reviewed-*.json"
   },
   {
     "id": "ITEM-GEN-T3.08-353.v1",
@@ -16062,7 +16071,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "localVerification": "26 pruebas, replay y rollback byte por byte",
+    "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
+    "change": "scripts/bank-editorial/reviewed-*.json"
   },
   {
     "id": "ITEM-GEN-T3.08-417.v1",
@@ -18288,7 +18300,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "change": "src/core/domain/question-review-overrides.ts",
+    "localVerification": "Exclusión de puntuación desde banco, sesión directa y reanudación; conserva consulta.",
+    "pendingMaterial": "Restituir figura o código mediante edición documentada; hasta entonces, np=1 en lectura y evaluación."
   },
   {
     "id": "ITEM-AS09B-P1-31",
@@ -18351,7 +18366,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "change": "src/core/domain/question-review-overrides.ts",
+    "localVerification": "Exclusión de puntuación desde banco, sesión directa y reanudación; conserva consulta.",
+    "pendingMaterial": "Restituir figura o código mediante edición documentada; hasta entonces, np=1 en lectura y evaluación."
   },
   {
     "id": "ITEM-AS11-P1-43",
@@ -31644,7 +31662,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "change": "src/core/domain/question-review-overrides.ts",
+    "localVerification": "Exclusión de puntuación desde banco, sesión directa y reanudación; conserva consulta.",
+    "pendingMaterial": "Restituir figura o código mediante edición documentada; hasta entonces, np=1 en lectura y evaluación."
   },
   {
     "id": "ITEM-AS09-P1-60",
@@ -31686,7 +31707,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "change": "src/core/domain/question-review-overrides.ts",
+    "localVerification": "Exclusión de puntuación desde banco, sesión directa y reanudación; conserva consulta.",
+    "pendingMaterial": "Restituir figura o código mediante edición documentada; hasta entonces, np=1 en lectura y evaluación."
   },
   {
     "id": "ITEM-AT401-P1-02",
@@ -35991,7 +36015,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "localVerification": "26 pruebas, replay y rollback byte por byte",
+    "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
+    "change": "scripts/bank-editorial/reviewed-*.json"
   },
   {
     "id": "ITEM-AT407-P1-12",
@@ -36033,7 +36060,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "localVerification": "26 pruebas, replay y rollback byte por byte",
+    "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
+    "change": "scripts/bank-editorial/reviewed-*.json"
   },
   {
     "id": "ITEM-AT407-P1-16",
@@ -39561,7 +39591,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "localVerification": "26 pruebas, replay y rollback byte por byte",
+    "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
+    "change": "scripts/bank-editorial/reviewed-*.json"
   },
   {
     "id": "ITEM-GEN-T3.08-545",
@@ -39582,7 +39615,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "localVerification": "26 pruebas, replay y rollback byte por byte",
+    "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
+    "change": "scripts/bank-editorial/reviewed-*.json"
   },
   {
     "id": "ITEM-GEN-T3.08-547",
@@ -52875,7 +52911,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "change": "src/core/domain/question-review-overrides.ts",
+    "localVerification": "Exclusión de puntuación desde banco, sesión directa y reanudación; conserva consulta.",
+    "pendingMaterial": "Restituir figura o código mediante edición documentada; hasta entonces, np=1 en lectura y evaluación."
   },
   {
     "id": "ITEM-AS09-P1-54",
@@ -71943,7 +71982,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "localVerification": "26 pruebas, replay y rollback byte por byte",
+    "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
+    "change": "scripts/bank-editorial/reviewed-*.json"
   },
   {
     "id": "ITEM-GEN-T3.08-1104.v2",
@@ -71964,7 +72006,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "localVerification": "26 pruebas, replay y rollback byte por byte",
+    "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
+    "change": "scripts/bank-editorial/reviewed-*.json"
   },
   {
     "id": "ITEM-GEN-T3.08-1110.v2",
@@ -72048,7 +72093,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "localVerification": "26 pruebas, replay y rollback byte por byte",
+    "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
+    "change": "scripts/bank-editorial/reviewed-*.json"
   },
   {
     "id": "ITEM-GEN-T3.08-1124",
@@ -72069,7 +72117,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "localVerification": "26 pruebas, replay y rollback byte por byte",
+    "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
+    "change": "scripts/bank-editorial/reviewed-*.json"
   },
   {
     "id": "ITEM-GEN-T3.08-1125",
@@ -72132,7 +72183,10 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE"
+    "status": "CORREGIDO Y VERIFICADO",
+    "localVerification": "26 pruebas, replay y rollback byte por byte",
+    "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
+    "change": "scripts/bank-editorial/reviewed-*.json"
   },
   {
     "id": "ITEM-GEN-T3.08-1133",

@@ -57,59 +57,66 @@ export function composeWeightedQuestions<T>(
   random: RandomGenerator,
   uniqueKeyOf?: (item: T) => string | undefined,
 ): T[] {
-  const active = topics.filter(topic => (pools[topic.id] || []).length);
-  if (!active.length) return [];
-  const targetCount = Math.min(count, active.reduce((sum, topic) => sum + pools[topic.id]!.length, 0));
+  const active = topics.filter(topic => pools[topic.id]?.length);
+  if (!active.length || count <= 0) return [];
   const weight = (topic: WeightedTopic) => (topic.weight ?? 0) > 0 ? topic.weight! : 1;
   const totalWeight = active.reduce((sum, topic) => sum + weight(topic), 0);
-  const allocations = active.map(topic => ({
-    topicId: topic.id,
-    exact: targetCount * weight(topic) / totalWeight,
-    count: 0,
-    remainder: 0,
+  const slots = active.map(topic => ({
+    pool: pools[topic.id]!,
+    target: count * weight(topic) / totalWeight,
+    selected: [] as T[],
+    cursor: 0,
   }));
-  allocations.forEach(allocation => {
-    allocation.count = Math.min(Math.floor(allocation.exact), pools[allocation.topicId]!.length);
-    allocation.remainder = allocation.exact - Math.floor(allocation.exact);
-  });
-  let remaining = targetCount - allocations.reduce((sum, allocation) => sum + allocation.count, 0);
-  for (const allocation of allocations.slice().sort((leftItem, rightItem) => rightItem.remainder - leftItem.remainder)) {
-    if (remaining > 0 && allocation.count < pools[allocation.topicId]!.length) {
-      allocation.count++;
-      remaining--;
+
+  // Reserve one distinct family per topic when the requested form can cover the syllabus.
+  // If another topic needs the same family, try moving its owner to an alternative.
+  const owner = new Map<string, number>();
+  const first = new Map<number, number>();
+  function reserve(topic: number, visited: Set<number>): boolean {
+    if (visited.has(topic)) return false;
+    visited.add(topic);
+    const pool = slots[topic].pool;
+    for (let index = 0; index < pool.length; index++) {
+      const key = uniqueKeyOf?.(pool[index]);
+      const current = key === undefined ? undefined : owner.get(key);
+      if (current !== undefined && !reserve(current, visited)) continue;
+      if (key !== undefined) owner.set(key, topic);
+      first.set(topic, index);
+      return true;
     }
+    return false;
   }
-  while (remaining > 0) {
-    const allocation = allocations.find(item => item.count < pools[item.topicId]!.length);
-    if (!allocation) break;
-    allocation.count++;
-    remaining--;
+  if (count >= slots.length) {
+    slots.forEach((_, topic) => reserve(topic, new Set()));
   }
-  const result: T[] = [];
-  const seenKeys = new Set<string>();
-  const add = (item: T): boolean => {
-    const key = uniqueKeyOf?.(item);
-    if (key !== undefined && seenKeys.has(key)) return false;
-    result.push(item);
-    if (key !== undefined) seenKeys.add(key);
-    return true;
-  };
-  for (const allocation of allocations) {
-    let selected = 0;
-    for (const item of pools[allocation.topicId]!) {
-      if (selected >= allocation.count) break;
-      if (add(item)) selected++;
-    }
-  }
-  if (uniqueKeyOf) {
-    for (const allocation of allocations) {
-      if (result.length >= targetCount) break;
-      for (const item of pools[allocation.topicId]!) {
-        if (result.length >= targetCount) break;
-        add(item);
+  for (const [topic, index] of first) slots[topic].selected.push(slots[topic].pool[index]);
+  const used = new Set(owner.keys());
+  let selected = first.size;
+  while (selected < count) {
+    let next = -1;
+    let deficit = -Infinity;
+    for (let topic = 0; topic < slots.length; topic++) {
+      const slot = slots[topic];
+      while (slot.cursor < slot.pool.length) {
+        const key = uniqueKeyOf?.(slot.pool[slot.cursor]);
+        if (slot.cursor !== first.get(topic) && (key === undefined || !used.has(key))) break;
+        slot.cursor++;
+      }
+      const missing = slot.target - slot.selected.length;
+      if (slot.cursor < slot.pool.length && missing > deficit) {
+        next = topic;
+        deficit = missing;
       }
     }
+    if (next < 0) break;
+    const slot = slots[next];
+    const item = slot.pool[slot.cursor++];
+    const key = uniqueKeyOf?.(item);
+    if (key !== undefined) used.add(key);
+    slot.selected.push(item);
+    selected++;
   }
+  const result = slots.flatMap(slot => slot.selected);
   return shuffleItems(result, random);
 }
 

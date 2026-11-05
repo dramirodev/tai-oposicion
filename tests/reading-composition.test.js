@@ -45,6 +45,11 @@ describe('reading composition', () => {
     expect(progress.items[0]).toMatchObject({ topicId: 'T1.01', asksForNegative: true, tokens: [{ key: true }] });
   });
 
+  it('excludes non-scoring items even when prioritized by the history', async () => {
+    const { services } = setup({ loadQuestionsById: async () => [question('fast', { np: 1 }), question('failed')] });
+    expect((await services.start()).items.map(item => item.id)).toEqual(['failed']);
+  });
+
   it('ignores a question batch when the account changes during loading', async () => {
     let release;
     const { dependencies, services } = setup({

@@ -20,7 +20,7 @@ export function SimulationReviewPage() {
     <div className="note">Elige uno de los supuestos. Son ejercicios reales de convocatorias anteriores.</div>
     {loading && <PageLoading variant="content" />}
     {!loading && choices.map((choice, index) => <section className="card" key={choice.id}>
-      <h2 className="h3">Supuesto {index + 1}</h2>
+      <h2 className="h3">Supuesto {index + 1}{choice.block && ` · Bloque ${choice.block}`}</h2>
       <div className="pre sm">{choice.text}</div>
       <button className="btn" onClick={() => { const result = simulationReview.start(choice.id); if (result === 'unavailable') setMessage('Ese supuesto ya no está disponible para esta cuenta. Vuelve al simulacro e inténtalo de nuevo.'); }}>Elegir este supuesto</button>
     </section>)}

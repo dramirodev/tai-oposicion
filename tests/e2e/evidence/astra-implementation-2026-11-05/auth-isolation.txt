@@ -1,0 +1,30 @@
+i  emulators: Starting emulators: auth, firestore
+i  emulators: Detected demo project ID "demo-tai-auth", emulated services will use a demo configuration and attempts to access non-emulated services for this project will fail.
+/bin/sh: lsof: command not found
+/bin/sh: lsof: command not found
+/bin/sh: lsof: command not found
+/bin/sh: lsof: command not found
+/bin/sh: lsof: command not found
+/bin/sh: lsof: command not found
+/bin/sh: lsof: command not found
+/bin/sh: lsof: command not found
+/bin/sh: lsof: command not found
+/bin/sh: lsof: command not found
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+i  Running script: TAI_ASTRA_AUTH_EMULATOR=1 npx vitest run tests/astra-auth-firestore.test.js
+
+ RUN  v5.0.5 /Users/dramiro/Documents/Codex/tai-audit-implementation
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  22:34:57
+   Duration  2.11s (tests 84%, import 8%, setup 4%, transform 3%)
+
+✔  Script exited successfully (code 0)
+i  emulators: Shutting down emulators.
+i  firestore: Stopping Firestore Emulator
+i  auth: Stopping Authentication Emulator
+i  hub: Stopping emulator hub
+i  logging: Stopping Logging Emulator

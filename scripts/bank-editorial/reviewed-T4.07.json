@@ -1,0 +1,86 @@
+[
+  {
+    "id": "AT407-P1-11",
+    "beforeSha256": "33147534efa341c2bdf659a924abe1c848d0869b7ecfbbfd5ffd5bc95b48042e",
+    "afterSha256": "f26ad570852a7b8eaf858038d08e32d08e25995253732abae3226ff1cb0eb95c",
+    "before": {
+      "q": "¿Cuántos hosts puede haber en una red de clase B?",
+      "a": [
+        "216",
+        "216 - 4",
+        "216 - 2",
+        "224 - 2"
+      ],
+      "c": 2,
+      "n": null,
+      "u": null
+    },
+    "after": {
+      "q": "En el direccionamiento IPv4 por clases, ¿cuántas direcciones son asignables a hosts en una red de clase B sin subdividir?",
+      "a": [
+        "2^16",
+        "2^16 − 4",
+        "2^16 − 2",
+        "2^24 − 2"
+      ],
+      "c": 2,
+      "n": "Una red de clase B sin subdividir tiene prefijo /16. De sus 65.536 direcciones, dos corresponden a red y broadcast. Quedan 65.534 asignables.",
+      "u": "65.534 hosts en cada una de las [p. 27]"
+    },
+    "reviewedOptions": [
+      "Cuenta también red y broadcast.",
+      "Descuenta cuatro direcciones en vez de dos.",
+      "Con 16 bits libres, 65.536 menos 2 da 65.534.",
+      "Usa 24 bits de host, propios de /8."
+    ],
+    "temario": {
+      "pdf": "T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Temario.pdf",
+      "sha256": "8c96987feee2c1ddade9129a46a22faf3166f37a58524261b7ec3818e5f1fb58",
+      "page": 27,
+      "quote": "65.534 hosts en cada una de las"
+    },
+    "normativeSource": "https://www.rfc-editor.org/rfc/rfc791#section-3.2"
+  },
+  {
+    "id": "AT407-P1-14",
+    "beforeSha256": "6a508e5fa70b78c431af2e0caacfe2d965e885bd20f57f7c8f1ed9e70b5d7c39",
+    "afterSha256": "10187d47fc866e475762193ed227bdbf5d913c5447780c687a456e853a3fb554",
+    "before": {
+      "q": "La subred cuya dirección es 62.54.32.89/10, ¿cuántos hosts podrá direccionar?",
+      "a": [
+        "210 - 2",
+        "212 - 2",
+        "220 - 2",
+        "222 - 2"
+      ],
+      "c": 3,
+      "n": null,
+      "u": null
+    },
+    "after": {
+      "q": "¿Cuántas direcciones puede asignar a hosts la subred IPv4 que contiene 62.54.32.89/10?",
+      "a": [
+        "2^10 − 2",
+        "2^12 − 2",
+        "2^20 − 2",
+        "2^22 − 2"
+      ],
+      "c": 3,
+      "n": "El prefijo /10 deja 32 − 10 = 22 bits de host. Tras reservar red y broadcast quedan 4.194.302 direcciones asignables.",
+      "u": "El tamaño del bloque debe ser una potencia de 2. [p. 34]"
+    },
+    "reviewedOptions": [
+      "10 es la longitud del prefijo.",
+      "12 bits corresponderían a /20.",
+      "20 bits corresponderían a /12.",
+      "22 bits dan 4.194.304 direcciones en total."
+    ],
+    "temario": {
+      "pdf": "T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Temario.pdf",
+      "sha256": "8c96987feee2c1ddade9129a46a22faf3166f37a58524261b7ec3818e5f1fb58",
+      "page": 34,
+      "quote": "El tamaño del bloque debe ser una potencia de 2."
+    },
+    "normativeSource": "https://www.rfc-editor.org/rfc/rfc4632#section-3.1"
+  }
+]

@@ -20,7 +20,7 @@ export function QuizSessionHeader({ snapshot, pace, headingRef, onExit, onPause 
       <div className="cnt min-w-11 text-right text-[length:var(--fs-m)] font-semibold text-muted">{snapshot.timed ? `#${snapshot.index + 1}` : `${snapshot.index + 1}/${snapshot.count}`}</div>
       {snapshot.timeLimitSeconds !== null && <>
         <div className="clock rounded-[var(--r-s)] bg-[var(--sel)] px-[.5625rem] py-1 font-semibold text-[length:var(--fs-b)] [font-family:var(--font-ui)] [font-variant-numeric:tabular-nums]" id="clock">{formatTime(snapshot.remainingSeconds)}</div>
-        <button className="ghost" id="pause" aria-label="Pausar" onClick={onPause}><Pause size="1.25rem" aria-hidden="true" /></button>
+        {!snapshot.fixedDeadline && <button className="ghost" id="pause" aria-label="Pausar" onClick={onPause}><Pause size="1.25rem" aria-hidden="true" /></button>}
       </>}
     </div>
     <div className="sub study-run-title">{snapshot.title} <HelpIconLink topic="sesiones" label="Ayuda sobre controles y estados de pregunta" /></div>

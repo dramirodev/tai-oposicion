@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+import { gradingRevision } from '../src/core/domain/pending-run.js';
 import { loadPendingRun } from '../src/core/application/runs/pending-run.js';
 
 const question = { i: 'q1', t: 'T1.01', o: 'O', q: 'Pregunta', a: ['a', 'b'], c: 0, np: 0 };
@@ -26,6 +27,24 @@ describe('loadPendingRun', () => {
     });
     expect(state.removed).toEqual([]);
     expect(state.loadQuestions).toHaveBeenCalledWith(['q1']);
+  });
+
+  it.each([
+    ['clave', { c: 1 }], ['opciones', { a: ['b', 'a'] }], ['enunciado', { q: 'Otra pregunta' }],
+    ['puntuabilidad', { np: 1 }], ['contexto', { cp: 'Caso distinto' }], ['identidad', { i: 'q2' }],
+  ])('rechaza cambios en %s incluso con el mismo recuento de preguntas', async (_field, changed) => {
+    const { state, dependencies } = repository({
+      saved: savedRun({ feedback: true, ans: [0], gradingRevisions: [gradingRevision(question)] }),
+      loadQuestions: async () => [{ ...question, ...changed }],
+    });
+    expect(await loadPendingRun(true, dependencies)).toBeNull();
+    expect(state.removed).toEqual(['guest']);
+  });
+
+  it.each([{ idx: 2 }, { ans: '0' }, { ans: [4] }, { gradingRevisions: ['malformed'] }])('limpia un checkpoint corrupto sin puntuarlo', async invalid => {
+    const { dependencies, state } = repository({ saved: savedRun(invalid) });
+    expect(await loadPendingRun(true, dependencies)).toBeNull();
+    expect(state.removed).toEqual(['guest']);
   });
 
   it('clears a session the current access level cannot resume', async () => {

@@ -1,6 +1,8 @@
 import { it, expect, beforeEach } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { isQuestionEditoriallyQuarantined } from '../src/core/domain/question-review-overrides.js';
+import { applyEditorialScoring, isQuestionEditoriallyQuarantined } from '../src/core/domain/question-review-overrides.js';
+import { questionNotice } from '../src/shared/presentation/study-content.js';
+import { filterScoringQuestions } from '../src/core/domain/selection.js';
 const load = f => JSON.parse(readFileSync(`public/data/${f}`, 'utf8'));
 const by = (f, id) => load(f).find(q => q.i === id);
 it('las preguntas reescritas como «versión editorial» vuelven a su contenido original', () => {
@@ -173,4 +175,22 @@ it('precisa preguntas repetidas cuando el mismo pasaje sustenta más de una resp
   expect(specification.q).toContain('implementaciones');
   expect(specification.a[specification.c]).toContain('Mojarra');
   expect(specification.u).toContain('Apache MyFaces');
+});
+
+it.each([
+ ['T3.05', 'AS09-P1-48', 'diagrama de clases UML', 'Simulacro 09.pdf', 9],
+ ['T3.05', 'AS10B-P1-63', 'identificar el diagrama', 'Simulacro 10 (bis).pdf', 11],
+ ['T3.06', 'AS09-P1-52', 'código Java', 'Simulacro 09.pdf', 10],
+ ['T2.03', 'AS08B-P1-37', 'árbol', 'Simulacro 08 (bis).pdf', 8],
+ ['T2.03', 'AS10B-P1-40', 'grafo', 'Simulacro 10 (bis).pdf', 8],
+])('protege %s %s y localiza el material necesario en el PDF', (topic, id, content, source, page) => {
+ const raw = by(topic + '.json', id);
+ const protectedQuestion = applyEditorialScoring(raw);
+ expect(protectedQuestion).toEqual({ ...raw, np: 1 });
+ expect(filterScoringQuestions([protectedQuestion], false, q => q.np)).toEqual([]);
+ expect(filterScoringQuestions([protectedQuestion], true, q => q.np)).toEqual([protectedQuestion]);
+ const notice = questionNotice(raw);
+ expect(notice).toContain(content);
+ expect(notice).toContain(source + ', página ' + page);
+ expect(notice).toContain('Solo estudio');
 });

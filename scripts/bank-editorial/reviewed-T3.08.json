@@ -1,0 +1,302 @@
+[
+  {
+    "id": "GEN-T3.08-540.v2",
+    "beforeSha256": "2b35436efe8a1716df9d2416c008b363d7b5e9b7a10f3e3707222d0a93dead6e",
+    "afterSha256": "b57a808d581a62535db75d109fb9acb6fcf6dcbf7927fa85d7f4edb9b8a94b06",
+    "before": {
+      "q": "La pseudoclase :out-range selecciona inputs cuyo valor:",
+      "a": [
+        "No es válido.",
+        "Es de solo lectura.",
+        "Está fuera del rango especificado por min y max.",
+        "Está dentro del rango."
+      ],
+      "c": 2,
+      "n": null,
+      "u": ":in-range: elemento input cuyo valor se encuentra dentro del rango (intervalo especificado por atributos min y max). … :invalid: elemento de un formulario cuyo contenido no se puede validar."
+    },
+    "after": {
+      "q": "¿En qué caso coincide un control <input type=\"number\" min=\"1\" max=\"5\"> con la pseudoclase CSS :out-of-range?",
+      "a": [
+        "Está vacío y no tiene el atributo required.",
+        "Su valor es 3 y tiene el atributo readonly.",
+        "Su valor es 6.",
+        "Su valor es 1."
+      ],
+      "c": 2,
+      "n": "El valor 6 supera el máximo de 5. El nombre normalizado es :out-of-range (Selectors, §12.3.2). El guion y la palabra «of» forman parte del selector.",
+      "u": "elemento input cuyo valor se encuentra fuera del rango [p. 16]"
+    },
+    "reviewedOptions": [
+      "Un control vacío no desborda los límites numéricos.",
+      "3 está dentro del intervalo y readonly no supone desbordamiento.",
+      "6 supera el límite superior.",
+      "1 coincide con el límite inferior y está dentro del intervalo."
+    ],
+    "temario": {
+      "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - CSS.pdf",
+      "sha256": "f871d3d81529d09b5ee8260e6c78a044df152e0b3a48155f5b54dea41fcf7fee",
+      "page": 16,
+      "quote": "elemento input cuyo valor se encuentra fuera del rango"
+    },
+    "normativeSource": "https://www.w3.org/TR/selectors-4/#range-pseudos",
+    "sourceDiscrepancy": "La p. 16 omite «of» en el selector. El W3C da :out-of-range."
+  },
+  {
+    "id": "GEN-T3.08-545",
+    "beforeSha256": "44262b42a8d48ad7c97d68b83024bbe2572f2d5e01c52b4d37c172272cc73773",
+    "afterSha256": "0a993235cfc859c1bc88624bf0b35b946c1df4311f1a02902bf63bca21a48d7f",
+    "before": {
+      "q": "Según la herencia de CSS, si se define una propiedad en un elemento, sus descendientes:",
+      "a": [
+        "No heredan nada.",
+        "Heredan solo los hermanos.",
+        "Heredan inicialmente ese mismo valor.",
+        "Heredan solo si se usa !important."
+      ],
+      "c": 2,
+      "n": null,
+      "u": "Cuando se establece el valor de alguna propiedad en un elemento, todos sus descendientes heredan inicialmente ese mismo valor."
+    },
+    "after": {
+      "q": "Una regla CSS establece color: black en body. Un span es hijo directo de body y ninguna declaración le asigna color. ¿Qué color recibe el span?",
+      "a": [
+        "El color del siguiente hermano.",
+        "Un color transparente.",
+        "El negro heredado de body.",
+        "El color de fondo de body."
+      ],
+      "c": 2,
+      "n": "color es una propiedad heredada. El hijo sin declaración propia recibe el valor calculado de color de su padre.",
+      "u": "body { font-family: Arial; color: black; } [p. 18]"
+    },
+    "reviewedOptions": [
+      "La herencia recorre la relación padre-hijo.",
+      "La ausencia de declaración propia activa la herencia de color.",
+      "El padre aporta el valor negro.",
+      "background-color y color son propiedades distintas."
+    ],
+    "temario": {
+      "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - CSS.pdf",
+      "sha256": "f871d3d81529d09b5ee8260e6c78a044df152e0b3a48155f5b54dea41fcf7fee",
+      "page": 18,
+      "quote": "body { font-family: Arial; color: black; }"
+    },
+    "normativeSource": "https://www.w3.org/TR/css-color-4/#the-color-property"
+  },
+  {
+    "id": "GEN-T3.08-1104.v1",
+    "beforeSha256": "98f8824a78756f1de0fd2780ddc4b24884d5653c5792c9df919f2bbe4de223a9",
+    "afterSha256": "971162b206c6af50d5d3d0cc513930d050ab4ff498f9f94b43343f6c65417cdd",
+    "before": {
+      "q": "Un comentario multilínea en Python se escribe con:",
+      "a": [
+        "/* */.",
+        "Triple comilla (''' ''').",
+        "## ##.",
+        "<!-- -->."
+      ],
+      "c": 1,
+      "n": null,
+      "u": "Podemos insertar comentarios dentro de Python de 2 formas: ''' ''': comentario multilínea. #: comentario de una sola línea (estilo consola)."
+    },
+    "after": {
+      "q": "En un archivo de Python 3, ¿cómo se escriben dos líneas consecutivas de comentarios léxicos?",
+      "a": [
+        "Encerrando las líneas entre /* y */.",
+        "Anteponiendo # a cada línea.",
+        "Encerrando las líneas entre comillas triples.",
+        "Encerrando las líneas entre <!-- y -->."
+      ],
+      "c": 1,
+      "n": "Fuera de una cadena, # inicia un comentario que termina al final de esa línea física. Las comillas triples delimitan un literal de cadena.",
+      "u": "#: comentario de una sola línea [p. 5]"
+    },
+    "reviewedOptions": [
+      "Es sintaxis de comentario de otros lenguajes.",
+      "Cada # inicia un comentario hasta el fin de línea.",
+      "Genera un literal de cadena.",
+      "Es sintaxis de comentario HTML."
+    ],
+    "temario": {
+      "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - Python.pdf",
+      "sha256": "3c2812e69c47029198d5e8371123b6cd0c0984b4ca73c41e93a229534521969b",
+      "page": 5,
+      "quote": "#: comentario de una sola línea"
+    },
+    "normativeSource": "https://docs.python.org/3/reference/lexical_analysis.html#comments",
+    "sourceDiscrepancy": "La p. 5 equipara cadena triple y comentario. La referencia léxica distingue un literal de cadena de un comentario."
+  },
+  {
+    "id": "GEN-T3.08-1104.v2",
+    "beforeSha256": "189243bafd464047952ec0b8de7807fb595f24a34a61103b3f4ad5bf5bada40a",
+    "afterSha256": "246ecdcb9af0ff34ea61fe4b1121bec80d1ddc8cb31ed8edaf800493de3fe527",
+    "before": {
+      "q": "El número de formas de insertar comentarios en Python es:",
+      "a": [
+        "Dos.",
+        "Cuatro.",
+        "Una.",
+        "Tres."
+      ],
+      "c": 0,
+      "n": null,
+      "u": "Podemos insertar comentarios dentro de Python de 2 formas: ''' ''': comentario multilínea. #: comentario de una sola línea (estilo consola)."
+    },
+    "after": {
+      "q": "En la sentencia de Python 3 mensaje = \"#TAI\"  # etiqueta, ¿qué parte inicia un comentario?",
+      "a": [
+        "La primera comilla doble.",
+        "El signo # dentro de la cadena.",
+        "El signo # situado tras la cadena.",
+        "El signo igual."
+      ],
+      "c": 2,
+      "n": "El analizador conserva el primer # como contenido de la cadena y trata el segundo como inicio del comentario.",
+      "u": "#: comentario de una sola línea [p. 5]"
+    },
+    "reviewedOptions": [
+      "La comilla abre el literal.",
+      "Forma parte de su contenido.",
+      "Está fuera del literal e inicia el comentario.",
+      "Es el signo de asignación."
+    ],
+    "temario": {
+      "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - Python.pdf",
+      "sha256": "3c2812e69c47029198d5e8371123b6cd0c0984b4ca73c41e93a229534521969b",
+      "page": 5,
+      "quote": "#: comentario de una sola línea"
+    },
+    "normativeSource": "https://docs.python.org/3/reference/lexical_analysis.html#comments",
+    "sourceDiscrepancy": "La p. 5 equipara cadena triple y comentario. La referencia léxica distingue un literal de cadena de un comentario."
+  },
+  {
+    "id": "GEN-T3.08-1121",
+    "beforeSha256": "e048f5d75a02c4d5e0ac4ea77fada75cd6cbc4e70471185f6228bed17310ae0b",
+    "afterSha256": "6b56f2746eabf4dae7958be88de5baa27152eb056878d5c21b38318e92cc5d18",
+    "before": {
+      "q": "El método items() de un diccionario Python devuelve:",
+      "a": [
+        "Un iterador sobre las claves.",
+        "Un iterador sobre los valores.",
+        "Un iterador sobre los pares (clave, valor).",
+        "El número de elementos."
+      ],
+      "c": 2,
+      "n": null,
+      "u": "d.keys(): iterador sobre las claves de un diccionario. o d.values(): iterador sobre los valores de un diccionario. o d.items(): iterador sobre los pares (clave,valor) de un diccionario. o d.popitem(): devuelve el último par (clave,valor) añadido. o d.clear(): elimina todos los pares del diccionario."
+    },
+    "after": {
+      "q": "En Python 3, ¿qué devuelve d.items() cuando d es un diccionario incorporado?",
+      "a": [
+        "Un iterador sobre las claves.",
+        "Una lista independiente de los valores.",
+        "Una vista dinámica de los pares (clave, valor).",
+        "El número de pares."
+      ],
+      "c": 2,
+      "n": "La vista dict_items permite recorrer los pares y refleja los cambios de d. iter(d.items()) crea un iterador sobre esa vista.",
+      "u": ">>> a.items() [p. 11]"
+    },
+    "reviewedOptions": [
+      "La operación expone pares y devuelve una vista.",
+      "El resultado refleja cambios del diccionario.",
+      "dict_items es la vista de sus pares.",
+      "len(d) calcula la cantidad."
+    ],
+    "temario": {
+      "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - Python.pdf",
+      "sha256": "3c2812e69c47029198d5e8371123b6cd0c0984b4ca73c41e93a229534521969b",
+      "page": 11,
+      "quote": ">>> a.items()"
+    },
+    "normativeSource": "https://docs.python.org/3/library/stdtypes.html#dictionary-view-objects",
+    "sourceDiscrepancy": "La p. 11 llama iterador a la vista. El ejemplo devuelve dict_items y la documentación de Python la define como vista."
+  },
+  {
+    "id": "GEN-T3.08-1124",
+    "beforeSha256": "7d1b6295c994ec1fa1001834a607188a788e374333953ab47da6aa25c9cdcd46",
+    "afterSha256": "abd1c5294df2d69e899a5702b91c8bb9bdd8a49c7407f4d68aa62d597ef3aef4",
+    "before": {
+      "q": "El valor no definido en Python es:",
+      "a": [
+        "undefined.",
+        "null.",
+        "None.",
+        "nil."
+      ],
+      "c": 2,
+      "n": null,
+      "u": "No se pueden utilizarse palabras reservadas del lenguaje. A diferencia de otros lenguajes no tienen asociado un tipo y no es necesario declararlas antes de usarlas (tipado dinámico). … # Valor no definido x = None del x"
+    },
+    "after": {
+      "q": "En Python 3, tras ejecutar x = None, ¿qué valor tiene x antes de ejecutar del x?",
+      "a": [
+        "undefined.",
+        "null.",
+        "None.",
+        "nil."
+      ],
+      "c": 2,
+      "n": "La asignación vincula x al objeto None. La instrucción posterior del x elimina el vínculo.",
+      "u": "x = None\ndel x [p. 13]"
+    },
+    "reviewedOptions": [
+      "undefined no es una constante incorporada de Python.",
+      "null no es el literal empleado en Python.",
+      "La asignación utiliza la constante None.",
+      "nil no es una constante incorporada de Python."
+    ],
+    "temario": {
+      "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - Python.pdf",
+      "sha256": "3c2812e69c47029198d5e8371123b6cd0c0984b4ca73c41e93a229534521969b",
+      "page": 13,
+      "quote": "x = None\ndel x"
+    },
+    "normativeSource": "https://docs.python.org/3/library/constants.html#None",
+    "sourceDiscrepancy": "El rótulo «valor no definido» en p. 13 es impreciso. El ejemplo ejecuta una asignación válida."
+  },
+  {
+    "id": "GEN-T3.08-1131.v2",
+    "beforeSha256": "136b8d08a858fa64953c5b31aafed064d1d6b77b58cb07f731c8177ffe5daac0",
+    "afterSha256": "c21cc4fe776c3a736fe7a5dd3ffe26c19e81dbe0e3b58448fcc7e80e3c2e5cd8",
+    "before": {
+      "q": "Si una función Python no indica ningún objeto en return, devuelve:",
+      "a": [
+        "False.",
+        "Nada.",
+        "Una cadena vacía.",
+        "0."
+      ],
+      "c": 1,
+      "n": null,
+      "u": "Para declarar una función se utiliza la siguiente sintaxis: def <nombre-funcion> (<parámetros>): bloque código return <objeto>"
+    },
+    "after": {
+      "q": "En una función ordinaria de Python 3, ¿qué valor devuelve al llamador la ejecución de return sin expresión?",
+      "a": [
+        "False.",
+        "None.",
+        "Una cadena vacía.",
+        "0."
+      ],
+      "c": 1,
+      "n": "Un return sin expresión termina la llamada y entrega el objeto None al llamador.",
+      "u": "Si no se indica ningún objeto [p. 17]"
+    },
+    "reviewedOptions": [
+      "False es un objeto booleano distinto.",
+      "La ausencia de expresión implica None.",
+      "No crea una cadena.",
+      "No devuelve un entero."
+    ],
+    "temario": {
+      "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - Python.pdf",
+      "sha256": "3c2812e69c47029198d5e8371123b6cd0c0984b4ca73c41e93a229534521969b",
+      "page": 17,
+      "quote": "Si no se indica ningún objeto"
+    },
+    "normativeSource": "https://docs.python.org/3/reference/simple_stmts.html#the-return-statement",
+    "sourceDiscrepancy": "La p. 17 denomina «nada» a la ausencia de valor explícito. El resultado observable es None."
+  }
+]

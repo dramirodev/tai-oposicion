@@ -1,3 +1,4 @@
+import { isQuestionEditoriallyQuarantined } from '../../../core/domain/question-review-overrides.js';
 import type { QuestionRecord } from '../../../core/domain/question-record.js';
 import type { QuestionStats } from '../../../core/domain/entities.js';
 import type { LightningQuestion, LightningServices } from '../../../shared/ui/study-services.js';
@@ -27,14 +28,14 @@ export function createLightningComposition(dependencies: LightningCompositionDep
       const failed = Object.keys(stats).filter(id => stats[id].lastResult === 0 && knownIds.has(id));
       const pool = [...dependencies.shuffle(lucky).slice(0, 5), ...due.slice(0, 5), ...dependencies.shuffle(failed).slice(0, 5)];
       const candidates = pool.length ? pool : dependencies.shuffle(dependencies.knownQuestionIds()).slice(0, 10);
-      const question = (await dependencies.loadQuestionsById(dependencies.shuffle(candidates).slice(0, 8))).find(item => !item.s && !item.cp);
+      const question = (await dependencies.loadQuestionsById(dependencies.shuffle(candidates).slice(0, 8))).find(item => item.np !== 1 && !item.s && !item.cp);
       if (!question) return null;
       const reasonKind = lucky.includes(question.i) ? 'lucky' : due.includes(question.i) ? 'due' : failed.includes(question.i) ? 'failed' : 'new';
       const reason = { lucky: 'Marcada como suerte', due: 'Toca repasarla', failed: 'La fallaste', new: 'Nueva' }[reasonKind];
       return { ...toFailureQuestionView(question, dependencies.sourceFallbacks), reason, reasonKind };
     },
     record(questionId: string, topicId: string, correct: boolean, seconds: number) {
-      dependencies.recordAnswer(questionId, topicId, correct, seconds);
+      if (!isQuestionEditoriallyQuarantined(questionId)) dependencies.recordAnswer(questionId, topicId, correct, seconds);
     },
     topicName: dependencies.topicName,
   };

@@ -2,7 +2,7 @@
 // Solo sube lo que ha cambiado (compara hashes con bank/meta). No necesita dependencias: usa la API REST de Firestore.
 //   ACCESS_TOKEN=$(gcloud auth print-access-token) node scripts/publish_bank.mjs [--dry]
 // La cuenta del token necesita permiso de escritura en Firestore del proyecto (p. ej. propietario). Las reglas no se aplican a IAM.
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { existsSync, realpathSync, readFileSync, readdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { gzipSync } from 'node:zlib';
 import { fileURLToPath } from 'node:url';
@@ -13,7 +13,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const base = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents/bank`;
 
 /** Empaqueta un fichero: hash del contenido y gzip. */
-export function pack(buf) { return { h: createHash('sha1').update(buf).digest('hex').slice(0, 16), z: gzipSync(buf, { level: 9 }) }; }
+export function pack(buf) { return { sha256: createHash('sha256').update(buf).digest('hex'), h: createHash('sha1').update(buf).digest('hex').slice(0, 16), z: gzipSync(buf, { level: 9 }) }; }
 /** Qué ficheros hay que subir o borrar según los hashes remotos. */
 export function plan(local, remote) {
   const up = Object.keys(local).filter(name => remote[name] !== local[name]);
@@ -24,9 +24,26 @@ const packDirectory = (dir, prefix = '') => existsSync(dir)
   ? Object.fromEntries(readdirSync(dir).filter(textValue => textValue.endsWith('.json')).sort().map(textValue => [prefix + textValue.slice(0, -5), pack(readFileSync(join(dir, textValue)))]))
   : {};
 /** Banco (`data/*`), tarjetas (`cards_*`) y explicaciones (`explanations_*`): ninguno se despliega ya como JSON estático. */
-export const loadLocal = (dir = join(root, 'public', 'data'), cardsDir = join(root, 'public', 'cards'), explanationsDir = join(root, 'public', 'explanations')) => ({
-  ...packDirectory(dir), ...packDirectory(cardsDir, 'cards_'), ...packDirectory(explanationsDir, 'explanations_'),
-});
+export function loadLocal(dir = join(root, 'public', 'data'), cardsDir = join(root, 'public', 'cards'), explanationsDir = join(root, 'public', 'explanations'), approvedRelease) {
+  const bank = packDirectory(dir);
+  if (approvedRelease) verifyApprovedBank(bank, approvedRelease);
+  return { ...bank, ...packDirectory(cardsDir, 'cards_'), ...packDirectory(explanationsDir, 'explanations_') };
+}
+
+/** Fail before the first network request and verify the exact bytes that will be published. */
+export function verifyApprovedBank(files, manifest) {
+  if (manifest.schemaVersion !== 1 || !Object.keys(manifest.files ?? {}).length) {
+    throw new Error('Manifiesto de revisión del banco ausente o incompatible.');
+  }
+  const names = Object.keys(files);
+  const expected = Object.keys(manifest.files);
+  if (expected.length !== names.length) throw new Error('El inventario del banco difiere del aprobado.');
+  for (const [name, packed] of Object.entries(files)) {
+    if (manifest.files[name + '.json']?.approvedSha256 !== packed.sha256) {
+      throw new Error('Archivo del banco sin aprobación editorial: ' + name);
+    }
+  }
+}
 
 async function api(method, path, token, body) {
   const response = await fetch(base + path, { method, headers: { authorization: 'Bearer ' + token, 'content-type': 'application/json' }, body: body && JSON.stringify(body) });
@@ -37,7 +54,9 @@ async function api(method, path, token, body) {
 async function main() {
   const token = process.env.ACCESS_TOKEN, dry = process.argv.includes('--dry');
   if (!token && !dry) { console.error('Falta ACCESS_TOKEN (gcloud auth print-access-token).'); process.exit(1); }
-  const local = loadLocal(), hashes = Object.fromEntries(Object.entries(local).map(([name, priorValue]) => [name, priorValue.h]));
+  const manifest = JSON.parse(readFileSync(join(root, 'scripts', 'bank-editorial', 'release.json'), 'utf8'));
+  const local = loadLocal(undefined, undefined, undefined, manifest);
+  const hashes = Object.fromEntries(Object.entries(local).map(([name, packed]) => [name, packed.h]));
   let remote = {}, remoteVersion = 0;
   if (token) {
     const metadata = await api('GET', '/meta', token);
@@ -58,4 +77,4 @@ async function main() {
     files: { mapValue: { fields: Object.fromEntries(Object.entries(hashes).map(([name, hash]) => [name, { stringValue: hash }])) } } } });
   console.log('meta v' + (remoteVersion + 1) + ' publicada');
 }
-if (process.argv[1] === fileURLToPath(import.meta.url)) main().catch(error => { console.error(error.message); process.exit(1); });
+if (process.argv[1] && existsSync(process.argv[1]) && realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch(error => { console.error(error.message); process.exit(1); });

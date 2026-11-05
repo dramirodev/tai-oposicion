@@ -1,3 +1,4 @@
+import { toast } from '../../../shared/ui/dialog-actions.js';
 import { localStudyProgressGateway } from '../../../adapters/local/progress-repository.js';
 import { clearPendingRun, readPendingRun, writePendingRun } from '../../../adapters/local/pending-run-storage.js';
 import { loadPendingRun } from '../../../core/application/runs/pending-run.js';
@@ -10,6 +11,7 @@ const repository = {
   hasActiveRun,
   read: readPendingRun,
   clear: clearPendingRun,
+  notifyChangedQuestions: () => toast('La sesión guardada ha caducado: no se puede verificar que las preguntas y sus claves sean las mismas. Puedes iniciar otra sesión.'),
   loadQuestions: studyQuestionCatalog.getQuestions,
 };
 

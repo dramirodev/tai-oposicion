@@ -1,7 +1,8 @@
+import { applyEditorialScoring } from '../../domain/question-review-overrides.js';
 import { filterScoringQuestions } from '../../domain/selection.js';
 import { isSimulationScoringPolicy } from '../../domain/simulation-scoring.js';
 import type { QuestionRecord } from '../../domain/question-record.js';
-import type { SavedRunSnapshot } from '../../domain/pending-run.js';
+import { matchesSavedQuestions, type SavedRunSnapshot } from '../../domain/pending-run.js';
 export type { SavedRunSnapshot } from '../../domain/pending-run.js';
 
 export interface PendingRun {
@@ -15,6 +16,7 @@ export interface PendingRunRepository {
   currentAccount(): string | null;
   hasActiveRun(): boolean;
   read(account: string | null): SavedRunSnapshot | null;
+  notifyChangedQuestions?(): void;
   clear(account: string | null): void;
   loadQuestions(ids: readonly string[]): Promise<QuestionRecord[]>;
 }
@@ -32,10 +34,11 @@ export async function loadPendingRun(full: boolean, repository: PendingRunReposi
     repository.clear(account);
     return null;
   }
-  const items = await repository.loadQuestions(saved.ids);
+  const items = (await repository.loadQuestions(saved.ids)).map(applyEditorialScoring);
   if (account !== repository.currentAccount()) return null;
-  if (items.length !== saved.ids.length || filterScoringQuestions(items, !!saved.feedback, question => question.np).length !== items.length) {
+  if (!matchesSavedQuestions(saved, items) || filterScoringQuestions(items, !!saved.feedback, question => question.np).length !== items.length) {
     repository.clear(account);
+    repository.notifyChangedQuestions?.();
     return null;
   }
   return { saved, items, account };

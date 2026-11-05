@@ -13,8 +13,9 @@ it('doble pulsación en Terminar no duplica el intento de examen',async()=>{
  ({unmountApp}=await import('../src/app/main'));
  const waitText=async text=>vi.waitFor(()=>expect(document.querySelector('#app').textContent).toContain(text));
  await waitText('Sesión rápida');location.hash='#/sim';await waitText('Simulacros');
- await vi.waitFor(()=>expect(document.querySelectorAll('[role="tab"]').length).toBe(3));
- document.querySelectorAll('[role="tab"]')[1].click();
+ const examTab = () => [...document.querySelectorAll('[role="tab"]')].find(tab => tab.textContent === 'Por examen');
+ await vi.waitFor(() => expect(examTab()).toBeDefined());
+ examTab().click();
  await vi.waitFor(()=>expect(document.querySelector('[data-exam-id="L2018-P1"]')).not.toBeNull());
  const exam = document.querySelector('[data-exam-id="L2018-P1"]');
  exam.click();
