@@ -18,6 +18,10 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Validar candidatos y fuentes editoriales
+        run: python3 -m unittest discover -s tools/question-editorial -p "test_*.py"
+      - name: Aislamiento Auth y Firestore de sesiones
+        run: npx --yes firebase-tools@13.35.1 emulators:exec --only auth,firestore --project demo-tai-auth "npx vitest run tests/astra-auth-firestore.test.js"
       - name: Arquitectura, lint, tipos y pruebas
         run: npm run check
         env:

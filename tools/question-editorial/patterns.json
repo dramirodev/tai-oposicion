@@ -1,0 +1,90 @@
+{
+  "audit": "Astra 2026-11-05",
+  "sampleSize": 39,
+  "patterns": [
+    {
+      "id": "CIF",
+      "nombre": "Combinación de cantidades y condiciones",
+      "definicion": "Una opción conserva el dato y otro atributo, como órgano, unidad, máscara o transporte.",
+      "demanda": "Recuerdo o discriminación de dos propiedades.",
+      "control": "Variar un solo componente o ambos. Exigir que una sola combinación satisfaga toda la fuente.",
+      "riesgo": "Distinguir un plazo hábil de uno natural antes de validar las cifras.",
+      "n": "4",
+      "denominador": "39",
+      "convocatorias": "2019, 2024, 2025",
+      "ejemplos": "TAI-2019-L-U-P1-03 (p. 2, Composición del Tribunal Constitucional); TAI-2024-L-A-P1-50 (p. 5, Plazo de respuesta y cómputo de días); TAI-2025-L-X-P1-72 (p. 7, Puerto y transporte SIP)",
+      "temas": "T1.01, T3.09, T4.06, T4.07",
+      "confianza": "consolidado en la muestra"
+    },
+    {
+      "id": "CLA",
+      "nombre": "Cambio de alcance o de propiedad",
+      "definicion": "Las opciones contienen proposiciones completas. Una cambia una propiedad definitoria, una condición, un sujeto o una consecuencia.",
+      "demanda": "Distinguir afirmaciones próximas o interpretar un resultado.",
+      "control": "Enunciar por separado la cláusula de cada alternativa que la hace verdadera o falsa bajo las condiciones dadas.",
+      "riesgo": "Una formulación generalmente cierta también puede ser defendible. Revisar excepciones.",
+      "n": "13",
+      "denominador": "39",
+      "convocatorias": "2019, 2022, 2024, 2025",
+      "ejemplos": "TAI-2019-L-U-P1-28 (p. 4, SSD, expansión del acrónimo y tecnología); TAI-2022-L-U-P1-28 (p. 3, Conector USB y versión del protocolo); TAI-2024-L-A-P1-03 (p. 1, Competencias del Rey y condición de autorización); TAI-2025-L-A-P1-03 (p. 1, Diputación Permanente)",
+      "temas": "T1.01, T1.02, T2.02, T3.02, T3.08, T4.01, T4.02, T4.06, T4.07",
+      "confianza": "consolidado en la muestra"
+    },
+    {
+      "id": "FAM",
+      "nombre": "Conceptos de una misma familia",
+      "definicion": "El enunciado aporta una propiedad, objetivo o definición. Las opciones proponen términos próximos que se aplican a problemas distintos.",
+      "demanda": "Reconocimiento y discriminación.",
+      "control": "Vincular cada alternativa a una definición o uso real y demostrar por qué no se aplica aquí.",
+      "riesgo": "Los términos podrían solaparse por jerarquía o versión.",
+      "n": "11",
+      "denominador": "39",
+      "convocatorias": "2019, 2022, 2024, 2025",
+      "ejemplos": "TAI-2019-L-U-P1-50 (p. 6, Finalidad de Ruby on Rails); TAI-2022-L-U-P1-03 (p. 1, Circunscripción electoral); TAI-2024-L-A-S1-12 (p. 9, Descripciones de servicios web); TAI-2025-L-A-P1-28 (p. 3, Finalidad de IPP)",
+      "temas": "T1.01, T1.02, T2.02, T3.06, T3.07, T3.08, T3.09, T4.09, T4.10",
+      "confianza": "consolidado en la muestra"
+    },
+    {
+      "id": "INS",
+      "nombre": "Elección de instrucción o fragmento",
+      "definicion": "Un requisito acota el resultado esperado. Las alternativas cambian sintaxis, parámetro, operador, orden o verbo.",
+      "demanda": "Aplicación de una regla, interpretación de código.",
+      "control": "Contrastar el efecto bajo entorno, versión y entradas fijados. Cuando proceda, ejecutar las cuatro alternativas.",
+      "riesgo": "Una variante distinta puede producir el mismo efecto.",
+      "n": "7",
+      "denominador": "39",
+      "convocatorias": "2019, 2024, 2025",
+      "ejemplos": "TAI-2019-L-U-S1-03 (p. 10, Atributo HTML obligatorio); TAI-2024-L-A-S1-03 (p. 8, INSERT INTO y literales); TAI-2025-L-A-S1-03 (p. 9, Agregación SQL por programa)",
+      "temas": "T3.04, T3.06, T3.08, T4.01, T4.09",
+      "confianza": "consolidado en la muestra"
+    },
+    {
+      "id": "CAL",
+      "nombre": "Resultado de un cálculo con datos del supuesto",
+      "definicion": "Unos datos de entrada y una restricción producen una solución numérica. Las otras opciones también son resultados expresados en las unidades esperadas.",
+      "demanda": "Aplicación y cálculo.",
+      "control": "Recalcular la solución y documentar qué operación concreta produciría cada distractor propuesto.",
+      "riesgo": "Confundir el tamaño de la red con el número de hosts utilizables.",
+      "n": "3",
+      "denominador": "39",
+      "convocatorias": "2019, 2025",
+      "ejemplos": "TAI-2019-L-U-S2-03 (p. 13, Hosts de una subred /21); TAI-2025-L-A-S2-03 (p. 12, División de /21 en cuatro subredes)",
+      "temas": "T2.02, T4.07",
+      "confianza": "recurrente, evidencia limitada"
+    },
+    {
+      "id": "ACT",
+      "nombre": "Elección de actuación operativa",
+      "definicion": "Una situación de implantación o diagnóstico admite varias actuaciones descritas. Se elige la compatible con el objetivo expresado.",
+      "demanda": "Razonamiento sobre escenario.",
+      "control": "Verificar permisos, objetivo, estado inicial y efecto de las alternativas.",
+      "riesgo": "Si el objetivo permite dos soluciones, remitir a revisión.",
+      "n": "1",
+      "denominador": "39",
+      "convocatorias": "2024",
+      "ejemplos": "TAI-2024-L-A-S2-03 (p. 11, Puerto 80 y redirección HTTPS)",
+      "temas": "T4.09",
+      "confianza": "ocasional"
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "question": {
+    "i": "DRAFT-T4.07-OSI-20261105",
+    "t": "T4.07",
+    "o": "G",
+    "q": "¿Cuántas capas jerárquicas describe el modelo OSI?",
+    "a": [
+      "Siete",
+      "Cuatro",
+      "Cinco",
+      "Ocho"
+    ],
+    "c": 0,
+    "d": 1,
+    "n": "El modelo OSI se representa como una pila de siete capas o niveles jerárquicos.",
+    "np": 1
+  },
+  "editorial": {
+    "schemaVersion": 1,
+    "revision": "eac7cc35dbdafb3ffa8a7149ebda875b157ef017e68942b966a72706c58629f2",
+    "topic": "T4.07",
+    "section": "Modelo OSI",
+    "concept": "Número de capas del modelo OSI",
+    "reference": {
+      "path": "T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Temario.pdf",
+      "sha256": "8c96987feee2c1ddade9129a46a22faf3166f37a58524261b7ec3818e5f1fb58",
+      "page": 4,
+      "quote": "-   Presenta los sistemas de información como una pila de siete capas o niveles jerárquicos."
+    },
+    "pattern": {
+      "id": "CIF",
+      "nombre": "Combinación de cantidades y condiciones",
+      "definicion": "Una opción conserva el dato y otro atributo, como órgano, unidad, máscara o transporte.",
+      "demanda": "Recuerdo o discriminación de dos propiedades.",
+      "control": "Variar un solo componente o ambos. Exigir que una sola combinación satisfaga toda la fuente.",
+      "riesgo": "Distinguir un plazo hábil de uno natural antes de validar las cifras.",
+      "n": "4",
+      "denominador": "39",
+      "convocatorias": "2019, 2024, 2025",
+      "ejemplos": "TAI-2019-L-U-P1-03 (p. 2, Composición del Tribunal Constitucional); TAI-2024-L-A-P1-50 (p. 5, Plazo de respuesta y cómputo de días); TAI-2025-L-X-P1-72 (p. 7, Puerto y transporte SIP)",
+      "temas": "T1.01, T3.09, T4.06, T4.07",
+      "confianza": "consolidado en la muestra"
+    },
+    "cognitiveDemand": "recordar",
+    "difficultyKind": "editorial_estimate",
+    "author": "candidate-pipeline-demo",
+    "state": "pending_review",
+    "rationales": [
+      "Es el número indicado por la fuente.",
+      "Corresponde al modelo TCP/IP de cuatro niveles.",
+      "Es otra agrupación docente, no la pila OSI.",
+      "Añade una capa que el modelo no define."
+    ],
+    "review": null,
+    "quality": {
+      "correctOptionIsLongest": true,
+      "problems": []
+    },
+    "stages": [
+      {
+        "stage": "topic",
+        "state": "completed"
+      },
+      {
+        "stage": "section",
+        "state": "completed"
+      },
+      {
+        "stage": "retrieval",
+        "state": "completed"
+      },
+      {
+        "stage": "concept",
+        "state": "completed"
+      },
+      {
+        "stage": "pattern",
+        "state": "completed"
+      },
+      {
+        "stage": "stem",
+        "state": "completed"
+      },
+      {
+        "stage": "solution",
+        "state": "completed"
+      },
+      {
+        "stage": "distractors",
+        "state": "completed"
+      },
+      {
+        "stage": "explanation",
+        "state": "completed"
+      },
+      {
+        "stage": "reference",
+        "state": "completed"
+      },
+      {
+        "stage": "structure",
+        "state": "completed"
+      },
+      {
+        "stage": "semantics",
+        "state": "pending_review"
+      },
+      {
+        "stage": "duplicates",
+        "state": "completed"
+      },
+      {
+        "stage": "quality",
+        "state": "completed"
+      },
+      {
+        "stage": "decision",
+        "state": "pending_review"
+      }
+    ]
+  }
+}
