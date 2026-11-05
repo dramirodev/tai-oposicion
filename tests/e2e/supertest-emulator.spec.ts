@@ -212,6 +212,65 @@ test.describe('Firebase Auth Emulator supertest', () => {
     await expect(page.getByRole('button', { name: 'Añadir al borrador local' })).toBeDisabled();
     await expect(page.locator('#app')).not.toContainText('No se pudo cargar el catálogo');
   });
+  test('Curación guarda un vínculo de prueba en el borrador local y lo recupera tras recargar', async ({ page }) => {
+    test.setTimeout(120_000);
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await signInSynthetic(page, identities.owner.email);
+    await page.goto('/#/curar-contenido');
+    await expect(page.getByRole('heading', { name: 'Curar vínculos a epígrafes' })).toBeVisible();
+
+    await page.getByLabel('Tema de la pregunta').selectOption('T1.01');
+    const question = page.getByRole('combobox', { name: 'Pregunta', exact: true });
+    await expect.poll(async () => question.locator('option').count()).toBeGreaterThan(1);
+    await question.selectOption({ index: 1 });
+    const questionId = await question.inputValue();
+    await page.getByLabel('Tema del PDF de origen').selectOption('T1.01');
+    const testFile = page.getByLabel('PDF de test de Drive');
+    await expect.poll(async () => testFile.locator('option').count()).toBeGreaterThan(1);
+    await testFile.selectOption({ index: 1 });
+    await page.getByLabel('Tema del epígrafe de destino').selectOption('T1.01');
+    const section = page.getByLabel('Epígrafe del temario');
+    await expect.poll(async () => section.locator('option').count()).toBeGreaterThan(1);
+    await section.selectOption({ index: 1 });
+    await page.getByLabel('Página física del PDF de test').fill('1');
+    await page
+      .getByLabel('Por qué corresponde esta pregunta al epígrafe')
+      .fill('Fixture sintético para verificar persistencia local; no constituye una revisión documental real.');
+    await page.getByLabel('Identificador del revisor').fill('TAI QA sintético');
+
+    const addToDraft = page.getByRole('button', { name: 'Añadir al borrador local' });
+    await expect(addToDraft).toBeDisabled();
+    await page
+      .getByLabel(
+        'He cotejado la pregunta y las páginas en los documentos de Drive; la asociación está revisada por una persona.',
+      )
+      .check();
+    await expect(addToDraft).toBeEnabled();
+    await addToDraft.click();
+    await expect(
+      page.getByText('Vínculo añadido al borrador local. Exporta el JSON para revisarlo en el repositorio.'),
+    ).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Borrador local · 1 vínculos' })).toBeVisible();
+    await page.screenshot({
+      path: 'tests/e2e/evidence/accessibility-2026-11-05/content-curation-synthetic-draft.png',
+      fullPage: true,
+    });
+
+    const stored = await page.evaluate(() =>
+      JSON.parse(localStorage.getItem('tai.academy-question-section-map:v2:tai-supertest') || 'null'),
+    );
+    expect(stored.schemaVersion).toBe(2);
+    expect(stored.links).toHaveLength(1);
+    expect(stored.links[0].questionId).toBe(questionId);
+    expect(stored.links[0].reviewer).toBe('TAI QA sintético');
+    await page.reload();
+    await expect(page.getByRole('heading', { name: 'Borrador local · 1 vínculos' })).toBeVisible();
+    const restored = await page.evaluate(() =>
+      JSON.parse(localStorage.getItem('tai.academy-question-section-map:v2:tai-supertest') || 'null'),
+    );
+    expect(restored.links).toHaveLength(1);
+    expect(restored.links[0].questionId).toBe(questionId);
+  });
   test('inventario accesible de rutas y controles con perfil propietario sintético', async ({ page }, testInfo) => {
     test.setTimeout(120_000);
     await page.setViewportSize({ width: 1280, height: 900 });

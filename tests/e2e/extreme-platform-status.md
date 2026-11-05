@@ -55,8 +55,8 @@ Estados: **Verificado**, **Parcial**, **Pendiente**, **Bloqueado**. “Verificad
 
 ## Actualización de cobertura — 5 de noviembre de 2026
 
-- Supertest Emulator se reejecutó tras añadir evidencia para Lectura atenta y Curación: **10/10 aprobadas**, Chromium; Auth/Firestore Emulator `demo-tai-auth`. La primera corrida tuvo fallos de selectores/reloj del test; se ajustó el oráculo para instalar `page.clock` antes del bootstrap y seleccionar el `combobox` por rol/nombre exacto. No se alteró la lógica del producto.
-- Las nuevas capturas están en `tests/e2e/evidence/accessibility-2026-11-05/reading-options-timed-gate.png` y `content-curation-filter-empty.png`. El informe de recorrido y el ledger ATE-005 enumeran exactamente las acciones y límites.
+- Supertest Emulator se reejecutó tras añadir evidencia para Lectura atenta y Curación: **11/11 aprobadas**, Chromium; Auth/Firestore Emulator `demo-tai-auth`. Incluye un fixture explícitamente artificial para probar el gate de Curación, su serialización a almacenamiento local y recuperación tras reload; no afirma revisión real de material. La primera corrida tuvo fallos de selectores/reloj del test y un locator de texto demasiado estricto; se ajustaron oráculos, sin alterar la lógica del producto.
+- Las nuevas capturas están en `tests/e2e/evidence/accessibility-2026-11-05/reading-options-timed-gate.png`, `content-curation-filter-empty.png` y `content-curation-synthetic-draft.png`. El informe de recorrido y el ledger ATE-005 enumeran exactamente las acciones y límites.
 - La matriz ahora refleja los dos recorridos y mantiene ATE-005 **EN CORRECCIÓN**. Continúan sin probarse sistemáticamente controles de todos los estados dinámicos, sesiones concurrentes, pérdida de red, y round-trip de edición/curación.
 - UX-009 sigue abierto. El checklist `tests/e2e/accessibility-manual-review.md` distingue resultados de teclado/ARIA demostrados por Playwright de lo no comprobado: VoiceOver/NVDA, zoom nativo 200%/400%, contraste integral y medición de objetivos WCAG 2.2.
 
