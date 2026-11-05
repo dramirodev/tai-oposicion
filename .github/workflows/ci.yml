@@ -32,7 +32,7 @@ jobs:
       - run: npm run build
       - run: node scripts/validate_cards.mjs
       - run: npx playwright install --with-deps chromium webkit
-      - name: Recarga y cierre de sesión con Auth real en emuladores
+      - name: Recarga, permisos y cambio de cuenta con Auth real en emuladores
         run: npx --yes firebase-tools@13.35.1 emulators:exec --only auth,firestore --project demo-tai-auth "TAI_AUTH_EMULATOR=1 npx playwright test --config=playwright.astra-auth.config.ts"
       - name: Reconstruir referencia visual y verificar Chromium y WebKit
         run: npm run test:e2e:ci
