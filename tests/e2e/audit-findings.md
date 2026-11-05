@@ -219,19 +219,19 @@ Estados válidos: `DETECTADO`, `ANALIZADO`, `PRIORIZADO`, `EN CORRECCIÓN`, `COR
 - **Brecha restante:** el inventario cubre controles visibles en estados iniciales y un diálogo móvil, pero aún no acciona/verifica cada control, formularios inválidos, todos los modales/estados dinámicos, variantes de historial extenso y nuevo usuario en cada módulo, ni cada vínculo entre módulos. No se afirma cobertura exhaustiva; completar matriz control→acción→resultado y journeys longitudinales/adversariales.
 - **Resultado final:** Cobertura ampliada y reproducible, hallazgo todavía abierto hasta cerrar estados dinámicos, continuidad entre módulos y oráculos de dominio en los controles identificados.
 
-### ATE-006 — Estrategia CI por perfil aún no implementada
+### ATE-006 — Perfiles CI integrados localmente; ejecución remota pendiente
 
 - **Categoría / funcionalidad:** Automatización / CI.
-- **Descripción:** QUICK/INTENSIVE/EXTREME tienen comandos reproducibles locales, pero no se conectaron a eventos PR, agenda ni workflow manual.
+- **Descripción:** QUICK/INTENSIVE/EXTREME tienen workflows y comandos locales configurados, pero la ejecución de GitHub Actions aún no está demostrada.
 - **Evidencia:** Revisión de workflows existentes, registrada en `extreme-platform-status.md`.
 - **Severidad / prioridad:** P2 / media.
-- **Causa:** No se configuró instalación aislada del framework ni retención de evidencias por perfil.
+- **Causa:** `e2e-profiles.yml` se encuentra solo en esta rama; GitHub no permite despacharlo mientras no exista en la rama por defecto. La rama está publicada, pero no tiene PR ni ejecución remota asociada.
 - **Solución propuesta:** QUICK en PR sin Gemini; INTENSIVE programado; EXTREME solo bajo demanda con Emulator y budgets explícitos.
 - **Archivos afectados:** `.github/workflows/` y documentación de ejecución.
 - **Estado de implementación:** CORREGIDO SIN VERIFICAR.
 - **Solución implementada:** `ci.yml` ejecuta QUICK autenticado en Emulator en PR y carga resultados como artefacto. `e2e-profiles.yml` añade INTENSIVE programado/manual y EXTREME manual; los perfiles usan solo pruebas Playwright deterministas, sin Gemini. EXTREME ejecuta la suite de navegador más un escenario acotado de 1.000 acciones con aserciones de estado/foco.
-- **Pruebas:** YAML de ambos workflows validado con parser local; Prettier pasa para workflows, package/config y pruebas. `npm run test:e2e:extreme` local **2/2** Chromium/WebKit (1.000 acciones cada uno; 50,4 s). La suite focal diaria+EXTREME pasó **4/4** Chromium/WebKit y suite global **260 pasadas/18 omitidas/0 fallidas**. Ninguna ejecución remota de GitHub Actions se ha observado porque esta rama no se ha publicado; no se declara CI remoto verificado.
-- **Resultado final:** Integración local y perfiles deterministas verificados localmente. Estado remoto pendiente de una ejecución real después de publicar la rama; la misión ATE con framework externo no invoca Gemini desde CI.
+- **Pruebas:** YAML de ambos workflows validado con parser local; Prettier pasa para workflows, package/config y pruebas. `npm run test:e2e:extreme` local **2/2** Chromium/WebKit (1.000 acciones cada uno; 50,4 s); suite global **260 pasadas/18 omitidas/0 fallidas**. Tras publicar `ac71bea`, `gh run list --branch audit/ux-integral-2026-11-04` no mostró ejecuciones. `gh workflow list` no presenta `e2e-profiles.yml`; `gh workflow run ...` devolvió HTTP 404: workflow no encontrado en la rama por defecto. No se declara CI remoto verificado.
+- **Resultado final:** Integración local y perfiles deterministas verificados. Estado remoto requiere que el workflow se integre primero en la rama por defecto (por ejemplo, mediante PR y posterior integración) y una ejecución real. La misión ATE con framework externo no invoca Gemini desde CI.
 
 ### ATE-007 — Matriz de rechazo del guard Emulator no estaba cubierta
 

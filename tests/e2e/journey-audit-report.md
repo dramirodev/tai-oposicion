@@ -225,7 +225,7 @@ El código de referencia y las pruebas E2E actuales se revalidaron después de l
 | UX-009 · Accesibilidad | Árbol ARIA owner: 16 rutas en escritorio y Home/Planificación móvil; **312 controles**, sin nombres vacíos. Navegación/enfoque y diálogo móvil con Escape/foco restaurado. Pruebas `mobile-layout`, `react-pages`, `stats-charts`: **30/30** Chromium/WebKit. Capturas de escritorio, móvil y menú en `evidence/accessibility-2026-11-05/`. | **ANALIZADO / abierto**. No se ha operado lector de pantalla real, zoom real 200%/400%, revisión exhaustiva de contraste ni criterio por criterio WCAG de toda la aplicación; no se declara conformidad AA. |
 | UX-011 · Foco de menú en WebKit | El E2E EXTREME abrió el menú por puntero y cerró con Escape. Chromium restauró foco; WebKit lo dejó en `body`. Se enfocan explícitamente los disparadores antes de abrir el diálogo. | **CORREGIDO Y VERIFICADO**: 1.000 acciones (500 aperturas y cierres) pasó en Chromium y WebKit; Escape devuelve foco al mismo botón. |
 | ATE-005 · Descubrimiento de controles | `npm run test:e2e:supertest`: **8/8** en Auth/Firestore Emulator y owner ficticio. Inventario ARIA serializado con cajas y perfiles de navegación owner/normal/restricted/pending/anonymous. | **EN CORRECCIÓN**. El inventario es de controles accesibles presentes al cargar cada ruta, más menú móvil. Aún no representa todos los controles tras interacciones ni asocia cada uno a un oráculo funcional; quedan estados inválidos, formularios/modales y journeys adversariales longitudinales. |
-| ATE-006 · Perfiles CI | QUICK en PR; INTENSIVE programado/manual; EXTREME manual con repetición Playwright determinista de 1.000 acciones. Artefactos de test/trazas/evidencia configurados a 14 días. EXTREME local: **1/1**, 18 s. | **Implementado localmente, no verificado en GitHub Actions**: rama no publicada, sin ejecución remota. La misión ampliada ATE remota tampoco se incorpora porque el framework local contiene cambios sin commit/push. |
+| ATE-006 · Perfiles CI | QUICK en PR; INTENSIVE programado/manual; EXTREME manual con repetición Playwright determinista de 1.000 acciones. Artefactos configurados a 14 días. EXTREME local: **2/2**. | **Implementado localmente, remoto no verificado**: la rama `ac71bea` está publicada; `gh run list` no encontró runs y GitHub devolvió 404 al despachar `e2e-profiles.yml` porque todavía no existe en la rama por defecto. Requiere integrar el workflow antes de comprobar Actions. |
 
 ### Cobertura observada del inventario sintético
 
@@ -254,6 +254,31 @@ Conteo del árbol accesible por ruta en el estado inicial de owner (roles intera
 
 El árbol completo con roles, nombres y cajas se conserva en `evidence/accessibility-2026-11-05/owner-route-control-inventory.json`.
 
+### Matriz de interacción observada por ruta (ATE-005)
+
+La cifra cuenta roles interactivos con nombre accesible en el estado inicial (281 escritorio + 31 en Home/Planificación móvil = 312). No existe instrumentación que mida controles únicos activados entre todas las pruebas; la tabla enumera interacciones demostradas y no presenta porcentajes inventados.
+
+| Ruta | Controles iniciales desktop | Interacción/estado dinámico demostrado | Brecha no cubierta sistemáticamente |
+|---|---:|---|---|
+| Inicio | 13 | Menú, navegación y sesión rápida (`bridge`, `routes`, `home-auth-loading`). | No se midió cada CTA; usuario nuevo y owner en todos los vacíos. |
+| Temario | 44 | Abrir tema/material, marcar sección, filtro y autoevaluación (`routes`, `react-pages`, `supertest-emulator`). | No se recorren todos los temas, formatos y controles de contenido largo. |
+| Planificación | 17 | Iniciar sesión, agendas semanal/mensual, evento/hito, reprogramación, confirmación y recarga (`css-ui`, `routes`, `bridge`, `supertest-emulator`). | Combinaciones de preferencias/fechas y fallos de guardado por control. |
+| Errores | 4 | Revisar y reabrir avisos locales (`errors-page`). | Cada categoría y estado adverso de sincronización. |
+| Falladas | 1 | Navegación móvil y sección activa (`mobile-layout`, `routes`). | Filtros, selección y vacíos sin cobertura individual contabilizada. |
+| Relámpago | 5 | Responder y avanzar (`bridge`). | Repetición rápida, red interrumpida y todos los estados de resultado. |
+| Trampas | 10 | Reflujo con etiquetas largas (`css-ui`). | Ejercicio funcional de cada control y combinación de respuesta. |
+| Lectura | 3 | Entrada y render de ruta (`routes`). | No se encontró un journey que ejercite todos sus controles propios. |
+| Curar contenido | 5 | Acceso owner y render autenticado (`supertest-emulator`). | Edición/guardado, validación y recuperación requieren fixture sintético. |
+| Test | 32 | Configuración, preguntas, marcas, pendientes, corrección, historial y test en papel (`bridge`, `routes`, `paper-test-log`, `supertest-emulator`). | No todos los selectores ni estados de fallo remoto. |
+| Simulacro | 18 | Empezar, pausar, abandonar, reanudar y corregir al finalizar (`bridge`). | Variantes de examen y persistencia remota no cubiertas por cada control. |
+| Simulacro Parte 2 | 3 | Entrada/render y flujo relacionado (`routes`, `bridge`). | Sin aserción independiente para todos los controles propios de Parte 2. |
+| Estadísticas | 45 | Gráficos con datos/vacíos, reflujo y secciones móviles plegables (`stats-charts`, `mobile-layout`, `css-ui`). | Cada filtro y cálculo de visualización no tiene aserciones exhaustivas. |
+| Ayuda | 19 | Índice, anclas, destinos y disponibilidad offline (`help-icons`, `bridge`). | No se recorre cada artículo/enlace en todos los perfiles. |
+| Ajustes | 59 | Horario semanal, evento/hito y preferencias usadas por Planificación (`css-ui`, `supertest-emulator`). | Todos los valores posibles y guardado con red perdida. |
+| Accesos | 3 | Owner aprueba/revoca; perfiles normal/restricted/pending/anonymous verifican guardas (`supertest-emulator`). | No se probaron sesiones paralelas/cambio rápido de usuario por control. |
+
+La matriz localiza la evidencia existente y las brechas; **ATE-005 sigue abierto** hasta asociar control→acción→resultado, abrir los estados dinámicos relevantes y completar los journeys longitudinales/adversariales restantes.
+
 El journey owner añade Planificación → estudio de tema → autoevaluación → test/hito → resultado, comprobación de historial remoto sintético, navegación/recarga de rutas y alta/baja de acceso. Firestore Emulator denegó escrituras no permitidas; todas las llamadas estuvieron limitadas al proyecto `demo-tai-auth`. No se usó Firebase de producción ni Gemini.
 
 ### Cambios de regresión y próximos pasos
@@ -263,6 +288,6 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - El menú móvil superó 1.000 acciones en Chromium, comprobando cada transición abierto/cerrado y el foco tras Escape. Es un estrés seguro de navegación; no pretende probar persistencia de dominio.
 - El primer test de EXTREME mostró una diferencia de foco en WebKit al abrir el diálogo con puntero; tras enfocar el activador explícitamente, las 1.000 acciones pasan tanto en Chromium como WebKit. El hallazgo queda registrado como UX-011.
 - La suite completa reveló una expectativa antigua que esperaba `topicTest` cuando el propio fixture genera `newContent`; la ruta observada a Temario coincidía con el plan mostrado y sus identificadores. Se corrigió solo el oráculo E2E y se registró como ATE-008.
-- QUICK/INTENSIVE/EXTREME están configurados en workflows distintos a deploy; el upload de artefactos conserva test-results, trazas, screenshots y evidencias accesibles por 14 días. No se disparó CI remoto ni se publicó la rama.
+- QUICK/INTENSIVE/EXTREME están configurados en workflows distintos a deploy; el upload conserva test-results, trazas, screenshots y evidencias por 14 días. La rama `ac71bea` se publicó, pero no se abrió PR. `gh workflow list` muestra solo los workflows de default branch y el dispatch manual de `e2e-profiles.yml` devolvió 404 porque aún no está integrado allí; no se afirma ejecución remota.
 - Verificación final de este corte: `npm run check` **189 archivos aprobados / 1 omitido; 959 tests aprobados / 27 omitidos**; `npm run build` terminó correctamente (advertencias de anotaciones Zod y chunks >500 kB); suite E2E global **260 pasadas, 18 omitidas, 0 fallidas** en Chromium/WebKit, 9,9 min; `npm run test:e2e:supertest` **8/8** en Auth/Firestore Emulator; `npm run test:e2e:extreme` **2/2**, Chromium + WebKit, 1.000 acciones y aserciones por ejecución. Ambos workflows parsean como YAML y los archivos de configuración/pruebas pasan Prettier. `git diff --check` pasó para cambios unstaged. `git diff --cached --check` señala whitespace preexistente en las líneas 3–4 y el final de `src/features/planning/auditoria-estudio-hasta-examen-2026-11-02.md`, ya staged antes de este corte; se dejó intacto para no reescribir trabajo previo.
-- Pendientes que impiden el cierre total: UX-009 requiere lector de pantalla real, zoom de navegador 200%/400%, contraste exhaustivo y revisión criterio por criterio; ATE-005 aún no asocia cada control dinámico/formulario/modal a un oráculo funcional ni cubre todos los recorridos longitudinales/adversariales; ATE-006 espera una ejecución real de GitHub Actions (la rama sigue local y no se publicó). No se accedió a Firebase de producción ni se consumió Gemini.
+- Pendientes que impiden el cierre total: UX-009 requiere lector de pantalla real, zoom de navegador 200%/400%, contraste exhaustivo y revisión criterio por criterio; ATE-005 aún no asocia cada control dinámico/formulario/modal a un oráculo funcional ni cubre todos los recorridos longitudinales/adversariales; ATE-006 requiere integrar el workflow en default branch y ejecutar GitHub Actions (la feature branch está publicada, sin PR). No se accedió a Firebase de producción ni se consumió Gemini.
