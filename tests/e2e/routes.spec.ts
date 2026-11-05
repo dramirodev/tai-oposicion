@@ -71,6 +71,26 @@ for (const theme of ['light', 'dark']) {
   });
 }
 
+test('la navegación por teclado conserva una señal visible al cambiar de ruta', async ({ page, browserName }) => {
+  await setup(page, 'light');
+  await page.goto('/#/planificacion');
+  await expect(page.getByRole('heading', { name: 'Planificación de estudio' })).toBeFocused();
+
+  const dateSettingsLink = page.getByRole('link', { name: 'Ajustar fecha y horario' });
+  await dateSettingsLink.focus();
+  await page.keyboard.press('Enter');
+
+  const settingsHeading = page.getByRole('heading', { name: 'Ajustes', level: 1 });
+  await expect(settingsHeading).toBeFocused();
+  const focusStyle = await settingsHeading.evaluate(element => {
+    const style = getComputedStyle(element);
+    return { outlineStyle: style.outlineStyle, outlineWidth: style.outlineWidth };
+  });
+  expect(focusStyle.outlineStyle).not.toBe('none');
+  expect(Number.parseFloat(focusStyle.outlineWidth)).toBeGreaterThanOrEqual(2.5);
+  await page.screenshot({ path: `tests/e2e/evidence/accessibility-2026-11-05/planning-route-keyboard-focus-${browserName}.png` });
+});
+
 test('simulacros por tema deja el skeleton y muestra los tests disponibles', async ({ page }) => {
   await setup(page, 'light');
   await page.goto('/#/sim');

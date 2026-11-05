@@ -108,6 +108,16 @@ Estados: **Verificado**, **Parcial**, **Pendiente**, **Bloqueado**. “Verificad
 - `npm run check` **960 aprobadas/27 omitidas**; arquitectura, ESLint, lint de exclusiones y TypeScript pasan. Avisos conocidos: `window.scrollTo` no implementado por jsdom; warning Rollup por comentarios Zod/chunks durante build.
 - **Siguiente paso:** reconciliar el diff y publicar este hito en la rama; luego consultar Actions tras el push. ATE-005, UX-009 y CI remota ATE-006 siguen abiertos por cobertura residual y evidencia externa.
 
+## Estado verificado más reciente — 5 de noviembre de 2026
+
+- `npm run check`: 962 tests aprobados/27 omitidos; 189 archivos aprobados/1 omitido. Arquitectura, ESLint y TypeScript correctos; aviso jsdom `window.scrollTo` no bloqueante.
+- Rutas y UX-018: `routes.spec.ts` 88/88 Chromium/WebKit; regresión de foco por teclado y 18 rutas en claro/oscuro, reflow 320/640 px, service worker/offline. `npm run test:e2e`: 296/324, 28 omisiones deliberadas para Emulator/EXTREME, cero fallos, 11,0 min.
+- Emulator: `npm run test:e2e:supertest` 12/12 bajo proyecto `demo-tai-auth`; perfiles owner/normal/restricted/pending/anonymous, datos sintéticos, reglas e inventario ARIA. Tras detectar que el paso de marca de tema vuelve a Planificación para la autoevaluación, las capturas se separaron y verificaron: `owner-temario-estudio.png` (Temario) y `owner-planificacion-autoevaluacion.png` (retorno). La suite pasó 12/12 después del ajuste. Errores de permiso emitidos son aserciones negativas esperadas.
+- EXTREME: 2/2, 1.000 acciones por motor, Playwright determinista, Gemini no invocado.
+- UX-018 cerrado verificado; UX-007 ya estaba cerrado. ATE-005 continúa EN CORRECCIÓN por controles/estados dinámicos y oráculos aún no recorridos. UX-009 sigue parcial (sin VoiceOver/NVDA, zoom nativo 200/400% y contraste WCAG integral). ATE-006: remoto no verificado; no hay PR, `gh workflow list --all` solo presenta `ci.yml` y `deploy.yml`; `e2e-profiles.yml` está en la rama feature y no se puede despachar desde el catálogo remoto actual.
+- Sin Firebase de producción ni Gemini. Los datos Auth/Firestore fueron solo Emulator; Playwright local empleó fixtures sintéticos.
+- **Siguiente paso ejecutable:** continuar ATE-005 en un flujo dinámico no duplicado; para ATE-006 remoto se necesita que el workflow llegue a la rama por defecto/CI PR mediante el proceso de integración del repositorio. La ejecución global no se declara cerrada.
+
 ## Revalidación continua — Accesibilidad y Ajustes (5 de noviembre de 2026)
 
 - UX-014, foco del diálogo destructivo en WebKit, corregido y verificado en commit `735f8b9`; regresión de Ajustes 4/4 Chromium/WebKit a 320/1440 px. No se confirma el borrado en la prueba.

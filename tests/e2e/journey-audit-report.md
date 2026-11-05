@@ -445,3 +445,21 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - Es un recorrido sintético local con service worker real; no usa Firebase ni altera datos de usuario. La disponibilidad offline no significa que el progreso remoto se haya sincronizado antes del corte. UX-009 continúa parcial porque la verificación `role=status` no sustituye VoiceOver/NVDA.
 - La segunda y tercera ejecuciones completas de `npm run check` pasaron, respectivamente, **961/988** y **962/989** (27 omitidas), frente al primer error aislado en `design-home-stats.test.js`; ese archivo también pasó 7/7 focalmente. El resultado inicial no se reprodujo y no se modificaron ni las aserciones ni el producto para ocultarlo.
 - La regresión de componente añadió descarga fallida → mensaje de error → botón recuperado → reintento satisfactorio, para 11/11 en `settings-page.test.js`.
+
+### UX-018: indicador visible al navegar a una ruta con teclado — 5 de noviembre de 2026
+
+- Reproducción manual en Chrome (500×841 CSS px): desde Planificación se activa por teclado «Ajustar fecha y horario»; React enfoca «Ajustes», pero `#app h1:focus { outline: none }` suprimía el indicador pese a `:focus-visible`.
+- Se limitó la supresión a `h1:focus:not(:focus-visible)`. La regresión de `routes.spec.ts` activa el enlace con Enter, exige foco en el H1 destino y outline visible ≥2,5 px, y guarda capturas Chromium/WebKit. Ambas capturas muestran el foco azul en el título.
+- La suite de rutas pasó **88/88** en Chromium/WebKit, incluidos 18 destinos, temas claro/oscuro, reflow a 320/640 px y servicio offline. Los 40 snapshots que fallaron antes de actualizar se revisaron y su diferencia correspondía al indicador de foco intencional; con baselines actualizados, la suite pasa.
+- **UX-018: CORREGIDO Y VERIFICADO** para este recorrido. No se amplía la conclusión a todos los controles ni se cierra UX-009: siguen pendientes VoiceOver/NVDA, zoom nativo 200/400 %, contraste integral y verificación WCAG aplicable.
+- Sin Firebase ni Gemini; datos sintéticos locales y Playwright determinista.
+
+### Revalidación final de este corte — 5 de noviembre de 2026
+
+- `npm run check`: **962 aprobadas/27 omitidas** (189 archivos aprobados/1 omitido); arquitectura, ESLint y TypeScript pasan. Sigue el aviso conocido de `window.scrollTo` en jsdom, sin fallo.
+- `npm run test:e2e -- tests/e2e/routes.spec.ts --update-snapshots`: **88/88** Chromium/WebKit; los 40 cambios de snapshots se revisaron y muestran únicamente el indicador de foco añadido en H1.
+- `npm run test:e2e`: **296/324**, 28 omitidas deliberadamente (Auth/Firestore Emulator y EXTREME) y cero fallos, Chromium/WebKit, 11,0 min.
+- `npm run test:e2e:supertest`: **12/12**, Auth + Firestore Emulator `demo-tai-auth`; perfiles owner/normal/restricted/pending/anonymous, permisos, persistencia y recuperación. No se contactó Firebase de producción; errores `PERMISSION_DENIED` esperados verifican reglas.
+- `npm run test:e2e:extreme`: **2/2**, 1.000 acciones por motor, sin Gemini.
+- Evidencia autenticada: se ajustó `supertest-emulator.spec.ts` para esperar el H1 de Temario y dividir la captura de lectura y la de autoevaluación tras volver a Planificación; el Emulator pasó 12/12 después del cambio. Se inspeccionaron las dos capturas resultantes.
+- Límites persistentes: ATE-005 sigue abierto porque el inventario de 312 controles ARIA iniciales y los journeys cubiertos no prueban cada control/estado; UX-009 sigue parcial sin VoiceOver/NVDA, zoom nativo 200/400% y barrido integral de contraste; ATE-006 remoto no es verificable aún (no hay PR, `gh workflow list --all` solo muestra `ci.yml` y `deploy.yml`; el workflow de perfiles solo está en la rama).

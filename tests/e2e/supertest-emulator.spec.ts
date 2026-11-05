@@ -60,12 +60,16 @@ test.describe('Firebase Auth Emulator supertest', () => {
     await capture('owner-planificacion');
     await page.getByRole('button', { name: 'Comenzar sesión' }).click();
     await expect(page).toHaveURL(/#\/temario\?topic=/);
+    await expect(page.locator('#app h1')).toContainText('Temas vistos');
+    await capture('owner-temario-estudio');
     const topic = new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('topic');
     await page.locator(`[data-t="${topic}"]`).click({ noWaitAfter: true });
-    await capture('owner-temario-estudio');
+    await expect(page).toHaveURL(/#\/planificacion$/);
     const rating = page.getByRole('group', {
       name: 'Después de estudiar en papel y cerrar los apuntes, ¿cuánto recordaste?',
     });
+    await expect(rating).toBeVisible();
+    await capture('owner-planificacion-autoevaluacion');
     await rating.getByRole('button', { name: 'Parcialmente' }).click();
     await expect(rating.getByText(/Autoevaluación guardada/)).toBeVisible();
     // A short real simulation creates answers and a scored result through the UI.

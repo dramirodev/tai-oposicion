@@ -4113,7 +4113,7 @@
                 "height": 463
               },
               "children": [
-                "T2.01 · Informática Básica",
+                "T3.10 · Metodologías de Pruebas y Colaboración",
                 {
                   "role": "paragraph",
                   "box": {
@@ -4124,10 +4124,10 @@
                   },
                   "text": "Cita del temario disponible, sin enlace verificado al PDF."
                 },
-                "El contenido de un byte se expresa en hexadecimal con:",
+                "CheckStyle es un linter para:",
                 {
                   "role": "button",
-                  "name": "A Dos dígitos hexadecimales.",
+                  "name": "A JavaScript.",
                   "box": {
                     "x": 368,
                     "y": 280,
@@ -4137,7 +4137,7 @@
                 },
                 {
                   "role": "button",
-                  "name": "B Tres dígitos hexadecimales.",
+                  "name": "B Python.",
                   "box": {
                     "x": 368,
                     "y": 355,
@@ -4147,7 +4147,7 @@
                 },
                 {
                   "role": "button",
-                  "name": "C Un dígito hexadecimal.",
+                  "name": "C Java.",
                   "box": {
                     "x": 368,
                     "y": 430,
@@ -4157,7 +4157,7 @@
                 },
                 {
                   "role": "button",
-                  "name": "D Cuatro dígitos hexadecimales.",
+                  "name": "D Ruby.",
                   "box": {
                     "x": 368,
                     "y": 505,
@@ -4184,7 +4184,7 @@
       "controls": [
         {
           "role": "button",
-          "name": "A Dos dígitos hexadecimales.",
+          "name": "A JavaScript.",
           "box": {
             "x": 368,
             "y": 280,
@@ -4194,7 +4194,7 @@
         },
         {
           "role": "button",
-          "name": "B Tres dígitos hexadecimales.",
+          "name": "B Python.",
           "box": {
             "x": 368,
             "y": 355,
@@ -4204,7 +4204,7 @@
         },
         {
           "role": "button",
-          "name": "C Un dígito hexadecimal.",
+          "name": "C Java.",
           "box": {
             "x": 368,
             "y": 430,
@@ -4214,7 +4214,7 @@
         },
         {
           "role": "button",
-          "name": "D Cuatro dígitos hexadecimales.",
+          "name": "D Ruby.",
           "box": {
             "x": 368,
             "y": 505,
@@ -4246,7 +4246,7 @@
             "x": 328,
             "y": 0,
             "width": 860,
-            "height": 949
+            "height": 979
           },
           "children": [
             {
@@ -4297,10 +4297,10 @@
                 "x": 368,
                 "y": 184,
                 "width": 780,
-                "height": 642
+                "height": 672
               },
               "children": [
-                "T2.04 · Sistemas Operativos",
+                "T4.02 · Administración de BD y Virtualización",
                 {
                   "role": "paragraph",
                   "box": {
@@ -4311,12 +4311,89 @@
                   },
                   "text": "Cita del temario disponible, sin enlace verificado al PDF."
                 },
-                "En una nube comunitaria: A La infraestructura es propiedad de un tercero abierto a entidades heterogéneas. B La infraestructura es completamente dedicada a un solo cliente. C La infraestructura combina nubes públicas y privadas. D La infraestructura es compartida en comunidad cerrada por varias organizaciones que comparten requisitos.",
+                "Con",
+                {
+                  "role": "mark",
+                  "box": {
+                    "x": 410,
+                    "y": 275,
+                    "width": 16,
+                    "height": 26
+                  },
+                  "text": "8"
+                },
+                "discos de",
+                {
+                  "role": "mark",
+                  "box": {
+                    "x": 523,
+                    "y": 275,
+                    "width": 12,
+                    "height": 26
+                  },
+                  "text": "1"
+                },
+                "TB en RAID",
+                {
+                  "role": "mark",
+                  "box": {
+                    "x": 646,
+                    "y": 275,
+                    "width": 16,
+                    "height": 26
+                  },
+                  "text": "6"
+                },
+                "E, la capacidad total es de: A",
+                {
+                  "role": "mark",
+                  "box": {
+                    "x": 427,
+                    "y": 352,
+                    "width": 14,
+                    "height": 21
+                  },
+                  "text": "5"
+                },
+                "TB. B",
+                {
+                  "role": "mark",
+                  "box": {
+                    "x": 427,
+                    "y": 427,
+                    "width": 14,
+                    "height": 21
+                  },
+                  "text": "4"
+                },
+                "TB. C",
+                {
+                  "role": "mark",
+                  "box": {
+                    "x": 427,
+                    "y": 502,
+                    "width": 14,
+                    "height": 21
+                  },
+                  "text": "6"
+                },
+                "TB. D",
+                {
+                  "role": "mark",
+                  "box": {
+                    "x": 427,
+                    "y": 577,
+                    "width": 12,
+                    "height": 21
+                  },
+                  "text": "7"
+                },
+                "TB.",
                 {
                   "role": "paragraph",
                   "box": {
                     "x": 368,
-                    "y": 643,
+                    "y": 623,
                     "width": 780,
                     "height": 26
                   },
@@ -4324,31 +4401,11 @@
                 },
                 {
                   "role": "button",
-                  "name": "Orden invertido",
-                  "box": {
-                    "x": 383,
-                    "y": 693,
-                    "width": 135,
-                    "height": 44
-                  }
-                },
-                {
-                  "role": "button",
                   "name": "Absolutización",
                   "box": {
-                    "x": 524,
-                    "y": 693,
+                    "x": 383,
+                    "y": 673,
                     "width": 131,
-                    "height": 44
-                  }
-                },
-                {
-                  "role": "button",
-                  "name": "Numeración de normas",
-                  "box": {
-                    "x": 661,
-                    "y": 693,
-                    "width": 188,
                     "height": 44
                   }
                 },
@@ -4356,9 +4413,59 @@
                   "role": "button",
                   "name": "Conceptos casi idénticos",
                   "box": {
-                    "x": 855,
-                    "y": 693,
+                    "x": 520,
+                    "y": 673,
                     "width": 201,
+                    "height": 44
+                  }
+                },
+                {
+                  "role": "button",
+                  "name": "Orden invertido",
+                  "box": {
+                    "x": 727,
+                    "y": 673,
+                    "width": 135,
+                    "height": 44
+                  }
+                },
+                {
+                  "role": "button",
+                  "name": "Inventado que suena real",
+                  "box": {
+                    "x": 868,
+                    "y": 673,
+                    "width": 202,
+                    "height": 44
+                  }
+                },
+                {
+                  "role": "button",
+                  "name": "Numeración de normas",
+                  "box": {
+                    "x": 383,
+                    "y": 723,
+                    "width": 188,
+                    "height": 44
+                  }
+                },
+                {
+                  "role": "button",
+                  "name": "Cambio de sujeto/órgano",
+                  "box": {
+                    "x": 577,
+                    "y": 723,
+                    "width": 204,
+                    "height": 44
+                  }
+                },
+                {
+                  "role": "button",
+                  "name": "Contaminación entre normas",
+                  "box": {
+                    "x": 787,
+                    "y": 723,
+                    "width": 228,
                     "height": 44
                   }
                 },
@@ -4367,38 +4474,8 @@
                   "name": "Cifra o plazo vecino",
                   "box": {
                     "x": 383,
-                    "y": 743,
+                    "y": 773,
                     "width": 164,
-                    "height": 44
-                  }
-                },
-                {
-                  "role": "button",
-                  "name": "Trampa del supuesto",
-                  "box": {
-                    "x": 553,
-                    "y": 743,
-                    "width": 173,
-                    "height": 44
-                  }
-                },
-                {
-                  "role": "button",
-                  "name": "Inventado que suena real",
-                  "box": {
-                    "x": 732,
-                    "y": 743,
-                    "width": 202,
-                    "height": 44
-                  }
-                },
-                {
-                  "role": "button",
-                  "name": "Intruso",
-                  "box": {
-                    "x": 940,
-                    "y": 743,
-                    "width": 78,
                     "height": 44
                   }
                 }
@@ -4430,31 +4507,11 @@
         },
         {
           "role": "button",
-          "name": "Orden invertido",
-          "box": {
-            "x": 383,
-            "y": 693,
-            "width": 135,
-            "height": 44
-          }
-        },
-        {
-          "role": "button",
           "name": "Absolutización",
           "box": {
-            "x": 524,
-            "y": 693,
+            "x": 383,
+            "y": 673,
             "width": 131,
-            "height": 44
-          }
-        },
-        {
-          "role": "button",
-          "name": "Numeración de normas",
-          "box": {
-            "x": 661,
-            "y": 693,
-            "width": 188,
             "height": 44
           }
         },
@@ -4462,9 +4519,59 @@
           "role": "button",
           "name": "Conceptos casi idénticos",
           "box": {
-            "x": 855,
-            "y": 693,
+            "x": 520,
+            "y": 673,
             "width": 201,
+            "height": 44
+          }
+        },
+        {
+          "role": "button",
+          "name": "Orden invertido",
+          "box": {
+            "x": 727,
+            "y": 673,
+            "width": 135,
+            "height": 44
+          }
+        },
+        {
+          "role": "button",
+          "name": "Inventado que suena real",
+          "box": {
+            "x": 868,
+            "y": 673,
+            "width": 202,
+            "height": 44
+          }
+        },
+        {
+          "role": "button",
+          "name": "Numeración de normas",
+          "box": {
+            "x": 383,
+            "y": 723,
+            "width": 188,
+            "height": 44
+          }
+        },
+        {
+          "role": "button",
+          "name": "Cambio de sujeto/órgano",
+          "box": {
+            "x": 577,
+            "y": 723,
+            "width": 204,
+            "height": 44
+          }
+        },
+        {
+          "role": "button",
+          "name": "Contaminación entre normas",
+          "box": {
+            "x": 787,
+            "y": 723,
+            "width": 228,
             "height": 44
           }
         },
@@ -4473,38 +4580,8 @@
           "name": "Cifra o plazo vecino",
           "box": {
             "x": 383,
-            "y": 743,
+            "y": 773,
             "width": 164,
-            "height": 44
-          }
-        },
-        {
-          "role": "button",
-          "name": "Trampa del supuesto",
-          "box": {
-            "x": 553,
-            "y": 743,
-            "width": 173,
-            "height": 44
-          }
-        },
-        {
-          "role": "button",
-          "name": "Inventado que suena real",
-          "box": {
-            "x": 732,
-            "y": 743,
-            "width": 202,
-            "height": 44
-          }
-        },
-        {
-          "role": "button",
-          "name": "Intruso",
-          "box": {
-            "x": 940,
-            "y": 743,
-            "width": 78,
             "height": 44
           }
         },
@@ -4531,7 +4608,7 @@
             "x": 328,
             "y": 0,
             "width": 860,
-            "height": 556
+            "height": 550
           },
           "children": [
             {
@@ -4572,15 +4649,25 @@
                 "x": 368,
                 "y": 159,
                 "width": 780,
-                "height": 350
+                "height": 343
               },
               "children": [
-                "Para controlar el número de conexiones a una base de datos se ha valorado el empleo de un patrón de diseño que sólo permitirá la creación de una instancia por clase. Es el patrón:",
                 {
                   "role": "paragraph",
                   "box": {
                     "x": 368,
-                    "y": 319,
+                    "y": 179,
+                    "width": 780,
+                    "height": 20
+                  },
+                  "text": "Cita del temario disponible, sin enlace verificado al PDF."
+                },
+                "El sistema de impresión más general en las impresoras de inyección de tinta, que produce pequeñas gotas cuando se necesitan, es el:",
+                {
+                  "role": "paragraph",
+                  "box": {
+                    "x": 368,
+                    "y": 312,
                     "width": 780,
                     "height": 26
                   },
@@ -4591,7 +4678,7 @@
                   "name": "La opción CORRECTA / VERDADERA",
                   "box": {
                     "x": 368,
-                    "y": 344,
+                    "y": 338,
                     "width": 780,
                     "height": 65
                   }
@@ -4601,7 +4688,7 @@
                   "name": "La INCORRECTA / FALSA / la excepción",
                   "box": {
                     "x": 368,
-                    "y": 419,
+                    "y": 413,
                     "width": 780,
                     "height": 65
                   }
@@ -4627,7 +4714,7 @@
           "name": "La opción CORRECTA / VERDADERA",
           "box": {
             "x": 368,
-            "y": 344,
+            "y": 338,
             "width": 780,
             "height": 65
           }
@@ -4637,7 +4724,7 @@
           "name": "La INCORRECTA / FALSA / la excepción",
           "box": {
             "x": 368,
-            "y": 419,
+            "y": 413,
             "width": 780,
             "height": 65
           }
@@ -8538,7 +8625,7 @@
                 "height": 22
               }
             },
-            "El Ministerio de Educación, Formación Profesional y Deportes ha puesto en marcha el proyecto EDUCA-DATA 2030, cuyo objetivo es diseñar, desarrollar e implantar un sistema integral para el seguimiento, análisis y toma de decisiones estratégicas sobre los diferentes programas educativos. El sistema permitirá la visualización de indicadores clave de rendimiento (KPI) relativos a centros educativos, programas formativos y alumnado, entre otros muchos. La solución se integrará con los sistemas corporativos existentes mediante servicios REST y procesamientos ETL, y almacenará la información en una base de datos Oracle Database 19c Enterprise Edition. El desarrollo se realizará utilizando Java SE D…",
+            "Debido a la pandemia ocasionada por el SARS-CoV-2, más conocido como Coronavirus, las Administraciones Publicas se han visto obligadas a impulsar el teletrabajo y a cambiar su estrategia en el ámbito de las TIC. En este sentido ha sido asignado en la integración de dos organismos en su departamento, los cuales no tienen capacidad para asumir las nuevas demandas de servicios y conexiones. Uno de los centros es la Demarcación de Carreteras de Madrid (DCM) y el otro es la Confederación Hidrográfica del Tajo (CHT). La DCM tiene máquinas físicas RedHat Enterprise Linux (RHEL). Su estructura consiste en tres áreas y en cada una de ellas trabajan 20 personas. La CHT tiene máquinas físicas Solaris. …",
             {
               "role": "button",
               "name": "Elegir este supuesto",
@@ -8560,7 +8647,7 @@
                 "height": 22
               }
             },
-            "La Subdirección General de Tecnologías de la Información y Comunicaciones del Ministerio donde usted trabaja (en adelante SGTIC), se encuentra actualmente en un proceso continuo de modernización y mejora de su infraestructura tecnológica, incorporando progresivamente nuevas soluciones y sustituyendo aquellas que han quedado más obsoletas, por lo que coexisten soluciones tradicionales con otras más actuales. No obstante, algunas de estas herramientas continúan siendo funcionales y válidas en los entornos descritos, por lo que es necesario seguir gestionándolas y manteniéndolas. Se le ha encargado la administración de ciertos servidores que alojan diversas bases de datos y aplicaciones web. En…",
+            "El Ministerio de Educación, Formación Profesional y Deportes tiene una red asignada en el Plan de Direccionamiento de la AGE 10.9.0.0/16 y ha creado un organismo para la enseñanza online de formadores, OEOF (en adelante nos referiremos en este supuesto sólo como “organismo”), al que le ha correspondido la última de las subredes de las 16 en las que se ha dividido la red ministerial. El sistema de enseñanza online de formadores se fundamenta en un servidor de formación accesible también desde Internet en la URL https://www.profesores.es. Los servidores de este sistema (web, http, DNS, DHCP, LDAP), se van a instalar con sistema operativo Linux Ubuntu. El portal web está montado usando Apache T…",
             {
               "role": "button",
               "name": "Elegir este supuesto",
@@ -11713,7 +11800,7 @@
                 "width": 721,
                 "height": 26
               },
-              "text": "sincronizado · último dato recibido 15:44:09"
+              "text": "sincronizado · último dato recibido 19:20:20"
             },
             {
               "role": "button",
@@ -11993,11 +12080,11 @@
             },
             {
               "role": "button",
-              "name": "Versión 1.1.12 (dfbd4ae)",
+              "name": "Versión 1.1.12 (543cc25)",
               "box": {
                 "x": 301,
                 "y": 896,
-                "width": 160,
+                "width": 164,
                 "height": 44
               }
             },
@@ -14122,11 +14209,11 @@
         },
         {
           "role": "button",
-          "name": "Versión 1.1.12 (dfbd4ae)",
+          "name": "Versión 1.1.12 (543cc25)",
           "box": {
             "x": 301,
             "y": 896,
-            "width": 160,
+            "width": 164,
             "height": 44
           }
         },

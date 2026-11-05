@@ -270,7 +270,7 @@ a {
    globally; buttons, navigation and card links opt out in their own rules. */
 /* Destinos programáticos de lectura; los controles conservan :focus-visible. */
 
-#app:focus,#app h1:focus {
+#app:focus,#app h1:focus:not(:focus-visible) {
   outline: none;
 }
 
