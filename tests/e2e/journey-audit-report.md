@@ -272,7 +272,7 @@ La cifra cuenta roles interactivos con nombre accesible en el estado inicial (28
 | Test | 32 | Configuración, preguntas, marcas, pendientes, corrección, historial y test en papel (`bridge`, `routes`, `paper-test-log`, `supertest-emulator`). | No todos los selectores ni estados de fallo remoto. |
 | Simulacro | 18 | Empezar, pausar, abandonar, reanudar y corregir al finalizar (`bridge`). | Variantes de examen y persistencia remota no cubiertas por cada control. |
 | Simulacro Parte 2 | 3 | Entrada/render y flujo relacionado (`routes`, `bridge`). | Sin aserción independiente para todos los controles propios de Parte 2. |
-| Estadísticas | 45 | Gráficos con datos/vacíos, reflujo y secciones móviles plegables (`stats-charts`, `mobile-layout`, `css-ui`). | Cada filtro y cálculo de visualización no tiene aserciones exhaustivas. |
+| Estadísticas | 45 | Gráficos con datos/vacíos, reflujo y secciones móviles plegables; los controles de comparación A/B cambian la diferencia según el orden seleccionado (**+10 / −10**) en Chromium/WebKit, claro/oscuro, 320/1440 px (`stats-charts`, `mobile-layout`, `css-ui`). Evidencia: `evidence/accessibility-2026-11-05/stats-comparison-reversed.png`. | Cada filtro/cálculo de visualización no tiene aserciones exhaustivas; las pruebas usan sesiones sintéticas locales y no acreditan cálculo de historial remoto sincronizado. |
 | Ayuda | 19 | Índice, anclas, destinos y disponibilidad offline (`help-icons`, `bridge`). | No se recorre cada artículo/enlace en todos los perfiles. |
 | Ajustes | 59 | Horario semanal, evento/hito y preferencias usadas por Planificación (`css-ui`, `supertest-emulator`). | Todos los valores posibles y guardado con red perdida. |
 | Accesos | 3 | Owner aprueba/revoca; perfiles normal/restricted/pending/anonymous verifican guardas (`supertest-emulator`). | No se probaron sesiones paralelas/cambio rápido de usuario por control. |
@@ -307,3 +307,10 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - **Evidencia visual:** [`antes de recargar`](evidence/accessibility-2026-11-05/authenticated-run-before-reload.png), [`diálogo de recuperación`](evidence/accessibility-2026-11-05/authenticated-run-resume-prompt.png), [`sesión reanudada`](evidence/accessibility-2026-11-05/authenticated-run-resumed.png). Capturas sintéticas verificadas visualmente. El almacenamiento es local; este test no representa sincronización multidispositivo.
 - **Verificación:** `npm run test:e2e:supertest` pasó **12/12** en Chromium con Auth/Firestore Emulator `demo-tai-auth`. La interacción de estudio y el abandono se hacen por la UI; no se alteraron reglas ni comportamiento pedagógico.
 - **Pendiente ATE-005:** cambios de cuenta/expiración, concurrencia entre pestañas, pérdida de red, historial extenso y los controles dinámicos restantes requieren journeys y oráculos propios.
+
+### Comparación de simulacros en Estadísticas (5 de noviembre de 2026)
+
+- En un fixture local sintético con resultados 70 y 80, el test selecciona 70 como Intento A y 80 como Intento B y verifica `Nota: +10`; invierte ambos selectores y comprueba `Nota: -10`. Esto valida la operación visible y el sentido de la comparación sin alterar el cálculo de producto.
+- **Verificación:** `npm run test:e2e -- tests/e2e/stats-charts.spec.ts` pasó **8/8** entre Chromium/WebKit, temas claro/oscuro y viewports 320/1440 px. La suite mantiene cobertura de gráfica, tooltip, teclado, reflujo y estado vacío.
+- **Evidencia:** [`comparación invertida`](evidence/accessibility-2026-11-05/stats-comparison-reversed.png), con datos sintéticos locales; no hay lectura ni escritura Firebase en este caso.
+- **Límite:** sigue faltando recorrer exhaustivamente filtros de temas/tipos, periodos, estrategia y datos sincronizados; ATE-005 permanece abierto.

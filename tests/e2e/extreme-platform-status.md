@@ -66,6 +66,7 @@ Estados: **Verificado**, **Parcial**, **Pendiente**, **Bloqueado**. “Verificad
 - El test demuestra `idx = 1`, la respuesta previa y la cuenta local `tai-supertest` antes y después de la recarga; muestra Resultado de sesión interrumpida y comprueba la limpieza del checkpoint al salir.
 - Capturas sintéticas: `evidence/accessibility-2026-11-05/authenticated-run-before-reload.png`, `authenticated-run-resume-prompt.png`, `authenticated-run-resumed.png`. No representan sincronización entre dispositivos.
 - La evidencia amplía ATE-005, que sigue abierto por controles y estados dinámicos restantes, concurrencia/offline/cambio de cuenta y cobertura funcional exhaustiva. UX-009 y la integración remota de ATE-006 permanecen abiertas.
+- La comparación de intentos de Estadísticas añade un oráculo funcional con fixtures locales 70/80: el orden 70→80 muestra +10 y el orden 80→70 muestra −10. `npm run test:e2e -- tests/e2e/stats-charts.spec.ts` terminó **8/8** Chromium/WebKit, claro/oscuro y 320/1440 px. Captura: `evidence/accessibility-2026-11-05/stats-comparison-reversed.png`. No prueba persistencia Firebase ni cubre todos los filtros.
 
 ## Revalidación 5 de noviembre de 2026
 

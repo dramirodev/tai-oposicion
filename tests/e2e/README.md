@@ -165,3 +165,7 @@ La misión navega repetidamente a Planificación en los límites de 10, 50, 100,
 `npm run test:e2e:supertest` pasó **12/12**. El nuevo caso sintético prepara T1.02 desde la interfaz, crea un hito, guarda respuesta y avance, recarga como `tai-supertest@example.test`, reanuda en pregunta 2 de 3, verifica los datos del checkpoint del UID y abandona como sesión interrumpida. Confirma que se limpia el checkpoint al finalizar. Capturas: `evidence/accessibility-2026-11-05/authenticated-run-before-reload.png`, `authenticated-run-resume-prompt.png`, `authenticated-run-resumed.png`.
 
 El almacenamiento de ejecución es local; este escenario no afirma recuperación entre dispositivos. La cuenta, reglas y lecturas/escrituras Firebase permanecieron en Emulator. ATE-005 sigue abierto para concurrencia, cambio/expiración de cuenta, offline, estados dinámicos restantes y cobertura exhaustiva. UX-009 y CI remota ATE-006 siguen pendientes.
+
+### Comparación funcional en Estadísticas — 5 de noviembre de 2026
+
+`npm run test:e2e -- tests/e2e/stats-charts.spec.ts` pasó **8/8** en Chromium y WebKit. Con dos simulacros sintéticos (70 y 80), se seleccionan Intento A/B y se verifica que invertir el orden invierte el resultado (**+10 / −10**). Se repite en temas claro/oscuro y viewports de 320 y 1440 px; se conserva [`stats-comparison-reversed.png`](evidence/accessibility-2026-11-05/stats-comparison-reversed.png). Usa progreso local de prueba; no se conecta a Firebase. No cubre todos los filtros ni sustituye la validación de estadísticas sincronizadas.
