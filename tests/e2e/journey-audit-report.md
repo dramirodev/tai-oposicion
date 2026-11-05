@@ -6,6 +6,12 @@ Este informe reúne evidencias de la auditoría manual, Playwright y los recorri
 
 El [registro canónico de hallazgos](audit-findings.md) mantiene IDs, estados y vínculos de evidencia/pruebas para UX y Agentic Test Explorer; este informe conserva el análisis y la evidencia UX. La auditoría de requisitos de plataforma, con matriz de implementación y aceptación pendiente, está en [extreme-platform-status.md](extreme-platform-status.md). Son alcances activos; no implican que la cobertura UX o de calidad esté completa.
 
+### Verificación del baseline visual y regresión integral — 5 de noviembre de 2026
+
+- Actualizado `tests/e2e/baseline-ref.txt` al commit revisado `2420d1b58bc4385df51d7036643262988dedebd9`, que contiene las capturas candidatas verificadas. Se conserva el baseline histórico anterior en Git.
+- `npm run test:e2e:ci`: **72/72** pruebas de referencia en Chromium/WebKit y **296/296** pruebas candidatas aprobadas, **28 omitidas** (suites separadas de Auth/Firestore Emulator y EXTREME), sin fallos. Planificación y el foco tras navegación SPA pasaron en ambos motores.
+- El runner local no prueba que GitHub Actions haya ejecutado el workflow remoto. ATE-006 sigue abierto; UX-009 sigue parcial y ATE-005 no declara cobertura exhaustiva.
+
 ### Corte histórico: acceso privilegiado y primera suite E2E (4 de noviembre de 2026)
 
 - `tai-supertest@example.test` no existía en el primer arranque de Auth Emulator `demo-tai-auth`; el fixture reservado lo creó. En las siguientes pruebas verificó el UID esperado, se restableció dentro del Emulator y se autenticó. No se consultó ni modificó Firebase de producción.

@@ -1,5 +1,11 @@
 # Agentic Test Explorer + TAI: auditoría de plataforma extrema
 
+## Revalidación integral de baseline — 5 de noviembre de 2026
+
+- `tests/e2e/baseline-ref.txt` ahora apunta al commit revisado `2420d1b58bc4385df51d7036643262988dedebd9`; el baseline histórico permanece disponible en Git.
+- `npm run test:e2e:ci` pasó las pruebas de referencia **72/72** (Chromium/WebKit) y candidata **296/296**, con **28 omitidas** deliberadamente para Emulator y EXTREME, sin fallos.
+- Es verificación local, no evidencia de ejecución GitHub Actions. ATE-005 continúa parcial; UX-009 aún requiere comprobaciones con tecnología asistiva/zoom/contraste; ATE-006 remoto continúa abierto hasta que haya ejecución del workflow desde el repositorio.
+
 Registro compartido de hallazgos/correcciones: [audit-findings.md](audit-findings.md). Los hallazgos de plataforma/ATE se mantienen con IDs estables y se enlazan desde este estado; no se duplican aquí.
 
 Fecha de inspección: 4 de noviembre de 2026. Este documento contrasta el alcance solicitado con los dos checkouts observados. En Agentic Test Explorer ya había modificaciones locales sin confirmar antes de esta auditoría; se han preservado. No se leyó `.env`, no se invocó Gemini y no se ejecutó ninguna prueba contra Firebase de producción.
