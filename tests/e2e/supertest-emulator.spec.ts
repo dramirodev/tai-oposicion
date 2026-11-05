@@ -58,9 +58,21 @@ test.describe('Firebase Auth Emulator supertest', () => {
     await page.goto('/#/planificacion');
     await expect(page.locator('#app h1')).toHaveText('Planificación de estudio');
     await capture('owner-planificacion');
-    await page.getByRole('button', { name: 'Comenzar sesión' }).click();
+    const startStudy = page.getByRole('button', { name: 'Comenzar sesión' });
+    await startStudy.evaluate((button) => {
+      button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      button.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
     await expect(page).toHaveURL(/#\/temario\?topic=/);
     await expect(page.locator('#app h1')).toContainText('Temas vistos');
+    const checkpoints = await page.evaluate(() =>
+      Object.entries(localStorage)
+        .filter(([key]) => key.startsWith('tai.training-session.v1.'))
+        .map(([, value]) => JSON.parse(value)),
+    );
+    expect(checkpoints).toHaveLength(1);
+    expect(checkpoints[0]).toMatchObject({ currentIndex: 0, completedAt: null });
+    expect(checkpoints[0].currentStartedAt).not.toBeNull();
     await capture('owner-temario-estudio');
     const topic = new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('topic');
     await page.locator(`[data-t="${topic}"]`).click({ noWaitAfter: true });
@@ -316,7 +328,7 @@ test.describe('Firebase Auth Emulator supertest', () => {
     await expect(
       page.getByText('Vínculo añadido al borrador local. Exporta el JSON para revisarlo en el repositorio.'),
     ).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Borrador local · 1 vínculos' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Borrador local · 1 vínculo' })).toBeVisible();
     await page.screenshot({
       path: 'tests/e2e/evidence/accessibility-2026-11-05/content-curation-synthetic-draft.png',
       fullPage: true,
@@ -330,7 +342,7 @@ test.describe('Firebase Auth Emulator supertest', () => {
     expect(stored.links[0].questionId).toBe(questionId);
     expect(stored.links[0].reviewer).toBe('TAI QA sintético');
     await page.reload();
-    await expect(page.getByRole('heading', { name: 'Borrador local · 1 vínculos' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Borrador local · 1 vínculo' })).toBeVisible();
     const restored = await page.evaluate(() =>
       JSON.parse(localStorage.getItem('tai.academy-question-section-map:v2:tai-supertest') || 'null'),
     );

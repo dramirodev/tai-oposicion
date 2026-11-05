@@ -512,3 +512,9 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - Ejecución focal: **2/2**, Chromium y WebKit; suite completa `routes.spec.ts`: **90/90** en ambos motores. Capturas del error en `evidence/accessibility-2026-11-05/offline-download-retry-{chromium,webkit}.png`; la respuesta se simula en el navegador y no alcanza Firebase ni el proveedor Gemini.
 - Este caso cubre fallo y reintento del shell/cache offline; quedan pendientes combinaciones de offline con Auth caducado, sincronización y escritura de actividad en journeys longitudinales.
 - Verificación general posterior: `npm test -- --maxWorkers=2` **189 archivos aprobados / 1 omitido; 964 tests aprobados / 27 omitidos**. `npm run check` sin límite de workers presentó una carrera transitoria en `design-flow.test.js` (un diálogo no apareció dentro de su espera); ese archivo pasó aislado **15/15** y la suite completa posterior pasó. Arquitectura, ESLint y TypeScript también pasaron; `git diff --check` se ejecutó tras la implementación.
+
+### ATE-005: doble activación de «Comenzar sesión» y persistencia del plan — 5 de noviembre de 2026
+
+- En el recorrido owner de Firebase Emulator, el botón «Comenzar sesión» recibe dos eventos click consecutivos. La aplicación navega una sola vez al tema planificado y guarda un único checkpoint de sesión, en índice `0`, con actividad iniciada y sin marcar como completada.
+- El rerun completo `npm run test:e2e:supertest` pasó **12/12** sobre Auth/Firestore Emulator `demo-tai-auth`. El mismo recorrido confirma el borrador curatorial tras recargar.
+- La primera repetición reveló dos aserciones de E2E que todavía exigían el copy histórico incorrecto «1 vínculos» después de UX-019. Se actualizaron a «1 vínculo»; era una expectativa obsoleta del test, no un defecto actual de interfaz. No hubo cambios a reglas de negocio ni datos de producción.

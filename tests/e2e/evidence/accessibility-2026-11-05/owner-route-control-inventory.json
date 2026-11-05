@@ -470,7 +470,7 @@
             "x": 236,
             "y": 0,
             "width": 1044,
-            "height": 2613
+            "height": 2538
           },
           "children": [
             {
@@ -4080,7 +4080,7 @@
             "x": 328,
             "y": 0,
             "width": 860,
-            "height": 687
+            "height": 789
           },
           "children": [
             {
@@ -4110,46 +4110,46 @@
                 "x": 368,
                 "y": 131,
                 "width": 780,
-                "height": 433
+                "height": 535
               },
               "children": [
-                "T1.04 · Transparencia El Presidente del Consejo de Transparencia y Buen Gobierno:",
+                "T3.06 · Java y .NET En .NET, el framework multiplataforma de código abierto para crear aplicaciones móviles y de escritorio nativas con C# y XAML que se pueden ejecutar en Android, iOS, macOS y Windows desde una sola base de código compartida se corresponde con:",
                 {
                   "role": "button",
-                  "name": "A Será nombrado por un periodo de 4 años renovable por una vez.",
+                  "name": "A .NET MAUI.",
                   "box": {
                     "x": 368,
-                    "y": 250,
+                    "y": 352,
                     "width": 780,
                     "height": 65
                   }
                 },
                 {
                   "role": "button",
-                  "name": "B Será nombrado por un periodo de 5 años renovable por una vez.",
+                  "name": "B .NET MUI.",
                   "box": {
                     "x": 368,
-                    "y": 325,
+                    "y": 427,
                     "width": 780,
                     "height": 65
                   }
                 },
                 {
                   "role": "button",
-                  "name": "C Será nombrado por un periodo no renovable de 4 años.",
+                  "name": "C .NET MONO X.",
                   "box": {
                     "x": 368,
-                    "y": 400,
+                    "y": 502,
                     "width": 780,
                     "height": 65
                   }
                 },
                 {
                   "role": "button",
-                  "name": "D Será nombrado por un periodo no renovable de 5 años.",
+                  "name": "D .NET MONO IU.",
                   "box": {
                     "x": 368,
-                    "y": 475,
+                    "y": 577,
                     "width": 780,
                     "height": 65
                   }
@@ -4173,40 +4173,40 @@
       "controls": [
         {
           "role": "button",
-          "name": "A Será nombrado por un periodo de 4 años renovable por una vez.",
+          "name": "A .NET MAUI.",
           "box": {
             "x": 368,
-            "y": 250,
+            "y": 352,
             "width": 780,
             "height": 65
           }
         },
         {
           "role": "button",
-          "name": "B Será nombrado por un periodo de 5 años renovable por una vez.",
+          "name": "B .NET MUI.",
           "box": {
             "x": 368,
-            "y": 325,
+            "y": 427,
             "width": 780,
             "height": 65
           }
         },
         {
           "role": "button",
-          "name": "C Será nombrado por un periodo no renovable de 4 años.",
+          "name": "C .NET MONO X.",
           "box": {
             "x": 368,
-            "y": 400,
+            "y": 502,
             "width": 780,
             "height": 65
           }
         },
         {
           "role": "button",
-          "name": "D Será nombrado por un periodo no renovable de 5 años.",
+          "name": "D .NET MONO IU.",
           "box": {
             "x": 368,
-            "y": 475,
+            "y": 577,
             "width": 780,
             "height": 65
           }
@@ -4235,7 +4235,7 @@
             "x": 328,
             "y": 0,
             "width": 860,
-            "height": 1177
+            "height": 979
           },
           "children": [
             {
@@ -4286,62 +4286,59 @@
                 "x": 368,
                 "y": 184,
                 "width": 780,
-                "height": 870
+                "height": 672
               },
               "children": [
-                "T4.09 · Seguridad en Redes",
-                {
-                  "role": "complementary",
-                  "name": "Advertencia de la pregunta",
-                  "box": {
-                    "x": 368,
-                    "y": 235,
-                    "width": 780,
-                    "height": 75
-                  },
-                  "children": [
-                    "Nota de la pregunta",
-                    {
-                      "role": "paragraph",
-                      "box": {
-                        "x": 386,
-                        "y": 276,
-                        "width": 748,
-                        "height": 23
-                      },
-                      "text": "Pharming frente a phishing, keylogger, vishing."
-                    }
-                  ]
-                },
-                "Dentro de las amenazas dirigidas al puesto del usuario, ¿en qué consiste la técnica de \"Pharming\" para la obtención ilícita de credenciales? A En la alteración del proceso de resolución de nombres (fichero hosts o caché DNS) para redirigir al usuario a una página web",
-                {
-                  "role": "mark",
-                  "box": {
-                    "x": 634,
-                    "y": 469,
-                    "width": 40,
-                    "height": 21
-                  },
-                  "text": "falsa"
-                },
-                ", incluso si este escribe la dirección correcta en el navegador. B En el envío masivo de correos electrónicos suplantando la identidad de una entidad financiera para que el usuario pinche en un enlace malicioso. C En la instalación de un programa malicioso que registra todas las pulsaciones de teclas realizadas en un dispositivo infectado. D En el uso de técnicas de ingeniería social telefónica con las que se suplanta la identidad de una empresa, organización o persona de confianza, con el fin de obtener información personal y sensible.",
+                "T2.04 · Sistemas Operativos",
                 {
                   "role": "paragraph",
                   "box": {
                     "x": 368,
-                    "y": 821,
+                    "y": 233,
+                    "width": 780,
+                    "height": 20
+                  },
+                  "text": "Cita del temario disponible, sin enlace verificado al PDF."
+                },
+                "Con permisos",
+                {
+                  "role": "mark",
+                  "box": {
+                    "x": 498,
+                    "y": 275,
+                    "width": 45,
+                    "height": 26
+                  },
+                  "text": "640,"
+                },
+                "el grupo propietario puede: A Leer el archivo, y otros no pueden hacer nada. B Leer y ejecutar el archivo, y otros nada. C No hacer nada, y otros solo leer. D Leer y escribir el archivo, y otros solo leer.",
+                {
+                  "role": "paragraph",
+                  "box": {
+                    "x": 368,
+                    "y": 623,
                     "width": 780,
                     "height": 26
                   },
-                  "text": "¿Qué trampas ves aquí? Marca todas las que apliquen (hay 1 posible)."
+                  "text": "¿Qué trampas ves aquí? Marca todas las que apliquen (hay varias posibles)."
                 },
                 {
                   "role": "button",
-                  "name": "Conceptos casi idénticos",
+                  "name": "Cierta pero no responde",
                   "box": {
                     "x": 383,
-                    "y": 871,
-                    "width": 201,
+                    "y": 673,
+                    "width": 194,
+                    "height": 44
+                  }
+                },
+                {
+                  "role": "button",
+                  "name": "Contaminación entre normas",
+                  "box": {
+                    "x": 583,
+                    "y": 673,
+                    "width": 228,
                     "height": 44
                   }
                 },
@@ -4349,49 +4346,49 @@
                   "role": "button",
                   "name": "Obligación/facultad",
                   "box": {
-                    "x": 590,
-                    "y": 871,
+                    "x": 817,
+                    "y": 673,
                     "width": 166,
                     "height": 44
                   }
                 },
                 {
                   "role": "button",
-                  "name": "Trampa del supuesto",
-                  "box": {
-                    "x": 763,
-                    "y": 871,
-                    "width": 173,
-                    "height": 44
-                  }
-                },
-                {
-                  "role": "button",
-                  "name": "Cierta pero no responde",
+                  "name": "Conceptos casi idénticos",
                   "box": {
                     "x": 383,
-                    "y": 921,
-                    "width": 194,
+                    "y": 723,
+                    "width": 201,
                     "height": 44
                   }
                 },
                 {
                   "role": "button",
-                  "name": "Inventado que suena real",
+                  "name": "Intruso",
                   "box": {
-                    "x": 583,
-                    "y": 921,
-                    "width": 202,
+                    "x": 590,
+                    "y": 723,
+                    "width": 78,
                     "height": 44
                   }
                 },
                 {
                   "role": "button",
-                  "name": "Orden invertido",
+                  "name": "Numeración de normas",
                   "box": {
-                    "x": 791,
-                    "y": 921,
-                    "width": 135,
+                    "x": 675,
+                    "y": 723,
+                    "width": 188,
+                    "height": 44
+                  }
+                },
+                {
+                  "role": "button",
+                  "name": "Cifra o plazo vecino",
+                  "box": {
+                    "x": 869,
+                    "y": 723,
+                    "width": 164,
                     "height": 44
                   }
                 },
@@ -4400,18 +4397,8 @@
                   "name": "Cambio de sujeto/órgano",
                   "box": {
                     "x": 383,
-                    "y": 971,
+                    "y": 773,
                     "width": 204,
-                    "height": 44
-                  }
-                },
-                {
-                  "role": "button",
-                  "name": "Cifra o plazo vecino",
-                  "box": {
-                    "x": 593,
-                    "y": 971,
-                    "width": 164,
                     "height": 44
                   }
                 }
@@ -4443,11 +4430,21 @@
         },
         {
           "role": "button",
-          "name": "Conceptos casi idénticos",
+          "name": "Cierta pero no responde",
           "box": {
             "x": 383,
-            "y": 871,
-            "width": 201,
+            "y": 673,
+            "width": 194,
+            "height": 44
+          }
+        },
+        {
+          "role": "button",
+          "name": "Contaminación entre normas",
+          "box": {
+            "x": 583,
+            "y": 673,
+            "width": 228,
             "height": 44
           }
         },
@@ -4455,49 +4452,49 @@
           "role": "button",
           "name": "Obligación/facultad",
           "box": {
-            "x": 590,
-            "y": 871,
+            "x": 817,
+            "y": 673,
             "width": 166,
             "height": 44
           }
         },
         {
           "role": "button",
-          "name": "Trampa del supuesto",
-          "box": {
-            "x": 763,
-            "y": 871,
-            "width": 173,
-            "height": 44
-          }
-        },
-        {
-          "role": "button",
-          "name": "Cierta pero no responde",
+          "name": "Conceptos casi idénticos",
           "box": {
             "x": 383,
-            "y": 921,
-            "width": 194,
+            "y": 723,
+            "width": 201,
             "height": 44
           }
         },
         {
           "role": "button",
-          "name": "Inventado que suena real",
+          "name": "Intruso",
           "box": {
-            "x": 583,
-            "y": 921,
-            "width": 202,
+            "x": 590,
+            "y": 723,
+            "width": 78,
             "height": 44
           }
         },
         {
           "role": "button",
-          "name": "Orden invertido",
+          "name": "Numeración de normas",
           "box": {
-            "x": 791,
-            "y": 921,
-            "width": 135,
+            "x": 675,
+            "y": 723,
+            "width": 188,
+            "height": 44
+          }
+        },
+        {
+          "role": "button",
+          "name": "Cifra o plazo vecino",
+          "box": {
+            "x": 869,
+            "y": 723,
+            "width": 164,
             "height": 44
           }
         },
@@ -4506,18 +4503,8 @@
           "name": "Cambio de sujeto/órgano",
           "box": {
             "x": 383,
-            "y": 971,
+            "y": 773,
             "width": 204,
-            "height": 44
-          }
-        },
-        {
-          "role": "button",
-          "name": "Cifra o plazo vecino",
-          "box": {
-            "x": 593,
-            "y": 971,
-            "width": 164,
             "height": 44
           }
         },
@@ -4544,7 +4531,7 @@
             "x": 328,
             "y": 0,
             "width": 860,
-            "height": 584
+            "height": 550
           },
           "children": [
             {
@@ -4585,7 +4572,7 @@
                 "x": 368,
                 "y": 159,
                 "width": 780,
-                "height": 377
+                "height": 343
               },
               "children": [
                 {
@@ -4598,12 +4585,12 @@
                   },
                   "text": "Cita del temario disponible, sin enlace verificado al PDF."
                 },
-                "Conforme al artículo 10.2 de la Constitución Española de 1978, los derechos fundamentales se interpretarán de acuerdo con la Declaración _____ de Derechos Humanos.",
+                "Una transferencia de zona DNS es la transacción por la cual un servidor secundario (esclavo):",
                 {
                   "role": "paragraph",
                   "box": {
                     "x": 368,
-                    "y": 346,
+                    "y": 312,
                     "width": 780,
                     "height": 26
                   },
@@ -4614,7 +4601,7 @@
                   "name": "La opción CORRECTA / VERDADERA",
                   "box": {
                     "x": 368,
-                    "y": 372,
+                    "y": 338,
                     "width": 780,
                     "height": 65
                   }
@@ -4624,7 +4611,7 @@
                   "name": "La INCORRECTA / FALSA / la excepción",
                   "box": {
                     "x": 368,
-                    "y": 447,
+                    "y": 413,
                     "width": 780,
                     "height": 65
                   }
@@ -4650,7 +4637,7 @@
           "name": "La opción CORRECTA / VERDADERA",
           "box": {
             "x": 368,
-            "y": 372,
+            "y": 338,
             "width": 780,
             "height": 65
           }
@@ -4660,7 +4647,7 @@
           "name": "La INCORRECTA / FALSA / la excepción",
           "box": {
             "x": 368,
-            "y": 447,
+            "y": 413,
             "width": 780,
             "height": 65
           }
@@ -8561,7 +8548,7 @@
                 "height": 22
               }
             },
-            "Usted forma parte de un grupo de funcionarios de nuevo ingreso que se acaban de incorporar a una Subdirección General de Tecnologías de la Información y Comunicaciones de un ministerio y una de las primeras tareas que se les encomienda es continuar el desarrollo de una aplicación que empezó un funcionario que ya no está en la subdirección. La aplicación se compone de un frontend desarrollado con Angular 21 que se comunica con dos APIs: • API de persistencia: Desarrollada en ASP.NET 10 con C# 14, expone servicios REST para realizar operaciones de consulta, escritura y borrado en una base de datos SQL Server 2025. Además, utiliza Nunit 3.0 para pruebas. • API de integración con servicios…",
+            "Se va a desarrollar un sistema que permitirá a una persona (interesado) otorgar permiso a otra (representante) para que actúe en su nombre ante la Administración en un determinado trámite. El sistema contará con los siguientes módulos: • Un frontal web (Punto de Acceso General) que recoge todos los trámites de la Administración y donde el interesado puede otorgar la representación. • Un proceso que tramita las peticiones de representación, envía notificaciones PUSH a los representantes y recaba los consentimientos producidos. • Un módulo de gestión para el personal funcionario de atención al público. Cuando el interesado pulse el botón Otorgar representación en un trámite, el sistema g…",
             {
               "role": "button",
               "name": "Elegir este supuesto",
@@ -11736,7 +11723,7 @@
                 "width": 721,
                 "height": 26
               },
-              "text": "sincronizado · último dato recibido 20:05:15"
+              "text": "sincronizado · último dato recibido 22:13:27"
             },
             {
               "role": "button",
@@ -12016,11 +12003,11 @@
             },
             {
               "role": "button",
-              "name": "Versión 1.1.12 (cb69188)",
+              "name": "Versión 1.1.12 (c7d360a)",
               "box": {
                 "x": 301,
                 "y": 896,
-                "width": 161,
+                "width": 162,
                 "height": 44
               }
             },
@@ -14145,11 +14132,11 @@
         },
         {
           "role": "button",
-          "name": "Versión 1.1.12 (cb69188)",
+          "name": "Versión 1.1.12 (c7d360a)",
           "box": {
             "x": 301,
             "y": 896,
-            "width": 161,
+            "width": 162,
             "height": 44
           }
         },
