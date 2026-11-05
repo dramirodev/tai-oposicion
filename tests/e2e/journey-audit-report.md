@@ -264,7 +264,7 @@ La cifra cuenta roles interactivos con nombre accesible en el estado inicial (28
 | Temario | 44 | Abrir tema/material, marcar sección, filtro y autoevaluación (`routes`, `react-pages`, `supertest-emulator`). | No se recorren todos los temas, formatos y controles de contenido largo. |
 | Planificación | 17 | Iniciar sesión, agendas semanal/mensual, evento/hito, reprogramación, confirmación y recarga (`css-ui`, `routes`, `bridge`, `supertest-emulator`). | Combinaciones de preferencias/fechas y fallos de guardado por control. |
 | Errores | 4 | Revisar y reabrir avisos locales (`errors-page`). | Cada categoría y estado adverso de sincronización. |
-| Falladas | 1 | Navegación móvil/sección activa y estado vacío → ayuda contextual `repaso` verificados en Chromium/WebKit, 320/1440 px (`mobile-layout`, `routes`, `failures-empty-state-journey`, 4/4). Capturas: `failures-{empty,help}-{320px,1440px}.png`. | Filtros con resultados y errores de carga/reintento no cubiertos sistemáticamente. |
+| Falladas | 1 | Vacío → ayuda contextual `repaso`; pregunta fallada sintética → búsqueda/no coincidencia, filtros de tema/temario/racha, marca guardada tras reload y práctica de la pregunta. Contador accesible «1 pregunta»; reflow sin scroll horizontal a 320 px y objetivo de marca ≥24×24 CSS px. Chromium/WebKit, 320/1440 px (`failures-empty-state-journey`, 8/8). El componente cubre error→Reintentar→recuperación (3/3). | Historial extenso y persistencia remota/multiusuario sin cobertura sistemática. |
 | Relámpago | 5 | Responder y avanzar (`bridge`). | Repetición rápida, red interrumpida y todos los estados de resultado. |
 | Trampas | 10 | Reflujo con etiquetas largas (`css-ui`). | Ejercicio funcional de cada control y combinación de respuesta. |
 | Lectura | 3 | Flujo de tres pasos, selección de palabras, bloqueo temporal, respuesta, avance y salida con confirmación (`supertest-emulator`, 11/11, Chromium/Emulator). Captura: `evidence/accessibility-2026-11-05/reading-options-timed-gate.png`. | No se recorre el lote completo de preguntas, interrupción/recuperación ni todas las respuestas límite. |
@@ -331,9 +331,28 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - **Verificación:** `npm run test:e2e -- tests/e2e/stats-practice-journey.spec.ts` pasó **4/4**; fixture local sintético, sin llamadas Firebase ni datos remotos. Capturas inicial y tras desplazar: `stats-to-topic-test-initial-320px.png`, `stats-to-topic-test-readable-option-320px.png`, `stats-to-topic-test-initial-1440px.png` y `stats-to-topic-test-readable-option-1440px.png`.
 - **Límite:** el journey llega a la pregunta, pero no la responde ni finaliza el test. La finalización y persistencia del resultado tienen pruebas separadas. ATE-005 continúa abierto para los restantes vínculos, filtros y estados adversariales.
 
-### Falladas vacías → ayuda contextual (5 de noviembre de 2026)
+### Falladas vacías/pobladas → ayuda, filtros, persistencia y práctica (5 de noviembre de 2026)
 
-- **Recorrido:** abrir `#/falladas` como invitado sintético sin historial, reconocer el estado vacío y activar el enlace accesible “Ayuda sobre preguntas falladas y repaso”. La navegación llega a `#/ayuda?tema=repaso` y enfoca/desplaza la explicación correspondiente.
-- **Verificación:** `npm run test:e2e -- tests/e2e/failures-empty-state-journey.spec.ts` pasó **4/4** en Chromium y WebKit, a 320 y 1440 px. Fixture de almacenamiento local vacío; sin Firebase ni Gemini.
-- **Evidencias visuales:** `evidence/accessibility-2026-11-05/failures-empty-{320px,1440px}.png` y `failures-help-{320px,1440px}.png`; capturas de viewport revisadas visualmente.
-- **Límite:** el recorrido acredita el vacío y el destino de ayuda. Los filtros con contenido, error de carga y acción de reintento siguen pendientes; ATE-005 permanece EN CORRECCIÓN.
+- **Recorrido vacío:** perfil invitado sintético sin historial abre `#/falladas`, reconoce el mensaje vacío y activa el enlace de ayuda; llega a `#/ayuda?tema=repaso`.
+- **Recorrido poblado:** fixture local con una pregunta fallada; búsqueda/no coincidencia, filtros T1.02/pendiente/racha 0, marca «Repasada en el temario», reload y verificación de persistencia, filtro repasada y comienzo de práctica de esa misma pregunta.
+- **Defecto UX-012 encontrado y corregido:** el anuncio decía «1 preguntas»; ahora muestra «1 pregunta» para un único resultado. No cambian filtros ni reglas de progreso.
+- **Verificación:** `npm run test:e2e -- tests/e2e/failures-empty-state-journey.spec.ts` pasó **8/8** en Chromium/WebKit, viewports 320/1440; la secuencia poblada pasó 4/4 y repetición Chromium para evidencias 2/2. `tests/failures-page.test.js` pasó **3/3**, incluyendo carga fallida y recuperación después de pulsar Reintentar. El caso poblado no presenta overflow horizontal a 320 px y la etiqueta de repaso ofrece un objetivo de al menos 24×24 CSS px. Sin Firebase/Gemini. La semilla local solo ocurre si falta `tai.v1:guest`, para no borrar el estado bajo prueba en reload.
+- **Evidencias visuales revisadas:** `evidence/accessibility-2026-11-05/failures-{empty,help}-{320px,1440px}.png`, `failures-populated-{320px,1440px}.png`, `failures-reviewed-restored-{320px,1440px}.png`.
+- **Límite:** la recuperación se verifica a nivel de componente; no se afirma una caída de red E2E. Historial extenso y persistencia remota/multiusuario siguen pendientes; ATE-005 continúa EN CORRECCIÓN.
+
+### Actualización ATE-005/UX-009 — error de carga y reflow de Falladas (5 de noviembre de 2026)
+
+- **Ciclo de recuperación:** `tests/failures-page.test.js` hace que `loadQuestions()` rechace una vez y devuelva una pregunta en el segundo intento. Verifica el mensaje de error semántico, el control «Reintentar», la nueva llamada y la pregunta recuperada: **2/2**.
+- **Responsive y objetivo:** el journey E2E poblado se ejecuta en Chromium/WebKit a 320 y 1440 CSS px; comprueba `documentElement.scrollWidth ≤ viewport width` a 320 y mide que el label clicable de «Repasada en el temario» supera 24×24 CSS px.
+- **Evidencia:** capturas poblada y persistida revisadas: `evidence/accessibility-2026-11-05/failures-populated-{320px,1440px}.png` y `failures-reviewed-restored-{320px,1440px}.png`.
+- **Límite:** es una verificación de estos controles/estados, no una inspección WCAG exhaustiva. VoiceOver/NVDA, zoom nativo 200%/400%, contraste integral, pantallas restantes y sincronización remota siguen fuera de la evidencia local; UX-009 queda abierto y ATE-005 permanece EN CORRECCIÓN.
+
+## Estado operativo vigente — 5 de noviembre de 2026
+
+- UX-007 continúa cerrado según sus regresiones previas en Chromium/WebKit; este corte no lo reabre.
+- UX-012 quedó **CORREGIDO Y VERIFICADO**; el diff de producto solo afecta al singular/plural del contador de Falladas. El test de página verifica también el camino de error y recuperación.
+- ATE-005 avanza con controles poblados de Falladas, persistencia tras reload, acción de práctica, recuperación de error y mediciones responsive. Esto amplía, pero no completa, la cobertura total de rutas/controladores.
+- Verificaciones vigentes de este corte: Playwright Falladas **8/8**, Vitest componente Falladas **2/2**, `npm run check` **960 aprobadas/27 omitidas**. Capturas se conservan en `evidence/accessibility-2026-11-05/`.
+- UX-009 sigue abierto: se verificó teclado y algunos estados ARIA con browser automatizado, así como reflow y un objetivo táctil de Falladas; siguen sin realizarse lector de pantalla real, zoom nativo 200%/400%, contraste exhaustivo y revisión WCAG completa.
+- ATE-006 sigue sin ejecución remota observable; la rama aún no ha llegado al default branch y no se creó una PR en este corte. QUICK/INTENSIVE/EXTREME permanecen disponibles localmente; EXTREME no se ejecuta en cada PR.
+- Regresión global después de la ampliación: `npm run test:e2e` terminó en **270 pasadas/28 omitidas/0 fallidas** en Chromium/WebKit (298 planificadas, 9,8 min). La prueba autenticada de Emulator se ejecutó aparte y pasó **12/12**; las dos EXTREME se ejecutaron aparte y pasaron **2/2** con 1.000 acciones por motor. `npm run check` pasó con **960 aprobadas/27 omitidas** (189 archivos aprobados/1 omitido); persiste el aviso conocido `window.scrollTo` de jsdom en Cards.

@@ -71,7 +71,7 @@ export function FailuresPage() {
     <h1>Falladas <HelpIconLink topic="repaso" label="Ayuda sobre preguntas falladas y repaso" /></h1>
     {trainingTopicIds && <p className="note">Entrenamiento de hoy: solo fallos de temas que has marcado como vistos.</p>}
     <p className="sub">Cada pregunta permanece hasta acertarla tres veces seguidas. Un fallo reinicia el contador; dejarla en blanco no cuenta. Marcar el temario no la quita de la lista y programa una comprobación de recuerdo dos días después.</p>
-    <p className="sub" aria-live="polite">{selected.length === scopedQuestions.length ? `${scopedQuestions.length} preguntas` : `${selected.length} de ${scopedQuestions.length} preguntas`}</p>
+    <p className="sub" aria-live="polite">{selected.length === scopedQuestions.length ? `${scopedQuestions.length} ${scopedQuestions.length === 1 ? 'pregunta' : 'preguntas'}` : `${selected.length} de ${scopedQuestions.length} preguntas`}</p>
     <div className="card">
       <label className="sr" htmlFor="failure-query">Buscar en las preguntas falladas</label>
       <input id="failure-query" type="search" placeholder="Buscar: palabra, artículo, comando…" autoComplete="off" enterKeyHint="search" value={filter.query} onChange={event => setFilter(current => ({ ...current, query: event.target.value }))} />
