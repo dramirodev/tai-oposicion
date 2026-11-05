@@ -267,7 +267,7 @@ function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsSer
     </fieldset>
     <fieldset className="training-activities" aria-describedby="training-calendar-events-help"><legend>Eventos y excepciones</legend>
       <p id="training-calendar-events-help" className="sm">Afectan solo a las fechas indicadas. Una ausencia fuerza 0 minutos; una disponibilidad sustituye el tiempo diario de estudio. El horario 08:00–15:00 incluye pausas: indica aparte los minutos de estudio enfocado. Clases e hitos son informativos. Si varias ventanas se solapan, prevalece la guardada más recientemente; una ausencia siempre prevalece. Los eventos pasados se conservan como historial. La procedencia es una nota personal, no una verificación oficial.</p>
-      <div className="grid min-w-0 grid-cols-2 items-end gap-3 max-[520px]:grid-cols-1">
+      <div className="training-event-fields grid min-w-0 grid-cols-2 items-end gap-3 max-[520px]:grid-cols-1">
         <label className="grid min-w-0 gap-1">Tipo<select aria-label="Tipo de evento" value={eventKind} onChange={event => setEventKind(event.target.value as TrainingCalendarEventKind)}>
           <option value="unavailable">Ausencia o vacaciones</option><option value="study-window">Disponibilidad especial</option><option value="class">Clase</option><option value="milestone">Hito o simulacro</option>
         </select></label>

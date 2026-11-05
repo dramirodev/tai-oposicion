@@ -26,6 +26,18 @@ for (const width of [320, 1440]) {
 
     const schedule = page.locator('#training-schedule');
     await expect(schedule).toBeVisible();
+    for (const name of ['Nombre del evento', 'Procedencia del evento']) {
+      const input = schedule.getByLabel(name);
+      const box = await input.boundingBox();
+      expect(box, `${name}: el campo debe tener dimensiones visibles`).not.toBeNull();
+      expect(box!.width, `${name}: anchura del campo`).toBeGreaterThanOrEqual(100);
+      expect(box!.height, `${name}: altura del campo`).toBeGreaterThanOrEqual(40);
+    }
+    const activityLabel = schedule.getByLabel('Estudio de tema nuevo').locator('xpath=..');
+    const activityTarget = await activityLabel.boundingBox();
+    expect(activityTarget, 'El checkbox conserva su etiqueta clicable').not.toBeNull();
+    expect(activityTarget!.width).toBeGreaterThanOrEqual(24);
+    expect(activityTarget!.height).toBeGreaterThanOrEqual(24);
     await schedule.getByLabel('Lunes: minutos de entrenamiento').fill('120');
     await schedule.getByLabel('Martes: enfoque de estudio').selectOption('consolidation');
     await schedule.getByLabel('Duración del bloque de concentración').selectOption('45');
