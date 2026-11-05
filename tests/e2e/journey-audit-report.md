@@ -276,6 +276,7 @@ La cifra cuenta roles interactivos con nombre accesible en el estado inicial (28
 | Ayuda | 19 | Índice, anclas, destinos y disponibilidad offline (`help-icons`, `bridge`). | No se recorre cada artículo/enlace en todos los perfiles. |
 | Ajustes | 59 | Horario semanal, evento/hito y preferencias usadas por Planificación (`css-ui`, `supertest-emulator`). | Todos los valores posibles y guardado con red perdida. |
 | Accesos | 3 | Owner aprueba/revoca; perfiles normal/restricted/pending/anonymous verifican guardas (`supertest-emulator`). | No se probaron sesiones paralelas/cambio rápido de usuario por control. |
+| Simulacros · configuración | 13 | En viewport 320 px cambia 40/80 preguntas y límites de duración, alcance, origen y Parte 2; comprueba `aria-pressed`/checkbox, protección frente a cero orígenes, persistencia tras reload y ausencia de overflow (`bridge.spec.ts`, Chromium/WebKit 2/2). Capturas antes/después en `evidence/accessibility-2026-11-05/simulation-config-{,restored-}320px-{chromium,webkit}.png`. | Configuración válida cubierta; no se inicia el simulacro en este recorrido ni se recorren todos los filtros de exámenes/historial o fallos de carga. |
 
 La matriz localiza la evidencia existente y las brechas; **ATE-005 sigue abierto** hasta asociar control→acción→resultado, abrir los estados dinámicos relevantes y completar los journeys longitudinales/adversariales restantes.
 
@@ -354,6 +355,14 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - **Alcance:** son anchos de viewport CSS; 640 px no demuestra zoom nativo al 200%. Tampoco se infiere ausencia universal de clipping vertical, solapamiento, contraste insuficiente o barreras con lector de pantalla.
 - ATE-005 gana comprobación de reflow reproducible para rutas iniciales; la asociación de todos los controles dinámicos con resultados observables sigue incompleta. UX-009 permanece abierto.
 
+### Configuración del simulacro: transiciones y persistencia (5 de noviembre de 2026)
+
+- El fixture invitado local abre Simulacros → Completo a 320 CSS px. La prueba cambia el número de preguntas y observa la regla de duración mínima en las transiciones relevantes; cambia alcance, origen y Parte 2; intenta desactivar la última fuente y comprueba que TAI conserva una selección válida.
+- Tras recargar, se verifican los estados accesibles y valores persistidos de todos los controles, ausencia de overflow horizontal y errores de consola vacíos. No se comienza una prueba ni se escriben datos remotos.
+- **Verificación:** `npm run test:e2e -- tests/e2e/bridge.spec.ts --grep 'configuración del simulacro'` pasó **2/2** Chromium/WebKit. Capturas antes y después de recargar revisadas visualmente en `evidence/accessibility-2026-11-05/simulation-config-*-320px-*.png`.
+- En una primera ejecución, el oráculo esperaba que 120 minutos se redujeran automáticamente a 90 al seleccionar 80 preguntas. El código conserva 120, opción válida; se corrigió el escenario para probar la regla real (60→80 sube a 90), sin cambio de producto.
+- ATE-005 suma un conjunto de estados dinámicos cubiertos; sigue abierto para los filtros de examen, los formularios/modales restantes y las variantes adversariales que aún no tienen oráculo.
+
 ## Estado operativo vigente — 5 de noviembre de 2026
 
 - UX-007 continúa cerrado según sus regresiones previas en Chromium/WebKit; este corte no lo reabre.
@@ -361,6 +370,9 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - ATE-005 avanza con controles poblados de Falladas, persistencia tras reload, acción de práctica, recuperación de error y mediciones responsive. Esto amplía, pero no completa, la cobertura total de rutas/controladores.
 - Verificaciones vigentes de este corte: Playwright Falladas **8/8**, Vitest componente Falladas **2/2**, `npm run check` **960 aprobadas/27 omitidas**. Capturas se conservan en `evidence/accessibility-2026-11-05/`.
 - Reflow de 18 destinos: `npm run test:e2e -- tests/e2e/routes.spec.ts` **86/86** Chromium/WebKit; cada ruta/tema mide overflow a 320 y 640 CSS px.
+- Configuración Simulacros: `bridge.spec.ts --grep 'configuración del simulacro'` **2/2** Chromium/WebKit, con selección accesible y persistencia tras reload a 320 px.
+- Verificación posterior de la suite que contiene el nuevo recorrido: `npm run test:e2e -- tests/e2e/bridge.spec.ts` pasó **48/48** Chromium/WebKit. `npm run check` pasó arquitectura, ESLint, TypeScript y Vitest: **960 aprobados/27 omitidos** (189 archivos aprobados/1 omitido); se conserva el aviso conocido de `window.scrollTo` en jsdom.
+- Regresión global posterior con la nueva prueba incluida: `npm run test:e2e` pasó **272/300**, omitió 28 (10 de Emulator + 2 EXTREME por motor) y no tuvo fallos en Chromium/WebKit; duración 9,9 min. Los recorridos de Emulator (12/12) y EXTREME (2/2, 1.000 acciones por motor) se ejecutaron por separado y permanecen como evidencia vigente del mismo corte.
 - UX-009 sigue abierto: se verificó teclado y algunos estados ARIA con browser automatizado, así como reflow y un objetivo táctil de Falladas; siguen sin realizarse lector de pantalla real, zoom nativo 200%/400%, contraste exhaustivo y revisión WCAG completa.
 - ATE-006 sigue sin ejecución remota observable; la rama aún no ha llegado al default branch y no se creó una PR en este corte. QUICK/INTENSIVE/EXTREME permanecen disponibles localmente; EXTREME no se ejecuta en cada PR.
 - Regresión global después de la ampliación: `npm run test:e2e` terminó en **270 pasadas/28 omitidas/0 fallidas** en Chromium/WebKit (298 planificadas, 9,8 min). La prueba autenticada de Emulator se ejecutó aparte y pasó **12/12**; las dos EXTREME se ejecutaron aparte y pasaron **2/2** con 1.000 acciones por motor. `npm run check` pasó con **960 aprobadas/27 omitidas** (189 archivos aprobados/1 omitido); persiste el aviso conocido `window.scrollTo` de jsdom en Cards.
