@@ -1,0 +1,59 @@
+
+> tai-pwa@1.1.13 check
+> npm run check:architecture && npm run lint && npm run lint:ignore-growth && npm run typecheck && npm test
+
+
+> tai-pwa@1.1.13 check:architecture
+> node scripts/check-architecture.mjs
+
+Arquitectura: sin deuda nueva; 2 excepciones pendientes.
+
+> tai-pwa@1.1.13 lint
+> eslint src
+
+
+> tai-pwa@1.1.13 lint:ignore-growth
+> node scripts/lint-ignore-growth.mjs
+
+Sin nuevas exclusiones de ESLint respecto a HEAD^.
+
+> tai-pwa@1.1.13 typecheck
+> tsc -p .
+
+
+> tai-pwa@1.1.13 test
+> vitest run
+
+
+ RUN  v5.0.5 /Users/dramiro/Documents/Codex/tai-audit-implementation
+
+Error: Not implemented: window.scrollTo
+    at module.exports (/Users/dramiro/Documents/Codex/tai-audit-implementation/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at /Users/dramiro/Documents/Codex/tai-audit-implementation/node_modules/jsdom/lib/jsdom/browser/Window.js:960:7
+    at grade (/Users/dramiro/Documents/Codex/tai-audit-implementation/src/features/cards/CardsPage.tsx:156:57)
+    at onClick (/Users/dramiro/Documents/Codex/tai-audit-implementation/src/features/cards/CardsPage.tsx:124:219)
+    at executeDispatch (/Users/dramiro/Documents/Codex/tai-audit-implementation/node_modules/react-dom/cjs/react-dom-client.development.js:20804:9)
+    at runWithFiberInDEV (/Users/dramiro/Documents/Codex/tai-audit-implementation/node_modules/react-dom/cjs/react-dom-client.development.js:1048:13)
+    at processDispatchQueue (/Users/dramiro/Documents/Codex/tai-audit-implementation/node_modules/react-dom/cjs/react-dom-client.development.js:20854:19)
+    at /Users/dramiro/Documents/Codex/tai-audit-implementation/node_modules/react-dom/cjs/react-dom-client.development.js:21423:9
+    at batchedUpdates$1 (/Users/dramiro/Documents/Codex/tai-audit-implementation/node_modules/react-dom/cjs/react-dom-client.development.js:3437:40)
+    at dispatchEventForPluginEventSystem (/Users/dramiro/Documents/Codex/tai-audit-implementation/node_modules/react-dom/cjs/react-dom-client.development.js:21008:7) undefined
+
+ Test Files  188 passed | 3 skipped (191)
+      Tests  995 passed | 29 skipped (1024)
+   Start at  23:04:16
+   Duration  13.20s (environment 49%, tests 29%, setup 15%, import 4%, transform 2%, worker 1%)
+
+Environment  jsdom was created 191 times · 48.70s total, 49% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+
+> tai-pwa@1.1.13 test:editorial
+> python3 -m unittest discover -s tools/question-editorial -p "test_*.py"
+
+.........
+----------------------------------------------------------------------
+Ran 9 tests in 0.064s
+
+OK

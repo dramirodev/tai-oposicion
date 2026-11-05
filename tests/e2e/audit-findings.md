@@ -20,3 +20,9 @@ Los estados locales y de producción se registran por separado. Una corrección 
 Se verificaron 13 correcciones factuales locales (10 P0, 2 P1 y 1 P2) y cinco exclusiones de evaluación por material ausente. Restan 3.501 incidencias editoriales sin corrección, de las que 427 son P0. La publicación de las 13 correcciones en Firestore sigue pendiente de autorización específica.
 
 Verificaciones del candidato 1.1.13: arquitectura, ESLint, crecimiento de ignores, tipos y 989 unitarias aprobadas con 28 omitidas; ocho comprobaciones Python; Auth/Firestore 1/1; reglas 27/27; 10 recorridos de aceptación en dos motores. El original de main 6b8ce24 pasó 949 pruebas y 27 omitidas en una extracción aislada posterior para obtener referencia sin cambios ajenos. Los logs completos están en evidence/astra-implementation-2026-11-05/. La auditoría de dependencias detecta siete avisos moderados en herramientas de lint (minimatch y sus dependientes); no se actualizaron dependencias ni se aplicó audit fix forzado.
+
+|ID nuevo|Hallazgo|Corrección|Estado|Prueba|
+|---|---|---|---|---|
+|TEC-09|Una recarga inmediata tras resetAll podía recuperar el espejo IndexedDB anterior.|Generación local por cuenta en snapshot y espejo; recuperación en curso invalida si cambia el estado. El aislamiento de fixtures se refuerza sin quitar comparaciones.|CORREGIDO Y VERIFICADO|Regresión de copia anterior y recuperación posterior de datos nuevos; 77 pruebas focalizadas, diez repeticiones de 61 pruebas cada una.|
+
+Tras resolver TEC-09, la suite general suma 995 aprobadas y 29 omitidas, y el pipeline nueve pruebas. La generación desde planes construye enunciado y alternativas según uno de los seis patrones y conserva la respuesta al reordenar, con prueba de regresión. CI se repite contra este commit antes de integrar.

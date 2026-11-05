@@ -70,6 +70,20 @@ class PipelineTests(unittest.TestCase):
             spec = dict(self.spec, **{flag: True})
             self.assertEqual(self.run_candidate(spec)['editorial']['state'], 'rejected')
 
+    def test_generates_from_a_concept_and_keeps_key_after_placement(self):
+        plan = {key: value for key, value in self.spec.items()
+                if key not in ('prompt', 'options', 'correct', 'solution', 'rationales', 'pattern')}
+        plan.update(answer='TCP', answerRationale='Establece conexión.',
+                    definition='protocolo de transporte orientado a conexión', correctPosition=2,
+                    distractors=[dict(text=text, reason=reason) for text, reason in
+                                 zip(self.spec['options'][1:], self.spec['rationales'][1:])])
+        result = pipeline.generate_from_concept(plan, self.root)
+        self.assertEqual(result['question']['a'][result['question']['c']], 'TCP')
+        self.assertEqual(result['editorial']['pattern']['id'], 'FAM')
+        self.assertIn(plan['definition'], result['question']['q'])
+        self.assertEqual(result['editorial']['state'], 'pending_review')
+        self.assertEqual(len(result['editorial']['stages']), 15)
+
     def test_cli_rejects_empty_bank_and_publication_directory(self):
         spec = self.root / 'spec.json'
         spec.write_text(json.dumps(self.spec))

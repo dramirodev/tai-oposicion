@@ -1,0 +1,34 @@
+{
+  "topic": "T4.07",
+  "section": "Modelo OSI",
+  "concept": "Número de capas del modelo OSI",
+  "explanation": "El modelo OSI se representa como una pila de siete capas o niveles jerárquicos.",
+  "reference": {
+    "path": "T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Temario.pdf",
+    "sha256": "8c96987feee2c1ddade9129a46a22faf3166f37a58524261b7ec3818e5f1fb58",
+    "page": 4,
+    "quote": "-   Presenta los sistemas de información como una pila de siete capas o niveles jerárquicos."
+  },
+  "cognitiveDemand": "distinguir",
+  "difficulty": 1,
+  "author": "candidate-pipeline-demo",
+  "id": "DRAFT-T4.07-CONCEPT-20261105",
+  "definition": "modelo de referencia con siete capas jerárquicas",
+  "answer": "OSI",
+  "answerRationale": "El pasaje describe el modelo OSI como siete niveles.",
+  "correctPosition": 2,
+  "distractors": [
+    {
+      "text": "TCP/IP de cuatro niveles",
+      "reason": "La agrupación de cuatro niveles difiere de la pila OSI."
+    },
+    {
+      "text": "Arquitectura cliente-servidor",
+      "reason": "Describe funciones de participantes y no siete niveles de protocolo."
+    },
+    {
+      "text": "Red punto a punto",
+      "reason": "Describe una relación de comunicación y no la pila de referencia."
+    }
+  ]
+}

@@ -20,3 +20,5 @@ La aceptación se refiere al expediente candidato. La integración en el banco r
 Las evaluaciones semánticas que no se pueden demostrar con estas comprobaciones permanecen en revisión. Los patrones ayudan a diseñar el problema, pero no prueban por sí solos la validez de una clave.
 
 El CLI exige un banco completo con `meta.json`, consulta también sus alias históricos y mantiene la salida fuera de `public` y del directorio del banco. Un rechazo independiente puede justificar una solución distinta. Para aprobar sí se exigen la solución coincidente y las tres verificaciones afirmativas.
+
+Para generar desde un concepto se usa `example-plan.json` en lugar de la propuesta completa. Se aporta objetivo, fuente, respuesta razonada y tres confusiones justificadas. La demanda cognitiva selecciona uno de los seis patrones observados; el programa construye el enunciado y coloca las cuatro alternativas preservando su clave y justificaciones. El estado permanece pendiente hasta revisión independiente. Se permiten planes de cantidades, alcance, conceptos próximos, código, cálculo y actuaciones según las premisas obligatorias de cada plantilla.

@@ -130,6 +130,47 @@ def generate_candidate(spec, curriculum_root, existing=(), review=None):
     return dict(question=question, editorial=manifest)
 
 
+def generate_from_concept(plan, curriculum_root, existing=(), review=None):
+    """Generate the stem and ordered options from an editorial concept plan.
+
+    Distractors describe specific misconceptions supplied by an editor or model.
+    Templates are tied to the six observed Astra patterns. Semantic approval
+    remains independent of this deterministic construction.
+    """
+    cues = {
+        'recordar': 'CIF', 'distinguir': 'FAM', 'comparar': 'CLA',
+        'interpretar código': 'INS', 'calcular': 'CAL', 'aplicar': 'ACT',
+    }
+    pattern = plan.get('pattern') or cues.get(plan.get('cognitiveDemand'))
+    templates = {
+        'CIF': 'Sobre {concept}, ¿qué combinación satisface {target}?',
+        'CLA': 'Con las condiciones {premises}, ¿qué afirmación sobre {concept} es correcta?',
+        'FAM': '¿Qué concepto corresponde a la descripción «{definition}»?',
+        'INS': 'Dado el fragmento {code}, ¿qué instrucción permite {target}?',
+        'CAL': 'Con los datos {premises}, ¿cuál es {target}?',
+        'ACT': 'En el escenario {scenario}, ¿qué actuación cumple {target}?',
+    }
+    if pattern not in templates:
+        raise ValueError('No demonstrated pattern matches this cognitive demand')
+    distractors = plan.get('distractors')
+    if not isinstance(distractors, list) or len(distractors) != 3:
+        raise ValueError('The plan requires three distinct misconceptions')
+    try:
+        prompt = templates[pattern].format_map(plan)
+        options = [plan['answer'], *[d['text'] for d in distractors]]
+        rationales = [plan['answerRationale'], *[d['reason'] for d in distractors]]
+    except (KeyError, TypeError) as error:
+        raise ValueError('The concept plan omits a required premise or rationale') from error
+    correct = plan.get('correctPosition', 0)
+    if type(correct) is not int or correct not in range(4):
+        raise ValueError('Invalid answer placement')
+    options.insert(correct, options.pop(0))
+    rationales.insert(correct, rationales.pop(0))
+    spec = dict(plan, pattern=pattern, prompt=prompt, options=options, correct=correct,
+                solution=plan['answer'], rationales=rationales)
+    return generate_candidate(spec, curriculum_root, existing, review)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('spec', type=Path)
@@ -156,7 +197,8 @@ def main():
     spec = json.loads(args.spec.read_text())
     if spec.get('id') in json.loads((args.bank / 'meta.json').read_text()):
         parser.error('ID or historical alias already belongs to the bank')
-    result = generate_candidate(spec, args.curriculum_root, bank,
+    generate = generate_from_concept if 'options' not in spec else generate_candidate
+    result = generate(spec, args.curriculum_root, bank,
                                 json.loads(args.review.read_text()) if args.review else None)
     # Exclusive creation prevents accidentally replacing an approved record.
     with args.output.open('x') as target:
