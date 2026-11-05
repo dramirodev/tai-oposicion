@@ -264,7 +264,7 @@ La cifra cuenta roles interactivos con nombre accesible en el estado inicial (28
 | Temario | 44 | Abrir tema/material, marcar sección, filtro y autoevaluación (`routes`, `react-pages`, `supertest-emulator`). | No se recorren todos los temas, formatos y controles de contenido largo. |
 | Planificación | 17 | Iniciar sesión, agendas semanal/mensual, evento/hito, reprogramación, confirmación y recarga (`css-ui`, `routes`, `bridge`, `supertest-emulator`). | Combinaciones de preferencias/fechas y fallos de guardado por control. |
 | Errores | 4 | Revisar y reabrir avisos locales (`errors-page`). | Cada categoría y estado adverso de sincronización. |
-| Falladas | 1 | Navegación móvil y sección activa (`mobile-layout`, `routes`). | Filtros, selección y vacíos sin cobertura individual contabilizada. |
+| Falladas | 1 | Navegación móvil/sección activa y estado vacío → ayuda contextual `repaso` verificados en Chromium/WebKit, 320/1440 px (`mobile-layout`, `routes`, `failures-empty-state-journey`, 4/4). Capturas: `failures-{empty,help}-{320px,1440px}.png`. | Filtros con resultados y errores de carga/reintento no cubiertos sistemáticamente. |
 | Relámpago | 5 | Responder y avanzar (`bridge`). | Repetición rápida, red interrumpida y todos los estados de resultado. |
 | Trampas | 10 | Reflujo con etiquetas largas (`css-ui`). | Ejercicio funcional de cada control y combinación de respuesta. |
 | Lectura | 3 | Flujo de tres pasos, selección de palabras, bloqueo temporal, respuesta, avance y salida con confirmación (`supertest-emulator`, 11/11, Chromium/Emulator). Captura: `evidence/accessibility-2026-11-05/reading-options-timed-gate.png`. | No se recorre el lote completo de preguntas, interrupción/recuperación ni todas las respuestas límite. |
@@ -330,3 +330,10 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - **Geometría/recuperación visual:** en 320 y 1440 px, Chromium y WebKit, la última opción queda por debajo de la zona visible inicial; la prueba la desplaza y comprueba que su borde inferior queda por encima de la barra fija de navegación. No se ha contado el contenido recortado por el viewport como pérdida ni se ha ocultado la barra.
 - **Verificación:** `npm run test:e2e -- tests/e2e/stats-practice-journey.spec.ts` pasó **4/4**; fixture local sintético, sin llamadas Firebase ni datos remotos. Capturas inicial y tras desplazar: `stats-to-topic-test-initial-320px.png`, `stats-to-topic-test-readable-option-320px.png`, `stats-to-topic-test-initial-1440px.png` y `stats-to-topic-test-readable-option-1440px.png`.
 - **Límite:** el journey llega a la pregunta, pero no la responde ni finaliza el test. La finalización y persistencia del resultado tienen pruebas separadas. ATE-005 continúa abierto para los restantes vínculos, filtros y estados adversariales.
+
+### Falladas vacías → ayuda contextual (5 de noviembre de 2026)
+
+- **Recorrido:** abrir `#/falladas` como invitado sintético sin historial, reconocer el estado vacío y activar el enlace accesible “Ayuda sobre preguntas falladas y repaso”. La navegación llega a `#/ayuda?tema=repaso` y enfoca/desplaza la explicación correspondiente.
+- **Verificación:** `npm run test:e2e -- tests/e2e/failures-empty-state-journey.spec.ts` pasó **4/4** en Chromium y WebKit, a 320 y 1440 px. Fixture de almacenamiento local vacío; sin Firebase ni Gemini.
+- **Evidencias visuales:** `evidence/accessibility-2026-11-05/failures-empty-{320px,1440px}.png` y `failures-help-{320px,1440px}.png`; capturas de viewport revisadas visualmente.
+- **Límite:** el recorrido acredita el vacío y el destino de ayuda. Los filtros con contenido, error de carga y acción de reintento siguen pendientes; ATE-005 permanece EN CORRECCIÓN.

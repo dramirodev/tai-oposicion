@@ -76,3 +76,12 @@ Estados: **Verificado**, **Parcial**, **Pendiente**, **Bloqueado**. “Verificad
 - ATE-005 conserva estado **parcial/en corrección**: inventario de árbol inicial y roles verificados no significa que cada control o estado dinámico se haya ejercitado con aserciones de dominio. Persistencia/permisos del journey owner sí se comprobaron en Emulator.
 - Verificación del corte: `npm run check` (959 pasaron/27 omitidos), build correcto, E2E global (260 pasaron/18 omitidos/0 fallos), Supertest Emulator (8/8), EXTREME dedicado (2/2 Chromium/WebKit, 1.000 acciones cada uno), YAML válido, Prettier y `git diff --check` correctos.
 - Mantener la auditoría abierta para tecnología asistiva/zoom/contraste, estados dinámicos y ejecución CI real. No usar esta suite local como evidencia de una ejecución remota.
+
+## Continuación ATE-005 — estado vacío de Falladas (5 de noviembre de 2026)
+
+- Se añadió `tests/e2e/failures-empty-state-journey.spec.ts`: perfil invitado sintético sin historial → estado vacío de `#/falladas` → enlace de ayuda contextual → sección `repaso`.
+- Verificación Playwright **4/4** en Chromium/WebKit y viewports 320/1440 px. Capturas de viewport revisadas en `tests/e2e/evidence/accessibility-2026-11-05/failures-{empty,help}-{320px,1440px}.png`.
+- Verificación general posterior: `npm run check` pasó (arquitectura, ESLint, TypeScript y Vitest: **959 aprobados / 27 omitidos**, 189 archivos aprobados / 1 omitido). El log muestra el aviso conocido de jsdom `window.scrollTo` desde un test de tarjetas, pero la ejecución terminó correctamente.
+- El primer intento de la segunda corrida recibió `EPERM` al enlazar el servidor Vite local en `127.0.0.1:4187`; la repetición autorizada pasó. Esto es un límite del sandbox, no un fallo de la app.
+- ATE-005 sigue **EN CORRECCIÓN**: quedan pendientes filtros con resultados, error/reintento de carga, otros estados dinámicos y recorridos adversariales; no se afirma cobertura completa. No se utilizó Firebase ni Gemini.
+- **Siguiente paso:** ejercitar Falladas con preguntas sintéticas existentes (búsqueda, tema, repaso, racha y acción habilitada/deshabilitada), comprobar efecto visible y persistencia de la marca solo si el fixture de prueba permite aislarla con seguridad.
