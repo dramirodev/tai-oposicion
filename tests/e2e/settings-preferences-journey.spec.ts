@@ -42,6 +42,25 @@ for (const width of [320, 1440]) {
       path: `tests/e2e/evidence/accessibility-2026-11-05/settings-preferences-${width}px-${browserName}.png`,
     });
 
+    const lightTheme = theme.getByRole('button', { name: 'Claro' });
+    await lightTheme.focus();
+    await page.keyboard.press('Enter');
+    await expect(lightTheme).toHaveAttribute('aria-pressed', 'true');
+    const darkTheme = theme.getByRole('button', { name: 'Oscuro' });
+    await darkTheme.focus();
+    await page.keyboard.press('Space');
+    await expect(darkTheme).toHaveAttribute('aria-pressed', 'true');
+    const largeText = textSize.getByRole('button', { name: 'A++', exact: true });
+    await largeText.focus();
+    await page.keyboard.press('Enter');
+    await expect(largeText).toHaveAttribute('aria-pressed', 'true');
+    const largestText = textSize.getByRole('button', { name: 'A+++' });
+    await largestText.focus();
+    await page.keyboard.press('Space');
+    await expect(largestText).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('html')).toHaveAttribute('data-color-scheme', 'dark');
+    await expect(page.locator('html')).toHaveAttribute('data-text-size', '3');
+
     await page.reload();
     await expect(page.locator('html')).toHaveAttribute('data-color-scheme', 'dark');
     await expect(page.locator('html')).toHaveAttribute('data-text-size', '3');
@@ -53,5 +72,17 @@ for (const width of [320, 1440]) {
       page.getByRole('group', { name: 'Tamaño de letra' }).getByRole('button', { name: 'A+++' }),
     ).toHaveAttribute('aria-pressed', 'true');
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+
+    const resetButton = page.getByRole('button', { name: 'Borrar progreso de este dispositivo' });
+    await resetButton.click();
+    const confirmation = page.getByRole('dialog');
+    await expect(confirmation).toContainText('¿Borrar TODO el progreso de este dispositivo?');
+    await page.keyboard.press('Escape');
+    await expect(confirmation).toBeHidden();
+    await expect(resetButton).toBeFocused();
+    expect(await page.evaluate(() => JSON.parse(localStorage.getItem('tai.v1:guest') || 'null').cfg.ui)).toMatchObject({
+      theme: 'dark',
+      size: 3,
+    });
   });
 }

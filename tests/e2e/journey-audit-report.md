@@ -335,10 +335,17 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 
 ### Ajustes → preferencias de apariencia → recarga (5 de noviembre de 2026)
 
-- **Recorrido:** desde Ajustes se elige Oscuro y A+++; se comprueban el estado `aria-pressed`, los atributos efectivos del documento, los valores guardados en `cfg.ui` y su restauración tras reload.
+- **Recorrido:** desde Ajustes se elige Oscuro y A+++ con clic; también se cambian los controles segmentados usando Enter y Espacio. Se comprueban `aria-pressed`, los atributos efectivos del documento, los valores guardados en `cfg.ui` y su restauración tras reload.
 - **Reflow:** en Chromium/WebKit y viewports 320/1440 CSS px, el documento no supera el ancho del viewport con el texto máximo. En 320 px el contenido ocupa más altura y se recorre mediante scroll vertical.
-- **Verificación:** `npm run test:e2e -- tests/e2e/settings-preferences-journey.spec.ts` pasó **4/4**. Las cuatro capturas `settings-preferences-{320,1440}px-{chromium,webkit}.png` quedan en `evidence/accessibility-2026-11-05/`.
+- **Verificación:** `npm run test:e2e -- tests/e2e/settings-preferences-journey.spec.ts` pasó **4/4** en el rerun con teclado. Las cuatro capturas `settings-preferences-{320,1440}px-{chromium,webkit}.png` quedan en `evidence/accessibility-2026-11-05/`.
 - **Límite:** verifica solo preferencias locales del usuario sintético. No sustituye zoom nativo 200%/400%, lector de pantalla ni revisión exhaustiva de contraste; UX-009 permanece abierto.
+
+### UX-014 — diálogo de borrado y recuperación del foco (5 de noviembre de 2026)
+
+- **Problema reproducido:** con clic en «Borrar progreso de este dispositivo», cancelar con Escape cerraba el diálogo, pero WebKit no volvía a enfocar el activador; Chromium sí. El test no confirma ni ejecuta el borrado.
+- **Corrección:** `ResetSection` conserva la referencia al botón invocador y la enfoca al resolverse la confirmación, incluida la cancelación. El requisito de confirmación y las reglas de borrado siguen iguales.
+- **Verificación:** `settings-preferences-journey.spec.ts` pasó **4/4** en Chromium/WebKit, 320/1440 px. Comprueba que el diálogo desaparece, el foco vuelve al botón y `cfg.ui` persiste.
+- **Límite:** verificación automatizada de un diálogo destructivo de Ajustes; los demás diálogos no se han recorrido por completo con lector de pantalla real.
 
 ### Falladas vacías/pobladas → ayuda, filtros, persistencia y práctica (5 de noviembre de 2026)
 

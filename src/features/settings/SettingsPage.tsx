@@ -431,12 +431,13 @@ function BackupSection({ settings }: { settings: SettingsServices }) {
 }
 
 function ResetSection({ settings }: { settings: SettingsServices }) {
-  const reset = async () => {
+  const reset = async (trigger: HTMLButtonElement) => {
     const account = settings.accountId();
     const approved = await ask('¿Borrar TODO el progreso de este dispositivo? (Si hay sesión iniciada, lo sincronizado en la nube se volverá a descargar.)', 'Borrar todo', true);
     if (approved && settings.accountId() === account) { settings.resetAll(); toast('Borrado'); }
+    if (trigger.isConnected) trigger.focus({ preventScroll: true });
   };
-  return <section className="card"><h2 className="h3">Zona delicada</h2><button className="btn danger" onClick={() => void reset()}>Borrar progreso de este dispositivo</button></section>;
+  return <section className="card"><h2 className="h3">Zona delicada</h2><button className="btn danger" onClick={event => void reset(event.currentTarget)}>Borrar progreso de este dispositivo</button></section>;
 }
 
 function DiagnosticsSection({ snapshot }: { snapshot: SettingsSnapshot }) {
