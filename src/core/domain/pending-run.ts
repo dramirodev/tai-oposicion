@@ -10,6 +10,7 @@ import type { SimulationScoringPolicy } from './simulation-scoring.js';
 export interface SavedRunSnapshot {
   kind: 'sim' | 'rev' | 'test';
   feedback?: boolean;
+  publicSample?: true;
   titulo?: string;
   limit?: number;
   idx: number;
@@ -36,6 +37,10 @@ export interface SavedRunSnapshot {
   retryOfAttemptId?: string;
   scoringPolicy?: SimulationScoringPolicy;
   milestoneEventId?: string;
+}
+
+export function canAccessStudyRun(full: boolean, account: string | null, run: Pick<SavedRunSnapshot, 'kind' | 'publicSample'>): boolean {
+  return full || (run.kind === 'rev' && (!account || run.publicSample === true));
 }
 
 /** The answer key and scoreability can change even when the visible text stays identical. */

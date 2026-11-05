@@ -16,10 +16,10 @@ import type { AttemptTracker } from '../ports/AttemptTracker.js';
 import type { StudyProgressGateway } from '../ports/StudyProgressGateway.js';
 import type { StudyQuestionCatalog } from '../ports/StudyQuestionCatalog.js';
 import type { PendingRun } from './runs/pending-run.js';
-import { elapsedOfficialExamSeconds, gradingRevision, matchesOfficialExam, matchesSavedQuestions, type SavedRunSnapshot } from '../domain/pending-run.js';
+import { canAccessStudyRun, elapsedOfficialExamSeconds, gradingRevision, matchesOfficialExam, matchesSavedQuestions, type SavedRunSnapshot } from '../domain/pending-run.js';
 
 type Question = QuestionRecord;
-export interface StudyEngineDependencies { progress: StudyProgressGateway; catalog: StudyQuestionCatalog }
+export interface StudyEngineDependencies { progress: StudyProgressGateway; catalog: StudyQuestionCatalog; fullAccess?(): boolean }
 let dependencies: StudyEngineDependencies | null = null;
 let stopListeningToAccount: (() => void) | undefined;
 function getDependencies(): StudyEngineDependencies {
@@ -178,6 +178,7 @@ export function finishCurrentRun(reason: 'complete' | 'interrupted' | 'timeout' 
 
 /** Crea la sesión; devuelve null si no hay preguntas puntuables. No navega: eso lo decide la interfaz. */
 export function createRun(cfg: RunCfg, sourceSessionId?: string): Run | null {
+  if (!canAccessStudyRun(getDependencies().fullAccess?.() ?? true, progress().accountId(), cfg)) return null;
   const items = filterScoringQuestions(cfg.items.map(applyEditorialScoring), cfg.feedback, question => question.np);
   if (!items.length) return null;
   const createdAt = catalog().now();
@@ -187,7 +188,7 @@ export function createRun(cfg: RunCfg, sourceSessionId?: string): Run | null {
   const run = { ...cfg, sessionKey: nextSessionKey++, items, idx: 0, ans: [], confidences: Array.from({ length: items.length }, () => null), discardedOptions: items.map(() => []), highlights: items.map(() => []), ...(cfg.feedback ? { studyStates: Array.from({ length: items.length }, () => 'unseen' as const) } : {}), t0: createdAt, secs: 0, paused: false } as Run;
   if (cfg.feedback) run.selfAssessments = Array.from({ length: items.length }, () => undefined);
   const scorable = items.map((question, position) => ({ question, position })).filter(({ question }) => question.np !== 1);
-  if (attemptTracker && scorable.length && scorable.every(({ question }) => question.i && (metadata?.[question.i] || cfg.officialExam && catalog().getTopicForQuestion(question.i)))) {
+  if (attemptTracker && scorable.length && scorable.every(({ question }) => question.i && (metadata?.[question.i] || (cfg.officialExam || question.s && question.supTexto) && catalog().getTopicForQuestion(question.i)))) {
     const scope = progress().accountId() || 'guest';
     const tracking = attemptTracker.beginSession(
       scope,
@@ -215,13 +216,25 @@ export function createRun(cfg: RunCfg, sourceSessionId?: string): Run | null {
 
 export interface PendingRunStorage {
   write(account: string | null, snapshot: SavedRunSnapshot): boolean;
-  clear(account: string | null): void;
+  clear(account: string | null, publicSample?: boolean): void;
 }
 let pendingRunStorage: PendingRunStorage | null = null;
 export function setPendingRunStorage(storage: PendingRunStorage | null): void { pendingRunStorage = storage; }
-export function clearRun(): void { pendingRunStorage?.clear(progress().accountId()); }
+export function clearRun(publicSample = getCurrentRun()?.publicSample): void {
+  pendingRunStorage?.clear(progress().accountId(), publicSample);
+}
+
+/** Preserve the account checkpoint without finalizing its attempt or adding any score. */
+export function suspendPrivateRun(): boolean {
+  const run = getCurrentRun();
+  if (!run || canAccessStudyRun(false, progress().accountId(), run)) return false;
+  setAttemptTrackingVisible(false);
+  saveRun();
+  sessionStateStore.setState({ run: null });
+  return true;
+}
 function canPersistRun(run: Run, metadata: ReturnType<StudyQuestionCatalog['getMetadataSnapshot']>): boolean {
-  return !run.supTexto && run.items.every(item => !!item.i && (!!metadata?.[item.i] || !!run.officialExam && !!catalog().getTopicForQuestion(item.i)));
+  return !run.supTexto && run.items.every(item => !!item.i && (!!metadata?.[item.i] || (run.officialExam || item.s && item.supTexto) && !!catalog().getTopicForQuestion(item.i)));
 }
 
 function savedRunSnapshot(run: Run): SavedRunSnapshot {
@@ -233,6 +246,7 @@ function savedRunSnapshot(run: Run): SavedRunSnapshot {
     confidences: run.confidences || [], discardedOptions: run.discardedOptions || [], highlights: run.highlights || [],
     ...(run.selfAssessments ? { selfAssessments: run.selfAssessments.map(value => value ?? null) } : {}),
     savedAt: Date.now(),
+    ...(run.publicSample ? { publicSample: true } : {}),
     ...(run.officialExam ? { officialExam: { ...run.officialExam } } : {}),
     ...(run.attemptScope ? { attemptScope: run.attemptScope } : {}),
     ...(run.attemptSessionId ? { attemptSessionId: run.attemptSessionId } : {}),
@@ -270,6 +284,7 @@ export function startImmediateRetryFromLastResult(questionId: string, sourceAvai
 
   const retryConfiguration: RunCfg = {
     kind: 'rev', feedback: true, items: [question], titulo: `Reintento inmediato · ${last.ses.titulo || 'Práctica'}`,
+    ...(last.publicSample ? { publicSample: true } : {}),
     exposureKind: 'immediate-retry', retryOfAttemptId: last.attemptIds[index],
   };
   if (!createRun(retryConfiguration)) return false;
@@ -334,6 +349,7 @@ function createResumedRun(saved: SavedRunSnapshot, items: QuestionRecord[], answ
   const states = restoreStudyStates(saved, answers, items.length);
   const run: Run = {
     kind: saved.kind,
+    ...(saved.publicSample ? { publicSample: true } : {}),
     sessionKey: nextSessionKey++,
     feedback: !!saved.feedback,
     titulo: saved.titulo,
@@ -365,7 +381,7 @@ function createResumedRun(saved: SavedRunSnapshot, items: QuestionRecord[], answ
 
 export function resumeRun({ saved: savedRun, items, account }: PendingRun): Run | null {
   items = items.map(applyEditorialScoring);
-  if (account !== progress().accountId() || !matchesSavedQuestions(savedRun, items)
+  if (!canAccessStudyRun(getDependencies().fullAccess?.() ?? true, account, savedRun) || account !== progress().accountId() || !matchesSavedQuestions(savedRun, items)
     || !savedRun.feedback && items.some(item => item.np === 1)) return null;
   const restoredAnswers = restoreOptionalValues(savedRun.ans);
   const answers = Array.from({ length: items.length }, (_value, index) => restoredAnswers[index]);
@@ -619,6 +635,7 @@ function completedSessionRecords(run: Run, reason: 'complete' | 'interrupted' | 
 
 function lastResult(run: Run, items: QuestionRecord[], session: LastResult['ses']): LastResult {
   return {
+    ...(run.publicSample ? { publicSample: true } : {}),
     ...(run.officialExam ? { officialExam: { ...run.officialExam } } : {}),
     ses: session, items, ans: [...run.ans], times: [...(run.times || [])], limit: run.limit || 0,
     feedback: run.feedback,

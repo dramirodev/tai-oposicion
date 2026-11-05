@@ -74,7 +74,7 @@ export function createFirebaseAccessControl(dependencies: AccessControlDependenc
     listeners.push(onSnapshot(grant, { includeMetadataChanges: true }, (snapshot: DocumentSnapshot) => {
       if (!isCurrent()) return;
       // An empty local cache is not an access denial. Wait for the server before redirecting.
-      if (snapshot.metadata?.fromCache && !snapshot.exists()) {
+      if (snapshot.metadata?.fromCache && (!snapshot.exists() || snapshot.data()?.ok !== true)) {
         // The listener stays live while offline. Settle the UI if the server is unreachable,
         // but preserve the checkpoint until there is an authoritative grant decision.
         if (!status.accessResolved) void getDocFromServer(grant).catch(error => { if (!status.accessResolved) failGrant(error); });

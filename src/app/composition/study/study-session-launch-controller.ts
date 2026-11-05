@@ -24,23 +24,24 @@ export function createStudySessionLaunchController(dependencies: StudySessionLau
     const account = dependencies.currentAccount();
     const fullAccess = dependencies.fullAccess();
     const selection = await dependencies.quickSelection(fullAccess);
-    if (account !== dependencies.currentAccount()) return;
+    if (account !== dependencies.currentAccount() || fullAccess !== dependencies.fullAccess()) return;
     if (!selection.items.length) {
       dependencies.showEmptyQuickSelection(fullAccess);
       return;
     }
-    dependencies.startRun({ kind: 'rev', feedback: true, items: selection.items, titulo: selection.titulo });
+    dependencies.startRun({ kind: 'rev', feedback: true, ...(!fullAccess ? { publicSample: true as const } : {}), items: selection.items, titulo: selection.titulo });
   }
 
   async function startDueReview(topicIds?: readonly string[], dailyTrainingActivity?: TrainingActivity, reference?: TrainingActivityReference): Promise<void> {
     const account = dependencies.currentAccount();
+    const fullAccess = dependencies.fullAccess();
     const selection = await dependencies.reviewSelection(topicIds);
-    if (account !== dependencies.currentAccount()) return;
+    if (account !== dependencies.currentAccount() || fullAccess !== dependencies.fullAccess()) return;
     if (!selection.items.length) {
       dependencies.showEmptyReviewSelection();
       return;
     }
-    const configuration = { kind: 'rev' as const, feedback: true, ...selection };
+    const configuration = { kind: 'rev' as const, feedback: true, ...(!fullAccess ? { publicSample: true as const } : {}), ...selection };
     if (dailyTrainingActivity) dependencies.startRun(configuration, dailyTrainingActivity, reference);
     else dependencies.startRun(configuration);
   }

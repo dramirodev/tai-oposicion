@@ -8,6 +8,7 @@ import type { SimulationScoringPolicy } from '../domain/simulation-scoring.js';
 
 export interface RunCfg {
   officialExam?: OfficialExamRun;
+  publicSample?: true;
   kind: SessionKind;
   feedback: boolean;
   items: QuestionRecord[];
@@ -74,6 +75,7 @@ export interface CompletedStudyRun {
 
 export interface LastResult {
   officialExam?: OfficialExamRun;
+  publicSample?: true;
   ses: CompletedStudyRun;
   items: QuestionRecord[];
   feedback?: boolean;

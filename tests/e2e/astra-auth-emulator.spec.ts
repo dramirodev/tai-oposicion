@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { initializeTestEnvironment } from '@firebase/rules-unit-testing';
 import { deleteApp, initializeApp } from 'firebase/app';
 import { connectAuthEmulator, getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 
 const projectId = 'demo-tai-auth';
 const firebaseConfig = {
@@ -94,6 +94,47 @@ test('Auth local aprobado conserva los 100 ítems en recarga protegida y bloquea
     expect(saved.ids.map((_: string, index: number) => resumed.ans[index] ?? null))
       .toEqual(saved.ids.map((_: string, index: number) => saved.ans[index] ?? null));
     expect(resumed.officialExam).toEqual(saved.officialExam);
+
+    const privateProgress = () => page.evaluate(uid => {
+      const data = JSON.parse(localStorage.getItem('tai.v1:' + uid) || '{}');
+      return { stats: data.stats || {}, sessions: data.sessions || [] };
+    }, user.uid);
+    const beforeRevocation = await privateProgress();
+    await env.withSecurityRulesDisabled(async owner => { await deleteDoc(doc(owner.firestore(), 'access', user.uid)); });
+    await expect(page.getByText('No hay una sesión activa.', { exact: false })).toBeVisible();
+    await expect(page.locator('.enun,.opt')).toHaveCount(0);
+    await page.keyboard.press('2');
+    expect(await privateProgress()).toEqual(beforeRevocation);
+    expect(await page.evaluate(() => localStorage.getItem('tai.account'))).toBe(user.uid);
+    const suspended = await snapshot();
+    expect(suspended.ids).toEqual(saved.ids);
+    expect(suspended.ans).toEqual(resumed.ans);
+    expect(suspended.attemptIds).toHaveLength(100);
+    expect(suspended.attemptIds).toEqual(saved.attemptIds);
+    expect(suspended.attemptSessionId).toBe(saved.attemptSessionId);
+    expect(suspended.officialExam).toEqual(saved.officialExam);
+
+    // A public sample on the same UID must never overwrite or clear the private exam.
+    await page.goto('/#/home');
+    await page.locator('#quick').click();
+    await expect(page.locator('.opts .opt').first()).toBeVisible();
+    await expect.poll(() => page.evaluate(uid => JSON.parse(localStorage.getItem('tai.sample-run:' + uid) || 'null')?.publicSample, user.uid)).toBe(true);
+    await page.locator('#exit').click();
+    await page.locator('.overlay [data-v="1"]').click();
+    await expect(page).toHaveURL(/#\/home$/);
+    expect((await snapshot()).ids).toEqual(saved.ids);
+    expect(await page.evaluate(uid => localStorage.getItem('tai.sample-run:' + uid), user.uid)).toBeNull();
+
+    await env.withSecurityRulesDisabled(async owner => { await setDoc(doc(owner.firestore(), 'access', user.uid), { ok: true, email }); });
+    await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
+    await page.locator('.overlay [data-v="1"]').click();
+    await expect(page.locator('#app h1')).toContainText('pregunta 1 de 100');
+    const restoredGrant = await snapshot();
+    expect(restoredGrant.ids).toEqual(suspended.ids);
+    expect(restoredGrant.ans).toEqual(suspended.ans);
+    expect(restoredGrant.attemptSessionId).toBe(saved.attemptSessionId);
+    expect(restoredGrant.attemptIds).toEqual(saved.attemptIds);
+    expect(restoredGrant.officialExam).toEqual(saved.officialExam);
 
     await page.goto('/#/settings');
     await page.getByRole('button', { name: 'Cerrar sesión' }).click();

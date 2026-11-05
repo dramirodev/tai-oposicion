@@ -81,7 +81,7 @@ export async function getQuestions(ids: string[]): Promise<Question[]> {
   await getMetadata();
   const canonicalIds = ids.map(questionId => questionMetadata?.[questionId]?.[5] || questionId);
   const requiredTopics = new Set(canonicalIds.map(questionId => questionMetadata?.[questionId]?.[0]).filter((topicId): topicId is string => Boolean(topicId)));
-  const questionsById = new Map<string, Question>(supQuestions);
+  const questionsById = new Map<string, Question>(sampleOnly() ? [] : supQuestions);
   for (const topicQuestions of await Promise.all([...requiredTopics].map(getTopicQuestions))) for (const question of topicQuestions) questionsById.set(question.i, question);
   return canonicalIds.flatMap((canonicalId, index) => {
     const question = questionsById.get(canonicalId);

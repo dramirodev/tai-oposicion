@@ -63,6 +63,35 @@ describe('integración del motor con el historial local', () => {
     expect(store.rec(question.i)[0]).toBe(1);
   });
 
+  it('suspende el repaso privado del UID sin nota ni cierre, incluso ante callbacks antiguos', async () => {
+    store.switchAccount('student');
+    const question = (await data.getTopicQuestions('T1.01')).find(item => !item.np);
+    const run = engine.createRun({ kind: 'rev', feedback: true, items: [question] });
+    engine.startCurrentQuestion();
+    expect(engine.suspendPrivateRun()).toBe(true);
+    engine.answerQuestion(run, question, question.c, 0);
+    engine.answerDeferred(run, question.c);
+    expect(engine.finishRun(run)).toBeNull();
+    expect(store.getSessions()).toHaveLength(0);
+    expect(store.rec(question.i)).toBeUndefined();
+    await tracker.flush();
+    expect((await repository.getSession('student', run.attemptSessionId)).status).toBe('active');
+    expect((await repository.getEvents('student', run.attemptIds[0])).events.map(event => event.type)).toEqual(['open', 'pause']);
+    const privateCheckpoint = localStorage.getItem('tai.run:student');
+    expect(await recovery.pendingRun(false)).toBeNull();
+    const sample = engine.createRun({ kind: 'rev', feedback: true, publicSample: true, items: [question] });
+    expect(engine.suspendPrivateRun()).toBe(false);
+    engine.saveRun();
+    expect(JSON.parse(localStorage.getItem('tai.sample-run:student')).publicSample).toBe(true);
+    engine.finishRun(sample, 'interrupted');
+    expect(localStorage.getItem('tai.run:student')).toBe(privateCheckpoint);
+    const resumed = engine.resumeRun(await recovery.pendingRun(true));
+    expect(resumed.attemptIds).toEqual(run.attemptIds);
+    expect(resumed.attemptSessionId).toBe(run.attemptSessionId);
+    expect(engine.finishRun(run)).toBeNull();
+    engine.finishRun(resumed, 'interrupted');
+  });
+
   it('mantiene las consultas no puntuables fuera de progreso, historial y denominador tras reanudar', async () => {
     const [original, scored] = (await data.getTopicQuestions('T1.01')).slice(0, 2);
     const consultation = { ...original, np: 1 };
@@ -110,6 +139,25 @@ describe('integración del motor con el historial local', () => {
     engine.answerCurrentQuestion(raw.c, 0);
     expect(engine.finishRun(consultation).ses.n).toBe(0);
     expect(store.rec(id)).toBeUndefined();
+  });
+
+  it('reanuda el caso histórico con el contexto recuperado del catálogo y sin copiar su texto al checkpoint', async () => {
+    store.switchAccount('student');
+    const raw = await data.getScenarios();
+    const entry = raw['TAI2024B-S1'];
+    const questions = entry.q.slice(0, 2).map(question => ({ ...question, supTexto: entry.texto }));
+    const run = engine.createRun({ kind: 'sim', feedback: false, items: questions });
+    engine.answerDeferred(run, 0);
+    expect(engine.suspendPrivateRun()).toBe(true);
+    const checkpoint = JSON.parse(localStorage.getItem('tai.run:student'));
+    expect(checkpoint.ids).toEqual(questions.map(q => q.i));
+    expect(JSON.stringify(checkpoint)).not.toContain(entry.texto.slice(0, 40));
+    const pending = await recovery.pendingRun(true);
+    const restored = engine.resumeRun(pending);
+    expect(restored.items[0].supTexto).toBe(entry.texto);
+    expect(restored.attemptIds).toEqual(run.attemptIds);
+    expect(restored.ans[0]).toBe(0);
+    engine.finishRun(restored, 'interrupted');
   });
 
   it('rehidrata la convocatoria íntegra con el supuesto real y conserva su vencimiento aunque la app esté cerrada', async () => {

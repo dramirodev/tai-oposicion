@@ -23,7 +23,7 @@ import { APP_VERSION, APP_BUILD } from './build-info.js';
 import { isFull, isOwner, accessLevel, devMode, setDevMode, devRevealed, revealDev } from './composition/access-composition.js';
 import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, createRun, resumeRun, startImmediateRetryFromLastResult, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, dueQuestionIds, selectQuestionsForTopics, selectWeightedSimulationQuestions, studyQuestionCatalog } from './composition/study/study-engine-composition.js';
 import { sessionStatePort } from './session-state-store.js';
-import { clearRun, pendingRun, saveRun } from './composition/study/pending-run-composition.js';
+import { clearRun, pendingRun, saveRun, watchPrivateRunAccess } from './composition/study/pending-run-composition.js';
 import { createTopicMasteryComposition } from './composition/topics/topic-mastery-composition.js';
 import { createTopicProgressComposition } from './composition/topics/topic-progress-composition.js';
 import { createAcademyStudyProgressComposition } from './composition/topics/academy-study-progress-composition.js';
@@ -214,7 +214,6 @@ async function openMenu() {
 interface SimulationRunConfiguration { includeSecondPart: boolean; secondPartMinutes: number }
 let simulationRunConfiguration: SimulationRunConfiguration | null = null;
 let reviewScenarioQuestions = new Map<string, Question[]>();
-let reviewScenarioTexts = new Map<string, string>();
 let reviewScenarioAccount: string | null = null;
 async function selectSimulationQuestions(index: Awaited<ReturnType<typeof getIndex>>, origins: ReadonlySet<Origin>, count: number, onlyTopics: ReadonlySet<string> | null, optionsPerQuestion?: number) {
   const topics = index.temas.filter(topic => !onlyTopics || onlyTopics.has(topic.id));
@@ -428,7 +427,8 @@ export function bootAppServices(): () => void {
   // Firebase may retain its IndexedDB identity after the local active-account key is lost.
   // Switching from guest storage to that initial identity must preserve a protected deep link.
   let hydratingFirstAccount = !localStudyProgressGateway.accountId() && !sync.status.authResolved;
-  return startAppBootstrap({
+  const stopWatchingAccess = watchPrivateRunAccess(resumeSaved);
+  const stopBootstrap = startAppBootstrap({
     onAccountChange: listener => localStudyProgressGateway.onAccountChange(() => {
       if (hydratingFirstAccount && localStudyProgressGateway.accountId() && sync.status.user) {
         hydratingFirstAccount = false;
@@ -465,6 +465,7 @@ export function bootAppServices(): () => void {
       try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getAllQuestionIdsForTopic }, progressStore, trainingSession, paperRecall, trainingCalendar, weeklyStudyAgenda, academyStudyProgress, paperTestAttempts); } catch (error) { console.error(error); }
     },
   });
+  return () => { stopWatchingAccess(); stopBootstrap(); };
 }
 
 // Descarga el banco en segundo plano (2 a la vez) para que Test, Simulacro y Repaso arranquen sin esperar a la red
@@ -627,15 +628,14 @@ export const studyServices: StudyServices = {
       const scenarios = await studyQuestionCatalog.getScenarios();
       if (account !== localStudyProgressGateway.accountId()) return [];
       const chosen = selectHistoricalScenarioPair(scenarios, Math.random);
-      reviewScenarioQuestions = new Map(chosen.map(choice => [choice.id, choice.questions]));
-      reviewScenarioTexts = new Map(chosen.map(choice => [choice.id, choice.text]));
+      reviewScenarioQuestions = new Map(chosen.map(choice => [choice.id, choice.questions.map(question => ({ ...question, supTexto: choice.text }))]));
       reviewScenarioAccount = account;
       return chosen.map(choice => ({ id: choice.id, block: choice.block, text: choice.text.slice(0, 700) + (choice.text.length > 700 ? '…' : '') }));
     },
     start(id) {
       const items = reviewScenarioQuestions.get(id);
       if (!items?.length || reviewScenarioAccount !== localStudyProgressGateway.accountId()) return 'unavailable';
-      const started = startRun({ kind: 'sim', feedback: false, items, limit: simulationRunConfiguration?.secondPartMinutes || 40, supTexto: reviewScenarioTexts.get(id), titulo: 'Simulacro · Parte 2 (supuesto)' });
+      const started = startRun({ kind: 'sim', feedback: false, items, limit: simulationRunConfiguration?.secondPartMinutes || 40, titulo: 'Simulacro · Parte 2 (supuesto)' });
       return started ? 'started' : 'unavailable';
     },
   },

@@ -65,7 +65,7 @@ export function createQuizServices(go: (path: string) => void, homePath: string,
       endConfirmation = null; closing = false;
       if (!accepted || getCurrentRun()?.sessionKey !== run.sessionKey) return;
       if (run.ans.some(value => value !== undefined)) { await this.finish('interrupted'); }
-      else { clearActiveRun(); clearRun(); go(homePath); }
+      else { clearRun(); clearActiveRun(); go(homePath); }
     },
     cancelConfirmation() { endConfirmation?.abort(); endConfirmation = null; closing = false; },
     toggleFlag() { const run = getCurrentRun(), question = run?.items[run.idx]; if (question) progress.toggleFlag(question.i, question.t); },
