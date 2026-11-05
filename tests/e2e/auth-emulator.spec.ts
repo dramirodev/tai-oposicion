@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { initializeTestEnvironment } from '@firebase/rules-unit-testing';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { readFile } from 'node:fs/promises';
@@ -78,6 +78,7 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
   await emulator.clearFirestore();
   let firstUid = '';
   let secondUid = '';
+  let peerPage: Page | undefined;
   try {
   await page.goto('/#/settings');
   firstUid = await signIn('study-owner@example.test');
@@ -133,11 +134,35 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
   const restoredPriority = page.locator('.planning-activity').filter({ hasText:'Preguntas del tema prioritario' });
   await expect(restoredPriority).toHaveCount(1);
   await expect(restoredPriority).toContainText(firstTopic!);
+  peerPage = await page.context().newPage();
+  await peerPage.route('**/*', route => {
+    const url = new URL(route.request().url());
+    const isLoopback = ['localhost', '127.0.0.1', '::1'].includes(url.hostname);
+    const isAppOrEmulatorPort = ['4187', '9099', '8080'].includes(url.port);
+    const isStaticGoogleAuthAsset = url.origin === 'https://apis.google.com' && route.request().method() === 'GET'
+      && (url.pathname === '/js/api.js' || url.pathname.startsWith('/_/scs/'));
+    if ((!isLoopback || !isAppOrEmulatorPort) && !isStaticGoogleAuthAsset) return route.abort('blockedbyclient');
+    if (url.port === '9099' || url.port === '8080') firebaseRequests.push(`${url.hostname}:${url.port}`);
+    return route.fallback();
+  });
+  await peerPage.route('**/firebase-config.json', route => route.fulfill({ json: {
+    apiKey:'fake-api-key', authDomain:'localhost', projectId:'demo-tai-auth', appId:'1:123:web:local-test',
+    taiEmulators:{ authHost:'127.0.0.1', authPort:9099, firestoreHost:'127.0.0.1', firestorePort:8080 },
+  } }));
+  await peerPage.clock.setFixedTime(new Date('2026-10-30T12:00:00+02:00'));
+  await peerPage.goto('/#/planificacion');
+  const peerPriority = peerPage.locator('.planning-activity').filter({ hasText:'Preguntas del tema prioritario' });
+  await expect(peerPriority).toHaveCount(1);
+  await expect(peerPriority).toContainText(firstTopic!);
+  await peerPage.screenshot({ path:'tests/e2e/evidence/accessibility-2026-11-05/authenticated-peer-tab-planning.png', fullPage:true });
+  await peerPage.close();
+  peerPage = undefined;
   const reloadedRecall = (await readRemote(`users/${firstUid}/cfg/trainingRecall`)).data();
   expect(reloadedRecall?.assessments).toHaveLength(1);
   expect(firebaseRequests.some(endpoint => endpoint.endsWith(':9099'))).toBe(true);
   expect(firebaseRequests.some(endpoint => endpoint.endsWith(':8080'))).toBe(true);
   } finally {
+    await peerPage?.close();
     await emulator.cleanup();
   }
 });

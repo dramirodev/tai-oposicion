@@ -317,6 +317,12 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - Regresión detectada en la primera ejecución: reloj instalado tras bootstrap no controlaba la referencia `Date.now` ya capturada; dos selectores ambiguos causaban falsos fallos. Se ajustó únicamente el fixture/oráculo y la reejecución pasó. No se cambió comportamiento de producto.
 - ATE-005 permanece **EN CORRECCIÓN**: estas rutas y estados concretos ya tienen evidencia, pero no equivalen a cobertura exhaustiva de todos los módulos, controles, import/export/borrado curatorial, cambios de usuario concurrentes ni fallos de red.
 
+### Sincronización de sesión entre pestañas (5 de noviembre de 2026)
+
+- `npm run test:e2e:firebase-auth` pasó **1/1 Chromium** con Auth y Firestore Emulator `demo-tai-auth`; el proyecto omite WebKit en este caso de autenticación con popup.
+- Tras cambiar owner → estudiante → owner y confirmar la persistencia remota sintética, la prueba abre una segunda página del mismo BrowserContext y comprueba en Planificación la prioridad del tema T1.02. Evidencia: [`authenticated-peer-tab-planning.png`](evidence/accessibility-2026-11-05/authenticated-peer-tab-planning.png), revisada visualmente.
+- El primer intento usaba «Cerrar sesión» como señal de autenticación en Planificación; el test falló porque ese botón no pertenece a esa pantalla. Se sustituyó por un oráculo del estado de dominio visible y la ejecución pasó. La prueba no certifica entre dispositivos ni entre perfiles de navegador distintos. No hubo Firebase de producción ni llamadas a Gemini.
+
 ### Recuperación de una sesión autenticada (5 de noviembre de 2026)
 
 - **Recorrido:** el owner sintético marca T1.02 como visto desde Planificación, crea un hito de tres preguntas, responde una y avanza a la segunda. Antes de recargar, la prueba valida `tai.run:tai-supertest` con `idx = 1` y respuesta guardada; `page.reload()` dispara el flujo de `pagehide`.
