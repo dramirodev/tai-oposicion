@@ -2,6 +2,10 @@
 
 El registro canónico de hallazgos UX/ATE con estados, evidencia y pruebas está en [audit-findings.md](audit-findings.md); el contexto UX está en [journey-audit-report.md](journey-audit-report.md) y la auditoría de requisitos de la plataforma, en [extreme-platform-status.md](extreme-platform-status.md). No leer `.env`, no invocar el modelo para repetir journeys y no iniciar pruebas de escritura sin el preflight Emulator y guard de red.
 
+## Vista previa manual sin Firebase
+
+Para probar la interfaz localmente sin cargar la configuración pública de Firebase (que apunta al proyecto de producción), ejecuta `npm run dev:offline-preview`. Este comando usa `vite.offline-preview.config.mjs`, que sirve `{}` para `/firebase-config.json` solo durante el desarrollo; la aplicación queda en modo local/invitado y no puede iniciar sesión ni sincronizar. Abre la URL local que muestre Vite. Para recorrer flujos autenticados, usa las suites Emulator documentadas abajo. El comando `npm run dev` normal sí lee `public/firebase-config.json`; no lo uses como vista previa interactiva de datos sin validar su destino.
+
 ## Usuarios ficticios y aislamiento
 
 La prueba `auth-emulator.spec.ts` inicia sesión mediante la pantalla simulada de Google del Auth Emulator. Al elegir **Add new account** e introducir un correo, el emulador crea un usuario local; no se crea una cuenta de Google ni se contacta con Firebase de producción. La prueba usa una cuenta para estudiar y otra (`student@example.test`) para comprobar que el progreso no cruza cuentas.

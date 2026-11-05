@@ -111,6 +111,34 @@ it('keeps editorial drafts isolated when the active account changes', async () =
   expect(screen.queryByRole('article')).not.toBeInTheDocument();
 });
 
+it('imports a valid local manifest and preserves it after rejecting malformed JSON', async () => {
+  window.localStorage.clear();
+  const imported = {
+    schemaVersion:2, revision:'imported-manifest', links:[{
+      status:'approved', questionId:'academy-q1', contentRevision:'fnv1a-12345678',
+      questionTopicId:'T3.01', testMaterialTopicId:'T1.04', sectionTopicId:'T3.01', sectionId:'ci-0123456789abcdefabcd',
+      testEvidence:{ path:'test.pdf', sourceHash:'a'.repeat(64), page:1 },
+      sectionEvidence:{ path:'section.pdf', sourceHash:'b'.repeat(64), outlineFingerprint:'c'.repeat(64), page:1 },
+      rationale:'Vínculo sintético importado desde un archivo local.', reviewedAt:1, reviewer:'fixture',
+    }],
+  };
+  renderApp(createElement(AcademyQuestionSectionMapPage), { services:services(), initialEntries:['/curar-contenido'] });
+  const user = userEvent.setup();
+  const fileInput = await screen.findByLabelText('Importar manifiesto');
+  const jsonFile = (text, name) => {
+    const file = new File([text], name, { type:'application/json' });
+    Object.defineProperty(file, 'text', { value:async () => text });
+    return file;
+  };
+  await user.upload(fileInput, jsonFile(JSON.stringify(imported), 'draft.json'));
+  expect(await screen.findByText('Manifiesto v2 importado. Comprueba vigencia al abrir los temas.')).toBeInTheDocument();
+  expect(JSON.parse(window.localStorage.getItem('tai.academy-question-section-map:v2:curator'))).toEqual(imported);
+
+  await user.upload(fileInput, jsonFile('{invalid json', 'broken.json'));
+  expect(await screen.findByText('No se pudo leer el JSON seleccionado.')).toBeInTheDocument();
+  expect(JSON.parse(window.localStorage.getItem('tai.academy-question-section-map:v2:curator'))).toEqual(imported);
+});
+
 it('preselects only the exact current source candidate and leaves section approval manual', async () => {
   const user = userEvent.setup();
   window.localStorage.clear();

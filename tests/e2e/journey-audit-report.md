@@ -499,3 +499,9 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - La prueba reprodujo «1 vínculos». Se cambió únicamente el copy para usar «1 vínculo» en singular; el estado cero conserva «0 vínculos».
 - `npm test -- tests/content-map-page.test.js`: **6/6**. Esta evidencia cubre el cambio de perfil dentro del servicio mockeado, no una sesión Auth Emulator adicional; ATE-005 sigue abierto para los demás estados y controles.
 - Regresión general tras los cambios locales de esta iteración: `npm run check` aprobó arquitectura, lint, typecheck y **963 tests / 27 omitidos**; `git diff --check` permanece limpio. El aviso jsdom de `window.scrollTo` es conocido y no hace fallar la suite.
+
+### ATE-005: importación local del manifiesto curatorial — 5 de noviembre de 2026
+
+- Se cubrió desde el componente la selección de un archivo JSON v2 sintético válido y el rechazo de JSON malformado. El primer importado queda en almacenamiento local y permanece intacto tras el segundo intento fallido.
+- `npm test -- tests/content-map-page.test.js`: **7/7**. La prueba simula `File.text()` porque jsdom no lo implementa; la lógica del componente y la persistencia `localStorage` sí se ejercitan.
+- Esta evidencia no es una prueba visual ni una sesión con Firebase Emulator. No hubo escritura remota ni llamada a Gemini. ATE-005 continúa abierto para la cobertura dinámica y longitudinal restante.
