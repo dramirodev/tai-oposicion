@@ -47,13 +47,14 @@ describe('loadPendingRun', () => {
     expect(state.removed).toEqual(['guest']);
   });
 
-  it('clears a session the current access level cannot resume', async () => {
+  it('preserves a session across a temporary loss of account access', async () => {
     const { state, dependencies } = repository({ saved: savedRun({ kind: 'test' }) });
 
     await expect(loadPendingRun(false, dependencies)).resolves.toBeNull();
 
-    expect(state.removed).toEqual(['guest']);
+    expect(state.removed).toEqual([]);
     expect(state.loadQuestions).not.toHaveBeenCalled();
+    await expect(loadPendingRun(true, dependencies)).resolves.toMatchObject({ saved: state.saved });
   });
 
   it('clears expired or inconsistent sessions but leaves data untouched if account changes during lookup', async () => {

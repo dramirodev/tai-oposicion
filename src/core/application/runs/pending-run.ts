@@ -27,9 +27,8 @@ const MAX_AGE = 2 * 86400000;
 export async function loadPendingRun(full: boolean, repository: PendingRunRepository): Promise<PendingRun | null> {
   const account = repository.currentAccount();
   const saved = repository.read(account);
-  if (!saved || repository.hasActiveRun()) return null;
+  if (!saved || repository.hasActiveRun() || (!full && saved.kind !== 'rev')) return null;
   if (saved.scoringPolicy !== undefined && !isSimulationScoringPolicy(saved.scoringPolicy)) { repository.clear(account); return null; }
-  if (!full && saved.kind !== 'rev') { repository.clear(account); return null; }
   if (!Array.isArray(saved.ids) || !saved.ids.length || Date.now() - (saved.savedAt || 0) > MAX_AGE) {
     repository.clear(account);
     return null;

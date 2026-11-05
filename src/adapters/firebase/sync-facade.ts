@@ -18,6 +18,7 @@ const load = (): Promise<Mod> => (loading ||= import('./legacy-sync.js').then(me
   status.state = 'sin conexión';
   status.error = 'No se pudo cargar el servicio de autenticación.';
   status.authResolved = true;
+  status.accessResolved = true;
   emit();
   throw event;
 }));

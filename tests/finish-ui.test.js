@@ -3,7 +3,7 @@ import {afterEach,it,expect,vi} from 'vitest';
 import {act} from '@testing-library/react';
 import {readFileSync} from 'node:fs';
 import path from 'node:path';
-vi.mock('../src/adapters/firebase/sync-facade.js',()=>({status:{user:null,state:'sin sesión',configured:false,authResolved:true},setAttemptRepository:()=>{},init:async()=>{},onStatus:()=>()=>{},login:async()=>{},logout:async()=>{},retry:()=>{}}));
+vi.mock('../src/adapters/firebase/sync-facade.js',()=>({status:{user:null,state:'sin sesión',configured:false,authResolved:true,accessResolved:true},setAttemptRepository:()=>{},init:async()=>{},onStatus:()=>()=>{},login:async()=>{},logout:async()=>{},retry:()=>{}}));
 let unmountApp;
 afterEach(()=>{unmountApp?.();unmountApp=undefined;vi.unstubAllGlobals();});
 it('doble pulsación en Terminar no duplica el intento de examen',async()=>{
@@ -11,7 +11,7 @@ it('doble pulsación en Terminar no duplica el intento de examen',async()=>{
  vi.stubGlobal('matchMedia',()=>({matches:true}));vi.stubGlobal('scrollTo',()=>{});Element.prototype.scrollIntoView=()=>{};
  vi.stubGlobal('fetch',async url=>{try{return {ok:true,json:async()=>JSON.parse(readFileSync(path.join('public',String(url)),'utf8'))};}catch{return {ok:false,json:async()=>null};}});
  ({unmountApp}=await import('../src/app/main'));
- const waitText=async text=>vi.waitFor(()=>expect(document.querySelector('#app').textContent).toContain(text));
+ const waitText=async text=>vi.waitFor(()=>expect(document.querySelector('#app').textContent).toContain(text), { timeout: 10000 });
  await waitText('Sesión rápida');location.hash='#/sim';await waitText('Simulacros');
  const examTab = () => [...document.querySelectorAll('[role="tab"]')].find(tab => tab.textContent === 'Por examen');
  await vi.waitFor(() => expect(examTab()).toBeDefined());

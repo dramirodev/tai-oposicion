@@ -1,3 +1,4 @@
+import { isFirebaseEmulatorRuntime } from '../../adapters/firebase/local-emulator-config.js';
 import { canManageAccess, canUseFullApp } from '../../core/domain/access-policy.js';
 import { localStudyProgressGateway } from '../../adapters/local/progress-repository.js';
 import { isDevelopmentUiRevealed, developmentMode, readRememberedAccess, rememberAccessForAccount, revealDevelopmentUi, setDevelopmentMode } from '../../adapters/local/access-preferences.js';
@@ -26,7 +27,7 @@ const capabilities = createAccessCapabilities({
   syncAccess: () => syncGateway.getSnapshot().access,
   rememberedAccess: readRememberedAccess,
   developerMode: developmentMode,
-  localRuntime,
+  get localRuntime() { return localRuntime && !isFirebaseEmulatorRuntime(); },
 });
 export const { accessLevel, isFull, isOwner } = capabilities;
 

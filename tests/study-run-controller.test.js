@@ -74,3 +74,12 @@ it('clears a declined saved run without navigating', async () => {
   expect(dependencies.resume).not.toHaveBeenCalled();
   expect(dependencies.navigateToQuiz).not.toHaveBeenCalled();
 });
+
+it('does not open a saved exam if full access was revoked while confirming', async () => {
+  const dependencies = createDependencies({
+    ask: vi.fn(async () => { dependencies.isFullAccess.mockReturnValue(false); return true; }),
+  });
+  await createStudyRunController(dependencies).resumeSaved();
+  expect(dependencies.resume).not.toHaveBeenCalled();
+  expect(dependencies.navigateToQuiz).not.toHaveBeenCalled();
+});

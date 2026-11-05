@@ -36,6 +36,7 @@ export function createStudyRunController(dependencies: StudyRunControllerDepende
       dependencies.clearPendingRun();
       return;
     }
+    if (pending.saved.kind !== 'rev' && !dependencies.isFullAccess()) return;
     if (dependencies.resume(pending)) dependencies.navigateToQuiz(pending.saved.trainingActivity, pending.saved.trainingActivityReference);
   }
 
