@@ -736,6 +736,56 @@ test('la configuración del simulacro conserva selecciones válidas tras recarga
   expect(errors).toEqual([]);
 });
 
+test('Simulacros por examen permite filtrar, seleccionar y recuperarse de una lista vacía', async ({ page, browserName }) => {
+  const errors = await start(page);
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto('/#/sim');
+  await page.getByRole('tab', { name: 'Por examen' }).click();
+
+  const exams = page.locator('[data-exam-id]');
+  const origin = page.getByLabel('Origen');
+  const turn = page.getByLabel('Turno');
+  const year = page.getByLabel('Año en la referencia');
+  await expect.poll(() => exams.count()).toBeGreaterThan(0);
+  await origin.selectOption('official');
+  await turn.selectOption('libre');
+  await expect.poll(() => exams.count()).toBeGreaterThan(0);
+  const freeExams = await exams.allTextContents();
+  expect(freeExams.every(name => name.includes('Ingreso libre'))).toBe(true);
+
+  const yearOptions = await year.locator('option').evaluateAll(options => options.map(option => (option as HTMLOptionElement).value));
+  expect(yearOptions.length).toBeGreaterThan(1);
+  const selectedYear = yearOptions[1];
+  await year.selectOption(selectedYear);
+  await expect.poll(() => exams.count()).toBeGreaterThan(0);
+  expect((await exams.allTextContents()).every(name => name.includes(selectedYear))).toBe(true);
+
+  const selectedExam = exams.first();
+  await selectedExam.click();
+  await expect(selectedExam).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: 'Estudiar', exact: true })).toBeEnabled();
+  await expect(page.getByRole('button', { name: 'Examen · 90 min' })).toBeEnabled();
+  await page.screenshot({
+    path: `tests/e2e/evidence/accessibility-2026-11-05/simulation-exam-filtered-320px-${browserName}.png`,
+  });
+
+  await origin.selectOption('academy');
+  await expect(exams).toHaveCount(0);
+  await expect(page.getByText('No hay exámenes con estos filtros. Cambia alguno de los filtros para ver otros exámenes.')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Estudiar', exact: true })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Examen · 90 min' })).toBeDisabled();
+  await page.screenshot({
+    path: `tests/e2e/evidence/accessibility-2026-11-05/simulation-exam-empty-320px-${browserName}.png`,
+  });
+
+  await turn.selectOption('all');
+  await year.selectOption('');
+  await expect.poll(() => exams.count()).toBeGreaterThan(0);
+  await expect(page.getByText('No hay exámenes con estos filtros. Cambia alguno de los filtros para ver otros exámenes.')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Estudiar', exact: true })).toBeEnabled();
+  expect(errors).toEqual([]);
+});
+
 test('el simulacro no presenta explicaciones ni corrección mientras sigue activo', async ({ page }) => {
   const errors = await start(page);
   await page.goto('/#/sim');

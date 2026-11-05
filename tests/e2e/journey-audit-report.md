@@ -361,18 +361,28 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - Tras recargar, se verifican los estados accesibles y valores persistidos de todos los controles, ausencia de overflow horizontal y errores de consola vacíos. No se comienza una prueba ni se escriben datos remotos.
 - **Verificación:** `npm run test:e2e -- tests/e2e/bridge.spec.ts --grep 'configuración del simulacro'` pasó **2/2** Chromium/WebKit. Capturas antes y después de recargar revisadas visualmente en `evidence/accessibility-2026-11-05/simulation-config-*-320px-*.png`.
 - En una primera ejecución, el oráculo esperaba que 120 minutos se redujeran automáticamente a 90 al seleccionar 80 preguntas. El código conserva 120, opción válida; se corrigió el escenario para probar la regla real (60→80 sube a 90), sin cambio de producto.
-- ATE-005 suma un conjunto de estados dinámicos cubiertos; sigue abierto para los filtros de examen, los formularios/modales restantes y las variantes adversariales que aún no tienen oráculo.
+- ATE-005 suma un conjunto de estados dinámicos cubiertos; sigue abierto para formularios/modales restantes, catálogos e historiales extensos y variantes adversariales que aún no tienen oráculo.
+
+### Simulacros por examen: filtros, selección y recuperación (5 de noviembre de 2026)
+
+- En fixture de invitado sin Firebase, el usuario filtra los exámenes oficiales por turno de ingreso libre y por año, selecciona un examen y activa Estudiar/Examen. Los nombres de los elementos visibles se cotejan con los filtros elegidos.
+- Al combinar el origen «Academia» con el turno «Ingreso libre», no aparecen coincidencias y las acciones quedan deshabilitadas. El copy antiguo recomendaba cambiar solo año o turno; se registró como UX-013 y se cambió por una recomendación que cubre cualquiera de los filtros. Restablecer turno y año vuelve a mostrar resultados y activa la acción.
+- **Verificación:** `npm run test:e2e -- tests/e2e/bridge.spec.ts --grep 'Simulacros por examen permite filtrar'` **2/2** Chromium/WebKit; suite `bridge.spec.ts` **50/50**. Capturas a 320 px de lista filtrada y estado vacío: `evidence/accessibility-2026-11-05/simulation-exam-{filtered,empty}-320px-{chromium,webkit}.png`.
+- No se inicia un examen ni se cambian datos remotos o reglas de negocio. ATE-005 gana cobertura de todos los selectores de Por examen y su estado vacío, pero aún no cubre todos los estados, controles y operaciones del producto.
 
 ## Estado operativo vigente — 5 de noviembre de 2026
 
 - UX-007 continúa cerrado según sus regresiones previas en Chromium/WebKit; este corte no lo reabre.
 - UX-012 quedó **CORREGIDO Y VERIFICADO**; el diff de producto solo afecta al singular/plural del contador de Falladas. El test de página verifica también el camino de error y recuperación.
+- UX-013 quedó **CORREGIDO Y VERIFICADO**; el estado vacío de Simulacros ahora recomienda cambiar cualquiera de los filtros y sus filtros/recuperación tienen regresión Chromium/WebKit.
 - ATE-005 avanza con controles poblados de Falladas, persistencia tras reload, acción de práctica, recuperación de error y mediciones responsive. Esto amplía, pero no completa, la cobertura total de rutas/controladores.
 - Verificaciones vigentes de este corte: Playwright Falladas **8/8**, Vitest componente Falladas **2/2**, `npm run check` **960 aprobadas/27 omitidas**. Capturas se conservan en `evidence/accessibility-2026-11-05/`.
 - Reflow de 18 destinos: `npm run test:e2e -- tests/e2e/routes.spec.ts` **86/86** Chromium/WebKit; cada ruta/tema mide overflow a 320 y 640 CSS px.
 - Configuración Simulacros: `bridge.spec.ts --grep 'configuración del simulacro'` **2/2** Chromium/WebKit, con selección accesible y persistencia tras reload a 320 px.
+- Filtros Por examen: `bridge.spec.ts --grep 'Simulacros por examen permite filtrar'` **2/2**; UX-013 corregido/verificado en ambos motores; lista vacía y recuperación cubiertas.
 - Verificación posterior de la suite que contiene el nuevo recorrido: `npm run test:e2e -- tests/e2e/bridge.spec.ts` pasó **48/48** Chromium/WebKit. `npm run check` pasó arquitectura, ESLint, TypeScript y Vitest: **960 aprobados/27 omitidos** (189 archivos aprobados/1 omitido); se conserva el aviso conocido de `window.scrollTo` en jsdom.
-- Regresión global posterior con la nueva prueba incluida: `npm run test:e2e` pasó **272/300**, omitió 28 (10 de Emulator + 2 EXTREME por motor) y no tuvo fallos en Chromium/WebKit; duración 9,9 min. Los recorridos de Emulator (12/12) y EXTREME (2/2, 1.000 acciones por motor) se ejecutaron por separado y permanecen como evidencia vigente del mismo corte.
+- Regresión global posterior a UX-013: `npm run test:e2e` pasó **274/302**, omitió 28 (10 de Emulator + 2 EXTREME por motor) y no tuvo fallos en Chromium/WebKit; duración 10,1 min. Los recorridos de Emulator (12/12) y EXTREME (2/2, 1.000 acciones por motor) se ejecutaron por separado y permanecen como evidencia vigente del mismo corte.
+- `npm run check` volvió a pasar con **960/27**; se mantiene el aviso no bloqueante conocido de `window.scrollTo` de jsdom en Cards.
 - UX-009 sigue abierto: se verificó teclado y algunos estados ARIA con browser automatizado, así como reflow y un objetivo táctil de Falladas; siguen sin realizarse lector de pantalla real, zoom nativo 200%/400%, contraste exhaustivo y revisión WCAG completa.
 - ATE-006 sigue sin ejecución remota observable; la rama aún no ha llegado al default branch y no se creó una PR en este corte. QUICK/INTENSIVE/EXTREME permanecen disponibles localmente; EXTREME no se ejecuta en cada PR.
 - Regresión global después de la ampliación: `npm run test:e2e` terminó en **270 pasadas/28 omitidas/0 fallidas** en Chromium/WebKit (298 planificadas, 9,8 min). La prueba autenticada de Emulator se ejecutó aparte y pasó **12/12**; las dos EXTREME se ejecutaron aparte y pasaron **2/2** con 1.000 acciones por motor. `npm run check` pasó con **960 aprobadas/27 omitidas** (189 archivos aprobados/1 omitido); persiste el aviso conocido `window.scrollTo` de jsdom en Cards.
