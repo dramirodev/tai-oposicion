@@ -273,6 +273,7 @@ La cifra cuenta roles interactivos con nombre accesible en el estado inicial (28
 | Simulacro | 18 | Empezar, pausar, abandonar, reanudar y corregir al finalizar (`bridge`). | Variantes de examen y persistencia remota no cubiertas por cada control. |
 | Simulacro Parte 2 | 3 | Entrada/render y flujo relacionado (`routes`, `bridge`). | Sin aserción independiente para todos los controles propios de Parte 2. |
 | Estadísticas | 45 | Gráficos con datos/vacíos, reflujo y secciones móviles plegables; la comparación A/B cambia de **+10 / −10** al invertir los intentos. La evolución mantiene métrica, filtro T1.02, periodo de 8 semanas y tabla visible tras recargar. Desde “Practicar temas” completa un test T1.02 de 15 preguntas y verifica Resultado y persistencia del agregado en Progreso. Chromium/WebKit, claro/oscuro y 320/1440 px (`stats-charts`, `stats-practice-journey`, `mobile-layout`, `css-ui`). | Cada filtro/cálculo de visualización no tiene aserciones exhaustivas; las pruebas usan sesiones sintéticas locales y no acreditan cálculo de historial remoto sincronizado. La última respuesta requiere desplazamiento antes de pulsarla. |
+| Ajustes · apariencia | — | Cambiar tema a oscuro y tamaño a A+++ desde controles accesibles; validar aria-pressed, apariencia aplicada, almacenamiento local y restauración tras recarga. Chromium/WebKit a 320/1440 CSS px; sin overflow horizontal. Evidencia `settings-preferences-*`. | Preferencias sintéticas locales; no verifica la configuración remota de cuenta ni zoom nativo del navegador. |
 | Ayuda | 19 | Índice, anclas, destinos y disponibilidad offline (`help-icons`, `bridge`). | No se recorre cada artículo/enlace en todos los perfiles. |
 | Ajustes | 59 | Horario semanal, evento/hito y preferencias usadas por Planificación (`css-ui`, `supertest-emulator`). | Todos los valores posibles y guardado con red perdida. |
 | Accesos | 3 | Owner aprueba/revoca; perfiles normal/restricted/pending/anonymous verifican guardas (`supertest-emulator`). | No se probaron sesiones paralelas/cambio rápido de usuario por control. |
@@ -332,6 +333,13 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - **Verificación:** `npm run test:e2e -- tests/e2e/stats-practice-journey.spec.ts` pasó **4/4** en Chromium/WebKit, a 320/1440 px. Fixture local sintético, sin llamadas Firebase ni datos remotos. Evidencia: capturas inicial/desplazada y `stats-to-topic-test-result-{320px,1440px}.png`.
 - **Límite:** prueba la persistencia local del intento y el agregado visible de respuestas; no verifica sincronización Firebase, recuperación detallada de la vista Resultado tras recargar esa ruta ni los demás temas. ATE-005 continúa abierto para los restantes vínculos, filtros y estados adversariales.
 
+### Ajustes → preferencias de apariencia → recarga (5 de noviembre de 2026)
+
+- **Recorrido:** desde Ajustes se elige Oscuro y A+++; se comprueban el estado `aria-pressed`, los atributos efectivos del documento, los valores guardados en `cfg.ui` y su restauración tras reload.
+- **Reflow:** en Chromium/WebKit y viewports 320/1440 CSS px, el documento no supera el ancho del viewport con el texto máximo. En 320 px el contenido ocupa más altura y se recorre mediante scroll vertical.
+- **Verificación:** `npm run test:e2e -- tests/e2e/settings-preferences-journey.spec.ts` pasó **4/4**. Las cuatro capturas `settings-preferences-{320,1440}px-{chromium,webkit}.png` quedan en `evidence/accessibility-2026-11-05/`.
+- **Límite:** verifica solo preferencias locales del usuario sintético. No sustituye zoom nativo 200%/400%, lector de pantalla ni revisión exhaustiva de contraste; UX-009 permanece abierto.
+
 ### Falladas vacías/pobladas → ayuda, filtros, persistencia y práctica (5 de noviembre de 2026)
 
 - **Recorrido vacío:** perfil invitado sintético sin historial abre `#/falladas`, reconoce el mensaje vacío y activa el enlace de ayuda; llega a `#/ayuda?tema=repaso`.
@@ -381,7 +389,7 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - Configuración Simulacros: `bridge.spec.ts --grep 'configuración del simulacro'` **2/2** Chromium/WebKit, con selección accesible y persistencia tras reload a 320 px.
 - Filtros Por examen: `bridge.spec.ts --grep 'Simulacros por examen permite filtrar'` **2/2**; UX-013 corregido/verificado en ambos motores; lista vacía y recuperación cubiertas.
 - Verificación posterior de la suite que contiene el nuevo recorrido: `npm run test:e2e -- tests/e2e/bridge.spec.ts` pasó **48/48** Chromium/WebKit. `npm run check` pasó arquitectura, ESLint, TypeScript y Vitest: **960 aprobados/27 omitidos** (189 archivos aprobados/1 omitido); se conserva el aviso conocido de `window.scrollTo` en jsdom.
-- Regresión global posterior a UX-013: `npm run test:e2e` pasó **274/302**, omitió 28 (10 de Emulator + 2 EXTREME por motor) y no tuvo fallos en Chromium/WebKit; duración 10,1 min. Los recorridos de Emulator (12/12) y EXTREME (2/2, 1.000 acciones por motor) se ejecutaron por separado y permanecen como evidencia vigente del mismo corte.
+- Regresión global actualizada tras los journeys de Resultado y Ajustes: `npm run test:e2e` pasó **278/306**, omitió 28 (10 de Emulator + 2 EXTREME por motor) y no tuvo fallos en Chromium/WebKit; duración 10,3 min. Los recorridos de Emulator (12/12) y EXTREME (2/2, 1.000 acciones por motor) se ejecutaron por separado y permanecen como evidencia vigente del mismo corte.
 - `npm run check` volvió a pasar con **960/27**; se mantiene el aviso no bloqueante conocido de `window.scrollTo` de jsdom en Cards.
 - UX-009 sigue abierto: se verificó teclado y algunos estados ARIA con browser automatizado, así como reflow y un objetivo táctil de Falladas; siguen sin realizarse lector de pantalla real, zoom nativo 200%/400%, contraste exhaustivo y revisión WCAG completa.
 - ATE-006 sigue sin ejecución remota observable; la rama aún no ha llegado al default branch y no se creó una PR en este corte. QUICK/INTENSIVE/EXTREME permanecen disponibles localmente; EXTREME no se ejecuta en cada PR.

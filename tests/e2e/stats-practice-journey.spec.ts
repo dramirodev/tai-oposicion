@@ -5,6 +5,9 @@ for (const width of [320, 1440]) {
   test(`Progreso permite volver al estudio mediante un test por tema · ${width}px`, async ({ page }) => {
     await page.route('**/firebase-config.json', (route) => route.fulfill({ json: {} }));
     await page.addInitScript(() => {
+      if (localStorage.getItem('tai.e2e.stats-practice-seeded')) return;
+      localStorage.setItem('tai.e2e.stats-practice-seeded', '1');
+      Math.random = () => 0.5;
       localStorage.setItem('tai.dev', '1');
       localStorage.setItem('tai.acc:guest', 'propietario');
       localStorage.setItem(
