@@ -470,7 +470,7 @@
             "x": 236,
             "y": 0,
             "width": 1044,
-            "height": 2538
+            "height": 2613
           },
           "children": [
             {
@@ -4080,7 +4080,7 @@
             "x": 328,
             "y": 0,
             "width": 860,
-            "height": 751
+            "height": 717
           },
           "children": [
             {
@@ -4110,10 +4110,10 @@
                 "x": 368,
                 "y": 131,
                 "width": 780,
-                "height": 497
+                "height": 463
               },
               "children": [
-                "T3.06 · Java y .NET",
+                "T2.01 · Informática Básica",
                 {
                   "role": "paragraph",
                   "box": {
@@ -4124,56 +4124,43 @@
                   },
                   "text": "Cita del temario disponible, sin enlace verificado al PDF."
                 },
-                "Una función miembro definida fuera de la clase se escribe precedida por el nombre de la clase y el operador:",
+                "El contenido de un byte se expresa en hexadecimal con:",
                 {
                   "role": "button",
-                  "name": "A .",
+                  "name": "A Dos dígitos hexadecimales.",
                   "box": {
                     "x": 368,
-                    "y": 314,
+                    "y": 280,
                     "width": 780,
                     "height": 65
                   }
                 },
                 {
                   "role": "button",
-                  "name": "B ->",
+                  "name": "B Tres dígitos hexadecimales.",
                   "box": {
                     "x": 368,
-                    "y": 389,
-                    "width": 780,
-                    "height": 65
-                  },
-                  "children": [
-                    "B",
-                    {
-                      "role": "code",
-                      "box": {
-                        "x": 427,
-                        "y": 410,
-                        "width": 17,
-                        "height": 18
-                      },
-                      "text": "->"
-                    }
-                  ]
-                },
-                {
-                  "role": "button",
-                  "name": "C <<",
-                  "box": {
-                    "x": 368,
-                    "y": 464,
+                    "y": 355,
                     "width": 780,
                     "height": 65
                   }
                 },
                 {
                   "role": "button",
-                  "name": "D ::",
+                  "name": "C Un dígito hexadecimal.",
                   "box": {
                     "x": 368,
-                    "y": 539,
+                    "y": 430,
+                    "width": 780,
+                    "height": 65
+                  }
+                },
+                {
+                  "role": "button",
+                  "name": "D Cuatro dígitos hexadecimales.",
+                  "box": {
+                    "x": 368,
+                    "y": 505,
                     "width": 780,
                     "height": 65
                   }
@@ -4197,53 +4184,40 @@
       "controls": [
         {
           "role": "button",
-          "name": "A .",
+          "name": "A Dos dígitos hexadecimales.",
           "box": {
             "x": 368,
-            "y": 314,
+            "y": 280,
             "width": 780,
             "height": 65
           }
         },
         {
           "role": "button",
-          "name": "B ->",
+          "name": "B Tres dígitos hexadecimales.",
           "box": {
             "x": 368,
-            "y": 389,
-            "width": 780,
-            "height": 65
-          },
-          "children": [
-            "B",
-            {
-              "role": "code",
-              "box": {
-                "x": 427,
-                "y": 410,
-                "width": 17,
-                "height": 18
-              },
-              "text": "->"
-            }
-          ]
-        },
-        {
-          "role": "button",
-          "name": "C <<",
-          "box": {
-            "x": 368,
-            "y": 464,
+            "y": 355,
             "width": 780,
             "height": 65
           }
         },
         {
           "role": "button",
-          "name": "D ::",
+          "name": "C Un dígito hexadecimal.",
           "box": {
             "x": 368,
-            "y": 539,
+            "y": 430,
+            "width": 780,
+            "height": 65
+          }
+        },
+        {
+          "role": "button",
+          "name": "D Cuatro dígitos hexadecimales.",
+          "box": {
+            "x": 368,
+            "y": 505,
             "width": 780,
             "height": 65
           }
@@ -4272,7 +4246,7 @@
             "x": 328,
             "y": 0,
             "width": 860,
-            "height": 929
+            "height": 949
           },
           "children": [
             {
@@ -4323,10 +4297,10 @@
                 "x": 368,
                 "y": 184,
                 "width": 780,
-                "height": 622
+                "height": 642
               },
               "children": [
-                "T4.08 · Internet",
+                "T2.04 · Sistemas Operativos",
                 {
                   "role": "paragraph",
                   "box": {
@@ -4337,100 +4311,12 @@
                   },
                   "text": "Cita del temario disponible, sin enlace verificado al PDF."
                 },
-                "Sobre las versiones del protocolo HTTP, señale la afirmación",
-                {
-                  "role": "mark",
-                  "box": {
-                    "x": 918,
-                    "y": 275,
-                    "width": 128,
-                    "height": 26
-                  },
-                  "text": "INCORRECTA"
-                },
-                ": A HTTP/",
-                {
-                  "role": "mark",
-                  "box": {
-                    "x": 472,
-                    "y": 352,
-                    "width": 24,
-                    "height": 21
-                  },
-                  "text": "1.0"
-                },
-                "amplía la versión anterior con los comandos HEAD y POST. B HTTP/",
-                {
-                  "role": "mark",
-                  "box": {
-                    "x": 472,
-                    "y": 427,
-                    "width": 18,
-                    "height": 21
-                  },
-                  "text": "1.1"
-                },
-                "fue estandarizada inicialmente por el RFC",
-                {
-                  "role": "mark",
-                  "box": {
-                    "x": 803,
-                    "y": 427,
-                    "width": 42,
-                    "height": 21
-                  },
-                  "text": "2616."
-                },
-                "C HTTP/",
-                {
-                  "role": "mark",
-                  "box": {
-                    "x": 472,
-                    "y": 502,
-                    "width": 27,
-                    "height": 21
-                  },
-                  "text": "0.9"
-                },
-                "aparece en",
-                {
-                  "role": "mark",
-                  "box": {
-                    "x": 588,
-                    "y": 502,
-                    "width": 35,
-                    "height": 21
-                  },
-                  "text": "1991"
-                },
-                "y soporta",
-                {
-                  "role": "mark",
-                  "box": {
-                    "x": 700,
-                    "y": 502,
-                    "width": 90,
-                    "height": 21
-                  },
-                  "text": "únicamente"
-                },
-                "el comando GET. D HTTP/",
-                {
-                  "role": "mark",
-                  "box": {
-                    "x": 472,
-                    "y": 577,
-                    "width": 27,
-                    "height": 21
-                  },
-                  "text": "0.9"
-                },
-                "soporta los comandos GET y POST y ofrece soporte a cabeceras.",
+                "En una nube comunitaria: A La infraestructura es propiedad de un tercero abierto a entidades heterogéneas. B La infraestructura es completamente dedicada a un solo cliente. C La infraestructura combina nubes públicas y privadas. D La infraestructura es compartida en comunidad cerrada por varias organizaciones que comparten requisitos.",
                 {
                   "role": "paragraph",
                   "box": {
                     "x": 368,
-                    "y": 623,
+                    "y": 643,
                     "width": 780,
                     "height": 26
                   },
@@ -4438,31 +4324,31 @@
                 },
                 {
                   "role": "button",
-                  "name": "Absolutización",
+                  "name": "Orden invertido",
                   "box": {
                     "x": 383,
-                    "y": 673,
+                    "y": 693,
+                    "width": 135,
+                    "height": 44
+                  }
+                },
+                {
+                  "role": "button",
+                  "name": "Absolutización",
+                  "box": {
+                    "x": 524,
+                    "y": 693,
                     "width": 131,
                     "height": 44
                   }
                 },
                 {
                   "role": "button",
-                  "name": "Obligación/facultad",
+                  "name": "Numeración de normas",
                   "box": {
-                    "x": 520,
-                    "y": 673,
-                    "width": 166,
-                    "height": 44
-                  }
-                },
-                {
-                  "role": "button",
-                  "name": "Cambio de sujeto/órgano",
-                  "box": {
-                    "x": 692,
-                    "y": 673,
-                    "width": 204,
+                    "x": 661,
+                    "y": 693,
+                    "width": 188,
                     "height": 44
                   }
                 },
@@ -4470,39 +4356,9 @@
                   "role": "button",
                   "name": "Conceptos casi idénticos",
                   "box": {
-                    "x": 902,
-                    "y": 673,
+                    "x": 855,
+                    "y": 693,
                     "width": 201,
-                    "height": 44
-                  }
-                },
-                {
-                  "role": "button",
-                  "name": "Contaminación entre normas",
-                  "box": {
-                    "x": 383,
-                    "y": 723,
-                    "width": 228,
-                    "height": 44
-                  }
-                },
-                {
-                  "role": "button",
-                  "name": "Pregunta inversa",
-                  "box": {
-                    "x": 617,
-                    "y": 723,
-                    "width": 145,
-                    "height": 44
-                  }
-                },
-                {
-                  "role": "button",
-                  "name": "Orden invertido",
-                  "box": {
-                    "x": 768,
-                    "y": 723,
-                    "width": 135,
                     "height": 44
                   }
                 },
@@ -4510,9 +4366,39 @@
                   "role": "button",
                   "name": "Cifra o plazo vecino",
                   "box": {
-                    "x": 909,
-                    "y": 723,
+                    "x": 383,
+                    "y": 743,
                     "width": 164,
+                    "height": 44
+                  }
+                },
+                {
+                  "role": "button",
+                  "name": "Trampa del supuesto",
+                  "box": {
+                    "x": 553,
+                    "y": 743,
+                    "width": 173,
+                    "height": 44
+                  }
+                },
+                {
+                  "role": "button",
+                  "name": "Inventado que suena real",
+                  "box": {
+                    "x": 732,
+                    "y": 743,
+                    "width": 202,
+                    "height": 44
+                  }
+                },
+                {
+                  "role": "button",
+                  "name": "Intruso",
+                  "box": {
+                    "x": 940,
+                    "y": 743,
+                    "width": 78,
                     "height": 44
                   }
                 }
@@ -4544,31 +4430,31 @@
         },
         {
           "role": "button",
-          "name": "Absolutización",
+          "name": "Orden invertido",
           "box": {
             "x": 383,
-            "y": 673,
+            "y": 693,
+            "width": 135,
+            "height": 44
+          }
+        },
+        {
+          "role": "button",
+          "name": "Absolutización",
+          "box": {
+            "x": 524,
+            "y": 693,
             "width": 131,
             "height": 44
           }
         },
         {
           "role": "button",
-          "name": "Obligación/facultad",
+          "name": "Numeración de normas",
           "box": {
-            "x": 520,
-            "y": 673,
-            "width": 166,
-            "height": 44
-          }
-        },
-        {
-          "role": "button",
-          "name": "Cambio de sujeto/órgano",
-          "box": {
-            "x": 692,
-            "y": 673,
-            "width": 204,
+            "x": 661,
+            "y": 693,
+            "width": 188,
             "height": 44
           }
         },
@@ -4576,39 +4462,9 @@
           "role": "button",
           "name": "Conceptos casi idénticos",
           "box": {
-            "x": 902,
-            "y": 673,
+            "x": 855,
+            "y": 693,
             "width": 201,
-            "height": 44
-          }
-        },
-        {
-          "role": "button",
-          "name": "Contaminación entre normas",
-          "box": {
-            "x": 383,
-            "y": 723,
-            "width": 228,
-            "height": 44
-          }
-        },
-        {
-          "role": "button",
-          "name": "Pregunta inversa",
-          "box": {
-            "x": 617,
-            "y": 723,
-            "width": 145,
-            "height": 44
-          }
-        },
-        {
-          "role": "button",
-          "name": "Orden invertido",
-          "box": {
-            "x": 768,
-            "y": 723,
-            "width": 135,
             "height": 44
           }
         },
@@ -4616,9 +4472,39 @@
           "role": "button",
           "name": "Cifra o plazo vecino",
           "box": {
-            "x": 909,
-            "y": 723,
+            "x": 383,
+            "y": 743,
             "width": 164,
+            "height": 44
+          }
+        },
+        {
+          "role": "button",
+          "name": "Trampa del supuesto",
+          "box": {
+            "x": 553,
+            "y": 743,
+            "width": 173,
+            "height": 44
+          }
+        },
+        {
+          "role": "button",
+          "name": "Inventado que suena real",
+          "box": {
+            "x": 732,
+            "y": 743,
+            "width": 202,
+            "height": 44
+          }
+        },
+        {
+          "role": "button",
+          "name": "Intruso",
+          "box": {
+            "x": 940,
+            "y": 743,
+            "width": 78,
             "height": 44
           }
         },
@@ -4645,7 +4531,7 @@
             "x": 328,
             "y": 0,
             "width": 860,
-            "height": 516
+            "height": 556
           },
           "children": [
             {
@@ -4686,25 +4572,15 @@
                 "x": 368,
                 "y": 159,
                 "width": 780,
-                "height": 309
+                "height": 350
               },
               "children": [
+                "Para controlar el número de conexiones a una base de datos se ha valorado el empleo de un patrón de diseño que sólo permitirá la creación de una instancia por clase. Es el patrón:",
                 {
                   "role": "paragraph",
                   "box": {
                     "x": 368,
-                    "y": 179,
-                    "width": 780,
-                    "height": 20
-                  },
-                  "text": "Cita del temario disponible, sin enlace verificado al PDF."
-                },
-                "¿Qué estándar IEEE 802.11 está enfocado a TV y opera entre 54 MHz y 790 MHz?",
-                {
-                  "role": "paragraph",
-                  "box": {
-                    "x": 368,
-                    "y": 278,
+                    "y": 319,
                     "width": 780,
                     "height": 26
                   },
@@ -4715,7 +4591,7 @@
                   "name": "La opción CORRECTA / VERDADERA",
                   "box": {
                     "x": 368,
-                    "y": 304,
+                    "y": 344,
                     "width": 780,
                     "height": 65
                   }
@@ -4725,7 +4601,7 @@
                   "name": "La INCORRECTA / FALSA / la excepción",
                   "box": {
                     "x": 368,
-                    "y": 379,
+                    "y": 419,
                     "width": 780,
                     "height": 65
                   }
@@ -4751,7 +4627,7 @@
           "name": "La opción CORRECTA / VERDADERA",
           "box": {
             "x": 368,
-            "y": 304,
+            "y": 344,
             "width": 780,
             "height": 65
           }
@@ -4761,7 +4637,7 @@
           "name": "La INCORRECTA / FALSA / la excepción",
           "box": {
             "x": 368,
-            "y": 379,
+            "y": 419,
             "width": 780,
             "height": 65
           }
@@ -8662,7 +8538,7 @@
                 "height": 22
               }
             },
-            "El organismo en el que usted presta servicios es el órgano competente para la concesión de unas becas para personas opositoras y, por tanto, ha surgido la necesidad de desarrollar un sistema de información que cubra todas las fases que se producen en la concesión de las becas. A continuación, se expone parte del modelo de datos del sistema, donde los atributos señalados en negrita son claves primarias y los señalados en cursiva, claves foráneas: El sistema, en su parte frontend, permitirá la firma y presentación de solicitudes, subsanaciones y alegaciones por parte de los interesados una vez se autentiquen. También permitirá la descarga de los distintos listados que se publiquen por parte de…",
+            "El Ministerio de Educación, Formación Profesional y Deportes ha puesto en marcha el proyecto EDUCA-DATA 2030, cuyo objetivo es diseñar, desarrollar e implantar un sistema integral para el seguimiento, análisis y toma de decisiones estratégicas sobre los diferentes programas educativos. El sistema permitirá la visualización de indicadores clave de rendimiento (KPI) relativos a centros educativos, programas formativos y alumnado, entre otros muchos. La solución se integrará con los sistemas corporativos existentes mediante servicios REST y procesamientos ETL, y almacenará la información en una base de datos Oracle Database 19c Enterprise Edition. El desarrollo se realizará utilizando Java SE D…",
             {
               "role": "button",
               "name": "Elegir este supuesto",
@@ -11794,7 +11670,7 @@
             "x": 236,
             "y": 0,
             "width": 1044,
-            "height": 5021
+            "height": 5091
           },
           "children": [
             {
@@ -11837,7 +11713,7 @@
                 "width": 721,
                 "height": 26
               },
-              "text": "sincronizado · último dato recibido 14:49:54"
+              "text": "sincronizado · último dato recibido 15:44:09"
             },
             {
               "role": "button",
@@ -12117,11 +11993,11 @@
             },
             {
               "role": "button",
-              "name": "Versión 1.1.12 (550c8f0)",
+              "name": "Versión 1.1.12 (dfbd4ae)",
               "box": {
                 "x": 301,
                 "y": 896,
-                "width": 163,
+                "width": 160,
                 "height": 44
               }
             },
@@ -13149,7 +13025,7 @@
                 "x": 301,
                 "y": 2325,
                 "width": 914,
-                "height": 259
+                "height": 240
               },
               "children": [
                 "Orden de la academia",
@@ -13169,7 +13045,7 @@
                   "name": "Añadir tema al final",
                   "box": {
                     "x": 318,
-                    "y": 2483,
+                    "y": 2464,
                     "width": 787,
                     "height": 48
                   },
@@ -13553,7 +13429,7 @@
                   "disabled": true,
                   "box": {
                     "x": 1113,
-                    "y": 2483,
+                    "y": 2464,
                     "width": 85,
                     "height": 48
                   }
@@ -13562,7 +13438,7 @@
                   "role": "paragraph",
                   "box": {
                     "x": 318,
-                    "y": 2543,
+                    "y": 2524,
                     "width": 880,
                     "height": 24
                   },
@@ -13575,7 +13451,7 @@
               "name": "Actividades disponibles",
               "box": {
                 "x": 301,
-                "y": 2600,
+                "y": 2581,
                 "width": 914,
                 "height": 327
               },
@@ -13587,7 +13463,7 @@
                   "checked": true,
                   "box": {
                     "x": 318,
-                    "y": 2653,
+                    "y": 2635,
                     "width": 20,
                     "height": 20
                   }
@@ -13599,7 +13475,7 @@
                   "checked": true,
                   "box": {
                     "x": 318,
-                    "y": 2709,
+                    "y": 2691,
                     "width": 20,
                     "height": 20
                   }
@@ -13611,7 +13487,7 @@
                   "checked": true,
                   "box": {
                     "x": 318,
-                    "y": 2765,
+                    "y": 2747,
                     "width": 20,
                     "height": 20
                   }
@@ -13623,7 +13499,7 @@
                   "checked": true,
                   "box": {
                     "x": 318,
-                    "y": 2821,
+                    "y": 2803,
                     "width": 20,
                     "height": 20
                   }
@@ -13635,7 +13511,7 @@
                   "checked": true,
                   "box": {
                     "x": 318,
-                    "y": 2877,
+                    "y": 2859,
                     "width": 20,
                     "height": 20
                   }
@@ -13648,9 +13524,9 @@
               "name": "Eventos y excepciones",
               "box": {
                 "x": 301,
-                "y": 2942,
+                "y": 2924,
                 "width": 914,
-                "height": 439
+                "height": 528
               },
               "children": [
                 "Eventos y excepciones",
@@ -13658,7 +13534,7 @@
                   "role": "paragraph",
                   "box": {
                     "x": 318,
-                    "y": 2984,
+                    "y": 2966,
                     "width": 880,
                     "height": 96
                   },
@@ -13669,9 +13545,9 @@
                   "role": "combobox",
                   "name": "Tipo de evento",
                   "box": {
-                    "x": 359,
-                    "y": 3092,
-                    "width": 393,
+                    "x": 318,
+                    "y": 3103,
+                    "width": 434,
                     "height": 48
                   },
                   "children": [
@@ -13723,10 +13599,10 @@
                   "role": "textbox",
                   "name": "Nombre del evento",
                   "box": {
-                    "x": 832,
-                    "y": 3108,
-                    "width": 20,
-                    "height": 20
+                    "x": 764,
+                    "y": 3103,
+                    "width": 434,
+                    "height": 48
                   },
                   "placeholder": "Vacaciones, clase…"
                 },
@@ -13735,10 +13611,10 @@
                   "role": "textbox",
                   "name": "Procedencia del evento",
                   "box": {
-                    "x": 543,
-                    "y": 3168,
-                    "width": 20,
-                    "height": 20
+                    "x": 318,
+                    "y": 3193,
+                    "width": 434,
+                    "height": 48
                   },
                   "placeholder": "Calendario personal, academia…"
                 },
@@ -13747,9 +13623,9 @@
                   "role": "textbox",
                   "name": "Inicio del evento",
                   "box": {
-                    "x": 821,
-                    "y": 3152,
-                    "width": 26,
+                    "x": 764,
+                    "y": 3193,
+                    "width": 434,
                     "height": 48
                   }
                 },
@@ -13758,9 +13634,9 @@
                   "role": "textbox",
                   "name": "Fin del evento",
                   "box": {
-                    "x": 441,
-                    "y": 3212,
-                    "width": 26,
+                    "x": 318,
+                    "y": 3282,
+                    "width": 434,
                     "height": 48
                   }
                 },
@@ -13770,7 +13646,7 @@
                   "disabled": true,
                   "box": {
                     "x": 318,
-                    "y": 3284,
+                    "y": 3354,
                     "width": 144,
                     "height": 44
                   }
@@ -13779,7 +13655,7 @@
                   "role": "paragraph",
                   "box": {
                     "x": 318,
-                    "y": 3340,
+                    "y": 3411,
                     "width": 880,
                     "height": 24
                   },
@@ -13793,7 +13669,7 @@
               "level": 2,
               "box": {
                 "x": 301,
-                "y": 3451,
+                "y": 3522,
                 "width": 914,
                 "height": 22
               }
@@ -13802,7 +13678,7 @@
               "role": "paragraph",
               "box": {
                 "x": 301,
-                "y": 3485,
+                "y": 3555,
                 "width": 721,
                 "height": 26
               },
@@ -13813,7 +13689,7 @@
               "name": "Ver errores del banco",
               "box": {
                 "x": 301,
-                "y": 3514,
+                "y": 3585,
                 "width": 184,
                 "height": 48
               }
@@ -13824,7 +13700,7 @@
               "level": 2,
               "box": {
                 "x": 301,
-                "y": 3636,
+                "y": 3707,
                 "width": 914,
                 "height": 22
               }
@@ -13833,7 +13709,7 @@
               "role": "status",
               "box": {
                 "x": 301,
-                "y": 3670,
+                "y": 3740,
                 "width": 721,
                 "height": 51
               },
@@ -13843,7 +13719,7 @@
               "role": "paragraph",
               "box": {
                 "x": 301,
-                "y": 3721,
+                "y": 3792,
                 "width": 676,
                 "height": 48
               },
@@ -13854,7 +13730,7 @@
               "name": "Descargar para uso sin conexión",
               "box": {
                 "x": 301,
-                "y": 3773,
+                "y": 3844,
                 "width": 257,
                 "height": 48
               }
@@ -13865,7 +13741,7 @@
               "level": 2,
               "box": {
                 "x": 301,
-                "y": 3895,
+                "y": 3966,
                 "width": 914,
                 "height": 22
               }
@@ -13874,7 +13750,7 @@
               "role": "paragraph",
               "box": {
                 "x": 301,
-                "y": 3929,
+                "y": 3999,
                 "width": 721,
                 "height": 51
               },
@@ -13886,7 +13762,7 @@
               "name": "Desde",
               "box": {
                 "x": 301,
-                "y": 4028,
+                "y": 4098,
                 "width": 451,
                 "height": 48
               },
@@ -13898,7 +13774,7 @@
               "name": "Hasta",
               "box": {
                 "x": 764,
-                "y": 4028,
+                "y": 4098,
                 "width": 451,
                 "height": 48
               },
@@ -13909,7 +13785,7 @@
               "name": "Modalidades para exportar",
               "box": {
                 "x": 301,
-                "y": 4092,
+                "y": 4162,
                 "width": 914,
                 "height": 44
               },
@@ -13920,7 +13796,7 @@
                   "checked": true,
                   "box": {
                     "x": 301,
-                    "y": 4102,
+                    "y": 4172,
                     "width": 24,
                     "height": 24
                   }
@@ -13932,7 +13808,7 @@
                   "checked": true,
                   "box": {
                     "x": 403,
-                    "y": 4102,
+                    "y": 4172,
                     "width": 24,
                     "height": 24
                   }
@@ -13945,7 +13821,7 @@
               "name": "Buscar sesiones completadas",
               "box": {
                 "x": 301,
-                "y": 4154,
+                "y": 4224,
                 "width": 240,
                 "height": 48
               }
@@ -13956,7 +13832,7 @@
               "disabled": true,
               "box": {
                 "x": 301,
-                "y": 4234,
+                "y": 4304,
                 "width": 257,
                 "height": 48
               }
@@ -13965,7 +13841,7 @@
               "role": "status",
               "box": {
                 "x": 301,
-                "y": 4286,
+                "y": 4356,
                 "width": 721,
                 "height": 0
               }
@@ -13974,7 +13850,7 @@
               "role": "separator",
               "box": {
                 "x": 301,
-                "y": 4286,
+                "y": 4356,
                 "width": 914,
                 "height": 1
               }
@@ -13983,7 +13859,7 @@
               "role": "paragraph",
               "box": {
                 "x": 301,
-                "y": 4287,
+                "y": 4357,
                 "width": 721,
                 "height": 77
               },
@@ -13994,7 +13870,7 @@
               "name": "Borrar historial detallado",
               "box": {
                 "x": 301,
-                "y": 4367,
+                "y": 4438,
                 "width": 204,
                 "height": 48
               }
@@ -14005,7 +13881,7 @@
               "level": 2,
               "box": {
                 "x": 301,
-                "y": 4489,
+                "y": 4560,
                 "width": 914,
                 "height": 24
               },
@@ -14016,7 +13892,7 @@
                   "name": "Ayuda sobre guardado y sincronización",
                   "box": {
                     "x": 463,
-                    "y": 4489,
+                    "y": 4560,
                     "width": 24,
                     "height": 24
                   },
@@ -14028,7 +13904,7 @@
               "role": "paragraph",
               "box": {
                 "x": 301,
-                "y": 4525,
+                "y": 4596,
                 "width": 676,
                 "height": 48
               },
@@ -14038,7 +13914,7 @@
               "role": "status",
               "box": {
                 "x": 301,
-                "y": 4573,
+                "y": 4644,
                 "width": 721,
                 "height": 0
               }
@@ -14048,7 +13924,7 @@
               "name": "Exportar progreso",
               "box": {
                 "x": 301,
-                "y": 4577,
+                "y": 4648,
                 "width": 162,
                 "height": 48
               }
@@ -14059,7 +13935,7 @@
               "name": "Importar",
               "box": {
                 "x": 468,
-                "y": 4578,
+                "y": 4649,
                 "width": 97,
                 "height": 46
               }
@@ -14070,7 +13946,7 @@
               "level": 2,
               "box": {
                 "x": 301,
-                "y": 4699,
+                "y": 4770,
                 "width": 914,
                 "height": 22
               }
@@ -14080,7 +13956,7 @@
               "name": "Borrar progreso de este dispositivo",
               "box": {
                 "x": 301,
-                "y": 4737,
+                "y": 4807,
                 "width": 272,
                 "height": 48
               }
@@ -14089,7 +13965,7 @@
               "role": "group",
               "box": {
                 "x": 276,
-                "y": 4834,
+                "y": 4904,
                 "width": 964,
                 "height": 96
               },
@@ -14099,7 +13975,7 @@
               "role": "paragraph",
               "box": {
                 "x": 276,
-                "y": 4950,
+                "y": 5020,
                 "width": 964,
                 "height": 26
               },
@@ -14246,11 +14122,11 @@
         },
         {
           "role": "button",
-          "name": "Versión 1.1.12 (550c8f0)",
+          "name": "Versión 1.1.12 (dfbd4ae)",
           "box": {
             "x": 301,
             "y": 896,
-            "width": 163,
+            "width": 160,
             "height": 44
           }
         },
@@ -15186,7 +15062,7 @@
           "name": "Añadir tema al final",
           "box": {
             "x": 318,
-            "y": 2483,
+            "y": 2464,
             "width": 787,
             "height": 48
           },
@@ -15570,7 +15446,7 @@
           "disabled": true,
           "box": {
             "x": 1113,
-            "y": 2483,
+            "y": 2464,
             "width": 85,
             "height": 48
           }
@@ -15581,7 +15457,7 @@
           "checked": true,
           "box": {
             "x": 318,
-            "y": 2653,
+            "y": 2635,
             "width": 20,
             "height": 20
           }
@@ -15592,7 +15468,7 @@
           "checked": true,
           "box": {
             "x": 318,
-            "y": 2709,
+            "y": 2691,
             "width": 20,
             "height": 20
           }
@@ -15603,7 +15479,7 @@
           "checked": true,
           "box": {
             "x": 318,
-            "y": 2765,
+            "y": 2747,
             "width": 20,
             "height": 20
           }
@@ -15614,7 +15490,7 @@
           "checked": true,
           "box": {
             "x": 318,
-            "y": 2821,
+            "y": 2803,
             "width": 20,
             "height": 20
           }
@@ -15625,7 +15501,7 @@
           "checked": true,
           "box": {
             "x": 318,
-            "y": 2877,
+            "y": 2859,
             "width": 20,
             "height": 20
           }
@@ -15634,9 +15510,9 @@
           "role": "combobox",
           "name": "Tipo de evento",
           "box": {
-            "x": 359,
-            "y": 3092,
-            "width": 393,
+            "x": 318,
+            "y": 3103,
+            "width": 434,
             "height": 48
           },
           "children": [
@@ -15687,10 +15563,10 @@
           "role": "textbox",
           "name": "Nombre del evento",
           "box": {
-            "x": 832,
-            "y": 3108,
-            "width": 20,
-            "height": 20
+            "x": 764,
+            "y": 3103,
+            "width": 434,
+            "height": 48
           },
           "placeholder": "Vacaciones, clase…"
         },
@@ -15698,10 +15574,10 @@
           "role": "textbox",
           "name": "Procedencia del evento",
           "box": {
-            "x": 543,
-            "y": 3168,
-            "width": 20,
-            "height": 20
+            "x": 318,
+            "y": 3193,
+            "width": 434,
+            "height": 48
           },
           "placeholder": "Calendario personal, academia…"
         },
@@ -15709,9 +15585,9 @@
           "role": "textbox",
           "name": "Inicio del evento",
           "box": {
-            "x": 821,
-            "y": 3152,
-            "width": 26,
+            "x": 764,
+            "y": 3193,
+            "width": 434,
             "height": 48
           }
         },
@@ -15719,9 +15595,9 @@
           "role": "textbox",
           "name": "Fin del evento",
           "box": {
-            "x": 441,
-            "y": 3212,
-            "width": 26,
+            "x": 318,
+            "y": 3282,
+            "width": 434,
             "height": 48
           }
         },
@@ -15731,7 +15607,7 @@
           "disabled": true,
           "box": {
             "x": 318,
-            "y": 3284,
+            "y": 3354,
             "width": 144,
             "height": 44
           }
@@ -15741,7 +15617,7 @@
           "name": "Ver errores del banco",
           "box": {
             "x": 301,
-            "y": 3514,
+            "y": 3585,
             "width": 184,
             "height": 48
           }
@@ -15751,7 +15627,7 @@
           "name": "Descargar para uso sin conexión",
           "box": {
             "x": 301,
-            "y": 3773,
+            "y": 3844,
             "width": 257,
             "height": 48
           }
@@ -15761,7 +15637,7 @@
           "name": "Desde",
           "box": {
             "x": 301,
-            "y": 4028,
+            "y": 4098,
             "width": 451,
             "height": 48
           },
@@ -15772,7 +15648,7 @@
           "name": "Hasta",
           "box": {
             "x": 764,
-            "y": 4028,
+            "y": 4098,
             "width": 451,
             "height": 48
           },
@@ -15784,7 +15660,7 @@
           "checked": true,
           "box": {
             "x": 301,
-            "y": 4102,
+            "y": 4172,
             "width": 24,
             "height": 24
           }
@@ -15795,7 +15671,7 @@
           "checked": true,
           "box": {
             "x": 403,
-            "y": 4102,
+            "y": 4172,
             "width": 24,
             "height": 24
           }
@@ -15805,7 +15681,7 @@
           "name": "Buscar sesiones completadas",
           "box": {
             "x": 301,
-            "y": 4154,
+            "y": 4224,
             "width": 240,
             "height": 48
           }
@@ -15816,7 +15692,7 @@
           "disabled": true,
           "box": {
             "x": 301,
-            "y": 4234,
+            "y": 4304,
             "width": 257,
             "height": 48
           }
@@ -15826,7 +15702,7 @@
           "name": "Borrar historial detallado",
           "box": {
             "x": 301,
-            "y": 4367,
+            "y": 4438,
             "width": 204,
             "height": 48
           }
@@ -15836,7 +15712,7 @@
           "name": "Ayuda sobre guardado y sincronización",
           "box": {
             "x": 463,
-            "y": 4489,
+            "y": 4560,
             "width": 24,
             "height": 24
           },
@@ -15847,7 +15723,7 @@
           "name": "Exportar progreso",
           "box": {
             "x": 301,
-            "y": 4577,
+            "y": 4648,
             "width": 162,
             "height": 48
           }
@@ -15857,7 +15733,7 @@
           "name": "Importar",
           "box": {
             "x": 468,
-            "y": 4578,
+            "y": 4649,
             "width": 97,
             "height": 46
           }
@@ -15867,7 +15743,7 @@
           "name": "Borrar progreso de este dispositivo",
           "box": {
             "x": 301,
-            "y": 4737,
+            "y": 4807,
             "width": 272,
             "height": 48
           }

@@ -54,13 +54,13 @@ La aplicación reconoce el propietario sintético solamente si la configuración
 
 Auditoría del código (`access-control.ts`, `access-policy.ts`, `access-composition.ts`, `route-runtime.tsx`, `firestore.rules`):
 
-| Nivel | Módulos completos | Gestionar accesos | Datos remotos |
-| --- | --- | --- | --- |
-| Anónimo / invitado | Sesión rápida, Inicio, Ayuda, Ajustes públicos | No | No |
-| Autenticado sin aprobar | Igual; puede solicitar acceso | No | Su solicitud y lectura de su aprobación |
-| Pendiente | Igual; solicitud visible | No | Igual |
-| Aprobado verificado | Planificación, Temario/materiales, test, simulacros, progreso, entrenadores, falladas, errores, curación | No | Banco en lectura y datos propios validados |
-| Propietario verificado | Todos los módulos habilitados | Aprobar, rechazar, revocar | Datos propios; no historial de otros ni escritura del banco |
+| Nivel                   | Módulos completos                                                                                        | Gestionar accesos          | Datos remotos                                               |
+| ----------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------- | ----------------------------------------------------------- |
+| Anónimo / invitado      | Sesión rápida, Inicio, Ayuda, Ajustes públicos                                                           | No                         | No                                                          |
+| Autenticado sin aprobar | Igual; puede solicitar acceso                                                                            | No                         | Su solicitud y lectura de su aprobación                     |
+| Pendiente               | Igual; solicitud visible                                                                                 | No                         | Igual                                                       |
+| Aprobado verificado     | Planificación, Temario/materiales, test, simulacros, progreso, entrenadores, falladas, errores, curación | No                         | Banco en lectura y datos propios validados                  |
+| Propietario verificado  | Todos los módulos habilitados                                                                            | Aprobar, rechazar, revocar | Datos propios; no historial de otros ni escritura del banco |
 
 Las rutas restringidas son `/temario`, `/planificacion`, `/errores`, `/falladas`, `/relampago`, `/trampas`, `/lectura`, `/curar-contenido`, `/test`, `/sim`, `/sim2`, `/stats`. `/acceso` tiene guard adicional de propietario. `/cards` redirige a Inicio porque está oculto, también al propietario. `/quiz` y `/result` son rutas de ejecución/resultados públicas para la sesión rápida; no conceden permisos remotos. `/examenes` redirige al flujo de simulacros. El modo local ordinario conserva su excepción de desarrollo; no es evidencia de permisos Firebase.
 
@@ -177,6 +177,10 @@ El mismo caso verifica que la evolución conserva tras recarga «Tiempo por preg
 `npm run test:e2e -- tests/e2e/stats-practice-journey.spec.ts` recorre Progreso → practicar T1.02 → responder 15 preguntas → Resultado → Progreso. Comprueba sus 15 revisiones, el intento, las estadísticas y que las 15 respuestas siguen agregadas después de recargar Progreso. Pasó **4/4** en Chromium/WebKit a 320/1440 px. También mide que la última opción queda por encima de la barra fija. Evidencia: `stats-to-topic-test-{initial,readable-option,result}-{320px,1440px}.png`. Usa el banco incluido y almacenamiento local sintético; no conecta con Firebase y no verifica sincronización remota.
 
 `npm run test:e2e -- tests/e2e/settings-preferences-journey.spec.ts` verifica cambiar Tema a Oscuro y Tamaño de letra a A+++ mediante clic, Enter y Espacio, los estados `aria-pressed`, el almacenamiento y la restauración tras reload; también abre la confirmación de borrado y cancela con Escape para verificar foco y estado conservado. Pasó 4/4 Chromium/WebKit a 320/1440 px, sin overflow horizontal; el borrado no se confirma. Evidencia `settings-preferences-{320,1440}px-{chromium,webkit}.png`. Utiliza el perfil sintético local, sin Firebase.
+
+`npm run test:e2e -- tests/e2e/settings-reset-journey.spec.ts` cubre el caso complementario: desde Ajustes invitado sintético, confirma explícitamente el borrado local, navega el diálogo con Tab, verifica el retorno del foco y el toast, y comprueba que el estado vacío persiste después de reload. Pasó 4/4 Chromium/WebKit a 320/1440 px. Evidencias completas: `evidence/accessibility-2026-11-05/settings-reset-{320,1440}px-{chromium,webkit}.png`. Solo manipula `tai.v1:guest`; no llama Firebase ni utiliza credenciales.
+
+`npm run test:e2e -- tests/e2e/settings-exam-target-journey.spec.ts` cubre Inicio → Ajustes → fecha personal → reload completo → cuenta atrás de Inicio → horizonte de Planificación → enlace de retorno a Ajustes. Pasó 4/4 Chromium/WebKit a 320/1440 px; conserva capturas de Planificación y Ajustes en `evidence/accessibility-2026-11-05/settings-exam-target-{planning-,}{320,1440}px-{chromium,webkit}.png`. El fixture es invitado/propietario sintético en almacenamiento local, sin Firebase ni datos reales.
 
 `npm run test:e2e -- tests/e2e/settings-training-schedule-journey.spec.ts` verifica preferencias de entrenamiento y eventos: inputs de nombre/nota ≥100×40 px, objetivo clicable de actividad ≥24×24 px, cambio de minutos/enfoque/duración, error ante fechas invertidas, creación de clase, persistencia tras reload y eliminación. Pasó **4/4** Chromium/WebKit a 320/1440 px. Capturas `settings-training-{320,1440}px-{chromium,webkit}.png`; fixture sintético local, sin Firebase.
 
