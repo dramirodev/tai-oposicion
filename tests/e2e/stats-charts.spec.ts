@@ -117,6 +117,23 @@ for (const theme of ['light', 'dark']) {
       mkdirSync(evidenceDir, { recursive: true });
       await page.screenshot({ path: `${evidenceDir}/stats-evolution-preferences-restored.png`, fullPage: true });
     }
+
+    await page.getByRole('button', { name: 'Acierto', exact: true }).click();
+    const evolutionFilter = page.getByLabel('Qué medir en la evolución');
+    const topicFilter = await evolutionFilter
+      .locator('option')
+      .evaluateAll((options) =>
+        options.map((option) => (option as HTMLOptionElement).value).find((value) => value === 't:T1.02'),
+      );
+    expect(topicFilter).toBe('t:T1.02');
+    await evolutionFilter.selectOption(topicFilter!);
+    await expect(evolutionFilter).toHaveValue(topicFilter!);
+
+    await page.reload();
+    await expect(page.getByRole('heading', { name: 'Progreso' })).toBeVisible();
+    await page.getByRole('button', { name: 'Evolución' }).click();
+    await expect(page.getByLabel('Qué medir en la evolución')).toHaveValue(topicFilter!);
+    await expect(page.getByLabel('Qué medir en la evolución')).toBeEnabled();
   });
 }
 

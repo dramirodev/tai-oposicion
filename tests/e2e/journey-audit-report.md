@@ -318,6 +318,7 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 ### Persistencia de preferencias de evolución en Estadísticas (5 de noviembre de 2026)
 
 - En el fixture sintético local, la persona cambia la métrica a «Tiempo por pregunta», elige 8 semanas y activa «Ver tabla». Tras recargar, abre Evolución y se comprueba que la métrica, el periodo y la tabla siguen seleccionados/renderizados.
+- También vuelve a «Acierto», filtra por T1.02 y recarga una segunda vez: se conserva el tema y el selector vuelve habilitado, verificando que el modo de tiempo no destruyó el filtro.
 - **Verificación:** `npm run test:e2e -- tests/e2e/stats-charts.spec.ts` pasó **8/8** en Chromium y WebKit; abarca claro/oscuro y viewports de 320/1440 px. La semilla local solo se inserta cuando no existe `tai.v1:guest`, para que `addInitScript` no restablezca la fixture durante reload y destruya el estado que se pretende verificar.
 - **Evidencia:** [`preferencias restauradas`](evidence/accessibility-2026-11-05/stats-evolution-preferences-restored.png), capturada tras la recarga en viewport escritorio y tema claro.
 - La primera ejecución falló porque el propio setup del test sobreescribía el snapshot en cada recarga. Se corrigió la condición de semillado; la evidencia no indicó un defecto de persistencia de TAI. El origen del falso fallo y su corrección están conservados en la prueba.
