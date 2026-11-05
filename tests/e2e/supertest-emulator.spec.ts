@@ -143,6 +143,75 @@ test.describe('Firebase Auth Emulator supertest', () => {
       await expect(page.getByRole('heading', { name: heading, exact: true })).toBeVisible({ timeout: 15_000 });
     }
   });
+  test('Lectura atenta recorre sus tres pasos, avanza y permite salir', async ({ page }) => {
+    test.setTimeout(90_000);
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.clock.install({ time: new Date('2026-10-29T12:00:00+01:00') });
+    await signInSynthetic(page, identities.owner.email);
+    await page.goto('/#/lectura');
+
+    await expect(page.getByRole('heading', { name: 'Lectura atenta · paso 1 de 3' })).toBeVisible();
+    await page.getByRole('button', { name: 'La opción CORRECTA / VERDADERA' }).click();
+    await expect(page.getByText(/¡Bien leído!|Ojo: lo habías leído al revés\./)).toBeVisible();
+    await page.getByRole('button', { name: 'Siguiente →' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Lectura atenta · paso 2 de 3' })).toBeVisible();
+    const words = page.getByRole('group', { name: 'Palabras del enunciado' });
+    const firstWord = words.getByRole('button').first();
+    await firstWord.click();
+    await expect(firstWord).toHaveAttribute('aria-pressed', 'true');
+    await page.getByRole('button', { name: 'Continuar', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'Ver opciones →' })).toBeVisible();
+    await page.getByRole('button', { name: 'Ver opciones →' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Lectura atenta · paso 3 de 3' })).toBeVisible();
+    mkdirSync('tests/e2e/evidence/accessibility-2026-11-05', { recursive: true });
+    await page.screenshot({
+      path: 'tests/e2e/evidence/accessibility-2026-11-05/reading-options-timed-gate.png',
+      fullPage: true,
+    });
+    const firstOption = page.locator('.opts .opt').first();
+    await expect(firstOption).toBeDisabled();
+    await page.clock.runFor('10:00');
+    await expect(firstOption).toBeEnabled();
+    await firstOption.click();
+    await expect(page.getByText(/¡Correcto!|Incorrecto/)).toBeVisible();
+    await page.getByRole('button', { name: 'Siguiente →' }).click();
+    await expect(page.getByRole('heading', { name: 'Lectura atenta · paso 1 de 3' })).toBeVisible();
+    await expect(page.locator('.cnt')).toHaveText(/^2\/\d+$/);
+
+    await page.getByRole('button', { name: 'Salir', exact: true }).click();
+    const confirmation = page.getByRole('dialog');
+    await expect(confirmation).toContainText('¿Salir del ejercicio?');
+    await confirmation.getByRole('button', { name: 'Salir', exact: true }).click();
+    await expect(page).toHaveURL(/#\/home$/);
+  });
+  test('Curación owner descubre preguntas, filtra candidatos y exige evidencia antes de guardar', async ({ page }) => {
+    test.setTimeout(120_000);
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await signInSynthetic(page, identities.owner.email);
+    await page.goto('/#/curar-contenido');
+    await expect(page.getByRole('heading', { name: 'Curar vínculos a epígrafes' })).toBeVisible();
+
+    await page.getByLabel('Tema de la pregunta').selectOption('T1.01');
+    await expect(page.getByText(/Cola de candidatos sin vínculo/)).toBeVisible();
+    const question = page.getByRole('combobox', { name: 'Pregunta', exact: true });
+    await expect.poll(async () => question.locator('option').count()).toBeGreaterThan(1);
+    await question.selectOption({ index: 1 });
+    const selectedQuestionId = await question.inputValue();
+    const search = page.getByLabel('Buscar candidato');
+    await search.fill('__sin_coincidencias__');
+    await expect(page.getByText('No hay candidatos pendientes para este tema o filtro.')).toBeVisible();
+    await page.screenshot({
+      path: 'tests/e2e/evidence/accessibility-2026-11-05/content-curation-filter-empty.png',
+      fullPage: true,
+    });
+    await search.clear();
+    await expect(question).toHaveValue(selectedQuestionId);
+
+    await expect(page.getByRole('button', { name: 'Añadir al borrador local' })).toBeDisabled();
+    await expect(page.locator('#app')).not.toContainText('No se pudo cargar el catálogo');
+  });
   test('inventario accesible de rutas y controles con perfil propietario sintético', async ({ page }, testInfo) => {
     test.setTimeout(120_000);
     await page.setViewportSize({ width: 1280, height: 900 });
