@@ -55,5 +55,28 @@ for (const width of [320, 1440]) {
       path: `${evidenceDir}/stats-to-topic-test-readable-option-${width}px.png`,
       fullPage: true,
     });
+
+    const questionIds = await page.evaluate(
+      () => JSON.parse(localStorage.getItem('tai.run:guest') || 'null').ids as string[],
+    );
+    expect(questionIds.length).toBeGreaterThan(0);
+    for (let index = 0; index < questionIds.length; index++) {
+      await page.locator('.quiz-page .option-control .opt').first().click();
+      await page.locator('#next').click();
+    }
+
+    await expect(page).toHaveURL(/#\/result(?:\?|$)/);
+    await expect(page.locator('#app h1')).toHaveText('Resultado');
+    await expect(page.locator('.rv')).toHaveCount(questionIds.length);
+    const savedProgress = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.v1:guest') || 'null'));
+    expect(savedProgress.sessions).toHaveLength(1);
+    expect(Object.keys(savedProgress.stats)).toEqual(expect.arrayContaining(questionIds));
+    await page.screenshot({ path: `${evidenceDir}/stats-to-topic-test-result-${width}px.png` });
+    await page.goto('/#/stats');
+    await expect(page.getByRole('heading', { name: 'Progreso' })).toBeVisible();
+    await expect(page.getByText(new RegExp(`^${questionIds.length} respuestas registradas`))).toBeVisible();
+    await page.reload();
+    await expect(page.getByRole('heading', { name: 'Progreso' })).toBeVisible();
+    await expect(page.getByText(new RegExp(`^${questionIds.length} respuestas registradas`))).toBeVisible();
   });
 }

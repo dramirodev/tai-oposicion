@@ -174,7 +174,7 @@ El mismo caso verifica que la evolución conserva tras recarga «Tiempo por preg
 
 ### Desde Progreso hasta una pregunta
 
-`npm run test:e2e -- tests/e2e/stats-practice-journey.spec.ts` recorre Progreso → Practicar temas → Test por tema → selección T1.02 → Quiz; confirma la ruta, el tema de la pregunta, el enunciado y las cuatro respuestas. Pasó **4/4** entre Chromium/WebKit y viewports 320/1440 px. Al final se desplaza la última opción y se mide que queda por encima de la barra fija. Capturas iniciales y tras desplazamiento: `stats-to-topic-test-initial-{320px,1440px}.png` y `stats-to-topic-test-readable-option-{320px,1440px}.png`. Usa el banco de preguntas incluido y almacenamiento local sintético; no conecta con Firebase. Este caso comprueba el inicio del test, no su finalización ni el guardado del resultado.
+`npm run test:e2e -- tests/e2e/stats-practice-journey.spec.ts` recorre Progreso → practicar T1.02 → responder 15 preguntas → Resultado → Progreso. Comprueba sus 15 revisiones, el intento, las estadísticas y que las 15 respuestas siguen agregadas después de recargar Progreso. Pasó **4/4** en Chromium/WebKit a 320/1440 px. También mide que la última opción queda por encima de la barra fija. Evidencia: `stats-to-topic-test-{initial,readable-option,result}-{320px,1440px}.png`. Usa el banco incluido y almacenamiento local sintético; no conecta con Firebase y no verifica sincronización remota.
 
 Se conservan además tres capturas sin sufijo por viewport de la primera ejecución exploratoria de este mismo fixture (1440 px), anteriores a añadir la matriz móvil; los archivos con sufijo son la evidencia canónica del test reproducible final.
 
