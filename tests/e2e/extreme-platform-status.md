@@ -98,3 +98,10 @@ Estados: **Verificado**, **Parcial**, **Pendiente**, **Bloqueado**. “Verificad
 - `npm run test:e2e:extreme` **2/2** (Chromium/WebKit), 1.000 interacciones por escenario, 49,4 s; sin Gemini.
 - `npm run check` **960 aprobadas/27 omitidas**; arquitectura, ESLint, lint de exclusiones y TypeScript pasan. Avisos conocidos: `window.scrollTo` no implementado por jsdom; warning Rollup por comentarios Zod/chunks durante build.
 - **Siguiente paso:** reconciliar el diff y publicar este hito en la rama; luego consultar Actions tras el push. ATE-005, UX-009 y CI remota ATE-006 siguen abiertos por cobertura residual y evidencia externa.
+
+## Revalidación continua — Accesibilidad y Ajustes (5 de noviembre de 2026)
+
+- UX-014, foco del diálogo destructivo en WebKit, corregido y verificado en commit `735f8b9`; regresión de Ajustes 4/4 Chromium/WebKit a 320/1440 px. No se confirma el borrado en la prueba.
+- ATE-005 amplía Ajustes → planificación semanal: preferencias, validación de fechas, ciclo de alta/recarga/baja de una clase sintética; 4/4 Chromium/WebKit a 320/1440 px. Capturas revisadas visualmente en `evidence/accessibility-2026-11-05/settings-training-*`.
+- `npm run check`: 960 aprobadas/27 omitidas, arquitectura, ESLint y TypeScript pasan. La regresión E2E global posterior pasa 282/310, omite 28 casos dedicados de Emulator/EXTREME y registra cero fallos en Chromium/WebKit (10,5 min). El primer fixture del journey de Ajustes se reinicializaba tras recargar; se corrigió la semilla de prueba y la repetición final pasó.
+- La rama está publicada hasta `d7cae41`. El acceso remoto CI sigue pendiente: no hay PR ni ejecución Actions vinculada y no se abre PR sin autorización. ATE-005, UX-009 y ATE-006 siguen abiertos; la auditoría no se declara completa.
