@@ -348,7 +348,7 @@ function useAiStudyExport(settings: SettingsServices) {
       const result = await settings.findAiSessions(range.from, range.to, selectedModes);
       if (settings.accountId() !== account) return;
       setChoices(result); setSelectedIds(new Set(result.map(choice => choice.id)));
-      setMessage(`${count(result.length, 'sesión completada', 'sesiones completadas')} disponibles.`);
+      setMessage(`${count(result.length, 'sesión completada', 'sesiones completadas')} ${result.length === 1 ? 'disponible' : 'disponibles'}.`);
     } catch (error) { setMessage(error instanceof Error ? error.message : 'No se pudieron buscar las sesiones.'); }
   };
   const buildExport = async () => {
@@ -383,7 +383,7 @@ function AiStudyExportSection({ settings }: { settings: SettingsServices }) {
     <AiModes value={ai.modes} onChange={ai.setModes} />
     <button className="btn sec" onClick={() => void ai.findSessions()}>Buscar sesiones completadas</button>
     <AiSessionChoices choices={ai.choices} selectedIds={ai.selectedIds} onChange={ai.setSelectedIds} />
-    <button className="btn" disabled={!ai.choices?.length} onClick={() => void ai.buildExport()}>Preparar análisis para descargar</button><p role="status" aria-live="polite">{ai.message}</p>
+    <button className="btn" disabled={!ai.choices?.length || !ai.selectedIds.size} onClick={() => void ai.buildExport()}>Preparar análisis para descargar</button><p role="status" aria-live="polite">{ai.message}</p>
     {ai.artifact && <AiExportPreview artifact={ai.artifact} />}
     <hr /><p>El borrado afecta al historial detallado de este ámbito en el dispositivo y crea una marca para que las copias antiguas no lo restauren. Conserva estadísticas agregadas, falladas, sesiones históricas y el progreso de estudio. Las copias ya descargadas no se borran.</p><button className="btn danger" onClick={() => void ai.deleteHistory()}>Borrar historial detallado</button>
   </section>;
