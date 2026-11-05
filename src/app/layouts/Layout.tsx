@@ -35,7 +35,7 @@ const tabs = [
 export function Layout() {
   useLayoutEffect(observeFixedLayout, []);
   const location = useLocation(), navigate = useNavigate();
-  const { full, owner } = useLayoutAccess(location.pathname, navigate);
+  const { full, owner } = useLayoutAccess();
   const section = useActiveSection(location.pathname);
   return <>
     {createPortal(

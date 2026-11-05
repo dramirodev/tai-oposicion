@@ -271,7 +271,10 @@ it('distingue el tiempo disponible del tiempo previsto cuando aún no hay activi
 
 it('pide elegir el tema semanal en Ajustes cuando no hay tema asignado', async () => {
   const emptyPlan = { weekday:1, minutes:120, restDay:false, activities:[] };
-  renderApp(createElement(PlanningPage), { services:servicesFor(overview(emptyPlan, { nextNewTopic:undefined })) });
+  // This scenario is a new-content day regardless of the real weekday.
+  const training = { ...DEFAULT_TRAINING_PREFERENCES, focusByDay:Array(7).fill('new-content') };
+  const settings = { getSnapshot:() => ({ training, exam:'', index:null }) };
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(emptyPlan, { nextNewTopic:undefined }), { settings }) });
   expect(await screen.findByRole('link', { name:'Ajustes' })).toHaveAttribute('href', '/settings#training-schedule');
   expect(screen.getByText(/Elige el tema que vas a introducir esta semana/)).toBeInTheDocument();
 });
@@ -315,7 +318,7 @@ it('integra en el horizonte la cobertura declarada de apartados de un temario vi
 
 it('no inventa fecha objetivo y explica cuando la secuencia configurada se agota', async () => {
   const emptyPlan = { weekday:1, minutes:120, restDay:false, activities:[] };
-  const training = { ...DEFAULT_TRAINING_PREFERENCES, academyTopicOrderIds:['T1.01'] };
+  const training = { ...DEFAULT_TRAINING_PREFERENCES, academyTopicOrderIds:['T1.01'], focusByDay:Array(7).fill('new-content') };
   const planned = overview(emptyPlan, { nextNewTopic:undefined, studiedTopics:1, studiedTopicDetails:[{ id:'T1.01', name:'Constitución' }] });
   const settings = { getSnapshot:() => ({ training, exam:'', index:{ topics:[{ id:'T1.01', name:'Constitución' }, { id:'T5.01', name:'Futuro' }] } }) };
   renderApp(createElement(PlanningPage), { services:servicesFor(planned, { settings }) });

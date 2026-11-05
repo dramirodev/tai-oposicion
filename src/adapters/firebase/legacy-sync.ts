@@ -7,7 +7,7 @@ import {
 import type { Auth, User } from 'firebase/auth';
 import type { Firestore, FirestoreError, Unsubscribe } from 'firebase/firestore';
 import { loadFirebaseConfig } from './firebase-config-loader.js';
-import { localFirebaseEmulators } from './local-emulator-config.js';
+import { configureFirebaseEmulatorRuntime, EMULATOR_OWNER_EMAIL, isFirebaseEmulatorRuntime } from './local-emulator-config.js';
 import { decodeFirebaseDocumentId, encodeFirebaseDocumentId } from './firebase-document-id-mapper.js';
 import { OWNER_EMAIL } from './access-policy.js';
 import type { AttemptRepository } from '../../core/ports/AttemptRepository.js';
@@ -48,7 +48,7 @@ const accessControl = createFirebaseAccessControl({
   auth: () => auth,
   database: () => db,
   userId: () => uid,
-  ownerEmail: OWNER_EMAIL,
+  get ownerEmail() { return isFirebaseEmulatorRuntime() ? EMULATOR_OWNER_EMAIL : OWNER_EMAIL; },
   status,
   emit,
   startSync: () => start(),
@@ -78,11 +78,12 @@ export async function init(
   paperTestAttemptStore = localPaperTestAttempts ?? null;
   temaOf = metaFns.temaOf; idsOfTema = metaFns.idsOfTema;
   status.authResolved = false;
+  status.accessResolved = false;
   const { config: firebaseConfig, loaded: leida } = await loadFirebaseConfig();
   const configured = status.configured = !!firebaseConfig.apiKey && !/PEGA/i.test(firebaseConfig.apiKey);
   status.host = location.host; status.authDomain = firebaseConfig.authDomain || '';
   // «sin configurar» solo si el fichero se leyó y no trae clave; si no se pudo leer (sin red) no es un problema de configuración
-  if (!configured) { status.authResolved = true; status.state = leida ? 'sin configurar' : 'sin conexión'; emit(); return; }
+  if (!configured) { status.authResolved = true; status.accessResolved = true; status.state = leida ? 'sin configurar' : 'sin conexión'; emit(); return; }
   // Un único origen: el almacenamiento local (progreso, temas vistos) es distinto en cada dominio.
   if (firebaseConfig.authDomain && location.hostname !== firebaseConfig.authDomain && /\.web\.app$/.test(location.hostname)) {
     location.replace('https://' + firebaseConfig.authDomain + location.pathname + location.search + location.hash); return;
@@ -90,8 +91,8 @@ export async function init(
   status.authResolved = false;
   status.state = 'comprobando sesión…'; emit();
   try {
+  const emulators = configureFirebaseEmulatorRuntime(firebaseConfig, location.hostname);
   const app = initializeApp(firebaseConfig);
-  const emulators = localFirebaseEmulators(firebaseConfig, location.hostname);
   // Persistencia explícita (IndexedDB y, si no, localStorage): en iOS la sesión debe sobrevivir al cierre de la app.
   auth = initializeAuth(app, { persistence: [indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence], popupRedirectResolver: browserPopupRedirectResolver });
   if (emulators) connectAuthEmulator(auth, `http://${emulators.authHost}:${emulators.authPort}`);
@@ -105,10 +106,11 @@ export async function init(
   }).catch(event => { try { localStorage.removeItem('tai.redir'); } catch {} const fields = errorFields(event); status.error = (fields.code || '') + ' ' + fields.message; emit(); });
   onAuthStateChanged(auth, (event: User | null) => {
     status.authResolved = true;
+    status.accessResolved = !event;
     status.user = event ? { name: event.displayName || event.email || '', email: event.email || '', verified: !!event.emailVerified } : null;
     accessControl.stop(); stop(); uid = null;
     status.requested = false; status.reqs = []; status.grants = []; accessControl.setAccess('invitado');
-    getProgressStore().switchAccount(event?.uid || null, !!event && event.email === OWNER_EMAIL && event.emailVerified);
+    getProgressStore().switchAccount(event?.uid || null, !!event && event.email === (isFirebaseEmulatorRuntime() ? EMULATOR_OWNER_EMAIL : OWNER_EMAIL) && event.emailVerified);
     if (event) { uid = event.uid; accessControl.resolve(event); }
     else { uid = null; stop(); status.requested = false; status.reqs = []; status.grants = []; accessControl.setAccess('invitado'); status.state = 'sin sesión'; emit(); }
     const epoch = accessControl.getEpoch();
@@ -119,6 +121,7 @@ export async function init(
     status.error = String(error instanceof Error ? error.message : error);
     status.state = 'error';
     status.authResolved = true;
+    status.accessResolved = true;
     emit();
   }
 }

@@ -52,7 +52,6 @@ export function StudyCalendar({ preferences, now, history, activeSession, topics
   const [month, setMonth] = useState(() => new Date(now.getFullYear(), now.getMonth(), 1));
   const [dateKey, setDateKey] = useState('');
   const [topicId, setTopicId] = useState(topics[0]?.id ?? '');
-  const [kind, setKind] = useState<ScheduledStudyActivityKind>('topicTest');
   const [minutes, setMinutes] = useState(20);
   const [proposal, setProposal] = useState<Proposal | null>(null);
   // La fecha pendiente de cada repaso se guarda por separado: una sola compartida se copiaba a todas las filas.
@@ -79,10 +78,10 @@ export function StudyCalendar({ preferences, now, history, activeSession, topics
   const agendaMinDate = dayKey(tomorrow), agendaMaxDate = dayKey(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 180));
 
   const prepareCreation = () => {
-    const decision = proposeStudyActivity({ dateKey:dateForInput, activity:kind, topicId, minutes, now:now.getTime(), preferences, seenTopicIds:topics.map(topic => topic.id), existing:activities });
+    const decision = proposeStudyActivity({ dateKey:dateForInput, activity:'topicTest', topicId, minutes, now:now.getTime(), preferences, seenTopicIds:topics.map(topic => topic.id), existing:activities });
     const message = decisionText(decision);
     setError(message || '');
-    if (!message) setProposal({ type:'create', dateKey:dateForInput, activity:kind, topicId, minutes });
+    if (!message) setProposal({ type:'create', dateKey:dateForInput, activity:'topicTest', topicId, minutes });
   };
 
   const prepareMove = (activity: ScheduledStudyActivity) => {
@@ -249,7 +248,7 @@ export function StudyCalendar({ preferences, now, history, activeSession, topics
         {!topics.length ? <p className="mt-[.4rem] mb-3 text-muted">No hay temas vistos para planificar. Márcalos en «Temas vistos» después de estudiarlos en papel.</p> : <div className="planning-calendar-form grid grid-cols-4 items-end gap-3 max-[520px]:grid-cols-2">
           <label className="grid min-w-0 gap-[.3rem] text-muted text-[length:var(--fs-s)]">Fecha<input className="box-border w-full min-w-0 min-h-11 rounded-[var(--r-s)] border border-[var(--line-strong,var(--line))] bg-[var(--card)] p-2 text-ink [font:inherit]" aria-label="Fecha del repaso" type="date" min={dayKey(tomorrow)} max={dayKey(maxDate)} value={dateKey} onChange={event => { setDateKey(event.target.value); setProposal(null); setError(''); }} /></label>
           <label className="grid min-w-0 gap-[.3rem] text-muted text-[length:var(--fs-s)]">Tema visto<select className="box-border w-full min-w-0 min-h-11 rounded-[var(--r-s)] border border-[var(--line-strong,var(--line))] bg-[var(--card)] p-2 text-ink [font:inherit]" aria-label="Tema del repaso" value={topicId} onChange={event => { setTopicId(event.target.value); setProposal(null); setError(''); }}>{topics.map(topic => <option key={topic.id} value={topic.id}>{topic.id} · {topic.name}</option>)}</select></label>
-          <label className="grid min-w-0 gap-[.3rem] text-muted text-[length:var(--fs-s)]">Actividad<select className="box-border w-full min-w-0 min-h-11 rounded-[var(--r-s)] border border-[var(--line-strong,var(--line))] bg-[var(--card)] p-2 text-ink [font:inherit]" aria-label="Tipo de repaso" value={kind} onChange={event => { setKind(event.target.value as ScheduledStudyActivityKind); setProposal(null); setError(''); }}><option value="topicTest">Test por tema</option></select></label>
+          <div className="grid min-w-0 gap-[.3rem] text-muted text-[length:var(--fs-s)]"><span>Actividad</span><p className="m-0 flex min-h-11 items-center rounded-[var(--r-s)] border border-line bg-[var(--card)] p-2 text-ink">Test por tema</p></div>
           <label className="grid min-w-0 gap-[.3rem] text-muted text-[length:var(--fs-s)]">Duración<select className="box-border w-full min-w-0 min-h-11 rounded-[var(--r-s)] border border-[var(--line-strong,var(--line))] bg-[var(--card)] p-2 text-ink [font:inherit]" aria-label="Duración del repaso" value={minutes} onChange={event => { setMinutes(Number(event.target.value)); setProposal(null); setError(''); }}>{[10, 20, 30, 40, 60].map(value => <option key={value} value={value}>{value} minutos</option>)}</select></label>
           <button className="btn sec min-h-11 max-[520px]:col-span-full" type="button" onClick={prepareCreation}>Revisar propuesta</button>
         </div>}

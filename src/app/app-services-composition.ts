@@ -676,7 +676,7 @@ export const studyServices: StudyServices = {
     seenTopics: localStudyProgressGateway.getSeenTopics,
     authResolved() { return sync.status.authResolved; },
     getActiveStudy() { const run = getCurrentRun(); return run ? { title: run.titulo || 'Test', position: run.idx, total: run.items.length } : null; },
-    getAccess() { return { full: isFull(), level: accessLevel(), greeting: saludo(), state: sync.status.state, configured: sync.status.configured, signedIn: !!sync.status.user, pendingRequests: sync.status.access === 'propietario' ? sync.status.reqs.length : 0 }; },
+    getAccess() { return { full: isFull(), resolved: sync.status.accessResolved, level: accessLevel(), greeting: saludo(), state: sync.status.state, configured: sync.status.configured, signedIn: !!sync.status.user, pendingRequests: sync.status.access === 'propietario' ? sync.status.reqs.length : 0 }; },
     subscribe(listener) { const offStore = localProgressRepository.subscribe(listener), offSync = sync.onStatus(listener), offEngine = subscribeEngine(listener); return () => { offStore(); offSync(); offEngine(); }; },
     async loadOverview() {
       await recover(); const account = localStudyProgressGateway.accountId(); const index = await getIndex(); await getMeta();

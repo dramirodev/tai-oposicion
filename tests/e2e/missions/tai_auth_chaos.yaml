@@ -1,0 +1,30 @@
+missions:
+  - thread_id: tai_auth_chaos_explorer_02
+    prompt: >
+      Explore TAI as an adversarial returning student at http://127.0.0.1:4187.
+      You are already signed in as a synthetic .test user through Firebase Auth
+      Emulator as tai-supertest@example.test with the legitimate owner role. Visit
+      every real module: planning, topics/materials, tests, simulations, results,
+      progress/statistics, reading, lightning, traps, failures, errors, settings,
+      help, and access management. Complete a short study and assessment journey.
+      Normal tai-normal@example.test is approved; tai-restricted@example.test is
+      unapproved; tai-pending@example.test has requested access. Use these accounts
+      and sign out to compare direct-route denials. Do not grant restricted users
+      access unless recording a deliberate owner grant/revoke test. Stress account isolation and stale state: reload during loading,
+      use browser back/forward, open planning before and after login, visit
+      studied topics, paper self-assessment and sessions, sign out and sign back
+      in if the UI permits it. Look for data crossing accounts, stale content,
+      impossible states, visible errors, and crashes. Use only the local Auth and
+      Firestore emulators. Do not enter real credentials, use production data,
+      or claim a bug without recording reproducible steps and observed evidence.
+      TAI uses Spanish hash routes such as /#/planificacion, /#/temario,
+      /#/test, /#/sim, /#/stats and /#/acceso. Before clicking, use an exact
+      selector from the current DOM snapshot; do not invent English routes.
+      A timeout for a nonexistent selector is an agent error, not an application
+      defect. Recover by inspecting the DOM and trying the observed link; after
+      two failures on the same selector, move to a different verified action.
+      For every candidate record the observed element, actual href, expected and
+      actual result, action-tape evidence and a successful or failed replay.
+      Report which requested modules and accounts were actually exercised and
+      which were not. Finish with an honest bounded coverage report rather than
+      repeating the same candidate.

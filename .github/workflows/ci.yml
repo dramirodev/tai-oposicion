@@ -26,5 +26,17 @@ jobs:
       - run: npm run build
       - run: node scripts/validate_cards.mjs
       - run: npx playwright install --with-deps chromium webkit
+      - name: QUICK autenticado con Firebase Emulator
+        run: npm run test:e2e:supertest
+      - name: Conservar evidencias del QUICK autenticado
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: tai-quick-emulator-${{ github.run_id }}
+          path: |
+            test-results-supertest/
+            tests/e2e/evidence/accessibility-2026-11-05/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Reconstruir referencia visual y verificar Chromium y WebKit
         run: npm run test:e2e:ci

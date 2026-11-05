@@ -31,7 +31,7 @@ export function createFirebaseAccessControl(dependencies: AccessControlDependenc
     listeners = [];
   };
   const setAccess = (level: AccessLevel) => { status.access = level; };
-  const handleError = (error: unknown) => { status.accessErr = String(errorCode(error)); dependencies.emit(); };
+  const handleError = (error: unknown) => { status.accessErr = String(errorCode(error)); status.accessResolved = true; dependencies.emit(); };
 
   function resolve(user: User): void {
     const database = dependencies.database();
@@ -41,6 +41,7 @@ export function createFirebaseAccessControl(dependencies: AccessControlDependenc
     const isCurrent = () => dependencies.userId() === accountId && currentEpoch === epoch;
     status.accessErr = '';
     if (user.email === dependencies.ownerEmail && user.emailVerified) {
+      status.accessResolved = true;
       setAccess('propietario');
       status.state = 'sincronizando…';
       dependencies.emit();
@@ -60,11 +61,13 @@ export function createFirebaseAccessControl(dependencies: AccessControlDependenc
 
     status.reqs = [];
     status.grants = [];
+    status.accessResolved = false;
     status.state = 'sesión iniciada';
     if (status.access === 'propietario') setAccess('invitado');
     dependencies.emit();
     listeners.push(onSnapshot(doc(database, 'access', accountId), (snapshot: DocumentSnapshot) => {
       if (!isCurrent()) return;
+      status.accessResolved = true;
       if (snapshot.exists() && (snapshot.data() || {}).ok === true) {
         if (status.access !== 'aprobado') { setAccess('aprobado'); status.state = 'sincronizando…'; dependencies.startSync(); }
       } else {

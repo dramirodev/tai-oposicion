@@ -17,6 +17,31 @@ async function selectIntroductionTopic(page: Page, topicId: string) {
   await page.getByLabel('Tema que estás introduciendo esta semana').selectOption(topicId);
 }
 
+test('los iconos de título permanecen en línea con el texto en móvil', async ({ page }) => {
+  await prepare(page, 'light', 0);
+  await page.setViewportSize({ width: 393, height: 852 });
+  await page.goto('/#/relampago', { waitUntil: 'domcontentloaded' });
+  const lightningHeading = page.getByRole('heading', { name: 'Pregunta relámpago' });
+  await expect(lightningHeading).toBeVisible();
+  await expect(lightningHeading.locator('svg')).toHaveCSS('display', 'inline-block');
+  const headingLines = await lightningHeading.evaluate(heading => {
+    const icon = heading.querySelector('svg');
+    const text = [...heading.childNodes].find(node => node.nodeType === Node.TEXT_NODE && node.textContent?.trim());
+    if (!icon || !text) return false;
+    const range = document.createRange();
+    range.selectNodeContents(text);
+    const iconRect = icon.getBoundingClientRect();
+    const textRect = range.getBoundingClientRect();
+    return Math.abs(iconRect.top - textRect.top) < 8 && iconRect.right <= textRect.left;
+  });
+  expect(headingLines, 'el icono y el título comparten línea').toBe(true);
+
+  await page.goto('/#/trampas', { waitUntil: 'domcontentloaded' });
+  const trapsHeading = page.getByRole('heading', { name: 'Detective de trampas' });
+  await expect(trapsHeading).toBeVisible();
+  await expect(trapsHeading.locator('svg')).toHaveCSS('display', 'inline-block');
+});
+
 test('Ajustes mantiene completas las etiquetas del horario semanal en escritorio y móvil', async ({ page }) => {
   await prepare(page, 'light', 0, true);
   await page.setViewportSize({ width: 1100, height: 850 });
@@ -335,7 +360,8 @@ test('Planificación prepara la sesión fuera de Inicio y permite comenzar el pa
   await expect(page.locator('#app h1')).toHaveText('Planificación de estudio');
   await expect(page.locator('.planning-activity')).toHaveCount(2);
   await page.getByRole('button', { name: 'Comenzar sesión' }).click();
-  await expect(page).toHaveURL(/#\/temario\?topic=T1\.02&dailyTraining=newContent/);
+  await expect(page).toHaveURL(/#\/temario\?topic=T1\.02&dailyTraining=newContent&trainingSessionId=training%3A\d{4}-\d{2}-\d{2}&trainingActivityId=/);
+  await expect(page.locator('#app h1')).toHaveText('Temas vistos');
 });
 
 test('la agenda semanal confirma, persiste y alimenta el checkpoint de la fecha al llegar', async ({ page }) => {
@@ -394,7 +420,8 @@ test('la pausa de foco se guarda, sobrevive a recarga y continúa el mismo paso'
   const resumed = await page.evaluate(() => JSON.parse(localStorage.getItem(`tai.training-session.v1.${encodeURIComponent('guest')}`) || 'null'));
   expect(resumed).toMatchObject({ currentIndex:0, currentStartedAt:null, breakStartedAt:null, activities:[{ id:session.activities[0].id }] });
   await page.getByRole('button', { name:'Continuar actividad' }).click();
-  await expect(page).toHaveURL(/#\/cards/);
+  await expect(page).toHaveURL(/#\/quiz\?dailyTraining=activeRecall&trainingSessionId=/);
+  await expect(page.locator('#app h1')).toContainText('pregunta 1');
 });
 
 test('registra el recuerdo del tema en papel y prioriza su comprobación el día siguiente', async ({ page }) => {
@@ -421,11 +448,11 @@ test('registra el recuerdo del tema en papel y prioriza su comprobación el día
   await expect(page.locator('#app h1')).toHaveText('Planificación de estudio');
   await expect(page.getByText(/2 de \d+ temas marcados como vistos/)).toBeVisible();
   const nextDayActivities = page.locator('.planning-activity');
-  await expect(nextDayActivities).toHaveCount(3);
-  await expect(nextDayActivities.nth(1)).toContainText('Preguntas del tema prioritario');
-  await expect(nextDayActivities.nth(1)).toContainText('T1.02');
-  await nextDayActivities.nth(1).getByText('Instrucciones y motivo').click();
-  await expect(nextDayActivities.nth(1)).toContainText('Tu autoevaluación de recuerdo en papel fue «Parcialmente» el 29 de octubre de 2026');
+  const priorityActivity = nextDayActivities.filter({ hasText:'Preguntas del tema prioritario' });
+  await expect(priorityActivity).toHaveCount(1);
+  await expect(priorityActivity).toContainText('T1.02');
+  await priorityActivity.getByText('Instrucciones y motivo').click();
+  await expect(priorityActivity).toContainText('Tu autoevaluación de recuerdo en papel fue «Parcialmente» el 29 de octubre de 2026');
 });
 
 test('un día de consolidación sin temas vistos muestra tiempo disponible, no una duración de sesión inventada', async ({ page }) => {
@@ -481,6 +508,19 @@ test('el calendario mensual distingue disponibilidad de sesiones completadas en 
 });
 
 for (const theme of ['light', 'dark']) {
+test(`Planificación permanece visible en WebKit durante el primer render · ${theme}`, async ({ page }, testInfo) => {
+  await prepare(page, theme, 0, true);
+  await page.setViewportSize({ width:375, height:812 });
+  await page.goto('/#/planificacion');
+  await expect(page.getByRole('heading', { name:'Planificación de estudio' })).toBeVisible();
+  const planning = page.locator('main.planning-page');
+  await expect(planning).toBeVisible();
+  await page.screenshot({ path:`tests/e2e/evidence/ux-audit-2026-11-04/planning-visible-${testInfo.project.name}-${theme}.png`, fullPage:true });
+  await page.getByRole('button', { name:'Mes', exact:true }).click();
+  await expect(planning).toBeVisible();
+  await expect(page.getByLabel('Duración del repaso')).toBeVisible();
+});
+
 test(`programa y reprograma un repaso de papel solo tras confirmar y conserva el cambio al recargar · ${theme}`, async ({ page }) => {
   await prepare(page, theme, 0, true);
   await page.clock.setFixedTime(new Date('2026-10-29T12:00:00+02:00'));
@@ -488,8 +528,8 @@ test(`programa y reprograma un repaso de papel solo tras confirmar y conserva el
   await page.goto('/#/planificacion');
   await page.getByRole('button', { name:'Mes', exact:true }).click();
   await page.getByLabel('Fecha del repaso').fill('2026-11-02');
-  await page.getByLabel('Tema del repaso').selectOption('T1.01');
-  await page.getByLabel('Tipo de repaso').selectOption('topicTest');
+  await expect(page.getByLabel('Tema del repaso')).toHaveValue('T1.01');
+  await expect(page.locator('.planning-calendar-form').getByText('Test por tema', { exact:true })).toBeVisible();
   await page.getByLabel('Duración del repaso').selectOption('20');
   await page.getByRole('button', { name:'Revisar propuesta' }).click();
   await expect(page.getByRole('group', { name:'Propuesta pendiente de confirmación' })).toContainText('lunes, 2 de noviembre de 2026');

@@ -686,7 +686,7 @@ ul.tips li {
 }
 
 @utility code-explanation { margin-top: 1rem; border-inline-start: 4px solid var(--selb); & .explanation-status { line-height: 1.6; } }
-@utility inline-feature-icon { margin-inline-end: .35em; vertical-align: -.12em; }
+@utility inline-feature-icon { display: inline-block; margin-inline-end: .35em; vertical-align: -.12em; }
 
 /* ===== inicio ===== */
 

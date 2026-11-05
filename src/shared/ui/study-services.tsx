@@ -39,7 +39,7 @@ export interface HomeOverview {
   studyContentInventory?: StudyContentInventory;
 }
 export interface AccessOverview {
-  full: boolean; level: string; greeting: string; state: string; configured: boolean;
+  full: boolean; resolved?: boolean; level: string; greeting: string; state: string; configured: boolean;
   signedIn: boolean; pendingRequests: number;
 }
 export interface HomeServices {

@@ -1,8 +1,6 @@
-import { useEffect, useRef, useSyncExternalStore } from 'react';
-import type { NavigateFunction } from 'react-router';
+import { useSyncExternalStore } from 'react';
 import { isFull, isOwner } from '../composition/access-composition.js';
 import { syncGateway } from '../../adapters/firebase/sync-status-store.js';
-import { hasActiveRun } from '../composition/study/study-engine-composition.js';
 import { subscribeAccessChanges } from '../access-events.js';
 import { isGuestNavigationRoute } from '../router/route-access.js';
 
@@ -15,16 +13,11 @@ const subscribe = (notify: () => void) => {
 export { isGuestNavigationRoute };
 
 /** Composes account, access and study-session state for the application shell. */
-export function useLayoutAccess(pathname: string, navigate: NavigateFunction) {
+export function useLayoutAccess() {
   const full = useSyncExternalStore(subscribe, isFull);
   const owner = useSyncExternalStore(subscribe, isOwner);
-  const previousFull = useRef(full);
-
-  useEffect(() => {
-    if (previousFull.current === full) return;
-    previousFull.current = full;
-    if (!hasActiveRun()) void navigate(pathname);
-  }, [full, navigate, pathname]);
+  // Access subscriptions already rerender the shell. Navigating to the old path here
+  // would cancel the account-change redirect (for example, logout → Home).
 
   return { full, owner };
 }

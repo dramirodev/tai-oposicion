@@ -1,0 +1,105 @@
+schema_version: 1
+title: TAI owner route coverage
+seed: 20261104
+scenarios:
+  - id: owner-module-route-smoke
+    title: Owner navigates the available study and administration modules
+    risk: high
+    min_profile: fast
+    steps:
+      - action: navigate
+        url: /#/home
+      - action: assert_text
+        selector: '#app h1:has-text("Hola")'
+        text: Hola
+      - action: check_page_health
+      - action: navigate
+        url: /#/planificacion
+      - action: assert_text
+        selector: '#app h1:has-text("Planificación de estudio")'
+        text: Planificación de estudio
+      - action: check_page_health
+      - action: navigate
+        url: /#/temario
+      - action: assert_text
+        selector: '#app h1:has-text("Temas vistos")'
+        text: Temas vistos
+      - action: check_page_health
+      - action: navigate
+        url: /#/test
+      - action: assert_text
+        selector: '#app h1:has-text("Test por tema")'
+        text: Test por tema
+      - action: check_page_health
+      - action: navigate
+        url: /#/sim
+      - action: assert_text
+        selector: '#app h1:has-text("Simulacros")'
+        text: Simulacros
+      - action: check_page_health
+      - action: navigate
+        url: /#/examenes
+      - action: assert_text
+        selector: '#app h1:has-text("Simulacros")'
+        text: Simulacros
+      - action: check_page_health
+      - action: navigate
+        url: /#/stats
+      - action: assert_text
+        selector: '#app h1:has-text("Progreso")'
+        text: Progreso
+      - action: check_page_health
+      - action: navigate
+        url: /#/falladas
+      - action: assert_text
+        selector: '#app h1:has-text("Falladas")'
+        text: Falladas
+      - action: check_page_health
+      - action: navigate
+        url: /#/errores
+      - action: assert_text
+        selector: '#app h1:has-text("Errores del banco")'
+        text: Errores del banco
+      - action: check_page_health
+      - action: navigate
+        url: /#/lectura
+      - action: assert_text
+        selector: '#app h1:has-text("Lectura atenta")'
+        text: Lectura atenta
+      - action: check_page_health
+      - action: navigate
+        url: /#/relampago
+      - action: assert_text
+        selector: '#app h1:has-text("Pregunta relámpago")'
+        text: Pregunta relámpago
+      - action: check_page_health
+      - action: navigate
+        url: /#/trampas
+      - action: assert_text
+        selector: '#app h1:has-text("Detective de trampas")'
+        text: Detective de trampas
+      - action: check_page_health
+      - action: navigate
+        url: /#/settings
+      - action: assert_text
+        selector: '#app h1:has-text("Ajustes")'
+        text: Ajustes
+      - action: check_page_health
+      - action: navigate
+        url: /#/ayuda
+      - action: assert_text
+        selector: '#app h1:has-text("Ayuda")'
+        text: Ayuda
+      - action: check_page_health
+      - action: navigate
+        url: /#/acceso
+      - action: assert_text
+        selector: '#app h1:has-text("Accesos")'
+        text: Accesos
+      - action: check_page_health
+      - action: navigate
+        url: /#/curar-contenido
+      - action: assert_text
+        selector: '#app h1:has-text("Curar vínculos a epígrafes")'
+        text: Curar vínculos a epígrafes
+      - action: check_page_health

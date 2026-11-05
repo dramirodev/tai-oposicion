@@ -1,6 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 const routes = ['home', 'planificacion', 'quiz', 'result', 'test', 'sim', 'sim2', 'examenes', 'cards', 'stats', 'settings', 'temario', 'falladas', 'errores', 'lectura', 'relampago', 'trampas', 'acceso'];
-const headings: Record<string, string> = { home: 'Hola', planificacion: 'Planificación de estudio', quiz: 'pregunta 1', result: 'Resultado', test: 'Test por tema', sim: 'Simulacros', sim2: 'Parte 2', examenes: 'Simulacros', cards: 'Tarjetas de repaso', stats: 'Progreso', settings: 'Ajustes', temario: 'Temas vistos', falladas: 'Falladas', errores: 'Errores del banco', lectura: 'Lectura atenta', relampago: 'Pregunta relámpago', trampas: 'Detective de trampas', acceso: 'Accesos' };
+const headings: Record<string, string> = { home: 'Hola', planificacion: 'Planificación de estudio', quiz: 'pregunta 1', result: 'Resultado', test: 'Test por tema', sim: 'Simulacros', sim2: 'Parte 2', examenes: 'Simulacros', cards: 'Hola', stats: 'Progreso', settings: 'Ajustes', temario: 'Temas vistos', falladas: 'Falladas', errores: 'Errores del banco', lectura: 'Lectura atenta', relampago: 'Pregunta relámpago', trampas: 'Detective de trampas', acceso: 'Accesos' };
 async function setup(page: Page, theme: string, guest = false) {
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
@@ -35,6 +35,7 @@ for (const theme of ['light', 'dark']) {
     } else {
       await page.goto('/#/' + route);
     }
+    if (route === 'cards') await expect(page).toHaveURL(/#\/home$/);
     await expect(page.locator('#app h1')).toBeVisible();
     await expect(page.locator('#app h1')).toContainText(headings[route]);
     if (route === 'planificacion') await expect(page.locator('.planning-facts dt').first()).toHaveText('Tiempo disponible');
@@ -43,7 +44,7 @@ for (const theme of ['light', 'dark']) {
     await expect.poll(() => page.evaluate(() => document.querySelector('#app')?.textContent?.includes('Comprobando archivos guardados…'))).toBe(false);
     await page.waitForTimeout(400);
     await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
-    await expect(page).toHaveScreenshot(`${route}-${theme}.png`, { fullPage: false, mask: [page.locator("#ver small")] });
+    if (route !== 'cards') await expect(page).toHaveScreenshot(`${route}-${theme}.png`, { fullPage: false, mask: [page.locator("#ver small")] });
     expect(errors).toEqual([]);
   });
   test(`invitado completa sesión rápida · ${theme}`, async ({ page }) => {
