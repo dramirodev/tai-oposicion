@@ -539,3 +539,15 @@ Seguimiento de la prueba Auth heredada: el refuerzo de T1.02 está primero, con 
 - **Estado de implementación:** CORREGIDO SIN VERIFICAR.
 - **Pruebas:** Adaptador10/10; repetición E2E20/20 (2 recorridos ×2 motores ×5 repeticiones), 2,2min. npm run check:1017 aprobadas/29 omitidas; arquitectura/lint/tipos correctos. Nueva CI Linux pendiente.
 - **Resultado final:** Defecto del fixture corregido; pendiente confirmar repetición y señal remota. ATE-006 permanece abierto.
+
+
+### ATE-005 — Perfiles locales reutilizables en Progreso (6/11)
+
+Fixtures versionados new/partial/extensive de0/2/300 sesiones en tests/e2e/fixtures/study-profiles.ts. Journey tests/e2e/stats-study-profiles.spec.ts verifica comparación, límite visual15, todas las opciones, recarga sin duplicados/pérdidas y reflow320.6/6 Chromium/WebKit; evidencia en evidence/study-profiles-2026-11-06. Primera pasada2/6 por forma incompleta del fixture, normalización respetada y fixture corregido. No es prueba de perfiles autenticados longitudinales ni multi-dispositivo; ATE-005 sigue EN CORRECCIÓN.
+
+
+### ATE-005 — Inventario dinámico autenticado y regresión de integración (6/11)
+
+Supertest12/12 sobre demo-tai-auth, propietario sintético: Oficial2025(11), Por examen(38), Por tema(48) =97 observaciones de controles, cero nombres vacíos; se comprueba pestaña activa y, en listas, selección final y acción Estudiar habilitada. JSON incluye estado/acción/oráculo y árbol con cajas. Evidencia `evidence/dynamic-controls-2026-11-06/`. Son observaciones, no porcentaje ni prueba individual de cada control. ATE-005 permanece abierto.
+
+Última integración1.1.16: E2E global306 aprobadas/30 omitidas/0 fallos (11,7min), más6/6 nuevos perfiles locales por separado. Check1046/29 omitidas. CI42190272937 aún en curso: resultado remoto pendiente.

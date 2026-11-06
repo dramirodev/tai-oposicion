@@ -1,5 +1,16 @@
 # Agentic Test Explorer + TAI: auditoría de plataforma extrema
 
+## Estado operativo actual — 6/11/2026
+
+Esta sección prevalece sobre los hitos históricos que se conservan debajo.
+
+- Checkout activo: `/tmp/tai-audit-integration`, PR110, integración de main6b68b0b publicada como2e85f9e. Checkout original con cambios concurrentes intacto.
+- Verificado: check1046/29 omitidas; E2E global306/30 omitidas/0 fallos (11,7min), tras integrar1.1.16. Perfiles locales0/2/300 sesiones6/6 por separado. Supertest actualizado12/12:313 controles iniciales y97 observaciones en3 estados dinámicos, todos nombrados.
+- CI42190272937 verifica2e85f9e: QUICK y Auth pasan; comparación integral Linux aún en curso. ATE-014 temporal corregido localmente20/20 + adaptador10/10, pendiente confirmación Linux. Referencia visual60a2263 vigente.
+- Abiertos: UX-009 (lector/zoom nativo/contraste integral); ATE-005 (cobertura restante, perfiles autenticados longitudinales y variantes); ATE-006 (CI integral y perfiles manuales/programados); ATE-014 hasta verificar remoto.
+- Siguiente acción: consultar `gh run view 42190272937 --json status,conclusion,jobs`; investigar cualquier fallo. No enviar otro push durante el run para no cancelarlo. Cambios nuevos de fixtures/inventario verificados localmente, pendientes de publicación tras ese resultado. No merge a main ni deploy.
+
+
 ## Revalidación integral de baseline — 5 de noviembre de 2026
 
 - `tests/e2e/baseline-ref.txt` ahora apunta al commit revisado `2420d1b58bc4385df51d7036643262988dedebd9`; el baseline histórico permanece disponible en Git.
@@ -205,3 +216,8 @@ Verificación: adaptador10/10;20/20 E2E (5 repeticiones por recorrido/motor); ch
 Tras publicar00d4ee9, PR110 volvió a CONFLICTING porque main avanzó a6b68b0b (version1.1.16, PR109/111). Se integra en el mismo checkout aislado. Único conflicto: tests/design-flow.test.js; se conserva la solución posterior de main que monta start-app/HomePage dentro de act y desmonta al terminar. Mantiene la intención de ATE-013 sin startup desprendido. Correcciones editoriales y tests de sincronización de main se preservan íntegros; no se reescriben los89 archivos integrados.
 
 Check integrado:1046 aprobadas/29 omitidas,196 archivos/3 omitidos; arquitectura/lint/tipos correctos. E2E global en curso (session58416); no declarar su resultado antes de terminar. Se publica integración para desbloquear CI PR, sin merge a main ni deploy. El SHA baseline60a2263 se conserva hasta revisar cualquier diferencia visual demostrada. Próximo paso: terminar E2E local, consultar el nuevo run Linux y corregir hallazgos sin relajar expectativas.
+
+
+### ATE-005: historial extenso reproducible
+
+Nuevos fixtures locales versionados0/2/300 sesiones y recorrido Progreso con comparación y persistencia exacta tras recarga.6/6 Chromium/WebKit a320px; typecheck correcto. Se mantienen reglas de retención300 y lista reciente15, sin alterarlas para el test. Evidencia en study-profiles-2026-11-06. Perfil autenticado longitudinal pendiente; esta cobertura es local. Global session58416 aún en curso; CI42190272937 para2e85f9e activo. No publicar otro push hasta registrar el resultado remoto para evitar su cancelación.

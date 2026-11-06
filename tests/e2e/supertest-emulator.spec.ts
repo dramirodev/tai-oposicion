@@ -454,8 +454,59 @@ test.describe('Firebase Auth Emulator supertest', () => {
     await page.keyboard.press('Escape');
     await expect(menu).toBeHidden();
     await expect(page.getByRole('button', { name: 'Menú' })).toBeFocused();
+    // Discover controls that only exist after an explicit transition, not just route entry.
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/#/sim');
+    const dynamicStates: {
+      route: string;
+      state: string;
+      action: string;
+      oracle: string;
+      snapshot: unknown;
+      controls: AriaNode[];
+    }[] = [];
+    for (const name of ['Oficial 2025', 'Por examen', 'Por tema']) {
+      const tab = page.getByRole('tab', { name, exact: true });
+      await tab.click();
+      await expect(tab).toHaveAttribute('aria-selected', 'true');
+      if (name === 'Oficial 2025') {
+        await expect(page.getByLabel('Baremo de calificación')).toBeVisible();
+        await expect(page.getByRole('button', { name: 'Abrir cuaderno e iniciar los 120 minutos' })).toBeVisible();
+      } else {
+        await expect(page.locator('[data-exam-id]').first()).toBeVisible();
+        await expect(page.locator('.page-loading')).toHaveCount(0);
+        await page.locator('[data-exam-id]').last().click();
+        await expect(page.locator('[data-exam-id]').last()).toHaveAttribute('aria-pressed', 'true');
+        await expect(page.getByRole('button', { name: 'Estudiar', exact: true })).toBeEnabled();
+      }
+      const snapshot = await page.locator('#app').ariaSnapshotJSON({ boxes: true });
+      const controls: AriaNode[] = [];
+      const visit = (node: AriaNode | AriaNode[]) => {
+        if (Array.isArray(node)) {
+          node.forEach(visit);
+          return;
+        }
+        if (node.role && controlRoles.has(node.role)) controls.push(node);
+        for (const child of node.children ?? []) visit(child);
+      };
+      visit(snapshot as AriaNode[]);
+      expect(controls.filter((control) => !control.name?.trim())).toEqual([]);
+      dynamicStates.push({
+        route: 'sim',
+        state: name,
+        action: 'abrir pestaña y seleccionar último examen cuando procede',
+        oracle: 'pestaña seleccionada; baremo/cuaderno disponible o examen seleccionado y Estudiar habilitado',
+        snapshot,
+        controls,
+      });
+      await page.screenshot({ path: testInfo.outputPath(`dynamic-sim-${dynamicStates.length}.png`), fullPage: true });
+    }
     const artifact = testInfo.outputPath('tai-owner-accessible-control-inventory.json');
-    const result = JSON.stringify({ profile: 'owner', routes: inventory, mobileMenu: menuSnapshot }, null, 2);
+    const result = JSON.stringify(
+      { profile: 'owner', routes: inventory, mobileMenu: menuSnapshot, dynamicStates },
+      null,
+      2,
+    );
     writeFileSync(artifact, result);
     writeFileSync(`${evidenceDir}/owner-route-control-inventory.json`, result);
     await testInfo.attach('tai-owner-accessible-control-inventory', {

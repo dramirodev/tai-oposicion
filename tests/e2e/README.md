@@ -207,3 +207,10 @@ Regresión anterior (270/298) y suites separadas registradas históricamente: `n
 ## Regresión funcional Firefox
 
 `npx playwright install firefox` prepara el motor opcional. `npm run test:e2e:firefox` reutiliza servidor/fixtures/configuración de la suite estándar y ejecuta `css-ui.spec.ts` con salida separada `test-results-firefox`. Cubre planificación, calendarios, reflow, foco y controles; no equivale a toda la suite ni a autenticación Firefox. Chromium/WebKit y sus snapshots siguen activos.
+
+
+## Perfiles locales y estados dinámicos — 6/11/2026
+
+`npm run test:e2e -- tests/e2e/stats-study-profiles.spec.ts` usa fixtures versionados new/partial/extensive (0/2/300 sesiones). Verifica comparación de notas, lista reciente, igualdad de historial tras reload y reflow a320px.6/6 Chromium/WebKit; datos locales sin Firebase. Evidencia: `evidence/study-profiles-2026-11-06/`.
+
+`npm run test:e2e:supertest` incorpora inventario de estados posteriores a abrir Oficial2025/Por examen/Por tema, además de rutas iniciales.12/12 con Auth/Firestore Emulator;97 observaciones dinámicas nombradas. Evidencia: `evidence/dynamic-controls-2026-11-06/`. No equivale a accionar todos los controles ni a cobertura exhaustiva.
