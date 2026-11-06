@@ -50,6 +50,7 @@ for (const theme of VISUAL_THEMES) for (const color of ['light','dark']) for (co
     for (const route of ['home','temario','planificacion','test','sim','sim2','examenes','stats','falladas','lectura','trampas','relampago','errores','settings','ayuda','acceso','curar-contenido']) {
       await page.goto(`/#/${route}`);
       await ready(page);
+      if (route === 'stats') await expect(page.getByRole('region', { name:'Métricas del periodo', exact:true })).not.toContainText('Cargando métricas del periodo…');
       await expect(page.locator('html')).toHaveAttribute('data-visual-theme',theme.id);
       await fits(page);
       const colors = await page.evaluate(() => {

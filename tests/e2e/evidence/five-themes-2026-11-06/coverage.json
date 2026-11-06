@@ -1,0 +1,2050 @@
+{
+  "schemaVersion": 1,
+  "initialMatrix": [
+    {
+      "theme": "classic",
+      "color": "dark",
+      "width": 1440,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "classic",
+      "color": "dark",
+      "width": 1440,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "classic",
+      "color": "dark",
+      "width": 390,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "classic",
+      "color": "dark",
+      "width": 390,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "classic",
+      "color": "light",
+      "width": 1440,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "classic",
+      "color": "light",
+      "width": 1440,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "classic",
+      "color": "light",
+      "width": 390,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "classic",
+      "color": "light",
+      "width": 390,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "living-notebook",
+      "color": "dark",
+      "width": 1440,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "living-notebook",
+      "color": "dark",
+      "width": 1440,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "living-notebook",
+      "color": "dark",
+      "width": 390,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "living-notebook",
+      "color": "dark",
+      "width": 390,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "living-notebook",
+      "color": "light",
+      "width": 1440,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "living-notebook",
+      "color": "light",
+      "width": 1440,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "living-notebook",
+      "color": "light",
+      "width": 390,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "living-notebook",
+      "color": "light",
+      "width": 390,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "momentum",
+      "color": "dark",
+      "width": 1440,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "momentum",
+      "color": "dark",
+      "width": 1440,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "momentum",
+      "color": "dark",
+      "width": 390,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "momentum",
+      "color": "dark",
+      "width": 390,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "momentum",
+      "color": "light",
+      "width": 1440,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "momentum",
+      "color": "light",
+      "width": 1440,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "momentum",
+      "color": "light",
+      "width": 390,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "momentum",
+      "color": "light",
+      "width": 390,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "soft-brutalism",
+      "color": "dark",
+      "width": 1440,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "soft-brutalism",
+      "color": "dark",
+      "width": 1440,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "soft-brutalism",
+      "color": "dark",
+      "width": 390,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "soft-brutalism",
+      "color": "dark",
+      "width": 390,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "soft-brutalism",
+      "color": "light",
+      "width": 1440,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "soft-brutalism",
+      "color": "light",
+      "width": 1440,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "soft-brutalism",
+      "color": "light",
+      "width": 390,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "soft-brutalism",
+      "color": "light",
+      "width": 390,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "tai-lab",
+      "color": "dark",
+      "width": 1440,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "tai-lab",
+      "color": "dark",
+      "width": 1440,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "tai-lab",
+      "color": "dark",
+      "width": 390,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "tai-lab",
+      "color": "dark",
+      "width": 390,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "tai-lab",
+      "color": "light",
+      "width": 1440,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "tai-lab",
+      "color": "light",
+      "width": 1440,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "tai-lab",
+      "color": "light",
+      "width": 390,
+      "browser": "chromium",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    },
+    {
+      "theme": "tai-lab",
+      "color": "light",
+      "width": 390,
+      "browser": "webkit",
+      "routes": [
+        "home",
+        "temario",
+        "planificacion",
+        "test",
+        "sim",
+        "sim2",
+        "examenes",
+        "stats",
+        "falladas",
+        "lectura",
+        "trampas",
+        "relampago",
+        "errores",
+        "settings",
+        "ayuda",
+        "acceso",
+        "curar-contenido"
+      ],
+      "additionalStates": [
+        "quiz",
+        "answer",
+        "dialog",
+        "result"
+      ],
+      "errors": [],
+      "phase": "initial-matrix"
+    }
+  ],
+  "dynamicStates": [
+    {
+      "theme": "classic",
+      "color": "dark",
+      "width": 320,
+      "browser": "chromium",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "classic",
+      "color": "dark",
+      "width": 320,
+      "browser": "webkit",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "classic",
+      "color": "light",
+      "width": 320,
+      "browser": "chromium",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "classic",
+      "color": "light",
+      "width": 320,
+      "browser": "webkit",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "living-notebook",
+      "color": "dark",
+      "width": 320,
+      "browser": "chromium",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "living-notebook",
+      "color": "dark",
+      "width": 320,
+      "browser": "webkit",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "living-notebook",
+      "color": "light",
+      "width": 320,
+      "browser": "chromium",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "living-notebook",
+      "color": "light",
+      "width": 320,
+      "browser": "webkit",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "momentum",
+      "color": "dark",
+      "width": 320,
+      "browser": "chromium",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "momentum",
+      "color": "dark",
+      "width": 320,
+      "browser": "webkit",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "momentum",
+      "color": "light",
+      "width": 320,
+      "browser": "chromium",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "momentum",
+      "color": "light",
+      "width": 320,
+      "browser": "webkit",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "soft-brutalism",
+      "color": "dark",
+      "width": 320,
+      "browser": "chromium",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "soft-brutalism",
+      "color": "dark",
+      "width": 320,
+      "browser": "webkit",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "soft-brutalism",
+      "color": "light",
+      "width": 320,
+      "browser": "chromium",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "soft-brutalism",
+      "color": "light",
+      "width": 320,
+      "browser": "webkit",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "tai-lab",
+      "color": "dark",
+      "width": 320,
+      "browser": "chromium",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "tai-lab",
+      "color": "dark",
+      "width": 320,
+      "browser": "webkit",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "tai-lab",
+      "color": "light",
+      "width": 320,
+      "browser": "chromium",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    },
+    {
+      "theme": "tai-lab",
+      "color": "light",
+      "width": 320,
+      "browser": "webkit",
+      "verified": [
+        "correct",
+        "wrong",
+        "report-form-cancelled",
+        "offline-banner",
+        "reset-dialog-cancelled",
+        "focus-return",
+        "cards-redirect",
+        "unknown-route"
+      ],
+      "sentReport": false,
+      "erasedData": false
+    }
+  ],
+  "gallery": {
+    "browser": "chromium",
+    "width": 390,
+    "height": 900,
+    "color": "light"
+  },
+  "limits": [
+    "No physical devices",
+    "No screen reader",
+    "Initial route matrix used pre-integration build; final functional/state cases use integrated 1.2.0; CI reruns complete matrix"
+  ],
+  "selector": {
+    "browsers": [
+      "chromium",
+      "webkit"
+    ],
+    "themes": 5,
+    "widths": [
+      320,
+      390,
+      768,
+      1440
+    ],
+    "verified": [
+      "keyboard-arrows",
+      "color-system-change",
+      "reload",
+      "navigation",
+      "answers-and-attempt-session-preserved",
+      "stable-topic-block-close"
+    ]
+  },
+  "authentication": {
+    "supertest": {
+      "passed": 18,
+      "browser": "chromium",
+      "app": "http://127.0.0.1:4187",
+      "project": "demo-tai-auth",
+      "auth": "127.0.0.1:9099",
+      "firestore": "127.0.0.1:8080",
+      "isolationBeforeWrites": 18,
+      "integratedMain": "c7d6f05",
+      "log": "/private/tmp/tai-five-supertest-integrated.log"
+    },
+    "authJourney": {
+      "passed": 2,
+      "integratedMain": "c7d6f05",
+      "verified": [
+        "protected-reload",
+        "100-item-exam",
+        "logout-guard",
+        "theme-per-account",
+        "legacy-recall-preserved"
+      ]
+    }
+  },
+  "technicalCases": [
+    {
+      "theme": "classic",
+      "color": "dark",
+      "browser": "chromium",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "classic",
+      "color": "dark",
+      "browser": "webkit",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "classic",
+      "color": "light",
+      "browser": "chromium",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "classic",
+      "color": "light",
+      "browser": "webkit",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "living-notebook",
+      "color": "dark",
+      "browser": "chromium",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "living-notebook",
+      "color": "dark",
+      "browser": "webkit",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "living-notebook",
+      "color": "light",
+      "browser": "chromium",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "living-notebook",
+      "color": "light",
+      "browser": "webkit",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "momentum",
+      "color": "dark",
+      "browser": "chromium",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "momentum",
+      "color": "dark",
+      "browser": "webkit",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "momentum",
+      "color": "light",
+      "browser": "chromium",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "momentum",
+      "color": "light",
+      "browser": "webkit",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "soft-brutalism",
+      "color": "dark",
+      "browser": "chromium",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "soft-brutalism",
+      "color": "dark",
+      "browser": "webkit",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "soft-brutalism",
+      "color": "light",
+      "browser": "chromium",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "soft-brutalism",
+      "color": "light",
+      "browser": "webkit",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "tai-lab",
+      "color": "dark",
+      "browser": "chromium",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "tai-lab",
+      "color": "dark",
+      "browser": "webkit",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "tai-lab",
+      "color": "light",
+      "browser": "chromium",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    },
+    {
+      "theme": "tai-lab",
+      "color": "light",
+      "browser": "webkit",
+      "width": 320,
+      "questionId": "AT306-P1-40",
+      "verified": [
+        "real-bank-question",
+        "blank-legacy-checkpoint",
+        "java-highlighting",
+        "long-content-reflow",
+        "real-answer-feedback"
+      ]
+    }
+  ],
+  "latestIntegratedCheck": {
+    "passed": 1177,
+    "skipped": 31,
+    "filesPassed": 213,
+    "filesSkipped": 4,
+    "main": "c7d6f05"
+  },
+  "integratedMetrics": {
+    "passed": 10,
+    "browsers": [
+      "chromium",
+      "webkit"
+    ],
+    "widths": [
+      320,
+      768,
+      1440
+    ],
+    "zoom": 2,
+    "ordinaryAnswers": 15,
+    "fixes": [
+      "UX-THEMES-005",
+      "UX-THEMES-006"
+    ]
+  }
+}

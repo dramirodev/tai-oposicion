@@ -43,6 +43,7 @@ for (const theme of ['light', 'dark']) {
     await expect(page.locator('#app .loading')).toHaveCount(0);
     // Espera el arranque externo y, en Ajustes, la comprobación asíncrona de caché.
     await expect.poll(() => page.evaluate(() => document.querySelector('#app')?.textContent?.includes('Comprobando archivos guardados…'))).toBe(false);
+    if (route === 'stats') await expect(page.getByRole('region', { name:'Métricas del periodo', exact:true })).not.toContainText('Cargando métricas del periodo…');
     await page.waitForTimeout(400);
     await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
     if (route !== 'cards') await expect(page).toHaveScreenshot(`${route}-${theme}.png`, { fullPage: false, mask: [page.locator("#ver small")] });

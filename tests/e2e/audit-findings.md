@@ -668,8 +668,10 @@ El primer intento de deploy42237352967 del merge PR116/f6aa79f falló en `tests/
 - **Evidencia / causa:** `ui-preferences`, `config`, composición UI, startup-theme y estilos inspeccionados; cuatro conceptos locales leídos.
 - **Severidad / prioridad:** P1 / requisito explícito de producto.
 - **Solución / archivos:** `visual-themes.ts`, `VisualThemeSelector.tsx`, SettingsPage/mapper, config/entities, composición UI y startup-theme, `index.css`.
-- **Estado de implementación:** CORREGIDO SIN VERIFICAR.
+- **Estado de implementación:** CORREGIDO Y VERIFICADO.
 - **Pruebas / resultado provisional:** Nuevas pruebas parametrizadas de persistencia, alias/default, cuenta y bootstrap; matriz Chromium/WebKit en ejecución. El alcance no acredita lector de pantalla ni dispositivos físicos.
+
+- **Cierre local verificado (6/11/2026):** 40 combinaciones iniciales de rutas, 150 E2E de revalidación integrada y selector en ambos motores; Auth2/2 sobre main c7d6f05 confirma tema por cuenta. Unitarias de default/alias/persistencia correctas. Ver evidence/five-themes-2026-11-06/README.md; CI remota pendiente en este corte.
 
 ### UX-TESTS-001 — Flujos aún proponen autoexplicación y recuerdo libre
 
@@ -679,8 +681,10 @@ El primer intento de deploy42237352967 del merge PR116/f6aa79f falló en `tests/
 - **Evidencia / causa:** TopicsPage/AcademyCurriculumPanel, PlanningPage/StudyCalendar, QuizFeedback y estudio semanal; implementación distribuida entre contenido, agenda y feedback.
 - **Severidad / prioridad:** P1 / requisito explícito de producto.
 - **Solución / archivos:** Los anteriores, `planned-training-activity.ts`, `study-training-plan.ts`, `study-weekly-agenda.ts`, TestPage, composición de overview, ayuda. Los algoritmos de nota y repaso de preguntas no cambian.
-- **Estado de implementación:** CORREGIDO SIN VERIFICAR.
+- **Estado de implementación:** CORREGIDO Y VERIFICADO.
 - **Pruebas / resultado provisional:** Suite base 1088/29 omitidas; nuevos tests de lector antiguo, no generación, transiciones sin escrituras y empty recuperable. E2E de papel, materiales, bridge y Emulator adaptados a la decisión de producto; ejecución integral pendiente.
+
+- **Cierre local verificado (6/11/2026):** Regresiones de dominio/componentes y bridge correctas; Auth2/2 conserva recuerdo histórico y elimina controles; Supertest18/18 sobre main c7d6f05 verifica planificación, materiales, permisos y recuperación. Sin puntuaciones sintéticas ni borrado histórico.
 
 ### UX-THEMES-002 — Bucle en bloques de Temario y tinta de calendario con contraste insuficiente
 
@@ -689,8 +693,10 @@ El primer intento de deploy42237352967 del merge PR116/f6aa79f falló en `tests/
 - **Severidad / prioridad:** P1 bucle; P2 contraste.
 - **Causa:** Inversión en lugar de asignación idempotente; uso de token de fondo como tinta.
 - **Solución / archivos:** Restaurado callback `(block, expanded)` con guardia de igualdad/búsqueda en TopicsPage; PlanningPage/StudyCalendar usan `text-accent` independiente del botón amarillo.
-- **Estado de implementación:** CORREGIDO SIN VERIFICAR.
+- **Estado de implementación:** CORREGIDO Y VERIFICADO.
 - **Pruebas / resultado provisional:** Segunda revisión estática confirma las correcciones. Se añade cierre estable de bloque en E2E y contraste parametrizado. Espera resultados finales de navegador.
+
+- **Cierre local verificado (6/11/2026):** Cierre estable de bloques y contraste de tokens pasan en los dos motores, cinco temas y dos modos; incluidos en 150 E2E finales. Segunda revisión independiente confirma compatibilidad tras integrar main.
 
 ### UX-THEMES-003 — Motivo de error desborda en móvil estrecho
 
@@ -700,8 +706,10 @@ El primer intento de deploy42237352967 del merge PR116/f6aa79f falló en `tests/
 - **Severidad / prioridad:** P2 / media.
 - **Causa:** Select sin límites de ancho dentro de feedback con padding.
 - **Solución / archivos:** `QuizFeedback.tsx`, utilidades existentes `w-full min-w-0 max-w-full`; no se alteran campos ni envío. `visual-themes.spec.ts` conserva aserción de reflujo y añade diagnóstico de elementos fuera del viewport.
-- **Estado de implementación:** CORREGIDO SIN VERIFICAR.
+- **Estado de implementación:** CORREGIDO Y VERIFICADO.
 - **Pruebas / resultado provisional:** Reproducción confirmada; revalidación pendiente sobre el build integrado, en ambos motores y todos los temas.
+
+- **Cierre local verificado (6/11/2026):** 20/20 casos dinámicos a320px, cinco temas × dos modos × dos motores; select y documento sin desbordamiento, informe cancelado y foco devuelto. Incluidos en 150/150 E2E.
 
 ### UX-THEMES-004 — Bloque Java real tratado como código en línea
 
@@ -710,9 +718,11 @@ El primer intento de deploy42237352967 del merge PR116/f6aa79f falló en `tests/
 - **Severidad / prioridad:** P2 / media.
 - **Causa:** El formateador reconocía fragmentos heurísticos, pero no delimitadores completos de bloque.
 - **Solución / archivos:** `study-text.ts` reconoce únicamente bloques completos, escapa el contenido y reutiliza `StudyCode`/Shiki y los estilos `cd blk` existentes. Mantiene el formateador previo fuera del bloque y conserva delimitadores incompletos sin pérdida. Sin parser Markdown ni dependencia nueva: reconocimiento acotado, sin algoritmo general nuevo.
-- **Estado de implementación:** CORREGIDO SIN VERIFICAR.
+- **Estado de implementación:** CORREGIDO Y VERIFICADO.
 - **Pruebas / resultado provisional:** `study-code-fences.test.js` verifica texto exacto del banco, primer token, prosa, dos lenguajes, HTML escapado y bloque incompleto. Matriz visual real en cinco temas, dos modos y dos motores pendiente de repetir.
 
+
+- **Cierre local verificado (6/11/2026):** 20/20 E2E reales Chromium/WebKit, cinco temas × dos modos a320px; Java resaltado en bloque y corrección real. Unitarias de texto exacto, múltiples bloques, escape e incompletos pasan; revisión independiente sin pérdida de contenido.
 
 ### MET-001 — La revisión textual no prueba igualdad de clave, contexto y fuente
 
@@ -748,3 +758,21 @@ El primer intento de deploy42237352967 del merge PR116/f6aa79f falló en `tests/
 - **Pruebas / resultado:** Pendiente nueva ejecución responsive tras el ajuste de tarjetas. Evidencia de esta tarea en `evidence/progress-metrics-2026-11-06/`, sin sobrescribir las capturas previas de accesibilidad.
 
 - **Cierre MET-003, 2026-11-06:** 18/18 recorridos de estadísticas en Chromium/WebKit, incluyendo 320/768/1440 px, claro/oscuro, foco de teclado y zoom de diseño CSS al 200 %. Cuatro recorridos móviles adicionales pasan. Tablas equivalentes desplazables; no desbordamiento horizontal del documento. No certifica un lector de pantalla ni un dispositivo físico. Capturas en `evidence/progress-metrics-2026-11-06/`.
+
+### UX-THEMES-005 — Reflujo de métricas pobladas con zoom CSS al 200 %
+
+- **Categoría / funcionalidad:** Responsive / Progreso integrado.
+- **Evidencia:** Regresión nueva de integración `progress-metrics.spec.ts:74`; Chromium, viewport1440, zoom CSS2, ancho de documento1974. Los pasos previos de320/768/1440 y filtros pasan.
+- **Prioridad:** P2. **Estado:** CORREGIDO Y VERIFICADO.
+- **Causa:** Medición inmediata del gráfico con sus dimensiones anteriores; Recharts usa ResizeObserver. `expect.poll` verifica el mismo ancho tras estabilizarse, sin aumentar timeout ni ocultar contenido. Diagnóstico y repetición Chromium1/1 correctos.
+- **Solución / pruebas / archivos:** En investigación; sin cambiar métricas, muestras, datos ni el requisito de reflujo.
+
+### UX-THEMES-006 — Recarga de Progreso omite una respuesta editorial válida
+
+- **Categoría / funcionalidad:** Integración / consistencia de métricas. **Prioridad:** P1. **Estado:** CORREGIDO Y VERIFICADO.
+- **Evidencia:** Nuevo journey de main:15 respuestas,15 intentos persistidos answered antes de navegar, resumen14 en ambos motores/tamaños. El ID faltante `GEN-T1.02-14` está corregido con contenido aprobado. Se descarta la hipótesis de cola perdida: las15 proyecciones existen en IndexedDB; no se cambia finish.
+- **Causa:** `loadMetrics` excluía cuarentenas con un hint de ID verificado sólo en memoria. Tras recargar el hint desaparece aunque el contenido exacto sea válido.
+- **Solución:** Verificar contenido actual de los candidatos revisados del filtro mediante el catálogo y la elegibilidad existentes antes de incluirlos. No autorizar por ID ni restaurar versiones obsoletas; conservar errores de carga visibles y guardas por cuenta. Reutilizar caché de temas, sin dependencia ni persistencia nueva. Coste: cargar los temas necesarios de esos candidatos; no se considera equivalente a una consulta sólo de metadatos.
+- **Archivos / pruebas:** stats-composition.ts y stats-practice-journey; regresión de contenido válido/antiguo pendiente y repetición de ambos motores.
+
+- **Cierre UX-THEMES-005/006:**10/10 E2E Chromium/WebKit, zoom200%, 320/768/1440,15/15 intentos y respuestas tras navegación/recarga. Cuatro regresiones de composición verifican contenido aprobado, alterado/sinproof, error de carga y cambio de cuenta; sin dependencia de estadísticas legacy. Check1177/31omitidas; revisión independiente sin defectos confirmados. La documentación de Recharts3.10.1 consultada mediante Context7 confirma ResizeObserver. No se alteró el cierre de sesiones al descartarse esa hipótesis.
