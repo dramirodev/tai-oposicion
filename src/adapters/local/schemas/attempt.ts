@@ -32,6 +32,7 @@ export const questionAttemptSchema = z.object({
   sessionId: z.string(),
   questionId: z.string(),
   contentRevision: z.string(),
+  semanticRevision: z.string().regex(/^semantic-v1-[a-f0-9]{8}$/).optional(),
   mode,
   position: index,
   exposure: index,
@@ -73,6 +74,7 @@ const event = <Type extends string, Payload extends z.ZodType>(type: Type, paylo
   type: z.literal(type),
   at: timestamp,
   monotonicAt: timestamp.optional(),
+  clockContext: z.string().min(1).max(128).optional(),
   payload,
 });
 const selfAssessmentEvent = z.object({
@@ -83,6 +85,7 @@ const selfAssessmentEvent = z.object({
   type: z.literal('self-assess'),
   at: timestamp,
   monotonicAt: timestamp.optional(),
+  clockContext: z.string().min(1).max(128).optional(),
   payload: z.object({ value: selfAssessment }),
 });
 

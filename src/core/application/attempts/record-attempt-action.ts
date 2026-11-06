@@ -15,7 +15,7 @@ interface RecordAttemptActionOptions {
   now: () => number;
   monotonicNow: () => number;
   createEventId: () => string;
-  eventMetadata?: { id: string; at: number; monotonicAt?: number };
+  eventMetadata?: { id: string; at: number; monotonicAt?: number; clockContext?: string };
 }
 
 export type RecordAttemptActionResult =
@@ -34,6 +34,7 @@ export async function recordAttemptAction(options: RecordAttemptActionOptions): 
     ...options.intent,
     id: options.eventMetadata?.id ?? options.createEventId(),
     sequence: attempt.lastSequence + 1,
+    ...(options.eventMetadata?.clockContext ? { clockContext: options.eventMetadata.clockContext } : {}),
     at: options.eventMetadata?.at ?? options.now(),
     ...(options.eventMetadata?.monotonicAt !== undefined
       ? { monotonicAt: options.eventMetadata.monotonicAt }

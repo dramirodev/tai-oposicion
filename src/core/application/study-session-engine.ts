@@ -1,3 +1,4 @@
+import { questionRecordSemanticRevision } from '../domain/attempts/question-semantic-revision.js';
 // Motor de preguntas: estado de la sesión en curso, guardado y reanudación, registro de respuestas, cierre con nota
 // y selección de preguntas (sesión rápida, repaso, trampas). Sin DOM: la interfaz solo pinta y llama a estas funciones.
 import { applyEditorialScoring, isEditorialContentBlocked } from '../domain/question-review-overrides.js';
@@ -57,6 +58,7 @@ export function configureSessionStateStore(store: SessionStateStore<EngineSnapsh
 }
 export function subscribe(fn: () => void): () => void { return sessionStateStore.subscribe(fn); }
 let attemptTracker: AttemptTracker | null = null;
+export const getAttemptTracker = (): AttemptTracker | null => attemptTracker;
 export function setAttemptTracker(tracker: AttemptTracker | null): void { attemptTracker = tracker; }
 export function flushAttemptTracking(): Promise<void> { return attemptTracker?.flush() || Promise.resolve(); }
 function recordAttempt(run: Run, intent: AttemptIntent, index = run.idx): Promise<boolean> {
@@ -197,6 +199,7 @@ export function createRun(cfg: RunCfg, sourceSessionId?: string): Run | null {
       scorable.map(({ question, position }) => ({
         questionId: question.i,
         contentRevision: questionContentRevision(question.q, question.a),
+        semanticRevision: questionRecordSemanticRevision(cfg.supTexto ? { ...question, supTexto: cfg.supTexto } : question),
         position,
         exposure: Math.max(1, (progress().getQuestionStats(question.i)?.attempts || 0) + 1),
         ...(cfg.exposureKind ? { exposureKind: cfg.exposureKind } : {}),

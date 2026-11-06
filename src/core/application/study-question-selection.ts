@@ -2,7 +2,7 @@ import { analyzeTopicMastery } from '../domain/topic-mastery.js';
 import {
   estimateQuickQuestionCount,
   filterScoringQuestions,
-  isQuestionAllowed,
+  isStudyQuestionEligible,
   pickGuestQuestions,
   pickQuickQuestions,
   composeWeightedQuestions,
@@ -32,8 +32,7 @@ export function createStudyQuestionSelection(
 ) {
   const origins = (): Set<string> => new Set(progress.getPreferences().test?.o || ['O', 'A', 'G']);
   const questionAllowed = (question: Question, allowedOrigins: ReadonlySet<string>): boolean =>
-    isQuestionAllowed(question.o, question.r, allowedOrigins)
-      && !isEditorialQuarantineActive(question);
+    isStudyQuestionEligible(question, allowedOrigins);
 
   async function loadQuestionsInRequestedOrder(ids: readonly string[]): Promise<Question[]> {
     if (!ids.length) return [];
@@ -192,11 +191,7 @@ export function createStudyQuestionSelection(
     const questionsByTopic = await Promise.all(topics.map(topic => catalog.getTopicQuestions(topic.id)));
     const pools = Object.fromEntries(topics.map((topic, index) => {
       const available = shuffleItems(
-        questionsByTopic[index].filter(question => questionAllowed(question, allowedOrigins)
-          && acceptQuestion(question)
-          && (question.o !== 'G' || question.v === 0)
-          && question.np !== 1
-          && question.p !== 1),
+        questionsByTopic[index].filter(question => isStudyQuestionEligible(question, allowedOrigins, 'simulation') && acceptQuestion(question)),
         random,
       );
       // Within each exposure tier, rotate the selected sources so a large pool

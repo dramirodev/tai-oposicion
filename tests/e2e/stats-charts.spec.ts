@@ -53,6 +53,7 @@ for (const theme of ['light', 'dark']) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto('/#/stats');
       await expect(page.getByRole('heading', { name: 'Progreso' })).toBeVisible();
+      await page.getByRole('region', { name: 'Métricas del periodo', exact: true }).getByRole('combobox', { name: 'Periodo', exact: true }).selectOption('all');
       await page.getByRole('button', { name: 'Simulacros' }).click();
       const simulatorChart = page.locator('.stats-chart').first();
       await expect(simulatorChart.locator('.recharts-line')).toHaveCount(1);
@@ -68,7 +69,7 @@ for (const theme of ['light', 'dark']) {
       await attemptB.selectOption('sim-1');
       await expect(page.getByText(/Nota: -10/)).toBeVisible();
       if (width === 1440 && theme === 'light') {
-        const evidenceDir = 'tests/e2e/evidence/accessibility-2026-11-05';
+        const evidenceDir = 'tests/e2e/evidence/progress-metrics-2026-11-06';
         mkdirSync(evidenceDir, { recursive: true });
         await page.screenshot({ path: `${evidenceDir}/stats-comparison-reversed.png`, fullPage: true });
       }
@@ -106,6 +107,7 @@ for (const theme of ['light', 'dark']) {
 
     await page.reload();
     await expect(page.getByRole('heading', { name: 'Progreso' })).toBeVisible();
+      await page.getByRole('region', { name: 'Métricas del periodo', exact: true }).getByRole('combobox', { name: 'Periodo', exact: true }).selectOption('all');
     await page.getByRole('button', { name: 'Evolución' }).click();
     await expect(page.getByRole('button', { name: 'Tiempo por pregunta' })).toHaveAttribute('aria-pressed', 'true');
     await expect(page.getByLabel('Número de semanas')).toHaveValue('8');
@@ -113,7 +115,7 @@ for (const theme of ['light', 'dark']) {
     await expect(page.getByRole('table', { name: 'Evolución semanal' })).toBeVisible();
     await expect(page.locator('.stats-chart').last().locator('.recharts-dot')).toHaveCount(2);
     if (theme === 'light') {
-      const evidenceDir = 'tests/e2e/evidence/accessibility-2026-11-05';
+      const evidenceDir = 'tests/e2e/evidence/progress-metrics-2026-11-06';
       mkdirSync(evidenceDir, { recursive: true });
       await page.screenshot({ path: `${evidenceDir}/stats-evolution-preferences-restored.png`, fullPage: true });
     }
@@ -131,6 +133,7 @@ for (const theme of ['light', 'dark']) {
 
     await page.reload();
     await expect(page.getByRole('heading', { name: 'Progreso' })).toBeVisible();
+      await page.getByRole('region', { name: 'Métricas del periodo', exact: true }).getByRole('combobox', { name: 'Periodo', exact: true }).selectOption('all');
     await page.getByRole('button', { name: 'Evolución' }).click();
     await expect(page.getByLabel('Qué medir en la evolución')).toHaveValue(topicFilter!);
     await expect(page.getByLabel('Qué medir en la evolución')).toBeEnabled();
@@ -156,6 +159,7 @@ test('la evolución explica el estado vacío cuando no hay datos para graficar',
   });
   await page.goto('/#/stats');
   await expect(page.getByRole('heading', { name: 'Progreso' })).toBeVisible();
+      await page.getByRole('region', { name: 'Métricas del periodo', exact: true }).getByRole('combobox', { name: 'Periodo', exact: true }).selectOption('all');
   await page.getByRole('button', { name: 'Evolución' }).click();
   await expect(page.getByText('Aún no hay datos de evolución para el periodo seleccionado.')).toBeVisible();
   await expect(page.locator('.stats-chart')).toHaveCount(0);
@@ -183,6 +187,7 @@ test('Estadísticas explica que aún no hay vínculos por apartado en escritorio
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/#/stats');
     await expect(page.getByRole('heading', { name: 'Progreso' })).toBeVisible();
+      await page.getByRole('region', { name: 'Métricas del periodo', exact: true }).getByRole('combobox', { name: 'Periodo', exact: true }).selectOption('all');
     const disclosure = page
       .locator('details.mobile-progress-disclosure')
       .filter({ has: page.getByText('Resultados por apartado', { exact: true }) });

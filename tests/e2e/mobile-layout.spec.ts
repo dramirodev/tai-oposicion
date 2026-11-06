@@ -15,6 +15,7 @@ test('los controles del informe de estrategia se alinean en móvil', async ({ pa
   await prepareOwner(page);
   await page.setViewportSize({ width: 320, height: 640 });
   await page.goto('/#/stats');
+  await page.getByRole('region', { name: 'Métricas del periodo', exact: true }).getByRole('combobox', { name: 'Periodo', exact: true }).selectOption('all');
   await page.getByRole('button', { name: 'Evolución' }).click();
 
   const period = page.locator('#strategy-period');
@@ -49,7 +50,8 @@ test('los apartados largos de Progreso empiezan plegados en móvil y se pueden a
   await prepareOwner(page);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/#/stats');
-  const map = page.locator('.mobile-progress-disclosure').filter({ has: page.getByText('Mapa de dominio', { exact: true }) }).first();
+  await page.getByRole('region', { name: 'Métricas del periodo', exact: true }).getByRole('combobox', { name: 'Periodo', exact: true }).selectOption('all');
+  const map = page.locator('.mobile-progress-disclosure').filter({ has: page.getByText('Mapa de práctica', { exact: true }) }).first();
   await expect(map.locator('summary')).toBeVisible();
   await expect(map).toHaveJSProperty('open', false);
   await map.locator('summary').click();

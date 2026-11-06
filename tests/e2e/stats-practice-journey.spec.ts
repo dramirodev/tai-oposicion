@@ -42,7 +42,7 @@ for (const width of [320, 1440]) {
     await expect(page.locator('.quiz-page .enun')).toBeVisible();
     await expect(page.locator('.quiz-page .option-control .opt')).toHaveCount(4);
 
-    const evidenceDir = 'tests/e2e/evidence/accessibility-2026-11-05';
+    const evidenceDir = 'tests/e2e/evidence/progress-metrics-2026-11-06';
     mkdirSync(evidenceDir, { recursive: true });
     await page.screenshot({ path: `${evidenceDir}/stats-to-topic-test-initial-${width}px.png`, fullPage: true });
     const lastOption = page.locator('.quiz-page .option-control .opt').last();
@@ -77,9 +77,13 @@ for (const width of [320, 1440]) {
     await page.screenshot({ path: `${evidenceDir}/stats-to-topic-test-result-${width}px.png` });
     await page.goto('/#/stats');
     await expect(page.getByRole('heading', { name: 'Progreso' })).toBeVisible();
+    await expect(page.getByRole('region', { name: 'Métricas del periodo', exact: true })).toContainText(`Acierto ordinario · ${questionIds.length} respuestas`);
+    await page.getByRole('region', { name: 'Métricas del periodo', exact: true }).getByRole('combobox', { name: 'Periodo', exact: true }).selectOption('all');
     await expect(page.getByText(new RegExp(`^${questionIds.length} respuestas registradas`))).toBeVisible();
     await page.reload();
     await expect(page.getByRole('heading', { name: 'Progreso' })).toBeVisible();
+    await expect(page.getByRole('region', { name: 'Métricas del periodo', exact: true })).toContainText(`Acierto ordinario · ${questionIds.length} respuestas`);
+    await page.getByRole('region', { name: 'Métricas del periodo', exact: true }).getByRole('combobox', { name: 'Periodo', exact: true }).selectOption('all');
     await expect(page.getByText(new RegExp(`^${questionIds.length} respuestas registradas`))).toBeVisible();
   });
 }

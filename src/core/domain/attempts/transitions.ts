@@ -11,6 +11,7 @@ export type AttemptSessionStatus = 'active' | 'completed' | 'interrupted';
 export interface QuestionAttemptSession {
   id: string;
   sourceSessionId?: string;
+  activity?: 'questions' | 'attentive-reading';
   mode: AttemptMode;
   status: AttemptSessionStatus;
   startedAt: number;
@@ -41,6 +42,7 @@ export interface QuestionAttempt {
   sessionId: string;
   questionId: string;
   contentRevision: string;
+  semanticRevision?: string;
   mode: AttemptMode;
   position: number;
   exposure: number;
@@ -65,6 +67,7 @@ interface ActionMetadata {
   sequence: number;
   at: number;
   monotonicAt?: number;
+  clockContext?: string;
 }
 
 export type AttemptAction =
@@ -81,7 +84,7 @@ export type AttemptAction =
   | (ActionMetadata & { type: 'close'; at: number });
 
 export type AttemptIntent = AttemptAction extends infer Action
-  ? Action extends AttemptAction ? Omit<Action, 'id' | 'sequence' | 'at' | 'monotonicAt'> : never
+  ? Action extends AttemptAction ? Omit<Action, 'id' | 'sequence' | 'at' | 'monotonicAt' | 'clockContext'> : never
   : never;
 
 export type AttemptEventType = AttemptAction['type'];
@@ -92,11 +95,12 @@ export interface AttemptEvent {
   type: AttemptEventType;
   at: number;
   monotonicAt?: number;
+  clockContext?: string;
   payload: AttemptActionPayload;
 }
 
 type AttemptActionPayload = AttemptAction extends infer Action
-  ? Action extends AttemptAction ? Omit<Action, 'id' | 'sequence' | 'at' | 'monotonicAt' | 'type'> : never
+  ? Action extends AttemptAction ? Omit<Action, 'id' | 'sequence' | 'at' | 'monotonicAt' | 'clockContext' | 'type'> : never
   : never;
 
 export type ProgressEffect = 'none' | 'record-practice-answer' | 'defer-to-session-finish';
@@ -216,6 +220,7 @@ export function applyAttemptAction(attempt: QuestionAttempt, action: AttemptActi
     type: action.type,
     at: action.at,
     ...(action.monotonicAt !== undefined ? { monotonicAt: action.monotonicAt } : {}),
+    ...(action.clockContext ? { clockContext: action.clockContext } : {}),
     payload: payloadOf(action),
   };
   return { accepted: true, attempt: next, event, progressEffect: result.progressEffect };

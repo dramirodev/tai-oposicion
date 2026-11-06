@@ -1,5 +1,7 @@
 import type { CSSProperties } from 'react';
 import {
+  Bar,
+  BarChart,
   CartesianGrid,
   Line,
   LineChart,
@@ -174,4 +176,21 @@ export function QuestionEvolutionChart({ weeks }: { weeks: readonly QuestionEvol
     <div className="my-2.5 flex flex-wrap gap-x-4 gap-y-2.5 text-[length:var(--fs-s)]">{evolutionSeries.map(series => <span className="inline-flex items-center gap-1.5" key={series.key}><i className="size-2.5 rounded-full" style={{ backgroundColor: series.color }} />{series.label}</span>)}</div>
     <p className="legend">El historial detallado está disponible desde que se activó esta función; sesiones anteriores no se reconstruyen.</p>
   </>;
+}
+
+/** Bars and the adjacent table consume the exact same daily projection. */
+export function StatsStudyBars({ days, label = 'Minutos observados por día' }: { days: readonly { date: string; observedMilliseconds: number }[]; label?: string }) {
+  const data = days.map(day => ({ date: day.date, minutes: day.observedMilliseconds / 60_000 }));
+  if (!data.some(day => day.minutes > 0)) return <p>Sin intervalos de tiempo medibles en este periodo.</p>;
+  return <div className={`${chartFrame} h-[12.5rem]`} role="group" aria-label={label}>
+    <ResponsiveContainer width="100%" height="100%">
+      <BarChart data={data} accessibilityLayer title={label} margin={{ top: 10, right: 10, left: 0, bottom: 10 }}>
+        <CartesianGrid stroke="var(--line)" strokeDasharray="3 3" />
+        <XAxis dataKey="date" tick={axisTick} interval="preserveStartEnd" />
+        <YAxis tick={axisTick} domain={[0, 'auto']} width={40} />
+        <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} formatter={value => [`${Number(value).toFixed(1)} min`, 'Tiempo observado']} />
+        <Bar dataKey="minutes" fill="var(--brand)" isAnimationActive={false} />
+      </BarChart>
+    </ResponsiveContainer>
+  </div>;
 }

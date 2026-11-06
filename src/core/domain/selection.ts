@@ -1,3 +1,5 @@
+import type { QuestionRecord } from './question-record.js';
+import { isEditorialQuarantineActive } from './question-review-overrides.js';
 import { hasPendingFailure } from './spaced-repetition.ts';
 
 export type RandomGenerator = () => number;
@@ -198,4 +200,10 @@ export function pickGuestQuestions<T>(
     }
   }
   return result;
+}
+
+/** Shared catalogue eligibility, identical to the study selectors. */
+export function isStudyQuestionEligible(question: QuestionRecord, origins: { has(origin: QuestionRecord['o']): boolean }, mode: 'practice' | 'simulation' = 'practice'): boolean {
+  return isQuestionAllowed(question.o, question.r, origins) && !isEditorialQuarantineActive(question)
+    && (mode !== 'simulation' || ((question.o !== 'G' || question.v === 0) && question.np !== 1 && question.p !== 1));
 }
