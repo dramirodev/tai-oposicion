@@ -9,3 +9,15 @@ Solo se reemplazan estas 12 referencias. `snapshot-review.json` registra huellas
 Preview offline integrado localhost:5176, Firebase config `{}`, tema claro, viewport 500×841. Lighthouse13.4.1 en Configurable y Oficial2025: accesibilidad100, sin fallos automatizados en esos estados. JSON versionados junto a este informe.
 
 Comprobación interactiva real mediante Chrome DevTools: desde pestaña Oficial2025, tres Tab llevan al selector Baremo; `:focus-visible` verdadero, outline azul sólido3px. Shift+Tab y Enter activan Por tema y mantienen el foco en su pestaña; sin overflow horizontal. Los intentos de cambiar el select nativo con ArrowDown/Enter y Space/End/Enter no alteraron su valor en este canal de automatización; no se cuenta como comprobación de selección ni se atribuye a un fallo de producto. No se usó lector de pantalla real ni zoom nativo.
+
+
+## Tema oscuro y teclado (6/11)
+
+Preview integrado localhost:5176, datos locales sin Firebase, Chrome a 500×841. Tema cambiado desde el botón «Oscuro» de Ajustes, confirmado visualmente en Planificación. Lighthouse 13.4.1 snapshot: Inicio, Planificación, Ajustes, Simulacros y Progreso vacío obtienen accesibilidad100. Informes `*-dark-lighthouse.json`; contraste automático y objetivos de Ajustes/Planificación pasan, sin incidencias devueltas. Estos estados no cubren contraste no textual, todos los gráficos, overlays, temas y perfiles ni sustituyen lector real.
+
+En Oficial2025, foco programático del select y teclas c/Tab y s/Tab cambian el baremo y muestran mínimos 24/80 + 6/20 y 24/80 + 9,67/20 respectivamente. Tab deja foco en el enlace de cortes. Los atajos Meta++/Control++ no cambian dimensiones ni escala: zoom nativo queda sin verificar.
+
+
+## Inventario autenticado integrado
+
+La ejecución owner de Supertest sobre la integración produjo 313 observaciones de controles con nombre (0 sin nombre), en 16 rutas de escritorio y repetición de Inicio/Planificación en móvil. Archivo completo `owner-route-control-inventory.json`, conteos reproducibles por ruta/viewport en `control-inventory-summary.json`. Sustituye el conteo histórico312 para este checkout; no es un porcentaje de acciones probadas ni cubre todos los estados dinámicos.

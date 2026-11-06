@@ -63,3 +63,15 @@
 - EXTREME integrado: **2/2**, 1.000 acciones por motor Chromium/WebKit, sin Gemini. Typecheck y diff-check correctos.
 - Configurable/Oficial2025: Lighthouse13.4.1 accesibilidad100 en preview offline local (500×841), árbol accesible y Tab/Shift+Tab/Enter, foco visible3px. Evidencias y límites en `evidence/integration-2026-11-06/README.md`. No equivale a conformidad WCAG.
 - PR110 sin conflictos; head32c200b, CI42181131603 inició y pasó preparación, editoriales, reglas, publicación atómica Emulator, arquitectura/lint/tipos/unitarias/build/cards. Instalación Playwright permanece en curso >18min; se solicitó cancelación para recuperar log. No está verificado CI remoto.
+
+
+### Simulacro oficial: comprobación interactiva de teclado — 6/11
+
+Chrome DevTools, preview local `localhost:5176/#/sim`, 500×841, sin Firebase: foco programático sobre el select nativo y pulsaciones reales `c` + Tab seleccionan «Cupo de la norma común 13» (`norma13`); el texto cambia a mínimos 24/80 y 6/20. Volver al select y pulsar `s` + Tab recupera «Sistema general» y mínimos 24/80 y 9,67/20. El foco avanza al enlace «Cortes publicados por la CPS». Se comprueban teclado y actualización observable (2.1.1, 4.1.2) en este control; el recorrido completo sigue cubierto por bridge.spec.ts. No se escucharon anuncios con lector.
+
+Los atajos Meta++ y Control++ no cambian innerWidth=500, outerWidth=500, devicePixelRatio=1 ni visualViewport.scale=1 en este canal. Se registra intento sin efecto; no es prueba de zoom 200/400 ni defecto demostrado de TAI. La limitación de zoom nativo continúa abierta.
+
+
+### Barrido automático oscuro — 6/11
+
+Inicio, Planificación, Ajustes, Simulacros y Progreso vacío: Lighthouse snapshot accesibilidad100 en preview offline integrado a 500×841. Contraste y objetivos de Planificación/Ajustes devuelven score1 y cero incidencias. Informes completos en `evidence/integration-2026-11-06/*-dark-lighthouse.json`; tema oscuro confirmado por captura visual. No se extiende el resultado a gráficos poblados, overlays, todos los roles ni contraste no textual. UX-009 conserva su estado parcial.

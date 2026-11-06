@@ -63,4 +63,13 @@ jobs:
       - name: Recarga, permisos y cambio de cuenta con Auth real en emuladores
         run: npx --yes firebase-tools@13.35.1 emulators:exec --only auth,firestore --project demo-tai-auth "TAI_AUTH_EMULATOR=1 npx playwright test --config=playwright.astra-auth.config.ts"
       - name: Reconstruir referencia visual y verificar Chromium y WebKit
+        id: regression
         run: npm run test:e2e:ci
+      - name: Conservar evidencias de la regresión integral
+        if: always() && steps.regression.outcome != 'skipped' && steps.regression.outcome != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: tai-regression-${{ github.run_id }}
+          path: test-results/
+          if-no-files-found: warn
+          retention-days: 14

@@ -295,7 +295,7 @@ Estados válidos: `DETECTADO`, `ANALIZADO`, `PRIORIZADO`, `EN CORRECCIÓN`, `COR
 - **Descripción:** QUICK/INTENSIVE/EXTREME tienen workflows y comandos locales configurados, pero la ejecución de GitHub Actions aún no está demostrada.
 - **Evidencia:** Revisión de workflows existentes, registrada en `extreme-platform-status.md`.
 - **Severidad / prioridad:** P2 / media.
-- **Causa:** `e2e-profiles.yml` se encuentra solo en esta rama; GitHub no permite despacharlo mientras no exista en la rama por defecto. La rama está publicada, pero no tiene PR ni ejecución remota asociada.
+- **Causa:** `e2e-profiles.yml` se encuentra solo en esta rama; GitHub no permite despacharlo mientras no exista en la rama por defecto. Históricamente no había PR ni ejecución; el 6/11 PR110 activa CI y el run42184320823 ya supera QUICK y Auth. El workflow de perfiles sigue pendiente de registro en default y ejecución remota.
 - **Solución propuesta:** QUICK en PR sin Gemini; INTENSIVE programado; EXTREME solo bajo demanda con Emulator y budgets explícitos.
 - **Archivos afectados:** `.github/workflows/` y documentación de ejecución.
 - **Estado de implementación:** CORREGIDO SIN VERIFICAR.
@@ -507,3 +507,15 @@ Seguimiento de la prueba Auth heredada: el refuerzo de T1.02 está primero, con 
 - Evidencia: dos checks integrados fallan en beforeAll de design-flow esperando Sesión rápida mientras DOM vacío o Suspense «Cargando la pantalla…»; suite aislada 15/15.
 - Causa probable: importación inicial que monta React fuera de act y espera el texto con reloj independiente de sus efectos.
 - Solución propuesta: importar/montar dentro de act async, conservando timeout y todas las aserciones. Archivo tests/design-flow.test.js. Verificado 6/11: check completo 1.016 aprobadas/29 omitidas y tres repeticiones completas Vitest posteriores con el mismo resultado. Logs en evidence/integration-2026-11-06/. No implica ausencia de toda intermitencia futura.
+
+
+### ATE-006 — Ampliación de verificación del 6/11
+
+- Revisión del workflow programado: EXTREME omitía QUICK autenticado y `npm run test:e2e` dependía de capturas macOS en un runner Linux. Ahora todos los perfiles ejecutan QUICK; INTENSIVE/EXTREME reconstruyen la referencia aprobada con `test:e2e:ci` y checkout con historial completo. Se conservan las aserciones y el SHA de referencia.
+- Se trasladan los mirrors oficiales HTTPS y límites de instalación 15/10 minutos, ya verificados en el run42184320823 (dependencias 68 s; navegadores 17 s). Suites acotadas 15/45/10 minutos y job 90 minutos. Artefactos solo tras iniciar QUICK, evitando presentar evidencia antigua cuando falla la preparación.
+- Validación local: YAML parseado con js-yaml, contratos de historial/Auth/baseline comprobados y Prettier correcto. Ejecución remota del workflow programado aún pendiente; no se cierra ATE-006 con estas comprobaciones estáticas.
+
+
+### Regresión integral de integración — 6/11
+
+`npm run test:e2e:ci`: referencia76/76; candidata306 aprobadas,30 omitidas,0 fallidas (11,5min), código0. Sustituye el resultado inicial292/14/30 para el checkout integrado. Omisiones de perfiles dedicados cubiertas por sus ejecuciones separadas, sin afirmar soporte Auth WebKit/Firefox. UX-007 no presenta regresión. ATE-005 sigue abierto por exhaustividad; inventario actual313 controles observados, todos nombrados, en evidence/integration-2026-11-06. ATE-006: QUICK y Auth remotos aprobados en run42184320823; comparación integral aún en curso al registrar este hito.
