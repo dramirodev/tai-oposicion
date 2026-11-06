@@ -651,3 +651,16 @@ Ampliación del recorrido autenticado: tras responder y avanzar a pregunta2, se 
 ### ATE-005 — Token inválido y caída comprobada
 
 Supertest19/19,2,5min,código0 (/tmp/tai-ate-expiry.log). Configuración guardada desde UI no nula; token de renovación sintético inválido con vencimiento forzado; recarga permite volver a entrar, conserva el estado local exacto y abre Planificación. No equivale a expiración natural ni revocación administrativa. Caída Firestore exige peticiones abortadas>0, checkpoint y respuesta conservados. Typecheck/diff-check correctos. Sin cambios de producto ni producción. Sigue EN CORRECCIÓN por matriz residual y persistencia remota tras recuperación.
+### ASTRA-M10-NETWORK2 — dos premisas de redes
+
+**Prioridad:** P0 editorial. **Estado:** CORREGIDO SIN VERIFICAR en CI/producción; validación local completada. **Origen:** dictámenes Astra `GEN-T4.09-70` y `GEN-T4.10-32.v2`, sin repetir la auditoría completa.
+
+El temario presenta garantías de PFS demasiado amplias y atribuye 50GBase-T a 802.3cd. Se registra la discrepancia: RFC7296§2.12 delimita PFS a claves de larga duración comprometidas posteriormente tras borrar los secretos de sesión; la tabla del mismo temario y las baselines IEEE corroboran 50GBASE-SR. Ledger `scripts/bank-editorial/reviewed-network2.json` conserva before/after/SHA, páginas49/17, fuentes primarias y las cuatro alternativas. Sólo cambian enunciado, explicación y referencia; opciones, claves, flags e IDs se mantienen. No se declara una validación de equipos o servicios reales ni una firma de otro modelo.
+
+Pruebas: regresión roja de contenido anterior, preflight/rollback/idempotencia/reanudación parcial/symlinks y preservación de los 414 registros anteriores incluyendo PHP; 72 Python/1 omitida, 1.087 unitarias/29 omitidas, arquitectura/lint/tipos/build1.1.22/tarjetas y render dos motores/dos tamaños correctos. Las versiones antiguas, mutadas o serializadas carecen de credencial. 415 reparaciones locales preparadas, 405 publicadas; 3.104 incidencias/30 P0 sin reparación factual local. Ninguna de las dos está autorizada o publicada en Firestore. Dependen de CI, integración coordinada y plan/autorización específica; el paquete de ocho pendiente sigue intacto.
+
+### DEPLOY-RULES-CALENDAR-LISTENER — espera inicial de reprogramación
+
+**Prioridad:** P2, infraestructura de prueba; impacto de producto no demostrado. **Estado:** ANALIZADO.
+
+El primer intento de deploy42237352967 del merge PR116/f6aa79f falló en `tests/firestore-rules.test.js:244`: segundo cliente sin estado inicial al vencer un bucle de50×20ms; 26 pruebas pasaron y no se publicaron reglas o Hosting. El test, adaptador de calendario y reglas son idénticos a la entrega anterior. Las 27 pruebas originales pasaron en un emulador local nuevo, sin modificaciones. La inicialización asíncrona del listener bajo carga es una hipótesis, no una causa demostrada ni una pérdida de datos confirmada. Se conserva el fallo y se ejecuta un único reintento oficial del job completo, sin relajar aserciones o aumentar plazos. Si se repite, instrumentar la recepción inicial y diferenciar disponibilidad del servidor, caché y entrega al segundo cliente antes de cambiar código o pruebas. No se consultaron ni modificaron datos de estudiantes.

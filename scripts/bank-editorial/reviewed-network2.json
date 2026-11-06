@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "f6aa79f424d68ab5b7899063d7d6842d227d13da",
+  "previousBatch": "reviewed-admin5",
+  "status": "SOURCE_REVIEWED_PENDING_VALIDATION_NOT_PUBLISHED",
+  "files": {
+    "T4.09.json": {
+      "beforeSha256": "2f6ff5e5d05307afff79136717fb4123db00298b543628fb98b725e0bff956b9",
+      "afterSha256": "bb1163f42997d72a6ddd16b8d7df8f3499426d48314585e4a6d39c1653b21652"
+    },
+    "T4.10.json": {
+      "beforeSha256": "b03d2f5578edf4b5abc68610876c172e5f93424492404378834f61aadc0f27cf",
+      "afterSha256": "c2856b032d05e9e72fe2fd3702a527a8a61d6a4f25995bcebbd0b3fd4733b01f"
+    }
+  },
+  "metadataEdits": [],
+  "sampleFiles": {},
+  "questions": [
+    {
+      "id": "GEN-T4.09-70",
+      "topic": "T4.09",
+      "storageFile": "public/data/T4.09.json",
+      "before": {
+        "i": "GEN-T4.09-70",
+        "t": "T4.09",
+        "o": "G",
+        "q": "En IKE, ¿qué opción impide descifrar el contenido de la comunicación aunque se comprometan las claves de las asociaciones de seguridad?",
+        "a": [
+          "Host Check.",
+          "Perfect Forward Secrecy.",
+          "NAT Traversal.",
+          "IP Payload Compression."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T4.09-70",
+        "u": "PDF T4.09 Seguridad en Redes - Temario.pdf, p. 49: B4T9 SEGURIDAD EN REDES TAI La protección anti-reenvío, se realiza mediante números de secuencia incluidos en la cabecera ESP de cada paquete. De esta forma se rechazarán paquetes con número de secuencia duplicado o fuera de la ventana actual aceptable. - IKE (Internet Key Exchange): se utiliza para realizar la autenticación mutua de origen y destino; definir los parámetros de seguridad de la conexión (Asociaciones de Seguridad, SA); intercambio de las claves de sesión y gestionar, actualizar y finalizar el canal de comunicación. Estandarizado en RFC 7296 (IKEv2). Se llama Asociación de Seguridad (Security Association, SA) al conjunto de parámetros de seguridad que se utilizarán en la conexión IPSec. Cada conexión tiene 2 SA asociadas, una en cada sentido, ya que los parámetros de la conexión de A hacia B, pueden ser diferentes a los de la conexión de B hacia A. Previo al establecimiento de la SA de la conexión IPsec, se crea la IKE SA. Esta IKE SA establece los algoritmos criptográficos, claves secretas, mecanismos de autenticación, grupo Diffie-Hellman, y otros parámetros a usar para la protección de los mensajes intercambiados posteriormente en la negociación de las IPsec SA, y otros mensajes de control. Cada comunicación IKE entre origen y destino, está compuesta de un par de mensajes (petición / respuesta), al que se le denominará \"intercambio\". La opción de Perfect Forward Secrecy impide que se descifre el contenido de la comunicación aunque se comprometan las claves establecidas para las asociaciones de seguridad. Por ello, a pesar de que supone incrementos en coste computacional, es altamente recomendable. - IPComp (IP Payload Compression Protocol): protocolo para la compresión de los datos antes de su cifrado. El objetivo es reducir el tamaño de los datos transmitidos sin perder información. Definido en RFC 3173. La compresión se aplicará al paquete antes de realizar el cifrado de los algoritmos ESP. No se aplicará a todos los paquetes, ya que pueden existir paquetes con tamaño reducido para los que no sea eficiente aplicar compresión (el beneficio obtenido sería escaso comparado con el esfuerzo de comprimir y descomprimir el paquete). IPcomp añade una cabecera extra a cada paquete y un parámetro de identificación (CPI, Compression Parameter Index), para identificar la \"asociación de compresión\" establecida entre los dos participantes. El uso de IPcomp se negocia durante los intercambios IKE como parte del establecimiento de la SA IPsec, y no tiene vida fuera de la SA, es decir, cuando esta expira el acuerdo de compresión entre emisor y receptor también. La negociación de compresión IP se realiza de forma separada a los parámetros criptográficos de la SA. PABLO ARELLANO www.theglobeformacion.com Página 49",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.09-70",
+        "t": "T4.09",
+        "o": "G",
+        "q": "En IKE, ¿qué propiedad protege las comunicaciones pasadas frente al compromiso posterior de claves de larga duración, una vez terminada la sesión y borrados sus secretos efímeros?",
+        "a": [
+          "Host Check.",
+          "Perfect Forward Secrecy.",
+          "NAT Traversal.",
+          "IP Payload Compression."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T4.09-70",
+        "u": "La opción de Perfect Forward Secrecy [p. 49]",
+        "v": 0,
+        "w": 1,
+        "n": "Perfect Forward Secrecy (PFS) evita reconstruir claves de sesiones anteriores a partir de claves de larga duración comprometidas posteriormente. Es necesario borrar los secretos que permitirían regenerarlas. No protege una sesión cuya propia clave de tráfico se ha obtenido. A: Host Check comprueba la postura de seguridad del equipo. B: PFS es la propiedad descrita. C: NAT Traversal permite atravesar dispositivos NAT. D: IPComp comprime datos antes del cifrado; no aporta esa garantía. El temario formula la garantía de forma demasiado amplia; se precisa su alcance conforme a RFC 7296, sección 2.12."
+      },
+      "beforeSha256": "e1fb4dd1f742d572b627889daeb1c3ba70458ec979778945bdc18bb89d487c80",
+      "afterSha256": "c6abf0083405e66a3d3a13c718e98e1e90ecdeb6249ba98372cd9bb82891f9dc",
+      "reference": {
+        "pdf": "01_Temario/T4.09 Seguridad en Redes/T4.09 Seguridad en Redes - Temario.pdf",
+        "page": 49,
+        "quote": "La opción de Perfect Forward Secrecy",
+        "sha256": "38ebb19d13455c4a1570159b22f6b3a550d7920fd21bbb519f76c7b1d9fb52c1",
+        "visualCheck": true
+      },
+      "reviewedOptions": [
+        "Host Check trata el estado de seguridad del extremo, no el aislamiento de claves históricas.",
+        "PFS se refiere al compromiso posterior de material de larga duración y al borrado de secretos efímeros.",
+        "NAT Traversal solventa el tránsito a través de NAT, no el compromiso de claves.",
+        "El propio temario define IPComp como compresión previa al cifrado."
+      ],
+      "priority": "P0",
+      "inSample": false,
+      "status": "SOURCE_REVIEWED_LOCAL_VERIFIED_PENDING_CI_AND_AUTHORIZATION",
+      "publication": "NOT_AUTHORIZED",
+      "reviewMethod": "Existing Astra finding; coordinator checked original temario pages visually, primary IEEE/RFC sources and all four alternatives. No independent model signature or device/runtime test claimed.",
+      "originalAstraFinding": "GEN-T4.09-70",
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc7296.txt",
+          "localFile": "work/next-p0-after413/rfc7296.txt",
+          "sha256": "b6c1bf3921e85dd3674f427ffcaded0209e1f9718e8d601e2f918371f46329a1",
+          "bytes": 354358,
+          "sections": [
+            "2.12",
+            "2.23"
+          ]
+        },
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc4949.txt",
+          "localFile": "work/next-p0-after413/rfc4949.txt",
+          "sha256": "32d1e3837ae5a7d2e99a63f43c6fea3dd350ffc6ac55b3aaadad250546ad7f87",
+          "bytes": 867626,
+          "entry": "perfect forward secrecy"
+        }
+      ],
+      "discrepancy": "El temario p49 atribuye protección aunque se comprometan claves de las SA. RFC7296 sección2.12 limita la garantía a claves de larga duración obtenidas posteriormente, tras cerrar y olvidar los secretos de sesión. Se registra la discrepancia y se corrige la premisa, sin afirmar inmunidad frente a la filtración de la clave de tráfico.",
+      "limits": [
+        "Documentary adjudication; no Ethernet hardware or live IKE service exercised."
+      ],
+      "auxiliaryReference": {
+        "pdf": "01_Temario/T4.09 Seguridad en Redes/T4.09 Seguridad en Redes - Temario.pdf",
+        "page": 38,
+        "quote": "Evaluación del estado de seguridad del dispositivo cliente (Host Check)",
+        "sha256": "38ebb19d13455c4a1570159b22f6b3a550d7920fd21bbb519f76c7b1d9fb52c1",
+        "visualCheck": false,
+        "textExtractionChecked": true
+      }
+    },
+    {
+      "id": "GEN-T4.10-32.v2",
+      "topic": "T4.10",
+      "storageFile": "public/data/T4.10.json",
+      "before": {
+        "i": "GEN-T4.10-32.v2",
+        "t": "T4.10",
+        "o": "G",
+        "q": "50GBase-T está definido en el estándar:",
+        "a": [
+          "IEEE 802.3cd.",
+          "IEEE 802.3bq.",
+          "IEEE 802.3df.",
+          "IEEE 802.3bs."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T4.10-32",
+        "u": "PDF T4.10 Redes Locales - Temario.pdf, p. 17: B4T10 REDES LOCALES TAI Longitud máxima 10 Gigabit Ethernet Estándar Velocidad Medio transmisión (en metros) 10GBase-SR (short range) 802.3ae 10 Gbps Fibra multimodo 300 10GBase-LR (long range) 802.3ae 10 Gbps Fibra monomodo 10.000 10GBase-ER (extended range) 802.3ae 10 Gbps Fibra monomodo 40.000 10GBase-LX4 802.3ae 10 Gbps Fibra multimodo 300 Par trenzado cat6 10GBase-T 802.3an 10 Gbps 100 o cat7 Longitud máxima 25 Gigabit Ethernet Estándar Velocidad Medio transmisión (en metros) 25GBase-ER 802.3by 25 Gbps Fibra monomodo 30.000 25GBase-SR 802.3by 25 Gbps Fibra multimodo 100 25GBase-LR 802.3by 25 Gbps Fibra monomodo 10.000 25GBase-T 802.3bq 25 Gbps Par trenzado cat 8 30 Longitud máxima 40 Gigabit Ethernet Estándar Velocidad Medio transmisión (en metros) 40GBase-SR4 802.3ba 40 Gbps Fibra óptica 125 40GBase-T 802.3bq 40 Gbps Par trenzado cat 8 30 Longitud máxima 50 Gigabit Ethernet Estándar Velocidad Medio transmisión (en metros) 50GBase-ER 802.3cd 50 Gbps Fibra monomodo 30.000 50GBase-SR 802.3cd 50 Gbps Fibra multimodo 100 50GBase-LR 802.3cd 50 Gbps Fibra monomodo 10.000 50GBase-T 802.3cd 50 Gbps Par trenzado cat 8 30 100 Gigabit Longitud máxima Estándar Velocidad Medio transmisión Ethernet (en metros) 100GBase-SR10 802.3ba 100 Gbps Fibra multimodo 100 100GBase-LR4 802.3ba 100 Gbps Fibra monomodo 10.000 PABLO ARELLANO www.theglobeformacion.com Página 17",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.10-32.v2",
+        "t": "T4.10",
+        "o": "G",
+        "q": "¿Qué estándar incorporó 50GBASE-SR sobre fibra multimodo?",
+        "a": [
+          "IEEE 802.3cd.",
+          "IEEE 802.3bq.",
+          "IEEE 802.3df.",
+          "IEEE 802.3bs."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T4.10-32",
+        "u": "50GBase-SR 802.3cd 50 Gbps Fibra multimodo [p. 17]",
+        "v": 0,
+        "w": 1,
+        "n": "IEEE 802.3cd incorporó 50GBASE-SR sobre fibra multimodo. No debe confundirse con la fila 50GBase-T de la tabla del temario, que atribuye incorrectamente esa variante a 802.3cd. A: 802.3cd es la respuesta. B: 802.3bq corresponde a 25G/40GBASE-T. C: 802.3df trata 400 y 800 Gb/s. D: 802.3bs trata 200 y 400 Gb/s. Se pregunta por la variante SR respaldada por el temario y las fuentes IEEE."
+      },
+      "beforeSha256": "d08db63028d0a47cad271ca06f198bcd158d850bf9b851de4cdb72550f6d3923",
+      "afterSha256": "59ca9cab128151bbf9f252ceb512323b3dedf0127c83d5be7e801a9d16e7797e",
+      "reference": {
+        "pdf": "01_Temario/T4.10 Redes Locales/T4.10 Redes Locales - Temario.pdf",
+        "page": 17,
+        "quote": "50GBase-SR 802.3cd 50 Gbps Fibra multimodo",
+        "sha256": "7a360f7f2f0279b47691155a5cdda67a5394114a70718a162878ac4414c8a710",
+        "visualCheck": true
+      },
+      "reviewedOptions": [
+        "El temario p17 asigna 50GBase-SR a 802.3cd; el catálogo IEEE de baselines adoptadas incluye 50GBASE-SR y el proyecto fue aprobado como 802.3cd-2018.",
+        "IEEE identifica el proyecto802.3bq como25G/40GBASE-T.",
+        "IEEE identifica el proyecto802.3df como400/800Gb/s.",
+        "IEEE identifica el proyecto802.3bs como200/400Gb/s."
+      ],
+      "priority": "P0",
+      "inSample": false,
+      "status": "SOURCE_REVIEWED_LOCAL_VERIFIED_PENDING_CI_AND_AUTHORIZATION",
+      "publication": "NOT_AUTHORIZED",
+      "reviewMethod": "Existing Astra finding; coordinator checked original temario pages visually, primary IEEE/RFC sources and all four alternatives. No independent model signature or device/runtime test claimed.",
+      "originalAstraFinding": "GEN-T4.10-32.v2",
+      "primary": [
+        {
+          "url": "https://www.ieee802.org/3/cd/",
+          "localFile": "work/next-p0-after413/ieee-cd.html",
+          "sha256": "33621cae63c6b889595df266928a9842115918ae0f9ccfb475d7a9bf81dbd671",
+          "bytes": 4349
+        },
+        {
+          "url": "https://www.ieee802.org/3/cd/baselines/index.html",
+          "localFile": "work/next-p0-after413/ieee-cd-baselines.html",
+          "sha256": "ccd364c7a73f3d18cc7478065ad6dc8e5c7084f7c691938b18ce039bb149fcf8",
+          "bytes": 36644
+        },
+        {
+          "url": "https://www.ieee802.org/3/cd/public/May16/king_3cd_01a_0516.pdf",
+          "localFile": "work/next-p0-after413/ieee-cd-sr-baseline.pdf",
+          "sha256": "e29563932bc0904f0940a4d732863dd65c06f182d379602e118113a5b6bc02a0",
+          "bytes": 371524
+        },
+        {
+          "url": "https://www.ieee802.org/3/bq/",
+          "localFile": "work/next-p0-after413/ieee-bq.html",
+          "sha256": "05e8ef5af3f8f70b94071e7685c5a8951cfb729a5526d5712df5fb5566c20ec8",
+          "bytes": 3821
+        },
+        {
+          "url": "https://www.ieee802.org/3/df/",
+          "localFile": "work/next-p0-after413/ieee-df.html",
+          "sha256": "2993aad8f337917139ff813ef8a2b57bf2a1256c3e7b975325ca6aea3ec8cbcb",
+          "bytes": 5239
+        },
+        {
+          "url": "https://www.ieee802.org/3/bs/",
+          "localFile": "work/next-p0-after413/ieee-bs.html",
+          "sha256": "c2855f1353e8dc6bdedf0b56bd397c340718f6efd29318ae6cccb0a1bc5880dc",
+          "bytes": 3658
+        }
+      ],
+      "discrepancy": "El temario p17 incluye una fila50GBase-T/802.3cd no respaldada por el proyecto IEEE. Se conserva el concepto de asociación PHY-estándar, utilizando únicamente la fila50GBase-SR de la misma página corroborada por IEEE. No se valida el resto de la tabla ni se afirma inexistencia universal de futuras variantes.",
+      "limits": [
+        "Documentary adjudication; no Ethernet hardware or live IKE service exercised."
+      ]
+    }
+  ]
+}

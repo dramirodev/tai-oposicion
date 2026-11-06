@@ -32,6 +32,7 @@ REVIEWED_BATCHES = {
     'reviewed-systems16': 'reviewed-systems16.json',
     'reviewed-syntax3': 'reviewed-syntax3.json',
     'reviewed-admin5': 'reviewed-admin5.json',
+    'reviewed-network2': 'reviewed-network2.json',
 }
 
 
