@@ -10,7 +10,7 @@ interface SourceQuestion { source?: QuestionSource; i?: string; u?: string }
 export function questionNotice(question: NoticeQuestion): string {
   const questionId = question.i || question.id || '';
   const review = questionReviewOverride(questionId);
-  if (review) return `<aside class="question-notice warning" aria-label="Material necesario para responder"><b>Solo estudio · no puntuable</b><p>${escapeHtml(review.reason)} Consulta ${escapeHtml(review.source)}, página ${review.page}.</p></aside>`;
+  if (review) return `<aside class="question-notice warning" aria-label="Revisión editorial de la pregunta"><b>Solo estudio · no puntuable</b><p>${escapeHtml(review.reason)} Consulta ${escapeHtml(review.source)}, página ${review.page}.</p></aside>`;
   const hasMissingVisual = missingVisualQuestionIds.has(questionId);
   if (!question.n && question.np !== 1 && !hasMissingVisual) return '';
   const visualNotice = hasMissingVisual
