@@ -1,0 +1,75 @@
+{
+  "id": "SYNC-IMPORT-300",
+  "priority": "P1",
+  "status": "LOCAL_FIXED_PENDING_NEW_OFFICIAL_CI",
+  "origin": "CI11642227333212; not an additional Astra semantic question finding",
+  "initialCi": {
+    "result": "FAIL",
+    "unitPassed": 1084,
+    "unitSkipped": 29,
+    "pythonPassed": 71,
+    "actualLinuxDpkgPassed": true,
+    "quickPassed": 12,
+    "quickFailed": 2,
+    "failures": {
+      "onlineRemoteSessions": 258,
+      "offlineRemoteSessions": 244,
+      "expected": 300,
+      "deadlineMs": 30000
+    }
+  },
+  "diagnosis": {
+    "source": "legacy-sync pushImport and missing-session recovery used separate setDoc per session",
+    "traceWritePostRequests": 209,
+    "traceDurationAboutSeconds": 28,
+    "failedHistoryPermissionErrors": 0,
+    "originalLocalTwoScenarios": "PASS26.1s",
+    "latency150msTwoScenarios": "PASS45s",
+    "latency500msBefore": {
+      "online": 260,
+      "offline": 256,
+      "expected": 300,
+      "deadlineMs": 30000
+    },
+    "permanentTrackedRed": {
+      "online": 251,
+      "expected": 300,
+      "deadlineMs": 30000
+    }
+  },
+  "change": {
+    "sdk": "existingfirebase10.14.1 fullFirestore writeBatch; no new dependency",
+    "groupBound": 100,
+    "ordinarySingleSessionPath": "unchanged",
+    "deduplicatePendingAccountAndPayload": true,
+    "rejectGroupFallback": "individual previous path only while same account remains active and payload is still current",
+    "noDeletionsOrSchemaChanges": true
+  },
+  "verifiedAfter": {
+    "trackedLatency500msGreen": "300/300; same30s; scenario14.8s",
+    "quickPassed": 16,
+    "historyScenarios": 4,
+    "unitPassed": 1087,
+    "unitSkipped": 29,
+    "syncUnitPassed": 29,
+    "architecture": "PASS",
+    "lint": "PASS",
+    "typecheck": "PASS",
+    "productionBuild": "PASS1.1.21 via official local npmstart",
+    "previous408AndNew5DataUnchanged": true
+  },
+  "boundaries": {
+    "emulatorProject": "demo-tai-auth",
+    "auth": "127.0.0.1:9099",
+    "firestore": "127.0.0.1:8080",
+    "app": "127.0.0.1:4191",
+    "identities": "reserved@example.test only",
+    "productionWrites": 0,
+    "productionStudentDataAccessed": false
+  },
+  "ci": "NEWHEAD_PENDING",
+  "deployment": "NOT_DEPLOYED",
+  "originalQuestionFindings": 3519,
+  "productionBankVersion": 16,
+  "publishedRepairs": 405
+}
