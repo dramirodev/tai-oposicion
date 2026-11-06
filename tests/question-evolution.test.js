@@ -27,3 +27,11 @@ describe('buildQuestionEvolution', () => {
     expect(weeks[0]).toMatchObject({ seen: 4, correct: 1, wrong: 1, unknown: 2 });
   });
 });
+
+it('attributes an ordinary answer to its terminal event, not session creation, and deduplicates delivery', () => {
+  const now = new Date(2026, 10, 6, 12).getTime();
+  const at = new Date(2026, 10, 5, 12).getTime();
+  const attempt = { id: 'terminal-date', sessionId: 'old-start', questionId: 'q', state: 'answered', outcome: 'correct', terminalEventId: 'answer', completedAt: new Date(2026, 10, 7).getTime() };
+  const result = buildQuestionEvolution({ createdAt: now, sessions: [{ id: 'old-start', status: 'completed', startedAt: new Date(2026, 8, 1).getTime() }], attempts: [attempt, attempt], events: [{ id: 'answer', attemptId: attempt.id, at }] }, 2, now);
+  expect(result.at(-1)).toMatchObject({ seen: 1, correct: 1, wrong: 0 });
+});

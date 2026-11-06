@@ -8,6 +8,7 @@ import type {
 export interface AttemptSeed {
   questionId: string;
   contentRevision: string;
+  semanticRevision?: string;
   position: number;
   exposure: number;
   exposureKind?: 'ordinary' | 'immediate-retry';
@@ -20,7 +21,7 @@ export interface AttemptTrackingRef {
 }
 
 export interface AttemptTracker {
-  beginSession(scope: string, mode: AttemptMode, startedAt: number, seeds: readonly AttemptSeed[], timeLimitSeconds?: number, sourceSessionId?: string): AttemptTrackingRef;
+  beginSession(scope: string, mode: AttemptMode, startedAt: number, seeds: readonly AttemptSeed[], timeLimitSeconds?: number, sourceSessionId?: string, activity?: 'questions' | 'attentive-reading'): AttemptTrackingRef;
   resumeSession(scope: string, sessionId: string, attemptIds: readonly string[]): void;
   record(scope: string, attemptId: string, intent: AttemptIntent): Promise<boolean>;
   closeSession(scope: string, sessionId: string, status: 'completed' | 'interrupted', endedAt: number, elapsedSeconds?: number): void;

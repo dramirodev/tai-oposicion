@@ -27,8 +27,9 @@ export interface StatsSnapshot {
   failureCount: number;
   weakTopics: readonly TopicProgress[];
   topics: readonly TopicProgress[];
-  sessions: readonly { id: string; ts: number; kind: string; n: number; a: number; nota: number; secs: number; scorePending?: boolean }[];
+  sessions: readonly { id: string; ts: number; topicIds?: readonly string[]; kind: string; n: number; a: number; nota: number; secs: number; scorePending?: boolean }[];
   reviewLoad: readonly number[];
+  cardReviewStatus?: { recorded: number; dueNow: number; withFsrs: number };
   predictedCardRetention: { reviewedCards: number; points: readonly { days: 7 | 14 | 30; recallProbability: number }[] } | null;
   failureReasons: readonly number[];
   lucky: number;
@@ -37,7 +38,7 @@ export interface StatsSnapshot {
   origins: readonly { label: string; answers: number; accuracy: number }[];
   types: readonly { id: string; label: string; answers: number; accuracy: number }[];
   domains: readonly StatsDomainTopic[];
-  simulations: readonly { id: string; ts: number; nota: number; part: string; dNota: number | null; a: number; f: number; b: number; secs: number; scoringPolicy?: SimulationScoringPolicy }[];
+  simulations: readonly { id: string; ts: number; topicIds?: readonly string[]; nota: number; part: string; dNota: number | null; a: number; f: number; b: number; secs: number; scoringPolicy?: SimulationScoringPolicy }[];
   slow: readonly { id: string; averageSeconds: number; attempts: number; correct: number; lastOutcome: number | null }[];
 }
 

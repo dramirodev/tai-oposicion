@@ -5,6 +5,11 @@ export interface AttemptPage {
   nextCursor: string | null;
 }
 
+export interface AttemptSessionPage {
+  sessions: readonly QuestionAttemptSession[];
+  nextCursor: string | null;
+}
+
 export interface AttemptEventPage {
   events: readonly AttemptEvent[];
   nextCursor: string | null;
@@ -38,6 +43,8 @@ export interface AttemptRepository {
   ): Promise<AppendAttemptEventResult>;
   getAttemptsBySession(scope: string, sessionId: string, cursor?: string, limit?: number): Promise<AttemptPage>;
   getEvents(scope: string, attemptId: string, cursor?: string, limit?: number): Promise<AttemptEventPage>;
+  getScopeSessionPage?(scope: string, cursor?: string, limit?: number): Promise<AttemptSessionPage>;
+  getScopeEventPage?(scope: string, cursor?: string, limit?: number): Promise<AttemptEventPage>;
   getScopePage(scope: string, cursor?: string, limit?: number): Promise<AttemptPage>;
   getScopeTombstone(scope: string): Promise<AttemptScopeTombstone | undefined>;
   importPage(

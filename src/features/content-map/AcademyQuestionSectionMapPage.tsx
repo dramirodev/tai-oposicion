@@ -1,3 +1,6 @@
+import { parsePublishedSectionManifest, type CurriculumSectionLink } from '../../core/domain/academy-section-evidence.js';
+import { createSectionProposal, type SectionProposalStatus } from '../../core/domain/academy-section-proposals.js';
+import { questionRecordSemanticRevision } from '../../core/domain/attempts/question-semantic-revision.js';
 import { useEffect, useMemo, useState } from 'react';
 import { Navigate } from 'react-router';
 import { academyCurriculumTopicLoaders } from '../../core/domain/academy-curriculum.generated.js';
@@ -61,6 +64,7 @@ export function AcademyQuestionSectionMapPage() {
   const [loadedTestTopic, setLoadedTestTopic] = useState<LoadedTopic | null>(null);
   const [loadedSectionTopic, setLoadedSectionTopic] = useState<LoadedTopic | null>(null);
   const [message, setMessage] = useState('');
+  const [proposalStatus, setProposalStatus] = useState<SectionProposalStatus>('pending-review');
   usePageReady(!!overview || !!accessError);
   useEffect(() => {
     let live = true;
@@ -123,7 +127,7 @@ export function AcademyQuestionSectionMapPage() {
   const add = () => {
     if (!canSave || !question || !testFile || !section) return;
     const link: AcademyQuestionSectionLink = {
-      status: 'approved', questionId: question.i, contentRevision: revision,
+      status: 'approved', questionId: question.i, contentRevision: revision, semanticRevision: questionRecordSemanticRevision(question),
       questionTopicId: question.t, testMaterialTopicId: testTopicId, sectionTopicId: section.topicId, sectionId: section.id,
       testEvidence: { path: testFile.path, sourceHash: testFile.sha256!, page: Number(testPage), ...(questionNumber ? { questionNumber: Number(questionNumber) } : {}) },
       sectionEvidence: { path: section.materialPath, sourceHash: section.sourceHash, outlineFingerprint: section.outlineFingerprint, page: section.printedPage },
@@ -190,7 +194,7 @@ export function AcademyQuestionSectionMapPage() {
           return <li className="rounded-md border border-line p-2" key={`${item.question.i}:${item.revision}`}><p className="text-sm"><b>{item.question.i}</b> · {item.question.q.replace(/\s+/g, ' ').slice(0, 180)} · {pageCount} localizador(es)</p><button className="btn sec mt-2" type="button" onClick={() => setQuestionId(item.question.i)}>Abrir para cotejar</button></li>;
         })}</ul> : <p className="mt-2 text-sm">{candidateQueue.length === 0 ? 'No hay candidatos pendientes para este tema o filtro.' : 'No hay candidatos en esta página.'}</p>}{candidatePageCount > 1 && <nav className="mt-3 flex items-center gap-2" aria-label="Páginas de candidatos"><button className="btn sec" type="button" disabled={visibleCandidatePage === 0} onClick={() => setCandidatePage(page => Math.max(0, page - 1))}>Anterior</button><span aria-live="polite">Página {visibleCandidatePage + 1} de {candidatePageCount}</span><button className="btn sec" type="button" disabled={visibleCandidatePage + 1 >= candidatePageCount} onClick={() => setCandidatePage(page => Math.min(candidatePageCount - 1, page + 1))}>Siguiente</button></nav>}</fieldset>
         <label className="mt-3 grid gap-1">Pregunta<select className="min-h-11 rounded-md border border-line bg-surface px-2" value={questionId} onChange={event => setQuestionId(event.target.value)}><option value="">Selecciona pregunta ({questions.length})</option>{questions.map(row => <option key={row.i} value={row.i}>{row.i} · {row.q.replace(/\s+/g, ' ').slice(0, 100)}</option>)}</select></label>
-        {question && <div className="my-2 rounded-md bg-[var(--surface-soft)] p-3"><p><b>{question.i}</b> · {question.o} · revisión {revision}</p><p>{question.q}</p>{question.a.map((option, index) => <p className="my-1" key={question.i + index}>{String.fromCharCode(65 + index)}. {option}{index === question.c ? ' · correcta en el banco' : ''}</p>)}</div>}
+        {question && <div className="my-2 rounded-md bg-[var(--surface-soft)] p-3"><p><b>{question.i}</b> · {question.o} · revisión {revision}</p><p>{question.q}</p>{question.cp && <p>Contexto: {question.cp}</p>}{question.supTexto && <p>Supuesto: {question.supTexto}</p>}{question.u && <p>Referencia conservada: {question.u}</p>}{question.a.map((option, index) => <p className="my-1" key={question.i + index}>{String.fromCharCode(65 + index)}. {option}{index === question.c ? ' · correcta en el banco' : ''}</p>)}</div>}
         {sourceCandidates.length > 0 && <fieldset className="mt-3 rounded-md border border-line p-3"><legend className="px-1 font-semibold">Coincidencias candidatas en tests de Drive · {sourceCandidates.reduce((sum, candidate) => sum + candidate.sources.reduce((count, source) => count + source.pages.length, 0), 0)}</legend><p className="my-1 text-sm text-muted">Se exige el enunciado y todas las opciones en orden, tras normalizar Unicode, mayúsculas y espacios. La página es física del PDF; una pregunta puede repetirse en otros temas. Coteja el documento. No propone ni aprueba un epígrafe.</p><div className="grid gap-2">{sourceCandidates.flatMap(candidate => candidate.sources.flatMap(match => {
           const source = academyQuestionSourceCandidates.materials[match.materialIndex];
           return source ? match.pages.map(page => <button className="btn sec justify-self-start" key={`${candidate.contentRevision}:${source.path}:${page}`} type="button" onClick={() => selectSourceCandidate(source, page)}>Preseleccionar {source.topicId} · {source.path} · PDF p. {page} (física)</button>) : [];
@@ -202,8 +206,36 @@ export function AcademyQuestionSectionMapPage() {
         <label className="mt-3 grid gap-1">Epígrafe del temario<select className="min-h-11 rounded-md border border-line bg-surface px-2" value={sectionId} onChange={event => setSectionId(event.target.value)}><option value="">Selecciona apartado</option>{(sectionTopic?.sections ?? []).filter(row => row.materialKind === 'syllabus' && row.sourceHash && row.outlineFingerprint).map(row => <option key={row.id} value={row.id}>{row.title} · p. {row.printedPage} · {row.materialPath}</option>)}</select></label>
         {section && <p className="sm">Coteja en Drive: <code>{section.materialPath}</code>, p. {section.printedPage}. El índice extraído requiere revisión humana.</p>}
         <label className="mt-3 grid gap-1">Por qué corresponde esta pregunta al epígrafe<textarea className="min-h-20 rounded-md border border-line bg-surface p-2" value={rationale} onChange={event => setRationale(event.target.value)} maxLength={1000} /></label>
+        <fieldset className="mt-3 rounded-md border border-line p-3"><legend>Propuesta sin aprobación</legend>
+          <p>Permite preparar una asociación curricular aunque la pregunta no tenga PDF de test. Conserva la clave y el contexto actuales; las coincidencias del índice requieren cotejo adicional.</p>
+          <label>Estado de propuesta<select value={proposalStatus} onChange={event => setProposalStatus(event.target.value as SectionProposalStatus)}><option value="pending-review">Pendiente de revisión</option><option value="ambiguous">Ambigua</option><option value="without-evidence">Sin evidencia suficiente</option><option value="rejected">Rechazada</option></select></label>
+          <button type="button" className="btn sec mt-2" disabled={!question || rationale.trim().length < 10} onClick={() => {
+            if (!question) return;
+            const proposal = createSectionProposal({ question, section, status: proposalStatus, rationale,
+              sourceCandidates: sourceCandidates.flatMap(candidate => candidate.sources.flatMap(match => {
+                const material = academyQuestionSourceCandidates.materials[match.materialIndex];
+                return material ? [{ path: material.path, sourceHash: material.sourceHash, physicalPages: match.pages }] : [];
+              })) });
+            saveExportFile(`${proposal.id.replaceAll(':', '-')}.json`, JSON.stringify({ schemaVersion: 1, proposals: [proposal] }, null, 2), 'application/json');
+            setMessage('Propuesta exportada sin aprobación. La publicación requiere revisión humana explícita y versionada.');
+          }}>Exportar propuesta para revisión</button>
+        </fieldset>
         <label className="mt-3 grid gap-1">Identificador del revisor<input className="min-h-11 rounded-md border border-line bg-surface px-2" value={reviewer} onChange={event => setReviewer(event.target.value)} maxLength={200} /></label>
         <label className="mt-3 flex items-start gap-2"><input type="checkbox" checked={confirmed} onChange={event => setConfirmed(event.target.checked)} /><span>He cotejado la pregunta y las páginas en los documentos de Drive; la asociación está revisada por una persona.</span></label>
+        <button className="btn sec mt-3" type="button" disabled={!question || !section || !confirmed || !reviewer.trim() || rationale.trim().length < 10} onClick={() => {
+          if (!question || !section || !confirmed || !reviewer.trim()) return;
+          const link: CurriculumSectionLink = {
+            status: 'approved', questionId: question.i, contentRevision: revision, semanticRevision: questionRecordSemanticRevision(question),
+            questionTopicId: question.t, sectionTopicId: section.topicId, sectionId: section.id,
+            sectionEvidence: { path: section.materialPath, sourceHash: section.sourceHash, outlineFingerprint: section.outlineFingerprint, page: section.printedPage },
+            evidence: { kind: 'curriculum-only' }, rationale: rationale.trim(), reviewer: reviewer.trim(), reviewedAt: localRevision(),
+          };
+          const reviewed = { schemaVersion: 3, revision: `local-reviewed-${localRevision()}`, links: [link] };
+          if (!parsePublishedSectionManifest(reviewed)) { setMessage('La revisión no cumple el contrato de evidencia curricular. Revisa las referencias.'); return; }
+          saveExportFile(`vinculo-curricular-${question.i}.json`, JSON.stringify(reviewed, null, 2), 'application/json');
+          setConfirmed(false); setMessage('Revisión curricular v3 exportada por la persona que confirmó el cotejo. No se ha incorporado a la publicación compartida.');
+        }}>Exportar revisión curricular v3</button>
+        <p className="legend">La exportación v3 conserva evidencia curricular sin atribuir un test de origen. Requiere el cotejo humano indicado arriba; publicar el vínculo es una operación posterior y explícita en el repositorio.</p>
         <button className="btn mt-3" type="button" disabled={!canSave} onClick={add}>{duplicate ? 'Esta versión ya está incluida' : 'Añadir al borrador local'}</button>
       </>}
     </section>}

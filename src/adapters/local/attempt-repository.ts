@@ -357,6 +357,34 @@ export function createLocalAttemptRepository(databaseName = 'tai-attempts'): Att
       };
     },
 
+    async getScopeSessionPage(scope, cursor, requestedLimit) {
+      const connection = await db();
+      const tx = connection.transaction('sessions', 'readonly');
+      const done = transactionDone(tx);
+      const limit = clampPageSize(requestedLimit);
+      const range = IDBKeyRange.bound([scope, cursor ?? ''], [scope, '\uffff'], cursor !== undefined, false);
+      const rows = await readRows<StoredSession>(tx.objectStore('sessions'), range, limit + 1);
+      await done;
+      const visible = rows.slice(0, limit).map(row => {
+        const mapped = attemptSessionMapper.toDomain(row.value);
+        if (!mapped.ok) throw new Error(`Sesión ${row.id} inválida: ${mapped.reason}`);
+        return mapped.value;
+      });
+      return { sessions: visible, nextCursor: rows.length > limit && visible.length ? visible.at(-1)!.id : null };
+    },
+
+    async getScopeEventPage(scope, cursor, requestedLimit) {
+      const connection = await db();
+      const tx = connection.transaction('events', 'readonly');
+      const done = transactionDone(tx);
+      const limit = clampPageSize(requestedLimit);
+      const range = IDBKeyRange.bound([scope, cursor ?? ''], [scope, '\uffff'], cursor !== undefined, false);
+      const rows = await readRows<StoredEvent>(tx.objectStore('events'), range, limit + 1);
+      await done;
+      const visible = rows.slice(0, limit).map(mapEvent);
+      return { events: visible, nextCursor: rows.length > limit && visible.length ? visible.at(-1)!.id : null };
+    },
+
     async getScopePage(scope, cursor, requestedLimit) {
       const connection = await db();
       const tx = connection.transaction('attempts', 'readonly');
@@ -510,7 +538,7 @@ export function createLocalAttemptRepository(databaseName = 'tai-attempts'): Att
 
 export const localAttemptRepository = createLocalAttemptRepository();
 
-function readRows<Row>(index: IDBIndex, range: IDBKeyRange, count: number): Promise<Row[]> {
+function readRows<Row>(index: IDBIndex | IDBObjectStore, range: IDBKeyRange, count: number): Promise<Row[]> {
   return new Promise((resolve, reject) => {
     const rows: Row[] = [];
     const request = index.openCursor(range);

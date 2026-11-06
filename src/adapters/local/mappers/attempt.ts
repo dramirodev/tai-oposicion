@@ -127,6 +127,7 @@ export const attemptMapper = {
       sessionId: attempt.sessionId,
       questionId: attempt.questionId,
       contentRevision: attempt.contentRevision,
+      ...(attempt.semanticRevision ? { semanticRevision: attempt.semanticRevision } : {}),
       mode: attempt.mode,
       position: attempt.position,
       exposure: attempt.exposure,
@@ -178,6 +179,7 @@ export const attemptMapper = {
         sessionId: attempt.sessionId,
         questionId: attempt.questionId,
         contentRevision: attempt.contentRevision,
+      ...(attempt.semanticRevision ? { semanticRevision: attempt.semanticRevision } : {}),
         mode: attempt.mode,
         position: attempt.position,
         exposure: attempt.exposure,
@@ -208,6 +210,7 @@ export const attemptMapper = {
       type: event.type,
       at: event.at,
       ...(event.monotonicAt !== undefined ? { monotonicAt: event.monotonicAt } : {}),
+      ...(event.clockContext ? { clockContext: event.clockContext } : {}),
       payload: { ...event.payload },
     };
   },
@@ -227,6 +230,7 @@ export const attemptMapper = {
         type: record.type,
         at: record.at,
         ...(record.monotonicAt !== undefined ? { monotonicAt: record.monotonicAt } : {}),
+        ...(record.clockContext ? { clockContext: record.clockContext } : {}),
         payload: mappedPayload.value,
       },
     };

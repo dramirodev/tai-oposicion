@@ -7,6 +7,7 @@ export const attemptSessionSchema = z.object({
   schemaVersion: z.literal(1),
   id: z.string(),
   sourceSessionId: z.string().optional(),
+  activity: z.enum(['questions', 'attentive-reading']).optional(),
   mode: z.enum(['practice', 'simulation']),
   status: z.enum(['active', 'completed', 'interrupted']),
   startedAt: nonNegativeTime,

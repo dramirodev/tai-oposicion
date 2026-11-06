@@ -20,7 +20,7 @@ beforeEach(async () => {
   const { StatsPage } = await import('../src/features/stats/StatsPage.tsx');
   const { studyServices } = await import('../src/app/app-services-composition.ts');
   const mount=async (Page, waitForReady=true) => { activeView?.unmount(); const container = document.createElement('div'); document.querySelector('#app').append(container); activeView = rtl.render(React.createElement(MemoryRouter,null,React.createElement(AppServicesProvider,{value:studyServices},React.createElement(Page))), { container }); if (waitForReady) await rtl.screen.findByRole('heading', { level: 1 }); };
-  routes.home=(options)=>mount(HomePage, options?.waitForReady ?? true); routes.temario=()=>mount(TopicsPage); routes.stats=()=>mount(StatsPage);
+  routes.home=(options)=>mount(HomePage, options?.waitForReady ?? true); routes.temario=()=>mount(TopicsPage); routes.stats=async()=>{ await mount(StatsPage); await rtl.screen.findByRole('group', { name: 'Sección de progreso' }); rtl.fireEvent.change(rtl.screen.getByRole('combobox', { name: 'Periodo', exact: true }), { target: { value: 'all' } }); };
 });
 afterEach(async()=> { activeView?.unmount(); activeView=undefined; await store.flushNow(); vi.unstubAllGlobals(); });
 it('prioriza retomar, repasar y falladas, agrupa entrenamientos y no presenta una fecha oficial inventada', async()=> {
@@ -65,16 +65,19 @@ it('muestra las secciones de progreso y deja cambiar el detalle de evolución', 
   expect(weeks.value).toBe('26');
   expect(document.querySelector('#app').textContent).toContain('Últimas sesiones');
 });
-it('no muestra una previsión de tarjetas en Progreso', async()=> {
+it('no inventa una previsión FSRS sin muestra de tarjetas', async()=> {
   await routes.stats();
   rtl.fireEvent.click(document.querySelector('[aria-label="Sección de progreso"] button:nth-child(3)'));
   expect(document.querySelector('#app').textContent).not.toMatch(/retención prevista de tarjetas|FSRS-6 para .*tarjeta/i);
 });
-it('mantiene oculta la previsión aunque haya valoraciones guardadas', async()=> {
+it('conserva la previsión de tarjetas como estimación con muestra y sin extrapolar al examen', async()=> {
   store.gradeCard('FC-Q-T1.01-998', 2, Date.now() - 86_400_000);
   await routes.stats();
   rtl.fireEvent.click(document.querySelector('[aria-label="Sección de progreso"] button:nth-child(3)'));
-  expect(document.querySelector('#app').textContent).not.toMatch(/retención prevista de tarjetas|FSRS-6 para .*tarjeta/i);
+  expect(document.querySelector('#app').textContent).toContain('Estimación FSRS de tarjetas');
+  expect(document.querySelector('#app').textContent).toContain('sobre 1 tarjetas con revisión registrada');
+  expect(document.querySelector('#app').textContent).toContain('No mide retención demostrada del temario');
+  store.resetAll();
 });
 it('buscar y navegar no modifica el progreso y una cuenta nueva no recibe la pantalla de la anterior', async()=> {
   store.setSeen(['T1.01']);

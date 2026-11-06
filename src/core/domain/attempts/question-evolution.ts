@@ -30,13 +30,18 @@ export function buildQuestionEvolution(archive: AttemptArchive, weeks: number, n
   }));
   const end = weekStart(monday, 1);
   const sessions = new Map(archive.sessions.map(session => [session.id, session]));
+  const terminalDates = new Map(archive.events.map(event => [event.id, event.at]));
+  const seen = new Set<string>();
   for (const attempt of archive.attempts) {
+    if (seen.has(attempt.id)) continue;
+    seen.add(attempt.id);
     const session = sessions.get(attempt.sessionId);
     if (attempt.exposureKind === 'immediate-retry') continue;
     if (session?.status !== 'completed' || attempt.state === 'unseen') continue;
-    if (session.startedAt < result[0].start || session.startedAt >= end) continue;
+    const at = (attempt.terminalEventId ? terminalDates.get(attempt.terminalEventId) : undefined) ?? attempt.completedAt ?? session.endedAt ?? session.startedAt;
+    if (at < result[0].start || at >= end) continue;
     let index = count - 1;
-    while (index > 0 && result[index].start > session.startedAt) index--;
+    while (index > 0 && result[index].start > at) index--;
     const week = result[index];
     week.seen++;
     if (attempt.outcome === 'correct') week.correct++;

@@ -6,6 +6,7 @@ import type { ReadingOutcome, ReadingProgress, ReadingPrompt, ReadingServices, R
 import { toFailureQuestionView, type QuestionSourceFallbacks } from '../../mappers/study-question-view-mapper.js';
 
 export interface ReadingCompositionDependencies {
+  observation?: { visible(question: QuestionRecord, visible: boolean): void; checkpoint(): void; answer(question: QuestionRecord, optionIndex: number, correct: boolean): void; close(): void };
   accountId(): string | null;
   onAccountChange(listener: () => void): () => void;
   loadQuestionMetadata(): Promise<unknown>;
@@ -34,10 +35,13 @@ export function createReadingComposition(dependencies: ReadingCompositionDepende
   let sourceQuestions = new Map<string, QuestionRecord>();
   let owner = dependencies.accountId();
   let batch: ReadingPrompt[] | null = null;
+  let bankQuestions = new Map<string, QuestionRecord>();
   let progress: ReadingProgress | null = null;
   const listeners = new Set<() => void>();
   const notify = () => listeners.forEach(listener => listener());
   dependencies.onAccountChange(() => {
+    dependencies.observation?.close();
+    bankQuestions.clear();
     owner = dependencies.accountId();
     batch = null;
     progress = null;
@@ -52,6 +56,13 @@ export function createReadingComposition(dependencies: ReadingCompositionDepende
 
   return {
     getProgress,
+    setObservedVisible(visible) {
+      const current = getProgress(), question = current?.items[current.index];
+      if (!question || current?.complete) return;
+      const original = bankQuestions.get(question.id);
+      if (original) dependencies.observation?.visible(original, visible);
+    },
+    checkpointObservation() { dependencies.observation?.checkpoint(); },
     subscribe(listener) { listeners.add(listener); return () => listeners.delete(listener); },
     async start() {
       ensureOwner();
@@ -72,6 +83,7 @@ export function createReadingComposition(dependencies: ReadingCompositionDepende
       if (requestOwner !== dependencies.accountId()) return null;
       const available = new Map(loaded.filter(question => !isEditorialContentBlocked(question) && !question.s && !question.cp).map(question => [question.i, question]));
       sourceQuestions = available;
+      bankQuestions = available;
       batch = dependencies.shuffle(ids.map(id => available.get(id)).filter((question): question is QuestionRecord => !!question).slice(0, 8)).map(question => ({
         ...toFailureQuestionView(question, dependencies.sourceFallbacks),
         asksForNegative: asksForNegativeOption(question.q),
@@ -127,6 +139,8 @@ export function createReadingComposition(dependencies: ReadingCompositionDepende
       const elapsedMilliseconds = dependencies.currentTime() - current.startedAt;
       if (elapsedMilliseconds < question.minimumSeconds * 1000) return false;
       const correct = index === question.correctIndex;
+      const original = bankQuestions.get(question.id);
+      if (original) dependencies.observation?.answer(original, index, correct);
       dependencies.recordAnswer(question.id, question.topicId, correct, dependencies.now(), Math.max(1, Math.round(elapsedMilliseconds / 1000)));
       dependencies.rememberQuestion(dependencies.accountId(), question.id);
       const marked = current.wordResult?.claimedNone ? [0, current.wordResult.total] : [current.wordResult?.hit || 0, current.wordResult?.total || 0];
@@ -138,11 +152,12 @@ export function createReadingComposition(dependencies: ReadingCompositionDepende
     next() {
       const current = getProgress();
       if (!current || current.selectedAnswer === null) return current;
+      dependencies.observation?.close();
       if (current.index + 1 >= current.items.length) { progress = { ...current, complete: true }; notify(); return progress; }
       progress = { ...current, index: current.index + 1, step: 0, meaningChoice: null, meaningCorrect: null, selectedWords: [], wordResult: null, selectedAnswer: null, answerCorrect: null, startedAt: 0 };
       notify();
       return progress;
     },
-    reset() { progress = null; batch = null; owner = dependencies.accountId(); notify(); },
+    reset() { dependencies.observation?.close(); bankQuestions.clear(); progress = null; batch = null; owner = dependencies.accountId(); notify(); },
   };
 }

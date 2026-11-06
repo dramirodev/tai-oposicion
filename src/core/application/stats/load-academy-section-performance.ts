@@ -1,5 +1,6 @@
+import type { MetricsQuery } from './metrics-query.js';
 import type { AcademyCurriculumTopic, AcademyCurriculumSection } from '../../domain/academy-curriculum-types.js';
-import { isAcademyQuestionSectionManifest, type AcademyQuestionSectionManifest } from '../../domain/academy-question-section-map.js';
+import { parsePublishedSectionManifest, sourceTopicForSectionLink } from '../../domain/academy-section-evidence.js';
 import type { Question } from '../../domain/entities.js';
 import type { AttemptRepository } from '../../ports/AttemptRepository.js';
 import { summarizeAcademySectionPerformance, type AcademySectionPerformanceResult } from './academy-section-performance.js';
@@ -7,7 +8,7 @@ import { summarizeAcademySectionPerformance, type AcademySectionPerformanceResul
 export interface AcademySectionPerformanceLoaderDependencies {
   manifest: unknown;
   accountId(): string | null;
-  repository: Pick<AttemptRepository, 'getScopePage'>;
+  repository: Pick<AttemptRepository, 'getScopePage'> & Partial<Pick<AttemptRepository, 'getSession' | 'getEvents'>>;
   loadQuestions(questionIds: readonly string[]): Promise<readonly Question[]>;
   loadTopic(topicId: string): Promise<AcademyCurriculumTopic | undefined>;
 }
@@ -15,17 +16,18 @@ export interface AcademySectionPerformanceLoaderDependencies {
 /** Lazily joins local objective history to the shared, versioned editorial publication. */
 export async function loadAcademySectionPerformance(
   dependencies: AcademySectionPerformanceLoaderDependencies,
+  query?: MetricsQuery,
 ): Promise<AcademySectionPerformanceResult> {
-  if (!isAcademyQuestionSectionManifest(dependencies.manifest)) {
+  const manifest = parsePublishedSectionManifest(dependencies.manifest);
+  if (!manifest) {
     return summarizeAcademySectionPerformance({ manifest: dependencies.manifest, questions: [], sections: [], availableTestMaterials: new Map(), attempts: [] });
   }
-  const manifest: AcademyQuestionSectionManifest = dependencies.manifest;
   if (manifest.links.length === 0) return summarizeAcademySectionPerformance({ manifest, questions: [], sections: [], availableTestMaterials: new Map(), attempts: [] });
 
   const account = dependencies.accountId();
   const scope = account || 'guest';
   const questionIds = [...new Set(manifest.links.map(link => link.questionId))];
-  const topicIds = [...new Set(manifest.links.flatMap(link => [link.testMaterialTopicId, link.sectionTopicId]))];
+  const topicIds = [...new Set(manifest.links.flatMap(link => [sourceTopicForSectionLink(link), link.sectionTopicId].filter((id): id is string => !!id)))];
   const [questions, topics] = await Promise.all([
     dependencies.loadQuestions(questionIds),
     Promise.all(topicIds.map(topicId => dependencies.loadTopic(topicId))),
@@ -48,14 +50,41 @@ export async function loadAcademySectionPerformance(
     }
   }
 
+  const empty = summarizeAcademySectionPerformance({ manifest, questions, sections, availableTestMaterials, attempts: [], query });
+  if (empty.status !== 'ready') return empty;
+  const linkedIds = new Set(questionIds);
   const attempts = [];
+  const sessions = new Map();
+  const events = [];
+  const seenCursors = new Set<string>();
   let cursor: string | undefined;
   do {
     const page = await dependencies.repository.getScopePage(scope, cursor, 100);
     attempts.push(...page.attempts);
+    for (const attempt of page.attempts) {
+      if (!linkedIds.has(attempt.questionId)) continue;
+      if (dependencies.repository.getSession && !sessions.has(attempt.sessionId)) {
+        const session = await dependencies.repository.getSession(scope, attempt.sessionId);
+        if (dependencies.accountId() !== account) throw new Error('La cuenta cambió mientras se cargaba el historial objetivo.');
+        if (session) sessions.set(session.id, session);
+      }
+      if (query && dependencies.repository.getEvents) {
+        let eventCursor: string | undefined;
+        const seenEvents = new Set<string>();
+        do {
+          const eventPage = await dependencies.repository.getEvents(scope, attempt.id, eventCursor, 100);
+          events.push(...eventPage.events); eventCursor = eventPage.nextCursor ?? undefined;
+          if (eventCursor && seenEvents.has(eventCursor)) throw new Error('El historial repitió una página de eventos.');
+          if (eventCursor) seenEvents.add(eventCursor);
+          if (dependencies.accountId() !== account) throw new Error('La cuenta cambió mientras se cargaba el historial objetivo.');
+        } while (eventCursor);
+      }
+    }
     cursor = page.nextCursor ?? undefined;
+    if (cursor && seenCursors.has(cursor)) throw new Error('El historial repitió una página.');
+    if (cursor) seenCursors.add(cursor);
     if (dependencies.accountId() !== account) throw new Error('La cuenta cambió mientras se cargaba el historial objetivo.');
   } while (cursor);
 
-  return summarizeAcademySectionPerformance({ manifest, questions, sections, availableTestMaterials, attempts });
+  return summarizeAcademySectionPerformance({ manifest, questions, sections, availableTestMaterials, attempts, query, events, ...(dependencies.repository.getSession ? { sessions: [...sessions.values()] } : {}) });
 }

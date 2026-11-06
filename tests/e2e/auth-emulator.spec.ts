@@ -163,7 +163,7 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
   const peerPriority = peerPage.locator('.planning-activity').filter({ hasText:'Preguntas del tema prioritario' });
   await expect(peerPriority).toHaveCount(1);
   await expect(peerPriority).toContainText(firstTopic!);
-  await peerPage.screenshot({ path:'tests/e2e/evidence/accessibility-2026-11-05/authenticated-peer-tab-planning.png', fullPage:true });
+  await peerPage.screenshot({ path:'tests/e2e/evidence/progress-metrics-2026-11-06/authenticated-peer-tab-planning.png', fullPage:true });
   await peerPage.close();
   peerPage = undefined;
   const reloadedRecall = (await readRemote(`users/${firstUid}/cfg/trainingRecall`)).data();
