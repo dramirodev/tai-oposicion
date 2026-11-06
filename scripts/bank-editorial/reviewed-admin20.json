@@ -1,0 +1,1901 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "3f6b560",
+  "status": "LOCAL_IMPLEMENTATION_NOT_PUBLISHED",
+  "sourceCandidateSha256": "496117aaced5274124e0791df421d2acc68822ff94852fa78ae9b8bbc1d3453d",
+  "fingerprintEncoding": "SHA256 UTF8 JSON.stringify Node insertion-order, no sorted keys",
+  "questions": [
+    {
+      "id": "AT401-P1-16",
+      "topic": "T4.01",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "AT401-P1-16",
+        "t": "T4.01",
+        "o": "A",
+        "q": "¿Qué comando en Linux muestra devuelve la lista de palabras de un fichero?",
+        "a": [
+          "wc.",
+          "wl.",
+          "wp.",
+          "wm."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT401-P1-16",
+        "t": "T4.01",
+        "o": "A",
+        "q": "¿Qué comando de Linux, con su opción -w, cuenta las palabras de un fichero?",
+        "a": [
+          "wc.",
+          "wl.",
+          "wp.",
+          "wm."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: wc cuenta palabras con -w; no devuelve una lista de palabras.",
+        "u": "wc opciones files: proviene de word count. Con la opción-c cuenta bytes, con -l líneas y con -w palabras. [p. 18]"
+      },
+      "beforeSha256": "3e923d42e69cad9b88c443f12c95497e8812182c2e2491e264b4eef2e020e82f",
+      "afterSha256": "878850deb068933f22b793e7bad66b6654420a46b9ab90d2010c68d6576b523d",
+      "reference": {
+        "pdf": "T4.01 Administración de SO/T4.01 Administración de SO - Temario (version alternativa).pdf",
+        "page": 18,
+        "sha256": "f7c99562cca2c5d2b7923505c7faced04877e46def902faa38faa149ea2c575e",
+        "quote": "wc opciones files: proviene de word count. Con la opción-c cuenta bytes, con -l líneas y con -w palabras.",
+        "role": "Respaldo directo"
+      },
+      "reviewedOptions": [
+        "wc -w cuenta palabras.",
+        "wl no es la utilidad GNU de recuento.",
+        "wp no es la utilidad GNU de recuento.",
+        "wm no es la utilidad GNU de recuento."
+      ],
+      "primary": [
+        {
+          "url": "https://www.gnu.org/software/coreutils/manual/html_node/wc-invocation.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "No se certifica el resto de la página del temario.",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "860d32f6df6d6f31ac5c3bda8ab64f125953d7c4e090b5b12889a2306cd059a7",
+        "after": "34f6bf7a8568086065cba2c37613220532e52d622a6bbc62f4b24881c4247554"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "AT401-P1-18",
+      "topic": "T4.01",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "AT401-P1-18",
+        "t": "T4.01",
+        "o": "A",
+        "q": "Indique qué comando del gestor de paquetes APT utilizamos para eliminar un paquete por completo incluyendo dependencias:",
+        "a": [
+          "apt-get remove paquete.",
+          "apt-get remove --purge paquete.",
+          "apt-delete paquete.",
+          "apt-delete --purge paquete."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT401-P1-18",
+        "t": "T4.01",
+        "o": "A",
+        "q": "¿Qué comando APT elimina un paquete y purga sus archivos de configuración gestionados por el paquete?",
+        "a": [
+          "apt-get remove paquete.",
+          "apt-get remove --purge paquete.",
+          "apt-delete paquete.",
+          "apt-delete --purge paquete."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: --purge añade la eliminación de configuración, no garantiza eliminar dependencias huérfanas; para estas existe autoremove.",
+        "u": "remove --purge package. Elimina por completo el paquete, incluyendo sus archivos de configuración. [p. 24]"
+      },
+      "beforeSha256": "ddb72a726811e64356b1a5312b3b0da05ad86df3ae83bb0f41c478e1790d7b48",
+      "afterSha256": "06e3c51f58967ec9728fea47e3cc90c663b66de3486d93ffc9e4ed3889c6c206",
+      "reference": {
+        "pdf": "T4.01 Administración de SO/T4.01 Administración de SO - Temario (version alternativa).pdf",
+        "page": 24,
+        "sha256": "f7c99562cca2c5d2b7923505c7faced04877e46def902faa38faa149ea2c575e",
+        "quote": "remove --purge package. Elimina por completo el paquete, incluyendo sus archivos de configuración.",
+        "role": "Respaldo directo"
+      },
+      "reviewedOptions": [
+        "remove conserva conffiles.",
+        "remove --purge equivale a purge.",
+        "apt-delete no es el comando APT indicado.",
+        "apt-delete no es el comando APT indicado."
+      ],
+      "primary": [
+        {
+          "url": "https://manpages.debian.org/trixie/apt/apt-get.8.en.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "No se certifica el resto de la página del temario.",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "5b075cf11b9d480b5d1674ba10038ca29a971148703f7d4878689c87d2ab819a",
+        "after": "257874700e0749c8729011129fb40c9ead1e41ce829ec01281ad129b8aed529d"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "AT401-P1-19",
+      "topic": "T4.01",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "AT401-P1-19",
+        "t": "T4.01",
+        "o": "A",
+        "q": "Indique qué comando del gestor de paquetes dpkg utilizamos para eliminar un paquete por completo incluyendo dependencias:",
+        "a": [
+          "dpkg -r paquete.",
+          "dpkg -P paquete.",
+          "dpkg -R paquete.",
+          "dpkg -p paquete."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT401-P1-19",
+        "t": "T4.01",
+        "o": "A",
+        "q": "¿Qué comando dpkg elimina un paquete y purga sus conffiles?",
+        "a": [
+          "dpkg -r paquete.",
+          "dpkg -P paquete.",
+          "dpkg -R paquete.",
+          "dpkg -p paquete."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: dpkg -P purga conffiles; no es una orden de eliminación automática de dependencias. No implica borrar archivos personales de configuración del usuario.",
+        "u": "dpkg -P paquete # elimina el paquete y ficheros de configuración [p. 25]"
+      },
+      "beforeSha256": "2c297ec5a9cc2f8a2796d99fa1036707d44f230707f0cd67b423b5aae146d1c7",
+      "afterSha256": "bd00a2c519dccd70ca8dee4d75b88cb3565c5d019445b0985d915a2337cf585d",
+      "reference": {
+        "pdf": "T4.01 Administración de SO/T4.01 Administración de SO - Temario (version alternativa).pdf",
+        "page": 25,
+        "sha256": "f7c99562cca2c5d2b7923505c7faced04877e46def902faa38faa149ea2c575e",
+        "quote": "dpkg -P paquete # elimina el paquete y ficheros de configuración",
+        "role": "Respaldo directo"
+      },
+      "reviewedOptions": [
+        "-r elimina sin purgar conffiles.",
+        "-P es --purge.",
+        "-R es opción recursiva, no acción de purga.",
+        "-p muestra información disponible del paquete."
+      ],
+      "primary": [
+        {
+          "url": "https://manpages.debian.org/trixie/dpkg/dpkg.1.en.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "No se certifica el resto de la página del temario.",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "2043aeb15d947ed3bd2447ac8dce24fa05ba872ed7e7f4a97fd581aecd66627f",
+        "after": "c2e6c175dcbdb2adcdf540f2ef3265b5fd2137bfde180a1adbecb717a1c70b93"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T4.01-05.v1",
+      "topic": "T4.01",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "GEN-T4.01-05.v1",
+        "t": "T4.01",
+        "o": "G",
+        "q": "Cuando varias GPO se aplican, prevalece:",
+        "a": [
+          "La local siempre.",
+          "La del dominio siempre.",
+          "La primera aplicada.",
+          "La última aplicada."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T4.01-05",
+        "u": "Se aplican en (LSDOU): (1) Local, (2), Site, (3) Domain, (4) OU. Última GPO aplicada es la que prevalece.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T4.01-05.v1",
+        "t": "T4.01",
+        "o": "G",
+        "q": "En el procesamiento ordinario LSDOU de GPO, sin vínculos forzados ni otras excepciones, si varias GPO configuran con valores distintos el mismo ajuste, prevalece:",
+        "a": [
+          "La local siempre.",
+          "La del dominio siempre.",
+          "La primera aplicada.",
+          "La última aplicada."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T4.01-05",
+        "u": "Se aplican en (LSDOU): (1) Local, (2), Site, (3) Domain, (4) OU. Última GPO aplicada es la que prevalece. [p. 2]",
+        "v": 0,
+        "n": "La precedencia de la última GPO se limita al conflicto ordinario del mismo ajuste; no es una regla absoluta frente a vínculos Enforced."
+      },
+      "beforeSha256": "84859f8bf6a50314133b49d814e20427c78ff3d69d5924a942f0b9751ce0aaaf",
+      "afterSha256": "3d70addbda5abed7f6aae7a25d1bd81d47f98d20c8f8f60db75f29a42050b78f",
+      "reference": {
+        "pdf": "T4.01 Administración de SO/T4.01 Administración de SO - Temario.pdf",
+        "page": 2,
+        "sha256": "830785b3be7c2f7d946930a151261b43598861d4639ef66c897af5c2384deff2",
+        "quote": "Se aplican en (LSDOU): (1) Local, (2), Site, (3) Domain, (4) OU. Última GPO aplicada es la que prevalece.",
+        "role": "Respaldo directo"
+      },
+      "reviewedOptions": [
+        "La local se procesa primero y puede ser sustituida.",
+        "La del dominio puede ser sustituida por la OU.",
+        "Una GPO posterior puede sustituir el valor de la primera.",
+        "El último ajuste aplicado prevalece en este supuesto."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/group-policy/group-policy-processing",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "No se certifica el resto de la página del temario.",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "cb98d6becf380efbfcd2058820a6abac5aef340922800cb8deb9d32792152602",
+        "after": "37fe428cfee6dbc2dcfeb8a4511ceff45694eafc0bfa8e114295c99ad88dcb6f"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "AT402-P1-21",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "AT402-P1-21",
+        "t": "T4.02",
+        "o": "A",
+        "q": "El tiempo máximo que se pueden perder los datos tras una caída sin que afecte a la continuidad del negocio se conoce como:",
+        "a": [
+          "RPO.",
+          "TRO.",
+          "PRO.",
+          "RTO."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT402-P1-21",
+        "t": "T4.02",
+        "o": "A",
+        "q": "El periodo máximo de pérdida de datos que una organización acepta, medido hacia atrás desde un incidente, se denomina:",
+        "a": [
+          "RPO.",
+          "TRO.",
+          "PRO.",
+          "RTO."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: RPO mide la ventana de pérdida de datos aceptable; RTO mide el plazo objetivo de recuperación del servicio.",
+        "u": "PUNTO de recuperación objetivo o RPO (Recovery Point Objective): es el periodo máximo de tiempo en el cual se han podido ver afectados datos antes de un incidente. [p. 58]"
+      },
+      "beforeSha256": "584d30c60ec2e1c02be5350a62ea9fce5acb903282c0dd2fbf06642e2c6f49ae",
+      "afterSha256": "40a35228e42dbfc3c7254df59c2cca797ebf16bef88002c9cab47f26d1264601",
+      "reference": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 58,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "PUNTO de recuperación objetivo o RPO (Recovery Point Objective): es el periodo máximo de tiempo en el cual se han podido ver afectados datos antes de un incidente.",
+        "role": "Respaldo directo"
+      },
+      "reviewedOptions": [
+        "RPO es Recovery Point Objective.",
+        "TRO no es la sigla normalizada buscada.",
+        "PRO invierte las letras de RPO.",
+        "RTO se refiere al tiempo de recuperación, no a la pérdida de datos."
+      ],
+      "primary": [
+        {
+          "url": "https://csrc.nist.gov/glossary/term/recovery_point_objective",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "No se certifica el resto de la página del temario.",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "d4351932b3473818c68fc8e156a21499d1b228aeaa619473251af8208d72cd3d",
+        "after": "e79108d2aa67f04f8cfc990de449f2691bb29a3bfaf0496dddcdb8fb91f51b88"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "AS10-P1-81",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "AS10-P1-81",
+        "t": "T4.02",
+        "o": "A",
+        "q": "El tipo de backup que consiste en salvaguardar sólo los archivos que han sido modificados desde el último backup completo se denomina:",
+        "a": [
+          "Diferencial.",
+          "Incremental.",
+          "Completa.",
+          "Mensual."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS10-P1-81",
+        "t": "T4.02",
+        "o": "A",
+        "q": "El tipo de backup que consiste en salvaguardar sólo los archivos que han sido modificados desde el último backup completo se denomina:",
+        "a": [
+          "Diferencial.",
+          "Incremental.",
+          "Completa.",
+          "Mensual."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "n": "Errata de clave de academia: la referencia es el último respaldo completo, por lo que corresponde diferencial.",
+        "u": "Backup DIFERENCIAL: partiendo de una copia de backup completa, se realiza una copia de todos los datos modificados desde que se hizo ese backup completo, [p. 55]"
+      },
+      "beforeSha256": "ee240fd75cdf120edb650a8fce6c46ae2ce36bd861ad477e531f546cbf7bb21d",
+      "afterSha256": "eb50eaaee1b0f5c658194ca0d9fb0997d9a693a101635c0692d5eb506816a800",
+      "reference": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 55,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "Backup DIFERENCIAL: partiendo de una copia de backup completa, se realiza una copia de todos los datos modificados desde que se hizo ese backup completo,",
+        "role": "Respaldo directo"
+      },
+      "reviewedOptions": [
+        "Diferencial acumula cambios desde el respaldo completo.",
+        "Incremental toma los cambios desde el respaldo previo correspondiente, no siempre el completo.",
+        "Completa copia todo el conjunto seleccionado.",
+        "Mensual expresa periodicidad, no este método."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/sql/relational-databases/backup-restore/differential-backups-sql-server?view=sql-server-ver17",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "No se certifica el resto de la página del temario.",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "45bd34076385853e0d732a6f8f61e35e84ea41110dc2a9838c15bdf69d6d75d4",
+        "after": "5878c689f83a95674840aad66eae1f78ed3ba034dd4ae31b3a14b8df661f9573"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T4.02-42.v1",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "GEN-T4.02-42.v1",
+        "t": "T4.02",
+        "o": "G",
+        "q": "Con 4 discos de 1 TB en RAID 1, la capacidad total es de:",
+        "a": [
+          "4 TB, según la fórmula C = n*d.",
+          "2 TB, según la fórmula C = n*d/2.",
+          "3 TB, según la fórmula C = (n-1)*d.",
+          "1 TB, según la fórmula C = d."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          2,
+          7
+        ],
+        "d": 1,
+        "f": "GEN-T4.02-42",
+        "u": "Revisión manual contra PDF T4.02, p.27: RAID 1: Mirroring a nivel de bloque Este nivel se vale del espejado para lograr redundancia. C = n*d/2 Se recomienda el uso de RAID 1 para copias de seguridad y minería de datos debido a la gran cantidad de lecturas frente al número de escrituras.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.02-42.v1",
+        "t": "T4.02",
+        "o": "G",
+        "q": "En un único espejo RAID 1 de cuatro vías, con cuatro discos de 1 TB que contienen copias idénticas, ¿qué capacidad útil hay, ignorando metadatos?",
+        "a": [
+          "4 TB, según la fórmula C = n*d.",
+          "2 TB, según la fórmula C = n*d/2.",
+          "3 TB, según la fórmula C = (n-1)*d.",
+          "1 TB, según la fórmula C = d."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          2,
+          7
+        ],
+        "d": 1,
+        "f": "GEN-T4.02-42",
+        "u": "la capacidad total del RAID 1 será la del disco más pequeño. [p. 27]",
+        "v": 0,
+        "w": 1,
+        "n": "Un espejo de cuatro copias conserva 1 TB útil. Dos pares en RAID 10 darían 2 TB, pero no son el espejo único planteado."
+      },
+      "beforeSha256": "f2bcab856b2b74a360c0e54e713ab3d23f4eb8084e8b13a14d2f92e56e95bc28",
+      "afterSha256": "620fd3d57d8532264d972b5009f11adedd474e00c281b4b72af1956bcced6dc4",
+      "reference": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 27,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "la capacidad total del RAID 1 será la del disco más pequeño.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "reviewedOptions": [
+        "4 TB suma capacidad bruta sin redundancia.",
+        "2 TB corresponde a dos pares con distribución, no a cuatro copias idénticas.",
+        "3 TB corresponde al cálculo de paridad simple, no a espejo.",
+        "Cada disco contiene la misma información: 1 TB único."
+      ],
+      "primary": [
+        {
+          "url": "https://docs.kernel.org/admin-guide/md.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "La fórmula n*d/2 de la misma página no describe un espejo único de cuatro vías",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "14b6f130c41c86ca9cd84d535fb53642f5fd5b18c5d2bd43c88288cfc172ae22",
+        "after": "004639fcc774fe76a7ee8514a6f701ff7cebfa32325e60f386ef836fd9ba0c0d"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T4.02-80.v1",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "GEN-T4.02-80.v1",
+        "t": "T4.02",
+        "o": "G",
+        "q": "SDS también es conocido como:",
+        "a": [
+          "NAS virtual.",
+          "VSAN (Virtual SAN).",
+          "LVM.",
+          "DAS virtual."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          12
+        ],
+        "d": 2,
+        "f": "GEN-T4.02-80",
+        "u": "Revisión manual contra PDF T4.02, p.48: El SDS (Software Defined Storage) o almacenamiento definido por software es una arquitectura de almacenamiento que separa el almacenamiento subyacente (hardware) mediante una capa de datos virtual, permitiendo una mayor flexibilidad y menores costes. SDS también es conocido como VSAN (Virtual SAN). La característica más importante del software controlador del SDS es que no hace suposiciones acerca de la capacidad o utilidad del hardware subyacente.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.02-80.v1",
+        "t": "T4.02",
+        "o": "G",
+        "q": "¿Cómo se traduce SDS (Software Defined Storage)?",
+        "a": [
+          "NAS virtual.",
+          "Almacenamiento definido por software.",
+          "Gestor de volúmenes lógicos.",
+          "DAS virtual."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7,
+          12
+        ],
+        "d": 2,
+        "f": "GEN-T4.02-80",
+        "u": "El SDS (Software Defined Storage) o almacenamiento definido por software [p. 48]",
+        "v": 0,
+        "w": 1,
+        "n": "SDS significa almacenamiento definido por software. VSAN no es un sinónimo general del concepto."
+      },
+      "beforeSha256": "83f63d4bb3110244a04fb16345757139df6e7d822517c4da13535f57a53d5b5f",
+      "afterSha256": "bfba17e9678d7b5a79bb2ed70e813b14b8a93807863b76b743e0a0f0774d3b67",
+      "reference": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 48,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "El SDS (Software Defined Storage) o almacenamiento definido por software",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "reviewedOptions": [
+        "NAS designa almacenamiento en red orientado a archivos.",
+        "Es la expansión y traducción de SDS.",
+        "Describe LVM, no la expansión de SDS.",
+        "DAS designa conexión directa, no SDS."
+      ],
+      "primary": [
+        {
+          "url": "https://www.redhat.com/en/topics/data-storage/software-defined-storage",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "La misma página equipara indebidamente SDS y VSAN; sólo la expansión citada respalda esta corrección",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "bda4f3b3dc0fd36b5905c4c960159b11252d1acbc2c883233b1d67fff8b7a8b6",
+        "after": "c6b8ba0c59ef2b423386452fc505c4c38149c543f9b3148181d29cb51876f9b8"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T4.02-104.v2",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "GEN-T4.02-104.v2",
+        "t": "T4.02",
+        "o": "G",
+        "q": "Un RTO de 6 horas significa que:",
+        "a": [
+          "Se asume la pérdida de datos de un periodo máximo de 6 horas.",
+          "Se tardarán 6 horas en volver a poner en marcha el servicio tras un incidente.",
+          "Se realizan copias de seguridad cada 6 horas.",
+          "Se verifica el sistema durante 6 horas tras la recuperación."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-104",
+        "u": "Revisión manual contra PDF T4.02, p.58: TIEMPO de recuperación objetivo o RTO (Recovery Time Objective): es el tiempo máximo de tiempo en el que se debe alcanzar un nivel de servicio mínimo tras una caída del servicio sin afectar a la continuidad del negocio. También se puede definir como el tiempo máximo que el servicio puede permanecer interrumpido. Ejemplo: un RTO de 6 horas significa que tardaremos 6 horas en volver a poner en marcha el servicio tras un incidente.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.02-104.v2",
+        "t": "T4.02",
+        "o": "G",
+        "q": "Un RTO de 6 horas significa que:",
+        "a": [
+          "Se asume la pérdida de datos de un periodo máximo de 6 horas.",
+          "El objetivo es recuperar el nivel de servicio establecido en un máximo de 6 horas tras la interrupción.",
+          "Se realizan copias de seguridad cada 6 horas.",
+          "Se verifica el sistema durante 6 horas tras la recuperación."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-104",
+        "u": "También se puede definir como el tiempo máximo que el servicio puede permanecer interrumpido. [p. 58]",
+        "v": 0,
+        "w": 1,
+        "n": "RTO es un objetivo máximo de recuperación, no una predicción de que se tardarán exactamente seis horas."
+      },
+      "beforeSha256": "e4eb4c9a224e44a7974c1e59c8880ef2c5fa75342ac50edeaf6cab3fcf9b585d",
+      "afterSha256": "c20ba7fa11542ec43cac4ec2cfed07d48053e360b32114b0458bcc0bcb768130",
+      "reference": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 58,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "También se puede definir como el tiempo máximo que el servicio puede permanecer interrumpido.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "reviewedOptions": [
+        "Confunde RTO con RPO.",
+        "Expresa el objetivo temporal de recuperación.",
+        "RTO no fija por sí solo periodicidad de copias.",
+        "No define una duración fija de verificación."
+      ],
+      "primary": [
+        {
+          "url": "https://csrc.nist.gov/glossary/term/recovery_time_objective",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "El ejemplo posterior que dice que se tardarán 6 horas confunde objetivo y duración efectiva",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "58ffe3eb0723448cff89c0081d2aab1a98fee27898144c825e6b43460badf910",
+        "after": "5a06124ec92393e9b0d780c227e245b281b74ad0ef6cbe290c1d2a066fe29edc"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T4.02-109.v2",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "GEN-T4.02-109.v2",
+        "t": "T4.02",
+        "o": "G",
+        "q": "Respecto al RTA (Recovery Time Actual), se cumple que:",
+        "a": [
+          "RTA < RTO.",
+          "RTA = RTO + WRT.",
+          "RTA > RTO.",
+          "RTA = MTD."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-109",
+        "u": "Revisión manual contra PDF T4.02, p.60: MTO (Maximum Tolerable Outage): es el máximo periodo tolerable desde que se produce el incidente hasta que los servicios se recuperan al 100% de rendimiento (incluyendo el tiempo de funcionamiento en modo degradado). MTPD (Maximum Tolerable Period of Disruption): periodo de disrupción máximo tolerable, es decir, el punto de no retorno o periodo de tiempo superado el cual la organización no puede remontar. ROL (Revised Operating Level): es el nivel mínimo de operación que debe tener una actividad para ser considerada como recuperada, aunque el nivel de servicio no sea óptimo. RTA (Recovery Time Actual): tiempo que realmente se requiere para reanudar el servicio. En todo caso, RTA < RTO.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.02-109.v2",
+        "t": "T4.02",
+        "o": "G",
+        "q": "¿Qué afirmación sobre RTA (Recovery Time Actual) y RTO es correcta?",
+        "a": [
+          "RTA puede ser menor, igual o mayor que RTO: es el tiempo efectivo de recuperación.",
+          "Siempre se cumple RTA = RTO + WRT.",
+          "Siempre se cumple RTA > RTO.",
+          "Siempre se cumple RTA = MTD."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-109",
+        "u": "RTA (Recovery Time Actual): tiempo que realmente se requiere para reanudar el servicio. [p. 60]",
+        "v": 0,
+        "w": 1,
+        "n": "El tiempo efectivo puede cumplir o incumplir el objetivo; RTA < RTO no es una identidad ni una garantía."
+      },
+      "beforeSha256": "98d8b1e134186db66edad3da54472ac115f1d95e4689ca8789ffb7421aec38d0",
+      "afterSha256": "7dab8d7501d8c77a3dac9038f6facb5206200e795efc1cde1b4658a86b03d626",
+      "reference": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 60,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "RTA (Recovery Time Actual): tiempo que realmente se requiere para reanudar el servicio.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "reviewedOptions": [
+        "El resultado observado puede quedar por debajo, coincidir o exceder el objetivo.",
+        "No existe esa identidad universal entre tiempo observado y objetivos.",
+        "También puede recuperarse antes del objetivo.",
+        "La duración tolerable no determina la duración observada."
+      ],
+      "primary": [
+        {
+          "url": "https://csrc.nist.gov/glossary/term/recovery_time_objective",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "La frase siguiente «En todo caso, RTA < RTO» es incorrecta; la primaria define RTO como objetivo y el contraste de tiempos es lógico, no una ejecución de recuperación",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "de589fa0b65e0ee321f97d2b44dce07640e4e17eef4b34df419c449d749014f2",
+        "after": "ec13b94b4fff874b7769eb9dbbc87eba3f42d781992c27b8b0d593433349fcca"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T4.02-121",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "GEN-T4.02-121",
+        "t": "T4.02",
+        "o": "G",
+        "q": "Según el temario, Red Hat Virtualization es un software de virtualización:",
+        "a": [
+          "De tipo 2, basado en el hipervisor KVM.",
+          "De tipo 2, basado en el hipervisor Hyper-V.",
+          "De tipo 1, basado en el hipervisor KVM.",
+          "De tipo 1, basado en el hipervisor Xen."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-121",
+        "u": "Revisión manual contra PDF T4.02, p.68,69: Citrix XenServer: es una plataforma de virtualización de servidores de tipo 1 Oracle VM Server: solución de virtualización de tipo 1 IBM PowerVM: software de virtualización de servidores de tipo 1 Proxmox Virtual Environment: solución de virtualización de servidores de código abierto de tipo 1. Red Hat Virtualization: software de virtualización de Red Hat de tipo 2 basado en el hipervisor KVM. Virtuozzo: solución de virtualización propietaria de tipo 2. OpenVZ: software de virtualización de código abierto de tipo 2 para anfitriones con sistema operativo Linux.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.02-121",
+        "t": "T4.02",
+        "o": "G",
+        "q": "Red Hat Virtualization utiliza KVM. ¿Qué clasificación corresponde al hipervisor en el que se basa?",
+        "a": [
+          "De tipo 2, basado en el hipervisor KVM.",
+          "De tipo 2, basado en el hipervisor Hyper-V.",
+          "De tipo 1, basado en el hipervisor KVM.",
+          "De tipo 1, basado en el hipervisor Xen."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-121",
+        "u": "KVM (Kernel-based Virtual Machine): solución de virtualización de código abierto para sistemas Linux de tipo 1. [p. 69]",
+        "v": 0,
+        "w": 1,
+        "n": "KVM es de tipo 1; Red Hat Virtualization se basa en KVM. Se corrige la clasificación errónea del temario."
+      },
+      "beforeSha256": "0b20297549b73076d996de0c1f2290d10bff9d5a6e33f9e876fef49f100b2170",
+      "afterSha256": "f5ab4bea4af943e9b1c7903f015aa21d2ec58f141ef1acc26b9c5fb313bded57",
+      "reference": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 69,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "KVM (Kernel-based Virtual Machine): solución de virtualización de código abierto para sistemas Linux de tipo 1.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "reviewedOptions": [
+        "KVM no se clasifica aquí como tipo 2.",
+        "RHV no se basa en Hyper-V.",
+        "KVM es tipo 1 según Red Hat.",
+        "RHV no se basa en Xen."
+      ],
+      "primary": [
+        {
+          "url": "https://www.redhat.com/en/topics/virtualization/what-is-a-hypervisor",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        },
+        {
+          "url": "https://www.redhat.com/en/topics/virtualization/what-is-KVM",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "La misma página atribuye tipo 2 a RHV, pese a identificar correctamente KVM como tipo 1",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "ebb4b76bd632e1267a82c0a17050b7afbd9f5489bc8937e107c20aa297940ffd",
+        "after": "db087b0635c13724a64f667ff5834564f40a8a8adc9f81b9753e4b147a06a67d"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T4.02-128",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "GEN-T4.02-128",
+        "t": "T4.02",
+        "o": "G",
+        "q": "Remote Desktop Services (RDS) es una tecnología de:",
+        "a": [
+          "VMware, conocida también como Horizon y anteriormente como View.",
+          "Microsoft, conocida también como Azure Virtual Desktop y anteriormente como Hyper-V Server.",
+          "Citrix, conocida también como XenApp y anteriormente como MetaFrame.",
+          "Microsoft, conocida también como RDSH y anteriormente como Terminal Services."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-128",
+        "u": "Revisión manual contra PDF T4.02, p.73: RDS (Remote Desktop Services): Remote Desktop Services, RDS, es una tecnología de Microsoft. Se conoce también como RDSH (Remote Desktop Session Host) y anteriormente se conocía como Terminal Services.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.02-128",
+        "t": "T4.02",
+        "o": "G",
+        "q": "Remote Desktop Services (RDS) es una tecnología de:",
+        "a": [
+          "VMware, conocida también como Horizon y anteriormente como View.",
+          "Microsoft, conocida también como Azure Virtual Desktop y anteriormente como Hyper-V Server.",
+          "Citrix, conocida también como XenApp y anteriormente como MetaFrame.",
+          "Microsoft, anteriormente denominada Terminal Services; RDSH es uno de sus roles."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-128",
+        "u": "RDS (Remote Desktop Services): Remote Desktop Services, RDS, es una tecnología de Microsoft. Se conoce también como RDSH (Remote Desktop Session Host) y anteriormente se conocía como Terminal Services. [p. 73]",
+        "v": 0,
+        "w": 1,
+        "n": "RDS es el conjunto de servicios de Microsoft; Remote Desktop Session Host (RDSH) es un rol, no un sinónimo del conjunto."
+      },
+      "beforeSha256": "606f55083e88e14b03d870b1c68d28bbd4be9ca897760abaff0cd89c0d6b6648",
+      "afterSha256": "868be35cc746920d103ee959c143f25447bdcdac8a2b3c12322483f171a7a440",
+      "reference": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 73,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "RDS (Remote Desktop Services): Remote Desktop Services, RDS, es una tecnología de Microsoft. Se conoce también como RDSH (Remote Desktop Session Host) y anteriormente se conocía como Terminal Services.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "reviewedOptions": [
+        "Horizon es de VMware, no RDS.",
+        "AVD y Hyper-V Server no son esos nombres históricos de RDS.",
+        "XenApp no es la tecnología RDS de Microsoft.",
+        "Identifica el fabricante, el nombre anterior y la distinción de rol."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/rds-roles",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        },
+        {
+          "url": "https://learn.microsoft.com/en-us/windows/win32/termserv/terminal-services-is-now-remote-desktop-services",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "El temario presenta RDSH como nombre equivalente, confundiendo conjunto y rol",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "971ca038bccde96faae1cdeee891994f01b56208306ba425deb80d57956418de",
+        "after": "3bba3cbd226a6e8ea02edbd951a6f6c9ee0f5479ff0d7d0ae41f4ff3276c997f"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T4.02-147.v1",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "GEN-T4.02-147.v1",
+        "t": "T4.02",
+        "o": "G",
+        "q": "Los montajes tmpfs de Docker:",
+        "a": [
+          "Son carpetas virtuales que solo existen en la memoria del host y nunca se escriben en el sistema de archivos.",
+          "Montan un archivo o directorio del host en el contenedor por su ruta absoluta.",
+          "Son directorios del host gestionados por Docker en /var/lib/docker/volumes.",
+          "Conservan los datos del contenedor tras detenerlo en la capa de escritura."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-147",
+        "u": "Revisión manual contra PDF T4.02, p.84: Volúmenes: son el mecanismo preferido para conservar los datos generados y utilizados por los contenedores de Docker. Montajes de enlace: cuando se utiliza un montaje, un archivo/directorio en la máquina host se monta en el contenedor. Montajes tmpfs: cuando un contenedor genera datos de estado no persistentes, conviene usar un montaje tmpfs Los montajes tmpfs son como carpetas virtuales que solo existen en la memoria del host y nunca se escriben en el sistema de archivos.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.02-147.v1",
+        "t": "T4.02",
+        "o": "G",
+        "q": "Los montajes tmpfs de Docker en Linux:",
+        "a": [
+          "Mantienen datos temporales en memoria, que pueden paginarse al área de intercambio del host.",
+          "Montan un archivo o directorio preexistente del host por su ruta absoluta, como un bind mount.",
+          "Son volúmenes persistentes gestionados por Docker.",
+          "Garantizan conservar los datos del montaje después de detener el contenedor."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-147",
+        "u": "Montajes tmpfs: cuando un contenedor genera datos de estado no persistentes, conviene usar un montaje tmpfs para evitar almacenar los datos en cualquier lugar de forma permanente y para aumentar el rendimiento del contenedor al evitar escribir en la capa de escritura del contenedor. Los montajes tmpfs son como carpetas virtuales que solo existen en la memoria del host y nunca se escriben en el sistema de archivos. [p. 84]",
+        "v": 0,
+        "w": 1,
+        "n": "Un tmpfs es temporal y basado en memoria, pero sus páginas pueden ir a swap; no garantiza que los datos nunca lleguen a disco."
+      },
+      "beforeSha256": "2e4e6ba7b137cd7b5d043681ff4b187850a3ddf7f5eff215b8cd11ea32f2433d",
+      "afterSha256": "c4bec09de9ee56d9db4d7f6221e26b961e1f716bc91d6ca7356fdf8fb790e38f",
+      "reference": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 84,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "Montajes tmpfs: cuando un contenedor genera datos de estado no persistentes, conviene usar un montaje tmpfs para evitar almacenar los datos en cualquier lugar de forma permanente y para aumentar el rendimiento del contenedor al evitar escribir en la capa de escritura del contenedor. Los montajes tmpfs son como carpetas virtuales que solo existen en la memoria del host y nunca se escriben en el sistema de archivos.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "reviewedOptions": [
+        "La documentación de Docker advierte expresamente de swap.",
+        "Describe un bind mount, no tmpfs.",
+        "Describe persistencia de volúmenes, no tmpfs.",
+        "Al detener el contenedor desaparece el montaje y sus datos."
+      ],
+      "primary": [
+        {
+          "url": "https://docs.docker.com/engine/storage/tmpfs/",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "La exclusión absoluta de escrituras en disco del temario omite la paginación a swap",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "a3074339e1f50871caf7450fd62b6b2799fbb4b62be4cd0e0aedae210675d110",
+        "after": "da14ad10a2fe1f24cc288adc0c1aaf412ffcc3b436d77730947f4559b284f63a"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T4.02-155",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "GEN-T4.02-155",
+        "t": "T4.02",
+        "o": "G",
+        "q": "En el proyecto Linux Containers, LXD es:",
+        "a": [
+          "Un runtime de contenedores de Linux de bajo nivel.",
+          "Un sistema de archivos de espacio de usuario (FUSE).",
+          "Un registro de imágenes de contenedores.",
+          "Un contenedor de sistema y un administrador de máquinas virtuales."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-155",
+        "u": "Revisión manual contra PDF T4.02, p.90: LXD es un contenedor de sistema y un administrador de MVs. LXC es un runtime de contenedores de Linux muy conocido que consta de herramientas, plantillas y enlaces de biblioteca y lenguaje. LXCFS es un sistema de archivos de espacio de usuario (FUSE) que ofrece superposición de archivos para cpuinfo, meminfo, stat y uptime",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.02-155",
+        "t": "T4.02",
+        "o": "G",
+        "q": "LXD es:",
+        "a": [
+          "Un runtime de contenedores de Linux de bajo nivel.",
+          "Un sistema de archivos de espacio de usuario (FUSE).",
+          "Un registro de imágenes de contenedores.",
+          "Un gestor de contenedores de sistema y de máquinas virtuales."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-155",
+        "u": "LXD es un contenedor de sistema y un administrador de MVs. [p. 90]",
+        "v": 0,
+        "w": 1,
+        "n": "LXD administra contenedores de sistema y máquinas virtuales; no es un contenedor individual. Se elimina la adscripción histórica a Linux Containers."
+      },
+      "beforeSha256": "2b034a8253e0930c9ecdb325f6b5b9025ee00290ca774a7b33d90f6d822008be",
+      "afterSha256": "d8d224cbb61db3110c321932180cb3ace6893b30945d1de03125ad7ce671ce77",
+      "reference": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 90,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "LXD es un contenedor de sistema y un administrador de MVs.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "reviewedOptions": [
+        "Corresponde a LXC en esta comparación.",
+        "Corresponde a LXCFS en esta comparación.",
+        "Un registro almacena imágenes; no define la función de LXD.",
+        "Es la función definida por el proyecto Canonical LXD."
+      ],
+      "primary": [
+        {
+          "url": "https://github.com/canonical/lxd/blob/main/README.md",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "La redacción del temario omite gestor delante de contenedores y mantiene una adscripción histórica",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "0513bd87456048c2478645e1ca3e2149d2205fa063d919639b86893136494bd8",
+        "after": "673e72c09f81187a6ed7310443305147139dd07a56c5f626ba776664d1218334"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T4.02-162.v1",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "GEN-T4.02-162.v1",
+        "t": "T4.02",
+        "o": "G",
+        "q": "Las aplicaciones multicontenedor creadas con Docker Compose se conocen como:",
+        "a": [
+          "Enjambres.",
+          "Pods.",
+          "Clústeres.",
+          "Stacks o pilas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-162",
+        "u": "Revisión manual contra PDF T4.02, p.95,96: Docker Compose es una herramienta oficial de Docker que está disponible para orquestar conjuntos de contenedores. El comando “Docker compose” se utiliza para crear aplicaciones MULTICONTENEDOR conocidas como “stacks” o pilas. En Compose, se usa un archivo YAML para configurar los servicios de la aplicación. Definir los servicios que componen la aplicación docker-compose.yml para que puedan ejecutarse juntos en un entorno aislado. Ejecutar docker compose up para que se inicie y ejecute la aplicación.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.02-162.v1",
+        "t": "T4.02",
+        "o": "G",
+        "q": "Según Compose Specification, ¿cómo se denomina un despliegue individual de una aplicación definida con Compose?",
+        "a": [
+          "Enjambre.",
+          "Pod.",
+          "Clúster.",
+          "Proyecto."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-162",
+        "u": "Docker Compose es una herramienta oficial de Docker que está disponible para orquestar conjuntos de contenedores. El comando “Docker compose” se utiliza para crear aplicaciones MULTICONTENEDOR conocidas como “stacks” o pilas. [p. 95]",
+        "v": 0,
+        "w": 1,
+        "n": "Compose Specification denomina proyecto al despliegue individual de la aplicación; stack se asocia al despliegue de servicios de Swarm y no es la denominación normativa preguntada."
+      },
+      "beforeSha256": "00bafb0212d61db1b97ab214a9e703990c9ccf00072d06bf544bf974f1a846dd",
+      "afterSha256": "79261ec5940b6816287249b7fd64cdfddf63338a318dc1cb500ea21456850ca9",
+      "reference": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 95,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "Docker Compose es una herramienta oficial de Docker que está disponible para orquestar conjuntos de contenedores. El comando “Docker compose” se utiliza para crear aplicaciones MULTICONTENEDOR conocidas como “stacks” o pilas.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "reviewedOptions": [
+        "Swarm es un conjunto de nodos, no el despliegue Compose definido.",
+        "Pod es la agrupación propia de Kubernetes.",
+        "Un clúster no es necesariamente un proyecto Compose.",
+        "Project es el término de Compose Specification."
+      ],
+      "primary": [
+        {
+          "url": "https://compose-spec.github.io/compose-spec/spec.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "El pasaje del temario usa stacks; la denominación proyecto procede de la especificación primaria, no de ese pasaje",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "f08615535a6c3b9f4df9ec2c0cdd9e9a839e66263c5c6ec9508d1fcea1b24f25",
+        "after": "675c8e105270c6709e83bbc31fb904ece58d2be0430b808f8d6aea0c9b7bb1a4"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "AT403-P1-38",
+      "topic": "T4.03",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "AT403-P1-38",
+        "t": "T4.03",
+        "o": "A",
+        "q": "El protocolo DKIM cuenta con un registro donde se declaran varios elementos con diferentes funciones. Indique a qué corresponde el valor “k”:",
+        "a": [
+          "El valor “k” permite seleccionar la clave criptográfica con la que se realiza el firmado digital de los correos para un determinado dominio",
+          "El valor “k” permite definir los servidores de reenvío autorizados para un determinado dominio.",
+          "El valor “k” permite indicar la cuenta de correo electrónico a la que se enviarán los reportes de fallo detectados por los servidores destino cuando reciben un mensaje que no cumple las políticas.",
+          "El valor “k” permite especificar el comportamiento de la política definida."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT403-P1-38",
+        "t": "T4.03",
+        "o": "A",
+        "q": "En un registro DNS de clave pública DKIM, ¿qué indica la etiqueta k?",
+        "a": [
+          "El tipo de clave criptográfica, por ejemplo rsa.",
+          "Los servidores de reenvío autorizados del dominio.",
+          "La cuenta de correo a la que se enviarán los informes de fallo.",
+          "El comportamiento de la política ante mensajes que no la cumplen."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: k expresa el tipo de clave; no selecciona una clave individual de firma. El selector y el dominio determinan la consulta DNS.",
+        "u": "k=rsa: tipo de clave criptográfica utilizada, en este caso RSA. [p. 25]"
+      },
+      "beforeSha256": "5f331a7f9da01d41cebacc0830b8292ebe8c8d7a9a3602d594e93432c5b14ce8",
+      "afterSha256": "ca77d287c5c3ffb7a5b4185ef5975fc2e922bc6c1a9942780d96fb124791ccbd",
+      "reference": {
+        "pdf": "T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+        "page": 25,
+        "sha256": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+        "quote": "k=rsa: tipo de clave criptográfica utilizada, en este caso RSA.",
+        "role": "Respaldo directo"
+      },
+      "reviewedOptions": [
+        "k declara el tipo de clave.",
+        "No es una lista de servidores autorizados.",
+        "k no es una dirección de informes.",
+        "k no define la política de tratamiento del correo."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc6376#section-3.6.1",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "No se certifica el resto de la página del temario.",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "1ffdcb1962f5d988cdcab35cdd8942b684ea16843562664de1326d36f5b95705",
+        "after": "dd12239311c44eba7964597ead92263034f3a31124cb421058f3a19ec6b593ec"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "AS11B-P1-87",
+      "topic": "T4.03",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "AS11B-P1-87",
+        "t": "T4.03",
+        "o": "A",
+        "q": "El estándar S/MIME especificado en el RFC 8581 permite:",
+        "a": [
+          "Solo firmar digitalmente correos electrónicos.",
+          "Solo cifrar correos electrónicos.",
+          "Tanto firmar digitalmente como cifrar correos electrónicos.",
+          "La negociación de los algoritmos criptográficos a emplear y la autenticación de las partes."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS11B-P1-87",
+        "t": "T4.03",
+        "o": "A",
+        "q": "El estándar S/MIME 4.0 especificado en el RFC 8551 permite:",
+        "a": [
+          "Solo firmar digitalmente correos electrónicos.",
+          "Solo cifrar correos electrónicos.",
+          "Tanto firmar digitalmente como cifrar correos electrónicos.",
+          "Únicamente negociar algoritmos entre las partes, sin firmar ni cifrar mensajes."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "n": "Errata de academia/temario: S/MIME 4.0 corresponde al RFC 8551, no al 8581. Incluye firma y cifrado de mensajes.",
+        "u": "S/MIME (Secure/Multipurpose Internet Mail Extensions) es un estándar especificado en el RFC 8581 (versión 4.0) que permite el cifrado de correos electrónicos mediante criptografía asimétrica y la firma digital de correos electrónicos. [p. 26]"
+      },
+      "beforeSha256": "7671e625a67451477cb6ff0135ac9ecc8aaf96e1657d466bbba51c94bbd418f8",
+      "afterSha256": "06bfa007c479fa1415fe9b00961cec3a4d620743cb847d3b457765f011090d66",
+      "reference": {
+        "pdf": "T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+        "page": 26,
+        "sha256": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+        "quote": "S/MIME (Secure/Multipurpose Internet Mail Extensions) es un estándar especificado en el RFC 8581 (versión 4.0) que permite el cifrado de correos electrónicos mediante criptografía asimétrica y la firma digital de correos electrónicos.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "reviewedOptions": [
+        "Omite la capacidad de cifrado.",
+        "Omite la capacidad de firma.",
+        "Ambas capacidades forman parte de S/MIME.",
+        "Niega las dos capacidades definidas por el estándar."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc8551",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "El pasaje cita erróneamente RFC 8581; la capacidad descrita sí es correcta",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "7dde7c08aec0670679b2fd4a6e3ac768861357d9b3deb332da566b6fc96fab1d",
+        "after": "3a48b9857fb8812078a8b319222968cd1ae933cb0dd50911c7162e5ef7783f1e"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": true
+    },
+    {
+      "id": "GEN-T4.03-05",
+      "topic": "T4.03",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "GEN-T4.03-05",
+        "t": "T4.03",
+        "o": "G",
+        "q": "Las especificaciones MIME se definieron inicialmente en el RFC:",
+        "a": [
+          "RFC 1521",
+          "RFC 2045",
+          "RFC 5322",
+          "RFC 822"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2,
+          6
+        ],
+        "d": 3,
+        "f": "GEN-T4.03-05",
+        "u": "PDF p. 5: definidas inicialmente en el RFC 1521 y posteriormente en RFC 2045 parte 1, RFC 2046 parte 2, RFC 2047 parte 3 y RFC 4289 parte 4",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.03-05",
+        "t": "T4.03",
+        "o": "G",
+        "q": "Las especificaciones MIME se definieron inicialmente en el RFC:",
+        "a": [
+          "RFC 1341",
+          "RFC 2045",
+          "RFC 5322",
+          "RFC 822"
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          2,
+          6
+        ],
+        "d": 3,
+        "f": "GEN-T4.03-05",
+        "u": "definidas inicialmente en el RFC 1521 y posteriormente en RFC 2045 parte 1, RFC 2046 parte 2, RFC 2047 parte 3 y RFC 4289 parte 4 [p. 5]",
+        "v": 0,
+        "w": 1,
+        "n": "Históricamente, MIME se definió en RFC 1341 (1992), sustituido por RFC 1521 (1993). No se presenta RFC 1341 como norma vigente."
+      },
+      "beforeSha256": "e1e42ec92bc08dd62d48f2cf260d28eb59178504a3258c0b1eb553acff993b88",
+      "afterSha256": "056a4b579d2b5197d77628d079d93bc8502d8994b555a3272b7a96f83928582f",
+      "reference": {
+        "pdf": "T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+        "page": 5,
+        "sha256": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+        "quote": "definidas inicialmente en el RFC 1521 y posteriormente en RFC 2045 parte 1, RFC 2046 parte 2, RFC 2047 parte 3 y RFC 4289 parte 4",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "reviewedOptions": [
+        "RFC 1341 documentó inicialmente MIME.",
+        "RFC 2045 es posterior, de 1996.",
+        "RFC 5322 define el formato de mensajes de Internet, no el primer MIME.",
+        "RFC 822 es anterior a MIME y no constituye su especificación inicial."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc1341",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "El temario omite RFC 1341 y atribuye el inicio a su sucesor RFC 1521",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "5c9075475e2d93b1e3e4e97f62111fdde3148880ec269c5bfa0d323c5547c06a",
+        "after": "b86ebedfcd73da53493c1702760c7954f00c02968a95a7d08c09e5ef466c0be0"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": true
+    },
+    {
+      "id": "GEN-T4.03-29",
+      "topic": "T4.03",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "GEN-T4.03-29",
+        "t": "T4.03",
+        "o": "G",
+        "q": "Según el temario, el protocolo POP3 descarga los correos del buzón del usuario y:",
+        "a": [
+          "Los elimina del servidor, por lo que solo son accesibles en local.",
+          "Los mantiene en el servidor, por lo que solo son accesibles en local.",
+          "Los mantiene en el servidor, por lo que son accesibles desde cualquier equipo.",
+          "Los elimina del servidor, por lo que son accesibles desde cualquier equipo."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          3,
+          1
+        ],
+        "d": 1,
+        "f": "GEN-T4.03-29",
+        "u": "PDF p. 18: este protocolo descarga los correos electrónicos del buzón del usuario, eliminándolos del servidor. De esta forma, los correos solo son accesibles en local. | PDF p. 18: Cuando se descarga el contenido de un buzón, típicamente se elimina del servidor, lo que implica que a partir de ese momento el usuario es el único responsable de la custodia de los mensajes",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.03-29",
+        "t": "T4.03",
+        "o": "G",
+        "q": "En POP3, ¿qué hace RETR al recuperar un mensaje, sin ejecutar DELE?",
+        "a": [
+          "Devuelve el mensaje sin marcarlo para borrado.",
+          "Lo marca automáticamente para borrado.",
+          "Lo borra inmediatamente del servidor.",
+          "Borra todos los mensajes del buzón al recuperar uno."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          3,
+          1
+        ],
+        "d": 1,
+        "f": "GEN-T4.03-29",
+        "u": "RETR: (recuperar) solicita un mensaje específico, que no se borra del buzón. [p. 18]",
+        "v": 0,
+        "w": 1,
+        "n": "Recuperar con RETR no equivale a borrar. DELE marca para borrado y la eliminación se procesa en UPDATE al terminar mediante QUIT, según RFC 1939."
+      },
+      "beforeSha256": "0d2b5f5e6372934a31d3d106a1ee6ae6e974e9138c655952c9b1f77ed917c1c1",
+      "afterSha256": "e0aef075d411d0550a23d142c5e4801a08e9563b01d14a4cbe1dbe951e8d39aa",
+      "reference": {
+        "pdf": "T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+        "page": 18,
+        "sha256": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+        "quote": "RETR: (recuperar) solicita un mensaje específico, que no se borra del buzón.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "reviewedOptions": [
+        "RETR recupera, no marca para borrar.",
+        "Marcar corresponde a DELE, no a RETR.",
+        "RETR no elimina inmediatamente.",
+        "RETR no es una operación de vaciado del buzón."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc1939",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "La introducción de la misma página generaliza que descargar elimina; la definición del comando y el RFC lo desmienten",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "cbd3d21d325409df8e63e7fab7df81540c75eb2a039e19ece999099dac6478b7",
+        "after": "ec0a3213c5def33ffb3199f2570a553e34732d944a63b0a0c9098c7d12deeba3"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T4.04-24.v2",
+      "topic": "T4.04",
+      "priority": "P0",
+      "status": "propuesta_revisada_no_aplicada",
+      "before": {
+        "i": "GEN-T4.04-24.v2",
+        "t": "T4.04",
+        "o": "G",
+        "q": "¿Cuál es el shell que utiliza por defecto un usuario según el campo shell de /etc/passwd?",
+        "a": [
+          "/bin/bash",
+          "/bin/sh",
+          "/usr/bin/nologin",
+          "/bin/zsh"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T4.04-24",
+        "u": "PDF p. 15: Debe tener entre 1 y 32 caracteres de longitud | PDF p. 15: Un carácter x indica que la contraseña cifrada se almacena en el archivo /etc/shadow | PDF p. 15: Por defecto /bin/bash.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.04-24.v2",
+        "t": "T4.04",
+        "o": "G",
+        "q": "En /etc/passwd figura la entrada «ana:x:1000:1000::/home/ana:/bin/zsh». ¿Qué shell de inicio está configurado para ana?",
+        "a": [
+          "/bin/bash",
+          "/bin/sh",
+          "/usr/bin/nologin",
+          "/bin/zsh"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T4.04-24",
+        "u": "usuario:password:uid:gid:comentario:directorio:shell-inicio [p. 15]",
+        "v": 0,
+        "w": 1,
+        "n": "El último campo especifica el shell de esa cuenta; /bin/bash no es un valor universal para todos los usuarios."
+      },
+      "beforeSha256": "163b6bd32d6fd4b5275f5f4e5febc9df2e974b87853dc61fc6f204d9cac3743c",
+      "afterSha256": "8ff3d8dbb49108c8d5127d686ae0f8f887c8d2befb611eb6513f126ac20ccdce",
+      "reference": {
+        "pdf": "T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+        "page": 15,
+        "sha256": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+        "quote": "usuario:password:uid:gid:comentario:directorio:shell-inicio",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "reviewedOptions": [
+        "No aparece como shell de esta entrada.",
+        "No es el último campo de esta entrada.",
+        "No está configurado en esta entrada.",
+        "Es el valor explícito del séptimo campo."
+      ],
+      "primary": [
+        {
+          "url": "https://man7.org/linux/man-pages/man5/passwd.5.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria consultada; sin ejecutar servicio"
+        }
+      ],
+      "sourceDiscrepancy": "La afirmación posterior de un /bin/bash por defecto universal no determina el valor de una cuenta concreta",
+      "objective": "Se conserva el concepto original; se corrige clave, precisión o formulación errónea.",
+      "originalSortedHashes": {
+        "before": "f2b822191c24d2210592b05717e83f06dfaaf1be75f559bebb3baa2edfa2eab5",
+        "after": "72f414c36ddab9858c0f5188d60d0a7cf1c36a195f4a448a813c7a3ee20d23d9"
+      },
+      "normalization": "Sólo after.u: quote literal y [p.N]. before/after SHA Node insertion-order. Ningún q/a/c/k/n alterado.",
+      "inSample": false
+    }
+  ],
+  "files": {
+    "T4.01.json": {
+      "beforeSha256": "ece5d90f1252a9cbff48a4e5f1f7fe105a1ea5e0ab2f82a0a7c5b18df6a28953",
+      "afterSha256": "f089050f62aaf3286372961b542c4e0d561117ac3365c33df7586b5a8db2f7d8"
+    },
+    "T4.02.json": {
+      "beforeSha256": "520162ad78c80a562cee5632dd468247abec0c6cf7bdde4e4d56921c6355d936",
+      "afterSha256": "c314c2aade8efee5d48f3c50b698c7a3c56f1a0899e37a2bb1d1a5d5dd8e7542"
+    },
+    "T4.03.json": {
+      "beforeSha256": "c8d638c8e0b868dac17e3f915ed423b66af0e330e9f5566d0016ecee66131a3c",
+      "afterSha256": "d88e245a7b507a5e261beaa83d0a9b7ec478c61921c04431a5a3a8d6146c6a55"
+    },
+    "T4.04.json": {
+      "beforeSha256": "38d3b2137580ab0d24bd8019f2b9c788b50323816d7e9e766b9ab7d4d17129e8",
+      "afterSha256": "4b7653ed61f5637a7f4e00bf1d24207293667802571753321a7f72fec36c7fce"
+    },
+    "meta.json": {
+      "beforeSha256": "2cebaf021991c2541211ee3febc4c107f30e2d673a8ca7e7d9ff60bdbddbae1b",
+      "afterSha256": "95b53bc221d15e6c54a5693459a92c3a24b454139e1af6c08288ab7bfb1daa12"
+    }
+  },
+  "metadataEdits": [
+    {
+      "id": "AT401-P1-18",
+      "topic": "T4.01",
+      "index": 2,
+      "before": [
+        "T4.01",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T4.01",
+        "A",
+        "K",
+        [],
+        0
+      ],
+      "beforeSha256": "41e8c803d1847d2a87ff85763a1c20a3e4ce44726bba8f1c69b2ac6a033ebf08",
+      "afterSha256": "9416e1d91099eadc9310ff902ca843cbad529b25a4c0a19b0a4e1cc956139e40"
+    },
+    {
+      "id": "AT401-P1-19",
+      "topic": "T4.01",
+      "index": 2,
+      "before": [
+        "T4.01",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T4.01",
+        "A",
+        "K",
+        [],
+        0
+      ],
+      "beforeSha256": "41e8c803d1847d2a87ff85763a1c20a3e4ce44726bba8f1c69b2ac6a033ebf08",
+      "afterSha256": "9416e1d91099eadc9310ff902ca843cbad529b25a4c0a19b0a4e1cc956139e40"
+    },
+    {
+      "id": "GEN-T4.02-42.v1",
+      "topic": "T4.02",
+      "index": 2,
+      "before": [
+        "T4.02",
+        "G",
+        "C",
+        [
+          2,
+          7
+        ],
+        1
+      ],
+      "after": [
+        "T4.02",
+        "G",
+        "K",
+        [
+          2,
+          7
+        ],
+        1
+      ],
+      "beforeSha256": "e4a18c6f3d3489778948bec1446787d6538d627d47a78ea4363fbfe0b0f36e17",
+      "afterSha256": "323b58a329930eac666772d49c3168ec92bf2f324b88da9e24e93efe425ce859"
+    },
+    {
+      "id": "GEN-T4.02-80.v1",
+      "topic": "T4.02",
+      "index": 2,
+      "before": [
+        "T4.02",
+        "G",
+        "C",
+        [
+          7,
+          12
+        ],
+        2
+      ],
+      "after": [
+        "T4.02",
+        "G",
+        "D",
+        [
+          7,
+          12
+        ],
+        2
+      ],
+      "beforeSha256": "e7df196a8d3e37a961366314a821c733b4aceae3fd6d73b4465d69f41ce674f8",
+      "afterSha256": "73b03a882e8741810438cfc96c674f811b17cb28217db02d3e33f29357b5d9e4"
+    },
+    {
+      "id": "GEN-T4.02-109.v2",
+      "topic": "T4.02",
+      "index": 2,
+      "before": [
+        "T4.02",
+        "G",
+        "C",
+        [
+          7,
+          9
+        ],
+        3
+      ],
+      "after": [
+        "T4.02",
+        "G",
+        "D",
+        [
+          7,
+          9
+        ],
+        3
+      ],
+      "beforeSha256": "95f98a50645f1152550961c4147ee3845fe06c294e4c52f1c1bac723da04e80e",
+      "afterSha256": "cbf3bae4fdc3ea40fb5ed692b4862e50b59c2aa92c547052529b7850fd911f2b"
+    },
+    {
+      "id": "GEN-T4.02-121",
+      "topic": "T4.02",
+      "index": 2,
+      "before": [
+        "T4.02",
+        "G",
+        "C",
+        [
+          7,
+          9
+        ],
+        3
+      ],
+      "after": [
+        "T4.02",
+        "G",
+        "D",
+        [
+          7,
+          9
+        ],
+        3
+      ],
+      "beforeSha256": "95f98a50645f1152550961c4147ee3845fe06c294e4c52f1c1bac723da04e80e",
+      "afterSha256": "cbf3bae4fdc3ea40fb5ed692b4862e50b59c2aa92c547052529b7850fd911f2b"
+    },
+    {
+      "id": "GEN-T4.02-162.v1",
+      "topic": "T4.02",
+      "index": 2,
+      "before": [
+        "T4.02",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T4.02",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "fb466ff1bfe13cfd86c047e610a7d9c9ed25041549e5c69c44b6db882c538f3f",
+      "afterSha256": "a48f1eff3f61b438e2d0cd531615008a67a6e69468d7f1ff96aed2612b5d3882"
+    },
+    {
+      "id": "AT403-P1-38",
+      "topic": "T4.03",
+      "index": 2,
+      "before": [
+        "T4.03",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T4.03",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "3bfd6312d0fc3177af7f03c68117ba599d29d446dfb2854a95cfb130edd7193b",
+      "afterSha256": "eb1476300231bc4d751062ad946677794798deb6ce1c67342cd1f55a25f54871"
+    },
+    {
+      "id": "GEN-T4.03-05",
+      "topic": "T4.03",
+      "index": 2,
+      "before": [
+        "T4.03",
+        "G",
+        "D",
+        [
+          2,
+          6
+        ],
+        3
+      ],
+      "after": [
+        "T4.03",
+        "G",
+        "C",
+        [
+          2,
+          6
+        ],
+        3
+      ],
+      "beforeSha256": "c3b58319fab94fbfcc83484b160793e9fabf9c9e201af646096e8ddda74a6ef3",
+      "afterSha256": "c9a391158633950956bc69364f705b29fe24543d9109cc5c41ecb1145916067e"
+    },
+    {
+      "id": "GEN-T4.03-29",
+      "topic": "T4.03",
+      "index": 2,
+      "before": [
+        "T4.03",
+        "G",
+        "D",
+        [
+          3,
+          1
+        ],
+        1
+      ],
+      "after": [
+        "T4.03",
+        "G",
+        "K",
+        [
+          3,
+          1
+        ],
+        1
+      ],
+      "beforeSha256": "04481332529fc9b9cba573303b13617fa4e5a181a3db66600d90cae95adfb2cf",
+      "afterSha256": "45b9d2bfbbf39d73cc622bab722f6800fd34ce05dfc4b8826080287512187de0"
+    },
+    {
+      "id": "GEN-T4.04-24.v2",
+      "topic": "T4.04",
+      "index": 2,
+      "before": [
+        "T4.04",
+        "G",
+        "D",
+        [
+          2,
+          7
+        ],
+        2
+      ],
+      "after": [
+        "T4.04",
+        "G",
+        "K",
+        [
+          2,
+          7
+        ],
+        2
+      ],
+      "beforeSha256": "7ae2b215c0c3ad8887651f3df664c9055774b711abe7628e91f2adf2be62e7ff",
+      "afterSha256": "dc5ea6cee94b8dad2e949ba4f2f1db003458c5a0056d4aebe7c8c323da5d1bcc"
+    }
+  ],
+  "sampleFiles": {
+    "T4.03.json": {
+      "beforeSha256": "fb156766b245fa21338f289f79a9d90121fecd2545176bc38006711e995853c3",
+      "afterSha256": "e2c706329162f3553d97f3933b8d52f938bde2be6a91d7de22c8ddfdd73cc2a6"
+    }
+  },
+  "implementation": {
+    "scope": "20 admin locales; sin producción",
+    "prior129And68Unchanged": true
+  }
+}

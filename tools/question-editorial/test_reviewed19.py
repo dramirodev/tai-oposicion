@@ -7,6 +7,7 @@ import subprocess
 import sys
 from tempfile import TemporaryDirectory
 import unittest
+from historical_bank import copy_release_boundary
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -37,13 +38,7 @@ class Reviewed19Tests(unittest.TestCase):
             folder = Path(temp)
             names = list(LEDGER['files'])
             self.assertEqual(len(names), 5)
-            later = json.loads((EDITORIAL / 'reviewed-followup.json').read_text())
-            for name in set(names) | set(later['files']):
-                shutil.copyfile(DATA/name, folder/name)
-            # Test this historical release at its own boundary: undo the independently
-            # reviewed successor on the temporary copy before replaying the original 19.
-            subprocess.run([sys.executable, str(EDITORIAL/'replay.py'), '--candidate-dir', temp,
-                            '--batch', 'reviewed-followup', '--rollback'], check=True, capture_output=True)
+            copy_release_boundary(folder, 'reviewed-19')
 
             def run(mode):
                 return subprocess.run([sys.executable, str(EDITORIAL/'replay.py'), '--candidate-dir', temp,
