@@ -667,6 +667,18 @@ test.describe('explicaciones offline con el service worker real', () => {
       if (!cache) throw new Error('El índice de explicaciones no está en la caché del service worker');
       await cache.put(url, new Response(JSON.stringify(index), { headers: { 'Content-Type': 'application/json' } }));
     }, [explanation]);
+    // The first online bootstrap can load both files before the worker controls the page.
+    // Mirror the intercepted config fixture in the shell cache; warm the real scenario
+    // catalog through the worker and wait for its asynchronous cache write.
+    await page.evaluate(async () => {
+      const shell = (await caches.keys()).find(name => name.startsWith('tai-v'));
+      if (!shell) throw new Error('No se encontró la caché del shell instalado');
+      await (await caches.open(shell)).put('firebase-config.json', Response.json({}));
+      const scenarios = await fetch('data/supuestos.json');
+      if (!scenarios.ok) throw new Error('No se pudo cargar el catálogo de supuestos');
+      await scenarios.arrayBuffer();
+    });
+    await expect.poll(() => page.evaluate(async () => !!(await caches.match('data/supuestos.json')))).toBe(true);
     await context.setOffline(true);
 
     await page.locator('#blank').click();
@@ -684,6 +696,12 @@ test.describe('explicaciones offline con el service worker real', () => {
     });
     expect(cached.ok).toBe(true);
     expect(cached.index.map(row => row.i)).toContain(question.i);
+    const offlineInputs = await page.evaluate(async () => {
+      const config = await fetch('firebase-config.json');
+      const scenarios = await fetch('data/supuestos.json');
+      return { config: await config.json(), hasScenarios: Object.keys(await scenarios.json()).length > 0 };
+    });
+    expect(offlineInputs).toEqual({ config: {}, hasScenarios: true });
     expect(errors.filter(error => !error.startsWith('Failed to load resource:'))).toEqual([]);
     const allowedOfflineRequests = ['https://apis.google.com/', 'https://www.googleapis.com/identitytoolkit/', 'https://tai-oposicion.firebaseapp.com/__/auth/'];
     expect(failedRequests.filter(url => !allowedOfflineRequests.some(prefix => url.startsWith(prefix)) && !url.endsWith('/explanations/index.json') && !url.endsWith('/version.json'))).toEqual([]);
