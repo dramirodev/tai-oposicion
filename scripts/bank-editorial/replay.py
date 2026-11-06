@@ -30,6 +30,7 @@ REVIEWED_BATCHES = {
     'reviewed-systems20': 'reviewed-systems20.json',
     'reviewed-foundations18': 'reviewed-foundations18.json',
     'reviewed-systems16': 'reviewed-systems16.json',
+    'reviewed-syntax3': 'reviewed-syntax3.json',
 }
 
 

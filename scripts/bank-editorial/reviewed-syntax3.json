@@ -1,0 +1,301 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "06b8dc67ae1a6656685eb1b33da2305dc9db0364",
+  "previousBatch": "reviewed-systems16",
+  "status": "LOCAL_PENDING_CI_AND_SPECIFIC_DATA_AUTHORIZATION",
+  "sourceDraftSha256": "73d7d4982c5ecc32e47b1ee3d9342b54014864f8c401f459d66c36621cec0197",
+  "fingerprintEncoding": "SHA256 UTF8 JSON.stringify insertion order; contextual envelope separate from runtime sorted canonical hash",
+  "questions": [
+    {
+      "id": "AS12B-S2-08",
+      "topic": "T4.01",
+      "storageFile": "public/data/supuestos.json",
+      "scenarioId": "AS12B-S2",
+      "before": {
+        "i": "AS12B-S2-08",
+        "t": "T4.01",
+        "o": "A",
+        "q": "En un sistema Linux, un archivo denominado test, tiene los siguientes permisos -rw-r----x. Tras ejecutar el comando chmod g=w, u+x,o-w test los permisos del archivo test serán:",
+        "a": [
+          "-rwx-w---x",
+          "-r-xr-xr-x",
+          "-rw-r-x--x",
+          "-rw-rwx--x"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 3,
+        "n": "chmod simbólico.",
+        "s": "AS12B-S2"
+      },
+      "after": {
+        "i": "AS12B-S2-08",
+        "t": "T4.01",
+        "o": "A",
+        "q": "En un sistema Linux, un archivo denominado test, tiene los siguientes permisos -rw-r----x. Tras ejecutar el comando chmod g=w,u+x,o-w test los permisos del archivo test serán:",
+        "a": [
+          "-rwx-w---x",
+          "-r-xr-xr-x",
+          "-rw-r-x--x",
+          "-rw-rwx--x"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 3,
+        "n": "Se elimina el espacio que separaba el modo en argumentos distintos. En la orden corregida, u+x cambia rw- a rwx; g=w sustituye r-- por -w-; o-w conserva --x. El resultado es -rwx-w---x, equivalente a 721. A: Corresponde a las tres operaciones. B: 555 no es el resultado. C: 651 conserva una lectura de grupo que se ha sustituido. D: 671 concede al grupo permisos que no se han indicado.",
+        "s": "AS12B-S2",
+        "u": "chmod [opciones] permisos archivo[s] [p. 75]"
+      },
+      "beforeSha256": "69fb6efb13eef4d72e53dca0e96bf0ff7f4dc9a9f3cb16238388029934a72769",
+      "afterSha256": "1943fe58726b42ddad31aef013a22d056774c1f1ce4c4cf04d05b8fce422497c",
+      "context": {
+        "scenarioId": "AS12B-S2",
+        "storageFile": "public/data/supuestos.json",
+        "supTexto": "",
+        "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "beforeContextualSha256": "668664abb8753dbd71f34f8923e611965e7295f3e4183d6f0ca5a807bee08176",
+        "afterContextualSha256": "fd23147658bd4b2053641dade46826668b3557d35d0513f6aabe23537dd0d0be"
+      },
+      "reference": {
+        "pdf": "01_Temario/T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf",
+        "page": 75,
+        "quote": "chmod [opciones] permisos archivo[s]",
+        "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1"
+      },
+      "sourceOriginalPDF": {
+        "id": "AS12B",
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/SIMULACROS/Simulacro 12 (bis).pdf",
+        "sha256": "05f942757c317f295ba81d922a95e924891a5956a67731e2b92c6ceb39a3da5b",
+        "pages": 22,
+        "matchingPages": [
+          19
+        ],
+        "questionPage": 19,
+        "visuallyReviewed": true
+      },
+      "reviewedOptions": [
+        "u+x deja el propietario en rwx, g=w sustituye el grupo por -w- y o-w conserva --x:721.",
+        "555 no resulta de las operaciones indicadas.",
+        "651 conserva lectura del grupo en vez de sustituir sus permisos por escritura.",
+        "671 concede al grupo permisos no indicados."
+      ],
+      "primarySources": [],
+      "limits": [
+        "No GNU/Linux runtime executed; only BSD chmod and permission derivation"
+      ],
+      "status": "REVIEWED_BY_SOURCE_AND_DETERMINISTIC_EXECUTION_NOT_PUBLISHED",
+      "factualRepairCount": 1,
+      "publication": "NOT_AUTHORIZED",
+      "priority": "P0",
+      "inSample": false,
+      "reviewMethod": "Original Astra semantic finding independently checked against original PDF image, temario passage and actual syntax/runtime oracles by root; no new external peer signature is claimed.",
+      "originalAstraFinding": "AS12B-S2-08"
+    },
+    {
+      "id": "L2019-S1-08",
+      "topic": "T3.08",
+      "storageFile": "public/data/supuestos.json",
+      "scenarioId": "L2019-S1",
+      "before": {
+        "i": "L2019-S1-08",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Dentro de las tecnologías para el desarrollo web utilizadas en su unidad, se contempla utilizar javascript. ¿Qué valor devuelve la siguiente función javascript? Function prueba() { var i = 1; var j = 0; while (i < 7) { j += i; i += 2; } return j; }",
+        "a": [
+          "2",
+          "9",
+          "6",
+          "0"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": 2,
+        "n": "Traza de bucle JavaScript.",
+        "y": "Ingreso libre OEP 2019",
+        "s": "L2019-S1"
+      },
+      "after": {
+        "i": "L2019-S1-08",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Dentro de las tecnologías para el desarrollo web utilizadas en su unidad, se contempla utilizar javascript. ¿Qué valor devuelve la siguiente función javascript? function prueba() { var i = 1; var j = 0; while (i < 7) { j += i; i += 2; } return j; }",
+        "a": [
+          "2",
+          "9",
+          "6",
+          "0"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": 2,
+        "n": "El cuaderno original imprime Function con mayúscula; ese literal no declara una función JavaScript. Se corrige a function y se evalúa la versión corregida: i toma 1, 3 y 5, que suman 9. A: 2 es el incremento, no el acumulado. B: Devuelve 9. C: 6 no corresponde a las iteraciones. D: El bucle sí se ejecuta desde i=1. Se conserva la clave histórica, sin presentar el literal erróneo como ejecutable.",
+        "y": "Ingreso libre OEP 2019",
+        "s": "L2019-S1",
+        "u": "function suma(alfa, beta) { [p. 11]"
+      },
+      "beforeSha256": "5e8a839a190515523c2da859edced607c6c70d57b431f815795ab1c7b051b932",
+      "afterSha256": "e9e0aa86b21c00a589aa139b71848981b8352ea4d673e9777e6253cc1684f3aa",
+      "context": {
+        "scenarioId": "L2019-S1",
+        "storageFile": "public/data/supuestos.json",
+        "supTexto": "En el departamento TIC, al que usted se acaba de incorporar, quiere desarrollar para la Subdirección de Selección un sistema integral de información para la gestión de los procesos selectivos y convocatorias de oposiciones de la Administración General del Estado. El sistema incluirá, entre otras, las siguientes funcionalidades: - Gestión de solicitudes de inscripción de aspirantes al proceso selectivo. - Gestión de colaboradores. - Generación de listados, estadísticas y cuadros de mando. - Generación de certificados para aspirantes y colaboradores. Dada la envergadura del proyecto, y para aprovechar las aplicaciones ya implantadas en la Subdirección y la experiencia profesional del personal, van a convivir diferentes lenguajes de programación, entre otros, Java, C# o Python, así como distintos gestores de Bases de Datos. Como repositorio de código se utiliza Git. A continuación se muestra un diagrama simplificado de clases que describe parte del sistema: Solicitud                                                    Opositor +IdSolicitud                 Presentada por                   +IdOpositor +IdOpositor              1..N                      1          +NIF +IdProceso 1..N Pertenece a 1 Proceso                                                     Ejercicio +IdProceso                          Consta                     +IdEjercicio +IdFormaAcceso            1                        1..N        +IdProceso +Duracion Salvo que el enunciado diga lo contrario, se asume que aquellas preguntas que contengan un fragmento de código tendrán declaradas correctamente todas las clases, librerías y variables que no aparezcan explícitamente. Del mismo modo sí se trata de lenguaje HTML, se da por supuesto que éste será HTML5 y será ejecutado en navegadores que soporten dicha versión. Las sentencias SQL que aparecen se encuentran dentro del estándar ANSI SQL. Como metodología de base el organismo aplica Métrica v3.",
+        "contextSha256": "0f91dd6b7ae26889e35c0bf128d11de678020f2539da266cebe27b3e6dd6bc07",
+        "beforeContextualSha256": "72d50c3ec089e1f772f18378e03aceaf2330b4ba65002fc3232adae0c7422b02",
+        "afterContextualSha256": "8501de802e49a068a410efdd6cd8bf8bc6c395055c83f25ec1af1b73a4aefe92"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - JavaScript.pdf",
+        "page": 11,
+        "quote": "function suma(alfa, beta) {",
+        "sha256": "1c05b0864e61ae0c2424e1f4d955a400e9260ddce455fba99a0337d56988f8cc"
+      },
+      "sourceOriginalPDF": {
+        "id": "L2019",
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/ingreso-libre-OEP2019__cues_1er_ejer_TAI-L_oep19_154AB89SD658.pdf",
+        "sha256": "717f09d4b4bc8e5bf54638368f564fbdc2f5b4108fa965988244f6a02cc96623",
+        "pages": 15,
+        "matchingPages": [
+          10
+        ],
+        "questionPage": 10,
+        "visuallyReviewed": true
+      },
+      "reviewedOptions": [
+        "2 es el incremento, no el acumulado devuelto.",
+        "Las iteraciones añaden1,3y5; devuelve9.",
+        "No corresponde a la suma de los valores impares ejecutados.",
+        "El bucle sí se ejecuta desde i=1."
+      ],
+      "primarySources": [
+        "https://262.ecma-international.org/10.0/#sec-function-definitions"
+      ],
+      "limits": [],
+      "status": "REVIEWED_BY_SOURCE_AND_DETERMINISTIC_EXECUTION_NOT_PUBLISHED",
+      "factualRepairCount": 1,
+      "publication": "NOT_AUTHORIZED",
+      "priority": "P0",
+      "inSample": false,
+      "reviewMethod": "Original Astra semantic finding independently checked against original PDF image, temario passage and actual syntax/runtime oracles by root; no new external peer signature is claimed.",
+      "originalAstraFinding": "L2019-S1-08"
+    },
+    {
+      "id": "L2025X-S1-04",
+      "topic": "T3.08",
+      "storageFile": "public/data/supuestos.json",
+      "scenarioId": "L2025X-S1",
+      "before": {
+        "i": "L2025X-S1-04",
+        "t": "T3.08",
+        "o": "O",
+        "q": "En una clase de TypeScript se definen los siguientes arrays: const menuAdministrador = [\"Usuarios\", \"Permisos\"]; const menuGestor = [\"Notificaciones\", \"Usuarios\", \"Asientos registrales\"]; En esa misma clase hay una función que ejecuta la siguiente operación: return […menuAdministrador, …menuGestor] ¿Qué hace esta operación?",
+        "a": [
+          "Sustituye el contenido de menuGestor por el de menuAdministrador.",
+          "Sustituye el contenido de menuAdministrador por el de menuGestor.",
+          "Genera un nuevo array que contiene únicamente los elementos comunes entre menuGestor y menuAdministrador.",
+          "Genera un nuevo array con el contenido de menuAdministrador y menuGestor."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": 2,
+        "n": "Operación sobre arrays en TypeScript.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1,
+        "s": "L2025X-S1"
+      },
+      "after": {
+        "i": "L2025X-S1-04",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Dentro de un método de TypeScript se definen los siguientes arrays: const menuAdministrador = [\"Usuarios\", \"Permisos\"]; const menuGestor = [\"Notificaciones\", \"Usuarios\", \"Asientos registrales\"]; Ese método ejecuta la siguiente operación: return [...menuAdministrador, ...menuGestor] ¿Qué hace esta operación?",
+        "a": [
+          "Sustituye el contenido de menuGestor por el de menuAdministrador.",
+          "Sustituye el contenido de menuAdministrador por el de menuGestor.",
+          "Genera un nuevo array que contiene únicamente los elementos comunes entre menuGestor y menuAdministrador.",
+          "Genera un nuevo array con el contenido de menuAdministrador y menuGestor."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": 2,
+        "n": "Se normalizan las elipsis tipográficas al operador de tres puntos ASCII y se precisa el ámbito del método. La expansión crea un array nuevo con los elementos de ambos arrays, en su orden original, y conserva Usuarios repetido. A: No sustituye menuGestor. B: No modifica menuAdministrador. C: No calcula una intersección. D: Combina el contenido en un array nuevo. La referencia del temario acredita el tema rest/spread, sin usar su cronología genérica como fecha inicial de la expansión de arrays.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1,
+        "s": "L2025X-S1",
+        "u": "rest/spread para variables [p. 5]"
+      },
+      "beforeSha256": "0a5fac23fc8a1b741b3cc9741880b71f84a97c6529bd0b800324918e6adbeed0",
+      "afterSha256": "11485642c6d62a273ae61e2986ad9a0de6e59bcd1f43c19fb7684a334ea5e704",
+      "context": {
+        "scenarioId": "L2025X-S1",
+        "storageFile": "public/data/supuestos.json",
+        "supTexto": "Usted forma parte de un grupo de funcionarios de nuevo ingreso que se acaban de incorporar a una Subdirección General de Tecnologías de la Información y Comunicaciones de un ministerio y una de las primeras tareas que se les encomienda es continuar el desarrollo de una aplicación que empezó un funcionario que ya no está en la subdirección. La aplicación se compone de un frontend desarrollado con Angular 21 que se comunica con dos APIs: •    API de persistencia: Desarrollada en ASP.NET 10 con C# 14, expone servicios REST para realizar operaciones de consulta, escritura y borrado en una base de datos SQL Server 2025. Además, utiliza Nunit 3.0 para pruebas. •    API de integración con servicios de la Agencia Estatal de Administración Digital (AEAD): Desarrollada en Java SE Development Kit (JDK) 8, expone servicios SOAP que están integrados con los servicios de GEISER. Se utiliza Git 2.43 como herramienta de control de versiones y las dos APIs están documentadas haciendo uso del estándar OpenAPI/Swagger 3.1.0. Usted forma parte del equipo técnico responsable del diseño, desarrollo, implantación y soporte de este proyecto y deberá responder a las cuestiones que se le plantean a continuación. Para responder a estas, suponga que tiene todos los permisos necesarios en las diferentes tecnologías empleadas y que, salvo que se especifique lo contrario, se utilizan las librerías nativas que ya han sido declaradas de cada lenguaje de programació n utilizado.",
+        "contextSha256": "98305f602c1b55f0c275d09187ad878232f02bb324614f731cf8e88b41622ac7",
+        "beforeContextualSha256": "389d7a75de69a9f7b1e0048ce8d7fa81354f7948a47ac497659491b378b6a972",
+        "afterContextualSha256": "2bf89ea50b50cb914ce2477f58e5f145cc4c837048aef6e6446bacee1561a374"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - JavaScript.pdf",
+        "page": 5,
+        "quote": "rest/spread para variables",
+        "sha256": "1c05b0864e61ae0c2424e1f4d955a400e9260ddce455fba99a0337d56988f8cc"
+      },
+      "sourceOriginalPDF": {
+        "id": "L2025X",
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/ingreso-libre-conv2025__cuestionario_TAI-L_ext_9QVS9NM8ER_154AB89SD658.pdf",
+        "sha256": "b8beaef6ea09b54b6fc60b892d2d3c1f98cd4003124021677f7e69f26863434f",
+        "pages": 15,
+        "matchingPages": [
+          9
+        ],
+        "questionPage": 9,
+        "visuallyReviewed": true
+      },
+      "reviewedOptions": [
+        "La expansión no sustituye menuGestor.",
+        "Tampoco modifica menuAdministrador.",
+        "No calcula una intersección ni elimina repetidos.",
+        "Crea una nueva matriz con los cinco elementos y conserva Usuarios repetido."
+      ],
+      "primarySources": [
+        "https://262.ecma-international.org/15.0/#sec-array-initializer"
+      ],
+      "limits": [],
+      "status": "REVIEWED_BY_SOURCE_AND_DETERMINISTIC_EXECUTION_NOT_PUBLISHED",
+      "factualRepairCount": 1,
+      "publication": "NOT_AUTHORIZED",
+      "priority": "P0",
+      "inSample": false,
+      "reviewMethod": "Original Astra semantic finding independently checked against original PDF image, temario passage and actual syntax/runtime oracles by root; no new external peer signature is claimed.",
+      "originalAstraFinding": "L2025X-S1-04"
+    }
+  ],
+  "files": {
+    "supuestos.json": {
+      "beforeSha256": "f7d2eeb2db294243e32cd6b71c9abf268a847717ec79be6c67401c23818b3952",
+      "afterSha256": "ab5eb20d7c0a13d48b5fb5e9cc6ce1ac33a4dc82e37699a63d1c5355d4593f47"
+    }
+  },
+  "metadataEdits": [],
+  "sampleFiles": {},
+  "validation": {
+    "originalAstraFindings": 3,
+    "sourcePdfVisualChecks": 3,
+    "temarioPassageChecks": 3,
+    "nodeActualRuntime": "24.22.1",
+    "typeScriptActualCompiler": "5.9.3",
+    "permissionsRuntime": "macOS BSD chmod; no GNU/Linux runtime claimed",
+    "answerLettersChanged": 0,
+    "prior405RowsChanged": 0,
+    "additionalPeerModelReview": false,
+    "reasonDeterministicAcceptance": "Three minimal syntax corrections demonstrated by original source plus parser/compiler/permission execution, not accepted from model confidence."
+  }
+}

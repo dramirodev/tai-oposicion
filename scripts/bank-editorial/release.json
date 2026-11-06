@@ -21,7 +21,8 @@
     "scripts/bank-editorial/reviewed-systems20.json",
     "scripts/bank-editorial/reviewed-foundations18.json",
     "scripts/bank-editorial/reviewed-systems16.json",
-    "scripts/bank-editorial/quarantines-reviewed8.json"
+    "scripts/bank-editorial/quarantines-reviewed8.json",
+    "scripts/bank-editorial/reviewed-syntax3.json"
   ],
   "files": {
     "T1.01.json": {
@@ -178,7 +179,7 @@
     },
     "supuestos.json": {
       "sourceBuildSha256": "8e38f2d07f8f00e08365b469d5dc9ea13131cbacd094fe09888f52714fb77dd2",
-      "approvedSha256": "f7d2eeb2db294243e32cd6b71c9abf268a847717ec79be6c67401c23818b3952"
+      "approvedSha256": "ab5eb20d7c0a13d48b5fb5e9cc6ce1ac33a4dc82e37699a63d1c5355d4593f47"
     }
   }
 }
