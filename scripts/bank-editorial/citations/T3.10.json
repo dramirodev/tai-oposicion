@@ -1,0 +1,3792 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T3.10",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "07c1050aafa79545a05851f37d7da9a2a20e0dce19bfa81494db780784a3129f",
+    "afterSha256": "3bc743c1a29e5fd3fc6d4633fc33c9b6dd06e4f07a642d4324069270e9f74f10"
+  },
+  "sample": {
+    "beforeSha256": "d5febea7f87bc7454770be7b7dfd2ab5d654ac9e57bd8b55e8f75c0b2587c035",
+    "afterSha256": "d5febea7f87bc7454770be7b7dfd2ab5d654ac9e57bd8b55e8f75c0b2587c035"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-TAI2024B-P1-53": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 35,
+      "printedPage": 35,
+      "excerpt": "En las pruebas de integración se examinan las interfaces entre grupos de componentes o subsistemas para asegurar que son llamados cuando es necesario y que los datos o mensajes que se transmiten son los requeridos.",
+      "label": "Pruebas de integración — interfaces de componentes y subsistemas"
+    },
+    "e-L2019-P1-55": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 36,
+      "printedPage": 36,
+      "excerpt": "Una vez que se han probado los componentes individuales y se han integrado, se prueba el sistema de forma global. En esta etapa pueden distinguirse los siguientes tipos de pruebas, cada uno con un objetivo claramente diferenciado: - Pruebas funcionales. Dirigidas a asegurar que el sistema de información realiza correctamente todas las funciones que se han detallado en las especificaciones dadas por el usuario del sistema. - Pruebas de comunicaciones. Determinan que las interfaces entre los componentes del sistema funcionan adecuadamente, tanto a través de dispositivos remotos, como locales. Asimismo, se han de probar las interfaces hombre/máquina. - Pruebas de rendimiento. Consisten en determinar que los tiempos de respuesta están dentro de los intervalos establecidos en las especificaciones del sistema. - Pruebas de volumen. Consisten en examinar el funcionamiento del sistema cuando está trabajando con grandes volúmenes de datos, simulando las cargas de trabajo esperadas. - Pruebas de sobrecarga. Consisten en comprobar el funcionamiento del sistema en el umbral límite de los recursos, sometiéndole a cargas masivas. El objetivo es establecer los puntos extremos en los cuales el sistema empieza a operar por debajo de los requisitos establecidos. - Pruebas de disponibilidad de datos. Consisten en demostrar que el sistema puede recuperarse ante fallos, tanto de equipo físico como lógico, sin comprometer la integridad de los datos. - Pruebas de facilidad de uso. Consisten en comprobar la adaptabilidad del sistema a las necesidades de los usuarios, tanto para asegurar que se acomoda a su modo habitual de trabajo, como para determinar las facilidades que aporta al introducir datos en el sistema y obtener los resultados.",
+      "label": "Pasaje del temario"
+    },
+    "e-L2025X-P1-57": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 22,
+      "printedPage": 22,
+      "excerpt": "- Scrum Master (facilitador): no es el líder del equipo (porque ellos se autoorganizan), sino que actúa como una protección entre el equipo y cualquier influencia que le distraiga. El Scrum Master es el responsable de la correcta implantación, seguimiento y utilización de Scrum en la organización y en el equipo de trabajo.",
+      "label": "Scrum — función de Scrum Master"
+    },
+    "e-L2018-P1-66": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 35,
+      "printedPage": 35,
+      "excerpt": "En las pruebas de integración se examinan las interfaces entre grupos de componentes o subsistemas para asegurar que son llamados cuando es necesario y que los datos o mensajes que se transmiten son los requeridos.",
+      "label": "Pruebas de integración — interfaces de componentes y subsistemas"
+    },
+    "e-L2024A-P1-54": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 35,
+      "printedPage": 35,
+      "excerpt": "En las pruebas de integración se examinan las interfaces entre grupos de componentes o subsistemas para asegurar que son llamados cuando es necesario y que los datos o mensajes que se transmiten son los requeridos.",
+      "label": "Pruebas de integración — interfaces de componentes y subsistemas"
+    },
+    "e-AT310-P1-07": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 13,
+      "printedPage": 13,
+      "excerpt": "Listamos las herramientas más usadas: - Altova Umodel: herramienta que genera código Java, C++, C# o VB.NET a partir de las clases del diagrama de clases de UML. Por otro lado, a partir de los diagramas de secuencia se genera el código de los métodos. - Visual Paradigm: herramienta que, a partir de diagramas UML, genera de forma automática código para diversos lenguajes de programación como Java, C#, C++, Python, PHP, Ruby o VB.NET.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT310-P1-14": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 28,
+      "printedPage": 28,
+      "excerpt": "Las interfaces descritas en la metodología son: - Gestión de Proyectos (GP): tiene como finalidad principal la planificación, el seguimiento y control de las actividades y de los recursos humanos y materiales que intervienen en el desarrollo de un Sistema de Información. Como consecuencia de este control es posible conocer en todo momento qué problemas se producen y resolverlos o paliarlos lo más pronto posible, lo cual evitará desviaciones temporales y económicas. - Seguridad (SEG): el análisis de los riesgos constituye una pieza fundamental en el diseño y desarrollo de sistemas de información seguros. Si bien los riesgos que afectan a un sistema de información son de distinta índole: naturales (inundaciones, incendios, etc.) o lógicos (fallos propios, ataques externos, virus, etc.) siendo estos últimos los contemplados en la interfaz de Seguridad de Métrica v3. - Gestión de la Configuración (GC): consiste en la aplicación de procedimientos administrativos y técnicos durante el desarrollo del sistema de información y su posterior mantenimiento. Su finalidad es identificar, definir, proporcionar información y controlar los cambios en la configuración del sistema, así como las modificaciones y versiones de los mismos. Este proceso permitirá conocer el estado de cada uno de los productos que se hayan definido como elementos de configuración, garantizando que no se realizan cambios incontrolados y que todos los participantes en el desarrollo del sistema disponen de la versión adecuada de los productos que manejan. - Aseguramiento de la Calidad (CAL): el objetivo esta interfaz es proporcionar un marco común de referencia para la definición y puesta en marcha de planes específicos de aseguramiento de calidad aplicables a proyectos concretos.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT310-P1-19": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 39,
+      "printedPage": 39,
+      "excerpt": "7. Pruebas de REGRESIÓN El objetivo de las PRUEBAS DE REGRESIÓN es eliminar el efecto onda, es decir, comprobar que los cambios sobre un componente de un sistema de información no introducen un comportamiento no deseado o errores adicionales en otros componentes no modificados.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT310-P1-27": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 39,
+      "printedPage": 39,
+      "excerpt": "Por último, cabe destacar dentro de las pruebas de aceptación otros dos tipos de pruebas de validación: - Pruebas ALFA: realizadas en las instalaciones de la organización que desarrolla, no por el equipo de desarrollo, sino por los clientes o un equipo de prueba independiente. - Pruebas BETA: realizadas por los clientes en sus propias instalaciones. Estas pruebas también se conocen como pruebas de campo.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT310-P1-29": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 37,
+      "printedPage": 37,
+      "excerpt": "- Pruebas de operación. Consisten en comprobar la correcta implementación de los procedimientos de operación, incluyendo la planificación y control de trabajos, arranque y rearranque del sistema, etc. - Pruebas de entorno. Consisten en verificar las interacciones del sistema con otros sistemas dentro del mismo entorno. - Pruebas de seguridad. Consisten en verificar los mecanismos de control de acceso al sistema para evitar alteraciones indebidas en los datos.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT310-P1-32": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 30,
+      "printedPage": 30,
+      "excerpt": "Según Métrica v3, los tipos de pruebas que deben realizarse son: - Pruebas Unitarias. - Pruebas de Integración. - Pruebas del Sistema. - Pruebas de Implantación. - Pruebas de Aceptación. - Pruebas de Regresión.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT310-P1-50": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 27,
+      "printedPage": 27,
+      "excerpt": "- Mantenimiento de Sistemas de Información (MSI): El objetivo de este proceso es la obtención de una nueva versión de un sistema de información desarrollado, a partir de las peticiones de mantenimiento que los usuarios realizan con motivo de un problema detectado en el sistema o por la necesidad de una mejora del mismo. Solo se considerarán los tipos de mantenimiento correctivo y evolutivo, quedando excluidos los tipos de mantenimiento adaptativo o perfectivo.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT310-P1-54": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 53,
+      "printedPage": 53,
+      "excerpt": "A pesar de que puede resultar muy útil para ajustar los commits, el área de preparación es a veces un paso más complejo de lo que se necesita para el flujo de trabajo. Si queremos saltarnos el área de preparación, Git ofrece un atajo sencillo. Añadiendo la opción -a al comando git commit Git preparará automáticamente todos los archivos rastreados antes de confirmarlos, ahorrándonos el paso de git add: git commit -a -m \"mensaje\"",
+      "label": "Git — commit -a y archivos rastreados"
+    },
+    "e-AS08-P1-90": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 36,
+      "printedPage": 36,
+      "excerpt": "4. Pruebas del SISTEMA Las PRUEBAS DEL SISTEMA tienen como objetivo ejercitar profundamente el sistema comprobando la integración del sistema de información globalmente, verificando el funcionamiento correcto de las interfaces entre los distintos subsistemas que lo componen y con el resto de sistemas de información con los que se comunica.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS08-P1-92": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 53,
+      "printedPage": 53,
+      "excerpt": "A pesar de que puede resultar muy útil para ajustar los commits, el área de preparación es a veces un paso más complejo de lo que se necesita para el flujo de trabajo. Si queremos saltarnos el área de preparación, Git ofrece un atajo sencillo. Añadiendo la opción -a al comando git commit Git preparará automáticamente todos los archivos rastreados antes de confirmarlos, ahorrándonos el paso de git add: git commit -a -m \"mensaje\"",
+      "label": "Git — commit -a y archivos rastreados"
+    },
+    "e-AS10-P1-65": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 60,
+      "printedPage": 60,
+      "excerpt": "Si todo eso fuera correcto se podría ejecutar un proceso de despliegue continuo CD (Continuous Deployment), que es una práctica que tiene como objetivo proporcionar una manera ágil, fiable y automática de poder entregar o desplegar los nuevos cambios (nueva versión) en el entorno específico, normalmente producción.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS11-P1-64": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 17,
+      "printedPage": 17,
+      "excerpt": "Por último, se describen los TIPOS DE MIGRACIÓN de aplicaciones: - Refronting o refacing: consiste en modificar únicamente la interfaz gráfica de una aplicación, sin necesidad de reescribir la aplicación completa.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS11-P1-70": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 60,
+      "printedPage": 60,
+      "excerpt": "Como parte de la cultura DevOps, los cambios que se hagan en el desarrollo, al subir al repositorio de código, van a lanzar un proceso de integración continua CI (Continuous Integration), que es una práctica del desarrollo de software que generalmente incluye la compilación del código, la ejecución de tests automáticos, la generación de artefactos y algunas otras fases como el análisis de calidad de código automático.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS12-P1-65": {
+      "path": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+      "sourceHash": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+      "physicalPage": 37,
+      "printedPage": 37,
+      "excerpt": "5. Pruebas de IMPLANTACIÓN El objetivo de las PRUEBAS DE IMPLANTACIÓN es comprobar el funcionamiento correcto del sistema integrado de hardware y software en el entorno de operación, y permitir al usuario que, desde el punto de vista de operación, realice la aceptación del sistema una vez instalado en su entorno real y en base al cumplimiento de los requisitos no funcionales especificados.",
+      "label": "Pasaje del temario"
+    }
+  },
+  "questions": [
+    {
+      "id": "TAI2024B-P1-53",
+      "before": {
+        "i": "TAI2024B-P1-53",
+        "t": "T3.10",
+        "o": "O",
+        "q": "Segun establece Métrica V3, en la construcción de un sistema de información, las pruebas que permiten verificar que los componentes o subsistemas interactúan correctamente a través de sus interfaces, tanto internas como externas, cubren la funcionalidad establecida y se ajustan a los requisitos especificados en las verificaciones correspondientes son:",
+        "a": [
+          "Pruebas unitarias.",
+          "Pruebas de integración.",
+          "Pruebas del sistema.",
+          "Pruebas de migración."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Definición literal de Métrica v3 → tipo de prueba.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "after": {
+        "i": "TAI2024B-P1-53",
+        "t": "T3.10",
+        "o": "O",
+        "q": "Segun establece Métrica V3, en la construcción de un sistema de información, las pruebas que permiten verificar que los componentes o subsistemas interactúan correctamente a través de sus interfaces, tanto internas como externas, cubren la funcionalidad establecida y se ajustan a los requisitos especificados en las verificaciones correspondientes son:",
+        "a": [
+          "Pruebas unitarias.",
+          "Pruebas de integración.",
+          "Pruebas del sistema.",
+          "Pruebas de migración."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Definición literal de Métrica v3 → tipo de prueba.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)",
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Pruebas de integración — interfaces de componentes y subsistemas\n\nTemario, p. 35 (PDF p. 35)\n\nEn las pruebas de integración se examinan las interfaces entre grupos de componentes o subsistemas para asegurar que son llamados cuando es necesario y que los datos o mensajes que se transmiten son los requeridos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "61063271821112f613772e810a8acd1c519a9526725d4ada46975f241384d893",
+      "afterSha256": "ff2fd5225e03b2f730e7f760d88ea8a965e37ec4b560b824a738ec7558e0a085",
+      "evidenceKeys": [
+        "e-TAI2024B-P1-53"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "L2019-P1-55",
+      "before": {
+        "i": "L2019-P1-55",
+        "t": "T3.10",
+        "o": "O",
+        "q": "Según Métrica v3, ¿qué tipo de pruebas consiste en determinar que los tiempos de respuesta están dentro de los intervalos establecidos en las especificaciones del sistema?",
+        "a": [
+          "Pruebas de respuesta.",
+          "Pruebas de sobrecarga.",
+          "Pruebas de rendimiento.",
+          "Pruebas de tiempo."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9,
+          7
+        ],
+        "d": 1,
+        "n": "Tipos de prueba de Métrica; \"de respuesta\"/\"de tiempo\" inventadas.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "after": {
+        "i": "L2019-P1-55",
+        "t": "T3.10",
+        "o": "O",
+        "q": "Según Métrica v3, ¿qué tipo de pruebas consiste en determinar que los tiempos de respuesta están dentro de los intervalos establecidos en las especificaciones del sistema?",
+        "a": [
+          "Pruebas de respuesta.",
+          "Pruebas de sobrecarga.",
+          "Pruebas de rendimiento.",
+          "Pruebas de tiempo."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9,
+          7
+        ],
+        "d": 1,
+        "n": "Tipos de prueba de Métrica; \"de respuesta\"/\"de tiempo\" inventadas.",
+        "y": "Ingreso libre OEP 2019",
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Pasaje del temario\n\nTemario, p. 36 (PDF p. 36)\n\nUna vez que se han probado los componentes individuales y se han integrado, se prueba el sistema de forma global. En esta etapa pueden distinguirse los siguientes tipos de pruebas, cada uno con un objetivo claramente diferenciado: - Pruebas funcionales. Dirigidas a asegurar que el sistema de información realiza correctamente todas las funciones que se han detallado en las especificaciones dadas por el usuario del sistema. - Pruebas de comunicaciones. Determinan que las interfaces entre los componentes del sistema funcionan adecuadamente, tanto a través de dispositivos remotos, como locales. Asimismo, se han de probar las interfaces hombre/máquina. - Pruebas de rendimiento. Consisten en determinar que los tiempos de respuesta están dentro de los intervalos establecidos en las especificaciones del sistema. - Pruebas de volumen. Consisten en examinar el funcionamiento del sistema cuando está trabajando con grandes volúmenes de datos, simulando las cargas de trabajo esperadas. - Pruebas de sobrecarga. Consisten en comprobar el funcionamiento del sistema en el umbral límite de los recursos, sometiéndole a cargas masivas. El objetivo es establecer los puntos extremos en los cuales el sistema empieza a operar por debajo de los requisitos establecidos. - Pruebas de disponibilidad de datos. Consisten en demostrar que el sistema puede recuperarse ante fallos, tanto de equipo físico como lógico, sin comprometer la integridad de los datos. - Pruebas de facilidad de uso. Consisten en comprobar la adaptabilidad del sistema a las necesidades de los usuarios, tanto para asegurar que se acomoda a su modo habitual de trabajo, como para determinar las facilidades que aporta al introducir datos en el sistema y obtener los resultados.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "4a196286a8e8b50c681dab20f2d2d397243a63c6e1955ed9e228d27e8b0027bc",
+      "afterSha256": "bd7079eadfa1c6f12faa79c92868097812e963db8fa70441346f53d6b53ddd32",
+      "evidenceKeys": [
+        "e-L2019-P1-55"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "L2025X-P1-57",
+      "before": {
+        "i": "L2025X-P1-57",
+        "t": "T3.10",
+        "o": "O",
+        "q": "De acuerdo con la Guía de Scrum, ¿cuál de los siguientes es uno de los roles que compone el Equipo de Scrum?",
+        "a": [
+          "Sprint Owner.",
+          "Scrum Planner.",
+          "Scrum Master.",
+          "Stakeholder."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9,
+          13
+        ],
+        "d": 1,
+        "n": "Roles de Scrum: inventados y stakeholder.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "after": {
+        "i": "L2025X-P1-57",
+        "t": "T3.10",
+        "o": "O",
+        "q": "De acuerdo con la Guía de Scrum, ¿cuál de los siguientes es uno de los roles que compone el Equipo de Scrum?",
+        "a": [
+          "Sprint Owner.",
+          "Scrum Planner.",
+          "Scrum Master.",
+          "Stakeholder."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9,
+          13
+        ],
+        "d": 1,
+        "n": "Roles de Scrum: inventados y stakeholder.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1,
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Scrum — función de Scrum Master\n\nTemario, p. 22 (PDF p. 22)\n\n- Scrum Master (facilitador): no es el líder del equipo (porque ellos se autoorganizan), sino que actúa como una protección entre el equipo y cualquier influencia que le distraiga. El Scrum Master es el responsable de la correcta implantación, seguimiento y utilización de Scrum en la organización y en el equipo de trabajo.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "a35de75e2d6cf6925d44a03f04648c5e22422acadcb26b4b21c554bfd96e4427",
+      "afterSha256": "2e3e1fe49ad63cfe33354564050605f78f67b8a41c3bb54de9ac02be74a86021",
+      "evidenceKeys": [
+        "e-L2025X-P1-57"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "L2018-P1-66",
+      "before": {
+        "i": "L2018-P1-66",
+        "t": "T3.10",
+        "o": "O",
+        "q": "Las pruebas cuya finalidad es verificar que los distintos componentes del sistema interactúan correctamente a través de sus interfaces se denominan:",
+        "a": [
+          "Pruebas de artefactos.",
+          "Pruebas de integración.",
+          "Pruebas de interacción.",
+          "Pruebas de implantación."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          9,
+          7
+        ],
+        "d": 1,
+        "n": "Pruebas de integración (tercera vez).",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "after": {
+        "i": "L2018-P1-66",
+        "t": "T3.10",
+        "o": "O",
+        "q": "Las pruebas cuya finalidad es verificar que los distintos componentes del sistema interactúan correctamente a través de sus interfaces se denominan:",
+        "a": [
+          "Pruebas de artefactos.",
+          "Pruebas de integración.",
+          "Pruebas de interacción.",
+          "Pruebas de implantación."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          9,
+          7
+        ],
+        "d": 1,
+        "n": "Pruebas de integración (tercera vez).",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)",
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Pruebas de integración — interfaces de componentes y subsistemas\n\nTemario, p. 35 (PDF p. 35)\n\nEn las pruebas de integración se examinan las interfaces entre grupos de componentes o subsistemas para asegurar que son llamados cuando es necesario y que los datos o mensajes que se transmiten son los requeridos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "671c7b5641a9e141eb99efe50432028a8831293ab5adfaf157dfe80d922e46ce",
+      "afterSha256": "5b068806d878450aeff0d62a0b31fe29d1472ecd6fd63f9def5144bedbbc1452",
+      "evidenceKeys": [
+        "e-L2018-P1-66"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "L2024A-P1-54",
+      "before": {
+        "i": "L2024A-P1-54",
+        "t": "T3.10",
+        "o": "O",
+        "q": "Según establece Métrica V3, en la construcción de un sistema de información, las pruebas que permiten verificar que los componentes o subsistemas interactúan correctamente a través de sus interfaces, tanto internas como externas, cubren la funcionalidad establecida y se ajustan a los requisitos especificados en las verificaciones correspondientes son:",
+        "a": [
+          "Pruebas unitarias.",
+          "Pruebas de integración.",
+          "Pruebas del sistema.",
+          "Pruebas de migración."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Definición literal de Métrica v3 → tipo de prueba. (= 2024 B P53)",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "after": {
+        "i": "L2024A-P1-54",
+        "t": "T3.10",
+        "o": "O",
+        "q": "Según establece Métrica V3, en la construcción de un sistema de información, las pruebas que permiten verificar que los componentes o subsistemas interactúan correctamente a través de sus interfaces, tanto internas como externas, cubren la funcionalidad establecida y se ajustan a los requisitos especificados en las verificaciones correspondientes son:",
+        "a": [
+          "Pruebas unitarias.",
+          "Pruebas de integración.",
+          "Pruebas del sistema.",
+          "Pruebas de migración."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Definición literal de Métrica v3 → tipo de prueba. (= 2024 B P53)",
+        "y": "Ingreso libre OEP 2023-2024 (2024)",
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Pruebas de integración — interfaces de componentes y subsistemas\n\nTemario, p. 35 (PDF p. 35)\n\nEn las pruebas de integración se examinan las interfaces entre grupos de componentes o subsistemas para asegurar que son llamados cuando es necesario y que los datos o mensajes que se transmiten son los requeridos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "c604fc72b446004fe9306bc243e04b51a3fb04a02e66133708a1ebf3910b8ba1",
+      "afterSha256": "cd7a02c85448e4f7a16ed150272c967e099f612eac1beccc7a9296065e84ac65",
+      "evidenceKeys": [
+        "e-L2024A-P1-54"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT310-P1-07",
+      "before": {
+        "i": "AT310-P1-07",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué herramienta permite la generación automática de código?",
+        "a": [
+          "Visual Paradigm.",
+          "Telegraf.",
+          "KVM.",
+          "CruiseControl."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT310-P1-07",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué herramienta permite la generación automática de código?",
+        "a": [
+          "Visual Paradigm.",
+          "Telegraf.",
+          "KVM.",
+          "CruiseControl."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Pasaje del temario\n\nTemario, p. 13 (PDF p. 13)\n\nListamos las herramientas más usadas: - Altova Umodel: herramienta que genera código Java, C++, C# o VB.NET a partir de las clases del diagrama de clases de UML. Por otro lado, a partir de los diagramas de secuencia se genera el código de los métodos. - Visual Paradigm: herramienta que, a partir de diagramas UML, genera de forma automática código para diversos lenguajes de programación como Java, C#, C++, Python, PHP, Ruby o VB.NET.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "d556e91409ff2e1c2d14d785cb5779c7e7595ae5d7c9e574f4fb8ba1cd8e4921",
+      "afterSha256": "f225976457115439d1b48096278703d80d18c9659786eaa33ec10ee6c338919e",
+      "evidenceKeys": [
+        "e-AT310-P1-07"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT310-P1-14",
+      "before": {
+        "i": "AT310-P1-14",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes es una interfaz Métrica v3?",
+        "a": [
+          "Gestión de versiones.",
+          "Planificación de proyectos.",
+          "Gestión de la configuración.",
+          "Aseguramiento del nivel de calidad."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT310-P1-14",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes es una interfaz Métrica v3?",
+        "a": [
+          "Gestión de versiones.",
+          "Planificación de proyectos.",
+          "Gestión de la configuración.",
+          "Aseguramiento del nivel de calidad."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Pasaje del temario\n\nTemario, p. 28 (PDF p. 28)\n\nLas interfaces descritas en la metodología son: - Gestión de Proyectos (GP): tiene como finalidad principal la planificación, el seguimiento y control de las actividades y de los recursos humanos y materiales que intervienen en el desarrollo de un Sistema de Información. Como consecuencia de este control es posible conocer en todo momento qué problemas se producen y resolverlos o paliarlos lo más pronto posible, lo cual evitará desviaciones temporales y económicas. - Seguridad (SEG): el análisis de los riesgos constituye una pieza fundamental en el diseño y desarrollo de sistemas de información seguros. Si bien los riesgos que afectan a un sistema de información son de distinta índole: naturales (inundaciones, incendios, etc.) o lógicos (fallos propios, ataques externos, virus, etc.) siendo estos últimos los contemplados en la interfaz de Seguridad de Métrica v3. - Gestión de la Configuración (GC): consiste en la aplicación de procedimientos administrativos y técnicos durante el desarrollo del sistema de información y su posterior mantenimiento. Su finalidad es identificar, definir, proporcionar información y controlar los cambios en la configuración del sistema, así como las modificaciones y versiones de los mismos. Este proceso permitirá conocer el estado de cada uno de los productos que se hayan definido como elementos de configuración, garantizando que no se realizan cambios incontrolados y que todos los participantes en el desarrollo del sistema disponen de la versión adecuada de los productos que manejan. - Aseguramiento de la Calidad (CAL): el objetivo esta interfaz es proporcionar un marco común de referencia para la definición y puesta en marcha de planes específicos de aseguramiento de calidad aplicables a proyectos concretos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "2faa9dcea5817f5de7ffdaf98ead510f5ab7a976d98ba887215da2c46bf7378c",
+      "afterSha256": "a765eb3650e1e0fe1e857349580fd0a335ea8fa0bd6083e2fda4f87bf5618f30",
+      "evidenceKeys": [
+        "e-AT310-P1-14"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT310-P1-19",
+      "before": {
+        "i": "AT310-P1-19",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál es el objetivo de las pruebas de regresión?",
+        "a": [
+          "Eliminar el efecto onda, es decir, comprobar que los cambios sobre un componente de un sistema de información no introducen un comportamiento no deseado o errores adicionales en otros componentes no modificado.",
+          "Validar que un sistema cumple con el funcionamiento esperado y permitir al usuario de dicho sistema que determine su aceptación, desde el punto de vista de su funcionalidad y rendimiento.",
+          "Comprobar el funcionamiento correcto del sistema integrado de hardware y software en el entorno de operación.",
+          "Ejercitar profundamente el sistema comprobando la integración del sistema de información globalmente."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT310-P1-19",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál es el objetivo de las pruebas de regresión?",
+        "a": [
+          "Eliminar el efecto onda, es decir, comprobar que los cambios sobre un componente de un sistema de información no introducen un comportamiento no deseado o errores adicionales en otros componentes no modificado.",
+          "Validar que un sistema cumple con el funcionamiento esperado y permitir al usuario de dicho sistema que determine su aceptación, desde el punto de vista de su funcionalidad y rendimiento.",
+          "Comprobar el funcionamiento correcto del sistema integrado de hardware y software en el entorno de operación.",
+          "Ejercitar profundamente el sistema comprobando la integración del sistema de información globalmente."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Pasaje del temario\n\nTemario, p. 39 (PDF p. 39)\n\n7. Pruebas de REGRESIÓN El objetivo de las PRUEBAS DE REGRESIÓN es eliminar el efecto onda, es decir, comprobar que los cambios sobre un componente de un sistema de información no introducen un comportamiento no deseado o errores adicionales en otros componentes no modificados.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "823558e6ade3d1e9620d88f261294b9193e04cb63fab56e68f0b11a5daa02f4e",
+      "afterSha256": "368542770a3259562ee0048f94bab34b673990aa8ecfcab14a2d84a6b6fefd07",
+      "evidenceKeys": [
+        "e-AT310-P1-19"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT310-P1-27",
+      "before": {
+        "i": "AT310-P1-27",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Las pruebas de campo son también conocidas como:",
+        "a": [
+          "Pruebas de humo.",
+          "Pruebas de integración.",
+          "Pruebas beta.",
+          "Pruebas alfa."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT310-P1-27",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Las pruebas de campo son también conocidas como:",
+        "a": [
+          "Pruebas de humo.",
+          "Pruebas de integración.",
+          "Pruebas beta.",
+          "Pruebas alfa."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Pasaje del temario\n\nTemario, p. 39 (PDF p. 39)\n\nPor último, cabe destacar dentro de las pruebas de aceptación otros dos tipos de pruebas de validación: - Pruebas ALFA: realizadas en las instalaciones de la organización que desarrolla, no por el equipo de desarrollo, sino por los clientes o un equipo de prueba independiente. - Pruebas BETA: realizadas por los clientes en sus propias instalaciones. Estas pruebas también se conocen como pruebas de campo.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "402583d7d00ef93f636258407ad1f229e91903ce3dab51708bcb927d14110720",
+      "afterSha256": "60a2bd4f26ecfa3fdc7b9235093cc8e84658e912051b8693fc197f1f2d7fbb9b",
+      "evidenceKeys": [
+        "e-AT310-P1-27"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT310-P1-29",
+      "before": {
+        "i": "AT310-P1-29",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Las pruebas que consisten en comprobar la correcta implementación de los procedimientos de operación, incluyendo la planificación y control de trabajos y arranque y rearranque del sistema se denominan:",
+        "a": [
+          "Pruebas de entorno.",
+          "Pruebas de seguridad.",
+          "Pruebas de backup.",
+          "Pruebas de operación."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT310-P1-29",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Las pruebas que consisten en comprobar la correcta implementación de los procedimientos de operación, incluyendo la planificación y control de trabajos y arranque y rearranque del sistema se denominan:",
+        "a": [
+          "Pruebas de entorno.",
+          "Pruebas de seguridad.",
+          "Pruebas de backup.",
+          "Pruebas de operación."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Pasaje del temario\n\nTemario, p. 37 (PDF p. 37)\n\n- Pruebas de operación. Consisten en comprobar la correcta implementación de los procedimientos de operación, incluyendo la planificación y control de trabajos, arranque y rearranque del sistema, etc. - Pruebas de entorno. Consisten en verificar las interacciones del sistema con otros sistemas dentro del mismo entorno. - Pruebas de seguridad. Consisten en verificar los mecanismos de control de acceso al sistema para evitar alteraciones indebidas en los datos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "2e89a36136d50f6fd3eac0c9274ebf94565d7bc1b932c4efd572743db65dcd43",
+      "afterSha256": "0cb28e58910adaa0b77565d7aeb97816f0897b43c115c7ffdef18bd37bfd14de",
+      "evidenceKeys": [
+        "e-AT310-P1-29"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT310-P1-32",
+      "before": {
+        "i": "AT310-P1-32",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Según Métrica v3, ¿qué tipo de prueba ha de realizarse en primer lugar?",
+        "a": [
+          "Pruebas validación.",
+          "Pruebas del sistema.",
+          "Pruebas de aceptación.",
+          "Pruebas de implantación."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT310-P1-32",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Según Métrica v3, ¿qué tipo de prueba ha de realizarse en primer lugar?",
+        "a": [
+          "Pruebas validación.",
+          "Pruebas del sistema.",
+          "Pruebas de aceptación.",
+          "Pruebas de implantación."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Pasaje del temario\n\nTemario, p. 30 (PDF p. 30)\n\nSegún Métrica v3, los tipos de pruebas que deben realizarse son: - Pruebas Unitarias. - Pruebas de Integración. - Pruebas del Sistema. - Pruebas de Implantación. - Pruebas de Aceptación. - Pruebas de Regresión.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "66abc36ac9b2fb42226887e601a1847c8bbbb1d5430a4a730350ace307c3e919",
+      "afterSha256": "596117e444fd5dc038e3e9c2f459ee10f994a86b253645ced1ac5a23d95a1ac1",
+      "evidenceKeys": [
+        "e-AT310-P1-32"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT310-P1-50",
+      "before": {
+        "i": "AT310-P1-50",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Métrica v3, contempla los siguientes tipos de mantenimiento:",
+        "a": [
+          "Perfectivo y evolutivo.",
+          "Adaptativo y perfectivo.",
+          "Adaptativo y correctivo.",
+          "Correctivo y evolutivo."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT310-P1-50",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Métrica v3, contempla los siguientes tipos de mantenimiento:",
+        "a": [
+          "Perfectivo y evolutivo.",
+          "Adaptativo y perfectivo.",
+          "Adaptativo y correctivo.",
+          "Correctivo y evolutivo."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Pasaje del temario\n\nTemario, p. 27 (PDF p. 27)\n\n- Mantenimiento de Sistemas de Información (MSI): El objetivo de este proceso es la obtención de una nueva versión de un sistema de información desarrollado, a partir de las peticiones de mantenimiento que los usuarios realizan con motivo de un problema detectado en el sistema o por la necesidad de una mejora del mismo. Solo se considerarán los tipos de mantenimiento correctivo y evolutivo, quedando excluidos los tipos de mantenimiento adaptativo o perfectivo.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "00cbd240c53b947fa18208a75e7d0185a8c223158566013049fb36e7cea5fd74",
+      "afterSha256": "8511ee88a6fb344421532f7e43a6358d68d2ecefa46eaa304398f4017de00154",
+      "evidenceKeys": [
+        "e-AT310-P1-50"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT310-P1-54",
+      "before": {
+        "i": "AT310-P1-54",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En Git, ¿qué comando permite guardar directamente los cambios del directorio de trabajo en el HEAD sin hacer uso del área de preparación?",
+        "a": [
+          "git commit -s.",
+          "git commit -a.",
+          "git add -a.",
+          "git add -s."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT310-P1-54",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En Git, ¿qué comando permite guardar directamente los cambios del directorio de trabajo en el HEAD sin hacer uso del área de preparación?",
+        "a": [
+          "git commit -s.",
+          "git commit -a.",
+          "git add -a.",
+          "git add -s."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Git — commit -a y archivos rastreados\n\nTemario, p. 53 (PDF p. 53)\n\nA pesar de que puede resultar muy útil para ajustar los commits, el área de preparación es a veces un paso más complejo de lo que se necesita para el flujo de trabajo. Si queremos saltarnos el área de preparación, Git ofrece un atajo sencillo. Añadiendo la opción -a al comando git commit Git preparará automáticamente todos los archivos rastreados antes de confirmarlos, ahorrándonos el paso de git add: git commit -a -m \"mensaje\"\n\nPara interpretar la respuesta: El atajo prepara automáticamente los archivos ya rastreados antes de confirmarlos. No incorpora archivos nuevos sin seguimiento; ese límite se conserva en el pasaje."
+      },
+      "beforeSha256": "0044b6daffc28555d10370c892b01a55dd5ed74948a445ecd65f2d3da68a24e7",
+      "afterSha256": "52e785a5f0aff9728749eaff33d0cbca4ad8ddd18058c76c72fbe5361fda081f",
+      "evidenceKeys": [
+        "e-AT310-P1-54"
+      ],
+      "rationale": "El atajo prepara automáticamente los archivos ya rastreados antes de confirmarlos. No incorpora archivos nuevos sin seguimiento; ese límite se conserva en el pasaje."
+    },
+    {
+      "id": "AS08-P1-90",
+      "before": {
+        "i": "AS08-P1-90",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué tipo de pruebas del software tienen como objetivo ejercitar profundamente el sistema comprobando la integración del sistema de información globalmente, verificando el funcionamiento correcto de las interfaces entre los distintos subsistemas que lo componen y con el resto de sistemas de información con los que se comunica?",
+        "a": [
+          "Pruebas de integración.",
+          "Pruebas del sistema.",
+          "Pruebas de regresión.",
+          "Pruebas de implantación."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS08-P1-90",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué tipo de pruebas del software tienen como objetivo ejercitar profundamente el sistema comprobando la integración del sistema de información globalmente, verificando el funcionamiento correcto de las interfaces entre los distintos subsistemas que lo componen y con el resto de sistemas de información con los que se comunica?",
+        "a": [
+          "Pruebas de integración.",
+          "Pruebas del sistema.",
+          "Pruebas de regresión.",
+          "Pruebas de implantación."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Pasaje del temario\n\nTemario, p. 36 (PDF p. 36)\n\n4. Pruebas del SISTEMA Las PRUEBAS DEL SISTEMA tienen como objetivo ejercitar profundamente el sistema comprobando la integración del sistema de información globalmente, verificando el funcionamiento correcto de las interfaces entre los distintos subsistemas que lo componen y con el resto de sistemas de información con los que se comunica.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "919d471496d3ed33177886233807fe91e40066edae3b42dc64f06330f9d2bc1e",
+      "afterSha256": "5e97570c8cc7126f432928aa72249775c765791ce7678628ca8898a75ec8d6a0",
+      "evidenceKeys": [
+        "e-AS08-P1-90"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS08-P1-92",
+      "before": {
+        "i": "AS08-P1-92",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En Git, para guardar los cambios saltándonos el área de preparación, debemos ejecutar el comando:",
+        "a": [
+          "git commit -m \"mensaje\"",
+          "git add .",
+          "git commit -a -m \"mensaje\"",
+          "git add -a ."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS08-P1-92",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En Git, para guardar los cambios saltándonos el área de preparación, debemos ejecutar el comando:",
+        "a": [
+          "git commit -m \"mensaje\"",
+          "git add .",
+          "git commit -a -m \"mensaje\"",
+          "git add -a ."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Git — commit -a y archivos rastreados\n\nTemario, p. 53 (PDF p. 53)\n\nA pesar de que puede resultar muy útil para ajustar los commits, el área de preparación es a veces un paso más complejo de lo que se necesita para el flujo de trabajo. Si queremos saltarnos el área de preparación, Git ofrece un atajo sencillo. Añadiendo la opción -a al comando git commit Git preparará automáticamente todos los archivos rastreados antes de confirmarlos, ahorrándonos el paso de git add: git commit -a -m \"mensaje\"\n\nPara interpretar la respuesta: El atajo prepara automáticamente los archivos ya rastreados antes de confirmarlos. No incorpora archivos nuevos sin seguimiento; ese límite se conserva en el pasaje."
+      },
+      "beforeSha256": "6723137d28ca6fbcf8c64f931e769e61c2b9bd3aa45a5fafdd7deacb21b777bb",
+      "afterSha256": "af1975f38bc8f8c16b273ec2f37ce30dc1ab4a79ab61a99c85d3bb81ecfa7c44",
+      "evidenceKeys": [
+        "e-AS08-P1-92"
+      ],
+      "rationale": "El atajo prepara automáticamente los archivos ya rastreados antes de confirmarlos. No incorpora archivos nuevos sin seguimiento; ese límite se conserva en el pasaje."
+    },
+    {
+      "id": "AS10-P1-65",
+      "before": {
+        "i": "AS10-P1-65",
+        "t": "T3.10",
+        "o": "A",
+        "q": "La estrategia por la que los cambios en el software son entregados de forma frecuente a través de despliegues automatizados, se denomina:",
+        "a": [
+          "Integración rápida.",
+          "Despliegue integrado.",
+          "Despliegue continuo.",
+          "Entrega integrada."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS10-P1-65",
+        "t": "T3.10",
+        "o": "A",
+        "q": "La estrategia por la que los cambios en el software son entregados de forma frecuente a través de despliegues automatizados, se denomina:",
+        "a": [
+          "Integración rápida.",
+          "Despliegue integrado.",
+          "Despliegue continuo.",
+          "Entrega integrada."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Pasaje del temario\n\nTemario, p. 60 (PDF p. 60)\n\nSi todo eso fuera correcto se podría ejecutar un proceso de despliegue continuo CD (Continuous Deployment), que es una práctica que tiene como objetivo proporcionar una manera ágil, fiable y automática de poder entregar o desplegar los nuevos cambios (nueva versión) en el entorno específico, normalmente producción.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "27a84213a217b0256562ff0f5cf3c842dd9ac12f353143d9cd696faa2768d180",
+      "afterSha256": "b9c9cb8353d67659fc23729cc5e5a0d4315fe6321c4f2270565cfc78d16a8d4a",
+      "evidenceKeys": [
+        "e-AS10-P1-65"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS11-P1-64",
+      "before": {
+        "i": "AS11-P1-64",
+        "t": "T3.10",
+        "o": "A",
+        "q": "La modalidad de migración de una aplicación que consiste en modificar únicamente su interfaz gráfica sin necesidad de reescribir la aplicación completa se llama:",
+        "a": [
+          "Refronting o refacing.",
+          "Rehosting.",
+          "Rearchitecting.",
+          "Wrapping."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS11-P1-64",
+        "t": "T3.10",
+        "o": "A",
+        "q": "La modalidad de migración de una aplicación que consiste en modificar únicamente su interfaz gráfica sin necesidad de reescribir la aplicación completa se llama:",
+        "a": [
+          "Refronting o refacing.",
+          "Rehosting.",
+          "Rearchitecting.",
+          "Wrapping."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Pasaje del temario\n\nTemario, p. 17 (PDF p. 17)\n\nPor último, se describen los TIPOS DE MIGRACIÓN de aplicaciones: - Refronting o refacing: consiste en modificar únicamente la interfaz gráfica de una aplicación, sin necesidad de reescribir la aplicación completa.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "5984c81903f685ff438ddfb904e3b2b52895faa4df5d8a16e4919731bbb5c277",
+      "afterSha256": "1625aa7694af23241f38a438de94fd42a4b28955514863d408860c8b0bc2215b",
+      "evidenceKeys": [
+        "e-AS11-P1-64"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS11-P1-70",
+      "before": {
+        "i": "AS11-P1-70",
+        "t": "T3.10",
+        "o": "A",
+        "q": "La práctica mediante la que los desarrolladores integran los cambios de código en un repositorio compartido de forma periódica se denomina:",
+        "a": [
+          "Despliegue directo.",
+          "Despliegue continuo.",
+          "Integración continua.",
+          "Entrega temprana."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS11-P1-70",
+        "t": "T3.10",
+        "o": "A",
+        "q": "La práctica mediante la que los desarrolladores integran los cambios de código en un repositorio compartido de forma periódica se denomina:",
+        "a": [
+          "Despliegue directo.",
+          "Despliegue continuo.",
+          "Integración continua.",
+          "Entrega temprana."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Pasaje del temario\n\nTemario, p. 60 (PDF p. 60)\n\nComo parte de la cultura DevOps, los cambios que se hagan en el desarrollo, al subir al repositorio de código, van a lanzar un proceso de integración continua CI (Continuous Integration), que es una práctica del desarrollo de software que generalmente incluye la compilación del código, la ejecución de tests automáticos, la generación de artefactos y algunas otras fases como el análisis de calidad de código automático.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "e673caf075a6597250fdd424ddaa2ae7491232d77c04416b21200fe5aeb4433c",
+      "afterSha256": "ababead99413ff24b1c6490fc88a0d22dd4b2e29bcb019f65010e4b06b076bb0",
+      "evidenceKeys": [
+        "e-AS11-P1-70"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS12-P1-65",
+      "before": {
+        "i": "AS12-P1-65",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Las pruebas especialmente vinculadas a comprobar el funcionamiento correcto del sistema integrado de hardware y software en el entorno de operación se denominan:",
+        "a": [
+          "Pruebas de implantación.",
+          "Pruebas de aceptación.",
+          "Pruebas de regresión.",
+          "Prueba de mantenimiento."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS12-P1-65",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Las pruebas especialmente vinculadas a comprobar el funcionamiento correcto del sistema integrado de hardware y software en el entorno de operación se denominan:",
+        "a": [
+          "Pruebas de implantación.",
+          "Pruebas de aceptación.",
+          "Pruebas de regresión.",
+          "Prueba de mantenimiento."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf — Pasaje del temario\n\nTemario, p. 37 (PDF p. 37)\n\n5. Pruebas de IMPLANTACIÓN El objetivo de las PRUEBAS DE IMPLANTACIÓN es comprobar el funcionamiento correcto del sistema integrado de hardware y software en el entorno de operación, y permitir al usuario que, desde el punto de vista de operación, realice la aceptación del sistema una vez instalado en su entorno real y en base al cumplimiento de los requisitos no funcionales especificados.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "8ab5912e56661f944f7297bc2e3d1f909be4a8250e12b8c75a109fa7794d6d91",
+      "afterSha256": "77393fc6f97985de3422beb79691ec8276228b6ca2d7aaafde4654ba0ab5ebd4",
+      "evidenceKeys": [
+        "e-AS12-P1-65"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-54",
+        "t": "T3.10",
+        "o": "O",
+        "q": "¿Cuál de las siguientes opciones se utilizan para el control de versiones?",
+        "a": [
+          "Mercurial, CVS y Selenium.",
+          "GitLab, GitHub y Apache Subversion.",
+          "SVN, Git y Cucumber.",
+          "Selenium, Cucumber y GitLab."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Basta un intruso (Selenium, Cucumber = testing) para invalidar el trío.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-58",
+        "t": "T3.10",
+        "o": "O",
+        "q": "Según METRICA v3, ¿qué tipo de pruebas son las que tienen como objetivo verificar el correcto ensamblaje entre los distintos componentes para comprobar que interactúan correctamente a través de sus interfaces, cubren la funcionalidad establecida y se ajustan a los requisitos no funcionales especificados?",
+        "a": [
+          "Pruebas del sistema.",
+          "Pruebas de implantación.",
+          "Pruebas de regresión.",
+          "Pruebas de integración."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Pruebas de integración (Métrica v3): casi idéntica a 2024 B P53.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-59",
+        "t": "T3.10",
+        "o": "O",
+        "q": "Según establece METRICA v3, ¿qué participantes están presentes en la tarea de “Elaboración de los Manuales de Usuario”?",
+        "a": [
+          "Usuarios Expertos.",
+          "Consultor de Sistemas de Información.",
+          "Equipo de Formación.",
+          "Equipo de Proyecto."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Participantes de una tarea de Métrica: memorización fina.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-60",
+        "t": "T3.10",
+        "o": "O",
+        "q": "¿Cuál de las siguientes herramientas NO es un software para el control de versiones?",
+        "a": [
+          "JMeter",
+          "Subversion",
+          "Mercurial",
+          "GIT"
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "JMeter (pruebas) entre control de versiones: se repite en 2024 B (P54, S1-11).",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-56",
+        "t": "T3.10",
+        "o": "O",
+        "q": "En el software para control de versiones GIT, hacer un 'commit' es:",
+        "a": [
+          "La acción de introducir comentarios iterativos entre versiones.",
+          "La acción de establecer un compromiso de uso (commitment) entre ambas partes.",
+          "La acción de descargar la rama de trabajo del repositorio central.",
+          "La acción de almacenar una nueva instantánea (snapshot) del estado del proyecto en el historial de GIT."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Definiciones inventadas de commit.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-57",
+        "t": "T3.10",
+        "o": "O",
+        "q": "Señale cuál de las siguientes herramientas de software libre se utiliza para realizar pruebas de carga y de estrés, permitiendo simular escenarios de concurrencia de usuarios:",
+        "a": [
+          "Cactus",
+          "Mockito",
+          "JMeter",
+          "Foglight"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Herramientas de prueba (Cactus, Mockito, Foglight) frente a JMeter.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-56",
+        "t": "T3.10",
+        "o": "O",
+        "q": "¿Cuál de los siguientes NO es un producto orientado a las pruebas de software?",
+        "a": [
+          "Avocado.",
+          "Cucumber.",
+          "TestLink.",
+          "OneTrust."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "OneTrust (privacidad) entre herramientas de prueba.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-57",
+        "t": "T3.10",
+        "o": "O",
+        "q": "En el contexto de una plataforma de desarrollo colaborativo, ¿qué describe mejor una “pull request”?",
+        "a": [
+          "Un comando de Git que obtiene cambios remotos y los integra en la rama local actual.",
+          "Una propuesta para fusionar un conjunto de cambios de una rama en otra.",
+          "Un mecanismo de Git para crear una etiqueta que marque un punto concreto del historial.",
+          "Un mecanismo para que un desarrollador solicite retirar (“pull”) la versión de código actualmente en producción y volver a la versión anterior estable."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Pull request frente a pull/tag.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-58",
+        "t": "T3.10",
+        "o": "O",
+        "q": "Señala la respuesta correcta acerca de las pruebas de software:",
+        "a": [
+          "Las pruebas de regresión comprueban que los cambios sobre un componente de un sistema de información no introducen un comportamiento no deseado o errores adicionales en otros componentes no modificados.",
+          "Las pruebas de tipo “caja blanca” consideran exclusivamente las entradas y salidas del sistema sin preocuparse por la estructura interna del mismo.",
+          "Las pruebas unitarias sirven para que el usuario del sistema determine su aceptación final, desde el punto de vista de su funcionalidad y rendimiento.",
+          "Las pruebas circunstanciales examinan las interfaces entre grupos de componentes o subsistemas para asegurar que son llamados en las circunstancias adecuadas y que los datos o mensajes que se transmiten son los requeridos."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7,
+          9
+        ],
+        "d": 2,
+        "n": "Tipos de prueba con definiciones cruzadas; \"circunstanciales\" inventadas.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-51",
+        "t": "T3.10",
+        "o": "O",
+        "q": "¿Qué significan las siglas que dan nombre a una matriz RACI?",
+        "a": [
+          "Reliable Algorithm for Confidential Information.",
+          "Reasonably Allocated and Centrally Implemented.",
+          "Responsible, Accountable, Consulted, Informed.",
+          "Random, Asignated, Controlled, Isolated."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "RACI: expansiones inventadas.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-55",
+        "t": "T3.10",
+        "o": "O",
+        "q": "En Git, ¿qué significa el estado 'Staged'?",
+        "a": [
+          "Que el archivo tiene conflictos de fusión y no se puede compilar.",
+          "Que los cambios han sido marcados para ser incluidos en el próximo 'commit'.",
+          "Que los cambios han sido subidos al servidor remoto con éxito.",
+          "Que se ha modificado el archivo pero todavía no se ha hecho 'commit' en la base de datos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Estados de Git.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-56",
+        "t": "T3.10",
+        "o": "O",
+        "q": "En Git, ¿qué comando se utiliza para guardar en el repositorio local una instantánea de los cambios previamente preparados?",
+        "a": [
+          "git push",
+          "git clone",
+          "git commit",
+          "git status"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "git commit frente a push/clone/status.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-29",
+        "t": "T3.10",
+        "o": "O",
+        "q": "¿Cuál de los siguientes NO es un principio del Manifiesto Ágil?",
+        "a": [
+          "El software funcionando es la medida principal de progreso.",
+          "El arte de maximizar la cantidad de trabajo realizado es esencial.",
+          "Los proyectos se desarrollan en torno a individuos motivados.",
+          "Los responsables de negocio y los desarrolladores trabajamos juntos de manera cotidiana durante todo el proyecto."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Principio ágil deformado (\"maximizar\" en vez de \"maximizar el trabajo no realizado\").",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-23",
+        "t": "T3.10",
+        "o": "O",
+        "q": "En el contexto de las metodologías de desarrollo de software, ¿cuál de los siguientes es un principio del Manifiesto Ágil?",
+        "a": [
+          "Son bienvenidos los requisitos cambiantes, incluso si llegan tarde al desarrollo.",
+          "Las personas del negocio y los desarrolladores deben coordinarse en una reunión semanal.",
+          "La documentación entregada es la principal medida del progreso.",
+          "Las mejores arquitecturas, requisitos y diseños emergen de equipos bien jerarquizados."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8,
+          12
+        ],
+        "d": 1,
+        "n": "Principios ágiles invertidos.",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-R-04",
+        "t": "T3.10",
+        "o": "O",
+        "q": "Indique la opción correcta sobre un “repositorio bare” en el sistema de control de versiones Git:",
+        "a": [
+          "Un repositorio bare es un mecanismo para lanzar scripts de usuario cuando suceden ciertas acciones importantes.",
+          "Un repositorio bare se suele usar para crear un repositorio central de Git remoto.",
+          "No existen repositorios bare en Git.",
+          "Un repositorio bare se suele usar para automatizar la copia de seguridad del repositorio local de trabajo."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Repositorio bare.",
+        "y": "Promoción interna OEP 2021-2024 (2024)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2025A-P1-30",
+        "t": "T3.10",
+        "o": "O",
+        "q": "En el ámbito de los sistemas de control de versiones como Git, ¿qué se entiende por un repositorio?",
+        "a": [
+          "Un servidor central donde se compila el código fuente de las aplicaciones web y distribuye la última versión ejecutable al navegador del usuario.",
+          "Un espacio que contiene el conjunto de archivos de un proyecto y el historial completo de cambios de cada uno de ellos, permitiendo almacenar, versionar y gestionar su evolución a lo largo del tiempo.",
+          "Un entorno de ejecución aislado que se utiliza para desplegar aplicaciones en producción y monitorizar su rendimiento.",
+          "Un archivo comprimido y cifrado que contiene la última versión estable del código fuente, conocida como “release candidate”."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Repositorio: definiciones inventadas.",
+        "y": "Promoción interna convocatoria 2025",
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-67",
+        "t": "T3.10",
+        "o": "O",
+        "q": "Dado un proyecto git, ¿con qué comando puedo listar las etiquetas?",
+        "a": [
+          "git tag",
+          "git list-tag",
+          "git rebase",
+          "git -t"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          10,
+          9
+        ],
+        "d": 1,
+        "n": "git tag frente a comandos inventados.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-68",
+        "t": "T3.10",
+        "o": "O",
+        "q": "La plataforma de control de versiones de Microsoft es:",
+        "a": [
+          "CVS",
+          "Trello",
+          "Team Foundation Server",
+          "ClearCase"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "TFS frente a CVS, Trello, ClearCase.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-69",
+        "t": "T3.10",
+        "o": "O",
+        "q": "Con respecto a SonarQube, señale la INCORRECTA:",
+        "a": [
+          "Solución diseñada para realizar análisis dinámico del código fuente de manera automática.",
+          "Entre las verificaciones que puede realizar está la detección de código duplicado.",
+          "Obtiene diversas métricas sobre el código.",
+          "Permite definir \"Quality Gates\" con las condiciones mínimas que el proyecto debe cumplir para subir a producción."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "SonarQube hace análisis estático, no dinámico.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-70",
+        "t": "T3.10",
+        "o": "O",
+        "q": "Con respecto a las pruebas de regresión, señale la INCORRECTA:",
+        "a": [
+          "Ante cambios sobre un componente software, ayudan a garantizar que el resto de componentes no se ve afectado.",
+          "Son compatibles con las metodologías ágiles de desarrollo.",
+          "Normalmente, implican la repetición de las pruebas que ya se han realizado previamente.",
+          "No es posible automatizar las pruebas de regresión."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          12
+        ],
+        "d": 1,
+        "n": "\"No es posible automatizar\" las de regresión.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-01",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué herramienta CASE permite la definición de otras herramientas CASE?",
+        "a": [
+          "U-CASE.",
+          "M-CASE.",
+          "MetaCASE.",
+          "I-CASE."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-02",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué herramienta permite hacer un seguimiento de errores y bugs?",
+        "a": [
+          "Jira.",
+          "FishEye.",
+          "IntelliJ IDEA.",
+          "Crucible."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-03",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué herramienta permite comparar diferencias entre versiones de un archivo?",
+        "a": [
+          "Redmine.",
+          "JDiff.",
+          "MDiff.",
+          "Gerrit."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-04",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué herramienta permite integración continua?",
+        "a": [
+          "Ant.",
+          "Gradle.",
+          "Trac.",
+          "Jenkins."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-05",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué herramienta permite la revisión de código?",
+        "a": [
+          "Crucible.",
+          "Bamboo.",
+          "Lux.",
+          "Chef."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-06",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué herramienta permite la revisión de logs?",
+        "a": [
+          "Grafana.",
+          "Kibana.",
+          "Piwik.",
+          "ATF."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-08",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Respecto al mantenimiento en Métrica v3, señale la respuesta INCORRECTA:",
+        "a": [
+          "El mantenimiento correctivo está excluido de Métrica v3.",
+          "El mantenimiento adaptativo son las modificaciones que afectan a los entornos en los que el sistema opera.",
+          "El mantenimiento perfectivo son las acciones llevadas a cabo para mejorar la calidad interna de los sistemas en cualquiera de sus aspectos.",
+          "El mantenimiento evolutivo son las incorporaciones, modificaciones y eliminaciones necesarias en un producto software para cubrir la expansión o cambio en las necesidades del usuario."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-09",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué herramienta permite la generación automática de documentación en el lenguaje Ruby?",
+        "a": [
+          "Sphinx.",
+          "Telegraf.",
+          "DocFX.",
+          "YARD."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-10",
+        "t": "T3.10",
+        "o": "A",
+        "q": "El examen y modificación de un sistema para ser reconstruido de una forma nueva y además derivada de esa nueva forma se conoce como:",
+        "a": [
+          "Ingeniería inversa.",
+          "Ingeniería directa.",
+          "Reingeniería.",
+          "Reestructuración."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-11",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué problema del código hace referencia a aquel código mal diseñado candidato a ser reestructurado o refactorizado?",
+        "a": [
+          "Code smell.",
+          "Código lasaña.",
+          "Código espagueti.",
+          "Código pizza."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-12",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué problema del código se conoce como código ravioli?",
+        "a": [
+          "Es el formado por clases simples y comprensibles que al interactuar entre sí se vuelven muy complejas desde un punto de vista global.",
+          "Es el compuesto por muchas capas complejas e interconectadas entre sí que ante un cambio en una capa conlleva cambios en otras capas.",
+          "Es aquel que tiene una arquitectura plana.",
+          "Es el compuesto por complejas estructuras de control de flujo."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Código ravioli vs lasaña/espagueti."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-13",
+        "t": "T3.10",
+        "o": "A",
+        "q": "El proceso de Desarrollo de Sistemas de Información de Métrica v3 incorpora los siguientes procesos:",
+        "a": [
+          "Análisis del Sistema de Información, Diseño del Sistema de Información y Mantenimiento del Sistema de Información.",
+          "Estudio de la Viabilidad del Sistema, Construcción del Sistema de Información e Implantación y Aceptación del Sistema.",
+          "Análisis del Sistema de Información, Seguridad y Aseguramiento de la Calidad.",
+          "Diseño del Sistema de Información, Construcción del Sistema de Información y Seguridad."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "Procesos de Desarrollo de Métrica v3."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-15",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Las particiones de equivalencia son una técnica de pruebas de:",
+        "a": [
+          "Integración.",
+          "Implantación.",
+          "Aceptación.",
+          "Unitarias."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-16",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes técnicas de prueba son de caja blanca?",
+        "a": [
+          "Pruebas de comparación.",
+          "De interfaz.",
+          "Análisis de los valores límite.",
+          "Grafo causa-efecto."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-18",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de los siguientes tipos de prueba NO pertenecen a las pruebas del sistema?",
+        "a": [
+          "Pruebas de volumen.",
+          "Pruebas de sobrecarga.",
+          "Pruebas de entorno.",
+          "Pruebas de recuperación."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-20",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué herramienta de pruebas unitarias del software es para JavaScript?",
+        "a": [
+          "xUnit.",
+          "TestNG.",
+          "QUnit.",
+          "Postman."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-21",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de los siguientes sistemas de control de versiones tiene una arquitectura centralizada?",
+        "a": [
+          "Perforce.",
+          "Bazaar.",
+          "Mercurial.",
+          "Darcs."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-22",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de los siguientes sistemas de control de versiones NO es de código abierto?",
+        "a": [
+          "Perforce.",
+          "Bazaar.",
+          "Mercurial.",
+          "Darcs."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-23",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En Git, para añadir los cambios del fichero hola.java del directorio de trabajo a la zona de intercambio temporal ejecutaremos:",
+        "a": [
+          "git commit hola.java.",
+          "git commit -d hola.java.",
+          "git add hola.java.",
+          "git index hola.java."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-24",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En Git, crear una nueva rama denominada pruebas, ejecutaremos:",
+        "a": [
+          "git branch.",
+          "git branch pruebas.",
+          "git checkout pruebas.",
+          "git clone pruebas."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-25",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una plataforma de desarrollo colaborativo de software?",
+        "a": [
+          "Bitbucket.",
+          "DevOps.",
+          "Forja del CTT.",
+          "GitHub."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-26",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Las pruebas alfa son pruebas de:",
+        "a": [
+          "Aceptación.",
+          "Regresión.",
+          "Validación.",
+          "Implantación."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-28",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes es un tipo de prueba de implantación?",
+        "a": [
+          "Pruebas de volumen.",
+          "Pruebas de gestión de copias de seguridad y recuperación.",
+          "Pruebas de sobrecarga.",
+          "Pruebas de fiabilidad."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-30",
+        "t": "T3.10",
+        "o": "A",
+        "q": "La técnica de prueba de condiciones límite son un tipo de prueba:",
+        "a": [
+          "De validación.",
+          "De aceptación.",
+          "Unitaria.",
+          "Regresión."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-31",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué es Scrum?",
+        "a": [
+          "Una metodología ágil para el desarrollo de sistemas software.",
+          "Un gestor de proyectos.",
+          "Una buena práctica de desarrollo software.",
+          "Un paradigma de programación."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-33",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes herramientas para pruebas de software está dirigida a aplicaciones web?",
+        "a": [
+          "Cypress.",
+          "JMeter.",
+          "Postman.",
+          "TestNG."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-34",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes herramientas NO está enfocada a las pruebas unitarias?",
+        "a": [
+          "TestNG.",
+          "Mockito.",
+          "PyUnit.",
+          "Cucumber."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-35",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Nexus 3 es:",
+        "a": [
+          "Una herramienta de IaC.",
+          "Un servidor de integración continua.",
+          "Un repositorio de artefactos.",
+          "Una herramienta de monitorización."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-36",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Según Métrica v3, ¿qué tipo de pruebas son las que permiten comprobar el funcionamiento correcto del sistema integrado de hardware y software en el entorno de operación, y permitir al usuario que, desde el punto de vista de operación, realice la aceptación del sistema una vez instalado en su entorno real?",
+        "a": [
+          "Pruebas integración.",
+          "Pruebas del implantación.",
+          "Pruebas de aceptación.",
+          "Pruebas de regresión."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Métrica v3: pruebas de implantación vs aceptación."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-37",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cómo se denominan las pruebas de caja negra permiten descubrir errores de implementación mediante la introducción de datos al azar, inválidos o malformados?",
+        "a": [
+          "Pruebas de humo.",
+          "Pruebas lazy.",
+          "Fuzzy testing.",
+          "Pruebas de implementación."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-38",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Testlink es:",
+        "a": [
+          "Un repositorio de objetos.",
+          "Un servidor de integración continua.",
+          "Una solución para la construcción de proyectos.",
+          "Una herramienta para gestión de pruebas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-39",
+        "t": "T3.10",
+        "o": "A",
+        "q": "La plataforma de control de versiones de Microsoft es:",
+        "a": [
+          "Plastic SCM.",
+          "Azure Devops Server.",
+          "Azure CVS Server.",
+          "Bazaar."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-41",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En Git, selecciona la respuesta correcta en relación con la ejecución del comando git init:",
+        "a": [
+          "Crea el directorio oculto .git que contiene la base de datos donde se registran los cambios en el repositorio.",
+          "Inicia el servidor de base de datos.",
+          "Levanta un repositorio.",
+          "Descarga ficheros de un repositorio remoto."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-42",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En Git, para copiar un repositorio ubicado en miservidor, se debe ejecutar el comando:",
+        "a": [
+          "git copy miservidor.",
+          "git clone miservidor.",
+          "git pull miservidor.",
+          "git checkout miservidor."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-43",
+        "t": "T3.10",
+        "o": "A",
+        "q": "El proceso que consiste en mejorar el código una vez escrito cambiando su estructura interna sin modificar su comportamiento externo se denomina:",
+        "a": [
+          "Ofuscación.",
+          "Encapsular.",
+          "Refactorización.",
+          "Comprimir."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-44",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué tipo de migración de aplicaciones consiste en sustituir la aplicación de forma completa por una o varias aplicaciones nuevas?",
+        "a": [
+          "Retirada.",
+          "Refronting.",
+          "Refactoring.",
+          "Replacement."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-45",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué tipo de migración de aplicaciones consiste en mover la aplicación de un entorno hardware a otro entorno más moderno, sin modificar el código ni la arquitectura?",
+        "a": [
+          "Refacing.",
+          "Rearchiteting.",
+          "Rehosting.",
+          "Retain."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Las R de migración."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-46",
+        "t": "T3.10",
+        "o": "A",
+        "q": "El tipo de migración de aplicaciones interoperation consiste en:",
+        "a": [
+          "No migrar una aplicación a la nube.",
+          "Encapsular la aplicación o algunos de sus componentes para que sean utilizados por otras aplicaciones o infraestructura con tecnología más moderna.",
+          "Modificar únicamente la interfaz gráfica de una aplicación, sin necesidad de reescribir la aplicación completa.",
+          "Desarrollar de nuevo la aplicación utilizando nuevos paradigmas de programación."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-47",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En Scrum, ¿qué es el backlog del producto?",
+        "a": [
+          "Son los requisitos del proyecto software pendientes de hacer.",
+          "Son los requisitos del proyecto software ya implementados.",
+          "Son los requisitos del proyecto software a desarrollar en el siguiente sprint.",
+          "Son los requisitos del proyecto software no planificados para las siguientes iteraciones."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-48",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En Extreme Programming, NO es un rol:",
+        "a": [
+          "Consultor.",
+          "Tester.",
+          "Tracker.",
+          "Usuario."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-49",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué proceso de Métrica v3 tiene como propósito analizar un conjunto concreto de necesidades, con la idea de proponer una solución a corto plazo. Los criterios con los que se hace esta propuesta no serán estratégicos sino tácticos y relacionados con aspectos económicos, técnicos, legales y operativos?",
+        "a": [
+          "Análisis de Sistema de Información.",
+          "Planificación del Sistema de Información.",
+          "Estudio de la Viabilidad del Sistema.",
+          "Diseño del Sistema de Información."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-51",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En Git, el fichero en que se indican aquellos ficheros que NO deben ser tenidos en cuenta en el control de versiones se denomina:",
+        "a": [
+          ".gitignore.",
+          ".gitexclude.",
+          ".gituntruck.",
+          ".gitread."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-52",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué significa en Git hacer un checkout?",
+        "a": [
+          "La acción de descargar una rama de un repositorio central.",
+          "La acción de cambiar de una rama a otra.",
+          "La acción de subir una rama a un repositorio remoto.",
+          "La acción de eliminar todos los cambios desde el último commit."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-55",
+        "t": "T3.10",
+        "o": "A",
+        "q": "La interfaz de Gestión de la Configuración consiste en:",
+        "a": [
+          "La aplicación de procedimientos administrativos y técnicos durante el desarrollo del sistema de información y su posterior mantenimiento.",
+          "El análisis de los riesgos para el diseño y desarrollo de sistemas de información seguros.",
+          "Proporcionar un marco común de referencia para la definición y puesta en marcha de planes específicos de aseguramiento de calidad aplicables a proyectos concretos.",
+          "La planificación, el seguimiento y control de las actividades y de los recursos humanos y materiales que intervienen en el desarrollo de un sistema de información."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-56",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué es SandCastle?",
+        "a": [
+          "Una herramienta para la ejecución de pruebas del sistema.",
+          "Una biblioteca de Java para la gestión de las pruebas de un sistema.",
+          "Un gestor de paquetes para macOS.",
+          "Una herramienta de generación automática de la documentación del código fuente."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-57",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En relación a DevOps y a CI/CD, señale la respuesta correcta:",
+        "a": [
+          "La entrega continua permite desplegar el sistema en el entorno de producción.",
+          "El despliegue continuo permite desplegar el sistema en el entorno de preproducción.",
+          "DevOps incluye una última fase de monitorización del sistema en el entorno de producción.",
+          "La integración continua no permite automatizar el análisis estático del código fuente del sistema."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-58",
+        "t": "T3.10",
+        "o": "A",
+        "q": "CI/CD aporta una serie de ventajas, ¿cuál de las siguientes NO es una de ellas?",
+        "a": [
+          "Mejora la calidad del código fuente.",
+          "Los incrementos del código fuente suponen un bajo riesgo.",
+          "Reduce el time to market.",
+          "Aumenta el coste económico al basarse en metodologías ágiles."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-59",
+        "t": "T3.10",
+        "o": "A",
+        "q": "NO es una herramienta para la gestión de la configuración:",
+        "a": [
+          "Artifactory.",
+          "Puppet.",
+          "Chef.",
+          "Vagrant."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-60",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál es el propósito de SonarQube?",
+        "a": [
+          "El análisis dinámico de la calidad del código fuente.",
+          "El análisis estático de la calidad del código fuente.",
+          "El análisis estático de la calidad del código objeto.",
+          "El análisis dinámico de la calidad del código objeto."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-61",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Scrum define una serie de roles. Indique cuál de los siguientes NO es uno de ellos:",
+        "a": [
+          "Scrum Master.",
+          "Scrum Team.",
+          "Stakeholders.",
+          "Product Owner."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-65",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En relación con SCRUM, ¿en qué reunión se deciden los ítems del Product Backlog que formarán parte del Sprint Backlog?",
+        "a": [
+          "En la Sprint Planning.",
+          "En la Sprint Review.",
+          "En la Daily Scrum.",
+          "En la Sprint Retrospective."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT310-P1-66",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Según SCRUM, ¿en qué reunión se inspecciona el resultado del sprint y se verifica si el incremento de producto satisface las expectativas del propietario del producto?",
+        "a": [
+          "En la Sprint Planning.",
+          "En la Sprint Review.",
+          "En la Daily Scrum.",
+          "En la Sprint Retrospective."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-87",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Entre los productos existentes para la gestión de la integración continua de software se encuentra:",
+        "a": [
+          "Go.CD.",
+          "FIT.",
+          "Jira.",
+          "Gerrit."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-88",
+        "t": "T3.10",
+        "o": "A",
+        "q": "La transformación de una forma de representación del sistema en otra distinta, al mismo nivel de abstracción y sin modificar el comportamiento externo del sistema, se conoce como:",
+        "a": [
+          "Ingeniería inversa.",
+          "Ingeniería directa.",
+          "Reingeniería.",
+          "Reestructuración."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-89",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué metodología de desarrollo software tiene como elemento las historias de usuario?",
+        "a": [
+          "Métrica.",
+          "RAD.",
+          "XP.",
+          "RUP."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-91",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes técnicas de prueba NO es de caja blanca?",
+        "a": [
+          "De comparación.",
+          "De interfaz.",
+          "De condiciones límite.",
+          "Del camino básico."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-93",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En Git, para crear una rama \"pruebas\" y activarla, debemos ejecutar el comando:",
+        "a": [
+          "git branch pruebas",
+          "git checkout pruebas",
+          "git branch -b pruebas",
+          "git checkout -b pruebas"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-94",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de los siguientes sistemas de control de versiones NO es centralizado?",
+        "a": [
+          "Perforce.",
+          "ClearCase.",
+          "Subversion.",
+          "Darcs."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-95",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En Git, los archivos del directorio de trabajo que no estaban en la última instantánea y que no están en el área de preparación se encuentran en el estado:",
+        "a": [
+          "Preparados.",
+          "No preparados.",
+          "Sin rastrear.",
+          "Rastreados."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-15",
+        "t": "T3.10",
+        "o": "A",
+        "q": "De entre las siguientes opciones, señale aquella respuesta con las reuniones que se proponen en Scrum:",
+        "a": [
+          "Sprint Scrum, Sprint Review, Daily Planning Meeting.",
+          "Sprint Retrospective, Daily Review, Daily Planning Meeting.",
+          "Sprint Review, Daily Scrum, Sprint Planning Meeting.",
+          "Daily Planning Meeting, Sprint Retrospective, Daily Review."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-78",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes es una herramienta de integración continua?",
+        "a": [
+          "Packer.",
+          "Jenkins.",
+          "AKN.",
+          "ITRS."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-79",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Las pruebas de regresión son aquellas pruebas encaminadas a:",
+        "a": [
+          "Asegurar el cumplimiento de los requisitos y especificaciones proporcionadas por los usuarios.",
+          "Descubrir errores o divergencias del software respecto a requisitos técnicos o de seguridad.",
+          "Descubrir errores, carencias de funcionalidad o divergencias funcionales con respecto al comportamiento esperado del software, causados por la realización de un cambio de componente.",
+          "Comprobar que el sistema cumple los requisitos de funcionamiento esperado, recogidos en el catálogo de requisitos y en los criterios de aceptación del sistema de información, y conseguir así la aceptación final del sistema por parte del usuario."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-80",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Git tiene tres estados principales en los que se pueden encontrar los archivos:",
+        "a": [
+          "confirmado (committed) y modificado (modified).",
+          "confirmado (committed), modificado (modified), y preparado (staged).",
+          "clonado (cloned), confirmado (committed), modificado (modified), y preparado (staged).",
+          "confirmado (committed), fusionado (merged), modificado (modified), y preparado (staged)."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-81",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En Git, para subir los cambios a un repositorio remoto utilizaremos el comando:",
+        "a": [
+          "git fetch",
+          "git pull",
+          "git remote",
+          "git push"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-89",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes soluciones NO es una herramienta de control de versiones del software?",
+        "a": [
+          "SourceSafe.",
+          "Subversion.",
+          "CVS.",
+          "BluePlanner."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-46",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Respecto a la reutilización de componentes software, indique la opción correcta:",
+        "a": [
+          "La reutilización de software, a través de componentes, se constituye como una forma de mejorar la productividad en el desarrollo de sistemas de software.",
+          "Sólo es aplicable con el lenguaje de programación C#.",
+          "Alarga los plazos de finalización y entrega del proyecto.",
+          "Carecen de problemas de integración y/o adaptación."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-47",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En el Lenguaje Unificado de Modelado (UML), los diagramas de artefactos se utilizan para modelar los siguientes sistemas, EXCEPTO uno de ellos:",
+        "a": [
+          "Código fuente.",
+          "Versiones ejecutables.",
+          "Sistemas embebidos.",
+          "Base de datos física."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-73",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes herramientas NO es una herramienta especializada en automatización de pruebas de software?",
+        "a": [
+          "Selenium.",
+          "Jenkins.",
+          "Jmeter.",
+          "Junit."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-74",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Con respecto a las pruebas de integración, indique la respuesta correcta:",
+        "a": [
+          "Las pruebas de integración recogen datos de determinados usuarios con el objeto de construir un prototipo que integre partes de una potencial aplicación.",
+          "En las pruebas de integración se examinan las interfaces entre grupos de componentes o subsistemas para asegurar que son llamados cuando es necesario y que los datos o mensajes que se transmiten son los requeridos.",
+          "Las pruebas de integración comprueban que la funcionalidad establecida está cubierta y se ajustan solo a los requisitos funcionales especificados en las verificaciones correspondientes.",
+          "Las pruebas de integración se llevan a cabo después de que el desarrollo y las pruebas de una aplicación estén finalizadas y se necesita detectar los últimos errores y problemas antes de liberar la versión final."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-75",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Las pruebas de caja blanca NO dan cobertura de:",
+        "a": [
+          "Ramas.",
+          "Condición/decisión.",
+          "Bucles.",
+          "Texto."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-76",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Según Métrica v3, el objetivo de las pruebas de implantación es:",
+        "a": [
+          "Permitir que el usuario determine, desde el punto de vista de operación, la aceptación del sistema instalado en su entorno real.",
+          "Comprobar el funcionamiento correcto del sistema integrado de hardware y software en el entorno de operación.",
+          "Verificar si los componentes interactúan correctamente a través de sus interfaces, tanto internas como externas.",
+          "Comprobar la integración de todos los componentes del sistema de información, así como la interacción del mismo con otros sistemas de información."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "El pasaje también respalda la alternativa de aceptación operativa por el usuario; revisar la unicidad de la pregunta antes de aceptar una sola clave.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AS09-P1-76"
+      ]
+    },
+    {
+      "question": {
+        "i": "AS09-P1-77",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Las pruebas de regresión deben realizarse:",
+        "a": [
+          "Cuando se produce una denegación de servicio.",
+          "Cuando se quiere comprobar el funcionamiento de un sistema de información en el umbral límite de recursos.",
+          "Cuando se quieren probar el funcionamiento de un sistema de información al que le falla alguno de sus componentes.",
+          "Cuando se han realizado cambios en algún sistema de información."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-95",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO puede ser considerada una herramienta de gestión de la configuración?",
+        "a": [
+          "Ansible.",
+          "Puppet.",
+          "Chef.",
+          "Flume."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-R-03",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Respecto de las siguientes técnicas de pruebas de software, indique la respuesta correcta:",
+        "a": [
+          "Las pruebas de caja gris son una combinación de pruebas unitarias y pruebas de integración.",
+          "Las pruebas de caja negra se centran en la secuencia de la lógica de los programas o sistemas.",
+          "Las pruebas de caja blanca se centran en la verificación de la estructura interna de un programa y no en las especificaciones y requerimientos.",
+          "Las pruebas de caja blanca son pruebas funcionales."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-44",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Un programa informático que procesa el código fuente de un proyecto software durante su tiempo de ejecución y actúa como una interfaz entre ese proyecto y el procesador, se denomina:",
+        "a": [
+          "Compilador.",
+          "Preprocesador.",
+          "Ensamblador.",
+          "Intérprete."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-70",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Las pruebas especialmente vinculadas al mantenimiento del programa previamente probado que han sufrido modificaciones se denominan:",
+        "a": [
+          "Pruebas de implantación.",
+          "Pruebas de aceptación.",
+          "Pruebas de regresión.",
+          "Prueba de mantenimiento."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-71",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En relación a DevOps, indique cuál de las siguientes afirmaciones es correcta:",
+        "a": [
+          "Lo equipos lanzan versiones de software en ciclos cortos.",
+          "Cada equipo trabaja internamente sus procesos sin necesidad de compartir ni dar visibilidad, ya que se establecen inicialmente los objetivos y se planifica y distribuye el trabajo desde el principio.",
+          "Están perfectamente separados los procesos de desarrollo y de operaciones.",
+          "En el proceso de entrega de software se evita el uso de automatización, para garantizar la calidad del desarrollo."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-72",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Seleccione la respuesta correcta en relación a la gestión de configuración del software:",
+        "a": [
+          "Son un conjunto de actividades desarrolladas para gestionar los cambios a lo largo del ciclo de vida.",
+          "Es una actividad de garantía de calidad de software que se aplica exclusivamente en la fase de diseño del proceso de ingeniería del software.",
+          "Es un método de desarrollo ágil.",
+          "Es un control de versiones que se aplica en la fase de desarrollo."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-73",
+        "t": "T3.10",
+        "o": "A",
+        "q": "De las siguientes, herramientas, identifica cual es la que está diseñada para medir la carga y el rendimiento de aplicaciones, simulando múltiples usuarios concurrentes:",
+        "a": [
+          "Apache JMeter.",
+          "Selenium.",
+          "JUnit.",
+          "Jest."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-74",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En el sistema de control de versiones Git los archivos se pueden encontrar en tres estados diferentes. ¿Cuál NO es uno de estos estados?",
+        "a": [
+          "Confirmado (committed).",
+          "Modificado (modified).",
+          "Retenido (holded).",
+          "Preparado (staged)."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-75",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Se quiere montar un sistema de integración continua, ¿cuál de las siguientes herramientas” NO está relacionada con este fin?",
+        "a": [
+          "Jenkins.",
+          "Git.",
+          "Maven.",
+          "Power BI."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-76",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Dentro del marco de Scrum, ¿qué ocurre en la reunión de Sprint Review?",
+        "a": [
+          "Es la fase donde el equipo analiza su desempeño y propone mejoras en su proceso de trabajo.",
+          "Se presenta el incremento del producto terminado y se obtiene retroalimentación de los interesados.",
+          "Se planifica en detalle cada tarea a realizar en los próximos meses.",
+          "Se asignan roles y responsabilidades fijas para todos los miembros del equipo."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-84",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En ORACLE, se utiliza una herramienta para identificar posibles cuellos de botella y optimizar la ejecución de consultas. ¿Cuál de las siguientes herramientas nos ofrece información sobre recursos, tiempos de espera y estadísticas de ejecución de sentencias SQL?",
+        "a": [
+          "RAC.",
+          "AWR.",
+          "RMAN.",
+          "DataGuard."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-R-04",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En GIT, ¿qué comando deben usar para enviar cambios locales a un repositorio remoto?",
+        "a": [
+          "git add.",
+          "git pull.",
+          "git commit.",
+          "git push."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-70",
+        "t": "T3.10",
+        "o": "A",
+        "q": "El mantenimiento de los Sistemas de Información se realiza como resultado de la evolución constante de los mismos. Cuando la complejidad de los Sistemas de Información crece, ¿cuál de las siguientes medidas facilita su mantenimiento?",
+        "a": [
+          "Corrección.",
+          "Adaptación.",
+          "Refactorización.",
+          "Refacing."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-71",
+        "t": "T3.10",
+        "o": "A",
+        "q": "SonarQube es una herramienta de tipo:",
+        "a": [
+          "Análisis de calidad estático.",
+          "Empaquetado y despliegue de aplicaciones.",
+          "Repositorio de artefactos.",
+          "Control de versiones."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-79",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué es RedHat OpenShift?",
+        "a": [
+          "Una herramienta de soporte a la automatización en entornos de desarrollo de software basados en integración continua.",
+          "Una plataforma de contenedores de Kubernetes empresarial con operaciones automatizadas integrales.",
+          "Un entorno que permite programar aplicaciones distribuidas basadas en big data.",
+          "Una herramienta para administrar la configuración de sistemas basados en Unix y Microsoft Windows de forma declarativa."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-93",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes es una herramienta utilizada en el ámbito de despliegue y gestión de la configuración de infraestructura como código (IaC)?",
+        "a": [
+          "Spring Boot.",
+          "SonarQube.",
+          "Vault.",
+          "Ansible."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-R-03",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Cuando hablamos de GitOps, ¿a qué nos estamos refiriendo?",
+        "a": [
+          "A la última versión estable del sistema de control de versiones Git.",
+          "A una herramienta de software libre que implementa Git.",
+          "A una serie de prácticas para gestionar configuraciones de aplicaciones y las infraestructuras utilizando Git.",
+          "A una extensión de pago del software de control de versiones Git utilizada para gestionar la Integración Continua."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-95",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué es Podman?",
+        "a": [
+          "Una plataforma de desarrollo de aplicaciones móviles.",
+          "Una herramienta de monitorización de redes.",
+          "Un motor de contenedores.",
+          "Un sistema de gestión de incidencias."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-51",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Señale el nombre de la herramienta que trabaja a nivel de protocolo y permite realizar pruebas de carga sobre aplicaciones web:",
+        "a": [
+          "Spark.",
+          "JMeter.",
+          "SonarQube.",
+          "JUnit."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-52",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Según Métrica v3, las pruebas que tienen por objeto comprobar que los cambios sobre un componente de un sistema de información no introducen un comportamiento no deseado o errores adicionales en otros componentes no modificados, se denomina:",
+        "a": [
+          "Pruebas de carga.",
+          "Pruebas de evolución.",
+          "Pruebas de usabilidad.",
+          "Pruebas de regresión."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-53",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Según Métrica v3, ¿qué tipo de mantenimiento se ocupa de mejorar la calidad interna de los sistemas en cualquiera de sus aspectos (reestructuración del código, definición más clara del sistema y optimización del rendimiento y eficiencia)?",
+        "a": [
+          "Correctivo.",
+          "Evolutivo.",
+          "Adaptativo.",
+          "Perfectivo."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-63",
+        "t": "T3.10",
+        "o": "A",
+        "q": "El proceso que parte de una solución software ya existente e intenta conocer y representar el diseño de dicha solución llegando a las especificaciones de partida se conoce como:",
+        "a": [
+          "Ingeniería inversa.",
+          "Reestructuración.",
+          "Ingeniería hacia delante.",
+          "Reingeniería."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-65",
+        "t": "T3.10",
+        "o": "A",
+        "q": "En Jenkins, a una expresión automatizada que permite obtener software desde el control de versiones siguiendo etapas que incluyen su construcción de una forma confiable y repetible, así como su prueba, se la denomina:",
+        "a": [
+          "Continuous delivery pipeline.",
+          "Autómata finito.",
+          "Build path.",
+          "Lógica de control."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-69",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Señale la herramienta para la construcción y gestión de proyectos basados en Java que incluye gestión de repositorios, de ciclo de vida y de dependencias:",
+        "a": [
+          "Redmine.",
+          "Ant.",
+          "Artifactory.",
+          "Maven."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-97",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Qué propone la Metodología de mejora del servicio basada en el Ciclo de Deming (PDCA)?",
+        "a": [
+          "Planifica, Haz, Chequea y Actúa.",
+          "Planifica, Diseña, Chequea e Informa.",
+          "Planifica, Diseña, Valora, Actúa.",
+          "Planifica, Desarrolla, Actúa e Informa."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-R-05",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un comando de Git?",
+        "a": [
+          "git commit.",
+          "git push.",
+          "git remote.",
+          "git move."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-78",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Las pruebas especialmente vinculadas al mantenimiento de aplicaciones se denominan:",
+        "a": [
+          "Pruebas de implantación.",
+          "Pruebas de aceptación.",
+          "Pruebas de regresión.",
+          "Pruebas de mantenimiento."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-79",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes herramientas de desarrollo software está relacionada con la monitorización?",
+        "a": [
+          "ATF.",
+          "Kotlin DSL.",
+          "FishEye.",
+          "Telegraf."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-64",
+        "t": "T3.10",
+        "o": "A",
+        "q": "Las pruebas de caja negra se basan en:",
+        "a": [
+          "La especificación de requisitos y la documentación funcional del módulo o programa a probar.",
+          "Observar el interior de lo que se quiere probar.",
+          "Estudiar la salida de datos, prestando especial atención a lo que ocurre en el interior del sistema.",
+          "Estudiar la entrada de datos al sistema y su tratamiento en el interior del mismo."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-R-05",
+        "t": "T3.10",
+        "o": "A",
+        "q": "El Gobierno y la RAE impulsan un proyecto para potenciar el español en el desarrollo de la Inteligencia Artificial. Este proyecto se denomina:",
+        "a": [
+          "IAlex.",
+          "LEIA.",
+          "AIRAE.",
+          "RIA."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-43",
+        "t": "T3.10",
+        "o": "A",
+        "q": "La transformación de una forma de representación de un sistema a otra distinta, pero del mismo nivel de abstracción, sin modificar el comportamiento externo del sistema es:",
+        "a": [
+          "Ingeniería inversa.",
+          "Reestructuración.",
+          "Ingeniería hacia delante.",
+          "Reingeniería."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Reingeniería frente a reestructuración.",
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-56",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es una herramienta de integración continua?",
+        "a": [
+          "Jenkins.",
+          "Bamboo.",
+          "Intrinsics.",
+          "AWS CodeBuilder."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "\"Intrinsics\" inventada entre herramientas de CI."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-R-03",
+        "t": "T3.10",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un entorno de desarrollo integrado?",
+        "a": [
+          "Visual Studio.",
+          "ScalaK.",
+          "Eclipse.",
+          "IntelliJ IDEA."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "\"ScalaK\" inventado.",
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 732,
+    "alreadyHadCitation": 588,
+    "added": 19,
+    "pending": 125,
+    "withCitation": 607
+  }
+}

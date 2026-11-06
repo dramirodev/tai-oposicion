@@ -1,0 +1,2052 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T4.06",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "ca34d218833357c658c29bd8d0d4e3b64699f63cf09b88b50647da5ac26639db",
+    "afterSha256": "47a04e7f58d78b4bce27262ecd8968d90db45c3ff6a47971f5fe8ef511b73416"
+  },
+  "sample": {
+    "beforeSha256": "13af76b1b43023f9280549045a1f40892949ddb3421773f70c37b0b39f9e2d0e",
+    "afterSha256": "13af76b1b43023f9280549045a1f40892949ddb3421773f70c37b0b39f9e2d0e"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-L2018-P1-86": {
+      "path": "T4.06 Comunicaciones y Redes/T4.06 Comunicaciones y Redes - Temario.pdf",
+      "sourceHash": "cc73bc044bdfdb53d6c6776f87a79f0fe690f1c5c1a2ee9c4749bb98f9bcf3eb",
+      "physicalPage": 41,
+      "printedPage": 41,
+      "excerpt": "Por último, hay que destacar el Segundo Dividendo Digital es un proceso por el cual se va a liberar la banda de 700 MHz del espectro radioeléctrico para desplegar en ella las futuras redes de telecomunicaciones 5G.",
+      "label": "Segundo dividendo digital — banda de 700 MHz"
+    },
+    "e-AT406-P1-19": {
+      "path": "T4.06 Comunicaciones y Redes/T4.06 Comunicaciones y Redes - Temario.pdf",
+      "sourceHash": "cc73bc044bdfdb53d6c6776f87a79f0fe690f1c5c1a2ee9c4749bb98f9bcf3eb",
+      "physicalPage": 14,
+      "printedPage": 14,
+      "excerpt": "- Categoría 6a (a de aumentado): frecuencias de hasta 500 MHz, transmitiendo a 10 Gbps y con alcances de 100 metros (10GBASE-T). Utiliza cableado FTP/STP/SFTP/SSTP.",
+      "label": "Cableado — categoría 6a y 500 MHz"
+    },
+    "e-AT406-P1-46": {
+      "path": "T4.06 Comunicaciones y Redes/T4.06 Comunicaciones y Redes - Temario.pdf",
+      "sourceHash": "cc73bc044bdfdb53d6c6776f87a79f0fe690f1c5c1a2ee9c4749bb98f9bcf3eb",
+      "physicalPage": 41,
+      "printedPage": 41,
+      "excerpt": "A nivel europeo se han identificado 3 bandas de frecuencias para el despliegue inicial de la tecnología 5G: - La banda de 3.400 - 3.800 MHz (3,5 GHz) PRINCIPAL - La banda de 26 GHz. - La banda de 700 MHz.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS12-P1-76": {
+      "path": "T4.06 Comunicaciones y Redes/T4.06 Comunicaciones y Redes - Temario.pdf",
+      "sourceHash": "cc73bc044bdfdb53d6c6776f87a79f0fe690f1c5c1a2ee9c4749bb98f9bcf3eb",
+      "physicalPage": 39,
+      "printedPage": 39,
+      "excerpt": "4G utiliza modulación OFDMA (Acceso Múltiple por División de Frecuencia Ortogonal)",
+      "label": "Acceso múltiple — OFDMA"
+    }
+  },
+  "questions": [
+    {
+      "id": "L2018-P1-86",
+      "before": {
+        "i": "L2018-P1-86",
+        "t": "T4.06",
+        "o": "O",
+        "q": "En relación con el segundo dividendo digital, ¿qué banda es la que necesitará ser liberada?",
+        "a": [
+          "La banda de 700 MHz.",
+          "La banda de 900 MHz.",
+          "La banda de 1800 MHz.",
+          "La banda de 2100 MHz."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Segundo dividendo digital: 700 MHz.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "after": {
+        "i": "L2018-P1-86",
+        "t": "T4.06",
+        "o": "O",
+        "q": "En relación con el segundo dividendo digital, ¿qué banda es la que necesitará ser liberada?",
+        "a": [
+          "La banda de 700 MHz.",
+          "La banda de 900 MHz.",
+          "La banda de 1800 MHz.",
+          "La banda de 2100 MHz."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Segundo dividendo digital: 700 MHz.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)",
+        "u": "T4.06 Comunicaciones y Redes - Temario.pdf — Segundo dividendo digital — banda de 700 MHz\n\nTemario, p. 41 (PDF p. 41)\n\nPor último, hay que destacar el Segundo Dividendo Digital es un proceso por el cual se va a liberar la banda de 700 MHz del espectro radioeléctrico para desplegar en ella las futuras redes de telecomunicaciones 5G.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "13089b457f3c924a673e4fccee88336f9edd5bd8be1543212c55442376f8b6a9",
+      "afterSha256": "06bd3067ff4fd08d03ee0b89f42bf5b59a410f3010ab2877d73f7b8ef15fc0a0",
+      "evidenceKeys": [
+        "e-L2018-P1-86"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT406-P1-19",
+      "before": {
+        "i": "AT406-P1-19",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué categoría de cable, según el EIA-TIA 568, permite trabajar hasta frecuencias de 500 MHz?",
+        "a": [
+          "Categoría 5e.",
+          "Categoría 6.",
+          "Categoría 6a.",
+          "Categoría 7."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT406-P1-19",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué categoría de cable, según el EIA-TIA 568, permite trabajar hasta frecuencias de 500 MHz?",
+        "a": [
+          "Categoría 5e.",
+          "Categoría 6.",
+          "Categoría 6a.",
+          "Categoría 7."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T4.06 Comunicaciones y Redes - Temario.pdf — Cableado — categoría 6a y 500 MHz\n\nTemario, p. 14 (PDF p. 14)\n\n- Categoría 6a (a de aumentado): frecuencias de hasta 500 MHz, transmitiendo a 10 Gbps y con alcances de 100 metros (10GBASE-T). Utiliza cableado FTP/STP/SFTP/SSTP.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "e5659284dae8010d22f9fe4e4aaad23c0080aafe64564dd6251aae430ad9e386",
+      "afterSha256": "8dcefa5b6327b1610114e9194f09f6cd9c417745045005f40bf9a48aac2d9bad",
+      "evidenceKeys": [
+        "e-AT406-P1-19"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT406-P1-46",
+      "before": {
+        "i": "AT406-P1-46",
+        "t": "T4.06",
+        "o": "A",
+        "q": "Cuál de las siguientes bandas de frecuencia es utilizada principalmente por la tecnología 5G en Europa para el despliegue inicial?",
+        "a": [
+          "900 MHz.",
+          "2.100 MHz.",
+          "3.400 - 3.800 MHz.",
+          "60 GHz."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT406-P1-46",
+        "t": "T4.06",
+        "o": "A",
+        "q": "Cuál de las siguientes bandas de frecuencia es utilizada principalmente por la tecnología 5G en Europa para el despliegue inicial?",
+        "a": [
+          "900 MHz.",
+          "2.100 MHz.",
+          "3.400 - 3.800 MHz.",
+          "60 GHz."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T4.06 Comunicaciones y Redes - Temario.pdf — Pasaje del temario\n\nTemario, p. 41 (PDF p. 41)\n\nA nivel europeo se han identificado 3 bandas de frecuencias para el despliegue inicial de la tecnología 5G: - La banda de 3.400 - 3.800 MHz (3,5 GHz) PRINCIPAL - La banda de 26 GHz. - La banda de 700 MHz.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "e0a733f5986625210c66146c1615a3be0cd0c7806c61564a5c841c60a1eb6490",
+      "afterSha256": "a41b9c53deefc4e71fb2247659f681512d6dd38b0240a135471442871d7fef15",
+      "evidenceKeys": [
+        "e-AT406-P1-46"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS12-P1-76",
+      "before": {
+        "i": "AS12-P1-76",
+        "t": "T4.06",
+        "o": "A",
+        "q": "Señale la opción que se corresponde con un método de acceso múltiple utilizado en las comunicaciones móviles:",
+        "a": [
+          "Acceso múltiple por división de celdas.",
+          "Acceso múltiple por división de datos.",
+          "Acceso múltiple por división de estaciones.",
+          "Acceso múltiple por división de frecuencia ortogonal."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS12-P1-76",
+        "t": "T4.06",
+        "o": "A",
+        "q": "Señale la opción que se corresponde con un método de acceso múltiple utilizado en las comunicaciones móviles:",
+        "a": [
+          "Acceso múltiple por división de celdas.",
+          "Acceso múltiple por división de datos.",
+          "Acceso múltiple por división de estaciones.",
+          "Acceso múltiple por división de frecuencia ortogonal."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "u": "T4.06 Comunicaciones y Redes - Temario.pdf — Acceso múltiple — OFDMA\n\nTemario, p. 39 (PDF p. 39)\n\n4G utiliza modulación OFDMA (Acceso Múltiple por División de Frecuencia Ortogonal)\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "26e316486d272766e757a554ccf6708bc68a9c2602634a073c8322d6e61e7273",
+      "afterSha256": "cb560017e0f86a88f64aad2734facc06e67ac5a015551c8e9eeade9097447268",
+      "evidenceKeys": [
+        "e-AS12-P1-76"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-57",
+        "t": "T4.06",
+        "o": "O",
+        "q": "¿Qué topología de red consiste en conectar todos los nodos directamente a un nodo central?",
+        "a": [
+          "Estrella.",
+          "Anillo.",
+          "Bus.",
+          "Árbol."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Topologías hermanas.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-70",
+        "t": "T4.06",
+        "o": "O",
+        "q": "Señale cuál de las siguientes tecnologías NO es una tecnología LPWAN:",
+        "a": [
+          "LoRaWAN.",
+          "Bluetooth LE.",
+          "SigFox.",
+          "NB-IoT."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Bluetooth LE no es LPWAN.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-71",
+        "t": "T4.06",
+        "o": "O",
+        "q": "¿Cuál de estos equipos de interconexión trabaja a nivel de red (nivel 3 del modelo OSI)?",
+        "a": [
+          "Enrutadores (Routers).",
+          "Puentes (Bridges).",
+          "Conmutadores (Switches).",
+          "Concentradores (Hubs)."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Dispositivos por nivel OSI.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-72",
+        "t": "T4.06",
+        "o": "O",
+        "q": "Cuál es la respuesta INCORRECTA acerca de la fibra óptica plástica (POF):",
+        "a": [
+          "Está hecha esencialmente de plástico, construida de polimetilmetacrilato envuelto en polímeros fluoruros.",
+          "Permite aprovechar todo el ancho de banda y hacerlo sin pérdidas.",
+          "Ofrece un núcleo conductor menor que el de la fibra tradicional.",
+          "Es muy flexible, lo que hace que se pueda usar sin problema en instalaciones donde los tubos son antiguos."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          8
+        ],
+        "d": 3,
+        "n": "POF tiene núcleo mayor, no menor.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-R-01",
+        "t": "T4.06",
+        "o": "O",
+        "q": "¿A qué se corresponden las siglas de Red SOHO?",
+        "a": [
+          "Small Own, Home Own.",
+          "Small Office, Home Own.",
+          "Small Office, Home Office.",
+          "Small Office, House Office."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Expansión del acrónimo SOHO con palabras cambiadas.",
+        "y": "Ingreso libre OEP 2022 (2023)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-73",
+        "t": "T4.06",
+        "o": "O",
+        "q": "De los siguientes protocolos de enrutamiento, ¿cuál utiliza un algoritmo de vector de distancia?",
+        "a": [
+          "OSPF",
+          "IGRP",
+          "IS-IS",
+          "OLSR"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Protocolos de enrutamiento: vector distancia frente a estado de enlace.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-72",
+        "t": "T4.06",
+        "o": "O",
+        "q": "En el contexto de las redes de comunicaciones, ¿cuál es una característica definitoria de la conmutación de circuitos frente a la conmutación de paquetes?",
+        "a": [
+          "El aprovechamiento del ancho de banda es más eficiente al ser compartido por múltiples usuarios.",
+          "Cada unidad de información o paquete puede seguir una ruta distinta hacia el destino.",
+          "Se establece un camino físico o lógico dedicado y exclusivo entre los nodos durante la comunicación.",
+          "Los datos se almacenan en los nodos intermedios antes de ser reenviados."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "Conmutación de circuitos frente a paquetes.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-69",
+        "t": "T4.06",
+        "o": "O",
+        "q": "¿Qué es la tecnología VPLS?",
+        "a": [
+          "Es una tecnología que permite unir redes Ethernet geográficamente dispersas haciendo que compartan un mismo dominio de difusión.",
+          "Es una tecnología de reenvío de paquetes que utiliza etiquetas para tomar decisiones relativas al reenvío de datos.",
+          "Es un conjunto de protocolos que proporcionan seguridad a las comunicaciones Internet en la capa IP.",
+          "Es un protocolo de enrutado entre sistemas autónomos."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "VPLS frente a MPLS, IPsec, BGP.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-70",
+        "t": "T4.06",
+        "o": "O",
+        "q": "El estándar H.245 propuesto por ITU es descrito como:",
+        "a": [
+          "Sistemas de comunicación multimedia basados en paquetes.",
+          "Protocolos de señalización de llamada y paquetización de trenes de medios para sistemas de comunicación multimedia por paquetes.",
+          "Gestión de funciones y canales de medios adicionales para terminales de la serie H.300.",
+          "Protocolo de control para comunicación multimedia."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Familia H.2xx de la UIT.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-39",
+        "t": "T4.06",
+        "o": "O",
+        "q": "Dentro de la topología de las redes de área local, aquella que se caracteriza por existir un enlace punto a punto directo entre los Equipos Terminal de Datos (DTE) vecinos que operan en un solo sentido, se denomina:",
+        "a": [
+          "Topología en estrella.",
+          "Topología de anillo.",
+          "Topología de árbol.",
+          "Topología de bus."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Topologías hermanas.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-43",
+        "t": "T4.06",
+        "o": "O",
+        "q": "¿Qué es una red POLAN?",
+        "a": [
+          "Es un tipo de red que permite la conexión de dispositivos en una zona geográfica extensa.",
+          "Es un tipo de red neuronal que se compone de dos partes: un generador y un discriminador.",
+          "Es un tipo de red que utiliza fibra óptica pasiva para transportar señales de datos entre el equipamiento central y los dispositivos de usuario, eliminando la necesidad de equipos intermedios.",
+          "Es una red de almacenamiento dedicada que permite a los servidores y dispositivos de almacenamiento compartir datos a través de una conexión segura de alta velocidad."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 3,
+        "n": "POLAN frente a definiciones de GAN, SAN, WAN.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-34",
+        "t": "T4.06",
+        "o": "O",
+        "q": "¿Qué mecanismo de solución a bucles de enrutamiento consiste en implementar un temporizador para que la distancia al destino deje de ser infinita y, en caso de que expirado el temporizador la distancia siga siendo infinita, eliminar la ruta de la tabla de enrutamiento?",
+        "a": [
+          "Poison reverse.",
+          "Triggered Updates.",
+          "Split horizon.",
+          "Hold down."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Mecanismos contra bucles de enrutamiento.",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2025A-P1-42",
+        "t": "T4.06",
+        "o": "O",
+        "q": "¿Cómo se denomina a la degradación de la señal que consiste en la pérdida de energía de la misma a medida que se propaga por el medio de transmisión?",
+        "a": [
+          "Distorsión de retardo.",
+          "Diafonía.",
+          "Ruido térmico.",
+          "Atenuación."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Degradaciones de la señal.",
+        "y": "Promoción interna convocatoria 2025"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2025A-P1-43",
+        "t": "T4.06",
+        "o": "O",
+        "q": "¿Qué dispositivo de interconexión de redes es capaz de segmentar los dominios de colisión, pero mantiene un único dominio de difusión?",
+        "a": [
+          "Un router.",
+          "Un switch.",
+          "Un hub.",
+          "Un gateway."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Dominios de colisión/difusión por dispositivo.",
+        "y": "Promoción interna convocatoria 2025"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-82",
+        "t": "T4.06",
+        "o": "O",
+        "q": "Señale la correcta en cuanto a los medios de transmisión:",
+        "a": [
+          "Los medios de transmisión guiados hacen uso del interfaz radio para la transmisión de señales.",
+          "En los medios de transmisión no guiados la señal queda confinada en el interior de dicho medio.",
+          "En los medios de transmisión no guiados es necesario el uso de dispositivos que emitan o capten la señal.",
+          "Los medios de transmisión guiados utilizan siempre sistemas de secuencia directa para ampliar el espectro."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "Medios guiados y no guiados invertidos.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-99",
+        "t": "T4.06",
+        "o": "O",
+        "q": "De entre los siguientes, ¿qué dispositivo utiliza tablas de encaminamiento?",
+        "a": [
+          "Un router.",
+          "Un hub.",
+          "Un media converter.",
+          "Un switch."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Router: tablas de encaminamiento.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-43",
+        "t": "T4.06",
+        "o": "O",
+        "q": "En una transmisión se envían secuencialmente dos tramas (A:0111011 ; B:0011100). Para incorporar un mecanismo de detección de errores se va a añadir un bit de paridad impar a cada una. ¿Cuáles serían los bits de paridad impar en cada caso?",
+        "a": [
+          "A:0;B:0",
+          "A:1;B:0",
+          "A:0;B:1",
+          "A:1;B:1"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": 2,
+        "n": "Bit de paridad impar.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-01",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál es el estándar relacionado con Wi-Fi 7?",
+        "a": [
+          "802.11ba.",
+          "802.11be.",
+          "802.11bi.",
+          "802.11bu."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-02",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿En que banda funciona el WiFi 802.11ax?",
+        "a": [
+          "El 802.11ax funciona en varias bandas.",
+          "UHF.",
+          "5GHz.",
+          "2,4GHz."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          1
+        ],
+        "d": 2,
+        "n": "Bandas de 802.11ax."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-03",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿En qué banda funciona el WiFi 802.11n?",
+        "a": [
+          "5 GHz.",
+          "UHF.",
+          "El 802.11n funciona en varias bandas.",
+          "2,4 GHz."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-04",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál es el sistema más seguro para proteger las redes inalámbricas Wi-Fi?",
+        "a": [
+          "SWAP.",
+          "WAP.",
+          "WPA2.",
+          "WEP."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-05",
+        "t": "T4.06",
+        "o": "A",
+        "q": "Las Redes Inalámbricas de Área Personal (WPAN) utilizan:",
+        "a": [
+          "Un protocolo de comunicaciones, denominado Bluetooth, diseñado especialmente para dispositivos de bajo consumo y con una cobertura baja.",
+          "La infraestructura de comunicaciones OpenBTS.",
+          "El acceso múltiple por división de código de banda ancha (WCDMA).",
+          "El servicio general de paquetes vía radio (GPRS)."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-06",
+        "t": "T4.06",
+        "o": "A",
+        "q": "En un centro de trabajo ha surgido un nuevo proyecto para dotar de cobertura WiFi las nuevas zonas de atención al público. De las siguientes alternativas, ¿qué tecnología WiFi usaría para ofrecer a los usuarios la velocidad de acceso más alta?",
+        "a": [
+          "802.11g.",
+          "802.11a.",
+          "802.11b.",
+          "802.11n."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-07",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál de los siguientes protocolos es un estándar IEEE para el control de acceso a la red?",
+        "a": [
+          "802.1x.",
+          "802.11n.",
+          "802.1q.",
+          "802.1s."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-08",
+        "t": "T4.06",
+        "o": "A",
+        "q": "El estándar conocido como WRAN (Wireless Regional Area Network) pertenece al grupo de trabajo del IEEE:",
+        "a": [
+          "802.19.",
+          "802.20.",
+          "802.21.",
+          "802.22."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-09",
+        "t": "T4.06",
+        "o": "A",
+        "q": "En el ámbito de las redes inalámbricas, la variante IEEE 802.11a:",
+        "a": [
+          "Opera dentro del rango de los 5 GHz.",
+          "Es compatible con el estándar 802.11b.",
+          "Es compatible con el estándar 802.11g.",
+          "Incorpora QoS (Calidad de Servicio)."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-10",
+        "t": "T4.06",
+        "o": "A",
+        "q": "El estándar IEEE 802.11e sobre redes inalámbricas se corresponde con especificaciones:",
+        "a": [
+          "Para la coexistencia con sistemas de Radar o Satélite.",
+          "De seguridad.",
+          "De roaming.",
+          "Sobre calidad de servicio QoS."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-11",
+        "t": "T4.06",
+        "o": "A",
+        "q": "Señalar en qué banda de frecuencias el estándar 802.11ad alcanza sus velocidades máximas:",
+        "a": [
+          "60 GHz.",
+          "6 GHz.",
+          "600 MHz.",
+          "60 MHz."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-12",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál es el estándar que define el cifrado y la autenticación de datos en redes inalámbricas?",
+        "a": [
+          "802.11c.",
+          "802.11s.",
+          "802.11i.",
+          "802.11ad."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "802.11i."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-13",
+        "t": "T4.06",
+        "o": "A",
+        "q": "Señale qué estándar WiFi del IEEE está especialmente diseñado para uso en redes que permitan la comunicación en entornos entre vehículos:",
+        "a": [
+          "802.UQay.",
+          "802.Un.",
+          "802.11p.",
+          "802.11ve."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-14",
+        "t": "T4.06",
+        "o": "A",
+        "q": "En relación con el estándar 802.11ac señale la opción INCORRECTA:",
+        "a": [
+          "Puede funcionar con 80 MHz o incluso 160 MHz.",
+          "Se conoce como WIFI 5G o WiFi Gigabit, y es una mejora del IEEE 802.11n.",
+          "Opera en el espectro de 2,4 GHz.",
+          "Los componentes utilizados consumen menos energía que los utilizados en el estándar 802.11n."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "802.11ac a 2,4 GHz."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-15",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál es un estándar IEEE para las redes de área local inalámbricas?",
+        "a": [
+          "802.9.",
+          "802.11g.",
+          "802.16.",
+          "802.3."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-16",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál de los siguientes estándares persigue evitar las vulnerabilidades de seguridad en las redes inalámbricas?",
+        "a": [
+          "802.11i.",
+          "802.1.",
+          "802.3.",
+          "802.l1a."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-17",
+        "t": "T4.06",
+        "o": "A",
+        "q": "La tecnología WiMAX 2 es conocida formalmente como:",
+        "a": [
+          "802.16m.",
+          "802.16a.",
+          "802.11x.",
+          "802.11."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-18",
+        "t": "T4.06",
+        "o": "A",
+        "q": "El equipo que se encuentra en ambos extremos de una línea de transmisión se denomina, según la ITU-T:",
+        "a": [
+          "ETC o equipo terminal de datos.",
+          "ETD o equipo terminal de datos.",
+          "ETCD o equipo terminal del circuito digital.",
+          "ETCD o equipo terminal del circuito de datos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-20",
+        "t": "T4.06",
+        "o": "A",
+        "q": "Sobre la multiplexación por división en frecuencia, indique la afirmación correcta:",
+        "a": [
+          "Las señales a enviar usan todo el ancho de banda disponible.",
+          "Las señales a enviar sólo usan el ancho de banda asignado.",
+          "Las señales se envían sólo en el tiempo asignado por todo ancho de banda.",
+          "Las señales se envían sólo en el tiempo asignado por el ancho de banda asignado."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-21",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué respuesta se corresponde con el teorema de Shannon?",
+        "a": [
+          "La máxima velocidad de transferencia de un canal es H*log2(1+S/N), donde H es el ancho de banda del canal de transmisión y S/N es la relación señal ruido.",
+          "La máxima velocidad a la que se puede transmitir información digital binaria es el doble de la máxima frecuencia del canal de transmisión.",
+          "La máxima velocidad de transferencia de un canal sujeto a ruido es directamente proporcional a la relación señal ruido del canal.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-22",
+        "t": "T4.06",
+        "o": "A",
+        "q": "El efecto de la diafonía en un cable se define como:",
+        "a": [
+          "La pérdida de potencia en la señal debido a la emisión electromagnética al ambiente.",
+          "La variación de la velocidad de propagación de la señal en función de la frecuencia.",
+          "La interferencia electromagnética producida entre señales que discurren simultáneamente entre pares paralelos.",
+          "Es la distorsión de la señal por la influencia de señales espurias del ambiente."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-23",
+        "t": "T4.06",
+        "o": "A",
+        "q": "La diferencia entre la fibra óptica monomodo y multimodo radica, principalmente, en:",
+        "a": [
+          "Las frecuencias usadas.",
+          "Los adaptadores usados.",
+          "La forma en que el haz de luz se refleja dentro del núcleo de la fibra.",
+          "Ninguna de las anteriores."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-24",
+        "t": "T4.06",
+        "o": "A",
+        "q": "La fibra multimodo NO se usa para aplicaciones donde el producto \"largas distancias por ancho de banda\" deba ser alto, porque:",
+        "a": [
+          "Existen diferentes modos de propagación, con diferentes velocidades de propagación de la señal, llegando la misma distorsionada al receptor.",
+          "El coste de fabricación de un segmento continuo se incrementa cuadráticamente con la distancia (mientras que en la monomodo lo hace linealmente).",
+          "Requiere transmitir en la segunda ventana, lo que unido a la potencia óptica necesaria por larga distancia hace que aumente prohibitivamente el coste.",
+          "Requiere, para amplificar la señal a largas distancias, EDFAs (Erbium Doped Fibre Amplifier), mientras que en monomodo hay amplificadores más baratos."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-25",
+        "t": "T4.06",
+        "o": "A",
+        "q": "El estándar internacional ISO/IEC 11801 establece para la clase F una frecuencia de hasta:",
+        "a": [
+          "600 MHz.",
+          "500 MHz.",
+          "1000 MHz.",
+          "1250 MHz."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-26",
+        "t": "T4.06",
+        "o": "A",
+        "q": "La dispersión modal en una fibra óptica:",
+        "a": [
+          "Sólo se produce en fibras monomodo.",
+          "Sólo se produce en fibras multimodo.",
+          "Se produce en ambos tipos de fibra.",
+          "No se produce en la fibra óptica."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 2,
+        "n": "Dispersión modal: \"sólo\" en ambas direcciones."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-27",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué norma define el cableado estructurado?",
+        "a": [
+          "ISO 50173.",
+          "ISO 11801.",
+          "ISO 18765.",
+          "ISO 80211."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-28",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué clase de cable, según la norma ISO 11801, elegiría para permitir la transmisión de video en tiempo real?",
+        "a": [
+          "Clase D.",
+          "Clase F.",
+          "Clase E.",
+          "b) y c) son correctas."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-29",
+        "t": "T4.06",
+        "o": "A",
+        "q": "Señale cuál de los siguientes no es un conector de fibra óptica:",
+        "a": [
+          "FC.",
+          "LC.",
+          "SC.",
+          "NC."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-30",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones sobre los cables EIA/TIA/568B de categoría 6 es correcta?",
+        "a": [
+          "Tiene un ancho de banda de hasta 10 GHz en cada par.",
+          "Se suele usar para transmitir a velocidades de 1 Gbps.",
+          "No permite implementar Power over Ethernet (PoE).",
+          "Sólo está disponible de forma experimental."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-31",
+        "t": "T4.06",
+        "o": "A",
+        "q": "Si se quiere interconectar mediante fibra óptica dos dispositivos separados a menos de 150 metros en un CPD a una velocidad de 40Gb/s, la categoría mínima de fibra óptica a usar debería ser:",
+        "a": [
+          "OM2.",
+          "OM3.",
+          "OM4.",
+          "OM5."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-32",
+        "t": "T4.06",
+        "o": "A",
+        "q": "Indique la afirmación correcta en relación con la transmisión por fibra óptica:",
+        "a": [
+          "La velocidad de propagación de la luz a través de una fibra óptica monomodo es de 300.000 Kms/seg.",
+          "La fibra óptica monomodo tiene una atenuación menor que el cable coaxial.",
+          "A la fibra óptica monomodo también se la conoce como de índice gradual.",
+          "La fibra óptica multimodo es la que presenta menores pérdidas de la señal."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-33",
+        "t": "T4.06",
+        "o": "A",
+        "q": "La ventana de una determinada fibra óptica está relacionada con:",
+        "a": [
+          "El número de modos de transmisión.",
+          "La longitud de onda de transmisión.",
+          "El ancho de banda de transmisión en MHz/Km.",
+          "La atenuación de transmisión en dB/Km."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-35",
+        "t": "T4.06",
+        "o": "A",
+        "q": "El ruido térmico es una perturbación:",
+        "a": [
+          "Debida a las diferencias en los coeficientes de dilatación de los conductores.",
+          "Aleatoria que aparece de forma natural en los conductores por agitación de los electrones.",
+          "Igual a la temperatura a la cual la resistencia equivalente del dispositivo produciría el ruido total observado.",
+          "Introducida en el proceso de cuantificación."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-36",
+        "t": "T4.06",
+        "o": "A",
+        "q": "El cable UTP (Unshielded Twisted Pair):",
+        "a": [
+          "No es tan susceptible a las interferencias electromagnéticas como el cable STP (Shielded Twisted Pair).",
+          "Es más barato y fácil de manipular que el STP.",
+          "Tiene una lámina externa de aluminio o de cobre trenzado alrededor del conjunto de pares.",
+          "Tiene una pantalla protectora para cada par de hilos."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-37",
+        "t": "T4.06",
+        "o": "A",
+        "q": "Una red de conmutación de paquetes trabaja en modo datagrama cuando:",
+        "a": [
+          "La transmisión de paquetes no es orientada a la conexión.",
+          "Se establecen circuitos virtuales entre origen y destino.",
+          "Se establecen circuitos físicos entre origen y destino.",
+          "Los mensajes se dividen en paquetes de longitud fija para su envío."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-38",
+        "t": "T4.06",
+        "o": "A",
+        "q": "Indique el orden correcto, de mayor a menor, en velocidad de transmisión:",
+        "a": [
+          "LTE, UMTS y GPRS.",
+          "W-CDMA, WiMAX y EDGE.EGDE, UMTS y LTE.",
+          "HSPA, LTE y GPRS.",
+          "WiMAX, GPRS y LTE."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-39",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué dos especificaciones introduce la versión 4.0 de Bluetooth?",
+        "a": [
+          "Clásico y de bajo consumo.",
+          "De bajo consumo y de alta velocidad.",
+          "Estándar y de alto rendimiento.",
+          "Clásico y avanzado."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-40",
+        "t": "T4.06",
+        "o": "A",
+        "q": "Indique qué topología de red no está permitida en una red ZigBee:",
+        "a": [
+          "Árbol.",
+          "Malla.",
+          "Bus.",
+          "Estrella."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-41",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál de las siguientes tecnologías permite la transmisión de datos a través de haces de luz visible, aprovechando el espectro óptico?",
+        "a": [
+          "ZigBee.",
+          "Li-Fi.",
+          "WiMAX.",
+          "Bluetooth."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-42",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones sobre la atenuación en los medios de transmisión es correcta?",
+        "a": [
+          "Es independiente de la distancia recorrida por la señal.",
+          "Se expresa en hercios (Hz).",
+          "Es directamente proporcional a la distancia y la frecuencia.",
+          "Solo afecta a señales digitales."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-43",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué tipo de cable par trenzado utiliza una lámina de aluminio como apantallamiento global para todos los pares?",
+        "a": [
+          "FTP.",
+          "UTP.",
+          "STP.",
+          "SFTP."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-44",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál es la principal ventaja de la fibra óptica plástica (POF) frente a la fibra óptica tradicional de vidrio?",
+        "a": [
+          "Mayor inmunidad al ruido.",
+          "Mayor alcance.",
+          "Mayor velocidad de transmisión.",
+          "Mayor flexibilidad y facilidad de instalación."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-47",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué estándar Wi-Fi introduce la operación en la banda de 60 GHz y velocidades de hasta 7 Gbps?",
+        "a": [
+          "802.11ac.",
+          "802.11ad.",
+          "802.11ax.",
+          "802.11n."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-48",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál de los siguientes protocolos permite la autenticación de usuarios en redes Wi-Fi mediante credenciales individuales y un servidor RADIUS?",
+        "a": [
+          "802.1X.",
+          "WPA2-PSK.",
+          "WEP.",
+          "WPA3-Personal."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-49",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué tecnología LPWAN destaca por su alta resistencia a interferencias y es especialmente adecuada para entornos urbanos?",
+        "a": [
+          "Mioty.",
+          "LoRaWAN.",
+          "NB-IoT.",
+          "SigFox."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-50",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué estándar IEEE define las redes inalámbricas personales (WPAN) como Bluetooth?",
+        "a": [
+          "IEEE 802.11.",
+          "IEEE 802.15.",
+          "IEEE 802.16.",
+          "IEEE 802.22."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-51",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué tipo de multiplexación permite la transmisión simultánea de varias señales usando diferentes códigos ortogonales?",
+        "a": [
+          "FDM.",
+          "TDM.",
+          "CDMA.",
+          "WDM."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-52",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál es la principal diferencia entre un circuito virtual conmutado (SVC) y uno permanente (PVC) en conmutación de paquetes?",
+        "a": [
+          "El SVC se establece para uso repetido y el PVC para llamadas puntuales.",
+          "El SVC se crea dinámicamente para cada conexión y el PVC está preestablecido.",
+          "El PVC permite rutas variables y el SVC rutas fijas.",
+          "No existe diferencia funcional."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-53",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál es la función principal del handover en una red móvil?",
+        "a": [
+          "Permitir la transmisión de datos a alta velocidad.",
+          "Asignar direcciones IP a los terminales.",
+          "Multiplexar señales de diferentes usuarios.",
+          "Gestionar el traspaso de la comunicación de un usuario entre celdas sin interrupción."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-54",
+        "t": "T4.06",
+        "o": "A",
+        "q": "Cuál de las siguientes tecnologías utiliza modulación WCDMA y permite velocidades de hasta 2 Mbps en interiores?",
+        "a": [
+          "GSM.",
+          "UMTS (3G).",
+          "LTE (4G).",
+          "GPRS."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-55",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué característica distingue a la tecnología LTE-Advanced respecto a LTE estándar?",
+        "a": [
+          "Velocidades teóricas de hasta 1 Gbps de bajada.",
+          "Uso de modulación TDMA.",
+          "Solo permite voz, no datos.",
+          "Opera únicamente en la banda de 900 MHz."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-56",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué estándar de telefonía móvil utiliza OFDMA y MIMO para aumentar la capacidad y velocidad?",
+        "a": [
+          "GSM.",
+          "UMTS.",
+          "LTE.",
+          "GPRS."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-57",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál es la principal ventaja de Massive MIMO en 5G?",
+        "a": [
+          "Permite mayor densidad de dispositivos conectados y mejora la eficiencia espectral.",
+          "Reduce la latencia a valores negativos.",
+          "Solo se utiliza para voz.",
+          "Elimina la necesidad de antenas en la estación base."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-58",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál de las siguientes bandas es considerada “banda milimétrica” para 5G?",
+        "a": [
+          "700 MHz.",
+          "2.100 MHz.",
+          "3.500 MHz.",
+          "26 GHz."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-59",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué banda de frecuencia se utiliza para la tecnología 2G y también para 4G en España?",
+        "a": [
+          "700 MHz.",
+          "900 MHz.",
+          "1.800 MHz.",
+          "2.100 MHz."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT406-P1-60",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál de las siguientes bandas es utilizada por la tecnología 4G (LTE) en España?",
+        "a": [
+          "800 MHz, 1.500 MHz, 1.800 MHz, 2.600 MHz.",
+          "900 MHz, 2.100 MHz.",
+          "3.400 MHz, 26 GHz.",
+          "700 MHz, 3.400 MHz."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-99",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué es la IoT?",
+        "a": [
+          "Es una red móvil de tecnología 5G.",
+          "Es una red de televisión sobre IP.",
+          "Es una red que interconecta todo tipo de dispositivos y objetos.",
+          "Es una red dedicada a la interconexión de operadores."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-75",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál de las siguientes opciones se corresponde con una característica de las redes de conmutación de paquetes?",
+        "a": [
+          "Es posible que haya problemas con los dispositivos de red intermedios, ya que les resulta complejo almacenar paquetes de pequeño tamaño.",
+          "Permite multiplexación estadística en las líneas de comunicación.",
+          "No se permite a la red diferenciar flujos de datos basados en prioridades.",
+          "Hay que generar y enviar a la red un paquete flotante aparte con todos los encabezados, ya que los paquetes no contienen un encabezado con la información necesaria para enrutar el paquete desde el origen hasta el destino."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-78",
+        "t": "T4.06",
+        "o": "A",
+        "q": "En un rack, ¿qué se entiende por “U”?",
+        "a": [
+          "Una medida estándar de la anchura de los equipos que se pueden conectar.",
+          "Una medida estándar del consumo de cada equipo.",
+          "Una medida estándar de la altura de los equipos que se pueden conectar.",
+          "Una medida estándar de la longitud de los raíles horizontales para fijar los equipos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-80",
+        "t": "T4.06",
+        "o": "A",
+        "q": "Señale la respuesta correcta en relación con la fibra óptica:",
+        "a": [
+          "Puede ser multimodo, monomodo y unimodo.",
+          "Un cable de fibra óptica es más difícil de manipular que un cable UTP.",
+          "Puede ser unimodo o multimodo.",
+          "Utiliza 5 ventanas como bandas de transmisión."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-83",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué rangos de frecuencia se utilizan en una red WiFi?",
+        "a": [
+          "3 GHz y 15 GHz.",
+          "2,4 GHz y 13 GHz.",
+          "2,4 GHz y 5 GHz.",
+          "Solo 5 GHz."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-94",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál de las siguientes modulaciones es utilizada por la tecnología 4G LTE?",
+        "a": [
+          "GMSK, Desplazamiento Mínimo Gaussiano.",
+          "OFDM, Acceso múltiple por División de Frecuencia Ortogonal.",
+          "BPSK, Modulación por desplazamiento diferencial de fase binario.",
+          "FHSS, espectro ensanchado por salto de frecuencia."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-99",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué estándar regula las redes de área metropolitana de banda ancha, conocidas como WiMAx?",
+        "a": [
+          "IEEE 802.11g.",
+          "IEEE 802.15.",
+          "IEEE 802.1Q.",
+          "IEEE 802.16."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-73",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué protocolo de encaminamiento está basado en el vector distancia?",
+        "a": [
+          "BGP.",
+          "RIP.",
+          "OSPF.",
+          "IS-IS."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "RIP frente a BGP/OSPF/IS-IS."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-74",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Cuál de las siguientes transmisiones de información NO es posible realizar?",
+        "a": [
+          "Datos analógicos por medio analógico.",
+          "Datos analógicos por medio digital.",
+          "Datos digitales por medio analógico.",
+          "Todas las opciones son posibles."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": 2,
+        "n": "\"Todas las opciones son posibles\"."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 328,
+    "alreadyHadCitation": 242,
+    "added": 4,
+    "pending": 82,
+    "withCitation": 246
+  }
+}

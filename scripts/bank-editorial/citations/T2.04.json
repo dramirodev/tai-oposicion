@@ -1,0 +1,3526 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T2.04",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "8170542fe6f18dbad8068aec6e9a5af6d6070d3dde303c066a7e0e0bf7baa88c",
+    "afterSha256": "31311f9dcdcc28dd2624823789ce9d6f42ef25b7887a87a9ef894b9b3a5a3bfe"
+  },
+  "sample": {
+    "beforeSha256": "ebe25e02838d684813227f78e4c9396fe79f0b0de04cff62114e3ac8c2c6e0b4",
+    "afterSha256": "ebe25e02838d684813227f78e4c9396fe79f0b0de04cff62114e3ac8c2c6e0b4"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-L2018-P1-36": {
+      "path": "T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf",
+      "sourceHash": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1",
+      "physicalPage": 12,
+      "printedPage": 12,
+      "excerpt": "En los sistemas de planificación generalmente se identifican tres niveles de planificación: - El planificador a LARGO PLAZO: long term scheduler. Decide que trabajos (conjunto de procesos) son candidatos para convertirse en procesos listos para competir por los recursos del sistema. - El planificador a MEDIO PLAZO: mid term scheduler. Decide qué procesos se suspenden o se reanudan para lograr ciertas metas de rendimiento. - El planificador a CORTO PLAZO: dispatcher o short term scheduler. Decide qué proceso, de los que ya están listos/preparados, es al que le corresponde estar ejecutándose en la unidad central de proceso.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT204-P1-03": {
+      "path": "T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf",
+      "sourceHash": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1",
+      "physicalPage": 21,
+      "printedPage": 21,
+      "excerpt": "En la paginación, se debe elegir cuidadosamente el tamaño de las páginas, ya que si éstas son muy pequeñas el control por parte del sistema operativo para saber cuáles están en memoria principal y cuáles en disco, sus direcciones reales, etcétera, crece y provoca mucha sobrecarga. Por otro lado, si las páginas son muy grandes, la sobrecarga disminuye, pero entonces puede ocurrir que se desperdicie memoria en procesos pequeños, conociéndose como fragmentación interna. Debe haber un equilibrio.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT204-P1-48": {
+      "path": "T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf",
+      "sourceHash": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1",
+      "physicalPage": 12,
+      "printedPage": 12,
+      "excerpt": "El planificador a MEDIO PLAZO: mid term scheduler. Decide qué procesos se suspenden o se reanudan para lograr ciertas metas de rendimiento.",
+      "label": "Planificación de procesos — medio plazo"
+    },
+    "e-AT204-P1-60": {
+      "path": "T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf",
+      "sourceHash": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1",
+      "physicalPage": 23,
+      "printedPage": 23,
+      "excerpt": "Además, hay que sumar el tiempo invertido en trasladar las páginas que pasan de memoria a disco. Para ello, se debe disponer de un método de elección para seleccionar la página candidata a salir de memoria. El objetivo de estos métodos es minimizar la tasa de fallos de página.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS03-P1-68": {
+      "path": "T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf",
+      "sourceHash": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1",
+      "physicalPage": 21,
+      "printedPage": 21,
+      "excerpt": "En la paginación, se debe elegir cuidadosamente el tamaño de las páginas, ya que si éstas son muy pequeñas el control por parte del sistema operativo para saber cuáles están en memoria principal y cuáles en disco, sus direcciones reales, etcétera, crece y provoca mucha sobrecarga. Por otro lado, si las páginas son muy grandes, la sobrecarga disminuye, pero entonces puede ocurrir que se desperdicie memoria en procesos pequeños, conociéndose como fragmentación interna. Debe haber un equilibrio.",
+      "label": "Pasaje del temario"
+    }
+  },
+  "questions": [
+    {
+      "id": "L2018-P1-36",
+      "before": {
+        "i": "L2018-P1-36",
+        "t": "T2.04",
+        "o": "O",
+        "q": "En un sistema operativo, indique el scheduler que decide qué proceso entra en el procesador para su ejecución:",
+        "a": [
+          "Short term scheduler.",
+          "Mid term scheduler.",
+          "Long term scheduler.",
+          "Main term scheduler."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Planificadores; \"Main term\" inventado.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "after": {
+        "i": "L2018-P1-36",
+        "t": "T2.04",
+        "o": "O",
+        "q": "En un sistema operativo, indique el scheduler que decide qué proceso entra en el procesador para su ejecución:",
+        "a": [
+          "Short term scheduler.",
+          "Mid term scheduler.",
+          "Long term scheduler.",
+          "Main term scheduler."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Planificadores; \"Main term\" inventado.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)",
+        "u": "T2.04 Sistemas Operativos - Temario.pdf — Pasaje del temario\n\nTemario, p. 12 (PDF p. 12)\n\nEn los sistemas de planificación generalmente se identifican tres niveles de planificación: - El planificador a LARGO PLAZO: long term scheduler. Decide que trabajos (conjunto de procesos) son candidatos para convertirse en procesos listos para competir por los recursos del sistema. - El planificador a MEDIO PLAZO: mid term scheduler. Decide qué procesos se suspenden o se reanudan para lograr ciertas metas de rendimiento. - El planificador a CORTO PLAZO: dispatcher o short term scheduler. Decide qué proceso, de los que ya están listos/preparados, es al que le corresponde estar ejecutándose en la unidad central de proceso.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "36b953f8e54a9a3f519052c02d972d72308e200eb76d34feb73845fd567ed717",
+      "afterSha256": "4a047d46905490b754c38d93d4058d0051d6bca2a051f30c865c059b7cd732d7",
+      "evidenceKeys": [
+        "e-L2018-P1-36"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT204-P1-03",
+      "before": {
+        "i": "AT204-P1-03",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Relacionado con la gestión de memoria, la técnica de paginación puede provocar:",
+        "a": [
+          "La tabla de páginas se quede sin memoria provocando un error de Memory Exceptión.",
+          "Fragmentación interna.",
+          "Fragmentación externa.",
+          "Fragmentación interna y externa a la vez."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT204-P1-03",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Relacionado con la gestión de memoria, la técnica de paginación puede provocar:",
+        "a": [
+          "La tabla de páginas se quede sin memoria provocando un error de Memory Exceptión.",
+          "Fragmentación interna.",
+          "Fragmentación externa.",
+          "Fragmentación interna y externa a la vez."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T2.04 Sistemas Operativos - Temario.pdf — Pasaje del temario\n\nTemario, p. 21 (PDF p. 21)\n\nEn la paginación, se debe elegir cuidadosamente el tamaño de las páginas, ya que si éstas son muy pequeñas el control por parte del sistema operativo para saber cuáles están en memoria principal y cuáles en disco, sus direcciones reales, etcétera, crece y provoca mucha sobrecarga. Por otro lado, si las páginas son muy grandes, la sobrecarga disminuye, pero entonces puede ocurrir que se desperdicie memoria en procesos pequeños, conociéndose como fragmentación interna. Debe haber un equilibrio.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "c197cc84aece3fed1f987dc6de709a30f4091c319bcb7d2dea4b77edd96c3d32",
+      "afterSha256": "815ed58a32563da7789c504f0028df1e5c67300980e49e0dcd85bcc7486a5fbe",
+      "evidenceKeys": [
+        "e-AT204-P1-03"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT204-P1-48",
+      "before": {
+        "i": "AT204-P1-48",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En relación con la administración de procesos, el planificador a medio plazo:",
+        "a": [
+          "Decide qué trabajos son candidatos a convertirse en procesos listos para competir por los recursos del sistema.",
+          "Decide qué proceso, de entre los listos, es al que se le va a asignar el procesador.",
+          "Decide qué procesos de entre los bloqueados pasan a la cola de listos.",
+          "Decide qué procesos se suspenden o se reanudan para lograr ciertas metas de rendimiento."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT204-P1-48",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En relación con la administración de procesos, el planificador a medio plazo:",
+        "a": [
+          "Decide qué trabajos son candidatos a convertirse en procesos listos para competir por los recursos del sistema.",
+          "Decide qué proceso, de entre los listos, es al que se le va a asignar el procesador.",
+          "Decide qué procesos de entre los bloqueados pasan a la cola de listos.",
+          "Decide qué procesos se suspenden o se reanudan para lograr ciertas metas de rendimiento."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T2.04 Sistemas Operativos - Temario.pdf — Planificación de procesos — medio plazo\n\nTemario, p. 12 (PDF p. 12)\n\nEl planificador a MEDIO PLAZO: mid term scheduler. Decide qué procesos se suspenden o se reanudan para lograr ciertas metas de rendimiento.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "d79cef45f818edc36145148e133591b52b582804234a234927e65558d5389243",
+      "afterSha256": "4d810d5d972332e7edb0ba6ed9ee316234004bbb2f1089fc1e01bc20fbdb87e0",
+      "evidenceKeys": [
+        "e-AT204-P1-48"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT204-P1-60",
+      "before": {
+        "i": "AT204-P1-60",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En el contexto de la gestión de memoria, ¿qué intentan minimizar los algoritmos de reemplazo?",
+        "a": [
+          "El número de marcos de página.",
+          "El tiempo de acceso a los marcos de página.",
+          "La tasa de fallos de página.",
+          "El tiempo de acceso al heap."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT204-P1-60",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En el contexto de la gestión de memoria, ¿qué intentan minimizar los algoritmos de reemplazo?",
+        "a": [
+          "El número de marcos de página.",
+          "El tiempo de acceso a los marcos de página.",
+          "La tasa de fallos de página.",
+          "El tiempo de acceso al heap."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T2.04 Sistemas Operativos - Temario.pdf — Pasaje del temario\n\nTemario, p. 23 (PDF p. 23)\n\nAdemás, hay que sumar el tiempo invertido en trasladar las páginas que pasan de memoria a disco. Para ello, se debe disponer de un método de elección para seleccionar la página candidata a salir de memoria. El objetivo de estos métodos es minimizar la tasa de fallos de página.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "43a0088a8d8b77f7d38c412a6ef3442ca99ee2028dedb29de87658cecedc7621",
+      "afterSha256": "ef5527b97cb47f1e6c666fb72b167ab4a949a06e70e4614e0e99eca0cc6080b3",
+      "evidenceKeys": [
+        "e-AT204-P1-60"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS03-P1-68",
+      "before": {
+        "i": "AS03-P1-68",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Relacionado con la gestión de memoria, la técnica de paginación puede provocar:",
+        "a": [
+          "La tabla de páginas se quede sin memoria provocando un error de Memory Exception.",
+          "Fragmentación interna.",
+          "Fragmentación externa.",
+          "Fragmentación interna y externa a la vez."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS03-P1-68",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Relacionado con la gestión de memoria, la técnica de paginación puede provocar:",
+        "a": [
+          "La tabla de páginas se quede sin memoria provocando un error de Memory Exception.",
+          "Fragmentación interna.",
+          "Fragmentación externa.",
+          "Fragmentación interna y externa a la vez."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T2.04 Sistemas Operativos - Temario.pdf — Pasaje del temario\n\nTemario, p. 21 (PDF p. 21)\n\nEn la paginación, se debe elegir cuidadosamente el tamaño de las páginas, ya que si éstas son muy pequeñas el control por parte del sistema operativo para saber cuáles están en memoria principal y cuáles en disco, sus direcciones reales, etcétera, crece y provoca mucha sobrecarga. Por otro lado, si las páginas son muy grandes, la sobrecarga disminuye, pero entonces puede ocurrir que se desperdicie memoria en procesos pequeños, conociéndose como fragmentación interna. Debe haber un equilibrio.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "1259f62a310f47d885164bdba0f0497862ac0324366ddc642e6e9ebf0944a984",
+      "afterSha256": "a368272419e34ff1bfa2f058666b28e06bfad3a7ff8824f9a369a32d620344db",
+      "evidenceKeys": [
+        "e-AS03-P1-68"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-27",
+        "t": "T2.04",
+        "o": "O",
+        "q": "¿Cuál es la función del kernel en un sistema operativo Unix/Linux?",
+        "a": [
+          "Gestionar la interfaz gráfica.",
+          "Controlar los procesos, la memoria y la administración de dispositivos.",
+          "Proveer servicios de red como TCP/IP.",
+          "Facilitar la comunicación entre usuarios a través de terminales."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Distractores = funciones de otros componentes (GUI, red, terminales).",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-56",
+        "t": "T2.04",
+        "o": "O",
+        "q": "¿Cuál de los siguientes conceptos permite que un proceso ejecute múltiples tareas de manera simultánea o concurrente en un sistema operativo?",
+        "a": [
+          "Segmentación.",
+          "Paginación.",
+          "Prepaging.",
+          "Hilos."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Segmentación/paginación/prepaging son de memoria, no de concurrencia.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-31",
+        "t": "T2.04",
+        "o": "O",
+        "q": "¿Cuál de las versiones siguientes es la más reciente del sistema operativo macOS?",
+        "a": [
+          "macOS Sierra",
+          "macOS Monterey",
+          "macOS Big Sur",
+          "macOS Ventura"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "Orden cronológico de versiones de macOS.",
+        "y": "Ingreso libre OEP 2022 (2023)",
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-32",
+        "t": "T2.04",
+        "o": "O",
+        "q": "Cuál de las siguientes afirmaciones NO es correcta:",
+        "a": [
+          "En Windows de 64 bits, un proceso de 64 bits no puede cargar una biblioteca de vínculos dinámicos (DLL) de 32 bits.",
+          "En Windows de 64 bits, un proceso de 32 bits no puede cargar un archivo DLL de 64 bits.",
+          "En Windows de 64 bits se admiten llamadas a procedimientos remotos (RPC) entre procesos de 64 y 32 bits solo en el mismo equipo.",
+          "En Windows de 64 bits se admiten llamadas a procedimientos remotos (RPC) entre procesos de 64 y 32 bits tanto en el mismo equipo como entre equipos distintos."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          12
+        ],
+        "d": 3,
+        "n": "c) \"solo en el mismo equipo\" frente a d) \"en el mismo equipo y entre equipos\".",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-61",
+        "t": "T2.04",
+        "o": "O",
+        "q": "Señale la respuesta INCORRECTA sobre el kernel de un Sistema Operativo:",
+        "a": [
+          "Controla todas las funciones importantes del hardware.",
+          "Se encarga del procesamiento paralelo de tareas (multitasking).",
+          "Es el núcleo del procesador.",
+          "Recibe peticiones de servicio de los procesos y los comunica con el hardware."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "\"Núcleo del procesador\": confunde kernel con core.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-R-02",
+        "t": "T2.04",
+        "o": "O",
+        "q": "Dentro de los dispositivos Android, es posible encontrar un gran número de capas de personalización. Señale cuál NO es una de ellas:",
+        "a": [
+          "MIUI",
+          "PenPoint OS",
+          "One UI",
+          "OriginOS"
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "PenPoint OS (SO antiguo real) entre capas Android.",
+        "y": "Ingreso libre OEP 2022 (2023)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-31",
+        "t": "T2.04",
+        "o": "O",
+        "q": "En una distribución Linux, ¿qué directorio contiene, entre otros, los ficheros de configuración tanto a nivel de componentes del sistema operativo en sí, como de los programas y aplicaciones instaladas a posteriori?",
+        "a": [
+          "/root",
+          "/bin",
+          "/dev",
+          "/etc"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Directorios hermanos de Linux.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-32",
+        "t": "T2.04",
+        "o": "O",
+        "q": "En los sistemas Linux, si se ejecuta el comando chmod 640 para modificar los permisos de un archivo, ¿qué permisos estoy asignando?",
+        "a": [
+          "Acceso de lectura, escritura y ejecución al propietario, acceso de lectura al grupo y ningún acceso al resto de usuarios.",
+          "Acceso de lectura, escritura y ejecución al propietario, acceso de lectura y escritura al grupo, y acceso de ejecución al resto de usuarios.",
+          "Acceso de lectura y escritura al propietario, acceso de lectura al grupo, y ningún acceso al resto de usuarios.",
+          "Acceso de lectura y escritura al propietario, acceso de ejecución al grupo, y ningún acceso al resto de usuarios."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "chmod 640 en permisos.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-31",
+        "t": "T2.04",
+        "o": "O",
+        "q": "¿Cuál es el kernel sobre el que se basa Android?",
+        "a": [
+          "Mach Kernel.",
+          "Windows NT Kernel.",
+          "Kernel de Linux.",
+          "Microkernel L4."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Kernels hermanos.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-32",
+        "t": "T2.04",
+        "o": "O",
+        "q": "En el contexto de iOS, ¿cómo se denomina la técnica que garantiza que las aplicaciones solo accedan a sus propios recursos y datos, mejorando la seguridad del sistema?",
+        "a": [
+          "Sandboxing.",
+          "Jailbreaking.",
+          "Sideloading.",
+          "Hypervisioning."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Sandboxing frente a jailbreaking/sideloading; \"hypervisioning\" inventado.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-59",
+        "t": "T2.04",
+        "o": "O",
+        "q": "¿Qué formato de disco se puede usar de manera nativa tanto en sistemas operativos Windows, en volúmenes de más de 32 GB, como en macOS Tahoe?",
+        "a": [
+          "ExFAT",
+          "APFS",
+          "HFS+",
+          "ReFS"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "ExFAT frente a APFS/HFS+/ReFS.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-25",
+        "t": "T2.04",
+        "o": "O",
+        "q": "¿Cuál de los siguientes algoritmos de planificación de CPU asigna un quantum de tiempo de CPU a cada proceso?",
+        "a": [
+          "FCFS.",
+          "SJF.",
+          "Por prioridades.",
+          "Round Robin."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Algoritmos de planificación hermanos.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-29",
+        "t": "T2.04",
+        "o": "O",
+        "q": "En un sistema Linux, el directorio /etc contiene:",
+        "a": [
+          "Los ficheros y directorios del usuario.",
+          "Los ficheros de configuración del sistema.",
+          "Los directorios de los usuarios.",
+          "Los ficheros binarios ejecutables esenciales del sistema."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "/etc (se repite en 2019 P31).",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-30",
+        "t": "T2.04",
+        "o": "O",
+        "q": "En Linux si queremos renombrar el archivo denominado “PAGOS” con el nuevo nombre “RECIBOS”, ejecutaremos el comando:",
+        "a": [
+          "rm PAGOS RECIBOS",
+          "mv PAGOS RECIBOS",
+          "mv RECIBOS PAGOS",
+          "rm RECIBOS PAGOS"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          10,
+          8
+        ],
+        "d": 1,
+        "n": "mv PAGOS RECIBOS: orden de argumentos.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-31",
+        "t": "T2.04",
+        "o": "O",
+        "q": "El framework de Wi-Fi en Android 14 y superior tiene tres HAL de Wi-Fi. Señale cuál es uno de ellos:",
+        "a": [
+          "HAL de Supervisor.",
+          "HAL de Comunicación.",
+          "HAL de Hostapd.",
+          "HAL de Wi-Fi."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 3,
+        "n": "HAL de Wi-Fi en Android 14.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-32",
+        "t": "T2.04",
+        "o": "O",
+        "q": "Dentro de los elementos constitutivos de un sistema operativo, ¿cómo se denomina a la estructura de datos que contiene información sobre un proceso?",
+        "a": [
+          "Tabla de páginas.",
+          "Vector de interrupciones.",
+          "Descriptor de segmento.",
+          "Bloque de control de proceso."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Bloque de control de proceso.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-R-01",
+        "t": "T2.04",
+        "o": "O",
+        "q": "En el sistema operativo Android, ¿qué extensión tienen los archivos ejecutables Dalvik?",
+        "a": [
+          ".dex",
+          ".apk",
+          ".dvk",
+          ".dxk"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": ".dex frente a extensiones inventadas.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1,
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-15",
+        "t": "T2.04",
+        "o": "O",
+        "q": "¿En Linux, qué tipo de proceso se corresponde con la característica de que, habiendo concluido, aún está presente en la tabla de procesos?",
+        "a": [
+          "Proceso zombie.",
+          "Proceso perdido.",
+          "Proceso huérfano.",
+          "Proceso demonio."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Tipos de proceso (zombie, huérfano, demonio).",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-16",
+        "t": "T2.04",
+        "o": "O",
+        "q": "En un entorno UNIX, tenemos los permisos \"rwxr-x-r–\" sobre un determinado fichero. ¿Qué acción o acciones puede hacer un usuario del grupo del propietario del fichero?",
+        "a": [
+          "Sólo leer.",
+          "Sólo leer y ejecutar.",
+          "Sólo leer, escribir y ejecutar.",
+          "Sólo ejecutar."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 2,
+        "n": "Interpretar permisos rwx del grupo.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-34",
+        "t": "T2.04",
+        "o": "O",
+        "q": "En los sistemas Linux, el comando pwd permite:",
+        "a": [
+          "Mostrar el nombre del directorio de trabajo actual.",
+          "Cambiar la contraseña de un usuario.",
+          "Informar del estado de los procesos.",
+          "Cambiar el directorio de trabajo."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "pwd frente a passwd/ps/cd.",
+        "y": "Promoción interna OEP 2019",
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-33",
+        "t": "T2.04",
+        "o": "O",
+        "q": "Entre las funciones de un Sistema Operativo NO se encuentra:",
+        "a": [
+          "Controlar las autorizaciones de uso para los usuarios.",
+          "Administrar la CPU a través de un algoritmo de programación.",
+          "Ejecutar rutinas de tratamiento de interrupciones en el caso de activación de una señal.",
+          "Constituir el conjunto de software y hardware necesario para el funcionamiento del ordenador."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "El SO no \"constituye el hardware\".",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-34",
+        "t": "T2.04",
+        "o": "O",
+        "q": "¿Cuál de los siguientes NO es un algoritmo de planificación utilizado en sistemas Windows y Linux?",
+        "a": [
+          "Algoritmo de agrupación",
+          "FCFS",
+          "SJF",
+          "Round Robin"
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "\"Algoritmo de agrupación\" inventado.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2025A-P1-16",
+        "t": "T2.04",
+        "o": "O",
+        "q": "En el sistema operativo Linux, ¿cuál es la función principal del comando chmod?",
+        "a": [
+          "Cambiar el propietario de un archivo.",
+          "Crear un enlace simbólico.",
+          "Modificar el grupo al que pertenece un usuario.",
+          "Cambiar los permisos de acceso de un archivo o directorio."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "chmod frente a chown/ln/usermod.",
+        "y": "Promoción interna convocatoria 2025"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-33",
+        "t": "T2.04",
+        "o": "O",
+        "q": "En Linux, ¿cuál de los siguientes comandos se debe utilizar para listar los ficheros contenidos en el archivo \"fichero.tar\"?",
+        "a": [
+          "tar -tvf fichero.tar",
+          "tar -xvf fichero.tar",
+          "tar -cvf fichero.tar",
+          "tar -avf fichero.tar"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 1,
+        "n": "tar -tvf lista el contenido sin extraerlo; -x extrae y -c crea. Se han normalizado las opciones cortas del original con guion; c=0 se conserva. Fuente: cuestionario INAP 2018, pág. impresa 3; comprobación local con tar.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-34",
+        "t": "T2.04",
+        "o": "O",
+        "q": "Seleccione la respuesta adecuada respecto al uso de Bitlocker en Windows:",
+        "a": [
+          "Característica de protección de la información que ayuda a mitigar el acceso no autorizado a datos mejorando las protecciones de archivo y de sistema.",
+          "Permite a un usuario acceder a las aplicaciones y datos almacenados en otro ordenador mediante un acceso por red.",
+          "Desfragmenta el disco duro y las unidades para mejorar el rendimiento del sistema realizándolo bit a bit, bloqueando el sector que se encuentra en proceso de optimización.",
+          "Es una herramienta de organización de trabajo en equipo y colaboración on-line."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "BitLocker frente a definiciones de otras herramientas.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-35",
+        "t": "T2.04",
+        "o": "O",
+        "q": "Indique cuál de las siguientes opciones NO corresponde con un identificador vinculado a información sobre un proceso Linux:",
+        "a": [
+          "TPID: identificador del hilo (thread) del proceso.",
+          "UID: identificador del usuario propietario.",
+          "PPID: identificador del proceso padre.",
+          "PID: identificador Único del proceso."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "\"TPID\" inventado entre identificadores de proceso.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-37",
+        "t": "T2.04",
+        "o": "O",
+        "q": "La versión Pie de Android se corresponde con la versión:",
+        "a": [
+          "7.0",
+          "8.0",
+          "9.0",
+          "10.0"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Versión de Android Pie (escalera).",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-15",
+        "t": "T2.04",
+        "o": "O",
+        "q": "Señale cuál de los siguientes formatos de archivo de configuración de inicialización de Windows 10:",
+        "a": [
+          ".ini",
+          ".conf",
+          ".msi",
+          ".wconf"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": ".ini frente a extensiones inventadas o de otro uso.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-16",
+        "t": "T2.04",
+        "o": "O",
+        "q": "Linux, el directorio /boot:",
+        "a": [
+          "Es el directorio que almacena los archivos de configuración, tanto a nivel de componente como de las aplicaciones instaladas a posteriori.",
+          "Es el directorio que incluye todos los ejecutables y archivos necesarios en el proceso de arranque del sistema.",
+          "Es el directorio del superusuario 'root'.",
+          "Es el directorio que contiene información de los procesos y aplicaciones que se están ejecutando."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "/boot frente a /etc, /root, /proc.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-17",
+        "t": "T2.04",
+        "o": "O",
+        "q": "La utilidad del comando 'tail' en UNIX es:",
+        "a": [
+          "Permite ver las últimas líneas de un fichero.",
+          "Busca en las últimas 10 líneas de un fichero un patrón dado.",
+          "Lista los últimos archivos creados en el directorio actual del usuario.",
+          "Realiza una búsqueda recursiva, comenzando por el directorio especificado y descendiendo por los subdirectorios."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "tail frente a grep/ls/find.",
+        "y": "Promoción interna OEP 2018",
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-R-04",
+        "t": "T2.04",
+        "o": "O",
+        "q": "Cuál de los siguientes sistemas de archivos, especialmente diseñado para optimizar dispositivos con memorias SSD, es el sucesor de HFS+",
+        "a": [
+          "NTFS",
+          "APFS",
+          "Ext4",
+          "exFAT"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "APFS sucesor de HFS+.",
+        "y": "Promoción interna OEP 2018",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-01",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Cuál de los siguientes sistemas de archivos NO fue creado para Windows:",
+        "a": [
+          "NTFS.",
+          "FAT16.",
+          "FAT32.",
+          "Ext2."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-02",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Seleccione la respuesta correcta con respecto al algoritmo de planificación Round Robin, es un algoritmo que:",
+        "a": [
+          "Provoca aplazamientos indefinidos.",
+          "Hace uso de “quantum” o “time-slice”.",
+          "Prioriza el proceso cuyo tiempo restante sea más corto.",
+          "Prioriza el proceso más corto."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Round Robin vs SRT/SJF."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-04",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En UNIX, si utiliza el comando “chmod 754” para modificar los permisos a un fichero, ¿qué permisos le estamos asignando?",
+        "a": [
+          "Acceso de lectura y ejecución al dueño, acceso total al grupo y acceso de lectura al resto de usuarios.",
+          "Acceso total al dueño, acceso de lectura y ejecución al grupo y acceso de lectura al resto de usuarios.",
+          "Acceso total al dueño del fichero, acceso de lectura al grupo y acceso de lectura y ejecución al resto de usuarios.",
+          "Acceso de lectura al dueño, acceso de lectura al grupo y total al resto de usuarios."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-05",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En UNIX, el comando para modificar los permisos de un fichero a acceso total al dueño, acceso de lectura y escritura al grupo y acceso de lectura al resto de usuarios:",
+        "a": [
+          "chmod 764.",
+          "chmod 654.",
+          "chmod 731.",
+          "chmod 752."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "chmod octal."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-06",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En UNIX, la expresión “daemon” se refiere a un proceso del sistema que:",
+        "a": [
+          "Se ejecuta durante un periodo corto de tiempo.",
+          "Es un proceso que no tiene padre.",
+          "Está siempre ejecutándose.",
+          "Siempre se ejecuta en segundo plano (background)."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-07",
+        "t": "T2.04",
+        "o": "A",
+        "q": "NO es una distribución Linux:",
+        "a": [
+          "Lollipop.",
+          "Red Hat.",
+          "Suse.",
+          "Debian."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-08",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Cuál de los siguientes NO es un estado en los que se puede encontrar un proceso:",
+        "a": [
+          "En ejecución.",
+          "Bloqueado.",
+          "Listo.",
+          "Ocioso."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-09",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En Linux, los archivos de configuración se encuentran en:",
+        "a": [
+          "/etc.",
+          "/bin.",
+          "/boot.",
+          "/root."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-10",
+        "t": "T2.04",
+        "o": "A",
+        "q": "La versión 2.0 del sistema operativo para móviles Android es:",
+        "a": [
+          "Cupcake.",
+          "Donut.",
+          "Eclair.",
+          "Honeycom."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-11",
+        "t": "T2.04",
+        "o": "A",
+        "q": "La versión 8.1 del sistema operativo para móviles Android es:",
+        "a": [
+          "Lollipop.",
+          "Marshmallow.",
+          "Pie.",
+          "Oreo."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-12",
+        "t": "T2.04",
+        "o": "A",
+        "q": "La versión actual de iOS es:",
+        "a": [
+          "24.",
+          "25.",
+          "26.",
+          "27."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-13",
+        "t": "T2.04",
+        "o": "A",
+        "q": "La capa de iOS que está desarrollada principalmente en Objetive C con tecnologías para acceso a ficheros multimedia es:",
+        "a": [
+          "Core OS.",
+          "Core Services.",
+          "Media.",
+          "Cocoa Touch."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-14",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Cuál de las siguientes capas de Firefox OS se corresponde con el núcleo:",
+        "a": [
+          "Gaia.",
+          "Gecko.",
+          "Gona.",
+          "Gonk."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-15",
+        "t": "T2.04",
+        "o": "A",
+        "q": "La implementación libre del protocolo de archivos compartidos de Windows, renombrado a CIFS, para sistemas tipo UNIX de forma que se vean como servidores o actúen como clientes en redes Windows es:",
+        "a": [
+          "Samba.",
+          "LDAP.",
+          "Active Directory.",
+          "Kerberos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-16",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En Linux, un proceso zombie es el que completada su ejecución:",
+        "a": [
+          "Se identifica porque al ejecutar ps, estos procesos se marcan como <zombie>.",
+          "Al padre se le envía la señal SIGPOLL a fin de que recupere la salida del proceso hijo.",
+          "Al padre se le envía la señal KILL para recuperar su ejecución.",
+          "Aún tiene una entrada en la tabla de procesos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-17",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Cuál de las siguientes claves del registro de Windows contiene la configuración predeterminada que se puede aplicar a todos los usuarios del equipo local:",
+        "a": [
+          "HKEY_CLASSES_ROOT.",
+          "HKEY_LOCAL_MACHINE\\Software\\Classes.",
+          "HKEY_CURRENT_USER\\Software\\Classes.",
+          "HKEY_CURRENT_CONFIG."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-18",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Cuál de las siguientes NO es una categoría de servicio en la nube según Microsoft:",
+        "a": [
+          "Informática con servidor.",
+          "Infraestructura como servicio.",
+          "Plataforma como servicio.",
+          "Software como servicio."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-19",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Qué aplicación para Windows 10 ofrece a los usuarios aplicaciones win32 como aplicaciones virtuales?",
+        "a": [
+          "WSL.",
+          "Hello.",
+          "App-V.",
+          "Defender."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-20",
+        "t": "T2.04",
+        "o": "A",
+        "q": "A la estructura en disco que contiene la información de control de un fichero en un sistema de ficheros UNIX se le denomina:",
+        "a": [
+          "I-nodo.",
+          "Cluster.",
+          "Bloque de control.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-21",
+        "t": "T2.04",
+        "o": "A",
+        "q": "NO es una distribución basada en Debian:",
+        "a": [
+          "Knoppix.",
+          "Trisquel.",
+          "Ubuntu.",
+          "CentOS."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-23",
+        "t": "T2.04",
+        "o": "A",
+        "q": "La versión 5.1 del sistema operativo para móviles Android es:",
+        "a": [
+          "Lollipop.",
+          "Marshmallow.",
+          "Pie.",
+          "Oreo."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-25",
+        "t": "T2.04",
+        "o": "A",
+        "q": "La interfaz de usuario de Windows 8 se denomina:",
+        "a": [
+          "Modern UI.",
+          "Continuum.",
+          "Aero.",
+          "Space."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-26",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál es el tamaño máximo de archivo que admite el sistema de ficheros JFS2?",
+        "a": [
+          "64 GB.",
+          "1 TB.",
+          "16 TB.",
+          "32 TB."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-27",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA sobre el sistema de ficheros Reiser4:",
+        "a": [
+          "Es la evolución de ReiserFS.",
+          "Admite journaling.",
+          "Soporta compresión y cifrado.",
+          "El tamaño máximo de archivo es de 4 TB."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-28",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál de los siguientes sistemas de ficheros permite gestionar un fichero de 6 EB?",
+        "a": [
+          "XFS.",
+          "NTFS.",
+          "HFS.",
+          "APFS."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-30",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Qué característica del sistema de ficheros APFS NO es cierta?",
+        "a": [
+          "Permite snapshots.",
+          "El tamaño máximo del volumen es 7,5 EB.",
+          "Soporta compresión.",
+          "Admite encriptación de forma no nativa."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-31",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Qué es Windows Insider?",
+        "a": [
+          "Una capa de compatibilidad desarrollada por Microsoft que simula un kernel de Linux que permite ejecutar aplicaciones propias.",
+          "Un asistente virtual.",
+          "Una funcionalidad que permite el cifrado de datos.",
+          "Un programa que permite instalar y usar las últimas compilaciones de Windows."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-32",
+        "t": "T2.04",
+        "o": "A",
+        "q": "La estructura lógica de un directorio activo se divide en niveles. Los niveles, del más alto al menos, son:",
+        "a": [
+          "Bosques, dominios y unidades organizativas.",
+          "Bosques, unidades organizativas y dominios.",
+          "Unidades organizativas, bosques y dominios.",
+          "Unidades organizativas, dominios y bosques."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-34",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál de las siguientes distribuciones está basada en Lubuntu?",
+        "a": [
+          "Kubuntu.",
+          "Peppermint OS.",
+          "Xubuntu.",
+          "Edubuntu."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "El propio pasaje indica Peppermint OS basado en Debian, mientras la pregunta pide Lubuntu. Requiere acotar versión histórica; no se acepta esa coincidencia.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AT204-P1-34"
+      ]
+    },
+    {
+      "question": {
+        "i": "AT204-P1-35",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Qué distribución utiliza Pacman como gestor de paquetes?",
+        "a": [
+          "Manjaro.",
+          "Q4OS.",
+          "Linux Mint.",
+          "Elementary OS."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-36",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En Linux, ¿dónde se almacenan los archivos ejecutables de administración del sistema?",
+        "a": [
+          "/bin.",
+          "/sbin.",
+          "/root.",
+          "/etc."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-37",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En Linux, los archivos de logs se encuentran en:",
+        "a": [
+          "/etc.",
+          "/bin.",
+          "/var.",
+          "/tmp."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Directorio de logs."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-38",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En relación con las redirecciones en Linux, \"1>&2\" significa:",
+        "a": [
+          "Redirecciona stderr hacia donde stdout apunte.",
+          "Redirecciona stdout hacia donde stderr apunte.",
+          "Redirecciona stderr hacia un archivo hacia un fichero.",
+          "Redirecciona stdout hacia un fichero."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-39",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En relación con las redirecciones en Linux, \"2>&1\" significa:",
+        "a": [
+          "Redirecciona stderr hacia donde stdout apunte.",
+          "Redirecciona stdout hacia donde stderr apunte.",
+          "Redirecciona stderr hacia un archivo hacia un fichero.",
+          "Redirecciona stdout hacia un fichero."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-40",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En relación con las redirecciones en Linux, qué opción permite la redireccionar stderr hacia un archivo concatenando la salida de errores a ese archivo:",
+        "a": [
+          "1>.",
+          "2>.",
+          "1>>.",
+          "2>>."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-42",
+        "t": "T2.04",
+        "o": "A",
+        "q": "El runtime de Android para la versión 10.0 es:",
+        "a": [
+          "Dalvik.",
+          "ARM.",
+          "ART.",
+          "JRE."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-43",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una característica del sistema operativo para móviles Android?",
+        "a": [
+          "Es de código abierto.",
+          "Su núcleo está basado en el kernel de Linux.",
+          "Utiliza un sistema de ficheros propio para el almacenamiento de datos.",
+          "Existe un catálogo de aplicaciones para ser descargadas e instaladas denominado Google Play."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-45",
+        "t": "T2.04",
+        "o": "A",
+        "q": "El algoritmo de reemplazo de páginas que elige la página que NO ha sido usada en el ciclo anterior es:",
+        "a": [
+          "NRU.",
+          "LRU.",
+          "NFU.",
+          "LFU."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-46",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Los algoritmos utilizados en multiprogramación en memoria real permiten asignar un hueco a un programa cuando se necesita que sea cargado en memoria. Señale la respuesta INCORRECTA:",
+        "a": [
+          "El algoritmo de primer ajuste asigna el primer hueco que sea mayor al tamaño deseado.",
+          "El algoritmo de peor ajuste asigna el hueco cuyo tamaño exceda en la mayor cantidad al tamaño deseado, no requiriéndose una búsqueda exhaustiva.",
+          "El algoritmo del siguiente ajuste asigna el primer hueco que sea mayor al tamaño deseado con la diferencia que se deja un puntero a la ubicación en donde se asignó el último hueco, comenzando la siguiente búsqueda a partir de ahí.",
+          "El algoritmo del mejor ajuste asigna el hueco cuyo tamaño exceda en la menor cantidad al tamaño deseado."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-47",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Qué algoritmo de planificación del procesador es del tipo no apropiativa?",
+        "a": [
+          "FCFS.",
+          "Round Robin.",
+          "SRTF.",
+          "Prioridad aplicándose Round Robin para procesos con misma prioridad."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-49",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En la administración de procesos, cualquier estrategia de planificación persigue una serie objetivos. Indique cuál NO es uno de ellos:",
+        "a": [
+          "Justicia.",
+          "Evitar la inanición.",
+          "Maximizar el tiempo de respuesta.",
+          "El sistema debe ser predecible."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-50",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Sobre la organización de las particiones en Unix, señale la respuesta correcta:",
+        "a": [
+          "Unix no utiliza el bloque 0 (superbloque).",
+          "El bloque 1 es bloque de arranque.",
+          "La lista de i-nodos se sitúa al final de la partición y asocia un i-nodo a uno o varios ficheros.",
+          "Los bloques de datos contienen tanto archivos como directorios."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          1
+        ],
+        "d": 3,
+        "n": "Bloques de la partición Unix."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-56",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Si decimos \"es un sistema operativo de tipo UNIX. Cuenta con cuatro capas de abstracción: la capa del núcleo del sistema operativo, las capas de servicios principales, la capa de medios y la capa de Cocoa Touch\", nos estamos refiriendo a:",
+        "a": [
+          "Android.",
+          "Windows phone.",
+          "iOS.",
+          "Firefox OS."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-57",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En un sistema operativo, el algoritmo que decide qué proceso entrará a ejecutarse, condicionado a que se ejecuten primero aquellos trabajos que necesitan menos tiempo es:",
+        "a": [
+          "Round Robin.",
+          "FCFS.",
+          "HRN.",
+          "SJF."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-58",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Dentro de las funciones del sistema operativo, existen varios tipos de planificación del procesador. La planificación no apropiativa es:",
+        "a": [
+          "Aquella en la cual, una vez que a un proceso le toca su turno de ejecución, ya no puede ser suspendido y no se le puede arrebatar la CPU. Este esquema puede ser peligroso, ya que, si el proceso contiene ciclos infinitos, el resto de los procesos pueden quedar aplazados indefinidamente.",
+          "Aquella en la cual, una vez que a un proceso le toca su turno de ejecución ya no puede ser suspendido, no se le puede arrebatar la CPU. Este esquema nunca genera ciclos infinitos, porque el resto de los procesos no quedarán aplazados indefinidamente y eventualmente entrarán a ejecutarse.",
+          "Aquella en la que existe un reloj que lanza interrupciones periódicas en las cuales el planificador toma el control y se decide si el mismo proceso seguirá ejecutándose o se le da su turno a otro proceso.",
+          "Aquella en la que existe un reloj que lanza interrupciones periódicas en las cuales el planificador toma el control y basándose en algoritmos de prioridades, se decide si el mismo proceso seguirá ejecutándose o se le da su turno a otro proceso."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT204-P1-59",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuáles son los modos de funcionamientos del sistema UNIX?",
+        "a": [
+          "Modo usuario y modo proceso.",
+          "Modo microkernel y modo kernel.",
+          "Modo usuario y modo kernel.",
+          "Modo proceso y modo microkernel."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-39",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Al tiempo que tarda un algoritmo en ejecutarse se le denomina:",
+        "a": [
+          "Definición.",
+          "Coste.",
+          "Finitud.",
+          "Precisión."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-41",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En el funcionamiento de los procesos de un sistema operativo se dice que se produce inanición cuando:",
+        "a": [
+          "Un proceso está esperando continuamente para usar un recurso que otros procesos están usando, sin llegar a alcanzar nunca la asignación de dicho recurso.",
+          "Un proceso entra en su sección crítica y queda bloqueado por la alta frecuencia de paginación heteroscedástica.",
+          "Dos procesos entran en su sección crítica, produciéndose peligro de interbloqueo.",
+          "Un recurso no puede ser usado simultáneamente por dos procesos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-55",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál de los siguientes nombres NO se corresponde con una versión del sistema operativo Android?",
+        "a": [
+          "Kit Kat.",
+          "Ice Cream Sandwich.",
+          "Donut.",
+          "Candy Marzipan."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-58",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En UNIX, el atributo \"uid\" de un proceso:",
+        "a": [
+          "Indica el identificador del usuario que ha lanzado el proceso.",
+          "Indica el grupo del usuario que ha lanzado el proceso.",
+          "Indica el identificador del proceso.",
+          "Indica la prioridad del proceso."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-59",
+        "t": "T2.04",
+        "o": "A",
+        "q": "La llamada en Linux que permite al sistema operativo crear un proceso hijo a partir de un proceso padre es:",
+        "a": [
+          "setpid.",
+          "fork.",
+          "trap.",
+          "exec."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-66",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Seleccione la respuesta correcta con respecto al algoritmo de planificación Round Robin. Es un algoritmo que:",
+        "a": [
+          "Provoca aplazamientos indefinidos.",
+          "Hace uso de quantum o time-slice.",
+          "Prioriza el proceso cuyo tiempo restante sea menor.",
+          "Prioriza el proceso más corto."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-67",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En UNIX, si ejecuta el comando chmod 754 para modificar los permisos a un fichero, ¿qué permisos le estará asignando?",
+        "a": [
+          "Acceso de lectura y ejecución al dueño, acceso total al grupo y acceso de lectura al resto de usuarios.",
+          "Acceso total al dueño del fichero, acceso de lectura y ejecución al grupo y acceso de lectura al resto de usuarios.",
+          "Acceso total al dueño del fichero, acceso de lectura al grupo y acceso de lectura y ejecución al resto de usuarios.",
+          "Acceso de lectura al dueño, acceso de lectura al grupo y total al resto de usuarios."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-75",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál de las siguientes claves del registro de Windows contiene información sobre los programas que se ejecutarán automáticamente cuando un usuario inicia sesión en el sistema?",
+        "a": [
+          "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run.",
+          "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentVersion\\Run.",
+          "HKEY_CURRENT_CONFIG\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run.",
+          "HKEY_ CURRENT_CONFIG \\SYSTEM\\CurrentVersion\\Run."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-81",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Con qué bit indicaría que los ficheros contenidos en el directorio solo pueden ser renombrados/borrados por el propietario del elemento, del directorio o el usuario root, aunque el resto de usuarios tenga permisos de escritura?",
+        "a": [
+          "Bit de propietario.",
+          "Bit de “página sucia”.",
+          "Sticky bit.",
+          "Bit de paridad."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-87",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Podremos almacenar un fichero de 6 GB en un dispositivo, si el sistema de ficheros con el que está formateado es:",
+        "a": [
+          "FAT32.",
+          "NTFS.",
+          "HPFS.",
+          "ISO 9660:1988 Level 2."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-88",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Para entornos Unix, indique cómo se asigna el sticky bit a un directorio:",
+        "a": [
+          "chmod u+s /directorio/fichero",
+          "chmog g+s /directorio",
+          "chmod 177 /directorio",
+          "chmod +t /directorio"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-39",
+        "t": "T2.04",
+        "o": "A",
+        "q": "La versión actual (a 1 de febrero de 2025) del sistema operativo iOS es:",
+        "a": [
+          "16.",
+          "17.",
+          "18.",
+          "19."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-40",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En el sistema operativo Linux, ¿cuál de las siguientes opciones busca la palabra \"libro\" dentro de ficheros?",
+        "a": [
+          "find -type f | xwygs grep \"libro\"",
+          "find -type f | xaygs grep \"libro\"",
+          "find -type f | xargs grep \"libro\"",
+          "find -type f | xargp grep \"libro\""
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-41",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Cuál de los siguientes sistemas de archivos NO fue creado para Windows:",
+        "a": [
+          "NTFS.",
+          "FAT16.",
+          "FAT32.",
+          "ext3."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-49",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En un sistema operativo GNU/Linux, se ejecuta la instrucción chmod 754 aprobados.txt. ¿Qué permisos se le han asignado al grupo?",
+        "a": [
+          "Lectura, escritura y ejecución.",
+          "Lectura y ejecución.",
+          "Escritura y ejecución.",
+          "Lectura y escritura."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-63",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un sistema operativo para dispositivos móviles?",
+        "a": [
+          "Android.",
+          "iOS.",
+          "z/OS.",
+          "Tizen."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-65",
+        "t": "T2.04",
+        "o": "A",
+        "q": "El algoritmo de planificación de procesos de sistemas operativos en el que a cada proceso se le asigna un tiempo máximo (quantum) para su ejecución y si cuando expira el quantum de tiempo el proceso continúa en CPU, el planificador lo desaloja y lo coloca al final de la cola de procesos preparados, que se gestiona como FIFO, se denomina:",
+        "a": [
+          "FCFS.",
+          "SJF.",
+          "Round Robin.",
+          "Cola multinivel con apropiación."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-76",
+        "t": "T2.04",
+        "o": "A",
+        "q": "NO es una característica del sistema operativo Android 13:",
+        "a": [
+          "Vista previa del portapapeles.",
+          "Material You.",
+          "Gestor de retroceso predictivo.",
+          "Preferencia de idioma de las apps."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-53",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En relación con los sistemas operativos, ¿qué se entiende por planificación apropiativa?",
+        "a": [
+          "Es aquella en la que el planificador puede expulsar a un proceso de la CPU para ejecutar otro proceso en cualquier momento.",
+          "Es aquella en la que el planificador no puede expulsar a un proceso de la CPU para ejecutar otro proceso cuando el primero está en ejecución.",
+          "Es aquella en la que el planificador puede expulsar a un proceso de la CPU para ejecutar otro proceso cada vez que el reloj lanza una interrupción periódica.",
+          "Es aquella en la que el planificador no puede expulsar a un proceso de la CPU para ejecutar otro proceso salvo que el proceso en ejecución esté pueda entrar en inanición."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-54",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Supongamos que se utiliza el algoritmo de planificación del procesador SRTF. Si el proceso A tiene una duración de 5 unidades de tiempo, el proceso B tiene una duración de 3 unidades de tiempo, el proceso C tiene una duración de 2 unidades de tiempo y el proceso de D tiene una duración de 1 unidad de tiempo y el momento de llegada es A en el instante 10, B y D en el instante 0 y C en el instante 1, ¿cuál es el orden de ejecución?",
+        "a": [
+          "D, C, B y A.",
+          "B, D, C y A.",
+          "A, C, B y D.",
+          "C, B, D y A."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-55",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En relación con los sistemas operativos, una estrategia de planificación del procesador persigue los siguientes objetivos (señale la INCORRECTA):",
+        "a": [
+          "Parcialidad.",
+          "Minimizar el tiempo de respuesta.",
+          "Evitar la inanición.",
+          "Justicia."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-56",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En relación con la administración de memoria en un sistema operativo, se define swapping como el:",
+        "a": [
+          "Proceso de intercambiar páginas entre memoria principal y disco.",
+          "Proceso de intercambiar segmentos entre memoria principal y disco.",
+          "Proceso de intercambiar programas completos entre memoria principal y disco.",
+          "Proceso de intercambiar páginas, segmentos o programas completos entre memoria principal y disco."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-57",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Si la salida de la ejecución del comando ps de UNIX muestra la columna STAT, ¿cuál de los siguientes valores NO podrá tomar un proceso?",
+        "a": [
+          "P (stopped).",
+          "R (runnable).",
+          "Z (zombie).",
+          "S (sleeping)."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-R-02",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En Linux los archivos de log se localizan en:",
+        "a": [
+          "/etc",
+          "/bin",
+          "/var",
+          "/root"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-52",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones es CORRECTA sobre soluciones de cloud computing?",
+        "a": [
+          "En SaaS, el cliente solo usa aplicaciones, mientras que en PaaS el cliente desarrolla sus propias aplicaciones.",
+          "SaaS permite a los clientes instalar software propio en la infraestructura.",
+          "SaaS requiere que el cliente administre el sistema operativo.",
+          "IaaS no permite a los clientes administrar el sistema operativo."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-66",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Qué comando permite cambiar el propietario de un archivo o directorio en sistemas tipo UNIX?",
+        "a": [
+          "chown",
+          "ps",
+          "find",
+          "who"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-69",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un sistema operativo móvil?",
+        "a": [
+          "z/OS.",
+          "Tizen.",
+          "iOS.",
+          "Ubuntu Touch."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-75",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Al ejecutar el comando “ps” en un sistema operativo GNU/Linux, ¿cuál de los siguientes NO es un estado para un proceso?",
+        "a": [
+          "Stopped (T).",
+          "Dead (X).",
+          "Zombie (Z).",
+          "InOut (IO)."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-51",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En sistemas operativos, ¿qué respuesta sobre administración de procesos es INCORRECTA?",
+        "a": [
+          "Los posibles estados de un proceso son en ejecución, listo y bloqueado.",
+          "La ejecución de una llamada al sistema por parte de un proceso en ejecución es causa de la creación de un proceso.",
+          "El planificador a largo plazo decide qué procesos se suspenden o se reanudan para lograr ciertas metas de rendimiento.",
+          "El algoritmo de planificación de colas multinivel es apropiativo."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-52",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Sobre los esquemas combinados en multiprogramación en memoria virtual indique la respuesta INCORRECTA:",
+        "a": [
+          "Combina la paginación y la segmentación.",
+          "Una dirección virtual es tridimensional.",
+          "Mantiene una tabla de páginas del proceso y una tabla de segmentos de la página.",
+          "Pueden generarse tanto fallos de página como fallos de segmento."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-55",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Señale la versión de Android INCORRECTA:",
+        "a": [
+          "Android 6.0 Marshmallow.",
+          "Android 7.0 Nougat.",
+          "Android 4.1 Jelly Bean.",
+          "Android 4.4 Ice Cream Sandwich."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-75",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál es una desventaja de la aplicación de la recursividad?",
+        "a": [
+          "La aplicación de la técnica divide y vencerás.",
+          "Algunos subproblemas tienen una solución directa.",
+          "El algoritmo tiene menos líneas de código que la alternativa iterativa.",
+          "Puede provocar stack overflow."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-45",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En UNIX, si queremos que el archivo fichero.txt tenga permisos de lectura y ejecución para al propietario, de escritura para el grupo y de ejecución para el resto, el comando a ejecutar es:",
+        "a": [
+          "chmod 642 fichero.txt",
+          "chmod 462 fichero.txt",
+          "chmod 521 fichero.txt",
+          "chmod 251 fichero.txt"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-46",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En la estructura de directorios de un sistema UNIX/Linux, el directorio que alberga los archivos de log es:",
+        "a": [
+          "/var",
+          "/log",
+          "/tmp",
+          "/etc"
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-100",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Qué almacena el directorio /etc en sistemas Linux?",
+        "a": [
+          "Archivos de control de procesos.",
+          "Ficheros de dispositivo.",
+          "Archivos de arranque.",
+          "Ficheros de configuración."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-39",
+        "t": "T2.04",
+        "o": "A",
+        "q": "La capa de compatibilidad desarrollada por Microsoft y disponible en Windows 11 que simula un kernel de Linux que permite ejecutar aplicaciones propias, se denomina:",
+        "a": [
+          "BitLocker.",
+          "Insider.",
+          "App-V.",
+          "WSL."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-40",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En UNIX, el superbloque se localiza en el bloque:",
+        "a": [
+          "Cero.",
+          "Uno.",
+          "Dos.",
+          "Tres."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-41",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En un sistema operativo GNU Linux deseamos modificar el propietario del archivo \"notas\" al usuario \"tribunal\", ¿cuál de las siguientes sentencias lo permite?",
+        "a": [
+          "chown tribunal notas",
+          "chown notas tribunal",
+          "owner tribunal notas",
+          "owner notas tribunal"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-82",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿En cuál de los siguientes directorios de un equipo Linux se suelen almacenar los ficheros que representan dispositivos hardware?",
+        "a": [
+          "/bin",
+          "/dev",
+          "/etc",
+          "/hw"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-86",
+        "t": "T2.04",
+        "o": "A",
+        "q": "La versión 14 de macOS se denomina:",
+        "a": [
+          "Monterey.",
+          "Sequoia.",
+          "Sonoma.",
+          "Ventura."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-90",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Qué efecto tiene el siguiente comando al ejecutarlo en un sistema operativo Linux? Asuma que el usuario tiene los permisos necesarios y no hay restricciones especiales en el sistema de archivos. chown -R tomcat:tomcat /app/tomcat/webapps/*",
+        "a": [
+          "El comando chown -R tomcat:tomcat /app/tomcat/webapps/* cambia recursivamente el propietario y el grupo de todos los archivos y directorios dentro de /app/tomcat/webapps/ a \"tomcat\".",
+          "El comando chown -R tomcat:tomcat /app/tomcat/webapps/* cambia recursivamente los permisos de lectura, escritura y ejecución de todos los archivos y directorios dentro de /app/tomcat/webapps/ a los del usuario \"tomcat\".",
+          "El comando chown -R tomcat:tomcat /app/tomcat/webapps/* cambia el propietario y el grupo de todos los archivos y directorios dentro de /app/tomcat/webapps/ a \"tomcat\" sin afectar a los subdirectorios.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-93",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Qué sistema de ficheros permite seguridad a nivel de control de listas de acceso (ACL)?",
+        "a": [
+          "NTFS.",
+          "FAT32 y NFSS.",
+          "NFSS.",
+          "Las listas ACL son exclusivas de sistemas Unix y Linux."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-94",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En relación con los sistemas operativos, ¿qué es el swapping?",
+        "a": [
+          "El intercambio de información entre aplicaciones.",
+          "Técnica que permite a un usuario disponer de varios entornos gráficos en un sistema operativo.",
+          "Técnica que permite mover bloque o fragmentos de información desde la memoria principal a un dispositivo de almacenamiento y viceversa.",
+          "Técnica empleada en la actualización del sistema operativo."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-100",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En relación con la estructura del sistema de ficheros de Unix, los ficheros se organizan en distintos directorios, cuya misión y nombre son estándar. Señale la respuesta INCORRECTA:",
+        "a": [
+          "/sbin contiene los archivos ejecutables de administración del sistema.",
+          "/lib contiene las bibliotecas compartidas y módulos del kernel necesarios para ejecutar los programas que residen en /bin y /sbin.",
+          "/proc contiene los directorios de trabajo de los usuarios.",
+          "/etc contiene los ficheros de configuración del sistema."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-24",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Respecto a los comandos en Linux, elija la respuesta FALSA:",
+        "a": [
+          "El comando ps enumera los procesos de un sistema, así como su estado, tamaño, nombre, propietario y tiempo de CPU entre otros.",
+          "El comando df muestra la cantidad de espacio libre disponible en los sistemas de archivos montados.",
+          "El comando kill envía señales a los procesos en ejecución.",
+          "El comando who se usa para ejecutar comandos como usuario diferente."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-25",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Sobre el sistema operativo Linux, señale qué afirmación es cierta para la mayoría de las distribuciones:",
+        "a": [
+          "El archivo de configuración principal para sshd suele residir bajo el directorio /etc/ssh/ y se llama sshd_config.",
+          "El comando ls -la devuelve una lista abreviada con el contenido del directorio actual, incluyendo elementos ocultos.",
+          "El comando mkdir se utiliza para borrar directorios.",
+          "El comando tar combina varios archivos en un único archivo, y usaremos la opción -c para extraer los archivos creados con dicho comando."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-28",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En un sistema de ficheros, la funcionalidad por la que se van registrando los cambios que todavía no han sido confirmados para que, en caso de fallo o pérdida de corriente, el sistema se pueda restablecer de forma rápida y con menos probabilidad de corrupción es:",
+        "a": [
+          "Inodo.",
+          "Junction point.",
+          "Journaling.",
+          "Fsck."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-29",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En un servidor Linux, analizando sus requerimientos se comprueba que el sistema puede llegar a crear ficheros temporales de más de 4 GB de tamaño. ¿Con cuál de los siguientes sistemas de ficheros necesitaríamos formatear los discos del servidor?",
+        "a": [
+          "EXT4.",
+          "exFAT.",
+          "NTFS.",
+          "Cualquiera de los sistemas de ficheros indicados cumple el requerimiento."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-83",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Indique la asociación INCORRECTA entre denominación y versión de macOS:",
+        "a": [
+          "Big Sur, versión 11.0.",
+          "Monterey, versión 12.0.",
+          "Ventura, versión 13.0.",
+          "Sonoma, versión 15.0."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-84",
+        "t": "T2.04",
+        "o": "A",
+        "q": "El sistema operativo del servidor que albergará una solución de envío de SMS será Linux. Este sistema operativo viene dotado de un “demonio” que se encarga de ejecutar tareas programadas. De este modo, podremos enviar los SMS con la periodicidad que se establezca. Este “demonio” se denomina:",
+        "a": [
+          "init.d",
+          "cron",
+          "sjob",
+          "rc.d"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-R-05",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Si se quiere contratar un sistema de computación en la nube que proporcione capacidad de decisión sobre configuración de servidores, de memoria y de procesadores, cuál de los siguientes servicios elegiría:",
+        "a": [
+          "Software como servicio (SaaS).",
+          "Infraestructura como servicio (IaaS).",
+          "Plataforma como servicio (PaaS).",
+          "SaaS, IaaS y PaaS tienen la misma capacidad de decisión sobre la configuración."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-32",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En el ámbito de los sistemas operativos, ¿qué algoritmo de planificación de procesos puede ser apropiativo o no apropiativo?",
+        "a": [
+          "SJF (Shortest Job First).",
+          "Colas multinivel.",
+          "Por prioridad.",
+          "SRTF (Shortest Remaining Time First)."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-34",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En el sistema operativo Unix, ¿qué comando se utiliza para cambiar el propietario y el grupo de un archivo simultáneamente?",
+        "a": [
+          "chown.",
+          "chmod.",
+          "chgrp.",
+          "usermod."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-78",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones es correcta en relación con la segmentación en la gestión de memoria?",
+        "a": [
+          "La segmentación divide la memoria en unidades fijas denominadas páginas.",
+          "La segmentación permite dividir la memoria en segmentos de tamaño variable.",
+          "La segmentación elimina completamente la fragmentación externa.",
+          "La segmentación impide el intercambio de datos entre procesos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-R-05",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál de las siguientes características de Windows 11 permite ejecutar aplicaciones de Android de forma nativa?",
+        "a": [
+          "Microsoft Store.",
+          "Windows Subsystem for Android.",
+          "App Container.",
+          "Windows Sandbox."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-34",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Cuál de los siguientes se considera sistemas de archivos remoto:",
+        "a": [
+          "HFS.",
+          "CIFS.",
+          "NTFS.",
+          "MFS."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-36",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál de las siguientes opciones NO se corresponde con un comando del sistema operativo Linux?",
+        "a": [
+          "pwd.",
+          "touch.",
+          "du.",
+          "userrad."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-42",
+        "t": "T2.04",
+        "o": "A",
+        "q": "El comando de Linux que permite cambiar la prioridad de un proceso que está en ejecución es:",
+        "a": [
+          "nice.",
+          "nohup.",
+          "renice.",
+          "top."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-43",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En la planificación del procesador de un sistema operativo, cuando llega el momento de elegir, de entre los procesos candidatos y listos, cuál debe pasar a ejecutarse en la unidad central de proceso, el responsable de hacerlo es:",
+        "a": [
+          "El planificador de alto nivel, también llamado a largo plazo o long term scheduler.",
+          "El planificador de bajo nivel, también llamado a corto plazo, dispatcher o short term scheduler.",
+          "El planificador de nivel intermedio, también llamado a medio plazo o mid term scheduler.",
+          "El planificador FIFO."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-44",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En Linux, el directorio /boot:",
+        "a": [
+          "Es el directorio que almacena los archivos de configuración, tanto a nivel de componente como de las aplicaciones instaladas a posteriori.",
+          "Es el directorio que incluye a todos los ejecutables y archivos necesarios en el proceso de arranque del sistema.",
+          "Es el directorio del superusuario root.",
+          "Es el directorio que contiene información de los procesos y aplicaciones que se están ejecutando."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-47",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Señale qué orden se debe usar para cambiar las propiedades de un fichero y conseguir que éste tenga los siguientes permisos en UNIX: para el propietario lectura, ejecución y escritura; para el grupo lectura y ejecución; para el resto de usuarios lectura.",
+        "a": [
+          "chmod 745",
+          "chmod 742",
+          "chmod 753",
+          "chmod 754"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-48",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Señale la sentencia correcta referida a la clave del registro de Windows 11 \"HKEY_LOCAL_MACHINE\":",
+        "a": [
+          "Contiene una lista de extensiones de distintos tipos de archivos y programa para abrirlos por defecto en una máquina.",
+          "Engloba las configuraciones de software, hardware, etc. de todas las cuentas de usuario en una máquina.",
+          "Alberga los datos sobre perfiles de usuario distintos que haya en local en una máquina con Windows.",
+          "Incluye todas las configuraciones del usuario activo de Windows en ese momento."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-28",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cómo se denomina el elemento del sistema operativo encargado de repartir el tiempo disponible de un procesador entre todos los procesos disponibles para su ejecución?",
+        "a": [
+          "Scheduler.",
+          "Signaler",
+          "System call.",
+          "Procesador MP."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-29",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál de los siguientes comandos Unix impide que el archivo de nombre “archivo.txt” sea modificado y ejecutado por el grupo al que pertenece dicho archivo?",
+        "a": [
+          "chmod u=rwx go=wx archivo.txt",
+          "chmod 766 archivo.txt",
+          "chmod 644 archivo.txt",
+          "chmod a+xw archivo.txt"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-30",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En un sistema operativo UNIX actual que funciona en un equipo con un único procesador se permiten ejecutar múltiples tareas de forma simultánea mediante técnicas conocidas como “Tiempo Compartido”. A la hora de decidir cuál será el siguiente proceso en usar la CPU indique qué criterio se usará en condiciones normales:",
+        "a": [
+          "Depende del Quantum definido en el arranque.",
+          "La disponibilidad en la cache de nivel 1 de los datos que necesita.",
+          "La prioridad del proceso.",
+          "El porcentaje de IO a disco que ha realizado en el último slot."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-71",
+        "t": "T2.04",
+        "o": "A",
+        "q": "El software que puede ejecutarse con máximos privilegios en el sistema infectado y que modifica el funcionamiento normal del sistema operativo o de otras aplicaciones para ocultar su actividad, es denominado:",
+        "a": [
+          "Spyware.",
+          "Eavesdropping.",
+          "Troyano.",
+          "Rootkit."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-27",
+        "t": "T2.04",
+        "o": "A",
+        "q": "El sistema operativo de código abierto de Google para dispositivos integrados centrado en la seguridad se denomina:",
+        "a": [
+          "Arch Linux.",
+          "KaiOS.",
+          "KataOS.",
+          "Lubuntu."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          13,
+          9
+        ],
+        "d": 3,
+        "n": "KataOS frente a otros SO.",
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-28",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál de los siguientes sistemas de archivos NO facilita la encriptación de ficheros?",
+        "a": [
+          "ext4.",
+          "Reiser4.",
+          "NTFS.",
+          "ReiserFS."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Sistemas de ficheros con/sin cifrado."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 621,
+    "alreadyHadCitation": 471,
+    "added": 5,
+    "pending": 145,
+    "withCitation": 476
+  }
+}

@@ -1,0 +1,4291 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T3.02",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "6de5c27a6932efa48f4e59eae794a2bbebe2165ff6a6f79d9f52519cee7ebfb1",
+    "afterSha256": "43ea4323a641d377c644ec933dcfd62c5665107054294316e23c4ba919caf1e1"
+  },
+  "sample": {
+    "beforeSha256": "8d6883af732f1fde7378e79d89b533037e55b4d067f9946aabf86e764c8c8fe8",
+    "afterSha256": "8d6883af732f1fde7378e79d89b533037e55b4d067f9946aabf86e764c8c8fe8"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-L2019-P1-37": {
+      "path": "T3.02 Diseño de BD/T3.02 Diseño de BD - Temario.pdf",
+      "sourceHash": "8e5f7ef02ccdae019b422c205c7a5b774efe690a03dc232069106bce975f3185",
+      "physicalPage": 30,
+      "printedPage": 30,
+      "excerpt": "Dependencia funcional Un atributo Y se dice que depende funcionalmente de otro X si, y sólo si, a cada valor de X le corresponde un único valor de Y, lo que se expresa de la siguiente forma: X → Y (también se dice que X determina o implica a Y). X se denomina implicante o determinante e Y es el implicado.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT302-P1-11": {
+      "path": "T3.02 Diseño de BD/T3.02 Diseño de BD - Temario.pdf",
+      "sourceHash": "8e5f7ef02ccdae019b422c205c7a5b774efe690a03dc232069106bce975f3185",
+      "physicalPage": 6,
+      "printedPage": 6,
+      "excerpt": "Nivel LÓGICO o EXTERNO En este nivel se guardan las distintas vistas parciales de la base de datos que se muestran a los usuarios y/o aplicaciones. Puesto que no todos los programas ni las personas que acceden a la base de datos necesitan tener una visión total de la información guardada en la misma, resulta conveniente crear vistas o esquemas específicos según las necesidades particulares de cada uno.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT302-P1-31": {
+      "path": "T3.02 Diseño de BD/T3.02 Diseño de BD - Temario.pdf",
+      "sourceHash": "8e5f7ef02ccdae019b422c205c7a5b774efe690a03dc232069106bce975f3185",
+      "physicalPage": 30,
+      "printedPage": 30,
+      "excerpt": "Cuantas más restricciones existan, menor será el número de relaciones que las satisfagan, así, por ejemplo, una relación en tercera forma normal estará también en segunda y en primera forma normal. Y, en consecuencia, cuanto más alta sea la forman normal aplicable a una relación menos vulnerable será a inconsistencias y anomalías.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT302-P1-36": {
+      "path": "T3.02 Diseño de BD/T3.02 Diseño de BD - Temario.pdf",
+      "sourceHash": "8e5f7ef02ccdae019b422c205c7a5b774efe690a03dc232069106bce975f3185",
+      "physicalPage": 7,
+      "printedPage": 7,
+      "excerpt": "A partir del modelo conceptual se obtiene el esquema conceptual que se identifica mediante las estructuras de datos, relaciones y restricciones.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS01-P1-44": {
+      "path": "T3.02 Diseño de BD/T3.02 Diseño de BD - Temario.pdf",
+      "sourceHash": "8e5f7ef02ccdae019b422c205c7a5b774efe690a03dc232069106bce975f3185",
+      "physicalPage": 5,
+      "printedPage": 5,
+      "excerpt": "- La independencia FÍSICA es la capacidad de modificar el esquema interno sin tener que alterar el esquema conceptual (o los externos). Por ejemplo, puede ser necesario reorganizar ciertos ficheros físicos con el fin de mejorar el rendimiento de las operaciones de consulta o de actualización de datos. Dado que la independencia física se refiere sólo a la separación entre las aplicaciones y las estructuras físicas de almacenamiento, es más fácil de conseguir que la independencia lógica.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS01-P1-R-03": {
+      "path": "T3.02 Diseño de BD/T3.02 Diseño de BD - Temario.pdf",
+      "sourceHash": "8e5f7ef02ccdae019b422c205c7a5b774efe690a03dc232069106bce975f3185",
+      "physicalPage": 30,
+      "printedPage": 30,
+      "excerpt": "Cuantas más restricciones existan, menor será el número de relaciones que las satisfagan, así, por ejemplo, una relación en tercera forma normal estará también en segunda y en primera forma normal. Y, en consecuencia, cuanto más alta sea la forman normal aplicable a una relación menos vulnerable será a inconsistencias y anomalías.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS02-P1-83": {
+      "path": "T3.02 Diseño de BD/T3.02 Diseño de BD - Temario.pdf",
+      "sourceHash": "8e5f7ef02ccdae019b422c205c7a5b774efe690a03dc232069106bce975f3185",
+      "physicalPage": 8,
+      "printedPage": 8,
+      "excerpt": "Como resumen de esta arquitectura, su propósito principal es que el Esquema Conceptual sea una descripción estable de la organización e independiente de las “vistas” y de la forma de almacenamiento de los datos. Debido a esta independencia de niveles, las Bases de Datos pueden ser flexibles y adaptables a los cambios.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS05G-P1-74": {
+      "path": "T3.02 Diseño de BD/T3.02 Diseño de BD - Temario.pdf",
+      "sourceHash": "8e5f7ef02ccdae019b422c205c7a5b774efe690a03dc232069106bce975f3185",
+      "physicalPage": 20,
+      "printedPage": 20,
+      "excerpt": "- Evitar los índices sobre atributos que se modifican a menudo. - Evitar los índices sobre atributos poco selectivos (aquellos en los que la consulta selecciona una porción significativa de la tabla). - Evitar los índices sobre atributos formados por cadenas de caracteres largas.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS08-P1-56": {
+      "path": "T3.02 Diseño de BD/T3.02 Diseño de BD - Temario.pdf",
+      "sourceHash": "8e5f7ef02ccdae019b422c205c7a5b774efe690a03dc232069106bce975f3185",
+      "physicalPage": 7,
+      "printedPage": 7,
+      "excerpt": "Nivel CONCEPTUAL Este modelo pretende reflejar la estructura y relaciones existentes entre los datos del mundo real que se van a guardar en la base de datos, aislando entre sí los niveles externo (vista del usuario) e interno (vista de la máquina).",
+      "label": "Pasaje del temario"
+    }
+  },
+  "questions": [
+    {
+      "id": "L2019-P1-37",
+      "before": {
+        "i": "L2019-P1-37",
+        "t": "T3.02",
+        "o": "O",
+        "q": "Según Métrica v3, en la teoría de la normalización se define el término de Dependencia Funcional como:",
+        "a": [
+          "Un atributo Y depende funcionalmente respecto de otro X, si depende funcionalmente de él en su totalidad, es decir, no depende de ninguno de los posibles atributos que formen parte de X.",
+          "Un atributo Y se dice que depende funcionalmente de otro X si, y sólo si, a cada valor de X le corresponde un único valor de Y.",
+          "Un atributo depende funcionalmente de otro si, y sólo si, depende de él a través de otro atributo.",
+          "Un atributo X sólo puede tomar un único valor de dominio simple."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Dependencia funcional frente a transitiva y 1FN.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "after": {
+        "i": "L2019-P1-37",
+        "t": "T3.02",
+        "o": "O",
+        "q": "Según Métrica v3, en la teoría de la normalización se define el término de Dependencia Funcional como:",
+        "a": [
+          "Un atributo Y depende funcionalmente respecto de otro X, si depende funcionalmente de él en su totalidad, es decir, no depende de ninguno de los posibles atributos que formen parte de X.",
+          "Un atributo Y se dice que depende funcionalmente de otro X si, y sólo si, a cada valor de X le corresponde un único valor de Y.",
+          "Un atributo depende funcionalmente de otro si, y sólo si, depende de él a través de otro atributo.",
+          "Un atributo X sólo puede tomar un único valor de dominio simple."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Dependencia funcional frente a transitiva y 1FN.",
+        "y": "Ingreso libre OEP 2019",
+        "u": "T3.02 Diseño de BD - Temario.pdf — Pasaje del temario\n\nTemario, p. 30 (PDF p. 30)\n\nDependencia funcional Un atributo Y se dice que depende funcionalmente de otro X si, y sólo si, a cada valor de X le corresponde un único valor de Y, lo que se expresa de la siguiente forma: X → Y (también se dice que X determina o implica a Y). X se denomina implicante o determinante e Y es el implicado.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "b089ae75083bc92228e35472168a0e627e2f9f1daf9b3b2cc79a574b5ce6283a",
+      "afterSha256": "afa0d1637de683136582ba5393f9981f1e9dc234045e9f64be2b26e7097bc669",
+      "evidenceKeys": [
+        "e-L2019-P1-37"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT302-P1-11",
+      "before": {
+        "i": "AT302-P1-11",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Qué nivel de la arquitectura ANSI/X3/SPARC contiene las vistas externas de la base de datos?",
+        "a": [
+          "Nivel físico.",
+          "Nivel conceptual.",
+          "Nivel lógico.",
+          "Las vistas están fuera del modelo de base de datos, ya que son externas."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT302-P1-11",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Qué nivel de la arquitectura ANSI/X3/SPARC contiene las vistas externas de la base de datos?",
+        "a": [
+          "Nivel físico.",
+          "Nivel conceptual.",
+          "Nivel lógico.",
+          "Las vistas están fuera del modelo de base de datos, ya que son externas."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.02 Diseño de BD - Temario.pdf — Pasaje del temario\n\nTemario, p. 6 (PDF p. 6)\n\nNivel LÓGICO o EXTERNO En este nivel se guardan las distintas vistas parciales de la base de datos que se muestran a los usuarios y/o aplicaciones. Puesto que no todos los programas ni las personas que acceden a la base de datos necesitan tener una visión total de la información guardada en la misma, resulta conveniente crear vistas o esquemas específicos según las necesidades particulares de cada uno.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "2b21faf7be3ffa8329522ff482518d1a7d1f437b57224a032613599cbb54c9c6",
+      "afterSha256": "4483112ad30a9df140155fb806335e48d2b6503368a55db772e10dc12006f49f",
+      "evidenceKeys": [
+        "e-AT302-P1-11"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT302-P1-31",
+      "before": {
+        "i": "AT302-P1-31",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En la teoría de bases de datos relacionales, cuanto más alta sea la forma normal aplicable a una tabla (acoplamiento = grado de interdependencia entre módulos, cohesión = medida de la relación funcional entre elementos de un módulo):",
+        "a": [
+          "Menor será la cohesión relacional.",
+          "Menor será el acoplamiento relacional.",
+          "Menos vulnerable será a inconsistencias y anomalías.",
+          "Más vulnerable será a inconsistencias y anomalías, pero será más eficiente."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT302-P1-31",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En la teoría de bases de datos relacionales, cuanto más alta sea la forma normal aplicable a una tabla (acoplamiento = grado de interdependencia entre módulos, cohesión = medida de la relación funcional entre elementos de un módulo):",
+        "a": [
+          "Menor será la cohesión relacional.",
+          "Menor será el acoplamiento relacional.",
+          "Menos vulnerable será a inconsistencias y anomalías.",
+          "Más vulnerable será a inconsistencias y anomalías, pero será más eficiente."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.02 Diseño de BD - Temario.pdf — Pasaje del temario\n\nTemario, p. 30 (PDF p. 30)\n\nCuantas más restricciones existan, menor será el número de relaciones que las satisfagan, así, por ejemplo, una relación en tercera forma normal estará también en segunda y en primera forma normal. Y, en consecuencia, cuanto más alta sea la forman normal aplicable a una relación menos vulnerable será a inconsistencias y anomalías.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "abd192342b09ce541552df9824580512f7efe81f959b5531a1695e39ac021162",
+      "afterSha256": "bf916acc309927f41e10cb7a8fc850ccd449217a65c729a5704fbab58a469ea4",
+      "evidenceKeys": [
+        "e-AT302-P1-31"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT302-P1-36",
+      "before": {
+        "i": "AT302-P1-36",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Qué esquema de bases de datos incluye la descripción de todos los datos e interrelaciones entre éstos, así como las restricciones de integridad?",
+        "a": [
+          "Esquema interno.",
+          "Esquema conceptual.",
+          "Esquema externo.",
+          "Esquema físico."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT302-P1-36",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Qué esquema de bases de datos incluye la descripción de todos los datos e interrelaciones entre éstos, así como las restricciones de integridad?",
+        "a": [
+          "Esquema interno.",
+          "Esquema conceptual.",
+          "Esquema externo.",
+          "Esquema físico."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.02 Diseño de BD - Temario.pdf — Pasaje del temario\n\nTemario, p. 7 (PDF p. 7)\n\nA partir del modelo conceptual se obtiene el esquema conceptual que se identifica mediante las estructuras de datos, relaciones y restricciones.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "9626b2d9f19de202004d938d5de6dacc6ef1bc66c037a8ad48b96a17e72989ed",
+      "afterSha256": "aba87c3b5ebd0c21abb52b4bf3b2db5fdec4c95327b0072fb2a59d8e653a5376",
+      "evidenceKeys": [
+        "e-AT302-P1-36"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS01-P1-44",
+      "before": {
+        "i": "AS01-P1-44",
+        "t": "T3.02",
+        "o": "A",
+        "q": "La capacidad de modificar el esquema interno de una base de datos sin tener que alterar el esquema conceptual o los externos es lo que se conoce como:",
+        "a": [
+          "Independencia física.",
+          "Independencia lógica.",
+          "Integridad de la entidad.",
+          "Integridad referencial."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS01-P1-44",
+        "t": "T3.02",
+        "o": "A",
+        "q": "La capacidad de modificar el esquema interno de una base de datos sin tener que alterar el esquema conceptual o los externos es lo que se conoce como:",
+        "a": [
+          "Independencia física.",
+          "Independencia lógica.",
+          "Integridad de la entidad.",
+          "Integridad referencial."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.02 Diseño de BD - Temario.pdf — Pasaje del temario\n\nTemario, p. 5 (PDF p. 5)\n\n- La independencia FÍSICA es la capacidad de modificar el esquema interno sin tener que alterar el esquema conceptual (o los externos). Por ejemplo, puede ser necesario reorganizar ciertos ficheros físicos con el fin de mejorar el rendimiento de las operaciones de consulta o de actualización de datos. Dado que la independencia física se refiere sólo a la separación entre las aplicaciones y las estructuras físicas de almacenamiento, es más fácil de conseguir que la independencia lógica.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "1780b0e46c094010bad49947d0b7d0cae4a303e01132d901baabbaebde5f97d8",
+      "afterSha256": "e0cfa99099e28fe3ecfabef109db1e6a9c69166bb3d7c84b2a699e65484725ed",
+      "evidenceKeys": [
+        "e-AS01-P1-44"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS01-P1-R-03",
+      "before": {
+        "i": "AS01-P1-R-03",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En la teoría de bases de datos relacionales, cuanto más alta sea la forma normal aplicable a una tabla:",
+        "a": [
+          "Menor será la cohesión relacional.",
+          "Menor será el acoplamiento relacional.",
+          "Menos vulnerable será a inconsistencias y anomalías.",
+          "Más vulnerable será a inconsistencias y anomalías, pero será más eficiente."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS01-P1-R-03",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En la teoría de bases de datos relacionales, cuanto más alta sea la forma normal aplicable a una tabla:",
+        "a": [
+          "Menor será la cohesión relacional.",
+          "Menor será el acoplamiento relacional.",
+          "Menos vulnerable será a inconsistencias y anomalías.",
+          "Más vulnerable será a inconsistencias y anomalías, pero será más eficiente."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.02 Diseño de BD - Temario.pdf — Pasaje del temario\n\nTemario, p. 30 (PDF p. 30)\n\nCuantas más restricciones existan, menor será el número de relaciones que las satisfagan, así, por ejemplo, una relación en tercera forma normal estará también en segunda y en primera forma normal. Y, en consecuencia, cuanto más alta sea la forman normal aplicable a una relación menos vulnerable será a inconsistencias y anomalías.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "bb06a790a20ceca030f02da743748c8791babc6620abbc650cc9d26841da87e2",
+      "afterSha256": "29d707eb57c1ea5d1407445b7e949e0cfa3df2631cb6959b5b827a0fd7e99131",
+      "evidenceKeys": [
+        "e-AS01-P1-R-03"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS02-P1-83",
+      "before": {
+        "i": "AS02-P1-83",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Según la Arquitectura ANSI/X3/SPARC, la descripción estable de la organización e independiente de las vistas y de la forma de almacenamiento de los datos se corresponde con:",
+        "a": [
+          "El esquema externo.",
+          "El esquema interno.",
+          "El esquema lógico.",
+          "El esquema conceptual."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS02-P1-83",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Según la Arquitectura ANSI/X3/SPARC, la descripción estable de la organización e independiente de las vistas y de la forma de almacenamiento de los datos se corresponde con:",
+        "a": [
+          "El esquema externo.",
+          "El esquema interno.",
+          "El esquema lógico.",
+          "El esquema conceptual."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.02 Diseño de BD - Temario.pdf — Pasaje del temario\n\nTemario, p. 8 (PDF p. 8)\n\nComo resumen de esta arquitectura, su propósito principal es que el Esquema Conceptual sea una descripción estable de la organización e independiente de las “vistas” y de la forma de almacenamiento de los datos. Debido a esta independencia de niveles, las Bases de Datos pueden ser flexibles y adaptables a los cambios.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "6e7211d4df5c3fbd094d0c054eeb85bfa2567a2a65db7c5fca313980bc298f0f",
+      "afterSha256": "6af4cdea9077201c714a496d81088c27ac2acb97f83c4c6b3da0e74a6f704304",
+      "evidenceKeys": [
+        "e-AS02-P1-83"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS05G-P1-74",
+      "before": {
+        "i": "AS05G-P1-74",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Qué criterio se debe seguir en el diseño físico de una base de datos para seleccionar los índices secundarios?",
+        "a": [
+          "Crear índices sobre tablas pequeñas.",
+          "Crear índices sobre atributos formados por cadenas de caracteres largas.",
+          "Crear índices sobre atributos poco selectivos.",
+          "Evitar los índices sobre atributos que se modifican a menudo."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS05G-P1-74",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Qué criterio se debe seguir en el diseño físico de una base de datos para seleccionar los índices secundarios?",
+        "a": [
+          "Crear índices sobre tablas pequeñas.",
+          "Crear índices sobre atributos formados por cadenas de caracteres largas.",
+          "Crear índices sobre atributos poco selectivos.",
+          "Evitar los índices sobre atributos que se modifican a menudo."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "u": "T3.02 Diseño de BD - Temario.pdf — Pasaje del temario\n\nTemario, p. 20 (PDF p. 20)\n\n- Evitar los índices sobre atributos que se modifican a menudo. - Evitar los índices sobre atributos poco selectivos (aquellos en los que la consulta selecciona una porción significativa de la tabla). - Evitar los índices sobre atributos formados por cadenas de caracteres largas.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "9e8eab5da999cd94951fbe929e217593f46cef847b66e6addd85538a927f6518",
+      "afterSha256": "d1b66516b5deb47e32a2cdee892c8dcc571a731dc80c5023baeb782427a2e8fa",
+      "evidenceKeys": [
+        "e-AS05G-P1-74"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS08-P1-56",
+      "before": {
+        "i": "AS08-P1-56",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Qué nivel de la arquitectura ANSI/X3/SPARC contiene la estructura y relaciones entre los datos?",
+        "a": [
+          "Nivel físico.",
+          "Nivel conceptual.",
+          "Nivel lógico.",
+          "Nivel externo."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS08-P1-56",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Qué nivel de la arquitectura ANSI/X3/SPARC contiene la estructura y relaciones entre los datos?",
+        "a": [
+          "Nivel físico.",
+          "Nivel conceptual.",
+          "Nivel lógico.",
+          "Nivel externo."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.02 Diseño de BD - Temario.pdf — Pasaje del temario\n\nTemario, p. 7 (PDF p. 7)\n\nNivel CONCEPTUAL Este modelo pretende reflejar la estructura y relaciones existentes entre los datos del mundo real que se van a guardar en la base de datos, aislando entre sí los niveles externo (vista del usuario) e interno (vista de la máquina).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "2a9a1af200116af3ca298ea0b77bb1c8076540abfa94cd60d9df44e7f7b5249b",
+      "afterSha256": "b8d023044f704ea3f9dbc34c84498467101ba7bda348103696bd5af04cada9e4",
+      "evidenceKeys": [
+        "e-AS08-P1-56"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-30",
+        "t": "T3.02",
+        "o": "O",
+        "q": "¿Cuál es la característica diferenciadora de las claves foráneas en una base de datos relacional?",
+        "a": [
+          "Un atributo que no tiene relación con otras tablas.",
+          "Un atributo que referencia la clave primaria de otra tabla.",
+          "Un atributo que puede tener valores duplicados.",
+          "Un atributo que se utiliza solo para consultas."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          14
+        ],
+        "d": 1,
+        "n": "c) \"puede tener duplicados\" es cierto, pero no es la característica diferenciadora. En el modelo L2024A la opción c tenía la repetición «de datos»; se conserva aquí la redacción normalizada.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-32",
+        "t": "T3.02",
+        "o": "O",
+        "q": "Señale la respuesta correcta sobre la normalización de bases de datos en Métrica v3:",
+        "a": [
+          "Un atributo tiene dependencia funcional completa de otro si, y sólo si, depende de él a través de otro atributo.",
+          "Una entidad está en 1FN si tiene grupos repetitivos, es decir, un atributo puede tomar varios valores de un dominio simple.",
+          "Una entidad está en 2FN si está en 1FN y todos los atributos que no forman parte de las claves candidatas tienen dependencia funcional completa respecto de éstas.",
+          "Una relación en 3FN estará también en 2FN, pero no en 1FN."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7,
+          12
+        ],
+        "d": 2,
+        "n": "a) \"a través de otro atributo\" = transitiva (catálogo); b) \"si tiene\" grupos repetitivos; d) \"pero no en 1FN\".",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-36",
+        "t": "T3.02",
+        "o": "O",
+        "q": "Una tabla se encuentra en Tercera Forma Normal (3FN) si:",
+        "a": [
+          "Está en 2FN y todo atributo que no forma parte de una clave candidata depende de ella al completo.",
+          "Está en 2FN y no existe ninguna dependencia transitiva de atributos no principales respecto de las claves.",
+          "Está en 2FN y no existen relaciones de dependencia de reunión no triviales que no se generen desde las claves.",
+          "Está en 2FN y los atributos que no forman parte de ninguna clave dependen de la clave principal."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "3FN frente a 2FN, 5FN y FNBC.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-38",
+        "t": "T3.02",
+        "o": "O",
+        "q": "En una entidad de base de datos con 4 columnas y 7 filas:",
+        "a": [
+          "El grado es 4 y la cardinalidad 7.",
+          "La cardinalidad es 4 y el grado 7.",
+          "El grado es 4 y el dominio 7.",
+          "El dominio es 4 y la cardinalidad 7."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 1,
+        "n": "Grado y cardinalidad invertidos.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-37",
+        "t": "T3.02",
+        "o": "O",
+        "q": "En el contexto de las bases de datos relacionales, ¿cómo se denomina a una columna o grupo de columnas de una tabla que contiene valores que coinciden con la clave primaria de otra tabla?",
+        "a": [
+          "Clave primaria externa.",
+          "Clave referencia.",
+          "Clave foránea.",
+          "Clave compuesta."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Clave foránea frente a nombres inventados.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-17",
+        "t": "T3.02",
+        "o": "O",
+        "q": "Entre las restricciones aplicables al modelo relacional de datos, \"la integridad de la entidad\" hace referencia a que:",
+        "a": [
+          "El conjunto de valores que pueden asociarse a esa entidad está acotado.",
+          "En una relación, el valor de la clave ajena debe ser igual al de la clave primaria.",
+          "Una clave ajena pueden admitir nulos, siempre y cuando lo permita el dominio.",
+          "Una clave primaria no puede ser nula, ni ninguno de los atributos que la componen."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Integridad de entidad frente a integridad referencial.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-20",
+        "t": "T3.02",
+        "o": "O",
+        "q": "¿Cuál es uno de los motivos para aplicar la desnormalización en una base de datos?",
+        "a": [
+          "Mejorar el rendimiento.",
+          "Disminución de la redundancia de los datos.",
+          "Disminución del tamaño de la base de datos.",
+          "Mejor actualización del modelo de datos."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "Desnormalización: motivos invertidos.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2025A-P1-36",
+        "t": "T3.02",
+        "o": "O",
+        "q": "En una base de datos relacional, la regla de integridad referencial establece que:",
+        "a": [
+          "Todo valor no nulo de la clave ajena debe existir en la clave referenciada.",
+          "Todo valor de la clave ajena debe ser único dentro de la tabla.",
+          "Toda clave primaria debe existir previamente en la tabla que la referencia.",
+          "La clave referenciada debe contener únicamente valores no nulos."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "Integridad referencial: dirección invertida.",
+        "y": "Promoción interna convocatoria 2025"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-43",
+        "t": "T3.02",
+        "o": "O",
+        "q": "En la teoría de normalización cuando una relación puede ser reconstruida sin pérdida de información a partir de una combinación de algunas de sus proyecciones se dice que tiene una:",
+        "a": [
+          "Dependencia de reunión.",
+          "Dependencia multivaluada.",
+          "Dependencia funcional de Boyce/Codd.",
+          "Dependencia funcional mutua."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Dependencia de reunión frente a multivaluada.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "La coincidencia encontrada pertenece a una condición de quinta forma normal y no define la reconstrucción sin pérdida por reunión de proyecciones. Pendiente de localizar la definición pertinente.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-L2018-P1-43"
+      ]
+    },
+    {
+      "question": {
+        "i": "L2018-P1-44",
+        "t": "T3.02",
+        "o": "O",
+        "q": "En el contexto del modelo relacional, ¿qué regla de integridad determina que los atributos de la clave primaria de una relación no puedan tener valores nulos?",
+        "a": [
+          "Integridad referencial.",
+          "Integridad de propagación.",
+          "Integridad de entidad.",
+          "Integridad de negocio."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7,
+          9
+        ],
+        "d": 1,
+        "n": "Integridad de entidad frente a referencial e inventadas.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-01",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es un objetivo perseguido por Codd en la presentación de su modelo relacional?",
+        "a": [
+          "Independencia lógica.",
+          "Independencia conceptual.",
+          "Independencia física.",
+          "Uniformidad."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-02",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Según la integridad de los datos en el modelo relacional. ¿A qué regla de integridad le corresponde la siguiente definición: “Los valores de claves foráneas deben existir en la clave primaria referenciada o bien deben ser valores nulos”?",
+        "a": [
+          "La regla de integridad referencial.",
+          "La regla de integridad de dominio.",
+          "La regla de integridad foránea inversa.",
+          "La regla de integridad de unicidad."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "El pasaje solo enumera dos reglas de integridad. Pendiente de extraer la definición completa de integridad referencial, no el título.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AT302-P1-02"
+      ]
+    },
+    {
+      "question": {
+        "i": "AT302-P1-03",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Las consecuencias principales de que una base de datos NO esté normalizada adecuadamente son:",
+        "a": [
+          "Errores de inconsistencias, incoherencias, actualización y redundancia de datos.",
+          "Problemas de bloque en las transacciones de las bases de datos.",
+          "Problemas de disponibilidad de la base de datos.",
+          "Dificultad para dimensionar adecuadamente las necesidades de almacenamiento de la base de datos."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-04",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes opciones NO representa uno de los niveles de abstracción de bases de datos?",
+        "a": [
+          "Interno.",
+          "Externo.",
+          "Sintáctico.",
+          "Conceptual."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          13,
+          9
+        ],
+        "d": 1,
+        "n": "Niveles ANSI: \"sintáctico\" inventado."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-05",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes operaciones NO se considera fundamental en el álgebra relacional?",
+        "a": [
+          "Proyección.",
+          "Intersección.",
+          "Selección.",
+          "Unión."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-06",
+        "t": "T3.02",
+        "o": "A",
+        "q": "El modelo de datos relacional fue introducido por:",
+        "a": [
+          "Codd.",
+          "Hamming.",
+          "Ritchie.",
+          "Adleman."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-07",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Dentro del modelo relacional, señale la afirmación ERRÓNEA:",
+        "a": [
+          "En una relación puede haber varias claves candidatas.",
+          "Una clave primaria es, a su vez, clave candidata.",
+          "Si se elimina un atributo de una clave candidata, ésta deja de serlo.",
+          "Una relación puede no tener clave candidata."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-08",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Según la teoría de la normalización, para pasar una relación de 1FN a 2FN hay que eliminar:",
+        "a": [
+          "De ella los grupos repetitivos.",
+          "Las dependencias parciales de la clave externas.",
+          "Las dependencias parciales de las claves candidatas.",
+          "Las dependencias transitivas de la clave primaria."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-09",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de los siguientes es un operador fundamental del álgebra relacional?",
+        "a": [
+          "Intersección.",
+          "Producto cartesiano.",
+          "Agrupación.",
+          "Cociente."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-10",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones sobre la Tercera Forma Normal (3FN) es correcta?",
+        "a": [
+          "Una entidad está en 3FN si está en 2FN y todos sus atributos no principales dependen directamente de la clave primaria, es decir, no hay dependencias funcionales transitivas de atributos no principales respecto de las claves.",
+          "Una entidad está en 3FN si está en 2FN y todos sus atributos que no forman parte de las claves candidatas (atributos no principales) tienen dependencia funcional completa respecto de éstas.",
+          "La 3FN es el nivel más elevado de normalización de una tabla.",
+          "Una tabla está en 3FN cuando está en 2FN y además todos los atributos, tanto principales como no principales, son atómicos."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-12",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes tareas NO corresponde a una tarea del diseño físico de una base de datos?",
+        "a": [
+          "Traducir el esquema lógico para el SGBD específico.",
+          "Diseñar los mecanismos de seguridad.",
+          "Transformación de entidades.",
+          "Seleccionar los índices secundarios."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-13",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un objetivo de la normalización de base de datos?",
+        "a": [
+          "Proporcionar una estructura más regular para la representación de tablas.",
+          "Optimizar la base de datos.",
+          "Evitar anomalías en las operaciones de manipulación de datos.",
+          "La eliminación de dependencias entre atributos."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-14",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Una relación, si los atributos que no forman parte de ninguna clave dependen de forma completa de la clave principal se dice que está en:",
+        "a": [
+          "Tercera Forma Normal.",
+          "Cuarta Forma Normal.",
+          "Quinta Forma Normal.",
+          "Segunda Forma Normal."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Formas normales: 2FN."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-15",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En una tabla, si cada determinante, atributo que determina completamente a otro, es clave candidata se dice que está en:",
+        "a": [
+          "Primera Forma Normal.",
+          "Segunda Forma Normal.",
+          "Forma Normal de Boyce-Codd.",
+          "Quinta Forma Normal."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "La formulación usa clave candidata para cualquier determinante y requiere revisar la condición formal de superclave y dependencias no triviales antes de aceptar FNBC sin reservas.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AT302-P1-15"
+      ]
+    },
+    {
+      "question": {
+        "i": "AT302-P1-16",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Si en una base de datos relacional tenemos una tabla que contiene una tupla cuya única clave ajena tiene un valor nulo:",
+        "a": [
+          "Estaremos incumpliendo la regla de integridad de entidad.",
+          "Estaremos incumpliendo la regla de integridad referencial.",
+          "Dicha tupla no está relacionada con ninguna otra tupla de la entidad a la que hace referencia la clave ajena.",
+          "Existirá una tupla en la entidad a la que hace referencia la clave ajena, con la que estará relacionada."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-17",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál es una restricción inherente al modelo relacional de los sistemas gestores de bases de datos?",
+        "a": [
+          "El atributo que forma parte de la clave tiene que ser numérico.",
+          "El atributo que forma parte de la clave no puede ser numérico.",
+          "El atributo que forma parte de la clave no puede tomar el valor cero.",
+          "El atributo que forma parte de la clave no puede tomar valore nulos (por nulo se interpreta valores desconocidos)."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-19",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones NO es correcta?",
+        "a": [
+          "Las bases de datos relacionales se normalizan para evitar la redundancia de datos.",
+          "Ningún atributo que compone una clave primaria puede ser nulo.",
+          "Un atributo nulo representa el valor cero o una cadena vacía.",
+          "Uno de los objetivos de la normalización es facilitar el mantenimiento de datos y programas."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-20",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Una tabla se dice que está en Tercera Forma Normal si se encuentra en Segunda Forma Normal y:",
+        "a": [
+          "Las únicas dependencias funcionales elementales son aquellas en las que la clave principal (y claves secundarias) determinan un atributo.",
+          "Todo atributo secundario depende totalmente de la clave completa.",
+          "Los valores que componen los atributos son elementales y únicos.",
+          "No existen atributos no primarios que son transitivamente dependientes de cada posible clave de la tabla."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-21",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En una tabla de una base de datos relacional, si no existen grupos repetitivos, y todos los elementos son independientes entre sí y dependen solamente de la clave primaria de forma plena, ¿ante qué forma normal nos encontramos?",
+        "a": [
+          "1FN.",
+          "2FN.",
+          "3FN.",
+          "No se encuentra en ninguna forma normal."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-22",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el modelo relacional, una relación R, decimos que está en Segunda Forma Normal (2FN) si:",
+        "a": [
+          "Está en Primera Forma Normal (1FN) y todos los atributos que no forman parte de las claves candidatas tienen dependencia funcional completa respecto de éstas.",
+          "Todos los atributos que no forman parte de las claves candidatas tienen dependencia funcional completa respecto de éstas.",
+          "Todos sus atributos no principales dependen directamente de la clave primaria.",
+          "No tiene grupos repetitivos, es decir, un atributo solo puede tomar un único valor de un dominio simple."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-23",
+        "t": "T3.02",
+        "o": "A",
+        "q": "La tabla siguiente EMPLEADOS (COD_EMPLEADO, COD_DEPARTAMENTO, TIPO, EDAD, PLANTA_DEPARTAMENTO) donde la clave principal es COD_EMPLEADO y COD_DEPARTAMENTO.",
+        "a": [
+          "Cumple la 2FN.",
+          "No cumple la 3FN, pero cumple la segunda.",
+          "No cumple la 2FN.",
+          "No cumple la 4FN, pero cumple la tercera."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-24",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Partiendo del diagrama Entidad/Relación de la figura. ¿Cuántas tablas generaría la transformación de este diagrama al modelo relacional?",
+        "a": [
+          "Dos.",
+          "Tres.",
+          "Cuatro.",
+          "Cinco."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-25",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Se pretende obtener el modelo lógico de datos a partir de este modelo entidad/relación, ¿cómo se reflejará la relación entre las tablas BECAS y ASPIRANTES?",
+        "a": [
+          "En una nueva tabla cuya clave primaria será la concatenación de los atributos claves de las tablas BECAS y ASPIRANTES.",
+          "Se propaga la clave primaria BECAS y los atributos de la relación de la entidad ASPIRANTES.",
+          "En una nueva tabla cuya clave primaria será la concatenación de cuatro valores: los atributos clave de las tablas BECAS, ASPIRANTES y los atributos de la relación (“otorgada” y “año_otorgamiento”).",
+          "Se propaga la clave primaria de cualquier de las dos tablas a la otra, y el atributo de la relación también, pero ninguno de estos será clave primaria en la relación dónde se propaguen."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-26",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En álgebra relacional la operación que, a partir de dos relaciones del mismo tipo, obtiene una nueva relación formada por las tuplas que pertenecen a las dos relaciones de partida, se llama:",
+        "a": [
+          "Unión.",
+          "Intersección.",
+          "Diferencia.",
+          "Producto cartesiano."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Intersección vs unión."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-27",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Una relación (una tabla) se compone de los campos o atributos A, B, C y D. Solo existe una clave candidata, y es la clave compuesta (A, B). Además, se cumple que (A, B) determina funcionalmente a C, y C determina funcionalmente a D. Indique la respuesta correcta:",
+        "a": [
+          "La tabla no cumple ninguna forma normal.",
+          "La tabla está en 1FN, pero no en 2FN, ni en 3FN.",
+          "La tabla está en 1FN y en 2FN, pero no en 3FN.",
+          "La tabla está en 1FN, en 2FN y en 3FN."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-28",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Tal y como se muestra en el diagrama de Entidad/Relación, ¿cuál de las siguientes afirmaciones sobre la realidad que representa el diagrama NO es cierta?",
+        "a": [
+          "Un Departamento está compuesto por una o varias Unidades y toda Unidad pertenece a un y sólo un Departamento.",
+          "Un Departamento puede ser dirigido por un Titular y todo Titular debe dirigir a un Departamento.",
+          "Cada Unidad puede ser dirigida por un Titular y un Titular dirige siempre una Unidad.",
+          "Un Departamento puede participar en varias Comisiones interministeriales."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-29",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Tomando como referencia el modelo E/R anterior, se pretende obtener el modelo lógico de datos, ¿cómo se reflejaría la relación entre las tablas DEPARTAMENTO y COMISIÓN MINISTERIAL?",
+        "a": [
+          "Se propaga el identificador de la Comisión Ministerial, así como los posibles atributos de la relación a la tabla de DEPARTAMENTOS.",
+          "Se propaga el identificador del Departamento, así como los posibles atributos de la relación a la tabla de COMISIONES MINISTERIALES.",
+          "Se crea una tabla nueva en la que se incluyen los atributos que forman clave primaria de las tablas DEPARTAMENTOS y COMISIONES MINISTERIALES, y los atributos que tiene la relación, siendo estos últimos la clave primaria de esta nueva tabla.",
+          "Se crea una tabla nueva en la que se incluyen los atributos que forman clave primaria de las tablas DEPARTAMENTOS y COMISIONES MINISTERIALES y que, a su vez, formarán la clave primaria de la nueva tabla. Así como los atributos que pueda tener la relación."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-30",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En una base de datos relacional en la que se tiene información guardada en una tabla de provincias y además se dispone de una tabla de municipios donde parte de la clave es la provincia, ¿se puede borrar un elemento de la tabla de provincias manteniendo la integridad del sistema?",
+        "a": [
+          "Si, una vez que los municipios ya existen no hay ningún problema.",
+          "Si, aunque no podría dar de alta nuevos municipios de esa provincia.",
+          "Sólo si no hay ninguna población perteneciente a esa provincia.",
+          "No, la tabla de provincias no puede cambiar ya que son un elemento estable."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-32",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Señale cuál de las siguientes afirmaciones sobre la arquitectura ANSI/X3/SPARC es correcta:",
+        "a": [
+          "El nivel externo también recibe el nombre de nivel físico.",
+          "El nivel interno también recibe el nombre de nivel lógico.",
+          "El nivel externo define los datos que se almacenan en la base de datos y las relaciones entre ellos.",
+          "El nivel externo contiene las vistas externas de la base de datos y permite ver a cada tipo de usuario solo aquella parte del esquema que es de su interés."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          4
+        ],
+        "d": 2,
+        "n": "Niveles ANSI/SPARC con nombres cruzados."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-34",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En relación al esquema conceptual en los niveles ANSI/X3/SPARC, ¿qué afirmación de las siguientes NO es correcta?",
+        "a": [
+          "Representa el modelo de datos de forma independiente del sistema gestor de bases que se utilizará.",
+          "Refleja la representación de los datos que se van a guardar y sus relaciones a partir del modelo ER.",
+          "Corresponde a la visión de la base de datos que ofrece cada aplicación.",
+          "Debe ser absolutamente independiente del esquema físico."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-35",
+        "t": "T3.02",
+        "o": "A",
+        "q": "El operador JOIN del álgebra relacional es un operador compuesto de otros operadores fundamentales, que son:",
+        "a": [
+          "Selección, proyección y unión.",
+          "Selección, producto cartesiano y proyección.",
+          "Diferencia de conjuntos, unión y producto cartesiano.",
+          "Unión, proyección y producto cartesiano."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-37",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En un diagrama entidad/relación:",
+        "a": [
+          "Una alta redundancia es buena ya que permite alcanzar la información a través de distintas relaciones.",
+          "Una baja redundancia es buena ya que no aporta información adicional y complica la gestión de la información.",
+          "Si aparece un ciclo entre relaciones y entidades, debemos eliminar una relación para evitar la redundancia.",
+          "Si aparece un ciclo entre relaciones y entidades, no es conveniente romperlo si cada una de las relaciones aporta una información distinta al resto."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-38",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Dada una relación ternaria en un diagrama E/R, ¿en cuántas relaciones se transformará en el modelo relacional?",
+        "a": [
+          "1.",
+          "2.",
+          "3.",
+          "4."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-39",
+        "t": "T3.02",
+        "o": "A",
+        "q": "La normalización se aplica en:",
+        "a": [
+          "El diseño físico.",
+          "El diseño conceptual.",
+          "El diseño lógico.",
+          "El diseño interno."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-40",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Señale la afirmación INCORRECTA sobre el modelo lógico relacional:",
+        "a": [
+          "La cardinalidad de una relación es el número de tuplas.",
+          "El grado de una relación es el número de atributos.",
+          "Un dominio es un conjunto de valores.",
+          "Cada fila de una relación puede ser única."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-41",
+        "t": "T3.02",
+        "o": "A",
+        "q": "La desnormalización controlada del modelo físico de datos se aplica para:",
+        "a": [
+          "Tener una estructura de tablas más regular.",
+          "Incrementar la flexibilidad del esquema.",
+          "Mejorar los tiempos de respuesta de las consultas.",
+          "Reducir o simplificar el número de acceso a la base de datos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-42",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el modelo relacional, señale la respuesta correcta:",
+        "a": [
+          "Un valor nulo representa el valor cero.",
+          "Un valor nulo representa un valor desconocido.",
+          "Un valor nulo representa la cadena vacía.",
+          "Un valor nulo representa el valor booleano false."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-43",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Según el modelo E/R extendido propuesto en Métrica v3, si 2 entidades se relacionan mediante la relación “ASOCIADA A”, siendo el tipo de correspondencia 1:1 y teniendo en cuenta que la relación “ASOCIADA A” posee el atributo “fecha_asociacion”, ¿en cuántas relaciones se transformará en el modelo relacional?",
+        "a": [
+          "1.",
+          "2.",
+          "3.",
+          "4."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-44",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Dada una jerarquía en el modelo Entidad- Relación extendido, se crea una tabla para el supertipo que tenga de clave primaria el identificador y una tabla para cada uno de los subtipos que tengan el identificador del supertipo como clave ajena. Esta solución es apropiada:",
+        "a": [
+          "Si los subtipos tienen muchos atributos distintos y se quieren conservar los atributos comunes en una tabla.",
+          "Porque mejora la eficiencia en los accesos a todos los atributos de un subtipo, sean los comunes al supertipo o los específicos.",
+          "Si los subtipos se diferencien en pocos atributos y las relaciones entre los subtipos y otras entidades sean las mismas.",
+          "En todo caso."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-45",
+        "t": "T3.02",
+        "o": "A",
+        "q": "La técnica cuyo objetivo consiste en una desnormalización controlada del modelo físico de datos que se aplica para reducir o simplificar el número de accesos a la base de datos, se denomina:",
+        "a": [
+          "Optimización.",
+          "Cálculo de accesos.",
+          "Caminos de acceso.",
+          "Normalización inversa."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-46",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Respecto a la regla de integridad de entidad, señale la respuesta INCORRECTA:",
+        "a": [
+          "Ninguno de los atributos que componen la clave primaria puede ser nulo.",
+          "Ninguno de los atributos que componen la claves candidatas puede ser nulo.",
+          "La clave primaria es irreducible.",
+          "No se aplica a las claves candidatas."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-47",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el modelo relacional, la extensión de una relación es:",
+        "a": [
+          "El número de atributos que posee.",
+          "El esquema de esa relación.",
+          "El conjunto de filas o tuplas de esa relación.",
+          "El conjunto de dominios utilizados para los atributos de esa relación."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-48",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el modelo relacional, la cardinalidad de una relación es:",
+        "a": [
+          "El número de atributos que posee.",
+          "El número de atributos que componen la clave primaria de esa relación.",
+          "El número de filas o tuplas de esa relación.",
+          "El número de dominios utilizados para los atributos de esa relación."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-49",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el modelo relacional, el grado de una relación es:",
+        "a": [
+          "El número de atributos que posee.",
+          "El número de atributos que componen la clave primaria de esa relación.",
+          "El número de filas o tuplas de esa relación.",
+          "El número de dominios utilizados para los atributos de esa relación."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT302-P1-50",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En la transformación al modelo relacional de un diagrama Entidad-Relación extendido, las relaciones de agregación:",
+        "a": [
+          "Se transforman del mismo modo que las 1:N.",
+          "Se transforman del mismo modo que las 1:1.",
+          "Se transforman del mismo modo que las N:M.",
+          "Su transformación depende del tipo de correspondencia concreto."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "El enunciado generaliza la transformación de la agregación sin fijar la representación y correspondencia. El pasaje coincide pero hace falta cotejar el supuesto concreto y la unicidad frente a la alternativa dependiente de correspondencia.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AT302-P1-50"
+      ]
+    },
+    {
+      "question": {
+        "i": "AS01-P1-02",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Sobre el modelo E/R anterior, señale la respuesta correcta:",
+        "a": [
+          "Se ha modelado una categoría entre las entidades UbicacionCentral, UbicacionExterior y Ubicacion.",
+          "Trabajador es una entidad débil.",
+          "Trabajador se transformará en una relación en el modelo relacional.",
+          "Relación 1 se transformará en una relación en el modelo relacional."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-18",
+        "t": "T3.02",
+        "o": "A",
+        "q": "De las siguientes afirmaciones sobre una clave foránea en el modelo relacional, indique cuál de ellas es FALSA:",
+        "a": [
+          "No puede contener valores nulos.",
+          "Puede formar parte de una clave primaria.",
+          "Puede contener valores repetidos.",
+          "Debe tener el mismo dominio que el atributo o atributos de la clave primaria a la que referencia."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-21",
+        "t": "T3.02",
+        "o": "A",
+        "q": "La integridad referencial en bases de datos relacionales define que:",
+        "a": [
+          "Todas las filas deben tener las mismas columnas y formato.",
+          "Si en una relación hay alguna clave ajena, sus valores deben coincidir con valores de la clave primaria a la que hace referencia o bien, deben ser todos nulos.",
+          "La clave primaria de una tupla no debe ser nula, ni ninguno de los atributos que la componen.",
+          "La independencia física de la base de datos."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-24",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Indique cuál de las siguientes afirmaciones sobre el proceso de creación del modelo relacional es cierta:",
+        "a": [
+          "El proceso de normalización de bases de datos consiste en aplicar una serie de reglas a las relaciones obtenidas tras el paso del Diccionario de Flujo de Datos (DFD) al modelo relacional.",
+          "Una clave compuesta es aquella columna que siendo clave primaria de una tabla, se incluye como columna dependiente en otra tabla.",
+          "Una clave ajena es aquella que podría haber sido seleccionada como clave primaria de la tabla por identificar de forma única a la fila a la que pertenece, pero no lo ha sido.",
+          "Una clave alternativa es aquella que podría haber sido seleccionada como clave primaria de la tabla por identificar de forma única a la fila a la que pertenece, pero no lo ha sido."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-26",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Si en una base de datos relacional tenemos una tabla que contiene una tupla cuya única clave ajena tiene un valor nulo:",
+        "a": [
+          "Estaremos incumpliendo la regla de integridad de la entidad.",
+          "Estaremos incumpliendo la regla de integridad referencial.",
+          "Dicha tupla no está relacionada con ninguna otra tupla de la entidad a la que hace referencia la clave ajena.",
+          "Existirá una tupla en la entidad a la que hace referencia la clave ajena, con la que estará relacionada."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-27",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Queremos almacenar en una base de datos relacional los alumnos de un determinado curso y las asignaturas en las que están matriculados. Teniendo en cuenta que un alumno estará matriculado en varias asignaturas, y que en una asignatura habrá matriculados varios alumnos, ¿cuál de las siguientes opciones refleja las tablas que serían necesarias para que dicha relación estuviese en 3FN?",
+        "a": [
+          "Una tabla alumnos con el código de alumno, sus datos personales y el código de las asignaturas en las que está matriculado.",
+          "Una tabla asignaturas con el código de la asignatura, su denominación, y el código de los alumnos que están matriculados.",
+          "Tres tablas: una tabla alumnos con el código de alumno y sus datos personales, otra tabla asignatura con el código de la asignatura y su denominación, y una tercera tabla que contuviese una fila por cada alumno y en esa fila los códigos de las asignaturas en las que estuviese matriculado.",
+          "Tres tablas: una tabla alumnos con el código de alumno y sus datos personales, otra tabla asignatura con el código de la asignatura y su denominación, y una tercera tabla que contuviese, en cada fila, una tupla (código alumno, código asignatura) por cada alumno y cada asignatura en la que éste estuviese matriculado."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-29",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Dada la tabla ESTUDIANTES(DNI, Nombre, Apellido 1, Apellido 2, DNITutor, NombreTutor), teniendo en cuenta que la relación no tiene grupos repetitivos, que DNI es la clave primaria y que DNITutor determina NombreTutor, es posible afirmar que la relación ESTUDIANTES:",
+        "a": [
+          "No está en 1FN.",
+          "Está en 1FN, pero no en 2FN.",
+          "Está en 2FN, pero no en 3FN.",
+          "Está en 3FN, pero no en FNBC."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-30",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En general, al pasar una relación 1:N con atributos propios, del modelo Entidad-Relación al modelo relacional:",
+        "a": [
+          "Se crea una tabla cuya clave principal es el atributo de la relación.",
+          "Se crea una nueva tabla cuya clave es la concatenación de las claves de las dos entidades y tiene un campo adicional para el atributo de la relación.",
+          "La clave de la entidad que participa con cardinalidad N y el atributo de la relación, pasan a la tabla de cardinalidad 1.",
+          "La clave de la entidad que participa con cardinalidad 1 y el atributo de la relación, pasan a la tabla de cardinalidad N."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-31",
+        "t": "T3.02",
+        "o": "A",
+        "q": "La arquitectura ANSI/X3/SPARC para sistemas de bases de datos se divide en los siguientes niveles:",
+        "a": [
+          "Lógico, de usuario y físico.",
+          "Externo, intermedio e interno.",
+          "Externo, conceptual e interno.",
+          "De usuario, de administrador y físico."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-32",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En una base de datos relacional, ¿qué concepto corresponde a \"si una tupla de una relación R1 hace referencia a una relación R2, debe referirse a una tupla que exista realmente en R2\"?",
+        "a": [
+          "Integridad referencial.",
+          "Integridad de clave.",
+          "Integridad de dominio.",
+          "Integridad de identidad de la entidad."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-33",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Sobre la regla de integridad de entidad del modelo lógico relacional, señale la respuesta correcta:",
+        "a": [
+          "Se aplica tanto a claves primarias como a claves candidatas.",
+          "Es aplicable solo a las claves ajenas.",
+          "Únicamente se aplica a las claves primarias.",
+          "Es de obligado cumplimiento para claves primarias y ajenas."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-34",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Indique cuál es la afirmación correcta respecto al modelo de datos relacional:",
+        "a": [
+          "Una clave candidata es el conjunto de atributos cuyos valores han de coincidir con los valores de la clave primaria de otra relación.",
+          "Una clave ajena es el conjunto de atributos que determinan unívoca y mínimamente cada tupla.",
+          "En una relación no pueden existir varias claves candidatas.",
+          "Para las claves ajenas, la regla de integridad referencial establece que los valores de la clave ajena pueden ser nulos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-35",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En relación con la optimización durante el diseño físico de bases de datos NO se recomienda:",
+        "a": [
+          "Introducir elementos redundantes.",
+          "Definir claves secundarias o índices para permitir caminos de acceso alternativos.",
+          "Combinar entidades si los accesos son frecuentes dentro o fuera de la misma transacción.",
+          "Combinar entidades si los accesos son frecuentes dentro de la misma transacción."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-36",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿En qué consiste la optimización durante el diseño físico de bases de datos?",
+        "a": [
+          "En desnormalizar el modelo lógico de datos.",
+          "En desnormalizar controladamente el modelo físico de datos.",
+          "En la normalización controlada del modelo lógico de datos.",
+          "En la normalización controlada del modelo físico de datos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-38",
+        "t": "T3.02",
+        "o": "A",
+        "q": "La arquitectura ANSI/SPARC de tres niveles proporciona una separación clara entre la vista lógica de los usuarios, la estructura conceptual de la base de datos y la implementación física. Esta separación permite cambios independientes en cada nivel sin afectar a los demás niveles, lo que facilita la modularidad, el mantenimiento y la evolución de la base de datos en un entorno empresarial. ¿Cuáles son los niveles definidos?",
+        "a": [
+          "Lógico, Conceptual y Físico.",
+          "Vista, Conceptual y Físico.",
+          "Vista, Modelo y Controlador.",
+          "Externo, Conceptual y Lógico."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-39",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿En qué Forma Normal estaría una tabla que cumpla la siguiente descripción: “dados tres atributos de una tabla, si para cada valor del primer atributo no existen múltiples valores en el segundo atributo y no hay ninguna relación entre el tercer atributo y el primero, a no ser a través del segundo atributo”?",
+        "a": [
+          "FNBC.",
+          "2FN.",
+          "3FN.",
+          "4FN."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-40",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el entorno de una base de datos, ¿qué se entiende por redundancia?",
+        "a": [
+          "Existe información contradictoria.",
+          "Existe información incongruente.",
+          "La información no es uniforme.",
+          "Existe información repetida."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-41",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Dentro del modelo relacional, el número de atributos de una relación define su:",
+        "a": [
+          "Dominio.",
+          "Cardinalidad.",
+          "Grado.",
+          "Extensión."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-42",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En un diagrama Entidad-Relación existe una relación N:M entre dos entidades: Alumno y Profesor. Un profesor puede dar clases a muchos alumnos, y un alumno puede tener muchos profesores. ¿Cuántas tablas son necesarias como mínimo para implementar en el modelo lógico esa relación en 1FN si se hace utilizando una base de datos relacional?",
+        "a": [
+          "Dos.",
+          "Tres.",
+          "Cuatro.",
+          "Cinco."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-43",
+        "t": "T3.02",
+        "o": "A",
+        "q": "La arquitectura ANSI/SPARC define para un sistema de gestión de bases de datos tres niveles de abstracción. Indique la afirmación INCORRECTA:",
+        "a": [
+          "El nivel externo contiene las vistas externas de la base de datos y permite a cada tipo de usuario ver sólo aquella parte del esquema que le interesa.",
+          "El nivel físico define cómo se almacenan los datos y los métodos de acceso.",
+          "El nivel conceptual se denomina también nivel lógico.",
+          "El nivel físico también recibe el nombre de nivel interno."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-45",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál es la definición correcta de 3FN?",
+        "a": [
+          "Una entidad está en 3FN si está en 2FN y todos los atributos que forman parte de las claves candidatas (atributos principales) tienen dependencia funcional completa respecto de éstas, es decir, no hay dependencias funcionales de atributos no principales respecto de una parte de las claves.",
+          "Una entidad está en 3FN si está en 2FN y todos los atributos que no forman parte de las claves candidatas (atributos no principales) tienen dependencia funcional completa respecto de éstas, es decir, no hay dependencias funcionales de atributos no principales respecto de una parte de las claves. Cada uno de los atributos de una entidad depende de toda la clave.",
+          "Una entidad está en 3FN si está en 2FN y todos sus atributos principales dependen directamente de la clave primaria, es decir, no hay dependencias funcionales transitivas de atributos no principales respecto de las claves.",
+          "Una entidad está en 3FN si está en 2FN y todos sus atributos no principales dependen directamente de la clave primaria, es decir, no hay dependencias funcionales transitivas de atributos no principales respecto de las claves."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-67",
+        "t": "T3.02",
+        "o": "A",
+        "q": "El diagrama E/R extendido que se muestra a continuación, ¿en cuántas relaciones se transformará en el modelo relacional?",
+        "a": [
+          "En una única relación.",
+          "En dos relaciones.",
+          "En tres relaciones.",
+          "El diagrama no puede ser transformado al modelo lógico relacional."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-68",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Dada la relación Alumnos(DNI, Nombre, Localidad, Provincia), sabiendo que la relación no tiene grupos repetitivos, que DNI es clave primaria y teniendo en cuenta las siguientes dependencias funcionales, ¿en qué forma normal se encuentra dicha relación?",
+        "a": [
+          "1FN.",
+          "2FN.",
+          "3FN.",
+          "FNBC."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-79",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación, si tenemos las entidades A, B, C y D y una relación X que asocia a todas esas entidades, señale la respuesta correcta:",
+        "a": [
+          "La transformación de este diagrama al modelo relacional supone la creación de 4 tablas.",
+          "La clave primaria de X estará compuesta en el modelo relacional por la concatenación de las claves primarias de las entidades A, B, C y D.",
+          "La clave primaria de X no contendrá en el modelo relacional ninguna clave ajena.",
+          "La relación X no está soportada en el modelo Entidad-Relación, al tener más de 3 entidades asociadas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-80",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Para cada atributo de una relación en el modelo relacional, el conjunto de valores permitidos para ese atributo se llama:",
+        "a": [
+          "Dominio.",
+          "Esquema.",
+          "Intensión.",
+          "Cardinalidad."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-83",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Se dice que una entidad se encuentra en segunda forma normal (2FN):",
+        "a": [
+          "Si no tiene grupos repetitivos, independientemente de que los atributos no primarios tengan o no dependencia funcional completa con cada una de las claves y no con partes de estas.",
+          "Si no tiene grupos repetitivos y cualquiera de sus atributos no primarios tienen una dependencia funcional completa con cada una de las claves y no con partes de éstas.",
+          "Si tiene grupos repetitivos, independientemente de que los atributos no primarios tengan o no dependencia funcional completa con cada una de las claves y no con partes de estas.",
+          "Si tiene grupos repetitivos y cualquiera de sus atributos no primarios tienen una dependencia funcional completa con cada una de las claves y no con partes de estas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-84",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Señale la afirmación correcta acerca de La Forma Normal de Boyce-Codd (FNBC):",
+        "a": [
+          "Requiere que existan dependencias funcionales no triviales de los atributos que no sean un conjunto de la clave candidata.",
+          "Es una versión ligeramente menos fuerte que la 3FN (Tercera Forma Normal).",
+          "Una relación está en FNBC si está en 3FN y solo si, todo determinante es una clave candidata.",
+          "Es una versión ligeramente menos fuerte que la 2FN (Segunda Forma Normal)."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-85",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Dado el diagrama E/R anterior, ¿cómo se transformará al modelo relacional la relación \"Está empleado en\"?",
+        "a": [
+          "Se transformará como cualquier relación 1:N, es decir, el identificador de la tabla Organización se propagará a la tabla Persona.",
+          "Se transformará como una relación reflexiva, propagándose el identificador de la tabla persona a la nueva tabla \"Está empleado en\".",
+          "Se transformará como las relaciones N:M, creándose una nueva tabla para la relación \"Está empleado en\" y se propagarán a esa nueva tabla los identificadores de las tablas Persona y Organización, que formarán parte de la clave primaria.",
+          "Se transformará creándose una tabla única para las relaciones \"Está empleado en\" y \"Cobra prestación\", propagándose a esa nueva tabla los identificadores de Persona, Organización y SEPE."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-86",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Teniendo en cuenta el diagrama E/R anterior, se va a transformar la jerarquía al modelo relacional sabiendo que los subtipos se diferencian en pocos atributos pero las relaciones entre los subtipos y otras entidades no son las mismas, ¿qué opción de transformación se considera más correcta?",
+        "a": [
+          "Se crea una tabla para la entidad Organización y se agrupa en una única tabla las entidades Persona y SEPE teniendo como clave primaria el identificador de Organización.",
+          "Se agrupan en una tabla todos los atributos de la entidad Organización y de las entidades Persona y SEPE. La clave primaria de esta tabla es el identificador de Organización añadiéndose un atributo que indique a qué subtipo pertenece cada ocurrencia.",
+          "Se crea una tabla para Persona y otra para SEPE y los atributos comunes aparecen en todos los subtipos y la clave primaria para cada tabla es el identificador de Organización.",
+          "Se crea una tabla para Organización que tenga de clave primaria el identificador y una tabla para Persona y otra para Empresa que tengan el identificador de Organización como clave ajena."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-87",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Partiendo del diagrama E/R anterior, la clave primaria de la entidad postor es idPostor y la clave primaria de Lote es idLote. Teniendo en cuenta que un postor puede pujar por varios lotes y un lote puede ser pujado por varios postores, que una puja se puede corresponder con un adjudicatario y un adjudicatario se corresponde con una puja, ¿qué respuesta sobre la transformación del diagrama E/R al modelo relacional es correcta?",
+        "a": [
+          "Adjudicatario(idPostor, idLote) siendo idPostor e idLote claves ajenas de la tabla Puja.",
+          "SeCorresponde(idPostor, idLote, fecha) siendo idPostor clave ajena de la tabla Postor e idPuja clave ajena de la tabla Puja.",
+          "Puja(idPostor, idLote) siendo idPostor clave ajena de la tabla Postor e idLote clave ajena de la tabla Lote.",
+          "El diagrama no puede ser trasformado al modelo relacional porque no es soportado."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-90",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Dentro del modelo relacional, el número de filas de una relación define su:",
+        "a": [
+          "Dominio.",
+          "Cardinalidad.",
+          "Grado.",
+          "Intensión."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-91",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el modelo relacional, las vistas:",
+        "a": [
+          "Son una forma de implementar la independencia lógica de los datos.",
+          "Son una forma de implementar la independencia física de los datos.",
+          "Almacenan el estado de una tabla en un momento dado.",
+          "Son definidas a partir de una tabla en las que se han eliminado algunos de sus atributos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-92",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Las reglas de integridad en una base de datos relacional son:",
+        "a": [
+          "Integridad de claves con las claves ajenas.",
+          "Integridad de entidad e integridad referencial.",
+          "Integridad referente a las claves.",
+          "Restricciones de usuario y claves primarias no nulas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-93",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Si cada uno de los atributos de una relación depende de la clave primaria, de toda la clave primaria y nada más que de la clave primaria, la relación estará en:",
+        "a": [
+          "1ª Forma Normal.",
+          "2ª Forma Normal.",
+          "3ª Forma Normal.",
+          "FNBC."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-95",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En relación con los operandos del álgebra relacional, se cumple que:",
+        "a": [
+          "La unión de las relaciones R y S puede aplicarse aun cuando R y S no tengan igual grado y/o compatibilidad de dominios.",
+          "El producto cartesiano incluye en la relación resultante las combinaciones de tuplas de ambas relaciones que en los atributos comunes no tienen valores iguales o correspondientes.",
+          "El grado de la relación resultante del Join entre dos relaciones R y S es igual al grado de R más el grado de S.",
+          "La intersección es un operador fundamental del álgebra relacional."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-96",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Respecto al diseño físico de la base de datos, señale la respuesta correcta:",
+        "a": [
+          "Define el esquema externo de la base de datos.",
+          "Es aconsejable crear índices sobre atributos que se modifican con frecuencia.",
+          "Son candidatos para construir estructuras de acceso los atributos involucrados en el Join de dos o más relaciones.",
+          "Para acceder a tuplas a través de valores exactos de alguno de sus campos no se recomienda el uso de ficheros dispersos."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-97",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Señale la alternativa que contiene los operadores que, juntos, componen el operador Join del álgebra relacional:",
+        "a": [
+          "Selección, proyección y diferencia.",
+          "Selección, proyección y producto cartesiano.",
+          "Proyección, producto cartesiano y diferencia.",
+          "Proyección, producto cartesiano y unión."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-98",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Qué solución evita valores nulos en la transformación de relaciones 1:1 utilizando propagación de clave?",
+        "a": [
+          "Propagar la clave desde la entidad del lado con cardinalidad (1,1) a la entidad del lado con cardinalidad (0,1).",
+          "Propagar la clave desde la entidad del lado con cardinalidad (0,1) a la entidad del lado con cardinalidad (1,1).",
+          "Propagar la clave desde la entidad del lado con cardinalidad (1,1) a la entidad del lado con cardinalidad (1,1).",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-99",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Si se transforma al modelo relacional una jerarquía parcial y solapada de un esquema E/R considerando solo una relación para los subtipos participantes:",
+        "a": [
+          "No existe redundancia en el manejo de los atributos del supertipo.",
+          "Hay que incluir una restricción para controlar el solapamiento.",
+          "Se pierde semántica en la transformación al relacional.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-100",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Dado el diagrama Entidad/Relación que se presenta a continuación, ¿qué relación se obtendrá en una transformación correcta al modelo relacional? Tenga en cuenta que los atributos a, b, c son, respectivamente, el identificador de las relaciones A, B y C. El diagrama muestra una relación ternaria R entre A, B y C, sin cardinalidades indicadas. En las opciones se expresa en texto la clave primaria que aparece subrayada en el original.",
+        "a": [
+          "R(a, b, c), con clave primaria (b, c).",
+          "R(a, b, c), con clave primaria (a).",
+          "R(a, b, c), con clave primaria (a, b, c).",
+          "R(a, b, c), con clave primaria (a, c)."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "Adaptación textual del original: se describe el diagrama ternario y se expresa en cada opción la clave primaria que el PDF señala mediante subrayado."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-R-02",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuándo puede ser conveniente transformar una jerarquía del modelo E/R en tantas relaciones como subtipos tenga la jerarquía?",
+        "a": [
+          "Cuando los subtipos tienen muchos atributos comunes.",
+          "Cuando se va a realizar un número elevado de consultas al supertipo.",
+          "Cuando el supertipo no participa en ninguna relación.",
+          "Cuando los subtipos tienen muchos atributos distintos."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "La frase encontrada describe la opción con tabla para supertipo y tablas para subtipos; el enunciado pregunta por tantas relaciones como subtipos. No se acepta una coincidencia que cambia la estrategia.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AS01-P1-R-02"
+      ]
+    },
+    {
+      "question": {
+        "i": "AS01-P1-R-04",
+        "t": "T3.02",
+        "o": "A",
+        "q": "NO es un modelo lógico de datos:",
+        "a": [
+          "El modelo de Boyce-Codd.",
+          "El modelo jerárquico.",
+          "El modelo orientado a objetos.",
+          "El modelo Codasyl."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-R-05",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Los operadores fundamentales del álgebra relacional son:",
+        "a": [
+          "Proyección, intersección, selección y división.",
+          "Selección, unión, join, diferencia e intersección.",
+          "Proyección, join, división y selección.",
+          "Selección, proyección, producto cartesiano, unión y diferencia."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-28",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Según el modelo relacional, ¿a qué término corresponde la definición “Dada una relación, un atributo o grupo de atributos Y que depende funcionalmente de un atributo o grupo de atributos X, pero no de ningún subconjunto de atributos de X”?",
+        "a": [
+          "Dependencia funcional.",
+          "Dependencia funcional trivial.",
+          "Dependencia funcional completa.",
+          "Dependencia funcional multivaluada."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-32",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Considere un modelo E/R con un tipo de relación muchos a muchos (N:M) Trabaja en el que participan los tipos de entidad Empleado y Proyecto. Trabaja tiene además el atributo fecha. La clave primaria del tipo de entidad Empleado es idEmp y la clave primaria del tipo de entidad Proyecto es idProy. Por definición del modelo E/R, la clave primaria del tipo de relación Trabaja:",
+        "a": [
+          "Puede ser (idProy, idEmp) o bien (idProy, idEmp, fecha).",
+          "Solo puede ser (idProy, idEmp, fecha).",
+          "Puede ser (idProy, idEmp), (idProy, idEmp, fecha), (idProy, fecha) o bien (idEmp, fecha).",
+          "Solo puede ser (idProy, idEmp)."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-33",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes sentencias es correcta en relación al término superclave?",
+        "a": [
+          "En una tabla siempre hay una única superclave que es la formada por el total de sus atributos.",
+          "Dada una clave candidata, cualquier subconjunto de atributos de ella es una superclave.",
+          "Una superclave es un conjunto de uno o varios atributos que identifican de modo único las tuplas de la relación.",
+          "Una superclave es el conjunto mínimo de atributos que identifican de modo único las tuplas de la relación."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-58",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Las bases de datos relacionales se normalizan para (señale la respuesta INCORRECTA):",
+        "a": [
+          "Evitar la redundancia de los datos.",
+          "Disminuir problemas de actualización de los datos en las tablas.",
+          "Proteger la integridad de datos.",
+          "Proporcionar funcionamiento en alta disponibilidad."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-63",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de estas afirmaciones es FALSA en bases de datos relacionales?",
+        "a": [
+          "Las claves primarias son la clave principal de un registro dentro de una tabla y estas deben cumplir con la integridad de datos.",
+          "Las claves ajenas se colocan en la tabla hija, contienen el mismo valor que la clave primaria del registro padre; por medio de estas se hacen las formas relacionales.",
+          "Pueden existir dos tablas con el mismo nombre.",
+          "La relación entre una tabla padre y un hijo se lleva a cabo por medio de las claves primarias y claves foráneas (o ajenas)."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-68",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Dada una relación R(A, B, C), donde no existen grupos repetitivos, A es clave primaria y están presentes las dependencias A→B, A→C y B→C, ¿en qué forma normal se encuentra la relación R?",
+        "a": [
+          "1ª Forma Normal.",
+          "2ª Forma Normal.",
+          "3ª Forma Normal.",
+          "FNBC."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-75",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Si al transformar una jerarquía del modelo Entidad-Relación al modelo lógico relacional creamos una relación para el supertipo y una relación para cada uno de los subtipos, señale la afirmación INCORRECTA:",
+        "a": [
+          "En cada relación de los subtipos existe un conjunto de atributos como clave ajena que referencia a la clave primaria del supertipo.",
+          "Es la solución que mejor conserva la semántica.",
+          "Es apropiada esta transformación porque los subtipos tienen muchos atributos distintos y, además, se quieren conservar los atributos comunes en el supertipo.",
+          "Es apropiada porque mejora la eficiencia en los accesos a todos los atributos de un subtipo, ya sean los atributos comunes al supertipo o los atributos específicos de cada subtipo."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-82",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el modelo relacional, el número de tuplas de una relación define su:",
+        "a": [
+          "Dominio.",
+          "Cardinalidad.",
+          "Grado.",
+          "Extensión."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-85",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En la normalización del Modelo Entidad-Relación, ¿cuál de las siguientes afirmaciones es INCORRECTA?",
+        "a": [
+          "En una tabla en Segunda Forma Normal, cada campo puede tener como mucho un valor.",
+          "En una tabla en Segunda Forma Normal, ningún campo (que no pertenezca a las claves candidatas) depende transitivamente de alguna clave candidata.",
+          "En una tabla en Tercera Forma Normal, cada campo puede tener como mucho un valor.",
+          "En una tabla en Tercera Forma Normal, las claves candidatas pueden estar compuestas de varios campos."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-91",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En los niveles de la arquitectura ANSI/X3/SPARC NO es correcto que:",
+        "a": [
+          "El nivel interno es el más cercano al almacenamiento físico.",
+          "El nivel externo es el más cercano al usuario.",
+          "El nivel conceptual es intermedio entre los niveles interno y externo.",
+          "En el nivel externo solo puede haber usuarios finales."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-93",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de los siguientes términos NO sería apropiado en una definición formal del modelo relacional de bases de datos?",
+        "a": [
+          "Relación.",
+          "Cardinalidad.",
+          "Identificador único.",
+          "Dominio."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-95",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál es el objetivo de la fase de diseño conceptual en el diseño de una base de datos?",
+        "a": [
+          "Obtener una representación de la información con independencia de usuarios y aplicaciones en particular.",
+          "Transformar el diseño lógico obtenido y adaptarlo al modelo de datos en el que se apoya el SGBD que se va a utilizar.",
+          "Conseguir una instrumentación lo más eficiente posible del diseño lógico.",
+          "Ninguna de las anteriores respuestas es correcta."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-96",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Si una relación R está en FNBC, entonces se cumple que:",
+        "a": [
+          "Todo determinante es una clave candidata.",
+          "No existe ningún atributo no principal que dependa transitivamente de alguna de las claves.",
+          "Cada atributo no principal tiene dependencia funcional completa respecto de cada una de las claves.",
+          "Todas son correctas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-98",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Para que una relación R que está en 1FN también esté en 2FN, la condición necesaria y suficiente es:",
+        "a": [
+          "Cada atributo no principal tiene dependencia funcional completa respecto del clave primaria.",
+          "No puede haber grupos repetitivos.",
+          "Cada atributo no principal tiene dependencia funcional completa respecto de cada una de las claves.",
+          "No puede haber grupos repetitivos ni admitirse valores nulos en los atributos de la clave primaria."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-R-04",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Según el modelo relacional, una tabla con grado 5 y cardinalidad 6 tiene:",
+        "a": [
+          "5 columnas y 6 tuplas.",
+          "5 tuplas y 6 columnas.",
+          "6 tuplas, y cada una de ellas relacionadas con 5 relaciones.",
+          "30 tuplas."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-37",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el modelo relacional, ¿qué se entiende por integridad referencial?",
+        "a": [
+          "Que todos los datos estén referenciados por su clave y ésta sea única.",
+          "Que todo atributo que represente una relación sea nulo, o bien exista en la clave primaria del elemento relacionado.",
+          "Que todo conjunto de operaciones que constituya una unidad progrese en conjunto o bien falle en conjunto, pero que no progrese nunca en situaciones intermedias.",
+          "Que se pueda referenciar la totalidad de la base de datos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-42",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En un sistema gestor de bases de datos construido sobre el modelo relacional, se denomina dominio:",
+        "a": [
+          "Al número de tuplas que tenga una relación.",
+          "Al número de atributos que tenga la relación.",
+          "Al rango de valores que puede tener un atributo dado.",
+          "Al producto del número de tuplas y atributos de una relación."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-47",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Dada la siguiente relación: Calificación(Dni_Profesor, Nombre_Profesor, Dni_Alumno, Nota_Asignatura). La clave primaria está formada por Dni_profesor y Dni_Alumno, y Dni_profesor implica Nombre_Profesor. ¿En qué forma normal está la relación Calificación?",
+        "a": [
+          "En primera forma normal.",
+          "En segunda forma normal.",
+          "En tercera forma normal.",
+          "En forma normal de Boyce-Codd."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-48",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el modelo relacional, un atributo o conjunto de atributos de una relación R2 cuyos valores han de concordar con los de la clave primaria de una relación R1, es una:",
+        "a": [
+          "Clave candidata.",
+          "Clave referencial.",
+          "Clave secundaria.",
+          "Clave ajena."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-49",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuáles son los tres niveles que establece ANSI/SPARC para garantizar la independencia de los datos?",
+        "a": [
+          "Interno, conceptual y de aplicación.",
+          "Interno, conceptual y externo.",
+          "Interno, intermedio y externo.",
+          "De almacenamiento, conceptual y de negocio."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-77",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Una tabla se dice que está en 3ª Forma Normal si se encuentra en 2ª Forma Normal y:",
+        "a": [
+          "Las únicas dependencias funcionales elementales son aquellas en las que la clave principal (y claves secundarias) determinan un atributo.",
+          "Todo atributo secundario depende totalmente de la clave completa.",
+          "Los valores que componen los atributos son elementales y únicos.",
+          "No existen atributos no primarios que son transitivamente dependientes de cada posible clave de la tabla."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-78",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Dada la tabla EMPLEADOS(COD_EMPLEADO, COD_DEPARTAMENTO, TIPO, EDAD, PLANTA_DEPARTAMENTO) donde la clave principal es COD_EMPLEADO y COD_DEPARTAMENTO, señale la respuesta correcta:",
+        "a": [
+          "Cumple la segunda forma normal.",
+          "No cumple la tercera forma normal, pero cumple la segunda.",
+          "No cumple la segunda forma normal.",
+          "No cumple la cuarta forma normal, pero cumple la tercera."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-R-01",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes operaciones del álgebra relacional NO pertenece a las operaciones fundamentales, también denominadas operadores básicos?",
+        "a": [
+          "Proyección.",
+          "Producto cartesiano.",
+          "Intersección.",
+          "Unión."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-52",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Las definiciones de restricciones de integridad en un esquema de bases de datos, ¿a qué nivel pertenecen de entre los propugnados en la arquitectura ANSI/SPARC para un modelo de SGBD?",
+        "a": [
+          "Conceptual.",
+          "Físico.",
+          "Interno.",
+          "Externo."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-68",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En relación a la normalización de bases de datos, indique a qué regla de normalización corresponde “Ningún atributo no primario de la tabla es dependiente transitivamente de una clave primaria” o “no hay dependencias funcionales transitivas de atributos no principales respecto de las claves”:",
+        "a": [
+          "A la 1ª FN.",
+          "A ninguna.",
+          "A la 3ª FN.",
+          "A la 2ª FN."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-82",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Según la teoría de la normalización, para pasar una relación de 2º FN a 3ª FN hay que eliminar:",
+        "a": [
+          "De ella los grupos repetitivos.",
+          "Las dependencias parciales respecto de la clave primaria.",
+          "Las dependencias parciales respecto de las claves candidatas.",
+          "Las dependencias transitivas respecto de las claves candidatas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-83",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Al diseñar la representación física de una base de datos, escogeremos los índices secundarios siguiendo los siguientes criterios (señale la INCORRECTA):",
+        "a": [
+          "Si la tabla es pequeña.",
+          "Sobre atributos que se utilizan para acceder con mucha frecuencia.",
+          "Sobre claves ajenas que se utilicen con frecuencia para hacer joins.",
+          "Sobre la clave primaria."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-84",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En la obtención del modelo lógico de datos a partir del modelo conceptual, la transformación de relaciones 1:1 supondrá la creación de una nueva tabla si (señale la respuesta INCORRECTA):",
+        "a": [
+          "Las cardinalidades mínimas son cero (ambas).",
+          "La relación tiene atributos propios.",
+          "Se prevé que posteriormente puedan variarse las cardinalidades.",
+          "Las dos entidades participan de forma completa en la relación."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-94",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Indique cuál de las siguientes afirmaciones es CORRECTA:",
+        "a": [
+          "En una tabla definida en SQL sólo se puede establecer una clave ajena (foránea) que referencie a la clave principal de otra tabla.",
+          "En una tabla definida en SQL sólo se puede establecer una clave ajena (foránea) que referencie a la clave principal o a un atributo que tenga la restricción de unicidad (UNIQUE) de otra tabla.",
+          "En una tabla definida en SQL sólo se puede establecer una clave ajena (foránea) que referencie a un atributo que tenga la restricción de unicidad (UNIQUE) de otra tabla.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-97",
+        "t": "T3.02",
+        "o": "A",
+        "q": "La arquitectura de tres niveles ANSI/X3/SPARC proporciona, entre otras, la independencia lógica de los datos, que permite:",
+        "a": [
+          "Cambiar el esquema interno sin necesidad de cambiar el esquema conceptual o los esquemas externos.",
+          "Cambiar el esquema conceptual sin necesidad de cambiar el esquema interno.",
+          "Cambiar el esquema conceptual sin necesidad de cambiar los esquemas externos ni los programas de aplicación.",
+          "Cambiar el esquema externo sin necesidad de cambiar el esquema conceptual."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-70",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En la transformación del modelo Entidad-Relación al modelo lógico relacional, las relaciones 1:1 se transformarán en una nueva tabla si (indique la respuesta INCORRECTA):",
+        "a": [
+          "Si una de las cardinalidades mínimas es cero y la otra no.",
+          "Las cardinalidades mínimas son cero (ambas), esto evitará valores nulos en las claves ajenas y mantendrá la simetría natural (las entidades mantienen su independencia en tablas separadas).",
+          "La relación tiene atributos propios.",
+          "Se prevé que posteriormente puedan variarse las cardinalidades."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-71",
+        "t": "T3.02",
+        "o": "A",
+        "q": "NO es un operador fundamental del álgebra relacional:",
+        "a": [
+          "Producto de cartesiano.",
+          "Diferencia.",
+          "Intersección.",
+          "Selección."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-72",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Respecto al modelo físico de datos, NO es una recomendación de optimización del mismo:",
+        "a": [
+          "Combinar entidades si los accesos son frecuentes dentro de la misma transacción.",
+          "Redefinir o añadir relaciones entre entidades para hacer más directo el acceso entre entidades.",
+          "No introducir elementos redundantes.",
+          "Definir claves secundarias o índices para permitir caminos de acceso alternativos."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-73",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el diseño de bases de datos y, en concreto, durante la obtención del modelo lógico a partir del modelo conceptual se realizan transformaciones (señale la respuesta INCORRECTA):",
+        "a": [
+          "En las relaciones 1:N de dependencia por identificador se utiliza el método de propagación de clave, y además la clave primaria de la tabla con cardinalidad muchos estará formada por la concatenación de su propia clave más la que le cede la de cardinalidad uno.",
+          "Una de las opciones para transformar una jerarquía consiste en crear una tabla para el supertipo que tenga de clave primaria el identificador y una tabla para cada uno de los subtipos que tengan el identificador del supertipo como clave ajena. Esta solución puede aplicarse cuando los subtipos se diferencien en pocos atributos y las relaciones entre los subtipos y otras entidades sean las mismas.",
+          "Cada entidad del modelo conceptual se transforma en una relación o tabla con estructura relacional. La clave primaria de la entidad pasa a ser la clave primaria de la relación. Los atributos que forman parte de la clave no podrán tomar el valor nulo.",
+          "Cuando se trata de relaciones reflexivas con correspondencia 1:N se transforma utilizando el método de propagación de clave, aunque, en este caso, al tratarse de la misma tabla, es necesario renombrar el nombre del identificador que se transfiere, ya que si no estaría repetido respecto del ya existente en la entidad de origen."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-75",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes respuestas NO es correcta en relación con el modelo lógico relacional?",
+        "a": [
+          "Al número de atributos de una relación se le denomina conjunto.",
+          "El número de tuplas de la relación define su cardinalidad.",
+          "Una relación es una tabla donde las filas corresponden a las tuplas y las columnas a los atributos.",
+          "Un dominio es un conjunto de valores."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-76",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Respecto a las reglas de integridad del modelo lógico relacional (señale la respuesta INCORRECTA):",
+        "a": [
+          "La regla de integridad referencial se aplica a las claves ajenas. Si en una relación hay alguna clave ajena, sus valores deben coincidir con valores de la clave primaria a la que hace referencia, o bien, deben ser completamente nulos.",
+          "La regla de integridad de la entidad se aplica a las claves primarias de las relaciones. Ninguno de los atributos que componen la clave primaria puede ser nulo.",
+          "La regla de integridad de la entidad se aplica a las relaciones, a las claves primarias y a las claves alternativas.",
+          "Al definir cada atributo sobre un dominio se impone una restricción sobre el conjunto de valores permitidos para cada atributo. A este tipo de restricciones se les denomina restricciones de dominios."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-78",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Una relación se compone de los campos A, B, C y D. Sólo existe una clave candidata, (A, B), que determina funcionalmente a C, y C determina funcionalmente a D. ¿En qué Forma Normal está la relación?",
+        "a": [
+          "No cumple ninguna forma normal.",
+          "Está en 1ª FN, en 2ª FN y en 3ª FN.",
+          "Está en 1ª FN, en 2ª FN pero no en 3ª FN.",
+          "Está en 1ª FN, pero no en 2ª FN ni en 3ª FN."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-79",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En relación a la normalización, señale la respuesta INCORRECTA:",
+        "a": [
+          "Una relación está en 4FN si y sólo si está en FNBC y además en todas las dependencias múltiplemente valoradas el implicante es clave primaria.",
+          "Una relación está en forma normal de Boyce-Codd si y sólo si está en 3FN y además todo determinante es una clave candidata.",
+          "Una relación está en 3FN si está en 2FN y todos sus atributos no principales dependen directamente de la clave primaria.",
+          "Una relación está en 2FN si está en 1FN y todos los atributos que no forman parte de las claves candidatas tienen dependencia funcional completa respecto de éstas."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-R-04",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En una base de datos relacional, se tiene información guardada en una tabla de PROVINCIAS y, además, se dispone de una tabla de MUNICIPIOS donde parte de la clave es la provincia, ¿se puede borrar un elemento de la tabla de provincias manteniendo la integridad del sistema?",
+        "a": [
+          "Solo si no hay ninguna población perteneciente a esa provincia.",
+          "Sí, una vez que los municipios ya existen no hay ningún problema.",
+          "Sí, aunque no podría dar de alta nuevos municipios de esa provincia.",
+          "No, la tabla de provincias no puede cambiar ya que son un elemento estable."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-R-05",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Sea la relación SOLICITUD(CODIGO, FECHA, DNI_SOLICITANTE, NOMBRE_SOLICITANTE, TELEFONO_SOLICITANTE), teniendo en cuenta que no hay grupos repetitivos y que el atributo CODIGO es su clave primaria, ¿en qué forma normal se encuentra?",
+        "a": [
+          "Sin normalizar.",
+          "1ª Forma Normal.",
+          "2ª Forma Normal.",
+          "3ª Forma Normal."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-13",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En una relación si los atributos que NO forman parte de ninguna clave dependen de forma completa de las claves candidatas, se dice que, normalmente, está en:",
+        "a": [
+          "Tercera Forma Normal.",
+          "Cuarta Forma Normal.",
+          "Quinta Forma Normal.",
+          "Segunda Forma Normal."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-19",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Según Codd, si una relación no posee grupos repetitivos y cada atributo que no pertenezca a la clave es identificado únicamente y de forma total por la clave se dice que está en:",
+        "a": [
+          "Primera Forma Normal.",
+          "Segunda Forma Normal.",
+          "Tercera Forma Normal.",
+          "Forma normal de Boyce-Codd."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-48",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Si hablamos de formas normales en el modelo relacional, una de las siguientes afirmaciones es FALSA:",
+        "a": [
+          "Una información está en primera forma normal si no incluye ningún grupo repetitivo.",
+          "La cuarta forma normal elimina dependencias monovaluadas.",
+          "La segunda forma normal, implica, además de estar en primera forma normal, que en una relación cualquiera de sus atributos no primarios tienen una dependencia plena con cada una de las claves, y no con partes de éstas.",
+          "La quinta forma normal elimina dependencias combinacionales."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-49",
+        "t": "T3.02",
+        "o": "A",
+        "q": "De entre las características de una relación del modelo relacional NO se encuentra:",
+        "a": [
+          "El orden de las columnas dentro de una tabla es indiferente.",
+          "Cada tabla debe contener un solo tipo de filas.",
+          "El valor individual de la intersección de cualquier fila y columna puede ser un único dato.",
+          "Un mismo dominio podrá servir para definir los valores de varias columnas diferentes."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-50",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Respecto al modelo relacional, señale la afirmación INCORRECTA:",
+        "a": [
+          "La regla de integridad de entidad se aplica a las claves primarias de las relaciones.",
+          "La integridad de entidad significa que ninguno de los atributos que componen la clave primaria o alternativa puede ser nulo.",
+          "La regla de integridad referencial se aplica a las claves ajenas.",
+          "La integridad referencial hace referencia a que, si en una relación hay alguna clave ajena, sus valores deben coincidir con valores de la clave primaria a la que hace referencia, o bien, deben ser completamente nulos."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-51",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En bases de datos, la obtención del modelo lógico a partir del modelo conceptual define varias opciones para la transformación de las jerarquías. Indique cuál de ellas conserva mejor la semántica.",
+        "a": [
+          "Se crea una tabla para cada subtipo, los atributos comunes aparecen en todos los subtipos y la clave primaria para cada tabla es el identificador del supertipo.",
+          "Agrupar en una tabla todos los atributos de la entidad supertipo y de los subtipos. La clave primaria de esta tabla es el identificador de la entidad. Se añade un atributo que indique a qué subtipo pertenece cada ocurrencia (el atributo discriminante de la jerarquía).",
+          "Consiste en crear una tabla para el supertipo que tenga de clave primaria el identificador y una tabla para cada uno de los subtipos que tengan el identificador del supertipo como clave ajena.",
+          "Todas las opciones anteriores son correctas."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-60",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Existe una implementación N:M entre dos entidades en el modelo conceptual de datos de una aplicación. Si se va a implementar como una relación normalizada en una base de datos relacional, ¿cuántas tablas se necesitarán como mínimo para poder incluir la relación entera en la base de datos?",
+        "a": [
+          "1.",
+          "2.",
+          "3.",
+          "4."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-67",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes operaciones del álgebra relacional es una operación unaria?",
+        "a": [
+          "Proyección.",
+          "Diferencia de conjuntos.",
+          "Producto cartesiano.",
+          "Unión."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-68",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Qué significa que una relación esté en Tercera Forma Normal?",
+        "a": [
+          "Que esté en segunda forma normal y además que todos sus atributos dependan de todos y cada uno de los atributos de la clave.",
+          "Que esté en segunda forma normal y además que no haya dependencias funcionales multivaluadas.",
+          "Que esté en segunda forma normal y además que no haya dependencias transitivas respecto de la clave primaria.",
+          "Que esté en segunda forma normal y además que no haya dependencias funcionales combinacionales."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-69",
+        "t": "T3.02",
+        "o": "A",
+        "q": "La arquitectura ANSI/X3/SPARC define los siguientes niveles de abstracción:",
+        "a": [
+          "Nivel interno y nivel externo.",
+          "Nivel conceptual y nivel interno.",
+          "Nivel interno, nivel conceptual y nivel externo.",
+          "Nivel lógico y nivel físico."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-70",
+        "t": "T3.02",
+        "o": "A",
+        "q": "La integridad referencial:",
+        "a": [
+          "Define que la clave primaria de una tupla no debe ser nulo, ni ninguno de los atributos que la componen.",
+          "Define que los valores de las claves ajenas de una tabla deben corresponder con los valores de la clave primaria a la que hace referencia, o ser nulos.",
+          "Define la independencia física y lógica de la base de datos.",
+          "Define que todas las filas tienen las mismas columnas y formato."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-55",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En una tabla de una base de datos relacional, si no existen grupos repetitivos, y todos los elementos son independientes entre sí y no dependen solamente de la clave primaria de forma plena, ¿ante qué forma normal (FN) nos encontramos?",
+        "a": [
+          "1ª FN.",
+          "2ª FN.",
+          "3ª FN.",
+          "FNBC."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-57",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Durante la obtención del modelo lógico a partir del conceptual, la transformación de relaciones en las que se crea una tabla como consecuencia de la relación, que tendrá como clave primaria la concatenación de los identificadores de las entidades relacionadas, se aplica a:",
+        "a": [
+          "Relaciones 1:1.",
+          "Relaciones 1:N.",
+          "Relaciones de agregación.",
+          "Relaciones ternarias."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-58",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Una relación está 4ª Forma Normal si y solo si:",
+        "a": [
+          "Está en 3FN y además todo determinante es clave candidata.",
+          "Está en FNBC y toda dependencia multivaluada de combinación está implicada por una clave candidata.",
+          "Está en 3FN y todos sus atributos no principales dependen directamente de la clave primaria.",
+          "Está en FNBC y además en todas las dependencias múltiplemente valoradas el implicante es clave candidata."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "La formulación de 4FN usa clave candidata donde se requiere revisar la condición formal de superclave y dependencias no triviales. La coincidencia del libro no basta para despejar la duda.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AS08-P1-58"
+      ]
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-48",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En relación con la normalización de bases de datos relacionales, señale la respuesta INCORRECTA:",
+        "a": [
+          "Una tabla está en Forma Normal de Boyce-Codd si está en Tercera Forma Normal y además todos los atributos que son determinantes son claves candidatas.",
+          "Una tabla está en Primera Forma Normal si no contiene grupos repetitivos, es decir, cada atributo de una tupla tiene a lo sumo un valor.",
+          "Una tabla está en Segunda Forma Normal si está en Primera Forma Normal y además todos los atributos no principales tienen dependencia funcional completa respecto de las claves candidatas.",
+          "Una tabla está en Segunda Forma Normal si ningún campo que no pertenezca a las claves candidatas depende transitivamente de alguna clave candidata."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-49",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el diseño de la representación física de la base de datos, en relación con los índices secundarios (señale la respuesta INCORRECTA):",
+        "a": [
+          "Crear índices sobre tablas pequeñas.",
+          "Crear un índice sobre la clave primaria de la relación.",
+          "Evitar los índices sobre atributos que se modifican a menudo.",
+          "Añadir un índice sobre las claves ajenas que se utilicen con frecuencia para hacer joins."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-50",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Una relación está en 4ª Forma Normal si y solo si:",
+        "a": [
+          "Está en 3ª Forma Normal y todo determinante es clave candidata.",
+          "Esta en Forma Normal de Boyce-Codd y en todas las dependencias múltiplemente valoradas el implicante es clave candidata.",
+          "Está en 3ª Forma Normal y toda dependencia de combinación está implicada por una clave candidata.",
+          "Está en Forma Normal de Boyce-Codd y todo determinante es clave candidata."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-51",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el modelo relacional, se dice que un atributo A tiene una dependencia funcional completa de los atributos B y C si A depende funcionalmente:",
+        "a": [
+          "De B y también de C.",
+          "De B o de C.",
+          "De B o de C pero no de ambos.",
+          "Del conjunto de ambos pero de ninguno de ellos por separado."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-36",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Según Métrica v3, indique cuál de las siguientes NO es un objetivo de la normalización de una base de datos:",
+        "a": [
+          "Minimizar la redundancia de los datos.",
+          "Disminuir problemas de actualización de los datos en las tablas.",
+          "Proteger la integridad de datos.",
+          "Mejorar la velocidad de acceso a los datos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-41",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el proceso de normalización, una tabla está en tercera forma normal (3FN) si, además de estar en 2FN, cumple que:",
+        "a": [
+          "No existe ninguna dependencia funcional transitiva entre atributos no clave.",
+          "Todos los atributos son atómicos y existe una clave primaria.",
+          "No existen dependencias funcionales parciales.",
+          "No existen dependencias multivaluadas."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-42",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál es la principal ventaja de usar índices en una base de datos relacional?",
+        "a": [
+          "Mejoran la velocidad de las consultas de búsqueda.",
+          "Eliminan la necesidad de claves primarias en las tablas.",
+          "Evitan la duplicidad de datos en toda la base de datos.",
+          "Reducen el tamaño de la base de datos."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-39",
+        "t": "T3.02",
+        "o": "A",
+        "q": "La regla de integridad de entidad especifica que:",
+        "a": [
+          "El nombre de las claves externas y primarias deben ser iguales.",
+          "La clave primaria debe ser numérica.",
+          "Cualquier atributo que pertenezca a la clave primaria de la relación puede ser nulo.",
+          "Ningún atributo que pertenezca a la clave primaria de la relación puede ser nulo."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-41",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En las fases de diseño de una base de datos, la identificación de entidades y las relaciones entre ellas se hace durante:",
+        "a": [
+          "El diseño conceptual.",
+          "El diseño físico.",
+          "Las pruebas de carga.",
+          "El diseño lógico."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "El pasaje encontrado describe la iteración de dos fases y no atribuye expresamente la identificación de entidades al diseño conceptual. Pendiente de localizar la definición de la fase.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AS10-P1-41"
+      ]
+    },
+    {
+      "question": {
+        "i": "AS10-P1-42",
+        "t": "T3.02",
+        "o": "A",
+        "q": "La desnormalización de un campo dependiente de otro en la misma tabla tiene como objetivo típico:",
+        "a": [
+          "El ahorro de espacio en el almacenamiento.",
+          "Evitar la redundancia de datos.",
+          "Aplicar la primera forma normal respecto a la atomicidad de los atributos.",
+          "La facilidad y rapidez para la obtención de su valor en consultas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-45",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Se dice que una relación está en Tercera Forma Normal (3FN):",
+        "a": [
+          "Si y sólo si está en 2FN y sus atributos no primarios tienen dependencias transitivas respecto de las claves.",
+          "Si está en 2FN y sus atributos no primarios no tienen dependencias transitivas respecto de las claves.",
+          "Si y sólo si está en 2FN y sus atributos no primarios depende funcionalmente de las claves.",
+          "Si está en 2FN y sus atributos no primarios dependen funcionalmente de las claves."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-67",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Si con una herramienta CASE se obtiene el modelo entidad-relación a partir de las tablas y claves ajenas ya existentes en una base de datos, se ha realizado:",
+        "a": [
+          "Las pruebas de consistencia de la base de datos.",
+          "El análisis de la base de datos.",
+          "El diseño de la base de datos.",
+          "Ingeniería inversa."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-51",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En un sistema de gestión de base de datos, y de acuerdo con la arquitectura ANSI/SPARC, señale la respuesta correcta:",
+        "a": [
+          "El esquema de nivel externo para los usuarios no incluye información sobre la base de datos completa.",
+          "El esquema de nivel interno para los usuarios no incluye información sobre la base de datos completa.",
+          "En el nivel conceptual se respetan estrictamente las necesidades de implementación.",
+          "En el nivel conceptual trabajan tanto los usuarios como el administrador de la base de datos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-52",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Una relación (una tabla) se compone de los campos o atributos A, B, C y D. Sólo existe una clave candidata y es la clave compuesta (A, B). Además, se cumple que (A, B) determina funcionalmente a C, y C determina funcionalmente a D. Indique la respuesta correcta:",
+        "a": [
+          "La tabla no cumple ninguna forma normal.",
+          "La tabla está en 1FN, pero no en 2FN, ni en 3FN.",
+          "La tabla está en 1FN y en 2FN, pero no en 3FN.",
+          "La tabla está en 1FN, en 2FN y en 3FN."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-59",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En álgebra relacional la operación que, a partir de dos relaciones del mismo tipo, obtiene una nueva relación formada por la tuplas que pertenecen a las dos relaciones de partida, se llama:",
+        "a": [
+          "Unión.",
+          "Intersección.",
+          "Diferencia.",
+          "Producto cartesiano."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-68",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones sobre el patrón Modelo-Vista-Controlador es FALSA?",
+        "a": [
+          "La vista obtiene información del modelo para presentarla.",
+          "La información que se guarda en el modelo es independiente de la interfaz de usuario.",
+          "Es posible la existencia de varias vistas simultáneas sobre el mismo modelo.",
+          "El modelo recibe los eventos de entrada del usuario y actualiza la información en consecuencia."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-42",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En un modelo relacional, ¿a qué hace referencia el dominio?",
+        "a": [
+          "Cada uno de los elementos que contiene una instancia de la relación.",
+          "Elemento susceptible de tomar valores.",
+          "Conjunto de valores que puede tomar un atributo.",
+          "Conjunto de filas y columnas que forman una tabla."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-51",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Qué afirmación es FALSA respecto a la normalización en bases de datos relacionales?",
+        "a": [
+          "Es una técnica de diseño conceptual de bases de datos.",
+          "Minimiza la redundancia de datos.",
+          "Reduce problemas potenciales en la actualización de los datos.",
+          "Protege la integridad de los datos."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-33",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones sobre el modelo relacional NO es correcta?",
+        "a": [
+          "Cada atributo de una tupla de una relación sólo podrá almacenar un valor.",
+          "Una clave foránea de una relación siempre será clave primaria de otra relación con la que se asocia.",
+          "El orden de las tuplas de una relación carece de relevancia.",
+          "Una clave foránea de una relación no podrá tener valores repetidos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-36",
+        "t": "T3.02",
+        "o": "A",
+        "q": "El diseño de bases de datos se subdivide en las siguientes actividades (señale la respuesta correcta teniendo en cuenta el orden de realización de dichas actividades):",
+        "a": [
+          "Diseño lógico, diseño interno y diseño físico.",
+          "Diseño conceptual, diseño lógico y diseño físico.",
+          "Diseño conceptual, diseño físico y diseño interno.",
+          "Diseño de vistas, diseño conceptual y diseño físico."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-42",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el modelo relacional, una relación R satisfará la tercera forma normal (3FN) si y sólo si:",
+        "a": [
+          "Está en 2FN y no existen dependencias funcionales entre los atributos que no forman parte de la clave primaria de la relación R.",
+          "Está en 2FN y cada atributo no principal de la relación tiene dependencia funcional completa respeto de la clave primaria de esa relación.",
+          "Está en 2FN y cada atributo tiene asociado un dominio del cual sólo toma un valor en cada tupla.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-43",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Una relación R(a, b, c) en la que todos sus atributos son principales, y sabiendo que cumple la 1FN (1ª Forma Normal), se puede asegurar que estará en:",
+        "a": [
+          "2FN, si solo hay una clave candidata.",
+          "2FN, si hay más de una clave candidata.",
+          "3FN.",
+          "No podemos asegurar nada sobre su nivel de normalización."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-34",
+        "t": "T3.02",
+        "o": "A",
+        "q": "¿Cuál de los siguientes esquemas NO forma parte de la arquitectura ANSI/SPARC?",
+        "a": [
+          "Esquema interno.",
+          "Esquema externo.",
+          "Esquema estructural.",
+          "Esquema conceptual."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "ANSI/SPARC: \"esquema estructural\" inventado.",
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-38",
+        "t": "T3.02",
+        "o": "A",
+        "q": "En el modelo relacional, una relación R satisfará la segunda forma normal (2FN) si y sólo si:",
+        "a": [
+          "Está en 3FN y no existen dependencias funcionales entre los atributos que no forman parte de la clave primaria de la relación R.",
+          "Está en 1FN y cada atributo no principal de la relación tiene dependencia funcional completa respeto de la clave primaria de esa relación.",
+          "Está en 1FN y cada atributo tiene asociado un dominio del cual sólo toma un valor en cada tupla.",
+          "Ninguna de las respuestas es correcta."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "2FN frente a 3FN/1FN; d) \"ninguna es correcta\"."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 389,
+    "alreadyHadCitation": 204,
+    "added": 9,
+    "pending": 176,
+    "withCitation": 213
+  }
+}

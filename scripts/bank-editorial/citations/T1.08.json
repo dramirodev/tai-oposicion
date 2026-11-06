@@ -1,0 +1,2748 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T1.08",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "ebb88614122668d36a7e5c9075ce9e7e3df02ef6838197a76fdb438a120a0766",
+    "afterSha256": "a5757419c7a0eaaa454e9501373d70efb306d938d6a47083d13681197b218a23"
+  },
+  "sample": {
+    "beforeSha256": "ca9bcce46251b74c6bb7d7c3c0609242c63c18c6b28e8b249663134a36ffb1e7",
+    "afterSha256": "ca9bcce46251b74c6bb7d7c3c0609242c63c18c6b28e8b249663134a36ffb1e7"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-TAI2024B-P1-13": {
+      "path": "T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf",
+      "sourceHash": "5f258b7cc3f23f39e1f8f4dbdf0679f85d8ff3c499df62a43cf011dcf27e391f",
+      "physicalPage": 18,
+      "printedPage": 18,
+      "excerpt": "Los formatos estructurados de las facturas electrónicas permitirán su visualización y emisión en las distintas lenguas oficiales existentes, con la finalidad de garantizar los derechos de los usuarios.",
+      "label": "Pasaje del temario"
+    },
+    "e-TAIL2022-P1-12": {
+      "path": "T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf",
+      "sourceHash": "5f258b7cc3f23f39e1f8f4dbdf0679f85d8ff3c499df62a43cf011dcf27e391f",
+      "physicalPage": 64,
+      "printedPage": 64,
+      "excerpt": "El período de vigencia de los certificados cualificados NO será superior a 5 años. Dicho período se fijará en atención a las características y tecnología empleada para generar los datos de creación de firma, sello, o autenticación de sitio web (art. 4.2 LSEC).",
+      "label": "Pasaje del temario"
+    },
+    "e-L2025X-P1-12": {
+      "path": "T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf",
+      "sourceHash": "5f258b7cc3f23f39e1f8f4dbdf0679f85d8ff3c499df62a43cf011dcf27e391f",
+      "physicalPage": 40,
+      "printedPage": 40,
+      "excerpt": "NIVELES DE SEGURIDAD de los SeID Un SeID notificado, deberá especificar los niveles de seguridad bajo, sustancial y alto para los MeID expedidos en virtud del mismo (art. 8.1).",
+      "label": "Pasaje del temario"
+    },
+    "e-AT108-P1-27": {
+      "path": "T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf",
+      "sourceHash": "5f258b7cc3f23f39e1f8f4dbdf0679f85d8ff3c499df62a43cf011dcf27e391f",
+      "physicalPage": 99,
+      "printedPage": 99,
+      "excerpt": "La Autoridad de Certificación es la Dirección General de la Policía (Ministerio del Interior) actúa como Autoridad de Certificación (AC), relacionando dos pares de claves con un ciudadano concreto.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT108-P1-29": {
+      "path": "T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf",
+      "sourceHash": "5f258b7cc3f23f39e1f8f4dbdf0679f85d8ff3c499df62a43cf011dcf27e391f",
+      "physicalPage": 103,
+      "printedPage": 103,
+      "excerpt": "España Digital 2026 recoge un conjunto de medidas, reformas e inversiones, articuladas en 12 ejes estratégicos y 42 medidas, alineados a las políticas digitales marcadas por la Comisión Europea para el nuevo periodo. Las acciones de la Agenda están orientadas a impulsar un crecimiento más sostenible e inclusivo, impulsado por las sinergias de las transiciones digital y ecológica, que llegue al conjunto de la sociedad y concilie las nuevas oportunidades que ofrece el mundo digital con el respeto de los valores constitucionales y la protección de los derechos individuales y colectivos:",
+      "label": "Pasaje del temario"
+    },
+    "e-AT108-P1-33": {
+      "path": "T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf",
+      "sourceHash": "5f258b7cc3f23f39e1f8f4dbdf0679f85d8ff3c499df62a43cf011dcf27e391f",
+      "physicalPage": 109,
+      "printedPage": 109,
+      "excerpt": "En marzo de 2021 la Comisión Europea presentó una estrategia de visión y vías para la transformación digital de Europa del momento actual a 2030: la Brújula Digital 2030, que traduce las ambiciones de transformación digital de la UE en objetivos concretos a alcanzar, dentro de cuatro puntos cardinales: - Ciudadano con capacidades digitales. - Infraestructuras digitales seguras y sostenibles. - Transformación digital de las empresas. - Digitalización de los servicios públicos.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT108-P1-48": {
+      "path": "T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf",
+      "sourceHash": "5f258b7cc3f23f39e1f8f4dbdf0679f85d8ff3c499df62a43cf011dcf27e391f",
+      "physicalPage": 32,
+      "printedPage": 32,
+      "excerpt": "A los efectos de garantizar que todas las personas físicas y jurídicas dispongan de un acceso transfronterizo seguro, de confianza y sin incidencias a servicios públicos y privados en la Unión, manteniendo al mismo tiempo el pleno control sobre sus datos, cada EM proporcionará al menos una EUDI en los 24 meses siguientes a la entrada en vigor de los actos de ejecución (art. 5 bis.1).",
+      "label": "Pasaje del temario"
+    },
+    "e-AT108-P1-49": {
+      "path": "T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf",
+      "sourceHash": "5f258b7cc3f23f39e1f8f4dbdf0679f85d8ff3c499df62a43cf011dcf27e391f",
+      "physicalPage": 28,
+      "printedPage": 28,
+      "excerpt": "5. Marco normativo - Reglamento (UE) 910/2014, de 23 de julio de 2014, relativo a la identificación electrónica y los servicios de confianza para las transacciones electrónicas en el mercado interior y por la que se deroga la Directiva 1999/93/CE (Reglamento eIDAS). - Reglamento (UE) 2024/1183 del Parlamento Europeo y del Consejo, de 11 de abril de 2024, por el que se modifica el Reglamento (UE) nº 910/2014 en lo que respecta al establecimiento del marco europeo de identidad digital (Reglamento eIDAS 2). - Ley 6/2020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza (LSEC). - Orden PRE/1838/2014, de 8 de octubre, por la que se publica el Acuerdo de Consejo de Ministros, de 19 de septiembre de 2014, por el que se aprueba Cl@ve, la plataforma común del Sector Público Administrativo Estatal para la identificación, autenticación y firma electrónica mediante el uso de claves concertadas. - Resolución de 14 de diciembre de 2015, de la Dirección de Tecnologías de la Información y las Comunicaciones, por la que se establecen las prescripciones técnicas necesarias para el desarrollo y aplicación del sistema Cl@ve. - Resolución de 14 de julio de 2017, de la Secretaría General de Administración Digital, por la que se establecen las condiciones de uso de firma electrónica no criptográfica, en las relaciones de los interesados con los órganos administrativos de la AGE y sus organismos públicos (última modificación 21 de octubre de 2022). - Ley de 59/2003, de 19 de diciembre, de firma electrónica (derogada). - Ley 39/2015, de 1 de octubre, del Procedimiento Administrativo Común de las Administraciones Públicas. - Ley 40/2015, de 1 de octubre, de Régimen Jurídico del Sector Público.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT108-P1-55": {
+      "path": "T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf",
+      "sourceHash": "5f258b7cc3f23f39e1f8f4dbdf0679f85d8ff3c499df62a43cf011dcf27e391f",
+      "physicalPage": 37,
+      "printedPage": 37,
+      "excerpt": "La certificación tendrá una validez máxima de 5 años, siempre que se realice una evaluación de la vulnerabilidad cada 2 años. Cuando se detecte una vulnerabilidad y no se subsane oportunamente, se cancelará la certificación (art. 5 quater.4).",
+      "label": "Pasaje del temario"
+    }
+  },
+  "questions": [
+    {
+      "id": "TAI2024B-P1-13",
+      "before": {
+        "i": "TAI2024B-P1-13",
+        "t": "T1.08",
+        "o": "O",
+        "q": "La Ley 56/2007, de 28 de diciembre, de Medidas de Impulso de la Sociedad de la Información, ¿qué establece sobre la factura electrónica en el artículo 1?",
+        "a": [
+          "Los formatos estructurados de las facturas electrónicas permitirán su visualización y emisión en las distintas lenguas oficiales existentes y en inglés, con la finalidad de garantizar los derechos de los usuarios nacionales y extranjeros.",
+          "Los formatos estructurados de las facturas electrónicas permitirán su visualización y emisión en las distintas lenguas oficiales existentes, con la finalidad de garantizar los derechos de los usuarios.",
+          "No trata en ningún artículo sobre la factura electrónica.",
+          "La factura electrónica solo se utilizará en contratación, estando excluida de la justificación de ayudas y subvenciones."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          3,
+          12
+        ],
+        "d": 3,
+        "n": "a) añade \"y en inglés... nacionales y extranjeros\" al texto literal; d) \"solo en contratación\".",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "after": {
+        "i": "TAI2024B-P1-13",
+        "t": "T1.08",
+        "o": "O",
+        "q": "La Ley 56/2007, de 28 de diciembre, de Medidas de Impulso de la Sociedad de la Información, ¿qué establece sobre la factura electrónica en el artículo 1?",
+        "a": [
+          "Los formatos estructurados de las facturas electrónicas permitirán su visualización y emisión en las distintas lenguas oficiales existentes y en inglés, con la finalidad de garantizar los derechos de los usuarios nacionales y extranjeros.",
+          "Los formatos estructurados de las facturas electrónicas permitirán su visualización y emisión en las distintas lenguas oficiales existentes, con la finalidad de garantizar los derechos de los usuarios.",
+          "No trata en ningún artículo sobre la factura electrónica.",
+          "La factura electrónica solo se utilizará en contratación, estando excluida de la justificación de ayudas y subvenciones."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          3,
+          12
+        ],
+        "d": 3,
+        "n": "a) añade \"y en inglés... nacionales y extranjeros\" al texto literal; d) \"solo en contratación\".",
+        "y": "Ingreso libre OEP 2023-2024 (2024)",
+        "u": "T1.08 Sociedad de la Información - Temario.pdf — Pasaje del temario\n\nTemario, p. 18 (PDF p. 18)\n\nLos formatos estructurados de las facturas electrónicas permitirán su visualización y emisión en las distintas lenguas oficiales existentes, con la finalidad de garantizar los derechos de los usuarios.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "d3318f911d62d0cd413f343c90f708be196edee5da93ed5992a1c951efa14be4",
+      "afterSha256": "b8620a6cb4d1ca26ccae64730d60d1dbcc90ddd530328017cc6645b2939dda8b",
+      "evidenceKeys": [
+        "e-TAI2024B-P1-13"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "TAIL2022-P1-12",
+      "before": {
+        "i": "TAIL2022-P1-12",
+        "t": "T1.08",
+        "o": "O",
+        "q": "De acuerdo con el artículo 4 de la Ley 6/2020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza, el periodo de vigencia de los certificados cualificados:",
+        "a": [
+          "No será superior a 5 años.",
+          "No será superior a 3 años.",
+          "Es ilimitado.",
+          "No será superior a 6 años."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Escalera 3-5-6-ilimitado (art. 4 Ley 6/2020). Se repite en 2024 B (P14, DNIe).",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "after": {
+        "i": "TAIL2022-P1-12",
+        "t": "T1.08",
+        "o": "O",
+        "q": "De acuerdo con el artículo 4 de la Ley 6/2020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza, el periodo de vigencia de los certificados cualificados:",
+        "a": [
+          "No será superior a 5 años.",
+          "No será superior a 3 años.",
+          "Es ilimitado.",
+          "No será superior a 6 años."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Escalera 3-5-6-ilimitado (art. 4 Ley 6/2020). Se repite en 2024 B (P14, DNIe).",
+        "y": "Ingreso libre OEP 2022 (2023)",
+        "u": "T1.08 Sociedad de la Información - Temario.pdf — Pasaje del temario\n\nTemario, p. 64 (PDF p. 64)\n\nEl período de vigencia de los certificados cualificados NO será superior a 5 años. Dicho período se fijará en atención a las características y tecnología empleada para generar los datos de creación de firma, sello, o autenticación de sitio web (art. 4.2 LSEC).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "f22f52ecf20e089f78366acc761e68c7ea402d19fa12069f82da4f2b35ed065d",
+      "afterSha256": "441874b71d5706ca8149ba328212c9c8f233bbe41ccb0023c76787ede6fbdc43",
+      "evidenceKeys": [
+        "e-TAIL2022-P1-12"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "L2025X-P1-12",
+      "before": {
+        "i": "L2025X-P1-12",
+        "t": "T1.08",
+        "o": "O",
+        "q": "De acuerdo con el artículo 8 del Reglamento (UE) 910/2014 (eIDAS), un sistema de identificación electrónica notificado, para los medios de identificación electrónica expedidos en virtud del mismo, deberá especificar los niveles de seguridad:",
+        "a": [
+          "Inseguro, seguro y muy seguro.",
+          "Básico, medio y avanzado.",
+          "Bajo, sustancial y alto.",
+          "Nivel 1, nivel 2 y nivel 3."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Niveles eIDAS bajo/sustancial/alto frente a escalas inventadas o de Cl@ve.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "after": {
+        "i": "L2025X-P1-12",
+        "t": "T1.08",
+        "o": "O",
+        "q": "De acuerdo con el artículo 8 del Reglamento (UE) 910/2014 (eIDAS), un sistema de identificación electrónica notificado, para los medios de identificación electrónica expedidos en virtud del mismo, deberá especificar los niveles de seguridad:",
+        "a": [
+          "Inseguro, seguro y muy seguro.",
+          "Básico, medio y avanzado.",
+          "Bajo, sustancial y alto.",
+          "Nivel 1, nivel 2 y nivel 3."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Niveles eIDAS bajo/sustancial/alto frente a escalas inventadas o de Cl@ve.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1,
+        "u": "T1.08 Sociedad de la Información - Temario.pdf — Pasaje del temario\n\nTemario, p. 40 (PDF p. 40)\n\nNIVELES DE SEGURIDAD de los SeID Un SeID notificado, deberá especificar los niveles de seguridad bajo, sustancial y alto para los MeID expedidos en virtud del mismo (art. 8.1).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "ec8fa993dea6fa649ba10fa00d46f471304ba09b7f64868b306e6f16f3a2b6dc",
+      "afterSha256": "264bbba78a027e441023e091dd96d988e024ad16ec166efec072da3a8e60e6e0",
+      "evidenceKeys": [
+        "e-L2025X-P1-12"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT108-P1-27",
+      "before": {
+        "i": "AT108-P1-27",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Quién es la autoridad de certificación en la PKI del DNIe?",
+        "a": [
+          "La FNMT.",
+          "La Dirección General de la Policía.",
+          "La plataforma @firma.",
+          "El Ministerio del Interior."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT108-P1-27",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Quién es la autoridad de certificación en la PKI del DNIe?",
+        "a": [
+          "La FNMT.",
+          "La Dirección General de la Policía.",
+          "La plataforma @firma.",
+          "El Ministerio del Interior."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T1.08 Sociedad de la Información - Temario.pdf — Pasaje del temario\n\nTemario, p. 99 (PDF p. 99)\n\nLa Autoridad de Certificación es la Dirección General de la Policía (Ministerio del Interior) actúa como Autoridad de Certificación (AC), relacionando dos pares de claves con un ciudadano concreto.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "7cd7ad0d0fc7a4358bdad59de56b1e6b89d90d6ecab18c9ab013be5fb38d3adf",
+      "afterSha256": "15f73024237b207281c8384b8282f2dfa41a35fbe06d0ee6518377696b989058",
+      "evidenceKeys": [
+        "e-AT108-P1-27"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT108-P1-29",
+      "before": {
+        "i": "AT108-P1-29",
+        "t": "T1.08",
+        "o": "A",
+        "q": "España Digital 2026 consta de:",
+        "a": [
+          "12 ejes estratégicos y 42 medidas.",
+          "11 ejes estratégicos y 41 medidas.",
+          "10 ejes estratégicos y 22 medidas.",
+          "10 ejes estratégicos y 21 medidas."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT108-P1-29",
+        "t": "T1.08",
+        "o": "A",
+        "q": "España Digital 2026 consta de:",
+        "a": [
+          "12 ejes estratégicos y 42 medidas.",
+          "11 ejes estratégicos y 41 medidas.",
+          "10 ejes estratégicos y 22 medidas.",
+          "10 ejes estratégicos y 21 medidas."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.08 Sociedad de la Información - Temario.pdf — Pasaje del temario\n\nTemario, p. 103 (PDF p. 103)\n\nEspaña Digital 2026 recoge un conjunto de medidas, reformas e inversiones, articuladas en 12 ejes estratégicos y 42 medidas, alineados a las políticas digitales marcadas por la Comisión Europea para el nuevo periodo. Las acciones de la Agenda están orientadas a impulsar un crecimiento más sostenible e inclusivo, impulsado por las sinergias de las transiciones digital y ecológica, que llegue al conjunto de la sociedad y concilie las nuevas oportunidades que ofrece el mundo digital con el respeto de los valores constitucionales y la protección de los derechos individuales y colectivos:\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "5eff3f152769268198e8add50f81574da2cc89fcd99c6ae16c8326c5773c1883",
+      "afterSha256": "de7e8ddc684ac50a8752a1a2c15395bfd739ecc2dc4488c4a4c5ff0b1fa67bcf",
+      "evidenceKeys": [
+        "e-AT108-P1-29"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT108-P1-33",
+      "before": {
+        "i": "AT108-P1-33",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Cómo se denomina la estrategia sobre transformación digital de Europa?",
+        "a": [
+          "Brújula Digital 2030.",
+          "Agenda Digital 2030.",
+          "Estrategia Digital 2030.",
+          "JOINUP 2030."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT108-P1-33",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Cómo se denomina la estrategia sobre transformación digital de Europa?",
+        "a": [
+          "Brújula Digital 2030.",
+          "Agenda Digital 2030.",
+          "Estrategia Digital 2030.",
+          "JOINUP 2030."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T1.08 Sociedad de la Información - Temario.pdf — Pasaje del temario\n\nTemario, p. 109 (PDF p. 109)\n\nEn marzo de 2021 la Comisión Europea presentó una estrategia de visión y vías para la transformación digital de Europa del momento actual a 2030: la Brújula Digital 2030, que traduce las ambiciones de transformación digital de la UE en objetivos concretos a alcanzar, dentro de cuatro puntos cardinales: - Ciudadano con capacidades digitales. - Infraestructuras digitales seguras y sostenibles. - Transformación digital de las empresas. - Digitalización de los servicios públicos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "d6a07d663e605f2178b2610f1e627cb7d66786f97c4582ccfc7fb66ad05a25e8",
+      "afterSha256": "a69208fd89878f864ca5c93ac6e519b5b58b0c28e4ea8679353d650333885fa2",
+      "evidenceKeys": [
+        "e-AT108-P1-33"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT108-P1-48",
+      "before": {
+        "i": "AT108-P1-48",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según el Reglamento eIDAS 2, ¿cuándo estará disponibles las carteras europeas de identidad digital?",
+        "a": [
+          "A más tardar el 21 de noviembre de 2027.",
+          "A los 2 años desde la entrada en vigor del Reglamento eIDAS 2.",
+          "En los 24 meses siguientes a la entrada en vigor de los actos de ejecución.",
+          "A más tardar en el plazo de un año desde la certificación de la cartera."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT108-P1-48",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según el Reglamento eIDAS 2, ¿cuándo estará disponibles las carteras europeas de identidad digital?",
+        "a": [
+          "A más tardar el 21 de noviembre de 2027.",
+          "A los 2 años desde la entrada en vigor del Reglamento eIDAS 2.",
+          "En los 24 meses siguientes a la entrada en vigor de los actos de ejecución.",
+          "A más tardar en el plazo de un año desde la certificación de la cartera."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T1.08 Sociedad de la Información - Temario.pdf — Pasaje del temario\n\nTemario, p. 32 (PDF p. 32)\n\nA los efectos de garantizar que todas las personas físicas y jurídicas dispongan de un acceso transfronterizo seguro, de confianza y sin incidencias a servicios públicos y privados en la Unión, manteniendo al mismo tiempo el pleno control sobre sus datos, cada EM proporcionará al menos una EUDI en los 24 meses siguientes a la entrada en vigor de los actos de ejecución (art. 5 bis.1).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "9a05a6cc88a8e0bdab2c96fc454df6f3186550575444c001a5ee86dcc62d0c6d",
+      "afterSha256": "b1da8337b3f43ca4daa7d0377b91e9fc47174681fc88f0f44999c21f6a303105",
+      "evidenceKeys": [
+        "e-AT108-P1-48"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT108-P1-49",
+      "before": {
+        "i": "AT108-P1-49",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes es el Reglamento, conocido como eIDAS 2, el cual modifica el Reglamento (UE) 910/2014 en lo que respecta al establecimiento del marco europeo de identidad digital?",
+        "a": [
+          "Reglamento (UE) 2024/1183.",
+          "Reglamento (UE) 2024/1082.",
+          "Reglamento (UE) 2024/1281.",
+          "Reglamento (UE) 2024/1384."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT108-P1-49",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes es el Reglamento, conocido como eIDAS 2, el cual modifica el Reglamento (UE) 910/2014 en lo que respecta al establecimiento del marco europeo de identidad digital?",
+        "a": [
+          "Reglamento (UE) 2024/1183.",
+          "Reglamento (UE) 2024/1082.",
+          "Reglamento (UE) 2024/1281.",
+          "Reglamento (UE) 2024/1384."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T1.08 Sociedad de la Información - Temario.pdf — Pasaje del temario\n\nTemario, p. 28 (PDF p. 28)\n\n5. Marco normativo - Reglamento (UE) 910/2014, de 23 de julio de 2014, relativo a la identificación electrónica y los servicios de confianza para las transacciones electrónicas en el mercado interior y por la que se deroga la Directiva 1999/93/CE (Reglamento eIDAS). - Reglamento (UE) 2024/1183 del Parlamento Europeo y del Consejo, de 11 de abril de 2024, por el que se modifica el Reglamento (UE) nº 910/2014 en lo que respecta al establecimiento del marco europeo de identidad digital (Reglamento eIDAS 2). - Ley 6/2020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza (LSEC). - Orden PRE/1838/2014, de 8 de octubre, por la que se publica el Acuerdo de Consejo de Ministros, de 19 de septiembre de 2014, por el que se aprueba Cl@ve, la plataforma común del Sector Público Administrativo Estatal para la identificación, autenticación y firma electrónica mediante el uso de claves concertadas. - Resolución de 14 de diciembre de 2015, de la Dirección de Tecnologías de la Información y las Comunicaciones, por la que se establecen las prescripciones técnicas necesarias para el desarrollo y aplicación del sistema Cl@ve. - Resolución de 14 de julio de 2017, de la Secretaría General de Administración Digital, por la que se establecen las condiciones de uso de firma electrónica no criptográfica, en las relaciones de los interesados con los órganos administrativos de la AGE y sus organismos públicos (última modificación 21 de octubre de 2022). - Ley de 59/2003, de 19 de diciembre, de firma electrónica (derogada). - Ley 39/2015, de 1 de octubre, del Procedimiento Administrativo Común de las Administraciones Públicas. - Ley 40/2015, de 1 de octubre, de Régimen Jurídico del Sector Público.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "7d4805a98c662c2a9551e77434ecf9228c3473eba202658d9d5558a8420c8977",
+      "afterSha256": "98878af06c48aa1cc2844f6be79ff302817fde4c5ffc73d8a6dc858702414cee",
+      "evidenceKeys": [
+        "e-AT108-P1-49"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT108-P1-55",
+      "before": {
+        "i": "AT108-P1-55",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según el Reglamento eIDAS 2, las certificaciones de las carteras europeas de identidad digital tendrán una validez máxima de:",
+        "a": [
+          "2 años.",
+          "3 años.",
+          "4 años, siempre que se realice una evaluación de la vulnerabilidad cada año.",
+          "5 años, siempre que se realice una evaluación de la vulnerabilidad cada 2 años."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT108-P1-55",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según el Reglamento eIDAS 2, las certificaciones de las carteras europeas de identidad digital tendrán una validez máxima de:",
+        "a": [
+          "2 años.",
+          "3 años.",
+          "4 años, siempre que se realice una evaluación de la vulnerabilidad cada año.",
+          "5 años, siempre que se realice una evaluación de la vulnerabilidad cada 2 años."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.08 Sociedad de la Información - Temario.pdf — Pasaje del temario\n\nTemario, p. 37 (PDF p. 37)\n\nLa certificación tendrá una validez máxima de 5 años, siempre que se realice una evaluación de la vulnerabilidad cada 2 años. Cuando se detecte una vulnerabilidad y no se subsane oportunamente, se cancelará la certificación (art. 5 quater.4).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "80572128bc12bfe0a1277c94b6c1270955bf0e4d8fc58c16f2901a72cf486a52",
+      "afterSha256": "93abcecebb26c62aab5efc033db57be470120c90a99d2695c19444684c8631df",
+      "evidenceKeys": [
+        "e-AT108-P1-55"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-14",
+        "t": "T1.08",
+        "o": "O",
+        "q": "Indique la respuesta correcta sobre la vigencia que tienen los certificados electrónicos reconocidos incorporados al documento nacional de identidad, según la legislación vigente:",
+        "a": [
+          "No podrá ser superior a tres años.",
+          "No podrá ser superior a cuatro años.",
+          "No podrá ser superior a cinco años.",
+          "No podrá ser superior a seis años."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Escalera de cifras consecutivas 3-4-5-6 años.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-11",
+        "t": "T1.08",
+        "o": "O",
+        "q": "Con carácter general el documento nacional de identidad tendrá un período de validez, a contar desde la fecha de la expedición o de cada una de sus renovaciones, de:",
+        "a": [
+          "Dos años cuando el solicitante no haya cumplido los cinco años de edad.",
+          "Cuatro años, cuando el titular haya cumplido los cinco años de edad y no haya alcanzado los treinta al momento de la expedición o renovación.",
+          "Nueve años, cuando el titular haya cumplido los treinta y no haya alcanzado los setenta.",
+          "Permanente cuando el titular haya cumplido los sesenta años."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Escalas de validez del DNI: d) \"sesenta\" por setenta.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-14",
+        "t": "T1.08",
+        "o": "O",
+        "q": "En relación al DNIe v3.0, indique la respuesta correcta:",
+        "a": [
+          "Contiene dos certificados electrónicos de componentes: uno de Autenticación y otro de Firma.",
+          "La renovación de los certificados incluidos en la tarjeta del DNI electrónico puede realizarse en los Puntos de Actualización del DNIe y a través de Internet.",
+          "Actualmente, los certificados electrónicos de Autenticación y de Firma Electrónica que contiene tienen un plazo de validez de 24 meses.",
+          "El PIN debe tener un mínimo de 8 caracteres y un máximo de 12."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "n": "DNIe 3.0: certificados, renovación, longitud de PIN.",
+        "y": "Ingreso libre OEP 2019",
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-15",
+        "t": "T1.08",
+        "o": "O",
+        "q": "La nueva Agenda Digital \"España Digital 2025\" recoge un conjunto de medidas, reformas e inversiones. ¿En cuántos ejes se articulan estas medidas?",
+        "a": [
+          "6",
+          "9",
+          "12",
+          "10"
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Número de ejes de España Digital 2025.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-16",
+        "t": "T1.08",
+        "o": "O",
+        "q": "¿Qué algoritmos criptográficos soporta el DNIe v3.0?",
+        "a": [
+          "RSA, PGP y Blowfish.",
+          "RC5 y algoritmo de hash MD5.",
+          "ElGamal, algoritmo de hash MD5 y cifrado simétrico Triple DES.",
+          "RSA, algoritmo de hash SHA-256 y cifrado simétrico Triple DES y AES."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          13,
+          9
+        ],
+        "d": 2,
+        "n": "Algoritmos del DNIe: tríos con un intruso.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-12",
+        "t": "T1.08",
+        "o": "O",
+        "q": "¿Qué información está almacenada en la zona de seguridad del DNI electrónico, accesible en lectura por el ciudadano en los Puntos de Actualización del DNIe?",
+        "a": [
+          "El certificado de Firma (No Repudio).",
+          "El certificado de Autenticación (Digital Signature).",
+          "El certificado CA intermedia emisora.",
+          "La imagen de la fotografía."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Zona de seguridad del DNIe: contenidos hermanos.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-13",
+        "t": "T1.08",
+        "o": "O",
+        "q": "De conformidad con el Anexo III del Reglamento 910/2014 del Parlamento Europeo y del Consejo de 23 de julio de 2014 relativo a la identificación electrónica y los servicios de confianza para las transacciones electrónicas en el mercado interior y por la que se deroga la Directiva 1999/93/CE, los certificados cualificados de sello electrónico contendrán:",
+        "a": [
+          "El nombre o los nombres de dominio explotados por la persona física o jurídica a la que se expida el certificado.",
+          "Al menos, el nombre del creador del sello y, cuando proceda, el número de registro, tal como se recojan en los registros oficiales.",
+          "Los elementos de la dirección, incluyendo al menos la ciudad y el Estado de la persona física o jurídica a quien se expida el certificado, y, cuando proceda, según figure en los registros oficiales.",
+          "Para personas físicas: al menos el nombre de la persona a la que se expida el certificado, o un seudónimo; si se usara un seudónimo, se indicará claramente."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Reglamento eIDAS, Anexo III: contenido de certificados de sello frente a otros anexos.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-14",
+        "t": "T1.08",
+        "o": "O",
+        "q": "En relación con el uso de pseudónimos en los certificados cualificados, la Ley 6/2020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza, establece que:",
+        "a": [
+          "Está prohibido el uso de pseudónimos para garantizar la transparencia y la gestión del proceso administrativo.",
+          "El prestador debe revelar la identidad real del titular únicamente si este lo autoriza expresamente.",
+          "El prestador está obligado a revelar la identidad real a solicitud de los órganos judiciales y otras autoridades públicas en el ejercicio de sus funciones.",
+          "Solo los certificados de sello electrónico de persona jurídica admiten pseudónimo."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          12,
+          5
+        ],
+        "d": 2,
+        "n": "Pseudónimos: \"prohibido\", \"solo\"; obligación de revelar a petición judicial.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-R-01",
+        "t": "T1.08",
+        "o": "O",
+        "q": "En relación con la Agenda España Digital 2026, indique la respuesta correcta:",
+        "a": [
+          "La Dirección General del Dato es la entidad ejecutora de las iniciativas propuestas en los distintos ejes de acción del Plan de Impulso de los Espacios de Datos Sectoriales.",
+          "Una de las prioridades de la Estrategia de Tecnologías Cuánticas de España es demostrar el impacto de la sensórica y metrología cuánticas.",
+          "La coordinación del Proyecto ALIA está a cargo de la Agencia Española de Supervisión de la Inteligencia Artificial.",
+          "Actúa en dos dimensiones fundamentales: infraestructuras y tecnología, y servicios públicos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          1,
+          7
+        ],
+        "d": 3,
+        "n": "España Digital 2026: órganos cambiados.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1,
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-13",
+        "t": "T1.08",
+        "o": "O",
+        "q": "¿Cuál de las siguientes opciones NO se incluye entre los ejes estratégicos de la Agenda Digital \"España Digital 2026\"?",
+        "a": [
+          "Las competencias digitales.",
+          "El eLearning y la Universidad Digital.",
+          "Los derechos digitales.",
+          "La ciberseguridad."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Eje inventado de España Digital 2026.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-01",
+        "t": "T1.08",
+        "o": "O",
+        "q": "Según el artículo 11 del Real Decreto 1553/2005, por el que se regula la expedición del documento nacional de identidad y sus certificados de firma electrónica, ¿cuáles son todos los tipos de certificados definidos que se incluyen en el chip incorporado a la tarjeta del DNI electrónico?",
+        "a": [
+          "Un certificado reconocido de Autenticación.",
+          "Un certificado reconocido de Firma.",
+          "Certificados reconocidos de Autenticación y de Firma.",
+          "Certificados reconocidos de Autenticación y de Firma, y certificado electrónico de la autoridad emisora."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          3
+        ],
+        "d": 2,
+        "n": "Certificados del DNIe: listas acumulativas (alcance).",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-14",
+        "t": "T1.08",
+        "o": "O",
+        "q": "¿Cómo se llama el middleware que permite gestionar la conexión NFC entre dispositivos móviles Android y el DNIe?",
+        "a": [
+          "DNIeNFConnect.",
+          "DNIeApp.",
+          "MiddleDNIe.",
+          "DNIeDroid."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Middleware NFC del DNIe con nombres inventados.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-01",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Qué servicios NO están incluidos dentro del ámbito de aplicación de la Ley 34/2002 de servicios de sociedad de la información y comercio electrónico?",
+        "a": [
+          "Subastas.",
+          "Compras por Internet.",
+          "Contratación de bienes por vía electrónica.",
+          "Los ofrecidos por notarios."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-02",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Un prestador de servicios de la sociedad de la información en cumplimiento de la Ley 34/2002 está obligado a suministrar la siguiente información (señale la respuesta INCORRECTA):",
+        "a": [
+          "Nombre o denominación social.",
+          "NIF.",
+          "Precios de los productos o servicios.",
+          "Protección datos de carácter personal."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "Información obligatoria LSSI."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-03",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Respecto a las comunicaciones comerciales por vía electrónica según la Ley 34/2002 (señale la respuesta INCORRECTA):",
+        "a": [
+          "Las comunicaciones comerciales deberán ser claramente identificables como tales.",
+          "En las comunicaciones comerciales, la persona física o jurídica en nombre de la cual se realizan debe ser claramente identificable.",
+          "Se estará también a lo dispuesto en las normas dictadas por las Comunidades Autónomas con competencia de desarrollo y ejecución sobre el consumo.",
+          "Queda prohibido el envío de comunicaciones comerciales en las que se disimule o se oculte la identidad del remitente por cuenta de quien se efectúa la comunicación."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-04",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Respecto a la contratación por vía electrónica establece la Ley 34/2002 que:",
+        "a": [
+          "El prestador de servicios de la sociedad de la información tiene la obligación de poner a disposición del destinatario, entre otros, los distintos trámites que deben seguirse para celebrar el contrato.",
+          "Las ofertas o propuestas de contratación realizadas por vía electrónica serán válidas durante el período que fije el oferente o, en su defecto, durante un mes.",
+          "Los contratos celebrados por vía electrónica producirán todos los efectos previstos por el ordenamiento jurídico, contando con el único requisito del consentimiento.",
+          "Para que sea válida la celebración de contratos por vía electrónica será necesario el previo acuerdo de las partes sobre la utilización de medios electrónicos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-05",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Cuál es el lugar de celebración de un contrato según la Ley 34/2002?",
+        "a": [
+          "En el lugar que esté establecido el prestador de servicios.",
+          "Si una parte es un consumidor, donde tenga su residencia habitual.",
+          "Si el contrato es entre profesionales, donde tenga su residencia habitual el oferente.",
+          "En todo caso, donde realice su actividad el prestador de servicios."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-06",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Señale la respuesta correcta en relación la prescripción de las sanciones de la Ley 34/2002:",
+        "a": [
+          "Las sanciones graves prescriben al año.",
+          "Las sanciones leves prescriben a los 6 meses.",
+          "Las sanciones muy graves prescriben a los 3 años.",
+          "Las sanciones muy graves no tienen prescripción alguna."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-07",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Señale la respuesta correcta en relación la prescripción de las infracciones de la Ley 34/2002:",
+        "a": [
+          "Las infracciones graves prescriben al año.",
+          "Las infracciones leves prescriben a los 6 meses.",
+          "Las infracciones muy graves prescriben a los 2 años.",
+          "Las infracciones muy graves no tienen prescripción alguna."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-08",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Cuál NO es una característica de la firma digital?",
+        "a": [
+          "Autenticidad.",
+          "Integridad.",
+          "No repudio en origen.",
+          "Confidencialidad."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-09",
+        "t": "T1.08",
+        "o": "A",
+        "q": "En general, ¿qué técnica permite validar el estado de vigencia de un certificado electrónico?",
+        "a": [
+          "CRL.",
+          "OCPS.",
+          "@firma.",
+          "La que ponga a disposición el prestador de servicios de certificación."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-10",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según el Reglamento 910/2014, ¿qué es una firma electrónica cualificada?",
+        "a": [
+          "Una firma electrónica avanzada que se crea mediante un dispositivo cualificado de creación de firmas electrónicas y que se basa en un certificado cualificado de firma electrónica.",
+          "Una firma electrónica que está vinculada al firmante de manera única, que permite la identificación del firmante y que ha sido creada utilizando datos de creación de la firma electrónica que el firmante puede utilizar.",
+          "Una firma electrónica que se crea mediante un dispositivo de creación de firmas electrónicas y que se basa en un certificado de firma electrónica.",
+          "Los datos en formato electrónico anejos a otros datos electrónicos asociados de manera lógica con ellos que utiliza el firmante para firma."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-11",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Qué nuevo tipo de certificado incorpora el Reglamento 910/2014?",
+        "a": [
+          "Certificado electrónico reconocido.",
+          "Certificado cualificado de órgano.",
+          "Certificado cualificado de cifrado.",
+          "Certificado cualificado de autenticación web."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-12",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Cuál NO es una causa de extinción de la vigencia de un certificado electrónico según la Ley 6/2020?",
+        "a": [
+          "Expiración del periodo de validez que figura en el certificado.",
+          "Resolución judicial o administrativa que lo ordene.",
+          "Solicitud formulada por el firmante.",
+          "Uso indebido del certificado electrónico."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-13",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes datos NO se incluye en un certificado cualificado de firma electrónica según el Reglamento 910/2014?",
+        "a": [
+          "La indicación que se expiden como tales.",
+          "La localización de los servicios que pueden utilizarse para consultar el estado de validez del certificado cualificado.",
+          "La firma electrónica del prestador de servicios de confianza expedidor.",
+          "El comienzo y el fin del periodo de validez del certificado."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-14",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes sistemas de firma NO está admitido por las AAPP según el art. 10 de la LPACAP para que los interesados puedan firmar?",
+        "a": [
+          "Sistema de firma electrónica cualificada.",
+          "Sistema de firma electrónica avanzada.",
+          "Sistema de sello electrónico cualificado.",
+          "Sistema de sello electrónico reconocido."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-15",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según el artículo 11 de la LPACAP, ¿para cuál de los siguientes trámites NO es obligatoria el uso de firma electrónica?",
+        "a": [
+          "Interponer recursos.",
+          "Renunciar a derechos.",
+          "Aportar documentación.",
+          "Formular solicitudes."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-16",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Qué tipo de firma longeva añade los certificados y la información de revocación de los mimos para su validación a largo plazo?",
+        "a": [
+          "AdES-C.",
+          "AdES-X.",
+          "AdES-XL.",
+          "AdES-A."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Firmas longevas AdES-C/X/XL/A."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-17",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Qué periodo de validez tiene la renovación del DNI para un titular de 25 años?",
+        "a": [
+          "2 años.",
+          "5 años.",
+          "10 años.",
+          "Permanente."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-19",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Respecto al DNI, señale la respuesta correcta:",
+        "a": [
+          "La pérdida de validez del DNI no llevará aparejada la pérdida de validez de los certificados electrónicos incorporados.",
+          "La renovación del DNI implicará expedición de nuevos certificados electrónicos.",
+          "La expedición de duplicados del DNI no implicará la expedición de nuevos certificados electrónicos.",
+          "La firma electrónica realizada a través del DNI no tendrá respecto de los datos consignados en forma electrónica el mismo valor que la firma manuscrita en relación con los consignados en papel."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-20",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes datos NO figura en el anverso del DNI?",
+        "a": [
+          "La nacionalidad.",
+          "El sexo.",
+          "La fecha de nacimiento.",
+          "El lugar de nacimiento."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-21",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Qué NO contiene el chip incorporado a la tarjeta soporte del DNI?",
+        "a": [
+          "Número de soporte.",
+          "Certificados reconocidos de autenticación y de firma.",
+          "Imagen digitalizada de la fotografía.",
+          "Claves privadas necesarias para la activación de los certificados."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-22",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA sobre los certificados electrónicos incorporados en el DNIe:",
+        "a": [
+          "El certificado de componente tiene como propósito la autenticación de la tarjeta del DNIe.",
+          "El certificado de autenticación tiene activo en el Key Usage el bit ContentCommitment.",
+          "El certificado de firma está asociado a un par de claves pública y privada generadas en el interior del chip del DNIe.",
+          "Los certificados de autenticación y de firma siguen el estándar X.509v3."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-23",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Quién es la autoridad de validación en la PKI del DNIe?",
+        "a": [
+          "FNMT.",
+          "Dirección General de la Policía.",
+          "La plataforma @firma.",
+          "El Ministerio del Interior."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-24",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según España Digital 2026, ¿cuál es la meta a conseguir en relación a la conectividad a 100 Mbps en 2025?",
+        "a": [
+          "75% de la población.",
+          "100% de la población.",
+          "75% de la población urbana.",
+          "100% de la población urbana."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-25",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Entre las metas de España Digital 2026 se encuentra:",
+        "a": [
+          "Competencias Digitales Avanzadas.",
+          "Reducción de emisiones CO2 por efecto de la digitalización.",
+          "Informática de Alto Rendimiento.",
+          "Computación cuántica en la nube."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "El pasaje pertenece a una tabla de metas 2025; se necesita aclarar su vínculo exacto con la versión España Digital 2026 antes de aceptar la atribución.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AT108-P1-25"
+      ]
+    },
+    {
+      "question": {
+        "i": "AT108-P1-26",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Como medida a conseguir dentro del Plan de España Digital 2026 encontramos aumentar el número de servicios públicos disponibles en móvil:",
+        "a": [
+          "No es correcto, esta no es una medida de este Plan sino del Plan de Transformación Digital de las Administraciones Públicas.",
+          "No es correcto, esta no es una medida de este Plan sino de la Estrategia Nacional de Inteligencia Artificial.",
+          "No es correcto, esta no es una medida de este Plan sino del Plan de Impulso 5G.",
+          "Es correcto, la medida propone conseguir el 50% de servicios públicos disponibles en aplicaciones móviles en el año 2025."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-28",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Cuál NO es una dimensión de la agenda España Digital 2026?",
+        "a": [
+          "Empresas.",
+          "Personas.",
+          "Administraciones Públicas.",
+          "Infraestructura y Tecnología."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-30",
+        "t": "T1.08",
+        "o": "A",
+        "q": "NO es un eje de España Digital 2026:",
+        "a": [
+          "España, hub audiovisual.",
+          "Economía del dato e inteligencia artificial.",
+          "Seguridad en la nube.",
+          "Derechos digitales."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-31",
+        "t": "T1.08",
+        "o": "A",
+        "q": "La medida “Programa Kit Digital” de España Digital 2026 se encuadra en el eje:",
+        "a": [
+          "Seguridad en la nube.",
+          "Transformación digital de la empresa y emprendimiento digital.",
+          "Economía del dato e inteligencia artificial.",
+          "Transformación digital del sector público."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-32",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según España Digital 2026, ¿cuál es la meta a conseguir en relación al número de servicios públicos disponibles en app móvil en 2025?",
+        "a": [
+          "25% de los servicios públicos disponibles en app móvil.",
+          "50% de los servicios públicos disponibles en app móvil.",
+          "75% de los servicios públicos disponibles en app móvil.",
+          "100% de los servicios públicos disponibles en app móvil."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "El pasaje pertenece a una tabla de metas 2025; se necesita aclarar su vínculo exacto con la versión España Digital 2026 antes de aceptar la atribución.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AT108-P1-32"
+      ]
+    },
+    {
+      "question": {
+        "i": "AT108-P1-34",
+        "t": "T1.08",
+        "o": "A",
+        "q": "De entre los siguientes, ¿cuál NO es un formato de firma?",
+        "a": [
+          "CADES.",
+          "MADES.",
+          "PADES.",
+          "XADES."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-37",
+        "t": "T1.08",
+        "o": "A",
+        "q": "De acuerdo con el artículo 14 de la Ley 6/2020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza, ¿cuál es el órgano de supervisión, regulador de determinados aspectos de los servicios electrónicos de confianza?",
+        "a": [
+          "El Ministerio de Asuntos Económicos y Transformación Digital.",
+          "El Ministerio de Hacienda y Función Pública.",
+          "La AIREF (Autoridad Independiente de Regulación Fiscal).",
+          "La Agencia Estatal de la Administración Tributaria."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-38",
+        "t": "T1.08",
+        "o": "A",
+        "q": "NO es un eje de actuación de la Estrategia Nacional de Inteligencia Artificial de 2024:",
+        "a": [
+          "Reforzar las palancas claves para el desarrollo de la IA.",
+          "Facilitar la expansión de la IA en el sector público y privado, fomentando la innovación y la ciberseguridad.",
+          "Desarrollar una IA transparente, responsable y humanística.",
+          "Integrar la Inteligencia Artificial en las cadenas de valor para transformar el sector industrial."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-39",
+        "t": "T1.08",
+        "o": "A",
+        "q": "NO es una palanca de la Estrategia Nacional de Inteligencia Artificial de 2024:",
+        "a": [
+          "Impulso a la inversión en supercomputación.",
+          "Desarrollar un marco integral de ciberseguridad.",
+          "Desarrollar una IA transparente, responsable y humanística.",
+          "Fomentar el talento en la IA."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-40",
+        "t": "T1.08",
+        "o": "A",
+        "q": "NO es un eje de actuación de la Estrategia de Impulso de la Tecnología 5G:",
+        "a": [
+          "Un espectro radioeléctrico habilitado para los servicios 5G.",
+          "Apoyar la recuperación económica y la creación de empleo.",
+          "Apoyo efectivo al despliegue de redes y servicios 5G.",
+          "Un marco regulatorio y administrativo dinamizador del despliegue de la tecnología 5G."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-41",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según el artículo 11 del Real Decreto 255/2025, por el que el DNI, ¿cuáles son todos los tipos de certificados definidos que se incluyen en el chip incorporado a la tarjeta del DNI electrónico?",
+        "a": [
+          "Un certificado cualificado de Autenticación.",
+          "Un certificado cualificado de Firma.",
+          "Certificados cualificados de Autenticación y de Firma.",
+          "Certificados cualificados de Autenticación y de Firma, y certificado electrónico de la autoridad emisora."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          1
+        ],
+        "d": 3,
+        "n": "Certificados del DNIe (RD 255/2025): escalera de completitud. Caducable.",
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-42",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Actualmente, según el Real Decreto 255/2025, la vigencia de los certificados electrónicos reconocidos incorporados al DNI:",
+        "a": [
+          "Será de 24 meses.",
+          "No será superior a los 2 años.",
+          "Será de 36 meses.",
+          "No será superior a los 20 meses."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-43",
+        "t": "T1.08",
+        "o": "A",
+        "q": "En la zona pública del chip incorporado al DNI, NO se encuentra:",
+        "a": [
+          "Certificado CA intermedia emisora.",
+          "Criptolibrería RSA.",
+          "Claves Diffie-Hellman.",
+          "Certificado x509 de componente."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-44",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Cómo se denomina al módulo criptográfico instalado en un ordenador con sistema operativo Windows para interaccionar con el DNI electrónico?",
+        "a": [
+          "PKCS#9.",
+          "CardModule.",
+          "PKCS#11.",
+          "ModDNI."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-45",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿En qué norma establecen las condiciones de uso de la firma no criptográfica en las relaciones de los interesados con los órganos de la Administración General del Estado y sus organismos públicos y entidades de derecho público vinculados o dependientes?",
+        "a": [
+          "Resolución de 14 de julio de 2017 de la Secretaría General de Administración Digital.",
+          "Resolución de 14 de diciembre de 2018 de la Secretaría General de Administración Digital.",
+          "Resolución de 21 de octubre de 2023 de la Secretaría de Estado de Digitalización e Inteligencia Artificial.",
+          "Resolución de 21 de julio de 2019 de la Secretaría de Estado de Digitalización e Inteligencia Artificial."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-46",
+        "t": "T1.08",
+        "o": "A",
+        "q": "De conformidad con el Reglamento eIDAS 2, señale la respuesta INCORRECTA sobre las carteras europeas de identidad digital:",
+        "a": [
+          "Son medios de identificación electrónica.",
+          "Permite al usuario almacenar, gestionar y validar de forma segura datos de identificación de la persona.",
+          "Se proporcionarán en el marco de un sistema de identificación electrónica con nivel de seguridad sustancial.",
+          "Permite firmar por medio de firmas electrónicas cualificadas o sellar por medio de sellos electrónicos cualificados."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-47",
+        "t": "T1.08",
+        "o": "A",
+        "q": "De conformidad con el Reglamento eIDAS 2, señale la respuesta correcta sobre las carteras europeas de identidad digital:",
+        "a": [
+          "Su utilización será obligatoria.",
+          "Respetarán el principio de seguridad desde el diseño.",
+          "La expedición, el uso y la revocación de las mismas serán gratuitos para todas las personas.",
+          "El código fuente de los componentes de programas informáticos de dichas carteras no tendrá licencia de código abierto."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-50",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿En qué fecha entró en vigor el Reglamento eIDAS 2?",
+        "a": [
+          "20/04/2024.",
+          "20/03/2024.",
+          "20/06/2024.",
+          "20/05/2024."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-51",
+        "t": "T1.08",
+        "o": "A",
+        "q": "En relación con el Reglamento eIDAS 2, señale la respuesta INCORRECTA:",
+        "a": [
+          "Un medio de identificación electrónica es una unidad material y/o inmaterial que contiene los datos de identificación de la persona y que se utiliza para la autenticación en servicios en línea o, cuando proceda, en servicios fuera de línea.",
+          "Un libro mayor electrónico es una secuencia de registros electrónicos de datos que garantiza la integridad de dichos registros y su exactitud independientemente de su orden cronológico.",
+          "Una fuente auténtica es repositorio o sistema, mantenido bajo la responsabilidad de un organismo del sector público o de una entidad privada, que contiene y proporciona atributos acerca de una persona física o jurídica, o de un objeto, y que se considera una fuente principal de dicha información, o que está reconocido como auténtico de conformidad con el Derecho de la Unión o nacional, incluidas las prácticas administrativas.",
+          "Una declaración electrónica de atributos es declaración en formato electrónico que permite la autenticación de atributos."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-52",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según el Reglamento eIDAS 2, señale la respuesta INCORRECTA en relación con la declaración electrónica cualificada de atributos:",
+        "a": [
+          "La declaración tiene un periodo de validez.",
+          "Es expedida por un prestador cualificado de servicios de certificación.",
+          "La declaración contendrá información sobre antecedentes penales.",
+          "La declaración contendrá un conjunto de datos que represente inequívocamente a la entidad a que se refieren los atributos declarados."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-53",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según la normativa vigente en materia de firma no criptográfica, se podrán utilizar sistemas de firma no criptográfica cuando el sistema de información asociado al procedimiento haya sido categorizado, según el Esquema Nacional de Seguridad, de:",
+        "a": [
+          "Categoría alta si así lo dispone la normativa reguladora aplicable.",
+          "Categoría media, en todo caso.",
+          "Categoría básica.",
+          "Categoría media, cuando sea necesario utilizar firma electrónica avanzada."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-54",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según la normativa vigente en materia de firma no criptográfica, qué garantías de seguridad deben ofrecer los sistemas de firma no criptográfica?",
+        "a": [
+          "Integridad y no repudio.",
+          "No repudio y autenticidad.",
+          "Autenticidad y confidencialidad.",
+          "Confidencialidad e integridad."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-56",
+        "t": "T1.08",
+        "o": "A",
+        "q": "En relación con el uso transfronterizo de las carteras europeas de identidad digital, el Reglamento eIDAS 2 establece que:",
+        "a": [
+          "Cuando los Estados miembros exijan una identificación y una autenticación electrónicas para acceder a un servicio en línea prestado por un organismo del sector público o del sector privado, también aceptarán las carteras europeas de identidad digital proporcionadas.",
+          "La Comisión facilitará la elaboración de códigos de conducta en estrecha colaboración con todas las partes interesadas pertinentes, en particular la sociedad civil, para contribuir a la amplia disponibilidad y la facilidad de uso de las carteras europeas de identidad digital y alentar a los prestadores de servicios a ultimar la elaboración de códigos de conducta.",
+          "En los ámbitos del transporte, la energía, la banca, los servicios financieros, la seguridad social, la sanidad, el agua potable, los servicios postales, la infraestructura digital, la educación o las telecomunicaciones se aceptarán en todo caso las carteras europeas de identidad digital.",
+          "Cuando los prestadores de plataformas en línea de muy gran tamaño y con un volumen de negocio superior a los 10 millones de euros exijan la autenticación del usuario para acceder a servicios en línea, también aceptarán y facilitarán el uso de las carteras europeas de identidad digital para la autenticación del usuario."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-57",
+        "t": "T1.08",
+        "o": "A",
+        "q": "En relación con el Reglamento eIDAS 2, señale la respuesta correcta:",
+        "a": [
+          "Los datos de creación de la firma electrónica son datos únicos que utiliza el firmante para crear una firma electrónica avanzada.",
+          "Una firma electrónica tendrá un efecto jurídico equivalente al de una firma manuscrita.",
+          "Solo podrá prestar un servicio cualificado de conservación de firmas electrónicas el prestador cualificado de servicios de certificación que utilice procedimientos y tecnologías capaces de ampliar la fiabilidad de los datos de la firma electrónica más allá del período de validez tecnológico.",
+          "Los Estados miembros no exigirán para la utilización transfronteriza de un servicio en línea ofrecido por un organismo del sector público una firma electrónica cuyo nivel de garantía de la seguridad sea superior al de una firma electrónica cualificada."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-58",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según el Reglamento eIDAS 2, los sellos cualificados de tiempo electrónicos disfrutarán de:",
+        "a": [
+          "Solo de la presunción de exactitud de la fecha y hora que indican.",
+          "Solo de la integridad de los datos a los que la fecha y hora estén vinculadas.",
+          "Solo de la fiabilidad de los datos de la firma electrónica más allá del período de validez tecnológico.",
+          "Tanto de la presunción de exactitud de la fecha y hora que indican como de la integridad de los datos a los que la fecha y hora estén vinculadas"
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-59",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según la Ley 6/2020, los prestadores cualificados de servicios electrónicos de confianza deberán conservar la información relativa a los servicios prestados (toda la información pertinente referente a los datos expedidos y recibidos) durante un periodo:",
+        "a": [
+          "De 15 años desde la expedición del certificado.",
+          "De 15 años desde la extinción del certificado.",
+          "De 20 años desde la expedición del certificado.",
+          "De 20 años desde la extinción del certificado."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "n": "Matriz 15/20 años × expedición/extinción."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-60",
+        "t": "T1.08",
+        "o": "A",
+        "q": "De conformidad con la Ley 6/2020, los prestadores cualificados de servicios de confianza remitirán al Ministerio de Asuntos Económicos y Transformación Digital un informe sobre sus datos de actividad del año civil precedente:",
+        "a": [
+          "A más tarde el 1 de febrero de cada año.",
+          "A más tarde el 1 de marzo de cada año.",
+          "A más tarde el 31 de enero de cada año.",
+          "A más tarde el 31 de marzo de cada año."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-62",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA sobre el uso obligatorio de firma requerida a los interesados por parte de las Administraciones Públicas que recoge el artículo 11 de Ley 39/2015, de 1 de octubre, del Procedimiento Administrativo Común de las Administraciones Públicas:",
+        "a": [
+          "Consultar el estado de tramitación del procedimiento.",
+          "Formular solicitudes.",
+          "Presentar declaraciones responsables o comunicaciones.",
+          "Desistir de acciones."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-63",
+        "t": "T1.08",
+        "o": "A",
+        "q": "De conformidad con la Resolución de 14 de diciembre de 2015, de la Dirección de Tecnologías de la Información y las Comunicaciones, por la que se establecen las prescripciones técnicas necesarias para el desarrollo y aplicación del sistema Cl@ve, seleccione la respuesta INCORRECTA:",
+        "a": [
+          "Existen dos modalidades o niveles de garantía de registro: nivel básico y nivel avanzado.",
+          "Existen dos modalidades de identificación electrónica basadas en el uso de claves concertadas: Cl@ve ocasional o Cl@ve PIN y Cl@ve permanente.",
+          "Cl@ve es un sistema de exclusivamente de Firma Electrónica común para todo el Sector Público Administrativo Estatal, basado en el uso de claves concertadas.",
+          "El sistema Cl@ve permitirá también el acceso a servicios de firma electrónica, en particular, a servicios de firma de documentos electrónicos mediante certificados electrónicos centralizados."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-64",
+        "t": "T1.08",
+        "o": "A",
+        "q": "De conformidad con el artículo 14 del Real Decreto 255/2025, por el que se regula el DNI, la versión digital del DNI:",
+        "a": [
+          "Se generará aunque la persona titular no disponga de su documento físico vigente.",
+          "Se obtendrá únicamente de manera presencial.",
+          "Tendrá una validez diferente que la versión física.",
+          "Tendrá la misma eficacia jurídica a efectos de identificación que la versión física."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT108-P1-65",
+        "t": "T1.08",
+        "o": "A",
+        "q": "De conformidad con la Disposición Transitoria 1ª del Real Decreto 255/2025, por el que se regula el DNI:",
+        "a": [
+          "Los DNIs emitidos con anterioridad a la entrada en vigor de este real decreto dejarán de ser válidos y eficaces.",
+          "Los DNIs emitidos con anterioridad a la entrada en vigor de este real decreto seguirán siendo válidos y eficaces.",
+          "Los DNIs emitidos con anterioridad a la entrada en vigor de este real decreto dejarán de ser válidos y eficaces en el plazo de 1 año.",
+          "Los DNIs emitidos con anterioridad a la entrada en vigor de este real decreto dejarán de ser válidos y eficaces en el plazo de 2 año."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-20",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Señale la respuesta correcta sobre la versión digital DNI:",
+        "a": [
+          "La DGP establecerá una actuación administrativa automatizada para la obtención de la versión digital del DNI, de manera electrónica, telemática o presencial, teniendo de forma alternativa la misma finalidad que el formato físico para la identificación de las personas.",
+          "La utilización del DNI en su versión digital no tendrá la misma eficacia jurídica a efectos de identificación.",
+          "Permitirá acreditar la identidad y la firma ante las autoridades, sus agentes y funcionarios públicos, así como en las relaciones con las Administraciones Públicas y con el sector privado.",
+          "El DNI en su versión digital se generará siempre, aunque la persona titular no disponga de su documento físico vigente."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-23",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según el Reglamento eIDAS2, ¿qué es una etiqueta de confianza de la Unión Europea para la cartera de identidad digital?",
+        "a": [
+          "Es un código QR que indica que la cartera europea de identidad digital de que se trate se ha proporcionado de conformidad con el Reglamento 910/2014.",
+          "Es un código de verificación expedido por un prestador cualificado de servicios de certificación que permite verificar la autenticidad de una cartera europea de identidad digital.",
+          "Es una marca de tiempo estampada en la cartera europea de identidad digital de que se trate.",
+          "Es una indicación verificable, sencilla y reconocible formulada de manera clara, de que la cartera europea de identidad digital de que se trate se ha proporcionado de conformidad con el Reglamento 910/2014."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-29",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Indique cuál de los siguientes NO es uno de los requisitos que debe cumplir una firma electrónica avanzada según el Reglamento eIDAS2:",
+        "a": [
+          "Estar vinculada al firmante de manera única.",
+          "Haber sido creada utilizando un dispositivo avanzado de creación de firmas electrónicas.",
+          "Haber sido creada utilizando datos de creación de firma que el firmante puede utilizar, con un alto nivel de confianza, bajo su exclusivo control.",
+          "Estar vinculada con los datos firmados, de modo tal que cualquier modificación ulterior de los mismos sea detectable."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-30",
+        "t": "T1.08",
+        "o": "A",
+        "q": "De acuerdo con el Reglamento eIDAS2 sobre identificación electrónica y servicios de confianza, los dispositivos cualificados de creación de firma electrónica:",
+        "a": [
+          "Podrán alterar los datos que deben firmarse si así lo requiere el proceso.",
+          "Impedirán que dichos datos se muestren al firmante antes de firmar.",
+          "Garantizarán razonablemente la confidencialidad de los datos de creación de firma electrónica utilizados para la creación de firmas electrónicas.",
+          "Podrán aparecer los datos de creación de firma electrónica utilizados para la creación de firma electrónica tantas veces como sea necesario en la práctica."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-31",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes perfiles de XAdES incluye los certificados y listas de revocación (consultas OCSP o CRLs) para poder verificar el documento firmado en el futuro incluso si las fuentes originales no estuvieran disponibles?",
+        "a": [
+          "XAdES-X.",
+          "XAdES-XL.",
+          "XAdES-C.",
+          "Esta funcionalidad no se soporta en XAdES."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-32",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Cuál es el estándar de la tarjeta física del DNI electrónico?",
+        "a": [
+          "ISO-7816-1.",
+          "PCKS#11.",
+          "ISO-17789.",
+          "ISO-7815-1."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-R-01",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según el artículo 21 de la Ley 34/2002, de 11 de Julio, de Servicios de la Sociedad de la Información y de Comercio electrónico, las comunicaciones comerciales a través de correo electrónico:",
+        "a": [
+          "Están estrictamente prohibidas en todos los casos.",
+          "Están permitidas si el destinatario de las mismas no manifiesta su oposición inequívoca y expresa.",
+          "Están permitidas en los casos previstos en la normativa vigente en materia de protección de datos.",
+          "Están permitidas si han sido solicitadas o previamente autorizadas por los destinatarios de las mismas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-22",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según la Ley 34/2002 de Servicios de Sociedad de la Información y Comercio Electrónico, NO será obligación de los prestadores de Servicios de la Sociedad de la Información permitir el acceso por medios electrónicos de forma fácil directa y gratuita a:",
+        "a": [
+          "Su nombre o denominación social.",
+          "Su número de identificación fiscal.",
+          "Facilitar información clara y exacta sobre el precio del producto o servicio.",
+          "Su número de registro del dominio que identifique al prestador de servicio en Internet."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-23",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Elija la afirmación correcta en relación con el contenido de la tarjeta chip del DNI electrónico:",
+        "a": [
+          "Se incluye un certificado electrónico único, personal e intransferible, con la doble funcionalidad de firma electrónica y de autenticación.",
+          "Se incluyen, entre otros, los datos de filiación del ciudadano (los mismos que están impresos en el soporte físico del DNI), junto con una imagen de la fotografía.",
+          "Los datos contenidos, en todo caso, sólo son accesibles en lectura por el ciudadano, mediante la utilización de la Clave Personal de Acceso o PIN, como garantía de confidencialidad.",
+          "No se incluye una imagen de la fotografía."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-24",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Indique cuál de las siguientes afirmaciones NO es correcta según lo establecido en el Reglamento eIDAS2:",
+        "a": [
+          "Una firma electrónica cualificada tendrá un efecto jurídico equivalente al de una firma manuscrita.",
+          "Una firma electrónica cualificada basada en un certificado cualificado emitido en un Estado miembro será reconocida como una firma electrónica cualificada en todos los demás Estados miembros.",
+          "Una firma electrónica cualificada es una firma electrónica avanzada que se crea mediante un dispositivo cualificado de creación de firmas electrónicas y que se basa en un certificado cualificado de firma electrónica.",
+          "El ámbito de aplicación de aplicación de este Reglamento afecta al Derecho nacional o de la Unión relacionado con la celebración y validez de los contratos u otras obligaciones legales o de procedimiento relativos a la forma."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-88",
+        "t": "T1.08",
+        "o": "A",
+        "q": "En relación con la firma electrónica avanzada, indique cuál de las siguientes opciones es la que añade los certificados y la información de revocación de los mismos, para su validación a largo plazo:",
+        "a": [
+          "AdES-A.",
+          "AdES-XL.",
+          "AdES-T.",
+          "eIDAS 2."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-R-01",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Respecto a la firma electrónica, según el Reglamento eIDAS, indique qué afirmación NO es correcta:",
+        "a": [
+          "Firma electrónica cualificada es una firma electrónica avanzada que se crea mediante un dispositivo cualificado de creación de firmas electrónicas y que se basa en un certificado cualificado de firma electrónica.",
+          "Una firma electrónica avanzada estará vinculada al firmante de manera única.",
+          "Una firma electrónica avanzada será capaz de identificar al firmante.",
+          "Una firma electrónica avanzada tendrá un efecto jurídico equivalente al de una firma manuscrita."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "n": "Edición de contenido: la opción C sustituye la alternativa repetida del original por el requisito del artículo 26(b) del Reglamento eIDAS. La respuesta sigue siendo D: el efecto equivalente a una firma manuscrita corresponde a la firma electrónica cualificada (artículo 25.2)."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-12",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según el Reglamento (UE) 910/2014 del Parlamento Europeo y del Consejo, de 23 de julio de 2014, relativo a la identificación electrónica y los servicios de confianza para las transacciones electrónicas en el mercado interior, son modalidades de firma electrónica:",
+        "a": [
+          "La firma electrónica avanzada y la firma electrónica cualificada.",
+          "La firma electrónica avanzada y la firma electrónica reconocida.",
+          "La firma electrónica reconocida y la firma digital.",
+          "La firma electrónica avanzada y la firma digital con tarjeta."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-13",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según el Reglamento (UE) 910/2014 del Parlamento Europeo y del Consejo, ¿qué es un servicio de confianza?",
+        "a": [
+          "Un servicio que regula únicamente la firma electrónica avanzada.",
+          "Un servicio electrónico prestado habitualmente a cambio de una remuneración, que se ocupa, entre otros, de la creación, verificación y validación de certificados para la autenticación de sitios web.",
+          "Un servicio electrónico siempre gratuito incluido en la lista de confianza de la Unión Europea o de un estado miembro.",
+          "Un servicio que incluye la evaluación de la conformidad de los emisores de firmas, sellos y certificados electrónicos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-14",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Qué debe hacerse para que cuando se quiera validar o verificar una firma en el futuro, la validación sea posible aunque esté caducado el certificado?",
+        "a": [
+          "Accediendo a Plataforma de Sellado de Tiempo TS@ de la Secretaría de Estado de Digitalización e Inteligencia Artificial.",
+          "Los formatos AdES (forma genérica de llamar a los formatos CAdES, XAdES y PAdES) contemplan la posibilidad de incorporar a las firmas electrónicas información adicional que garantiza la validez de una firma a largo plazo, una vez vencido el periodo de validez del certificado.",
+          "En el caso de la firma electrónica básica, si el certificado está caducado automáticamente se dará la firma como válida en fecha última de validez de la autoridad de certificación (CA).",
+          "Todas las respuestas son correctas."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-18",
+        "t": "T1.08",
+        "o": "A",
+        "q": "De conformidad con lo establecido en el Reglamento eIDAS 2, un medio de identificación electrónica es:",
+        "a": [
+          "Una unidad material y/o inmaterial que contiene los datos de identificación de la persona y que se utiliza para la autenticación en servicios en línea o, cuando proceda, en servicios fuera de línea.",
+          "Una unidad inmaterial que contiene los datos de identificación de la persona y que se utiliza exclusivamente para la autenticación en servicios en línea.",
+          "Una unidad material que contiene los datos de identificación de la persona y que se utiliza para la autenticación en servicios en línea o, cuando proceda, en servicios fuera de línea.",
+          "Una unidad material y/o inmaterial que contiene los datos de identificación de la persona y que se utiliza exclusivamente para la autenticación en servicios en línea."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-19",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Qué formato de firma electrónica es el más adecuado cuando el documento original es un PDF?",
+        "a": [
+          "CAdES.",
+          "XAdES.",
+          "PAdES.",
+          "OOXML."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-20",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según la Orden PRE/1838/2014, de 8 de octubre, por la que se publica el Acuerdo de Consejo de Ministros, de 19 de septiembre de 2014, por el que se aprueba Cl@ve, existen dos tipos de sistemas de identificación:",
+        "a": [
+          "Cl@ve ocasional y Cl@ve longeva.",
+          "Cl@ve ocasional y Cl@ve permanente.",
+          "Cl@ve transitoria y Cl@ve permanente.",
+          "Cl@ve OTP y Cl@ve permanente."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-13",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según el Reglamento 910/2014, de 23 de julio de 2014, relativo a la identificación electrónica y los servicios de confianza para las transacciones electrónicas en el mercado interior, ¿cuál de estas definiciones se corresponde con un prestador cualificado de servicios de confianza?",
+        "a": [
+          "Una persona física o jurídica que presta uno o más servicios de confianza.",
+          "Que presta uno o varios servicios de confianza cualificados y al que el organismo de supervisión ha concedido la cualificación.",
+          "Persona física o jurídica que expide certificados electrónicos o presta otros servicios en relación con la firma electrónica.",
+          "Que presta uno o varios servicios de confianza y al que el organismo cualificado ha concedido la prestación."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-88",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Qué es la firma digital?",
+        "a": [
+          "Una firma digital es un conjunto de datos asociados a un mensaje que permite asegurar la identidad del firmante.",
+          "Una firma digital es un conjunto de datos asociados a un mensaje que permite asegurar la identidad del firmante y la integridad del mensaje.",
+          "Una firma digital es un conjunto de datos asociados a un mensaje que permite asegurar la integridad del mensaje.",
+          "Una firma digital es un conjunto de datos asociados a un mensaje."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-20",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Un documento electrónico va a ser firmado electrónicamente por múltiples usuarios, teniendo en cuenta que el orden de firma es relevante, ya que cada firma refrenda o certifica la firma del firmante anterior. ¿Cuál es el tipo de firma descrita?",
+        "a": [
+          "Contrafirma.",
+          "Cofirma.",
+          "Firma online.",
+          "Firmas colaborativas."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-21",
+        "t": "T1.08",
+        "o": "A",
+        "q": "En lo referente a los certificados de identidad pública contenidos en el Documento Nacional de Identidad (DNIe), señale la respuesta FALSA:",
+        "a": [
+          "Son emitidos como certificados reconocidos.",
+          "Vinculan una serie de datos personales del ciudadano a unas determinadas claves.",
+          "Garantizan la autenticidad, integridad y no repudio.",
+          "Pueden ser renovados por declaración de que el ciudadano no tiene capacidad de firma (pródigo)."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-R-02",
+        "t": "T1.08",
+        "o": "A",
+        "q": "La ley 34/2002, de servicios de la sociedad de la información y comercio electrónico, en su artículo 45 trata la prescripción. Señale la respuesta correcta respecto a las infracciones:",
+        "a": [
+          "Las muy graves prescribirán a los tres años, las graves a los dos años y las leves al año.",
+          "Las muy graves prescribirán a los cinco años, las graves a los dos años y las leves a los seis meses.",
+          "Las muy graves prescribirán a los tres años, las graves a los dos años y las leves a los seis meses.",
+          "Las muy graves prescribirán a los cinco años, las graves a los tres años y las leves al año."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-11",
+        "t": "T1.08",
+        "o": "A",
+        "q": "De conformidad con la Ley 6/2020, reguladora de determinados aspectos de los servicios electrónicos de confianza, cuando el prestador cualificado vaya a cesar en su actividad deberá comunicarlo a los clientes a los que preste sus servicios y al órgano de supervisión:",
+        "a": [
+          "Con una antelación mínima de 1 mes al cese de la actividad.",
+          "Con una antelación mínima de 2 meses al cese de la actividad.",
+          "Con una antelación mínima de 3 meses al cese de la actividad.",
+          "Con una antelación mínima de 6 meses al cese de la actividad."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-14",
+        "t": "T1.08",
+        "o": "A",
+        "q": "En relación con los sistemas de identificación electrónica, el Reglamento 910/2014 eIDAS establece como niveles de seguridad (señale la respuesta INCORRECTA):",
+        "a": [
+          "El nivel básico.",
+          "El nivel bajo.",
+          "El nivel sustancial.",
+          "El nivel alto."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-15",
+        "t": "T1.08",
+        "o": "A",
+        "q": "En relación con España Digital 2026, señale la respuesta INCORRECTA:",
+        "a": [
+          "Incorpora como medida el Plan Spain Audiovisual Hub.",
+          "Una meta es que en 2025 se alcance un 50% de los servicios públicos disponibles en app móvil.",
+          "Está estructurada en 8 ejes estratégicos.",
+          "Es una agenda para el impulso de la transformación digital de España."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-16",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA en relación con los datos criptográficos que alberga el chip del DNIe v4:",
+        "a": [
+          "Clave RSA pública de autenticación (Digital Signature).",
+          "Clave RSA pública de no repudio (Digital Signature).",
+          "Clave RSA privada de autenticación (Digital Signature).",
+          "Clave RSA privada de firma (ContentCommitment)."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-18",
+        "t": "T1.08",
+        "o": "A",
+        "q": "El Reglamento 910/2014, de 23 de julio de 2014, relativo a la identificación electrónica y los servicios de confianza para las transacciones electrónicas en el mercado interior y por la que se deroga la Directiva 1999/93/CE define un sistema de identificación electrónica como:",
+        "a": [
+          "El proceso de utilizar los datos de identificación de una persona en formato electrónico que representan de manera única a una persona física o jurídica o a una persona física que representa a una persona jurídica.",
+          "Un proceso electrónico que posibilita la identificación electrónica de una persona física o jurídica, o del origen y la integridad de datos en formato electrónico.",
+          "Un régimen para la identificación electrónica en virtud del cual se expiden medios de identificación electrónica a las personas físicas o jurídicas o a una persona física que representa a una persona jurídica.",
+          "Una unidad material y/o inmaterial que contiene los datos de identificación de una persona y que se utiliza para la autenticación en servicios en línea."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-20",
+        "t": "T1.08",
+        "o": "A",
+        "q": "La FNMT-RCM expide un certificado de componente que permite proteger con un solo certificado todos los subdominios asociados a un dominio. Se denomina:",
+        "a": [
+          "Certificado wildcard.",
+          "Certificado de autenticación de sitio web.",
+          "Certificado SAN.",
+          "Certificado de sello de entidad."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-21",
+        "t": "T1.08",
+        "o": "A",
+        "q": "NO es un eje estratégico de la Agenda España Digital 2026:",
+        "a": [
+          "Ciberseguridad.",
+          "RETECH.",
+          "España, hub visual.",
+          "Competencias digitales."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-08",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Indique cuál de las siguientes afirmaciones sobre certificados digitales es INCORRECTA:",
+        "a": [
+          "Un certificado digital es un vínculo entre una clave pública y una identidad de usuario, que se consigue mediante una firma digital de una CA, la cual hace pública la clave privada de su certificado raíz.",
+          "Un PSC (prestador de servicios de certificación) puede tener varias CA (autoridad de certificación).",
+          "Una autoridad de registro es quien identifica de manera inequívoca al solicitante de un certificado y suministra los datos a la CA para que pueda emitir el certificado.",
+          "Cualquier firma emitida con posterioridad a la revocación de un certificado no tiene validez."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-09",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según el Reglamento (UE) 910/2014 del Parlamento Europeo y del Consejo, indique cuál de los siguientes tipos de firma electrónica tiene efecto jurídico equivalente al de una firma manuscrita:",
+        "a": [
+          "Firma biométrica digitalizada.",
+          "Firma electrónica certificada.",
+          "Firma electrónica cualificada.",
+          "Firma electrónica avanzada."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-10",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Según el Reglamento (UE) 910/2014 del Parlamento Europeo y del Consejo, indique en cuáles de los siguientes estados se puede encontrar un certificado cualificado de firma electrónica durante su periodo de validez:",
+        "a": [
+          "Activo y revocado.",
+          "Activo, revocado y suspendido.",
+          "Activo, revocado y prorrogado.",
+          "Activo, revocado y extraviado."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-15",
+        "t": "T1.08",
+        "o": "A",
+        "q": "La Estrategia Nacional de Inteligencia Artificial especifica 3 ejes de actuación. Indique cuál de los siguientes NO es uno de ellos:",
+        "a": [
+          "Integrar la Inteligencia Artificial en la vida cotidiana para transformar el tejido económico.",
+          "Facilitar la expansión de la IA en el sector público y privado, fomentando la innovación y la ciberseguridad.",
+          "Desarrollar una IA transparente, responsable y humanística.",
+          "Reforzar las palancas claves para el desarrollo de la IA."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 3,
+        "n": "Ejes de la Estrategia de IA."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-12",
+        "t": "T1.08",
+        "o": "A",
+        "q": "En relación al cambio de PIN del DNI electrónico (DNIe) sin conocer el PIN actual, señale la respuesta INCORRECTA:",
+        "a": [
+          "El titular debe acudir a un Punto de Actualización del DNIe.",
+          "El PIN deberá tener un mínimo de 12 y un máximo 16 caracteres, debiendo, en la medida de lo posible, contener una combinación alfanumérica, para dotar a dicha clave de mayor seguridad.",
+          "Se solicitará al titular su huella dactilar.",
+          "El titular debe informar previamente a la Dirección General de la Policía de la solicitud de cambio de PIN."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Cotejado con Simulacro 12 bis, p. 4, y su plantilla D, p. 22. Se restituye 12–16 en b), coincidente con el manual oficial del DNIe (p. 4); se retira la nota que afirmaba 8–16 sin respaldo. No se exige informar previamente a la DGP: se utiliza el Punto de Actualización y la huella. Fuentes: https://www.dnielectronico.es/PDFs/CAMBIO_PIN_CON_PIN.pdf ; https://www.dnielectronico.es/PortalDNIe/PRF1_Cons02.action?pag=REF_2100",
+        "z": 1,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 455,
+    "alreadyHadCitation": 344,
+    "added": 9,
+    "pending": 102,
+    "withCitation": 353
+  }
+}

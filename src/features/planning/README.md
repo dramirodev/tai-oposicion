@@ -882,3 +882,43 @@ Línea base actual: `npm run check` pasa con 1.091 pruebas y 29 omitidas. El pri
 **Integración local COMPLETADO Y VERIFICADO; publicación EN PROGRESO.** `npm run check`: 1.125 aprobadas/31 omitidas, 209 archivos correctos/4 omitidos; Python: 75 pruebas, una omitida; build correcto; emuladores `demo-tai-auth` Auth9099/Firestore8080: 2/2 métricas y sincronización, salida 0. Los campos opcionales no abren acceso entre cuentas. Se añade esta prueba de emulador a CI antes de integrar. Versión preparada 1.1.23.
 
 La nueva ejecución local de navegador se detuvo antes de las pruebas: el puerto4187 pertenece al worktree `simplificacion-cinco-temas`; no se mata ni reutiliza su servidor. Las 18 pruebas de métricas existentes se incluyen en la suite completa de CI de esta PR; el resultado nuevo queda pendiente, sin atribuirle el resultado del checkout antiguo. Logs locales: `/tmp/tai-metrics-integrated-{check,python,build}.log` y `/tmp/tai-metrics-release-emulator.log`. No se publican citas nuevas ni vínculos en esta PR.
+
+
+### Segundo lote de citas: T1.04–T1.11 — 2026-11-06
+
+**IMPLEMENTADO SIN VERIFICAR globalmente; check completado.** Se cotejaron 162 candidatos frente a enunciado, clave, alternativas y pasajes. Se incorporan 143 citas claras y se dejan 19 pendientes tras cotejo. Otras 973 preguntas sin cita siguen pendientes de revisión semántica individual: no se presentan como dudosas ni revisadas por la mera búsqueda literal. Se conservan las citas anteriores y todos los campos excepto las adiciones de `u`; no se aprueban vínculos estadísticos ni se cambia puntuabilidad.
+
+Por tema: T1.04 22; T1.05 21; T1.06 12; T1.07 25; T1.08 9; T1.09 19; T1.10 27; T1.11 8. Los expedientes de `scripts/bank-editorial/citations/` conservan preguntas antes/después, hashes, PDF, páginas y motivos. Los informes de `editorial/citas-por-tema/` distinguen pendientes cotejadas y no revisadas. Se sustituyeron coincidencias de título, otro precepto o ENI/ENS por pasajes que prueban la función o definición concreta.
+
+Validación: `npm run check` 1.099 aprobadas/29 omitidas. Python y build en ejecución; no se atribuye publicación remota al cambio local. El usuario ha autorizado publicar lotes claros, manteniendo pendientes las dudosas. La PR120 de métricas se verifica en paralelo en GitHub; este lote tiene rama propia desde main454a025. Próximo paso: terminar Python/build, abrir PR y continuar cotejo de temas técnicos y preguntas no encontradas por coincidencia literal.
+
+**Cierre del lote: COMPLETADO Y VERIFICADO localmente para estas 143 incorporaciones.** 75 pruebas Python (una omitida), build y diff correctos. El renderizado de todas las citas aceptadas tras respuesta errónea forma parte de `tests/syllabus-citations.test.js` y pasó en el check global. Quedan pendientes las 19 dudas cotejadas y las 973 preguntas sin cotejo individual. Publicación remota pendiente de PR/CI y comprobación del banco; no se declara completado el conjunto de temas.
+
+
+### Lote técnico de citas — 2026-11-06
+
+**IMPLEMENTADO SIN VERIFICAR globalmente; check completado.** Se revisaron los 149 candidatos encontrados en los bloques técnicos, leyendo enunciado, clave, alternativas y pasaje. Se incorporan 124 citas en veinte temas y se dejan 25 candidatos pendientes. T3.04 y T3.07 solo reciben informes de pendientes; no se crean ledgers vacíos ni se cambia el banco en esos dos temas. El conjunto de preguntas sin cita no encontrado por la búsqueda literal sigue pendiente de cotejo individual; no se declara completada la revisión semántica de todos los bancos.
+
+Se contrastaron visualmente las tablas de categorías UML (B3T5 p68) e hipervisores (B4T2 p69). Se prefirió la definición textual específica frente a tablas mal extraídas y pasajes de otro concepto: IR frente a UC, SNMPv3 frente a v2, sesión frente a transporte, y la condición de archivos rastreados de commit -a. Los resúmenes de T3.06 se identifican por sus nombres reales, sin presentarlos como un PDF de temario inexistente. Todos los extractos se cotejan por hash y página; solo se añade `u`. No se aprueban vínculos estadísticos ni se altera puntuabilidad.
+
+Validación global en ejecución en `/tmp/tai-citas-tech-{check,python,build}.log`. La PR120 de métricas y la PR121 de 143 citas administrativas siguen su validación remota independiente. Próximo paso: cerrar comprobaciones, abrir PR técnica y continuar preguntas pendientes, conservando la distinción entre dudas cotejadas y preguntas aún no revisadas.
+
+**Cierre local: COMPLETADO Y VERIFICADO para 124 citas.** `npm run check`: 1.111 aprobadas/29 omitidas. Build y diff correctos. La primera suite Python detectó deriva en el fixture histórico de T3.06, que copiaba el archivo actual directamente fuera del helper; ahora también verifica y revierte el overlay con `citation_base`, sin alterar los SHA ni las aserciones originales. Segunda suite: 75 pruebas correctas, una omitida. Se preservan el fallo y la reproducción en `/tmp/tai-citas-tech-python.log` y el resultado final en `/tmp/tai-citas-tech-python-fixed.log`.
+
+
+### Publicación remota de la PR119 — 2026-11-06
+
+**COMPLETADO Y VERIFICADO para las 496 citas de T1.01–T1.03.** Con autorización explícita posterior, se leyó el banco productivo v16 y se cotejaron los 496 registros completos contra el `before` revisado. Todos coincidieron. Se añadieron exclusivamente sus campos `u`, preservando todas las demás filas y los 77 recursos del inventario remoto; cero borrados y cero omisiones. Commit atómico con comparación de `bank/meta.updateTime`, versión creciente17 y rechazo de una publicación concurrente tanto en preflight como en la lectura del publicador. Se guardó respaldo previo en `/tmp/tai-citations-live-backup-16` y se verificaron por GET los tres SHA finales. Recibo: `editorial/citas-por-tema/publicacion-2026-11-06.json`.
+
+No se aprovecharon estas citas para publicar reparaciones ajenas que pudieran existir únicamente en main, ni se sustituyeron archivos completos por versiones locales divergentes. Las PR121/122 siguen pendientes de CI/integración/publicación y las métricas PR120 aún no se declaran desplegadas.
+
+
+### Consolidación en dos PRs — 2026-11-06
+
+**EN PROGRESO.** Por instrucción del usuario, el trabajo actual se organiza en PR120 (métricas) y PR121 (contenido completo). PR120 ya está integrada en main `c1f9c24`; el workflow oficial de despliegue42287124660 terminó SUCCESS. La rama de PR121 conserva los commits de PR122 e incorpora main mediante merge, resolviendo exclusivamente los conflictos de append del handoff y conservando ambos historiales. No se modifica código de métricas durante esta resolución.
+
+PR121 reúne 267 citas nuevas:143 de Administración y124 técnicas, más el recibo de las496 ya publicadas desde PR119. La antigua PR122 se cierra como consolidada; no se elimina su rama ni se crea otra PR. Las44 dudas de los311 candidatos permanecen pendientes, al igual que las preguntas sin cotejo individual. Comprobaciones de integración conjunta pendientes; no se atribuyen las validaciones separadas al conjunto hasta ejecutarlas.
+
+**Consolidación COMPLETADO Y VERIFICADO localmente.** La rama unificada sobre main pasa arquitectura/lint/tipos y1.153 pruebas/31 omitidas,75 pruebas Python (una omitida),build ydiff. No quedan entradas sin resolver en Git ni cambios de producto frente a main: el diff contiene banco/muestras/expedientes, handoff yla adaptación del fixture histórico. El endpoint productivo `https://tai-oposicion.web.app/version.json` devuelve `1.1.23+c1f9c24`,coincidente con el despliegue de PR120.
+
+La PR121 concentra todos los lotes pendientes de esta tarea; siguientes incorporaciones y correcciones se acumulan en ella, sin abrir más PRs. La PR122 queda sustituida por PR121 y conserva su historial. Su cierre no declara completada la revisión de las preguntas aún no cotejadas ni la publicación de las267 citas nuevas; CI conjunta ypublicación de ese contenido siguen pendientes.

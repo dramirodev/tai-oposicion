@@ -1,0 +1,4134 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T3.08",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "07a31683ae98d723e07be68ab566c475a1d7a28c64b49825b42d6cb1709a78cf",
+    "afterSha256": "99a746b384ab1c0523633316557e2ca64298de289c243911e5cd1413b158034c"
+  },
+  "sample": {
+    "beforeSha256": "3839693dd119df9ea67f5fe20389159fa8370256f6f6bcd000e131807d92b149",
+    "afterSha256": "3839693dd119df9ea67f5fe20389159fa8370256f6f6bcd000e131807d92b149"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-AT308-P1-98": {
+      "path": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - CSS.pdf",
+      "sourceHash": "f871d3d81529d09b5ee8260e6c78a044df152e0b3a48155f5b54dea41fcf7fee",
+      "physicalPage": 31,
+      "printedPage": 31,
+      "excerpt": "Actualmente hay muchos preprocesadores, pero los más populares son SASS, LESS y Stylus (en este orden). - SASS (Syntactically Awesome Style Sheets): hojas de estilo sintácticamente impresionantes es una extensión de CSS que permite utilizar variables, reglas anidadas, mixins, importaciones en línea y mucho más, todas con una sintaxis completamente compatible con CSS.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS08B-P1-72": {
+      "path": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+      "sourceHash": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5",
+      "physicalPage": 17,
+      "printedPage": 17,
+      "excerpt": "- Hacer uso de CSS Layouts que nos permiten la creación de diseños fáciles y flexibles como Grid Layout, Flexbox o Multicol. - Definir puntos de ruptura. Son expresiones condicionales que aplican diferentes estilos dependiendo del dispositivo. Esto se hace mediante Media Queries. - Usar imágenes vectoriales SVG. La imagen no pierde calidad al redimensionarse. - Envolver objetos en un contenedor. Esto hace un diseño comprensible, limpio y ordenado. - En el ciclo de desarrollo hay que tener presente que se va a acceder al sitio o la aplicación desde diferentes dispositivos con distintos tipos de pantalla y resoluciones.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS08B-P1-92": {
+      "path": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+      "sourceHash": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5",
+      "physicalPage": 9,
+      "printedPage": 9,
+      "excerpt": "- Apache Cordova: framework de desarrollo móvil de código abierto que utiliza tecnologías web (HTML, CSS y JavaScript) para el desarrollo multiplataforma. Las aplicaciones se ejecutan dentro de envolturas dirigidas a cada plataforma y dependen de enlaces API conformes con los estándares para acceder a las capacidades de cada dispositivo, como sensores, datos, estado de la red, etc.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS08B-P1-95": {
+      "path": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+      "sourceHash": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5",
+      "physicalPage": 32,
+      "printedPage": 32,
+      "excerpt": "(3) Mozilla Firefox: navegador de código abierto y multiplataforma. Motor de renderizado: Gecko. Intérprete de JavaScript: SpiderMonkey.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS10-P1-64": {
+      "path": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - CSS.pdf",
+      "sourceHash": "f871d3d81529d09b5ee8260e6c78a044df152e0b3a48155f5b54dea41fcf7fee",
+      "physicalPage": 5,
+      "printedPage": 5,
+      "excerpt": "Las media queries crean una experiencia mejorada según las características de los dispositivos, puesto que los usuarios esperan que los sitios web a los que acceden ofrezcan la misma experiencia que si se usara un ordenador.",
+      "label": "Pasaje del temario"
+    }
+  },
+  "questions": [
+    {
+      "id": "AT308-P1-98",
+      "before": {
+        "i": "AT308-P1-98",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Un preprocesador de CSS compila todo el código fuente en un archivo CSS plano. ¿Cuál de las siguientes opciones se corresponde con preprocesadores CSS?",
+        "a": [
+          "Stylesheet, flex y grid.",
+          "Padding, margin y display.",
+          "CSS-Edit, inline y block.",
+          "Sass, Less y Stylus."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT308-P1-98",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Un preprocesador de CSS compila todo el código fuente en un archivo CSS plano. ¿Cuál de las siguientes opciones se corresponde con preprocesadores CSS?",
+        "a": [
+          "Stylesheet, flex y grid.",
+          "Padding, margin y display.",
+          "CSS-Edit, inline y block.",
+          "Sass, Less y Stylus."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.08 Aplicaciones Web - Temario - CSS.pdf — Pasaje del temario\n\nTemario, p. 31 (PDF p. 31)\n\nActualmente hay muchos preprocesadores, pero los más populares son SASS, LESS y Stylus (en este orden). - SASS (Syntactically Awesome Style Sheets): hojas de estilo sintácticamente impresionantes es una extensión de CSS que permite utilizar variables, reglas anidadas, mixins, importaciones en línea y mucho más, todas con una sintaxis completamente compatible con CSS.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "e10fb3cbfcccd1fdaf1a657c63b82e8f9d17d3e533ef7dd2191f0010266fb13f",
+      "afterSha256": "eddd12f093df1dbb2dafd1e8f90ad68b26acb2b9c3c3cba9db36ebb452eb0df1",
+      "evidenceKeys": [
+        "e-AT308-P1-98"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS08B-P1-72",
+      "before": {
+        "i": "AS08B-P1-72",
+        "t": "T3.08",
+        "o": "A",
+        "q": "El módulo CSS3 que permite determinar el tamaño del dispositivo y, en función de ello, ajustar la visualización de la aplicación móvil se denomina:",
+        "a": [
+          "Object queries.",
+          "Responsive DOM queries.",
+          "Screen design queries.",
+          "Media queries."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS08B-P1-72",
+        "t": "T3.08",
+        "o": "A",
+        "q": "El módulo CSS3 que permite determinar el tamaño del dispositivo y, en función de ello, ajustar la visualización de la aplicación móvil se denomina:",
+        "a": [
+          "Object queries.",
+          "Responsive DOM queries.",
+          "Screen design queries.",
+          "Media queries."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "u": "T3.08 Aplicaciones Web - Temario.pdf — Pasaje del temario\n\nTemario, p. 17 (PDF p. 17)\n\n- Hacer uso de CSS Layouts que nos permiten la creación de diseños fáciles y flexibles como Grid Layout, Flexbox o Multicol. - Definir puntos de ruptura. Son expresiones condicionales que aplican diferentes estilos dependiendo del dispositivo. Esto se hace mediante Media Queries. - Usar imágenes vectoriales SVG. La imagen no pierde calidad al redimensionarse. - Envolver objetos en un contenedor. Esto hace un diseño comprensible, limpio y ordenado. - En el ciclo de desarrollo hay que tener presente que se va a acceder al sitio o la aplicación desde diferentes dispositivos con distintos tipos de pantalla y resoluciones.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "e2bdeffd876a582cfe13238ac4af4a1386d3c69ef9c76f38bf924c4d5cf6415c",
+      "afterSha256": "050b29cb2eb90a2f312f90bb8cd2adc1479c5df0b5833179e683a54e9a956791",
+      "evidenceKeys": [
+        "e-AS08B-P1-72"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS08B-P1-92",
+      "before": {
+        "i": "AS08B-P1-92",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Indique cuál es un conocido framework para el desarrollo de aplicaciones móviles basadas en tecnologías estándar HTML5, CSS y Javascript:",
+        "a": [
+          "Naturgy.",
+          "Apache Cordova.",
+          "Apache Nifi.",
+          "Open Mobility."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS08B-P1-92",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Indique cuál es un conocido framework para el desarrollo de aplicaciones móviles basadas en tecnologías estándar HTML5, CSS y Javascript:",
+        "a": [
+          "Naturgy.",
+          "Apache Cordova.",
+          "Apache Nifi.",
+          "Open Mobility."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.08 Aplicaciones Web - Temario.pdf — Pasaje del temario\n\nTemario, p. 9 (PDF p. 9)\n\n- Apache Cordova: framework de desarrollo móvil de código abierto que utiliza tecnologías web (HTML, CSS y JavaScript) para el desarrollo multiplataforma. Las aplicaciones se ejecutan dentro de envolturas dirigidas a cada plataforma y dependen de enlaces API conformes con los estándares para acceder a las capacidades de cada dispositivo, como sensores, datos, estado de la red, etc.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "66f7f7e786723f7e66692c8edb3acd1db28c9bc7fdce6837ff57fb49cf22200c",
+      "afterSha256": "98b56e18b3bea3977c5ff461c1572e372d983189b6a59319066c15309be2261a",
+      "evidenceKeys": [
+        "e-AS08B-P1-92"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS08B-P1-95",
+      "before": {
+        "i": "AS08B-P1-95",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué navegador web utiliza como intérprete de JavaScript SpiderMonkey?",
+        "a": [
+          "Lynx.",
+          "Mozilla Firefox.",
+          "Safari.",
+          "Microsoft Edge."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS08B-P1-95",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué navegador web utiliza como intérprete de JavaScript SpiderMonkey?",
+        "a": [
+          "Lynx.",
+          "Mozilla Firefox.",
+          "Safari.",
+          "Microsoft Edge."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.08 Aplicaciones Web - Temario.pdf — Pasaje del temario\n\nTemario, p. 32 (PDF p. 32)\n\n(3) Mozilla Firefox: navegador de código abierto y multiplataforma. Motor de renderizado: Gecko. Intérprete de JavaScript: SpiderMonkey.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "b43089263f33cff9451c3b068e3e99c5afec9556938d65092eb591261830be5f",
+      "afterSha256": "bec53b2a870e96a0bae9ddc38cd77ecb021bfd7311de5ec84310bc1cb2298108",
+      "evidenceKeys": [
+        "e-AS08B-P1-95"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS10-P1-64",
+      "before": {
+        "i": "AS10-P1-64",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué mecanismo se utiliza en CSS (Cascading Style Sheets) para adaptar un sitio web dependiendo de la presencia o el valor de varias características y parámetros del dispositivo utilizado?",
+        "a": [
+          "Media queries.",
+          "Flexible layouts.",
+          "Device dependent layouts.",
+          "Responsive queries."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS10-P1-64",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué mecanismo se utiliza en CSS (Cascading Style Sheets) para adaptar un sitio web dependiendo de la presencia o el valor de varias características y parámetros del dispositivo utilizado?",
+        "a": [
+          "Media queries.",
+          "Flexible layouts.",
+          "Device dependent layouts.",
+          "Responsive queries."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "u": "T3.08 Aplicaciones Web - Temario - CSS.pdf — Pasaje del temario\n\nTemario, p. 5 (PDF p. 5)\n\nLas media queries crean una experiencia mejorada según las características de los dispositivos, puesto que los usuarios esperan que los sitios web a los que acceden ofrezcan la misma experiencia que si se usara un ordenador.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "d1f14580678d27ccd5b5b67124838bc309b7dbdfa9f0f63b787d26cad21aaccc",
+      "afterSha256": "f7e5f99ab97e4fcaadce2256a1118da3bf36d736c70dcc84dab16951ee43ae9a",
+      "evidenceKeys": [
+        "e-AS10-P1-64"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-48",
+        "t": "T3.08",
+        "o": "O",
+        "q": "¿Qué evento de HTML utilizaría para producir un efecto al situar el puntero del ratón sobre un elemento?",
+        "a": [
+          "onclick.",
+          "onmouseover.",
+          "onmousedown.",
+          "onmouseout."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Eventos hermanos onmouse*.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-49",
+        "t": "T3.08",
+        "o": "O",
+        "q": "¿Cuál de las siguientes es una diferencia entre HTML y XHTML?",
+        "a": [
+          "HTML exige que las etiquetas se escriban en minúscula, mientras que XHTML no.",
+          "XHTML permite que haya elementos no vacíos sin cerrar, mientras que HTML no.",
+          "En HTML es obligatorio que los valores de los atributos vayan entre comillas, mientras que en XHTML no.",
+          "En XHTML es obligatoria la presencia del elemento <head>."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "a), b), c) atribuyen a HTML lo que exige XHTML (sujeto intercambiado).",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-R-04",
+        "t": "T3.08",
+        "o": "O",
+        "q": "En CSS3, ¿cuál de las siguientes unidades de medida NO es relativa?",
+        "a": [
+          "Q",
+          "vw",
+          "ex",
+          "ch"
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": 3,
+        "n": "Q (cuartos de milímetro) es absoluta.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-53",
+        "t": "T3.08",
+        "o": "O",
+        "q": "¿Cuál es el motor web desarrollado por The Mozilla Foundation?",
+        "a": [
+          "WebKit",
+          "Firefox",
+          "Gecko",
+          "Edge"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Firefox (navegador) y Edge como intrusos; WebKit hermano real.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-54",
+        "t": "T3.08",
+        "o": "O",
+        "q": "¿Qué término está relacionado con XML-binary Optimized Packaging (XOP)?",
+        "a": [
+          "Reconstituted XML Infoset",
+          "XOP Header",
+          "XOP Package",
+          "Optimized Document"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 3,
+        "n": "Términos que suenan a XOP.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-55",
+        "t": "T3.08",
+        "o": "O",
+        "q": "¿Cuál de los siguientes NO es un framework para javascript?",
+        "a": [
+          "Angular",
+          "Bootstrap",
+          "React",
+          "JDBC"
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "JDBC entre frameworks JS (Bootstrap también es intruso discutible).",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-R-04",
+        "t": "T3.08",
+        "o": "O",
+        "q": "¿Cuál de los siguientes lenguajes está relacionado con el desarrollo en backend?",
+        "a": [
+          "GO",
+          "SASS",
+          "XML",
+          "ANGULAR"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "GO frente a tecnologías de frontend.",
+        "y": "Ingreso libre OEP 2022 (2023)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-39",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Señale la respuesta correcta en relación a las tecnologías y herramientas de desarrollo front-end:",
+        "a": [
+          "Sass, Less y Stylus, son preprocesadores de CSS.",
+          "Postman es una herramienta que sirve para probar la parte de front-end, no permitiendo validar los servicios REST.",
+          "Node js fue construido con el motor de java jre 1.9",
+          "Bootstrap es una herramienta de desarrollo que permite realizar test de los servicios REST, aislando al programador del front-end."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          12,
+          7
+        ],
+        "d": 2,
+        "n": "Sass/Less/Stylus; distractores con \"no permitiendo\" y atribuciones falsas.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-50",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Indique, de entre las siguientes afirmaciones, cuál es relativa a Ruby on Rails (RoR):",
+        "a": [
+          "Es un lenguaje de programación creado por G. Ruby.",
+          "Es un framework de control de versiones escrito en el lenguaje Ruby.",
+          "Es un framework de desarrollo de aplicaciones web basado en el patrón MVC.",
+          "Es un servicio de .NET."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Ruby on Rails: definiciones inventadas.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-51",
+        "t": "T3.08",
+        "o": "O",
+        "q": "En una sentencia \"if\" en el lenguaje de programación Python, ¿cómo se identifica el bloque de código a ejecutar si la condición se cumple?",
+        "a": [
+          "El bloque debe estar delimitado por llaves {}",
+          "El bloque debe estar delimitado por corchetes []",
+          "El bloque debe estar delimitado por corchetes ()",
+          "Cada línea del bloque debe estar precedida por el mismo número de espacios en blanco, con la misma sangría."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Bloques en Python: indentación frente a llaves/corchetes.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-52",
+        "t": "T3.08",
+        "o": "O",
+        "q": "En el lenguaje XML, ¿cuál de las siguientes sentencias sería correcta para añadir comentarios?",
+        "a": [
+          "<-- Aquí va el comentario /-->",
+          "< Aquí va el comentario !>",
+          "<!-- Aquí va el comentario -->",
+          "<--! Aquí va el comentario -->"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 1,
+        "n": "Sintaxis de comentario XML con un carácter cambiado.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-R-05",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Indique cuál de las siguientes característica de JavaScript es INCORRECTA:",
+        "a": [
+          "Es imperativo y dinámico.",
+          "Proporciona funciones de segunda clase.",
+          "Es débilmente tipado.",
+          "Está basado en prototipos."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "\"Funciones de segunda clase\" (son de primera clase).",
+        "y": "Ingreso libre OEP 2019",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-52",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Según el HTML Living Standard de WHATWG, ¿en qué posición debe aparecer la declaración DOCTYPE dentro de la estructura de un documento HTML?",
+        "a": [
+          "En la primera línea, antes del elemento raíz <html>.",
+          "Dentro del elemento <head>, como primera instrucción antes de cualquier metadato.",
+          "Dentro del elemento raíz <html>, como primera instrucción.",
+          "Al inicio del elemento <body>, antes de cualquier contenido visible."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "Posición del DOCTYPE.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-53",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Según la especificación XML del W3C, ¿cuántos elementos raíz puede contener un documento XML bien formado?",
+        "a": [
+          "Ninguno, si el documento declara un DTD externo que lo define.",
+          "Varios, siempre que estén separados por instrucciones de procesamiento.",
+          "Solo dos: uno para el prólogo y otro para el contenido del documento.",
+          "Solo uno: el elemento raíz, cuyas etiquetas de apertura y cierre no se encuentran dentro del contenido de ningún otro elemento."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          12,
+          2
+        ],
+        "d": 1,
+        "n": "XML: un único elemento raíz.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-48",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Indique cuál de las siguientes afirmaciones es INCORRECTA:",
+        "a": [
+          "XSD se refiere al lenguaje de definición de esquemas XML.",
+          "DTD proporciona medios para validar archivos XML en relación con un conjunto de normas.",
+          "En XHTML todos los elementos tienen que llevar cierre.",
+          "jQuery es un lenguaje de programación que permite la mejora de JavaScript."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "jQuery es biblioteca, no lenguaje.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-50",
+        "t": "T3.08",
+        "o": "O",
+        "q": "En JavaScript, cuál de las siguientes afirmaciones es INCORRECTA:",
+        "a": [
+          "Entre los tipos de datos JavaScript están String, Boolean, Undefined y Number.",
+          "Una variable declarada sin valor asignado tiene el valor undefined.",
+          "123 == '123' devolverá falso.",
+          "El alcance de una variable declarada con let es de bloque."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "123 == '123' devuelve verdadero.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-52",
+        "t": "T3.08",
+        "o": "O",
+        "q": "¿Cuál de las siguientes afirmaciones es FALSA?",
+        "a": [
+          "En JavaScript, la ejecución de isNaN(\"hola\") dará como resultado true.",
+          "El lenguaje de programación JavaScript forma parte de la plataforma Java.",
+          "XML es la base de un gran número de normas tales como el Lenguaje Universal de Negocios, entre otros.",
+          "React es una biblioteca de código abierto de JavaScript para crear interfaces de usuario de front-end."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "\"JavaScript forma parte de la plataforma Java\".",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-25",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Indique cuáles de las siguientes etiquetas NO fueron introducidas como novedad en HTML5.",
+        "a": [
+          "<footer> y <details>",
+          "<header> y <nav>",
+          "<details> y <mark>",
+          "<caption> y <nav>"
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Etiquetas que no son nuevas en HTML5 (pares).",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-33",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Las siglas UI y UX hacen referencia a:",
+        "a": [
+          "Interfaz de usuario (User Interface) y experiencia de usuario (User eXperience).",
+          "Innovación para usuarios (User Innovation) y ejemplos de usuario (User eXamples).",
+          "Índice de Unicode (Unicode Index) y pericia en Unicode (Unicode eXpertise).",
+          "Interfaz unidireccional (Unidirectional Interface) y experiencia unidireccional (Unidirectional eXperience)."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Expansiones inventadas de UI/UX.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-R-05",
+        "t": "T3.08",
+        "o": "O",
+        "q": "En el contexto de HTML5, si queremos ocultar una parte de la pantalla hasta que un usuario haya hecho \"log in\", utilizaremos:",
+        "a": [
+          "El atributo hidden.",
+          "El atributo style del elemento como \"non visible\".",
+          "La etiqueta aside.",
+          "La etiqueta iframe."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9,
+          13
+        ],
+        "d": 1,
+        "n": "Atributo hidden.",
+        "y": "Promoción interna OEP 2019",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-29",
+        "t": "T3.08",
+        "o": "O",
+        "q": "¿Cuál de estos elementos permiten definir la presentación y estilos de una página web?",
+        "a": [
+          "CSS",
+          "XSS",
+          "CSI",
+          "OSS/BSS"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "CSS frente a siglas parecidas.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-30",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Cuál es una de las restricciones básicas que introduce XHTML referente a la sintaxis de sus etiquetas:",
+        "a": [
+          "Los nombres de las etiquetas y de los atributos se pueden escribir en letras mayúsculas o minúsculas.",
+          "Los elementos anidados no tienen que cerrarse ordenadamente.",
+          "Los atributos se pueden minimizar.",
+          "Para elementos vacíos, se requieren etiquetas finales."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "XHTML: restricciones invertidas.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-18",
+        "t": "T3.08",
+        "o": "O",
+        "q": "¿Qué hará el siguiente código de JavaScript console.log(10 === ‘10’)?",
+        "a": [
+          "Imprimirá true.",
+          "Imprimirá false.",
+          "Dará error.",
+          "Imprimirá ‘1010’."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": 1,
+        "n": "=== no convierte tipos.",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-62",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Python 3.7, indique qué resultado se obtiene al ejecutar print(\"Java\"*4+\"Linux\")",
+        "a": [
+          "Java4Linux",
+          "Devuelve un error de sintaxis.",
+          "Genera excepción, por tipo de operando no soportado.",
+          "JavaJavaJavaJavaLinux"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": 1,
+        "n": "Operador * con cadenas en Python.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-63",
+        "t": "T3.08",
+        "o": "O",
+        "q": "¿Cuál de las siguientes opciones representa una de las nuevas etiquetas introducidas por HTML5?",
+        "a": [
+          "<progress>",
+          "<socialmedia>",
+          "<blog>",
+          "<navigation>"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Etiquetas HTML5 inventadas.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-64",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Considerando como premisa la existencia del archivo foto.jpg en la misma ubicación que el archivo que contiene el código HTML indicado a continuación, ¿qué mostraría en pantalla el siguiente código? <a href=\"https://www.boe.es\" ><img src=\"foto.jpg\" alt=\"Acceso al BOE\"/></a>",
+        "a": [
+          "Mostraría la imagen foto.jpg siendo esta un hipervínculo a la página https://www.boe.es",
+          "Mostraría el texto “Acceso al BOE” siendo este un hipervínculo a la página https://www.boe.es",
+          "Mostraría la imagen foto.jpg y a continuación el texto “Acceso al BOE”, siendo este un hipervínculo a la página https://www.boe.es",
+          "Mostraría el texto “Acceso al BOE” como hipervínculo a la página https://www.boe.es y a continuación la imagen foto.jpg"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 2,
+        "n": "Imagen como hipervínculo.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-24",
+        "t": "T3.08",
+        "o": "O",
+        "q": "PHP el operador de comparación ' === ' entre dos valores devuelve TRUE si:",
+        "a": [
+          "Ambos valores son iguales.",
+          "Si ambos valores son iguales después de la manipulación de tipos.",
+          "Si ambos valores son iguales y son del mismo tipo.",
+          "Si ambos valores son iguales o son del mismo tipo."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "=== en PHP.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-49",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Señale cuál de las siguientes etiquetas ha sido eliminada en HTML5:",
+        "a": [
+          "<big>",
+          "<div>",
+          "<article>",
+          "<a>"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "<big> eliminada en HTML5.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-01",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes elementos NO ha sido incorporado en HTML5?",
+        "a": [
+          "<address>",
+          "<aside>",
+          "<nav>",
+          "<section>"
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-02",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes elementos ha sido incorporado en HTML5?",
+        "a": [
+          "<h3>",
+          "<main>",
+          "<base>",
+          "<samp>"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Elementos nuevos de HTML5."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-03",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué elemento de HTML5 marca el texto que debe introducir el usuario?",
+        "a": [
+          "<code>",
+          "<var>",
+          "<dfn>",
+          "<kbd>"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-04",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué elemento de HTML5 marca variables de programas y similares?",
+        "a": [
+          "<code>",
+          "<var>",
+          "<dfn>",
+          "<samp>"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-05",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué elemento de HTML5 representa una oportunidad de salto de línea?",
+        "a": [
+          "<br>",
+          "<vbr>",
+          "<wbr>",
+          "<xbr>"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-07",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué elemento en HTML5 NO comienza en una nueva línea y solo ocupa el ancho necesario?",
+        "a": [
+          "<p>",
+          "<span>",
+          "<div>",
+          "<ul>"
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-08",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Respecto al elemento <figure> en HTML5 seleccione la respuesta INCORRECTA:",
+        "a": [
+          "Es un elemento introducido en esta versión.",
+          "Especifica contenido autónomo como ilustraciones, fotos, diagramas, etc.",
+          "Con el elemento <caption> se asigna una leyenda al elemento <figure>.",
+          "No es equivalente semánticamente al elemento <img>"
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-09",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Para representar una lista descriptiva en HTML5 utilizaremos el elemento:",
+        "a": [
+          "<ul>",
+          "<ol>",
+          "<dt>",
+          "<dl>"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-10",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué elemento de HTML5 se utiliza para representar el encabezado de una sección?",
+        "a": [
+          "<h1>",
+          "<caption>",
+          "<legend>",
+          "<hgroup>"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-12",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué atributo de elemento <video> de HTML5 permite mostrar una imagen mientras el video se descarga o hasta que el usuario inicie la reproducción del mismo?",
+        "a": [
+          "autoplay.",
+          "controls.",
+          "src.",
+          "poster."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-13",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué elemento de HTML5 NO puede ser utilizado en conjunto con <source>?",
+        "a": [
+          "<figure>",
+          "<picture>",
+          "<audio>",
+          "<video>"
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Elementos que admiten <source>."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-14",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Respecto a la sintaxis en HTML5 indique la respuesta INCORRECTA:",
+        "a": [
+          "Las comillas para indicar valores de los atributos son facultativas.",
+          "Es obligatorio incluir la etiqueta de cierre para todo elemento con etiqueta de apertura y de cierre.",
+          "En atributos booleanos la simple presencia del mismo indica un valor true.",
+          "Los elementos se pueden escribir en mayúsculas y minúsculas."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-15",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una característica de HTML5?",
+        "a": [
+          "Nuevos elementos semánticos.",
+          "Audio y vídeo nativos.",
+          "API de dibujo en Canvas.",
+          "Service workers."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-16",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es un atributo global en HTML5?",
+        "a": [
+          "content.",
+          "class.",
+          "title.",
+          "id."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-17",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué elemento de HTML5 define un contenedor para una aplicación o contenido interactivo externo que por lo general no es HTML?",
+        "a": [
+          "<iframe>",
+          "<embed>",
+          "<object>",
+          "<video>"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-18",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué elemento nos permite utilizar subtítulos en un video en HTML5?",
+        "a": [
+          "<canvas>",
+          "<source>",
+          "<param>",
+          "<track>"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-19",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué atributo del <input> en HTML5 permite mostrar un texto de ayuda dentro del campo?",
+        "a": [
+          "list",
+          "tooltip",
+          "placeholder",
+          "inputhelp"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-20",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En HTML5 se quiere utilizar en una lista desplegable opciones de grupos, para ello recurrimos al elemento:",
+        "a": [
+          "<optgroup>",
+          "<select>",
+          "<option>",
+          "<group>"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-21",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Indique la respuesta INCORRECTA sobre el elemento <datalist> de HTML5:",
+        "a": [
+          "Es un elemento introducido en HTML5.",
+          "Define un conjunto de valores para otros elementos.",
+          "El elemento <option> permite definir los valores de la lista.",
+          "Obliga al usuario a seleccionar uno de los valores del elemento <datalist>, no actuando como un listado de sugerencias."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-22",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En relación con HTML5 indique la respuesta INCORRECTA:",
+        "a": [
+          "<meter> representa una medición escalar dentro de un rango conocido.",
+          "<progress> representa el progreso de finalización de una tarea.",
+          "<rt> representa los paréntesis alrededor de una anotación Ruby.",
+          "<keygen> representa un control generador de claves y el envío de la clave pública como parte de un formulario."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-23",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué elemento interactivo de HTML5 nos permite representar un widget?",
+        "a": [
+          "<object>",
+          "<dialog>",
+          "<summary>",
+          "<details>"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-24",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO se considera una ventaja de CSS3?",
+        "a": [
+          "Reduce el código JavaScript.",
+          "Permite el diseño adaptativo.",
+          "Reduce el tiempo de desarrollo pero no el tiempo de mantenimiento.",
+          "Incrementa el rendimiento de las páginas."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-25",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué son las media queries?",
+        "a": [
+          "Es una característica de JavaScript.",
+          "Permite añadir estilos o reglas específicas CSS3 según medida de la pantalla, orientación del dispositivo o densidad de píxeles.",
+          "Es una de las incorporaciones introducidas por HTML5.",
+          "Son consultas genéricas que se pueden lanzar contra una base de datos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-26",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Si queremos aplicar un estilo a todos los elementos con atributo class=\"texto\" de una página HTML, definiremos en la hoja de estilo CSS3 asociada el selector:",
+        "a": [
+          ":texto",
+          "#texto",
+          "texto",
+          ".texto"
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-27",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En una hoja de estilo CSS3 un selector del tipo .selector es un:",
+        "a": [
+          "Selector de ID.",
+          "Selector de clase.",
+          "Selector descendente.",
+          "Selector de tipo."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-29",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En una hoja de estilo CSS3 un selector del tipo selector1 selector2 es un:",
+        "a": [
+          "Selector de ID.",
+          "Selector de clase.",
+          "Selector descendente.",
+          "Selector de tipo."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-30",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En una hoja de estilo CSS3 el selector div + h1 es se aplicará a todos los elementos:",
+        "a": [
+          "<h1> situados dentro de elementos <div>.",
+          "<h1> situados justo después de un elemento <div>.",
+          "<div> y todos los elementos <h1>.",
+          "<h1> cuyo padre directo sea un elemento <div>."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-32",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En una hoja de estilo CSS3 un selector del tipo selector1 > selector2 es un:",
+        "a": [
+          "Selector de hermanos general.",
+          "Selector de hijos.",
+          "Selector descendente.",
+          "Selector adyacente."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Combinadores CSS."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-35",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En una hoja de estilo CSS3 el selector div ˜ h1 es se aplicará a todos los elementos:",
+        "a": [
+          "<h1> situados dentro de elementos <div>.",
+          "<h1> situados justo después de un elemento <div>.",
+          "<h1> hermanos de <div> que se sitúen tras este elemento.",
+          "<h1> cuyo padre directo sea un elemento <div>."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-36",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En una hoja de estilo CSS3 si tenemos el selector p[class$=especial] {color:red;} se aplicará a todos los elementos:",
+        "a": [
+          "<p> que tenga el atributo class cuyo valor acaba en especial.",
+          "<p> que tenga el atributo class cuyo valor comienza por especial.",
+          "<p> que tenga el atributo class cuyo valor contiene especial.",
+          "<p> que tenga el atributo class cuyo valor es una serie de palabras separadas por guiones que comienza con especial."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-37",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En una hoja de estilo CSS3 :required es:",
+        "a": [
+          "Un pseudoelemento.",
+          "Una pseudoclase.",
+          "Un pseudoestado.",
+          "Un pseudoselector."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-38",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En una hoja de estilo CSS3 ::selection es:",
+        "a": [
+          "Un pseudoelemento.",
+          "Una pseudoclase.",
+          "Un pseudoestado.",
+          "Un pseudoselector."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-39",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Para elemento <h1> señale cuál es la respuesta correcta en base a las siguientes opciones de estilos CSS que aplican a dicho elemento: Opción 1 En las hojas de estilo de autor se ha definido h1{color: red;} En las hojas de estilo de usuario usuario se ha definido h1{color:blue;} Opción 2 En las hojas de estilo de autor se ha definido h1{color: red;} En las hojas de estilo de usuario usuario se ha definido h1{color:blue !important;}",
+        "a": [
+          "Según la opción 1, el encabezado aparecerá en azul y según la opción 2 en azul.",
+          "Según la opción 1, el encabezado aparecerá en rojo y según la opción 2 en rojo.",
+          "Según la opción 1, el encabezado aparecerá en rojo y según la opción 2 en azul.",
+          "Según la opción 1, el encabezado aparecerá en azul y según la opción 2 en rojo."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-40",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Indique el orden de precedencia de las hojas de estilo CSS:",
+        "a": [
+          "Hojas de estilo de navegador, hojas de estilo de usuario y hojas de estilo de autor.",
+          "Hojas de estilo de autor, hojas de estilo de usuario y hojas de estilo de navegador.",
+          "Hojas de estilo de usuario, hojas de estilo de autor y hojas de estilo de navegador.",
+          "Hojas de estilo de autor, hojas de estilo de navegador y hojas de estilo de usuario."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-41",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En el modelo de cajas de CSS3, si se desea establecer un margen derecho de 10px y un relleno izquierdo de 5px:",
+        "a": [
+          "Se establecerá la propiedad margin-right: 10px y padding-left: 5px.",
+          "Se establecerá la propiedad padding-right: 10px y margin-left: 5px.",
+          "Se establecerá la propiedad margin-left: 10px y padding-right: 5px.",
+          "Se establecerá la propiedad padding-left: 10px y margin-right: 5px."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-42",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué posicionamiento de un elemento en CSS3 se utiliza por defecto?",
+        "a": [
+          "Relative.",
+          "Fixed.",
+          "Static.",
+          "Absolute."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-43",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En relación con el posicionamiento de un elemento en CSS3 indique la respuesta correcta:",
+        "a": [
+          "El posicionamiento flotante permite el desplazamiento de una caja, mediante los valores top y bottom.",
+          "El modelo flexbox permite que un comportamiento predecible de las cajas, ajustándose al tamaño concreto de la pantalla.",
+          "Para utilizar el modelo flexbox en un elemento hacemos uso de la propiedad flex:display.",
+          "El desplazamiento con un posicionamiento relativo se controla solo con las propiedades left y right."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-44",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué valor corresponde a la propiedad list-style-type para que una lista muestre el orden i, ii, iii…?",
+        "a": [
+          "lower-roman.",
+          "lower-greek.",
+          "lower-latin.",
+          "upper-latin."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-45",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué valor corresponde a la propiedad list-style-type para que una lista muestre el orden a, b, c…?",
+        "a": [
+          "upper-alpha.",
+          "lower-greek.",
+          "lower-latin.",
+          "upper-latin."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-46",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué valor corresponde a la propiedad list-style-type para que una lista muestre el orden A, B, C…?",
+        "a": [
+          "upper-armenian.",
+          "lower-greek.",
+          "lower-latin.",
+          "upper-latin."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-47",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes es un preprocesador CSS?",
+        "a": [
+          "Tailwind.",
+          "Foundation.",
+          "LESS.",
+          "MiniCSS."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-51",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, indique qué realiza el siguiente código <?php $longitud= strlen(trim($pass)); if($longitud < $longitud_minima) echo \"Longitud insuficiente\"; else echo sha1(str_shuffle($pass)); ?>",
+        "a": [
+          "Elimina los espacios en blanco a izquierda y derecha de $pass y obtiene su longitud. Compara esa longitud con una longitud mínima. Si es menor, muestra por pantalla \"Longitud insuficiente\", en otro caso obtiene un resumen de la cadena $pass previamente reordenada de forma aleatoria y lo muestra por pantalla.",
+          "Elimina los espacios en blanco a izquierda de $pass y obtiene su longitud. Compara esa longitud con una longitud mínima. Si es menor, muestra por pantalla \"Longitud insuficiente\", en otro caso obtiene un resumen de la cadena $pass previamente reordenada de forma aleatoria y lo muestra por pantalla.",
+          "Elimina los espacios en blanco a derecha de $pass y obtiene su longitud. Compara esa longitud con una longitud mínima. Si es menor, muestra por pantalla \"Longitud insuficiente\", en otro caso obtiene un resumen de la cadena $pass previamente reordenada de forma aleatoria y lo muestra por pantalla.",
+          "Elimina los espacios en blanco a izquierda y derecha de $pass y obtiene su longitud. Compara esa longitud con una longitud mínima. Si es menor, muestra por pantalla \"Longitud insuficiente\", en otro caso reordena aleatoriamente la cadena $pass y lo muestra por pantalla."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-52",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, para eliminar una variable denominada $var:",
+        "a": [
+          "delete($var);",
+          "unset($var);",
+          "erase($var);",
+          "del($var);"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-53",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, queremos definir la función flecha cuadrado. Indique la sentencia correcta:",
+        "a": [
+          "$resultado = fn($x) => $x**2;",
+          "$resultado = fn() => $x * $x;",
+          "$resultado = fn() = $x * $x;",
+          "$resultado = fn($x) = $x**2;"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-54",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, indique la salida del siguiente código <?php function hola(&$arg = \"HOLA\") { $arg .= \"!!\"; } $arg = \"hola\"; hola($argv); echo $arg; ?>",
+        "a": [
+          "HOLA!!",
+          "hola!!",
+          "hola",
+          "HOLA"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-55",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, para imprimir por pantalla los valores de un array denominado $colores:",
+        "a": [
+          "echo $colores;",
+          "print_r($colores);",
+          "print($colores);",
+          "printf($colores);"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-56",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, indique cuál de las siguientes sentencias no añade un elemento a un array $colores:",
+        "a": [
+          "$colores[\"X\"] = \"verde\";",
+          "$array_unshift($colores, \"verde\");",
+          "$array_pop($colores, \"verde\");",
+          "$array_push($colores, \"verde\");"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-57",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, indique la sentencia que incluye y evalúa el archivo fichero, salvo que el fichero haya sido previamente incluido:",
+        "a": [
+          "include($fichero);",
+          "include_once($fichero);",
+          "require($fichero);",
+          "require_once($fichero);"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-58",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, ¿cuál de las siguientes NO es una variable predefinida?",
+        "a": [
+          "$GLOBALS",
+          "$_REQUEST",
+          "$_POST",
+          "$_RESPONSE"
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-59",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, ¿qué operador se utiliza para el control de errores?",
+        "a": [
+          "!!",
+          "::",
+          "!^",
+          "@"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-60",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, ¿cuál es la salida que genera el siguiente código? <?php function muestra() { static $contador = 0; echo $contador++; } for($i=0; $i<5; $i++) { muestra(); } ?>",
+        "a": [
+          "01234",
+          "00000",
+          "0 1 2 3 4",
+          "0 0 0 0 0"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-62",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un framework de desarrollo en PHP?",
+        "a": [
+          "Zend.",
+          "CodeIgniter.",
+          "Django.",
+          "Symfony."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-63",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Indique la salida tras la ejecución del siguiente código en Python: print('¡¡¡', 'Hola', sep='-', end='!!!')",
+        "a": [
+          "¡¡¡Hola!!!",
+          "¡¡¡Hola",
+          "¡¡¡-Hola!!!",
+          "¡¡¡-Hola-!!!"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-64",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué operador de Python se utiliza para la división entera?",
+        "a": [
+          "/",
+          "//",
+          "%",
+          "%%"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-65",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Indique la respuesta INCORRECTA sobre Python:",
+        "a": [
+          "Las tuplas son secuencias ordenadas de objetos del mismo tipo.",
+          "Las tuplas son inmutables.",
+          "Se representan mediante paréntesis y los elementos se separan por comas.",
+          "Las tuplas son de tipo tuple."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-66",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En Python, ¿qué salida produce el siguiente código? 'ejercicio'.title()",
+        "a": [
+          "ejercicio",
+          "Ejercicio",
+          "EJERCICIO",
+          "EJercicio"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-67",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En Python, ¿qué salida produce el siguiente código? a = list(\"confidencial\") print(a[-9])",
+        "a": [
+          "c",
+          "d",
+          "l",
+          "f"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-69",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En Python, ¿qué función devuelve la longitud de una tupla t?",
+        "a": [
+          "lenght(t)",
+          "long(t)",
+          "len(t)",
+          "leng(t)"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-70",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En Python, ¿qué respuesta NO es correcta en relación con los diccionarios?",
+        "a": [
+          "Son objetos inmutables.",
+          "Se representan con llaves, los pares separados por comas y cada par contiene una clave y un objeto asociado separado por dos puntos.",
+          "Es una colección de pares.",
+          "Las claves han de ser únicas."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-71",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En Python, ¿qué sentencia para crear un diccionario es correcta?",
+        "a": [
+          "a = {'clave1': 1, 'clave2': 2, 'clave3': 'valor3'}",
+          "a = {'clave1': 1, 'clave2': 2, 'clave3': valor3}",
+          "a = {clave1: 1, clave2: 2, clave3: valor3}",
+          "a = {'clave1': 1; 'clave2': 2; 'clave3': 'valor3'}"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-72",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En Python, ¿qué sentencia para crear una función es correcta?",
+        "a": [
+          "def area_cuadrado(lado): return lado**2",
+          "def area_cuadrado(lado) return lado**2",
+          "function area_cuadrado(lado): return lado**2",
+          "function area_cuadrado(lado) return lado**2"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-73",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En Python, ¿qué respuesta NO es correcta?",
+        "a": [
+          "Los módulos predefinidos no necesitan importación explícita.",
+          "Los módulos no están relacionados con el concepto de reutilización.",
+          "Los módulos pueden contener funciones y variables.",
+          "Los módulos pueden ser importados de forma completa o parcial."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-74",
+        "t": "T3.08",
+        "o": "A",
+        "q": "ECMAScript 2016 se corresponde con la versión:",
+        "a": [
+          "Quinta.",
+          "Sexta.",
+          "Séptima.",
+          "Octava."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-75",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué versión de ECMAScript incorpora la iteración asincrónica?",
+        "a": [
+          "Sexta.",
+          "Séptima.",
+          "Octava.",
+          "Novena."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-77",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué tipo de dato en JavaScript admite un valor único e inmutable denominado átomo?",
+        "a": [
+          "Undefined.",
+          "Null.",
+          "Object.",
+          "Symbol."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-78",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué finalidad tiene la operación slice() sobre un array en JavaScript?",
+        "a": [
+          "Crea un array.",
+          "Convierte un array en una cadena de caracteres.",
+          "Elimina el último elemento del array.",
+          "Copia un array."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-79",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué evento se dispara cuando se selecciona un ítem de una lista desplegable en JavaScript?",
+        "a": [
+          "onselect.",
+          "onchange.",
+          "onfocus.",
+          "onblur."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-80",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cómo se denomina el objeto principal relacionado con AJAX?",
+        "a": [
+          "HttpRequest.",
+          "XMLHttpRequest.",
+          "AJAXHttpRequest.",
+          "AJAXRequest."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-82",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un framework JavaScript?",
+        "a": [
+          "jQuery.",
+          "React.",
+          "Yii.",
+          "Node.js."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "n": "Yii es un framework PHP; se corrige únicamente JavScript→JavaScript."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-83",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En Ruby, indique la respuesta INCORRECTA sobre los Símbolos:",
+        "a": [
+          "Van precedidos de dos puntos.",
+          "No contienen valores.",
+          "Son el objeto más básico de Ruby.",
+          "No son más eficientes que las cadenas."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-84",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué clase utiliza Ruby on Rails para la Vista?",
+        "a": [
+          "Active Record.",
+          "Action View.",
+          "Ruby Record.",
+          "Ruby View."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-85",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Seleccione la respuesta correcta sobre las aplicaciones híbridas:",
+        "a": [
+          "Permite acceder a todas las características hardware del dispositivo.",
+          "La aplicación desarrollada se visualiza en el navegador.",
+          "Se desarrollan con el framework Ionic.",
+          "Las aplicaciones no son distribuidas en las tiendas de aplicaciones."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-86",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué es Capacitor?",
+        "a": [
+          "Un framework para desarrollo de interfaces de usuario.",
+          "Un ORM.",
+          "Un framework que permite acceder a las capacidades de los dispositivos.",
+          "Un plugin destinado a las notificaciones push."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-88",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Dado el siguiente código PHP, ¿cuál es el error de sintaxis? <?php $nombre=\"Juan; echo \"Hola, \" . $nombre; ?>",
+        "a": [
+          "Falta un punto y coma después del echo.",
+          "Falta una comilla doble para cerrar la cadena en la asignación de Juan.",
+          "El operador de concatenación (.) está mal utilizado.",
+          "No existe ningún error de sintaxis."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-89",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál es una diferencia clave entre JSON y XML como formatos de intercambio de datos en Internet?",
+        "a": [
+          "JSON no admite estructuras jerárquicas de datos, mientras que XML sí las permite.",
+          "JSON requiere etiquetas de apertura y cierre para definir estructuras, mientras que XML no las necesita.",
+          "JSON es más legible y ligero que XML, pero XML admite atributos y una mayor capacidad de descripción de datos.",
+          "No existe diferencia entre ambos formatos de intercambio de datos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-90",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué lenguaje de programación es más común para desarrollar aplicaciones Android nativas?",
+        "a": [
+          "Kotlin.",
+          "Swift.",
+          "JavaScript.",
+          "C."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-91",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Para diseñar el estilo de los campos de entrada obligatorios del formulario de solicitud se va a hacer uso del siguiente selector CSS: “::first-letter”. ¿Cuál es su especificidad?",
+        "a": [
+          "0-1-0.",
+          "0-0-1.",
+          "1-0-1.",
+          "1-0-0."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          2
+        ],
+        "d": 3,
+        "n": "Especificidad de pseudoelemento."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-92",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál es la función principal de XSLT?",
+        "a": [
+          "Transformar documentos XML en otros formatos.",
+          "Definir el tipo de datos de los elementos.",
+          "Validar la estructura de un documento XML.",
+          "Especificar el contenido en formato estructurado."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-93",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En relación a los DTD y XML Schemas, ¿cuál es la respuesta correcta?",
+        "a": [
+          "XML Schema tiene sintaxis propia.",
+          "DTD permite definir nuevos tipos de datos.",
+          "DTD es extensible.",
+          "XML Schema es fuertemente tipado."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-94",
+        "t": "T3.08",
+        "o": "A",
+        "q": "El aprendizaje profundo (deep learning) es una rama del aprendizaje automático que modela a alto nivel el mundo real mediante redes neuronales, aprendiendo de manera continua e iterativa de los resultados obtenidos en la aplicación de modelos de aprendizaje automático sin la necesidad de intervención humana. ¿Cuál de las siguientes NO es una biblioteca usada para operar con redes neuronales?",
+        "a": [
+          "Keras.",
+          "AutomaticDL.",
+          "TensorFlow.",
+          "PyTorch."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-95",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Si un XML cumple con la sintaxis pero no tiene ningún XML Schema se dice que:",
+        "a": [
+          "Está bien formado.",
+          "Está bien formado y es válido.",
+          "No está bien formado.",
+          "No está bien formado pero es válido."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-96",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué evento de HTML utilizaría para producir un efecto cuando el puntero del ratón sale de la superficie de un elemento?",
+        "a": [
+          "onclick.",
+          "onmouseover.",
+          "onmousedown.",
+          "onmouseout."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-97",
+        "t": "T3.08",
+        "o": "A",
+        "q": "AJAX es una tecnología de desarrollo web que se caracteriza por la siguiente afirmación:",
+        "a": [
+          "Es un metalenguaje extensible de etiquetas desarrollado por el World Wide Web Consortium al igual que HTML.",
+          "Es una aplicación de creación y manipulación de gráficos vectoriales con posibilidades de manejo de código mediante un lenguaje de scripting.",
+          "Es un lenguaje de scripting basado en objetos no tipado y ligero, utilizado para acceder a objetos en aplicaciones.",
+          "Es una técnica de desarrollo web creada con el fin de implementar aplicaciones interactivas que se ejecutan en el navegador de los usuarios y mantienen comunicación asíncrona con el servidor en segundo plano."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT308-P1-99",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál es el motor de renderizado del navegador web Safari?",
+        "a": [
+          "Webkit.",
+          "Blink.",
+          "Gecko.",
+          "Trident."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-57",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En SQL, un valor nulo se especifica con la palabra predefinida NULL y se interpreta como:",
+        "a": [
+          "Valor cero.",
+          "Cadena vacía.",
+          "Valor booleano igual a FALSE.",
+          "Valor desconocido."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-36",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En JSON, ¿cuál de las siguientes opciones es una estructura válida?",
+        "a": [
+          "[\"descripcion\": \"Not Found\", \"estado\": 0]",
+          "[mensaje:\"Juan\", errores:{401, 402, 403}]",
+          "{descripcion: \"Éxito\", estado: 0, datos: \"string\", metadatos: \"string\"}",
+          "{\"nombre\":\"Juan\", \"notas\":[5.5, 7.2, 6.1]}"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-R-04",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Indique cuál de los siguientes contenidos pertenece a un fichero en formato JSON válido:",
+        "a": [
+          "{\"menu\": { \"id\": \"file\", \"popup\": { \"menuitem\": [ {\"value\": \"Open\"}, {\"value\": \"Close\"} ]} ]}",
+          "{\"menu\": { \"id\": \"file\", \"popup\": { \"menuitem\": { {\"value\": \"Open\"}, {\"value\": \"Close\"} }} }}",
+          "{\"menu\": { \"id\": \"file\", \"popup\": { \"menuitem\": [ {\"value\": \"Open\"}, {\"value\": \"Close\"} ]} }}",
+          "{\"menu\", { \"id\", \"file\", \"popup\", { \"menuitem\", [ {\"value\", \"Open\"}, {\"value\", \"Close\"} ]} }}"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-42",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué modelo de color define los colores mediante matiz, saturación e intensidad?",
+        "a": [
+          "HSI.",
+          "CMYK.",
+          "HSV.",
+          "HSB."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-48",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En una tabla hash, ¿qué es una colisión?",
+        "a": [
+          "Cuando la función de dispersión devuelve la misma clave para dos elementos iguales.",
+          "Cuando la función de dispersión devuelve la misma clave para dos elementos diferentes.",
+          "Cuando la función de dispersión devuelve claves distintas para dos elementos iguales.",
+          "Cuando la función de dispersión devuelve claves distintas para dos elementos diferentes."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-45",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es modelo de color?",
+        "a": [
+          "HSL.",
+          "HSV.",
+          "HLA.",
+          "CMYK."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-74",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes lenguajes NO es un lenguaje que, desde su aparición, sigue el modelo de orientación a objetos basados en clases?",
+        "a": [
+          "JavaScript.",
+          "Java.",
+          "C++.",
+          "Eiffel."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-87",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál es la estructura estándar de una directiva JSP?",
+        "a": [
+          "<@ directiva atributo1=\"valor1\" atributo2=\"valor2\"...>",
+          "<%@ directiva atributo1=\"valor1\" atributo2=\"valor2\"...%>",
+          "<!@ directiva atributo1=\"valor1\" atributo2=\"valor2\"...>",
+          "<*@ directiva atributo1=\"valor1\" atributo2=\"valor2\"...*>"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-94",
+        "t": "T3.08",
+        "o": "A",
+        "q": "El lenguaje de consulta sobre RDF que permite hacer búsquedas sobre los recursos de la Web Semántica utilizando distintas fuentes de datos es:",
+        "a": [
+          "OWL.",
+          "RQUERY.",
+          "JQUERY.",
+          "SPARQL."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-96",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Si en el fichero estilos.css, se incluye: #inner {float: right; width: 130px; color: blue}, ¿cómo se utilizaría el estilo indicado en un párrafo de una página html que utilice esa hoja de estilos?",
+        "a": [
+          "<P ref=\"inner\">",
+          "<P id=\"inner\">",
+          "<P class=\"inner\">",
+          "<P font=inner>"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-R-02",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, ¿cuál de las siguientes asignaciones es la correcta?",
+        "a": [
+          "$a = 0GOOGLE;",
+          "$a = 0123;",
+          "$a = 0hAF;",
+          "$a = 0xNULL;"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-R-05",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En Python, [1, \"dos\", True] es:",
+        "a": [
+          "Una lista.",
+          "Una tupla.",
+          "Un diccionario.",
+          "Un mapa."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-49",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En relación con la estructura lógica de un SGBD Oracle, indique el orden de adecuado de tal manera que cada elemento agrupe a elementos del tipo siguiente:",
+        "a": [
+          "Tablespace, extensión, segmento.",
+          "Segmento, tablespace, extensión.",
+          "Extensión, segmento, tablespace.",
+          "Tablespace, segmento, extensión."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-50",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué SGBD está incluido en OpenOffice?",
+        "a": [
+          "MaxDB.",
+          "HSQLDB.",
+          "Apache Derby.",
+          "PostgreSQL."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-79",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué navegador web utiliza como intérprete de JavaScript JavaScriptCore?",
+        "a": [
+          "Lynx.",
+          "Microsoft Edge.",
+          "Safari.",
+          "Mozilla Firefox."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-80",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué estándar del W3C permite construir expresiones para recorrer y procesar un documento XML?",
+        "a": [
+          "XLST.",
+          "XQuery.",
+          "XLink.",
+          "XPath."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-82",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes elementos ha sido incorporado en HTML5?",
+        "a": [
+          "<hgroup>",
+          "<address>",
+          "<dd>",
+          "<kbo>"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-33",
+        "t": "T3.08",
+        "o": "A",
+        "q": "El modelo de color que define los colore mediante matiz, saturación y valor, se denomina:",
+        "a": [
+          "RGB.",
+          "HSL.",
+          "HSV.",
+          "HSC."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-71",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Señale de entre las siguientes opciones cuál NO corresponde a una de las etiquetas semánticas incluidas en HTML5:",
+        "a": [
+          "aside.",
+          "div.",
+          "footer.",
+          "nav."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-73",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Indique cuál de los siguientes elementos corresponde a un estándar de W3C que permite referenciar partes de un documento XML:",
+        "a": [
+          "XPath.",
+          "XSD.",
+          "XSL-FO.",
+          "XSLT."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-56",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cómo se define una sección de código en ASP.NET Web Pages?",
+        "a": [
+          "Mediante el carácter @ seguido de un bloque entre llaves, que contiene código Razor y no HTML.",
+          "Mediante el carácter @ seguido de un bloque entre llaves, que contiene código HTML y no Razor.",
+          "Mediante el carácter ¿ seguido de un bloque entre llaves, que contiene código Razor y no HTML.",
+          "Mediante el carácter ¿ seguido de un bloque entre llaves, que contiene código HTML y no Razor."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-65",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Indique cuál es el lenguaje para encontrar y extraer elementos y atributos de los documentos XML y puede ser usado para transformar XML en XHTML:",
+        "a": [
+          "Xpath.",
+          "Xquery.",
+          "Xslt.",
+          "Xjava."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-67",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Indique qué sintaxis es correcta para que el analizador o parser XML ignore una determinada sección de su documento XML:",
+        "a": [
+          "<xml:CDATA[ Texto a ignorar ]>",
+          "<CDATA> Texto a ignorar </CDATA>",
+          "<![CDATA[Texto a ignorar]]>",
+          "<PCDATA>Texto a ignorar</PCDATA>"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-68",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de las siguientes reglas CSS se emplea para establecer el tamaño del texto de un elemento?",
+        "a": [
+          "font-size.",
+          "text-size.",
+          "main-size.",
+          "letter-size."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-69",
+        "t": "T3.08",
+        "o": "A",
+        "q": "De las siguientes definiciones de color en CSS, ¿cuál es INCORRECTA?",
+        "a": [
+          "rgb(0 255 0)",
+          "hsl(120deg 100% 50%)",
+          "#00fc",
+          "argb(50% 1 1 1)"
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-70",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Indique cuál NO es un estándar de aplicaciones web:",
+        "a": [
+          "HTML5.",
+          "CSS.",
+          "XML.",
+          "SOA."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-58",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué es jQueryMobile?",
+        "a": [
+          "Un framework para el desarrollo de interfaces web adaptadas a dispositivos móviles.",
+          "Un sistema operativo para dispositivos móviles.",
+          "Un lenguaje de programación orientado a objetos.",
+          "Un software de bases de datos para móviles."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-59",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué atributo del elemento input de HTML5 es necesario para mostrar un selector de fechas?",
+        "a": [
+          "type=\"calendar\".",
+          "type=\"datetime\".",
+          "type=\"date\".",
+          "type=\"day\"."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "El selector de fechas se declara con input type=\"date\"; se igualan las comillas del distractor type=\"day\"."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-60",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Se requiere el uso de un framework de JavaScript para la interfaz web de la aplicación. ¿Cuál de los siguientes frameworks es más adecuado para el desarrollo de aplicaciones SPA (Single Page Applications)?",
+        "a": [
+          "Vue.js.",
+          "Django.",
+          "Laravel.",
+          "Express.js."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-63",
+        "t": "T3.08",
+        "o": "A",
+        "q": "El lenguaje de scripting recomendado y usado más comúnmente para manipular el DOM (Modelo de Objetos del Documento) en páginas Web es:",
+        "a": [
+          "JavaScript.",
+          "Python.",
+          "Ruby.",
+          "Perl."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-64",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué propiedad de CSS se utiliza para definir el espacio entre el contenido de un elemento y su borde?",
+        "a": [
+          "margin.",
+          "border.",
+          "outline.",
+          "padding."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-28",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Indique cuál de las siguientes alternativas es la correcta para representar en formato JSON un array con las cadenas de texto que contengan los nombres de los días de la semana en castellano:",
+        "a": [
+          "{\"lunes\", \"martes\", \"miércoles\", \"jueves\", \"viernes\", \"sábado\", \"domingo\"}",
+          "{lunes ; martes ; miércoles ; jueves ; viernes ; sábado ; domingo}",
+          "[\"lunes\", \"martes\", \"miércoles\", \"jueves\", \"viernes\", \"sábado\", \"domingo\"]",
+          "{[lunes],[martes],[miercoles],[jueves],[viernes],[sabado],[domingo]}"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-48",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Señale la afirmación correcta:",
+        "a": [
+          "Tanto PHP como JavaScript son lenguajes que se pueden ejecutar en el lado del servidor o en el lado del cliente.",
+          "El lenguaje PHP genera únicamente código HTML.",
+          "El lenguaje PHP sólo puede ser ejecutado en el lado del servidor.",
+          "El analizador PHP sólo puede instalarse y ejecutarse en servidores Linux o Unix."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-59",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En HTML5 la etiqueta <source> está destinada a incluir:",
+        "a": [
+          "Documentación sobre la página.",
+          "Código de scripts para dinamizar la página.",
+          "Diferentes versiones de un fichero para un elemento multimedia.",
+          "La especificación del lenguaje de scripts que se utiliza en la página."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-60",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En HTML5, ¿con cuál de los siguientes elementos se puede utilizar el atributo \"pattern\"?",
+        "a": [
+          "textarea.",
+          "form.",
+          "input.",
+          "select."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-61",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Si se define la regla CSS tr:nth-child(2) {color: red;} el efecto sobre el código HTML <table><tr><td>uno</td></tr><tr><td>dos</td></tr></table> será:",
+        "a": [
+          "Mostrar el texto \"dos\" en color rojo, porque es la segunda línea de la tabla.",
+          "Mostrar los textos \"uno\" y \"dos\" en color rojo, porque son las dos primeras líneas de la tabla.",
+          "Ninguno, porque afectaría a la segunda columna de la tabla, que no existe.",
+          "Ninguno, porque afectaría a la tercera línea de la tabla, que no existe."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-62",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En el lenguaje JavaScript una variable cuyo nombre comienza con $ o _:",
+        "a": [
+          "Es publica si comienzo por $ y privada si comienza por _.",
+          "No tiene ningún significado especial.",
+          "Es pública en ambos casos.",
+          "Es privada en ambos casos."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-63",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué elemento estructural puede referenciarse en un archivo XML para facilitar su validación?",
+        "a": [
+          "DTD.",
+          "Xpath.",
+          "XSLT.",
+          "Xerces."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-R-04",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un framework de PHP?",
+        "a": [
+          "Laravel.",
+          "Symfony.",
+          "CakePHP.",
+          "Quarkus."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-38",
+        "t": "T3.08",
+        "o": "A",
+        "q": "El formato de archivo OGG Media (OGM) es un formato:",
+        "a": [
+          "Propietario de audio.",
+          "Libre de imagen.",
+          "Propietario de audio y video.",
+          "Libre de audio y video."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-70",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En Python, respecto a la declaración things=(1,”a”,23,0,0), indique el tipo de dato de “things”:",
+        "a": [
+          "Un conjunto.",
+          "Una lista.",
+          "Un vector.",
+          "Una tupla."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-71",
+        "t": "T3.08",
+        "o": "A",
+        "q": "El lenguaje de programación JavaScript se caracteriza por:",
+        "a": [
+          "Ser fuertemente tipados.",
+          "No estar basado en objetos.",
+          "Estar basado en prototipos.",
+          "Tener una sintaxis parecida al lenguaje XML."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-72",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de las siguientes opciones cumple con la sintaxis XML?",
+        "a": [
+          "<7dias>abierto</7dias>",
+          "<tipo doc>pdf</tipo doc>",
+          "<Direccion_1>Atocha</direccion_1>",
+          "<_fichero/>"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-73",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de las siguientes opciones permite incorporar en una página web los estilos definidos en el fichero general.css?",
+        "a": [
+          "<style rel=”stylesheet” type=”text/css” url=”general.css”/>",
+          "<css rel=”stylesheet” type=”text/css” url=”general.css”/>",
+          "<meta rel=”stylesheet” type=”text/css” href=”general.css”/>",
+          "<link rel=”stylesheet” type=”text/css” href=”general.css”/>"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-74",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Indique el elemento de HTML5 que se usa para todo aquel contenido indirectamente relacionado con el contenido principal de la página web:",
+        "a": [
+          "<nav>.",
+          "<section>.",
+          "<aside>.",
+          "<article>"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-76",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Indique la opción adecuada para almacenar información en local en el navegador del cliente con HTML5:",
+        "a": [
+          "El objeto window.localStorage.",
+          "Una base de datos MySQL incrustada en el navegador.",
+          "Un fichero XML embebido en el navegador.",
+          "El objeto window.sessionStorage."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-49",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes es un framework para el diseño de sitios y aplicaciones web enfocado principalmente en el estilo (CSS) y el diseño?",
+        "a": [
+          "PretifyCSS.",
+          "BootSpring.",
+          "Bootstrap.",
+          "MyStiles."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-66",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Respecto a la internacionalización en aplicaciones web, se considerada una buena práctica:",
+        "a": [
+          "Usar siempre un atributo de idioma en el elemento <html>.",
+          "Indicar el idioma en el elemento <body> en lugar de en el elemento <html>.",
+          "Indicar el idioma sólo en los elementos <div>.",
+          "Indicar el idioma sólo en los elementos <title>."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-67",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Entre las nuevas etiquetas semánticas del HTML5 NO se encuentra:",
+        "a": [
+          "footer.",
+          "nav.",
+          "header.",
+          "strike."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-38",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En una tabla hash, si la función hash utilizada da el mismo índice para dos valores que se están insertando:",
+        "a": [
+          "La premisa es falsa; por definición, una función hash nunca puede dar el mismo resultado para dos valores distintos.",
+          "El segundo elemento tendría que sobreescribir al primero.",
+          "El segundo elemento podría almacenarse en alguna otra posición libre de la tabla hash.",
+          "En una tabla hash no se puede utilizar una función hash que pueda dar el mismo resultado para dos valores distintos."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-69",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, el operador de comparación “===” entre dos valores devuelve TRUE si:",
+        "a": [
+          "Ambos valores son iguales.",
+          "Ambos valores son iguales después de la manipulación de tipos.",
+          "Ambos valores son iguales y son del mismo tipo.",
+          "Ambos valores son iguales o son del mismo tipo."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-70",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En JavaScript, ¿cómo se escribe una sentencia condicional para comprobar que la variable \"x\" es distinta de 2?",
+        "a": [
+          "if x <> 2",
+          "if (x != 2)",
+          "if (x = 2)",
+          "if x != 2"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "n": "Edición de contenido: la opción C sustituye la alternativa repetida del original por una asignación, sintaxis válida que no comprueba si x es distinto de 2. La respuesta correcta sigue siendo B."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-72",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En HTML5 cuál es la forma correcta de escribir la etiqueta que permite referenciar mapas de imagen en el cliente:",
+        "a": [
+          "<map src=\"imagen.jpg\" alt=\"Mi imagen con mapa seleccionable\"/>",
+          "<map src=\"imagen.jpg\" alt=\"Mi imagen con mapa seleccionable\" area=\"#Mapa\"/>",
+          "<img src=\"imagen.jpg\" alt=\"Mi imagen con mapa seleccionable\" map=\"#Mapa\" />",
+          "<img src=\"imagen.jpg\" alt=\"Mi imagen con mapa seleccionable\" usemap=\"#Mapa\" />"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-73",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En HTML5, ¿cuál es la forma correcta de representar acrónimos, siglas o abreviaturas?",
+        "a": [
+          "<acronym title=\"Administración General del Estado\">AGE </acronym>",
+          "<abbr title=\"Administración General del Estado\"> >AGE</abbr>, ya que <acronym> se ha declarado obsoleto.",
+          "Con el tag <acronym> o con el tag <abbr>, son equivalentes.",
+          "<span title=\"Administración General del Estado\">AGE</span>"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-R-04",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En el lenguaje Xpath, utilizado en XSL, ¿qué obtenemos al aplicar la ruta de ubicación @name?",
+        "a": [
+          "La selección del nodo denominado \"name\".",
+          "La selección del atributo \"name\" del nodo actual.",
+          "La selección del nodo padre relativo al nodo \"name\".",
+          "La selección del atributo \"name\" del nodo padre al nodo actual."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-54",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Indique cuál de las siguientes opciones declara de forma correcta un documento HTML5:",
+        "a": [
+          "<!DOCTYPE HTML PUBLIC “-//W3C/DTD HTML 5.0//EN” “http://www.w3.org/TR/html5/strict.dtd”>",
+          "<!DOCTYPE html versión=5>",
+          "<!DOCTYPE html>",
+          "<!DOCTYPE HTML5>"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "El ejemplo contiene la declaración HTML5 correcta pero falta el pasaje que distingue versiones y justifica la sintaxis entre alternativas; pendiente de localizarlo en el temario HTML.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AS12-P1-54"
+      ]
+    },
+    {
+      "question": {
+        "i": "AS12-P1-55",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué resultado muestra la ejecución de la siguiente función JavaScript? let a = 3; let b = new Number(3); let c = 3; console.log(a == b, a === b, b === c);",
+        "a": [
+          "true false true",
+          "false false true",
+          "true false false",
+          "false true true"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-56",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En el lenguaje JavaScript, ¿qué sentencia NO es válida en base a la siguiente definición? const paciente1 = { edad: 3, andaluz: true }; const paciente2 = { nombre: \"andaluz\", ppm: [34,54,45,47,41] };",
+        "a": [
+          "paciente1[paciente2.nombre]",
+          "paciente2.paciente1.edad",
+          "paciente2.ppm[paciente1[“edad”]]",
+          "paciente1.edad"
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-59",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Respecto al lenguaje PHP, ¿cuál de estas afirmaciones es cierta?",
+        "a": [
+          "El código PHP, entre las etiquetas <!php y !, puede ser incrustado en el código HTML.",
+          "El código PHP es ejecutado en el cliente generando un código HTML para poder ser interpretado por el navegador.",
+          "Entre las capacidades de PHP se incluye la creación de imágenes.",
+          "Es necesario algún navegador para ejecutar scripts de PHP."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-R-04",
+        "t": "T3.08",
+        "o": "A",
+        "q": "La clase JavaScript para realizar peticiones AJAX, implementada como estándar de la W3C, es:",
+        "a": [
+          "Feathers.",
+          "jQuery.ajax.",
+          "axios.",
+          "XMLHttpRequest."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-45",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué framework para la creación de aplicaciones de una sola página está escrito en TypeScript y es de código abierto?",
+        "a": [
+          "Django.",
+          "Groovy.",
+          "Ruby on Rails.",
+          "Angular."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Angular frente a frameworks de otros lenguajes."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-48",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué es un scriptlet JSP?",
+        "a": [
+          "Cualquier bloque de código Java válido que se encuentre entre los delimitadores <-- y -->.",
+          "Cualquier bloque de código Java válido que se encuentre entre los delimitadores <* y *>.",
+          "Cualquier bloque de código Java válido que se encuentre entre los delimitadores <+ y +>.",
+          "Cualquier bloque de código Java válido que se encuentre entre los delimitadores <% y %>."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 2,
+        "n": "Delimitadores de scriptlet JSP."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-49",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Un comentario en el código fuente en Python comienza con:",
+        "a": [
+          "!",
+          "#",
+          "%",
+          "-"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 1,
+        "n": "Comentario en Python."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 1776,
+    "alreadyHadCitation": 1596,
+    "added": 5,
+    "pending": 175,
+    "withCitation": 1601
+  }
+}

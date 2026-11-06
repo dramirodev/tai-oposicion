@@ -1,0 +1,2152 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T4.05",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "00c6b52eebd03883d67e6698e91432c022556f3bc1e2a0ea7b1e056281762f09",
+    "afterSha256": "06389d5439d155749d000da53ca38a6210ea7775ca53599f1f28d9814d5245ae"
+  },
+  "sample": {
+    "beforeSha256": "0ed4e5b3e94bfbaad888d807a221e5d83312318f9125c21203bb3ef3c9144a89",
+    "afterSha256": "0ed4e5b3e94bfbaad888d807a221e5d83312318f9125c21203bb3ef3c9144a89"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-AT405-P1-08": {
+      "path": "T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+      "sourceHash": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+      "physicalPage": 8,
+      "printedPage": 8,
+      "excerpt": "Incidente de seguridad Suceso (inesperado o no deseado) con consecuencias en detrimento de la seguridad del sistema de información. Según MAGERIT, evento con consecuencias en detrimento de la seguridad del sistema de información.",
+      "label": "Pasaje del temario"
+    }
+  },
+  "questions": [
+    {
+      "id": "AT405-P1-08",
+      "before": {
+        "i": "AT405-P1-08",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Qué es un incidente de seguridad?",
+        "a": [
+          "Suceso (esperado) con consecuencias en detrimento de la seguridad del sistema de información.",
+          "Suceso (no deseado) con consecuencias en detrimento de la seguridad del sistema de información.",
+          "Suceso (inesperado o no deseado) con consecuencias en detrimento de la seguridad de la organización.",
+          "Suceso (inesperado o no deseado) con consecuencias en detrimento de la seguridad del sistema de información."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT405-P1-08",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Qué es un incidente de seguridad?",
+        "a": [
+          "Suceso (esperado) con consecuencias en detrimento de la seguridad del sistema de información.",
+          "Suceso (no deseado) con consecuencias en detrimento de la seguridad del sistema de información.",
+          "Suceso (inesperado o no deseado) con consecuencias en detrimento de la seguridad de la organización.",
+          "Suceso (inesperado o no deseado) con consecuencias en detrimento de la seguridad del sistema de información."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T4.05 Seguridad CPD y Criptografía - Temario.pdf — Pasaje del temario\n\nTemario, p. 8 (PDF p. 8)\n\nIncidente de seguridad Suceso (inesperado o no deseado) con consecuencias en detrimento de la seguridad del sistema de información. Según MAGERIT, evento con consecuencias en detrimento de la seguridad del sistema de información.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "b196a334f1a632329d8a5b0d82f37d002ec1d843fe13b56c0a04ab28329cb49d",
+      "afterSha256": "a4b63171b5c60b23bba851025fc627021564a393eb1e35316c6d919c40ef10a7",
+      "evidenceKeys": [
+        "e-AT405-P1-08"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-62",
+        "t": "T4.05",
+        "o": "O",
+        "q": "La regla 3-2-1 de las copias de seguridad consiste en:",
+        "a": [
+          "Conservar 3 copias de los datos, en 2 medios diferentes con 1 copia almacenada en un lugar externo a la organización.",
+          "Conservar 3 copias de los datos, en 2 medios iguales con 1 copia almacenada en un lugar externo a la organización.",
+          "Conservar 3 copias de los datos, en 2 medios iguales con 1 copia almacenada en un lugar interno a la organización.",
+          "Conservar 3 copias de los datos, en 2 medios diferentes con 1 copia almacenada en un lugar interno a la organización."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Matriz diferentes/iguales × externo/interno.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-68",
+        "t": "T4.05",
+        "o": "O",
+        "q": "Indique la respuesta correcta sobre el formato de firma digital CAdES:",
+        "a": [
+          "Es apropiado para firmar ficheros grandes, especialmente si la firma contiene el documento original.",
+          "Es el formato de firma que utiliza Microsoft Office.",
+          "El resultado es un fichero de texto XML. No es adecuado cuando el fichero original es muy grande.",
+          "Es el formato más adecuado cuando el documento original es un PDF."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Formatos hermanos: c) describe XAdES, d) PAdES.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-69",
+        "t": "T4.05",
+        "o": "O",
+        "q": "¿Qué es ECDSA?",
+        "a": [
+          "Un algoritmo de firma.",
+          "Un estándar estadounidense de cableado.",
+          "Un organismo regulador internacional.",
+          "Un protocolo de nivel de enlace."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Distractores de dominios distintos (cableado, organismo, nivel de enlace).",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-70",
+        "t": "T4.05",
+        "o": "O",
+        "q": "Seleccione la respuesta INCORRECTA sobre la firma electrónica:",
+        "a": [
+          "Se llama Co-firma a la firma múltiple en la que todos los firmantes están al mismo nivel y en la que no importa el orden en el que se firma.",
+          "Cuando se firma en formato XAdES (XML Avanzado), el resultado es un fichero de texto XML.",
+          "En el formato XAdES se habla de firmas despegadas (detached), envolventes (enveloping) y envueltas (enveloped) según en qué sitio del propio fichero de firma se guarde el documento original.",
+          "El formato PAdES (Propietario Avanzado) es el formato propio utilizado por Microsoft Office, si bien existe una implementación abierta que se aplica en Open Office."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          9,
+          7
+        ],
+        "d": 2,
+        "n": "PAdES \"Propietario Avanzado\" de Office: se repite como distractor en 2024 B P68.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-66",
+        "t": "T4.05",
+        "o": "O",
+        "q": "¿Indique la afirmación FALSA con respecto al proceso de firma digital?",
+        "a": [
+          "La aplicación o dispositivo digital utilizados para la firma digital crea un resumen del documento a firmar utilizando una función hash.",
+          "La aplicación cifra el documento a firmar asegurando la confidencialidad.",
+          "La aplicación cifra el resumen del documento a firmar obteniendo a su vez otro documento electrónico que corresponde con la firma electrónica.",
+          "Para cifrar el resumen, la aplicación utiliza la clave privada."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "La firma no cifra el documento (confidencialidad).",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-67",
+        "t": "T4.05",
+        "o": "O",
+        "q": "Indique cuál de las siguientes opciones se corresponde con el concepto de ITIL:",
+        "a": [
+          "Su origen proviene de la metodología Kaizen y ofrece a las organizaciones un instrumento útil para la sistematización de las actividades que dan soporte al ciclo de vida del software.",
+          "Es una librería java, referida a la seguridad, que forma parte de la plataforma de Jakarta EE.",
+          "Es una colección de mejores prácticas de gestión de servicios de tecnologías de la información.",
+          "Es una metodología de análisis y gestión de riesgos de los sistemas de información."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "ITIL frente a definiciones de otros marcos.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-69",
+        "t": "T4.05",
+        "o": "O",
+        "q": "Señale cuál de los siguientes NO es un algoritmo asimétrico:",
+        "a": [
+          "RSA",
+          "GOST",
+          "ECDSA",
+          "ElGamal"
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "GOST (simétrico) entre asimétricos.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-R-04",
+        "t": "T4.05",
+        "o": "O",
+        "q": "Para valorar el nivel de disponibilidad y seguridad de un CPD, el estándar ANSI EIA/TIA 942 estableció:",
+        "a": [
+          "Cuatro niveles, siendo TIER I el de mayor disponibilidad y TIER IV el de menor.",
+          "Tres niveles, siendo TIER I el de mayor disponibilidad y TIER III el de menor.",
+          "Tres niveles, siendo TIER I el de menor disponibilidad y TIER III el de mayor.",
+          "Cuatro niveles, siendo TIER I el de menor disponibilidad y TIER IV el de mayor."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          2,
+          8
+        ],
+        "d": 2,
+        "n": "Matriz 3/4 niveles × orden TIER ascendente/descendente.",
+        "y": "Ingreso libre OEP 2019",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-70",
+        "t": "T4.05",
+        "o": "O",
+        "q": "Según el estándar ANSI/TIA 942-B, la zona de un Centro de Procesamiento de Datos donde se ubican elementos finales, como un servidor o un mainframe, se denomina:",
+        "a": [
+          "MDA (Main Distribution Area).",
+          "EDA (Equipment Distribution Area).",
+          "HDA (Horizontal Distribution Area).",
+          "IDA (Intermediate Distribution Area)."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Zonas del CPD según TIA-942.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-R-02",
+        "t": "T4.05",
+        "o": "O",
+        "q": "De acuerdo con el CCN-CERT, solo se autorizan los métodos de Key Exchange que proporcionen una fortaleza de seguridad de, al menos:",
+        "a": [
+          "192 bits.",
+          "128 bits.",
+          "112 bits.",
+          "256 bits."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 3,
+        "n": "Fortaleza mínima de intercambio de claves.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1,
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-67",
+        "t": "T4.05",
+        "o": "O",
+        "q": "¿Cuál de las siguientes metodologías NO se corresponde a una metodología de riesgos?",
+        "a": [
+          "OCTAVE.",
+          "MAGERIT.",
+          "NIST SP 800-30.",
+          "PRICE3."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "PRICE3 no es metodología de riesgos (MAGERIT, OCTAVE, NIST).",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-68",
+        "t": "T4.05",
+        "o": "O",
+        "q": "¿Qué es el plenum, de acuerdo con el estándar ANSI/TIA 942-B?",
+        "a": [
+          "Un compartimento donde uno o más conductos de aire están conectados y que forma parte del sistema de distribución del aire.",
+          "Un conductor metálico sólido o trenzado aislado individualmente.",
+          "Una unión de conductores destinada a ser permanente.",
+          "Un cable utilizado para establecer conexiones en un panel de conexión."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Plenum según TIA-942-B.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-79",
+        "t": "T4.05",
+        "o": "O",
+        "q": "¿Qué tipo de cifrado es el algoritmo RSA?",
+        "a": [
+          "Un criptosistema de clave privada.",
+          "Un criptosistema de clave pública.",
+          "Un criptosistema lineal.",
+          "Un criptosistema elipsoidal."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "RSA: clave pública; \"elipsoidal\" inventado.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-43",
+        "t": "T4.05",
+        "o": "O",
+        "q": "¿Cuál de los siguientes algoritmos de cifrado es de clave pública?",
+        "a": [
+          "RSA",
+          "Blowfish",
+          "IDEA",
+          "Twofish"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "RSA frente a simétricos.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-47",
+        "t": "T4.05",
+        "o": "O",
+        "q": "¿Qué información NO contiene un certificado SSL/TLS?",
+        "a": [
+          "El nombre de dominio asociado al certificado emitido.",
+          "La Autoridad certificadora que lo emite.",
+          "La clave privada.",
+          "Fecha de emisión del certificado."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "El certificado no contiene la clave privada.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-41",
+        "t": "T4.05",
+        "o": "O",
+        "q": "Indique la respuesta correcta sobre el formato de firma digital CAdES:",
+        "a": [
+          "Es apropiado para firmar ficheros grandes, especialmente si la firma contiene el documento original porque optimiza el espacio de la información.",
+          "Es el formato de firma que utiliza Microsoft Office.",
+          "El resultado es un fichero de texto XML. No es adecuado cuando el fichero original es muy grande.",
+          "Es el formato más adecuado cuando el documento original es un PDF."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "= 2024 B P68 (formatos de firma).",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-42",
+        "t": "T4.05",
+        "o": "O",
+        "q": "Indique la respuesta correcta sobre el instrumento para medir la eficiencia de los CPD, conocido como variable PUE (Power Usage Effectiveness):",
+        "a": [
+          "Sirve para comparar el total de energía consumida por el CPD con la cantidad de energía que realmente consume el equipamiento de TI (tecnologías de la información).",
+          "Sirve para establecer un orden de mayor a menor consumo de energía de los equipos conectados en un CPD en base al estándar IEEE P1574.",
+          "Sirve para medir la eficiencia energética de un equipo concreto de entre todos los conectados en un CPD.",
+          "Sirve para comparar la energía consumida por el CPD con la cantidad de energía consumida por los equipos que no son TI (sistemas de refrigeración, etc.)."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Definición de PUE.",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-85",
+        "t": "T4.05",
+        "o": "O",
+        "q": "¿Cómo se llama la causa potencial de un incidente que puede causar daños a un sistema de información o a una organización?",
+        "a": [
+          "Amenaza",
+          "Riesgo",
+          "Impacto",
+          "Vulnerabilidad"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Amenaza frente a riesgo/impacto/vulnerabilidad.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-34",
+        "t": "T4.05",
+        "o": "O",
+        "q": "Indique cuál de las siguientes herramientas se utilizaría en caso de querer garantizar la confidencialidad de la información:",
+        "a": [
+          "Firma electrónica,",
+          "Código CSV,",
+          "Función HASH.",
+          "Cifrado."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Confidencialidad: cifrado (se repite en 2018 S2-20).",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-41",
+        "t": "T4.05",
+        "o": "O",
+        "q": "¿Cuál de los siguientes es un algoritmo de cifrado asimétrico?",
+        "a": [
+          "AES",
+          "Blowfish",
+          "ElGamal",
+          "TDES"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "ElGamal frente a simétricos.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-R-05",
+        "t": "T4.05",
+        "o": "O",
+        "q": "Según estándar ANSI/TIA 942, ¿a qué TIER debe corresponderse un CPD para cumplir con un grado de disponibilidad del 99,741%?",
+        "a": [
+          "TIER1",
+          "TIER2",
+          "TIER3",
+          "TIER 4"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 3,
+        "n": "Porcentajes de disponibilidad por TIER.",
+        "y": "Promoción interna OEP 2018",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-01",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cómo se llama el defecto o debilidad en el diseño, implementación u operación de un sistema que habilita o facilita la materialización de una amenaza?",
+        "a": [
+          "Amenaza.",
+          "Vulnerabilidad.",
+          "Impacto.",
+          "Riesgo."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-02",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cómo se llama la consecuencia que sobre un activo tiene la materialización de una amenaza?",
+        "a": [
+          "Amenaza.",
+          "Vulnerabilidad.",
+          "Impacto.",
+          "Riesgo."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-03",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cómo se llama el intento de destruir, exponer, alterar o inhabilitar un sistema de información o la información que el sistema maneja, o violar alguna política de seguridad de alguna otra manera?",
+        "a": [
+          "Ataque.",
+          "Amenaza.",
+          "Impacto.",
+          "Riesgo."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-04",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cómo se llama el componente o funcionalidad de un sistema de información susceptible de ser atacado deliberada o accidentalmente con consecuencias para la organización?",
+        "a": [
+          "Procedimiento.",
+          "Salvaguarda.",
+          "Sistema de información.",
+          "Activo."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-05",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un tipo de riesgo?",
+        "a": [
+          "Acumulado.",
+          "Potencial.",
+          "Derivado.",
+          "Repercutido."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-06",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cómo se llama la estimación del grado de exposición a que una amenaza se materialice sobre uno o más activos causando daños o perjuicios a la organización?",
+        "a": [
+          "Incidente de seguridad.",
+          "Riesgo.",
+          "Gestión del riesgo.",
+          "Análisis del riesgo."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-07",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cómo se llama al procedimiento o mecanismo tecnológico que reduce el riesgo?",
+        "a": [
+          "Seguridad física",
+          "Criptografía.",
+          "Gestión del riesgo.",
+          "Salvaguarda."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-09",
+        "t": "T4.05",
+        "o": "A",
+        "q": "La consecuencia que sobre un activo tiene la materialización de una amenaza se denomina:",
+        "a": [
+          "Impacto.",
+          "Amenaza.",
+          "Daño.",
+          "Riesgo."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-10",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes es un tipo de impacto?",
+        "a": [
+          "Remanente.",
+          "Residual.",
+          "Requerido.",
+          "Repercutido."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-12",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Señale cuál de las siguientes descripciones se corresponde con la amenaza/ataque denominado \"smishing\":",
+        "a": [
+          "Envío de un mensaje suplantando a una entidad legítima para lograr su objetivo a través de SMS.",
+          "Consigue información del usuario mirando \"por encima del hombro\" desde una posición cercana, mientras que el usuario utiliza los dispositivos sin darse cuenta.",
+          "Consiste en manipular los resultados devueltos por un motor de búsqueda de contenidos en la red, redirigiendo al usuario a sitios que contienen software dañino.",
+          "Familia de ataques en red consistente en el envío de paquetes ICMP mal construidos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-13",
+        "t": "T4.05",
+        "o": "A",
+        "q": "En el ámbito de las amenazas a la seguridad, la interrupción afecta a la disponibilidad. De forma similar:",
+        "a": [
+          "La interceptación afecta a la integridad.",
+          "La modificación afecta a la confidencialidad.",
+          "La fabricación afecta a la integridad.",
+          "La fabricación afecta a la confidencialidad."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-14",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes tipos de ataque vulnera la integridad de la información?",
+        "a": [
+          "Interrupción.",
+          "Modificación.",
+          "Fabricación.",
+          "Intercepción."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-15",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Qué se entiende por IP Spoofing?",
+        "a": [
+          "Es un ataque que se basa en la ejecución de código \"Script\" arbitrario en un navegador.",
+          "Es un ataque que pretende provocar un direccionamiento erróneo en los equipos afectados, mediante la traducción errónea de los nombres de dominio a direcciones IP.",
+          "Es un ataque que consiste en modificar la cabecera de los paquetes enviados a un determinado sistema informático para simular que proceden de un equipo distinto al que verdaderamente los originó.",
+          "Es un ataque que se compone de un conjunto de actuaciones que persiguen colapsar determinados equipos o redes informáticas, para impedir que puedan ofrecer sus servicios a sus clientes y usuarios."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-16",
+        "t": "T4.05",
+        "o": "A",
+        "q": "En el contexto de la seguridad lógica, si hablamos de una bomba lógica, ¿cuál de las siguientes afirmaciones es verdadera?",
+        "a": [
+          "El código se replica al activarse.",
+          "Su efecto es retardado.",
+          "No se activan por eventos.",
+          "Es otra manera de referirse a los troyanos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-17",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿A qué tipo de ataque nos referimos cuando se suplanta la identidad de una dirección IP origen?",
+        "a": [
+          "DoS.",
+          "Phishing.",
+          "Sniffing.",
+          "Spoofing."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-18",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿A qué tipo de ataque pertenece el denominado ping de la muerte?",
+        "a": [
+          "Spoofing.",
+          "Man in the middle.",
+          "Denial of Service.",
+          "Flooding."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-19",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Qué tipo de ataque es un \"ataque smurf\"?",
+        "a": [
+          "Denegación de servicio.",
+          "Hombre en el medio.",
+          "Fuerza Bruta.",
+          "Ingeniería social."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-20",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Cuando multitud de sistemas atacan un único sistema provocando su caída, estamos ante:",
+        "a": [
+          "Un ataque de denegación de servicio (DoS).",
+          "La deep web.",
+          "Un ataque distribuido de denegación de servicio (DDoS).",
+          "Un ataque de ingeniería social."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "DoS vs DDoS."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-21",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Qué es un exploit?",
+        "a": [
+          "Es un malware diseñado para aprovechar la vulnerabilidad de un software.",
+          "Persona que accede a datos no autorizados.",
+          "Adware que modifica la página de inicio de los navegadores de Internet sin el consentimiento del usuario.",
+          "Software utilizado para la suplantación de la identidad de un usuario de la red."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-22",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Diferencia entre un virus y un Caballo de Troya:",
+        "a": [
+          "El virus suele utilizar canales encubiertos.",
+          "El virus presenta un mecanismo de replicación.",
+          "El Caballo de Troya advierte de su presencia.",
+          "El “Caballo de Troya no esconde funciones potencialmente maliciosas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-23",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una dimensión de seguridad?",
+        "a": [
+          "Autenticidad.",
+          "Confidencialidad.",
+          "Integridad.",
+          "Decisión."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-24",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Un programa malicioso capaz de alojarse en computadoras y permitir el acceso a usuarios externos, a través de una red local o de Internet, con el fin de recabar información o controlar remotamente a la máquina anfitriona, se denomina:",
+        "a": [
+          "Un caballo de Troya.",
+          "Un virus.",
+          "Un gusano.",
+          "El talón de Aquiles."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-25",
+        "t": "T4.05",
+        "o": "A",
+        "q": "El ataque smurf consiste en:",
+        "a": [
+          "Dejar una conexión en estado semiabierto y no llegar a realizarse el paso final para establecer una conexión.",
+          "Se trata de mandar a un puerto abierto del servidor un paquete hecho con la dirección y puerto origen igual que la dirección y puerto destino.",
+          "Consiste en recolectar direcciones broadcast para después mandar una petición ICMP cada una de ellas, falsificando la dirección IP de origen.",
+          "Se trata de saturar la red mediante una cantidad repetitiva y enorme de peticiones de conexión."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-26",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Respecto al algoritmo RSA:",
+        "a": [
+          "Reduce el problema de la distribución de claves respecto a los criptosistemas clásicos.",
+          "Pertenece a la categoría de criptosistemas simétricos.",
+          "Se basa en la utilización de grandes series de números primos de tamaño pequeño.",
+          "Se basa en la transposición y sustitución de símbolos a través de múltiples iteraciones."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-27",
+        "t": "T4.05",
+        "o": "A",
+        "q": "El algoritmo de encriptación Camelia:",
+        "a": [
+          "Fue desarrollado en EEUU.",
+          "La longitud de clave es variable entre 128, 192 y 256 bits.",
+          "Tiene un tamaño de bloque de 64 bits.",
+          "No está soportado en TLS/SSL."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-28",
+        "t": "T4.05",
+        "o": "A",
+        "q": "La criptografía asimétrica es un método criptográfico para el envío de mensajes que usa:",
+        "a": [
+          "Un par de claves privadas correspondientes a las entidades que se comunican y que solamente conocen ellos, el remitente y destinatario y que usan ambos para lograr descifrar los mensajes que se intercambian.",
+          "Una clave que se intercambian alternativamente entre los interlocutores para salvaguardar la información que se intercambian. Esta clave cambia nuevamente con cada nueva sesión y tiene una longitud de caracteres suficiente para evitar el apropiamiento indebido.",
+          "Una clave tanto para cifrar como para descifrar mensajes. Las dos partes que se comunican entre sí han de ponerse de acuerdo de antemano sobre la clave a usar. El remitente cifra un mensaje usando la clave y el destinatario lo descifra con esta misma clave.",
+          "Un par de claves relacionadas entre sí y que pertenecen a la misma persona: una clave pública que se puede entregar a cualquiera o publicarla en algún sitio y una clave privada que el propietario debe guardar de modo que nadie tenga acceso a ella."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-29",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones es la correcta dentro de un sistema de cifrado asimétrico?",
+        "a": [
+          "Los extremos que se comunican deben conocer la clave privada.",
+          "Se utiliza un par de claves, una para cifrar y otra para descifrar.",
+          "Utilizan longitudes de claves menores que el cifrado simétrico.",
+          "Es más rápido que el cifrado simétrico."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-30",
+        "t": "T4.05",
+        "o": "A",
+        "q": "En un sistema de clave asimétrica, ¿cuál es la clave que se usa para que A (emisor) firme digitalmente un mensaje que envía al destinatario B?",
+        "a": [
+          "La clave pública de A.",
+          "El certificado digital.",
+          "La clave privada de A.",
+          "La clave privada de B."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-31",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un modo de operación del algoritmo de cifrado DES (Data Encryption Standard)?",
+        "a": [
+          "ECB (Electronic CodeBook Mode).",
+          "CFB (Cypher Feedback Mode).",
+          "BBM (Bit Block Mode).",
+          "CBC (Cypher Block Chaining Mode)."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-32",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuáles de los siguientes algoritmos de cifrado se consideran cifradores en flujo?",
+        "a": [
+          "DSA, Vernam, RC4, Wake.",
+          "DES, Vernam, SAFER, Wake.",
+          "Vernam, RC4, SAFER, Wake.",
+          "Ninguno de los anteriores."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-34",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Seleccione cuál de los siguientes nombres NO corresponde con una de las soluciones de Ciberseguridad del Centro Criptológico Nacional:",
+        "a": [
+          "VICTORIA.",
+          "PILAR.",
+          "INES.",
+          "AMPARO."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-35",
+        "t": "T4.05",
+        "o": "A",
+        "q": "El lema de Kerckchoffs postula:",
+        "a": [
+          "La seguridad absoluta no es alcanzable.",
+          "La seguridad de cifrado debe residir exclusivamente en el secreto de la clave y no en el desconocimiento del algoritmo de cifrado.",
+          "La seguridad de las comunicaciones se apoya en algoritmos criptográficos.",
+          "El cifrado asimétrico garantiza la confidencialidad de la información transmitida entre emisor y receptor."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-36",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Indique la solución de Ciberseguridad del CCN que gestiona incidentes y amenazas de ciberseguridad a través de técnicas de correlación compleja de eventos:",
+        "a": [
+          "LORETO.",
+          "EMMA.",
+          "CARMEN.",
+          "GLORIA."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-37",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Qué solución de Ciberseguridad del CCN se encarga del almacenamiento en la nube?",
+        "a": [
+          "LORETO.",
+          "LUCIA.",
+          "MARTA.",
+          "MONICA."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-38",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Qué solución de Ciberseguridad del CCN se dedica de las grabaciones y emisiones de vídeos en streaming?",
+        "a": [
+          "REYES.",
+          "ROCIO.",
+          "VANESA.",
+          "MONICA."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Herramientas del CCN."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-39",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál es el objetivo de la solución de Ciberseguridad del CCN ADA?",
+        "a": [
+          "Automatización y normalización de auditorías.",
+          "Seguridad para Android.",
+          "Análisis avanzado de malware.",
+          "Visibilidad y control sobre la red."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-40",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Qué solución de Ciberseguridad del CCN se encarga de la defensa de ataques avanzados APT?",
+        "a": [
+          "CARMEN.",
+          "CLARA.",
+          "CLAUDIA.",
+          "EMMA."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-41",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Respecto a la clasificación de Centros de Proceso de Datos, ¿cuál se corresponde con el nivel TIER III?",
+        "a": [
+          "Data center básico.",
+          "Componentes redundantes.",
+          "Concurrentemente mantenible.",
+          "Tolerante a fallos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-42",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Qué disponibilidad ofrece un CPD de nivel Tier II?",
+        "a": [
+          "99,671%.",
+          "99,741%.",
+          "99,871%.",
+          "99,781%."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-43",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Un CPD que tiene múltiples líneas de distribución eléctrica y de refrigeración, aunque solo una sola activa, se corresponde con el nivel:",
+        "a": [
+          "Tier I.",
+          "Tier II.",
+          "Tier III.",
+          "Tier IV."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-44",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes algoritmos es un método de cifrado en flujo?",
+        "a": [
+          "Blowfish.",
+          "Skipjack.",
+          "DSA.",
+          "Grain."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-45",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes algoritmos tiene una longitud de hash de 512 bits?",
+        "a": [
+          "Whirpool.",
+          "Tiger.",
+          "SHA-1.",
+          "MD5."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-46",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes algoritmos es un método de cifrado en bloque?",
+        "a": [
+          "AES.",
+          "RSA.",
+          "ECDH.",
+          "DSA."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-47",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Qué algoritmo criptográfico está basado en curvas elípticas?",
+        "a": [
+          "ElGamal.",
+          "ECDSA.",
+          "Diffie-Helmman.",
+          "DSA."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-48",
+        "t": "T4.05",
+        "o": "A",
+        "q": "El puerto utilizado para la conexión de datos en FTPS implícito es:",
+        "a": [
+          "21.",
+          "22.",
+          "989.",
+          "990."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-49",
+        "t": "T4.05",
+        "o": "A",
+        "q": "NO es una solución para la gestión de incidencias:",
+        "a": [
+          "MantisBT.",
+          "Trello.",
+          "ServiceTonic.",
+          "SysAid."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-50",
+        "t": "T4.05",
+        "o": "A",
+        "q": "El protocolo RDP es utilizado en la tecnología de Escritorio Remoto y el puerto de escucha del servidor es el:",
+        "a": [
+          "5900.",
+          "3359.",
+          "5500.",
+          "3389."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-53",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un ataque de suplantación de identidad?",
+        "a": [
+          "Hijacking.",
+          "Smurf.",
+          "IP spoofing.",
+          "ARP spoofing."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-58",
+        "t": "T4.05",
+        "o": "A",
+        "q": "La principal característica de la criptografía simétrica es que el emisor y el receptor deben ponerse de acuerdo en",
+        "a": [
+          "Cómo acordar las claves secretas que usarán en el futuro.",
+          "La clave secreta que van a compartir, que será la misma para los dos.",
+          "Establecer el formato y longitud de los mensajes a intercambiar.",
+          "Decidir el intervalo de tiempo que han de esperar entre el envío de un mensaje cifrado y el siguiente."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-59",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Dos usuarios quieren intercambiarse información mediante un sistema de cifrado simétrico que ofrezca la mayor garantía de seguridad posible. ¿Cuál de los siguientes métodos de cifrado deberían elegir?",
+        "a": [
+          "RSA-1024.",
+          "AES-256.",
+          "ECDH.",
+          "Tiger."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-60",
+        "t": "T4.05",
+        "o": "A",
+        "q": "El cifrado de la información tiene como principal objetivo lograr comunicaciones entre dos usuarios de modo que se garantice:",
+        "a": [
+          "La confidencialidad de los datos enviados.",
+          "El no repudio de los datos intercambiados.",
+          "La disponibilidad de la información manejada.",
+          "La autenticidad de quienes intervienen en la comunicación."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-61",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Qué tipo de sistema se utiliza en un CPD para garantizar la continuidad del servicio ante fallos?",
+        "a": [
+          "RAID.",
+          "VPN.",
+          "NAT.",
+          "DHCP."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Continuidad: RAID."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-62",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes elementos es esencial en un CPD para garantizar la seguridad física?",
+        "a": [
+          "Firewall.",
+          "Control de acceso biométrico.",
+          "Antivirus.",
+          "IDS."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-63",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Qué algoritmo se utiliza para el intercambio seguro de claves?",
+        "a": [
+          "SHA-256.",
+          "Diffie-Hellman.",
+          "MD5.",
+          "RC4."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT405-P1-64",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Qué característica define a los algoritmos de firma digital?",
+        "a": [
+          "Uso de claves simétricas.",
+          "Requieren canal seguro para distribución.",
+          "Garantizan autenticidad y no repudio.",
+          "Solo cifran datos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-73",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un tipo de nube?",
+        "a": [
+          "Nube privada.",
+          "Nube pública.",
+          "Nube relacional.",
+          "Nube híbrida."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-21",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Respecto a la prestación de servicios de validación de certificados electrónicos, se realiza en base a:",
+        "a": [
+          "Online Certificate Status Protocol (OCSP).",
+          "Online Services Protocol (OSP).",
+          "Services Status Protocol (SSP).",
+          "Online Status Services Certificate (OSSC)."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-90",
+        "t": "T4.05",
+        "o": "A",
+        "q": "En el contexto de las infraestructuras de clave pública (PKI), ¿qué protocolo posibilita consultar el estado de revocación de un certificado digital?",
+        "a": [
+          "PKCS#12 (Public Key Cryptography Standard#12).",
+          "OCSP (Online Certificate Status Protocol).",
+          "CRS (Certificate Revocation Status).",
+          "CRLP (Certificate Revocation List Protocol)."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-35",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cómo se denomina a un algoritmo que busca o expresa la solución de un problema a través de una rutina o función que se llama a sí misma?",
+        "a": [
+          "Iterativo.",
+          "Difuso.",
+          "Recursivo.",
+          "Imperativo."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-77",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Dentro del concepto actual de Green CPD, una de las técnicas de ahorro de costes y mejora de la infraestructura utilizada es el Free Cooling. ¿En qué consiste?",
+        "a": [
+          "En dividir el alineamiento y aislamiento de los servidores entre pasillo frío y pasillo caliente, de manera que se optimiza la climatización del CPD.",
+          "En que, debido al alto grado de generación calórica de los equipos de cómputo y a las limitaciones del aire como elemento refrigerante, se utilizan circuitos de agua destilada para enfriar los equipos.",
+          "En el uso de paneles solares en la climatización del CPD, que al ser energía gratuita minimiza los costes de refrigeración del mismo.",
+          "Utilizar las bajas temperaturas del aire exterior para la climatización. Obviamente sólo cuando las temperaturas exteriores son inferiores a la necesaria dentro del CPD."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-79",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes algoritmos utiliza clave pública?",
+        "a": [
+          "DES.",
+          "AES.",
+          "RSA.",
+          "RC5."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-80",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes algoritmos de cifrado simétrico está acreditado por el CCN para su uso dentro del Esquema Nacional de Seguridad?",
+        "a": [
+          "RSA.",
+          "AES.",
+          "DSA.",
+          "ECDSA."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-99",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Conforme a la especificación del protocolo TLS en el que se basa HTTPS, una vez establecido el handshake, para encriptar los datos es necesario:",
+        "a": [
+          "Un certificado AES-256.",
+          "Un método de cifrado de clave pública.",
+          "Una CA (Autoridad de certificación) reconocida por el navegador.",
+          "Un método de cifrado simétrico."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-93",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Una amenaza es:",
+        "a": [
+          "La causa potencial de un incidente que puede causar daños a un sistema de información o a una organización.",
+          "Intento de destruir, exponer, alterar o inhabilitar un sistema de información o la información que el sistema maneja, o violar alguna política de seguridad de alguna otra manera.",
+          "Defecto o debilidad en el diseño, implementación u operación de un sistema que habilita o facilita la materialización de una amenaza.",
+          "Suceso (inesperado o no deseado) con consecuencias en detrimento de la seguridad del sistema de información."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-95",
+        "t": "T4.05",
+        "o": "A",
+        "q": "La amenaza que motiva la pérdida o la inutilización de la información afecta a:",
+        "a": [
+          "La confidencialidad.",
+          "La integridad.",
+          "La trazabilidad.",
+          "La disponibilidad."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-26",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Si para el acceso a un registro de un fichero, la dirección de almacenamiento del registro se calcula mediante una función matemática (hash) definida sobre la clave, entonces se dice que:",
+        "a": [
+          "El fichero tiene organización secuencial indexada.",
+          "El fichero tiene organización secuencial encadenada.",
+          "El fichero tiene organización en montículos.",
+          "El fichero tiene organización aleatoria."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-73",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes algoritmos es más eficiente para cifrar grandes volúmenes de datos?",
+        "a": [
+          "SHA-2.",
+          "RSA.",
+          "AES.",
+          "MDM-5."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-74",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuáles de los siguientes tipos de algoritmos de criptografía pueden encontrarse dentro de la criptografía simétrica?",
+        "a": [
+          "De métodos y de funciones.",
+          "De bloque y de flujo.",
+          "De ocultamiento y de resumen.",
+          "De funciones y de flujo."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-85",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Cuál es la mínima clasificación Tier que garantiza que todo el equipamiento de TI tenga alimentación doble?",
+        "a": [
+          "Tier I.",
+          "Tier II.",
+          "Tier III.",
+          "Tier IV."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-R-02",
+        "t": "T4.05",
+        "o": "A",
+        "q": "A nivel europeo, ¿cómo se denomina a la Agencia de Ciberseguridad de la Unión Europea?",
+        "a": [
+          "ENISA.",
+          "SECUE.",
+          "CIBERUE.",
+          "ENEA."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-55",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Indique qué atributo es más deseable con el fin de utilizar un rasgo biométrico en un sistema de control automático de accesos:",
+        "a": [
+          "Que posea una alta variabilidad temporal.",
+          "Que posea una alta variabilidad interusario.",
+          "Que posea una alta variabilidad intrausuario.",
+          "Que posea una alta homogeneidad interusuario."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 3,
+        "n": "Biometría: variabilidad inter/intra invertida."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-63",
+        "t": "T4.05",
+        "o": "A",
+        "q": "Cuál de los siguientes algoritmos de cifrado NO es un algoritmo de cifrado simétrico:",
+        "a": [
+          "RSA.",
+          "TDES.",
+          "DES.",
+          "IDEA."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "RSA entre simétricos."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 172,
+    "alreadyHadCitation": 78,
+    "added": 1,
+    "pending": 93,
+    "withCitation": 79
+  }
+}
