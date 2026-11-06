@@ -11,6 +11,8 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[2]
 EDITORIAL = ROOT / 'scripts/bank-editorial'
+sys.path.insert(0, str(ROOT / 'scripts'))
+from citation_release import citation_base
 ORDER = ('reviewed-19', 'reviewed-followup', 'reviewed-wave2', 'reviewed-admin20', 'reviewed-legal19', 'reviewed-programming20', 'reviewed-web25', 'reviewed-architecture20', 'reviewed-languages17', 'reviewed-web23', 'reviewed-development11', 'reviewed-systems20', 'reviewed-foundations18', 'reviewed-systems16', 'reviewed-syntax3', 'reviewed-admin5', 'reviewed-network2')
 
 
@@ -21,10 +23,10 @@ def copy_release_boundary(folder, batch):
     names = {name for ledger in ledgers.values() for name in ledger['files']}
     samples = {name for ledger in ledgers.values() for name in ledger.get('sampleFiles', {})}
     for name in names:
-        shutil.copyfile(ROOT / 'public/data' / name, folder / name)
+        (folder / name).write_bytes(citation_base(name, (ROOT / 'public/data' / name).read_bytes()))
     (folder / 'sample').mkdir()
     for name in samples:
-        shutil.copyfile(ROOT / 'public/sample' / name, folder / 'sample' / name)
+        (folder / 'sample' / name).write_bytes(citation_base(name, (ROOT / 'public/sample' / name).read_bytes(), sample=True))
     for successor in reversed(ORDER[position + 1:]):
         subprocess.run([sys.executable, str(EDITORIAL / 'replay.py'),
                         '--candidate-dir', str(folder), '--batch', successor,

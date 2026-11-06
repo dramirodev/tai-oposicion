@@ -3,6 +3,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from scripts.citation_release import citation_base
+
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASE = ROOT / 'scripts' / 'bank-editorial' / 'release.json'
@@ -40,7 +42,7 @@ def prepare_bank(generated, destination):
     approved_rows = {}
     for name, entry in files.items():
         data = (PUBLISHED / name).read_bytes()
-        if digest(data) != entry['approvedSha256']:
+        if digest(citation_base(name, data)) != entry['approvedSha256']:
             raise ValueError(f'El banco aprobado difiere del manifiesto editorial: {name}')
         approved[name] = data
         for question in question_rows(name, json.loads(data)):
