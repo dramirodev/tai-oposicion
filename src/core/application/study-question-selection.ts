@@ -66,9 +66,12 @@ export function createStudyQuestionSelection(
       .map(entry => entry.id);
   }
 
-  const falladasIds = (): string[] => Object.entries(progress.getAllQuestionStats())
-    .filter(([id, stats]) => catalog.getTopicForQuestion(id) && hasPendingFailure(stats) && !isQuestionEditoriallyQuarantined(id))
+  // Candidate IDs must reach the loader on cold entry; only loaded content can
+  // distinguish an old quarantined record from its approved correction.
+  const failedQuestionCandidateIds = (): string[] => Object.entries(progress.getAllQuestionStats())
+    .filter(([id, stats]) => catalog.getTopicForQuestion(id) && hasPendingFailure(stats))
     .map(([id]) => id);
+  const falladasIds = (): string[] => failedQuestionCandidateIds().filter(id => !isQuestionEditoriallyQuarantined(id));
 
   async function quickGuest(
     index: StudyCatalogIndex,
@@ -251,5 +254,5 @@ export function createStudyQuestionSelection(
     return { items, targets };
   }
 
-  return { dueQuestionIds, falladasIds, quickItems, repasoItems, selectQuestionsForTopics, selectWeightedSimulationQuestions, trapTest };
+  return { dueQuestionIds, falladasIds, failedQuestionCandidateIds, quickItems, repasoItems, selectQuestionsForTopics, selectWeightedSimulationQuestions, trapTest };
 }

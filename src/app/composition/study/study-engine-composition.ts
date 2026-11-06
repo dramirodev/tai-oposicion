@@ -9,7 +9,7 @@ export const studyQuestionCatalog = httpStudyQuestionCatalog;
 configureStudyEngine({ progress: localStudyProgressGateway, catalog: studyQuestionCatalog, fullAccess: isFull });
 
 const studyQuestionSelection = createStudyQuestionSelection(localStudyProgressGateway, studyQuestionCatalog);
-export const { dueQuestionIds, falladasIds, quickItems, repasoItems, selectQuestionsForTopics, selectWeightedSimulationQuestions, trapTest } = studyQuestionSelection;
+export const { dueQuestionIds, falladasIds, failedQuestionCandidateIds, quickItems, repasoItems, selectQuestionsForTopics, selectWeightedSimulationQuestions, trapTest } = studyQuestionSelection;
 export type { StudyQuestionSelection } from '../../../core/application/study-question-selection.js';
 
 export * from '../../../core/application/study-session-engine.js';
