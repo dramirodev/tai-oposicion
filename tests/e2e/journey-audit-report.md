@@ -518,3 +518,13 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - En el recorrido owner de Firebase Emulator, el botón «Comenzar sesión» recibe dos eventos click consecutivos. La aplicación navega una sola vez al tema planificado y guarda un único checkpoint de sesión, en índice `0`, con actividad iniciada y sin marcar como completada.
 - El rerun completo `npm run test:e2e:supertest` pasó **12/12** sobre Auth/Firestore Emulator `demo-tai-auth`. El mismo recorrido confirma el borrador curatorial tras recargar.
 - La primera repetición reveló dos aserciones de E2E que todavía exigían el copy histórico incorrecto «1 vínculos» después de UX-019. Se actualizaron a «1 vínculo»; era una expectativa obsoleta del test, no un defecto actual de interfaz. No hubo cambios a reglas de negocio ni datos de producción.
+
+### UX-020 / ATE-005: recuperar actividad de Temario tras recargar — 5 de noviembre de 2026
+
+- En el journey owner de Auth/Firestore Emulator, se recarga la actividad diaria de Temario y se verifica que persisten ruta, `trainingSessionId`, `trainingActivityId`, tema e índice del checkpoint.
+- La reproducción inicial encontró un defecto: `pagehide` detenía el cronómetro y la acción explícita de marcar el tema no avanzaba el checkpoint porque su `currentStartedAt` era `null`; la sesión quedaba sin la autoevaluación prevista.
+- La corrección permite finalizar una actividad pausada solo con la referencia exacta de sesión/actividad y fuera de una pausa de descanso. Las llamadas sin referencia y las obsoletas siguen sin efecto; se conserva el tiempo acumulado.
+- Verificación: dominio **12/12**; `npm run test:e2e:supertest` **12/12**; suite Vitest `--maxWorkers=2` **965 aprobadas/27 omitidas**; arquitectura, ESLint y TypeScript pasan. Se registró UX-020 en `audit-findings.md`.
+- La captura `evidence/ux-audit-2026-11-04/owner-temario-recuperado.png` muestra el estado autenticado sintético después de recuperar la ruta; el flujo completo confirma que tras completar el tema aparece la autoevaluación y el checkpoint avanza. Firebase de producción y Gemini no se usaron.
+- ATE-005 sigue abierto: esta nueva relación recuperación→completar→autoevaluación añade un oráculo funcional, pero no demuestra cobertura exhaustiva de todos los controles/estados. UX-009 y ATE-006 remoto también siguen abiertos.
+- Regresión E2E global posterior: `npm run test:e2e` terminó **300/328**, con 28 omisiones intencionales (suite Emulator y EXTREME), cero fallos, Chromium/WebKit, en **11,4 min**. Incluyó las regresiones de Planificación/WebKit, rutas, controles offline/reintento, simulacros, estadísticas y Ajustes. La suite Emulator se ejecutó aparte y pasó **12/12**.

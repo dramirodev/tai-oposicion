@@ -73,6 +73,23 @@ test.describe('Firebase Auth Emulator supertest', () => {
     expect(checkpoints).toHaveLength(1);
     expect(checkpoints[0]).toMatchObject({ currentIndex: 0, completedAt: null });
     expect(checkpoints[0].currentStartedAt).not.toBeNull();
+    const plannedActivityUrl = page.url();
+    const plannedActivityParams = new URL(plannedActivityUrl).hash.split('?')[1];
+    const plannedActivityQuery = new URLSearchParams(plannedActivityParams);
+    expect(plannedActivityQuery.get('trainingSessionId')).toBe(checkpoints[0].id);
+    expect(plannedActivityQuery.get('trainingActivityId')).toBe(checkpoints[0].activities[0].id);
+    await page.reload();
+    await expect(page.locator('#app h1')).toContainText('Temas vistos');
+    expect(page.url()).toBe(plannedActivityUrl);
+    await expect(page.locator(`[data-t="${plannedActivityQuery.get('topic')}"]`)).toBeVisible();
+    const recoveredCheckpoints = await page.evaluate(() =>
+      Object.entries(localStorage)
+        .filter(([key]) => key.startsWith('tai.training-session.v1.'))
+        .map(([, value]) => JSON.parse(value)),
+    );
+    expect(recoveredCheckpoints).toHaveLength(1);
+    expect(recoveredCheckpoints[0]).toMatchObject({ id: checkpoints[0].id, currentIndex: 0, completedAt: null });
+    await capture('owner-temario-recuperado');
     await capture('owner-temario-estudio');
     const topic = new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('topic');
     await page.locator(`[data-t="${topic}"]`).click({ noWaitAfter: true });

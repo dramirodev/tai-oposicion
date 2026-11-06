@@ -67,12 +67,27 @@ describe('sesión diaria guiada', () => {
     expect(completed).toMatchObject({ elapsedSecondsByActivity: [25], currentIndex: 1, completedAt: now + 70_000 });
   });
 
+  it('confirma una actividad pausada solo con su referencia exacta y conserva el tiempo acumulado', () => {
+    const now = 1_800_000_000_000;
+    const created = createDailyTrainingSession({ ...plan, activities: [plan.activities[0]] }, now);
+    const started = startTrainingSessionActivity(created, now + 1_000);
+    const paused = pauseTrainingSessionActivity(started, now + 16_000);
+    const reference = trainingActivityReference(paused);
+    expect(reference).not.toBeNull();
+    expect(completeTrainingSessionActivity(paused, 'activeRecall', now + 30_000)).toBe(paused);
+    expect(completeTrainingSessionActivity(paused, 'activeRecall', now + 30_000, { ...reference, activityId: 'stale' })).toBe(paused);
+
+    const completed = completeTrainingSessionActivity(paused, 'activeRecall', now + 30_000, reference);
+    expect(completed).toMatchObject({ currentIndex: 1, currentStartedAt: null, elapsedSecondsByActivity: [15], completedAt: now + 30_000 });
+  });
+
   it('registra pausa separada y reanuda la misma actividad desde el checkpoint', () => {
     const now = 1_800_000_000_000;
     const created = createDailyTrainingSession({ ...plan, activities: [plan.activities[0]] }, now);
     const started = startTrainingSessionActivity(created, now + 1_000);
     const resting = beginTrainingSessionBreak(started, now + 16_000, 5);
     expect(resting).toMatchObject({ currentIndex: 0, currentStartedAt: null, breakStartedAt: now + 16_000, breakDurationMinutes: 5, elapsedSecondsByActivity: [15] });
+    expect(completeTrainingSessionActivity(resting, 'activeRecall', now + 20_000, trainingActivityReference(resting))).toBe(resting);
     expect(startTrainingSessionActivity(resting, now + 20_000)).toBe(resting);
     const resumed = startTrainingSessionActivity(endTrainingSessionBreak(resting, now + 5 * 60_000), now + 6 * 60_000);
     expect(resumed).toMatchObject({ currentIndex: 0, breakStartedAt: null, currentStartedAt: now + 6 * 60_000 });

@@ -124,6 +124,14 @@ Estados: **Verificado**, **Parcial**, **Pendiente**, **Bloqueado**. “Verificad
 - Sin Firebase de producción ni Gemini. Los datos Auth/Firestore fueron solo Emulator; Playwright local empleó fixtures sintéticos.
 - **Siguiente paso ejecutable:** continuar ATE-005 en un flujo dinámico no duplicado; para ATE-006 remoto se necesita que el workflow llegue a la rama por defecto/CI PR mediante el proceso de integración del repositorio. La ejecución global no se declara cerrada.
 
+## Continuidad de actividad de Temario tras recarga — 5 de noviembre de 2026
+
+- Se reprodujo un defecto real en el recorrido Planificación → Temario: tras recargar, `pagehide` dejaba la actividad pausada; al marcar el tema, el progreso del tema se guardaba pero el checkpoint no avanzaba y no aparecía la autoevaluación.
+- Causa: el dominio rechazaba cualquier finalización con `currentStartedAt === null`, aun cuando la acción entregara la referencia exacta del checkpoint/actividad. Se corrigió para permitir únicamente esa finalización pausada con referencia coincidente y fuera de la pausa de descanso; llamadas sin referencia o con ID obsoleto siguen siendo no-op.
+- Regresiones: dominio **12/12**; Auth/Firestore Emulator `demo-tai-auth` **12/12** Chromium, incluida recarga, recuperación de la ruta y autoevaluación; Vitest global **965 aprobadas/27 omitidas** (189 archivos/1 omitido). Arquitectura, ESLint, TypeScript y `git diff --check` pasan.
+- Regresión E2E global posterior: **300 pasadas / 28 omitidas / 0 fallidas** en Chromium/WebKit, 11,4 min; las omisiones corresponden a Emulator y EXTREME, ejecutados por separado (Emulator **12/12** en este corte).
+- Hallazgo UX-020 en `audit-findings.md`; el journey y la evidencia se vinculan desde `journey-audit-report.md`. ATE-005 permanece abierto para cobertura restante. UX-009 y ATE-006 remoto también siguen abiertos; sin Firebase de producción ni Gemini.
+
 ## Revalidación continua — Accesibilidad y Ajustes (5 de noviembre de 2026)
 
 - UX-014, foco del diálogo destructivo en WebKit, corregido y verificado en commit `735f8b9`; regresión de Ajustes 4/4 Chromium/WebKit a 320/1440 px. No se confirma el borrado en la prueba.

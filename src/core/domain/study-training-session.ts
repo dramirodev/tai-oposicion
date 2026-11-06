@@ -145,20 +145,22 @@ export function completeTrainingSessionActivity(
   timestamp: number,
   expected?: TrainingActivityReference,
 ): DailyTrainingSession {
-  if (session.completedAt !== null || session.currentStartedAt === null
-    || session.activities[session.currentIndex]?.activity !== activity) return session;
+  if (session.completedAt !== null || session.activities[session.currentIndex]?.activity !== activity
+    || (session.currentStartedAt === null && (!expected || session.breakStartedAt != null))) return session;
   if (expected && (expected.sessionId !== session.id || expected.activityId !== (session.activities[session.currentIndex]?.id ?? `${session.id}:activity:${session.currentIndex + 1}`))) return session;
   const currentIndex = session.currentIndex + 1;
   const isComplete = currentIndex >= session.activities.length;
   const elapsedSecondsByActivity = [...(session.elapsedSecondsByActivity ?? session.activities.map(() => 0))];
-  elapsedSecondsByActivity[session.currentIndex] += Math.max(0, Math.floor((timestamp - session.currentStartedAt) / 1000));
+  if (session.currentStartedAt !== null) {
+    elapsedSecondsByActivity[session.currentIndex] += Math.max(0, Math.floor((timestamp - session.currentStartedAt) / 1000));
+  }
   return {
     ...session,
     currentIndex,
     currentStartedAt: null,
     elapsedSecondsByActivity,
     updatedAt: timestamp,
-    completedAt: isComplete ? Math.max(timestamp, session.currentStartedAt, session.startedAt) : null,
+    completedAt: isComplete ? Math.max(timestamp, session.currentStartedAt ?? session.startedAt, session.startedAt) : null,
   };
 }
 

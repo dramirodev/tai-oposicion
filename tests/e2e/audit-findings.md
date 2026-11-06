@@ -398,6 +398,20 @@ Estados válidos: `DETECTADO`, `ANALIZADO`, `PRIORIZADO`, `EN CORRECCIÓN`, `COR
 - **Pruebas de verificación:** `npm test -- tests/content-map-page.test.js` pasó **6/6**; incluye estado sin asociaciones, singular, cambio de cuenta ida/vuelta y ausencia de vínculos de la otra cuenta al regresar. `npm run check` pasó con **963 tests aprobados / 27 omitidos**; arquitectura, lint y TypeScript correctos.
 - **Resultado final:** El contador muestra concordancia correcta y la regresión comprueba aislamiento entre perfiles.
 
+### UX-020 — La sesión diaria no avanzaba al marcar un tema tras recargar
+
+- **Categoría / funcionalidad:** Continuidad de sesión / Planificación → Temario.
+- **Descripción:** Si el usuario recargaba la ruta de un tema abierto como actividad diaria, `pagehide` pausaba el cronómetro. Después, al marcar el tema como estudiado, se registraba el progreso del tema pero la actividad del checkpoint no avanzaba; la autoevaluación planificada quedaba inaccesible desde ese flujo.
+- **Evidencia:** Reproducido en el recorrido owner de `tests/e2e/supertest-emulator.spec.ts` con Auth y Firestore Emulator `demo-tai-auth`: tras reload, seleccionar el tema dejaba `currentIndex` en 0 y no mostraba la autoevaluación. La prueba actual verifica recuperación de la misma URL/IDs y avanza a la autoevaluación tras la acción explícita de completar.
+- **Severidad / prioridad:** P1 / alta; la interrupción recuperable impedía completar la sesión diaria planificada.
+- **Causa identificada:** `completeTrainingSessionActivity` rechazaba toda finalización con `currentStartedAt === null`, aunque la acción explícita llevaba una referencia de sesión/actividad exacta y el contador estuviera pausado por `pagehide`.
+- **Comportamiento actual / propuesto / consecuencias:** Actual antes del arreglo: tema marcado, checkpoint sin avance tras recarga. Propuesto: permitir la finalización pausada solo si la referencia recibida coincide exactamente con la sesión y actividad actuales, y no hay una pausa de descanso en curso; conservar el tiempo acumulado. Las llamadas sin referencia o con referencia obsoleta siguen siendo no-op. No se alteran prioridades ni reglas pedagógicas.
+- **Solución aplicada:** Se ajustó la guarda de dominio para aceptar ese caso acotado, mantener `elapsedSecondsByActivity` y calcular `completedAt` de forma estable aun sin cronómetro activo.
+- **Archivos afectados:** `src/core/domain/study-training-session.ts`, `tests/domain/study-training-session.test.js`, `tests/e2e/supertest-emulator.spec.ts` y evidencia autenticada de recuperación.
+- **Estado de implementación:** CORREGIDO Y VERIFICADO.
+- **Pruebas de verificación:** Test de dominio **12/12**; `npm run test:e2e:supertest` **12/12** Chromium usando exclusivamente Auth/Firestore Emulator `demo-tai-auth`; `npm test -- --maxWorkers=2` **189 archivos aprobados / 1 omitido; 965 tests aprobados / 27 omitidos**; arquitectura, ESLint, TypeScript y `git diff --check` correctos. No se usó producción ni Gemini.
+- **Resultado final:** El recorrido autenticado conserva la actividad tras reload y, al marcar el tema, vuelve a Planificación con la autoevaluación accesible. La evidencia se limita a la identidad sintética y al entorno Emulator.
+
 ## Registro y cierre
 
 Un hallazgo solo pasa a `CORREGIDO Y VERIFICADO` con referencia a evidencia ejecutada. Los hallazgos históricos no se eliminan; si una hipótesis no se confirma, se cambia a `DESCARTADO, CON JUSTIFICACIÓN` y se conserva la evidencia. Actualizar este registro y los informes vinculados tras cada unidad significativa.
