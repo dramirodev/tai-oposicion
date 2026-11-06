@@ -14,7 +14,9 @@
     "scripts/bank-editorial/reviewed-legal19.json",
     "scripts/bank-editorial/reviewed-programming20.json",
     "scripts/bank-editorial/reviewed-web25.json",
-    "scripts/bank-editorial/reviewed-architecture20.json"
+    "scripts/bank-editorial/reviewed-architecture20.json",
+    "scripts/bank-editorial/reviewed-languages17.json",
+    "scripts/bank-editorial/reviewed-web23.json"
   ],
   "files": {
     "T1.01.json": {
@@ -103,7 +105,7 @@
     },
     "T3.06.json": {
       "sourceBuildSha256": "2acbb6cc84034956e06fda7241297e19fdca38b48e75b7a568d84935c7e67c9e",
-      "approvedSha256": "cd8ead125529d2bdcf6a5e84d6c730df4c13c599046fce704ca2c8a86e4fd6cc"
+      "approvedSha256": "c8b506447d77a53f045ba0d8c5351bb9a15009fa2573fe46caf7ef6c45f8da23"
     },
     "T3.07.json": {
       "sourceBuildSha256": "02b0137e359ecbf35300ae60e152f65dac9f68af11c4815d5e9a7474bcbfd292",
@@ -111,7 +113,7 @@
     },
     "T3.08.json": {
       "sourceBuildSha256": "1bd30e425fa83555093a6862fb44215b31485076ba0213a0d6183df33f1e52a3",
-      "approvedSha256": "308f6f6495843bc06aa3f163aeac62215ce02993d12442d6da093bc074d3b331"
+      "approvedSha256": "07a31683ae98d723e07be68ab566c475a1d7a28c64b49825b42d6cb1709a78cf"
     },
     "T3.09.json": {
       "sourceBuildSha256": "b4838f7e311d72eeb2fce6b19ddc5314a8aafec4765a1cea5c247fa610e6c739",
@@ -167,11 +169,11 @@
     },
     "meta.json": {
       "sourceBuildSha256": "4fba68b338a59ab59c86c6e24da4b5b918c243c23ea5e69781532f0cd1b6ac2d",
-      "approvedSha256": "a45df16461321b2eea669013fb44507fa7a48f2c1ebaa613d074ba9cc516003a"
+      "approvedSha256": "e5c25be4225120225e770d3d1968504edffc3bec41879ce5af47e5fb91683e24"
     },
     "supuestos.json": {
       "sourceBuildSha256": "8e38f2d07f8f00e08365b469d5dc9ea13131cbacd094fe09888f52714fb77dd2",
-      "approvedSha256": "e0103cd4837cc7ab4b0f6ed07fd1a058f45d15603f619b52568fdfab660da744"
+      "approvedSha256": "9b85f51bff5cb4f87f7a7827575bd3c363e6bc8eaaa8109ff63edd4a03fa0c7d"
     }
   }
 }

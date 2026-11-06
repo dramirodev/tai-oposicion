@@ -1,0 +1,2885 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "398718893b74508a528669d30bd127474659ad56",
+  "previousBatch": "reviewed-languages17",
+  "status": "LOCAL_PENDING_CI_AND_PUBLICATION",
+  "sourceCandidateSha256": "c1d4a9f139c9fd4c4f51723031af4691672810b31f92d48df0de5f06ff0302c5",
+  "fingerprintEncoding": "SHA256 UTF8 JSON.stringify Node insertion-order, no sorted keys; scenario envelope is separate from canonical runtime proof",
+  "questions": [
+    {
+      "id": "GEN-T3.08-05.v1",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-05.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Respecto a la conexión a Internet, las apps nativas:",
+        "a": [
+          "La necesitan parcialmente.",
+          "Solo funcionan online.",
+          "La necesitan siempre.",
+          "No la necesitan para funcionar."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-05",
+        "u": "Adaptación perfecta al dispositivo concreto, siendo posible acceder a todas las características del hardware del dispositivo: cámara, GPS, agenda, almacenamiento... Ofrecen la mejor experiencia de usuario. Rendimiento muy alto. No necesitan conexión a internet para funcionar.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-05.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Respecto a la conexión a Internet, una aplicación nativa:",
+        "a": [
+          "La requiere para ejecutar cualquier instrucción local.",
+          "No puede comunicarse con servicios remotos.",
+          "Tiene garantizadas todas sus funciones sin conexión.",
+          "Puede ofrecer funciones sin conexión, pero otras pueden requerir servicios de red."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-05",
+        "u": "No necesitan conexión a internet para funcionar. [p. 4]",
+        "v": 0,
+        "n": "El PDF generaliza indebidamente: ser nativa no determina las dependencias de red de todas las funciones. A: La ejecución local no exige por sí misma red. B: Una app nativa puede consumir servicios remotos. C: La arquitectura nativa no garantiza esa disponibilidad. D: Distingue las funciones locales y las dependientes de red."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 4,
+        "quote": "No necesitan conexión a internet para funcionar.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "La ejecución local no exige por sí misma red.",
+        "Una app nativa puede consumir servicios remotos.",
+        "La arquitectura nativa no garantiza esa disponibilidad.",
+        "Distingue las funciones locales y las dependientes de red."
+      ],
+      "primary": [
+        {
+          "url": "https://developer.android.com/topic/architecture/data-layer/offline-first",
+          "checkedAt": "2026-11-06",
+          "assessment": "El PDF generaliza indebidamente: ser nativa no determina las dependencias de red de todas las funciones."
+        }
+      ],
+      "objectiveChange": "Conserva concepto; corrige alcance o precisión de la misma afirmación.",
+      "sourceDiscrepancy": "El PDF generaliza indebidamente: ser nativa no determina las dependencias de red de todas las funciones.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "64d111be502318ba9f9a487f1497cfbf50efed53250ee072aede8e67250190cd",
+      "afterSha256": "d0ac5dfae28d058dcca6933485b57bcfee1ce939140697f7577e23668e6c18f2",
+      "questionSha256": "938f0dfca72973e4921e0a000e19ad87d1336eb3b176b04a9b80a34bfc67945c",
+      "typeReview": {
+        "k": "C",
+        "rationale": "Completa el enunciado con una afirmación."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "d0ac5dfae28d058dcca6933485b57bcfee1ce939140697f7577e23668e6c18f2",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-06",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-06",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Un inconveniente de las apps nativas es que:",
+        "a": [
+          "El código no es reutilizable entre plataformas.",
+          "Siempre necesitan conexión.",
+          "No acceden al hardware.",
+          "No pueden enviar notificaciones push."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-06",
+        "u": "Costes y tiempos de desarrollo elevado ya que hay que desarrollar la aplicación para cada plataforma concreta usando las tecnologías propias de cada una. … El código no es reutilizable entre las distintas plataformas.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-06",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Sobre la reutilización de código al desarrollar aplicaciones nativas para varias plataformas, ¿qué afirmación es correcta?",
+        "a": [
+          "Puede compartirse lógica portable, aunque la integración específica de cada plataforma puede exigir código distinto.",
+          "No puede reutilizarse ninguna línea de código entre plataformas.",
+          "Toda la interfaz y cualquier API del sistema son idénticas en todas las plataformas.",
+          "El uso de código nativo impide incorporar bibliotecas C o C++."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-06",
+        "u": "El código no es reutilizable entre las distintas plataformas. [p. 4]",
+        "v": 0,
+        "n": "La negación absoluta del PDF es incorrecta. El NDK permite reutilizar bibliotecas C/C++; esto no hace automáticamente portables todas las APIs o interfaces. A: Diferencia código portable e integración específica. B: Existen bibliotecas portables reutilizables. C: Las APIs e interfaces pueden diferir. D: El NDK es precisamente un mecanismo para incorporar esas bibliotecas."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 4,
+        "quote": "El código no es reutilizable entre las distintas plataformas.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "Diferencia código portable e integración específica.",
+        "Existen bibliotecas portables reutilizables.",
+        "Las APIs e interfaces pueden diferir.",
+        "El NDK es precisamente un mecanismo para incorporar esas bibliotecas."
+      ],
+      "primary": [
+        {
+          "url": "https://developer.android.com/ndk/guides",
+          "checkedAt": "2026-11-06",
+          "assessment": "La negación absoluta del PDF es incorrecta. El NDK permite reutilizar bibliotecas C/C++; esto no hace automáticamente portables todas las APIs o interfaces."
+        }
+      ],
+      "objectiveChange": "Conserva concepto; corrige alcance o precisión de la misma afirmación.",
+      "sourceDiscrepancy": "La negación absoluta del PDF es incorrecta. El NDK permite reutilizar bibliotecas C/C++; esto no hace automáticamente portables todas las APIs o interfaces.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "51445c57df05d074e4f88efcb63e04cffa77c6a86c44601666152f80bbd085a3",
+      "afterSha256": "3ea30205b1b46e881df954e3047864cd8bad17b0aa0e82518f103c70790aaf38",
+      "questionSha256": "1f712dd48f8382bbabf7d3835c1281b2f88f49e11f7bb08e4dff7b448e2059b4",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "3ea30205b1b46e881df954e3047864cd8bad17b0aa0e82518f103c70790aaf38",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-16",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-16",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El gran inconveniente de las webapp es que:",
+        "a": [
+          "Tienen coste elevado.",
+          "Requieren varios desarrollos.",
+          "Requieren actualización en tiendas.",
+          "No tienen acceso a los recursos del dispositivo."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          8,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-16",
+        "u": "El gran inconveniente es que las webapp NO tienen acceso a los recursos del dispositivo. … No disponible en las tiendas de aplicaciones. No dispone del icono de acceso de forma directa en la pantalla del móvil. Necesita conexión a Internet.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-16",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿Qué afirmación describe correctamente el acceso de una webapp a recursos del dispositivo?",
+        "a": [
+          "Tiene acceso irrestricto a cualquier componente sin permiso.",
+          "Ninguna API web permite acceder a una cámara.",
+          "Solo puede acceder a recursos tras publicarse en una tienda.",
+          "Puede acceder a determinados recursos mediante APIs del navegador, sujeto a soporte, permisos y restricciones de seguridad."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-16",
+        "u": "El gran inconveniente es que las webapp NO tienen acceso a los recursos del dispositivo. [p. 6]",
+        "v": 0,
+        "n": "La prohibición absoluta del PDF es falsa: getUserMedia permite acceso a cámara o micrófono con las condiciones de seguridad y permiso aplicables. A: No existe acceso irrestricto. B: getUserMedia ofrece ese acceso bajo condiciones. C: La publicación en tienda no es un requisito general de esas APIs. D: Expresa la capacidad y sus límites."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 6,
+        "quote": "El gran inconveniente es que las webapp NO tienen acceso a los recursos del dispositivo.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "No existe acceso irrestricto.",
+        "getUserMedia ofrece ese acceso bajo condiciones.",
+        "La publicación en tienda no es un requisito general de esas APIs.",
+        "Expresa la capacidad y sus límites."
+      ],
+      "primary": [
+        {
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia",
+          "checkedAt": "2026-11-06",
+          "assessment": "La prohibición absoluta del PDF es falsa: getUserMedia permite acceso a cámara o micrófono con las condiciones de seguridad y permiso aplicables."
+        }
+      ],
+      "objectiveChange": "Conserva concepto; corrige alcance o precisión de la misma afirmación.",
+      "sourceDiscrepancy": "La prohibición absoluta del PDF es falsa: getUserMedia permite acceso a cámara o micrófono con las condiciones de seguridad y permiso aplicables.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "d2ef9ff51a14ea02b720dc04d2aba1f3b6f6a7e547550b94b32d44b6c05153d0",
+      "afterSha256": "bd09c5a834bf1be82d5b6db760690b5269258a8c62bc46b82b9432907a42afbb",
+      "questionSha256": "febdb2949e9f5986a881b33e487d42304fe8de5b2419562965689f370c4ada74",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "bd09c5a834bf1be82d5b6db760690b5269258a8c62bc46b82b9432907a42afbb",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-16.v2",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-16.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Las webapp necesitan:",
+        "a": [
+          "Un WebView.",
+          "Una tienda.",
+          "Instalación en el dispositivo.",
+          "Conexión a Internet."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          8,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-16",
+        "u": "El gran inconveniente es que las webapp NO tienen acceso a los recursos del dispositivo. … No disponible en las tiendas de aplicaciones. No dispone del icono de acceso de forma directa en la pantalla del móvil. Necesita conexión a Internet.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-16.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿Qué afirmación es correcta sobre la conexión a Internet de una aplicación web?",
+        "a": [
+          "Necesita red en todo momento, aunque sus recursos ya estén disponibles localmente.",
+          "No puede almacenar recursos para utilizarlos sin conexión.",
+          "Toda aplicación web garantiza acceso sin conexión a cualquier servicio remoto.",
+          "Puede ofrecer funciones sin conexión si sus recursos y datos necesarios están disponibles localmente; otras funciones pueden necesitar red."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-16",
+        "u": "Necesita conexión a Internet. [p. 6]",
+        "v": 0,
+        "n": "La frase del PDF no admite las aplicaciones web preparadas para funcionar sin conexión. Disponer de caché no garantiza cualquier operación remota. A: Los recursos locales pueden permitir funciones sin red. B: Los service workers y Cache API permiten almacenamiento local. C: Un servicio remoto no se vuelve accesible por ser una webapp. D: Acota la capacidad offline a los recursos y funciones disponibles."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 6,
+        "quote": "Necesita conexión a Internet.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "Los recursos locales pueden permitir funciones sin red.",
+        "Los service workers y Cache API permiten almacenamiento local.",
+        "Un servicio remoto no se vuelve accesible por ser una webapp.",
+        "Acota la capacidad offline a los recursos y funciones disponibles."
+      ],
+      "primary": [
+        {
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers",
+          "checkedAt": "2026-11-06",
+          "assessment": "La frase del PDF no admite las aplicaciones web preparadas para funcionar sin conexión. Disponer de caché no garantiza cualquier operación remota."
+        }
+      ],
+      "objectiveChange": "Conserva concepto; corrige alcance o precisión de la misma afirmación.",
+      "sourceDiscrepancy": "La frase del PDF no admite las aplicaciones web preparadas para funcionar sin conexión. Disponer de caché no garantiza cualquier operación remota.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "0fa9c7f1696cfcc48e4a66d217743a5ffd8894194cd93a2b18e4ab64ad40e524",
+      "afterSha256": "7ebfd3d3b60ce32ef1f835f16643c1a753a56cc74af4bfd7beeca543e4ab2296",
+      "questionSha256": "50d8282744864a8a170538d3c592a29daf574899a175ede37442a023148b29f9",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "7ebfd3d3b60ce32ef1f835f16643c1a753a56cc74af4bfd7beeca543e4ab2296",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-21",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-21",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El formato de empaquetado de las apps híbridas en Google Play es:",
+        "a": [
+          ".apk.",
+          ".ipa.",
+          ".exe.",
+          ".app."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-21",
+        "u": "El formato de empaquetado de la app es .app (Apple Store) y .apk (Google Play). … La app desarrollada se visualiza en un WebView (no mediante un navegador web) que es un navegador integrado en una aplicación nativa",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-21",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Para publicar una aplicación nueva en Google Play, ¿qué formato de publicación se exige desde agosto de 2021?",
+        "a": [
+          "Android App Bundle (.aab).",
+          "Archivo iOS .ipa.",
+          "Ejecutable Windows .exe.",
+          "Un archivo .html aislado, sin paquete Android."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          3
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-21",
+        "u": "El formato de empaquetado de la app es .app (Apple Store) y .apk (Google Play). [p. 7]",
+        "v": 0,
+        "n": "El PDF confunde el APK instalable con el formato de publicación requerido para nuevas aplicaciones. Google Play genera APKs desde el App Bundle. A: Es el formato de publicación requerido en el alcance indicado. B: Corresponde al ecosistema iOS, no al formato exigido. C: Es un formato Windows. D: No satisface el formato de publicación Android exigido."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 7,
+        "quote": "El formato de empaquetado de la app es .app (Apple Store) y .apk (Google Play).",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "Es el formato de publicación requerido en el alcance indicado.",
+        "Corresponde al ecosistema iOS, no al formato exigido.",
+        "Es un formato Windows.",
+        "No satisface el formato de publicación Android exigido."
+      ],
+      "primary": [
+        {
+          "url": "https://developer.android.com/guide/app-bundle",
+          "checkedAt": "2026-11-06",
+          "assessment": "El PDF confunde el APK instalable con el formato de publicación requerido para nuevas aplicaciones. Google Play genera APKs desde el App Bundle."
+        }
+      ],
+      "objectiveChange": "Actualiza el mismo objetivo: formato de distribución Google Play; delimita nuevas aplicaciones, no pregunta instalación APK.",
+      "sourceDiscrepancy": "El PDF confunde el APK instalable con el formato de publicación requerido para nuevas aplicaciones. Google Play genera APKs desde el App Bundle.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "b1582b959687cc168112adb0c43d833508076e2e19abc257346ed8c1a5016df6",
+      "afterSha256": "7ed7410f53cbf160342f7e9792fe0eff8e7dc515bf0c061d3860d6a63374b0c8",
+      "questionSha256": "650c48fe73a13ae8a8c4ed076c171f442b7b5d778e455671b572ae4244cc32d5",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "7ed7410f53cbf160342f7e9792fe0eff8e7dc515bf0c061d3860d6a63374b0c8",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-40.v1",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-40.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Las PWA son ligeras porque:",
+        "a": [
+          "Usan WebView.",
+          "No dejan de ser webs.",
+          "No usan JavaScript.",
+          "Son compiladas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-40",
+        "u": "Las principales ventajas de las PWA son: Son ligeras ya que no dejan de ser webs. Son multiplataforma, accesibles desde cualquier dispositivo (ordenador, tablet, móvil…). Sin necesidad de instalación, ya que no hace falta que el usuario se descargue e instale ningún tipo de aplicación en el dispositivo.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-40.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿Qué afirmación es correcta sobre el tamaño de los recursos y datos almacenados por una PWA?",
+        "a": [
+          "Por ser web, su tamaño es siempre despreciable.",
+          "Depende de los recursos y datos que la aplicación descargue y almacene.",
+          "No puede almacenar JavaScript ni imágenes.",
+          "Todas las PWA ocupan exactamente el mismo número de bytes."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-40",
+        "u": "Son ligeras ya que no dejan de ser webs. [p. 12]",
+        "v": 0,
+        "n": "La ligereza no es una garantía derivada de ser web: los recursos de aplicación y los datos pueden almacenarse y ocupar espacio. A: La naturaleza web no impone tamaño despreciable. B: La carga y el almacenamiento determinan el espacio usado. C: Esos recursos se pueden guardar en caché. D: El contenido de las aplicaciones difiere."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 12,
+        "quote": "Son ligeras ya que no dejan de ser webs.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "La naturaleza web no impone tamaño despreciable.",
+        "La carga y el almacenamiento determinan el espacio usado.",
+        "Esos recursos se pueden guardar en caché.",
+        "El contenido de las aplicaciones difiere."
+      ],
+      "primary": [
+        {
+          "url": "https://web.dev/articles/storage-for-the-web",
+          "checkedAt": "2026-11-06",
+          "assessment": "La ligereza no es una garantía derivada de ser web: los recursos de aplicación y los datos pueden almacenarse y ocupar espacio."
+        }
+      ],
+      "objectiveChange": "Precisa el significado medible de ligera (tamaño), conservando el objetivo original.",
+      "sourceDiscrepancy": "La ligereza no es una garantía derivada de ser web: los recursos de aplicación y los datos pueden almacenarse y ocupar espacio.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "1e0f9492d2f2cc931c8792b1419750a5924deb769e0bffa231f1e029a8d07427",
+      "afterSha256": "089716043b97b50c1f28a2dfc7ee716cba00370861a7499f4e4e1bad5fc03ba9",
+      "questionSha256": "98d032df90120f96fe60d1a7f5a0ab2ec538e44acfddac33e448c376bec33de0",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "089716043b97b50c1f28a2dfc7ee716cba00370861a7499f4e4e1bad5fc03ba9",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-41",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-41",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Un inconveniente de las PWA es que:",
+        "a": [
+          "Tienen mayor consumo de batería que una app nativa.",
+          "Tienen coste de desarrollo elevado.",
+          "No funcionan offline.",
+          "Necesitan instalación."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          8,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-41",
+        "u": "Inconvenientes de las PWA: No disponibles en tiendas de aplicaciones. Mayor consumo de batería que una app nativa. No proporcionan acceso a todas las características del dispositivo.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-41",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Al comparar el consumo de batería de una PWA y una aplicación nativa, ¿qué afirmación es válida?",
+        "a": [
+          "La categoría PWA no basta para decidir cuál consume más: influyen el trabajo realizado y la implementación.",
+          "Una PWA consume siempre más, aunque ambas estén inactivas.",
+          "Toda aplicación nativa consume energía nula al ejecutar código.",
+          "El código JavaScript de una PWA nunca puede influir en el consumo."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-41",
+        "u": "Mayor consumo de batería que una app nativa. [p. 12]",
+        "v": 0,
+        "n": "El PDF presenta una comparación universal sin fijar carga ni implementación. La actividad de CPU, scripts y renderizado influye en el impacto energético. A: No infiere un orden universal sin medir condiciones comparables. B: La categoría no demuestra esa desigualdad universal. C: Ejecutar código no garantiza consumo nulo. D: La ejecución de scripts puede aumentar actividad y consumo."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 12,
+        "quote": "Mayor consumo de batería que una app nativa.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "No infiere un orden universal sin medir condiciones comparables.",
+        "La categoría no demuestra esa desigualdad universal.",
+        "Ejecutar código no garantiza consumo nulo.",
+        "La ejecución de scripts puede aumentar actividad y consumo."
+      ],
+      "primary": [
+        {
+          "url": "https://webkit.org/blog/8993/cpu-timeline-in-web-inspector/",
+          "checkedAt": "2026-11-06",
+          "assessment": "El PDF presenta una comparación universal sin fijar carga ni implementación. La actividad de CPU, scripts y renderizado influye en el impacto energético."
+        }
+      ],
+      "objectiveChange": "Conserva concepto; corrige alcance o precisión de la misma afirmación.",
+      "sourceDiscrepancy": "El PDF presenta una comparación universal sin fijar carga ni implementación. La actividad de CPU, scripts y renderizado influye en el impacto energético.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "66adb833241d1d5a9d3142f850e1a2124feef4de5ae714fce08d2bb991533158",
+      "afterSha256": "8862e36e3b7f2092bddff61f27961447aecde7a146d47e4fa0f44ff4f528ff6a",
+      "questionSha256": "4eb009e47bc8c6a00c6f7c9f37485fc2644fcfd12e88b7c6286badf36b8d17d6",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "8862e36e3b7f2092bddff61f27961447aecde7a146d47e4fa0f44ff4f528ff6a",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-41.v2",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-41.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Las PWA, respecto a las tiendas de aplicaciones:",
+        "a": [
+          "Solo están en App Store.",
+          "No están disponibles en ellas.",
+          "Solo están en Google Play.",
+          "Están siempre disponibles."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          8,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-41",
+        "u": "Inconvenientes de las PWA: No disponibles en tiendas de aplicaciones. Mayor consumo de batería que una app nativa. No proporcionan acceso a todas las características del dispositivo.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-41.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Respecto a distribuir una PWA mediante una tienda de aplicaciones, ¿qué afirmación es correcta?",
+        "a": [
+          "Solo es posible en App Store.",
+          "Puede empaquetarse para una tienda compatible, cumpliendo sus requisitos; no aparece automáticamente en todas.",
+          "Está prohibido en cualquier tienda por ser una PWA.",
+          "El manifiesto web publica automáticamente la aplicación en todas las tiendas."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-41",
+        "u": "No disponibles en tiendas de aplicaciones. [p. 12]",
+        "v": 0,
+        "n": "La indisponibilidad universal del PDF es falsa: una PWA puede integrarse en un paquete Android mediante Trusted Web Activity. La admisión depende de los requisitos de la tienda. A: La distribución no se limita universalmente a App Store. B: Distingue posibilidad, empaquetado y requisitos. C: Existe distribución Android mediante TWA. D: El manifiesto no equivale a publicación en tiendas."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 12,
+        "quote": "No disponibles en tiendas de aplicaciones.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "La distribución no se limita universalmente a App Store.",
+        "Distingue posibilidad, empaquetado y requisitos.",
+        "Existe distribución Android mediante TWA.",
+        "El manifiesto no equivale a publicación en tiendas."
+      ],
+      "primary": [
+        {
+          "url": "https://developer.chrome.com/docs/android/trusted-web-activity/quick-start/",
+          "checkedAt": "2026-11-06",
+          "assessment": "La indisponibilidad universal del PDF es falsa: una PWA puede integrarse en un paquete Android mediante Trusted Web Activity. La admisión depende de los requisitos de la tienda."
+        }
+      ],
+      "objectiveChange": "Conserva concepto; corrige alcance o precisión de la misma afirmación.",
+      "sourceDiscrepancy": "La indisponibilidad universal del PDF es falsa: una PWA puede integrarse en un paquete Android mediante Trusted Web Activity. La admisión depende de los requisitos de la tienda.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "62e2f2b38146173d04d84e23728d33ffa4c9a6af520086b7898ca6be871652ee",
+      "afterSha256": "580482e5e4366e3e49e5dbe57e2a476e6ad75a8e150d3772e12ce7a21f8c4197",
+      "questionSha256": "bddea1f0976d49136442c77ee5a88ee6b6f305b0512d67541c01f92eda889177",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "580482e5e4366e3e49e5dbe57e2a476e6ad75a8e150d3772e12ce7a21f8c4197",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-42.v1",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-42.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Respecto a las tiendas de aplicaciones:",
+        "a": [
+          "Las híbridas sí están y las PWA no.",
+          "Ambas sí están.",
+          "Las PWA sí están y las híbridas no.",
+          "Ninguna está."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-42",
+        "u": "Las PWA se ejecutan directamente en el navegador, las híbridas no (webview). Las PWA no están disponibles en las tiendas de aplicaciones, las híbridas sí.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-42.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Al comparar aplicaciones híbridas y PWA respecto a las tiendas de aplicaciones, ¿qué afirmación es correcta?",
+        "a": [
+          "Ser PWA impide siempre cualquier distribución mediante tienda.",
+          "Ambas pueden distribuirse mediante paquetes adecuados y cumpliendo los requisitos de la tienda.",
+          "Ser híbrida garantiza la publicación automática en todas las tiendas.",
+          "Ninguna puede distribuirse mediante una tienda."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-42",
+        "u": "Las PWA no están disponibles en las tiendas de aplicaciones, las híbridas sí. [p. 12]",
+        "v": 0,
+        "n": "El PDF establece una separación absoluta que no se sostiene: empaquetar una PWA para Android permite su distribución, sin garantizar admisión automática. A: La integración mediante TWA proporciona un contraejemplo. B: La posibilidad está condicionada al paquete y los requisitos. C: Las tiendas mantienen sus procedimientos y condiciones. D: No describe la distribución de estas aplicaciones."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 12,
+        "quote": "Las PWA no están disponibles en las tiendas de aplicaciones, las híbridas sí.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "La integración mediante TWA proporciona un contraejemplo.",
+        "La posibilidad está condicionada al paquete y los requisitos.",
+        "Las tiendas mantienen sus procedimientos y condiciones.",
+        "No describe la distribución de estas aplicaciones."
+      ],
+      "primary": [
+        {
+          "url": "https://developer.chrome.com/docs/android/trusted-web-activity/quick-start/",
+          "checkedAt": "2026-11-06",
+          "assessment": "El PDF establece una separación absoluta que no se sostiene: empaquetar una PWA para Android permite su distribución, sin garantizar admisión automática."
+        }
+      ],
+      "objectiveChange": "Conserva concepto; corrige alcance o precisión de la misma afirmación.",
+      "sourceDiscrepancy": "El PDF establece una separación absoluta que no se sostiene: empaquetar una PWA para Android permite su distribución, sin garantizar admisión automática.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "e46cae236f052f8c3f38e51c86ddfb7f51001513d4f13dd10f59ac94a7babba5",
+      "afterSha256": "98bd6a804f62a37cf286a85b70c920d3df06276783c202c29f9cc4bddf313789",
+      "questionSha256": "daf970ee6e3346bf9c837e6db0ad74682470da4ebdada63bd19284fa2ea34f2a",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "98bd6a804f62a37cf286a85b70c920d3df06276783c202c29f9cc4bddf313789",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-52.v1",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-52.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "La etiqueta meta viewport indica a la página:",
+        "a": [
+          "La codificación de caracteres.",
+          "El ancho de la pantalla en píxeles independientemente del dispositivo.",
+          "Los estilos a aplicar.",
+          "El idioma del documento."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-52",
+        "u": "Usar la etiqueta meta name=\"viewport\" content=\"width=device-width initialscale=1\", indica a la página el ancho de la pantalla en píxeles independientemente del dispositivo. … Definir puntos de ruptura. Son expresiones condicionales que aplican diferentes estilos dependiendo del dispositivo. Esto se hace mediante Media Queries.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-52.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En `<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">`, ¿qué solicita `width=device-width`?",
+        "a": [
+          "Usar la codificación UTF-8.",
+          "Ajustar el ancho del viewport al ancho del dispositivo expresado en píxeles CSS.",
+          "Fijar siempre el ancho a 1920 píxeles físicos.",
+          "Cambiar el idioma del documento."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-52",
+        "u": "indica a la página el ancho de la pantalla en píxeles independientemente del dispositivo. [p. 17]",
+        "v": 0,
+        "n": "Se precisa la directiva width=device-width y la unidad CSS; no toda etiqueta viewport define lo mismo ni se trata de contar píxeles físicos. A: La codificación no la define esa directiva. B: Es el ajuste solicitado. C: No impone un ancho físico fijo. D: No declara el idioma."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 17,
+        "quote": "indica a la página el ancho de la pantalla en píxeles independientemente del dispositivo.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "La codificación no la define esa directiva.",
+        "Es el ajuste solicitado.",
+        "No impone un ancho físico fijo.",
+        "No declara el idioma."
+      ],
+      "primary": [
+        {
+          "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/name/viewport",
+          "checkedAt": "2026-11-06",
+          "assessment": "Se precisa la directiva width=device-width y la unidad CSS; no toda etiqueta viewport define lo mismo ni se trata de contar píxeles físicos."
+        }
+      ],
+      "objectiveChange": "Conserva concepto; corrige alcance o precisión de la misma afirmación.",
+      "sourceDiscrepancy": "Se precisa la directiva width=device-width y la unidad CSS; no toda etiqueta viewport define lo mismo ni se trata de contar píxeles físicos.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "231b0917a072e566fdc2c03e0842ec571549550de02ad10b138dd7e61c31a4bf",
+      "afterSha256": "b05c9f045f587b8886629b4b9afacbe676e184e4fbd00026d63311a9f842beb2",
+      "questionSha256": "03f37e9060dc7841dd66ee1b5a22fbed819f03b71fdf396e1d6c95e101587577",
+      "typeReview": {
+        "k": "K",
+        "rationale": "Interpretar una directiva en código HTML prevalece."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "b05c9f045f587b8886629b4b9afacbe676e184e4fbd00026d63311a9f842beb2",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-59",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-59",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El atributo xs:schemaLocation indica:",
+        "a": [
+          "La ubicación del fichero XSD.",
+          "La codificación.",
+          "La ubicación del DTD.",
+          "La versión de XML."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-59",
+        "u": "Si se utiliza un XML Schema para validar el documento XML en lugar de un DTD, se añadirán al elemento raíz los siguientes atributos: … xs:schemaLocation indica la ubicación del fichero XSD.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-59",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En un documento XML, con `xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"`, ¿qué expresa `xsi:schemaLocation`?",
+        "a": [
+          "Pares de URI: un espacio de nombres y una ubicación sugerida del documento de esquema correspondiente.",
+          "La codificación de los caracteres del documento.",
+          "La ubicación de un DTD que sustituye al esquema.",
+          "La versión de XML utilizada por el analizador."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-59",
+        "u": "xs:schemaLocation indica la ubicación del fichero XSD. [p. 19]",
+        "v": 0,
+        "n": "El prefijo xs del PDF es válido porque allí se liga a XMLSchema-instance, pero su valor esquema.xsd aislado omite el par espacio de nombres/ubicación. La ubicación es una sugerencia, no una orden de validación. A: Describe los pares y su naturaleza orientativa. B: La codificación se declara por otro mecanismo. C: schemaLocation no designa un DTD. D: No establece la versión XML."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 19,
+        "quote": "xs:schemaLocation indica la ubicación del fichero XSD.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "Describe los pares y su naturaleza orientativa.",
+        "La codificación se declara por otro mecanismo.",
+        "schemaLocation no designa un DTD.",
+        "No establece la versión XML."
+      ],
+      "primary": [
+        {
+          "url": "https://www.w3.org/TR/xmlschema-1/#xsi_schemaLocation",
+          "checkedAt": "2026-11-06",
+          "assessment": "El prefijo xs del PDF es válido porque allí se liga a XMLSchema-instance, pero su valor esquema.xsd aislado omite el par espacio de nombres/ubicación. La ubicación es una sugerencia, no una orden de validación."
+        }
+      ],
+      "objectiveChange": "Conserva concepto; corrige alcance o precisión de la misma afirmación.",
+      "sourceDiscrepancy": "El prefijo xs del PDF es válido porque allí se liga a XMLSchema-instance, pero su valor esquema.xsd aislado omite el par espacio de nombres/ubicación. La ubicación es una sugerencia, no una orden de validación.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "397dee570fb2bb4f29988d5c2f3f98e1fd2dbed3b9098b4cc8086ea3f72b3450",
+      "afterSha256": "ddf88b8b7b78090ad0e1aa50b2a9da4eb9975360303dd56659b445a11d8435a7",
+      "questionSha256": "340e8d169b91e25be6e5ba6ddb1f3f2fb1490ccd4576b00cdd3efe81bbea9e8c",
+      "typeReview": {
+        "k": "K",
+        "rationale": "Interpretación del fragmento XML con declaración de namespace explícita."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "09effa5fa7fab1de5fc98584c0d6099d43d618be58b59ae95731560139d32fc9",
+      "independentAdjustment": "D→K: interpretación de namespace y atributo XML; autor acepta.",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-89.v2",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-89.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En teoría, los estándares web del W3C deberían permitir que las páginas:",
+        "a": [
+          "No dependan del HTML.",
+          "Se visualicen exactamente igual en todos los navegadores.",
+          "Se visualicen distinto.",
+          "Solo funcionen en un navegador."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-89",
+        "u": "Un navegador web es un programa informático que permite consultar y visualiza páginas web. El navegador interpreta el código, HTML generalmente, en el que está escrita la página web … La comunicación entre servidor web y navegador web se realiza a través del protocolo HTTP, aunque cualquier navegador soporta otros protocolos como HTTPS o FTP.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-89.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿Qué puede afirmarse sobre el aspecto de una página que usa estándares web?",
+        "a": [
+          "Los estándares eliminan la necesidad de HTML.",
+          "Favorecen la interoperabilidad, pero no garantizan una imagen idéntica píxel a píxel en todos los navegadores y configuraciones.",
+          "Obligan a que cada navegador produzca un resultado incompatible.",
+          "Solo permiten utilizar un navegador concreto."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-89",
+        "u": "En teoría, los estándares web publicados por el W3C deberían permitir que las páginas fueran visualizadas exactamente igual en todos los navegadores. [p. 31]",
+        "v": 0,
+        "n": "El propio temario reconoce diferencias a continuación. CSS contempla estilos de autor, usuario y agente; cumplir estándares no impone una única configuración visual. A: HTML sigue siendo parte de la plataforma. B: Distingue interoperabilidad de identidad visual absoluta. C: La incompatibilidad no es el objetivo del estándar. D: No restringe a un producto concreto."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 31,
+        "quote": "En teoría, los estándares web publicados por el W3C deberían permitir que las páginas fueran visualizadas exactamente igual en todos los navegadores.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "HTML sigue siendo parte de la plataforma.",
+        "Distingue interoperabilidad de identidad visual absoluta.",
+        "La incompatibilidad no es el objetivo del estándar.",
+        "No restringe a un producto concreto."
+      ],
+      "primary": [
+        {
+          "url": "https://www.w3.org/TR/CSS2/cascade.html#cascade",
+          "checkedAt": "2026-11-06",
+          "assessment": "El propio temario reconoce diferencias a continuación. CSS contempla estilos de autor, usuario y agente; cumplir estándares no impone una única configuración visual."
+        }
+      ],
+      "objectiveChange": "Conserva concepto; corrige alcance o precisión de la misma afirmación.",
+      "sourceDiscrepancy": "El propio temario reconoce diferencias a continuación. CSS contempla estilos de autor, usuario y agente; cumplir estándares no impone una única configuración visual.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "919eec8e90c820fc823d85d2850b12fec111e5a18f9bb4025fb72016e4557b79",
+      "afterSha256": "c97b6844edfde25f6d5c392000280e9af9d0d4e674efd75be67e4f01b6bf6bc2",
+      "questionSha256": "d28fcef92f93a37949fc2b807bd1c354e7b70af1b55d7632011ae7f30b8ac1f7",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "c97b6844edfde25f6d5c392000280e9af9d0d4e674efd75be67e4f01b6bf6bc2",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-300",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-300",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Las normas del lenguaje HTML están definidas por el:",
+        "a": [
+          "World Wide Web Consortium (W3C).",
+          "ISO.",
+          "IETF.",
+          "OASIS."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-300",
+        "u": "El lenguaje HTML (HyperText Markup Language) es el lenguaje estándar utilizado para la creación de páginas web. Este lenguaje se rige por unas normas definidas por el World Wide Web Consortium (W3C)",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-300",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿Qué organización mantiene el HTML Living Standard en sus repositorios, en el marco de colaboración acordado con W3C en 2019?",
+        "a": [
+          "WHATWG.",
+          "ISO.",
+          "IETF.",
+          "OASIS."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-300",
+        "u": "Este lenguaje se rige por unas normas definidas por el World Wide Web Consortium (W3C) [p. 3]",
+        "v": 0,
+        "n": "La atribución exclusiva del PDF no describe el estándar vivo actual. El acuerdo sitúa el trabajo conjunto en los repositorios WHATWG. A: Mantiene el Living Standard indicado. B: No es el repositorio responsable preguntado. C: No es el repositorio responsable preguntado. D: No es el repositorio responsable preguntado."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 3,
+        "quote": "Este lenguaje se rige por unas normas definidas por el World Wide Web Consortium (W3C)",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "reviewedOptions": [
+        "Mantiene el Living Standard indicado.",
+        "No es el repositorio responsable preguntado.",
+        "No es el repositorio responsable preguntado.",
+        "No es el repositorio responsable preguntado."
+      ],
+      "primary": [
+        {
+          "url": "https://www.w3.org/news/2019/w3c-and-the-whatwg-have-just-signed-an-agreement-to-collaborate-on-the-development-of-a-single-version-of-the-html-and-dom-specifications/",
+          "checkedAt": "2026-11-06",
+          "assessment": "La atribución exclusiva del PDF no describe el estándar vivo actual. El acuerdo sitúa el trabajo conjunto en los repositorios WHATWG."
+        }
+      ],
+      "objectiveChange": "Conserva concepto; corrige alcance o precisión de la misma afirmación.",
+      "sourceDiscrepancy": "La atribución exclusiva del PDF no describe el estándar vivo actual. El acuerdo sitúa el trabajo conjunto en los repositorios WHATWG.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "b5cfa87482262d52e39a4df98f19883878ec2a91ea706760da80fc05266ceecd",
+      "afterSha256": "1c50ded83307b3c657d9243d33f4296238230fbf16fd6b8024ceaadb21160765",
+      "questionSha256": "72d1333d74c7ff5ea1dddb215a0c618106abca6dedc8b0650db3bd2425c18792",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "1c50ded83307b3c657d9243d33f4296238230fbf16fd6b8024ceaadb21160765",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-301.v1",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-301.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El lenguaje HTML se creó en 1980 en el:",
+        "a": [
+          "MIT.",
+          "W3C.",
+          "CERN.",
+          "IBM."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-301",
+        "u": "El lenguaje HTML se crea en 1980 en el CERN como una propuesta para compartir y publicar documentación. … El primer documento con una descripción formal de HTML no aparece hasta 1991, y el primer estándar no aparece hasta 1995 con el nombre de HTML 2.0.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-301.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿En qué organización trabajaba Tim Berners-Lee cuando implementó los primeros componentes de la Web, incluido HTML, en 1990?",
+        "a": [
+          "MIT.",
+          "W3C.",
+          "CERN.",
+          "IBM."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-301",
+        "u": "El lenguaje HTML se crea en 1980 en el CERN como una propuesta para compartir y publicar documentación. [p. 3]",
+        "v": 0,
+        "n": "Se corrige 1980 por 1990, conservando la pregunta por el lugar de origen. CERN documenta la implementación de HTML antes de Navidad de 1990. A: No es la organización de ese desarrollo. B: W3C no es el lugar preguntado. C: Es la organización documentada. D: No es la organización de ese desarrollo."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 3,
+        "quote": "El lenguaje HTML se crea en 1980 en el CERN como una propuesta para compartir y publicar documentación.",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "reviewedOptions": [
+        "No es la organización de ese desarrollo.",
+        "W3C no es el lugar preguntado.",
+        "Es la organización documentada.",
+        "No es la organización de ese desarrollo."
+      ],
+      "primary": [
+        {
+          "url": "https://home.cern/world-wide-web-35/",
+          "checkedAt": "2026-11-06",
+          "assessment": "Se corrige 1980 por 1990, conservando la pregunta por el lugar de origen. CERN documenta la implementación de HTML antes de Navidad de 1990."
+        }
+      ],
+      "objectiveChange": "Mismo objetivo histórico: identificar CERN; se corrige la fecha falsa.",
+      "sourceDiscrepancy": "Se corrige 1980 por 1990, conservando la pregunta por el lugar de origen. CERN documenta la implementación de HTML antes de Navidad de 1990.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "6d52908767b3c27f696044a7888b58701dc346b2a0c8ee6afeb941159f9c50a2",
+      "afterSha256": "997be63b51982185c8e36f4e22a6a929d9872ceb46a5ca2fd663511ba0d33e3f",
+      "questionSha256": "60c52dbb482b058fb93d361f1cf13679aee6b161ba6aae0312dc762d542d1d4e",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "997be63b51982185c8e36f4e22a6a929d9872ceb46a5ca2fd663511ba0d33e3f",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-418.v1",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-418.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Un elemento NO soportado en HTML5, según el temario, es:",
+        "a": [
+          "<b>.",
+          "<em>.",
+          "<u>.",
+          "<i>."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          8,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-418",
+        "u": "<u> Muestra el texto subrayado No soportado en HTML5 … <font> Fuente del texto No soportado en HTML5",
+        "v": 0,
+        "n": "ADVERTENCIA: las cuatro etiquetas propuestas (b, em, u, i) existen en HTML actual; u no es una etiqueta no soportada. El enunciado carece de respuesta única válida. Se conserva la clave original como referencia histórica, sin puntuar.",
+        "np": 1
+      },
+      "after": {
+        "i": "GEN-T3.08-418.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿Qué elemento es obsoleto y no conforme para los autores según HTML Living Standard?",
+        "a": [
+          "<b>.",
+          "<em>.",
+          "<font>.",
+          "<i>."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          4
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-418",
+        "u": "<font> Fuente del texto No soportado en HTML5 [p. 36]",
+        "v": 0,
+        "n": "El PDF marca u incorrectamente como no soportado. Se utiliza font, presente en la misma tabla, y se pregunta conformidad de autor, no capacidad del navegador para dibujarlo. A: b sigue definido. B: em sigue definido. C: font es obsoleto y no conforme para autores. D: i sigue definido."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 36,
+        "quote": "<font> Fuente del texto No soportado en HTML5",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "reviewedOptions": [
+        "b sigue definido.",
+        "em sigue definido.",
+        "font es obsoleto y no conforme para autores.",
+        "i sigue definido."
+      ],
+      "primary": [
+        {
+          "url": "https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features",
+          "checkedAt": "2026-11-06",
+          "assessment": "El PDF marca u incorrectamente como no soportado. Se utiliza font, presente en la misma tabla, y se pregunta conformidad de autor, no capacidad del navegador para dibujarlo."
+        }
+      ],
+      "objectiveChange": "Mismo objetivo (elemento HTML obsoleto), sustituye distractor defectuoso por font en la misma página; no valida la clave original.",
+      "sourceDiscrepancy": "El PDF marca u incorrectamente como no soportado. Se utiliza font, presente en la misma tabla, y se pregunta conformidad de autor, no capacidad del navegador para dibujarlo.",
+      "inSample": false,
+      "sampleCopies": [],
+      "quarantineChange": "Propuesta de retirada de np=1 sólo tras firma independiente de esta reformulación; no aplicado.",
+      "beforeSha256": "6139ade103bfc68e7e6ee7cda08e8260c950f5d59f812392f8995ba67a420a19",
+      "afterSha256": "ebfd26266ecfb70e3af912b116a52b47177813e8a50265eb44f455fa9a6a3e1e",
+      "questionSha256": "c5fd29a8b99cfead6eb9984e0b4d73c48a3beba5f9b6a9fe4fbd1b9d3777bb61",
+      "typeReview": {
+        "k": "I",
+        "rationale": "Selecciona elemento NO conforme."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "ebfd26266ecfb70e3af912b116a52b47177813e8a50265eb44f455fa9a6a3e1e",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-425.v2",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-425.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El atributo kind de <track> puede valer:",
+        "a": [
+          "src, lang o label.",
+          "primary, secondary o alt.",
+          "captions, chapter, descriptions, metadata o subtitles.",
+          "audio, video, image o text."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-425",
+        "u": "<source> Permite especificar archivos alternativos para <picture>, <audio> o <video> que el navegador puede elegir, en función del soporte del navegador o el ancho de la ventana gráfica. … <track> Especifica pistas de texto para elementos <audio> o <video>.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-425.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿Qué lista contiene únicamente valores válidos del atributo kind de track en HTML?",
+        "a": [
+          "src, lang, label.",
+          "primary, secondary, alt.",
+          "captions, chapters, descriptions, metadata, subtitles.",
+          "audio, video, image, text."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-425",
+        "u": "kind: tipo de pista. Valores: captions, chapter, descriptions, metadata o subtitles. [p. 41]",
+        "v": 0,
+        "n": "La errata chapter del PDF debe ser chapters. La pregunta comprueba valores definidos, no si el analizador tolera valores inválidos. A: Son nombres ajenos a esos valores enumerados. B: No son valores de kind. C: Los cinco pertenecen a la enumeración. D: No son valores de kind."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 41,
+        "quote": "kind: tipo de pista. Valores: captions, chapter, descriptions, metadata o subtitles.",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "reviewedOptions": [
+        "Son nombres ajenos a esos valores enumerados.",
+        "No son valores de kind.",
+        "Los cinco pertenecen a la enumeración.",
+        "No son valores de kind."
+      ],
+      "primary": [
+        {
+          "url": "https://html.spec.whatwg.org/multipage/media.html#attr-track-kind",
+          "checkedAt": "2026-11-06",
+          "assessment": "La errata chapter del PDF debe ser chapters. La pregunta comprueba valores definidos, no si el analizador tolera valores inválidos."
+        }
+      ],
+      "objectiveChange": "Conserva concepto; corrige alcance o precisión de la misma afirmación.",
+      "sourceDiscrepancy": "La errata chapter del PDF debe ser chapters. La pregunta comprueba valores definidos, no si el analizador tolera valores inválidos.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "93a53804fbc23981f2b915dc4ebd7eb95fe26a33abaf2107c3b70bf9c0cb36aa",
+      "afterSha256": "402c1e388991895fe7ca46ffe3cf0b36801d0a5f99b002b018fafbd425bff284",
+      "questionSha256": "2675d10b05675c2be5f8b6b488b9dfc67bb7d2a55ac24a3d3e3e2d482ae05bc5",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "402c1e388991895fe7ca46ffe3cf0b36801d0a5f99b002b018fafbd425bff284",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-510.v2",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-510.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El motor WebKit fue desarrollado por el navegador:",
+        "a": [
+          "Konkeror y mejorado por Safari de Apple.",
+          "Internet Explorer y mejorado por Edge.",
+          "Firefox y mejorado por Mozilla.",
+          "Chrome y mejorado por Opera."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-510",
+        "u": "Familia WebKit: basados en el motor de dibujo WebKit, desarrollado por el navegador Konkeror y mejorado por Safari de Apple. … Familia Blink: Opera y Google Chrome utilizan el motor Blink, una bifurcación del proyecto WebKit.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-510.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿De qué bibliotecas del proyecto KDE surgió WebKit como bifurcación?",
+        "a": [
+          "KHTML y KJS.",
+          "Trident y Chakra.",
+          "Gecko y SpiderMonkey.",
+          "Blink y V8."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-510",
+        "u": "Familia WebKit: basados en el motor de dibujo WebKit, desarrollado por el navegador Konkeror y mejorado por Safari de Apple. [p. 5]",
+        "v": 0,
+        "n": "El PDF atribuye el desarrollo al navegador y escribe Konkeror. Se precisa la genealogía: WebKit surgió de KHTML y KJS de KDE. A: Es la genealogía documentada. B: No son sus bibliotecas de origen. C: No son sus bibliotecas de origen. D: Blink es posterior a WebKit, no su origen."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - CSS.pdf",
+        "page": 5,
+        "quote": "Familia WebKit: basados en el motor de dibujo WebKit, desarrollado por el navegador Konkeror y mejorado por Safari de Apple.",
+        "sha256": "f871d3d81529d09b5ee8260e6c78a044df152e0b3a48155f5b54dea41fcf7fee"
+      },
+      "reviewedOptions": [
+        "Es la genealogía documentada.",
+        "No son sus bibliotecas de origen.",
+        "No son sus bibliotecas de origen.",
+        "Blink es posterior a WebKit, no su origen."
+      ],
+      "primary": [
+        {
+          "url": "https://developer.mozilla.org/en-US/docs/Glossary/WebKit",
+          "checkedAt": "2026-11-06",
+          "assessment": "El PDF atribuye el desarrollo al navegador y escribe Konkeror. Se precisa la genealogía: WebKit surgió de KHTML y KJS de KDE."
+        },
+        {
+          "url": "https://github.com/qt/qtwebkit",
+          "checkedAt": "2026-11-06",
+          "assessment": "README del proyecto QtWebKit atribuye el código HTML y JavaScript a ramas de KHTML y KJS de KDE."
+        }
+      ],
+      "objectiveChange": "Mismo objetivo de origen de WebKit; distingue proyecto/bibliotecas de navegador.",
+      "sourceDiscrepancy": "El PDF atribuye el desarrollo al navegador y escribe Konkeror. Se precisa la genealogía: WebKit surgió de KHTML y KJS de KDE.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "4abf5d001b264edf66b50d8e1e5b3a1ba98fd7a6927dafaa5cd5777223c904f9",
+      "afterSha256": "6025d3fa2dacb371a1bc8d80fd60aab959ca181a2d024cd3cee5ced09f9dc5a1",
+      "questionSha256": "53ba7070d8879e4da1988a85a4d2794fa54f3c41ca0c23305d62c895b5707ec3",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "6025d3fa2dacb371a1bc8d80fd60aab959ca181a2d024cd3cee5ced09f9dc5a1",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-577.v1",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-577.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "La propiedad device-width hace referencia a:",
+        "a": [
+          "La resolución del dispositivo.",
+          "El área visible del dispositivo.",
+          "La orientación.",
+          "La densidad de píxeles."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-577",
+        "u": "En este caso estaríamos refiriéndonos a tamaños de pantalla mayores de 600 píxeles. … min-width hace referencia al área visible en el dispositivo, mientras que con device-width hace referencia a la resolución del dispositivo.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-577.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En Media Queries Level 3, para medios continuos, ¿qué mide device-width?",
+        "a": [
+          "El ancho de la pantalla de salida, expresado en unidades CSS de longitud.",
+          "El ancho del viewport de la página, con independencia del ancho de pantalla.",
+          "La orientación vertical u horizontal.",
+          "La densidad de píxeles por unidad de longitud."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-577",
+        "u": "con device-width hace referencia a la resolución del dispositivo. [p. 30]",
+        "v": 0,
+        "n": "El PDF usa resolución de forma imprecisa. device-width mide ancho de pantalla; resolution es densidad. Se evalúa esta característica heredada, no se recomienda para nuevos diseños. A: Es la superficie de salida indicada en medios continuos. B: Describe width, no device-width. C: Corresponde a orientation. D: Corresponde a resolution."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - CSS.pdf",
+        "page": 30,
+        "quote": "con device-width hace referencia a la resolución del dispositivo.",
+        "sha256": "f871d3d81529d09b5ee8260e6c78a044df152e0b3a48155f5b54dea41fcf7fee"
+      },
+      "reviewedOptions": [
+        "Es la superficie de salida indicada en medios continuos.",
+        "Describe width, no device-width.",
+        "Corresponde a orientation.",
+        "Corresponde a resolution."
+      ],
+      "primary": [
+        {
+          "url": "https://www.w3.org/TR/mediaqueries-3/#device-width",
+          "checkedAt": "2026-11-06",
+          "assessment": "El PDF usa resolución de forma imprecisa. device-width mide ancho de pantalla; resolution es densidad. Se evalúa esta característica heredada, no se recomienda para nuevos diseños."
+        }
+      ],
+      "objectiveChange": "Conserva concepto; corrige alcance o precisión de la misma afirmación.",
+      "sourceDiscrepancy": "El PDF usa resolución de forma imprecisa. device-width mide ancho de pantalla; resolution es densidad. Se evalúa esta característica heredada, no se recomienda para nuevos diseños.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "17db3a75be2427665740a1190351d16e2068a91ff0f9c4dadd105c853b783eb1",
+      "afterSha256": "b0ff385bcce6158355b3257b56ae3d1aae47b7048b58a4d46384e2323fd66a76",
+      "questionSha256": "5554bc63faa55d3c53e6bf9e7420c1f5ca2f9dcd234c30467d739630cbdda7e1",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "b0ff385bcce6158355b3257b56ae3d1aae47b7048b58a4d46384e2323fd66a76",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-703.v1",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-703.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "ECMA son las siglas de:",
+        "a": [
+          "European Computer Machinery Agency.",
+          "European Code Management Association.",
+          "Electronic Computer Manufacturers Alliance.",
+          "European Computer Manufacturer Association."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-703",
+        "u": "ECMA es el nombre de la asociación europea de fabricantes de ordenadores (European Computer Manufacturer Association) … Uno de estos es el estándar ECMA-262, que también se conoce como ECMAScript.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-703.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿Cuál era el nombre original de la asociación ECMA, antes de adoptar la denominación Ecma International?",
+        "a": [
+          "European Computer Machinery Agency.",
+          "European Code Management Association.",
+          "Electronic Computer Manufacturers Alliance.",
+          "European Computer Manufacturers Association."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-703",
+        "u": "European Computer Manufacturer Association [p. 4]",
+        "v": 0,
+        "n": "Se corrige Manufacturers en plural y se delimita el nombre histórico, sin atribuirlo como denominación actual. A: No es el nombre histórico. B: No es el nombre histórico. C: No es el nombre histórico. D: Es la denominación original documentada."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - JavaScript.pdf",
+        "page": 4,
+        "quote": "European Computer Manufacturer Association",
+        "sha256": "1c05b0864e61ae0c2424e1f4d955a400e9260ddce455fba99a0337d56988f8cc"
+      },
+      "reviewedOptions": [
+        "No es el nombre histórico.",
+        "No es el nombre histórico.",
+        "No es el nombre histórico.",
+        "Es la denominación original documentada."
+      ],
+      "primary": [
+        {
+          "url": "https://ecma-international.org/history/",
+          "checkedAt": "2026-11-06",
+          "assessment": "Se corrige Manufacturers en plural y se delimita el nombre histórico, sin atribuirlo como denominación actual."
+        }
+      ],
+      "objectiveChange": "La expansión de las siglas es el mismo objetivo; el alcance histórico es inherente al cambio de nombre.",
+      "sourceDiscrepancy": "Se corrige Manufacturers en plural y se delimita el nombre histórico, sin atribuirlo como denominación actual.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "2e62137e16f905eb31a7f7c87690123b64e7dbb6688dc96b84b35fb639a95e61",
+      "afterSha256": "afc5d0b2cd5260cabd719dea2503bbb46b3396691d182204ffdba50b96a8829d",
+      "questionSha256": "256f361ece8e08231ce39199b44f0edd0a99725842415bf4978d3a736c4baf95",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "afc5d0b2cd5260cabd719dea2503bbb46b3396691d182204ffdba50b96a8829d",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-707.v2",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-707.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El nombre en clave de ECMAScript 5 en desarrollo era:",
+        "a": [
+          "Harmony.",
+          "Strict.",
+          "Neptune.",
+          "Babel."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-707",
+        "u": "no fue hasta diciembre del 2009, una década después de la versión anterior, cuando se presentó la siguiente versión del lenguaje: ECMAScript 5. … Esta edición añadió la manera estricta del lenguaje («strict mode»)",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-707.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿Con qué nombre de trabajo se desarrolló la revisión que pasó a denominarse ECMAScript, Fifth Edition?",
+        "a": [
+          "ECMAScript 3.1.",
+          "Strict.",
+          "Neptune.",
+          "Babel."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-707",
+        "u": "A esta versión se la conoce también como Harmony, que es el nombre en clave que se le daba mientras estaba en desarrollo. [p. 4]",
+        "v": 0,
+        "n": "Ecma/GA/2009/051, p.1, identifica expresamente ECMAScript 3.1 como nombre de trabajo anterior de la quinta edición. Distingue Harmony como proyecto para trabajo futuro; el PDF confunde ambos. A: Es el nombre de trabajo documentado. B: Strict mode es una característica, no aquel nombre. C: No es el nombre documentado. D: No es el nombre documentado."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - JavaScript.pdf",
+        "page": 4,
+        "quote": "A esta versión se la conoce también como Harmony, que es el nombre en clave que se le daba mientras estaba en desarrollo.",
+        "sha256": "1c05b0864e61ae0c2424e1f4d955a400e9260ddce455fba99a0337d56988f8cc"
+      },
+      "reviewedOptions": [
+        "Es el nombre de trabajo documentado.",
+        "Strict mode es una característica, no aquel nombre.",
+        "No es el nombre documentado.",
+        "No es el nombre documentado."
+      ],
+      "primary": [
+        {
+          "url": "https://archives.ecma-international.org/2009/GA/ga-2009-051.pdf",
+          "checkedAt": "2026-11-06",
+          "assessment": "Ecma/GA/2009/051, p.1, identifica expresamente ECMAScript 3.1 como nombre de trabajo anterior de la quinta edición. Distingue Harmony como proyecto para trabajo futuro; el PDF confunde ambos."
+        }
+      ],
+      "objectiveChange": "Conserva concepto; corrige alcance o precisión de la misma afirmación.",
+      "sourceDiscrepancy": "Ecma/GA/2009/051, p.1, identifica expresamente ECMAScript 3.1 como nombre de trabajo anterior de la quinta edición. Distingue Harmony como proyecto para trabajo futuro; el PDF confunde ambos.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "921bf12d075d968ebba81ca0956ff6e0c24b24efb0770e5c05b19573298b19da",
+      "afterSha256": "e4003c432a7d0ad755f1ec8049da485db698380a6d883484b65b89865dcdb7a7",
+      "questionSha256": "870f5d4034782cb3a08c20fa4f7cd0e04a6aac88e8c8024ae6fedfaaa395a282",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "e4003c432a7d0ad755f1ec8049da485db698380a6d883484b65b89865dcdb7a7",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-785.v2",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-785.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El comportamiento del evento keyup es:",
+        "a": [
+          "No es soportado en Edge.",
+          "Distinto en Edge y el resto.",
+          "El mismo en todos los navegadores: keyCode es el código interno y charCode no está definido.",
+          "Igual que keypress."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-785",
+        "u": "Evento keydown: Mismo comportamiento en todos los navegadores: Propiedad keyCode: código interno de la tecla. Propiedad charCode: no definido.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-785.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Según la descripción informativa de los atributos heredados de KeyboardEvent en UI Events, ¿qué valor tiene charCode en un evento keyup?",
+        "a": [
+          "El punto de código Unicode de cualquier tecla pulsada.",
+          "Siempre el código ASCII 13.",
+          "0.",
+          "El valor JavaScript undefined."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-785",
+        "u": "Propiedad charCode: no definido. [p. 24]",
+        "v": 0,
+        "n": "La descripción heredada asigna 0 a charCode en keydown/keyup; no significa undefined. El apartado es informativo y charCode está obsoleto: no se afirma uniformidad universal de todos los navegadores. A: La descripción de carácter corresponde a keypress con entrada de carácter. B: No fija 13 para keyup. C: Es el valor de esa descripción para keyup. D: Confunde ausencia de carácter con undefined."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - JavaScript.pdf",
+        "page": 24,
+        "quote": "Propiedad charCode: no definido.",
+        "sha256": "1c05b0864e61ae0c2424e1f4d955a400e9260ddce455fba99a0337d56988f8cc"
+      },
+      "reviewedOptions": [
+        "La descripción de carácter corresponde a keypress con entrada de carácter.",
+        "No fija 13 para keyup.",
+        "Es el valor de esa descripción para keyup.",
+        "Confunde ausencia de carácter con undefined."
+      ],
+      "primary": [
+        {
+          "url": "https://www.w3.org/TR/uievents/#legacy-key-attributes",
+          "checkedAt": "2026-11-06",
+          "assessment": "La descripción heredada asigna 0 a charCode en keydown/keyup; no significa undefined. El apartado es informativo y charCode está obsoleto: no se afirma uniformidad universal de todos los navegadores."
+        }
+      ],
+      "objectiveChange": "Mismo evento y propiedad; acota la fuente heredada para evitar una garantía universal.",
+      "sourceDiscrepancy": "La descripción heredada asigna 0 a charCode en keydown/keyup; no significa undefined. El apartado es informativo y charCode está obsoleto: no se afirma uniformidad universal de todos los navegadores.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "42f9a881360210061bcb4a60be72be23b1db7578933cd806e42791dd26066ab6",
+      "afterSha256": "592ad02a442136cbe7999c950f121ca8818e296e334e2c53af589560ab1b6cf1",
+      "questionSha256": "ddf79dca280800459cc84dff51c892c346b343ff295c7011fc851b581ff8dc94",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "592ad02a442136cbe7999c950f121ca8818e296e334e2c53af589560ab1b6cf1",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-786.v1",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-786.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En keypress, en el resto de navegadores, para teclas normales keyCode:",
+        "a": [
+          "Es el código interno.",
+          "Es el código del carácter.",
+          "No está definido.",
+          "Vale 0."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-786",
+        "u": "Resto de navegadores: Propiedad keyCode: para las teclas normales, no definido. Para las teclas especiales, el código interno de la tecla. Propiedad charCode: para las teclas normales, el código del carácter de la tecla que se ha pulsado. Para las teclas especiales, 0.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-786.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿Por qué no es portable afirmar que keyCode vale undefined en cualquier keypress de una tecla imprimible en todos los navegadores distintos de Edge?",
+        "a": [
+          "Porque keyCode siempre devuelve una cadena con el nombre de la tecla.",
+          "Porque todos esos navegadores garantizan exactamente el mismo código para cualquier distribución de teclado.",
+          "Porque keyCode es una propiedad numérica heredada cuyo comportamiento depende de la implementación; algunos modelos comunican códigos de carácter en ella.",
+          "Porque keypress no ha existido nunca."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-786",
+        "u": "Propiedad keyCode: para las teclas normales, no definido. Para las teclas especiales, el código interno de la tecla. [p. 24]",
+        "v": 0,
+        "n": "La clasificación resto de navegadores del PDF no define versiones ni un modelo único. UI Events describe modelos heredados diferentes; no sustenta undefined universal. A: keyCode es numérica, no una cadena con el nombre. B: Los modelos y entornos no garantizan esa uniformidad. C: Explica el defecto de la afirmación original sin imponer otro valor universal. D: keypress existe como evento heredado."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - JavaScript.pdf",
+        "page": 24,
+        "quote": "Propiedad keyCode: para las teclas normales, no definido. Para las teclas especiales, el código interno de la tecla.",
+        "sha256": "1c05b0864e61ae0c2424e1f4d955a400e9260ddce455fba99a0337d56988f8cc"
+      },
+      "reviewedOptions": [
+        "keyCode es numérica, no una cadena con el nombre.",
+        "Los modelos y entornos no garantizan esa uniformidad.",
+        "Explica el defecto de la afirmación original sin imponer otro valor universal.",
+        "keypress existe como evento heredado."
+      ],
+      "primary": [
+        {
+          "url": "https://www.w3.org/TR/uievents/#legacy-key-models",
+          "checkedAt": "2026-11-06",
+          "assessment": "La clasificación resto de navegadores del PDF no define versiones ni un modelo único. UI Events describe modelos heredados diferentes; no sustenta undefined universal."
+        }
+      ],
+      "objectiveChange": "Conserva el problema de compatibilidad keypress/keyCode; sustituye una pseudoregla universal por la variación documentada.",
+      "sourceDiscrepancy": "La clasificación resto de navegadores del PDF no define versiones ni un modelo único. UI Events describe modelos heredados diferentes; no sustenta undefined universal.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "5f2b8a7371ff945a542384a1da5c5990126ee18c525dc78dc2fa92744dbfcdf0",
+      "afterSha256": "c3a2a62554ad74737448de894a03499f57f84a877fc98ca2a4465103e4a0a915",
+      "questionSha256": "3d14f43fef528a49caca2c976718486ece946d5158b526281c7b8adb8ac15c36",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "c3a2a62554ad74737448de894a03499f57f84a877fc98ca2a4465103e4a0a915",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    },
+    {
+      "id": "GEN-T3.08-1302.v1",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-1302.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Ruby es un lenguaje de código abierto bajo:",
+        "a": [
+          "Licencia Python Software Foundation.",
+          "Licencia BSD.",
+          "Licencia GPL v2 exclusivamente.",
+          "Licencia Ruby de la Free Software Foundation."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1302",
+        "u": "Es dinámicamente tipado, es decir, no es necesario definir cierto tipo de variables, sino que el lenguaje lo va a interpretar por nosotros. … Es un lenguaje de código abierto bajo Licencia Ruby de la Free Software Foundation.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1302.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Según el archivo oficial de licencia de Ruby, ¿qué alternativas se ofrecen para redistribuir o modificar Ruby, sin perjuicio de los componentes con condiciones propias?",
+        "a": [
+          "Únicamente Python Software Foundation License.",
+          "Únicamente BSD de dos cláusulas, sin alternativa.",
+          "Únicamente GPL v2.",
+          "BSD de dos cláusulas o las condiciones de la licencia Ruby indicadas en ese archivo."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1302",
+        "u": "Es un lenguaje de código abierto bajo Licencia Ruby de la Free Software Foundation. [p. 3]",
+        "v": 0,
+        "n": "El archivo oficial atribuye el copyright a Yukihiro Matsumoto y ofrece BSD de dos cláusulas o sus condiciones Ruby; el PDF atribuye indebidamente la licencia a FSF. El archivo exceptúa componentes con condiciones propias. A: No es la licencia indicada. B: Omite la alternativa Ruby y por eso es falsa. C: No describe las alternativas actuales indicadas. D: Recoge ambas alternativas con la salvedad del enunciado."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - Ruby.pdf",
+        "page": 3,
+        "quote": "Es un lenguaje de código abierto bajo Licencia Ruby de la Free Software Foundation.",
+        "sha256": "fbe6f76b90a113b58fad5c55666315bb3376145e070b352b718cec6fd1d4871f"
+      },
+      "reviewedOptions": [
+        "No es la licencia indicada.",
+        "Omite la alternativa Ruby y por eso es falsa.",
+        "No describe las alternativas actuales indicadas.",
+        "Recoge ambas alternativas con la salvedad del enunciado."
+      ],
+      "primary": [
+        {
+          "url": "https://www.ruby-lang.org/en/about/license.txt",
+          "checkedAt": "2026-11-06",
+          "assessment": "El archivo oficial atribuye el copyright a Yukihiro Matsumoto y ofrece BSD de dos cláusulas o sus condiciones Ruby; el PDF atribuye indebidamente la licencia a FSF. El archivo exceptúa componentes con condiciones propias."
+        }
+      ],
+      "objectiveChange": "Conserva concepto; corrige alcance o precisión de la misma afirmación.",
+      "sourceDiscrepancy": "El archivo oficial atribuye el copyright a Yukihiro Matsumoto y ofrece BSD de dos cláusulas o sus condiciones Ruby; el PDF atribuye indebidamente la licencia a FSF. El archivo exceptúa componentes con condiciones propias.",
+      "inSample": false,
+      "sampleCopies": [],
+      "beforeSha256": "8ddeec2035ea5c02423b87435d257d0cb18f4dc74dccc78ee15f8c010a657a31",
+      "afterSha256": "6367b921a99ca0c847d7d099c3c717f669b93ed6b5d9dea372860d5daa5b4050",
+      "questionSha256": "e28467d73c0a8a91c517619a0e803b8957fa208a25dadf1377a4cf3a4d8612de",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado, alcance o procedencia; no ejecuta código."
+      },
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "sourceAfterSha256": "6367b921a99ca0c847d7d099c3c717f669b93ed6b5d9dea372860d5daa5b4050",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "scope": "Cuatro alternativas/racionales, cita física/hash, beforeactual, primarias.3IDs con controles reales en2motores; demás documental."
+      }
+    }
+  ],
+  "files": {
+    "T3.08.json": {
+      "beforeSha256": "308f6f6495843bc06aa3f163aeac62215ce02993d12442d6da093bc074d3b331",
+      "afterSha256": "07a31683ae98d723e07be68ab566c475a1d7a28c64b49825b42d6cb1709a78cf"
+    },
+    "meta.json": {
+      "beforeSha256": "9b953bdd6e77d8107cc79f501195ee49b3320cc686d441397b4f2ad850abe181",
+      "afterSha256": "e5c25be4225120225e770d3d1968504edffc3bec41879ce5af47e5fb91683e24"
+    }
+  },
+  "metadataEdits": [
+    {
+      "id": "GEN-T3.08-06",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "a899db862df8ce50d63ce2923d87f5c2d76b16ae725fbf9e7bdde7e64f7416b9",
+      "afterSha256": "35ee53432c15604d854c510a9dc948cfd8a5bc7e2a95cde9e46922c729174eaa"
+    },
+    {
+      "id": "GEN-T3.08-16",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          8,
+          12
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          8,
+          12
+        ],
+        3
+      ],
+      "beforeSha256": "b8e382c8070b8ec02643ba617240e70c95805f45e2e847ec0cf66dafabfe5f92",
+      "afterSha256": "fd413d2ebf0ece38e36d6fc3a8745b550b17c957a204a7417f584b206b17cdf4"
+    },
+    {
+      "id": "GEN-T3.08-16.v2",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          8,
+          12
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          8,
+          12
+        ],
+        3
+      ],
+      "beforeSha256": "b8e382c8070b8ec02643ba617240e70c95805f45e2e847ec0cf66dafabfe5f92",
+      "afterSha256": "fd413d2ebf0ece38e36d6fc3a8745b550b17c957a204a7417f584b206b17cdf4"
+    },
+    {
+      "id": "GEN-T3.08-21",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          8,
+          7
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          8,
+          7
+        ],
+        3
+      ],
+      "beforeSha256": "5bf22aef68ac26ae4f6d62c03efc74caba5a6b1d8215166305f52369a83aff8c",
+      "afterSha256": "99a27b45076f43264da661a0b4f535e48dd490c1a2040e75d6164ca9927270df"
+    },
+    {
+      "id": "GEN-T3.08-40.v1",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "a899db862df8ce50d63ce2923d87f5c2d76b16ae725fbf9e7bdde7e64f7416b9",
+      "afterSha256": "35ee53432c15604d854c510a9dc948cfd8a5bc7e2a95cde9e46922c729174eaa"
+    },
+    {
+      "id": "GEN-T3.08-41",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          8,
+          12
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          8,
+          12
+        ],
+        3
+      ],
+      "beforeSha256": "b8e382c8070b8ec02643ba617240e70c95805f45e2e847ec0cf66dafabfe5f92",
+      "afterSha256": "fd413d2ebf0ece38e36d6fc3a8745b550b17c957a204a7417f584b206b17cdf4"
+    },
+    {
+      "id": "GEN-T3.08-41.v2",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          8,
+          12
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          8,
+          12
+        ],
+        3
+      ],
+      "beforeSha256": "b8e382c8070b8ec02643ba617240e70c95805f45e2e847ec0cf66dafabfe5f92",
+      "afterSha256": "fd413d2ebf0ece38e36d6fc3a8745b550b17c957a204a7417f584b206b17cdf4"
+    },
+    {
+      "id": "GEN-T3.08-42.v1",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          8,
+          7
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          8,
+          7
+        ],
+        3
+      ],
+      "beforeSha256": "5bf22aef68ac26ae4f6d62c03efc74caba5a6b1d8215166305f52369a83aff8c",
+      "afterSha256": "99a27b45076f43264da661a0b4f535e48dd490c1a2040e75d6164ca9927270df"
+    },
+    {
+      "id": "GEN-T3.08-52.v1",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "K",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "a899db862df8ce50d63ce2923d87f5c2d76b16ae725fbf9e7bdde7e64f7416b9",
+      "afterSha256": "97687e5f252816edcd627d6855e62286e400f88896e30c7a5169cece096afcf9"
+    },
+    {
+      "id": "GEN-T3.08-59",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "K",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "a899db862df8ce50d63ce2923d87f5c2d76b16ae725fbf9e7bdde7e64f7416b9",
+      "afterSha256": "97687e5f252816edcd627d6855e62286e400f88896e30c7a5169cece096afcf9"
+    },
+    {
+      "id": "GEN-T3.08-89.v2",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        2
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        2
+      ],
+      "beforeSha256": "e7cad5654e78cb253f78449f58f6af5772ccc4a4166d87cc9d7109ce92cb1424",
+      "afterSha256": "f28873777dda1d49e065d071397c0b0bed05c008864b83a35f66c72a1a1abdc7"
+    },
+    {
+      "id": "GEN-T3.08-300",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        2
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        2
+      ],
+      "beforeSha256": "e7cad5654e78cb253f78449f58f6af5772ccc4a4166d87cc9d7109ce92cb1424",
+      "afterSha256": "f28873777dda1d49e065d071397c0b0bed05c008864b83a35f66c72a1a1abdc7"
+    },
+    {
+      "id": "GEN-T3.08-301.v1",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          8,
+          7
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          8,
+          7
+        ],
+        3
+      ],
+      "beforeSha256": "5bf22aef68ac26ae4f6d62c03efc74caba5a6b1d8215166305f52369a83aff8c",
+      "afterSha256": "99a27b45076f43264da661a0b4f535e48dd490c1a2040e75d6164ca9927270df"
+    },
+    {
+      "id": "GEN-T3.08-425.v2",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "K",
+        [
+          8,
+          7
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          8,
+          7
+        ],
+        3
+      ],
+      "beforeSha256": "4bd61672e0d5aed410d08067ba95c8ff13008145b25b3d7fc86d94d5a4742d4d",
+      "afterSha256": "99a27b45076f43264da661a0b4f535e48dd490c1a2040e75d6164ca9927270df"
+    },
+    {
+      "id": "GEN-T3.08-510.v2",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "a899db862df8ce50d63ce2923d87f5c2d76b16ae725fbf9e7bdde7e64f7416b9",
+      "afterSha256": "35ee53432c15604d854c510a9dc948cfd8a5bc7e2a95cde9e46922c729174eaa"
+    },
+    {
+      "id": "GEN-T3.08-577.v1",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8,
+          9
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8,
+          9
+        ],
+        3
+      ],
+      "beforeSha256": "3442c1ae7a799e2fdbb007f6b9787ac9d2be3cd35a0f6a7d02a7593db2235ba1",
+      "afterSha256": "53bd60377d23b68dffb200071845c0fe0c11f1dd96ad3a9fa6aa0e49c71b1607"
+    },
+    {
+      "id": "GEN-T3.08-703.v1",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "a899db862df8ce50d63ce2923d87f5c2d76b16ae725fbf9e7bdde7e64f7416b9",
+      "afterSha256": "35ee53432c15604d854c510a9dc948cfd8a5bc7e2a95cde9e46922c729174eaa"
+    },
+    {
+      "id": "GEN-T3.08-707.v2",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "a899db862df8ce50d63ce2923d87f5c2d76b16ae725fbf9e7bdde7e64f7416b9",
+      "afterSha256": "35ee53432c15604d854c510a9dc948cfd8a5bc7e2a95cde9e46922c729174eaa"
+    },
+    {
+      "id": "GEN-T3.08-785.v2",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8,
+          9
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8,
+          9
+        ],
+        3
+      ],
+      "beforeSha256": "3442c1ae7a799e2fdbb007f6b9787ac9d2be3cd35a0f6a7d02a7593db2235ba1",
+      "afterSha256": "53bd60377d23b68dffb200071845c0fe0c11f1dd96ad3a9fa6aa0e49c71b1607"
+    },
+    {
+      "id": "GEN-T3.08-786.v1",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8,
+          9
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8,
+          9
+        ],
+        3
+      ],
+      "beforeSha256": "3442c1ae7a799e2fdbb007f6b9787ac9d2be3cd35a0f6a7d02a7593db2235ba1",
+      "afterSha256": "53bd60377d23b68dffb200071845c0fe0c11f1dd96ad3a9fa6aa0e49c71b1607"
+    },
+    {
+      "id": "GEN-T3.08-1302.v1",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8,
+          9
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8,
+          9
+        ],
+        3
+      ],
+      "beforeSha256": "3442c1ae7a799e2fdbb007f6b9787ac9d2be3cd35a0f6a7d02a7593db2235ba1",
+      "afterSha256": "53bd60377d23b68dffb200071845c0fe0c11f1dd96ad3a9fa6aa0e49c71b1607"
+    }
+  ],
+  "sampleFiles": {},
+  "held": [
+    {
+      "id": "GEN-T3.08-503.v1",
+      "status": "held-not-applied",
+      "before": {
+        "i": "GEN-T3.08-503.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "CSS3 empezó a desarrollarse en:",
+        "a": [
+          "1998.",
+          "2005.",
+          "1996.",
+          "2011."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-503",
+        "u": "La tercera revisión, CSS3, empezó en 2005 y, actualmente, sigue publicando actualizaciones. … Hay más de 50 módulos, cada uno con un estatus diferente",
+        "v": 0
+      },
+      "reason": "2005 es insostenible: W3C publicó Paged Media Properties for CSS3 el 22-06-1999. Este hito prueba anterioridad pero no el instante preciso en que empezó el desarrollo. No se reemplaza una pregunta de inicio por otra sobre fecha de publicación para salvar el ID.",
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - CSS.pdf",
+        "page": 4,
+        "quote": "La tercera revisión, CSS3, empezó en 2005 y, actualmente, sigue publicando actualizaciones.",
+        "sha256": "f871d3d81529d09b5ee8260e6c78a044df152e0b3a48155f5b54dea41fcf7fee"
+      },
+      "primary": [
+        {
+          "url": "https://www.w3.org/1999/06/WD-css3-page-19990623",
+          "checkedAt": "2026-11-06"
+        }
+      ],
+      "reviewedOptions": [
+        "1998 no queda probado como inicio por el borrador de 1999.",
+        "2005 contradice el borrador existente de 1999.",
+        "1996 no queda probado como inicio de CSS3.",
+        "2011 contradice el borrador de 1999."
+      ],
+      "beforeSha256": "dffb94fdabb4b984b821a42ca754350d1d96661f478a0157c27e2d40b3bc565f",
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "inSample": false,
+      "sampleCopies": []
+    },
+    {
+      "id": "AS10-P1-48",
+      "status": "held-not-applied",
+      "before": {
+        "i": "AS10-P1-48",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Señale la afirmación correcta:",
+        "a": [
+          "Tanto PHP como JavaScript son lenguajes que se pueden ejecutar en el lado del servidor o en el lado del cliente.",
+          "El lenguaje PHP genera únicamente código HTML.",
+          "El lenguaje PHP sólo puede ser ejecutado en el lado del servidor.",
+          "El analizador PHP sólo puede instalarse y ejecutarse en servidores Linux o Unix."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Se conserva la retención previa: PHP no está limitado a servidores web y JavaScript puede ejecutarse en ambos lados. Cliente no está definido con precisión; no se sustituye este contraste por una pregunta distinta sobre CLI.",
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 3,
+        "quote": "el código es ejecutado en el servidor, generando el HTML y enviándolo al cliente.",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "primary": [
+        {
+          "url": "https://www.php.net/manual/en/features.commandline.php",
+          "checkedAt": "2026-11-06"
+        }
+      ],
+      "reviewedOptions": [
+        "La amplitud de cliente/servidor impide descartarla universalmente sin definir entorno.",
+        "PHP puede generar otras salidas, no sólo HTML.",
+        "La CLI es un contraejemplo a sólo servidor.",
+        "PHP no está limitado a Linux/Unix."
+      ],
+      "beforeSha256": "bb23339aae5492c6f7556085bb2a2ad52f263e07e729814757fc8043e7489427",
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "inSample": false,
+      "sampleCopies": []
+    },
+    {
+      "id": "P2019-P1-25",
+      "status": "held-not-applied",
+      "before": {
+        "i": "P2019-P1-25",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Indique cuáles de las siguientes etiquetas NO fueron introducidas como novedad en HTML5.",
+        "a": [
+          "<footer> y <details>",
+          "<header> y <nav>",
+          "<details> y <mark>",
+          "<caption> y <nav>"
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Etiquetas que no son nuevas en HTML5 (pares).",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Procedencia oficial: no se reescribe ni cambia la clave canónica sin cotejo concluyente del cuaderno y plantilla. En la versión del banco ninguna pareja está formada sólo por etiquetas pre-HTML5; investigar posible transcripción/errata o anulación. Propuesta de mitigación separada: cuarentena explicativa, nunca presentar C como verdad técnica.",
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 3,
+        "quote": "En ella se incorporan nuevas etiquetas y atributos",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "primary": [
+        {
+          "url": "https://www.w3.org/TR/html5-diff/",
+          "checkedAt": "2026-11-06"
+        }
+      ],
+      "reviewedOptions": [
+        "footer y details son incorporaciones HTML5.",
+        "header y nav son incorporaciones HTML5.",
+        "details y mark son incorporaciones HTML5, por lo que C no responde a NO.",
+        "caption es anterior, pero nav es nuevo: la pareja no cumple ambas anteriores."
+      ],
+      "beforeSha256": "6d7281c991e97b2c3cc672a535efb39eab5bb161f8148830a8178e1c043cbd68",
+      "sourceValidation": {
+        "pdfHash": true,
+        "literalPageQuote": true,
+        "method": "Fresh pdftotext -layout single page; whitespace normalized only. Primary discrepancy is explicit; quote is provenance, not factual endorsement."
+      },
+      "inSample": false,
+      "sampleCopies": []
+    }
+  ],
+  "separateMitigations": [],
+  "implementation": {
+    "prior300Unchanged": true,
+    "firestoreWrites": 0
+  }
+}

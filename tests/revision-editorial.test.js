@@ -1,6 +1,10 @@
-import { it, expect, beforeEach } from 'vitest';
+import { it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { applyEditorialScoring, isQuestionEditoriallyQuarantined } from '../src/core/domain/question-review-overrides.js';
+import { webcrypto } from 'node:crypto';
+import { verifyQuestionContent } from '../src/adapters/http/question-content-verification.js';
+import { hasApprovedQuestionContent } from '../src/core/domain/question-content-proof.js';
+afterEach(()=>vi.unstubAllGlobals());
+import { applyEditorialScoring, isQuestionEditoriallyQuarantined, questionReviewOverride } from '../src/core/domain/question-review-overrides.js';
 import { questionNotice } from '../src/shared/presentation/study-content.js';
 import { filterScoringQuestions } from '../src/core/domain/selection.js';
 const load = f => JSON.parse(readFileSync(`public/data/${f}`, 'utf8'));
@@ -30,9 +34,16 @@ it('marcar el temario como repasado no cambia el día de actividad de la pregunt
   expect(r[12]).toBeGreaterThan(t0);
 });
 
-it('las cuatro preguntas ambiguas advierten del problema y no puntúan', () => {
+it('las tres preguntas todavía ambiguas y la versión HTML antigua no puntúan; sólo la reparación exacta se activa', async () => {
  for(const [f,id] of [['T3.09.json','AT309-P1-12'],['T3.03.json','GEN-T3.03-48'],['T3.03.json','GEN-T3.03-48.v1'],['T3.08.json','GEN-T3.08-418.v1']]) {
-  const q=by(f,id); expect(q.n?.length,id).toBeGreaterThan(40); expect(q.np,id).toBe(1);
+  const q=by(f,id); expect(q.n?.length,id).toBeGreaterThan(40);
+ if(id==='GEN-T3.08-418.v1'){
+  const entry=JSON.parse(readFileSync('scripts/bank-editorial/reviewed-web23.json','utf8')).questions.find(q=>q.id===id);
+  expect(q).toEqual(entry.after); expect(entry.before.np).toBe(1);
+  vi.stubGlobal('crypto',webcrypto);
+  expect(applyEditorialScoring(await verifyQuestionContent(entry.before)).np).toBe(1);
+  const approved=await verifyQuestionContent(q);expect(hasApprovedQuestionContent(approved)).toBe(true);expect(applyEditorialScoring(approved).np).not.toBe(1);
+ }else expect(q.np,id).toBe(1);
  }
 });
 
@@ -200,19 +211,19 @@ it.each([
 });
 
 
-it('exige prueba de contenido para las 282 nuevas correcciones factuales', () => {
+it('exige prueba de contenido para las 322 nuevas correcciones factuales', () => {
  const previous = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-19.json', 'utf8')).questions;
  const followup = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-followup.json', 'utf8')).questions.filter(q => q.priority === 'P0');
  const wave2 = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-wave2.json', 'utf8')).questions.filter(q => q.after.np !== 1);
  const admin = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-admin20.json', 'utf8')).questions;
  const legal = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-legal19.json', 'utf8')).questions;
  const programming = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-programming20.json', 'utf8')).questions;
- const following = ['reviewed-web25','reviewed-architecture20'].flatMap(name=>JSON.parse(readFileSync('scripts/bank-editorial/'+name+'.json','utf8')).questions);
+ const following = ['reviewed-web25','reviewed-architecture20','reviewed-languages17','reviewed-web23'].flatMap(name=>JSON.parse(readFileSync('scripts/bank-editorial/'+name+'.json','utf8')).questions);
  const entries = [...previous, ...followup, ...wave2, ...admin, ...legal, ...programming, ...following];
- expect(entries).toHaveLength(282);
+ expect(entries).toHaveLength(322);
  for (const entry of entries) {
   for (const version of [entry.before, entry.after]) {
-   expect(isQuestionEditoriallyQuarantined(version.i), version.i).toBe(true);
+   expect(questionReviewOverride(version.i), version.i).toBeDefined();
    const safe = applyEditorialScoring(version);
    expect(safe.np).toBe(1);
    expect(filterScoringQuestions([safe], false, q => q.np)).toEqual([]);
