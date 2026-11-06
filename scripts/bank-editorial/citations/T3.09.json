@@ -1,0 +1,2607 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T3.09",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "5509df1e1156cfe32f8b9452f134a794f277205c145b91eb4eacc976d97765cf",
+    "afterSha256": "b1549400ba9c21d249c969fc3ab2bb9bf6a60fac2f65325a828c772bf3dd3632"
+  },
+  "sample": {
+    "beforeSha256": "dcce5a573a70495c20aca58fa5ffe8388e6631cc61de43068fc449cd35035e7a",
+    "afterSha256": "dcce5a573a70495c20aca58fa5ffe8388e6631cc61de43068fc449cd35035e7a"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-AT309-P1-17": {
+      "path": "T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Temario.pdf",
+      "sourceHash": "0539d2f33ba827890a48a438cbb574e3beddf60dbff135d65bdf023737471146",
+      "physicalPage": 28,
+      "printedPage": 28,
+      "excerpt": "11. Normativa sobre accesibilidad El Real Decreto 1112/2018, de 7 de septiembre, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público1 traspone al ordenamiento jurídico español la Directiva (UE) 2016/2102 del Parlamento Europeo y del Consejo, de 26 de octubre de 2016, sobre la accesibilidad de los sitios web y aplicaciones para dispositivos móviles de los organismos del sector público.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT309-P1-18": {
+      "path": "T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Temario.pdf",
+      "sourceHash": "0539d2f33ba827890a48a438cbb574e3beddf60dbff135d65bdf023737471146",
+      "physicalPage": 28,
+      "printedPage": 28,
+      "excerpt": "- La inclusión de las aplicaciones móviles desarrolladas por las Administraciones Públicas que deberán ser accesibles antes del 23 de junio de 2021. - La inclusión de intranets o extranets nuevas o que se renueven sustancialmente a partir del 23/09/2019. - En cada portal y aplicación móvil deberá existir una declaración de accesibilidad, según el modelo establecido a nivel europeo en la Decisión de Ejecución (UE) 2018/1523 de la Comisión por la que se establece un modelo de declaración de accesibilidad de conformidad con la Directiva (UE) 2016/2102.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT309-P1-19": {
+      "path": "T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Temario.pdf",
+      "sourceHash": "0539d2f33ba827890a48a438cbb574e3beddf60dbff135d65bdf023737471146",
+      "physicalPage": 49,
+      "printedPage": 49,
+      "excerpt": "PRINCIPIO 5 Con tolerancia al error: El diseño minimiza los riesgos y las consecuencias adversas de acciones involuntarias o accidentales. Pautas: - Que disponga los elementos para minimizar los riesgos y errores: elementos más usados, más accesibles; y los elementos peligrosos eliminados, aislados o tapados. - Que proporcione advertencias sobre peligros y errores. - Que proporcione características seguras de interrupción. - Que desaliente acciones inconscientes en tareas que requieren vigilancia.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT309-P1-20": {
+      "path": "T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Temario.pdf",
+      "sourceHash": "0539d2f33ba827890a48a438cbb574e3beddf60dbff135d65bdf023737471146",
+      "physicalPage": 50,
+      "printedPage": 50,
+      "excerpt": "La Organización Internacional para la Estandarización (ISO) ofrece dos definiciones de usabilidad: ISO/IEC 9126: La usabilidad se refiere a la capacidad de un software de ser comprendido, aprendido, usado y ser atractivo para el usuario, en condiciones específicas de uso.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT309-P1-21": {
+      "path": "T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Temario.pdf",
+      "sourceHash": "0539d2f33ba827890a48a438cbb574e3beddf60dbff135d65bdf023737471146",
+      "physicalPage": 54,
+      "printedPage": 54,
+      "excerpt": "Las normas de AENOR (Asociación Española de Normalización y Certificación), el organismo de normalización reconocido oficialmente, más relevantes en el campo de la accesibilidad TIC son las siguientes: - UNE 139801:2003, la norma española de accesibilidad al hardware. Define los requisitos que debe cumplir un ordenador personal para que sea accesible para las personas con diversidad funcional.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT309-P1-30": {
+      "path": "T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Temario.pdf",
+      "sourceHash": "0539d2f33ba827890a48a438cbb574e3beddf60dbff135d65bdf023737471146",
+      "physicalPage": 5,
+      "printedPage": 5,
+      "excerpt": "WCAG 2.1 es un estándar que se compone de: - 4 principios: perceptible, operable, comprensible y robusto. Cada principio se compone de un número de pautas. - 13 pautas, cada una de las cuales agrupan criterios de conformidad. - 78 criterios de conformidad, que se pueden comprobar, cada uno de los cuales se clasifica en uno de los tres niveles: A, AA y AAA. - Técnicas suficientes. - Técnicas recomendables.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS09-P1-71": {
+      "path": "T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Temario.pdf",
+      "sourceHash": "0539d2f33ba827890a48a438cbb574e3beddf60dbff135d65bdf023737471146",
+      "physicalPage": 28,
+      "printedPage": 28,
+      "excerpt": "A los efectos de este real decreto se entiende por ACCESIBILIDAD el conjunto de principios y técnicas que se deben respetar al diseñar, construir, mantener y actualizar los sitios web y las aplicaciones para dispositivos móviles para garantizar la igualdad y la no discriminación en el acceso de las personas usuarias, en particular de las personas con discapacidad y de las personas mayores (art. 1.2 RD 1112/2018).",
+      "label": "Pasaje del temario"
+    },
+    "e-AS10-P1-69": {
+      "path": "T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Temario.pdf",
+      "sourceHash": "0539d2f33ba827890a48a438cbb574e3beddf60dbff135d65bdf023737471146",
+      "physicalPage": 52,
+      "printedPage": 52,
+      "excerpt": "Ley de Hick Esta ley, relacionada con la usabilidad y la experiencia de usuario, enuncia que el tiempo que se tarda en adoptar una decisión, aumenta a medida que se incrementa el número y la complejidad de las opciones.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS10-P1-73": {
+      "path": "T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Temario.pdf",
+      "sourceHash": "0539d2f33ba827890a48a438cbb574e3beddf60dbff135d65bdf023737471146",
+      "physicalPage": 34,
+      "printedPage": 34,
+      "excerpt": "La accesibilidad se tendrá presente de forma integral en el proceso de diseño, gestión, mantenimiento y actualización de contenidos de los sitios web y las aplicaciones para dispositivos móviles (art. 5.2 RD 1112/2018).",
+      "label": "Pasaje del temario"
+    },
+    "e-AS11B-P1-77": {
+      "path": "T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Temario.pdf",
+      "sourceHash": "0539d2f33ba827890a48a438cbb574e3beddf60dbff135d65bdf023737471146",
+      "physicalPage": 6,
+      "printedPage": 6,
+      "excerpt": "WCAG 2.2 se compone de: - 4 principios: perceptible, operable, comprensible y robusto (POCR). Cada principio se compone de un número de pautas. - 13 pautas, cada una de las cuales agrupan criterios de conformidad. - 86 criterios de conformidad, que se pueden comprobar, cada uno de los cuales se clasifica en uno de los tres niveles: A, AA y AAA. - Técnicas suficientes. - Técnicas recomendables.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS12-P1-60": {
+      "path": "T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Temario.pdf",
+      "sourceHash": "0539d2f33ba827890a48a438cbb574e3beddf60dbff135d65bdf023737471146",
+      "physicalPage": 28,
+      "printedPage": 28,
+      "excerpt": "11. Normativa sobre accesibilidad El Real Decreto 1112/2018, de 7 de septiembre, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público1 traspone al ordenamiento jurídico español la Directiva (UE) 2016/2102 del Parlamento Europeo y del Consejo, de 26 de octubre de 2016, sobre la accesibilidad de los sitios web y aplicaciones para dispositivos móviles de los organismos del sector público.",
+      "label": "Pasaje del temario"
+    }
+  },
+  "questions": [
+    {
+      "id": "AT309-P1-17",
+      "before": {
+        "i": "AT309-P1-17",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Qué norma española legisla sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público?",
+        "a": [
+          "Real Decreto 1112/2018.",
+          "Real Decreto 1112/2019.",
+          "Real Decreto 1121/2018.",
+          "Real Decreto 1121/2019."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT309-P1-17",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Qué norma española legisla sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público?",
+        "a": [
+          "Real Decreto 1112/2018.",
+          "Real Decreto 1112/2019.",
+          "Real Decreto 1121/2018.",
+          "Real Decreto 1121/2019."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.09 Accesibilidad y Seguridad - Temario.pdf — Pasaje del temario\n\nTemario, p. 28 (PDF p. 28)\n\n11. Normativa sobre accesibilidad El Real Decreto 1112/2018, de 7 de septiembre, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público1 traspone al ordenamiento jurídico español la Directiva (UE) 2016/2102 del Parlamento Europeo y del Consejo, de 26 de octubre de 2016, sobre la accesibilidad de los sitios web y aplicaciones para dispositivos móviles de los organismos del sector público.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "2beb32050d4eec0312b0d723c5c901d2fe1be72f089ceece32aebc9e666bb13e",
+      "afterSha256": "6b55b7528fc9fe0764a32475d4dabcf7a7899afd3a4d3a97f44c04d0acd18d75",
+      "evidenceKeys": [
+        "e-AT309-P1-17"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT309-P1-18",
+      "before": {
+        "i": "AT309-P1-18",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿En qué fecha las aplicaciones móviles desarrolladas por las Administraciones Públicas deberán ser accesibles?",
+        "a": [
+          "Antes de 2021.",
+          "Antes del 23 de diciembre de 2020.",
+          "Antes del 23 de junio de 2021.",
+          "Antes del 23 de septiembre de 2020."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT309-P1-18",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿En qué fecha las aplicaciones móviles desarrolladas por las Administraciones Públicas deberán ser accesibles?",
+        "a": [
+          "Antes de 2021.",
+          "Antes del 23 de diciembre de 2020.",
+          "Antes del 23 de junio de 2021.",
+          "Antes del 23 de septiembre de 2020."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.09 Accesibilidad y Seguridad - Temario.pdf — Pasaje del temario\n\nTemario, p. 28 (PDF p. 28)\n\n- La inclusión de las aplicaciones móviles desarrolladas por las Administraciones Públicas que deberán ser accesibles antes del 23 de junio de 2021. - La inclusión de intranets o extranets nuevas o que se renueven sustancialmente a partir del 23/09/2019. - En cada portal y aplicación móvil deberá existir una declaración de accesibilidad, según el modelo establecido a nivel europeo en la Decisión de Ejecución (UE) 2018/1523 de la Comisión por la que se establece un modelo de declaración de accesibilidad de conformidad con la Directiva (UE) 2016/2102.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "3855dc9a21592aba287309e46ce5820e2f79c7ad48caa4a05f567fd18123f707",
+      "afterSha256": "9ecd0f59ba5e8b122a77a2d849c22999a8d7da9da9ca748fb5cc4c4b4d6c2135",
+      "evidenceKeys": [
+        "e-AT309-P1-18"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT309-P1-19",
+      "before": {
+        "i": "AT309-P1-19",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En relación con el diseño universal o diseño para todos, ¿qué principio tiene como objetivo que el diseño minimice los riesgos y las consecuencias adversas de acciones involuntarias o accidentales?",
+        "a": [
+          "Uso flexible.",
+          "Uso equiparable.",
+          "Con tolerancia al error.",
+          "Simple e intuitivo."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT309-P1-19",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En relación con el diseño universal o diseño para todos, ¿qué principio tiene como objetivo que el diseño minimice los riesgos y las consecuencias adversas de acciones involuntarias o accidentales?",
+        "a": [
+          "Uso flexible.",
+          "Uso equiparable.",
+          "Con tolerancia al error.",
+          "Simple e intuitivo."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.09 Accesibilidad y Seguridad - Temario.pdf — Pasaje del temario\n\nTemario, p. 49 (PDF p. 49)\n\nPRINCIPIO 5 Con tolerancia al error: El diseño minimiza los riesgos y las consecuencias adversas de acciones involuntarias o accidentales. Pautas: - Que disponga los elementos para minimizar los riesgos y errores: elementos más usados, más accesibles; y los elementos peligrosos eliminados, aislados o tapados. - Que proporcione advertencias sobre peligros y errores. - Que proporcione características seguras de interrupción. - Que desaliente acciones inconscientes en tareas que requieren vigilancia.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "e32168a6d507d60856be0fb31dbb02b30d8ef0dedbdc94d3b2351e551b5b0293",
+      "afterSha256": "264dda722d5abc593ae414ce92b68d7c7122e9982ac53b2d36d5d777d15b242c",
+      "evidenceKeys": [
+        "e-AT309-P1-19"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT309-P1-20",
+      "before": {
+        "i": "AT309-P1-20",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿En qué norma ISO se define la usabilidad como la capacidad de un software de ser comprendido, aprendido, usado y ser atractivo para el usuario, en condiciones específicas de uso?",
+        "a": [
+          "ISO/IEC 9126.",
+          "ISO/IEC 9216.",
+          "ISO/IEC 9241.",
+          "ISO/IEC 9421."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT309-P1-20",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿En qué norma ISO se define la usabilidad como la capacidad de un software de ser comprendido, aprendido, usado y ser atractivo para el usuario, en condiciones específicas de uso?",
+        "a": [
+          "ISO/IEC 9126.",
+          "ISO/IEC 9216.",
+          "ISO/IEC 9241.",
+          "ISO/IEC 9421."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.09 Accesibilidad y Seguridad - Temario.pdf — Pasaje del temario\n\nTemario, p. 50 (PDF p. 50)\n\nLa Organización Internacional para la Estandarización (ISO) ofrece dos definiciones de usabilidad: ISO/IEC 9126: La usabilidad se refiere a la capacidad de un software de ser comprendido, aprendido, usado y ser atractivo para el usuario, en condiciones específicas de uso.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "1624cfa873a3b3f83c989e25a3dfcf825dbdd6b0f1b7b755049f1d641cd41486",
+      "afterSha256": "bd3561458af5db7723e31d2fafcace357e3eceb008448d87d50a85bdfadfa50c",
+      "evidenceKeys": [
+        "e-AT309-P1-20"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT309-P1-21",
+      "before": {
+        "i": "AT309-P1-21",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Qué norma de AENOR trata sobre accesibilidad hardware?",
+        "a": [
+          "UNE 139801:2003.",
+          "UNE 139802:2009.",
+          "UNE 139803:2012.",
+          "UNE 139804:2015."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT309-P1-21",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Qué norma de AENOR trata sobre accesibilidad hardware?",
+        "a": [
+          "UNE 139801:2003.",
+          "UNE 139802:2009.",
+          "UNE 139803:2012.",
+          "UNE 139804:2015."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.09 Accesibilidad y Seguridad - Temario.pdf — Pasaje del temario\n\nTemario, p. 54 (PDF p. 54)\n\nLas normas de AENOR (Asociación Española de Normalización y Certificación), el organismo de normalización reconocido oficialmente, más relevantes en el campo de la accesibilidad TIC son las siguientes: - UNE 139801:2003, la norma española de accesibilidad al hardware. Define los requisitos que debe cumplir un ordenador personal para que sea accesible para las personas con diversidad funcional.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "c23e237fafb5f37c31f0be6a972365bcfe14915fbf31d2abf8f1f8e7a19adb31",
+      "afterSha256": "00462e29a9b70fb9ac371a7b2b3ce10ebc0980b2c4c3f1288cbc6b5d955164b5",
+      "evidenceKeys": [
+        "e-AT309-P1-21"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT309-P1-30",
+      "before": {
+        "i": "AT309-P1-30",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Cuáles son los cuatro principios de accesibilidad en los que se basa el estándar WCAG (Web Content Accessibility Guidelines)?",
+        "a": [
+          "Perceptible, comprensible, único y seguro.",
+          "Perceptible, operable, comprensible y robusto.",
+          "Perceptible, operable, seguro y robusto.",
+          "Perceptible, operable, seguro y estético."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Principios POUR."
+      },
+      "after": {
+        "i": "AT309-P1-30",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Cuáles son los cuatro principios de accesibilidad en los que se basa el estándar WCAG (Web Content Accessibility Guidelines)?",
+        "a": [
+          "Perceptible, comprensible, único y seguro.",
+          "Perceptible, operable, comprensible y robusto.",
+          "Perceptible, operable, seguro y robusto.",
+          "Perceptible, operable, seguro y estético."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Principios POUR.",
+        "u": "T3.09 Accesibilidad y Seguridad - Temario.pdf — Pasaje del temario\n\nTemario, p. 5 (PDF p. 5)\n\nWCAG 2.1 es un estándar que se compone de: - 4 principios: perceptible, operable, comprensible y robusto. Cada principio se compone de un número de pautas. - 13 pautas, cada una de las cuales agrupan criterios de conformidad. - 78 criterios de conformidad, que se pueden comprobar, cada uno de los cuales se clasifica en uno de los tres niveles: A, AA y AAA. - Técnicas suficientes. - Técnicas recomendables.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "998da15ac5fe0495d7be563eee3adf860126798c26adddf9258818f0b6737f7e",
+      "afterSha256": "9bfbc7b081c36e33de8cf85167a72f1dfa02e9c288c701d0fda4cd5c3d2a12dc",
+      "evidenceKeys": [
+        "e-AT309-P1-30"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS09-P1-71",
+      "before": {
+        "i": "AS09-P1-71",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Se entiende por accesibilidad a:",
+        "a": [
+          "El conjunto de principios y técnicas que se deben respetar al diseñar, construir, mantener y actualizar los sitios web y las aplicaciones para dispositivos móviles para garantizar la igualdad y la no discriminación en el acceso de las personas usuarias, en particular de las personas con discapacidad y de las personas mayores.",
+          "La capacidad de los sistemas de información y de los procedimientos a los que éstos dan soporte, de compartir datos y posibilitar el intercambio de información y conocimiento entre ellos.",
+          "La cualidad de los sistemas de información que son sencillos de usar porque facilitan la lectura de los textos, descargan rápidamente la información y presentan funciones y menús sencillos, por lo que el usuario encuentra satisfechas sus consultas y cómodo su uso.",
+          "Las herramientas para proteger el software contra ataques maliciosos de hackers y otros riesgos, de forma que nuestro software siga funcionando correctamente con este tipo de riesgos potenciales."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS09-P1-71",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Se entiende por accesibilidad a:",
+        "a": [
+          "El conjunto de principios y técnicas que se deben respetar al diseñar, construir, mantener y actualizar los sitios web y las aplicaciones para dispositivos móviles para garantizar la igualdad y la no discriminación en el acceso de las personas usuarias, en particular de las personas con discapacidad y de las personas mayores.",
+          "La capacidad de los sistemas de información y de los procedimientos a los que éstos dan soporte, de compartir datos y posibilitar el intercambio de información y conocimiento entre ellos.",
+          "La cualidad de los sistemas de información que son sencillos de usar porque facilitan la lectura de los textos, descargan rápidamente la información y presentan funciones y menús sencillos, por lo que el usuario encuentra satisfechas sus consultas y cómodo su uso.",
+          "Las herramientas para proteger el software contra ataques maliciosos de hackers y otros riesgos, de forma que nuestro software siga funcionando correctamente con este tipo de riesgos potenciales."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "u": "T3.09 Accesibilidad y Seguridad - Temario.pdf — Pasaje del temario\n\nTemario, p. 28 (PDF p. 28)\n\nA los efectos de este real decreto se entiende por ACCESIBILIDAD el conjunto de principios y técnicas que se deben respetar al diseñar, construir, mantener y actualizar los sitios web y las aplicaciones para dispositivos móviles para garantizar la igualdad y la no discriminación en el acceso de las personas usuarias, en particular de las personas con discapacidad y de las personas mayores (art. 1.2 RD 1112/2018).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "259b5803a981770f3fb11bb71be14ac9d23c419a278375e6f6c462e6f888d33e",
+      "afterSha256": "813307909e16209890fab761fb4c3f0d9ef62fa20f9886863ab2fa2e49adc0ec",
+      "evidenceKeys": [
+        "e-AS09-P1-71"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS10-P1-69",
+      "before": {
+        "i": "AS10-P1-69",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En el ámbito de la experiencia de usuario (UX), ¿qué es lo que indica la Ley de Hick?",
+        "a": [
+          "El tiempo que se tarda en adoptar una decisión, aumenta a medida que se incrementa el número y la complejidad de las opciones.",
+          "El tiempo necesario para alcanzar el objetivo es una función de la distancia y tamaño que hay que recorrer hasta él.",
+          "Los usuarios pasan la mayor parte de su tiempo en otros sitios web. Esto significa que los usuarios prefieren que tu web trabaje de manera similar a como lo hacen las otras webs que ya conocen.",
+          "Los objetos que están próximos tienden a unirse y en la experiencia de usuario se entienden como en el mismo grupo."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS10-P1-69",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En el ámbito de la experiencia de usuario (UX), ¿qué es lo que indica la Ley de Hick?",
+        "a": [
+          "El tiempo que se tarda en adoptar una decisión, aumenta a medida que se incrementa el número y la complejidad de las opciones.",
+          "El tiempo necesario para alcanzar el objetivo es una función de la distancia y tamaño que hay que recorrer hasta él.",
+          "Los usuarios pasan la mayor parte de su tiempo en otros sitios web. Esto significa que los usuarios prefieren que tu web trabaje de manera similar a como lo hacen las otras webs que ya conocen.",
+          "Los objetos que están próximos tienden a unirse y en la experiencia de usuario se entienden como en el mismo grupo."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "u": "T3.09 Accesibilidad y Seguridad - Temario.pdf — Pasaje del temario\n\nTemario, p. 52 (PDF p. 52)\n\nLey de Hick Esta ley, relacionada con la usabilidad y la experiencia de usuario, enuncia que el tiempo que se tarda en adoptar una decisión, aumenta a medida que se incrementa el número y la complejidad de las opciones.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "4a02022444554c6fb31fe1ba5eb6cced2c3769bc9b77e726c6ac06af8d3d8d31",
+      "afterSha256": "cebae4c814c207e8a9d2d3467be2e2e8736b0d6343ca973ceed886d4d36143da",
+      "evidenceKeys": [
+        "e-AS10-P1-69"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS10-P1-73",
+      "before": {
+        "i": "AS10-P1-73",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Según el Real Decreto 1112/2018, de 7 de septiembre, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público, la accesibilidad se tendrá presente:",
+        "a": [
+          "De forma integral en el proceso de diseño, gestión, mantenimiento y actualización de contenidos de los sitios web.",
+          "En el proceso de diseño, gestión y mantenimiento, excluyéndose la actualización de contenidos de los sitios web.",
+          "Sólo en el desarrollo de los sitios web.",
+          "Sólo en el diseño de los sitios web."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS10-P1-73",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Según el Real Decreto 1112/2018, de 7 de septiembre, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público, la accesibilidad se tendrá presente:",
+        "a": [
+          "De forma integral en el proceso de diseño, gestión, mantenimiento y actualización de contenidos de los sitios web.",
+          "En el proceso de diseño, gestión y mantenimiento, excluyéndose la actualización de contenidos de los sitios web.",
+          "Sólo en el desarrollo de los sitios web.",
+          "Sólo en el diseño de los sitios web."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.09 Accesibilidad y Seguridad - Temario.pdf — Pasaje del temario\n\nTemario, p. 34 (PDF p. 34)\n\nLa accesibilidad se tendrá presente de forma integral en el proceso de diseño, gestión, mantenimiento y actualización de contenidos de los sitios web y las aplicaciones para dispositivos móviles (art. 5.2 RD 1112/2018).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "8b5d7e7d3f9e2a3cf941d3c413f7aa6d1929260db0ebce9b363ca2116064be7c",
+      "afterSha256": "83651d46cdf8eac7e8ffe5b7862fb129de736eac7edc0dd0bdf0ac50cbac41a5",
+      "evidenceKeys": [
+        "e-AS10-P1-73"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS11B-P1-77",
+      "before": {
+        "i": "AS11B-P1-77",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En el contexto de la accesibilidad web, en la recomendación WCAG 2.2 se hace referencia a cuatro principios generales que engloban aspectos generales aplicables a todos los contenidos. ¿Cuáles son esos principios?",
+        "a": [
+          "Perceptible, operable, comprensible y robusto.",
+          "Perceptible, abstraible, comprensible y operable.",
+          "Perceptible, robusto, inferible y operable.",
+          "Perceptible, inferible, comprensible y operable."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS11B-P1-77",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En el contexto de la accesibilidad web, en la recomendación WCAG 2.2 se hace referencia a cuatro principios generales que engloban aspectos generales aplicables a todos los contenidos. ¿Cuáles son esos principios?",
+        "a": [
+          "Perceptible, operable, comprensible y robusto.",
+          "Perceptible, abstraible, comprensible y operable.",
+          "Perceptible, robusto, inferible y operable.",
+          "Perceptible, inferible, comprensible y operable."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.09 Accesibilidad y Seguridad - Temario.pdf — Pasaje del temario\n\nTemario, p. 6 (PDF p. 6)\n\nWCAG 2.2 se compone de: - 4 principios: perceptible, operable, comprensible y robusto (POCR). Cada principio se compone de un número de pautas. - 13 pautas, cada una de las cuales agrupan criterios de conformidad. - 86 criterios de conformidad, que se pueden comprobar, cada uno de los cuales se clasifica en uno de los tres niveles: A, AA y AAA. - Técnicas suficientes. - Técnicas recomendables.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "e0a635ca8fec31857c0782ef746936bae3a2319ea4b3df47fe187bfada6181c2",
+      "afterSha256": "050d44b4a9a6598cc328ffd96263ad583c5b5d0d69b32322ce89ed06a369fc78",
+      "evidenceKeys": [
+        "e-AS11B-P1-77"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS12-P1-60",
+      "before": {
+        "i": "AS12-P1-60",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Qué norma tiene por objeto garantizar los requisitos de accesibilidad de los sitios web y aplicaciones para dispositivos móviles de los organismos del sector público?",
+        "a": [
+          "Ley Orgánica 3/2018, de 5 de diciembre.",
+          "Ley 39/2015, de 1 de octubre.",
+          "Real Decreto 1112/2018, de 7 de septiembre.",
+          "Ley 12/2007, de 26 de noviembre."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS12-P1-60",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Qué norma tiene por objeto garantizar los requisitos de accesibilidad de los sitios web y aplicaciones para dispositivos móviles de los organismos del sector público?",
+        "a": [
+          "Ley Orgánica 3/2018, de 5 de diciembre.",
+          "Ley 39/2015, de 1 de octubre.",
+          "Real Decreto 1112/2018, de 7 de septiembre.",
+          "Ley 12/2007, de 26 de noviembre."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.09 Accesibilidad y Seguridad - Temario.pdf — Pasaje del temario\n\nTemario, p. 28 (PDF p. 28)\n\n11. Normativa sobre accesibilidad El Real Decreto 1112/2018, de 7 de septiembre, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público1 traspone al ordenamiento jurídico español la Directiva (UE) 2016/2102 del Parlamento Europeo y del Consejo, de 26 de octubre de 2016, sobre la accesibilidad de los sitios web y aplicaciones para dispositivos móviles de los organismos del sector público.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "373955c1b35fe7d260901484a05e4c7737f3ded24db8a32f64cd5bd70bcbb566",
+      "afterSha256": "c37f6f48ee2956dd68460bc46d320de9aab6661b12f29db9630d58188d083443",
+      "evidenceKeys": [
+        "e-AS12-P1-60"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-50",
+        "t": "T3.09",
+        "o": "O",
+        "q": "Señale la respuesta correcta referente al término ATAG:",
+        "a": [
+          "Son Pautas de Accesibilidad que explican cómo hacer que el contenido web sea más accesible para las personas con discapacidades.",
+          "Es una Suite que define una forma de hacer que el contenido web y las aplicaciones web sean más accesibles para las personas con discapacidades.",
+          "Son Pautas de Accesibilidad que explican cómo hacer que los agentes de usuario sean accesibles para las personas con discapacidades.",
+          "Son un conjunto de normas que deben cumplir las herramientas de autor para ser accesibles y generar contenidos también accesibles."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Las 4 opciones son definiciones reales de WCAG, WAI-ARIA, UAAG y ATAG.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-52",
+        "t": "T3.09",
+        "o": "O",
+        "q": "Con respecto a las solicitudes de información accesible y quejas, el Real Decreto 1112/2018, de 7 de septiembre, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público establece que:",
+        "a": [
+          "Recibidas las solicitudes de información accesible y quejas, la entidad obligada deberá responder a la persona interesada en el plazo de veinte días naturales.",
+          "Recibidas las solicitudes de información accesible y quejas, la entidad obligada deberá responder a la persona interesada en el plazo de veinte días hábiles.",
+          "Recibidas las solicitudes de información accesible y quejas, la entidad obligada deberá responder a la persona interesada en el plazo de diez días naturales.",
+          "Recibidas las solicitudes de información accesible y quejas, la entidad obligada deberá responder a la persona interesada en el plazo de diez días hábiles."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Matriz 20/10 días × naturales/hábiles.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-20",
+        "t": "T3.09",
+        "o": "O",
+        "q": "¿Qué es WCAG?",
+        "a": [
+          "Unas pautas de accesibilidad de contenidos web promovidas por el W3C.",
+          "Una librería de Java EE para la creación de aplicaciones web creada por Oracle.",
+          "Un componente del ecosistema Hadoop para el manejo de Big Data.",
+          "Un framework javascript especialmente indicado para trabajar con bases de datos no relacionales."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Distractores = definiciones de otras tecnologías reales (Java EE, Hadoop, JS).",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-56",
+        "t": "T3.09",
+        "o": "O",
+        "q": "Para detectar, eliminar y/o mitigar las debilidades de una aplicación se pueden realizar diferentes análisis de seguridad durante el ciclo de vida del desarrollo de software, entre los que NO se encuentra:",
+        "a": [
+          "SAST (Static Application Security Testing).",
+          "S-SDLC (Secure Software Development Liability Control).",
+          "DAST (Dynamic Application Security Testing).",
+          "SCA (Software Composition Analysis)."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "\"Secure Software Development Liability Control\": acrónimo real (S-SDLC) con expansión inventada.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-57",
+        "t": "T3.09",
+        "o": "O",
+        "q": "El principio de la accesibilidad web que exige que los componentes y la navegación de la interfaz de usuario se puedan utilizar por cualquier persona usuaria es:",
+        "a": [
+          "La perceptibilidad.",
+          "La comprensibilidad.",
+          "La robustez.",
+          "La operabilidad."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Principios POUR de accesibilidad (WCAG).",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-53",
+        "t": "T3.09",
+        "o": "O",
+        "q": "En relación con el Real Decreto 1112/2018, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público, indique qué respuesta es INCORRECTA:",
+        "a": [
+          "Las entidades obligadas deberán ofrecer un mecanismo de comunicación para presentar sugerencias y quejas.",
+          "La primera revisión de accesibilidad deberá haberse realizado en el caso de los sitios web antes de dos años desde la entrada en vigor de este real decreto.",
+          "La primera revisión de accesibilidad deberá haberse realizado en el caso de las aplicaciones móviles, antes de dos años desde la entrada en vigor de este real decreto.",
+          "La entidad obligada deberá responder a la persona interesada sobre las solicitudes de información accesible y quejas, en el plazo de veinte días hábiles."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          2
+        ],
+        "d": 3,
+        "n": "RD 1112/2018: plazos de primera revisión.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-54",
+        "t": "T3.09",
+        "o": "O",
+        "q": "Según las Pautas de Accesibilidad para el Contenido Web (WCAG) 2.1, ¿cuál es el objetivo de que un contenido sea Distinguible?",
+        "a": [
+          "Crear contenido que pueda presentarse de diferentes formas (por ejemplo, con una disposición más simple) sin perder información o estructura.",
+          "Facilitar a los usuarios ver y oír el contenido, incluyendo la separación entre el primer plano y el fondo.",
+          "Proporcionar alternativas textuales para todo contenido no textual de modo que se pueda convertir a otros formatos que las personas necesiten, tales como textos ampliados, braille, voz, símbolos o en un lenguaje más simple.",
+          "Proporcionar alternativas para los medios tempodependientes."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Pautas WCAG hermanas (adaptable, alternativas textuales, tempodependientes).",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-54",
+        "t": "T3.09",
+        "o": "O",
+        "q": "De acuerdo con el artículo 3 del Real Decreto 1112/2018, de 7 de septiembre, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público, indique la opción correcta acerca del contenido accesible de sitios web y apps móviles:",
+        "a": [
+          "Incluye la información textual y no textual, documentos y formularios descargables y contenidos multimedia pregrabados, así como el diseño de los dispositivos de interacción como pantallas, teclados y ratones.",
+          "Incluye la información textual y no textual, documentos y formularios descargables, contenidos multimedia pregrabados, interacción bidireccional y la cumplimentación de procesos de identificación, autenticación, firma y pago.",
+          "Los documentos y formularios descargables no están incluidos, por la posibilidad de tratarse de contenidos de terceros que no están bajo el control del sujeto obligado.",
+          "La cumplimentación de procesos de identificación, autenticación, firma y pago no están incluidos, por gestionarse generalmente a través de sistemas de terceros."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          3
+        ],
+        "d": 2,
+        "n": "RD 1112/2018: alcance del contenido accesible.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-54",
+        "t": "T3.09",
+        "o": "O",
+        "q": "Señale la respuesta correcta según la Directiva (UE) 2016/2102 del Parlamento Europeo y del Consejo, de 26 de octubre de 2016, sobre la accesibilidad de los sitios web y aplicaciones para dispositivos móviles de los organismos del sector público:",
+        "a": [
+          "El diseño universal debe permitir que todas las personas puedan usar productos o servicios, en la mayor medida posible, sin adaptación o diseño especializado, pero no excluye dispositivos de apoyo para ciertos grupos cuando sean necesarios.",
+          "El diseño universal implica que no deben existir ayudas técnicas (dispositivos de apoyo), porque todo debe funcionar igual para todos sin excepciones.",
+          "La Directiva incluye en su ámbito de aplicación los sitios web y aplicaciones para dispositivos móviles de prestadores del servicio público de radiodifusión y sus filiales.",
+          "La Directiva incluye en su ámbito de aplicación el contenido multimedia en directo de base temporal publicado después del 23 de septiembre de 2020."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          3,
+          12
+        ],
+        "d": 3,
+        "n": "Directiva 2016/2102: alcance (contenido en directo excluido).",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-32",
+        "t": "T3.09",
+        "o": "O",
+        "q": "Según el WCAG 2.1, ¿qué pauta de las siguientes pertenece al principio Comprensible?",
+        "a": [
+          "Adaptable",
+          "Navegable",
+          "Predecible",
+          "Distinguible"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Pautas WCAG por principio.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-31",
+        "t": "T3.09",
+        "o": "O",
+        "q": "Indique cuántos son los principios generales de usabilidad Web definidos por Jakob Nielsen:",
+        "a": [
+          "7",
+          "4",
+          "10",
+          "8"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Número de principios de Nielsen (10).",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-19",
+        "t": "T3.09",
+        "o": "O",
+        "q": "¿Qué término hace referencia a la realización de un análisis estático del código fuente de una aplicación para identificar vulnerabilidades de seguridad antes de que se implemente en un entorno de producción real?",
+        "a": [
+          "SAST.",
+          "OWASP.",
+          "DAST.",
+          "SART."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9,
+          13
+        ],
+        "d": 1,
+        "n": "SAST frente a DAST/OWASP; SART inventado.",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-32",
+        "t": "T3.09",
+        "o": "O",
+        "q": "Uno de los expertos más reconocidos en usabilidad web, Jakob Nielsen, estableció 10 principios clave que todo diseñador web debe tener en cuenta. ¿Cuál de los siguientes NO es uno de ellos?",
+        "a": [
+          "Visibilidad del estado del sistema.",
+          "Control y libertad del usuario.",
+          "Reconocimiento después que recuerdo.",
+          "Ayuda y documentación."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "Nielsen: \"reconocimiento antes que recuerdo\" invertido.",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-65",
+        "t": "T3.09",
+        "o": "O",
+        "q": "Señale cual NO es una pauta del Principio Perceptible de WCAG 2.1:",
+        "a": [
+          "Alternativas textuales: Proporcione alternativas textuales para todo contenido no textual, de manera que pueda modificarse para ajustarse a las necesidades de las personas, como por ejemplo en una letra mayor, braille, voz, símbolos o un lenguaje más simple.",
+          "Distinguible: Haga más fácil para los usuarios ver y oír el contenido, incluyendo la separación entre primer plano y fondo.",
+          "Contenido multimedia dependiente del tiempo: Proporcione alternativas para contenidos multimedia sincronizados dependientes del tiempo.",
+          "Ataques epilépticos: No diseñar contenido que pueda causar ataques epilépticos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Pauta WCAG de otro principio presentada como perceptible.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-R-02",
+        "t": "T3.09",
+        "o": "O",
+        "q": "El estándar de accesibilidad para productos y servicios TIC que aplica a las Administraciones Públicas españolas es:",
+        "a": [
+          "UNE-EN 301549:2019",
+          "UNE-EN 301341:2019",
+          "UNE-EN 301876:2019",
+          "UNE-EN 301803:2019"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          6
+        ],
+        "d": 2,
+        "n": "Número de norma UNE-EN 301549.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-01",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Qué pauta definida por el WAI NO es de accesibilidad?",
+        "a": [
+          "ATAG.",
+          "UAAG.",
+          "WCAG.",
+          "ACAG."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-02",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Cuántas pautas se definen en WCAG 2.2?",
+        "a": [
+          "11.",
+          "12.",
+          "13.",
+          "14."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-03",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿A quién NO se dirige principalmente WCAG 2.2?",
+        "a": [
+          "A usuarios de aplicaciones.",
+          "A desarrolladores de contenidos web.",
+          "A desarrolladores de herramientas para la evaluación de la accesibilidad web.",
+          "A desarrolladores de navegadores."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-05",
+        "t": "T3.09",
+        "o": "A",
+        "q": "El criterio de conformidad \"Orientación\" se encuadra en la pauta de WCAG 2.2:",
+        "a": [
+          "Distinguible.",
+          "Operable.",
+          "Adaptable.",
+          "Visible."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-06",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En WCAG 2.2, el criterio de conformidad Contraste de contenido no textual de al menos 3:1 en elementos como botones, campos de formulario, gráficos iconos… es de:",
+        "a": [
+          "Nivel A.",
+          "Nivel AA.",
+          "Nivel AAA.",
+          "Nivel AAAA."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-07",
+        "t": "T3.09",
+        "o": "A",
+        "q": "La pauta \"Ataques epilépticos\" de WCAG 2.2 pertenece al principio:",
+        "a": [
+          "Perceptible.",
+          "Operable.",
+          "Comprensible.",
+          "Robusto."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-08",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En WCAG 2.2, el criterio de conformidad \"Tres destellos\" es de:",
+        "a": [
+          "Nivel A.",
+          "Nivel AA.",
+          "Nivel AAA.",
+          "Nivel AAAA."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-09",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En WCAG 2.2, el criterio de conformidad \"Titulado de páginas\" es de:",
+        "a": [
+          "Nivel A.",
+          "Nivel AA.",
+          "Nivel AAA.",
+          "Nivel AAAA."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-10",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En WCAG 2.2, el criterio de conformidad \"Idioma de la página\" es de:",
+        "a": [
+          "Nivel A.",
+          "Nivel AA.",
+          "Nivel AAA.",
+          "Nivel AAAA."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-11",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En WCAG 2.2, el criterio de conformidad \"Abreviaturas\" es de:",
+        "a": [
+          "Nivel A.",
+          "Nivel AA.",
+          "Nivel AAA.",
+          "Nivel AAAA."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-13",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA sobre WAI-ARIA:",
+        "a": [
+          "Su significado es Aplicaciones de Internet Enriquecidas Accesibles.",
+          "Permite transmitir comportamientos de la IU a las tecnologías de apoyo.",
+          "Establece ontologías de roles, estados y propiedades.",
+          "No pertenece a WAI, es una biblioteca para la Web Semántica."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-14",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Indique un criterio de conformidad nuevo incluido en el borrador de WCAG 2.2:",
+        "a": [
+          "Entrada redundante.",
+          "Tamaño del objetivo.",
+          "Gestor del puntero.",
+          "Reajuste."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-16",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Una herramienta de evaluación de la accesibilidad:",
+        "a": [
+          "Realiza siempre un chequeo automático de todos los criterios de conformidad.",
+          "Solo puede comprobar de forma automática una parte de los criterios de conformidad.",
+          "Es de uso opcional en la Administración General del Estado.",
+          "Es un servicio de pago en línea."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-22",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Respecto a los esquemas de autenticación de usuarios, señale la respuesta correcta:",
+        "a": [
+          "Un SMS que recibe el usuario es algo que sabe.",
+          "El reconocimiento ocular es algo que tiene el usuario.",
+          "Un PIN es algo que posee el usuario.",
+          "El reconocimiento facial es algo que es del usuario."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-23",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un principio de seguridad en el desarrollo de sistemas?",
+        "a": [
+          "Mínima funcionalidad.",
+          "Máximo privilegio.",
+          "Defensa en profundidad.",
+          "Resiliencia."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-24",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Cuando varios procesos acceden al mismo tiempo a un recurso compartido cambiando su estado y obtenido un valor no esperado, es una vulnerabilidad de:",
+        "a": [
+          "Desbordamiento de buffer.",
+          "Condición de carrera.",
+          "Error de formato de cadena.",
+          "Cross-Site Scripting."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-25",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Para el desarrollo seguro de aplicaciones web se recomienda:",
+        "a": [
+          "Uso del método POST para consulta de información.",
+          "Uso del método GET para envío de información.",
+          "El cifrado de las comunicaciones entre las partes.",
+          "El uso de cabeceras HTTP como método de validación."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-26",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En relación a los estándares de documentación, ¿cuál está relacionado con la usabilidad?",
+        "a": [
+          "ISO 9241.",
+          "ISO 9127.",
+          "BS 7649.",
+          "ISO 9240."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-27",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Según el Real Decreto 1112/2018, ¿cada cuánto tiempo hay que revisar la exactitud de toda la información contenida en la Declaración de accesibilidad?",
+        "a": [
+          "Como mínimo cada tres años.",
+          "Como mínimo una vez al año, pero solo hay que actualizar la fecha \"Última revisión de la declaración\" si se ha hecho algún cambio en la declaración.",
+          "Como mínimo una vez al año.",
+          "Como mínimo cada dos años."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-28",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Qué significa ARIA?",
+        "a": [
+          "Accessible Rich Internet Applications.",
+          "Augmented Real Interface for Accessibility.",
+          "Application Rapid Interface for Accessibility.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-29",
+        "t": "T3.09",
+        "o": "A",
+        "q": "TAW es:",
+        "a": [
+          "Un lector de pantalla.",
+          "Un magnificador de pantalla.",
+          "Un teclado virtual en pantalla.",
+          "Una herramienta de revisión automática de la accesibilidad web."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-31",
+        "t": "T3.09",
+        "o": "A",
+        "q": "La norma UNE 139803:2012 regula:",
+        "a": [
+          "Los requisitos de accesibilidad para los sistemas informáticos.",
+          "Los requisitos de seguridad para contenidos en la web.",
+          "Los requisitos de accesibilidad y seguridad para contenidos en la web.",
+          "Los requisitos de accesibilidad para contenidos en la web."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-32",
+        "t": "T3.09",
+        "o": "A",
+        "q": "La pauta WCAG 2.2 de Asistencia a la entrada de datos se relaciona con el principio:",
+        "a": [
+          "Perceptible.",
+          "Operable.",
+          "Compresible.",
+          "Robusto."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Pauta asociada a principio."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-33",
+        "t": "T3.09",
+        "o": "A",
+        "q": "La pauta WCAG 2.2 de Tiempo suficiente se relaciona con el principio:",
+        "a": [
+          "Perceptible.",
+          "Operable.",
+          "Compresible.",
+          "Robusto."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-34",
+        "t": "T3.09",
+        "o": "A",
+        "q": "El Real Decreto 1112/2018 sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público aplica a los contenidos siguientes (señale la respuesta INCORRECTA):",
+        "a": [
+          "Información textual y no textual.",
+          "Documentos y formularios que se puedan descargar.",
+          "Formas de interacción entre la persona interesada y el sitio web o aplicación para dispositivos móviles.",
+          "Contenido multimedia en directo (que se emite en directo) de base temporal."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-35",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En los enlaces de hipertexto, ¿qué recomiendan las normas de accesibilidad del W3C?",
+        "a": [
+          "No dar al usuario el control sobre los cambios de vista.",
+          "Utilizar el literal “Pinche aquí”.",
+          "Repetir el enlace cada vez que el texto de ese enlace aparezca dentro del documento.",
+          "Usar texto para identificar el propósito del enlace que tenga sentido leído fuera de contexto."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-36",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En HTML y en relación con la accesibilidad Web, ¿qué atributo debe utilizar para describir la función de cada elemento visual?",
+        "a": [
+          "attrib.",
+          "image.",
+          "alt.",
+          "vision."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-37",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Cuál de los siguientes ejemplos es una barrera de accesibilidad en páginas web?",
+        "a": [
+          "Imágenes con texto alternativo.",
+          "Ubicación de las páginas mediante “migas de pan”.",
+          "Colocar información importante en una ventana emergente.",
+          "Creación de páginas web haciendo uso de media queries."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-38",
+        "t": "T3.09",
+        "o": "A",
+        "q": "El Real Decreto 1112/2018, de 7 de septiembre, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público:",
+        "a": [
+          "Tiene por objeto garantizar los requisitos de accesibilidad de los sitios web y aplicaciones para dispositivos móviles de los organismos del sector público.",
+          "Se aplica a todo el sector público estatal, autonómico y local con la excepción de la Administración de Justicia.",
+          "Define accesibilidad como el conjunto de principios y técnicas que se deben respetar al diseñar, construir y mantener los sitios web exclusivamente.",
+          "No incluye como contenido accesible de los sitios web y de las aplicaciones para dispositivos móviles los procesos de identificación, autenticación, firma y pago."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-39",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Según el artículo 15 del Real Decreto 1112/2018, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público, indique la respuesta correcta sobre la declaración de accesibilidad:",
+        "a": [
+          "Será actualizada periódicamente, como mínimo una vez cada dos años, desde la primera revisión de accesibilidad.",
+          "Será revisada periódicamente por la Red de Contactos de Accesibilidad Digital de las Administraciones Públicas, como mínimo una vez cada dos años.",
+          "Será actualizada periódicamente, como mínimo una vez al año, o cada vez que se realice una revisión de accesibilidad.",
+          "Será actualizada periódicamente, como mínimo una vez cada tres años, o cada vez que se realice una revisión de accesibilidad."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-40",
+        "t": "T3.09",
+        "o": "A",
+        "q": "El artículo 3.1 del Real Decreto 1112/2018, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público, indica como ámbito objetivo de aplicación:",
+        "a": [
+          "Sitios web, independientemente del dispositivo empleado para acceder a ellos, y las aplicaciones para dispositivos móviles de los organismos del sector público y otros obligados.",
+          "Sitios web, únicamente cuando se accede a ellos desde dispositivos móviles, y las aplicaciones para dispositivos móviles del sector público y otros obligados.",
+          "Solo a sitios web para dispositivos móviles del sector público y otros obligados.",
+          "Solo a las aplicaciones para dispositivos móviles del sector público y otros obligados."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-41",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes características de una web NO se ajusta a los principios de accesibilidad del W3C?",
+        "a": [
+          "Toda la funcionalidad que está disponible con ratón también está disponible con teclado.",
+          "Contiene breves descripciones del contenido no textual, como archivos de audio y vídeo.",
+          "Sólo hay un camino para encontrar las páginas relevantes en un conjunto de páginas web.",
+          "El color no se utiliza como única forma de transmitir información o identificar el contenido."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-42",
+        "t": "T3.09",
+        "o": "A",
+        "q": "De acuerdo con el Real Decreto 1112/2018, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público, en relación a los mecanismos de comunicación relativos a las solicitudes de información accesible y quejas en sitios webs ya publicados, ¿cuál es la fecha de entrada en vigor?",
+        "a": [
+          "En el momento de publicación en el BOE del Real Decreto 1112/2018.",
+          "Al año de la entrada en vigor del Real Decreto 1112/2018.",
+          "A los dos años de la entrada en vigor del Real Decreto 1112/2018.",
+          "A los cuatro años de la entrada en vigor del Real Decreto 1112/2018."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-43",
+        "t": "T3.09",
+        "o": "A",
+        "q": "De acuerdo con el artículo 10 del Real Decreto 1112/2018, recibidas las solicitudes de información accesible y quejas, la entidad obligada deberá responder a la persona interesada en el plazo de:",
+        "a": [
+          "10 días naturales.",
+          "20 días naturales.",
+          "10 días hábiles.",
+          "20 días hábiles."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "La clave de veinte días hábiles figura en el artículo12.3 del material, pero la pregunta remite al artículo10. Pendiente de revisar la referencia antes de aceptar la cita como concordante.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AT309-P1-43"
+      ]
+    },
+    {
+      "question": {
+        "i": "AT309-P1-44",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En relación con el Real Decreto 1112/2018, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público, indique qué respuesta es INCORRECTA:",
+        "a": [
+          "Los criterios de accesibilidad recogidos en el presente real decreto no serán de aplicación a los sitios web y aplicaciones para dispositivos móviles del Banco de España.",
+          "Las entidades obligadas deberán ofrecer un mecanismo de comunicación para presentar sugerencias y quejas.",
+          "La primera revisión de accesibilidad deberá haberse realizado en el caso de los sitios web antes de dos años desde la entrada en vigor de este real decreto.",
+          "La primera revisión de accesibilidad deberá haberse realizado en el caso de las aplicaciones móviles, antes de tres años desde la entrada en vigor de este real decreto."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-46",
+        "t": "T3.09",
+        "o": "A",
+        "q": "El principio de la accesibilidad web que exige que la información y los componentes de la IU deben ser mostrados a los usuarios en formas que ellos puedan entender es:",
+        "a": [
+          "La perceptibilidad.",
+          "La comprensibilidad.",
+          "La robustez.",
+          "La operabilidad."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-47",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Según el artículo 3 del Real Decreto 1112/2018, el contenido accesible de los sitios web y de las aplicaciones para dispositivos móviles incluye (señale la respuesta INCORRECTA):",
+        "a": [
+          "Las formas de interacción bidireccional.",
+          "El tratamiento de formularios digitales.",
+          "La cumplimentación de los procesos de identificación, autenticación, firma y pago con independencia de la plataforma tecnológica que se use para su puesta a disposición del público.",
+          "Los documentos y formularios que no se pueden descargar."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-48",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Según el artículo 7 del Real Decreto 1112/2018, relacionado con la carga desproporcionada, señale la respuesta INCORRECTA:",
+        "a": [
+          "La excepción al cumplimiento de los requisitos de accesibilidad deberá ser motivada y se limitará al contenido concreto y a lo estrictamente necesario para reducir la carga.",
+          "La carga desproporcionada es aquella carga que impone a la entidad obligada una carga financiera y organizativa excesiva, o que compromete su capacidad para cumplir su cometido o para publicar la información necesaria y pertinente para sus tareas y servicios, teniendo en cuenta al mismo tiempo el posible beneficio o perjuicio para los ciudadanos, en particular para las personas con discapacidad y personas mayores.",
+          "Se consideran motivos que permitan apreciar la excepción de la carga desproporcionada la falta de prioridad, de tiempo o de conocimientos.",
+          "En todo caso, en la declaración de accesibilidad para el sitio web concreto o la aplicación para dispositivos móviles concreta, después de realizar la correspondiente evaluación, se hará constar las partes de los requisitos de accesibilidad que no puede cumplir y, en su caso, se ofrecerá alternativas accesibles."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-49",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Según el artículo 4 del Real Decreto 1112/2018, el principio de la accesibilidad que exige que los contenidos sean suficientemente sólidos para poder ser interpretados de forma fiable por una gran variedad de agentes de usuario, incluidas las tecnologías de asistencia, se corresponde con la:",
+        "a": [
+          "Perceptibilidad.",
+          "Operabilidad.",
+          "Compresibilidad.",
+          "Robustez."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-50",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Establece el artículo 15 del Real Decreto 1112/2018, que la declaración de accesibilidad comprenderá, como mínimo, la siguiente información (señale la respuesta INCORRECTA):",
+        "a": [
+          "La Unidad responsable de accesibilidad.",
+          "Un enlace y descripción del mecanismo de comunicación.",
+          "Una explicación sobre aquellas partes del contenido que no sean accesibles y las razones de dicha inaccesibilidad, así como, en su caso, las alternativas accesibles que se ofrezcan.",
+          "Un enlace al procedimiento de reclamación al que cualquier persona interesada pueda recurrir en caso de que la respuesta a la comunicación o a la solicitud sea insatisfactoria."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-51",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes es una herramienta relacionada con la accesibilidad en dispositivos móviles con sistema operativo iOS?",
+        "a": [
+          "A11yUITests.",
+          "Lint.",
+          "Accessibility Scanner.",
+          "UI Automator Viewer."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-52",
+        "t": "T3.09",
+        "o": "A",
+        "q": "La pauta WCAG 2.2 Legible se relaciona con el principio:",
+        "a": [
+          "Perceptible.",
+          "Operable.",
+          "Compresible.",
+          "Robusto."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-53",
+        "t": "T3.09",
+        "o": "A",
+        "q": "WCAG 2.2 se compone de:",
+        "a": [
+          "4 principios, 13 pautas y 86 criterios de conformidad.",
+          "4 principios, 12 pautas y 85 criterios de conformidad.",
+          "3 principios, 14 pautas y 84 criterios de conformidad.",
+          "5 principios, 12 pautas y 87 criterios de conformidad."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 3,
+        "n": "Cifras de WCAG 2.2."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-54",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Cómo se denomina la guía para aplicar WCAG a las tecnologías de la información y comunicaciones no web?",
+        "a": [
+          "WCAGNOTIC.",
+          "WCAG2ICT.",
+          "WCAG2TIC.",
+          "WCAGCIT2."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-55",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes herramientas relacionadas con la accesibilidad para aplicaciones móviles en sistemas Android está orientada a la exploración de componentes gráficos?",
+        "a": [
+          "Espresso.",
+          "Accessibility Insights.",
+          "Accessibility Snapshot.",
+          "Accessibility Inspector."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "El pasaje extraído es una tabla con columnas mezcladas que no acredita la exploración de componentes gráficos. Pendiente de inspección y de revisar la herramienta y plataforma concretas.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AT309-P1-55"
+      ]
+    },
+    {
+      "question": {
+        "i": "AT309-P1-56",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En los sistemas biométricos, ¿qué parámetro hace referencia a la tasa de falos positivos?",
+        "a": [
+          "FRR.",
+          "EER.",
+          "EAR.",
+          "FAR."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-58",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En relación con el desarrollo seguro de aplicaciones web, ¿qué técnica de validación NO es una recomendación para la validación de los datos de entrada?",
+        "a": [
+          "La sanitización de consultas.",
+          "El formato.",
+          "El tipo de datos.",
+          "Los valores mínimos y máximos."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-59",
+        "t": "T3.09",
+        "o": "A",
+        "q": "El ataque que fuerza al navegador validado de una víctima a enviar una petición a una aplicación web vulnerable, la cual entonces realiza la acción elegida por el atacante a través de la víctima, se denomina:",
+        "a": [
+          "XSS.",
+          "CSRF.",
+          "Inyección SQL.",
+          "RFI."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-22",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Seleccione la respuesta INCORRECTA sobre el Real Decreto 1112/2018, de 7 de septiembre, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público:",
+        "a": [
+          "Las comunicaciones sobre requisitos de accesibilidad permiten a cualquier persona física y jurídica informar sobre cualquier posible incumplimiento por parte del sitio web o de la aplicación para dispositivos móviles de los requisitos de accesibilidad establecidos. También permite transmitir otras dificultades de acceso al contenido o formular cualquier otra consulta o sugerencia de mejora relativa a la accesibilidad del sitio web o aplicación para dispositivos móviles.",
+          "Las entidades obligadas por el presente real decreto realizarán revisiones del cumplimiento de los requisitos de accesibilidad establecidos tanto en la fase de diseño de los sitios web y aplicaciones para dispositivos móviles como antes y después de su puesta en funcionamiento, así como cada 2 años.",
+          "Las solicitudes de información accesible y quejas permiten a cualquier persona física o jurídica formular quejas relativas al cumplimiento de los requisitos de este real decreto y solicitar la información relativa a contenidos que están excluidos del ámbito de aplicación de este real decreto.",
+          "Se crea la red de contactos de accesibilidad digital de las administraciones públicas con funciones de asistencia al Ministerio de Política Territorial y Función Pública, que tendrá la consideración de grupo de trabajo."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-24",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Según el Real Decreto 1112/2018, de 7 de septiembre, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público, el contenido accesible de los sitios web y de las aplicaciones para dispositivos móviles incluye (indique la respuesta INCORRECTA):",
+        "a": [
+          "Contenidos de terceros que no estén financiados ni desarrollados por el sujeto obligado ni estén bajo su control.",
+          "Los documentos y formularios que se pueden descargar.",
+          "Los contenidos multimedia pregrabados de base temporal.",
+          "Las formas de interacción bidireccional."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-25",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Según el Real Decreto 1112/2018, de 7 de septiembre, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público, los sitios web y aplicaciones para dispositivos móviles de las entidades obligadas incluidas en el ámbito de aplicación del presente real decreto deberán ser accesibles para sus personas usuarias y, en particular, para las personas mayores y personas con discapacidad, de modo que sus contenidos sean (señale la respuesta INCORRECTA):",
+        "a": [
+          "Operables.",
+          "Entendibles.",
+          "Robustos.",
+          "Perceptibles."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-95",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Respecto a HTML5, señale la respuesta correcta:",
+        "a": [
+          "Su uso está recomendado para el desarrollo web de los sitios de la Administración General del Estado, siempre que no se incumpla la normativa de accesibilidad.",
+          "En ningún caso se recomienda el uso de HTML5 en el desarrollo web de los sitios de la Administración General del Estado.",
+          "Simplifica el desarrollo de sitios web porque elimina el uso de CSS (Cascading Style Sheets).",
+          "No permite incluir vídeo de forma nativa, siendo necesario recurrir siempre a complementos (plugins) externos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-97",
+        "t": "T3.09",
+        "o": "A",
+        "q": "WCAG 2.2 se compone de:",
+        "a": [
+          "4 principios, 13 pautas, 86 criterios de conformidad, técnicas suficientes y técnicas recomendadas.",
+          "4 principios, 12 pautas, 78 criterios de conformidad, técnicas suficientes y técnicas recomendadas.",
+          "4 principios, 13 pautas, 78 criterios de conformidad, técnicas suficientes y técnicas recomendadas.",
+          "4 principios, 12 pautas, 86 criterios de conformidad, técnicas suficientes y técnicas recomendadas."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-98",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En WCAG 2.2, la pauta “Modalidades de entrada” que tiene por objetivo facilitar a los usuarios operar la funcionalidad a través de varios métodos de entrada además del teclado, se encuadra en el principio:",
+        "a": [
+          "Perceptible.",
+          "Operable.",
+          "Compresible.",
+          "Robusto."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-99",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Cuál es de los siguientes criterios de conformidad del estándar WCAG 2.2 es de Nivel AAA?",
+        "a": [
+          "Sugerencias ante errores: si se detecta automáticamente un error en la entrada de datos y se dispone de sugerencias para hacer la corrección, entonces se presentan las sugerencias al usuario, a menos que esto ponga en riesgo la seguridad o el propósito del contenido.",
+          "Uso del color: el color no se usa como único medio visual para transmitir la información, indicar una acción, solicitar una respuesta o distinguir un elemento visual.",
+          "Contenido no textual: proporciona alternativas de texto para el contenido que no es de texto.",
+          "Ayuda: se proporciona ayuda dependiente del contexto."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-83",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En WCAG 2.2, el criterio de conformidad \"Navegación coherente\" es de:",
+        "a": [
+          "Nivel A.",
+          "Nivel AA.",
+          "Nivel AAA.",
+          "El criterio no forma parte de WCAG 2.2."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-86",
+        "t": "T3.09",
+        "o": "A",
+        "q": "El Real Decreto 1112/2018 sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público, establece la inclusión de intranets o extranets nuevas o que se renueven sustancialmente a partir de:",
+        "a": [
+          "23 de junio de 2021.",
+          "23 de junio de 2019.",
+          "23 de septiembre de 2021.",
+          "23 de septiembre de 2019."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-R-04",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En WCAG 2.2, ¿qué pautas forman parte del principio \"Comprensible\"?",
+        "a": [
+          "Modalidades de entrada, teclado accesible y adaptable.",
+          "Teclado accesible, tiempo suficiente y navegación.",
+          "Compatible y legible.",
+          "Legible, previsible y asistencia a la entrada de datos."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-26",
+        "t": "T3.09",
+        "o": "A",
+        "q": "De entre las siguientes opciones, indique cuál NO es un principio de usabilidad enunciado por Jakob Nielsen:",
+        "a": [
+          "Estética y diseño minimalista, no contiendo información innecesaria.",
+          "Ayudar a los usuarios a reconocer y recuperarse ante fallos provocados por ellos mismos, aunque no se puede sugerir una solución al problema.",
+          "Relación entre el sistema y el mundo real.",
+          "Consistencia y estándares, estableciéndose convenciones lógicas y mantenibles en el tiempo."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-27",
+        "t": "T3.09",
+        "o": "A",
+        "q": "El W3C mantiene una lista de herramientas de evaluación de la accesibilidad web, ¿cuál de las siguientes herramientas NO soporta la recomendación WCAG 2.2?",
+        "a": [
+          "ACHECKS.",
+          "AEL Accessibility Checker.",
+          "AccessibilityChecker.org.",
+          "Free Website Accessibility Checker."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-75",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Cuáles son los cuatro principios básicos en que se organizan las pautas de accesibilidad al contenido web (WCAG 2.2)?",
+        "a": [
+          "Perceptible, robustez, amable y compresible.",
+          "Operable, adaptable, comprensible y maduro.",
+          "Perceptible, operable, comprensible y robustez.",
+          "Operable, amable, maduro y comprensible."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-R-01",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En relación con WCAG 2.2, señale cuál de las siguientes pautas NO pertenece al principio 2 - Operable:",
+        "a": [
+          "Ataques epilépticos: no diseñar contenido que pueda causar ataques epilépticos.",
+          "Modalidades de entrada: facilitar a los usuarios operar la funcionalidad a través de varios métodos de entrada además del teclado.",
+          "Teclado accesible: poder controlar todas las funciones desde el teclado.",
+          "Asistencia a la entrada de datos: ayudar a los usuarios a evitar y corregir errores."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-61",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Indique cuál de los siguientes no es uno de los 10 principios de usabilidad de Jakob Nielsen:",
+        "a": [
+          "Visibilidad del estado del sistema.",
+          "Control y libertad del usuario.",
+          "Flexibilidad y eficiencia de uso.",
+          "Seguridad integral."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-66",
+        "t": "T3.09",
+        "o": "A",
+        "q": "El conjunto de estándares web de aplicaciones de Internet enriquecidas y accesibles, cuyo objetivo es hacer que el contenido web y las aplicaciones web sean más accesibles para las personas con discapacidades, se denomina:",
+        "a": [
+          "Core Accessibility API Mappings.",
+          "CMS.",
+          "Marcado SVG.",
+          "WAI-ARIA."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-67",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Cuál es el principio de la accesibilidad a sitios web que exige que los componentes y la navegación de la interfaz de usuario se puedan utilizar por cualquier persona usuaria:",
+        "a": [
+          "Usabilidad.",
+          "Operabilidad.",
+          "Compresibilidad.",
+          "Perceptibilidad."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-68",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Indique la respuesta correcta sobre el Real Decreto 1112/2018, de 7 de septiembre, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público:",
+        "a": [
+          "Tiene por objeto garantizar los requisitos de accesibilidad de los sitios web y aplicaciones para dispositivos móviles de los organismos del sector público.",
+          "Se aplica a todo el sector público estatal, autonómico y local, así como a los contenidos de terceros que no estén financiados ni desarrollados ni bajo control de la administración pública.",
+          "Define accesibilidad como el conjunto de principios y técnicas que se deben respetar al diseñar, construir y mantener los sitios web exclusivamente.",
+          "No incluye como contenido accesible de los sitios web y de las aplicaciones para dispositivos móviles los procesos de identificación, autenticación, firma y pago."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-66",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Qué es TAW?",
+        "a": [
+          "Un lector de pantalla.",
+          "Un magnificador de pantalla.",
+          "Un teclado virtual en pantalla.",
+          "Una herramienta de revisión automática de la accesibilidad web."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-68",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En una aplicación web que pretenda cumplir el nivel AAA de las normas WCAG de accesibilidad, respecto a la caducidad de la sesión por inactividad:",
+        "a": [
+          "Debe advertir al usuario antes que caduque la sesión, dándole la posibilidad de mantenerla abierta durante más tiempo.",
+          "No existe ninguna norma al respecto.",
+          "Debe hacer que la duración de la sesión sea al menos de 2 horas en inactividad.",
+          "Debe advertir al usuario claramente al iniciar la aplicación del tiempo permitido de inactividad antes que caduque la sesión."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-77",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Según el estándar de W3C para la accesibilidad:",
+        "a": [
+          "Toda la funcionalidad debería estar disponible a través del teclado.",
+          "Toda la funcionalidad debería estar accesible a través de voz.",
+          "Solo la funcionalidad calificada como esencial de nivel A tiene que estar disponible a través del teclado.",
+          "Solo la funcionalidad relacionada con navegación tiene que estar disponible a través del teclado."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-50",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Para qué se usa la herramienta Swagger UI?",
+        "a": [
+          "Para la indexación de ficheros en un agregador de logs.",
+          "Para la documentación de APIs REST.",
+          "Para revisar la accesibilidad de un sitio web.",
+          "Para el desarrollo de interfaces de usuario multidispositivo."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-62",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En el ámbito de la accesibilidad, ¿cuál de los siguientes contenidos está exento de cumplimiento de accesibilidad del Real Decreto 1112/2018, de 7 de septiembre, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público?",
+        "a": [
+          "Información textual y no textual.",
+          "Documentos pdf.",
+          "Documentos en formato de archivo ofimático.",
+          "Contenido multimedia en directo."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-68",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En el ámbito del diseño web, NO es un objetivo del diseño responsive:",
+        "a": [
+          "Adaptarse la interfaz de usuario al tamaño de la pantalla del dispositivo.",
+          "Evitar el scroll vertical.",
+          "Permitir la correcta visualización en diferentes dispositivos.",
+          "Mejorar la experiencia de navegación para los usuarios."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-75",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Qué afirmación sobre accesibilidad es FALSA?",
+        "a": [
+          "Se pueden crear documentos accesibles en formato PDF.",
+          "Se puede utilizar JavaScript sin romper la accesibilidad si se respetan las pautas de WAI-ARIA.",
+          "No es aconsejable utilizar Flash como medio principal para ofrecer contenidos.",
+          "Se puede utilizar JavaScript sin romper la accesibilidad; basta con respetar la especificación ECMAScript 5.1, alineada con ISO/IEC 16262:2011."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-76",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes herramientas es un lector de pantallas para las personas invidentes?",
+        "a": [
+          "Jaws.",
+          "Lynx.",
+          "Hera.",
+          "Web Accessibility Toolbar."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-61",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En el contexto de accesibilidad, ¿en qué nivel de criterios de conformidad de las pautas de accesibilidad para el contenido web WCAG 2.2 se especifica \"Proporcionar subtítulos para todo el contenido de audio en directo de los multimedia sincronizados\"?",
+        "a": [
+          "Nivel A.",
+          "Nivel AA.",
+          "Nivel AAA.",
+          "No figura en ningún nivel especificado en las pautas WCAG 2.2."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-51",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En el contexto de la accesibilidad de los contenidos web, señale la respuesta FALSA:",
+        "a": [
+          "La norma UNE 139803:2012 anula y sustituye la UNE 139803:2004.",
+          "La norma que establece los requisitos de accesibilidad para los contenidos web es la UNE 139803:2012.",
+          "La norma UNE 139803:2012 no es aplicable al software utilizado para acceder a los contenidos web.",
+          "La UNE 139803:2012 se basa en las Pautas de Accesibilidad para el Contenido Web (WCAG) en su versión 1.0."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          6
+        ],
+        "d": 3,
+        "n": "Normas UNE de accesibilidad."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT309-P1-04",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Qué principio de WCAG 2.2 se corresponde con «la información y los componentes de la interfaz de usuario deben presentarse a los usuarios de formas que puedan percibir»?",
+        "a": [
+          "Perceptible.",
+          "Operable.",
+          "Comprensible.",
+          "Robusto."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Corrección técnica del original: el Test T3.09 p. 2 decía entender pero la plantilla p. 12 marca A. WCAG 2.2, principio 1, utiliza percibir; el principio 3 es comprender. Se corrige la definición, no la clave A (c=0). Fuente: https://www.w3.org/TR/WCAG22/#perceivable"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 181,
+    "alreadyHadCitation": 78,
+    "added": 11,
+    "pending": 92,
+    "withCitation": 89
+  }
+}

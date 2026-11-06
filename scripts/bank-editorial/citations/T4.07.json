@@ -1,0 +1,2633 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T4.07",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "1ae2cf58ebbf7e70182302b55c0dadb1baf815ab28304a8da5f5e5b3fbed1731",
+    "afterSha256": "e190cf31ab7d981de95107ea70d7d1c81a1439983f7f6a597a75db0e23a74dd0"
+  },
+  "sample": {
+    "beforeSha256": "a888c0eb5a77c9f38e1edeece498c962faa5b38ed2fdb5f3c481da687ef8f264",
+    "afterSha256": "a888c0eb5a77c9f38e1edeece498c962faa5b38ed2fdb5f3c481da687ef8f264"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-L2025A-P1-71": {
+      "path": "T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Temario.pdf",
+      "sourceHash": "8c96987feee2c1ddade9129a46a22faf3166f37a58524261b7ec3818e5f1fb58",
+      "physicalPage": 15,
+      "printedPage": 15,
+      "excerpt": "Capa de PRESENTACIÓN (nivel 6) A diferencia de las capas inferiores, las explicadas hasta ahora, que se ocupan sólo del movimiento fiable de bits de un lado a otro, la capa de presentación se encarga de la sintaxis y la semántica de la información que se transmite. Además, aísla a dichas capas inferiores del formato de los datos de las aplicaciones específicas. Las estructuras de datos a intercambiar se deben definir de forma abstracta, mediante la codificación de estos datos de una manera estándar acordada, haciendo posible así la comunicación entre computadoras con representaciones locales diferentes. La capa de presentación maneja estas estructuras de datos abstractas y las convierte de la representación de la computadora a la representación estándar de la red y viceversa. Además de esta funcionalidad, la capa de presentación ofrece a la de aplicación los servicios de: - Garantía de que la información que envía la capa de aplicación de un sistema pueda ser entendida y utilizada por la capa de aplicación de otro sistema. - Acuerdo y negociación de la sintaxis de transferencia en la fase de establecimiento de la conexión. La sintaxis elegida puede ser cambiada durante el tiempo que dure la conexión. o Definición del código a utilizar para representar una cadena de caracteres (ASCII, EBCDIC, etc.). o Interpretación de formatos de números... - COMPRESIÓN de los datos, si es necesario. - Aplicación de procesos CRIPTOGRÁFICOS, si así se requiere. Es el nivel clave para el sistema de seguridad del modelo OSI. - Formateo de la información para su visualización o impresión.",
+      "label": "OSI — presentación, sintaxis, cifrado y compresión"
+    },
+    "e-AT407-P1-10": {
+      "path": "T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Temario.pdf",
+      "sourceHash": "8c96987feee2c1ddade9129a46a22faf3166f37a58524261b7ec3818e5f1fb58",
+      "physicalPage": 28,
+      "printedPage": 28,
+      "excerpt": "Clase A 10.0.0.0/8 10.x.y.z Clase B 172.16.0.0/12 172.16.0.0 - 172.31.255.255 Clase C 192.168.0.0/16 192.168.x.y",
+      "label": "Pasaje del temario"
+    },
+    "e-AS12B-P1-62": {
+      "path": "T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Temario.pdf",
+      "sourceHash": "8c96987feee2c1ddade9129a46a22faf3166f37a58524261b7ec3818e5f1fb58",
+      "physicalPage": 14,
+      "printedPage": 14,
+      "excerpt": "Por tanto, la función principal de la capa de sesión es el establecimiento, administración y finalización ordenada de sesiones entre dos máquinas. Una sesión permite el transporte ordinario de datos, como efectuar un login a un sistema remoto o transferir un archivo entre dos nodos, pero también proporciona servicios mejorados, útiles en algunas aplicaciones, como los que se detallan a continuación: - Manejo del CONTROL DEL DIÁLOGO (quién habla, cuándo, cuánto tiempo, half duplex o full duplex). Las sesiones pueden permitir que el tráfico vaya en una única dirección, comunicaciones bidireccionales alternadas (half duplex), o en ambas direcciones al mismo tiempo, comunicaciones bidireccionales simultáneas (full duplex). En las comunicaciones half duplex, la capa de sesión ayuda a llevar el control de los turnos, mediante el manejo de fichas, también llamadas testigos o token. Sólo el lado que posea la ficha puede efectuar la operación. - SINCRONIZACIÓN del diálogo, mediante la inserción de puntos de verificación en la corriente de datos (APDU), de modo que si se produce una interrupción sólo es necesario repetir la transferencia de los datos después del último punto de verificación. La decisión de dónde colocar los puntos de sincronización es competencia directa del nivel de aplicación.",
+      "label": "OSI — sesión, diálogo y sincronización tras interrupciones"
+    }
+  },
+  "questions": [
+    {
+      "id": "L2025A-P1-71",
+      "before": {
+        "i": "L2025A-P1-71",
+        "t": "T4.07",
+        "o": "O",
+        "q": "Dentro del modelo de referencia OSI, ¿qué capa tiene como función principal la negociación de la sintaxis de transferencia y la aplicación de transformaciones de datos tales como el cifrado y la compresión?",
+        "a": [
+          "Capa de sesión.",
+          "Capa de presentación.",
+          "Capa de aplicación.",
+          "Capa de transporte."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Capas OSI hermanas.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "after": {
+        "i": "L2025A-P1-71",
+        "t": "T4.07",
+        "o": "O",
+        "q": "Dentro del modelo de referencia OSI, ¿qué capa tiene como función principal la negociación de la sintaxis de transferencia y la aplicación de transformaciones de datos tales como el cifrado y la compresión?",
+        "a": [
+          "Capa de sesión.",
+          "Capa de presentación.",
+          "Capa de aplicación.",
+          "Capa de transporte."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Capas OSI hermanas.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1,
+        "u": "T4.07 Modelo TCP y OSI - Temario.pdf — OSI — presentación, sintaxis, cifrado y compresión\n\nTemario, p. 15 (PDF p. 15)\n\nCapa de PRESENTACIÓN (nivel 6) A diferencia de las capas inferiores, las explicadas hasta ahora, que se ocupan sólo del movimiento fiable de bits de un lado a otro, la capa de presentación se encarga de la sintaxis y la semántica de la información que se transmite. Además, aísla a dichas capas inferiores del formato de los datos de las aplicaciones específicas. Las estructuras de datos a intercambiar se deben definir de forma abstracta, mediante la codificación de estos datos de una manera estándar acordada, haciendo posible así la comunicación entre computadoras con representaciones locales diferentes. La capa de presentación maneja estas estructuras de datos abstractas y las convierte de la representación de la computadora a la representación estándar de la red y viceversa. Además de esta funcionalidad, la capa de presentación ofrece a la de aplicación los servicios de: - Garantía de que la información que envía la capa de aplicación de un sistema pueda ser entendida y utilizada por la capa de aplicación de otro sistema. - Acuerdo y negociación de la sintaxis de transferencia en la fase de establecimiento de la conexión. La sintaxis elegida puede ser cambiada durante el tiempo que dure la conexión. o Definición del código a utilizar para representar una cadena de caracteres (ASCII, EBCDIC, etc.). o Interpretación de formatos de números... - COMPRESIÓN de los datos, si es necesario. - Aplicación de procesos CRIPTOGRÁFICOS, si así se requiere. Es el nivel clave para el sistema de seguridad del modelo OSI. - Formateo de la información para su visualización o impresión.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "ebadcbef214c7b4302f1b3392de47fa0bf88428d2cf80a42e0a883ad745501ef",
+      "afterSha256": "0609a9ff100cee372f26774dd8204dc3f78fc46bda576c404bee81fd294d169a",
+      "evidenceKeys": [
+        "e-L2025A-P1-71"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT407-P1-10",
+      "before": {
+        "i": "AT407-P1-10",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Qué direcciones de clase B están reservadas para uso privado?",
+        "a": [
+          "10.0.0.0 - 10.255.255.255",
+          "172.16.0.0 - 172.31.255.255",
+          "174.16.0.0 - 174.31.255.255",
+          "192.168.0.0 - 192.168.255.255"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT407-P1-10",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Qué direcciones de clase B están reservadas para uso privado?",
+        "a": [
+          "10.0.0.0 - 10.255.255.255",
+          "172.16.0.0 - 172.31.255.255",
+          "174.16.0.0 - 174.31.255.255",
+          "192.168.0.0 - 192.168.255.255"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "u": "T4.07 Modelo TCP y OSI - Temario.pdf — Pasaje del temario\n\nTemario, p. 28 (PDF p. 28)\n\nClase A 10.0.0.0/8 10.x.y.z Clase B 172.16.0.0/12 172.16.0.0 - 172.31.255.255 Clase C 192.168.0.0/16 192.168.x.y\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "3a1e1ce4c2cb582cafff1956b80c8741d146ce9b15db34179a6c3b789c9ded45",
+      "afterSha256": "dc7eb7cd1fd9a21f3c8cbc1d79847330321257c3391b1fa5a0ec476fa2b1f284",
+      "evidenceKeys": [
+        "e-AT407-P1-10"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS12B-P1-62",
+      "before": {
+        "i": "AS12B-P1-62",
+        "t": "T4.07",
+        "o": "A",
+        "q": "La capa del modelo OSI encargada del control del diálogo y de la recuperación en caso de errores es:",
+        "a": [
+          "La capa de sesión.",
+          "La capa de aplicación.",
+          "La capa de presentación.",
+          "La capa de transporte."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Capa de sesión."
+      },
+      "after": {
+        "i": "AS12B-P1-62",
+        "t": "T4.07",
+        "o": "A",
+        "q": "La capa del modelo OSI encargada del control del diálogo y de la recuperación en caso de errores es:",
+        "a": [
+          "La capa de sesión.",
+          "La capa de aplicación.",
+          "La capa de presentación.",
+          "La capa de transporte."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Capa de sesión.",
+        "u": "T4.07 Modelo TCP y OSI - Temario.pdf — OSI — sesión, diálogo y sincronización tras interrupciones\n\nTemario, p. 14 (PDF p. 14)\n\nPor tanto, la función principal de la capa de sesión es el establecimiento, administración y finalización ordenada de sesiones entre dos máquinas. Una sesión permite el transporte ordinario de datos, como efectuar un login a un sistema remoto o transferir un archivo entre dos nodos, pero también proporciona servicios mejorados, útiles en algunas aplicaciones, como los que se detallan a continuación: - Manejo del CONTROL DEL DIÁLOGO (quién habla, cuándo, cuánto tiempo, half duplex o full duplex). Las sesiones pueden permitir que el tráfico vaya en una única dirección, comunicaciones bidireccionales alternadas (half duplex), o en ambas direcciones al mismo tiempo, comunicaciones bidireccionales simultáneas (full duplex). En las comunicaciones half duplex, la capa de sesión ayuda a llevar el control de los turnos, mediante el manejo de fichas, también llamadas testigos o token. Sólo el lado que posea la ficha puede efectuar la operación. - SINCRONIZACIÓN del diálogo, mediante la inserción de puntos de verificación en la corriente de datos (APDU), de modo que si se produce una interrupción sólo es necesario repetir la transferencia de los datos después del último punto de verificación. La decisión de dónde colocar los puntos de sincronización es competencia directa del nivel de aplicación.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "d837dacd690214ffae4e0c973deca418ecee5f3a9cd084a801c7ab6e0fb2698e",
+      "afterSha256": "e7e885e6a4dd60f35b5dc74c15a584fd1581c20cd4ce5b76523da73cd600941b",
+      "evidenceKeys": [
+        "e-AS12B-P1-62"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-58",
+        "t": "T4.07",
+        "o": "O",
+        "q": "¿Qué protocolo hay que utilizar para obtener una dirección física a partir de una dirección lógica?",
+        "a": [
+          "RARP.",
+          "NAT.",
+          "ARP.",
+          "PAT."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          8,
+          13
+        ],
+        "d": 1,
+        "n": "RARP hace lo inverso; NAT/PAT son de otra familia.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-72",
+        "t": "T4.07",
+        "o": "O",
+        "q": "Relativa al direccionamiento IPv4, indique la respuesta INCORRECTA:",
+        "a": [
+          "La dirección 172.16.52.63 es una dirección de clase B.",
+          "Las direcciones 192.168.123.71 y 192.168.123.133 con máscara de subred 255.255.255.192 se encuentran en la misma red.",
+          "Las redes de clase A usan una máscara de subred predeterminada de 255.0.0.0.",
+          "En las redes clase C se permite direccionar 254 equipos como máximo."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": 2,
+        "n": "Subred /26: .71 y .133 caen en subredes distintas.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-73",
+        "t": "T4.07",
+        "o": "O",
+        "q": "¿Cuál es la respuesta correcta con respecto modelo TCP/IP?",
+        "a": [
+          "La arquitectura TCP/IP tiene cinco capas o niveles: Acceso a red, Internet, Transporte, Sesión y Aplicación.",
+          "TCP y UDP son protocolos de la capa de Internet.",
+          "Telnet es un protocolo de la capa de sesión.",
+          "ICMP es un protocolo de la capa de Internet."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          11,
+          7
+        ],
+        "d": 2,
+        "n": "Mete la capa de sesión de OSI en TCP/IP: contaminación entre modelos.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-74",
+        "t": "T4.07",
+        "o": "O",
+        "q": "¿Cuál de las siguientes respuestas es correcta respecto al modelo OSI de ISO?",
+        "a": [
+          "Las capas o niveles del modelo OSI son: Física, de red, de transporte, de sesión, de presentación y de aplicación.",
+          "La versión actual del estándar OSI es la ISO/IEC 7498-1:1994.",
+          "La capa de transporte se ocupa, entre otros, de aspectos como el enrutamiento, el reenvío y el direccionamiento a través de una red.",
+          "La capa de sesión a menudo se divide en dos subcapas: la capa de control de acceso a los medios (MAC) y la capa de control de enlace lógico (LLC)."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "a) lista sin la capa de enlace; c) y d) funciones de otras capas. La correcta es un número de norma.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)",
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-73",
+        "t": "T4.07",
+        "o": "O",
+        "q": "¿Cuál es el prefijo de dirección de Multicast en IPv6?",
+        "a": [
+          "::1/128",
+          "224.0.0.0/4",
+          "FF00::/8",
+          "FC00::/7"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Prefijos hermanos: loopback, multicast IPv4, ULA.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-74",
+        "t": "T4.07",
+        "o": "O",
+        "q": "Seleccione la respuesta correcta sobre los niveles y servicios del modelo OSI:",
+        "a": [
+          "El modelo OSI se compone de 7 niveles, pero se pude asimilar a un modelo de referencia simplificado de solamente 2 niveles: TCP (Niveles 1 a 4) e IP (Niveles 5, 6 y 7).",
+          "Las entidades en un nivel N+1 ofrecen servicios que son utilizados por las entidades del nivel N.",
+          "Un servicio confirmado utiliza las 4 primitivas de comunicación entre capas: Request, Indication, Response, Confirm.",
+          "Un servicio no confirmado utiliza 3 de las 4 primitivas: Request, Indication, Response."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          8,
+          2
+        ],
+        "d": 3,
+        "n": "b) invierte N y N+1; d) \"3 de las 4 primitivas\" mal elegidas; a) modelo inventado de 2 niveles.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-72",
+        "t": "T4.07",
+        "o": "O",
+        "q": "¿Cuál es el prefijo para las direcciones multicast en el protocolo IPv6?",
+        "a": [
+          "FF80::/10",
+          "FF00::/8",
+          "FE00::/8",
+          "FE80::/10"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Prefijos IPv6 hermanos (se repite en 2022 P73).",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-80",
+        "t": "T4.07",
+        "o": "O",
+        "q": "En relación a TCP y UDP indique cuál de las siguientes características NO es correcta:",
+        "a": [
+          "TCP es fiable.",
+          "UDP obliga al nivel de red a verificar que el envío es correcto.",
+          "TCP trabaja con un flujo de bytes.",
+          "UDP es un protocolo sin conexión."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "b) atribuye a UDP una verificación que no hace.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-73",
+        "t": "T4.07",
+        "o": "O",
+        "q": "Dada la red 10.0.0.0/8, se necesitan crear 600 subredes. ¿Cuál es la máscara de subred mínima que satisface este requisito?",
+        "a": [
+          "/17",
+          "/18",
+          "/16",
+          "/19"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 2,
+        "n": "600 subredes: 2^10 → /18.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-74",
+        "t": "T4.07",
+        "o": "O",
+        "q": "Según establece la RFC 8200, ¿cuál es el propósito del campo \"Hop Limit\" en la cabecera fija de IPv6?",
+        "a": [
+          "Determinar la prioridad de la calidad de servicio (QoS) del paquete.",
+          "Indicar el número máximo de saltos que un paquete puede dar antes de ser descartado.",
+          "Especificar el tamaño total de la carga útil del paquete.",
+          "Identificar el tipo de cabecera de extensión que sigue a la cabecera fija."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Campos de la cabecera IPv6.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-73",
+        "t": "T4.07",
+        "o": "O",
+        "q": "Señale la respuesta correcta con respecto a CG-NAT:",
+        "a": [
+          "Es una solución de los operadores que hace que muchos clientes se conecten a Internet utilizando la misma dirección IPv4.",
+          "Es una solución que hace que muchos clientes que se conectan a Internet utilicen varias direcciones IP.",
+          "Es una solución que permite la asignación de varias direcciones IP privadas a una dirección IP pública entre direcciones locales y globales.",
+          "Es una solución que permite la creación de una red de área extensa definida por software."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "CG-NAT frente a NAT y SD-WAN.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-74",
+        "t": "T4.07",
+        "o": "O",
+        "q": "De entre las siguientes direcciones IPv4, ¿cuál es la que pertenece a la Clase A?",
+        "a": [
+          "2.17.39.162",
+          "142.250.200.131",
+          "239.255.255.255",
+          "192.168.0.59"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 1,
+        "n": "Clase A por rango.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-46",
+        "t": "T4.07",
+        "o": "O",
+        "q": "¿Cuál de los siguientes es un protocolo de nivel de transporte de TCP/IP?",
+        "a": [
+          "SMTP",
+          "ARP",
+          "UDP",
+          "FTP"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "UDP frente a protocolos de otras capas.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-47",
+        "t": "T4.07",
+        "o": "O",
+        "q": "El orden ascendente que siguen las capas del modelo OSI es:",
+        "a": [
+          "Física, Enlace, Red, Transporte, Sesión, Presentación y Aplicación.",
+          "Física, Enlace, Red, Transporte, Presentación, Sesión y Aplicación.",
+          "Física, Enlace, Transporte, Red, Sesión, Aplicación y Presentación.",
+          "Física, Enlace, Red, Transporte, Sesión, Aplicación y Presentación."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "Orden de las capas OSI (catálogo 8).",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-45",
+        "t": "T4.07",
+        "o": "O",
+        "q": "¿Cuál de los siguientes NO es un protocolo de nivel de Red (OSI nivel 3)?",
+        "a": [
+          "BGP",
+          "ARP",
+          "FTP",
+          "RIP"
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "FTP no es de nivel 3.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-46",
+        "t": "T4.07",
+        "o": "O",
+        "q": "¿Cuál es la el prefijo de dirección de Multicast en IPv6?",
+        "a": [
+          "::1/128",
+          "224.0.0.0/4",
+          "FF00::/8",
+          "FC00::/7"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "= 2022 L P73.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-R-05",
+        "t": "T4.07",
+        "o": "O",
+        "q": "Señale cuál es el valor del campo Tipo del protocolo ICMPv6 cuyo mensaje de error es “Paquete demasiado Grande”:",
+        "a": [
+          "2",
+          "4",
+          "1",
+          "3"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 3,
+        "n": "Tipo ICMPv6.",
+        "y": "Promoción interna OEP 2022 (2023)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-44",
+        "t": "T4.07",
+        "o": "O",
+        "q": "Indique la respuesta INCORRECTA:",
+        "a": [
+          "La capa de sesión del modelo OSI está incluida en la capa de aplicación del modelo TCP/IP.",
+          "La capa de acceso de red del modelo TCP/IP se corresponde con la capa de red del modelo OSI.",
+          "La capa de presentación del modelo OSI está incluida en la capa de aplicación del modelo TCP/IP.",
+          "La capa de transporte del modelo TCP/IP se corresponde con la capa de transporte del modelo OSI."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          11
+        ],
+        "d": 2,
+        "n": "Correspondencia de capas OSI y TCP/IP.",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2025A-P1-45",
+        "t": "T4.07",
+        "o": "O",
+        "q": "En el saludo de tres vías (Three-way handshake) de TCP, ¿qué flag o flags se activan en el segundo paso?",
+        "a": [
+          "Solo INIT.",
+          "Solo ACK.",
+          "SYN y ACK.",
+          "SYN y FIN."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Flags del handshake TCP (\"INIT\" inventado).",
+        "y": "Promoción interna convocatoria 2025"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-83",
+        "t": "T4.07",
+        "o": "O",
+        "q": "Indique el protocolo que permite conocer la dirección IP asociada a una dirección MAC:",
+        "a": [
+          "ARP",
+          "BOOTP",
+          "RARP",
+          "LSMAC"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "RARP frente a ARP (dirección invertida).",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-90",
+        "t": "T4.07",
+        "o": "O",
+        "q": "En cuanto al modelo de interconexión de sistemas abiertos OSI, escoja la opción correcta:",
+        "a": [
+          "Las unidades de información de la capa de transporte se denominan paquetes.",
+          "Cada capa presta servicios a la capa inferior.",
+          "La capa de transporte trabaja siempre con protocolos no orientados a conexión.",
+          "La capa de presentación se encarga del formato de los datos que se van a intercambiar entre las aplicaciones."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          8,
+          12
+        ],
+        "d": 2,
+        "n": "OSI: dirección de servicios invertida, \"siempre\".",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-91",
+        "t": "T4.07",
+        "o": "O",
+        "q": "Señale la opción INCORRECTA con respecto al protocolo IPv4:",
+        "a": [
+          "La transmisión de datos se realiza mediante datagramas (paquetes IP).",
+          "Es orientado a conexión, por lo que los paquetes son tratados de forma conjunta.",
+          "No es fiable, por lo que no garantiza la entrega de paquetes, ni la entrega en secuencia.",
+          "En su cabecera incluye el campo Checksum."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "IPv4 orientado a conexión.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-92",
+        "t": "T4.07",
+        "o": "O",
+        "q": "De entre las siguientes opciones de direcciones IPv4, ¿cuáles son dos direcciones asignables a dos host en distintas redes?",
+        "a": [
+          "190.11.255.255 y 190.10.30.40",
+          "19.24.48.35 y 19.132.250.35",
+          "246.2.8.44 y 246.2.240.3",
+          "213.45.128.8 y 213.45.126.74"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 3,
+        "n": "Direcciones asignables en redes distintas.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-45",
+        "t": "T4.07",
+        "o": "O",
+        "q": "IPv6, el campo \"Clase de Tráfico\" tiene un tamaño de:",
+        "a": [
+          "6bits.",
+          "8bits.",
+          "10bits.",
+          "12bits."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Clase de Tráfico de IPv6: 8 bits.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-46",
+        "t": "T4.07",
+        "o": "O",
+        "q": "Según el modelo OSI, ¿en qué capa quedaría encuadrado el protocolo RPC?",
+        "a": [
+          "Capa red.",
+          "Capa transporte.",
+          "Capa sesión.",
+          "Capa presentación."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "RPC en la capa de sesión.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-47",
+        "t": "T4.07",
+        "o": "O",
+        "q": "Indique cuál de las siguientes direcciones IPv4 es una dirección IP clase B asignable:",
+        "a": [
+          "10.16.7.2",
+          "192.168.25.34",
+          "172.16.256.22",
+          "183.45.33.12"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 2,
+        "n": "Clase B asignable (privadas e IP imposible como trampa).",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-01",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Qué significan las siglas de OSI?",
+        "a": [
+          "Operative System Integration.",
+          "Open System Interconnection.",
+          "Operative System Information.",
+          "Open System Information."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-02",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿De cuántos niveles se compone el modelo OSI?",
+        "a": [
+          "4.",
+          "5.",
+          "6.",
+          "7."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-03",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Qué nombre reciben las 4 capas del modelo TCP/IP?",
+        "a": [
+          "Aplicación, Transporte, red, física.",
+          "Aplicación, Transporte, Internet, física.",
+          "Aplicación, Transporte, red, acceso a la red.",
+          "Aplicación, Transporte, Internet, acceso a la red."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-04",
+        "t": "T4.07",
+        "o": "A",
+        "q": "El conjunto de reglas que determinan el comportamiento de comunicación horizontal entre entidades pares en el modelo OSI se denomina:",
+        "a": [
+          "Servicio.",
+          "Interfaz.",
+          "Protocolo.",
+          "Ninguna de los anteriores."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-05",
+        "t": "T4.07",
+        "o": "A",
+        "q": "El protocolo IP:",
+        "a": [
+          "Está orientado a conexión.",
+          "No garantiza la entrega de los paquetes ni la entrega en secuencia, ni la entrega única.",
+          "Verifica la integridad del paquete y de los datos que contiene.",
+          "Direcciona los paquetes empleando direcciones físicas IP de 64 bits."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-06",
+        "t": "T4.07",
+        "o": "A",
+        "q": "La dirección 115.40.110.15 es de clase:",
+        "a": [
+          "B.",
+          "A.",
+          "D.",
+          "C."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Clase de una IPv4."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-07",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Qué máscara de subred se utilizaría en una red clase B?",
+        "a": [
+          "255.255.255.255",
+          "255.255.255.0",
+          "255.255.0.0",
+          "255.0.0.0"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-08",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuál es la dirección reservada que utiliza un host inicialmente?",
+        "a": [
+          "0.0.0.0",
+          "127.0.0.1",
+          "255.255.255.255",
+          "No existe una inicial."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-09",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿En qué RFC se define el protocolo IPv4?",
+        "a": [
+          "RFC 791.",
+          "RFC 793.",
+          "RFC 795.",
+          "RFC 707."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-12",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Qué protocolo se encuentra en la misma capa que el protocolo IP?",
+        "a": [
+          "TCP.",
+          "UDP.",
+          "NTP.",
+          "ARP."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-15",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuál es la función principal del protocolo ICMP?",
+        "a": [
+          "Convertir direcciones físicas en direcciones IP.",
+          "Convertir direcciones IP en direcciones físicas.",
+          "Estar orientado a conexión y proporcionar una conexión full-duplex fiable.",
+          "Manejar el control de la información y de errores entre el router y el host."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-16",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Sobre el protocolo IPv6, señale la respuesta correcta:",
+        "a": [
+          "Incrementa el tamaño de dirección IP a 32 bits.",
+          "Implementa broadcast.",
+          "Introduce QoS al permitir el etiquetado de flujos.",
+          "No soporta cifrado."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-17",
+        "t": "T4.07",
+        "o": "A",
+        "q": "El número de bits del campo Etiqueta de flujo en IPv6 es:",
+        "a": [
+          "8.",
+          "16.",
+          "20.",
+          "24."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-18",
+        "t": "T4.07",
+        "o": "A",
+        "q": "La capa Internet de la arquitectura TCP/IP tiene como misión:",
+        "a": [
+          "Proporcionar comunicación entre procesos en ordenadores distintos.",
+          "Enrutar los paquetes, sin garantía de llegada al extremo final ni en orden.",
+          "Proporcionar transferencia de datos extremo a extremo.",
+          "Proporcionar transferencia de datos extremo a extremo, garantizando la llegada y el orden de los paquetes."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-19",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Un segmento TCP:",
+        "a": [
+          "Comienza con una cabecera de 32 bits.",
+          "Comienza indicando el puerto origen y destino y a continuación el número de secuencia.",
+          "Finaliza con un acuse de recibo o un mensaje de control.",
+          "Comienza con una cabecera de como mínimo 20 bytes."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Cabecera TCP de 20 bytes."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-20",
+        "t": "T4.07",
+        "o": "A",
+        "q": "En IPv6, ¿qué valor tendrá el campo siguiente cabecera si el tipo es autenticación?",
+        "a": [
+          "17.",
+          "43.",
+          "44.",
+          "51."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-21",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuáles son los tipos de direcciones de IPv6?",
+        "a": [
+          "Unicast, multicast y broadcast.",
+          "Anycast, multicast y broadcast.",
+          "Multicast, anycast y broadcast.",
+          "Unicast, multicast y anycast."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-22",
+        "t": "T4.07",
+        "o": "A",
+        "q": "De entre de los puertos \"bien conocidos\", el puerto 23 está reservado a:",
+        "a": [
+          "FTP.",
+          "SSH.",
+          "Telnet.",
+          "HTTP."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-23",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuál de los siguientes protocolos da a conocer la dirección IP que se corresponde con la dirección física de un host?",
+        "a": [
+          "ARP.",
+          "RARP.",
+          "PPP.",
+          "UDP."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-25",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Respecto al protocolo ICMP, señale la respuesta INCORRECTA:",
+        "a": [
+          "Es utilizado por las herramientas ping y traceroute, que envían mensajes de petición echo ICMP.",
+          "Es un protocolo de mensajes de control y error.",
+          "Es un protocolo de nivel de red que sólo se encarga de la notificación de errores.",
+          "Uno de sus usos se produce cuando el TTL de un datagrama llega a 0, descartándose y enviándose un mensaje ICMP."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-26",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA sobre el protocolo IP:",
+        "a": [
+          "Verifica la integridad de la cabecera pero no de los datos.",
+          "Admite fragmentación de paquetes.",
+          "Es fiable en cuanto a que garantiza la entrega de paquetes.",
+          "Es no orientado a conexión."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-27",
+        "t": "T4.07",
+        "o": "A",
+        "q": "En el protocolo Internet Protocol versión 6 (IPv6), ¿cuál es la afirmación INCORRECTA?",
+        "a": [
+          "Sólo se permite fragmentar en el origen.",
+          "No tiene un mecanismo equivalente al del bit Don't Fragment (DF) de IPv4.",
+          "Se requiere que todos los enlaces tengan un MTU de 1500 octetos o mayor.",
+          "Un jumbograma es un paquete IPv6 que contiene una carga útil (payload) mayor que 65535 octetos."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-28",
+        "t": "T4.07",
+        "o": "A",
+        "q": "El RFC que define las especificaciones del protocolo IPv6 es:",
+        "a": [
+          "RFC 3161.",
+          "RFC 2373.",
+          "RFC 2250.",
+          "RFC 2460."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7,
+          9
+        ],
+        "d": 3,
+        "n": "RFC de IPv6 (2460, ya sustituido por 8200). Caducable.",
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-29",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Cuál NO es un tipo de dirección en IPv6:",
+        "a": [
+          "Unycast.",
+          "Multicast.",
+          "Anycast.",
+          "Broadcast."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-30",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Las direcciones IPv6 mapeadas desde IPv4 tienen el formato:",
+        "a": [
+          "::FFFF:<dirección IPv4>",
+          "::EEEE:<dirección IPv4>",
+          "::DDDD:<dirección IPv4>",
+          "::AAAA:<dirección IPv4>"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-31",
+        "t": "T4.07",
+        "o": "A",
+        "q": "La cabecera de un datagrama IPv6:",
+        "a": [
+          "Es de longitud variable.",
+          "Es de longitud fija, 40 bytes.",
+          "Contiene un campo etiqueta de flujo de 16 bits.",
+          "Contiene un campo, Longitud de carga útil, que almacena el tamaño del paquete: cabecera más cabeceras de extensión más datos."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-32",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Cuál de las siguientes NO es una cabecera de extensión IPv6:",
+        "a": [
+          "Autenticación.",
+          "Opciones en destino.",
+          "Opciones en origen.",
+          "ESP."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-33",
+        "t": "T4.07",
+        "o": "A",
+        "q": "En el modelo OSI, ¿qué nivel se encarga de la representación y formato de datos, la compresión y cifrado de los mismos y las conversiones de formato?",
+        "a": [
+          "Aplicación.",
+          "Presentación.",
+          "Sesión.",
+          "Transporte."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-34",
+        "t": "T4.07",
+        "o": "A",
+        "q": "La cabecera de un segmento TCP contiene un campo de flags. Indiqué qué flag NO se almacena en dicho campo:",
+        "a": [
+          "PSH.",
+          "END.",
+          "URG.",
+          "FIN."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-35",
+        "t": "T4.07",
+        "o": "A",
+        "q": "El campo Posición del Fragmento de la cabecera de un datagrama IPv4 tiene una longitud de:",
+        "a": [
+          "8 bits.",
+          "16 bits.",
+          "12 bits.",
+          "13 bits."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-36",
+        "t": "T4.07",
+        "o": "A",
+        "q": "En el modelo OSI, el nivel que añade mecanismos de control a los datos, que permiten mantener, establecer, sincronizar y gestionar el diálogo entre las aplicaciones que se comunican es:",
+        "a": [
+          "Transporte.",
+          "Sesión.",
+          "Presentación.",
+          "Aplicación."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-37",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Cuando un sistema en una red local envía un datagrama IP a otro sistema en una subred distinta, utiliza el protocolo ARP para obtener:",
+        "a": [
+          "La dirección MAC del sistema final destino.",
+          "La dirección IP del sistema final destino.",
+          "La identificación del puerto TCP o UDP del sistema final destino.",
+          "La dirección MAC del router."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-38",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuál de los siguientes rangos de direcciones IP asignables corresponde a una red de clase A?",
+        "a": [
+          "0.0.0.0 – 126.255.255.255",
+          "1.0.0.0 – 127.255.255.255",
+          "1.0.0.0 – 126.255.255.255",
+          "0.0.0.0 – 127.255.255.255"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-39",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Los rangos de IP de la clase D son reservados para:",
+        "a": [
+          "broadcast.",
+          "multicast.",
+          "anycast.",
+          "Ninguno de los anteriores."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-40",
+        "t": "T4.07",
+        "o": "A",
+        "q": "En IPv6 la característica anycast permite:",
+        "a": [
+          "Enviar paquetes a todas las direcciones de un grupo.",
+          "Enviar paquetes a cualquier miembro de un grupo de nodos.",
+          "Recibir paquetes de cualquier nodo de la red.",
+          "Anunciar la presencia de receptores en la red a posibles emisores."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-41",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿A qué capa del modelo OSI pertenecen los protocolos TCP y UDP?",
+        "a": [
+          "Sesión.",
+          "Transporte.",
+          "Red.",
+          "Enlace."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-42",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Qué protocolo de los siguientes opera sobre UDP?",
+        "a": [
+          "ARP.",
+          "DNS.",
+          "Telnet.",
+          "Todos ellos operan sobre UDP."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-43",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Qué ventajas aporta TCP sobre UDP?",
+        "a": [
+          "TCP permite enviar paquetes mucho más largos mejorando el rendimiento de la aplicación.",
+          "TCP utiliza una cabecera más pequeña que la de UDP.",
+          "TCP incluye un mecanismo de reintento de transmisión para prevenir paquetes perdidos.",
+          "Ninguna de las anteriores."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-44",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿A cuál de las siguientes redes pertenece el host 192.168.14.2?",
+        "a": [
+          "192.168.10.0/22",
+          "192.168.11.0/21",
+          "192.168.14.0/23",
+          "192.168.13.0/24"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-45",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Qué es la MTU en un paquete IP?",
+        "a": [
+          "El máximo uso de transmisión.",
+          "La mayor unidad posible de datos que puede ser enviada a través de un medio físico.",
+          "El tamaño del paquete IP.",
+          "Solo se utiliza en IPv6."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-46",
+        "t": "T4.07",
+        "o": "A",
+        "q": "En el modelo OSI, la Capa de Enlace de Datos transmite los bits en:",
+        "a": [
+          "Paquetes.",
+          "Segmentos.",
+          "Tramas.",
+          "Transportes."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-48",
+        "t": "T4.07",
+        "o": "A",
+        "q": "En el modelo OSI, ¿qué capa es la encargada de encaminar los datos hacia su destino eligiendo la ruta más efectiva?",
+        "a": [
+          "Capa Física.",
+          "Capa Red.",
+          "Capa Presentación.",
+          "Capa Enlace."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-49",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿En qué capa del modelo OSI se convierte la información codificada en Unos (1) y Ceros (0), en una señal digital?",
+        "a": [
+          "Aplicación.",
+          "Física.",
+          "Transporte.",
+          "Enlace."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-50",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Se denomina \"datagrama\" al paquete de datos en la capa de:",
+        "a": [
+          "Aplicación.",
+          "Internet.",
+          "Transporte.",
+          "Acceso a red."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-51",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Respecto a las técnicas NAT de traducción de direcciones señale la respuesta correcta:",
+        "a": [
+          "Traducen direcciones IPv4 a IPv6.",
+          "Asignan direcciones IP públicas a direcciones IP privadas.",
+          "Son utilizadas por programas localizados en la CPU para manejar direcciones físicas.",
+          "Son utilizadas en los procesos de swapping y así poder realizar el intercambio de datos entre memoria principal y secundaria."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-52",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuál es el mecanismo que permite que los equipos en una red tengan un esquema de direccionamiento privado ahorrando direccionamiento público y ocultando las direcciones IP reales de las máquinas cuando se sale a Internet?",
+        "a": [
+          "Enrutamiento.",
+          "NAT.",
+          "Conmutación.",
+          "IPv6."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-53",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones es correcta?",
+        "a": [
+          "TCP y UDP son protocolos orientados a conexión.",
+          "TCP y UDP son protocolos no orientados a conexión.",
+          "TCP es un protocolo orientado a conexión.",
+          "UDP es un protocolo orientado a conexión."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-54",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuál de las siguientes respuestas es la correcta?",
+        "a": [
+          "La dirección IP 192.168.1.1 es de clase D.",
+          "La dirección IP 10.0.0.1 es de clase B.",
+          "La dirección IP 172.16.1.1 es de clase B.",
+          "La dirección IP 172.16.1.1 es de clase A."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-55",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Las capas que considera el modelo OSI son:",
+        "a": [
+          "Aplicación, Presentación, Conexión, Transporte, Red, Enlace de datos y Físico.",
+          "Aplicación, Presentación, Sesión, Transporte, Red y Físico.",
+          "Aplicación, Presentación, Conexión, Red, Enlace de datos y Cableado.",
+          "Aplicación, Presentación, Sesión, Transporte, Red, Enlace de datos y Físico."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-56",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Cuál de las siguientes afirmaciones es correcta en relación con el campo de la cabecera UDP \"Suma de Verificación\":",
+        "a": [
+          "Es obligatorio y se calcula sólo sobre la cabecera del segmento UDP.",
+          "Es opcional y se almacena como 0 si no se calcula.",
+          "En la cabecera UDP no existe el campo \"Suma de Verificación\".",
+          "Es obligatorio y se calcula sobre el segmento UDP completo."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-58",
+        "t": "T4.07",
+        "o": "A",
+        "q": "En el modelo OSI, la capa de enlace:",
+        "a": [
+          "Se encarga de envío de bits en un medio físico de transmisión.",
+          "Es la capa en la que se toman los bits que se entrega la capa física y los agrupa en cientos o miles de bits para formar los frames.",
+          "Se encarga de controlar la operación de la subred y decide como hacer que los paquetes lleguen a su destino.",
+          "Establece, administra y finaliza las sesiones de comunicación entre las entidades de la capa de aplicación."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-59",
+        "t": "T4.07",
+        "o": "A",
+        "q": "En el modelo OSI, un protocolo es:",
+        "a": [
+          "Un conjunto de reglas, semánticas y sintácticas, que utiliza un nivel N para relacionarse con el mismo nivel de otro sistema.",
+          "EI conjunto de reglas, semánticas y sintácticas, que utiliza un nivel N para relacionarse con los niveles inmediatamente superior e inferior.",
+          "El conjunto de reglas, semánticas y sintácticas, que utiliza un nivel N para utilizar servicios del sistema.",
+          "Ninguna de las anteriores."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-60",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Qué capa del modelo OSI se encarga de la detección de errores, la topología de red y el acceso al medio?",
+        "a": [
+          "La capa física.",
+          "La capa de enlace a datos.",
+          "La capa de transporte.",
+          "La capa de red."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-61",
+        "t": "T4.07",
+        "o": "A",
+        "q": "En un conjunto de paquetes IPv4 de todas las clases posibles, ¿qué número mínimo de los bits más significativos de las direcciones IP se necesita conocer para poder determinar, para todo el conjunto, cuáles pertenecen a una clase C?",
+        "a": [
+          "1.",
+          "2.",
+          "3.",
+          "4."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-62",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuántas subredes de clase A son posibles utilizar en IPv4?",
+        "a": [
+          "32.",
+          "128.",
+          "256.",
+          "512."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-63",
+        "t": "T4.07",
+        "o": "A",
+        "q": "El modelo de referencia de sistemas abiertos OSI, está definido por la norma:",
+        "a": [
+          "ISO 7498.",
+          "ISO 9001.",
+          "ISO 17799.",
+          "IS0 27003."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-64",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Dada una red de clase B, si se usa la máscara 255.255.240.0 para las subredes, ¿cuántas subredes distintas se pueden crear?",
+        "a": [
+          "2.",
+          "14.",
+          "16.",
+          "30."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-65",
+        "t": "T4.07",
+        "o": "A",
+        "q": "De las siguientes afirmaciones sobre IPv6, señale la respuesta INCORRECTA:",
+        "a": [
+          "Ofrece un espacio de direcciones prácticamente infinito.",
+          "No introduce complejidad en la red al utilizar direcciones sin clase.",
+          "Permite la introducción de parámetros de calidad en el servicio.",
+          "Define una cabecera de longitud variable."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-66",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Una máscara de subred en IPv4 es:",
+        "a": [
+          "Un patrón de 64 bits que permite distinguir en una dirección IP la parte que corresponde a la red y la parte que se asigna a los nodos.",
+          "Un patrón de 128 bits que permite distinguir en una dirección IP la parte que corresponde a la red y la parte que se asigna a los nodos.",
+          "Un patrón de 16 bits que permite distinguir en una dirección IP la parte que corresponde a la red y la parte que se asigna a los nodos.",
+          "Un patrón de 32 bits que permite distinguir en una dirección IP la parte que corresponde a la red y la parte que se asigna a los nodos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-67",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuál de las siguientes mejoras de IPv6 con respecto a IPv4 es FALSA?",
+        "a": [
+          "Aumento de la flexibilidad en el direccionamiento, a través del concepto de anycast, mediante el cual el paquete se entrega solamente a un nodo seleccionado de entre un conjunto.",
+          "Cabecera de longitud variable de hasta 100 octetos. La cabecera de longitud variable de IPv6 da mayor flexibilidad para almacenar los datos propios del encabezamiento.",
+          "Mayores capacidades de seguridad. IPv6 incluye características que permiten la autenticación y la privacidad.",
+          "Las respuestas son a) y c) son ciertas."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-68",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Indique a qué subred pertenece la siguiente dirección de broadcast 95.25.46.159:",
+        "a": [
+          "95.25.30.128/27",
+          "95.25.30.128/25",
+          "95.25.46.128/27",
+          "95.25.46.128/25"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-69",
+        "t": "T4.07",
+        "o": "A",
+        "q": "La dirección IPv4 150.214.93.12 corresponde con el ordenador (nodo) de la siguiente red /23:",
+        "a": [
+          "150.214.92.254",
+          "150.214.93.0",
+          "150.214.93.255",
+          "150.214.92.0"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-70",
+        "t": "T4.07",
+        "o": "A",
+        "q": "De las siguientes afirmaciones sobre el protocolo ICMP, ¿cuál es cierta?",
+        "a": [
+          "Está definido en las RFC 792 y 4443.",
+          "Se considera un protocolo de nivel de transporte, al ir sobre datagramas IP.",
+          "Permite conocer la dirección MAC asociada a una dirección IP.",
+          "La cabecera tiene una longitud de 4 bytes en ICMPv4 y de 8 en ICMPv6."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-87",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Qué protocolo se encarga de la traducción de direcciones IP en direcciones físicas?",
+        "a": [
+          "ifconfig.",
+          "macd.",
+          "arp.",
+          "tcpdump."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-73",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Qué información proporciona el comando tracert o traceroute?",
+        "a": [
+          "Rastrea los \"routers\" por los que pasa un paquete hasta alcanzar su destino.",
+          "Determina el protocolo de red operativo.",
+          "Determina si existe una entrada en la tabla de enrutamiento para la red de destino.",
+          "Determina si las aplicaciones de capa superior funcionan correctamente."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-84",
+        "t": "T4.07",
+        "o": "A",
+        "q": "De cara a la transmisión de voz a través de redes informáticas, ¿qué tipo de servicio sería más adecuado en la capa 2 de enlace de datos del modelo de referencia OSI (Open Systems Interconnection)?",
+        "a": [
+          "Servicio sin conexión y sin acuse de recibo.",
+          "Servicio sin conexión y con acuse de recibo.",
+          "Servicio orientado a conexión.",
+          "La capa de enlace no ofrece ningún servicio apto para la transmisión de voz."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-87",
+        "t": "T4.07",
+        "o": "A",
+        "q": "La RFC 1918 regula los rangos de direcciones reservadas para redes privadas, según dicha RFC, ¿cuál de los siguientes rangos sería INCORRECTO considerarlo como red privada?",
+        "a": [
+          "10.0.0.0 a 10.255.255.255.",
+          "192.168.0.0 a 192.168.255.255.",
+          "169.16.0.0 a 169.31.255.255.",
+          "172.16.0.0 a 172.31.255.255."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-88",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO sería una dirección válida en IPv6?",
+        "a": [
+          "FABC::A093:4520:7:3::1.",
+          "fe80::2e81:58ff:fee9:64bb/64.",
+          "fee8::2D81:58gf:fe9e:3eab.",
+          "2001:A128::32:FEDC:BA98:7865:4321."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-89",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuál es la razón fundamental para utilizar subredes?",
+        "a": [
+          "Reducir el tamaño del dominio de colisión.",
+          "Aumentar el número de direcciones de host.",
+          "Reducción del tamaño de dominio de difusión.",
+          "Ninguna de las respuestas es correcta."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-90",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Sobre el protocolo UDP, indique la respuesta correcta:",
+        "a": [
+          "Los dispositivos de destino rearman los mensajes y los transfieren a una aplicación.",
+          "Se vuelven a transmitir los paquetes de datos de los que no se realizó el acuse de recibo.",
+          "Se realiza el seguimiento de los segmentos de datos transmitidos.",
+          "No se realiza el acuse de recibo de los datos recibidos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-91",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Según el modelo de referencia de Interconexión de Sistemas Abiertos (OSI), ¿cuál de estas afirmaciones es cierta?",
+        "a": [
+          "La capa donde se garantiza un transporte confiable de la información es en la capa de transporte.",
+          "La capa de red se asegura de que los paquetes que envía al otro extremo de la conexión siempre viajan y se reciben en el mismo orden.",
+          "Una buena implementación de la capa física es aquella que evita errores en la transmisión de los paquetes de un extremo a otro de la conexión.",
+          "Se compone de 8 capas. Desde la capa física a la capa de usuario."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-97",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Según el modelo OSI, ¿en qué capa quedaría encuadrado el protocolo RPC?",
+        "a": [
+          "Capa de red.",
+          "Capa de transporte.",
+          "Capa de sesión.",
+          "Capa de presentación."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "El pasaje localizado explica la relación entre sesión y presentación pero no menciona RPC. Pendiente de encontrar una clasificación expresa y de revisar el modelo usado.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AS11B-P1-97"
+      ]
+    },
+    {
+      "question": {
+        "i": "AS12-P1-84",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un campo de la cabecera del protocolo IPv4?",
+        "a": [
+          "La longitud total del paquete.",
+          "El puerto de destino.",
+          "TTL.",
+          "El protocolo."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-87",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Respecto al protocolo IPv6, ¿cuál de las siguientes respuestas es FALSA?",
+        "a": [
+          "IPv6 no permite ni la fragmentación ni el reensamblado en routers intermedios.",
+          "IPv6 ha introducido un nuevo tipo de dirección denominado dirección anycast.",
+          "La cabecera de IPv6 tiene un campo de 12 bits para definir la clase de tráfico.",
+          "ICMPv6 incluye la funcionalidad del protocolo de gestión de grupos de Internet (IGMP), protocolo separado de ICMP en IPv4."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-88",
+        "t": "T4.07",
+        "o": "A",
+        "q": "En el protocolo TCP/IP, si a una red de clase C le asignamos la máscara 255.255.255.192, ¿cuántas subredes y cuantas direcciones de host útiles por subred tendríamos disponibles?",
+        "a": [
+          "8 subredes con 32 direcciones de host cada una.",
+          "4 subredes con 64 direcciones de host cada una.",
+          "4 subredes con 62 direcciones de host cada una.",
+          "8 subredes con 30 direcciones de host cada una."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-89",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuál de las siguientes características del protocolo IP NO es correcta?",
+        "a": [
+          "Los paquetes de información viajan independientemente por la red ya que contienen cada uno la dirección IP origen y destino.",
+          "Los datagramas pueden ser fragmentados en su camino al destino.",
+          "Los datagramas cuentan con un campo TTL que limita la vida del paquete en la red.",
+          "Los datagramas no indican parámetros de prioridades durante el tránsito por la red"
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-96",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones con respeto al modelo OSI (Modelo de referencia para la interconexión de sistemas abiertos) NO es correcta?",
+        "a": [
+          "Una de las funciones de la capa de enlace es el control de acceso al medio en las redes de difusión.",
+          "La compresión de los datos es una función de la capa de presentación.",
+          "La aplicación de procesos criptográficos corresponde a la capa de sesión.",
+          "Una de las funcionalidades básicas del nivel de red es el encaminamiento de paquetes de información."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-60",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Sobre el protocolo TCP señale la respuesta correcta:",
+        "a": [
+          "No establece una conexión entre el dispositivo emisor y el dispositivo receptor y no verifica de forma continua la emisión y recepción de la información entre ambos.",
+          "Envía los paquetes sin importar el orden.",
+          "La cabecera tiene un tamaño fijo de 20 bytes.",
+          "El campo de la cabecera “Tamaño de la ventana” indica la cantidad de bytes que pueden enviarse a partir del último byte para el que se ha recibido acuse de recibo."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          12,
+          2
+        ],
+        "d": 2,
+        "n": "TCP: negaciones y cabecera \"fija de 20 bytes\"."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-69",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Si en una cabecera IPv6 el campo “Next Header” tiene el valor 17, ¿a qué protocolo hace referencia?",
+        "a": [
+          "UDP.",
+          "SSH.",
+          "TCP.",
+          "FTP."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 3,
+        "n": "Next Header 17 = UDP."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-70",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuál de las siguientes direcciones IPv4 es válida como pública para una clase A?",
+        "a": [
+          "172.16.1.7",
+          "127.50.0.1",
+          "98.1.0.0",
+          "10.1.23.44"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 2,
+        "n": "Clase A pública frente a privadas y loopback."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-71",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Según el modelo OSI ordene de mayor a menor nivel los siguientes PDU´s:",
+        "a": [
+          "Paquete, segmento, trama.",
+          "Trama, paquete, segmento.",
+          "Segmento, paquete, trama.",
+          "Segmento, trama, paquete."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "Orden de PDU (catálogo 8)."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-78",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Indique de entre las siguientes opciones cuál es una ventaja de IPv6 sobre IPv4:",
+        "a": [
+          "Las direcciones IPv6 se basan en direccionamiento plano de 128 bits en oposición a IPv4 que se basa en direccionamiento jerárquico de 32 bits.",
+          "La cabecera IPv6 es más simple que la cabecera IPv4, lo que mejora el manejo de los paquetes.",
+          "Tanto IPv4 como IPv6 admiten autenticación, pero solo IPv6 admite capacidades de privacidad.",
+          "El espacio de direcciones de IPv6 es cuatro veces mayor que el espacio de direcciones IPv4."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2,
+          12
+        ],
+        "d": 2,
+        "n": "Ventajas de IPv6 con datos falsos (\"cuatro veces mayor\")."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT407-P1-13",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Qué dirección IPv6 representa todos los nodos del enlace local?",
+        "a": [
+          "FF02::1",
+          "FF::/128",
+          "FE80::/10",
+          "::FFFF:1/128"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Corrección técnica del Test T4.07 p. 3: el original FF01::1/8 no representa los nodos del enlace. RFC 4291 §2.7.1 distingue FF01::1 (interfaz) de FF02::1 (enlace). Se explicita el ámbito y se corrige a), conservando su índice c=0. Fuente: https://www.rfc-editor.org/rfc/rfc4291.html#section-2.7.1"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 210,
+    "alreadyHadCitation": 98,
+    "added": 3,
+    "pending": 109,
+    "withCitation": 101
+  }
+}

@@ -1,0 +1,3259 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T3.05",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "86b056bf377ea2b4f64fd6801e6f24e5123b5cfe569d73766aeafb2c34c475ad",
+    "afterSha256": "b2a526127d5adb4921f1e04ead7847a089e92192161fede60b343261ab9293df"
+  },
+  "sample": {
+    "beforeSha256": "0d8a8efbedb759051494fe48b72b7c35f64aabb1ec6e0b328e8c024de8d5c8fe",
+    "afterSha256": "0d8a8efbedb759051494fe48b72b7c35f64aabb1ec6e0b328e8c024de8d5c8fe"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-L2025X-P1-R-05": {
+      "path": "T3.05 POO/B3T5_POO 1.pdf",
+      "sourceHash": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
+      "physicalPage": 68,
+      "printedPage": 68,
+      "excerpt": "COMPORTAMIENTO de un sistema. - Diagramas de Interacción: o Diagrama de Secuencia: describe el comportamiento dinámico del sistema haciendo énfasis en la secuencia mensajes intercambiados por los objetos. o Diagrama de Comunicación: describe el comportamiento dinámico del sistema mostrando cómo interactúan los objetos entre sí. o Diagrama de Tiempo: muestra el cambio en el estado o valor de uno o más objetos en el tiempo. o Diagrama Global de Interacción: vista global sobre el resto de diagramas de interacción (secuencia, comunicación y tiempo).",
+      "label": "Pasaje del temario"
+    },
+    "e-AT305-P1-05": {
+      "path": "T3.05 POO/B3T5_POO 1.pdf",
+      "sourceHash": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
+      "physicalPage": 6,
+      "printedPage": 6,
+      "excerpt": "Liskov substitution (OBJETOS DE SUBCLASES SE COMPORTAN IGUAL QUE LOS DE LA SUPERCLASE) La sustitución de Liskov nos dice que los objetos de un programa deberían ser reemplazables por instancias de sus subtipos sin alterar el correcto funcionamiento del programa.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT305-P1-21": {
+      "path": "T3.05 POO/B3T5_POO 1.pdf",
+      "sourceHash": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
+      "physicalPage": 38,
+      "printedPage": 38,
+      "excerpt": "Visitor (Visitante) Es un patrón que permite definir nuevas operaciones sobre una jerarquía de clases sin modificar las clases sobre las que opera.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT305-P1-27": {
+      "path": "T3.05 POO/B3T5_POO 1.pdf",
+      "sourceHash": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
+      "physicalPage": 56,
+      "printedPage": 56,
+      "excerpt": "2 Diagrama de casos de uso Los objetivos de los casos de uso son los siguientes: - Capturar los requisitos funcionales del sistema y expresarlos desde el punto de vista del usuario. - Guiar todo el proceso de desarrollo del sistema de información.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT305-P1-36": {
+      "path": "T3.05 POO/B3T5_POO 1.pdf",
+      "sourceHash": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
+      "physicalPage": 51,
+      "printedPage": 51,
+      "excerpt": "5 Diagrama de despliegue El objetivo de estos diagramas es mostrar la disposición de las particiones físicas del sistema de información y la asignación de los componentes software a estas particiones. Es decir, las relaciones físicas entre los componentes software y hardware en el sistema a entregar.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT305-P1-40": {
+      "path": "T3.05 POO/B3T5_POO 1.pdf",
+      "sourceHash": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
+      "physicalPage": 56,
+      "printedPage": 56,
+      "excerpt": "- Reunión: representado mediante un rectángulo vertical al cual llegan transiciones concurrentes.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT305-P1-53": {
+      "path": "T3.05 POO/B3T5_POO 1.pdf",
+      "sourceHash": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
+      "physicalPage": 51,
+      "printedPage": 51,
+      "excerpt": "5 Diagrama de despliegue El objetivo de estos diagramas es mostrar la disposición de las particiones físicas del sistema de información y la asignación de los componentes software a estas particiones. Es decir, las relaciones físicas entre los componentes software y hardware en el sistema a entregar.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT305-P1-60": {
+      "path": "T3.05 POO/B3T5_POO 1.pdf",
+      "sourceHash": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
+      "physicalPage": 68,
+      "printedPage": 68,
+      "excerpt": "3. Esquema diagramas de UML - Diagrama de Clases: muestra la estructura estática del sistema, incluyendo clases, atributos, métodos y las relaciones entre los objetos. - Diagrama de Componentes: visión física que muestra la organización y dependencia de los componentes software. ESTRUCTURALES - Diagrama de Objetos: muestra una instantánea del sistema en un determinado momento en el tiempo. - Diagrama de Estructura Compuesta: muestra la estructura interna de una clase y las colaboraciones que esta estructura hace posible. - Diagrama de Despliegue: muestra la disposición de las particiones físicas del sistema de y la asignación de los componentes software a estas particiones. - Diagrama de Paquetes: visión lógica del sistema que lo organiza en subsistemas y muestra las dependencias entre ellos.",
+      "label": "UML — diagramas estructurales, tabla inspeccionada visualmente"
+    },
+    "e-AS05G-P1-93": {
+      "path": "T3.05 POO/B3T5_POO 1.pdf",
+      "sourceHash": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
+      "physicalPage": 68,
+      "printedPage": 68,
+      "excerpt": "o Diagrama de Secuencia: describe el comportamiento dinámico del sistema haciendo énfasis en la secuencia mensajes intercambiados por los objetos.",
+      "label": "UML — secuencia y orden de mensajes"
+    },
+    "e-AS05G-P1-99": {
+      "path": "T3.05 POO/B3T5_POO 1.pdf",
+      "sourceHash": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
+      "physicalPage": 68,
+      "printedPage": 68,
+      "excerpt": "- Diagrama de Actividades: muestra el flujo de actividades en un sistema (variante del diagrama de máquina de estado). - Diagrama de Casos de Uso: captura los requisitos funcionales del sistema desde el punto de vista del usuario. - Diagrama de Máquina de Estado: muestra el comportamiento dependiente del tiempo COMPORTAMIENTO de un sistema.",
+      "label": "UML — diagramas de comportamiento, tabla inspeccionada visualmente"
+    },
+    "e-AS06-P1-84": {
+      "path": "T3.05 POO/B3T5_POO 1.pdf",
+      "sourceHash": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
+      "physicalPage": 51,
+      "printedPage": 51,
+      "excerpt": "5 Diagrama de despliegue El objetivo de estos diagramas es mostrar la disposición de las particiones físicas del sistema de información y la asignación de los componentes software a estas particiones. Es decir, las relaciones físicas entre los componentes software y hardware en el sistema a entregar.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS06-P1-85": {
+      "path": "T3.05 POO/B3T5_POO 1.pdf",
+      "sourceHash": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
+      "physicalPage": 68,
+      "printedPage": 68,
+      "excerpt": "COMPORTAMIENTO de un sistema. - Diagramas de Interacción: o Diagrama de Secuencia: describe el comportamiento dinámico del sistema haciendo énfasis en la secuencia mensajes intercambiados por los objetos. o Diagrama de Comunicación: describe el comportamiento dinámico del sistema mostrando cómo interactúan los objetos entre sí. o Diagrama de Tiempo: muestra el cambio en el estado o valor de uno o más objetos en el tiempo. o Diagrama Global de Interacción: vista global sobre el resto de diagramas de interacción (secuencia, comunicación y tiempo).",
+      "label": "Pasaje del temario"
+    },
+    "e-AS08-P1-68": {
+      "path": "T3.05 POO/B3T5_POO 1.pdf",
+      "sourceHash": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
+      "physicalPage": 30,
+      "printedPage": 30,
+      "excerpt": "3. Patrones de comportamiento Chain of Responsability (Cadena de responsabilidades) El patrón de diseño Cadena de responsabilidades permite establecer una cadena de objetos receptores a través de los cuales se pasa una petición formulada por un objeto emisor. Cualquiera de los objetos receptores puede responder a la petición en función de un criterio establecido.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS08B-P1-62": {
+      "path": "T3.05 POO/B3T5_POO 1.pdf",
+      "sourceHash": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
+      "physicalPage": 37,
+      "printedPage": 37,
+      "excerpt": "Template Method (Método plantilla) Es un patrón de diseño que define una estructura algorítmica en una superclase, delegando la implementación a las subclases, es decir, define una serie de pasos que serán redefinidos en las subclases.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS09-P1-44": {
+      "path": "T3.05 POO/B3T5_POO 1.pdf",
+      "sourceHash": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
+      "physicalPage": 14,
+      "printedPage": 14,
+      "excerpt": "7. Composición La composición es un mecanismo por el que se pueden crear clases complejas agregando objetos de clases ya existentes. Su relación se le conoce como “tiene-un”. Permite reutilizar código.",
+      "label": "Pasaje del temario"
+    }
+  },
+  "questions": [
+    {
+      "id": "L2025X-P1-R-05",
+      "before": {
+        "i": "L2025X-P1-R-05",
+        "t": "T3.05",
+        "o": "O",
+        "q": "En UML, ¿qué tipo de diagrama se utiliza para representar la interacción entre objetos o participantes mediante los mensajes que se intercambian entre ellos?",
+        "a": [
+          "Diagrama de clases.",
+          "Diagrama de secuencia.",
+          "Diagrama de despliegue.",
+          "Diagrama de componentes."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Diagrama de secuencia.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1,
+        "r": 1
+      },
+      "after": {
+        "i": "L2025X-P1-R-05",
+        "t": "T3.05",
+        "o": "O",
+        "q": "En UML, ¿qué tipo de diagrama se utiliza para representar la interacción entre objetos o participantes mediante los mensajes que se intercambian entre ellos?",
+        "a": [
+          "Diagrama de clases.",
+          "Diagrama de secuencia.",
+          "Diagrama de despliegue.",
+          "Diagrama de componentes."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Diagrama de secuencia.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1,
+        "r": 1,
+        "u": "B3T5_POO 1.pdf — Pasaje del temario\n\nTemario, p. 68 (PDF p. 68)\n\nCOMPORTAMIENTO de un sistema. - Diagramas de Interacción: o Diagrama de Secuencia: describe el comportamiento dinámico del sistema haciendo énfasis en la secuencia mensajes intercambiados por los objetos. o Diagrama de Comunicación: describe el comportamiento dinámico del sistema mostrando cómo interactúan los objetos entre sí. o Diagrama de Tiempo: muestra el cambio en el estado o valor de uno o más objetos en el tiempo. o Diagrama Global de Interacción: vista global sobre el resto de diagramas de interacción (secuencia, comunicación y tiempo).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "a74ab9cbb11b0e034f99dc6428dacc5c9dc058a46325a9e92ba7acfd23ab2474",
+      "afterSha256": "224d03c21e3dfae36c1633a80f36f1db66a16765f9474f6db64c14c24778461c",
+      "evidenceKeys": [
+        "e-L2025X-P1-R-05"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT305-P1-05",
+      "before": {
+        "i": "AT305-P1-05",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El principio de diseño orientado a objetos “sustitución Liskov” establece que:",
+        "a": [
+          "Los objetos de un programa deberían ser reemplazables por instancias de sus subtipos sin alterar el correcto funcionamiento del programa.",
+          "Los módulos software deber ser abiertos para su modificación y cerrados para su extensión.",
+          "Una clase debe tener responsabilidad sobre una única funcionalidad del software.",
+          "Una clase puede ser reemplazada por otra no relacionada sin afectar al comportamiento del software."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT305-P1-05",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El principio de diseño orientado a objetos “sustitución Liskov” establece que:",
+        "a": [
+          "Los objetos de un programa deberían ser reemplazables por instancias de sus subtipos sin alterar el correcto funcionamiento del programa.",
+          "Los módulos software deber ser abiertos para su modificación y cerrados para su extensión.",
+          "Una clase debe tener responsabilidad sobre una única funcionalidad del software.",
+          "Una clase puede ser reemplazada por otra no relacionada sin afectar al comportamiento del software."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "B3T5_POO 1.pdf — Pasaje del temario\n\nTemario, p. 6 (PDF p. 6)\n\nLiskov substitution (OBJETOS DE SUBCLASES SE COMPORTAN IGUAL QUE LOS DE LA SUPERCLASE) La sustitución de Liskov nos dice que los objetos de un programa deberían ser reemplazables por instancias de sus subtipos sin alterar el correcto funcionamiento del programa.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "fd61b8c52f0bef48d6b25890b3edfcd5304fdd659d49b90af3caee08e5d6ffcf",
+      "afterSha256": "271d652be0393acf7a4ac4a916568ca150d4ea898279e1d3c50be9d7ff413557",
+      "evidenceKeys": [
+        "e-AT305-P1-05"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT305-P1-21",
+      "before": {
+        "i": "AT305-P1-21",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El patrón de diseño Visitor permite:",
+        "a": [
+          "Coordinar las relaciones entre sus asociados.",
+          "Definir nuevas operaciones sobre una jerarquía de clases sin modificar las clases sobre las que opera.",
+          "Solicitar una operación a un objeto sin conocer el contenido de la operación.",
+          "Proveer una interfaz unificada sencilla que haga intermediaria entre un cliente y una interfaz o grupo de ellas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT305-P1-21",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El patrón de diseño Visitor permite:",
+        "a": [
+          "Coordinar las relaciones entre sus asociados.",
+          "Definir nuevas operaciones sobre una jerarquía de clases sin modificar las clases sobre las que opera.",
+          "Solicitar una operación a un objeto sin conocer el contenido de la operación.",
+          "Proveer una interfaz unificada sencilla que haga intermediaria entre un cliente y una interfaz o grupo de ellas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "B3T5_POO 1.pdf — Pasaje del temario\n\nTemario, p. 38 (PDF p. 38)\n\nVisitor (Visitante) Es un patrón que permite definir nuevas operaciones sobre una jerarquía de clases sin modificar las clases sobre las que opera.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "4d3f95d7ca58fd3c0e6bb4c4970cd4425c77dc94666a62685f74974b16fa6f69",
+      "afterSha256": "e13e26c38ece03a5916d96a136dc892d62c9cf0cb1a772b128827fa4b0f00ebd",
+      "evidenceKeys": [
+        "e-AT305-P1-21"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT305-P1-27",
+      "before": {
+        "i": "AT305-P1-27",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes diagramas de UML permite capturar los requisitos funcionales del sistema y expresarlos desde el punto de vista del usuario?",
+        "a": [
+          "Diagrama de máquina de estados.",
+          "Diagrama de comunicación.",
+          "Diagrama de actividad.",
+          "Diagrama de casos de uso."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT305-P1-27",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes diagramas de UML permite capturar los requisitos funcionales del sistema y expresarlos desde el punto de vista del usuario?",
+        "a": [
+          "Diagrama de máquina de estados.",
+          "Diagrama de comunicación.",
+          "Diagrama de actividad.",
+          "Diagrama de casos de uso."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "B3T5_POO 1.pdf — Pasaje del temario\n\nTemario, p. 56 (PDF p. 56)\n\n2 Diagrama de casos de uso Los objetivos de los casos de uso son los siguientes: - Capturar los requisitos funcionales del sistema y expresarlos desde el punto de vista del usuario. - Guiar todo el proceso de desarrollo del sistema de información.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "2b2ed5e68a363385e5b3f64504af551646a50a9d6a6876568c45017365d59a12",
+      "afterSha256": "50c2cc72d6692f91e843d973348dfd94a130a6c6151dc71cde80742acbcf461a",
+      "evidenceKeys": [
+        "e-AT305-P1-27"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT305-P1-36",
+      "before": {
+        "i": "AT305-P1-36",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El diagrama UML que tiene como objetivo mostrar la disposición de las particiones físicas del sistema de información se denomina:",
+        "a": [
+          "Diagrama de comunicación.",
+          "Diagrama de componentes.",
+          "Diagrama de despliegue.",
+          "Diagrama de arquitectura software."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT305-P1-36",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El diagrama UML que tiene como objetivo mostrar la disposición de las particiones físicas del sistema de información se denomina:",
+        "a": [
+          "Diagrama de comunicación.",
+          "Diagrama de componentes.",
+          "Diagrama de despliegue.",
+          "Diagrama de arquitectura software."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "B3T5_POO 1.pdf — Pasaje del temario\n\nTemario, p. 51 (PDF p. 51)\n\n5 Diagrama de despliegue El objetivo de estos diagramas es mostrar la disposición de las particiones físicas del sistema de información y la asignación de los componentes software a estas particiones. Es decir, las relaciones físicas entre los componentes software y hardware en el sistema a entregar.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "ee3a4293010e4b4fc72e8106315311a7d04fd48f3d9f608822b30ccd2ca25466",
+      "afterSha256": "8665d3bf22c84d1b6de95c6ef882a245dff0d91d9ceddd059eb30483e8811b56",
+      "evidenceKeys": [
+        "e-AT305-P1-36"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT305-P1-40",
+      "before": {
+        "i": "AT305-P1-40",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En un diagrama de actividad, ¿cómo se representa una transición de reunión?",
+        "a": [
+          "Mediante un rectángulo vertical del que parten las transiciones concurrentes.",
+          "Mediante un rectángulo vertical al cual llegan transiciones concurrentes.",
+          "Mediante un rombo relleno del que parten las transiciones concurrentes.",
+          "Mediante un rombo no relleno al cual llegan transiciones concurrentes."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT305-P1-40",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En un diagrama de actividad, ¿cómo se representa una transición de reunión?",
+        "a": [
+          "Mediante un rectángulo vertical del que parten las transiciones concurrentes.",
+          "Mediante un rectángulo vertical al cual llegan transiciones concurrentes.",
+          "Mediante un rombo relleno del que parten las transiciones concurrentes.",
+          "Mediante un rombo no relleno al cual llegan transiciones concurrentes."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "B3T5_POO 1.pdf — Pasaje del temario\n\nTemario, p. 56 (PDF p. 56)\n\n- Reunión: representado mediante un rectángulo vertical al cual llegan transiciones concurrentes.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "276fb8fd4328b507a8bdb9119e9bbd5e56817cb597fa989683fb14540fb12ee7",
+      "afterSha256": "ae449e837331e469b3a486dae05bd1327cccaaf2555bb357482b05b402748334",
+      "evidenceKeys": [
+        "e-AT305-P1-40"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT305-P1-53",
+      "before": {
+        "i": "AT305-P1-53",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En UML, ¿cómo se denomina el diagrama que describe los nodos que participan en la ejecución de elementos de software y de los componentes que residen en estos nodos?",
+        "a": [
+          "Diagrama de paquetes.",
+          "Diagrama de interacción.",
+          "Diagrama de despliegue.",
+          "Diagrama de componentes."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT305-P1-53",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En UML, ¿cómo se denomina el diagrama que describe los nodos que participan en la ejecución de elementos de software y de los componentes que residen en estos nodos?",
+        "a": [
+          "Diagrama de paquetes.",
+          "Diagrama de interacción.",
+          "Diagrama de despliegue.",
+          "Diagrama de componentes."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "B3T5_POO 1.pdf — Pasaje del temario\n\nTemario, p. 51 (PDF p. 51)\n\n5 Diagrama de despliegue El objetivo de estos diagramas es mostrar la disposición de las particiones físicas del sistema de información y la asignación de los componentes software a estas particiones. Es decir, las relaciones físicas entre los componentes software y hardware en el sistema a entregar.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "dab4a10e89b224e2e9fbf145a2ad2023eaf6cb1b853b83c7debf30eb422b4b15",
+      "afterSha256": "b5b2e28993f8ba7655d2467b8dc7f8e034e20096a36d2607a9b82f10d26ef2ec",
+      "evidenceKeys": [
+        "e-AT305-P1-53"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT305-P1-60",
+      "before": {
+        "i": "AT305-P1-60",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes tipos de diagramas UML es un diagrama de estructura?",
+        "a": [
+          "Diagrama de actividad.",
+          "Diagrama de secuencia.",
+          "Diagrama de casos de uso.",
+          "Diagrama de clases."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT305-P1-60",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes tipos de diagramas UML es un diagrama de estructura?",
+        "a": [
+          "Diagrama de actividad.",
+          "Diagrama de secuencia.",
+          "Diagrama de casos de uso.",
+          "Diagrama de clases."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "B3T5_POO 1.pdf — UML — diagramas estructurales, tabla inspeccionada visualmente\n\nTemario, p. 68 (PDF p. 68)\n\n3. Esquema diagramas de UML - Diagrama de Clases: muestra la estructura estática del sistema, incluyendo clases, atributos, métodos y las relaciones entre los objetos. - Diagrama de Componentes: visión física que muestra la organización y dependencia de los componentes software. ESTRUCTURALES - Diagrama de Objetos: muestra una instantánea del sistema en un determinado momento en el tiempo. - Diagrama de Estructura Compuesta: muestra la estructura interna de una clase y las colaboraciones que esta estructura hace posible. - Diagrama de Despliegue: muestra la disposición de las particiones físicas del sistema de y la asignación de los componentes software a estas particiones. - Diagrama de Paquetes: visión lógica del sistema que lo organiza en subsistemas y muestra las dependencias entre ellos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "70f71cba587ce7ff88f232af3f884baf55a8ac55f9666670380c6d8374afe93d",
+      "afterSha256": "8c7124523ab0011a1cda20e8df0d4daf8e523fbbfbc4bc6863ebd59150ed471e",
+      "evidenceKeys": [
+        "e-AT305-P1-60"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS05G-P1-93",
+      "before": {
+        "i": "AS05G-P1-93",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En el marco del modelado de sistemas con UML, ¿cuál de los diagramas siguientes hace especial hincapié en la ordenación temporal de mensajes?",
+        "a": [
+          "Diagrama de despliegue.",
+          "Diagrama de máquina de estados.",
+          "Diagrama de secuencia.",
+          "Diagrama de comunicación."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS05G-P1-93",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En el marco del modelado de sistemas con UML, ¿cuál de los diagramas siguientes hace especial hincapié en la ordenación temporal de mensajes?",
+        "a": [
+          "Diagrama de despliegue.",
+          "Diagrama de máquina de estados.",
+          "Diagrama de secuencia.",
+          "Diagrama de comunicación."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "B3T5_POO 1.pdf — UML — secuencia y orden de mensajes\n\nTemario, p. 68 (PDF p. 68)\n\no Diagrama de Secuencia: describe el comportamiento dinámico del sistema haciendo énfasis en la secuencia mensajes intercambiados por los objetos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "dc470b64e4ec65ec54794cd27b9dfca7c06421c073f2383ec0f22bf27fa36bd7",
+      "afterSha256": "033c90f02eefbc05208839967716579fa0029b1b4cda02bf43ea1a716bcd2fb2",
+      "evidenceKeys": [
+        "e-AS05G-P1-93"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS05G-P1-99",
+      "before": {
+        "i": "AS05G-P1-99",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En UML 2.5, ¿cuál de los siguientes diagramas pertenece a la categoría de diagramas de comportamiento?",
+        "a": [
+          "Diagrama de componentes.",
+          "Diagrama de máquina de estado.",
+          "Diagrama de estructura compuesta.",
+          "Diagrama de objetos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS05G-P1-99",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En UML 2.5, ¿cuál de los siguientes diagramas pertenece a la categoría de diagramas de comportamiento?",
+        "a": [
+          "Diagrama de componentes.",
+          "Diagrama de máquina de estado.",
+          "Diagrama de estructura compuesta.",
+          "Diagrama de objetos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "B3T5_POO 1.pdf — UML — diagramas de comportamiento, tabla inspeccionada visualmente\n\nTemario, p. 68 (PDF p. 68)\n\n- Diagrama de Actividades: muestra el flujo de actividades en un sistema (variante del diagrama de máquina de estado). - Diagrama de Casos de Uso: captura los requisitos funcionales del sistema desde el punto de vista del usuario. - Diagrama de Máquina de Estado: muestra el comportamiento dependiente del tiempo COMPORTAMIENTO de un sistema.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "337dc878f2be5a5cae8f67fc0cd0cba4c107e9cafae36880e611a9a3fd8742bf",
+      "afterSha256": "c5784fb811b693ef553c383851f90534f5d2d0d347bce7b3d59093728dea0cd1",
+      "evidenceKeys": [
+        "e-AS05G-P1-99"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS06-P1-84",
+      "before": {
+        "i": "AS06-P1-84",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Respecto a UML versión 2.5.1, ¿cuál es el objetivo del diagrama de despliegue?",
+        "a": [
+          "Mostrar la organización de los componentes software, sus interfaces y las dependencias entre ellos.",
+          "Mostrar la estructura interna de una clase (visión de la estructura como una caja blanca), incluyendo sus puntos de interacción con otras partes del sistema (comunicación entre estructuras).",
+          "Mostrar la disposición de las particiones físicas del sistema de información y la asignación de los componentes software a estas particiones.",
+          "Obtener una visión más clara del sistema de información orientado a objetos, organizándolo en subsistemas, agrupando los elementos del análisis, diseño o construcción y detallando las relaciones de dependencia entre ellos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS06-P1-84",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Respecto a UML versión 2.5.1, ¿cuál es el objetivo del diagrama de despliegue?",
+        "a": [
+          "Mostrar la organización de los componentes software, sus interfaces y las dependencias entre ellos.",
+          "Mostrar la estructura interna de una clase (visión de la estructura como una caja blanca), incluyendo sus puntos de interacción con otras partes del sistema (comunicación entre estructuras).",
+          "Mostrar la disposición de las particiones físicas del sistema de información y la asignación de los componentes software a estas particiones.",
+          "Obtener una visión más clara del sistema de información orientado a objetos, organizándolo en subsistemas, agrupando los elementos del análisis, diseño o construcción y detallando las relaciones de dependencia entre ellos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "B3T5_POO 1.pdf — Pasaje del temario\n\nTemario, p. 51 (PDF p. 51)\n\n5 Diagrama de despliegue El objetivo de estos diagramas es mostrar la disposición de las particiones físicas del sistema de información y la asignación de los componentes software a estas particiones. Es decir, las relaciones físicas entre los componentes software y hardware en el sistema a entregar.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "f54ac508e4df23f139670e7ee5f84a046451ad01e082f037a3e6de647fc660d4",
+      "afterSha256": "11bb3c79c3fdb87ced84a74760bd91dd3667a79252e180c3d290ec4a589db6de",
+      "evidenceKeys": [
+        "e-AS06-P1-84"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS06-P1-85",
+      "before": {
+        "i": "AS06-P1-85",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Indique el diagrama de UML versión 2.5.1 que describe el comportamiento dinámico del sistema de información mostrando cómo interactúan los objetos entre sí, es decir, con qué otros objetos tienen vínculos o intercambia mensajes un determinado objeto:",
+        "a": [
+          "Diagrama de secuencia.",
+          "Diagrama de colaboración.",
+          "Diagrama de tiempos.",
+          "Diagrama de comunicación."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS06-P1-85",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Indique el diagrama de UML versión 2.5.1 que describe el comportamiento dinámico del sistema de información mostrando cómo interactúan los objetos entre sí, es decir, con qué otros objetos tienen vínculos o intercambia mensajes un determinado objeto:",
+        "a": [
+          "Diagrama de secuencia.",
+          "Diagrama de colaboración.",
+          "Diagrama de tiempos.",
+          "Diagrama de comunicación."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "B3T5_POO 1.pdf — Pasaje del temario\n\nTemario, p. 68 (PDF p. 68)\n\nCOMPORTAMIENTO de un sistema. - Diagramas de Interacción: o Diagrama de Secuencia: describe el comportamiento dinámico del sistema haciendo énfasis en la secuencia mensajes intercambiados por los objetos. o Diagrama de Comunicación: describe el comportamiento dinámico del sistema mostrando cómo interactúan los objetos entre sí. o Diagrama de Tiempo: muestra el cambio en el estado o valor de uno o más objetos en el tiempo. o Diagrama Global de Interacción: vista global sobre el resto de diagramas de interacción (secuencia, comunicación y tiempo).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "0c10050408ce7d1cc4a144995c4fd44340376a5fc5eabd25b29e25555bd071d4",
+      "afterSha256": "a516cbb20fc6ebda31c87df440512cf3f7b1aa4e59bea2b89a89c019dafebb61",
+      "evidenceKeys": [
+        "e-AS06-P1-85"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS08-P1-68",
+      "before": {
+        "i": "AS08-P1-68",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El patrón de diseño que permite establecer una cadena de objetos receptores a través de los cuales se pasa una petición formulada por un objeto emisor de tal forma que cualquiera de los objetos receptores puede responder a la petición en función de un criterio establecido se denomina:",
+        "a": [
+          "Command.",
+          "Mediator.",
+          "Chain of Responsability.",
+          "Proxy."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS08-P1-68",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El patrón de diseño que permite establecer una cadena de objetos receptores a través de los cuales se pasa una petición formulada por un objeto emisor de tal forma que cualquiera de los objetos receptores puede responder a la petición en función de un criterio establecido se denomina:",
+        "a": [
+          "Command.",
+          "Mediator.",
+          "Chain of Responsability.",
+          "Proxy."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "B3T5_POO 1.pdf — Pasaje del temario\n\nTemario, p. 30 (PDF p. 30)\n\n3. Patrones de comportamiento Chain of Responsability (Cadena de responsabilidades) El patrón de diseño Cadena de responsabilidades permite establecer una cadena de objetos receptores a través de los cuales se pasa una petición formulada por un objeto emisor. Cualquiera de los objetos receptores puede responder a la petición en función de un criterio establecido.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "f93d0105bb6e144bdcfc2b4987668c9572768a70e195537a36afe8a8672074a7",
+      "afterSha256": "403ddca63709998f3d4767ecf69d98b95bc413c9a86ebb3d9807a5ae2d2bae70",
+      "evidenceKeys": [
+        "e-AS08-P1-68"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS08B-P1-62",
+      "before": {
+        "i": "AS08B-P1-62",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El patrón de diseño que define una estructura algorítmica en una superclase, delegando la implementación a las subclases, es decir, define una serie de pasos que serán redefinidos en las subclases es:",
+        "a": [
+          "Template Method.",
+          "Strategy.",
+          "Builder.",
+          "Chain of Responsability."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS08B-P1-62",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El patrón de diseño que define una estructura algorítmica en una superclase, delegando la implementación a las subclases, es decir, define una serie de pasos que serán redefinidos en las subclases es:",
+        "a": [
+          "Template Method.",
+          "Strategy.",
+          "Builder.",
+          "Chain of Responsability."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "B3T5_POO 1.pdf — Pasaje del temario\n\nTemario, p. 37 (PDF p. 37)\n\nTemplate Method (Método plantilla) Es un patrón de diseño que define una estructura algorítmica en una superclase, delegando la implementación a las subclases, es decir, define una serie de pasos que serán redefinidos en las subclases.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "161aaff61bb1ac205bc923f644b8816f53227a7221da2cc6f8c591ba9326a3c5",
+      "afterSha256": "1801771e715d5e2e7941bd3af1c6c4a2cd2b85c38a74ded34fbb33e39c2ffa4e",
+      "evidenceKeys": [
+        "e-AS08B-P1-62"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS09-P1-44",
+      "before": {
+        "i": "AS09-P1-44",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En programación orientada a objetos si dos clases están unidas mediante una relación “tiene-un”, se está haciendo uso de:",
+        "a": [
+          "El polimorfismo.",
+          "La composición.",
+          "La herencia.",
+          "La sobrecarga."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS09-P1-44",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En programación orientada a objetos si dos clases están unidas mediante una relación “tiene-un”, se está haciendo uso de:",
+        "a": [
+          "El polimorfismo.",
+          "La composición.",
+          "La herencia.",
+          "La sobrecarga."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "B3T5_POO 1.pdf — Pasaje del temario\n\nTemario, p. 14 (PDF p. 14)\n\n7. Composición La composición es un mecanismo por el que se pueden crear clases complejas agregando objetos de clases ya existentes. Su relación se le conoce como “tiene-un”. Permite reutilizar código.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "c1565942777e81156efbc3dd232a3c0b9b373935fcfdf6381256dcea05b799f9",
+      "afterSha256": "4efbd0190ce9f494be57530a37a48cd08ea7f28b8659121d1e2ddeeae277d885",
+      "evidenceKeys": [
+        "e-AS09-P1-44"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-40",
+        "t": "T3.05",
+        "o": "O",
+        "q": "Señale la respuesta INCORRECTA. El patrón de diseño “Composite”:",
+        "a": [
+          "Es un patrón de diseño estructural que permite componer objetos en estructuras de árbol.",
+          "Sirve para construir objetos complejos a partir de otros más simples y similares entre sí.",
+          "Simplifica el tratamiento de los objetos creados que, al poseer de una interfaz común, se tratan todos de la misma manera.",
+          "Se recomienda su uso cuando se quiere añadir responsabilidades a objetos concretos de manera dinámica y transparente y sin afectar a otros objetos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "d) es la definición literal del patrón Decorator.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-41",
+        "t": "T3.05",
+        "o": "O",
+        "q": "Señale la respuesta INCORRECTA respecto al Lenguaje de Modelado Unificado (UML):",
+        "a": [
+          "Es un lenguaje basado en diagramas para la especificación, visualización, construcción y documentación de cualquier sistema software.",
+          "Es independiente de las metodologías de análisis y diseño y de los lenguajes de programación que se utilicen en la construcción del software.",
+          "Se basa en el paradigma de la orientación a objetos.",
+          "Muestra únicamente el modelado estático de un sistema software, que puede utilizarse en las diferentes fases de su ciclo de desarrollo."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          12
+        ],
+        "d": 1,
+        "n": "\"Muestra únicamente el modelado estático\".",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-42",
+        "t": "T3.05",
+        "o": "O",
+        "q": "En diseño y programación orientada a objetos, una relación de generalización entre clases:",
+        "a": [
+          "Implica que la subclase hereda las propiedades, el comportamiento y las relaciones de la superclase, a la vez que puede añadir sus propias propiedades, relaciones y comportamiento.",
+          "Describe un conjunto de enlaces, que definen las interconexiones semánticas entre las instancias de las clases que participan en la relación.",
+          "Asume una subordinación conceptual del tipo “todo/parte”, o bien “tiene un”.",
+          "Se representa mediante una línea discontinua que une la superclase y subclase con un rectángulo al lado de la superclase."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "b) asociación, c) agregación, d) notación inventada.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-44",
+        "t": "T3.05",
+        "o": "O",
+        "q": "¿Cuál de los siguientes términos hace referencia a patrones generales de software para asignación de responsabilidades en el diseño orientado a objetos?",
+        "a": [
+          "OOD",
+          "GRASP",
+          "Booch",
+          "Fan-In & Fan-Out"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "GRASP frente a otros términos reales de diseño OO.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-46",
+        "t": "T3.05",
+        "o": "O",
+        "q": "Según METRICA v3, ¿cuál es diagrama que describe en detalle un determinado escenario de un caso de uso?",
+        "a": [
+          "Diagrama de Interacción.",
+          "Diagrama de representación.",
+          "Diagrama de flujo de datos.",
+          "Diagrama de casos de uso."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Diagramas hermanos de Métrica v3.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-35",
+        "t": "T3.05",
+        "o": "O",
+        "q": "Indique la definición correcta en referencia a los diagramas de flujo de datos de Métrica v3:",
+        "a": [
+          "Almacén de datos: representa la información en movimiento utilizada por el sistema.",
+          "Proceso de control: representa procesos que coordinan y sincronizan las actividades de otros procesos del diagrama de flujo de datos.",
+          "Flujo de control: representa el flujo entre dos procesos de control.",
+          "Flujo de datos: representa el movimiento de los datos, y establece la comunicación entre dos almacenes."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Definiciones de elementos del DFD (Métrica) cruzadas.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-44",
+        "t": "T3.05",
+        "o": "O",
+        "q": "Respecto a los patrones de diseño GoF (Gang of Four), indique cuál de las siguientes definiciones se corresponde con el patrón Decorator:",
+        "a": [
+          "Proporciona el poder agregar una nueva funcionalidad a un objeto dinámicamente.",
+          "Proporciona una interfaz unificada para un conjunto de interfaces de un subsistema.",
+          "Proporciona un sustituto o representante de otro objeto para controlar el acceso a éste.",
+          "Proporciona un modo de acceder secuencialmente a los elementos de un objeto agregado sin exponer su representación interna."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Definiciones de patrones GoF hermanos.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-45",
+        "t": "T3.05",
+        "o": "O",
+        "q": "Cuál de las siguientes afirmaciones NO se corresponde con el lenguaje UML:",
+        "a": [
+          "Una clase se representa mediante un rectángulo con tres secciones, la superior contiene el identificador o nombre de la clase, la central contiene los atributos, y la inferior, las operaciones o métodos que tienen asociados.",
+          "Las asociaciones son los elementos que representan las relaciones que existen entre los elementos estructurales que se utilizan en los modelos.",
+          "Un tipo de asociación entre elementos estructurales es la dispersión.",
+          "La agregación es un tipo de asociación entre elementos estructurales que representa una clase que es parte de otra."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "\"Dispersión\" inventada como tipo de asociación UML.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-45",
+        "t": "T3.05",
+        "o": "O",
+        "q": "¿Qué patrón de diseño de comportamiento se utiliza para notificar automáticamente a múltiples objetos sobre los cambios de estado de un sujeto, manteniendo un acoplamiento débil?",
+        "a": [
+          "Singleton.",
+          "Observer.",
+          "Adapter.",
+          "Factory Method."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Patrones GoF hermanos.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-46",
+        "t": "T3.05",
+        "o": "O",
+        "q": "En una arquitectura de herencia simple, si una subclase define un método con la misma lista de parámetros que un método de su superclase para especializar su comportamiento, ¿qué concepto se está aplicando?",
+        "a": [
+          "Sobrecarga (Overloading).",
+          "Ocultación de atributos (Field Hiding).",
+          "Sobrescritura (Overriding).",
+          "Agregación (Aggregating)."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Sobrescritura frente a sobrecarga.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-41",
+        "t": "T3.05",
+        "o": "O",
+        "q": "En diseño modular de software, ¿qué tipo de acoplamiento se produce cuando varios módulos comparten una estructura global de datos?",
+        "a": [
+          "Acoplamiento de datos.",
+          "Acoplamiento de control.",
+          "Acoplamiento común.",
+          "Acoplamiento de contenido."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Tipos de acoplamiento hermanos.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-42",
+        "t": "T3.05",
+        "o": "O",
+        "q": "En un diagrama de clases UML, ¿qué significado tiene el símbolo de resta ( - ) colocado antes del nombre de un atributo o método?",
+        "a": [
+          "Indica que el elemento tiene una visibilidad de tipo private.",
+          "Indica que el elemento tiene una visibilidad de tipo public.",
+          "Indica que el elemento tiene que ser revisado.",
+          "Indica que el elemento almacena únicamente valores numéricos negativos."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9,
+          8
+        ],
+        "d": 1,
+        "n": "Visibilidad UML (-) frente a pública e inventadas.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-43",
+        "t": "T3.05",
+        "o": "O",
+        "q": "¿Qué principio de diseño establece que las clases de alto nivel no deben depender de las de bajo nivel, sino que ambas deben depender de abstracciones?",
+        "a": [
+          "Dependency Inversion Principle (DIP).",
+          "Single Responsibility Principle (SRP).",
+          "Liskov Substitution Principle (LSP).",
+          "Interface Segregation Principle (ISP)."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Principios SOLID hermanos.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-44",
+        "t": "T3.05",
+        "o": "O",
+        "q": "Dentro de los patrones de diseño del \"Gang of Four\" (GoF), ¿cuál es la diferencia fundamental entre el patrón Factory Method y el patrón Abstract Factory?",
+        "a": [
+          "Factory Method es un patrón de comportamiento, mientras que Abstract Factory es creacional.",
+          "Factory Method crea objetos de diferentes tipos de datos, mientras que Abstract Factory sólo crea objetos de un único tipo.",
+          "Factory Method requiere obligatoriamente el uso de interfaces, mientras que Abstract Factory sólo funciona con clases abstractas.",
+          "Factory Method sirve para crear objetos de un mismo tipo, mientras que Abstract Factory permite crear objetos de una misma familia."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "n": "Factory Method frente a Abstract Factory.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-18",
+        "t": "T3.05",
+        "o": "O",
+        "q": "Según Métrica v3, en un diagrama de flujo de datos, ¿qué componente representa una funcionalidad que tiene que llevar a cabo el sistema para transformar o manipular datos?",
+        "a": [
+          "Entidad externa.",
+          "Proceso.",
+          "Almacén de datos.",
+          "Flujo de datos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Componentes del DFD.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-26",
+        "t": "T3.05",
+        "o": "O",
+        "q": "En relación a la representación de los diagramas de casos de uso del Lenguaje de Modelado Unificado (UML), indique la correcta.",
+        "a": [
+          "Los diagramas de casos de uso contienen actores, relaciones y casos de usos.",
+          "Los diagramas de casos de uso contienen almacenes, relaciones y procedimientos.",
+          "Los diagramas de casos de uso contienen actores, relaciones y procedimientos.",
+          "Los diagramas de casos de uso contienen almacenes, relaciones y casos de uso."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Matriz actores/almacenes × casos de uso/procedimientos.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-27",
+        "t": "T3.05",
+        "o": "O",
+        "q": "En lo referente a los patrones de diseño GoF (Gang of Four), indique cuál de los siguientes se corresponde con un patrón de comportamiento:",
+        "a": [
+          "Adapter",
+          "Iterator",
+          "Composite",
+          "Builder"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Clasificación de patrones GoF.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-23",
+        "t": "T3.05",
+        "o": "O",
+        "q": "¿Cuál de las siguientes características NO se corresponde con el modelo orientado a objetos?",
+        "a": [
+          "Abstracción.",
+          "Durabilidad.",
+          "Modularidad.",
+          "Encapsulamiento."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Durabilidad (ACID) entre rasgos de la OO.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2025A-P1-25",
+        "t": "T3.05",
+        "o": "O",
+        "q": "En el contexto de la relación entre clases y objetos, ¿cuál es la definición técnica más precisa de una instancia?",
+        "a": [
+          "Es el código fuente escrito en el lenguaje de programación que define los atributos.",
+          "Es un ejemplar concreto e individualizado de una clase que posee su propio estado.",
+          "Es un método estático que se ejecuta sin necesidad de crear el objeto en memoria.",
+          "Es el conjunto de todas las clases que pertenecen a un mismo paquete o espacio de nombres."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Instancia frente a clase/método estático/paquete.",
+        "y": "Promoción interna convocatoria 2025"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-41",
+        "t": "T3.05",
+        "o": "O",
+        "q": "En un Diagrama de Flujo de Datos (DFD), indique cuál de las siguientes afirmaciones es FALSA:",
+        "a": [
+          "El proceso nunca es el origen ni el final de los datos.",
+          "El almacén no puede crear, transformar o destruir datos.",
+          "Un almacén no puede aparecer varias veces en el diagrama.",
+          "Un proceso siempre es necesario como intermediario entre una entidad externa y un almacén de datos."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          12
+        ],
+        "d": 2,
+        "n": "DFD: \"un almacén no puede aparecer varias veces\" (sí puede).",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-42",
+        "t": "T3.05",
+        "o": "O",
+        "q": "Señale la INCORRECTA con respecto a la comprobación de la consistencia de un DFD resultado de una explosión:",
+        "a": [
+          "No deben faltar flujos de datos de entrada o salida que acompañaban al proceso del nivel superior.",
+          "No debe aparecer algún flujo de datos que no estuviese ya asociado al proceso de nivel superior.",
+          "Todos los elementos del DFD resultante deben estar conectados directa o indirectamente con los flujos del proceso origen.",
+          "Las entidades externas deben descomponerse en cada explosión del DFD al igual que el resto de los elementos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Consistencia de la explosión de un DFD.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-52",
+        "t": "T3.05",
+        "o": "O",
+        "q": "En UML 2.5, ¿cuál de los siguientes diagramas pertenece a la categoría de diagramas de estructura?",
+        "a": [
+          "Diagrama de paquetes.",
+          "Diagrama de flujo de información.",
+          "Diagrama de secuencia.",
+          "Diagrama de actividad."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Diagramas de estructura frente a comportamiento (UML 2.5).",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-53",
+        "t": "T3.05",
+        "o": "O",
+        "q": "¿Cuál de los siguientes NO es una de las características del modelo orientado a objetos?",
+        "a": [
+          "Modularidad",
+          "Abstracción",
+          "Durabilidad",
+          "Reusabilidad"
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Durabilidad entre rasgos OO (se repite en 2022 PI P23).",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-54",
+        "t": "T3.05",
+        "o": "O",
+        "q": "Indique cuál de los siguientes es un patrón de tipo creacional:",
+        "a": [
+          "Composite",
+          "Proxy",
+          "Iterator",
+          "Singleton"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Clasificación de patrones GoF.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-28",
+        "t": "T3.05",
+        "o": "O",
+        "q": "El patrón de diseño que permite disponer de varios métodos y posibilita elegir cuál utilizar en tiempo de ejecución es:",
+        "a": [
+          "Builder",
+          "Interpreter",
+          "Observer",
+          "Strategy"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Strategy frente a otros patrones.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-01",
+        "t": "T3.05",
+        "o": "A",
+        "q": "SOLID es un acrónimo que hace referencia a 5 principios del diseño orientado a objetos. Señale cuál NO es uno de ellos:",
+        "a": [
+          "S (Single): principio de responsabilidad única.",
+          "I (Interface): principio de desacoplamiento de interfaz.",
+          "D (Dependency): de inversión de dependencia.",
+          "L (Liskov): principio de sustitución de Liskov."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-02",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿En qué consiste el principio de diseño orientado a objetos “inversión de dependencia”?",
+        "a": [
+          "En que las clases deben depender de abstracciones, no de implementaciones.",
+          "En disponer de varias interfaces específicas que una interfaz de propósito general.",
+          "En disponer de funcionalidades que se requieran en un futuro.",
+          "En que una clase no delega en un tercero diferentes tipos de flujos de control."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-03",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Qué acrónimo se corresponde con el principio “No vas a necesitar eso”?",
+        "a": [
+          "KISS.",
+          "LoD.",
+          "YAGNI.",
+          "IoC."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-04",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Si una aplicación dispone de varios métodos diferentes para abrir una conexión con un gestor documental, ¿qué principio NO se cumple?",
+        "a": [
+          "KISS.",
+          "SOLID.",
+          "YAGNI.",
+          "DRY."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-06",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En POO, ¿qué son las clases abstractas?",
+        "a": [
+          "Aquellas que se dividen en subclases.",
+          "Las que no tienen instancias.",
+          "Aquellas que están predefinidas.",
+          "Las que no son reutilizables."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Clase abstracta."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-07",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Un objeto:",
+        "a": [
+          "Es una librería de métodos que se pueden realizar con un tipo de información.",
+          "Se crea como generalización de una clase.",
+          "Encapsula la información junto con las operaciones que se pueden realizar sobre ella.",
+          "Es el elemento básico de ejecución en POO y estructurada."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-09",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Los objetos se caracterizan por (señale la INCORRECTA):",
+        "a": [
+          "Los atributos.",
+          "El estado.",
+          "El comportamiento.",
+          "La identidad."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-10",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En la POO, el tipo de método cuyo único objetivo es modificar el valor de un atributo es:",
+        "a": [
+          "Constructor.",
+          "Setter.",
+          "Getter.",
+          "Modifier."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-11",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El mecanismo por el cual se pueden crear clases complejas agregando objetos de clases ya existentes se denomina:",
+        "a": [
+          "Polimorfismo.",
+          "Composición.",
+          "Herencia.",
+          "Sobrecarga."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-12",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA:",
+        "a": [
+          "La sobrecarga consiste en definir nuevos métodos dentro de una clase con el mismo nombre pero diferente signatura.",
+          "La sobreescritura consiste en redefinir un método en una clase hija.",
+          "La sobrecarga de operadores es admitida en algunos lenguajes de programación.",
+          "La sobrecarga implica herencia."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-13",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO se considera una ventaja de la POO?",
+        "a": [
+          "La reusabilidad.",
+          "La interoperabilidad.",
+          "La extensibilidad.",
+          "La generalidad."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-14",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes es un patrón de diseño creacional?",
+        "a": [
+          "Singleton.",
+          "Facade.",
+          "Wrapper.",
+          "Template method."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-15",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes es un patrón de diseño estructural?",
+        "a": [
+          "Builder.",
+          "Flyweight.",
+          "Strategy.",
+          "Command."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-16",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes es un patrón de diseño de comportamiento?",
+        "a": [
+          "Model View Controller.",
+          "Composite.",
+          "State.",
+          "Proxy."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-17",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones NO se corresponde con los patrones de diseño?",
+        "a": [
+          "Son reusables.",
+          "Permiten resolver problemas similares a ocasiones anteriores.",
+          "Estandarizan el modo en que se realiza el diseño.",
+          "Formaliza un vocabulario común entre usuarios."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-18",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El patrón de diseño que consiste en garantizar que una clase solo tenga una instancia y proporcionar un punto de acceso global a ella se denomina:",
+        "a": [
+          "Singleton.",
+          "Proxy.",
+          "Command.",
+          "Visitor."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Singleton."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-19",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El patrón de diseño que permite construir objetos complejos a partir de otros más simples y similares entre sí se denomina:",
+        "a": [
+          "Composite.",
+          "Facade.",
+          "Wrapper.",
+          "Template method."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-20",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El patrón de diseño que guarda parte o todo el estado interno de un objeto, para que pueda ser restaurado posteriormente se denomina:",
+        "a": [
+          "State.",
+          "Proxy.",
+          "Command.",
+          "Memento."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-22",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál es la versión actual de UML?",
+        "a": [
+          "2.5.1.",
+          "2.5.2",
+          "2.5.3.",
+          "2.4.7."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Versión de UML. Caducable.",
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-23",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una característica de UML?",
+        "a": [
+          "Escalable.",
+          "Estándar.",
+          "Es una metodología.",
+          "Exhaustivo."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-24",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un diagrama de estructura de UML?",
+        "a": [
+          "Diagrama de clases.",
+          "Diagrama de objetos.",
+          "Diagrama de casos de uso.",
+          "Diagrama de paquetes."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-25",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es tipo de relación del diagrama de clases?",
+        "a": [
+          "Composición.",
+          "Agrupación.",
+          "Agregación",
+          "Dependencia."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-28",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Indique qué patrón de diseño permite añadir responsabilidades a un objeto dinámicamente:",
+        "a": [
+          "Decorator.",
+          "Composite.",
+          "Adapter.",
+          "Proxy."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-29",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un diagrama de comportamiento, según UML?",
+        "a": [
+          "Diagrama de casos de uso.",
+          "Diagrama de despliegue.",
+          "Diagrama de actividad.",
+          "Diagrama de máquina de estado."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-30",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Cuál de los siguientes patrones de diseño está clasificado como patrón de comportamiento:",
+        "a": [
+          "Builder.",
+          "Singleton.",
+          "Visitor.",
+          "Flywight."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-31",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿A cuál de los siguientes tipos pertenece el patrón de diseño Singleton?",
+        "a": [
+          "Creacional.",
+          "Comportamiento.",
+          "Estructural.",
+          "Arquitectura."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-32",
+        "t": "T3.05",
+        "o": "A",
+        "q": "De acuerdo con la norma ISO/IEC 19505-1:2012, ¿qué significa UML?",
+        "a": [
+          "Unified Marking Language.",
+          "United Modeling Language.",
+          "United Marking Language.",
+          "Unified Modeling Language."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-33",
+        "t": "T3.05",
+        "o": "A",
+        "q": "De los siguientes diagramas de UML, ¿cuál NO es un diagrama de estructura?",
+        "a": [
+          "Diagrama de paquetes.",
+          "Diagrama de componentes.",
+          "Diagrama de despliegue.",
+          "Diagrama de actividad."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-34",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En un diagrama de clases, si un método va precedido de \"-\" (signo menos) quiere decir que es accesible:",
+        "a": [
+          "Desde dentro de la clase.",
+          "Desde cualquier clase de cualquier paquete de clases.",
+          "Desde clases del mismo paquete.",
+          "Desde dentro de la clase y clases que hereden de ella."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-37",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Qué diagrama muestra una instantánea del sistema en un determinado momento en el tiempo?",
+        "a": [
+          "Diagrama de tiempo.",
+          "Diagrama de estructura compuesta.",
+          "Diagrama de componentes.",
+          "Diagrama de objetos."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-38",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En un diagrama de estructura compuesta, el elemento que comunica las partes de una estructura, conectando instancias concretas se denomina:",
+        "a": [
+          "Conector.",
+          "Parte.",
+          "Puerto.",
+          "Propiedad."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-39",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En un diagrama de actividad, ¿qué transición permite que los flujos entrantes se sincronicen?",
+        "a": [
+          "Decision node.",
+          "Merge node.",
+          "Fork node.",
+          "Join node."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-41",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En un diagrama de casos de uso, si se quiere reflejar un comportamiento común haremos uso de:",
+        "a": [
+          "La relación extend.",
+          "La herencia.",
+          "La relación include.",
+          "La dependencia."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-42",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En un diagrama de casos de uso la relación entre casos de uso se representa con:",
+        "a": [
+          "Una línea discontinua entre los casos de uso.",
+          "Una línea continua dirigida desde un caso de uso a otro.",
+          "Una flecha discontinua entre los casos de uso con el nombre del tipo de relación como etiqueta.",
+          "Una flecha continua entre los casos de uso con el nombre del tipo de relación como etiqueta."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-43",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Sobre el diagrama de máquina de estado señale la respuesta INCORRECTA:",
+        "a": [
+          "Muestra el comportamiento dependiente del tiempo de un sistema de información.",
+          "Los pseudo-estados se utilizan para expresar caminos de transición complejos.",
+          "Un sistema puede tener varios estados iniciales.",
+          "Una acción es una operación instantánea asociada a un evento."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-44",
+        "t": "T3.05",
+        "o": "A",
+        "q": "NO es un diagrama de interacción:",
+        "a": [
+          "Diagrama global de interacción.",
+          "Diagrama de tiempos.",
+          "Diagrama de comunicación.",
+          "Diagrama de objetos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "Diagramas de interacción UML."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-45",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Indique el diagrama UML en el que se pueden utilizar los fragmentos combinados:",
+        "a": [
+          "Diagrama de secuencia.",
+          "Diagrama de clases.",
+          "Diagrama de comunicación.",
+          "Diagrama global de interacción."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-49",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En tiempo de ejecución, ¿qué concepto hace referencia a la posibilidad de utilizar el mismo nombre de método con los mismos parámetros en la programación orientada a objetos?",
+        "a": [
+          "Herencia.",
+          "Ligadura dinámica.",
+          "Polimorfismo.",
+          "Abstracción."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-51",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Según METRICA v3, la relación jerárquica entre un objeto que representa la totalidad de ese objeto y las partes que lo componen, es una relación entre clases de tipo:",
+        "a": [
+          "Herencia.",
+          "Composición.",
+          "Asociación.",
+          "Agregación."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-54",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones con respecto a los patrones de diseño es correcta?",
+        "a": [
+          "Se pueden clasificar como patrones de creación, de estructura y de comportamiento.",
+          "Su ámbito siempre son las clases, nunca los objetos.",
+          "Son equivalentes a los frameworks.",
+          "El patrón “Builder” es un patrón de comportamiento."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-55",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En un diagrama de comunicación UML, en el que un objeto :Agenda envía un mensaje crearEvento(DescripcionEvento desc, int prioridad) a un objeto :Calendario, ¿qué tipo de relación existe entre las clases Calendario y DescripcionEvento?",
+        "a": [
+          "Navegabilidad.",
+          "Dependencia.",
+          "Realización.",
+          "Herencia."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-56",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Qué tipo de relaciones se pueden representar en un diagrama de despliegue?",
+        "a": [
+          "Relaciones de herencia entre clases.",
+          "Relaciones de dependencia entre nodos de hardware.",
+          "Relaciones de amistad entre objetos.",
+          "Relaciones de agregación entre componentes de software."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-57",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones sobre los patrones de diseño de software es cierta?",
+        "a": [
+          "Los patrones de diseño son soluciones específicas para problemas únicos en el desarrollo de software.",
+          "Los patrones de diseño son una técnica que solo se aplica en la capa de presentación.",
+          "Los patrones de diseño son soluciones generales para problemas comunes en el desarrollo de software.",
+          "Los patrones de diseño se utilizan solo en proyectos pequeños."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-58",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Indique qué patrón de diseño se debe utilizar cuando un comportamiento solo tenga sentido en algunas clases de una jerarquía de clases, pero no en otras:",
+        "a": [
+          "Observer.",
+          "Visitor.",
+          "Proxy.",
+          "Adapter."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT305-P1-59",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Entre los diagramas UML se encuentran:",
+        "a": [
+          "Diagrama de clases, diagrama de arquitectura y diagrama de despliegue.",
+          "Diagrama de clases, diagrama de secuencia y diagrama de tiempos.",
+          "Diagrama de objetos, diagrama de datos y diagrama de despliegue.",
+          "Diagrama de objetos, diagrama de secuencia y diagrama de configuración."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-28",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En una metodología de diseño de bases de datos, ¿cómo se llama la etapa cuyo objetivo es obtener una buena representación de los recursos de información con independencia de los usuarios o el SGBD, y sin realizar consideraciones sobre la eficiencia?",
+        "a": [
+          "Diseño conceptual.",
+          "Diseño lógico estándar.",
+          "Diseño lógico específico.",
+          "Diseño preliminar."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-02",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Los flujos de datos en un DFD que comunican proceso con almacenes solo pueden ser de los siguientes tipos:",
+        "a": [
+          "Control y flujo.",
+          "Consulta, actualización y borrado.",
+          "Consulta, actualización y diálogo.",
+          "Control y comunicación."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-38",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En el análisis de los requisitos de un sistema de información, para representar los distintos datos y sus relaciones, la “técnica” más adecuada:",
+        "a": [
+          "Pseudocódigo.",
+          "Modelo Entidad/Relación.",
+          "DFD (Diagrama de Flujo de Datos).",
+          "Diagramas de máquinas de estados."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-08",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En UML 2.5, señale la respuesta INCORRECTA sobre el diagrama de componentes:",
+        "a": [
+          "Muestra la organización de los componentes software, sus interfaces y las dependencias entre ellos.",
+          "Un componente es un módulo software que puede ser código fuente, código binario un ejecutable o una librería.",
+          "Proporciona una visión lógica de la construcción del sistema de información.",
+          "Existen dos tipos de interfaces: requerida y proporcionada."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-95",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El patrón de diseño cuyo propósito es convertir la interfaz de una clase en otra que esperan los clientes es:",
+        "a": [
+          "Proxy.",
+          "Composite.",
+          "Adapter.",
+          "Facade."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-96",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El patrón de diseño cuyo propósito es desacoplar una abstracción de su implementación de manera que las dos puedan evolucionar independientemente es:",
+        "a": [
+          "Facade.",
+          "Bridge.",
+          "Adapter.",
+          "Wrapper."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-97",
+        "t": "T3.05",
+        "o": "A",
+        "q": "La característica de los lenguajes orientados a objetos que permite declarar y definir en una misma clase dos o más métodos con el mismo nombre, pero distintos argumentos, se denomina:",
+        "a": [
+          "Sobrescritura.",
+          "Polimorfismo.",
+          "Herencia.",
+          "Sobrecarga."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-98",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Cuál de los siguientes patrones de diseño está clasificado como patrón de comportamiento:",
+        "a": [
+          "Builder.",
+          "Singleton.",
+          "Visitor.",
+          "Flyweight."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-100",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Para controlar el número de conexiones a una base de datos se ha valorado el empleo de un patrón de diseño que sólo permitirá la creación de una instancia por clase. Es el patrón:",
+        "a": [
+          "Singleton.",
+          "Adapter.",
+          "Facade.",
+          "Interface."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-53",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En programación orientada a objetos, la capacidad de un objeto de una clase dada A de aparecer y comportarse como si fuera de la clase B se conoce como:",
+        "a": [
+          "Herencia.",
+          "Extensibilidad.",
+          "Sobrecarga.",
+          "Polimorfismo."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-78",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El patrón de diseño orientado a objetos “Abstract Factory”:",
+        "a": [
+          "Define una interfaz para crear objetos, pero permite a las subclases decidir qué clase instanciar.",
+          "Separa la construcción de un objeto complejo de su representación de forma que el mismo proceso de construcción puede crear diferentes representaciones.",
+          "Proporciona una interfaz para crear familias de objetos relacionados o dependientes sin especificar sus clases concretas.",
+          "Especifica los objetos a crear usando una instancia prototípica y crea nuevos objetos copiando ese prototipo."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-81",
+        "t": "T3.05",
+        "o": "A",
+        "q": "De entre los siguientes patrones de diseño indique cuál NO es un patrón de comportamiento:",
+        "a": [
+          "Decorator.",
+          "Mediator.",
+          "Visitor.",
+          "Iterator."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-82",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Señale la respuesta correcta en relación con la programación orientada a objetos:",
+        "a": [
+          "Los conceptos de sobrecarga y sobrescritura son análogos.",
+          "Sobrescribir significa definir varios métodos dentro de una misma clase con el mismo nombre.",
+          "Sobrecargar significa ocultar un método de la superclase con una nueva implementación en la clase hija.",
+          "La sobrescritura implica la existencia de herencia, en cambio, con la sobrecarga no."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-83",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Una de las siguientes respuestas NO es una ventaja de la orientación a objetos. Indique cuál:",
+        "a": [
+          "Extensibilidad.",
+          "Reusabilidad.",
+          "Fiabilidad.",
+          "Modularidad."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-81",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En el diseño orientado a objetos, la ocultación del estado o de los datos miembro de un objeto, de forma que sólo es posible modificar los mismos mediante los métodos definidos para dicho objeto, se conoce como:",
+        "a": [
+          "Abstracción.",
+          "Polimorfismo.",
+          "Herencia.",
+          "Encapsulamiento."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-82",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de la lista siguiente corresponde a patrones de diseño creacionales?",
+        "a": [
+          "Facade, Composite, Bridge.",
+          "Strategy, Proxy, Iterator.",
+          "Builder, Abstract Factory, Prototype.",
+          "MVC, Session, Router."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-83",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones es falsa respecto de UML?",
+        "a": [
+          "Los paquetes pueden contener clases, objetos, relaciones, componentes, nodos y diagramas asociados.",
+          "Los diagramas de clases expresan la estructura estática de un sistema, con las clases, los atributos y las operaciones.",
+          "Las relaciones entre los casos de uso son de subordinación, dependencia, igualdad y superioridad.",
+          "Los nodos del diagrama de despliegue se representan con un cubo, y las líneas que los unen simbolizan los soportes de las comunicaciones."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-84",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Indique el patrón de diseño que responde a la necesidad de añadir dinámicamente funcionalidad a un objeto permitiendo no tener que crear sucesivas clases que hereden de la primera incorporando la nueva funcionalidad, sino otras que la implementan y se asocian a la primera:",
+        "a": [
+          "Decorator.",
+          "Facade.",
+          "Interpreter.",
+          "Observer."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-85",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En UML, NO es un diagrama dinámico:",
+        "a": [
+          "Diagrama de secuencia.",
+          "Diagrama de máquina de estado.",
+          "Diagrama de despliegue.",
+          "Diagrama de comunicación."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-67",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un diagrama de comportamiento de UML?",
+        "a": [
+          "Diagrama de actividad.",
+          "Diagrama de componentes.",
+          "Diagrama de casos de uso.",
+          "Diagrama de máquina de estado."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-69",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En el diagrama de despliegue, la pieza física de información que representa un software se denomina:",
+        "a": [
+          "Artefacto.",
+          "Nodo.",
+          "Componente.",
+          "Dispositivo."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-59",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Todos los lenguajes orientados a objetos deben tener las siguientes características:",
+        "a": [
+          "Asociación, herencia y objetos.",
+          "Herencia, asociación y encapsulación.",
+          "Herencia, encapsulación y polimorfismo.",
+          "Clases, superclases y subclases."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-60",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál es el propósito de un caso de uso en UML?",
+        "a": [
+          "Descomposición funcional.",
+          "Identificación de requisitos.",
+          "Definir una secuencia de acciones.",
+          "Identificar multiplicidades."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-61",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Indique la afirmación NO es correcta con respecto a los diagramas de clases de UML 2.5:",
+        "a": [
+          "En la composición de clases, los objetos compuestos dependen en existencia de la clase compuesta.",
+          "La agregación de clases es un tipo de asociación que indica que una clase es parte de otra clase.",
+          "La agregación de clases se representa mediante un rombo sin rellenar colocado en el extremo en el que está la clase que agrega a otras.",
+          "La composición de clases se representa mediante un rombo sin rellenar, colocado en el extremo en el que está la clase compuesta."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-50",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Indique cuál de los siguientes patrones de diseño reduce la redundancia cuando gran cantidad de objetos poseen idéntica información:",
+        "a": [
+          "Adapter.",
+          "Flyweight.",
+          "Facade.",
+          "Command."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-60",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Indique cuál de las siguientes características NO forma parte de los principios de diseño SOA:",
+        "a": [
+          "Interconexión.",
+          "Encapsulación.",
+          "Reutilización.",
+          "Abstracción."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-48",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El principio de programación orientada a objetos que se refiere al hecho de que objetos de diferentes clases, pero con una interfaz común, se puedan usar de manera indistinta sin tener que saber de qué clase exacta son para poder hacerlo, se llama:",
+        "a": [
+          "Abstracción.",
+          "Herencia.",
+          "Polimorfismo.",
+          "Encapsulación."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-49",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El patrón de diseño que permite solicitar una operación a un objeto sin conocer realmente el contenido de la operación ni el receptor real de la misma, encapsulándose la petición como un objeto, se denomina:",
+        "a": [
+          "Command.",
+          "Interpreter.",
+          "Chain of responsability.",
+          "Iterator."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-49",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En el ámbito de los patrones de diseño software, ¿cómo se denomina el patrón que garantiza la existencia de una única instancia para una clase y la creación de un mecanismo de acceso global a dicha instancia?",
+        "a": [
+          "Prototype.",
+          "Singleton.",
+          "Object Pool.",
+          "Builder."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-50",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes tipos diagramas de UML NO corresponde a un tipo de diagrama de interacción?",
+        "a": [
+          "Diagrama de secuencia.",
+          "Diagrama de tiempos.",
+          "Diagrama de comunicación.",
+          "Diagrama de actividad."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-60",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El tipo del patrón de diseño Observer es:",
+        "a": [
+          "De creación.",
+          "Estructural.",
+          "De comportamiento.",
+          "De asociación."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "La coincidencia aparece en la introducción de patrones de comportamiento pero el pasaje elegido solo describe Chain of Responsibility. Pendiente de extraer la clasificación específica de Observer.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AS10B-P1-60"
+      ]
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-61",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Cuál de los siguientes es un patrón de diseño que representa y externaliza el estado interno de un objeto sin violar la encapsulación, de forma que éste puede volver a dicho estado más tarde:",
+        "a": [
+          "Flyweight.",
+          "Memento.",
+          "Observer.",
+          "State."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-47",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Señale el nombre del patrón de diseño que garantiza la existencia de una única instancia para una clase:",
+        "a": [
+          "Iterator.",
+          "Singleton.",
+          "Visitor.",
+          "Unique."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-60",
+        "t": "T3.05",
+        "o": "A",
+        "q": "En el contexto de la notación UML 2.5.1, indique cuál de los siguientes diagramas NO se incluye en este lenguaje de modelado:",
+        "a": [
+          "Diagrama de tiempos.",
+          "Diagrama de secuencia.",
+          "Diagrama de actuación.",
+          "Diagrama de objetos."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-61",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Qué patrón de diseño permite que clases con interfaces incompatibles se comuniquen?",
+        "a": [
+          "Bridge.",
+          "Adapter.",
+          "Façade.",
+          "Interface."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-45",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Según UML, ¿qué representa el diagrama de componentes?",
+        "a": [
+          "La configuración en funcionamiento del sistema a modelar, incluyendo hardware y software.",
+          "La funcionalidad que ofrece el sistema en lo que se refiere a su interacción externa.",
+          "La organización estructural de los objetos y el rol de estos.",
+          "La organización y dependencias lógicas entre elementos software del sistema a modelar."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-46",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Las características fundamentales de la POO son:",
+        "a": [
+          "Objetos, mensajes, métodos y clases.",
+          "Abstracción, encapsulamiento, herencia y polimorfismo.",
+          "Objetos, abstracción, operaciones y mensajes.",
+          "Abstracción, encapsulamiento, métodos y clases."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-47",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El patrón Singleton:",
+        "a": [
+          "Asegura la existencia de una única instancia de la clase y proporciona un acceso global a la misma.",
+          "Se consigue gracias a que una clase externa genera la única instancia que existe.",
+          "Es un patrón de arquitectura de software que separa los datos y la lógica de negocio de una aplicación de la interfaz de usuario y el módulo encargado de gestionar los eventos y las comunicaciones.",
+          "Abstrae el proceso de creación de un objeto complejo, centralizando dicho proceso en un único punto."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-40",
+        "t": "T3.05",
+        "o": "A",
+        "q": "El patrón de diseño que define una dependencia de uno a muchos entre objetos, de forma que, cuando un objeto cambia de estado, se notifica y se actualizan automáticamente todos los objetos que dependen de él se denomina:",
+        "a": [
+          "Memento.",
+          "Singleton.",
+          "Observer.",
+          "Command."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Patrón Observer."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-41",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Dado un diagrama de clases, seleccione la definición correcta sobre una relación de dependencia, según Métrica v3:",
+        "a": [
+          "Es un mecanismo que permite a una clase de objetos incorporar atributos y métodos de otra clase, añadiéndolos a los que ya posee.",
+          "Es un tipo de relación jerárquica entre un objeto que representa la totalidad de ese objeto y las partes que lo componen.",
+          "Se utiliza entre dos clases o entre una clase y una interfaz, e indica que una clase requiere de otra para proporcionar alguno de sus servicios.",
+          "Es un mecanismo que permite especificar un conjunto de operaciones de una clase o paquete que son visibles desde otras clases o paquetes."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Relaciones de Métrica con definiciones cruzadas."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-42",
+        "t": "T3.05",
+        "o": "A",
+        "q": "De los cinco principios de diseño SOLID, ¿a qué hace referencia la “I”?",
+        "a": [
+          "La noción de que muchas interfaces cliente específicas son mejores que una interfaz de propósito general.",
+          "La noción de que los objetos de un programa deberían ser reemplazables por instancias de sus subtipos sin alterar el correcto funcionamiento del programa.",
+          "La noción de que un objeto solo debería tener una única razón para cambiar.",
+          "La noción de que se debe depender de abstracciones, no depender de implementaciones."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Principios SOLID (la I)."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 519,
+    "alreadyHadCitation": 393,
+    "added": 15,
+    "pending": 111,
+    "withCitation": 408
+  }
+}

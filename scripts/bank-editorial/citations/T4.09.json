@@ -1,0 +1,3197 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T4.09",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "bb1163f42997d72a6ddd16b8d7df8f3499426d48314585e4a6d39c1653b21652",
+    "afterSha256": "00fcca1521c92dc95387cda39fc984532c16d09cbbbd97a9c6a1d29a9bc93837"
+  },
+  "sample": {
+    "beforeSha256": "957b75feba7be66ba0fc95cc3e65c3e975cc3b3a98078b4ca09b600425bb4f10",
+    "afterSha256": "957b75feba7be66ba0fc95cc3e65c3e975cc3b3a98078b4ca09b600425bb4f10"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-L2025X-P1-R-03": {
+      "path": "T4.09 Seguridad en Redes/T4.09 Seguridad en Redes - Temario.pdf",
+      "sourceHash": "38ebb19d13455c4a1570159b22f6b3a550d7920fd21bbb519f76c7b1d9fb52c1",
+      "physicalPage": 51,
+      "printedPage": 51,
+      "excerpt": "En la actualidad, las VPN de nivel de enlace se basan en el estándar MACsec, Media Access Control (MAC) Security, definido en IEEE 802.1AE, que especifica un conjunto de protocolos que proporcionan medidas de seguridad para la protección de los datos en la capa de enlace de redes LAN tipo Ethernet.",
+      "label": "MACsec — IEEE 802.1AE"
+    },
+    "e-AT409-P1-41": {
+      "path": "T4.09 Seguridad en Redes/T4.09 Seguridad en Redes - Temario.pdf",
+      "sourceHash": "38ebb19d13455c4a1570159b22f6b3a550d7920fd21bbb519f76c7b1d9fb52c1",
+      "physicalPage": 47,
+      "printedPage": 47,
+      "excerpt": "Los concentradores VPN deben por lo tanto soportar de forma obligatoria el modo túnel, y de forma opcional, el modo transporte. Los equipos finales (host) deben soportar de forma obligatoria ambos modos (transporte y túnel).",
+      "label": "Pasaje del temario"
+    },
+    "e-AT409-P1-52": {
+      "path": "T4.09 Seguridad en Redes/T4.09 Seguridad en Redes - Temario.pdf",
+      "sourceHash": "38ebb19d13455c4a1570159b22f6b3a550d7920fd21bbb519f76c7b1d9fb52c1",
+      "physicalPage": 8,
+      "printedPage": 8,
+      "excerpt": "Según su nivel de participación dentro de la pila de protocolos OSI, se realiza una de las principales clasificaciones entre los cortafuegos existentes. Aunque encontramos inevitablemente soluciones híbridas, a grandes rasgos podemos diferenciar los tipos: - Nivel de enlace de datos (nivel 2): permite filtrar por direcciones MAC. Hasta hace poco era extraño encontrar filtros basados en este nivel, pero han ido ganando popularidad al mejorar las prestaciones de seguridad de los dispositivos de red basados en esa capa, como por ejemplo los switches Ethernet. - Nivel de red (nivel 3): permite filtrar por direcciones IP. - Nivel de transporte (nivel 4): permite filtrar por protocolo (TCP, UDP) y puertos. Estos cortafuegos también suelen permitir realizar NAT, lo que supone otra capa de defensa. - Nivel de aplicación (nivel 7): permite filtrar por características propias de un protocolo, bloqueando o cambiando el resultado, por ejemplo, determinadas peticiones DNS o URL en la navegación web. Pueden realizar tareas de Proxy.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT409-P1-56": {
+      "path": "T4.09 Seguridad en Redes/T4.09 Seguridad en Redes - Temario.pdf",
+      "sourceHash": "38ebb19d13455c4a1570159b22f6b3a550d7920fd21bbb519f76c7b1d9fb52c1",
+      "physicalPage": 53,
+      "printedPage": 53,
+      "excerpt": "Comparación de protocolos: De los protocolos vulnerables (L2TP, PPTP y P2F) usados por las VPN de nivel de enlace, el más completo por el momento es L2TP combinado con IPsec, para proveer de mecanismos de cifrado y autenticación robustos desde el equipo cliente, al concentrador de la red interna. PPTP tiene múltiples vulnerabilidades conocidas y, por lo tanto, graves problemas de seguridad. L2F solo protege una parte de las comunicaciones y requiere la participación del ISP.",
+      "label": "Pasaje del temario"
+    }
+  },
+  "questions": [
+    {
+      "id": "L2025X-P1-R-03",
+      "before": {
+        "i": "L2025X-P1-R-03",
+        "t": "T4.09",
+        "o": "O",
+        "q": "Señale cuál es un estándar que especifica un conjunto de protocolos que proporcionan medidas de seguridad para la protección de los datos en la capa de enlace de redes de área local tipo Ethernet, conocido como MAC Security:",
+        "a": [
+          "IEEE 802.1AE",
+          "IEEE 802.1AP",
+          "IEEE 802.1AF",
+          "IEEE 802.1AZ"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          6
+        ],
+        "d": 3,
+        "n": "802.1AE (MACsec) frente a 802.1 hermanas.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1,
+        "r": 1
+      },
+      "after": {
+        "i": "L2025X-P1-R-03",
+        "t": "T4.09",
+        "o": "O",
+        "q": "Señale cuál es un estándar que especifica un conjunto de protocolos que proporcionan medidas de seguridad para la protección de los datos en la capa de enlace de redes de área local tipo Ethernet, conocido como MAC Security:",
+        "a": [
+          "IEEE 802.1AE",
+          "IEEE 802.1AP",
+          "IEEE 802.1AF",
+          "IEEE 802.1AZ"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          6
+        ],
+        "d": 3,
+        "n": "802.1AE (MACsec) frente a 802.1 hermanas.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1,
+        "r": 1,
+        "u": "T4.09 Seguridad en Redes - Temario.pdf — MACsec — IEEE 802.1AE\n\nTemario, p. 51 (PDF p. 51)\n\nEn la actualidad, las VPN de nivel de enlace se basan en el estándar MACsec, Media Access Control (MAC) Security, definido en IEEE 802.1AE, que especifica un conjunto de protocolos que proporcionan medidas de seguridad para la protección de los datos en la capa de enlace de redes LAN tipo Ethernet.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "cc3419684a04979310002206c51d4da9f3bc45051f35898616d7b3e322dbd6c2",
+      "afterSha256": "00adc0f362b4a6a96fbdffd7f7a9e404ca6bde5bf8054b8b4fe4d3ae6e3b7fee",
+      "evidenceKeys": [
+        "e-L2025X-P1-R-03"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT409-P1-41",
+      "before": {
+        "i": "AT409-P1-41",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cómo se denominan los 2 modos de utilización de IPSec?",
+        "a": [
+          "Balanceado y no balanceado.",
+          "Túnel y abierto.",
+          "Datagrama y transporte.",
+          "Transporte y túnel."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT409-P1-41",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cómo se denominan los 2 modos de utilización de IPSec?",
+        "a": [
+          "Balanceado y no balanceado.",
+          "Túnel y abierto.",
+          "Datagrama y transporte.",
+          "Transporte y túnel."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T4.09 Seguridad en Redes - Temario.pdf — Pasaje del temario\n\nTemario, p. 47 (PDF p. 47)\n\nLos concentradores VPN deben por lo tanto soportar de forma obligatoria el modo túnel, y de forma opcional, el modo transporte. Los equipos finales (host) deben soportar de forma obligatoria ambos modos (transporte y túnel).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "f696efd16c74191ddc8c99754abdd4bbe6b4379e2a5cf14beb9b57fe29f2d0d7",
+      "afterSha256": "39de6829589d544e7153143f659065eb02bf3e9c77fd536b3de50c506418ed2d",
+      "evidenceKeys": [
+        "e-AT409-P1-41"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT409-P1-52",
+      "before": {
+        "i": "AT409-P1-52",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Qué tipo de cortafuegos permite filtrar por direcciones MAC?",
+        "a": [
+          "Nivel de red.",
+          "Nivel de enlace de datos.",
+          "Nivel de transporte.",
+          "Nivel de aplicación."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT409-P1-52",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Qué tipo de cortafuegos permite filtrar por direcciones MAC?",
+        "a": [
+          "Nivel de red.",
+          "Nivel de enlace de datos.",
+          "Nivel de transporte.",
+          "Nivel de aplicación."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T4.09 Seguridad en Redes - Temario.pdf — Pasaje del temario\n\nTemario, p. 8 (PDF p. 8)\n\nSegún su nivel de participación dentro de la pila de protocolos OSI, se realiza una de las principales clasificaciones entre los cortafuegos existentes. Aunque encontramos inevitablemente soluciones híbridas, a grandes rasgos podemos diferenciar los tipos: - Nivel de enlace de datos (nivel 2): permite filtrar por direcciones MAC. Hasta hace poco era extraño encontrar filtros basados en este nivel, pero han ido ganando popularidad al mejorar las prestaciones de seguridad de los dispositivos de red basados en esa capa, como por ejemplo los switches Ethernet. - Nivel de red (nivel 3): permite filtrar por direcciones IP. - Nivel de transporte (nivel 4): permite filtrar por protocolo (TCP, UDP) y puertos. Estos cortafuegos también suelen permitir realizar NAT, lo que supone otra capa de defensa. - Nivel de aplicación (nivel 7): permite filtrar por características propias de un protocolo, bloqueando o cambiando el resultado, por ejemplo, determinadas peticiones DNS o URL en la navegación web. Pueden realizar tareas de Proxy.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "379d4f2bd7ce667d0da7316899e381abbabc23ec37863e6c2aa98b59fb38cc96",
+      "afterSha256": "c85ff17bd64138d23a5ce76c87c9427ccf2be36bb2fb5ac59fc77305fb3c75f9",
+      "evidenceKeys": [
+        "e-AT409-P1-52"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT409-P1-56",
+      "before": {
+        "i": "AT409-P1-56",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Respecto a los protocolos de VPN de nivel de enlace, ¿cuál de las siguientes combinaciones proporciona actualmente el mayor nivel de seguridad para la comunicación entre un equipo cliente y la red interna de la organización?",
+        "a": [
+          "L2TP combinado con Ipsec.",
+          "PPTP con MPPE.",
+          "L2F sin cifrado adicional.",
+          "L2TP sin Ipsec."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "w": 1
+      },
+      "after": {
+        "i": "AT409-P1-56",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Respecto a los protocolos de VPN de nivel de enlace, ¿cuál de las siguientes combinaciones proporciona actualmente el mayor nivel de seguridad para la comunicación entre un equipo cliente y la red interna de la organización?",
+        "a": [
+          "L2TP combinado con Ipsec.",
+          "PPTP con MPPE.",
+          "L2F sin cifrado adicional.",
+          "L2TP sin Ipsec."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "w": 1,
+        "u": "T4.09 Seguridad en Redes - Temario.pdf — Pasaje del temario\n\nTemario, p. 53 (PDF p. 53)\n\nComparación de protocolos: De los protocolos vulnerables (L2TP, PPTP y P2F) usados por las VPN de nivel de enlace, el más completo por el momento es L2TP combinado con IPsec, para proveer de mecanismos de cifrado y autenticación robustos desde el equipo cliente, al concentrador de la red interna. PPTP tiene múltiples vulnerabilidades conocidas y, por lo tanto, graves problemas de seguridad. L2F solo protege una parte de las comunicaciones y requiere la participación del ISP.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "a7224a1731f977ed0c3a127263fca4af0430989ad291a2182d3dd3cdd3c28252",
+      "afterSha256": "1831f4189829aad1c826d852566e1614bf17354cb5b951297c28c6eefb5a85a5",
+      "evidenceKeys": [
+        "e-AT409-P1-56"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-67",
+        "t": "T4.09",
+        "o": "O",
+        "q": "Indique la respuesta correcta sobre tipos de ataque a un sistema de información:",
+        "a": [
+          "El sniffing es la generación de tráfico utilizando un origen falseado.",
+          "El spoofing es la captura del tráfico que circula por una red.",
+          "Denegacion de servicio distribuida (DDoS) es un ataque a varios objetivos desde un solo punto, con la finalidad de degradar total o parcialmente los servicios prestados por esos recursos a sus usuarios legítimos.",
+          "El barrido (“escaneo”) de puertos es un ataque que trata de obtener información básica acerca de qué servicios se ofrecen en un determinado sistema, así como otros detalles técnicos del mismo."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "a) y b) intercambian las definiciones de sniffing y spoofing; c) DDoS invertido.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-69",
+        "t": "T4.09",
+        "o": "O",
+        "q": "¿Cuál de las siguientes es una herramienta de ticketing para la gestión de incidentes de seguridad en las entidades del ámbito de aplicación del Esquema Nacional de Seguridad?",
+        "a": [
+          "ATENEA.",
+          "MONICA.",
+          "LUCIA .",
+          "INES."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Herramientas reales del CCN (ATENEA, MONICA, INES).",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-78",
+        "t": "T4.09",
+        "o": "O",
+        "q": "La herramienta del CCN que proporciona visibilidad y control sobre la red es:",
+        "a": [
+          "CARMEN.",
+          "EMMA.",
+          "MONICA.",
+          "OLVIDO."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Herramientas reales del CCN.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-79",
+        "t": "T4.09",
+        "o": "O",
+        "q": "La creación de un señuelo atractivo para potenciales atacantes con el objetivo de aprender sus ataques y poder prevenirlos o defenderlos en el futuro se hace mediante un:",
+        "a": [
+          "IPS.",
+          "SIEM.",
+          "IDS.",
+          "Honeypot."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "IPS/SIEM/IDS frente a honeypot.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-80",
+        "t": "T4.09",
+        "o": "O",
+        "q": "¿Cuál de los siguientes ataques consiste en suplantar a una entidad legítima por medio de llamadas telefónicas?",
+        "a": [
+          "Pharming.",
+          "Smishing.",
+          "Vishing.",
+          "Whaling."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Familia *ishing: la raíz da la pista (vi = voice).",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-17",
+        "t": "T4.09",
+        "o": "O",
+        "q": "Señale qué afirmación es correcta con respecto a las soluciones de Ciberseguridad proporcionadas por el Centro Criptológico Nacional (CCN):",
+        "a": [
+          "CLARA, protección y trazabilidad del dato.",
+          "ELENA, Simulador de Técnicas de Cibervigilancia.",
+          "GLORIA, Gestión de eventos e información de seguridad.",
+          "MONICA, Gestor de logs para responder ante incidentes y amenazas."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Herramientas CCN con funciones cruzadas (se repite en 2024 B: P69, P78).",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-76",
+        "t": "T4.09",
+        "o": "O",
+        "q": "¿Qué parte de un certificado de sitio web necesita un navegador para establecer una conexión segura HTTPS?",
+        "a": [
+          "La clave pública del certificado del sitio web, para que el navegador descifre los mensajes enviados por ese sitio web.",
+          "La clave privada del certificado del sitio web, para que el navegador cifre los mensajes que envía al sitio web.",
+          "Las claves pública y privada del certificado del sitio web, para poder cifrar y descifrar los mensajes que se intercambia con el sitio web.",
+          "Ninguna. Es el sitio web el que debe recibir las claves pública y privada del certificado de la persona que navega."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "Uso de clave pública/privada invertido.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-77",
+        "t": "T4.09",
+        "o": "O",
+        "q": "¿Qué es un portal cautivo?",
+        "a": [
+          "Un sitio web bloqueado por un ransomware, cuyo acceso no se recupera hasta que se paga un rescate.",
+          "Una página o aplicación web con acceso limitado, generalmente en fase de pruebas como paso previo a ponerse en producción.",
+          "Un sitio web que no cumple los criterios del nivel AA de WCAG.",
+          "Una página web que gestiona el acceso de los usuarios a una red, generalmente inalámbrica."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Distractores que suenan a \"cautivo\" (secuestrado, limitado).",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-78",
+        "t": "T4.09",
+        "o": "O",
+        "q": "Entre los protocolos que puede usar una VPN para proporcionar cifrado NO se encuentra:",
+        "a": [
+          "PPTP/MPPE",
+          "IPSec",
+          "L2TP/IPSec",
+          "KSEC 1.1"
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "\"KSEC 1.1\" inventado entre protocolos VPN reales.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-68",
+        "t": "T4.09",
+        "o": "O",
+        "q": "¿Cuál es la última versión estable del protocolo TLS?",
+        "a": [
+          "TLS 1.2",
+          "TLS 1.3",
+          "TLS 1.4",
+          "SSL 3.0"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Versiones de TLS (1.4 no existe).",
+        "y": "Ingreso libre OEP 2019",
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-77",
+        "t": "T4.09",
+        "o": "O",
+        "q": "La herramienta del CCN-CERT que permite realizar análisis estático de código dañino a través de múltiples motores antivirus y antimalware para plataformas Windows y Linux es:",
+        "a": [
+          "MARIA",
+          "PILAR",
+          "CLARA",
+          "REYES"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Herramientas del CCN con nombre de persona.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-78",
+        "t": "T4.09",
+        "o": "O",
+        "q": "En relación con las VPN de nivel de enlace, ¿cuál de los siguientes protocolos NO se utiliza para la implementación de dicha VPN?",
+        "a": [
+          "PPTP (Point-to-Point Tunneling Protocol).",
+          "L2F (Layer Two Forwarding).",
+          "L2TP (Layer Two Tunneling Protocol).",
+          "P2TP (Point two Tunneling Protocol)."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "\"P2TP\" inventado entre protocolos VPN de nivel 2.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-55",
+        "t": "T4.09",
+        "o": "O",
+        "q": "De acuerdo con el CCN-CERT, ¿cuál de los siguientes NO se considera un mecanismo de Autenticación Multi-Factor (MFA)?",
+        "a": [
+          "Contraseña + Token OTP (One Time Password).",
+          "Escáner de Iris + Huella dactilar.",
+          "Contraseña + Escáner de Iris.",
+          "Tarjeta de identificación + Reconocimiento facial."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "MFA: dos factores del mismo tipo no son MFA.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-68",
+        "t": "T4.09",
+        "o": "O",
+        "q": "¿Cuál de las siguientes es una base de datos de vulnerabilidades?",
+        "a": [
+          "NVD.",
+          "UTM.",
+          "CVDB.",
+          "SCAP."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9,
+          13
+        ],
+        "d": 2,
+        "n": "NVD frente a CVDB inventado y UTM/SCAP.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-69",
+        "t": "T4.09",
+        "o": "O",
+        "q": "De acuerdo con las recomendaciones del CCN-CERT, un requisito para una contraseña robusta es:",
+        "a": [
+          "Tener al menos 7 caracteres.",
+          "Incluir datos del usuario, como su nombre o fecha de nacimiento.",
+          "Usar frases cortas sin sentido.",
+          "Apuntar la contraseña en un papel guardado en un bolso o cartera personal."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 1,
+        "n": "Contraseña robusta: distractores absurdos.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-75",
+        "t": "T4.09",
+        "o": "O",
+        "q": "¿Cuál es una de las principales ventajas técnicas de TLS 1.3 respecto a TLS 1.2?",
+        "a": [
+          "Aumenta el número de pasos de verificación en el handshake para asegurar que la clave sea más larga.",
+          "Elimina el uso de certificados digitales, basándose únicamente en contraseñas de un solo uso (OTP).",
+          "Obliga a que el cliente y el servidor se encuentren en la misma subred física.",
+          "Permite completar el handshake en un solo viaje de ida y vuelta (1-RTT), reduciendo la latencia."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 1,
+        "n": "Ventajas de TLS 1.3.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-77",
+        "t": "T4.09",
+        "o": "O",
+        "q": "Dentro de las amenazas dirigidas al puesto del usuario, ¿en qué consiste la técnica de \"Pharming\" para la obtención ilícita de credenciales?",
+        "a": [
+          "En la alteración del proceso de resolución de nombres (fichero hosts o caché DNS) para redirigir al usuario a una página web falsa, incluso si este escribe la dirección correcta en el navegador.",
+          "En el envío masivo de correos electrónicos suplantando la identidad de una entidad financiera para que el usuario pinche en un enlace malicioso.",
+          "En la instalación de un programa malicioso que registra todas las pulsaciones de teclas realizadas en un dispositivo infectado.",
+          "En el uso de técnicas de ingeniería social telefónica con las que se suplanta la identidad de una empresa, organización o persona de confianza, con el fin de obtener información personal y sensible."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Pharming frente a phishing, keylogger, vishing.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-78",
+        "t": "T4.09",
+        "o": "O",
+        "q": "En el diseño de una arquitectura de red segura, ¿qué configuración perimetral permite aislar los servidores que ofrecen servicios al exterior, impidiendo que una intrusión en estos comprometa directamente la red interna?",
+        "a": [
+          "La implementación de una red privada virtual (VPN) de acceso remoto para todos los usuarios externos.",
+          "La creación de una zona desmilitarizada (DMZ) mediante el uso de cortafuegos que segmenten el tráfico.",
+          "El uso de un único sistema de detección de intrusiones (IDS) configurado en modo promiscuo en el núcleo de la red.",
+          "La asignación de direcciones IP públicas directamente a los terminales de los usuarios internos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "DMZ frente a VPN/IDS.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-53",
+        "t": "T4.09",
+        "o": "O",
+        "q": "¿Qué práctica de seguridad en el desarrollo de software previene de forma directa las vulnerabilidades de inyección como SQLi o XSS?",
+        "a": [
+          "Uso de contraseñas complejas por parte de los usuarios.",
+          "Validación y saneamiento de las entradas de usuario al sistema.",
+          "Instalación de un antivirus en el servidor.",
+          "Minimizar el número de ventanas abiertas durante el desarrollo."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Validación de entradas frente a medidas de otro ámbito.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-76",
+        "t": "T4.09",
+        "o": "O",
+        "q": "En el desarrollo de una aplicación web segura con HTTPS, ¿cuál es el propósito técnico del atributo \"HttpOnly\" en una cabecera \"Set-Cookie\"?",
+        "a": [
+          "Obliga a que la cookie sólo se envíe si la conexión está cifrada mediante TLS.",
+          "Impide que los scripts del lado del cliente accedan a la cookie, mitigando ataques XSS.",
+          "Define que la cookie es válida para el dominio de segundo nivel y todos sus subdominios.",
+          "Establece que la cookie debe eliminarse automáticamente al cerrar el navegador."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "HttpOnly frente a Secure, Domain y sesión (se repite en 2022 S1-R2).",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-77",
+        "t": "T4.09",
+        "o": "O",
+        "q": "Según las recomendaciones del CCN-CERT sobre seguridad en redes privadas virtuales, ¿qué nombre recibe el túnel de red seguro que opera en la capa de red y que se implementa como un kernel de interfaz virtual de red para Linux?",
+        "a": [
+          "MACsec.",
+          "IKEV2.",
+          "EAPoL.",
+          "WireGuard."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "WireGuard frente a MACsec, IKEv2, EAPoL.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-41",
+        "t": "T4.09",
+        "o": "O",
+        "q": "En relación a los riesgos de seguridad en aplicaciones, según OWASP, ¿qué tipo de fallo ocurre cuando datos no confiables son enviados a un intérprete como parte de un comando o consulta?",
+        "a": [
+          "Secuencia de comandos en sitios cruzados (XSS).",
+          "Exposición de datos sensibles.",
+          "Redirecciones y reenvíos no validados.",
+          "Inyección."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Categorías OWASP.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-42",
+        "t": "T4.09",
+        "o": "O",
+        "q": "¿Qué tipo de ataque lleva a cabo el virus Ryuk?",
+        "a": [
+          "Sniffing",
+          "Ransomware",
+          "Spoofing",
+          "Phishing"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Ryuk = ransomware.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-49",
+        "t": "T4.09",
+        "o": "O",
+        "q": "¿Cuál de las siguientes herramientas del CCN-CERT se utiliza para la detección de amenazas complejas en el puesto del usuario?",
+        "a": [
+          "MARIA",
+          "CLAUDIA",
+          "GLORIA",
+          "ANA"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Herramientas del CCN con nombre de persona.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-32",
+        "t": "T4.09",
+        "o": "O",
+        "q": "En cuanto a las conexiones de acceso remoto, ¿cuál NO sería una recomendación para mitigar el riesgo?",
+        "a": [
+          "Los privilegios de acceso remoto a recursos por parte del teletrabajador serán los mismos que cuando se trabaja en local.",
+          "El canal de comunicación debe ser cifrado y terminar en un firewall.",
+          "La conexión debe solicitar un segundo factor de autenticación.",
+          "Los datos de la conexión deben quedar registrados y estar disponibles para su consulta."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "Acceso remoto: a) invierte \"mínimos privilegios\" (correcta por ser la NO recomendación).",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-41",
+        "t": "T4.09",
+        "o": "O",
+        "q": "Los protocolos AAA se descomponen en tres procesos entrelazados. Señale la respuesta correcta:",
+        "a": [
+          "Autenticación, Autorización, Aislamiento.",
+          "Autenticación, Autorización, Seguridad.",
+          "Autenticación, Autorización, Control.",
+          "Autenticación, Autorización, Contabilización."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "AAA: tercer término cambiado.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-49",
+        "t": "T4.09",
+        "o": "O",
+        "q": "¿Cuál de las siguientes Guias de Seguridad CCN-STIC trata sobre la “Seguridad en Redes Privadas Virtuales”?",
+        "a": [
+          "837",
+          "814",
+          "836",
+          "812"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          6
+        ],
+        "d": 3,
+        "n": "Número de guía CCN-STIC.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-50",
+        "t": "T4.09",
+        "o": "O",
+        "q": "De los siguientes protocolos de seguridad, indique cuál es el más empleado por las VPN de nivel de transporte:",
+        "a": [
+          "TLS",
+          "SSH",
+          "IPSec",
+          "MACsec"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "TLS frente a SSH/IPsec/MACsec.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-R-01",
+        "t": "T4.09",
+        "o": "O",
+        "q": "Señale la respuesta INCORRECTA con respecto al ataque KRACK:",
+        "a": [
+          "Son las siglas de \"Key Reinstallation Attack\".",
+          "El objetivo del ataque es el proceso de negociación del protocolo WPA2.",
+          "Distinta clave de cifrado es utilizada con valores NONCE que ya han sido utilizados en pasado.",
+          "Esta vulnerabilidad afecta únicamente al protocolo WPA2."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          12
+        ],
+        "d": 3,
+        "n": "KRACK: \"únicamente WPA2\".",
+        "y": "Promoción interna OEP 2022 (2023)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-R-03",
+        "t": "T4.09",
+        "o": "O",
+        "q": "¿Cuál de las siguientes herramientas se utiliza para la detección y prevención de intrusiones (HIDS)?",
+        "a": [
+          "OSSEC",
+          "GIT",
+          "Sonar",
+          "Checkstyle"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "OSSEC frente a herramientas de desarrollo.",
+        "y": "Promoción interna OEP 2022 (2023)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2025A-P1-49",
+        "t": "T4.09",
+        "o": "O",
+        "q": "En el contexto de la seguridad del puesto de trabajo, ¿en qué consiste el principio de mínimo privilegio que debe aplicarse a los usuarios de un sistema informático según el Esquema Nacional de Seguridad (ENS) regulado en el Real Decreto 311/2022, de 3 de mayo?",
+        "a": [
+          "En garantizar la trazabilidad completa de las acciones realizadas por los administradores de sistemas mediante el uso de cuentas genéricas de alta prioridad.",
+          "En conceder a cada usuario únicamente los permisos estrictamente necesarios para el desempeño de sus funciones.",
+          "En implementar un control de acceso basado exclusivamente en la ubicación física del puesto de usuario, independientemente del rol desempeñado.",
+          "En obligar a los usuarios a compartir sus credenciales con sus responsables directos para garantizar la continuidad del servicio."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 1,
+        "n": "Mínimo privilegio: distractores absurdos.",
+        "y": "Promoción interna convocatoria 2025"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-84",
+        "t": "T4.09",
+        "o": "O",
+        "q": "La herramienta del CCN-CERT dedicada al análisis automatizado de ficheros que puedan tener un comportamiento malicioso se llama:",
+        "a": [
+          "ANA",
+          "MARTA",
+          "REYES",
+          "GLORIA"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Herramientas del CCN.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-94",
+        "t": "T4.09",
+        "o": "O",
+        "q": "De acuerdo al RFC 8446, ¿cuál de las siguientes opciones NO representa uno de los tipos de mensajes mediante los que TLS v 1.3 negocia los parámetros de seguridad de la conexión?",
+        "a": [
+          "ServerHello",
+          "HelloRequest",
+          "HelloRetryRequest",
+          "ClientHello"
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 3,
+        "n": "HelloRequest (TLS 1.2) en TLS 1.3: contaminación de versiones.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-96",
+        "t": "T4.09",
+        "o": "O",
+        "q": "Señale cuál de las siguientes descripciones se corresponde con la amenaza denominada “Clickjacking”:",
+        "a": [
+          "Un usuario malicioso puede ejecutar comandos en el sistema operativo host.",
+          "Un usuario malicioso intenta acceder a partes del sistema de ficheros del servidor web a los que no debería tener acceso.",
+          "Un usuario malicioso secuestra las pulsaciones de ratón dirigidas a un sitio aparentemente inocente y las redirige a otro sitio, engañando a usuarios de Internet.",
+          "Inundación de peticiones no legítimas a un servidor de Manera que se interrumpa el acceso a usuarios legítimos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Clickjacking frente a otras amenazas.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-97",
+        "t": "T4.09",
+        "o": "O",
+        "q": "De entre las siguientes afirmaciones relacionadas con el uso de cortafuegos, seleccione la afirmación correcta:",
+        "a": [
+          "Los cortafuegos de tipo stateless guardan información de las sesiones a las que pertenecen los paquetes.",
+          "Un cortafuegos DPI permite una inspección profunda del contenido completo del paquete.",
+          "Los cortafuegos de tipo stateful no guardan información de las sesiones a las que pertenecen los paquetes.",
+          "Los cortafuegos de próxima generación no incorporan funciones de NAT ni VPN para aligerar su carga."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "Cortafuegos stateless/stateful invertidos.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-98",
+        "t": "T4.09",
+        "o": "O",
+        "q": "¿Cuál de las siguientes Opciones es cierta con respecto a los protocolos IPSec, PPTP y OpenVPN?",
+        "a": [
+          "IPSec utiliza dos protocolos de seguridad (AH y ESK) y un protocolo de gestión de claves (IKE).",
+          "El protocolo OpenVPN no es compatible con IPSec, IKE, PPTP y L2TP.",
+          "El protocolo PPTP es el que ofrece un nivel de encriptación más fuerte, pero precisa de un esfuerzo elevado para su configuración.",
+          "Los tres protocolos protegen las comunicaciones a nivel 2 de la pila OSI."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          9,
+          2
+        ],
+        "d": 3,
+        "n": "IPsec/PPTP/OpenVPN con datos cambiados.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-R-03",
+        "t": "T4.09",
+        "o": "O",
+        "q": "¿Cuál de las siguientes afirmaciones es correcta?",
+        "a": [
+          "L2TP se refiere a Layer 2 Tunneling Protocol.",
+          "IKEv2 se refiere a Internet Key Extended Protocol Version 2.",
+          "ESP se refiere a Enhanced Security Payload.",
+          "SSTP se refiere a Secure System Transport Protocol."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Expansiones de siglas cambiadas.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-50",
+        "t": "T4.09",
+        "o": "O",
+        "q": "En unprotocolo de conexión TLS v1.3, ¿quién inicia la conexión en el proceso Handshake?",
+        "a": [
+          "El servidor.",
+          "El cliente.",
+          "La puede iniciar tanto el cliente como el servidor,",
+          "El que tenga el certificado digital que acredita su identidad."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "Handshake de TLS: lo inicia el cliente.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-01",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Los cortafuegos de filtrado de paquetes ¿en qué capa TCP/IP actúan?",
+        "a": [
+          "Capa IP.",
+          "Capa de Aplicación.",
+          "Capa de Sesión.",
+          "Capa de Transporte."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-02",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Cuál de los siguientes elementos de seguridad opera en el nivel 3 del modelo OSI:",
+        "a": [
+          "Proxy.",
+          "Firewall de filtrado de paquetes.",
+          "Antivirus.",
+          "Filtro antispam."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-03",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Un cortafuegos es:",
+        "a": [
+          "Un software que impide los accesos indeseables a la intranet desde el exterior.",
+          "Un software cuya función principal es limitar el uso excesivo de Internet.",
+          "Un motor antivirus dedicado a impedir los virus que llegan de Internet.",
+          "Un elemento (que puede ser hardware o un software) cuya función principal es limitar el acceso de los usuarios a determinadas páginas de Internet."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-04",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Para la protección del puesto de trabajo, NO son necesarios los productos de una de las siguientes categorías:",
+        "a": [
+          "Antifraude.",
+          "Seguridad en movilidad.",
+          "Seguridad en los sistemas.",
+          "Gestión y control de acceso e identidad."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-05",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes categorías de servicios NO tiene una relación directa con la protección del puesto de trabajo?",
+        "a": [
+          "Planificación e implantación de servicios.",
+          "Control de dispositivos externos de almacenamiento.",
+          "Control de acceso a la red corporativa.",
+          "Autenticación."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-06",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Los sistemas de detección de intrusos se utilizan para:",
+        "a": [
+          "Obtener información confidencial de los usuarios.",
+          "Hacer un seguimiento de los lugares visitados en Internet por los usuarios de una institución.",
+          "Analizar la red y generar alarmas ante actividades anómalas",
+          "Todas son ciertas."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-08",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Hablando de la seguridad perimetral y de firewalls, se puede decir que:",
+        "a": [
+          "Una DMZ (DeMilitarized Zone) es una subred entre las redes interna y externa (generalmente Internet).",
+          "La arquitectura denominada spoofing utiliza un equipo con una única tarjeta de red para conectarse a dos redes, a la red interna y a la red externa.",
+          "Una arquitectura de capa de red, basada en el filtrado de paquetes IP en función de unas reglas establecidas, se utiliza en sistemas que requieren un nivel de seguridad muy elevado.",
+          "En ningún caso un firewall implementa políticas de seguridad, ya que simplemente bloquea todo acceso de un usuario externo a la red interna."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-09",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Para que un IDS (sistema de detección de intrusión) sea efectivo:",
+        "a": [
+          "Solo pasará por él el tráfico de correo electrónico.",
+          "Solo pasará por él el tráfico http.",
+          "Todo el tráfico de red debe llegar a él.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-10",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones relativas a los firewalls es FALSA?",
+        "a": [
+          "Funciona, en principio, denegando cualquier tráfico que se produzca cerrando todos los puertos de nuestro PC.",
+          "El funcionamiento de este tipo de programas se basa en el filtrado de paquetes.",
+          "Se componen de equipos y programas.",
+          "Nos advierte de que ciertos paquetes pueden ser perniciosos para nuestro sistema o la red."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-11",
+        "t": "T4.09",
+        "o": "A",
+        "q": "En relación a un cortafuegos, ¿cuál de las siguientes afirmaciones es FALSA?",
+        "a": [
+          "Se puede impedir el paso a todo el tráfico IP que vaya dirigido a una cierta dirección IP o a una red concreta.",
+          "No se puede impedir el paso a todo el tráfico que provenga de cierta dirección IP o de cierta red concreta.",
+          "Se puede impedir el paso a todo tráfico que no provenga de cierta dirección IP o de cierta red concreta.",
+          "Se puede impedir el paso del tráfico que vaya dirigido a un puerto concreto."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-12",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Un cortafuegos:",
+        "a": [
+          "Sirve exclusivamente para eliminar los problemas de virus en el ordenador.",
+          "Analiza todos los mensajes que entran o salen, y bloquea los que no cumplen los criterios de seguridad fijados.",
+          "Es un elemento hardware de interconexión entre 2 redes.",
+          "Es un router de propósito específico, para el acceso a Internet de una red."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-13",
+        "t": "T4.09",
+        "o": "A",
+        "q": "En IPSec se conoce como \"Asociación de seguridad\" a:",
+        "a": [
+          "La relación entre dos o más entidades que describe cómo éstas utilizarán los servicios de seguridad para comunicarse de forma segura.",
+          "Servicios de seguridad y autenticación que incluyen mecanismos de firma digital o funciones resumen con clave.",
+          "Servicios de confidencialidad, integridad y autenticación que incluyen mecanismos de cifrado, firma digital o funciones resumen con clave.",
+          "Protocolo en dos fases para el intercambio seguro de claves."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-14",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Cuando en movilidad necesitamos usar recursos de la empresa, se hace a través de una Red Privada Virtual (VPN). ¿Cuál de estas afirmaciones es cierta?",
+        "a": [
+          "El algoritmo de cifrado AES asegura la integridad de los datos enviados.",
+          "El algoritmo de hash SHA asegura la confidencialidad de los datos enviados.",
+          "El protocolo de seguridad SSL opera en la capa de sesión (nivel 5 de OSI) por lo que permite que las aplicaciones lo usen sin tener que modificarse.",
+          "El protocolo de seguridad IPsec opera en la capa de red (nivel 3 de OSI) por lo que permite que las aplicaciones lo usen sin tener que modificarse."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-15",
+        "t": "T4.09",
+        "o": "A",
+        "q": "En una Red Privada Virtual con IPSEC, ¿cuál de los siguientes protocolos se utiliza para establecer las asociaciones de seguridad y generar las claves criptográficas iniciales?",
+        "a": [
+          "SSL.",
+          "IKE.",
+          "TSL/SSL.",
+          "ESP/AH."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-16",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones acerca de las Redes Privadas Virtuales (RPVs) es FALSA?",
+        "a": [
+          "Habitualmente distinguimos entre dos tipos de RPV: de acceso remoto, para dar acceso a un usuario que se conectan a la oficina desde lugares remotos, y site to site, para interconectar de manera permanente dos sedes de una misma compañía.",
+          "Para incrementar la seguridad de la RPV, el usuario remoto puede acceder utilizando certificados digitales.",
+          "Dos de los protocolos más habituales para establecer RPVs son IPSEC y SSL.",
+          "La RPV ofrecen un mejor rendimiento debido a que encapsulan el tráfico en una nueva cabecera IP."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-17",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Indique qué protocolo de autenticación de los siguientes NO se puede usar en una conexión VPN utilizando L2TP:",
+        "a": [
+          "MS-CHAP.",
+          "CHAP.",
+          "TPAP.",
+          "PAP."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-18",
+        "t": "T4.09",
+        "o": "A",
+        "q": "En el entorno de servicios VPN, ¿cuál de los siguientes es un protocolo que se utiliza específicamente para la autenticación de usuarios entre el servidor VPN y la base de datos de usuarios?",
+        "a": [
+          "PL/SQL.",
+          "WPA.",
+          "RADIUS.",
+          "SHA-1."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-19",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Se le plantea la necesidad de unir dos sedes situadas en ciudades distintas vía telemática, intentando minimizar los costes y con nivel de seguridad similar al que se obtendría al unirlas físicamente por cable. ¿Cuál de estas soluciones escogería?",
+        "a": [
+          "Contratación a un operador de telecomunicaciones de líneas de comunicación dedicadas.",
+          "Uso de firewalls y tecnologías VPN a través de Internet.",
+          "Creación de una red interconexión LAN-MAN entre ambas sedes.",
+          "Uso de proxies de comunicaciones a través de una red MAN."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "Mini caso: unir sedes con VPN."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-20",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Respecto a las VPN de nivel de red, señale la respuesta INCORRECTA:",
+        "a": [
+          "El modo túnel se utiliza en escenarios de VPN de sitio a sitio.",
+          "El modo transporte añade una nueva cabecera IP.",
+          "Los concentradores VPN son utilizados en el modo túnel.",
+          "El modo transporte proporciona seguridad de extremo a extremo."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-21",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Un paquete IP en una VPN en modo túnel:",
+        "a": [
+          "Añade una cabecera IPsec entre la cabecera IP y la cabecera TCP/UDP.",
+          "Añade una cabecera IPsec que se sitúa antes de la cabecera IP.",
+          "Añade una cabecera IPsec tras la cabecera IP y la cabecera TCP/UDP.",
+          "No añade una cabecera IPsec."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-22",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál NO es una característica de un cortafuegos?",
+        "a": [
+          "No puede ser utilizado para implementar VPN.",
+          "Permite la implementación de auditorías de seguridad.",
+          "Define un punto único de control.",
+          "Proporciona protección contra ataques de spoofing y enrutado."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [
+          12
+        ],
+        "d": 2,
+        "n": "Cortafuegos: negación."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-23",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una funcionalidad de los cortafuegos?",
+        "a": [
+          "La prevención de intrusiones.",
+          "El filtrado de contenidos.",
+          "La traducción de direcciones.",
+          "La monitorización de la red."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-24",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Qué tipo de cortafuegos es conocido como DPI?",
+        "a": [
+          "Cortafuegos transparente.",
+          "Filtrado de paquetes.",
+          "Filtrado de paquetes con estado e inspección.",
+          "Filtrado de paquetes con estado."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-25",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Sobre los cortafuegos a nivel de sistema, indique la respuesta correcta:",
+        "a": [
+          "Opera en la capa de enlace de datos.",
+          "Gestionan el flujo entre VLANs.",
+          "No se ubican en la red.",
+          "Se conocen también como proxies."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-26",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Qué arquitectura de cortafuegos es considerada la más simple?",
+        "a": [
+          "SOHO.",
+          "DMZ.",
+          "Multi-DMZ.",
+          "Multi-DMZ por VLAN."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-27",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Un proxy inverso:",
+        "a": [
+          "Actúa de intermediario para todas las conexiones salientes de la organización.",
+          "Actúa de intermediario para todas las conexiones entrantes del exterior.",
+          "Es conocido también como proxy Socks.",
+          "Es transparente para las comunicaciones establecidas por los clientes de la organización."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-28",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Respecto a los IDS, señale la respuesta correcta:",
+        "a": [
+          "Cuentan con una única sonda para capturar el tráfico.",
+          "Dispone de una consola central de administración denominada SIME.",
+          "Los NIDS se caracterizan por su eficacia.",
+          "Los HIDS son fácilmente escalables."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-29",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Los sistemas IDS para redes 802.11 se denominan:",
+        "a": [
+          "NIDS.",
+          "HIDS.",
+          "PIDS.",
+          "WIDS."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-30",
+        "t": "T4.09",
+        "o": "A",
+        "q": "En relación con las herramientas IDS/IPS, indique la respuesta correcta:",
+        "a": [
+          "OSSEC es un NIDS.",
+          "Fail2ban es un IDS.",
+          "Bro es un IDS y a la vez un IPS.",
+          "Nginx es un HIDS."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-31",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Qué es Snorby?",
+        "a": [
+          "Un proxy transparente.",
+          "Un IDS a nivel de sistema.",
+          "Un IDS a nivel de red.",
+          "Una consola central de administración."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-32",
+        "t": "T4.09",
+        "o": "A",
+        "q": "El sistema físico o virtual que integra una red de herramientas y hosts cuyo valor reside en ser atacado o comprometido se denomina:",
+        "a": [
+          "Honeypot.",
+          "SOHO.",
+          "IPS.",
+          "Honeynet."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-33",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Qué afirmación se corresponde con un escritorio virtual?",
+        "a": [
+          "Permite al usuario controlar de forma remota un equipo de la organización.",
+          "Es un marco de trabajo o framework, que integra varias tecnologías para entregar a los usuarios aplicaciones y datos de forma unificada en un único espacio de trabajo.",
+          "Permite a los usuarios el acceso remoto a un entorno de escritorio completo con las aplicaciones y recursos que necesitan.",
+          "Se utiliza para unir redes mediante una conexión segura."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-34",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Señale la afirmación INCORRECTA en relación con el protocolo ESP:",
+        "a": [
+          "Ofrece los mismos servicios que AH.",
+          "No ofrece confidencialidad.",
+          "La versión actual del protocolo es la 3.",
+          "El modo transporte no añade ninguna nueva cabecera IP, mantiene la original."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-35",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Señale la afirmación INCORRECTA en relación con el protocolo AH:",
+        "a": [
+          "Ofrece integridad.",
+          "Ofrece autenticación de destino.",
+          "Su implementación no es obligatoria en IPsec versión 3.",
+          "El modo túnel añade una nueva cabecera IP al paquete."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-36",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un protocolo perteneciente a IPsec?",
+        "a": [
+          "IKE.",
+          "HMAC.",
+          "AH.",
+          "ESP."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-37",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Señale cuál de los siguientes es un protocolo de acceso empleado en VDI:",
+        "a": [
+          "IPX/SPX.",
+          "FCoE.",
+          "RDP.",
+          "SIP."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-38",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Qué NO puede hacer un sistema de detección de intrusos?",
+        "a": [
+          "Controlar el tráfico de red dentro y fuera de los firewalls.",
+          "Evitar que salten alarmas falsas.",
+          "Detectar tiempos de acceso anormales.",
+          "Guardar logs de los accesos."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-39",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Se puede filtrar el tráfico, mediante un firewall de nivel 3, entre dos máquinas situadas en la misma LAN?",
+        "a": [
+          "En todo caso.",
+          "No.",
+          "Depende de la configuración del firewall.",
+          "Depende de la configuración de la LAN."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-40",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Los routers para filtrado de paquetes (\"packet filtering\"):",
+        "a": [
+          "Son cortafuegos (firewalls) que operan en el nivel de aplicación en su modalidad \"stateful inspection\".",
+          "Son firewalls que operan en el nivel de aplicación en su modalidad \"stateless inspection\".",
+          "No son firewalls, sino dispositivos de encaminamiento (\"routing\") que se pueden conectar a un cortafuegos como complemento de éste.",
+          "Son firewalls que operan en el nivel de red."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Filtrado de paquetes en nivel de red."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-42",
+        "t": "T4.09",
+        "o": "A",
+        "q": "El protocolo L2TP es comúnmente utilizado por las VPN para:",
+        "a": [
+          "Efectuar el proceso de encriptado de los datos transmitidos a través de la red pública.",
+          "Efectuar la autentificación de los usuarios.",
+          "Crear túneles de nivel OSI 2 que encapsulan los datagramas IP transmitidos a través de una red no privada.",
+          "Filtrar los datos recibidos por cada usuario."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-43",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes es una herramienta IDS?",
+        "a": [
+          "Nessus.",
+          "Snort.",
+          "Nagios.",
+          "NetSaint."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-44",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Indique cuál de las siguientes afirmaciones relacionadas con IPsec es FALSA:",
+        "a": [
+          "IPv6 incluye explícitamente la posibilidad de utilizarlo.",
+          "Puede operar en modo túnel o en modo transporte.",
+          "El protocolo AH proporciona confidencialidad.",
+          "El protocolo ESP proporciona autenticación."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-45",
+        "t": "T4.09",
+        "o": "A",
+        "q": "La diferencia entre un IDS y un IPS es:",
+        "a": [
+          "Los IDS detectan un ataque, generan una alerta, actúan e intentan neutralizar el ataque.",
+          "Los IDS se pueden instalar en un servidor y los IPS solo pueden ser un equipo hardware.",
+          "Los IDS y los IPS funcionan exactamente igual.",
+          "Los IPS detectan un ataque, generan una alerta, actúan e intentan neutralizar el ataque."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-46",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Los cortafuegos de nivel 7 de la capa OSI, esto es, a nivel de aplicación:",
+        "a": [
+          "No existen.",
+          "Tratan con números de secuencias de paquetes TCP/IP.",
+          "Pueden ser considerados como filtros de paquetes.",
+          "Actúan a modo de proxy para las distintas aplicaciones que van a controlar."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-47",
+        "t": "T4.09",
+        "o": "A",
+        "q": "La seguridad en red en las organizaciones se basa en la implementación de múltiples barreras de seguridad. Los cortafuegos son una de las principales barreras utilizadas, ¿cuál de las siguientes características NO le aplica a los cortafuegos?",
+        "a": [
+          "Filtrado de paquete.",
+          "NAT - Network Address Traslation.",
+          "VPN - Virtual Private Network.",
+          "NAC - Network Access Control."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-48",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones acerca de una DMZ pone en riesgo nuestra red interna?",
+        "a": [
+          "Las conexiones desde la red interna o privada a la DMZ están permitidas.",
+          "Las conexiones desde la red externa o pública a la DMZ están permitidas.",
+          "Las conexiones desde la DMZ a la red interna o privada están permitidas.",
+          "Las conexiones desde la DMZ a la red externa o pública están permitidas."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-49",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Los cortafuegos aportan seguridad a los sistemas. Señale la respuesta correcta:",
+        "a": [
+          "Un cortafuegos correctamente configurado da una seguridad total al sistema.",
+          "La seguridad total solo la aportan determinadas marcas y modelos de cortafuegos.",
+          "Ningún cortafuegos puede aportar seguridad total a los sistemas.",
+          "Los cortafuegos implementados por software son más seguros que los implementados por hardware."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-50",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Qué es el split tunneling en una VPN?",
+        "a": [
+          "Una técnica que permite usar de forma paralela varios servidores de VPN, mejorando así la velocidad de la VPN.",
+          "Una técnica que permite enrutar parte del tráfico de red a través de la VPN y el resto directamente a Internet a través del ISP del cliente.",
+          "Una técnica que permite usar simultáneamente diferentes mecanismos de cifrado, en función del tráfico de red, mejorando así la seguridad en la VPN.",
+          "Una técnica que permite separar la autenticación y el tráfico en servidores diferentes en una VPN, mejorando así la seguridad en la VPN."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-51",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál es una buena práctica recomendada al diseñar una infraestructura multicapa de cortafuegos?",
+        "a": [
+          "Utilizar cortafuegos del mismo fabricante.",
+          "Permitir que el router de perímetro actúe como primer cortafuegos.",
+          "Gestionar distintos cortafuegos por distintos equipos de administradores.",
+          "Configurar todos los cortafuegos con la misma política."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-53",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál es la principal diferencia entre el filtrado básico de paquetes y el filtrado de paquetes con estado?",
+        "a": [
+          "El filtrado básico inspecciona el contenido de los paquetes.",
+          "El filtrado básico permite NAT.",
+          "El filtrado con estado solo funciona a nivel de aplicación.",
+          "El filtrado con estado mantiene información sobre las conexiones establecidas."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-54",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones es una ventaja del uso de servidores proxy?",
+        "a": [
+          "Ocultan el esquema de la red interna a los usuarios externos.",
+          "Permiten el acceso directo a la red interna desde Internet.",
+          "No requieren configuración en los clientes.",
+          "No generan latencia en las comunicaciones."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Ventaja del proxy."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-55",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Qué ventaja principal tiene un HIDS frente a un NIDS?",
+        "a": [
+          "Mayor eficiencia en grandes volúmenes de tráfico.",
+          "Facilidad de monitorización de destinatarios finales.",
+          "Menor probabilidad de error en la detección de ataques.",
+          "No requiere instalación en todos los sistemas."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-57",
+        "t": "T4.09",
+        "o": "A",
+        "q": "En el contexto de IPsec, ¿por qué el modo túnel es compatible con NAT y el modo transporte no lo es habitualmente?",
+        "a": [
+          "Porque el modo túnel cifra solo los datos y deja la cabecera IP original intacta.",
+          "Porque el modo túnel añade una nueva cabecera IP, permitiendo modificar direcciones sin invalidar la autenticación.",
+          "Porque el modo transporte utiliza cifrado simétrico y el modo túnel asimétrico.",
+          "Porque el modo túnel no utiliza autenticación de cabecera."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-58",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes medidas técnicas es fundamental para evitar la suplantación de identidad y garantizar la trazabilidad de las acciones en los sistemas de una organización?",
+        "a": [
+          "Uso de usuarios genéricos para facilitar el acceso.",
+          "Permitir la instalación de software por cualquier usuario.",
+          "Deshabilitar el bloqueo automático de sesión por inactividad.",
+          "Implantar una política de contraseñas robusta y limitar los permisos de administración."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-59",
+        "t": "T4.09",
+        "o": "A",
+        "q": "El administrador de red de un Ministerio debe configurar el cortafuegos perimetral para permitir únicamente el acceso externo al servidor web (TCP/80 y TCP/443) y al servidor de correo (TCP/25), denegando cualquier otro tráfico entrante. Además, debe permitir que los usuarios internos naveguen por Internet y envíen correos electrónicos. ¿Cuál sería la política de filtrado más adecuada y segura para este escenario?",
+        "a": [
+          "Política permisiva con acción por defecto ACCEPT ALL.",
+          "Política permisiva con reglas para bloquear solo puertos peligrosos.",
+          "Política restrictiva con acción por defecto DENY ALL y reglas explícitas para los servicios permitidos.",
+          "Política restrictiva permitiendo todo el tráfico saliente y entrante."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT409-P1-60",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Un empleado necesita acceder desde su casa a la red interna de la empresa para trabajar con aplicaciones de gestión y acceder a archivos compartidos. El organismo quiere garantizar la confidencialidad, integridad y autenticación mutua de las comunicaciones, y que el acceso solo sea posible si el equipo del empleado está actualizado y protegido. ¿Qué solución y configuración es la más adecuada?",
+        "a": [
+          "VPN SSL Portal sin comprobación del estado del equipo.",
+          "VPN IPsec con autenticación mutua y evaluación del estado de seguridad del dispositivo cliente.",
+          "Acceso directo a la aplicación mediante HTTP.",
+          "VPN PPTP sin autenticación."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-01",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Según el modelo E/R anterior, en el nuevo sistema un Trabajador:",
+        "a": [
+          "Puede tener un puesto de trabajo en una ubicación central y otro en una ubicación en el exterior.",
+          "Tendrá un puesto de trabajo en el exterior y al menos otro en la ubicación central.",
+          "Trabajará en la ubicación central o en una ubicación exterior.",
+          "Solo trabajará en un puesto de trabajo en una ubicación central o en una ubicación exterior."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-72",
+        "t": "T4.09",
+        "o": "A",
+        "q": "En sistemas Windows, ¿para qué sirve WSUS?",
+        "a": [
+          "Ofrece un servicio de cortafuegos a los usuarios de una organización.",
+          "Proporciona una solución integral para administrar las actualizaciones dentro de la red.",
+          "Se utiliza para eliminar las amenazas por virus y malware.",
+          "Proporciona un sistema de compartición de ficheros e impresoras."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-100",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cómo podemos evitar un ataque de CSRF (falsificación de petición en sitios cruzados)?",
+        "a": [
+          "Implementando tokens de formulario o mediante el uso de imágenes CAPTCHA.",
+          "Mediante el uso de sesiones.",
+          "Filtrando cualquier contenido recibido por el usuario.",
+          "Minimizando la cantidad de información que se proporciona al usuario o atacante."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-84",
+        "t": "T4.09",
+        "o": "A",
+        "q": "En relación con los principios de seguridad en el desarrollo de sistemas, la resiliencia supone que:",
+        "a": [
+          "Se debe disponer de una capacidad de vigilancia y respuesta que permita la reacción oportuna y adecuada a cualquier incidente de seguridad.",
+          "Los sistemas deben tener la capacidad de soportar y recuperarse ante incidentes de seguridad.",
+          "Solo estarán disponibles las funciones, protocolos y servicios necesarios para cumplir con el requisito funcional del sistema.",
+          "Los usuarios de los sistemas que manejen información clasificada solo dispondrán de los privilegios y autorizaciones que se requieran para la realización de las obligaciones asociadas a sus puestos de trabajo."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-85",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Respecto a las vulnerabilidades de seguridad en entornos web, ¿en qué consiste CSRF?",
+        "a": [
+          "Permiten a los atacantes obtener las credenciales de cuentas y los session token al no ser protegidos adecuadamente.",
+          "Permite al atacante enviar datos no confiables a un intérprete para ejecutar comandos y acceder a datos sin autorización.",
+          "Permite a los atacantes explotar procesadores XML vulnerables.",
+          "Fuerza al navegador validado de una víctima a enviar una petición a una aplicación web vulnerable, la cual entonces realiza la acción elegida por el atacante a través de la víctima."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-77",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Un ataque XSS (Cross-Site Scripting) permite al atacante:",
+        "a": [
+          "Secuestrar sesiones de usuario, destruir sitios web o redirigir al usuario hacia un sitio malicioso.",
+          "Incluir código y datos dañinos en la aplicación web.",
+          "Obtener contraseñas, claves o testigos de sesión y así conseguir identidades de otros usuarios.",
+          "Ejecutar comandos no intencionados o acceder a datos sin autorización."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-98",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de los siguientes sistemas correspondería con un sistema de autenticación fuerte?",
+        "a": [
+          "Un sistema que utilice usuario y contraseña.",
+          "Un sistema que utilice usuario, contraseña y token digital.",
+          "Un sistema que utilice identificación biométrica.",
+          "Un sistema que utilice usuario y código numérico."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-72",
+        "t": "T4.09",
+        "o": "A",
+        "q": "El método de autenticación de doble factor es:",
+        "a": [
+          "En la autenticación de doble factor, el primer factor suele ser la contraseña y el segundo un código aleatorio generado por un token, un dispositivo externo, o por una app en el móvil o en el ordenador que en ambos casos posee el usuario.",
+          "Es La pareja usuario/contraseña, el usuario nos identifica y la contraseña nos autentica.",
+          "Es una contraseña que nos autentica y un PIN privado que posee el usuario.",
+          "Es una clave criptográfica asociada a un PIN privado que posee el usuario."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-R-02",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones sobre API RESTful es FALSA?",
+        "a": [
+          "Las interacciones con servidores RESTful no tienen estado, el servidor recibe en cada llamada toda la información necesaria para ejecutarse sin necesidad de conocer una llamada anterior.",
+          "Se usan los identificadores de recursos para conocer con qué recursos se está trabajando en cada petición.",
+          "Todas las conexiones con una API RESTful tienen que realizarse a través del protocolo HTTPS.",
+          "El uso de JSON Web Token facilita la autenticación en los servicios API RESTful."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-69",
+        "t": "T4.09",
+        "o": "A",
+        "q": "En una aplicación se requiere implementar un sistema de autenticación robusto para proteger el acceso a los datos. ¿Cuál de las siguientes combinaciones de factores de autenticación NO se considera una buena práctica de seguridad?",
+        "a": [
+          "Contraseña + token de hardware (generador de códigos).",
+          "Contraseña + dato biométrico (huella dactilar).",
+          "Contraseña + pregunta de seguridad + fecha de nacimiento.",
+          "Contraseña + código de verificación enviado por SMS."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-77",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Si se está utilizando la herramienta Matomo (antes conocida como Piwik), ¿cuál es su utilidad?",
+        "a": [
+          "Analítica web.",
+          "Control de accesos a base de datos.",
+          "Escaneo de puertos.",
+          "Seguridad web."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-79",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes herramientas se puede utilizar para administrar el acceso de los usuarios a los recursos de la organización y la administración de aplicaciones y dispositivos?",
+        "a": [
+          "Docker.",
+          "Insider.",
+          "Malwarebytes.",
+          "Intune."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-72",
+        "t": "T4.09",
+        "o": "A",
+        "q": "La inclusión de código malicioso en formularios web o parámetros de URLs con el objetivo de que sea almacenado por el servidor y posteriormente ejecutado en el navegador de cualquier usuario que visualice el contenido incrustado, es conocido como:",
+        "a": [
+          "Ataque de Cross-Site Scripting.",
+          "Inyección SQL.",
+          "Man in the middle.",
+          "Replay de sesión."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-84",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Qué es una zona de red desmilitarizada (DMZ)?",
+        "a": [
+          "Es una red con direccionamiento privado reservada para el uso del gobierno y cuerpos de seguridad.",
+          "Es una red local que se ubica entre la red interna de una organización y una red externa, con acceso desde internet.",
+          "Es la zona red interna protegida en la que deben situarse los recursos con información sensible de nuestra organización.",
+          "Es una zona de red limitada a algunos terminales conectados a un mainframe a través de líneas de teléfono."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-85",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Qué afirmación sobre nmap es cierta:",
+        "a": [
+          "Es una herramienta que testea el cableado de red.",
+          "Es un firewall de red.",
+          "Es una herramienta de auditoría de seguridad.",
+          "Todas las respuestas anteriores son correctas."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-92",
+        "t": "T4.09",
+        "o": "A",
+        "q": "La Guía de Seguridad editada por el Centro Criptológico Nacional que trata la gestión y uso de dispositivos móviles es:",
+        "a": [
+          "CCN-STIC 827.",
+          "CCN-STIC 450.",
+          "CCN-STIC 805.",
+          "CCN-STIC 823."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-49",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA con respecto a las soluciones de ciberseguridad proporcionadas por el CCN:",
+        "a": [
+          "IRIS, Estado de la ciberseguridad del sector público.",
+          "LUCIA, Sistemas de Gestión Federada de Tickets.",
+          "REYES, Intercambio de Información de Ciberamenazas.",
+          "EMMA, Herramienta para la detección de amenazas complejas en el puesto de usuario."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-93",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes es una herramienta de monitorización de red?",
+        "a": [
+          "Xen.",
+          "Opsview.",
+          "OpenVZ.",
+          "VirtualBox."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-61",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Un licornio es una tecnología de apoyo (ayuda técnica) empleada por:",
+        "a": [
+          "Los usuarios con baja visión.",
+          "Los usuarios ciegos.",
+          "Los usuarios sordos.",
+          "Los usuarios con discapacidad motriz."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-76",
+        "t": "T4.09",
+        "o": "A",
+        "q": "En un sistema de monitorización SNMP v1, ¿cuál es el método de autenticación utilizado para realizar consultas entre cliente y servidor?",
+        "a": [
+          "Un campo en texto claro conocido como “Comunidad” que viaja en la consulta SNMP y que tienen que tener correctamente configurados tanto el cliente SNMP como el servidor.",
+          "El cliente debe tener registrada la cadena LDAP del servidor y este envía la clave LDAP en formato MD5 dentro de la consulta SNMP.",
+          "El establecimiento de sesión TCP entre cliente y servidor incluye una clave WPA previamente configurada y que permite al servidor interrogar al cliente.",
+          "El establecimiento de sesión UDP entre cliente y servidor incluye una clave WPA previamente configurada y que permite al servidor interrogar al cliente."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-78",
+        "t": "T4.09",
+        "o": "A",
+        "q": "La herramienta desarrollada por el CCN-CERT para la Gestión de Ciberincidentes en las entidades del ámbito de aplicación del Esquema Nacional de Seguridad, que ofrece funcionalidades de ticketing para la gestión de incidentes de seguridad, se denomina:",
+        "a": [
+          "LUCIA.",
+          "MARIA.",
+          "ROCIO.",
+          "PILAR."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-81",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de los siguientes es un ataque que se caracteriza porque el fraude está dirigido principalmente a ejecutivos de alto nivel con el objeto de obtener todo tipo de información confidencial para el acceso y control de los sistemas de información de la empresa?",
+        "a": [
+          "Hunting.",
+          "Stalking.",
+          "Whaling.",
+          "Trusting."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-R-01",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Cuando un aplicativo de un fabricante es calificado como “zero Foot-print”, en términos del cliente necesario para usar la aplicación, ¿a qué se refiere el fabricante del producto?",
+        "a": [
+          "A que la huella de carbono generada por los sistemas alojados en el CPD es mínima.",
+          "A que la aplicación puede consumirse desde un navegador web básico sin necesidad de desplegar nada más en el mismo.",
+          "A que la aplicación está validada para no ser vulnerable a fallos de seguridad del tipo “Zero day”.",
+          "A que la impresión desde dicho cliente es compatible con el estándar Energy Star."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-19",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Para el establecimiento de un canal cifrado y autenticado entre la tarjeta del DNI electrónico y los drivers, se utiliza el protocolo de autenticación mutua definido en:",
+        "a": [
+          "ISO 7816-1.",
+          "ISO 14443.",
+          "PKCS#1.",
+          "CWA 14890."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-94",
+        "t": "T4.09",
+        "o": "A",
+        "q": "El tipo de ataque contra un sitio web en el que se modifica la apariencia visual de una página web, es conocido como:",
+        "a": [
+          "Pentest.",
+          "Whaling.",
+          "Defacement.",
+          "Vishing."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-77",
+        "t": "T4.09",
+        "o": "A",
+        "q": "En relación a los conceptos básicos de interconexión de redes de área local (LAN). Cuando un paquete de datos va a ser transmitido en un equipo cliente que usa TCP/IPv4 hacia un servidor que está fuera de su red local (LAN), ¿cuál de estas operaciones realizará?",
+        "a": [
+          "Consultará la caché DNS para localizar su router.",
+          "Consultará la tabla ARP para localizar la MAC del cliente remoto.",
+          "Consultará la tabla de rutas para conocer el siguiente salto al que enviar el paquete.",
+          "Todas las respuestas anteriores son correctas."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-92",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál es la principal diferencia, de las siguientes, entre un sistema cortafuegos con capacidad IDS (Intrusion Detection System) y uno con capacidad IPS (Intrusion Prevention System)?",
+        "a": [
+          "Ambos sistemas notifican sobre intentos de accesos no autorizados a una red de datos, basándose en el análisis del tráfico, pero el IPS puede implementar reglas de mitigación, mientras que el IDS no.",
+          "Ambos sistemas evitan intentos de accesos no autorizados a una red de datos, basándose en el análisis del tráfico y cortando aquel que sea sospechoso, pero el IDS sólo analiza datos en capa 4 del modelo OSI y el IPS lo hace hasta capa 7.",
+          "Ambos sistemas monitorizan el tráfico entrante, pero mientras el IDS analiza el mismo en busca de firmas de virus conocidos, el IPS sólo está pensado para evitar ataques del tipo DDoS.",
+          "Ambos sistemas evitan intentos de accesos no autorizados a una red de datos, basándose en el análisis del tráfico y cortando aquel que sea sospechoso, pero el IDS actúa sólo en el tráfico de salida y el IPS en el de entrada."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-93",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Con respecto a las DMZ (zonas desmilitarizadas), ¿cuál de las siguientes respuestas es correcta?",
+        "a": [
+          "No pueden configurarse con un único firewall.",
+          "Suelen incorporar servidores de aplicación, entre otros.",
+          "No permiten conexiones desde la DMZ a la red interna, pero sí viceversa.",
+          "Tienen unos criterios de seguridad más restrictivos que los de la red interna."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-97",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de estos protocolos implementaría para securizar una Red de Area Local mediante autenticación, de forma que alguien que se conecte a una toma de red de usuario no pueda acceder a ella si no está correctamente autenticado?",
+        "a": [
+          "DHCP.",
+          "802.1X.",
+          "TLS 1.2.",
+          "802.11g."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-98",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuáles de las siguientes NO es una característica de un cortafuegos de nivel de aplicación?",
+        "a": [
+          "Realizan control del estado de la comunicación (stateful inspection).",
+          "Tiene mejor rendimiento que un cortafuegos “stateless” (con hardware equivalente).",
+          "Inspeccionan el contenido.",
+          "Garantizan que se cumplen los RFC o estándares correspondientes."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-14",
+        "t": "T4.09",
+        "o": "A",
+        "q": "La Estrategia Nacional de Ciberseguridad 2019 se sustenta y se inspira en los siguientes principios rectores:",
+        "a": [
+          "Inversión, corrección, planificación y puertas abiertas.",
+          "Confidencialidad, integridad, disponibilidad y autenticidad.",
+          "Unidad de acción, anticipación, eficiencia y resiliencia.",
+          "Innovación, investigación, despliegue y uso de sistemas analógicos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9,
+          13
+        ],
+        "d": 2,
+        "n": "Principios de la Estrategia de Ciberseguridad 2019; b) son dimensiones de seguridad."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-20",
+        "t": "T4.09",
+        "o": "A",
+        "q": "Es competencia del CCN-CERT:",
+        "a": [
+          "La gestión de ciberincidentes que afecten a cualquier organismo o empresa pública española.",
+          "La gestión de ciberincidentes que afecten a cualquier entidad bancaria española.",
+          "La gestión de ciberincidentes que afecten a cualquier operador de telecomunicaciones español.",
+          "La gestión de ciberincidentes que afecten al sector privado."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          3
+        ],
+        "d": 2,
+        "n": "Ámbito del CCN-CERT: alcance del sujeto.",
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-53",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cómo se denomina la vulnerabilidad web consistente en la ejecución de un comando malicioso de acceso o modificación de una base de datos como parte de una petición?",
+        "a": [
+          "CRLF injection.",
+          "SQL injection.",
+          "Cross site scripting.",
+          "DB pass-through."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Inyección SQL.",
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-54",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un factor de autenticación “algo que se tiene”?",
+        "a": [
+          "Notificaciones push.",
+          "Token de seguridad.",
+          "PIN.",
+          "Secretos look-up."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Factores \"algo que se tiene\" frente a \"algo que se sabe\".",
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-79",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un protocolo VPN?",
+        "a": [
+          "Wireguard.",
+          "L2TP.",
+          "SSTP.",
+          "S2TP."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "\"S2TP\" inventado.",
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-R-04",
+        "t": "T4.09",
+        "o": "A",
+        "q": "En el ámbito del aprendizaje automático (Machine Learning), ¿en qué tipo de aprendizaje se realiza el entrenamiento del modelo en base a datos etiquetados previamente?",
+        "a": [
+          "Supervisado.",
+          "No supervisado.",
+          "Con apoyo externo.",
+          "Sin apoyo externo."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Aprendizaje supervisado."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 387,
+    "alreadyHadCitation": 253,
+    "added": 4,
+    "pending": 130,
+    "withCitation": 257
+  }
+}
