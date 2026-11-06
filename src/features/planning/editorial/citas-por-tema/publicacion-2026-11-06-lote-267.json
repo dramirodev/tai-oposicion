@@ -1,0 +1,509 @@
+{
+  "project": "tai-oposicion",
+  "version": 17,
+  "updateTime": "2026-11-06T20:27:03.897009Z",
+  "topics": [
+    "T1.04",
+    "T1.05",
+    "T1.06",
+    "T1.07",
+    "T1.08",
+    "T1.09",
+    "T1.10",
+    "T1.11",
+    "T2.01",
+    "T2.02",
+    "T2.03",
+    "T2.04",
+    "T2.05",
+    "T3.01",
+    "T3.02",
+    "T3.05",
+    "T3.06",
+    "T3.08",
+    "T3.09",
+    "T3.10",
+    "T4.02",
+    "T4.04",
+    "T4.05",
+    "T4.06",
+    "T4.07",
+    "T4.08",
+    "T4.09",
+    "T4.10"
+  ],
+  "added": 267,
+  "already": 0,
+  "skipped": [],
+  "edits": [
+    {
+      "topic": "T1.04",
+      "ids": [
+        "L2018-P1-07",
+        "AT1041-P1-05",
+        "AT1041-P1-06",
+        "AT1041-P1-08",
+        "AT1041-P1-20",
+        "AT1041-P1-31",
+        "AT1041-P1-40",
+        "AT1041-P1-41",
+        "AT1041-P1-48",
+        "AT1041-P1-50",
+        "AT1042-P1-01",
+        "AT1042-P1-17",
+        "AT1042-P1-21",
+        "AT1042-P1-22",
+        "AT1042-P1-27",
+        "AT1042-P1-44",
+        "AT1042-P1-45",
+        "AT1042-P1-50",
+        "AS05G-P1-23",
+        "AS06-P1-05",
+        "AS08-P1-13",
+        "AS12B-P1-06"
+      ],
+      "before": "d982049b14e42a51adfb84a0ca540765e7bea336b43c66d9ce096713458c3b21",
+      "after": "d3cd8a8657cddf73be48bf189feb27ccf6479a54825c4e0d48852f441bcb1fe2"
+    },
+    {
+      "topic": "T1.05",
+      "ids": [
+        "TAIL2022-P1-08",
+        "L2025X-P1-09",
+        "AT1051-P1-12",
+        "AT1051-P1-25",
+        "AT1051-P1-26",
+        "AT1051-P1-27",
+        "AT1051-P1-35",
+        "AT1051-P1-39",
+        "AT1051-P1-49",
+        "AT1051-P1-55",
+        "AT1052-P1-09",
+        "AT1052-P1-10",
+        "AT1052-P1-34",
+        "AT1052-P1-36",
+        "AT1052-P1-46",
+        "AT1052-P1-47",
+        "AT1052-P1-53",
+        "AT1052-P1-58",
+        "AS05G-P1-24",
+        "AS08-P1-18",
+        "AS12B-P1-07"
+      ],
+      "before": "bb8936aac16d8e547c69e0fdc1b84b368b53f33cdf19321929c67315a5f5a7ee",
+      "after": "c2b2523e0b4db8a584b3659b75a6096605ff471f21935109a1ddab4a706f0c40"
+    },
+    {
+      "topic": "T1.06",
+      "ids": [
+        "L2018-P1-11",
+        "AT106-P1-01",
+        "AT106-P1-09",
+        "AT106-P1-12",
+        "AT106-P1-14",
+        "AT106-P1-27",
+        "AT106-P1-29",
+        "AT106-P1-30",
+        "AT106-P1-35",
+        "AT106-P1-38",
+        "AS03-P1-07",
+        "AS08-P1-24"
+      ],
+      "before": "14f4109176ccbe40c4261d53545602448d7943d60f0ccbc24991d0fea771d160",
+      "after": "b4a0c34c00e1e065c918e995ff1fbcceae8b4467b7081d2a26827bb11baf6ab2"
+    },
+    {
+      "topic": "T1.07",
+      "ids": [
+        "TAIL2022-P1-10",
+        "L2019-P1-12",
+        "L2025A-P1-10",
+        "L2025X-P1-10",
+        "L2025X-P1-11",
+        "P2022-P1-09",
+        "P2024A-P1-08",
+        "P2025A-P1-10",
+        "AT107-P1-13",
+        "AT107-P1-24",
+        "AT107-P1-26",
+        "AT107-P1-38",
+        "AT107-P1-43",
+        "AT107-P1-51",
+        "AT107-P1-71",
+        "AT107-P1-73",
+        "AT107-P1-74",
+        "AT107-P1-78",
+        "AT107-P1-81",
+        "AT107-P1-83",
+        "AT107-P1-90",
+        "AT107-P1-91",
+        "AT107-P1-93",
+        "AS11-P1-12",
+        "AS11-P1-13"
+      ],
+      "before": "ea3ea0c74888ac73cd701e40c451e15f8c5b778f9d750c0a42725991a8f55ef5",
+      "after": "469dcb7d2202909216bd0c4706de49a4933c24480aede017e0183f1c66471cc9"
+    },
+    {
+      "topic": "T1.08",
+      "ids": [
+        "TAI2024B-P1-13",
+        "TAIL2022-P1-12",
+        "L2025X-P1-12",
+        "AT108-P1-27",
+        "AT108-P1-29",
+        "AT108-P1-33",
+        "AT108-P1-48",
+        "AT108-P1-49",
+        "AT108-P1-55"
+      ],
+      "before": "ebb88614122668d36a7e5c9075ce9e7e3df02ef6838197a76fdb438a120a0766",
+      "after": "a5757419c7a0eaaa454e9501373d70efb306d938d6a47083d13681197b218a23"
+    },
+    {
+      "topic": "T1.09",
+      "ids": [
+        "TAI2024B-P1-15",
+        "L2019-P1-18",
+        "P2019-P1-04",
+        "AT109-P1-09",
+        "AT109-P1-16",
+        "AT109-P1-18",
+        "AT109-P1-20",
+        "AT109ALT-P1-12",
+        "AT109ALT-P1-22",
+        "AT109ALT-P1-25",
+        "AT109ALT-P1-48",
+        "AT109ALT-P1-58",
+        "AT109ALT-P1-60",
+        "AS09-P1-16",
+        "AS09B-P1-22",
+        "AS09B-P1-23",
+        "AS09B-P1-R-01",
+        "AS11-P1-17",
+        "AS11-P1-19"
+      ],
+      "before": "14ba16408c26cd1e02c6056b0395d265e1e6658d3a3bcb878586e59e403cbe80",
+      "after": "aa69bece2ce3a4de5305d3bf7dc877edaca0b2e1dfb09ed5103f524da74149c6"
+    },
+    {
+      "topic": "T1.10",
+      "ids": [
+        "P2024A-P1-03",
+        "AT110-P1-01",
+        "AT110-P1-02",
+        "AT110-P1-04",
+        "AT110-P1-08",
+        "AT110-P1-11",
+        "AT110-P1-20",
+        "AT110-P1-38",
+        "AT110-P1-46",
+        "AT110-P1-81",
+        "AT110-P1-82",
+        "AT110-P1-89",
+        "AT1102-P1-10",
+        "AT1102-P1-11",
+        "AT1102-P1-12",
+        "AT1102-P1-15",
+        "AT1102-P1-23",
+        "AT1102-P1-25",
+        "AT1102-P1-40",
+        "AT1102-P1-41",
+        "AT1102-P1-57",
+        "AT1102-P1-59",
+        "AS10-P1-21",
+        "AS10B-P1-17",
+        "AS11-P1-23",
+        "AS11B-P1-29",
+        "AS12B-P1-R-01"
+      ],
+      "before": "0ae153c37f6ae7607a187b6542f6a4bdc3138c5c5486f7f6c67565122d0d409a",
+      "after": "96978ecfcac34fda60c033a900316c15ea8f6cbc9f925b6efa166be38bc12b4e"
+    },
+    {
+      "topic": "T1.11",
+      "ids": [
+        "AT111-P1-03",
+        "AT111-P1-15",
+        "AT111-P1-17",
+        "AT111-P1-26",
+        "AT111-P1-46",
+        "AT111-P1-54",
+        "AT111-P1-59",
+        "AT111-P1-60"
+      ],
+      "before": "cac3a72a72b497cd6ca197fecd6a87c1bb720b424caa37e4ec161ad5e56bd4dc",
+      "after": "301e6ecac2c0b832aa295e46a87d37c178022b151501a79edeae2ee88435c24e"
+    },
+    {
+      "topic": "T2.01",
+      "ids": [
+        "AT201-P1-08",
+        "AT201-P1-11",
+        "AT201-P1-20",
+        "AT201-P1-45",
+        "AS04-P1-22",
+        "AS09B-P1-25"
+      ],
+      "before": "882e83da1cd50cf97c45bf7a4d2ad003e968c55546f6fbfae48623a739f98007",
+      "after": "bb0c01f8e9f9cd4d3daf00b36d451efb0818b7cf2a4d56de1adeac92bcb3d4fb"
+    },
+    {
+      "topic": "T2.02",
+      "ids": [
+        "AT202-P1-27",
+        "AT202-P1-40"
+      ],
+      "before": "0829a05fcb5090f40ac610f871f26dd623a5797bddecc1acf0c7c7fa5719bdfc",
+      "after": "29837e70d360c9dc4670c3e11672918e4eb0e612dae0e27676facb1c6cf25b64"
+    },
+    {
+      "topic": "T2.03",
+      "ids": [
+        "AT203-P1-16",
+        "AT203-P1-38",
+        "AS05G-P1-46",
+        "AS12-P1-25"
+      ],
+      "before": "07a9fd18c0f74184dade938131fe9ee5e3cea6f232ac6c5b3a28adfe60598c67",
+      "after": "b2a48393cc58c182d26e728f1fcfcc4f7f464b238ddfea8c78cbf60fe8a86e8f"
+    },
+    {
+      "topic": "T2.04",
+      "ids": [
+        "L2018-P1-36",
+        "AT204-P1-03",
+        "AT204-P1-48",
+        "AT204-P1-60",
+        "AS03-P1-68"
+      ],
+      "before": "8170542fe6f18dbad8068aec6e9a5af6d6070d3dde303c066a7e0e0bf7baa88c",
+      "after": "31311f9dcdcc28dd2624823789ce9d6f42ef25b7887a87a9ef894b9b3a5a3bfe"
+    },
+    {
+      "topic": "T2.05",
+      "ids": [
+        "TAIL2022-P1-33",
+        "TAIL2022-P1-35",
+        "AS03-P1-43",
+        "AS08B-P1-44",
+        "AS09B-P1-35",
+        "AS09B-P1-47",
+        "AS10-P1-43"
+      ],
+      "before": "9a2b3d399046cf71e2b4001feb9f8eddc443adc6d83a8fabfa7b11f7b7070ef4",
+      "after": "f6080732d8ab7535abb6f55fa67aaccb28f65c3354a138ae492823aeb640d2f0"
+    },
+    {
+      "topic": "T3.01",
+      "ids": [
+        "L2025X-P1-36",
+        "P2022-P1-17",
+        "AT301-P1-35",
+        "AT301-P1-37",
+        "AT301-P1-38",
+        "AT301-P1-39",
+        "AT301-P1-46",
+        "AS01-P1-20",
+        "AS04-P1-48",
+        "AS07-P1-61",
+        "AS07-P1-62"
+      ],
+      "before": "b990b22f185850480a5f3f01d85ab2bd94cfacf6e932862f48f6288bf8e36551",
+      "after": "1653d0af47c72582f63c6e0497169061f000147289be49f6416fdf78a45aa0b8"
+    },
+    {
+      "topic": "T3.02",
+      "ids": [
+        "L2019-P1-37",
+        "AT302-P1-11",
+        "AT302-P1-31",
+        "AT302-P1-36",
+        "AS01-P1-44",
+        "AS01-P1-R-03",
+        "AS02-P1-83",
+        "AS05G-P1-74",
+        "AS08-P1-56"
+      ],
+      "before": "6de5c27a6932efa48f4e59eae794a2bbebe2165ff6a6f79d9f52519cee7ebfb1",
+      "after": "43ea4323a641d377c644ec933dcfd62c5665107054294316e23c4ba919caf1e1"
+    },
+    {
+      "topic": "T3.05",
+      "ids": [
+        "L2025X-P1-R-05",
+        "AT305-P1-05",
+        "AT305-P1-21",
+        "AT305-P1-27",
+        "AT305-P1-36",
+        "AT305-P1-40",
+        "AT305-P1-53",
+        "AT305-P1-60",
+        "AS05G-P1-93",
+        "AS05G-P1-99",
+        "AS06-P1-84",
+        "AS06-P1-85",
+        "AS08-P1-68",
+        "AS08B-P1-62",
+        "AS09-P1-44"
+      ],
+      "before": "86b056bf377ea2b4f64fd6801e6f24e5123b5cfe569d73766aeafb2c34c475ad",
+      "after": "b2a526127d5adb4921f1e04ead7847a089e92192161fede60b343261ab9293df"
+    },
+    {
+      "topic": "T3.06",
+      "ids": [
+        "AT306-P1-68",
+        "AS10-P1-56",
+        "AS11-P1-54"
+      ],
+      "before": "c8b506447d77a53f045ba0d8c5351bb9a15009fa2573fe46caf7ef6c45f8da23",
+      "after": "73fcbfcb8ebe1eb7aeb03b0d606fbfcbc533cef691f2f9f4278da4c7ad4080cb"
+    },
+    {
+      "topic": "T3.08",
+      "ids": [
+        "AT308-P1-98",
+        "AS08B-P1-72",
+        "AS08B-P1-92",
+        "AS08B-P1-95",
+        "AS10-P1-64"
+      ],
+      "before": "07a31683ae98d723e07be68ab566c475a1d7a28c64b49825b42d6cb1709a78cf",
+      "after": "99a746b384ab1c0523633316557e2ca64298de289c243911e5cd1413b158034c"
+    },
+    {
+      "topic": "T3.09",
+      "ids": [
+        "AT309-P1-17",
+        "AT309-P1-18",
+        "AT309-P1-19",
+        "AT309-P1-20",
+        "AT309-P1-21",
+        "AT309-P1-30",
+        "AS09-P1-71",
+        "AS10-P1-69",
+        "AS10-P1-73",
+        "AS11B-P1-77",
+        "AS12-P1-60"
+      ],
+      "before": "5509df1e1156cfe32f8b9452f134a794f277205c145b91eb4eacc976d97765cf",
+      "after": "b1549400ba9c21d249c969fc3ab2bb9bf6a60fac2f65325a828c772bf3dd3632"
+    },
+    {
+      "topic": "T3.10",
+      "ids": [
+        "TAI2024B-P1-53",
+        "L2019-P1-55",
+        "L2025X-P1-57",
+        "L2018-P1-66",
+        "L2024A-P1-54",
+        "AT310-P1-07",
+        "AT310-P1-14",
+        "AT310-P1-19",
+        "AT310-P1-27",
+        "AT310-P1-29",
+        "AT310-P1-32",
+        "AT310-P1-50",
+        "AT310-P1-54",
+        "AS08-P1-90",
+        "AS08-P1-92",
+        "AS10-P1-65",
+        "AS11-P1-64",
+        "AS11-P1-70",
+        "AS12-P1-65"
+      ],
+      "before": "9979c71f14830b44f6b161662698c6b7a9c8e7a95d39a56008f835e35f6dbef3",
+      "after": "a7923cb591e92da4efa42551b1b7f8ee08facdabc8f944d9deb546908e819e96"
+    },
+    {
+      "topic": "T4.02",
+      "ids": [
+        "AT402-P1-25",
+        "AT402-P1-38",
+        "AT402-P1-47",
+        "AT402-P1-60",
+        "AS09-P1-90",
+        "AS09B-P1-100"
+      ],
+      "before": "fff603a0585089ce8340188a8e376869e1b30c6d05b61e723b8b5800852be7fa",
+      "after": "ef16d37a356878867b949b61231a5a462ec5321c2bcb3a63dd5b2f9f97d2142e"
+    },
+    {
+      "topic": "T4.04",
+      "ids": [
+        "AT404-P1-31",
+        "AT404-P1-38",
+        "AT404-P1-45",
+        "AT404-P1-60"
+      ],
+      "before": "05b9236b2ce61bd3ce2221d8de8efeaf6b46b2e9635a97c68f2d254854bbb279",
+      "after": "c1bd7d662e35f008345baa84be307bb11d5ab7b560637fa6fde763874561913b"
+    },
+    {
+      "topic": "T4.05",
+      "ids": [
+        "AT405-P1-08"
+      ],
+      "before": "00c6b52eebd03883d67e6698e91432c022556f3bc1e2a0ea7b1e056281762f09",
+      "after": "06389d5439d155749d000da53ca38a6210ea7775ca53599f1f28d9814d5245ae"
+    },
+    {
+      "topic": "T4.06",
+      "ids": [
+        "L2018-P1-86",
+        "AT406-P1-19",
+        "AT406-P1-46",
+        "AS12-P1-76"
+      ],
+      "before": "ca34d218833357c658c29bd8d0d4e3b64699f63cf09b88b50647da5ac26639db",
+      "after": "47a04e7f58d78b4bce27262ecd8968d90db45c3ff6a47971f5fe8ef511b73416"
+    },
+    {
+      "topic": "T4.07",
+      "ids": [
+        "L2025A-P1-71",
+        "AT407-P1-10",
+        "AS12B-P1-62"
+      ],
+      "before": "1ae2cf58ebbf7e70182302b55c0dadb1baf815ab28304a8da5f5e5b3fbed1731",
+      "after": "e190cf31ab7d981de95107ea70d7d1c81a1439983f7f6a597a75db0e23a74dd0"
+    },
+    {
+      "topic": "T4.08",
+      "ids": [
+        "AT408-P1-15",
+        "AT408-P1-33",
+        "AT408-P1-34",
+        "AS11-P1-93"
+      ],
+      "before": "3c3b5ed2dd9335688caa86677dd3286eda9fd8d2c4be1d02366321214e709946",
+      "after": "2b0965b762734c4033978749b084e2d4356bace2a035e3ca33f9e7cf70d30772"
+    },
+    {
+      "topic": "T4.09",
+      "ids": [
+        "L2025X-P1-R-03",
+        "AT409-P1-41",
+        "AT409-P1-52",
+        "AT409-P1-56"
+      ],
+      "before": "2f6ff5e5d05307afff79136717fb4123db00298b543628fb98b725e0bff956b9",
+      "after": "b012ffe55d67e1eb54d4b4907c7a9c0b1da05f35397d9e0dbd7ee0b10c59fac3"
+    },
+    {
+      "topic": "T4.10",
+      "ids": [
+        "AT410-P1-11"
+      ],
+      "before": "b03d2f5578edf4b5abc68610876c172e5f93424492404378834f61aadc0f27cf",
+      "after": "dea663a36b0f67f51fd972c24b284c44eb7c0670ae8354bcc68956d5354bf7ce"
+    }
+  ],
+  "allFiles": 77,
+  "backup": "/tmp/tai-citations-live-backup-17",
+  "afterVersion": 18,
+  "afterUpdateTime": "2026-11-06T21:48:08.265378Z",
+  "verifiedAt": "2026-11-06T21:48:19.811Z",
+  "verification": "All 28 changed resource SHA-256 values and all 77 inventory hashes verified by remote GET; zero omissions and zero deletions."
+}

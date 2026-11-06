@@ -226,6 +226,7 @@ for (const theme of ['light', 'dark']) {
     await prepare(page, theme);
     await page.setViewportSize({ width: 320, height: 720 });
     await page.goto('/#/stats');
+    await page.getByRole('region', { name: 'Métricas del periodo', exact: true }).getByRole('combobox', { name: 'Periodo', exact: true }).selectOption('all');
     const sections = page.getByRole('group', { name: 'Sección de progreso' });
     const sectionStyle = await sections.evaluate(element => {
       const style = getComputedStyle(element);
@@ -245,6 +246,7 @@ for (const theme of ['light', 'dark']) {
     await prepare(page, theme);
     await page.setViewportSize({ width: 320, height: 720 });
     await page.goto('/#/stats');
+    await page.getByRole('region', { name: 'Métricas del periodo', exact: true }).getByRole('combobox', { name: 'Periodo', exact: true }).selectOption('all');
     await page.getByRole('button', { name: 'Evolución' }).click();
     await expect(page.getByRole('combobox', { name: 'Qué medir en la evolución' })).toBeVisible();
     const dimensions = await page.evaluate(() => ({
@@ -595,6 +597,7 @@ test('el espaciado de texto conserva el reflujo con una sesión en curso', async
     await page.addStyleTag({ content: '*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}' });
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
   }
+  await page.getByRole('region', { name: 'Métricas del periodo', exact: true }).getByRole('combobox', { name: 'Periodo', exact: true }).selectOption('all');
   await page.locator('summary').filter({ hasText: 'Lectura y carga de repasos' }).click();
   const chart = page.locator('.chart-scroll');
   await expect(chart).toBeVisible();

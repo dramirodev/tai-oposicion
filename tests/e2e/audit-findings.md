@@ -776,3 +776,25 @@ El primer intento de deploy42237352967 del merge PR116/f6aa79f falló en `tests/
 - **Archivos / pruebas:** stats-composition.ts y stats-practice-journey; regresión de contenido válido/antiguo pendiente y repetición de ambos motores.
 
 - **Cierre UX-THEMES-005/006:**10/10 E2E Chromium/WebKit, zoom200%, 320/768/1440,15/15 intentos y respuestas tras navegación/recarga. Cuatro regresiones de composición verifican contenido aprobado, alterado/sinproof, error de carga y cambio de cuenta; sin dependencia de estadísticas legacy. Check1177/31omitidas; revisión independiente sin defectos confirmados. La documentación de Recharts3.10.1 consultada mediante Context7 confirma ResizeObserver. No se alteró el cierre de sesiones al descartarse esa hipótesis.
+
+
+### MET-004 — Pruebas del histórico sin seleccionar su periodo
+
+- **Categoría / funcionalidad:** Infraestructura de regresión de Progreso. **Prioridad:** P2. **Estado:** CORREGIDO Y VERIFICADO.
+- **Evidencia:** CI42289349979 falla esperando `.dmt` y el selector de evolución. Reproducción sobre main6b396df:8 fallos/6 correctas en Chromium y WebKit; log `/tmp/tai-current-progress.log`, trazas `/tmp/tai-current-progress-results`. Los seis recorridos de métricas y práctica/recarga pasan.
+- **Causa:** Los casos de reflujo y gráfico heredado abren Progreso con el periodo predeterminado de30 días, pero esperan herramientas acumuladas que solo se muestran al seleccionar Todo el historial. No se demuestra pérdida de resultados ni desbordamiento real con esa ausencia.
+- **Solución propuesta:** Seleccionar explícitamente Todo el historial mediante la UI antes de las mismas comprobaciones acumuladas; conservar conteo36, límites de ancho, foco y condiciones de los gráficos. No ampliar plazos ni alterar producto.
+- **Archivos / verificación:** `tests/e2e/css-ui.spec.ts`; repetir casos afectados y recorridos de métricas/práctica en ambos motores.
+
+
+### MET-005 — Etiqueta de estado desborda el histórico con texto ampliado
+
+- **Categoría / funcionalidad:** Accesibilidad / reflujo en Progreso. **Prioridad:** P2. **Estado:** CORREGIDO Y VERIFICADO.
+- **Evidencia:** Tras corregir MET-004,14/16 recorridos pasan; los dos motores detectan511px en viewport393 al abrir Lectura y carga de repasos con tamaño3 y espaciado WCAG. Trazas `/tmp/tai-current-progress-fixed-results`; aserción original de ancho conservada.
+- **Causa comprobada:** La etiqueta Sin respuestas de las tarjetas acumuladas no permite partición. Ocultar el gráfico o las tablas no cambia511px; retirar las tarjetas reduce a393px. Aplicar únicamente overflow-wrap:anywhere en esas tarjetas también devuelve393px, sin ocultar contenido. Diagnóstico `/tmp/tai-progress-overflow.cjs`.
+- **Solución:** Ajustar palabras en el contenedor local de tarjetas acumuladas; conservar columnas, texto, datos, gráfico desplazable y reglas globales.
+- **Archivos / pruebas:** `src/features/stats/StatsTopicsSection.tsx` y el caso existente de espaciado en `tests/e2e/css-ui.spec.ts`; repetir en Chromium/WebKit y comprobar suite/build.
+
+- **Cierre MET-004/MET-005:** La repetición conjunta conserva todas las aserciones:16/16 correctas en Chromium/WebKit, incluidos320/768/1440, filtros, práctica/recarga, tamaño3 y espaciado ampliado. El documento queda en393px y el gráfico mantiene su desplazamiento local, barras y legibilidad. `npm run check`:1177 correctas/31 omitidas. La prueba original se conserva como reproducción roja; no se aumentaron plazos ni se ocultó contenido. Batería completa de CSS/Progreso en ejecución antes de publicar.
+
+- **Verificación ampliada MET-004/MET-005:**96/96 pruebas de CSS, gráficos, métricas y práctica pasan en Chromium/WebKit; log `/tmp/tai-progress-regression-complete.log`. Se conservan contraste/tema, teclado, reflujo, service worker sin red, pausa/recarga y retorno al estudio. No se atribuye a esta corrida validación de datos reales ni de dispositivo físico.

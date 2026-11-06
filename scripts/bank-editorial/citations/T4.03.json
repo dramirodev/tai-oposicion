@@ -1,0 +1,1485 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T4.03",
+  "baseCommit": "6b396dfb2caccdef85a6f82fd92c0c5d89778d50",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "f6762c48b6a655a7c8967e2fe4cf8dd14569eabb6bd97801b636e554ec21ad88",
+    "afterSha256": "efaf16e770f2c54be6cec1d1d338a818337b3943ff0fa74d2b1881a0ced1f20f"
+  },
+  "sample": {
+    "beforeSha256": "e2c706329162f3553d97f3933b8d52f938bde2be6a91d7de22c8ddfdd73cc2a6",
+    "afterSha256": "e2c706329162f3553d97f3933b8d52f938bde2be6a91d7de22c8ddfdd73cc2a6"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "imap": {
+      "path": "T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+      "sourceHash": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+      "physicalPage": 20,
+      "printedPage": 20,
+      "excerpt": "4. IMAP4 Para eliminar alguno de los problemas descritos con anterioridad se diseñó el protocolo IMAP4 (Internet Message Access Protocol), que permite básicamente que los buzones de correo de los usuarios se encuentren centralizados en el servidor de correo y, por tanto, puedan ser accedidos con la misma visión de éstos desde diferentes clientes. El protocolo IMAP versión 4 rev1 está especificado en el RFC 3501 y permite al usuario acceder y manipular los mensajes de correo electrónico en un servidor, sin necesidad de descarga de los mismos. Al no descargar los correos en local, permite al usuario acceder a su correo desde cualquier localización.",
+      "label": "IMAP — consulta de mensajes en el servidor"
+    },
+    "protocols": {
+      "path": "T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+      "sourceHash": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+      "physicalPage": 10,
+      "printedPage": 10,
+      "excerpt": "3. PROTOCOLOS DE CORREO ELECTRÓNICO - SMTP - POP3 - IMAP4 - QMTP 1. SMTP SMTP (Simple Mail Transfer Protocol) o Protocolo Simple de Transferencia de Correo es un protocolo de la capa de aplicación encargado del transporte y entrega del correo electrónico. SMTP es responsable de procesar y reenviar correos electrónicos de un remitente a un destinatario. En otras palabras, se trata del protocolo estándar para intercambio de mensajes, por lo que cualquier servidor de correo que desee recibir email en términos generales, deberá ser capaz de \"entender\" SMTP.",
+      "label": "Protocolos de correo — SMTP, POP3 e IMAP"
+    },
+    "clients": {
+      "path": "T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+      "sourceHash": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+      "physicalPage": 34,
+      "printedPage": 34,
+      "excerpt": "6. CLIENTES DE CORREO ELECTRÓNICO Como cliente en modo texto destaca Mutt. Es un pequeño pero potente cliente de correo electrónico para sistemas operativos Unix de código abierto, bajo licencia GPL. La característica principal es que el cliente de correo electrónico está basado en texto, y algunas de sus características notables incluyen: compatibilidad con MIME, cifrado con PGP y S/MIME, altamente configurable, control total sobre las cabeceras al redactar un mensaje, distribución bajo licencia GPL con una comunidad de desarrollo activa. De entre los clientes pesados de correo electrónico pesados podemos citar:",
+      "label": "Clientes de correo — contexto de la enumeración"
+    },
+    "outlook": {
+      "path": "T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+      "sourceHash": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+      "physicalPage": 35,
+      "printedPage": 35,
+      "excerpt": "(7) Microsoft Outlook Características: - Disponible en Windows, macOS, iOS, Android y app web. - Software propietario.",
+      "label": "Clientes de correo — Microsoft Outlook"
+    },
+    "route": {
+      "path": "T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+      "sourceHash": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+      "physicalPage": 8,
+      "printedPage": 8,
+      "excerpt": "2. COMPONENTES DE UN SISTEMA DE CORREO Un sistema de correo electrónico está formado por los siguientes componentes: - MUA (Mail User Agent o Agente de usuario de correo). Es el cliente de correo electrónico desde el que el usuario gestiona los mensajes: creación, borrado, envío, lectura… Se utiliza para enviar correo electrónico, a través del MTA correspondiente mediante el protocolo SMTP o sus extensiones, así como para recibir correo electrónico desde el MTA correspondiente mediante protocolos como POP3 o IMAP. Los tipos de clientes de correo pueden ser: o Clientes en modo texto: accesible desde la interfaz de comandos shell mediante una cuenta en la máquina que alberga el servidor de correo. o Clientes pesados o de escritorio: aplicaciones instaladas en máquinas locales de los usuarios que gestionan todo el ciclo de vida de creación, envío y recepción de mensajes, así como la posibilidad de almacenamiento local. o Clientes ligeros: (webmail) no requiere instalación en la máquina cliente ya que el servicio es ofrecido a través de una página web a través de un navegador web. La seguridad en la comunicación puede implementarse mediante HTTPS. Desde un punto de vista técnico, un webmail no es más que un entorno de gestión de mensajes de correo a través de web. Los protocolos de transporte, tecnologías implicadas, etc. son los mismos que con el uso de MUA tradicionales, con la diferencia de que estos elementos se utilizan entre el servidor de correo y el servidor web, no entre el MUA y el MTA, y el navegador, a través de aplicaciones web, nos proporciona las capacidades de gestión de mensajes de cualquier cliente nativo. o Clientes en dispositivos móviles: app instalada en dicho dispositivo. - MTA (Mail Transfer Agent o Agente de transferencia de correo). Denominado también \"estafeta\" es el encargado del transporte de los mensajes de un nodo a otro usando el protocolo SMTP y, por otro lado, de la recepción de correos electrónicos desde otros MSAs o MTAs. A la primera MTA a la que el cliente entrega su correo se la llama MSA (Mail Sending Agent).",
+      "label": "Correo — MUA, MTA, envío y recepción"
+    },
+    "activesync": {
+      "path": "T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+      "sourceHash": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+      "physicalPage": 40,
+      "printedPage": 40,
+      "excerpt": "Exchange ActiveSync Exchange ActiveSync es un protocolo de sincronización de Exchange que está optimizado para trabajar con redes de alta latencia y bajo ancho de banda. Este protocolo basado en HTTP y XML permite a los dispositivos móviles acceder a la información de la organización en un servidor que está ejecutando Microsoft Exchange, en concreto, a su correo electrónico, calendario, contactos y tareas y les permite seguir teniendo acceso a esta información cuando trabajan sin conexión. Los servicios de cifrado estándar agregan seguridad a las comunicaciones móviles con el servidor. Puede configurar Exchange ActiveSync para utilizar el cifrado SSL a fin de establecer la comunicación entre el servidor Exchange y el dispositivo móvil. Las características principales de Exchange ActiveSync son: - Compatibilidad con mensajes HTML. - Tecnología Direct Push que usa una conexión HTTPS cifrada que se establece y mantiene entre el dispositivo móvil y el servidor para enviar mensajes de correo electrónico. - Eliminación de contenido en un dispositivo móvil relacionado con un servidor Exchange. El barrido remoto realizaría un barrido a nivel de dispositivo, restaurando el dispositivo condiciones de fábrica. Es lo que se conoce como Remote wipe o limpieza remota.",
+      "label": "Exchange ActiveSync — HTTP, XML, SSL y Remote wipe"
+    }
+  },
+  "questions": [
+    {
+      "id": "TAI2024B-P1-64",
+      "before": {
+        "i": "TAI2024B-P1-64",
+        "t": "T4.03",
+        "o": "O",
+        "q": "¿Cuál es una ventaja del uso del protocolo IMAP en lugar de POP3?",
+        "a": [
+          "Permite visualizar los correos directamente en el servidor sin descargarlos.",
+          "Es más sencillo que POP3.",
+          "No requiere autenticación.",
+          "Descarga los correos automáticamente del servidor."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "d) describe POP3.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "after": {
+        "i": "TAI2024B-P1-64",
+        "t": "T4.03",
+        "o": "O",
+        "q": "¿Cuál es una ventaja del uso del protocolo IMAP en lugar de POP3?",
+        "a": [
+          "Permite visualizar los correos directamente en el servidor sin descargarlos.",
+          "Es más sencillo que POP3.",
+          "No requiere autenticación.",
+          "Descarga los correos automáticamente del servidor."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "d) describe POP3.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)",
+        "u": "T4.03 Administración del Correo - Temario.pdf — IMAP — consulta de mensajes en el servidor\n\nTemario, p. 20 (PDF p. 20)\n\n4. IMAP4 Para eliminar alguno de los problemas descritos con anterioridad se diseñó el protocolo IMAP4 (Internet Message Access Protocol), que permite básicamente que los buzones de correo de los usuarios se encuentren centralizados en el servidor de correo y, por tanto, puedan ser accedidos con la misma visión de éstos desde diferentes clientes. El protocolo IMAP versión 4 rev1 está especificado en el RFC 3501 y permite al usuario acceder y manipular los mensajes de correo electrónico en un servidor, sin necesidad de descarga de los mismos. Al no descargar los correos en local, permite al usuario acceder a su correo desde cualquier localización.\n\nPara interpretar la respuesta: IMAP permite consultar y manipular los mensajes en el servidor sin descargar primero el buzón. No se afirma que nunca descargue datos cuando el usuario abre un mensaje."
+      },
+      "beforeSha256": "bf2928a8e4d8a36d6cb8003a753739984195ce7d7d5653cf2207a5de3bb8106b",
+      "afterSha256": "2c541b28285848f704329818daafd8bfff85d341b120c0aaabac8ab60fb59cc0",
+      "evidenceKeys": [
+        "imap"
+      ],
+      "rationale": "IMAP permite consultar y manipular los mensajes en el servidor sin descargar primero el buzón. No se afirma que nunca descargue datos cuando el usuario abre un mensaje."
+    },
+    {
+      "id": "TAIL2022-P1-66",
+      "before": {
+        "i": "TAIL2022-P1-66",
+        "t": "T4.03",
+        "o": "O",
+        "q": "¿Cuál de los siguientes NO es un protocolo de correo electrónico?",
+        "a": [
+          "IMAP",
+          "SMTP",
+          "Outlook",
+          "POP3"
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Outlook es un cliente, no un protocolo.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "after": {
+        "i": "TAIL2022-P1-66",
+        "t": "T4.03",
+        "o": "O",
+        "q": "¿Cuál de los siguientes NO es un protocolo de correo electrónico?",
+        "a": [
+          "IMAP",
+          "SMTP",
+          "Outlook",
+          "POP3"
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Outlook es un cliente, no un protocolo.",
+        "y": "Ingreso libre OEP 2022 (2023)",
+        "u": "T4.03 Administración del Correo - Temario.pdf — Protocolos de correo — SMTP, POP3 e IMAP\n\nTemario, p. 10 (PDF p. 10)\n\n3. PROTOCOLOS DE CORREO ELECTRÓNICO - SMTP - POP3 - IMAP4 - QMTP 1. SMTP SMTP (Simple Mail Transfer Protocol) o Protocolo Simple de Transferencia de Correo es un protocolo de la capa de aplicación encargado del transporte y entrega del correo electrónico. SMTP es responsable de procesar y reenviar correos electrónicos de un remitente a un destinatario. En otras palabras, se trata del protocolo estándar para intercambio de mensajes, por lo que cualquier servidor de correo que desee recibir email en términos generales, deberá ser capaz de \"entender\" SMTP.\n\nT4.03 Administración del Correo - Temario.pdf — Clientes de correo — contexto de la enumeración\n\nTemario, p. 34 (PDF p. 34)\n\n6. CLIENTES DE CORREO ELECTRÓNICO Como cliente en modo texto destaca Mutt. Es un pequeño pero potente cliente de correo electrónico para sistemas operativos Unix de código abierto, bajo licencia GPL. La característica principal es que el cliente de correo electrónico está basado en texto, y algunas de sus características notables incluyen: compatibilidad con MIME, cifrado con PGP y S/MIME, altamente configurable, control total sobre las cabeceras al redactar un mensaje, distribución bajo licencia GPL con una comunidad de desarrollo activa. De entre los clientes pesados de correo electrónico pesados podemos citar:\n\nT4.03 Administración del Correo - Temario.pdf — Clientes de correo — Microsoft Outlook\n\nTemario, p. 35 (PDF p. 35)\n\n(7) Microsoft Outlook Características: - Disponible en Windows, macOS, iOS, Android y app web. - Software propietario.\n\nPara interpretar la respuesta: Se pide lo que no es un protocolo. El temario enumera SMTP, POP3 e IMAP como protocolos y sitúa Outlook dentro de los clientes de correo."
+      },
+      "beforeSha256": "ba12fc7c90ab2c3906c7136184187df0884338609bf7cc940c6305ba5a0a336e",
+      "afterSha256": "55ee21ea4c78730a8620e9bb34e9f2d039e004dace8a4c1567d0dd8204f7c444",
+      "evidenceKeys": [
+        "protocols",
+        "clients",
+        "outlook"
+      ],
+      "rationale": "Se pide lo que no es un protocolo. El temario enumera SMTP, POP3 e IMAP como protocolos y sitúa Outlook dentro de los clientes de correo."
+    },
+    {
+      "id": "L2019-P1-62",
+      "before": {
+        "i": "L2019-P1-62",
+        "t": "T4.03",
+        "o": "O",
+        "q": "Considerando que tanto en el punto de origen como en el punto de destino disponemos de un ordenador de usuario con un cliente de correo electrónico instalado y un servidor de correo electrónico, ¿qué papel juegan los protocolos SMTP, POP3 e IMAP durante el envío de uno de estos correos electrónicos?",
+        "a": [
+          "SMTP se usa desde el ordenador del usuario de origen al servidor de correo electrónico en el origen. POP3 o IMAP se usan entre el servidor de correo en el origen y el servidor de correo en el destino. SMTP se usa de nuevo entre el servidor de correo de destino y el destinatario, para enviarle el mensaje cuando se conecte.",
+          "POP3 se usa desde el ordenador del usuario de origen al servidor de correo electrónico en el origen. IMAP se usa entre el servidor de correo en el origen y el servidor de correo en el destino. SMTP se usa entre el servidor de correo de destino y el destinatario, para enviarle el mensaje cuando se conecte.",
+          "SMTP se usa desde el ordenador del usuario de origen al servidor de correo electrónico en el origen, así como desde el servidor de origen al servidor de destino. POP3 o IMAP se usan desde el servidor de correo en el destino hasta el ordenador del destinatario, para enviarle el mensaje cuando se conecte.",
+          "POP3 o IMAP se usan desde el ordenador del usuario de origen al servidor de correo electrónico en el origen, así como desde el servidor de origen al servidor de destino. SMTP se usa desde el servidor de correo en el destino hasta el ordenador del destinatario, para enviarle el mensaje cuando se conecte."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "Papel de SMTP/POP3/IMAP en el recorrido del correo: tramos intercambiados.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "after": {
+        "i": "L2019-P1-62",
+        "t": "T4.03",
+        "o": "O",
+        "q": "Considerando que tanto en el punto de origen como en el punto de destino disponemos de un ordenador de usuario con un cliente de correo electrónico instalado y un servidor de correo electrónico, ¿qué papel juegan los protocolos SMTP, POP3 e IMAP durante el envío de uno de estos correos electrónicos?",
+        "a": [
+          "SMTP se usa desde el ordenador del usuario de origen al servidor de correo electrónico en el origen. POP3 o IMAP se usan entre el servidor de correo en el origen y el servidor de correo en el destino. SMTP se usa de nuevo entre el servidor de correo de destino y el destinatario, para enviarle el mensaje cuando se conecte.",
+          "POP3 se usa desde el ordenador del usuario de origen al servidor de correo electrónico en el origen. IMAP se usa entre el servidor de correo en el origen y el servidor de correo en el destino. SMTP se usa entre el servidor de correo de destino y el destinatario, para enviarle el mensaje cuando se conecte.",
+          "SMTP se usa desde el ordenador del usuario de origen al servidor de correo electrónico en el origen, así como desde el servidor de origen al servidor de destino. POP3 o IMAP se usan desde el servidor de correo en el destino hasta el ordenador del destinatario, para enviarle el mensaje cuando se conecte.",
+          "POP3 o IMAP se usan desde el ordenador del usuario de origen al servidor de correo electrónico en el origen, así como desde el servidor de origen al servidor de destino. SMTP se usa desde el servidor de correo en el destino hasta el ordenador del destinatario, para enviarle el mensaje cuando se conecte."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "Papel de SMTP/POP3/IMAP en el recorrido del correo: tramos intercambiados.",
+        "y": "Ingreso libre OEP 2019",
+        "u": "T4.03 Administración del Correo - Temario.pdf — Correo — MUA, MTA, envío y recepción\n\nTemario, p. 8 (PDF p. 8)\n\n2. COMPONENTES DE UN SISTEMA DE CORREO Un sistema de correo electrónico está formado por los siguientes componentes: - MUA (Mail User Agent o Agente de usuario de correo). Es el cliente de correo electrónico desde el que el usuario gestiona los mensajes: creación, borrado, envío, lectura… Se utiliza para enviar correo electrónico, a través del MTA correspondiente mediante el protocolo SMTP o sus extensiones, así como para recibir correo electrónico desde el MTA correspondiente mediante protocolos como POP3 o IMAP. Los tipos de clientes de correo pueden ser: o Clientes en modo texto: accesible desde la interfaz de comandos shell mediante una cuenta en la máquina que alberga el servidor de correo. o Clientes pesados o de escritorio: aplicaciones instaladas en máquinas locales de los usuarios que gestionan todo el ciclo de vida de creación, envío y recepción de mensajes, así como la posibilidad de almacenamiento local. o Clientes ligeros: (webmail) no requiere instalación en la máquina cliente ya que el servicio es ofrecido a través de una página web a través de un navegador web. La seguridad en la comunicación puede implementarse mediante HTTPS. Desde un punto de vista técnico, un webmail no es más que un entorno de gestión de mensajes de correo a través de web. Los protocolos de transporte, tecnologías implicadas, etc. son los mismos que con el uso de MUA tradicionales, con la diferencia de que estos elementos se utilizan entre el servidor de correo y el servidor web, no entre el MUA y el MTA, y el navegador, a través de aplicaciones web, nos proporciona las capacidades de gestión de mensajes de cualquier cliente nativo. o Clientes en dispositivos móviles: app instalada en dicho dispositivo. - MTA (Mail Transfer Agent o Agente de transferencia de correo). Denominado también \"estafeta\" es el encargado del transporte de los mensajes de un nodo a otro usando el protocolo SMTP y, por otro lado, de la recepción de correos electrónicos desde otros MSAs o MTAs. A la primera MTA a la que el cliente entrega su correo se la llama MSA (Mail Sending Agent).\n\nPara interpretar la respuesta: SMTP se utiliza para entregar el mensaje del cliente al servidor y entre servidores; POP3 o IMAP sirven para la recepción desde el servidor por el cliente destinatario. Los otros recorridos intercambian esos papeles."
+      },
+      "beforeSha256": "6ecf17062a2255d75f00211fa82ef2245bcb21d2df3836c881e1cccb06bd8cc5",
+      "afterSha256": "5e091062f4c6a87cab766fd8bf39aea368077bdd1e3a8fad89d4c2c2c9d54991",
+      "evidenceKeys": [
+        "route"
+      ],
+      "rationale": "SMTP se utiliza para entregar el mensaje del cliente al servidor y entre servidores; POP3 o IMAP sirven para la recepción desde el servidor por el cliente destinatario. Los otros recorridos intercambian esos papeles."
+    },
+    {
+      "id": "P2019-P1-38",
+      "before": {
+        "i": "P2019-P1-38",
+        "t": "T4.03",
+        "o": "O",
+        "q": "El protocolo SMTP es acrónimo de:",
+        "a": [
+          "Secure Mail Transfer Protocol.",
+          "Secure Mail Transaction Protocol.",
+          "Simple Mail Transfer Protocol.",
+          "Simple Managemet Trace Protocol."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Expansiones de SMTP cambiadas.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "after": {
+        "i": "P2019-P1-38",
+        "t": "T4.03",
+        "o": "O",
+        "q": "El protocolo SMTP es acrónimo de:",
+        "a": [
+          "Secure Mail Transfer Protocol.",
+          "Secure Mail Transaction Protocol.",
+          "Simple Mail Transfer Protocol.",
+          "Simple Managemet Trace Protocol."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Expansiones de SMTP cambiadas.",
+        "y": "Promoción interna OEP 2019",
+        "u": "T4.03 Administración del Correo - Temario.pdf — Protocolos de correo — SMTP, POP3 e IMAP\n\nTemario, p. 10 (PDF p. 10)\n\n3. PROTOCOLOS DE CORREO ELECTRÓNICO - SMTP - POP3 - IMAP4 - QMTP 1. SMTP SMTP (Simple Mail Transfer Protocol) o Protocolo Simple de Transferencia de Correo es un protocolo de la capa de aplicación encargado del transporte y entrega del correo electrónico. SMTP es responsable de procesar y reenviar correos electrónicos de un remitente a un destinatario. En otras palabras, se trata del protocolo estándar para intercambio de mensajes, por lo que cualquier servidor de correo que desee recibir email en términos generales, deberá ser capaz de \"entender\" SMTP.\n\nPara interpretar la respuesta: SMTP significa Simple Mail Transfer Protocol; el pasaje incluye la expansión y su función de transporte y entrega."
+      },
+      "beforeSha256": "e8aa8607bd1f90b7a37a3967d7cd07f01631ab9cc9196bba9257f4d2a08515a7",
+      "afterSha256": "4a08225e94ee23237bb033165717c1ded8fd39c62340220677c9a5974661a0fa",
+      "evidenceKeys": [
+        "protocols"
+      ],
+      "rationale": "SMTP significa Simple Mail Transfer Protocol; el pasaje incluye la expansión y su función de transporte y entrega."
+    },
+    {
+      "id": "L2018-P1-78",
+      "before": {
+        "i": "L2018-P1-78",
+        "t": "T4.03",
+        "o": "O",
+        "q": "¿Cuál de las siguientes opciones sobre el protocolo Exchange ActiveSync es FALSA?",
+        "a": [
+          "Está basado en los protocolos HTTP y XML.",
+          "Consigue un mayor rendimiento gracias al empleo de JSON para la reducción del peso de los mensajes.",
+          "Permite configuración para usar SSL entre cliente y servidor.",
+          "Permite ejecutar una acción de Remote wipe (limpieza remota) para la eliminación del contenido relacionado con el servidor Exchange alojado en un dispositivo móvil."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "ActiveSync no usa JSON.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "after": {
+        "i": "L2018-P1-78",
+        "t": "T4.03",
+        "o": "O",
+        "q": "¿Cuál de las siguientes opciones sobre el protocolo Exchange ActiveSync es FALSA?",
+        "a": [
+          "Está basado en los protocolos HTTP y XML.",
+          "Consigue un mayor rendimiento gracias al empleo de JSON para la reducción del peso de los mensajes.",
+          "Permite configuración para usar SSL entre cliente y servidor.",
+          "Permite ejecutar una acción de Remote wipe (limpieza remota) para la eliminación del contenido relacionado con el servidor Exchange alojado en un dispositivo móvil."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "ActiveSync no usa JSON.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)",
+        "u": "T4.03 Administración del Correo - Temario.pdf — Exchange ActiveSync — HTTP, XML, SSL y Remote wipe\n\nTemario, p. 40 (PDF p. 40)\n\nExchange ActiveSync Exchange ActiveSync es un protocolo de sincronización de Exchange que está optimizado para trabajar con redes de alta latencia y bajo ancho de banda. Este protocolo basado en HTTP y XML permite a los dispositivos móviles acceder a la información de la organización en un servidor que está ejecutando Microsoft Exchange, en concreto, a su correo electrónico, calendario, contactos y tareas y les permite seguir teniendo acceso a esta información cuando trabajan sin conexión. Los servicios de cifrado estándar agregan seguridad a las comunicaciones móviles con el servidor. Puede configurar Exchange ActiveSync para utilizar el cifrado SSL a fin de establecer la comunicación entre el servidor Exchange y el dispositivo móvil. Las características principales de Exchange ActiveSync son: - Compatibilidad con mensajes HTML. - Tecnología Direct Push que usa una conexión HTTPS cifrada que se establece y mantiene entre el dispositivo móvil y el servidor para enviar mensajes de correo electrónico. - Eliminación de contenido en un dispositivo móvil relacionado con un servidor Exchange. El barrido remoto realizaría un barrido a nivel de dispositivo, restaurando el dispositivo condiciones de fábrica. Es lo que se conoce como Remote wipe o limpieza remota.\n\nPara interpretar la respuesta: Se pide la afirmación falsa. El protocolo se describe basado en HTTP y XML; el pasaje respalda también SSL y Remote wipe. La afirmación de mejora de rendimiento mediante JSON no corresponde al formato descrito por el material."
+      },
+      "beforeSha256": "ae3390652579a2b8835d6a9eb8183534ddf54039649647db093c812c635822e1",
+      "afterSha256": "c9351fe6f3d2cac03350aa0142f21fb7e43720b39087c0b3074e8ceee11211e5",
+      "evidenceKeys": [
+        "activesync"
+      ],
+      "rationale": "Se pide la afirmación falsa. El protocolo se describe basado en HTTP y XML; el pasaje respalda también SSL y Remote wipe. La afirmación de mejora de rendimiento mediante JSON no corresponde al formato descrito por el material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "P2024A-P1-39",
+        "t": "T4.03",
+        "o": "O",
+        "q": "Indique cuál de los siguientes NO es un protocolo de acceso al correo electrónico:",
+        "a": [
+          "IMAP.",
+          "POP3.",
+          "SNTP.",
+          "SMTP."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "SNTP (hora) entre protocolos de correo.",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "La pregunta pide un protocolo de acceso al correo, pero SMTP es de envío y SNTP de hora. Es necesario revisar el alcance de acceso y la unicidad de la alternativa, sin aprobar por descarte superficial.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2025A-P1-38",
+        "t": "T4.03",
+        "o": "O",
+        "q": "¿Qué registro DNS permite a los propietarios de dominios firmar automáticamente los correos electrónicos de su dominio?",
+        "a": [
+          "DKIM.",
+          "SPF.",
+          "DMARC.",
+          "CNAME."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "DKIM frente a SPF/DMARC.",
+        "y": "Promoción interna convocatoria 2025"
+      },
+      "reason": "Un registro DNS DKIM publica la clave pública para verificar; la firma la genera el servidor con la privada. La formulación atribuye al registro DNS la firma automática y necesita revisión.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-79",
+        "t": "T4.03",
+        "o": "O",
+        "q": "En el protocolo de correo electrónico POP3, el comando que permite obtener información acerca del número de mensajes del servidor y lo que ocupan en total en bytes es:",
+        "a": [
+          "STAT",
+          "RGET",
+          "RETR",
+          "PASS"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Comandos POP3 hermanos.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-38",
+        "t": "T4.03",
+        "o": "O",
+        "q": "¿A qué se corresponden las siglas del protocolo IMAP?",
+        "a": [
+          "Internet Mail Access Protocol.",
+          "Internet Mail Auth Protocol.",
+          "Internet Message Auth Protocol.",
+          "Internet Message Access Protocol."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Expansión de IMAP (matriz Mail/Message × Access/Auth).",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-39",
+        "t": "T4.03",
+        "o": "O",
+        "q": "Seleccione entre los protocolos siguientes aquel que se emplea en el envío de correos electrónicos entre servidores de correo:",
+        "a": [
+          "POP3",
+          "SMTP",
+          "IMAP",
+          "MX"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "SMTP entre servidores.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-01",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Según el RFC 822, el formato de un mensaje de correo electrónico está formado por:",
+        "a": [
+          "Un encabezado y el cuerpo.",
+          "Un encabezado, varias cabeceras y el cuerpo.",
+          "Un encabezado, una línea en blanco y el cuerpo.",
+          "Un encabezado, una cabecera y el cuerpo."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-02",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Cuál de las siguientes cabeceras de un mensaje de correo electrónico es personalizada?",
+        "a": [
+          "X-Spam-Status.",
+          "Y-Spam-Status.",
+          "Z-Spam-Status",
+          "References."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-03",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Cuál NO es un formato de codificación válido para la cabecera MIME Content-Transfer- Encoding?",
+        "a": [
+          "base64.",
+          "8bit.",
+          "quoted.",
+          "binary."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-04",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Señale la respuesta correcta en relación con la cabecera MIME Content-Type cuando el tipo MIME principal es \"multipart\":",
+        "a": [
+          "El subtipo digest permite que en un solo mensaje contenga varios submensajes.",
+          "El subtipo mixed permite incluir en un mensaje varios mensajes.",
+          "El subtipo parallel permite incluir en un mensaje subpartes que se pueden ver simultáneamente.",
+          "El subtipo alt permite que en un mismo mensaje se pueda incluir una única información en varios formatos."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-05",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Sobre las listas de distribución señale la respuesta INCORRECTA:",
+        "a": [
+          "Permiten el envío de un mensaje a varios destinatarios a la vez.",
+          "Todos los destinatarios están identificados en el campo To y son visibles para el resto de destinatarios.",
+          "Son útiles para organizar grupos de trabajo dentro de una organización.",
+          "Mailman es un software que permite la implementación y gestión de listas de distribución."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-06",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Un cliente de correo electrónico es un:",
+        "a": [
+          "MUA.",
+          "MDA.",
+          "MTA.",
+          "MRA."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-07",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Al último agente de transferencia de correo que recibe el correo y lo entrega al cliente destinatario se llama:",
+        "a": [
+          "MUA.",
+          "MDA.",
+          "MTA.",
+          "MRA."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-08",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un protocolo de correo electrónico?",
+        "a": [
+          "SMTP.",
+          "POP4.",
+          "IMAP4.",
+          "QMTP."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-09",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Cuál es el puerto TCP estándar del protocolo IMAP4?",
+        "a": [
+          "110.",
+          "993.",
+          "25.",
+          "143."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Puerto IMAP 143 vs 993."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-10",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Qué característica de SMTP es FALSA?",
+        "a": [
+          "Sigue una arquitectura cliente/servidor.",
+          "Basado en texto.",
+          "Los mensajes son enviados por defecto en sin cifrar.",
+          "Se limita a caracteres ASCII de 7 bits."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-11",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Si el código de respuesta de un servidor SMTP es 502, podemos decir que:",
+        "a": [
+          "El servicio está preparado.",
+          "El servicio no está disponible.",
+          "El comando no implementado.",
+          "La secuencia de comandos errónea."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-12",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Si el código de respuesta de un servidor SMTP es 450, podemos decir que:",
+        "a": [
+          "Es una solicitud no ejecutada, buzón de correo no disponible.",
+          "Se ha producido un fallo en la transacción.",
+          "El servicio está cerrando el canal de trasmisión.",
+          "Es una acción no ejecutada por insuficiente espacio de almacenamiento en el sistema."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-13",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA sobre el protocolo POP3:",
+        "a": [
+          "Permite la descarga de mensajes desde el servidor.",
+          "Los mensajes son siempre eliminados del buzón.",
+          "Utiliza el protocolo TCP.",
+          "Los mensajes solo son accesibles en local."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-14",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿A qué hace referencia un registro MX en un servidor DNS?",
+        "a": [
+          "A la dirección del buzón del destinatario del correo.",
+          "Al servidor DNS de la organización destinataria del correo.",
+          "Al servidor web asociado al correo.",
+          "Al servidor de correo asociado al dominio."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-15",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Cuál es el RFC original de SMTP?",
+        "a": [
+          "820.",
+          "821.",
+          "822.",
+          "823."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-16",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Qué respuesta sobre SMTP es INCORRECTA?",
+        "a": [
+          "SMTP puede transportar correo a través de múltiples redes.",
+          "En SMTP se puede transferir el correo dentro de la misma red o entre dos redes.",
+          "En SMTP un correo electrónico puede pasar por varias MTAs intermedias.",
+          "En SMTP se crea una conexión única entre emisor y receptor final."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-17",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Qué persigue MIME?",
+        "a": [
+          "Ofrecer mecanismos adicionales de seguridad.",
+          "La descarga del correo electrónico entrante en la máquina del usuario.",
+          "La autenticación de servidores SMTP.",
+          "Incluir diferentes tipos de información en un correo electrónico, además de texto plano en ASCII 7 bits."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-18",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Qué comando de SMTP comprueba si el servidor acepta ESMTP?",
+        "a": [
+          "EHLO.",
+          "HELO.",
+          "ETRN.",
+          "DSN."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-19",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Indique la respuesta INCORRECTA sobre el correo electrónico:",
+        "a": [
+          "SMTP es un protocolo de transporte de correo.",
+          "IMAP es un protocolo de acceso a los correos en un servidor de correo.",
+          "RETR es un comando utilizado por el protocolo POP3.",
+          "MIME no permite acentos en el cuerpo de los correos electrónicos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-20",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Qué comandos se usan en POP3 para descargar y borrar los 2 primeros mensajes del buzón de correo?",
+        "a": [
+          "RETR 1; DELE 1; RETR 2; DELE 2",
+          "RETE 1,2; DELE 1,2",
+          "RETR 1-2, DELE 1-2",
+          "RETR 1; RETR 2"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-21",
+        "t": "T4.03",
+        "o": "A",
+        "q": "La principal diferencia entre S/MIME y PGP es:",
+        "a": [
+          "PGP es un software libre.",
+          "S/MIME requiere SSL.",
+          "PGP no se puede usar para el envío de correos electrónicos.",
+          "S/MIME requiere el uso de certificados digitales."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-22",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Qué protocolo de correo permite acceder al correo electrónico, manteniendo los mensajes en el servidor, de forma que pueda accederse al correo desde distintos dispositivos?",
+        "a": [
+          "SMTP.",
+          "QMTP.",
+          "POP3.",
+          "IMAP4."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-23",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Sobre SPF (Sender Policy Framework) señale la respuesta correcta:",
+        "a": [
+          "Define reglas para clasificar el correo electrónico en carpetas del buzón según el origen.",
+          "Define reglas de encriptado y desencriptado de correo electrónico.",
+          "Es un protocolo contra las falsificaciones del emisor de correo electrónico.",
+          "Es un protocolo para el diseño de sistemas de mensajería instantánea."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-24",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO permite la firma digital de correos electrónicos?",
+        "a": [
+          "S/MIME.",
+          "STARTTLS.",
+          "PGP.",
+          "GPG."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-25",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un cliente de correo electrónico?",
+        "a": [
+          "Spark.",
+          "Spike.",
+          "Exim.",
+          "SeaMonkey."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-26",
+        "t": "T4.03",
+        "o": "A",
+        "q": "El comando de IMAP4 que permite elimina mensajes de un buzón es:",
+        "a": [
+          "DELETE.",
+          "EXPUNGE.",
+          "DROP.",
+          "UNSUBSCRIBE."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Comandos IMAP."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-27",
+        "t": "T4.03",
+        "o": "A",
+        "q": "El comando de POP3 que muestra la cabecera y el número de líneas de un mensaje concreto es:",
+        "a": [
+          "TOP.",
+          "APOP.",
+          "STAT.",
+          "UIDL."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Comandos POP3."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-28",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Cuál NO es un mecanismo de autenticación SMTP?",
+        "a": [
+          "CRAM-MD5.",
+          "LOGIN.",
+          "NTL.",
+          "DIGEST-MD5."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          7,
+          9
+        ],
+        "d": 3,
+        "n": "Autenticación SMTP: NTL (falta la M)."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-29",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Cuando un cliente indica al servidor SMTP el comienzo del mensaje de correo, el cliente recibe el código de respuesta:",
+        "a": [
+          "200.",
+          "354.",
+          "551.",
+          "452."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-30",
+        "t": "T4.03",
+        "o": "A",
+        "q": "El puerto de POP3 que establece una conexión cifrada es:",
+        "a": [
+          "992.",
+          "993.",
+          "994.",
+          "995."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-31",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Indique la respuesta INCORRECTA en relación con el control de accesos de un sistema de correo:",
+        "a": [
+          "Se debe permitir el tráfico SMTP entrante desde Internet hacia el servidor de correo.",
+          "Se debe permitir el tráfico SMTP saliente desde el servidor hacia Internet.",
+          "Se debe permitir el tráfico SMTP saliente desde la red interna hacia Internet.",
+          "Se debe permitir el tráfico SMTP/POP3/IMAP4 desde la red interna hacia el servidor de correo."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-37",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Se va a instalar el protocolo SMTP en un servidor. Indique qué puerto por defecto debería abrirse en el firewall:",
+        "a": [
+          "53.",
+          "110.",
+          "25.",
+          "138."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT403-P1-40",
+        "t": "T4.03",
+        "o": "A",
+        "q": "El comando del protocolo IMAP4 que permite listar los buzones de correo es:",
+        "a": [
+          "LIST.",
+          "SUBSCRIBE.",
+          "LSUB.",
+          "EXAMINE."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-97",
+        "t": "T4.03",
+        "o": "A",
+        "q": "El puerto TCP en el que por defecto escucha un servicio IMAP4 sin hacer uso TLS/SSL es:",
+        "a": [
+          "110.",
+          "995.",
+          "993.",
+          "143."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-98",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Qué comando del protocolo SMTP permite el comienzo del cuerpo del mensaje?",
+        "a": [
+          "ETRN.",
+          "EXPN.",
+          "DATA.",
+          "MAIL."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-100",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Qué tecnología está relacionada con la firma digital del correo electrónico por parte del remitente?",
+        "a": [
+          "DMARC.",
+          "ADAM.",
+          "SPF.",
+          "DKIM."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-96",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Qué comando del protocolo SMTP comprueba la existencia del destinatario del mensaje?",
+        "a": [
+          "ETRN.",
+          "EXPN.",
+          "VRFY.",
+          "TURN."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-97",
+        "t": "T4.03",
+        "o": "A",
+        "q": "El código de respuesta de un servidor SMTP indicando que el servicio está disponible es:",
+        "a": [
+          "25.",
+          "500.",
+          "421.",
+          "220."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-98",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Qué tecnología NO está relacionada con la determinación de la autenticidad de los remitentes de correo electrónico?",
+        "a": [
+          "DMARC.",
+          "ADAM.",
+          "SPF.",
+          "DKIM."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-83",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Cuál de los siguientes productos es más adecuado si desea implantar en su organización un servidor de correo open source?",
+        "a": [
+          "Microsoft Exchange Server.",
+          "Dovecot.",
+          "Open Nebula.",
+          "POSIX."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-96",
+        "t": "T4.03",
+        "o": "A",
+        "q": "¿Cuál de estos NO es un protocolo del servicio de correo electrónico?",
+        "a": [
+          "MIME.",
+          "IMAP.",
+          "SMTP.",
+          "FTP."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-98",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Indique el puerto TCP asignado al protocolo IMAP sobre TLS:",
+        "a": [
+          "143.",
+          "995.",
+          "23.",
+          "993."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-87",
+        "t": "T4.03",
+        "o": "A",
+        "q": "En el contexto de los sistemas de correo electrónico, ¿para qué se utiliza DKIM?",
+        "a": [
+          "Para incorporar una cabecera al correo electrónico con una firma digital del contenido del mensaje.",
+          "Para la autenticación de correos electrónicos.",
+          "Para cifrar el contenido de un correo electrónico.",
+          "Para garantizar que los servidores de correo están autorizados para el envío de correos electrónicos."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-41",
+        "t": "T4.03",
+        "o": "A",
+        "q": "El agente de transferencia de correo encargado de la recepción y entrega al cliente destinatario se denomina:",
+        "a": [
+          "MDA.",
+          "MSA.",
+          "MTA.",
+          "MTA Relay."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-86",
+        "t": "T4.03",
+        "o": "A",
+        "q": "El comando del protocolo IMAP4 que permite acceder a un buzón en modo lectura es:",
+        "a": [
+          "SELECT.",
+          "ACCESS.",
+          "SUBSCRIBE.",
+          "EXAMINE."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-82",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Sobre el protocolo de transferencia de correo SMTP, indique cuál de las siguientes afirmaciones es INCORRECTA:",
+        "a": [
+          "El transmisor actúa como cliente y el receptor como servidor.",
+          "En el protocolo SMTP, en sus especificaciones básicas, todos los caracteres enviados están codificados mediante el código ASCII.",
+          "Cuando un servidor establece una conexión con el cliente SMTP, espera a que este envíe un mensaje “220 Service ready” o “421 Service no available”.",
+          "Si el servidor no está preparado para recibir correo el cliente liberará la conexión y lo intentará más tarde."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-90",
+        "t": "T4.03",
+        "o": "A",
+        "q": "El mensaje HELO es:",
+        "a": [
+          "El primero que se envía en un mensaje HTTP.",
+          "El primero que se envía en un mensaje FTP.",
+          "El primero que se envía en un mensaje SMTP.",
+          "No es un mensaje válido en ninguno de los anteriores protocolos."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-72",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Un sistema antispam para detección de correo basura utiliza un método heurístico para distinguir los correos basura de los correos legítimos con contenido útil:",
+        "a": [
+          "Siempre es capaz de distinguir unos de otros correctamente.",
+          "Utiliza un sistema de puntuación de algunos parámetros, como listas de palabras, de direcciones de correo, etcétera y en función de la puntuación asignada a un correo se clasifica como spam o no.",
+          "El usuario tiene que “entrenar” al sistema para decirle qué correos son spam y cuáles no, por lo que no son fiables hasta que llevan un tiempo de funcionamiento.",
+          "El administrador de seguridad de la organización es el que decide qué correos son spam y cuáles no."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 2,
+        "n": "Antispam heurístico: \"siempre\", \"el usuario tiene que\".",
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 163,
+    "alreadyHadCitation": 105,
+    "added": 5,
+    "pending": 53,
+    "withCitation": 110
+  }
+}
