@@ -69,3 +69,30 @@ export async function readSyntheticRemote(page: Page, path: string) {
     return { status:response.status, data };
   }, path);
 }
+
+
+/** Read-only proof of initialized client config, fail-closed routing and emulator reachability. */
+export async function verifySyntheticBrowserIsolation(page: Page) {
+  const endpoints: { url:string; method:string; status:number }[] = [];
+  const responseListener = (response: import('@playwright/test').Response) => {
+    const url = new URL(response.url());
+    if (['9099','8080'].includes(url.port)) endpoints.push({ url:response.url(), method:response.request().method(), status:response.status() });
+  };
+  page.on('response', responseListener);
+  try {
+    await page.goto('http://127.0.0.1:4187/#/settings');
+    await expect(page.getByRole('button', { name:'Entrar con Google' })).toBeVisible();
+    const configuration: unknown = await page.evaluate(async () => {
+      const config = await (await fetch('/firebase-config.json')).json();
+      await Promise.all([
+        fetch('http://127.0.0.1:9099/emulator/v1/projects/demo-tai-auth/config').catch(() => null),
+        fetch('http://127.0.0.1:8080/v1/projects/demo-tai-auth/databases/(default)/documents/_preflight/probe').catch(() => null),
+      ]);
+      return config;
+    });
+    expect(configuration).toMatchObject({ projectId:'demo-tai-auth', taiEmulators:{ authHost:'127.0.0.1', authPort:9099, firestoreHost:'127.0.0.1', firestorePort:8080 } });
+    expect(endpoints.some(endpoint => new URL(endpoint.url).port === '9099' && endpoint.method === 'GET')).toBe(true);
+    expect(endpoints.some(endpoint => new URL(endpoint.url).port === '8080' && endpoint.method === 'GET')).toBe(true);
+    return { configuration, clientInitialized:true, endpoints, phase:'before-fixtures', trafficKind:'read-only reachability; all SDK traffic is constrained by the installed guard' };
+  } finally { page.off('response', responseListener); }
+}

@@ -26,7 +26,8 @@ async function ready(page: Page) {
   await expect(page.locator('.page-loading')).toHaveCount(0);
 }
 async function fits(page: Page) {
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+  const layout = await page.evaluate(() => ({ fits:document.documentElement.scrollWidth <= innerWidth + 1, width:innerWidth, documentWidth:document.documentElement.scrollWidth, outside:[...document.querySelectorAll('body *')].filter(node => node.getBoundingClientRect().right > innerWidth + 1).map(node => ({ tag:node.tagName, className:node.getAttribute('class') })).slice(-10) }));
+  expect(layout.fits, JSON.stringify(layout)).toBe(true);
 }
 function contrast(a: string, b: string) {
   const luminance = (color: string) => {
@@ -93,7 +94,7 @@ test('selector: cinco elecciones inmediatas conservan sesión y datos tras naveg
     const saved = JSON.parse(localStorage.getItem('tai.v1:guest') || '{}');
     const run = JSON.parse(localStorage.getItem('tai.run:guest') || 'null');
     return { stats:saved.stats, sessions:saved.sessions, seen:saved.seen,
-      run:run ? { ids:run.ids, ans:run.ans, studyStates:run.studyStates, attemptSessionId:run.attemptSessionId } : null };
+      run:run ? { ids:run.ids, ans:run.ids.map((_id: string, index: number) => run.ans?.[index] ?? null), studyStates:run.studyStates, attemptSessionId:run.attemptSessionId } : null };
   });
   const before = await progress();
   await page.getByRole('radio', { name:/Neobrutalismo suave/ }).focus();
@@ -205,3 +206,30 @@ test('galería comparable de los cinco temas con los mismos datos', async ({ pag
     await page.goto('/#/settings');
   }
 });
+
+for (const theme of VISUAL_THEMES) for (const color of ['light','dark']) {
+  test(`${theme.id} · ${color} · pregunta técnica real con código`, async ({ page, browserName }) => {
+    await prepare(page, theme.id, color);
+    await page.setViewportSize({ width:320,height:900 });
+    const question = (JSON.parse(readFileSync('public/data/T3.06.json','utf8')) as { i:string; q:string; c:number }[]).find(q => q.i === 'AT306-P1-40')!;
+    expect(question.q).toContain('```java');
+    await page.goto('/#/home');
+    await ready(page);
+    // An unanswered historical checkpoint is supported without grading revisions;
+    // no answer, score or completed activity is fabricated by this fixture.
+    await page.evaluate(id => localStorage.setItem('tai.run:guest',JSON.stringify({ kind:'test', feedback:true, idx:0, ids:[id], ans:[], savedAt:Date.now() })),question.i);
+    await page.reload();
+    await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
+    await page.locator('.overlay [data-v="1"]').click();
+    const code = page.locator('.enun code[data-shiki-language="java"]');
+    await expect(code).toBeVisible();
+    await expect(code).toHaveClass(/shiki/);
+    await expect(code).toHaveCSS('white-space','pre-wrap');
+    await fits(page);
+    await page.screenshot({ path:`${evidence}/${theme.id}-${color}-320-technical-${browserName}.png`,fullPage:true });
+    await page.locator(`.opt[data-i="${question.c}"]`).click();
+    await expect(page.locator('.fb')).toContainText('Correcto');
+    await fits(page);
+    writeFileSync(`${evidence}/${theme.id}-${color}-technical-${browserName}.json`,JSON.stringify({ theme:theme.id,color,browser:browserName,width:320,questionId:question.i,verified:['real-bank-question','blank-legacy-checkpoint','java-highlighting','long-content-reflow','real-answer-feedback'] },null,2));
+  });
+}

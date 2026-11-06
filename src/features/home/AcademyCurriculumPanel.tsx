@@ -57,6 +57,9 @@ async function sha256(bytes: ArrayBuffer): Promise<string> {
   return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
+const historicalTimingLabels = { assisted:'Con ayuda', immediate:'Al terminar', delayed:'Diferido' };
+const historicalRatingLabels = { 'not-recalled':'No lo recordé', partial:'Parcialmente', recalled:'Lo recordé' };
+
 function coverageTimestamp(): number { return Date.now(); }
 
 function SectionStudyUnit({ section, events, materialOpenEvents, sessionId, activityId, record, targetSectionId }: {
@@ -100,7 +103,7 @@ function SectionStudyUnit({ section, events, materialOpenEvents, sessionId, acti
       {(history.length > 0 || followUps.length > 0) && <details className="mt-2">
         <summary className="min-h-11 cursor-pointer content-center text-sm">Historial de autoevaluaciones antiguas · {history.length}</summary>
         <p className="text-sm text-muted">Se conserva como registro personal; no cuenta como tests, aciertos ni dominio.</p>
-        <ul className="my-1 list-disc ps-5 text-sm">{history.map(item => <li key={item.id}>{new Date(item.occurredAt).toLocaleString()} · {item.timing} · {item.rating}</li>)}</ul>
+        <ul className="my-1 list-disc ps-5 text-sm">{history.map(item => <li key={item.id}>{new Date(item.occurredAt).toLocaleString()} · {historicalTimingLabels[item.timing]} · {historicalRatingLabels[item.rating]}</li>)}</ul>
         {followUps.length > 0 && <p className="text-sm">{followUps.length} seguimientos antiguos conservados. Puedes practicar el tema con el enlace de test.</p>}
       </details>}
     </div>

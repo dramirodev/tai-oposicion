@@ -691,3 +691,24 @@ El primer intento de deploy42237352967 del merge PR116/f6aa79f falló en `tests/
 - **Solución / archivos:** Restaurado callback `(block, expanded)` con guardia de igualdad/búsqueda en TopicsPage; PlanningPage/StudyCalendar usan `text-accent` independiente del botón amarillo.
 - **Estado de implementación:** CORREGIDO SIN VERIFICAR.
 - **Pruebas / resultado provisional:** Segunda revisión estática confirma las correcciones. Se añade cierre estable de bloque en E2E y contraste parametrizado. Espera resultados finales de navegador.
+
+### UX-THEMES-003 — Motivo de error desborda en móvil estrecho
+
+- **Categoría / funcionalidad:** Responsive / formulario de aviso desde corrección.
+- **Descripción:** El select nativo de motivo conserva un mínimo intrínseco mayor que el espacio de feedback a 320 px; aparece scroll horizontal.
+- **Evidencia:** Matriz de estados de los cinco temas, Chromium; diagnóstico local independiente: viewport 320, documento 325, select derecho 325/ancho 288. Captura local `/private/tmp/tai-five-report-overflow.png` y trazas de la matriz.
+- **Severidad / prioridad:** P2 / media.
+- **Causa:** Select sin límites de ancho dentro de feedback con padding.
+- **Solución / archivos:** `QuizFeedback.tsx`, utilidades existentes `w-full min-w-0 max-w-full`; no se alteran campos ni envío. `visual-themes.spec.ts` conserva aserción de reflujo y añade diagnóstico de elementos fuera del viewport.
+- **Estado de implementación:** CORREGIDO SIN VERIFICAR.
+- **Pruebas / resultado provisional:** Reproducción confirmada; revalidación pendiente sobre el build integrado, en ambos motores y todos los temas.
+
+### UX-THEMES-004 — Bloque Java real tratado como código en línea
+
+- **Categoría / funcionalidad:** Legibilidad / contenido técnico.
+- **Descripción / evidencia:** La pregunta real `AT306-P1-40` contiene un bloque Java delimitado y multilínea; se representaba con `code.cd` en línea (`white-space: break-spaces`), dejando el delimitador como prosa. La nueva prueba conserva la exigencia de formato de bloque, sin rebajarla al estilo erróneo.
+- **Severidad / prioridad:** P2 / media.
+- **Causa:** El formateador reconocía fragmentos heurísticos, pero no delimitadores completos de bloque.
+- **Solución / archivos:** `study-text.ts` reconoce únicamente bloques completos, escapa el contenido y reutiliza `StudyCode`/Shiki y los estilos `cd blk` existentes. Mantiene el formateador previo fuera del bloque y conserva delimitadores incompletos sin pérdida. Sin parser Markdown ni dependencia nueva: reconocimiento acotado, sin algoritmo general nuevo.
+- **Estado de implementación:** CORREGIDO SIN VERIFICAR.
+- **Pruebas / resultado provisional:** `study-code-fences.test.js` verifica texto exacto del banco, primer token, prosa, dos lenguajes, HTML escapado y bloque incompleto. Matriz visual real en cinco temas, dos modos y dos motores pendiente de repetir.

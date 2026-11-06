@@ -216,8 +216,8 @@ test.describe('service worker real', () => {
   await page.evaluate(() => document.fonts.ready);
   expect(await page.evaluate(() => document.fonts.check('16px Geist'))).toBe(true);
   // La hoja compilada debe llegar de la caché, no solo el HTML/JS.
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(245, 246, 247)');
-  await expect(page.locator('#quick')).toHaveCSS('background-color', 'rgb(32, 35, 38)');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(255, 249, 237)');
+  await expect(page.locator('#quick')).toHaveCSS('background-color', 'rgb(255, 231, 120)');
   await page.locator('#quick').click();
   await expect(page.locator('#app h1')).toContainText('pregunta 1');
   await page.locator('.enun').focus();

@@ -324,10 +324,10 @@ test('el tema automático sigue los cambios del sistema sin recargar', async ({ 
   await page.emulateMedia({ colorScheme: 'light' });
   await page.goto('/#/home');
   await expect(page.locator('#quick')).toBeVisible();
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(245, 246, 247)');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(255, 249, 237)');
   await page.emulateMedia({ colorScheme: 'dark' });
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(17, 17, 19)');
-  await expect.poll(() => page.locator('meta[name="theme-color"]').getAttribute('content')).toBe('#111113');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(28, 26, 22)');
+  await expect.poll(() => page.locator('meta[name="theme-color"]').getAttribute('content')).toBe('#1c1a16');
 });
 
 test('saltar al contenido conserva la ruta y ofrece un destino de teclado', async ({ page }) => {

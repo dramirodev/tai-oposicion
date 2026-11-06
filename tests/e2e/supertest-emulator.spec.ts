@@ -15,7 +15,7 @@ import {
   terminate,
 } from 'firebase/firestore';
 import { identities, assertEmulators } from '../../scripts/e2e/synthetic-users.mjs';
-import { guardSyntheticBrowser, signInSynthetic, readSyntheticRemote } from './synthetic-auth';
+import { guardSyntheticBrowser, signInSynthetic, readSyntheticRemote, verifySyntheticBrowserIsolation } from './synthetic-auth';
 
 import { studyProfileFixture } from './fixtures/study-profiles';
 
@@ -42,27 +42,10 @@ test.describe('Firebase Auth Emulator supertest', () => {
     // Read-only preflight precedes every fixture write. Inspect the effective
     // browser config and observe GET traffic to both fixed emulators.
     const probe = await context.newPage();
-    const endpoints: { url:string; method:string; status:number }[] = [];
-    probe.on('response', response => {
-      const url = new URL(response.url());
-      if (['9099','8080'].includes(url.port)) endpoints.push({ url:response.url(), method:response.request().method(), status:response.status() });
-    });
     try {
-      await probe.goto('http://127.0.0.1:4187/#/settings');
-      const configuration = await probe.evaluate(async () => {
-        const config = await (await fetch('/firebase-config.json')).json();
-        await Promise.all([
-          fetch('http://127.0.0.1:9099/emulator/v1/projects/demo-tai-auth/config').catch(() => null),
-          fetch('http://127.0.0.1:8080/v1/projects/demo-tai-auth/databases/(default)/documents/_preflight/probe').catch(() => null),
-        ]);
-        return config;
-      });
-      expect(configuration.projectId).toBe('demo-tai-auth');
-      expect(configuration.taiEmulators).toEqual({ authHost:'127.0.0.1', authPort:9099, firestoreHost:'127.0.0.1', firestorePort:8080 });
-      expect(endpoints.some(endpoint => new URL(endpoint.url).port === '9099' && endpoint.method === 'GET')).toBe(true);
-      expect(endpoints.some(endpoint => new URL(endpoint.url).port === '8080' && endpoint.method === 'GET')).toBe(true);
+      const isolation = await verifySyntheticBrowserIsolation(probe);
       mkdirSync(testInfo.outputDir, { recursive:true });
-      writeFileSync(testInfo.outputPath('isolation-before-writes.json'), JSON.stringify({ configuration, endpoints, phase:'before-fixtures' },null,2));
+      writeFileSync(testInfo.outputPath('isolation-before-writes.json'), JSON.stringify(isolation,null,2));
     } finally { await probe.close(); }
     execFileSync(process.execPath, ['scripts/e2e/prepare-synthetic-users.mjs'], {
       env: process.env,

@@ -174,6 +174,28 @@ export function todoCodigo(text: unknown): boolean {
 // Texto → HTML seguro: escapa todo, pone en tipografía de código lo que lo parece y (opcional) resalta las palabras clave de lectura.
 export function richHtml(text: unknown, highlightKeywords = false): string {
   const textValue = String(text ?? '');
+  const opening = /^[ \t]{0,3}```([A-Za-z0-9_#+.-]*)[ \t]*\r?\n/gm;
+  const closing = /^[ \t]{0,3}```[ \t]*(?:\r?\n|$)/gm;
+  let html = '', cursor = 0;
+  let fence: RegExpExecArray | null;
+  while ((fence = opening.exec(textValue)) !== null) {
+    const bodyStart = opening.lastIndex;
+    closing.lastIndex = bodyStart;
+    const end = closing.exec(textValue);
+    // Do not repeatedly rescan the suffix when an opening has no closing line.
+    if (!end) break;
+    html += inlineRichHtml(textValue.slice(cursor, fence.index), highlightKeywords);
+    const language = fence[1] ? ` data-language="${esc(fence[1].toLowerCase())}"` : '';
+    html += `<pre class="code-sample"><code class="cd blk"${language}>${esc(textValue.slice(bodyStart, end.index))}</code></pre>`;
+    cursor = closing.lastIndex;
+    opening.lastIndex = cursor;
+  }
+  return html + inlineRichHtml(textValue.slice(cursor), highlightKeywords);
+}
+
+/** Existing prose/inline-code behavior is retained outside complete code fences. */
+function inlineRichHtml(text: unknown, highlightKeywords: boolean): string {
+  const textValue = String(text ?? '');
   if (todoCodigo(textValue)) { const match = /^(\s*)([\s\S]*?)(\.?\s*)$/.exec(textValue)!; const blockClass = /\s/.test(match[2]) && match[2].length > 18 ? ' blk' : ''; return esc(match[1]) + '<code class="cd' + blockClass + '">' + codeInner(esc(match[2] + (blockClass ? match[3] : ''))) + '</code>' + (blockClass ? '' : esc(match[3])); }
   const codeRanges = rangosCodigo(textValue), keywordRanges = highlightKeywords ? claveSpans(textValue).filter(([keywordStart, keywordEnd]) => !codeRanges.some(([codeStart, codeEnd]) => keywordStart < codeEnd && codeStart < keywordEnd)) : [];
   const boundaries = new Set([0, textValue.length]);

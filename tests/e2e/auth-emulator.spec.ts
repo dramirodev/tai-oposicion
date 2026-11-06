@@ -1,3 +1,4 @@
+import { verifySyntheticBrowserIsolation } from './synthetic-auth';
 import { expect, test, type Page } from '@playwright/test';
 import { initializeTestEnvironment } from '@firebase/rules-unit-testing';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
@@ -12,10 +13,10 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
   });
   await page.clock.setFixedTime(new Date('2026-10-29T12:00:00+02:00'));
   const firebaseRequests: string[] = [];
-  await page.route('**/*', route => {
+  await page.context().route('**/*', route => {
     const url = new URL(route.request().url());
     const isLoopback = ['localhost', '127.0.0.1', '::1'].includes(url.hostname);
-    const isAppOrEmulatorPort = ['4187', '4195', '9099', '8080'].includes(url.port);
+    const isAppOrEmulatorPort = ['4187', '9099', '8080'].includes(url.port);
     const isStaticGoogleAuthAsset = url.origin === 'https://apis.google.com' && route.request().method() === 'GET'
       && (url.pathname === '/js/api.js' || url.pathname.startsWith('/_/scs/'));
     if ((!isLoopback || !isAppOrEmulatorPort) && !isStaticGoogleAuthAsset) return route.abort('blockedbyclient');
@@ -82,6 +83,7 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
     return result;
   };
 
+  await verifySyntheticBrowserIsolation(page);
   await emulator.clearFirestore();
   let firstUid = '';
   let secondUid = '';
@@ -156,7 +158,7 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
   await peerPage.route('**/*', route => {
     const url = new URL(route.request().url());
     const isLoopback = ['localhost', '127.0.0.1', '::1'].includes(url.hostname);
-    const isAppOrEmulatorPort = ['4187', '4195', '9099', '8080'].includes(url.port);
+    const isAppOrEmulatorPort = ['4187', '9099', '8080'].includes(url.port);
     const isStaticGoogleAuthAsset = url.origin === 'https://apis.google.com' && route.request().method() === 'GET'
       && (url.pathname === '/js/api.js' || url.pathname.startsWith('/_/scs/'));
     if ((!isLoopback || !isAppOrEmulatorPort) && !isStaticGoogleAuthAsset) return route.abort('blockedbyclient');
