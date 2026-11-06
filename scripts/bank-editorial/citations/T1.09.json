@@ -1,0 +1,3260 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T1.09",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "14ba16408c26cd1e02c6056b0395d265e1e6658d3a3bcb878586e59e403cbe80",
+    "afterSha256": "aa69bece2ce3a4de5305d3bf7dc877edaca0b2e1dfb09ed5103f524da74149c6"
+  },
+  "sample": {
+    "beforeSha256": "c1c0e86284d9956e0b7219d48093dbc04521650f67f0a55bedf0a90530559e4b",
+    "afterSha256": "81a06b6c527c6681fdde29661ad39f9be77895ab6f9ec130594d2c40b09e8b44"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-TAI2024B-P1-15": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 9,
+      "printedPage": 9,
+      "excerpt": "c) adecuados, pertinentes y limitados a lo necesario en relación con los fines para los que son tratados (MINIMIZACIÓN DE DATOS).",
+      "label": "RGPD — minimización de datos (artículo 5.1.c)"
+    },
+    "e-L2019-P1-18": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 5,
+      "printedPage": 5,
+      "excerpt": "Ámbito de aplicación (art. 2) 1. El presente Reglamento se aplica al tratamiento total o parcialmente automatizado de datos personales, así como al tratamiento no automatizado de datos personales contenidos o destinados a ser incluidos en un fichero.",
+      "label": "Pasaje del temario"
+    },
+    "e-P2019-P1-04": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 49,
+      "printedPage": 49,
+      "excerpt": "Derecho de OPOSICIÓN (art. 18) El derecho de oposición, así como los derechos relacionados con las decisiones individuales automatizadas, incluida la realización de perfiles, se ejercerán de acuerdo con lo establecido, respectivamente, en el RGPD.",
+      "label": "LOPDGDD — derecho de oposición (artículo 18)"
+    },
+    "e-AT109-P1-09": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 60,
+      "printedPage": 60,
+      "excerpt": "7. Autoridades de protección de datos LA AGENCIA ESPAÑOLA DE PROTECCIÓN DE DATOS (arts. 44 a 56) Disposiciones generales La Agencia Española de Protección de Datos8 es una autoridad administrativa independiente de ámbito estatal, de las previstas en la Ley 40/2015, de 1 de octubre, de Régimen Jurídico del Sector Público, con personalidad jurídica y plena capacidad pública y privada, que actúa con plena independencia de los poderes públicos en el ejercicio de sus funciones.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT109-P1-16": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 43,
+      "printedPage": 43,
+      "excerpt": "b) Garantizar los derechos digitales de la ciudadanía conforme al mandato establecido en el art. 18.4 de la Constitución.",
+      "label": "LOPDGDD — objeto (artículo 1.b)"
+    },
+    "e-AT109-P1-18": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 42,
+      "printedPage": 42,
+      "excerpt": "Título I. Disposiciones generales",
+      "label": "LOPDGDD — estructura del título I"
+    },
+    "e-AT109-P1-20": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 45,
+      "printedPage": 45,
+      "excerpt": "2. Cuando se pretenda fundar el tratamiento de los datos en el consentimiento del afectado para una pluralidad de finalidades será preciso que conste de manera específica e inequívoca que dicho consentimiento se otorga para todas ellas.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT109ALT-P1-12": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 13,
+      "printedPage": 13,
+      "excerpt": "1. El responsable del tratamiento tomará las medidas oportunas para facilitar al interesado toda información indicada en los arts. 13 y 14 (información que deberá facilitarse al interesado), así como cualquier comunicación con arreglo a los arts. 15 a 22 y 34 relativa al tratamiento (derechos), en forma concisa, transparente, inteligible y de fácil acceso, con un lenguaje claro y sencillo, en particular cualquier información dirigida específicamente a un niño. La información será facilitada por escrito o por otros medios, inclusive, si procede, por medios electrónicos. Cuando lo solicite el interesado, la información podrá facilitarse verbalmente siempre que se demuestre la identidad del interesado por otros medios.",
+      "label": "RGPD — información al interesado (artículo 12.1)"
+    },
+    "e-AT109ALT-P1-22": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 20,
+      "printedPage": 20,
+      "excerpt": "DERECHO DE OPOSICIÓN Y DECISIONES INDIVIDUALES AUTOMATIZADAS Derecho de oposición (art. 21) 1. El interesado tendrá derecho a OPONERSE en cualquier momento, por motivos relacionados con su situación particular, a que datos personales que le conciernan sean objeto de un tratamiento incluida la elaboración de perfiles. El responsable del tratamiento dejará de tratar los datos personales, salvo que acredite motivos legítimos imperiosos para el tratamiento que prevalezcan sobre los intereses, los derechos y las libertades del interesado, o para la formulación, el ejercicio o la defensa de reclamaciones.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT109ALT-P1-25": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 31,
+      "printedPage": 31,
+      "excerpt": "3. La certificación será voluntaria y estará disponible a través de un proceso transparente.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT109ALT-P1-48": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 47,
+      "printedPage": 47,
+      "excerpt": "Si los datos obtenidos del afectado fueran a ser tratados para la elaboración de perfiles, la información básica comprenderá asimismo esta circunstancia. En este caso, el afectado deberá ser informado de su derecho a oponerse a la adopción de decisiones individuales automatizadas que produzcan efectos jurídicos sobre él o le afecten significativamente de modo similar.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT109ALT-P1-58": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 6,
+      "printedPage": 6,
+      "excerpt": "7) responsable del tratamiento o responsable: la persona física o jurídica, autoridad pública, servicio u otro organismo que, solo o junto con otros, determine los FINES y MEDIOS del",
+      "label": "RGPD — responsable del tratamiento (artículo 4.7, inicio)"
+    },
+    "context-AT109ALT-P1-58": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 7,
+      "printedPage": 7,
+      "excerpt": "tratamiento; si el Derecho de la Unión o de los Estados miembros determina los fines y medios del tratamiento, el responsable del tratamiento o los criterios específicos para su nombramiento podrá establecerlos el Derecho de la Unión o de los Estados miembros.",
+      "label": "RGPD — responsable del tratamiento (artículo 4.7, continuación)"
+    },
+    "e-AT109ALT-P1-60": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 76,
+      "printedPage": 76,
+      "excerpt": "- Evalúa-Riesgo RGPD v2: herramienta que tiene como objeto servir de ayuda a responsables y encargados a identificar los factores de riesgo para los derechos y libertades de los interesados cuyos datos están presentes en el tratamiento, hacer una primera evaluación del riesgo intrínseco, incluyendo la necesidad de realizar una EIPD, y estimar el riesgo residual si se utilizan medidas y garantías para mitigar los factores de riesgos específicos.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS09-P1-16": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 22,
+      "printedPage": 22,
+      "excerpt": "2. El responsable del tratamiento aplicará las medidas técnicas y organizativas apropiadas con miras a garantizar que, por defecto, solo sean objeto de tratamiento los datos personales que sean necesarios para cada uno de los fines específicos del tratamiento. Esta obligación se aplicará a la cantidad de datos personales recogidos, a la extensión de su tratamiento, a su plazo de conservación y a su accesibilidad. Tales medidas garantizarán en particular que, por defecto, los datos personales no sean accesibles, sin la intervención de la persona, a un número indeterminado de personas físicas.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS09B-P1-22": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 6,
+      "printedPage": 6,
+      "excerpt": "7) responsable del tratamiento o responsable: la persona física o jurídica, autoridad pública, servicio u otro organismo que, solo o junto con otros, determine los FINES y MEDIOS del",
+      "label": "RGPD — responsable del tratamiento (artículo 4.7, inicio)"
+    },
+    "context-AS09B-P1-22": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 7,
+      "printedPage": 7,
+      "excerpt": "tratamiento; si el Derecho de la Unión o de los Estados miembros determina los fines y medios del tratamiento, el responsable del tratamiento o los criterios específicos para su nombramiento podrá establecerlos el Derecho de la Unión o de los Estados miembros.",
+      "label": "RGPD — responsable del tratamiento (artículo 4.7, continuación)"
+    },
+    "e-AS09B-P1-23": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 13,
+      "printedPage": 13,
+      "excerpt": "3. El responsable del tratamiento facilitará al interesado información relativa a sus actuaciones sobre la base de una y, en cualquier caso, en el plazo de 1 mes a partir de la recepción de la solicitud. Dicho plazo podrá prorrogarse otros 2 meses en caso necesario, teniendo en cuenta la complejidad y el número de solicitudes. El responsable informará al interesado de cualquiera de dichas prórrogas en el plazo de un mes a partir de la recepción de la solicitud, indicando los motivos de la dilación. Cuando el interesado presente la solicitud por medios electrónicos, la información se facilitará por medios electrónicos cuando sea posible, a menos que el interesado solicite que se facilite de otro modo.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS09B-P1-R-01": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 11,
+      "printedPage": 11,
+      "excerpt": "Los Estados miembros podrán establecer por ley una edad inferior a tales fines, siempre que esta no sea inferior a 13 años.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS11-P1-17": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 26,
+      "printedPage": 26,
+      "excerpt": "EVALUACIÓN DE IMPACTO RELATIVA A LA PROTECCIÓN DE DATOS Y CONSULTA PREVA Evaluación de impacto relativa a la protección de datos (art. 35) 1. Cuando sea probable que un tipo de tratamiento, en particular si utiliza nuevas tecnologías, por su naturaleza, alcance, contexto o fines, entrañe un alto riesgo para los derechos y libertades de las personas físicas, el responsable del tratamiento realizará, antes del tratamiento, una EVALUACIÓN DEL IMPACTO de las operaciones de tratamiento en la protección de datos personales. Una única evaluación podrá abordar una serie de operaciones de tratamiento similares que entrañen altos riesgos similares.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS11-P1-19": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 6,
+      "printedPage": 6,
+      "excerpt": "7) responsable del tratamiento o responsable: la persona física o jurídica, autoridad pública, servicio u otro organismo que, solo o junto con otros, determine los FINES y MEDIOS del",
+      "label": "RGPD — responsable del tratamiento (artículo 4.7, inicio)"
+    },
+    "context-AS11-P1-19": {
+      "path": "T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+      "sourceHash": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+      "physicalPage": 7,
+      "printedPage": 7,
+      "excerpt": "tratamiento; si el Derecho de la Unión o de los Estados miembros determina los fines y medios del tratamiento, el responsable del tratamiento o los criterios específicos para su nombramiento podrá establecerlos el Derecho de la Unión o de los Estados miembros.",
+      "label": "RGPD — responsable del tratamiento (artículo 4.7, continuación)"
+    }
+  },
+  "questions": [
+    {
+      "id": "TAI2024B-P1-15",
+      "before": {
+        "i": "TAI2024B-P1-15",
+        "t": "T1.09",
+        "o": "O",
+        "q": "¿Qué principio relativo al tratamiento de datos personales definido en el Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales y a la libre circulación de estos datos y por el que se deroga la Directiva 95/46/CE (Reglamento general de protección de datos) se refiere a que los datos serán adecuados, pertinentes y limitados a lo necesario en relación con los fines para los que son tratados?",
+        "a": [
+          "Limitación de la finalidad.",
+          "Exactitud.",
+          "Minimización de datos.",
+          "Adecuación de datos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7,
+          9
+        ],
+        "d": 1,
+        "n": "Da la definición literal y pide el nombre; \"Adecuación de datos\" viene de la LOPD derogada.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "after": {
+        "i": "TAI2024B-P1-15",
+        "t": "T1.09",
+        "o": "O",
+        "q": "¿Qué principio relativo al tratamiento de datos personales definido en el Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales y a la libre circulación de estos datos y por el que se deroga la Directiva 95/46/CE (Reglamento general de protección de datos) se refiere a que los datos serán adecuados, pertinentes y limitados a lo necesario en relación con los fines para los que son tratados?",
+        "a": [
+          "Limitación de la finalidad.",
+          "Exactitud.",
+          "Minimización de datos.",
+          "Adecuación de datos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7,
+          9
+        ],
+        "d": 1,
+        "n": "Da la definición literal y pide el nombre; \"Adecuación de datos\" viene de la LOPD derogada.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)",
+        "u": "T1.09 Protección de Datos - Temario.pdf — RGPD — minimización de datos (artículo 5.1.c)\n\nTemario, p. 9 (PDF p. 9)\n\nc) adecuados, pertinentes y limitados a lo necesario en relación con los fines para los que son tratados (MINIMIZACIÓN DE DATOS).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "a8386f0aeb7b47a0f9f7b4391396f126263ce86e1aafeb3ee92ae801f39d0f98",
+      "afterSha256": "2586491bc3bd9e5632215d0da74a3c066524da29772c72d1396dfd3e0b0655e4",
+      "evidenceKeys": [
+        "e-TAI2024B-P1-15"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "L2019-P1-18",
+      "before": {
+        "i": "L2019-P1-18",
+        "t": "T1.09",
+        "o": "O",
+        "q": "Señale la respuesta correcta en relación al ámbito de aplicación material del Reglamento (UE) 2016/679 en lo que respecta al tratamiento de datos personales:",
+        "a": [
+          "Se aplica al tratamiento total o parcialmente automatizado de datos personales por parte de las autoridades competentes con fines de prevención, investigación, detección o enjuiciamiento de infracciones penales, o de ejecución de sanciones penales, incluida la de protección frente a amenazas a la seguridad pública y su prevención.",
+          "Se aplica al tratamiento total o parcialmente automatizado de datos personales, así como al tratamiento no automatizado de datos personales contenidos o destinados a ser incluidos en un fichero.",
+          "Se aplica al tratamiento de datos personales efectuado por una persona física en el ejercicio de actividades exclusivamente personales o domésticas.",
+          "Se aplica al tratamiento total de datos personales."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          3
+        ],
+        "d": 3,
+        "n": "Ámbito material del RGPD: alcance recortado o ampliado.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "after": {
+        "i": "L2019-P1-18",
+        "t": "T1.09",
+        "o": "O",
+        "q": "Señale la respuesta correcta en relación al ámbito de aplicación material del Reglamento (UE) 2016/679 en lo que respecta al tratamiento de datos personales:",
+        "a": [
+          "Se aplica al tratamiento total o parcialmente automatizado de datos personales por parte de las autoridades competentes con fines de prevención, investigación, detección o enjuiciamiento de infracciones penales, o de ejecución de sanciones penales, incluida la de protección frente a amenazas a la seguridad pública y su prevención.",
+          "Se aplica al tratamiento total o parcialmente automatizado de datos personales, así como al tratamiento no automatizado de datos personales contenidos o destinados a ser incluidos en un fichero.",
+          "Se aplica al tratamiento de datos personales efectuado por una persona física en el ejercicio de actividades exclusivamente personales o domésticas.",
+          "Se aplica al tratamiento total de datos personales."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          3
+        ],
+        "d": 3,
+        "n": "Ámbito material del RGPD: alcance recortado o ampliado.",
+        "y": "Ingreso libre OEP 2019",
+        "u": "T1.09 Protección de Datos - Temario.pdf — Pasaje del temario\n\nTemario, p. 5 (PDF p. 5)\n\nÁmbito de aplicación (art. 2) 1. El presente Reglamento se aplica al tratamiento total o parcialmente automatizado de datos personales, así como al tratamiento no automatizado de datos personales contenidos o destinados a ser incluidos en un fichero.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "ed3a55bf01df2089c52a5ba9331535986215a98e95788d6456c80e2812902d22",
+      "afterSha256": "2f31482a8bcd1964df21ae71ad9a0389e317310697bb02d158e07094f61680ec",
+      "evidenceKeys": [
+        "e-L2019-P1-18"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "P2019-P1-04",
+      "before": {
+        "i": "P2019-P1-04",
+        "t": "T1.09",
+        "o": "O",
+        "q": "Según la Ley Orgánica 3/2018, de Protección de Datos y garantía de los derechos digitales, en su Título III capítulo II, donde se trata el ejercicio de los derechos en materia de protección de datos, ¿cuál de los siguientes es un derecho que se puede ejercer?",
+        "a": [
+          "Derecho de indemnización.",
+          "Derecho de custodia.",
+          "Derecho de oposición.",
+          "Derecho al cifrado de la información."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Derechos ARSOPOL frente a inventados.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "after": {
+        "i": "P2019-P1-04",
+        "t": "T1.09",
+        "o": "O",
+        "q": "Según la Ley Orgánica 3/2018, de Protección de Datos y garantía de los derechos digitales, en su Título III capítulo II, donde se trata el ejercicio de los derechos en materia de protección de datos, ¿cuál de los siguientes es un derecho que se puede ejercer?",
+        "a": [
+          "Derecho de indemnización.",
+          "Derecho de custodia.",
+          "Derecho de oposición.",
+          "Derecho al cifrado de la información."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Derechos ARSOPOL frente a inventados.",
+        "y": "Promoción interna OEP 2019",
+        "u": "T1.09 Protección de Datos - Temario.pdf — LOPDGDD — derecho de oposición (artículo 18)\n\nTemario, p. 49 (PDF p. 49)\n\nDerecho de OPOSICIÓN (art. 18) El derecho de oposición, así como los derechos relacionados con las decisiones individuales automatizadas, incluida la realización de perfiles, se ejercerán de acuerdo con lo establecido, respectivamente, en el RGPD.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "25e9163d124cb7d3f2fce07c638d2d6c7e53e025a34d031e3b02d513d2df03ba",
+      "afterSha256": "37ed6d68e2ca2e60273efa27e91938f6a4a379bfa9733d28bca168d940af8ea3",
+      "evidenceKeys": [
+        "e-P2019-P1-04"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT109-P1-09",
+      "before": {
+        "i": "AT109-P1-09",
+        "t": "T1.09",
+        "o": "A",
+        "q": "La Agencia Española de Protección de Datos es:",
+        "a": [
+          "Un Organismo Autónomo.",
+          "Una Entidad Pública Empresarial.",
+          "Una Sociedad Mercantil Estatal.",
+          "Una Autoridad Administrativa Independiente."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT109-P1-09",
+        "t": "T1.09",
+        "o": "A",
+        "q": "La Agencia Española de Protección de Datos es:",
+        "a": [
+          "Un Organismo Autónomo.",
+          "Una Entidad Pública Empresarial.",
+          "Una Sociedad Mercantil Estatal.",
+          "Una Autoridad Administrativa Independiente."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.09 Protección de Datos - Temario.pdf — Pasaje del temario\n\nTemario, p. 60 (PDF p. 60)\n\n7. Autoridades de protección de datos LA AGENCIA ESPAÑOLA DE PROTECCIÓN DE DATOS (arts. 44 a 56) Disposiciones generales La Agencia Española de Protección de Datos8 es una autoridad administrativa independiente de ámbito estatal, de las previstas en la Ley 40/2015, de 1 de octubre, de Régimen Jurídico del Sector Público, con personalidad jurídica y plena capacidad pública y privada, que actúa con plena independencia de los poderes públicos en el ejercicio de sus funciones.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "a179e935ac0761ca8cf03cd6d953c4b0e2773a0f8fc7088ae2fce2a2d6fa4492",
+      "afterSha256": "54f9e10a767c0c3079c2bebc228d5d92e5269751704c4804f9294403b2a0a2f7",
+      "evidenceKeys": [
+        "e-AT109-P1-09"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT109-P1-16",
+      "before": {
+        "i": "AT109-P1-16",
+        "t": "T1.09",
+        "o": "A",
+        "q": "La Ley Orgánica 3/2018 tiene por objeto garantizar los derechos digitales de la ciudadanía conforme al mandato establecido en el artículo:",
+        "a": [
+          "9.3 de la Constitución.",
+          "14 de la Constitución.",
+          "18.4 de la Constitución.",
+          "35.1 de la Constitución."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT109-P1-16",
+        "t": "T1.09",
+        "o": "A",
+        "q": "La Ley Orgánica 3/2018 tiene por objeto garantizar los derechos digitales de la ciudadanía conforme al mandato establecido en el artículo:",
+        "a": [
+          "9.3 de la Constitución.",
+          "14 de la Constitución.",
+          "18.4 de la Constitución.",
+          "35.1 de la Constitución."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.09 Protección de Datos - Temario.pdf — LOPDGDD — objeto (artículo 1.b)\n\nTemario, p. 43 (PDF p. 43)\n\nb) Garantizar los derechos digitales de la ciudadanía conforme al mandato establecido en el art. 18.4 de la Constitución.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "6d3a72e263d71070184ef1c02aadb27c67021f1407da0e22b844a66f269048b3",
+      "afterSha256": "64738179acd0a1ad456ab34151aa2d33ced38142f1e0edf3e1e810ae0ba1c6e9",
+      "evidenceKeys": [
+        "e-AT109-P1-16"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT109-P1-18",
+      "before": {
+        "i": "AT109-P1-18",
+        "t": "T1.09",
+        "o": "A",
+        "q": "El Título I de la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales se denomina:",
+        "a": [
+          "Principios de protección de datos.",
+          "Disposiciones Generales.",
+          "Disposiciones aplicables a tratamientos concretos.",
+          "Derechos de las personas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT109-P1-18",
+        "t": "T1.09",
+        "o": "A",
+        "q": "El Título I de la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales se denomina:",
+        "a": [
+          "Principios de protección de datos.",
+          "Disposiciones Generales.",
+          "Disposiciones aplicables a tratamientos concretos.",
+          "Derechos de las personas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.09 Protección de Datos - Temario.pdf — LOPDGDD — estructura del título I\n\nTemario, p. 42 (PDF p. 42)\n\nTítulo I. Disposiciones generales\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "6311265ef1cbff8a5f35e27c33a0aa1aa69a8e87103b131dde11bc653af03fcc",
+      "afterSha256": "1f605d161b29f7d399c602201623e7614edebffc6993c0141a91dcceb1ec98fc",
+      "evidenceKeys": [
+        "e-AT109-P1-18"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT109-P1-20",
+      "before": {
+        "i": "AT109-P1-20",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Cuando se pretenda fundar el tratamiento de los datos en el consentimiento del afectado para una pluralidad de finalidades será preciso que conste de manera específica e inequívoca que dicho consentimiento se otorga:",
+        "a": [
+          "Para todas ellas.",
+          "Por un período de tiempo limitado.",
+          "De manera irrevocable.",
+          "Debido al interés público."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT109-P1-20",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Cuando se pretenda fundar el tratamiento de los datos en el consentimiento del afectado para una pluralidad de finalidades será preciso que conste de manera específica e inequívoca que dicho consentimiento se otorga:",
+        "a": [
+          "Para todas ellas.",
+          "Por un período de tiempo limitado.",
+          "De manera irrevocable.",
+          "Debido al interés público."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.09 Protección de Datos - Temario.pdf — Pasaje del temario\n\nTemario, p. 45 (PDF p. 45)\n\n2. Cuando se pretenda fundar el tratamiento de los datos en el consentimiento del afectado para una pluralidad de finalidades será preciso que conste de manera específica e inequívoca que dicho consentimiento se otorga para todas ellas.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "e0b43afa2edec6bf354a2717803c5ff9edcf5dc0e0e03c71a29b46bc66dcdb56",
+      "afterSha256": "fa57c642beeba566b7252c80d7e3e974de1b0ac7fd8d580e81f6187a0f5603d8",
+      "evidenceKeys": [
+        "e-AT109-P1-20"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT109ALT-P1-12",
+      "before": {
+        "i": "AT109ALT-P1-12",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto a los derechos de los interesados establecidos en el RGPD, ¿quién tomará las medidas oportunas para facilitar al interesado toda información?",
+        "a": [
+          "La autoridad de control.",
+          "El encargado.",
+          "El responsable.",
+          "La Agencia de Protección de datos Europea."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT109ALT-P1-12",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto a los derechos de los interesados establecidos en el RGPD, ¿quién tomará las medidas oportunas para facilitar al interesado toda información?",
+        "a": [
+          "La autoridad de control.",
+          "El encargado.",
+          "El responsable.",
+          "La Agencia de Protección de datos Europea."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T1.09 Protección de Datos - Temario.pdf — RGPD — información al interesado (artículo 12.1)\n\nTemario, p. 13 (PDF p. 13)\n\n1. El responsable del tratamiento tomará las medidas oportunas para facilitar al interesado toda información indicada en los arts. 13 y 14 (información que deberá facilitarse al interesado), así como cualquier comunicación con arreglo a los arts. 15 a 22 y 34 relativa al tratamiento (derechos), en forma concisa, transparente, inteligible y de fácil acceso, con un lenguaje claro y sencillo, en particular cualquier información dirigida específicamente a un niño. La información será facilitada por escrito o por otros medios, inclusive, si procede, por medios electrónicos. Cuando lo solicite el interesado, la información podrá facilitarse verbalmente siempre que se demuestre la identidad del interesado por otros medios.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "633f75491655243ae382fe42f73a68388a0da446b552690b848567831bf63cf8",
+      "afterSha256": "1f52a156fe3b38ad68c88ff37ade414ce98add201127efe164acfc99fc624db0",
+      "evidenceKeys": [
+        "e-AT109ALT-P1-12"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT109ALT-P1-22",
+      "before": {
+        "i": "AT109ALT-P1-22",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto al derecho de oposición el titular de derechos tendrá derecho a oponerse al tratamiento de sus datos en el siguiente plazo:",
+        "a": [
+          "En 1 mes desde la notificación de la recepción de sus datos.",
+          "En 3 meses desde la notificación de la recepción de sus datos.",
+          "En 6 meses desde la notificación de la recepción de sus datos.",
+          "En cualquier momento."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT109ALT-P1-22",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto al derecho de oposición el titular de derechos tendrá derecho a oponerse al tratamiento de sus datos en el siguiente plazo:",
+        "a": [
+          "En 1 mes desde la notificación de la recepción de sus datos.",
+          "En 3 meses desde la notificación de la recepción de sus datos.",
+          "En 6 meses desde la notificación de la recepción de sus datos.",
+          "En cualquier momento."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.09 Protección de Datos - Temario.pdf — Pasaje del temario\n\nTemario, p. 20 (PDF p. 20)\n\nDERECHO DE OPOSICIÓN Y DECISIONES INDIVIDUALES AUTOMATIZADAS Derecho de oposición (art. 21) 1. El interesado tendrá derecho a OPONERSE en cualquier momento, por motivos relacionados con su situación particular, a que datos personales que le conciernan sean objeto de un tratamiento incluida la elaboración de perfiles. El responsable del tratamiento dejará de tratar los datos personales, salvo que acredite motivos legítimos imperiosos para el tratamiento que prevalezcan sobre los intereses, los derechos y las libertades del interesado, o para la formulación, el ejercicio o la defensa de reclamaciones.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "78f95958af431aa68d43fe5181dad1885704bcfa4f1014e62efcd1493a019918",
+      "afterSha256": "6ae9522398d4bfe8aac7ba39784d5af381bac3a472d541cac9d6ef5953801216",
+      "evidenceKeys": [
+        "e-AT109ALT-P1-22"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT109ALT-P1-25",
+      "before": {
+        "i": "AT109ALT-P1-25",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto a certificación en materia de protección de datos señale la respuesta correcta:",
+        "a": [
+          "La certificación será voluntaria y estará disponible a través de un proceso transparente.",
+          "La certificación será obligatoria y estará disponible a través de un proceso transparente.",
+          "La certificación será voluntaria y estará disponible a través de un proceso secreto.",
+          "La certificación será obligatoria y estará disponible a través de un proceso secreto."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT109ALT-P1-25",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto a certificación en materia de protección de datos señale la respuesta correcta:",
+        "a": [
+          "La certificación será voluntaria y estará disponible a través de un proceso transparente.",
+          "La certificación será obligatoria y estará disponible a través de un proceso transparente.",
+          "La certificación será voluntaria y estará disponible a través de un proceso secreto.",
+          "La certificación será obligatoria y estará disponible a través de un proceso secreto."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.09 Protección de Datos - Temario.pdf — Pasaje del temario\n\nTemario, p. 31 (PDF p. 31)\n\n3. La certificación será voluntaria y estará disponible a través de un proceso transparente.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "e453fcdaf65df40d24111275be818f3cb896ee8897e2dd7a6af5fd57820b6366",
+      "afterSha256": "592cd2fd950775766fa0f265c93c3d345a91652c12883e7a8a7301bc753128ad",
+      "evidenceKeys": [
+        "e-AT109ALT-P1-25"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT109ALT-P1-48",
+      "before": {
+        "i": "AT109ALT-P1-48",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según la Ley Orgánica 3/2018 y en relación a la elaboración de perfiles:",
+        "a": [
+          "El afectado deberá ser informado de su derecho a oponerse a la adopción de decisiones individuales automatizadas que produzcan efectos jurídicos sobre él o le afecten significativamente.",
+          "En la información que se le ofrezca al afectado deberá incluirse detalle del algoritmo utilizado",
+          "Por razones comerciales no se dará detalle de las fuentes de las que proceden los datos",
+          "El interesado tendrá el derecho de oposición durante el primer año después del comienzo de la actividad de elaboración de perfiles."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT109ALT-P1-48",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según la Ley Orgánica 3/2018 y en relación a la elaboración de perfiles:",
+        "a": [
+          "El afectado deberá ser informado de su derecho a oponerse a la adopción de decisiones individuales automatizadas que produzcan efectos jurídicos sobre él o le afecten significativamente.",
+          "En la información que se le ofrezca al afectado deberá incluirse detalle del algoritmo utilizado",
+          "Por razones comerciales no se dará detalle de las fuentes de las que proceden los datos",
+          "El interesado tendrá el derecho de oposición durante el primer año después del comienzo de la actividad de elaboración de perfiles."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.09 Protección de Datos - Temario.pdf — Pasaje del temario\n\nTemario, p. 47 (PDF p. 47)\n\nSi los datos obtenidos del afectado fueran a ser tratados para la elaboración de perfiles, la información básica comprenderá asimismo esta circunstancia. En este caso, el afectado deberá ser informado de su derecho a oponerse a la adopción de decisiones individuales automatizadas que produzcan efectos jurídicos sobre él o le afecten significativamente de modo similar.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "4129c436a4eab7369c2a84d0f2eb9a7e3d23e61975d0f02b7f244d1076b1c890",
+      "afterSha256": "c8b498701243a02b57511d508bf3581c9e86311a81d5c91efde55e22ff4ee7c9",
+      "evidenceKeys": [
+        "e-AT109ALT-P1-48"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT109ALT-P1-58",
+      "before": {
+        "i": "AT109ALT-P1-58",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Aquella persona física o jurídica, autoridad pública, servicio u otro organismo que, solo o junto con otros, determine los fines y medios del tratamiento, es:",
+        "a": [
+          "El encargado.",
+          "El afectado.",
+          "El responsable.",
+          "El tercero."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT109ALT-P1-58",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Aquella persona física o jurídica, autoridad pública, servicio u otro organismo que, solo o junto con otros, determine los fines y medios del tratamiento, es:",
+        "a": [
+          "El encargado.",
+          "El afectado.",
+          "El responsable.",
+          "El tercero."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.09 Protección de Datos - Temario.pdf — RGPD — responsable del tratamiento (artículo 4.7, inicio)\n\nTemario, p. 6 (PDF p. 6)\n\n7) responsable del tratamiento o responsable: la persona física o jurídica, autoridad pública, servicio u otro organismo que, solo o junto con otros, determine los FINES y MEDIOS del\n\nT1.09 Protección de Datos - Temario.pdf — RGPD — responsable del tratamiento (artículo 4.7, continuación)\n\nTemario, p. 7 (PDF p. 7)\n\ntratamiento; si el Derecho de la Unión o de los Estados miembros determina los fines y medios del tratamiento, el responsable del tratamiento o los criterios específicos para su nombramiento podrá establecerlos el Derecho de la Unión o de los Estados miembros.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "e1f608cdf8a5c7e1fccb21fe6fcc997aa17958aad95275ca185388897ffac42a",
+      "afterSha256": "71dd36746a471630d2807e14e4852c490d4018014e5b1131409fabba71cdb3e7",
+      "evidenceKeys": [
+        "e-AT109ALT-P1-58",
+        "context-AT109ALT-P1-58"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT109ALT-P1-60",
+      "before": {
+        "i": "AT109ALT-P1-60",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Para revisar si debo someter a mi tratamiento de datos personales a una Evaluación de Impacto, la AEPD ha liberado la aplicación:",
+        "a": [
+          "FACILITA EIPD.",
+          "PILAR.",
+          "EVALÚA-RIESGO RGPD.",
+          "COMUNICA-BRECHA RGPD."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT109ALT-P1-60",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Para revisar si debo someter a mi tratamiento de datos personales a una Evaluación de Impacto, la AEPD ha liberado la aplicación:",
+        "a": [
+          "FACILITA EIPD.",
+          "PILAR.",
+          "EVALÚA-RIESGO RGPD.",
+          "COMUNICA-BRECHA RGPD."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.09 Protección de Datos - Temario.pdf — Pasaje del temario\n\nTemario, p. 76 (PDF p. 76)\n\n- Evalúa-Riesgo RGPD v2: herramienta que tiene como objeto servir de ayuda a responsables y encargados a identificar los factores de riesgo para los derechos y libertades de los interesados cuyos datos están presentes en el tratamiento, hacer una primera evaluación del riesgo intrínseco, incluyendo la necesidad de realizar una EIPD, y estimar el riesgo residual si se utilizan medidas y garantías para mitigar los factores de riesgos específicos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "0079c9e415aa4d83b584490d72a701fc1ccf43f2c06f94ebfc53de51185a23d8",
+      "afterSha256": "a82e165f91fc2bf183dfb571e2ca0e986c30b9d37a2155d02207d4df48c2de81",
+      "evidenceKeys": [
+        "e-AT109ALT-P1-60"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS09-P1-16",
+      "before": {
+        "i": "AS09-P1-16",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según el artículo 25 del Reglamento (UE) 2016/679, de 27 de abril, el responsable de tratamiento aplicará las medidas técnicas y organizativas apropiadas con miras a garantizar que, por defecto, solo sean objeto de tratamiento los datos personales que sean necesarios para cada uno de los fines específicos del tratamiento. Esta obligación se aplicará a:",
+        "a": [
+          "La cantidad de datos personales recogidos, a la extensión de su tratamiento, a su plazo de conservación y a su accesibilidad.",
+          "La cantidad de datos personales recogidos, a su plazo de conservación y a su integridad.",
+          "La cantidad de datos personales recogidos, a la cesión de su tratamiento, a su plazo de conservación y a su integridad.",
+          "La cantidad de datos personales recogidos, a la transferencia de su tratamiento y a su accesibilidad."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS09-P1-16",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según el artículo 25 del Reglamento (UE) 2016/679, de 27 de abril, el responsable de tratamiento aplicará las medidas técnicas y organizativas apropiadas con miras a garantizar que, por defecto, solo sean objeto de tratamiento los datos personales que sean necesarios para cada uno de los fines específicos del tratamiento. Esta obligación se aplicará a:",
+        "a": [
+          "La cantidad de datos personales recogidos, a la extensión de su tratamiento, a su plazo de conservación y a su accesibilidad.",
+          "La cantidad de datos personales recogidos, a su plazo de conservación y a su integridad.",
+          "La cantidad de datos personales recogidos, a la cesión de su tratamiento, a su plazo de conservación y a su integridad.",
+          "La cantidad de datos personales recogidos, a la transferencia de su tratamiento y a su accesibilidad."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.09 Protección de Datos - Temario.pdf — Pasaje del temario\n\nTemario, p. 22 (PDF p. 22)\n\n2. El responsable del tratamiento aplicará las medidas técnicas y organizativas apropiadas con miras a garantizar que, por defecto, solo sean objeto de tratamiento los datos personales que sean necesarios para cada uno de los fines específicos del tratamiento. Esta obligación se aplicará a la cantidad de datos personales recogidos, a la extensión de su tratamiento, a su plazo de conservación y a su accesibilidad. Tales medidas garantizarán en particular que, por defecto, los datos personales no sean accesibles, sin la intervención de la persona, a un número indeterminado de personas físicas.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "47dc4de0fb478206d88e02c5a238d6c36acb4df7ac1c906c0c79e1b0ee8b392b",
+      "afterSha256": "b0f08e456772af5cb936e78916457add9ac36e4cee063534b9efbcab1ec96f84",
+      "evidenceKeys": [
+        "e-AS09-P1-16"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS09B-P1-22",
+      "before": {
+        "i": "AS09B-P1-22",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con el Reglamento (UE) 2016/679 (Reglamento General de Protección de Datos), la persona física o jurídica, autoridad pública, servicio u otro organismo que, solo o junto con otros, determina los fines y medios del tratamiento es:",
+        "a": [
+          "El responsable del tratamiento.",
+          "El delegado de protección de datos.",
+          "El encargado del tratamiento.",
+          "El interesado."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS09B-P1-22",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con el Reglamento (UE) 2016/679 (Reglamento General de Protección de Datos), la persona física o jurídica, autoridad pública, servicio u otro organismo que, solo o junto con otros, determina los fines y medios del tratamiento es:",
+        "a": [
+          "El responsable del tratamiento.",
+          "El delegado de protección de datos.",
+          "El encargado del tratamiento.",
+          "El interesado."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.09 Protección de Datos - Temario.pdf — RGPD — responsable del tratamiento (artículo 4.7, inicio)\n\nTemario, p. 6 (PDF p. 6)\n\n7) responsable del tratamiento o responsable: la persona física o jurídica, autoridad pública, servicio u otro organismo que, solo o junto con otros, determine los FINES y MEDIOS del\n\nT1.09 Protección de Datos - Temario.pdf — RGPD — responsable del tratamiento (artículo 4.7, continuación)\n\nTemario, p. 7 (PDF p. 7)\n\ntratamiento; si el Derecho de la Unión o de los Estados miembros determina los fines y medios del tratamiento, el responsable del tratamiento o los criterios específicos para su nombramiento podrá establecerlos el Derecho de la Unión o de los Estados miembros.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "997845612f7ddcf7f5fabf8171b4d78bb5cbcde7587474ee0703b46f3786de1d",
+      "afterSha256": "6017161090b33cc351719f380c184402bc7eb3269054a73bf23d61696ee89865",
+      "evidenceKeys": [
+        "e-AS09B-P1-22",
+        "context-AS09B-P1-22"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS09B-P1-23",
+      "before": {
+        "i": "AS09B-P1-23",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según el Reglamento (UE) 2016/679, de 27 de abril, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales y a la libre circulación de estos datos, ¿qué plazo tiene el responsable para atender la solicitud del derecho de acceso presentada por el interesado?",
+        "a": [
+          "15 días a partir de la recepción de la solicitud.",
+          "20 días a partir de la recepción de la solicitud.",
+          "1 mes a partir de la recepción de la solicitud.",
+          "2 meses a partir de la recepción de la solicitud."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS09B-P1-23",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según el Reglamento (UE) 2016/679, de 27 de abril, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales y a la libre circulación de estos datos, ¿qué plazo tiene el responsable para atender la solicitud del derecho de acceso presentada por el interesado?",
+        "a": [
+          "15 días a partir de la recepción de la solicitud.",
+          "20 días a partir de la recepción de la solicitud.",
+          "1 mes a partir de la recepción de la solicitud.",
+          "2 meses a partir de la recepción de la solicitud."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T1.09 Protección de Datos - Temario.pdf — Pasaje del temario\n\nTemario, p. 13 (PDF p. 13)\n\n3. El responsable del tratamiento facilitará al interesado información relativa a sus actuaciones sobre la base de una y, en cualquier caso, en el plazo de 1 mes a partir de la recepción de la solicitud. Dicho plazo podrá prorrogarse otros 2 meses en caso necesario, teniendo en cuenta la complejidad y el número de solicitudes. El responsable informará al interesado de cualquiera de dichas prórrogas en el plazo de un mes a partir de la recepción de la solicitud, indicando los motivos de la dilación. Cuando el interesado presente la solicitud por medios electrónicos, la información se facilitará por medios electrónicos cuando sea posible, a menos que el interesado solicite que se facilite de otro modo.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "d2a67fd9f986638aaa94d1625b28e8c39854107da5593cd69f0a69b196702ac1",
+      "afterSha256": "363212274a5393614613c0624fb169fd210b8053793f75952a5963a897a2af2c",
+      "evidenceKeys": [
+        "e-AS09B-P1-23"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS09B-P1-R-01",
+      "before": {
+        "i": "AS09B-P1-R-01",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con lo establecido en el Reglamento (UE) 2016/679, del Parlamento y del Consejo, de 27 de abril, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales y a la libre circulación de estos datos y por el que se deroga la Directiva 95/46/CE (Reglamento General de Protección de Datos), los Estados miembros podrán establecer por Ley una edad inferior a 16 años para el consentimiento del niño en relación con los servicios de la sociedad de la información:",
+        "a": [
+          "Siempre que esta no sea inferior a 12 años.",
+          "Siempre que esta no sea inferior a 15 años.",
+          "Siempre que esta no sea inferior a 13 años.",
+          "Siempre que esta no sea inferior a 14 años."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS09B-P1-R-01",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con lo establecido en el Reglamento (UE) 2016/679, del Parlamento y del Consejo, de 27 de abril, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales y a la libre circulación de estos datos y por el que se deroga la Directiva 95/46/CE (Reglamento General de Protección de Datos), los Estados miembros podrán establecer por Ley una edad inferior a 16 años para el consentimiento del niño en relación con los servicios de la sociedad de la información:",
+        "a": [
+          "Siempre que esta no sea inferior a 12 años.",
+          "Siempre que esta no sea inferior a 15 años.",
+          "Siempre que esta no sea inferior a 13 años.",
+          "Siempre que esta no sea inferior a 14 años."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "u": "T1.09 Protección de Datos - Temario.pdf — Pasaje del temario\n\nTemario, p. 11 (PDF p. 11)\n\nLos Estados miembros podrán establecer por ley una edad inferior a tales fines, siempre que esta no sea inferior a 13 años.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "067858acfb78baf3e751e0f8e06d38e61a5594853a6a2e9ec4de97e786d30315",
+      "afterSha256": "a8f6663a7a173f1a3c93275f3da5a0c4ae29f35dd21b851cafa02f286f86964f",
+      "evidenceKeys": [
+        "e-AS09B-P1-R-01"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS11-P1-17",
+      "before": {
+        "i": "AS11-P1-17",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De conformidad con la normativa vigente en materia de protección de datos, ¿en qué momento debe hacer el responsable del tratamiento la Evaluación del Impacto relativa a la protección de datos?",
+        "a": [
+          "Cuando se haya producido un incidente sobre un tratamiento.",
+          "Sólo cuando se presente una reclamación al Delegado de Protección de Datos.",
+          "Sólo cuando se presente una reclamación a la Agencia Española de Protección de Datos.",
+          "Antes del tratamiento."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS11-P1-17",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De conformidad con la normativa vigente en materia de protección de datos, ¿en qué momento debe hacer el responsable del tratamiento la Evaluación del Impacto relativa a la protección de datos?",
+        "a": [
+          "Cuando se haya producido un incidente sobre un tratamiento.",
+          "Sólo cuando se presente una reclamación al Delegado de Protección de Datos.",
+          "Sólo cuando se presente una reclamación a la Agencia Española de Protección de Datos.",
+          "Antes del tratamiento."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T1.09 Protección de Datos - Temario.pdf — Pasaje del temario\n\nTemario, p. 26 (PDF p. 26)\n\nEVALUACIÓN DE IMPACTO RELATIVA A LA PROTECCIÓN DE DATOS Y CONSULTA PREVA Evaluación de impacto relativa a la protección de datos (art. 35) 1. Cuando sea probable que un tipo de tratamiento, en particular si utiliza nuevas tecnologías, por su naturaleza, alcance, contexto o fines, entrañe un alto riesgo para los derechos y libertades de las personas físicas, el responsable del tratamiento realizará, antes del tratamiento, una EVALUACIÓN DEL IMPACTO de las operaciones de tratamiento en la protección de datos personales. Una única evaluación podrá abordar una serie de operaciones de tratamiento similares que entrañen altos riesgos similares.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "ebce40d99cc353e80ef24ff8681d6c6ec2690721cee5e1bb9ff4164157ae5c7f",
+      "afterSha256": "20812bf706da9ec14fbe3fe270294b0c65ec411972459f52a7d485ceff12aa32",
+      "evidenceKeys": [
+        "e-AS11-P1-17"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS11-P1-19",
+      "before": {
+        "i": "AS11-P1-19",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según el Reglamento Europeo de Protección de Datos 2016/679, la persona física o jurídica, autoridad pública, servicio u otro organismo que, sólo o junto con otros, determine los fines y medios del tratamiento es:",
+        "a": [
+          "El responsable del tratamiento.",
+          "El encargado del tratamiento.",
+          "La autoridad de control.",
+          "El Delegado de Protección de Datos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS11-P1-19",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según el Reglamento Europeo de Protección de Datos 2016/679, la persona física o jurídica, autoridad pública, servicio u otro organismo que, sólo o junto con otros, determine los fines y medios del tratamiento es:",
+        "a": [
+          "El responsable del tratamiento.",
+          "El encargado del tratamiento.",
+          "La autoridad de control.",
+          "El Delegado de Protección de Datos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.09 Protección de Datos - Temario.pdf — RGPD — responsable del tratamiento (artículo 4.7, inicio)\n\nTemario, p. 6 (PDF p. 6)\n\n7) responsable del tratamiento o responsable: la persona física o jurídica, autoridad pública, servicio u otro organismo que, solo o junto con otros, determine los FINES y MEDIOS del\n\nT1.09 Protección de Datos - Temario.pdf — RGPD — responsable del tratamiento (artículo 4.7, continuación)\n\nTemario, p. 7 (PDF p. 7)\n\ntratamiento; si el Derecho de la Unión o de los Estados miembros determina los fines y medios del tratamiento, el responsable del tratamiento o los criterios específicos para su nombramiento podrá establecerlos el Derecho de la Unión o de los Estados miembros.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "8efe0e839360bb4cb5a6f044b657a927c6d1f977359e010fbdc74458db9dcdf4",
+      "afterSha256": "072a037c5bc2c84838502f6c637c0cace937ee4c47ef59237718b7654a4ea612",
+      "evidenceKeys": [
+        "e-AS11-P1-19",
+        "context-AS11-P1-19"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAIL2022-P1-13",
+        "t": "T1.09",
+        "o": "O",
+        "q": "Indique según el título X de la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales, ¿cuál de los siguientes NO es un derecho digital?",
+        "a": [
+          "Derecho al testamento digital.",
+          "Derecho al olvido en servicios de redes sociales y servicios equivalentes.",
+          "Derecho a la desconexión digital en el ámbito laboral.",
+          "Derecho a la igualdad y a la no discriminación en el entorno digital."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "\"Igualdad y no discriminación en el entorno digital\" suena a derecho digital pero no está en el Título X.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-14",
+        "t": "T1.09",
+        "o": "O",
+        "q": "Según establece el artículo 34 de la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales, los responsables y encargados de tratamiento comunicarán a la Agencia Española de Protección de Datos, las designaciones, nombramientos y ceses de los delegados de protección de datos en el plazo de:",
+        "a": [
+          "10 días.",
+          "15 días.",
+          "1 mes.",
+          "3 meses."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Escalera de plazos 10 días / 15 días / 1 mes / 3 meses.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-17",
+        "t": "T1.09",
+        "o": "O",
+        "q": "Con respecto a la prescripción de las sanciones referidas a la Ley Orgánica 3/2018, de Protección de Datos Personales y garantía de los derechos digitales, señale cuál de estas afirmaciones es correcta:",
+        "a": [
+          "Las sanciones por importe igual o inferior a 40.000 euros, prescriben en el plazo de diez meses.",
+          "Las sanciones por importe igual o inferior a 40.000 euros, prescriben en el plazo de un año.",
+          "Las sanciones por importe igual o inferior a 40.000 euros, prescriben en el plazo de dos años",
+          "Las sanciones por importe igual o inferior a 40.000 euros, prescriben en el plazo de tres años."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 3,
+        "n": "Plazos de prescripción por tramos de importe.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-R-02",
+        "t": "T1.09",
+        "o": "O",
+        "q": "¿Cuál es la funcionalidad de la herramienta \"FACILITA\"?",
+        "a": [
+          "Una herramienta de la Agencia Española de Protección de Datos para el tratamiento de datos personales de escaso riesgo.",
+          "Una herramienta ofrecida por la Administración Pública que facilita la adecuación del plan de actuación para ayudar a las personas con movilidad reducida.",
+          "Una aplicación de código abierto que ofrece la Administración General del Estado para que facilitar la visualización de contenidos multimedia.",
+          "Una aplicación para móviles que ofrece la Agencia Estatal de Administración Tributaria para generar y presentar la declaración de la renta."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "FACILITA (AEPD) frente a otras herramientas públicas.",
+        "y": "Ingreso libre OEP 2019",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-15",
+        "t": "T1.09",
+        "o": "O",
+        "q": "De conformidad con el artículo 96 de la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales, ¿a qué hace referencia el derecho al testamento digital?",
+        "a": [
+          "A la transmisión automática de activos financieros digitales de personas fallecidas.",
+          "Al acceso a contenidos gestionados por prestadores de servicios de la sociedad de la información sobre personas fallecidas.",
+          "A la herencia de dispositivos digitales físicos del fallecido.",
+          "A la supresión automática y obligatoria de los datos personales del fallecido."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "Testamento digital: activos financieros, dispositivos físicos, supresión automática.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-16",
+        "t": "T1.09",
+        "o": "O",
+        "q": "Según el artículo 79 de la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales, indique cuándo son aplicables los derechos y libertades consagrados en la Constitución y en los Tratados y Convenios Internacionales:",
+        "a": [
+          "Solo son aplicables fuera de Internet.",
+          "Son aplicables en Internet únicamente cuando exista tratamiento de datos personales.",
+          "Son plenamente aplicables en Internet, con la colaboración de los prestadores de servicios de la sociedad de la información.",
+          "Se aplican en Internet solo si así lo establece un desarrollo reglamentario posterior."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 1,
+        "n": "\"Solo fuera de Internet\", \"únicamente\", \"solo si…\".",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-14",
+        "t": "T1.09",
+        "o": "O",
+        "q": "Señale la respuesta correcta respecto a la garantía de los derechos digitales reflejada en la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales:",
+        "a": [
+          "La garantía efectiva del derecho de acceso a Internet atenderá la realidad específica de los entornos digitales.",
+          "El empleador podrá acceder a los contenidos derivados del uso de medios digitales, tanto personales como facilitados a los trabajadores, a los solos efectos de controlar el cumplimiento de las obligaciones laborales o estatutarias y de garantizar la integridad de dichos dispositivos.",
+          "Los trabajadores y los empleados públicos tendrán derecho a la desconexión digital a fin de garantizar, fuera del tiempo de trabajo legal o convencionalmente establecido, el respeto de su tiempo de descanso, permisos y vacaciones, así como de su intimidad personal y familiar.",
+          "El ejercicio del derecho al olvido en las búsquedas de internet impedirá el acceso a la información publicada en el sitio web a través de la utilización de búsqueda del nombre de quien ejerciera el derecho, así como de cualquier otro criterio de búsqueda."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          12,
+          3
+        ],
+        "d": 3,
+        "n": "Derechos digitales de la LOPDGDD con alcance alterado.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-02",
+        "t": "T1.09",
+        "o": "O",
+        "q": "De acuerdo con el Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales y a la libre circulación de estos datos y por el que se deroga la Directiva 95/46/CE (Reglamento general de protección de datos), el responsable y el encargado del tratamiento aplicarán medidas técnicas y organizativas apropiadas para garantizar un nivel de seguridad adecuado al riesgo, que en su caso incluya, entre otros:",
+        "a": [
+          "La capacidad de garantizar la confidencialidad, integridad, disponibilidad y resiliencia permanentes de los sistemas y servicios de tratamiento.",
+          "La capacidad de garantizar la confidencialidad, integridad, disponibilidad y trazabilidad permanentes de los sistemas y servicios de tratamiento.",
+          "La capacidad de garantizar la confidencialidad, autenticidad, disponibilidad y resiliencia permanentes de los sistemas y servicios de tratamiento.",
+          "La capacidad de garantizar la confidencialidad, autenticidad, integridad y disponibilidad permanentes de los sistemas y servicios de tratamiento."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Art. 32 RGPD: cuarteto de dimensiones con una cambiada (trazabilidad, autenticidad).",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-R-01",
+        "t": "T1.09",
+        "o": "O",
+        "q": "Según establece la Ley Orgánica 3/2018 de Protección de Datos Personales y garantía de los derechos digitales, ¿quién NO puede ponerse en contacto con los prestadores de servicios de la sociedad de la información para acceder a los contenidos de la persona fallecida?",
+        "a": [
+          "En caso de fallecimiento de personas con discapacidad, estas facultades podrán ejercerse por quienes hubiesen sido designados para el ejercicio de funciones de apoyo si tales facultades se entendieran comprendidas en las medidas de apoyo prestadas por el designado.",
+          "El albacea testamentario así como aquella persona o institución a la que el fallecido hubiese designado expresamente para ello podrá solicitar, con arreglo a las instrucciones recibidas, el acceso a los contenidos con vistas a dar cumplimiento a tales instrucciones.",
+          "En caso de personas fallecidas mayores de edad, estas facultades no podrán ejercerse por sus representantes legales o, en el marco de sus competencias, por el Ministerio Fiscal, que podrá actuar de oficio o a instancia de cualquier persona física o jurídica interesada.",
+          "Las personas vinculadas al fallecido por razones familiares o de hecho, así como sus herederos podrán dirigirse a los prestadores de servicios de la sociedad de la información al objeto de acceder a dichos contenidos e impartirles las instrucciones que estimen oportunas sobre su utilización, destino o supresión."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          3
+        ],
+        "d": 3,
+        "n": "Testamento digital: quién puede acceder.",
+        "y": "Promoción interna OEP 2021-2024 (2024)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2025A-P1-03",
+        "t": "T1.09",
+        "o": "O",
+        "q": "En España, según el artículo 7 de la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales, ¿a partir de qué edad puede un menor prestar por sí solo consentimiento para el tratamiento de sus datos personales?",
+        "a": [
+          "13 años.",
+          "14 años.",
+          "15 años.",
+          "16 años."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Edad de consentimiento: escalera 13-16 (14 en España).",
+        "y": "Promoción interna convocatoria 2025"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-15",
+        "t": "T1.09",
+        "o": "O",
+        "q": "Según el Reglamento (UE) 2016/679, Reglamento General de Protección de Datos, el derecho a recibir los datos personales que incumban al interesado, que haya facilitado a un responsable del tratamiento, en un formato estructurado, de uso común y lectura mecánica, y a transmitirlos a otro responsable del tratamiento, se denomina:",
+        "a": [
+          "Derecho de acceso.",
+          "Derecho a la portabilidad de los datos.",
+          "Derecho a la transferencia de los datos.",
+          "Derecho a la custodia de los datos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7,
+          9
+        ],
+        "d": 1,
+        "n": "Portabilidad frente a acceso y derechos inventados.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-03",
+        "t": "T1.09",
+        "o": "O",
+        "q": "Según el Reglamento (UE) 2016/679 sobre tratamiento de datos personales (RGPD), ¿sigue siendo obligatoria la inscripción de ficheros a la AEPD?",
+        "a": [
+          "SÍ.",
+          "No.",
+          "Solamente sigue siendo obligatoria en el caso de ficheros de responsables públicos.",
+          "Solamente sigue siendo obligatoria en el caso de ficheros de responsables privados."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          3
+        ],
+        "d": 1,
+        "n": "Inscripción de ficheros con el RGPD: alcance.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-R-01",
+        "t": "T1.09",
+        "o": "O",
+        "q": "Según la Ley Orgánica 3/2018, de Protección de Datos Personales y Garantía de los Derechos Digitales, ¿en cuál de los siguientes entidades los responsables y encargados del tratamiento NO están obligados a la designación de un Delegado de Protección de Datos?",
+        "a": [
+          "Los establecimientos financieros de crédito.",
+          "Los colegios profesionales.",
+          "Las federaciones deportivas cuando traten datos de menores de edad.",
+          "Los profesionales de la salud que ejerzan su actividad a título individual,"
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          3
+        ],
+        "d": 3,
+        "n": "DPD obligatorio (art. 34 LOPDGDD): excepción de profesionales sanitarios individuales.",
+        "y": "Promoción interna OEP 2018",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-01",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con la Ley Orgánica 3/2018, cuál de los siguientes derechos añade respecto al Reglamento de la UE:",
+        "a": [
+          "La Protección de las personas físicas en lo que respecta al tratamiento de sus datos personales.",
+          "Garantizar los derechos digitales de la ciudadanía.",
+          "La libre circulación de datos personales.",
+          "El derecho de acceso a datos de personas fallecidas en todo caso."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-02",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto a los datos de las personas fallecidas, señale la respuesta correcta:",
+        "a": [
+          "Las personas vinculadas al fallecido por razones familiares o de hecho así como sus herederos podrán dirigirse al responsable o encargado del tratamiento al objeto de solicitar el acceso a los datos personales de aquella pero no su rectificación o supresión.",
+          "En caso de fallecimiento de menores, estas facultades podrán ejercerse también por sus representantes legales, los tutores educativos o, en el marco de sus competencias, por el Ministerio Fiscal, que podrá actuar de oficio o a instancia de cualquier persona física o jurídica interesada.",
+          "En caso de fallecimiento de personas con discapacidad estas facultades también podrán ejercerse, además de por sus representantes legales o, en el marco de sus competencias, por el Ministerio Fiscal, por quienes hubiesen sido designados para el ejercicio de funciones de apoyo, si tales facultades se entendieran comprendidas en las medidas de apoyo prestadas por el designado.",
+          "Los familiares podrán acceder a los datos del causante, y solicitar su rectificación o supresión, cuando la persona fallecida lo hubiese prohibido expresamente o así lo establezca una ley."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-03",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con la Ley Orgánica 3/2018, señale la respuesta correcta:",
+        "a": [
+          "El tratamiento de los datos personales de un menor de edad únicamente podrá fundarse en su consentimiento cuando sea mayor de dieciséis años.",
+          "El tratamiento de los datos personales de un menor de edad únicamente podrá fundarse en su consentimiento cuando sea mayor de quince años.",
+          "El tratamiento de los datos personales de un menor de edad únicamente podrá fundarse en su consentimiento cuando sea mayor de catorce años.",
+          "El tratamiento de los datos personales de un menor de edad únicamente podrá fundarse en su consentimiento cuando sea mayor de trece años."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-04",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con el Reglamento UE 2016/679 respecto a los menores señale la respuesta correcta:",
+        "a": [
+          "El tratamiento de los datos de los menores de trece años, fundado en el consentimiento, solo será lícito si consta el del titular de la patria potestad o tutela, con el alcance que determinen los titulares de la patria potestad o tutela.",
+          "El tratamiento de los datos de los menores de catorce años, fundado en el consentimiento, solo será lícito si consta el del titular de la patria potestad o tutela, con el alcance que determinen los titulares de la patria potestad o tutela.",
+          "El tratamiento de los datos de los menores de quince años, fundado en el consentimiento, solo será lícito si consta el del titular de la patria potestad o tutela, con el alcance que determinen los titulares de la patria potestad o tutela.",
+          "El tratamiento de los datos de los menores de dieciséis años, fundado en el consentimiento, solo será lícito si consta el del titular de la patria potestad o tutela, con el alcance que determinen los titulares de la patria potestad o tutela."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-05",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con la Ley Orgánica 3/2018 el solo consentimiento del afectado no bastará para levantar la prohibición del tratamiento de datos cuya finalidad principal sea identificar. Señale la respuesta INCORRECTA:",
+        "a": [
+          "Ideología.",
+          "Afiliación sindical.",
+          "Convicciones religiosas.",
+          "Convicciones filosóficas."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-06",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Cuál de las siguientes opciones no forma parte de la información básica de acuerdo con la Ley Orgánica 3/2018:",
+        "a": [
+          "La identidad del interesado del tratamiento y de su representante, en su caso.",
+          "La posibilidad de ejercer los derechos establecidos en los artículos 15 a 22 del Reglamento (UE) 2016/679.",
+          "La finalidad del tratamiento.",
+          "La identidad del responsable del tratamiento y de su representante, en su caso."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-07",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con la Ley Orgánica 3/2018 señale la respuesta correcta:",
+        "a": [
+          "Los derechos reconocidos en los artículos 15 a 22 del Reglamento (UE) 2016/679 solo podrán ejercerse directamente.",
+          "Los derechos reconocidos en los artículos 15 a 22 del Reglamento (UE) 2016/679, podrán ejercerse directamente o por medio de representante legal o voluntario.",
+          "El responsable del tratamiento no estará obligado a informar al afectado sobre los medios a su disposición para ejercer los derechos que le corresponden.",
+          "En cualquier caso, los titulares de la patria potestad podrán ejercitar en nombre y representación de los menores de dieciocho años los derechos de acceso, rectificación, cancelación, oposición o cualesquiera otros que pudieran corresponderles."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-08",
+        "t": "T1.09",
+        "o": "A",
+        "q": "En cuanto a los sistemas de exclusión publicitaria señale la respuesta INCORRECTA:",
+        "a": [
+          "Será lícito el tratamiento de datos personales que tenga por objeto evitar el envío de comunicaciones comerciales a quienes hubiesen manifestado su negativa u oposición a recibirlas.",
+          "Podrán crearse sistemas de información sectoriales en los que solo se incluirán los datos imprescindibles para identificar a los afectados. Nunca podrán crearse sistemas de información generales salvo que lo autorice una norma con rango de ley.",
+          "Podrán crearse sistemas de información, generales o sectoriales, en los que solo se incluirán los datos imprescindibles para identificar a los afectados.",
+          "Quienes pretendan realizar comunicaciones de mercadotecnia directa, deberán previamente consultar los sistemas de exclusión publicitaria."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-10",
+        "t": "T1.09",
+        "o": "A",
+        "q": "La Presidencia de la Agencia Española de Protección de Datos estará asesorada por el:",
+        "a": [
+          "Consejo Consultivo de la Agencia Española de Protección de Datos.",
+          "Consejo Asesor de la Agencia Española de Protección de Datos.",
+          "Consejo de Estado.",
+          "Consejo General del Poder Judicial."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-11",
+        "t": "T1.09",
+        "o": "A",
+        "q": "En cuanto a las potestades de la Agencia Española de Protección de Datos se encuentra la siguiente:",
+        "a": [
+          "La Presidencia de la Agencia Española de Protección de Datos podrá dictar disposiciones que fijen los criterios que se denominarán «Instrucciones de la Agencia Española de Protección de Datos».",
+          "La Presidencia de la Agencia Española de Protección de Datos podrá dictar disposiciones que fijen los criterios que se denominarán «Recomendaciones de la Agencia Española de Protección de Datos».",
+          "La Presidencia de la Agencia Española de Protección de Datos podrá dictar disposiciones que fijen los criterios que se denominarán «Dictámenes de la Agencia Española de Protección de Datos».",
+          "La Presidencia de la Agencia Española de Protección de Datos podrá dictar disposiciones que fijen los criterios que se denominarán «Circulares de la Agencia Española de Protección de Datos»."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-12",
+        "t": "T1.09",
+        "o": "A",
+        "q": "A cuál de los siguientes NO se le aplica el régimen sancionador establecido en la Ley Orgánica 3/2018:",
+        "a": [
+          "A los encargados de los tratamientos.",
+          "A los delegados de protección de datos.",
+          "A las entidades de certificación.",
+          "A las entidades acreditadas de supervisión de los códigos de conducta."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-13",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA respecto al régimen sancionador establecido en la Ley Orgánica 3/2018:",
+        "a": [
+          "Las infracciones leves prescribirán al año.",
+          "Las sanciones leves prescribirán al año.",
+          "Las infracciones graves prescribirán a los dos años.",
+          "Las sanciones por importe comprendido entre 40.001 y 300.000 euros prescriben a los dos años."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-14",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Cual de los siguientes derechos NO está comprendido en la Ley Orgánica 3/2018 como derecho digital:",
+        "a": [
+          "Derecho de acceso internacional a Internet.",
+          "Derecho de acceso universal a Internet.",
+          "Derecho a la neutralidad de Internet.",
+          "Derecho a la seguridad digital."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-15",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto al derecho al olvido señale la respuesta correcta:",
+        "a": [
+          "El ejercicio del derecho al que se refiere este artículo impedirá el acceso a la información publicada en el sitio web a través de la utilización de otros criterios de búsqueda distintos del nombre de quien ejerciera el derecho.",
+          "No existe en cuanto a redes sociales y servicios equivalentes.",
+          "No existe en cuanto a búsquedas de internet.",
+          "Existe en cuanto a en búsquedas de Internet."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-17",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Podrán dirigirse al responsable o encargado del tratamiento al objeto de solicitar el acceso a los datos personales del fallecido y, en su caso, su rectificación o supresión:",
+        "a": [
+          "Las personas vinculadas al fallecido por razones familiares.",
+          "Las personas vinculadas al fallecido por razones de hecho.",
+          "Sus herederos.",
+          "Todas son correctas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-19",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Los responsables y encargados del tratamiento de datos así como todas las personas que intervengan en cualquier fase de este estarán sujetas al deber de:",
+        "a": [
+          "Custodia.",
+          "Cuidado.",
+          "Confidencialidad.",
+          "Sigilo."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-21",
+        "t": "T1.09",
+        "o": "A",
+        "q": "El tratamiento de los datos de los menores de catorce años, fundado en el consentimiento:",
+        "a": [
+          "Será lícito por sí mismo.",
+          "No será posible en ningún caso.",
+          "Solo será lícito si consta el del titular de la patria potestad.",
+          "Solo será lícito para los menores de edad si consta el del titular de la patria potestad."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "La clave omite la tutela: el material admite consentimiento del titular de patria potestad O tutela. La exclusión implícita requiere cotejo.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AT109-P1-21"
+      ]
+    },
+    {
+      "question": {
+        "i": "AT109-P1-22",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Quienes realizan la actividad de investigación:",
+        "a": [
+          "Podrán recabar cualquier información.",
+          "Solicitarán a las Unidades de Información de las Fuerzas y Cuerpos de Seguridad la elaboración de Inspecciones.",
+          "Podrán realizar inspecciones y requerir la información precisa para el cumplimiento de sus funciones.",
+          "Las respuestas a) y b) son correctas."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-23",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto a la cooperación institucional, en todo caso se celebrarán reuniones:",
+        "a": [
+          "Mensuales.",
+          "Bimensuales.",
+          "Semestrales.",
+          "Anuales."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-24",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según el Reglamento (UE) 2016/679, de 27 de abril, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales y a la libre circulación de estos datos, cuando el tratamiento de datos de carácter personal se base en el consentimiento del interesado:",
+        "a": [
+          "El interesado no podrá revocar su consentimiento al responsable del tratamiento.",
+          "El interesado deberá ser capaz de demostrar que consintió el tratamiento de sus datos personales.",
+          "El responsable deberá ser capaz de demostrar que el interesado consistió el tratamiento de sus datos personales.",
+          "El responsable y el interesado deberán enviar en todo caso al servicio jurídico una prueba por escrito del consentimiento formulado por ambas partes para el tratamiento de los datos personales."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109-P1-25",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Señale la respuesta correcta de acuerdo con el artículo 3 de la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales:",
+        "a": [
+          "Las personas vinculadas a un fallecido por razones familiares o de hecho así como sus herederos no podrán acceder a los datos del causante, ni solicitar su rectificación o supresión, en ningún caso.",
+          "Las personas vinculadas a un fallecido por razones familiares o de hecho así como sus herederos podrán acceder a los datos del causante, así como solicitar su rectificación o supresión, en cualquier caso.",
+          "Las personas vinculadas a un fallecido por razones familiares o de hecho así como sus herederos no podrán acceder a los datos del causante, ni solicitar su rectificación o supresión, cuando la persona fallecida lo hubiese prohibido expresamente o así lo establezca una ley.",
+          "Las personas vinculadas a un fallecido por razones familiares o de hecho así como sus herederos solamente podrán acceder a los datos del causante, así como solicitar su rectificación o supresión, en caso de haber convivido con dicho causante."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-01",
+        "t": "T1.09",
+        "o": "A",
+        "q": "El objeto del Reglamento (UE) 2016/679 es:",
+        "a": [
+          "Establecer las normas relativas a la protección de las personas físicas en lo que respecta al tratamiento de los datos personales y las normas relativas a la libre circulación de tales datos.",
+          "Proteger los derechos y libertades fundamentales de las personas físicas y, en particular, su derecho a la protección de los datos generales.",
+          "Protege únicamente las libertades fundamentales de las personas físicas y, en particular, su derecho a la protección de los datos personales.",
+          "Establecer las normas relativas a la protección de las personas físicas en lo que respecta al tratamiento de los datos personales pero las normas relativas a la libre circulación de tales datos se regularan independientemente."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-02",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto al ámbito material y territorial del RGPD señale la correcta:",
+        "a": [
+          "El presente Reglamento se aplica al tratamiento de datos personales en el contexto de las actividades de un estable cimiento del responsable o del encargado en la Unión, cuando el tratamiento de datos tenga lugar en la Unión.",
+          "El presente Reglamento se aplica en el ejercicio de una actividad no comprendida en el ámbito de aplicación del Derecho de la Unión.",
+          "El presente Reglamento se aplica al tratamiento de datos personales en el contexto de las actividades de un estable cimiento del responsable o del encargado en la Unión, independientemente de que el tratamiento tenga lugar en la Unión o no.",
+          "El presente Reglamento se aplica al tratamiento efectuado por una persona física en el ejercicio de actividades exclusivamente personales o domésticas."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-03",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con el RGPD que se entiende por datos personales:",
+        "a": [
+          "Todo conjunto estructurado de datos personales, accesibles con arreglo a criterios determinados, ya sea centralizado, descentralizado o repartido de forma funcional o geográfica.",
+          "Toda información sobre una persona jurídica identificada o identificable.",
+          "Toda información sobre una persona física identificada o identificable.",
+          "Toda información recabada por las Administraciones Publicas."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-04",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Que se entiende como establecimiento principal de acuerdo con el RGPD:",
+        "a": [
+          "En lo que se refiere a un responsable del tratamiento con establecimientos en más de un Estado miembro, todos y cada uno de sus establecimientos.",
+          "En lo que se refiere a un responsable del tratamiento con establecimientos en más de un Estado miembro, el lugar de su administración central en la Unión.",
+          "En lo que se refiere a un responsable del tratamiento con establecimientos en más de un Estado miembro, el lugar que decida la comisión europea.",
+          "En lo que se refiere a un responsable del tratamiento con establecimientos en más de un Estado miembro, el lugar de su nacimiento."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-05",
+        "t": "T1.09",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO forma parte de los principios de tratamiento de datos personales de acuerdo con el RGPD?",
+        "a": [
+          "Maximización de datos.",
+          "Minimización de datos.",
+          "Exactitud.",
+          "Licitud, lealtad y transparencia."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-06",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según el RGPD, ¿que principio de tratamiento establece que los datos personales serán recogidos con fines determinados, explícitos y legítimos, y no serán tratados ulteriormente de manera incompatible con dichos fines?",
+        "a": [
+          "Principio de integridad y confidencialidad.",
+          "Principio de limitación del plazo de conservación.",
+          "Principio de exactitud.",
+          "Principio de limitación de la finalidad."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-07",
+        "t": "T1.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes características debe cumplir el tratamiento de datos para ser lícito de acuerdo con el RGPD?",
+        "a": [
+          "El interesado dio su consentimiento para el tratamiento de sus datos personales para uno o varios fines específicos.",
+          "El tratamiento es necesario para el cumplimiento de una obligación legal aplicable al responsable del tratamiento.",
+          "El tratamiento es necesario para el cumplimiento de una obligación legal aplicable al encargado del tratamiento.",
+          "Las respuestas a) y b) son correctas."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-08",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto a las condiciones del consentimiento señale la INCORRECTA de acuerdo con el RGPD:",
+        "a": [
+          "El tratamiento de los datos personales de un niño se considerará lícito cuando tenga como mínimo 14 años.",
+          "El tratamiento de los datos personales de un niño se considerará lícito cuando tenga como mínimo 16 años.",
+          "El interesado tendrá derecho a retirar su consentimiento en cualquier momento.",
+          "Cuando el tratamiento se base en el consentimiento del interesado el responsable deberá ser capaz de demostrar que aquel consintió el tratamiento de sus datos personales."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-09",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con el RGPD, está permitido el tratamiento de los siguientes datos de acuerdo con lo establecido en la prohibición del tratamiento:",
+        "a": [
+          "Afiliación sindical.",
+          "Origen étnico o racial.",
+          "Opiniones políticas.",
+          "Opiniones personales."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-10",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con el RGPD NO será de aplicación la prohibición de tratamiento de los datos de categorías especiales:",
+        "a": [
+          "El tratamiento se refiere a datos personales que el interesado no ha hecho manifiestamente públicos.",
+          "El interesado dio su consentimiento explícito para el tratamiento de dichos datos personales con uno o más de los fines especificados.",
+          "El interesado dio su consentimiento tácito para el tratamiento de dichos datos personales con uno o más de los fines especificados.",
+          "Ámbito de sus actividades legítimas y con las debidas garantías, por una fundación, una asociación o cualquier otro organismo sin ánimo de lucro, cualquiera que fuera su finalidad siempre que el tratamiento se refiera exclusivamente a los miembros actuales o antiguos de tales organismos o a personas que mantengan contactos regulares."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-13",
+        "t": "T1.09",
+        "o": "A",
+        "q": "El RGPD regula que el responsable del tratamiento facilitará al interesado información relativa a sus actuaciones tras una solicitud en el plazo de:",
+        "a": [
+          "1 mes prorrogable por 2 meses más.",
+          "1 mes improrrogable.",
+          "2 meses prorrogable por 1 mes más.",
+          "2 meses improrrogables."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-14",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según el RGPD, la información facilitada, así como toda comunicación y cualquier actuación realizada serán (señale la respuesta INCORRECTA):",
+        "a": [
+          "Gratuitas.",
+          "Cuando las solicitudes sean manifiestamente infundadas o excesivas, especialmente debido a su carácter repetitivo, el responsable del tratamiento podrá cobrar un canon o negarse respecto de la solicitud a actuar.",
+          "El responsable del tratamiento soportará la carga de demostrar el carácter manifiestamente infundado o excesivo de la solicitud.",
+          "La información que deberá facilitarse a los interesados no podrá transmitirse en combinación con iconos normalizados."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-15",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto a la información que deberá facilitarse cuando los datos personales se obtengan del interesado:",
+        "a": [
+          "Se facilitará el domicilio fiscal del responsable.",
+          "No se facilitará el destino de los datos.",
+          "No se facilitará los datos de contacto del delegado de protección de datos.",
+          "Se facilitará la identidad y los datos de contacto del responsable."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-16",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto a la Información que deberá facilitarse cuando los datos personales NO se hayan obtenido del interesado:",
+        "a": [
+          "El responsable del tratamiento le facilitará cuanta información solicite.",
+          "El responsable del tratamiento le facilitará dentro de un plazo razonable, una vez obtenidos los datos personales, y a más tardar dentro de un mes la información.",
+          "El responsable del tratamiento no le facilitará el plazo durante el cual se conservarán.",
+          "El responsable del tratamiento no le facilitara las fuentes de las que proceden."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-17",
+        "t": "T1.09",
+        "o": "A",
+        "q": "¿Qué derechos tiene el interesado de acuerdo con el RGPD?",
+        "a": [
+          "Derecho de acceso, rectificación, cancelación, limitación, portabilidad y reposición.",
+          "Derecho de acceso, rectificación, cancelación, limitación, portabilidad y oposición.",
+          "Derecho de acceso, rectificación, supresión, limitación, portabilidad y oposición.",
+          "Derecho de acceso, rectificación, supresión, limitación, portabilidad y reposición."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          1
+        ],
+        "d": 2,
+        "n": "Derechos ARSULIPO: cancelación/supresión × oposición/reposición."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-18",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Sobre el derecho de acceso, el RGPD establece:",
+        "a": [
+          "El interesado tendrá derecho a obtener del responsable del tratamiento confirmación de si se están tratando o no datos personales.",
+          "El interesado tendrá derecho a obtener del responsable del tratamiento confirmación únicamente de si se están tratando.",
+          "El responsable del tratamiento no facilitará una copia de los datos personales objeto de tratamiento.",
+          "No se comunicarán los fines del tratamiento."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-19",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto al derecho de rectificación, señale la respuesta correcta:",
+        "a": [
+          "El interesado tendrá derecho a obtener sin dilación indebida del responsable del tratamiento la rectificación de los datos personales inexactos que le conciernan.",
+          "El interesado tendrá derecho a obtener sin dilación indebida del responsable del tratamiento la rectificación de los datos personales exactos que le conciernan.",
+          "El interesado tendrá derecho a obtener con dilación indebida del responsable del tratamiento la rectificación de los datos personales inexactos que le conciernan.",
+          "El interesado tendrá derecho a que se completen los datos personales que sean completos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-20",
+        "t": "T1.09",
+        "o": "A",
+        "q": "El interesado tendrá derecho a obtener sin dilación indebida del responsable del tratamiento la supresión de los datos personales que le conciernan cuando:",
+        "a": [
+          "El interesado se oponga al tratamiento con arreglo al artículo 21 (derecho de oposición), y prevalezcan otros motivos legítimos para el tratamiento.",
+          "Los datos personales hayan sido tratados lícitamente.",
+          "Los datos personales sean necesarios en relación con los fines para los que fueron recogidos o tratados de otro modo.",
+          "Los datos personales ya no sean necesarios en relación con los fines para los que fueron recogidos o tratados de otro modo."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-21",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto al derecho de limitación señale la respuesta INCORRECTA:",
+        "a": [
+          "El interesado tendrá derecho a obtener del responsable del tratamiento la limitación del tratamiento de los datos cuando el tratamiento sea ilícito y el interesado se oponga a la supresión de los datos personales y solicite en su lugar la limitación de su uso.",
+          "El interesado tendrá derecho a obtener del responsable del tratamiento la limitación del tratamiento de los datos cuando el responsable ya no necesite los datos personales para los fines del tratamiento, pero el interesado los necesite para la formulación, el ejercicio o la defensa de reclamaciones.",
+          "El interesado tendrá no derecho a obtener del responsable del tratamiento la limitación del tratamiento de los datos cuando el interesado impugne la exactitud de los datos personales, durante un plazo que permita al responsable verificar la exactitud de los mismos.",
+          "El interesado tendrá derecho a obtener del responsable del tratamiento la limitación del tratamiento de los datos cuando el interesado se haya opuesto al tratamiento, mientras se verifica si los motivos legítimos del responsable prevalecen sobre los del interesado."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-23",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con el encargado del tratamiento de los datos personales:",
+        "a": [
+          "El encargado del tratamiento podrá recurrir a otro encargado sin la autorización previa por escrito, específica o general, del responsable.",
+          "El encargado del tratamiento no recurrirá a otro encargado sin la autorización previa por escrito, específica o general, del responsable.",
+          "El encargado del tratamiento no podrá recurrir a otro encargado en ningún caso.",
+          "El encargado del tratamiento podrá recurrir a otro encargado con autorización verbal, especifica o general, del responsable."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-24",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto a la notificación de una violación de la seguridad de los datos personales señale la respuesta correcta:",
+        "a": [
+          "Sera notificada por la autoridad de control a más tardar en el plazo de 72 horas al responsable.",
+          "Sera notificada por la autoridad de control a más tardar en el plazo de 48 horas al responsable.",
+          "Sera notificada por el responsable a más tardar en el plazo de 72 horas a la autoridad de control.",
+          "Sera notificada por el responsable a más tardar en el plazo de 48 horas a la autoridad de control."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-26",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con la Ley Orgánica 3/2018, el objeto de la ley es:",
+        "a": [
+          "Adaptar el ordenamiento español al Reglamento UE relativo a la protección de las personas físicas en lo que respecta al tratamiento de sus datos personales y a la libre circulación de estos datos, y completar sus disposiciones.",
+          "Garantizar los derechos digitales de la ciudadanía conforme al mandato establecido en el art. 17.4 de la Constitución.",
+          "Fomentar la divulgación de datos de carácter personal.",
+          "La transmisión de datos de carácter personal."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-27",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Señale la correcta respecto al ámbito de aplicación de la Ley Orgánica 3/2018:",
+        "a": [
+          "Se aplica a cualquier tratamiento total o parcialmente automatizado de datos personales.",
+          "Se aplica a cualquier tratamiento total o parcialmente automatizado de datos personales, así como al tratamiento no automatizado de datos personales contenidos o destinados a ser incluidos en un fichero.",
+          "Se aplicará al tratamiento de datos de personas fallecidas.",
+          "Se aplicará al tratamiento de datos sobre materias clasificadas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-28",
+        "t": "T1.09",
+        "o": "A",
+        "q": "El régimen de protección de los datos de carácter personal que se establece en la presente Ley Orgánica 3/2018 no será de aplicación (señale la respuesta INCORRECTA):",
+        "a": [
+          "A los ficheros sometidos a la normativa sobre protección de materias clasificadas.",
+          "A los ficheros mantenidos por personas físicas en el ejercicio de actividades exclusivamente personales o domésticas.",
+          "A los ficheros establecidos por autoridades competentes con fines de prevención, investigación, detección o enjuiciamiento de infracciones penales.",
+          "A los ficheros establecidos para actividades afectadas por el derecho de la Unión Europea."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-29",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según la Ley Orgánica 3/2018, con respecto a los datos de las personas fallecidas:",
+        "a": [
+          "Las personas vinculadas por razones familiares podrán dirigirse al responsable o encargado para solicitar el acceso, rectificación y limitación.",
+          "El fallecido podrá prohibir expresamente a sus herederos el acceso a sus datos de carácter patrimonial.",
+          "En caso de fallecimiento de menores podrán ejercer los derechos referidos es esta Ley, el Ministerio Fiscal.",
+          "En ningún caso podrá el fallecido prohibir expresamente el acceso a sus datos."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-30",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con la Ley Orgánica 3/2018 la Presidencia de la AEPD será nombrado por un periodo de:",
+        "a": [
+          "4 años renovable.",
+          "6 años no renovable.",
+          "3 años no renovable.",
+          "5 años renovable."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-31",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según la Ley Orgánica 3/2018 señale la respuesta correcta:",
+        "a": [
+          "los responsables y encargados del tratamiento de datos así como todas las personas que intervengan en cualquiera de sus fases no están sujetas al deber de confidencialidad.",
+          "los responsables y encargados del tratamiento de datos así como todas las personas que intervengan en cualquiera de sus fases están sujetas al deber de confidencialidad y esta obligación no se mantendrá una vez finalizada la relación del obligado con el responsable o encargado del tratamiento.",
+          "los responsables y encargados del tratamiento de datos así como todas las personas que intervengan en cualquiera de sus fases están sujetas al deber de confidencialidad.",
+          "los responsables y encargados del tratamiento de datos así como todas las personas que intervengan en cualquiera de sus fases están sujetas al deber de confidencialidad y esta obligación se mantendrá una vez finalizada la relación del obligado con el responsable o encargado del tratamiento, no se mantendrá una vez finalizada la relación del obligado con el responsable o encargado del tratamiento."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-32",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con Ley Orgánica 3/2018, los datos serán:",
+        "a": [
+          "Exactos y si fuere posible, actualizados.",
+          "Aproximados, y si fuese necesario, actualizados.",
+          "Exactos, y si fuere necesario, actualizados.",
+          "Reales y ciertos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          1
+        ],
+        "d": 2,
+        "n": "Exactitud: \"si fuere necesario\" vs \"posible\"."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-33",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto al Delegado de Protección de datos, responsables y encargados deberán comunicar la designación de delegado de prevención, en un plazo de:",
+        "a": [
+          "20 días.",
+          "30 días.",
+          "10 días.",
+          "5 días."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-34",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Con respecto a los derechos de los interesados, indique la respuesta correcta:",
+        "a": [
+          "Se ejercerán de acuerdo con el Reglamento General de Prevención de Datos 2018/679.",
+          "Son el derecho de acceso, rectificación, supresión (olvido) y limitación.",
+          "Son el derecho de portabilidad, acceso, rectificación y anulación.",
+          "Son el derecho de acceso, oposición, corrección, limitación y supresión."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-35",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto al consentimiento del afectado para el tratamiento de los datos de carácter personal regulado en la Ley Orgánica 3/2018, señale la respuesta correcta:",
+        "a": [
+          "Deberá manifestarse de forma libre, específica, inequívoca y siempre a través de declaración.",
+          "Se admitirá el consentimiento tácito en algunos casos.",
+          "Se podrá supeditar a la ejecución de un contrato aún cuando no guarde relación las funciones propias de las Administraciones públicas en el ámbito de sus competencias",
+          "El tratamiento de datos personales de un menor únicamente puede fundarse en su consentimiento cuando sea mayor de catorce años."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          12
+        ],
+        "d": 2,
+        "n": "Consentimiento LOPDGDD: \"siempre\", \"únicamente\"."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-36",
+        "t": "T1.09",
+        "o": "A",
+        "q": "En casos de categorías especiales de datos:",
+        "a": [
+          "El consentimiento del afectado bastará para levantar la prohibición.",
+          "Son datos de categorías especiales los relativos a la ideología, afiliación sindical, religión, orientación sexual, creencias.",
+          "La categoría de datos especiales no se tendrá en cuenta para tratamiento de datos de internet.",
+          "Ninguna de las respuestas es correcta."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-37",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según la Ley Orgánica 3/2018, la presidencia de la Agencia Española de Protección de Datos:",
+        "a": [
+          "Será nombrada por Real Decreto del Consejo de Ministros a propuesta de su Presidente.",
+          "Será nombrada por el Gobierno, a propuesta del Ministerio del Interior.",
+          "Será nombrada por Real Decreto del Consejo de Ministros a propuesta del Ministerio de Justicia conjuntamente con el Ministerio del Interior.",
+          "Será nombrada por el Gobierno, a propuesta del Ministerio de Justicia"
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-38",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Los datos de carácter personal que hagan referencia al origen racial, a la salud y a la vida sexual sólo podrán ser recabados, tratados y cedidos cuando, señale la INCORRECTA:",
+        "a": [
+          "Por razones de interés público esencial, amparados en una norma con rango de ley.",
+          "Para fines de medicina preventiva o laboral amparados en una norma con rango de ley.",
+          "El afectado consienta expresamente.",
+          "Por razones de interés público en el ámbito de la salud pública amparados en una norma con rango de ley."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-39",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con la Ley Orgánica 3/2018 y el derecho de acceso:",
+        "a": [
+          "Se considera un uso repetitivo el ejercicio de acceso en más de dos ocasiones en el plazo de seis meses.",
+          "Se considera un uso repetitivo el ejercicio de acceso en más de una ocasión en el plazo de seis meses.",
+          "Se considera un uso repetitivo el ejercicio de acceso en más de una ocasión en el plazo de tres meses.",
+          "Se considera un uso repetitivo el ejercicio de acceso en más de dos ocasiones en el plazo de tres meses."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-40",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con la Ley Orgánica 3/2018 y el derecho de acceso:",
+        "a": [
+          "Deberá estar regulada en un contrato privado.",
+          "Se entenderá otorgado si el responsable facilita un sistema de acceso remoto, directo y seguro que garantice el acceso en su parcialidad.",
+          "Cuando el interesado elija un medio distinto y suponga un coste desproporcionado, se considerará una solicitud excesiva y los costes se asumirán íntegros por el afectado.",
+          "Se entenderá otorgado si el responsable facilita un sistema de acceso remoto, directo y seguro que garantice el acceso en su totalidad."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-41",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Cuál de los siguientes derechos NO corresponde a los interesados respecto al tratamiento de datos:",
+        "a": [
+          "Derecho de acceso.",
+          "Derecho de cancelación.",
+          "Derecho de recriminación.",
+          "Derecho de rectificación."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-42",
+        "t": "T1.09",
+        "o": "A",
+        "q": "La información básica respecto al tratamiento de datos deberá contener, como mínimo:",
+        "a": [
+          "Finalidad del tratamiento.",
+          "Identidad del responsable del tratamiento y de su representante, en su caso.",
+          "Posibilidad de ejercer los derechos establecidos en los artículos 15 a 22 del RGPD.",
+          "Todas las respuestas son correctas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-43",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto al procedimiento de oposición, acceso, rectificación o cancelación señale la correcta:",
+        "a": [
+          "Los procedimientos para ejercitar el derecho de oposición, acceso, así como los de rectificación y cancelación serán establecidos en esta ley y no podrá exigirse contraprestación en ningún caso.",
+          "Los procedimientos para ejercitar el derecho de oposición, acceso, así como los de rectificación y cancelación serán establecidos en esta ley y podrá excepcionalmente exigirse contraprestación.",
+          "Los procedimientos para ejercitar el derecho de oposición, acceso, así como los de rectificación y cancelación necesitan la asistencia de un representante y se exigirá contraprestación.",
+          "Los procedimientos para ejercitar el derecho de oposición, acceso, así como los de rectificación y cancelación necesitan la asistencia de un representante."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-44",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Con respecto a los derechos y los medios a disposición del afectado:",
+        "a": [
+          "El responsable no estará obligado a informar sobre los medios a disposición para ejercer los derechos.",
+          "Los medios deberán ser fácilmente accesibles para el afectado.",
+          "El ejercicio no podrá ser denegado por el solo motivo de optar el afectado por otro medio.",
+          "Las respuestas b) y c) son correctas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-45",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Los derechos de acceso, rectificación, cancelación, oposición o cualesquiera otros que pudieran corresponderles al afectado según la Ley Orgánica 3/2018 podrán ser ejercitados por los titulares de la patria potestad en nombre y representación de:",
+        "a": [
+          "Los menores de 18 años.",
+          "Los menores de 15 años.",
+          "Los menores de 16 años.",
+          "Los menores de 14 años."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-46",
+        "t": "T1.09",
+        "o": "A",
+        "q": "A través de qué ministerio se relaciona la Agencia Española de Protección de Datos:",
+        "a": [
+          "Ministerio de Presidencia.",
+          "Ministerio de Política Territorial y Memoria Democrática.",
+          "Ministerio para la Transformación Digital y de la Función Pública.",
+          "Ministerio de Justicia."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "La dependencia ministerial se enuncia sin fecha ni remisión expresa al tenor de la ley; cotejar organización y denominación ministerial antes de aceptar como dato actual.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AT109ALT-P1-46"
+      ]
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-47",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Respecto a la prescripción de infracciones y sanciones señale la correcta:",
+        "a": [
+          "Las infracciones muy graves prescribirán a los 3 años, las graves a los 2 años y las leves a los 6 meses.",
+          "Las infracciones muy graves prescribirán a los 4 años, las graves a los 2 años y las leves a los 6 meses.",
+          "Las infracciones muy graves prescribirán a los 3 años, las graves a los 2 años y las leves al año.",
+          "Las infracciones muy graves prescribirán a los 4 años, las graves a los 2 años y las leves al año."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-49",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De acuerdo con la Ley Orgánica 3/2018, cuál de los siguientes datos es un dato especialmente protegido:",
+        "a": [
+          "Sexo.",
+          "Nombre.",
+          "Raza.",
+          "Dirección."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-50",
+        "t": "T1.09",
+        "o": "A",
+        "q": "En cuanto a las sanciones a aplicar por incumplimiento de la Ley Orgánica 3/2018 y las medidas de protección asociadas:",
+        "a": [
+          "Las sanciones por importe igual o inferior a 40.000 euros prescriben en el plazo de un año.",
+          "Las sanciones por importe igual o inferior a 40.000 euros prescriben en el plazo de dos años.",
+          "Las sanciones por importe igual o inferior a 40.000 euros prescriben en el plazo de tres años.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-51",
+        "t": "T1.09",
+        "o": "A",
+        "q": "¿De qué ministerio tiene dependencia jerárquica la AEPD?",
+        "a": [
+          "Ministerio del Interior.",
+          "Ministerio de Justicia.",
+          "Ministerio de Hacienda.",
+          "Ninguna respuesta es correcta."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          10
+        ],
+        "d": 2,
+        "n": "AEPD sin dependencia jerárquica: \"ninguna correcta\"."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-52",
+        "t": "T1.09",
+        "o": "A",
+        "q": "En relación al RGPD, indique la respuesta correcta:",
+        "a": [
+          "Entró en vigor a los veinte días de su publicación en el DOUE.",
+          "Será aplicable a partir de mayo de 2018.",
+          "Entró en vigor el 27 de abril de 2016.",
+          "Son correctas las respuestas a) y b)."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-53",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según la Ley Orgánica 3/2018, para ejercer los derechos de rectificación y cancelación es necesario:",
+        "a": [
+          "Pagar los gastos ocasionados.",
+          "Se necesita representante.",
+          "No se necesita nada, se ejercen de forma gratuita.",
+          "Ninguna respuesta es correcta."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-54",
+        "t": "T1.09",
+        "o": "A",
+        "q": "La prestación de servicios por parte de terceros a las Administraciones Públicas, cuando implique un tratamiento de datos según la Ley Orgánica 3/2018, exige:",
+        "a": [
+          "Cumplir lo dispuesto en la Ley de Contratos de las Administraciones Públicas.",
+          "Además de cumplir lo dispuesto en otras leyes, deberá incorporar los requisitos formales exigibles al encargado del tratamiento.",
+          "Crear una persona jurídica distinta sujeto al derecho privado.",
+          "Realizar copias de seguridad de datos."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-55",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Sobre la AEPD señale la respuesta INCORRECTA:",
+        "a": [
+          "Un ente de derecho público con personalidad jurídica propia.",
+          "Se relaciona con el Gobierno a través del Ministerio de Hacienda.",
+          "Ejerce sus funciones a través de un Director.",
+          "Actúa con plena independencia de las Administraciones públicas."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-56",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según la normativa en materia de protección de datos, en relación con el derecho de rectificación, señale la respuesta INCORRECTA:",
+        "a": [
+          "El afectado deberá indicar en su solicitud a qué datos se refiere y la corrección.",
+          "Que se podrá, en las circunstancias que indique el Reglamento, exigir una mínima contraprestación por los gastos de gestión que conlleve dicha rectificación.",
+          "Es un derecho de todos los ciudadanos.",
+          "El afectado deberá acompañar, cuando sea preciso, la documentación justificativa de la inexactitud o carácter incompleto de los datos."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-57",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según la Ley Orgánica 3/2018, es un dato de carácter personal:",
+        "a": [
+          "Cualquier información relativa a las personas físicas o jurídicas identificables.",
+          "Cualquier información relativa a la salud, ideología, religión, creencias o raza.",
+          "Cualquier información relativa a personas físicas identificadas o identificables.",
+          "Cualquier información relativa a personas, excluida las de carácter político, sindical o religioso."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT109ALT-P1-59",
+        "t": "T1.09",
+        "o": "A",
+        "q": "NO es un derecho digital del ciudadano según la Ley Orgánica 3/2018:",
+        "a": [
+          "El derecho de educación digital.",
+          "El derecho a la neutralidad de internet.",
+          "El derecho a la seguridad digital.",
+          "El derecho a la banda ancha."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-07",
+        "t": "T1.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes se trata de la Ley reguladora del ejercicio del alto cargo de la Administración General del Estado?",
+        "a": [
+          "Ley 3/2015, de 30 de marzo.",
+          "Ley 5/2015, de 3 de mayo.",
+          "Ley 3/2018, de 13 de diciembre.",
+          "Ley 5/2018, de 23 de enero."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-15",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según el artículo 5 del Reglamento (UE) 2016/679, de 27 de abril, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales y a la libre circulación de estos datos, los datos personales serán tratados, en relación con la persona interesada, de manera lícita, leal y:",
+        "a": [
+          "Confidencial.",
+          "Fiable.",
+          "Segura.",
+          "Transparente."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-17",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según se indica en el artículo 33 del RGPD, en caso de violación de la seguridad de los datos personales que constituya un riesgo para los derechos y las libertades de las personas físicas, en qué plazo el responsable del tratamiento la notificará a la autoridad de control competente:",
+        "a": [
+          "A más tardar 72 horas después de que haya tenido constancia de ella.",
+          "A más tardar 48 horas después de que haya tenido constancia de ella.",
+          "A más tardar 24 horas después de que haya tenido constancia de ella.",
+          "No es necesario realizar ninguna notificación."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "La clave enuncia las 72 horas sin la condición «de ser posible» del artículo 33 y sin el tratamiento de retrasos justificados; requiere revisar el alcance.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AS09-P1-17"
+      ]
+    },
+    {
+      "question": {
+        "i": "AS10-P1-14",
+        "t": "T1.09",
+        "o": "A",
+        "q": "¿Qué principio de los regulados en el artículo 5 del Reglamento (UE) 2016/679, del Parlamento Europeo y del Consejo, de 27 de abril, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales, establece que los datos serán recogidos con fines determinados, explícitos y legítimos?",
+        "a": [
+          "Limitación de la finalidad.",
+          "Exactitud.",
+          "Minimización de los datos.",
+          "Limitación del plazo de conservación."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-15",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Conforme al artículo 17 del Reglamento (UE) 2016/679, del Parlamento Europeo y del Consejo, de 27 de abril, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales, el interesado tendrá derecho a obtener sin dilación indebida del responsable del tratamiento la supresión de los datos personales que le conciernan, siempre que concurran alguna de las circunstancias siguientes (señale la respuesta INCORRECTA):",
+        "a": [
+          "Los datos personales ya no sean necesarios en relación con los fines para los que fueron recogidos.",
+          "El interesado se oponga al tratamiento.",
+          "Los datos personales hayan sido tratados ilícitamente.",
+          "Los datos sean necesarios para la formulación, el ejercicio o la defensa de reclamaciones."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-15",
+        "t": "T1.09",
+        "o": "A",
+        "q": "En relación con el tratamiento de imágenes con fines de videovigilancia, el artículo 22 de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales, afirma que:",
+        "a": [
+          "Podrán captarse imágenes de la vía pública en la medida en que resulte imprescindible para preservar la seguridad de las personas y bienes, así como de sus instalaciones.",
+          "Podrán captarse imágenes del interior de un domicilio privado cuando fuese necesario para garantizar la seguridad de bienes o instalaciones estratégicos o de infraestructuras vinculadas al transporte.",
+          "Los datos serán suprimidos en el plazo máximo de tres meses desde su captación, salvo cuando hubieran de ser conservados para acreditar la comisión de actos que atenten contra la integridad de personas, bienes o instalaciones.",
+          "El deber de información previsto en el artículo 12 del Reglamento (UE) 2016/679 se entenderá cumplido mediante la colocación de un dispositivo informativo identificando al Delegado de Protección de Datos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-16",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales, ¿cuál de los siguientes en un derecho?",
+        "a": [
+          "Derecho al olvido en la nube.",
+          "Derecho al testamento vital.",
+          "Protección de datos en el ámbito laboral.",
+          "Derechos digitales en la negociación colectiva."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "La alternativa sobre protección de datos en el ámbito laboral también expresa un derecho. El enunciado no delimita a las rúbricas literales del título X; revisar unicidad.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AS10B-P1-16"
+      ]
+    },
+    {
+      "question": {
+        "i": "AS11-P1-18",
+        "t": "T1.09",
+        "o": "A",
+        "q": "El tratamiento de datos personales de manera tal que ya no puedan atribuirse a un interesado sin utilizar información adicional, se conoce como:",
+        "a": [
+          "Elaboración de perfiles.",
+          "Limitación del tratamiento.",
+          "Registro de actividades de tratamiento.",
+          "Seudonimización."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-20",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según el Reglamento Europeo de Protección de Datos 2016/679, relativo a la protección de las personas físicas en lo que respecta al tratamiento de protección de datos personales y a la libre circulación de estos datos (RGPD), ¿cuál de las siguientes definiciones NO es correcta?",
+        "a": [
+          "Encargado del tratamiento o encargado: la persona física o jurídica, autoridad pública, servicio u otro organismo que trate datos personales por cuenta del responsable del tratamiento y determina los fines y medios del tratamiento.",
+          "Destinatario: la persona física o jurídica, autoridad pública, servicio u otro organismo al que se comuniquen datos personales, se trate o no de un tercero. No obstante, no se considerarán destinatarios las autoridades públicas que puedan recibir datos personales en el marco de una investigación concreta de conformidad con el Derecho de la Unión o de los Estados miembros; el tratamiento de tales datos por dichas autoridades públicas será conforme con las normas en materia de protección de datos aplicables a los fines del tratamiento.",
+          "Tercero: persona física o jurídica, autoridad pública, servicio u organismo distinto del interesado, del responsable del tratamiento, del encargado del tratamiento y de las personas autorizadas para tratar los datos personales bajo la autoridad directa del responsable o del encargado.",
+          "Responsable del tratamiento o responsable: la persona física o jurídica, autoridad pública, servicio u otro organismo que, solo o junto con otros, determine los fines y medios del tratamiento; si el Derecho de la Unión o de los Estados miembros determina los fines y medios del tratamiento, el responsable del tratamiento o los criterios específicos para su nombramiento podrá establecerlos el Derecho de la Unión o de los Estados miembros."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-21",
+        "t": "T1.09",
+        "o": "A",
+        "q": "¿De qué organismo depende jerárquicamente la Agencia Española de Protección de Datos?",
+        "a": [
+          "Del Ministerio de Asuntos Económicos y Transformación Digital.",
+          "De ninguno, pues es una autoridad pública independiente.",
+          "Del Ministerio del Interior.",
+          "Del Ministerio de Justicia."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-24",
+        "t": "T1.09",
+        "o": "A",
+        "q": "De entre los derechos digitales regulados en la Ley 3/2018 de Protección de Datos Personales y garantía de los derechos digitales, ¿cuál de los siguientes NO se considera un derecho digital?",
+        "a": [
+          "Derecho de oposición en Internet.",
+          "Derecho a la desconexión digital en el ámbito laboral.",
+          "Protección de los menores en Internet.",
+          "Derechos digitales en la negociación colectiva."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-11",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según la actual Ley Orgánica vigente de Protección de Datos Personales y garantía de los derechos digitales, ¿quién puede acceder a los datos personales de una persona fallecida? (Señale la respuesta INCORRECTA)",
+        "a": [
+          "Las personas vinculadas al fallecido por razones familiares o de hecho, así como sus herederos.",
+          "Las personas o instituciones a las que el fallecido hubiese designado expresamente para ello.",
+          "En los fallecidos menores de edad, sus padres y representantes legales o, en el marco de sus competencias, el Ministerio Fiscal.",
+          "Ninguna persona está autorizada para acceder a los datos personales en este supuesto."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-12",
+        "t": "T1.09",
+        "o": "A",
+        "q": "El interesado tendrá derecho a obtener del responsable del tratamiento la limitación del tratamiento de los datos cuando se cumpla, ¿cuál de las condiciones siguientes?",
+        "a": [
+          "El interesado impugne la exactitud de los datos personales, durante un plazo que permita al responsable verificar la exactitud de los mismos.",
+          "El tratamiento sea ilícito y el interesado se oponga a la supresión de los datos personales y solicite en su lugar la limitación de su uso.",
+          "El responsable ya no necesite los datos personales para los fines del tratamiento, pero el interesado los necesite para la formulación, el ejercicio o la defensa de reclamaciones.",
+          "Todas las respuestas son correctas."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-R-03",
+        "t": "T1.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes entidades NO tiene obligación de designar un delegado de protección de datos?",
+        "a": [
+          "La Agencia Española de Protección de Datos.",
+          "El Ilustre Colegio de Abogados de Madrid.",
+          "Un médico que ejerza su actividad a título individual y esté legalmente obligado al mantenimiento de las historias clínicas de los pacientes.",
+          "La Universidad Complutense de Madrid."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-13",
+        "t": "T1.09",
+        "o": "A",
+        "q": "En relación con el artículo 7 de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales, el tratamiento de los datos personales de un menor de edad únicamente podrá fundarse en su consentimiento expreso cuando:",
+        "a": [
+          "Sea mayor de 13 años.",
+          "Sea mayor de 14 años.",
+          "Sea mayor de 15 años.",
+          "Sea mayor de 16 años."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Edad de consentimiento (= promoción interna 2025 P3)."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 221,
+    "alreadyHadCitation": 100,
+    "added": 19,
+    "pending": 102,
+    "withCitation": 119
+  }
+}

@@ -1,0 +1,1605 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T1.06",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "14f4109176ccbe40c4261d53545602448d7943d60f0ccbc24991d0fea771d160",
+    "afterSha256": "b4a0c34c00e1e065c918e995ff1fbcceae8b4467b7081d2a26827bb11baf6ab2"
+  },
+  "sample": {
+    "beforeSha256": "063440af290032a55cfe30c7f39d8ec49265f63d3117ccc3795298c1d4992094",
+    "afterSha256": "994f289c78c75fc9b51d1a8331dc05ee1e299a6b397211a306ab818736d6c302"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-L2018-P1-11": {
+      "path": "T1.06 Fuentes del Derecho/T1.06 Fuentes del Derecho - Temario OPO.pdf",
+      "sourceHash": "4a2f6932755a6d48a2bd0d8d179707b9cacab6dcd466e7bfd2654a5d27170c1d",
+      "physicalPage": 15,
+      "printedPage": 15,
+      "excerpt": "2) Una nota FORMAL (el procedimiento de elaboración): la aprobación, modificación o derogación de las leyes orgánicas exigirá mayoría absoluta del Congreso, en una votación final sobre el conjunto del proyecto (art. 81.2 CE).",
+      "label": "Pasaje del temario"
+    },
+    "e-AT106-P1-01": {
+      "path": "T1.06 Fuentes del Derecho/T1.06 Fuentes del Derecho - Temario OPO.pdf",
+      "sourceHash": "4a2f6932755a6d48a2bd0d8d179707b9cacab6dcd466e7bfd2654a5d27170c1d",
+      "physicalPage": 17,
+      "printedPage": 17,
+      "excerpt": "Leyes de TRANSFERENCIA o DE DELEGACIÓN El Estado podrá transferir o delegar en las CCAA, mediante ley orgánica, facultades correspondientes a materia de titularidad estatal que por su propia naturaleza sean susceptibles de transferencia o delegación. La ley preverá en cada caso la correspondiente transferencia de medios financieros, así como las formas de control que se reserve el Estado (art. 150.2 CE).",
+      "label": "Leyes de transferencia o delegación — artículo 150.2 CE"
+    },
+    "e-AT106-P1-09": {
+      "path": "T1.06 Fuentes del Derecho/T1.06 Fuentes del Derecho - Temario OPO.pdf",
+      "sourceHash": "4a2f6932755a6d48a2bd0d8d179707b9cacab6dcd466e7bfd2654a5d27170c1d",
+      "physicalPage": 26,
+      "printedPage": 26,
+      "excerpt": "El principio de jerarquía normativa no se refiere solo a las relaciones entre el Reglamento y la Ley. También los propios Reglamentos están relacionados entre sí jerárquicamente de forma correlativa a la jerarquía que une a los órganos de que proceden. El art. 24.2 de la LG dispone: “Los Reglamentos se ordenarán según la siguiente jerarquía: 1º. Disposiciones aprobadas por Real Decreto del Presidente del Gobierno o acordado en Consejo de Ministros. 2º. Disposiciones aprobadas por Orden Ministerial”.",
+      "label": "Pasaje del temario"
+    },
+    "context-AT106-P1-09": {
+      "source": "cortes",
+      "path": "T1.02 Cortes Generales/T1.02 Cortes Generales - Temario.pdf",
+      "sourceHash": "a826e75d13d409bfd8af8c56def14f629a1242c26c0ad09f5c67de7981fb1783",
+      "physicalPage": 12,
+      "printedPage": 12,
+      "label": "5. Elaboración de las leyes — delegación legislativa (art. 82.1)",
+      "excerpt": "Las Cortes Generales podrán delegar en el Gobierno la potestad de dictar normas con rango de ley sobre materias determinadas no incluidas para las leyes orgánicas (art. 82.1 CE)."
+    },
+    "e-AT106-P1-12": {
+      "path": "T1.06 Fuentes del Derecho/T1.06 Fuentes del Derecho - Temario OPO.pdf",
+      "sourceHash": "4a2f6932755a6d48a2bd0d8d179707b9cacab6dcd466e7bfd2654a5d27170c1d",
+      "physicalPage": 19,
+      "printedPage": 19,
+      "excerpt": "La LEGISLACIÓN DELEGADA viene expresamente recogida en la CE. En concreto: “Las Cortes Generales podrán delegar en el Gobierno la potestad de dictar normas con rango de ley sobre materias determinadas no incluidas en el art. anterior” (Ley Orgánica) (art. 82.1 CE). Materias excluidas (art. 81.1 CE): - Desarrollo de los derechos fundamentales y de las libertades públicas. - Estatutos de Autonomía. - Régimen electoral general - Las demás previstas en la Constitución (materias reguladas por Ley Orgánica). Según el art. 82.2 de la CE, podemos distinguir 2 tipos de legislación delegada: - Textos refundidos. - Textos articulados. Las disposiciones del Gobierno que contengan legislación delegada recibirán el título de Decretos Legislativos (art. 85 CE).",
+      "label": "Legislación delegada — artículos 82 y 85 CE"
+    },
+    "e-AT106-P1-14": {
+      "path": "T1.06 Fuentes del Derecho/T1.06 Fuentes del Derecho - Temario OPO.pdf",
+      "sourceHash": "4a2f6932755a6d48a2bd0d8d179707b9cacab6dcd466e7bfd2654a5d27170c1d",
+      "physicalPage": 3,
+      "printedPage": 3,
+      "excerpt": "Los PRINCIPIOS GENERALES DEL DERECHO (pgD) se aplicarán en defecto de ley o costumbre, sin perjuicio de su carácter informador del ordenamiento jurídico (art. 1.4 CC).",
+      "label": "Pasaje del temario"
+    },
+    "e-AT106-P1-27": {
+      "path": "T1.06 Fuentes del Derecho/T1.06 Fuentes del Derecho - Temario OPO.pdf",
+      "sourceHash": "4a2f6932755a6d48a2bd0d8d179707b9cacab6dcd466e7bfd2654a5d27170c1d",
+      "physicalPage": 20,
+      "printedPage": 20,
+      "excerpt": "La delegación legislativa deberá otorgarse mediante una Ley de Bases cuando su objeto sea la formación de textos articulados (art. 82.2 CE).",
+      "label": "Pasaje del temario"
+    },
+    "e-AT106-P1-29": {
+      "path": "T1.06 Fuentes del Derecho/T1.06 Fuentes del Derecho - Temario OPO.pdf",
+      "sourceHash": "4a2f6932755a6d48a2bd0d8d179707b9cacab6dcd466e7bfd2654a5d27170c1d",
+      "physicalPage": 29,
+      "printedPage": 29,
+      "excerpt": "Las RECOMENDACIONES y los DICTÁMENES no serán vinculantes. La incorporación al ordenamiento interno del Derecho Comunitario se produce directamente, dado que, a través del Tratado de Adhesión de España a las Comunidades Europeas, se ha producido una cesión de soberanía. En consecuencia, no es precisa ni la ratificación ni la publicación en el BOE para su entrada en vigor, bastando su publicación en el Diario Oficial de la Unión Europea.",
+      "label": "Derecho de la UE — recomendaciones y dictámenes"
+    },
+    "e-AT106-P1-30": {
+      "path": "T1.06 Fuentes del Derecho/T1.06 Fuentes del Derecho - Temario OPO.pdf",
+      "sourceHash": "4a2f6932755a6d48a2bd0d8d179707b9cacab6dcd466e7bfd2654a5d27170c1d",
+      "physicalPage": 15,
+      "printedPage": 15,
+      "excerpt": "Son leyes orgánicas (art. 81.1 CE): - Las relativas al desarrollo de los derechos fundamentales y de las libertadas públicas. - Las que aprueben los Estatutos de Autonomía. - Las que aprueben el régimen electoral general. - Las demás previstas en la CE.",
+      "label": "Leyes orgánicas — artículo 81.1 CE"
+    },
+    "e-AT106-P1-35": {
+      "path": "T1.06 Fuentes del Derecho/T1.06 Fuentes del Derecho - Temario OPO.pdf",
+      "sourceHash": "4a2f6932755a6d48a2bd0d8d179707b9cacab6dcd466e7bfd2654a5d27170c1d",
+      "physicalPage": 15,
+      "printedPage": 15,
+      "excerpt": "Son leyes orgánicas (art. 81.1 CE): - Las relativas al desarrollo de los derechos fundamentales y de las libertadas públicas. - Las que aprueben los Estatutos de Autonomía. - Las que aprueben el régimen electoral general. - Las demás previstas en la CE.",
+      "label": "Leyes orgánicas — artículo 81.1 CE"
+    },
+    "e-AT106-P1-38": {
+      "source": "cortes",
+      "path": "T1.02 Cortes Generales/T1.02 Cortes Generales - Temario.pdf",
+      "sourceHash": "a826e75d13d409bfd8af8c56def14f629a1242c26c0ad09f5c67de7981fb1783",
+      "physicalPage": 16,
+      "printedPage": 16,
+      "label": "Tratados internacionales — artículo 94.1",
+      "excerpt": "La prestación del consentimiento del Estado para obligarse por medio de tratados o convenios requerirá la previa autorización de las Cortes Generales, en los siguientes casos (art. 94.1 CE): - Tratados de carácter político. - Tratados o convenios de carácter militar. - Tratados o convenios que afecten a la integridad territorial del Estado o a los derechos y deberes fundamentales establecidos en el Título I. - Tratados o convenios que impliquen obligaciones financieras para la Hacienda Pública. - Tratados o convenios que supongan modificación o derogación de alguna ley o exijan medidas legislativas para su ejecución."
+    },
+    "e-AS03-P1-07": {
+      "path": "T1.06 Fuentes del Derecho/T1.06 Fuentes del Derecho - Temario OPO.pdf",
+      "sourceHash": "4a2f6932755a6d48a2bd0d8d179707b9cacab6dcd466e7bfd2654a5d27170c1d",
+      "physicalPage": 20,
+      "printedPage": 20,
+      "excerpt": "La delegación legislativa deberá otorgarse mediante una Ley de Bases cuando su objeto sea la formación de textos articulados (art. 82.2 CE).",
+      "label": "Pasaje del temario"
+    },
+    "e-AS08-P1-24": {
+      "path": "T1.06 Fuentes del Derecho/T1.06 Fuentes del Derecho - Temario OPO.pdf",
+      "sourceHash": "4a2f6932755a6d48a2bd0d8d179707b9cacab6dcd466e7bfd2654a5d27170c1d",
+      "physicalPage": 20,
+      "printedPage": 20,
+      "excerpt": "Regulado en el art. 86 de la CE: En casos de extraordinaria y urgente necesidad el Gobierno podrá dictar disposiciones legislativas provisionales que tomarán la forma de Decretos-Leyes y que NO podrán afectar: - Al ordenamiento de las instituciones básicas del Estado,",
+      "label": "Pasaje del temario"
+    }
+  },
+  "questions": [
+    {
+      "id": "L2018-P1-11",
+      "before": {
+        "i": "L2018-P1-11",
+        "t": "T1.06",
+        "o": "O",
+        "q": "Conforme a lo establecido en el artículo 81 de la Constitución, la aprobación, modificación o derogación de las leyes orgánicas exigirá:",
+        "a": [
+          "Mayoría absoluta del Congreso e igual mayoría del Senado, en una votación final sobre el conjunto de las enmiendas.",
+          "Mayoría absoluta del Congreso, en una votación final sobre el conjunto del proyecto.",
+          "Mayoría absoluta del Congreso únicamente en los casos en que exista veto establecido por mayoría simple del Senado.",
+          "Mayoría simple del Congreso, en una votación final sobre el conjunto del proyecto."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          2,
+          1
+        ],
+        "d": 1,
+        "n": "Leyes orgánicas: mayoría absoluta del Congreso.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "after": {
+        "i": "L2018-P1-11",
+        "t": "T1.06",
+        "o": "O",
+        "q": "Conforme a lo establecido en el artículo 81 de la Constitución, la aprobación, modificación o derogación de las leyes orgánicas exigirá:",
+        "a": [
+          "Mayoría absoluta del Congreso e igual mayoría del Senado, en una votación final sobre el conjunto de las enmiendas.",
+          "Mayoría absoluta del Congreso, en una votación final sobre el conjunto del proyecto.",
+          "Mayoría absoluta del Congreso únicamente en los casos en que exista veto establecido por mayoría simple del Senado.",
+          "Mayoría simple del Congreso, en una votación final sobre el conjunto del proyecto."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          2,
+          1
+        ],
+        "d": 1,
+        "n": "Leyes orgánicas: mayoría absoluta del Congreso.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)",
+        "u": "T1.06 Fuentes del Derecho - Temario OPO.pdf — Pasaje del temario\n\nTemario, p. 15 (PDF p. 15)\n\n2) Una nota FORMAL (el procedimiento de elaboración): la aprobación, modificación o derogación de las leyes orgánicas exigirá mayoría absoluta del Congreso, en una votación final sobre el conjunto del proyecto (art. 81.2 CE).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "462148a4ac0aec384848a8c2336d5597672b2df00fabfc1ef0a4483841bba7a0",
+      "afterSha256": "50a86ab8afedc2bb05fbbc3447aac6d9d7dc0a692e072c3e262e3d85793cd6ca",
+      "evidenceKeys": [
+        "e-L2018-P1-11"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT106-P1-01",
+      "before": {
+        "i": "AT106-P1-01",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Según lo establecido en el art. 150 de la CE, las leyes de delegación son:",
+        "a": [
+          "Leyes orgánicas.",
+          "Leyes ordinarias.",
+          "Leyes de transferencia.",
+          "Leyes marco."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Leyes del art. 150 (orgánicas) vs leyes marco."
+      },
+      "after": {
+        "i": "AT106-P1-01",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Según lo establecido en el art. 150 de la CE, las leyes de delegación son:",
+        "a": [
+          "Leyes orgánicas.",
+          "Leyes ordinarias.",
+          "Leyes de transferencia.",
+          "Leyes marco."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Leyes del art. 150 (orgánicas) vs leyes marco.",
+        "u": "T1.06 Fuentes del Derecho - Temario OPO.pdf — Leyes de transferencia o delegación — artículo 150.2 CE\n\nTemario, p. 17 (PDF p. 17)\n\nLeyes de TRANSFERENCIA o DE DELEGACIÓN El Estado podrá transferir o delegar en las CCAA, mediante ley orgánica, facultades correspondientes a materia de titularidad estatal que por su propia naturaleza sean susceptibles de transferencia o delegación. La ley preverá en cada caso la correspondiente transferencia de medios financieros, así como las formas de control que se reserve el Estado (art. 150.2 CE).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "56de84cc3f224478b10b7d22ade2f23b335a411c111c1e5b855d1be8e0b9641f",
+      "afterSha256": "996226f308a726eba5769f921932b433abee78100c31481bd7f6ca43a6a72a43",
+      "evidenceKeys": [
+        "e-AT106-P1-01"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT106-P1-09",
+      "before": {
+        "i": "AT106-P1-09",
+        "t": "T1.06",
+        "o": "A",
+        "q": "De entre las siguientes, ¿cuál es jerárquicamente la de menor rango?",
+        "a": [
+          "Orden Ministerial.",
+          "Real Decreto de Consejo de Ministros.",
+          "Real Decreto legislativo.",
+          "Real Decreto de Presidente del Gobierno."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT106-P1-09",
+        "t": "T1.06",
+        "o": "A",
+        "q": "De entre las siguientes, ¿cuál es jerárquicamente la de menor rango?",
+        "a": [
+          "Orden Ministerial.",
+          "Real Decreto de Consejo de Ministros.",
+          "Real Decreto legislativo.",
+          "Real Decreto de Presidente del Gobierno."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T1.06 Fuentes del Derecho - Temario OPO.pdf — Pasaje del temario\n\nTemario, p. 26 (PDF p. 26)\n\nEl principio de jerarquía normativa no se refiere solo a las relaciones entre el Reglamento y la Ley. También los propios Reglamentos están relacionados entre sí jerárquicamente de forma correlativa a la jerarquía que une a los órganos de que proceden. El art. 24.2 de la LG dispone: “Los Reglamentos se ordenarán según la siguiente jerarquía: 1º. Disposiciones aprobadas por Real Decreto del Presidente del Gobierno o acordado en Consejo de Ministros. 2º. Disposiciones aprobadas por Orden Ministerial”.\n\nT1.02 Cortes Generales - Temario.pdf — 5. Elaboración de las leyes — delegación legislativa (art. 82.1)\n\nTemario, p. 12 (PDF p. 12)\n\nLas Cortes Generales podrán delegar en el Gobierno la potestad de dictar normas con rango de ley sobre materias determinadas no incluidas para las leyes orgánicas (art. 82.1 CE).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "0149dd37495f54198cfe8c83738a70b0dec786e143dae4946200a6e5a1fd42f8",
+      "afterSha256": "edb92063105aa670c824fbca0a067e32091bbf4700f30f56eb0f486cf562b7ac",
+      "evidenceKeys": [
+        "e-AT106-P1-09",
+        "context-AT106-P1-09"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT106-P1-12",
+      "before": {
+        "i": "AT106-P1-12",
+        "t": "T1.06",
+        "o": "A",
+        "q": "En aplicación de la CE, existe delegación legislativa de las Cortes Generales en el Gobierno en el supuesto de los:",
+        "a": [
+          "Reglamentos con fuerza de ley.",
+          "Decretos-Leyes y Decretos Legislativos.",
+          "Decretos Legislativos.",
+          "Proyectos de Ley."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT106-P1-12",
+        "t": "T1.06",
+        "o": "A",
+        "q": "En aplicación de la CE, existe delegación legislativa de las Cortes Generales en el Gobierno en el supuesto de los:",
+        "a": [
+          "Reglamentos con fuerza de ley.",
+          "Decretos-Leyes y Decretos Legislativos.",
+          "Decretos Legislativos.",
+          "Proyectos de Ley."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.06 Fuentes del Derecho - Temario OPO.pdf — Legislación delegada — artículos 82 y 85 CE\n\nTemario, p. 19 (PDF p. 19)\n\nLa LEGISLACIÓN DELEGADA viene expresamente recogida en la CE. En concreto: “Las Cortes Generales podrán delegar en el Gobierno la potestad de dictar normas con rango de ley sobre materias determinadas no incluidas en el art. anterior” (Ley Orgánica) (art. 82.1 CE). Materias excluidas (art. 81.1 CE): - Desarrollo de los derechos fundamentales y de las libertades públicas. - Estatutos de Autonomía. - Régimen electoral general - Las demás previstas en la Constitución (materias reguladas por Ley Orgánica). Según el art. 82.2 de la CE, podemos distinguir 2 tipos de legislación delegada: - Textos refundidos. - Textos articulados. Las disposiciones del Gobierno que contengan legislación delegada recibirán el título de Decretos Legislativos (art. 85 CE).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "d14c6eae208957cf0c025538e9fe283b5101aedc55e8af15e7771d6f5badf07f",
+      "afterSha256": "e7a4cbbf69e92aea8a4bc0030006330c32a2460817431fbb4274e16b24b2e820",
+      "evidenceKeys": [
+        "e-AT106-P1-12"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT106-P1-14",
+      "before": {
+        "i": "AT106-P1-14",
+        "t": "T1.06",
+        "o": "A",
+        "q": "¿Cuándo son aplicables los principios generales del derecho?",
+        "a": [
+          "Cuando así lo habilite un precepto legal y siempre que no sean contrarios a la moral ni al orden público y resulten probados.",
+          "Siempre que no exista doctrina científica.",
+          "Siempre que las normas de desarrollo reglamentario así lo prevean.",
+          "En defecto de ley o costumbre, sin perjuicio de su carácter informador del ordenamiento jurídico."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT106-P1-14",
+        "t": "T1.06",
+        "o": "A",
+        "q": "¿Cuándo son aplicables los principios generales del derecho?",
+        "a": [
+          "Cuando así lo habilite un precepto legal y siempre que no sean contrarios a la moral ni al orden público y resulten probados.",
+          "Siempre que no exista doctrina científica.",
+          "Siempre que las normas de desarrollo reglamentario así lo prevean.",
+          "En defecto de ley o costumbre, sin perjuicio de su carácter informador del ordenamiento jurídico."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T1.06 Fuentes del Derecho - Temario OPO.pdf — Pasaje del temario\n\nTemario, p. 3 (PDF p. 3)\n\nLos PRINCIPIOS GENERALES DEL DERECHO (pgD) se aplicarán en defecto de ley o costumbre, sin perjuicio de su carácter informador del ordenamiento jurídico (art. 1.4 CC).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "2506b8da7161a8cb675cb98e620d1d18ff84da54c9b297919daff9833a159e0a",
+      "afterSha256": "0a11270597b3a2d2bced924e5fced40a132b512e17b8f5c7c288627ae23f4d1e",
+      "evidenceKeys": [
+        "e-AT106-P1-14"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT106-P1-27",
+      "before": {
+        "i": "AT106-P1-27",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Según la Constitución Española, la delegación legislativa de las Cortes Generales en el Gobierno, cuando tenga por objeto la formación de textos articulados, deberá otorgarse mediante:",
+        "a": [
+          "Ley orgánica.",
+          "Ley de bases.",
+          "Ley ordinaria.",
+          "Ley orgánica o Ley de bases, según la materia."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT106-P1-27",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Según la Constitución Española, la delegación legislativa de las Cortes Generales en el Gobierno, cuando tenga por objeto la formación de textos articulados, deberá otorgarse mediante:",
+        "a": [
+          "Ley orgánica.",
+          "Ley de bases.",
+          "Ley ordinaria.",
+          "Ley orgánica o Ley de bases, según la materia."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.06 Fuentes del Derecho - Temario OPO.pdf — Pasaje del temario\n\nTemario, p. 20 (PDF p. 20)\n\nLa delegación legislativa deberá otorgarse mediante una Ley de Bases cuando su objeto sea la formación de textos articulados (art. 82.2 CE).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "3b53559e678a0d895ab6aa99985566e4870cd12a02cca66dd09911cdf1f86f85",
+      "afterSha256": "17bc99507241d533ce229ff1091edf99ced1f4249a2ef7fb3177dad136593477",
+      "evidenceKeys": [
+        "e-AT106-P1-27"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT106-P1-29",
+      "before": {
+        "i": "AT106-P1-29",
+        "t": "T1.06",
+        "o": "A",
+        "q": "De acuerdo con el Derecho comunitario vigente, las recomendaciones y los dictámenes de la Comisión Europea:",
+        "a": [
+          "No serán vinculantes.",
+          "Serán vinculantes.",
+          "Obligarán a todos los Estados afectados.",
+          "Serán preceptivos en todo su contenido."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT106-P1-29",
+        "t": "T1.06",
+        "o": "A",
+        "q": "De acuerdo con el Derecho comunitario vigente, las recomendaciones y los dictámenes de la Comisión Europea:",
+        "a": [
+          "No serán vinculantes.",
+          "Serán vinculantes.",
+          "Obligarán a todos los Estados afectados.",
+          "Serán preceptivos en todo su contenido."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.06 Fuentes del Derecho - Temario OPO.pdf — Derecho de la UE — recomendaciones y dictámenes\n\nTemario, p. 29 (PDF p. 29)\n\nLas RECOMENDACIONES y los DICTÁMENES no serán vinculantes. La incorporación al ordenamiento interno del Derecho Comunitario se produce directamente, dado que, a través del Tratado de Adhesión de España a las Comunidades Europeas, se ha producido una cesión de soberanía. En consecuencia, no es precisa ni la ratificación ni la publicación en el BOE para su entrada en vigor, bastando su publicación en el Diario Oficial de la Unión Europea.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "40aecbf2d3fef889bc4cb453c4d623cfb4d372c4a9deb99339dc33e6d47106ea",
+      "afterSha256": "fbd3fc253345e9d90d3e4cc8bf350c76364e7024f3921fa70cd20d7813e97878",
+      "evidenceKeys": [
+        "e-AT106-P1-29"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT106-P1-30",
+      "before": {
+        "i": "AT106-P1-30",
+        "t": "T1.06",
+        "o": "A",
+        "q": "De conformidad con la Constitución Española, el desarrollo de los derechos fundamentales y de las libertades públicas, se llevará a efecto mediante:",
+        "a": [
+          "Ley.",
+          "Ley orgánica.",
+          "Decreto Legislativo.",
+          "Decreto-Ley."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT106-P1-30",
+        "t": "T1.06",
+        "o": "A",
+        "q": "De conformidad con la Constitución Española, el desarrollo de los derechos fundamentales y de las libertades públicas, se llevará a efecto mediante:",
+        "a": [
+          "Ley.",
+          "Ley orgánica.",
+          "Decreto Legislativo.",
+          "Decreto-Ley."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.06 Fuentes del Derecho - Temario OPO.pdf — Leyes orgánicas — artículo 81.1 CE\n\nTemario, p. 15 (PDF p. 15)\n\nSon leyes orgánicas (art. 81.1 CE): - Las relativas al desarrollo de los derechos fundamentales y de las libertadas públicas. - Las que aprueben los Estatutos de Autonomía. - Las que aprueben el régimen electoral general. - Las demás previstas en la CE.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "e7ae58512b07c2bc9140fffc3aecba23e15fab59601cda2d48688e042471ad42",
+      "afterSha256": "78a70acb56fd5a8659e264a4f287abd62c25afb45a46587b5fc71ac3c36270cd",
+      "evidenceKeys": [
+        "e-AT106-P1-30"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT106-P1-35",
+      "before": {
+        "i": "AT106-P1-35",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Los Estatutos de Autonomía serán aprobados por:",
+        "a": [
+          "Leyes de bases.",
+          "Leyes ordinarias.",
+          "Reales Decretos.",
+          "Leyes orgánicas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT106-P1-35",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Los Estatutos de Autonomía serán aprobados por:",
+        "a": [
+          "Leyes de bases.",
+          "Leyes ordinarias.",
+          "Reales Decretos.",
+          "Leyes orgánicas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.06 Fuentes del Derecho - Temario OPO.pdf — Leyes orgánicas — artículo 81.1 CE\n\nTemario, p. 15 (PDF p. 15)\n\nSon leyes orgánicas (art. 81.1 CE): - Las relativas al desarrollo de los derechos fundamentales y de las libertadas públicas. - Las que aprueben los Estatutos de Autonomía. - Las que aprueben el régimen electoral general. - Las demás previstas en la CE.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "8058038d29ad77915ba54b2d7075f0d23b48fc8681216ce2fac88c4e2eed6a96",
+      "afterSha256": "8b3c49c83e4a3e56429456dde04d75a52e91eb10d7775f46a301044e84822859",
+      "evidenceKeys": [
+        "e-AT106-P1-35"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT106-P1-38",
+      "before": {
+        "i": "AT106-P1-38",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Tal y como así establece nuestro texto constitucional, ¿qué autorización previa requiere la prestación del consentimiento del Estado para obligarse por medio de Tratados o convenios que supongan modificación o derogación de alguna Ley o exijan medias legislativas para su ejecución?",
+        "a": [
+          "Del Congreso de los Diputados.",
+          "De las Cortes Generales.",
+          "Del Presidente del Gobierno.",
+          "Del Jefe del Estado."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT106-P1-38",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Tal y como así establece nuestro texto constitucional, ¿qué autorización previa requiere la prestación del consentimiento del Estado para obligarse por medio de Tratados o convenios que supongan modificación o derogación de alguna Ley o exijan medias legislativas para su ejecución?",
+        "a": [
+          "Del Congreso de los Diputados.",
+          "De las Cortes Generales.",
+          "Del Presidente del Gobierno.",
+          "Del Jefe del Estado."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T1.02 Cortes Generales - Temario.pdf — Tratados internacionales — artículo 94.1\n\nTemario, p. 16 (PDF p. 16)\n\nLa prestación del consentimiento del Estado para obligarse por medio de tratados o convenios requerirá la previa autorización de las Cortes Generales, en los siguientes casos (art. 94.1 CE): - Tratados de carácter político. - Tratados o convenios de carácter militar. - Tratados o convenios que afecten a la integridad territorial del Estado o a los derechos y deberes fundamentales establecidos en el Título I. - Tratados o convenios que impliquen obligaciones financieras para la Hacienda Pública. - Tratados o convenios que supongan modificación o derogación de alguna ley o exijan medidas legislativas para su ejecución.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "e9cc21b8de69aac5eba9cfc2110eab0bf7dea19f5d41a9f5f34c234108bafd2a",
+      "afterSha256": "94ef132c03fb9d1f03710f1d1c1777ff8453884eaadbe237dec434419da1969e",
+      "evidenceKeys": [
+        "e-AT106-P1-38"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS03-P1-07",
+      "before": {
+        "i": "AS03-P1-07",
+        "t": "T1.06",
+        "o": "A",
+        "q": "El artículo 82 de la Constitución Española indica que la delegación legislativa deberá otorgarse mediante:",
+        "a": [
+          "Una ley ordinaria cuando se trate de la formación de textos articulados.",
+          "Una ley de bases cuando se trate de refundir varios textos legales en uno solo.",
+          "Una ley de bases cuando su objeto sea la formación de textos articulados.",
+          "Una ley orgánica cuando se trate de formación de textos articulados."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS03-P1-07",
+        "t": "T1.06",
+        "o": "A",
+        "q": "El artículo 82 de la Constitución Española indica que la delegación legislativa deberá otorgarse mediante:",
+        "a": [
+          "Una ley ordinaria cuando se trate de la formación de textos articulados.",
+          "Una ley de bases cuando se trate de refundir varios textos legales en uno solo.",
+          "Una ley de bases cuando su objeto sea la formación de textos articulados.",
+          "Una ley orgánica cuando se trate de formación de textos articulados."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.06 Fuentes del Derecho - Temario OPO.pdf — Pasaje del temario\n\nTemario, p. 20 (PDF p. 20)\n\nLa delegación legislativa deberá otorgarse mediante una Ley de Bases cuando su objeto sea la formación de textos articulados (art. 82.2 CE).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "c4fec980169214f87066b5ebb6af332d85a7f5cb339c6ef9e00d2fb256fe4f5f",
+      "afterSha256": "0b1a65b4e47eb1b56125624a7068617bf049d31fa5ad9deae0ae3d10c6065ca7",
+      "evidenceKeys": [
+        "e-AS03-P1-07"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS08-P1-24",
+      "before": {
+        "i": "AS08-P1-24",
+        "t": "T1.06",
+        "o": "A",
+        "q": "El Gobierno podrá dictar disposiciones legislativas provisionales que tomarán la forma de Decretos-Leyes en caso de:",
+        "a": [
+          "Extraordinaria necesidad.",
+          "Interés general.",
+          "Extraordinaria y urgente necesidad.",
+          "Urgencia e interés general."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS08-P1-24",
+        "t": "T1.06",
+        "o": "A",
+        "q": "El Gobierno podrá dictar disposiciones legislativas provisionales que tomarán la forma de Decretos-Leyes en caso de:",
+        "a": [
+          "Extraordinaria necesidad.",
+          "Interés general.",
+          "Extraordinaria y urgente necesidad.",
+          "Urgencia e interés general."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "u": "T1.06 Fuentes del Derecho - Temario OPO.pdf — Pasaje del temario\n\nTemario, p. 20 (PDF p. 20)\n\nRegulado en el art. 86 de la CE: En casos de extraordinaria y urgente necesidad el Gobierno podrá dictar disposiciones legislativas provisionales que tomarán la forma de Decretos-Leyes y que NO podrán afectar: - Al ordenamiento de las instituciones básicas del Estado,\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "65e417954dba759113eb89dd3eefd0313dc8c238b13984cb1d6c852cd316b3ce",
+      "afterSha256": "7bc4163f769127dc388ff6559f23ea89567e3c3ffbac2061d8c74f1cabf75c3d",
+      "evidenceKeys": [
+        "e-AS08-P1-24"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "L2019-P1-10",
+        "t": "T1.06",
+        "o": "O",
+        "q": "Según lo establecido en el artículo 82 de la Constitución Española, cuando se trate de refundir varios textos legales en uno solo, la delegación legislativa de las Cortes Generales en el Gobierno deberá otorgarse mediante:",
+        "a": [
+          "Una Ley de Bases.",
+          "Una Ley Orgánica.",
+          "Una Ley Ordinaria.",
+          "Un Decreto Legislativo."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Ley de bases (articulado) frente a ley ordinaria (refundición).",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-10",
+        "t": "T1.06",
+        "o": "O",
+        "q": "La celebración de un tratado internacional que contenga estipulaciones contrarias a la Constitución:",
+        "a": [
+          "Es nula.",
+          "Exigirá la previa revisión constitucional.",
+          "Exigirá al Tribunal Supremo la previa declaración de la contradicción, que será solicitada por el Presidente del Gobierno.",
+          "Exigirá al Tribunal Constitucional la previa declaración de la contradicción, que será solicitada por el Presidente del Gobierno."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          1
+        ],
+        "d": 2,
+        "n": "Tratados contrarios a la CE: previa revisión constitucional.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-02",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Según lo establecido en el art. 150 de la CE, las leyes marco son:",
+        "a": [
+          "Leyes orgánicas.",
+          "Leyes de transferencia.",
+          "Leyes estatales.",
+          "Leyes marco."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-03",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Según el Código Civil, las fuentes del ordenamiento jurídico español son:",
+        "a": [
+          "La costumbre, los principios generales de derecho y la doctrina científica.",
+          "La ley, la costumbre y los principios generales de derecho.",
+          "La ley, los principios generales de derecho y la jurisprudencia.",
+          "La ley, la costumbre y la jurisprudencia."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-04",
+        "t": "T1.06",
+        "o": "A",
+        "q": "¿Cuándo los Tratado Internacionales forman parte del ordenamiento jurídico español?",
+        "a": [
+          "Cuando el Rey manifiesta el consentimiento del Estado.",
+          "Cuando sean publicados en el Diario Oficial de la Unión Europea.",
+          "Cuando sean publicados en el BOE.",
+          "En el momento de su aprobación."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-05",
+        "t": "T1.06",
+        "o": "A",
+        "q": "El principio de reserva de ley significa que ciertas materias solo pueden ser reguladas por:",
+        "a": [
+          "Real Decreto Legislativo.",
+          "Ley ordinaria o ley orgánica.",
+          "Ley orgánica y no por ley ordinaria.",
+          "Real Decreto-Ley."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-06",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Según el art. 153 de la CE, el control de la actividad de los órganos de las Comunidades Autónomas en lo relativo a la constitucionalidad de sus disposiciones normativas con fuerza de ley, se ejercerá por:",
+        "a": [
+          "El Tribunal de Cuentas.",
+          "La jurisdicción contencioso-administrativa.",
+          "El Gobierno.",
+          "El Tribunal Constitucional."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-07",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Las leyes dictadas por el Estado que establezcan los principios necesarios para conciliar las disposiciones normativas de las CCAA, aún en el caso de materias atribuidas a la competencia de éstas y cuando lo exija el interés general, son:",
+        "a": [
+          "Leyes de delegación.",
+          "Leyes de armonización.",
+          "Leyes de transferencia.",
+          "Leyes marco."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-08",
+        "t": "T1.06",
+        "o": "A",
+        "q": "¿Quién NO ejerce la potestad reglamentaria?",
+        "a": [
+          "El Gobierno.",
+          "Los órganos de Gobierno de las CCAA.",
+          "Los órganos de gobierno locales.",
+          "Las Cortes Generales."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-10",
+        "t": "T1.06",
+        "o": "A",
+        "q": "¿En cuál de los siguientes casos un reglamento NO es ilegal?",
+        "a": [
+          "Cuando vulnere otra disposición administrativa de rango superior.",
+          "Cuando regulen materias reservadas a la Ley.",
+          "Cuando establezca la retroactividad de disposiciones sancionadoras no favorables.",
+          "Cuando desarrolle una Ley."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-11",
+        "t": "T1.06",
+        "o": "A",
+        "q": "En relación con las leyes de bases señale la afirmación correcta:",
+        "a": [
+          "Las disposiciones del Gobierno que resulten del uso de una ley de bases serán Decretos Legislativos.",
+          "Su control se encomienda exclusivamente a la competencia de los Tribunales.",
+          "Podrán, si así se establece en la propia ley de bases y siempre que no se vulnere el principio de irretroactividad de las normas sancionadoras o restrictivas de derechos individuales, facultar al Gobierno para dictar normas con carácter retroactivo.",
+          "Deberán tener carácter de ley orgánica si tienen por objeto delegar la potestad de formar textos articulados en materia de régimen electoral general."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          1
+        ],
+        "d": 2,
+        "n": "Leyes de bases: afirmación correcta."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-13",
+        "t": "T1.06",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO tiene atribuida como competencia de la iniciativa legislativa?",
+        "a": [
+          "El Gobierno.",
+          "El Congreso.",
+          "El pueblo, solo para materias tributarias.",
+          "Las Asambleas de las CCAA."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-15",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Adoptan la forma de Real Decreto solo:",
+        "a": [
+          "Las disposiciones reglamentarias aprobadas por el Consejo de Ministros.",
+          "Las disposiciones reglamentarias aprobadas por el Presidente del Gobierno o el Consejo de Ministros.",
+          "Las disposiciones reglamentarias aprobadas por el Consejo de Ministros o por el Ministro de la Presidencia por corresponder la competencia a distintos Ministros.",
+          "Las disposiciones reglamentarias aprobadas por el Consejo de Ministros o las Comisiones Delegadas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-16",
+        "t": "T1.06",
+        "o": "A",
+        "q": "De acuerdo con la CE, las leyes orgánicas:",
+        "a": [
+          "Únicamente pueden ser propuestas para su tramitación por el Gobierno.",
+          "Son las relativas, entre otras, al desarrollo de los derechos y deberes de los ciudadanos.",
+          "Pueden ser aprobadas por las Cortes Generales y por las Asambleas Legislativas de las CCAA.",
+          "Su contenido queda excluido de la delegación que por parte de las Cortes Generales puedan hacer hacia el Gobierno para que dicte Decretos Legislativos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-17",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Señale cuál de las siguientes afirmaciones NO es correcta conforme a lo establecido en el artículo 1 del Código Civil:",
+        "a": [
+          "Las normas jurídicas contenidas en los Tratados Internacionales no serán de aplicación directa en España en tanto no hayan sido convalidadas por las Cortes Generales.",
+          "La jurisprudencia complementará el ordenamiento jurídico con la doctrina que, de modo reiterado, establezca el Tribunal Supremo al interpretar y aplicar la ley, la costumbre y los principios generales del derecho.",
+          "La costumbre solo regirá en defecto de ley aplicable, siempre que resulte probada y no sea contraria a la moral y al orden público.",
+          "Los principios generales del derecho tienen carácter informador del ordenamiento jurídico."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-18",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Por aplicación del principio de jerarquía normativa:",
+        "a": [
+          "Las leyes orgánicas prevalecen sobre las leyes autonómicas.",
+          "Las disposiciones del ejecutivo con rango de ley se subordinan a las leyes emanadas del poder legislativo.",
+          "Las disposiciones administrativas se subordinan a las disposiciones emanadas del poder legislativo.",
+          "Las leyes estatales tienen mayor rango que las leyes de las CCAA."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-19",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Según el Código Civil, la costumbre:",
+        "a": [
+          "Deberá ser probada y solo regirá en defecto de ley aplicable.",
+          "Puede ser, en determinados supuestos, contraria al orden público.",
+          "Los usos jurídicos interpretativos de una declaración de voluntad tienen la consideración de costumbre.",
+          "Se puede aplicar en cualquier momento."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-20",
+        "t": "T1.06",
+        "o": "A",
+        "q": "¿Cuál puede considerarse una fuente indirecta del derecho administrativo?",
+        "a": [
+          "La ley.",
+          "La jurisprudencia.",
+          "La costumbre.",
+          "Los principios generales del Derecho."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-21",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Una Ley entra en vigor:",
+        "a": [
+          "A los veinte días de su publicación en el BOE, salvo que la propia Ley disponga otra cosa, según establece el Código Civil.",
+          "Inmediatamente tras la sanción y promulgación por el Rey.",
+          "Inmediatamente tras la sanción del Rey, que dispone de quince días desde la aprobación del texto por las Cortes Generales.",
+          "Tras la sanción y promulgación del Rey, a los quince días de su publicación en el BOE, salvo que la propia Ley establezca otra fecha diferente, según establece el Código Civil."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-22",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Se regulará mediante Ley Orgánica:",
+        "a": [
+          "El Estatuto e Incompatibilidades de los miembros del Gobierno.",
+          "Las formas de ejercicio y los requisitos de la iniciativa popular para la presentación de proposiciones de ley.",
+          "El Estatuto Orgánico del Ministerio Fiscal.",
+          "El procedimiento a través del cual deben producirse los actos administrativos, garantizando cuando proceda la audiencia del interesado."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-23",
+        "t": "T1.06",
+        "o": "A",
+        "q": "El ejercicio de la potestad reglamentaria corresponde:",
+        "a": [
+          "Al Rey.",
+          "Al Gobierno.",
+          "Al Defensor del Pueblo.",
+          "A los Tribunales."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-24",
+        "t": "T1.06",
+        "o": "A",
+        "q": "En caso de extraordinaria y urgente necesidad el Gobierno podrá dictar:",
+        "a": [
+          "Decretos-leyes.",
+          "Leyes.",
+          "Decretos Legislativos.",
+          "Sentencias."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-25",
+        "t": "T1.06",
+        "o": "A",
+        "q": "La norma comunitaria que obliga al Estado miembro destinatario en cuanto al resultado que deba conseguir dejando, sin embargo, a las autoridades nacionales la elección de la forma y de los medios es:",
+        "a": [
+          "El reglamento.",
+          "La directiva.",
+          "La decisión.",
+          "La recomendación."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-26",
+        "t": "T1.06",
+        "o": "A",
+        "q": "De conformidad con la Constitución Española, el derecho de sindicación del funcionariado se regulará:",
+        "a": [
+          "Por Ley ordinaria.",
+          "Por Ley Orgánica.",
+          "El funcionariado no tiene reconocido el derecho de sindicación.",
+          "Por la normativa de la Función Pública de cada Comunidad Autónoma."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-28",
+        "t": "T1.06",
+        "o": "A",
+        "q": "De acuerdo con la Constitución Española, la celebración de un Tratado internacional que contenga estipulaciones contrarias a la misma, exigirá:",
+        "a": [
+          "La ratificación del Gobierno de la Nación, previa tramitación como Decreto-Ley.",
+          "La ratificación de las Cortes Generales, aprobada por mayoría cualificada.",
+          "La previa reforma constitucional.",
+          "La ratificación de las Cortes Generales, aprobada por mayoría absoluta."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-32",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Los Reglamentos administrativos NO podrán:",
+        "a": [
+          "Regular materias objeto de reserva de ley.",
+          "Tipificar infracciones administrativas.",
+          "Establecer cánones.",
+          "Hacer ninguna de las previsiones anteriores."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-33",
+        "t": "T1.06",
+        "o": "A",
+        "q": "De acuerdo con la Constitución Española, el ejercicio de los derechos y libertades reconocidos en el Capítulo II del Título I solo podrá regularse por:",
+        "a": [
+          "Decreto.",
+          "Ley.",
+          "Orden.",
+          "Decreto-ley."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-34",
+        "t": "T1.06",
+        "o": "A",
+        "q": "De entre las fuentes del Derecho comunitario NO son vinculantes:",
+        "a": [
+          "Los reglamentos.",
+          "Las directivas.",
+          "Los dictámenes.",
+          "Las decisiones."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Actos no vinculantes de la UE."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-36",
+        "t": "T1.06",
+        "o": "A",
+        "q": "La sanción de las leyes aprobadas por las Cortes Generales corresponde a:",
+        "a": [
+          "El Rey en el plazo de 15 días desde su aprobación.",
+          "El Presidente del Congreso de los Diputados en el plazo de 15 días desde su aprobación.",
+          "El Presidente del Congreso de los Diputados en el plazo de 30 días desde su aprobación.",
+          "El Rey en el plazo de 20 días desde su aprobación."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-37",
+        "t": "T1.06",
+        "o": "A",
+        "q": "¿A quién corresponde garantizar el cumplimiento de los tratados por los que se atribuya a una organización o institución internacional el ejercicio de competencias derivadas de la Constitución Española?",
+        "a": [
+          "Al Jefe del Estado.",
+          "A las Cortes Generales o al Gobierno, según los casos.",
+          "A las Cortes Generales, sin excepción.",
+          "Al Gobierno en cuanto titular del poder ejecutivo."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-39",
+        "t": "T1.06",
+        "o": "A",
+        "q": "En el supuesto de que una Comunidad Autónoma remitiera a la Mesa del Congreso una proposición de reforma de la Constitución, ¿cuántos miembros de dicha Asamblea Legislativa estarían encargados de su defensa ante el Pleno de la Cámara Baja?",
+        "a": [
+          "Todos.",
+          "Cualquiera de ellos.",
+          "Tres.",
+          "Uno, tres o cinco."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT106-P1-40",
+        "t": "T1.06",
+        "o": "A",
+        "q": "La delegación legislativa deberá otorgarse al Gobierno:",
+        "a": [
+          "Para materia determinada.",
+          "Con fijación del plazo mínimo para su ejercicio.",
+          "Todas las otras respuestas son ciertas.",
+          "De forma expresa o presunta."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          12,
+          1
+        ],
+        "d": 2,
+        "n": "Delegación legislativa: \"plazo mínimo\" y \"presunta\" deformados."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-50",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Las disposiciones legislativas provisionales dictadas por el Gobierno de la Nación para casos de extraordinaria y urgente necesidad, según dispone la Constitución Española, llevan el nombre de:",
+        "a": [
+          "Decretos-leyes.",
+          "Decretos-Legislativos.",
+          "Decretos Reglamentarios.",
+          "Leyes urgentes."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-88",
+        "t": "T1.06",
+        "o": "A",
+        "q": "La delegación legislativa deberá otorgarse mediante:",
+        "a": [
+          "Una ley de bases cuando su objeto sea la formación de textos articulados o por una ley orgánica cuando se trate de refundir varios textos legales en uno solo.",
+          "Una ley ordinaria cuando su objeto sea la formación de textos articulados o por una ley de bases cuando de trate de refundir varios textos legales en uno solo.",
+          "Una ley ordinaria cuando su objeto sea la formación de textos articulados o por una ley orgánica cuando se trate de refundir varios textos legales en uno solo.",
+          "Una ley de bases cuando su objeto sea la formación de textos articulados o por una ley ordinaria cuando se trate de refundir varios textos legales en uno solo."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-R-02",
+        "t": "T1.06",
+        "o": "A",
+        "q": "El Tribunal Constitucional tiene jurisdicción en todo el territorio español y es competente para conocer (señale la respuesta INCORRECTA):",
+        "a": [
+          "Del recurso de inconstitucionalidad contra leyes y disposiciones normativas con fuerza de ley. La declaración de inconstitucionalidad de una norma jurídica con rango de ley, interpretada por la jurisprudencia, afectará a ésta, si bien la sentencia o sentencias recaídas no perderán el valor de cosa juzgada.",
+          "Del recurso de amparo por violación de los derechos y libertades referidos en el artículo 53.2, de esta Constitución, en los casos y formas que la ley establezca.",
+          "De los conflictos de competencia entre el Gobierno y las Comunidades Autónomas o de los de éstas entre sí.",
+          "De las demás materias que le atribuyan la Constitución o las leyes orgánicas."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-04",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Los Decreto-Ley:",
+        "a": [
+          "Son disposiciones con alcance de reglamento, dictadas por el Consejo de Ministros por delegación expresa de las Cortes Generales.",
+          "No se pueden tramitar como Proyectos de Ley por el procedimiento de urgencia.",
+          "Deben ser convalidadas o derogados por el Congreso de los diputados de forma inmediata, en un máximo de 5 días.",
+          "Son disposiciones legislativas provisionales dictadas por el Gobierno en caso de extraordinaria y urgente necesidad."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-14",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Según la Constitución Española, la iniciativa legislativa:",
+        "a": [
+          "Corresponde en exclusiva al Gobierno cuando se pretenda la modificación de una ley orgánica.",
+          "Corresponde en exclusiva al Senado y a las respectivas Asambleas Legislativas, cuando se pretenda la reforma de un Estatuto de Autonomía.",
+          "No procederá mediante el ejercicio de la iniciativa popular en materias tributarias.",
+          "No podrá ejercerse por las Asambleas Legislativas de las Comunidades Autónomas para la modificación de leyes orgánicas distintas de su propio Estatuto de Autonomía."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-37",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Según el artículo 82 de la Constitución Española, la delegación legislativa (señale la respuesta INCORRECTA):",
+        "a": [
+          "Habrá de otorgarse para materia concreta.",
+          "Habrá de otorgarse con fijación del plazo para su ejercicio.",
+          "Habrá de otorgarse al Gobierno de forma expresa.",
+          "Podrá permitir la subdelegación a autoridades distintas del propio Gobierno."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-09",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Según establece la Constitución Española en relación con los decretos legislativos, señale la respuesta INCORRECTA:",
+        "a": [
+          "Las leyes de bases podrán facultar dictar normas con carácter retroactivo.",
+          "Las leyes de bases no en ningún caso podrán autorizar la modificación de la propia ley de bases.",
+          "La delegación legislativa habrá de otorgarse al Gobierno de forma expresa, para materia concreta y con fijación del plazo para su ejercicio.",
+          "La delegación legislativa no podrá entenderse concedida de modo implícito o por tiempo indeterminado, tampoco podrá permitir la subdelegación a autoridades distintas del propio Gobierno."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-26",
+        "t": "T1.06",
+        "o": "A",
+        "q": "¿A quién corresponde manifestar el consentimiento del Estado para obligarse internacionalmente por medio de tratados, de conformidad con la Constitución y las leyes?",
+        "a": [
+          "Al Presidente del Gobierno.",
+          "Al Gobierno.",
+          "Al Rey.",
+          "Al Congreso de los Diputados."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-27",
+        "t": "T1.06",
+        "o": "A",
+        "q": "¿A quién NO corresponde el ejercicio de la potestad reglamentaria según la Constitución Española?",
+        "a": [
+          "A las Cortes Generales.",
+          "Al Gobierno de la Nación.",
+          "A los órganos de gobierno locales.",
+          "A los órganos de gobierno de las Comunidades Autónomas."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-30",
+        "t": "T1.06",
+        "o": "A",
+        "q": "En relación con la jerarquía normativa, señale la respuesta correcta:",
+        "a": [
+          "Las leyes orgánicas tienen un rango superior a las leyes ordinarias.",
+          "Las normas con fuerza de ley tienen un rango superior a los reglamentos.",
+          "Los principios generales del Derecho tienen un rango superior a la costumbre.",
+          "Las leyes marco tienen un rango superior a las leyes de transferencia."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-16",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Según el artículo 84 de la Constitución Española, cuando una proposición de ley o una enmienda fuere contraria a una delegación legislativa en vigor:",
+        "a": [
+          "El Gobierno está facultado para oponerse a su tramitación.",
+          "Será automáticamente rechazada por el Congreso de los Diputados.",
+          "Supondrá la derogación total o parcial de la ley de delegación.",
+          "Se modificará la ley de delegación en los términos expresados en la proposición o enmienda."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-06",
+        "t": "T1.06",
+        "o": "A",
+        "q": "De conformidad con el Título III de la Constitución Española, ¿qué tipo de disposición normativa con fuerza de Ley emana del Gobierno en situaciones de extraordinaria y urgente necesidad?",
+        "a": [
+          "Decreto Legislativo.",
+          "Decreto-Ley.",
+          "Ley Orgánica.",
+          "Ley de Bases."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 213,
+    "alreadyHadCitation": 157,
+    "added": 12,
+    "pending": 44,
+    "withCitation": 169
+  }
+}

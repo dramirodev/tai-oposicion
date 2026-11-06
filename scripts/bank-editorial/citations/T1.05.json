@@ -1,0 +1,3708 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T1.05",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "bb8936aac16d8e547c69e0fdc1b84b368b53f33cdf19321929c67315a5f5a7ee",
+    "afterSha256": "c2b2523e0b4db8a584b3659b75a6096605ff471f21935109a1ddab4a706f0c40"
+  },
+  "sample": {
+    "beforeSha256": "8b91da148d33c063e7141a1384a1f048a1869807e9d9a4490529a82af626825d",
+    "afterSha256": "8b91da148d33c063e7141a1384a1f048a1869807e9d9a4490529a82af626825d"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-TAIL2022-P1-08": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 90,
+      "printedPage": 90,
+      "excerpt": "Todas las resoluciones de compatibilidad para desempeñar un 2º puesto o actividad en el sector público o el ejercicio de actividades privadas se inscribirán en los Registros de Personal correspondientes. Este requisito será indispensable, en el primer caso, para que puedan acreditarse haberes a los afectados por dicho puesto o actividad.",
+      "label": "Pasaje del temario"
+    },
+    "e-L2025X-P1-09": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 90,
+      "printedPage": 90,
+      "excerpt": "Todas las resoluciones de compatibilidad para desempeñar un 2º puesto o actividad en el sector público o el ejercicio de actividades privadas se inscribirán en los Registros de Personal correspondientes. Este requisito será indispensable, en el primer caso, para que puedan acreditarse haberes a los afectados por dicho puesto o actividad.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT1051-P1-12": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 12,
+      "printedPage": 12,
+      "excerpt": "4. La condición de personal eventual NO podrá constituir mérito para el acceso a la Función Pública o para la promoción interna.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT1051-P1-25": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 19,
+      "printedPage": 19,
+      "excerpt": "Artículo 15. Derechos individuales EJERCIDOS COLECTIVAMENTE Los empleados públicos tienen los siguientes derechos individuales que se ejercen de forma colectiva: - A la libertad sindical. - A la negociación colectiva y a la participación en la determinación de las condiciones de trabajo. - Al ejercicio de la huelga, con la garantía del mantenimiento de los servicios esenciales de la comunidad. - Al planteamiento de conflictos colectivos de trabajo. - Al de reunión, en los términos establecidos en el art. 46 de este Estatuto.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT1051-P1-26": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 19,
+      "printedPage": 19,
+      "excerpt": "Artículo 15. Derechos individuales EJERCIDOS COLECTIVAMENTE Los empleados públicos tienen los siguientes derechos individuales que se ejercen de forma colectiva: - A la libertad sindical. - A la negociación colectiva y a la participación en la determinación de las condiciones de trabajo. - Al ejercicio de la huelga, con la garantía del mantenimiento de los servicios esenciales de la comunidad. - Al planteamiento de conflictos colectivos de trabajo. - Al de reunión, en los términos establecidos en el art. 46 de este Estatuto.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT1051-P1-27": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 29,
+      "printedPage": 29,
+      "excerpt": "Artículo 50. Vacaciones de los funcionarios públicos 1. Los funcionarios públicos tendrán derecho a disfrutar, durante cada año natural, de unas vacaciones retribuidas de 22 días hábiles, o de los días que correspondan proporcionalmente si el tiempo de servicio durante el año fue menor (no se considerarán como días hábiles los sábados, sin perjuicio de las adaptaciones que se establezcan para los horarios especiales).",
+      "label": "Pasaje del temario"
+    },
+    "e-AT1051-P1-35": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 43,
+      "printedPage": 43,
+      "excerpt": "Artículo 55. Principios rectores 1. Todos los ciudadanos tienen derecho al acceso al empleo público de acuerdo con los principios constitucionales de igualdad, mérito y capacidad, y de acuerdo con lo previsto en el presente Estatuto y en el resto del ordenamiento jurídico.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT1051-P1-39": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 46,
+      "printedPage": 46,
+      "excerpt": "2. La composición y funcionamiento de dichos órganos garantizarán: - los principios de imparcialidad, profesionalidad y especialización de sus integrantes, - los principios de agilidad y celeridad en la realización de las pruebas, así como la presencia equilibrada entre mujeres y hombres. - Se promoverá, igualmente, la participación en los mismos de personas con discapacidad, en particular en aquellos procesos en los que exista turno de reserva para este colectivo.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT1051-P1-49": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 53,
+      "printedPage": 53,
+      "excerpt": "Artículo 69. Objetivos e instrumentos de la planificación 1. La planificación de los RRHH en las AAPP tendrá como objetivo contribuir a la consecución de la eficacia en la prestación de los servicios y de la eficiencia en la utilización de los recursos económicos disponibles mediante la dimensión adecuada de sus efectivos, su mejor distribución, formación, promoción profesional y movilidad.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT1051-P1-55": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 58,
+      "printedPage": 58,
+      "excerpt": "Artículo 76. Grupos de clasificación profesional del personal funcionario de carrera Los cuerpos y escalas se clasifican, de acuerdo con la titulación exigida para el acceso a los mismos, en los siguientes grupos: - Grupo A: Dividido en dos Subgrupos, A1 y A2 (título universitario de Grado o el que exija la ley). La clasificación de los cuerpos y escalas en cada Subgrupo estará en función del nivel de responsabilidad de las funciones a desempeñar y de las características de las pruebas de acceso. - Grupo B: Para el acceso a los cuerpos o escalas del Grupo B se exigirá estar en posesión del título de Técnico Superior. - Grupo C: Dividido en dos Subgrupos: o C1: Título de Bachiller o Técnico. o C2: Título de Graduado en ESO.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT1052-P1-09": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 64,
+      "printedPage": 64,
+      "excerpt": "Artículo 116. La evaluación del desempeño. Concepto y fines 1. La evaluación del desempeño es el procedimiento mediante el cual anualmente se valora la conducta profesional y se mide el rendimiento o el logro de resultados de las empleadas y empleados públicos, con la finalidad de mejorar la productividad de las diferentes unidades y la calidad de los servicios públicos.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT1052-P1-10": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 62,
+      "printedPage": 62,
+      "excerpt": "7. La progresión alcanzada en el sistema de carrera profesional recogido en este artículo se retribuirá mediante un COMPLEMENTO DE CARRERA, cuya cuantía será la misma para todo el personal funcionario del mismo grupo o subgrupo de clasificación profesional que tenga reconocido el mismo tramo.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT1052-P1-34": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 79,
+      "printedPage": 79,
+      "excerpt": "i) Cuando sean designados como personal eventual por ocupar puestos de trabajo con funciones expresamente calificadas como de confianza o asesoramiento político y no opten por permanecer en la situación de servicio activo. j) Cuando adquieran la condición de funcionarios al servicio de organizaciones internacionales. k) Cuando sean designados asesores de los grupos parlamentarios de las Cortes Generales o de las asambleas legislativas de las CCAA. l) Cuando sean activados como reservistas voluntarios para prestar servicios en las Fuerzas Armadas.",
+      "label": "Pasaje del temario"
+    },
+    "context-AT1052-P1-34": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 78,
+      "printedPage": 78,
+      "excerpt": "Artículo 87. Servicios especiales En general son cargos políticos 1. Los funcionarios de carrera serán declarados en situación de servicios especiales:",
+      "label": "Situaciones administrativas — artículo 87"
+    },
+    "e-AT1052-P1-36": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 78,
+      "printedPage": 78,
+      "excerpt": "Artículo 87. Servicios especiales En general son cargos políticos 1. Los funcionarios de carrera serán declarados en situación de servicios especiales: a) Cuando sean designados miembros del Gobierno o de los órganos de gobierno de las CCAA y ciudades de Ceuta y Melilla, miembros de las Instituciones de la UE o de las organizaciones internacionales, o sean nombrados altos cargos de las citadas AAPP o Instituciones.",
+      "label": "TREBEP — servicios especiales (artículo 87.1.a)"
+    },
+    "e-AT1052-P1-46": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 88,
+      "printedPage": 88,
+      "excerpt": "2. El plazo de prescripción de las faltas comenzará a contarse desde que se hubieran cometido, y desde el cese de su comisión cuando se trate de faltas continuadas. El de las sanciones, desde la firmeza de la resolución sancionadora.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT1052-P1-47": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 89,
+      "printedPage": 89,
+      "excerpt": "Partiendo de dicho precepto constitucional surge la Ley 53/1984, 26 de diciembre, de Incompatibilidades del Personal al Servicio de las AAPP.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT1052-P1-53": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 90,
+      "printedPage": 90,
+      "excerpt": "- Con carácter general, es incompatible el ejercicio de 2 puestos públicos, con las excepciones que marca la ley, y para su ejercicio será necesaria autorización. - 1 puesto público y otro privado pueden ser compatibles. Para su ejercicio será necesario el reconocimiento de la compatibilidad. - Es incompatible la percepción de 2 remuneraciones a cargo del sector público. - Es incompatible el ejercicio de cualquier puesto público con la percepción de pensión de jubilación o retiro. La DA 9ª permite la compatibilidad del desempeño de un puesto de profesor emérito con la percepción de la pensión de jubilación. También es compatible el desempeño de un puesto a tiempo parcial en régimen laboral con la percepción de la pensión de jubilación parcial.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT1052-P1-58": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 51,
+      "printedPage": 51,
+      "excerpt": "Artículo 65. Pérdida de la nacionalidad La pérdida de la nacionalidad española o la de cualquier otro Estado miembro de la UE o la de aquellos Estados a los que, en virtud de tratados internacionales celebrados por la UE y ratificados por España, les sea de aplicación la libre circulación de trabajadores, que haya sido tenida en cuenta para el nombramiento, determinará la pérdida de la condición de funcionario salvo que simultáneamente se adquiera la nacionalidad de alguno de dichos Estados.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS05G-P1-24": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 29,
+      "printedPage": 29,
+      "excerpt": "Artículo 50. Vacaciones de los funcionarios públicos 1. Los funcionarios públicos tendrán derecho a disfrutar, durante cada año natural, de unas vacaciones retribuidas de 22 días hábiles, o de los días que correspondan proporcionalmente si el tiempo de servicio durante el año fue menor (no se considerarán como días hábiles los sábados, sin perjuicio de las adaptaciones que se establezcan para los horarios especiales).",
+      "label": "Pasaje del temario"
+    },
+    "e-AS08-P1-18": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 13,
+      "printedPage": 13,
+      "excerpt": "Artículo 13. Personal DIRECTIVO profesional (no es un tipo de Empleado Público, sí personal al servicio de las Admon) El Gobierno y los órganos de gobierno de las CCAA podrán establecer, en desarrollo de este Estatuto, el régimen jurídico específico del personal directivo así como los criterios para determinar su condición, de acuerdo, entre otros, con los siguientes principios: 1. Es personal directivo el que desarrolla funciones directivas profesionales en las AAPP, definidas como tales en las normas específicas de cada Admón. 2. Su designación atenderá a principios de mérito y capacidad y a criterios de idoneidad, y se llevará a cabo mediante procedimientos que garanticen la publicidad y concurrencia.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS12B-P1-07": {
+      "path": "T1.05 TREBEP/T1.05 TREBEP - Temario.pdf",
+      "sourceHash": "8ed9d7b96e099356e62602766f4a37eb15df7a18af84f17555f87d0cbe11a4e2",
+      "physicalPage": 8,
+      "printedPage": 8,
+      "excerpt": "Artículo 4. Personal con legislación específica propia Las disposiciones de este Estatuto sólo se aplicarán directamente cuando así lo disponga su legislación específica al siguiente personal: a) Personal funcionario de las Cortes Generales y de las asambleas legislativas de las CCAA. b) Personal funcionario de los demás Órganos Constitucionales del Estado y de los órganos estatutarios de las CCAA. c) Jueces, Magistrados, Fiscales y demás personal funcionario al servicio de la Admón. de Justicia. d) Personal militar de las Fuerzas Armadas. e) Personal de las Fuerzas y Cuerpos de Seguridad. f) Personal retribuido por arancel. g) Personal del Centro Nacional de Inteligencia. h) Personal del Banco de España y Fondo de Garantía de Depósitos de Entidades de Crédito.",
+      "label": "TREBEP — personal con legislación específica propia (artículo 4)"
+    }
+  },
+  "questions": [
+    {
+      "id": "TAIL2022-P1-08",
+      "before": {
+        "i": "TAIL2022-P1-08",
+        "t": "T1.05",
+        "o": "O",
+        "q": "Conforme establece el artículo 18 de la Ley 53/1984, de 26 de diciembre, de Incompatibilidades del personal al servicio de las Administraciones Públicas, todas las resoluciones de compatibilidad para desempeñar un segundo puesto o actividad en el sector público o el ejercicio de actividades privadas se inscribirán:",
+        "a": [
+          "En el Registro Central de Personal.",
+          "En la Oficina de Conflicto de Intereses.",
+          "En la Unidad de Personal del Ministerio u Organismo correspondiente.",
+          "En los Registros de Personal correspondientes."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          1
+        ],
+        "d": 3,
+        "n": "Ley 53/1984 incompatibilidades: registros hermanos.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "after": {
+        "i": "TAIL2022-P1-08",
+        "t": "T1.05",
+        "o": "O",
+        "q": "Conforme establece el artículo 18 de la Ley 53/1984, de 26 de diciembre, de Incompatibilidades del personal al servicio de las Administraciones Públicas, todas las resoluciones de compatibilidad para desempeñar un segundo puesto o actividad en el sector público o el ejercicio de actividades privadas se inscribirán:",
+        "a": [
+          "En el Registro Central de Personal.",
+          "En la Oficina de Conflicto de Intereses.",
+          "En la Unidad de Personal del Ministerio u Organismo correspondiente.",
+          "En los Registros de Personal correspondientes."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          1
+        ],
+        "d": 3,
+        "n": "Ley 53/1984 incompatibilidades: registros hermanos.",
+        "y": "Ingreso libre OEP 2022 (2023)",
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 90 (PDF p. 90)\n\nTodas las resoluciones de compatibilidad para desempeñar un 2º puesto o actividad en el sector público o el ejercicio de actividades privadas se inscribirán en los Registros de Personal correspondientes. Este requisito será indispensable, en el primer caso, para que puedan acreditarse haberes a los afectados por dicho puesto o actividad.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "ac02436f9ffff36599dea8ed247960673c424afdc81f4c7059501ec71b893e45",
+      "afterSha256": "af0e3251f578deb5092798c9899666402a26dcf8eb074392dc9428d901a868f0",
+      "evidenceKeys": [
+        "e-TAIL2022-P1-08"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "L2025X-P1-09",
+      "before": {
+        "i": "L2025X-P1-09",
+        "t": "T1.05",
+        "o": "O",
+        "q": "Conforme establece el artículo 18 de la Ley 53/1984, de 26 de diciembre, de Incompatibilidades del personal al servicio de las Administraciones Públicas, todas las resoluciones de compatibilidad para desempeñar un segundo puesto o actividad en el sector público o el ejercicio de actividades privadas se inscribirán:",
+        "a": [
+          "En el Registro Administrativo de Compatibilidades del organismo (RAC).",
+          "En la Oficina de Conflicto de Intereses.",
+          "En el Registro Común de Actividades del Personal de las Administraciones Públicas (RCAP).",
+          "En los Registros de Personal correspondientes."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          1,
+          9
+        ],
+        "d": 3,
+        "n": "Repite el enunciado de 2022 P8 con distractores nuevos (RAC, RCAP inventados).",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "after": {
+        "i": "L2025X-P1-09",
+        "t": "T1.05",
+        "o": "O",
+        "q": "Conforme establece el artículo 18 de la Ley 53/1984, de 26 de diciembre, de Incompatibilidades del personal al servicio de las Administraciones Públicas, todas las resoluciones de compatibilidad para desempeñar un segundo puesto o actividad en el sector público o el ejercicio de actividades privadas se inscribirán:",
+        "a": [
+          "En el Registro Administrativo de Compatibilidades del organismo (RAC).",
+          "En la Oficina de Conflicto de Intereses.",
+          "En el Registro Común de Actividades del Personal de las Administraciones Públicas (RCAP).",
+          "En los Registros de Personal correspondientes."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          1,
+          9
+        ],
+        "d": 3,
+        "n": "Repite el enunciado de 2022 P8 con distractores nuevos (RAC, RCAP inventados).",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 90 (PDF p. 90)\n\nTodas las resoluciones de compatibilidad para desempeñar un 2º puesto o actividad en el sector público o el ejercicio de actividades privadas se inscribirán en los Registros de Personal correspondientes. Este requisito será indispensable, en el primer caso, para que puedan acreditarse haberes a los afectados por dicho puesto o actividad.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "419ff8506f549a1453ac87e57d29456e10bc4a27075e5bbdc584f567021b5ae8",
+      "afterSha256": "2b0190cf3434fd66d7301a9738f75f51753ab266c437a7fa707603b668699a5b",
+      "evidenceKeys": [
+        "e-L2025X-P1-09"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT1051-P1-12",
+      "before": {
+        "i": "AT1051-P1-12",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el Real Decreto Legislativo 5/2015, por el que se aprueba el Texto Refundido de la Ley del Estatuto Básico del Empleado Público, es correcto indicar que:",
+        "a": [
+          "Es personal eventual el que, en virtud de nombramiento y con carácter fijo, por tiempo indefinido o temporal dependiendo del caso, solo realiza funciones expresamente calificadas como de confianza o asesoramiento especial.",
+          "El nombramiento y cese del personal eventual no serán libres.",
+          "La condición de personal eventual no podrá constituir mérito para el acceso a la Función Pública o para la promoción interna.",
+          "Al personal eventual le será aplicable, en lo que sea adecuado a la naturaleza de su condición, el mismo convenio del personal laboral."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1051-P1-12",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el Real Decreto Legislativo 5/2015, por el que se aprueba el Texto Refundido de la Ley del Estatuto Básico del Empleado Público, es correcto indicar que:",
+        "a": [
+          "Es personal eventual el que, en virtud de nombramiento y con carácter fijo, por tiempo indefinido o temporal dependiendo del caso, solo realiza funciones expresamente calificadas como de confianza o asesoramiento especial.",
+          "El nombramiento y cese del personal eventual no serán libres.",
+          "La condición de personal eventual no podrá constituir mérito para el acceso a la Función Pública o para la promoción interna.",
+          "Al personal eventual le será aplicable, en lo que sea adecuado a la naturaleza de su condición, el mismo convenio del personal laboral."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 12 (PDF p. 12)\n\n4. La condición de personal eventual NO podrá constituir mérito para el acceso a la Función Pública o para la promoción interna.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "309d57512e1443202e049aaa43ab42bc7636c164dd7e971f79c4164625512a07",
+      "afterSha256": "8257e440d33db9d7d3fa9328eec2a8a1adabdd4da5007c8aae272ce2e4b3fa54",
+      "evidenceKeys": [
+        "e-AT1051-P1-12"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT1051-P1-25",
+      "before": {
+        "i": "AT1051-P1-25",
+        "t": "T1.05",
+        "o": "A",
+        "q": "El derecho al ejercicio de la huelga de los empleados públicos se ejercerá:",
+        "a": [
+          "Con la garantía del mantenimiento de los servicios esenciales de la comunidad.",
+          "De manera obligatoria cuando se trate de huelga general.",
+          "De acuerdo con la legislación aplicable en cada caso.",
+          "De forma que nadie pueda ser obligado a trabajar."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1051-P1-25",
+        "t": "T1.05",
+        "o": "A",
+        "q": "El derecho al ejercicio de la huelga de los empleados públicos se ejercerá:",
+        "a": [
+          "Con la garantía del mantenimiento de los servicios esenciales de la comunidad.",
+          "De manera obligatoria cuando se trate de huelga general.",
+          "De acuerdo con la legislación aplicable en cada caso.",
+          "De forma que nadie pueda ser obligado a trabajar."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 19 (PDF p. 19)\n\nArtículo 15. Derechos individuales EJERCIDOS COLECTIVAMENTE Los empleados públicos tienen los siguientes derechos individuales que se ejercen de forma colectiva: - A la libertad sindical. - A la negociación colectiva y a la participación en la determinación de las condiciones de trabajo. - Al ejercicio de la huelga, con la garantía del mantenimiento de los servicios esenciales de la comunidad. - Al planteamiento de conflictos colectivos de trabajo. - Al de reunión, en los términos establecidos en el art. 46 de este Estatuto.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "ea3761f704a1922d4a902895fea47cf9941c6a16b497aefbb0968e644d3c9308",
+      "afterSha256": "6838d5100a31e333763174690e88ddb46c96715494b9c1d03d3baa099811e80a",
+      "evidenceKeys": [
+        "e-AT1051-P1-25"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT1051-P1-26",
+      "before": {
+        "i": "AT1051-P1-26",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el Texto Refundido de la Ley del Estatuto Básico del Empleado Público, aprobado por el Real Decreto Legislativo 5/2015, de 30 de octubre, los empleados públicos tienen los siguientes derechos individuales que se ejercen de forma colectiva:",
+        "a": [
+          "A la libre asociación profesional.",
+          "A participar en la consecución de los objetivos atribuidos a la unidad donde preste sus servicios y a ser informado por sus superiores de las tareas a desarrollar.",
+          "A la libertad sindical.",
+          "A la formación continua y a la actualización permanente de sus conocimientos y capacidades profesionales, preferentemente en horario laboral."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1051-P1-26",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el Texto Refundido de la Ley del Estatuto Básico del Empleado Público, aprobado por el Real Decreto Legislativo 5/2015, de 30 de octubre, los empleados públicos tienen los siguientes derechos individuales que se ejercen de forma colectiva:",
+        "a": [
+          "A la libre asociación profesional.",
+          "A participar en la consecución de los objetivos atribuidos a la unidad donde preste sus servicios y a ser informado por sus superiores de las tareas a desarrollar.",
+          "A la libertad sindical.",
+          "A la formación continua y a la actualización permanente de sus conocimientos y capacidades profesionales, preferentemente en horario laboral."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 19 (PDF p. 19)\n\nArtículo 15. Derechos individuales EJERCIDOS COLECTIVAMENTE Los empleados públicos tienen los siguientes derechos individuales que se ejercen de forma colectiva: - A la libertad sindical. - A la negociación colectiva y a la participación en la determinación de las condiciones de trabajo. - Al ejercicio de la huelga, con la garantía del mantenimiento de los servicios esenciales de la comunidad. - Al planteamiento de conflictos colectivos de trabajo. - Al de reunión, en los términos establecidos en el art. 46 de este Estatuto.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "4e25c06ba7ed73fb42479709303a386ead922a7233504d6ea8ee95847b8bc178",
+      "afterSha256": "46b855a139060d59adb68b6c25a928b3c6e3f7cd20db00aee7458ec8fa088da4",
+      "evidenceKeys": [
+        "e-AT1051-P1-26"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT1051-P1-27",
+      "before": {
+        "i": "AT1051-P1-27",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el TREBEP, las vacaciones anuales del personal funcionario tendrán una duración, por cada año completo de servicios, de:",
+        "a": [
+          "23 días hábiles.",
+          "22 días hábiles.",
+          "22 días naturales.",
+          "Un mes, que se podrá dividir en dos fracciones quincenales, o en su defecto, 22 días naturales."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1051-P1-27",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el TREBEP, las vacaciones anuales del personal funcionario tendrán una duración, por cada año completo de servicios, de:",
+        "a": [
+          "23 días hábiles.",
+          "22 días hábiles.",
+          "22 días naturales.",
+          "Un mes, que se podrá dividir en dos fracciones quincenales, o en su defecto, 22 días naturales."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 29 (PDF p. 29)\n\nArtículo 50. Vacaciones de los funcionarios públicos 1. Los funcionarios públicos tendrán derecho a disfrutar, durante cada año natural, de unas vacaciones retribuidas de 22 días hábiles, o de los días que correspondan proporcionalmente si el tiempo de servicio durante el año fue menor (no se considerarán como días hábiles los sábados, sin perjuicio de las adaptaciones que se establezcan para los horarios especiales).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "f40959e05c59d168b9c1e02887c71636df9ea48eb087af2b38b57f3aa4ee30b6",
+      "afterSha256": "537a7abd0f69eb9934351681615309a7184b6efe1c6b9806b41a06e0ac57c0fe",
+      "evidenceKeys": [
+        "e-AT1051-P1-27"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT1051-P1-35",
+      "before": {
+        "i": "AT1051-P1-35",
+        "t": "T1.05",
+        "o": "A",
+        "q": "En el artículo 55 del TREBEP, se establece que:",
+        "a": [
+          "Todos los ciudadanos tienen derecho al acceso al empleo público de acuerdo con los principios constitucionales de igualdad, mérito y capacidad.",
+          "Todos los españoles tienen derecho al acceso al empleo público de acuerdo con los principios constitucionales de igualdad, legalidad y capacidad.",
+          "Todos los españoles tienen derecho al acceso al empleo público de acuerdo con los principios constitucionales de igualdad, mérito y capacidad.",
+          "Todos los ciudadanos tienen derecho al acceso al empleo público de acuerdo con los principios constitucionales de igualdad, legalidad y capacidad."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1051-P1-35",
+        "t": "T1.05",
+        "o": "A",
+        "q": "En el artículo 55 del TREBEP, se establece que:",
+        "a": [
+          "Todos los ciudadanos tienen derecho al acceso al empleo público de acuerdo con los principios constitucionales de igualdad, mérito y capacidad.",
+          "Todos los españoles tienen derecho al acceso al empleo público de acuerdo con los principios constitucionales de igualdad, legalidad y capacidad.",
+          "Todos los españoles tienen derecho al acceso al empleo público de acuerdo con los principios constitucionales de igualdad, mérito y capacidad.",
+          "Todos los ciudadanos tienen derecho al acceso al empleo público de acuerdo con los principios constitucionales de igualdad, legalidad y capacidad."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 43 (PDF p. 43)\n\nArtículo 55. Principios rectores 1. Todos los ciudadanos tienen derecho al acceso al empleo público de acuerdo con los principios constitucionales de igualdad, mérito y capacidad, y de acuerdo con lo previsto en el presente Estatuto y en el resto del ordenamiento jurídico.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "ad1d18254debf1728e8621dde130c5fcf29d84ca485d9766a5a3a32757aac6e4",
+      "afterSha256": "0acdbc8bd02258b66db5a81b1d3b049d10d0789c9c025b9a4e4b5c785ad719fb",
+      "evidenceKeys": [
+        "e-AT1051-P1-35"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT1051-P1-39",
+      "before": {
+        "i": "AT1051-P1-39",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el Real Decreto-ley 6/2023, ¿cuáles son principios a los que deberá ajustarse la composición y el funcionamiento de los órganos de selección?",
+        "a": [
+          "Transparencia e imparcialidad de sus integrantes.",
+          "Agilidad y profesionalidad de sus integrantes.",
+          "Imparcialidad, profesionalidad y especialización de sus integrantes.",
+          "Transparencia, agilidad y profesionalidad de sus integrantes."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1051-P1-39",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el Real Decreto-ley 6/2023, ¿cuáles son principios a los que deberá ajustarse la composición y el funcionamiento de los órganos de selección?",
+        "a": [
+          "Transparencia e imparcialidad de sus integrantes.",
+          "Agilidad y profesionalidad de sus integrantes.",
+          "Imparcialidad, profesionalidad y especialización de sus integrantes.",
+          "Transparencia, agilidad y profesionalidad de sus integrantes."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 46 (PDF p. 46)\n\n2. La composición y funcionamiento de dichos órganos garantizarán: - los principios de imparcialidad, profesionalidad y especialización de sus integrantes, - los principios de agilidad y celeridad en la realización de las pruebas, así como la presencia equilibrada entre mujeres y hombres. - Se promoverá, igualmente, la participación en los mismos de personas con discapacidad, en particular en aquellos procesos en los que exista turno de reserva para este colectivo.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "78ce361c2ad038f949494788d442df274ad313ff44149a3ca898ac86963dc685",
+      "afterSha256": "db0801c0a63787aef5b7d1e2f0e9bf5269ad56ea9c73376de0ef83dad3f8e180",
+      "evidenceKeys": [
+        "e-AT1051-P1-39"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT1051-P1-49",
+      "before": {
+        "i": "AT1051-P1-49",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con lo dispuesto en el artículo 69 del TREBEP, la planificación de los recursos humanos en las Administraciones Públicas tendrá como objetivo contribuir a:",
+        "a": [
+          "La eficacia en la utilización de los recursos humanos disponibles.",
+          "La optimización en la optimización de los recursos humanos disponibles.",
+          "La eficiencia en la prestación de los servicios.",
+          "La eficacia en la prestación de los servicios."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1051-P1-49",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con lo dispuesto en el artículo 69 del TREBEP, la planificación de los recursos humanos en las Administraciones Públicas tendrá como objetivo contribuir a:",
+        "a": [
+          "La eficacia en la utilización de los recursos humanos disponibles.",
+          "La optimización en la optimización de los recursos humanos disponibles.",
+          "La eficiencia en la prestación de los servicios.",
+          "La eficacia en la prestación de los servicios."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 53 (PDF p. 53)\n\nArtículo 69. Objetivos e instrumentos de la planificación 1. La planificación de los RRHH en las AAPP tendrá como objetivo contribuir a la consecución de la eficacia en la prestación de los servicios y de la eficiencia en la utilización de los recursos económicos disponibles mediante la dimensión adecuada de sus efectivos, su mejor distribución, formación, promoción profesional y movilidad.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "b655defb47b6bc43461063734bd3d079f117e150d7ce853c99d51dc566162f6a",
+      "afterSha256": "0e9e7b0cb8827cb7387ac2bed22a3f761969a71e3aa7e2b4da1fa8a6b0628fcc",
+      "evidenceKeys": [
+        "e-AT1051-P1-49"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT1051-P1-55",
+      "before": {
+        "i": "AT1051-P1-55",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con el artículo 76 del TREBEP, los cuerpos y escalas se clasifican:",
+        "a": [
+          "De acuerdo con la titulación exigida para el acceso a los mismos.",
+          "De acuerdo con el nivel de responsabilidad de las funciones a desempeñar.",
+          "De acuerdo con las características de las pruebas de acceso.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1051-P1-55",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con el artículo 76 del TREBEP, los cuerpos y escalas se clasifican:",
+        "a": [
+          "De acuerdo con la titulación exigida para el acceso a los mismos.",
+          "De acuerdo con el nivel de responsabilidad de las funciones a desempeñar.",
+          "De acuerdo con las características de las pruebas de acceso.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 58 (PDF p. 58)\n\nArtículo 76. Grupos de clasificación profesional del personal funcionario de carrera Los cuerpos y escalas se clasifican, de acuerdo con la titulación exigida para el acceso a los mismos, en los siguientes grupos: - Grupo A: Dividido en dos Subgrupos, A1 y A2 (título universitario de Grado o el que exija la ley). La clasificación de los cuerpos y escalas en cada Subgrupo estará en función del nivel de responsabilidad de las funciones a desempeñar y de las características de las pruebas de acceso. - Grupo B: Para el acceso a los cuerpos o escalas del Grupo B se exigirá estar en posesión del título de Técnico Superior. - Grupo C: Dividido en dos Subgrupos: o C1: Título de Bachiller o Técnico. o C2: Título de Graduado en ESO.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "91fb6ac2dc733df2903a25f80bf94d3b1d99119e88916d591e3b66e191b756c7",
+      "afterSha256": "9ccfeb274b2e2277372b248b322ae0d985647586a6cd0118714f6e523853f421",
+      "evidenceKeys": [
+        "e-AT1051-P1-55"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT1052-P1-09",
+      "before": {
+        "i": "AT1052-P1-09",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el Real Decreto-ley 6/2023, el procedimiento mediante el cual anualmente se valora la conducta profesional y se mide el rendimiento o el logro de resultados de las empleadas y empleados públicos, con la finalidad de mejorar la productividad de las diferentes unidades y la calidad de los servicios públicos, se denomina:",
+        "a": [
+          "Evaluación del rendimiento.",
+          "Evaluación del desempeño.",
+          "Evaluación de idoneidad.",
+          "Evaluación de adaptación."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1052-P1-09",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el Real Decreto-ley 6/2023, el procedimiento mediante el cual anualmente se valora la conducta profesional y se mide el rendimiento o el logro de resultados de las empleadas y empleados públicos, con la finalidad de mejorar la productividad de las diferentes unidades y la calidad de los servicios públicos, se denomina:",
+        "a": [
+          "Evaluación del rendimiento.",
+          "Evaluación del desempeño.",
+          "Evaluación de idoneidad.",
+          "Evaluación de adaptación."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 64 (PDF p. 64)\n\nArtículo 116. La evaluación del desempeño. Concepto y fines 1. La evaluación del desempeño es el procedimiento mediante el cual anualmente se valora la conducta profesional y se mide el rendimiento o el logro de resultados de las empleadas y empleados públicos, con la finalidad de mejorar la productividad de las diferentes unidades y la calidad de los servicios públicos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "2e3bc016968e587c6714c892862db10bea8a56836a50dc2c491c442eb189a1df",
+      "afterSha256": "80aa04ad46dcc3c956e592af89a7131df1d539adbda6dc51c2720f257dd9b0ed",
+      "evidenceKeys": [
+        "e-AT1052-P1-09"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT1052-P1-10",
+      "before": {
+        "i": "AT1052-P1-10",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con el Real Decreto-ley 6/2023, la progresión alcanzada en el sistema de carrera profesional recogido en este artículo se retribuirá mediante el:",
+        "a": [
+          "Complemento de productividad.",
+          "Complemento de desarrollo.",
+          "Complemento de destino.",
+          "Complemento de carrera."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1052-P1-10",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con el Real Decreto-ley 6/2023, la progresión alcanzada en el sistema de carrera profesional recogido en este artículo se retribuirá mediante el:",
+        "a": [
+          "Complemento de productividad.",
+          "Complemento de desarrollo.",
+          "Complemento de destino.",
+          "Complemento de carrera."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 62 (PDF p. 62)\n\n7. La progresión alcanzada en el sistema de carrera profesional recogido en este artículo se retribuirá mediante un COMPLEMENTO DE CARRERA, cuya cuantía será la misma para todo el personal funcionario del mismo grupo o subgrupo de clasificación profesional que tenga reconocido el mismo tramo.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "937ae67ad0eeae27e035f1a687926bc086d4976b71766a5838c8446de35c5ea5",
+      "afterSha256": "5f4fb0d628ac1adf7fb5e0e10fa23983dbb69ce19ed3ca98a74dd4a09ef2340a",
+      "evidenceKeys": [
+        "e-AT1052-P1-10"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT1052-P1-34",
+      "before": {
+        "i": "AT1052-P1-34",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Los funcionarios de carrera serán declarados en situación de servicios especiales:",
+        "a": [
+          "Cuando sean designados como personal eventual, en todo caso.",
+          "Cuando se encuentren en situación de excedencia voluntaria, por prestación de servicios en otras Administraciones.",
+          "Cuando adquieran la condición de funcionarios al servicio de organizaciones internacionales.",
+          "Cuando se encuentren en situación de excedencia voluntaria por prestación de servicios en otras Administraciones, siempre que no opten por permanecer en la situación de servicio activo."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1052-P1-34",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Los funcionarios de carrera serán declarados en situación de servicios especiales:",
+        "a": [
+          "Cuando sean designados como personal eventual, en todo caso.",
+          "Cuando se encuentren en situación de excedencia voluntaria, por prestación de servicios en otras Administraciones.",
+          "Cuando adquieran la condición de funcionarios al servicio de organizaciones internacionales.",
+          "Cuando se encuentren en situación de excedencia voluntaria por prestación de servicios en otras Administraciones, siempre que no opten por permanecer en la situación de servicio activo."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 79 (PDF p. 79)\n\ni) Cuando sean designados como personal eventual por ocupar puestos de trabajo con funciones expresamente calificadas como de confianza o asesoramiento político y no opten por permanecer en la situación de servicio activo. j) Cuando adquieran la condición de funcionarios al servicio de organizaciones internacionales. k) Cuando sean designados asesores de los grupos parlamentarios de las Cortes Generales o de las asambleas legislativas de las CCAA. l) Cuando sean activados como reservistas voluntarios para prestar servicios en las Fuerzas Armadas.\n\nT1.05 TREBEP - Temario.pdf — Situaciones administrativas — artículo 87\n\nTemario, p. 78 (PDF p. 78)\n\nArtículo 87. Servicios especiales En general son cargos políticos 1. Los funcionarios de carrera serán declarados en situación de servicios especiales:\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "59739c57f13ae76383b6573fc062ed43469304677e2d10f047ef1243cd448dd8",
+      "afterSha256": "990a0d07afb6e38adcc697fe438664302fb2677328c42eedadcf4b8bc727fdba",
+      "evidenceKeys": [
+        "e-AT1052-P1-34",
+        "context-AT1052-P1-34"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT1052-P1-36",
+      "before": {
+        "i": "AT1052-P1-36",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Los funcionarios de carrera que sean designados miembros del Gobierno o de los órganos de gobierno de las Comunidades Autónoma serán declarados en situación de:",
+        "a": [
+          "Servicios especiales.",
+          "Servicio activo.",
+          "Servicio en otras Administraciones públicas.",
+          "Excedencia."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1052-P1-36",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Los funcionarios de carrera que sean designados miembros del Gobierno o de los órganos de gobierno de las Comunidades Autónoma serán declarados en situación de:",
+        "a": [
+          "Servicios especiales.",
+          "Servicio activo.",
+          "Servicio en otras Administraciones públicas.",
+          "Excedencia."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — TREBEP — servicios especiales (artículo 87.1.a)\n\nTemario, p. 78 (PDF p. 78)\n\nArtículo 87. Servicios especiales En general son cargos políticos 1. Los funcionarios de carrera serán declarados en situación de servicios especiales: a) Cuando sean designados miembros del Gobierno o de los órganos de gobierno de las CCAA y ciudades de Ceuta y Melilla, miembros de las Instituciones de la UE o de las organizaciones internacionales, o sean nombrados altos cargos de las citadas AAPP o Instituciones.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "132a80b687cc7ac0073a10b69832a4500149b6b1f14abc2fd05c69773721041f",
+      "afterSha256": "9469130f9a331927a89eddb8b94d7006c6d40298b8bc39f21c668cb4ffba3e9e",
+      "evidenceKeys": [
+        "e-AT1052-P1-36"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT1052-P1-46",
+      "before": {
+        "i": "AT1052-P1-46",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el TREBEP, el plazo de prescripción de las faltas disciplinarias continuadas comenzará a contarse desde:",
+        "a": [
+          "La firmeza de la resolución sancionadora que ponga fin al procedimiento.",
+          "Que se cometió la falta disciplinaria.",
+          "El cese de su comisión.",
+          "El momento en que la Administración tuvo conocimiento de su realización."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1052-P1-46",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el TREBEP, el plazo de prescripción de las faltas disciplinarias continuadas comenzará a contarse desde:",
+        "a": [
+          "La firmeza de la resolución sancionadora que ponga fin al procedimiento.",
+          "Que se cometió la falta disciplinaria.",
+          "El cese de su comisión.",
+          "El momento en que la Administración tuvo conocimiento de su realización."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 88 (PDF p. 88)\n\n2. El plazo de prescripción de las faltas comenzará a contarse desde que se hubieran cometido, y desde el cese de su comisión cuando se trate de faltas continuadas. El de las sanciones, desde la firmeza de la resolución sancionadora.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "133cd64da1f027e34c465b025f5e9003062662b3ed089ba03db5c0c2f997cac1",
+      "afterSha256": "13bfc1e26f04604256700fe23ea528e0141a4e082d17c1ade08c1612d9955a00",
+      "evidenceKeys": [
+        "e-AT1052-P1-46"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT1052-P1-47",
+      "before": {
+        "i": "AT1052-P1-47",
+        "t": "T1.05",
+        "o": "A",
+        "q": "¿Qué norma regula las incompatibilidades del personal al servicio de las Administraciones Públicas?",
+        "a": [
+          "La Ley 30/1984.",
+          "La Ley 39/2015.",
+          "La Ley 53/1984.",
+          "El TREBEP."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1052-P1-47",
+        "t": "T1.05",
+        "o": "A",
+        "q": "¿Qué norma regula las incompatibilidades del personal al servicio de las Administraciones Públicas?",
+        "a": [
+          "La Ley 30/1984.",
+          "La Ley 39/2015.",
+          "La Ley 53/1984.",
+          "El TREBEP."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 89 (PDF p. 89)\n\nPartiendo de dicho precepto constitucional surge la Ley 53/1984, 26 de diciembre, de Incompatibilidades del Personal al Servicio de las AAPP.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "3137f5e825e970fa6e17b2193c2091905d055a104b065adfc27b998a9a5b7f33",
+      "afterSha256": "0065bb380e46218b35cbf78e4ae458eb2fe6ecb6ac3e492b8c753e76b7b343ae",
+      "evidenceKeys": [
+        "e-AT1052-P1-47"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT1052-P1-53",
+      "before": {
+        "i": "AT1052-P1-53",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según la normativa en materia de incompatibilidades del personal al servicio de las Administraciones Públicas, el ejercicio de actividades privadas requerirá con carácter previo:",
+        "a": [
+          "El reconocimiento de la compatibilidad.",
+          "La autorización de la compatibilidad.",
+          "La concesión de la compatibilidad.",
+          "El visto bueno de la compatibilidad."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1052-P1-53",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según la normativa en materia de incompatibilidades del personal al servicio de las Administraciones Públicas, el ejercicio de actividades privadas requerirá con carácter previo:",
+        "a": [
+          "El reconocimiento de la compatibilidad.",
+          "La autorización de la compatibilidad.",
+          "La concesión de la compatibilidad.",
+          "El visto bueno de la compatibilidad."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 90 (PDF p. 90)\n\n- Con carácter general, es incompatible el ejercicio de 2 puestos públicos, con las excepciones que marca la ley, y para su ejercicio será necesaria autorización. - 1 puesto público y otro privado pueden ser compatibles. Para su ejercicio será necesario el reconocimiento de la compatibilidad. - Es incompatible la percepción de 2 remuneraciones a cargo del sector público. - Es incompatible el ejercicio de cualquier puesto público con la percepción de pensión de jubilación o retiro. La DA 9ª permite la compatibilidad del desempeño de un puesto de profesor emérito con la percepción de la pensión de jubilación. También es compatible el desempeño de un puesto a tiempo parcial en régimen laboral con la percepción de la pensión de jubilación parcial.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "5aecdb267975b0e4215e0ef01b5936d30b7321260913213b73f1709210b3c2b7",
+      "afterSha256": "6647f559db4c7bc5dbcb176e478a079a80102e9053206aecdfedfd4706c0c851",
+      "evidenceKeys": [
+        "e-AT1052-P1-53"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT1052-P1-58",
+      "before": {
+        "i": "AT1052-P1-58",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el TREBEP, son causas de pérdida de la condición de funcionario de carrera:",
+        "a": [
+          "La pérdida de la nacionalidad española en todo caso.",
+          "La pérdida de la nacionalidad.",
+          "El incumplimiento de las normas sobre incompatibilidades.",
+          "El abandono del servicio."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1052-P1-58",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el TREBEP, son causas de pérdida de la condición de funcionario de carrera:",
+        "a": [
+          "La pérdida de la nacionalidad española en todo caso.",
+          "La pérdida de la nacionalidad.",
+          "El incumplimiento de las normas sobre incompatibilidades.",
+          "El abandono del servicio."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 51 (PDF p. 51)\n\nArtículo 65. Pérdida de la nacionalidad La pérdida de la nacionalidad española o la de cualquier otro Estado miembro de la UE o la de aquellos Estados a los que, en virtud de tratados internacionales celebrados por la UE y ratificados por España, les sea de aplicación la libre circulación de trabajadores, que haya sido tenida en cuenta para el nombramiento, determinará la pérdida de la condición de funcionario salvo que simultáneamente se adquiera la nacionalidad de alguno de dichos Estados.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "74906308695796048f35a1f9c7f385fdd43936bb1affb9a77998a79dd3b9cde2",
+      "afterSha256": "c0f3412e5a071d21950d4293eb74d780c8d123af2c8ff319cb8e699fd18b8146",
+      "evidenceKeys": [
+        "e-AT1052-P1-58"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS05G-P1-24",
+      "before": {
+        "i": "AS05G-P1-24",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el artículo 50.1 del TREBEP, los funcionarios públicos tendrán derecho a disfrutar, durante cada año natural, de unas vacaciones retribuidas de:",
+        "a": [
+          "Un mes.",
+          "30 días naturales.",
+          "22 días hábiles.",
+          "30 días hábiles."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS05G-P1-24",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el artículo 50.1 del TREBEP, los funcionarios públicos tendrán derecho a disfrutar, durante cada año natural, de unas vacaciones retribuidas de:",
+        "a": [
+          "Un mes.",
+          "30 días naturales.",
+          "22 días hábiles.",
+          "30 días hábiles."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 29 (PDF p. 29)\n\nArtículo 50. Vacaciones de los funcionarios públicos 1. Los funcionarios públicos tendrán derecho a disfrutar, durante cada año natural, de unas vacaciones retribuidas de 22 días hábiles, o de los días que correspondan proporcionalmente si el tiempo de servicio durante el año fue menor (no se considerarán como días hábiles los sábados, sin perjuicio de las adaptaciones que se establezcan para los horarios especiales).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "767845b110c12f5251c40098c7f3db17bc6c9280ce1ce4b5f80518feb056d419",
+      "afterSha256": "ff994cbf7e7da96824e1176f7808113116d28819258dfa0e4e8459af63c934dd",
+      "evidenceKeys": [
+        "e-AS05G-P1-24"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS08-P1-18",
+      "before": {
+        "i": "AS08-P1-18",
+        "t": "T1.05",
+        "o": "A",
+        "q": "La designación del personal directivo profesional regulado en el TREBEP atenderá a los principios de:",
+        "a": [
+          "Mérito e igualdad.",
+          "Igualdad y capacidad.",
+          "Mérito y capacidad.",
+          "Igualdad e idoneidad."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS08-P1-18",
+        "t": "T1.05",
+        "o": "A",
+        "q": "La designación del personal directivo profesional regulado en el TREBEP atenderá a los principios de:",
+        "a": [
+          "Mérito e igualdad.",
+          "Igualdad y capacidad.",
+          "Mérito y capacidad.",
+          "Igualdad e idoneidad."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T1.05 TREBEP - Temario.pdf — Pasaje del temario\n\nTemario, p. 13 (PDF p. 13)\n\nArtículo 13. Personal DIRECTIVO profesional (no es un tipo de Empleado Público, sí personal al servicio de las Admon) El Gobierno y los órganos de gobierno de las CCAA podrán establecer, en desarrollo de este Estatuto, el régimen jurídico específico del personal directivo así como los criterios para determinar su condición, de acuerdo, entre otros, con los siguientes principios: 1. Es personal directivo el que desarrolla funciones directivas profesionales en las AAPP, definidas como tales en las normas específicas de cada Admón. 2. Su designación atenderá a principios de mérito y capacidad y a criterios de idoneidad, y se llevará a cabo mediante procedimientos que garanticen la publicidad y concurrencia.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "7b62ba3af4088e5f8f5a590088c544baf3535c4bd167d20886ac2243bfd35bef",
+      "afterSha256": "ffc4ef164a5bdfa3f2b41e22494204b32f4a8cdae9902db582e1f92bc80b04e6",
+      "evidenceKeys": [
+        "e-AS08-P1-18"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS12B-P1-07",
+      "before": {
+        "i": "AS12B-P1-07",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el artículo 4 del Texto Refundido de la Ley del Estatuto Básico del Empleado Público, las disposiciones de este Estatuto se aplicarán directamente cuando así lo disponga su legislación específica al siguiente personal:",
+        "a": [
+          "Personal del Banco de España.",
+          "Personal de Universidades Públicas.",
+          "Personal que presta sus servicios en Organismos Públicos.",
+          "Personal docente."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          3
+        ],
+        "d": 3,
+        "n": "TREBEP art. 4: personal con legislación específica."
+      },
+      "after": {
+        "i": "AS12B-P1-07",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el artículo 4 del Texto Refundido de la Ley del Estatuto Básico del Empleado Público, las disposiciones de este Estatuto se aplicarán directamente cuando así lo disponga su legislación específica al siguiente personal:",
+        "a": [
+          "Personal del Banco de España.",
+          "Personal de Universidades Públicas.",
+          "Personal que presta sus servicios en Organismos Públicos.",
+          "Personal docente."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          3
+        ],
+        "d": 3,
+        "n": "TREBEP art. 4: personal con legislación específica.",
+        "u": "T1.05 TREBEP - Temario.pdf — TREBEP — personal con legislación específica propia (artículo 4)\n\nTemario, p. 8 (PDF p. 8)\n\nArtículo 4. Personal con legislación específica propia Las disposiciones de este Estatuto sólo se aplicarán directamente cuando así lo disponga su legislación específica al siguiente personal: a) Personal funcionario de las Cortes Generales y de las asambleas legislativas de las CCAA. b) Personal funcionario de los demás Órganos Constitucionales del Estado y de los órganos estatutarios de las CCAA. c) Jueces, Magistrados, Fiscales y demás personal funcionario al servicio de la Admón. de Justicia. d) Personal militar de las Fuerzas Armadas. e) Personal de las Fuerzas y Cuerpos de Seguridad. f) Personal retribuido por arancel. g) Personal del Centro Nacional de Inteligencia. h) Personal del Banco de España y Fondo de Garantía de Depósitos de Entidades de Crédito.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "105ea16868adf83cd3cbbc116284db4c10cb1a0f13c35ec1ecf320451f1d52ea",
+      "afterSha256": "6b12f517ca9928856eb944204c8cb299968bb5782d73af2f21e51261fc35479c",
+      "evidenceKeys": [
+        "e-AS12B-P1-07"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "L2025A-P1-08",
+        "t": "T1.05",
+        "o": "O",
+        "q": "Según establece el artículo 78 del Real Decreto Legislativo 5/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley del Estatuto Básico del Empleado Público, señale cuál de los siguientes NO es uno de los principios de provisión de puestos de trabajo del personal funcionario de carrera:",
+        "a": [
+          "Mérito.",
+          "Conocimiento.",
+          "Igualdad.",
+          "Publicidad."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "\"Conocimiento\" no es principio de acceso (art. 78 TREBEP).",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-09",
+        "t": "T1.05",
+        "o": "O",
+        "q": "Conforme a lo establecido en el Texto refundido del Estatuto Básico del Empleado Público, los empleados públicos se clasifican en:",
+        "a": [
+          "Funcionarios de carrera, funcionarios interinos, personal laboral - ya sea fijo, por tiempo indefinido o temporal - y personal eventual.",
+          "Funcionarios de carrera, funcionarios interinos y personal laboral fijo o por tiempo indefinido.",
+          "Funcionarios de carrera y personal laboral fijo.",
+          "Funcionarios de carrera, funcionarios interinos y personal eventual."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          3
+        ],
+        "d": 2,
+        "n": "Clases de empleados públicos (TREBEP): listas incompletas.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-01",
+        "t": "T1.05",
+        "o": "A",
+        "q": "El TREBEP se aplica, conforme a su artículo 2.1:",
+        "a": [
+          "Al personal funcionario y en lo que proceda al personal laboral al servicio de las Administraciones Públicas, que señala este Estatuto.",
+          "Únicamente al personal funcionario al servicio de las Administraciones Públicas que señala el Estatuto.",
+          "Al personal funcionario y en todo caso al personal laboral al servicio de las Administraciones Públicas, que señala el Estatuto.",
+          "Al personal funcionario y en lo que proceda al personal eventual al servicio de las Administraciones Públicas."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-02",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Conforme a lo dispuesto en el TREBEP, son empleados públicos:",
+        "a": [
+          "Los que ejerzan funciones que impliquen la participación directa o indirecta en el ejercicio de las potestades públicas o en la salvaguardia de los intereses generales del Estado y de las Administraciones Públicas.",
+          "Los funcionarios de carrera pero no los funcionarios interinos.",
+          "Solo los funcionarios de carrera, el personal laboral por tiempo indefinido y el personal eventual.",
+          "Quienes desempeñen funciones retribuidas en las Administraciones Públicas al servicio de los intereses generales."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-03",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA. Las disposiciones del TREBEP solo se aplicarán directamente cuando así lo disponga su legislación específica a los siguientes colectivos de personal:",
+        "a": [
+          "Personal funcionario de las Cortes Generales.",
+          "Personal militar de las Fuerzas Armadas.",
+          "Personal retribuido por arancel.",
+          "Personal de las Universidades Públicas."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-04",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según establece el artículo 3 del TREBEP, qué legislación será aplicable al personal funcionario de las Entidades Locales:",
+        "a": [
+          "El TREBEP y el IV Convenio Colectivo, en su caso.",
+          "La legislación propia establecida por la CCAA.",
+          "La legislación prevista a nivel estatal y las normas particulares establecidas por las Asambleas legislativas de las CCAA.",
+          "La legislación laboral en vigor."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-05",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con lo establecido en el Real Decreto Legislativo 5/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley del Estatuto Básico del Empleado Público, señale qué personal se rige con legislación específica propia:",
+        "a": [
+          "El personal al servicio de los Organismos Públicos vinculados o dependientes de cualquier Administración Pública.",
+          "El personal funcionario al servicio de la Administración de Justicia.",
+          "El personal al servicio de las Agencias y demás entidades de derecho público con personalidad jurídica propia, vinculadas o dependientes de cualquiera de las Administraciones Públicas.",
+          "El personal civil de las Fuerzas Armadas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-06",
+        "t": "T1.05",
+        "o": "A",
+        "q": "El artículo 4 del TREBEP establece las disposiciones de dicho Estatuto solo se aplicarán directamente cuando así lo disponga su legislación específica al personal de:",
+        "a": [
+          "Las Universidades Públicas.",
+          "El Consejo Superior de Investigaciones Científicas.",
+          "El Centro Nacional de Inteligencia.",
+          "El Consejo de Seguridad Nuclear."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-07",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el Texto Refundido de la Ley del Estatuto Básico del Empleado Público, aprobado por el Real Decreto Legislativo 5/2015, de 30 de octubre, los empleados públicos se clasifican en:",
+        "a": [
+          "Funcionarios de carrera, funcionarios interinos y personal laboral.",
+          "Funcionarios de carrera, funcionarios laborales y personal eventual.",
+          "Funcionarios fijos, funcionarios interinos, personal laboral y personal eventual.",
+          "Funcionarios de carrera, funcionarios interinos, personal laboral y personal eventual."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-08",
+        "t": "T1.05",
+        "o": "A",
+        "q": "El desempeño de funciones que implican el ejercicio de potestades públicas o salvaguardia de los intereses generales del Estado puede asumirse por:",
+        "a": [
+          "Los empleados públicos.",
+          "Los funcionarios de carrera.",
+          "Personal laboral fijo y funcionario de carrera.",
+          "Personal laboral y funcionario de carrera."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-09",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el Texto Refundido de la Ley del Estatuto Básico del Empleado Público, aprobado por el Real Decreto Legislativo 5/2015, de 30 de octubre, el funcionario de carrera se define como:",
+        "a": [
+          "Todo el que, por disposición inmediata de la Ley, o por elección o por nombramiento de Autoridad competente, participe en el ejercicio de funciones públicas.",
+          "Aquel que, en virtud de contrato de trabajo formalizado por escrito, en cualquiera de las modalidades de contratación de personal previstas en la legislación laboral, presta servicios retribuidos por las Administraciones Públicas.",
+          "Son funcionarios de carrera quienes, en virtud de nombramiento legal, están vinculados a una Administración Pública por una relación estatutaria regulada por el Derecho Administrativo para el desempeño de servicios profesionales retribuidos de carácter permanente.",
+          "Todo aquel que, desde su posición en una Administración Pública, sirva los intereses generales de los ciudadanos desempeñando una función retribuida."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-10",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el Real Decreto Legislativo 5/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley del Estatuto Básico del Empleado Público, una de las circunstancias que debe darse para el nombramiento de un funcionario interino es el exceso o acumulación de tareas por plazo máximo de:",
+        "a": [
+          "3 meses, dentro de un periodo de 6 meses.",
+          "12 meses, dentro de un periodo de 18 meses.",
+          "9 meses, dentro de un periodo de 18 meses.",
+          "12 meses, dentro de un periodo de 24 meses."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-11",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el TREBEP, los funcionarios interinos pueden ser nombrados para alguna de las circunstancias siguientes:",
+        "a": [
+          "La ejecución de programas de carácter temporal, por plazo máximo de seis meses, con posibilidad de ampliación.",
+          "La ejecución de programas de carácter temporal, que no podrán tener una duración superior a tres años, con posibilidad de ampliación hasta doce meses más.",
+          "El exceso o acumulación de tareas, por plazo máximo de doce meses, dentro de un periodo de dieciocho meses.",
+          "El lanzamiento de una nueva actividad, por plazo máximo de seis meses."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-13",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el TREBEP, cuando existiendo alguna plaza vacante no haya sido posible su cobertura por funcionarios de carrera y se haya cubierto por un interino:",
+        "a": [
+          "Dicha plaza deberá incluirse en la oferta de empleo correspondiente al ejercicio siguiente en que se produce su nombramiento.",
+          "Dicha plaza podrá ser amortizada.",
+          "Dicha plaza solo podrá incluirse en la oferta de empleo correspondiente al ejercicio en que se produce su nombramiento.",
+          "Dicha plaza no podrá incluirse en la oferta de empleo hasta que hayan transcurrido tres años."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-14",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según dispone el TREBEP el personal laboral, en función de la duración del contrato, podrá ser:",
+        "a": [
+          "Fijo o temporal.",
+          "Fijo, por tiempo indefinido o temporal.",
+          "Fijo o por tiempo indefinido.",
+          "Por tiempo indefinido o temporal."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-15",
+        "t": "T1.05",
+        "o": "A",
+        "q": "El artículo 12 del TREBEP regula el denominado personal eventual, estableciendo que:",
+        "a": [
+          "Tienen por finalidad realizar actividades de naturaleza no permanente y aquellas por las que se responsabilizan de la gestión y control de resultados en relación con los objetivos que les hayan sido fijados.",
+          "Su condición no podrá constituir mérito para el acceso a la Función Pública, pero sí para la promoción interna.",
+          "Su designación atenderá a principios de mérito y capacidad y a criterios de idoneidad.",
+          "Su número y las condiciones retributivas serán públicas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-16",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el TREBEP, indique la respuesta correcta en relación con el personal eventual:",
+        "a": [
+          "Es nombrado por razones expresamente justificadas de necesidad y urgencia.",
+          "Su selección habrá de realizarse mediante procedimientos ágiles que respetarán, en todo caso, los principios de igualdad, mérito, capacidad y publicidad.",
+          "La determinación de las condiciones de empleo no tendrá la consideración de materia objeto de negociación colectiva.",
+          "Cesa, en todo caso, cuando se produzca el de la autoridad a la que preste la función de confianza o asesoramiento."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-17",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el Texto Refundido de la Ley del Estatuto Básico del Empleado Público, aprobado por el Real Decreto Legislativo 5/2015, de 30 de octubre, el personal eventual:",
+        "a": [
+          "No es empleado público.",
+          "Es empleado público clasificado como personal funcionario.",
+          "Es empleado público pero no está clasificado como personal funcionario.",
+          "Es empleado público clasificado como personal directivo profesional."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-18",
+        "t": "T1.05",
+        "o": "A",
+        "q": "El desempeño de un puesto de trabajo como personal eventual no puede constituir un mérito para:",
+        "a": [
+          "El acceso a la función pública, la promoción interna o la provisión de puestos de trabajo.",
+          "El acceso a la función pública o la promoción interna.",
+          "El acceso a la función pública o la provisión de puestos de trabajo.",
+          "La promoción interna o la provisión de puestos de trabajo."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-19",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con el TREBEP, en relación con el personal directivo:",
+        "a": [
+          "La designación del personal directivo atenderá a los principios de igualdad, mérito y capacidad, y se llevará a cabo mediante procedimientos que garanticen la publicidad y concurrencia.",
+          "La designación del personal directivo atenderá a los principios de mérito y capacidad, y se llevará a cabo mediante procedimientos que garanticen la publicidad y concurrencia.",
+          "La designación del personal directivo atenderá a los principios de igualdad, mérito y capacidad, y se llevará a cabo mediante procedimientos que garanticen la concurrencia.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-20",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el TREBEP, señale la afirmación correcta respecto al personal directivo:",
+        "a": [
+          "Su régimen jurídico deberá establecerse por Ley.",
+          "Tendrá que ser necesariamente funcionario público o personal laboral al servicio de una Administración Pública.",
+          "Su designación se llevará a cabo mediante procedimientos que garanticen la publicidad y concurrencia.",
+          "Le será aplicable el régimen general de los funcionarios de carrera."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-21",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Conforme al Texto Refundido del Estatuto Básico del Empleado Público, el personal directivo profesional:",
+        "a": [
+          "Exclusivamente ha de ser funcionario de carrera.",
+          "Exclusivamente ha de ser funcionario de carrera o interino.",
+          "Ha de ser funcionario de carrera, funcionario interino o personal laboral.",
+          "Ninguna de las respuestas anteriores es cierta."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-22",
+        "t": "T1.05",
+        "o": "A",
+        "q": "En el Texto Refundido de la Ley del Estatuto Básico del Empleado Público, aprobado por el Real Decreto Legislativo 5/2015, de 30 de octubre, y dentro de la clasificación de los empleados públicos, ¿cuál de los siguientes NO se clasifica como empleados públicos?",
+        "a": [
+          "Personal directivo profesional.",
+          "Personal laboral, ya sea fijo, por tiempo indefinido o temporal.",
+          "Funcionarios interinos.",
+          "Funcionario de carrera."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-23",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el artículo 47 bis del TREBEP, señale la respuesta correcta sobre el teletrabajo:",
+        "a": [
+          "La Administración proporcionará y mantendrá a las personas que trabajen en esta modalidad, los medios tecnológicos necesarios para su actividad.",
+          "El personal laboral no se regirá, en materia de teletrabajo, por lo previsto en el presente Estatuto y por sus normas de desarrollo.",
+          "Puede tener carácter obligatorio y reversible.",
+          "En los supuestos y con los efectos que se determine puede tener carácter obligatorio por causas medioambientales o de eficiencia energética."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-24",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con el artículo 15 del TREBEP, ¿cuál de los siguientes derechos individuales se ejerce de forma colectiva por los funcionarios de la Administración de Aduanas?",
+        "a": [
+          "El derecho a la libre asociación profesional.",
+          "El derecho al ejercicio de huelga.",
+          "El derecho a la formación continua.",
+          "El derecho a participar en la consecución de los objetivos de su unidad."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-28",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el artículo 48 del TREBEP los funcionarios públicos tendrán entre otros, los siguientes permisos:",
+        "a": [
+          "Por fallecimiento de un familiar dentro del primer grado de consanguinidad o afinidad, tres días hábiles cuando el suceso se produzca en la misma localidad, y cinco días hábiles cuando sea en distinta localidad. En el caso de fallecimiento de familiar dentro del segundo grado de consanguinidad o afinidad, el permiso será de dos días hábiles cuando se produzca en la misma localidad y de cuatro días hábiles cuando sea en distinta localidad.",
+          "Por traslado de domicilio sin cambio de residencia, dos días.",
+          "Por lactancia de un hijo menor de nueve meses tendrá derecho a una hora de ausencia del trabajo que podrá dividir en varias fracciones. Este derecho podrá sustituirse por una reducción de la jornada normal en dos horas al inicio y al final de la jornada o, en una hora al inicio o al final de la jornada, con la misma finalidad. Este derecho no podrá ser ejercido indistintamente por uno u otro de los progenitores, en el caso de que ambos trabajen.",
+          "Todas las respuestas son falsas."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-29",
+        "t": "T1.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes es un permiso del que puede disfrutar un funcionario de carrera según el artículo 48 del TREBEP?",
+        "a": [
+          "Por traslado de domicilio sin cambio de residencia, 2 días.",
+          "Para concurrir a exámenes finales y demás pruebas definitivas de aptitud, durante un tiempo máximo de 4 horas el día de su celebración.",
+          "Por enfermedad grave de un familiar dentro del primer grado de afinidad, 5 días hábiles.",
+          "6 días al año para el cumplimiento de un deber inexcusable de carácter público o personal y por deberes relacionados con la conciliación de la vida familiar y laboral."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-30",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según los artículos 48 y 49 del TREBEP, entre los permisos de los funcionarios públicos y por motivos de conciliación de la vida personal, familiar y laboral y por razón de violencia de género NO se encuentran los de:",
+        "a": [
+          "Permiso por nacimiento para la madre biológica, cuya duración será de diecinueve semanas, de las cuales las 6 semanas inmediatas posteriores al parto serán en todo caso de descanso obligatorio e ininterrumpido. Este permiso se ampliará en 2 semanas más en el supuesto de discapacidad del hijo o hija y, por cada hijo o hija a partir del segundo en los supuestos de parto múltiple, una para cada uno de los progenitores.",
+          "Permiso de paternidad por el nacimiento, acogimiento o adopción de un hijo cuya duración es de quince días, a disfrutar por el padre o el otro progenitor a partir de la fecha del nacimiento, de la decisión administrativa o judicial de acogimiento o de la resolución judicial por la que se constituya la adopción.",
+          "Permiso por cuidado de hijo menor afectado por cáncer u otra enfermedad grave, consistente en una reducción de la jornada de trabajo de al menos la mitad de la duración de aquélla, percibiendo las retribuciones íntegras con cargo a los presupuestos del órgano o entidad donde venga prestando sus servicios, para el cuidado, durante la hospitalización y tratamiento continuado, del hijo menor de edad afectado por cáncer (tumores malignos, melanomas o carcinomas) o por cualquier otra enfermedad grave que implique un ingreso hospitalario de larga duración y requiera la necesidad de su cuidado directo, continuo y permanente acreditado.",
+          "Cuidado de un familiar de primer grado, derecho a solicitar una reducción de hasta el cincuenta por ciento de la jornada laboral, con carácter retribuido, por razones de enfermedad muy grave y por el plazo máximo de un mes."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-31",
+        "t": "T1.05",
+        "o": "A",
+        "q": "En relación con el permiso parental para el cuidado de hijo, hija o menor acogido por tiempo superior a un año, hasta el momento en que el menor cumpla 8 años, señale la respuesta INCORRECTA:",
+        "a": [
+          "Constituye un derecho individual de las personas progenitoras, adoptantes o acogedoras, hombres o mujeres, sin que pueda transferirse su ejercicio.",
+          "Tendrá una duración no superior a 6 semanas.",
+          "Se disfrutará de forma continua o discontinua.",
+          "Podrá disfrutarse a tiempo completo o en régimen de jornada a a tiempo parcial."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-32",
+        "t": "T1.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes se trata de un principio ético del TREBEP?",
+        "a": [
+          "No aceptarán ningún trato de favor o situación que implique privilegio o ventaja injustificada por parte de personas físicas o entidades privadas.",
+          "No aceptarán trato de favor o situación que implique privilegio o ventaja justificada por parte de personas físicas o entidades privadas.",
+          "Tratarán con atención y respeto a los ciudadanos, sus superiores, y restantes empleados públicos.",
+          "Garantizarán la constancia y permanencia de los documentos para su transmisión y entrega a los posteriores responsables."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-33",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Entre los principios éticos enumerados por el artículo 53 del TREBEP NO se encuentra el de:",
+        "a": [
+          "Respeto a la Constitución y el resto de normas que integran el ordenamiento jurídico.",
+          "Persecución de la satisfacción de los intereses generales de los ciudadanos.",
+          "Ajuste de la actuación a los principios de lealtad y buena fe con la Administración en la que presten sus servicios, y con sus superiores, compañeros, subordinados y con los ciudadanos.",
+          "Trato con atención y respeto a los ciudadanos, a sus superiores y a los restantes empleados públicos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-34",
+        "t": "T1.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es uno de los principios a garantizar en un proceso selectivo según el artículo 55 del TREBEP?",
+        "a": [
+          "Eficacia, celeridad y economía procesal.",
+          "Independencia y discrecionalidad técnica en la actuación de los órganos de selección.",
+          "Adecuación entre el contenido de los procesos selectivos y las funciones o tareas a desarrollar.",
+          "Agilidad, sin perjuicio de la objetividad en los procesos de selección."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-36",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Un requisito general para acceder al empleo público es:",
+        "a": [
+          "Tener cumplidos los 18 años y no exceder de la edad máxima de jubilación forzosa.",
+          "No haber sido condenado anteriormente a pena de inhabilitación absoluta o especial.",
+          "Tener cumplidos los 18 años y ser español de nacimiento.",
+          "Tener una determinada nacionalidad que permite el ingreso."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-37",
+        "t": "T1.05",
+        "o": "A",
+        "q": "En relación con los sistemas selectivos, tal y como establece el artículo 114 del Real Decreto-ley, señale la afirmación correcta:",
+        "a": [
+          "Los órganos de selección no podrán proponer el acceso a la condición de funcionario de un número superior de aprobados al de plazas convocadas, excepto cuando así lo prevea la propia convocatoria.",
+          "Los órganos de selección podrán proponer el acceso a la condición de funcionario de un número superior de aprobados al de plazas convocadas, excepto cuando así lo prevea la propia convocatoria.",
+          "Los órganos de selección deberán proponer el acceso a la condición de funcionario de un número superior de aprobados al de plazas convocadas, excepto cuando así lo prevea la propia convocatoria.",
+          "Excepcionalmente, los órganos de selección no podrán proponer el acceso a la condición de funcionario de un número superior de aprobados al de plazas convocadas, excepto cuando así lo prevea la propia convocatoria."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-38",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el Real Decreto-ley 6/2023, ¿quiénes de los citados a continuación NO podrán pertenecer a un órgano de selección?",
+        "a": [
+          "Los funcionarios que no se encuentren en servicio activo.",
+          "Los funcionarios de Administraciones públicas diferentes a las que procede a efectuar la convocatoria.",
+          "Los funcionarios interinos.",
+          "Todos los citados anteriormente podrán pertenecer a un órgano de selección."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-40",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el Real Decreto-ley 6/2023, los sistemas aplicables a la selección de personal serán los de (señale la respuesta INCORRECTA):",
+        "a": [
+          "Oposición.",
+          "Concurso.",
+          "Estabilización.",
+          "Concurso-oposición."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-41",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con el artículo 62 del TREBEP, la condición de un funcionario de carrera se adquiere por el cumplimiento sucesivo de los siguientes requisitos (señale la respuesta INCORRECTA):",
+        "a": [
+          "Superación del proceso selectivo.",
+          "Acto de acatamiento de la Constitución, del Estatuto de Autonomía y, en su caso, del resto del ordenamiento jurídico.",
+          "Toma de posesión dentro del plazo que se establezca.",
+          "Nombramiento por el órgano o autoridad competente, que será publicado en el Diario Oficial correspondiente."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-42",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Tras el nombramiento como funcionario, la ausencia de toma de posesión implica:",
+        "a": [
+          "La pérdida de la condición de funcionario.",
+          "La no adquisición de la condición de funcionario.",
+          "Diferir la condición de funcionario, si existen razones fundadas.",
+          "El pase a excedencia por interés particular."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-43",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Señale la afirmación correcta en relación con la renuncia a la condición de funcionario público, regulada en el artículo 64 del TREBEP:",
+        "a": [
+          "La renuncia a la condición de funcionario ha de ser expresa y deberá ser necesariamente aceptada por la Administración.",
+          "La renuncia a la condición de funcionario ha de manifestarse en todo caso por escrito.",
+          "La renuncia a la condición de funcionario inhabilita para volver a acceder de nuevo a la Administración Pública.",
+          "La Administración debe aceptar expresamente la renuncia a la condición de funcionario en todos los casos, salvo que lo desaconsejen las necesidades del servicio."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-44",
+        "t": "T1.05",
+        "o": "A",
+        "q": "NO constituye una causa de pérdida de la condición de funcionario de carrera, conforme a los dispuesto en el TREBEP:",
+        "a": [
+          "La jubilación total del funcionario.",
+          "La suspensión firme de funciones.",
+          "La pena principal o accesoria de inhabilitación absoluta o especial para cargo público que tuviere carácter firme.",
+          "La renuncia."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-45",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el TREBEP, cuando se pierde la condición de funcionario por renuncia:",
+        "a": [
+          "No se podrá reingresar de nuevo en la Administración Pública.",
+          "Se podrá reingresar de nuevo en la Administración Pública, sin más requisitos.",
+          "Se podrá reingresar de nuevo en la Administración Pública, previa superación de los correspondientes procesos selectivos.",
+          "Se podrá reingresar de nuevo en la Administración Pública, previa rehabilitación."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-46",
+        "t": "T1.05",
+        "o": "A",
+        "q": "La jubilación forzosa se declarará de oficio al cumplir el funcionario:",
+        "a": [
+          "60 años.",
+          "65 años.",
+          "67 años.",
+          "70 años."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-47",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según lo dispuesto en el TREBEP, NO podrá ser aceptada la renuncia cuando (señale la INCORRECTA):",
+        "a": [
+          "El funcionario esté sujeto a expediente disciplinario.",
+          "El funcionario haya cometido una infracción tipificada como muy grave.",
+          "Haya sido dictado en su contra auto de procesamiento.",
+          "Haya sido dictado en su contra auto de apertura de juicio oral por la comisión de algún delito."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-48",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el TREBEP, los funcionarios de carrera pierden su condición de tal, entre otros, en el siguiente supuesto:",
+        "a": [
+          "Por sanción de demérito.",
+          "Por excedencia forzosa.",
+          "Por incapacidad temporal.",
+          "Por renuncia a la condición de funcionario."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-50",
+        "t": "T1.05",
+        "o": "A",
+        "q": "En relación con la Oferta de Empleo Público o instrumento similar, el TREBEP establece que:",
+        "a": [
+          "Se aprobará anualmente por las Cortes Generales o por las Asambleas Legislativas de las Comunidades Autónomas, debiendo ser publicada en los Diarios Oficiales correspondientes.",
+          "Una vez aprobada, la ejecución de la misma deberá desarrollarse dentro del plazo prorrogable de tres años.",
+          "No podrá contener medidas derivadas de la planificación de recursos humanos.",
+          "Comportará la obligación de convocar los correspondientes procesos selectivos para las plazas comprometidas y hasta un diez por ciento adicional."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-51",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con el Real Decreto-ley 6/2023, de 19 de diciembre, por el que se aprueban medidas urgentes para la ejecución del Plan de Recuperación, Transformación y Resiliencia en materia de servicio público de justicia, función pública, régimen local y mecenazgo, en relación a la Oferta de Empleo Público, señale la respuesta INCORRECTA:",
+        "a": [
+          "Las convocatorias deberán publicarse en el mismo año natural de la publicación en el BOE de la OEP, en la que se incluyan las citadas plazas.",
+          "Las convocatorias deberán ejecutarse en el plazo máximo de 2 años desde su publicación y las respectivas fases de oposición en 1 año, salvo causa justificada.",
+          "Las plazas no cubiertas en la ejecución de una convocatoria podrán convocarse nuevamente.",
+          "Las plazas no cubiertas en la ejecución de una convocatoria podrán convocarse nuevamente, siempre que no hayan transcurrido más de 2 años desde la publicación de la oferta."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 3,
+        "n": "RDL 6/2023 plazos de convocatoria; caducable.",
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-52",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con el Real Decreto-ley 6/2023, de 19 de diciembre, por el que se aprueban medidas urgentes para la ejecución del Plan de Recuperación, Transformación y Resiliencia en materia de servicio público de justicia, función pública, régimen local y mecenazgo, en la Oferta de Empleo Público, ¿qué porcentaje de se incluirá para promoción interna?",
+        "a": [
+          "No inferior al 30% de las plazas de acceso libre.",
+          "Al menos el 35% de las plazas de acceso libre.",
+          "Como máximo el 40% de las plazas de acceso libre.",
+          "Entre el 20% y el 40% de las plazas de acceso libre."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-53",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el Real Decreto-ley 6/2023, ¿cuál es el objetivo de efectivos totales de personas con discapacidad en la Administración del Estado?",
+        "a": [
+          "1%.",
+          "2%.",
+          "3%.",
+          "4%."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1051-P1-54",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con el artículo 75 del TREBEP, los cuerpos y escalas de funcionarios se crean, modifican y suprimen:",
+        "a": [
+          "Por ley de las Cortes Generales o de las asambleas legislativas de las comunidades autónomas.",
+          "Por Real Decreto de Consejo de Ministros.",
+          "Solo por ley de las Cortes Generales.",
+          "Por Orden del Ministerio de Hacienda y Función Pública."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-01",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el artículo 76 del TREBEP, el título universitario de Grado se exigirá para el acceso a los cuerpos o escalas:",
+        "a": [
+          "Únicamente para el Subgrupo A1.",
+          "Únicamente para el Subgrupo A2.",
+          "Del grupo A, tanto para el Subgrupo A1 como el Subgrupo A2.",
+          "Del Subgrupo B."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-02",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el Real Decreto-ley 6/2023, ¿cuál es el intervalo de niveles que corresponde al subgrupo C1?",
+        "a": [
+          "Del 15 al 22.",
+          "Del 20 al 26.",
+          "Del 16 al 22.",
+          "Del 14 al 20."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-03",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el Real Decreto-ley 6/2023, ¿cuál es el intervalo de niveles que corresponde al subgrupo A2?",
+        "a": [
+          "Del 15 al 22.",
+          "Del 20 al 26.",
+          "Del 18 al 24.",
+          "Del 16 al 24."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 3,
+        "n": "Intervalos de niveles por subgrupo: cifras parecidas. Caducable.",
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-04",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el artículo 16 del TREBEP, ¿en qué consiste la carrera vertical?",
+        "a": [
+          "Es el conjunto ordenado de oportunidades de ascenso y expectativas de progreso profesional conforme a los principios de igualdad, mérito y capacidad.",
+          "Consiste en la progresión de grado, categoría, escalón u otros conceptos análogos, sin necesidad de cambiar de puesto de trabajo y de conformidad con lo establecido en la letra b) del artículo 17 y en el apartado 3 del artículo 20 de este Estatuto.",
+          "Consiste en el ascenso en la estructura de puestos de trabajo por los procedimientos de provisión establecidos en el Capítulo III del Título V del Estatuto.",
+          "Consiste en el ascenso desde un cuerpo o escala de un Subgrupo, o Grupo de clasificación profesional en el supuesto de que éste no tenga Subgrupo, a otro superior."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-05",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el artículo 18 del TREBEP, ¿qué antigüedad deben poseer los funcionarios en el subgrupo o grupo de clasificación profesional inferior para poder participar en los procesos selectivos de promoción interna?",
+        "a": [
+          "Al menos 1 año de servicio activo.",
+          "Al menos 2 años de servicio activo.",
+          "Al menos 3 años de servicio activo.",
+          "Al menos 5 años de servicio activo."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-06",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el TREBEP, ¿en qué consiste la promoción interna?",
+        "a": [
+          "Consiste en el ascenso desde un cuerpo o escala de un Subgrupo, o Grupo de clasificación profesional en el supuesto de que éste no tenga Subgrupo, a otro superior.",
+          "Consiste en el ascenso en la estructura de puestos de trabajo por los procedimientos de provisión establecidos en el Capítulo III del Título V de este Estatuto.",
+          "Consiste en la progresión de grado, categoría, escalón u otros conceptos análogos, sin necesidad de cambiar de puesto de trabajo y de conformidad con lo establecido en la letra b) del artículo 17 y en el apartado 3 del artículo 20 de este Estatuto.",
+          "Todas las respuestas son incorrectas."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-07",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con el artículo 16 del TREBEP, la progresión de grado, categoría, escalón u otros conceptos análogos, sin necesidad de cambiar de puesto de trabajo, es:",
+        "a": [
+          "La carrera vertical.",
+          "La carrera horizontal.",
+          "La promoción interna horizontal.",
+          "La promoción interna vertical."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-08",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA en relación con la carrera horizontal según establece el Real Decreto-ley 6/2023:",
+        "a": [
+          "Tendrá carácter voluntario.",
+          "En cada grupo o subgrupo de personal funcionario existirán 5 tramos.",
+          "Los ascensos de tramo se producirán de forma consecutiva y exigirán, para poder ascender al tramo superior, un periodo mínimo de 5 años de servicios efectivos en el caso del primer tramo y de 6 años en los siguientes.",
+          "Los ascensos de tramo se producirán previa solicitud de la persona interesada."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-11",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el Texto Refundido de la Ley del Estatuto Básico del Empleado Público, aprobado por el Real Decreto Legislativo 5/2015, de 30 de octubre, el ascenso desde un cuerpo o escala de un Subgrupo, o Grupo de clasificación profesional en el supuesto de que éste no tenga Subgrupo, a otro superior, constituye la:",
+        "a": [
+          "Promoción profesional vertical.",
+          "Carrera profesional vertical.",
+          "Promoción interna vertical.",
+          "Carrera profesional interna."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-12",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con el artículo 74 del TREBEP, las Administraciones Públicas estructurarán su organización a través de relaciones de puestos de trabajo u otros instrumentos organizativos similares que comprenderán, al menos (señale la respuesta INCORRECTA):",
+        "a": [
+          "La denominación de los puestos.",
+          "Los grupos de clasificación profesional.",
+          "Los sistemas de provisión.",
+          "Las retribuciones básicas."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-13",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Uno de los supuestos que se indica a continuación NO supone el pase de los funcionarios de carrera a la situación de servicios especiales de acuerdo con el Texto Refundido de la Ley del Estatuto Básico del Empleado Público, aprobado por el Real Decreto Legislativo 5/2015, de 30 de octubre. Señale cuál:",
+        "a": [
+          "Cuando adquieran la condición de funcionarios al servicio de organizaciones internacionales.",
+          "Cuando sean adscritos a los servicios del Tribunal Constitucional.",
+          "Cuando sean activados como reservistas voluntarios para prestar servicios en las Fuerzas Armadas.",
+          "Cuando sean transferidos a las Comunidades Autónomas."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-14",
+        "t": "T1.05",
+        "o": "A",
+        "q": "En el Texto Refundido de la Ley del Estatuto Básico del Empleado Público, aprobado por el Real Decreto Legislativo 5/2015, de 30 de octubre, el permiso de lactancia se prevé para el caso de hijos menores de:",
+        "a": [
+          "Nueve meses.",
+          "Dieciocho meses.",
+          "Seis meses.",
+          "Doce meses."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-15",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el Texto Refundido de la Ley del Estatuto Básico del Empleado Público, aprobado por el Real Decreto Legislativo 5/2015, de 30 de octubre, los servicios extraordinarios prestados por los funcionarios fuera de la jornada normal de trabajo se retribuyen a través de:",
+        "a": [
+          "Las retribuciones complementarias.",
+          "Las gratificaciones.",
+          "Las horas extra.",
+          "Las retribuciones extraordinarias."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "La coincidencia trata de efectos de la evaluación del desempeño, no de servicios extraordinarios. Además, gratificaciones y retribuciones complementarias requieren cotejar unicidad y grado de precisión.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AT1052-P1-15"
+      ]
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-16",
+        "t": "T1.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes retribuciones de los funcionarios se clasifica como NO complementaria?",
+        "a": [
+          "De destino.",
+          "Específica.",
+          "De productividad.",
+          "De trienio."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-17",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el TREBEP, las retribuciones básicas de los funcionarios están integradas por:",
+        "a": [
+          "El sueldo y los trienios.",
+          "El sueldo, los trienios y el complemento de destino.",
+          "El sueldo y los complementos que retribuyen el rendimiento o los resultados alcanzados por el funcionario.",
+          "El sueldo, exclusivamente."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-18",
+        "t": "T1.05",
+        "o": "A",
+        "q": "La especial dificultad técnica, responsabilidad, dedicación, incompatibilidad exigible para el desempeño de determinados puestos de trabajo o las condiciones en que se desarrolla el trabajo, se retribuyen mediante:",
+        "a": [
+          "El sueldo.",
+          "El complemento de destino.",
+          "El complemento específico.",
+          "Las gratificaciones."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-19",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según establece el artículo 78 del TREBEP, las Administraciones Públicas proveerán los puestos de trabajo mediante procedimientos basados en los principios de:",
+        "a": [
+          "Mérito, capacidad, publicidad, profesionalidad.",
+          "Mérito, igualdad , capacidad, profesionalidad.",
+          "Mérito, paridad, capacidad e igualdad.",
+          "Mérito, capacidad, igualdad y publicidad."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-20",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el artículo 78 del TREBEP, las leyes de Función Pública que se dicten en desarrollo del presente Estatuto podrán establecer otros procedimientos de provisión en los supuestos de (señale la respuesta INCORRECTA):",
+        "a": [
+          "Comisiones de servicio.",
+          "Reingreso al servicio activo.",
+          "Movilidad por motivos de rehabilitación del funcionario.",
+          "Permutas entre puestos de trabajo."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-21",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con el artículo 78 del TREBEP, ¿cuáles son los procedimientos de provisión de puestos de trabajo?",
+        "a": [
+          "Oposición, concurso y concurso-oposición.",
+          "Oposición, concurso y libre designación.",
+          "Libre designación y concurso.",
+          "Libre designación y oposición."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-22",
+        "t": "T1.05",
+        "o": "A",
+        "q": "La libre designación con convocatoria pública, según el TREBEP:",
+        "a": [
+          "Consiste en la apreciación discrecional por el órgano competente de la idoneidad de los candidatos en relación con los requisitos exigidos para el desempeño del puesto.",
+          "El órgano competente para el nombramiento podrá recabar la intervención de especialistas que permitan apreciar la idoneidad de los candidatos.",
+          "Los titulares de los puestos de trabajo provistos por el procedimiento de libre designación con convocatoria pública podrán ser cesados discrecionalmente.",
+          "Todas las respuestas anteriores son correctas."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          10
+        ],
+        "d": 2,
+        "n": "Libre designación: \"todas correctas\"."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-23",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el artículo 82 del TREBEP, los traslados de movilidad por razón de violencia de género y por razón de violencia terrorista:",
+        "a": [
+          "Estos traslados tendrán la consideración de movilidad voluntaria.",
+          "Estos traslados tendrán la consideración de traslado forzoso.",
+          "Estos traslados tendrán la consideración de traslado forzoso o voluntaria, de forma potestativa.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-24",
+        "t": "T1.05",
+        "o": "A",
+        "q": "La situación administrativa de suspensión provisional, cuando es consecuencia de la tramitación de un expediente disciplinario, con carácter general tiene una duración máxima de:",
+        "a": [
+          "Un año.",
+          "6 meses.",
+          "3 meses.",
+          "No tiene duración máxima, sino que ésta coincide con la duración del expediente."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-25",
+        "t": "T1.05",
+        "o": "A",
+        "q": "La mujer funcionaria en excedencia por violencia de género, tendrá derecho a que se compute esta excedencia a efectos de antigüedad:",
+        "a": [
+          "Durante todo el periodo de su duración.",
+          "Durante los tres primeros meses.",
+          "Durante los seis primeros meses, prorrogable hasta dieciocho meses.",
+          "Durante los dieciocho primeros meses en todo caso."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-26",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Los funcionarios de carrera que obtengan destino en otras Administraciones públicas a través de los procedimientos de movilidad quedarán respecto a su Administración de origen en la situación administrativa:",
+        "a": [
+          "En servicios especiales.",
+          "En servicio activo.",
+          "En excedencia.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-27",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con lo establecido en el artículo 88 del TREBEP, los funcionarios de carrera se encontrarán en la situación administrativa de \"Servicio en otras Administraciones Públicas\":",
+        "a": [
+          "Cuando obtengan destino en una Administración pública distinta en virtud de procesos de transferencia.",
+          "Cuando obtengan destino en una Administración pública distinta en virtud de procesos de provisión de puestos de trabajo.",
+          "Se rigen por la legislación de la Administración que estén destinados.",
+          "Todas las respuestas anteriores son correctas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-28",
+        "t": "T1.05",
+        "o": "A",
+        "q": "La suspensión firme por sanción disciplinaria no podrá exceder de:",
+        "a": [
+          "2 años.",
+          "3 años.",
+          "6 años.",
+          "5 años."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-29",
+        "t": "T1.05",
+        "o": "A",
+        "q": "El TREBEP establece la situación administrativa de excedencia voluntaria por agrupación familiar en los siguientes términos:",
+        "a": [
+          "Podrá ser declarada cuando los funcionarios de carrera hayan prestado un mínimo de cinco años en cualquiera de las Administraciones Públicas.",
+          "Podrá concederse cuando el cónyuge reside en otra localidad por haber obtenido un puesto de trabajo como laboral temporal o fijo, en cualquiera de las Administraciones Públicas.",
+          "El funcionario deberá mantenerse un mínimo de dos años en esta situación, no existiendo plazo máximo para la misma que podrá mantenerse de forma indefinida.",
+          "El tiempo en esta situación administrativa no devengará retribuciones, ni será computable a efectos de trienios y derechos pasivos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 3,
+        "n": "Excedencia agrupación familiar: plazos y efectos mezclados."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-30",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Los funcionarios de carrera podrán obtener la excedencia voluntaria por interés particular cuando hayan prestado servicios efectivos en cualquiera de las Administraciones Públicas durante un periodo:",
+        "a": [
+          "Mínimo de cinco años inmediatamente anteriores.",
+          "Mínimo de cuatro años.",
+          "Mínimo de cinco años.",
+          "Mínimo de cuatro años inmediatamente anteriores."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-31",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el artículo 89 del TREBEP, la excedencia por cuidado de hijos o familiares:",
+        "a": [
+          "Tendrán derecho a disfrutarla los funcionarios respecto de familiares de 1 grado de consanguineidad o afinidad.",
+          "Los funcionarios tendrán derecho a disfrutarla por un periodo máximo de 3 años durante los cuales se reservará el puesto de trabajo desempeñado.",
+          "Los funcionarios tendrán derecho a participar en los cursos de formación que convoque la Administración mientras se mantengan en esta situación.",
+          "Tendrá derecho a disfrutar de ella todos aquellos funcionarios que tengan un periodo de servicios mínimos de 5 años."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-32",
+        "t": "T1.05",
+        "o": "A",
+        "q": "En el caso de la funcionaria víctima de violencia de género, una vez concedida la excedencia por esta razón, ¿durante qué periodo tiene derecho a percibir las retribuciones íntegras de su puesto de trabajo?",
+        "a": [
+          "En el primer mes de duración de esta excedencia.",
+          "En los dos primeros meses de duración de esta excedencia.",
+          "En los seis primeros meses de duración de esta excedencia.",
+          "En el primer año de duración de esta excedencia."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-33",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según lo dispuesto en el art. 89 del TREBEP, los funcionarios de carrera respecto a la excedencia por cuidado de familiares (señale la respuesta INCORRECTA):",
+        "a": [
+          "Tendrá derecho a un periodo de excedencia de duración no será superior a tres años para atender al cuidado de cada hijo.",
+          "También tendrán un derecho a un periodo de excedencia no superior a tres años para atender al cuidado de un familiar que se encuentre a su cargo, hasta el primer grado de consanguinidad o afinidad.",
+          "El periodo de excedencia será único por cada sujeto causante.",
+          "El tiempo de permanencia en esta situación será computable a efectos de trienios."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-35",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De entre los siguientes supuestos, ¿en cuál los funcionarios de carrera NO serán declarados en situación de servicios especiales?",
+        "a": [
+          "Cuando sean designados asesores de los grupos parlamentarios de las Cortes Generales o de las asambleas legislativas de las comunidades autónomas.",
+          "Cuando sean autorizados para realizar una misión por periodo determinado superior a tres meses en organismos internacionales, gobiernos o entidades públicas extranjeras o en programas de cooperación internacional.",
+          "Cuando accedan a la condición de Diputado o Senador de las Cortes Generales o miembros de las asambleas legislativas de las comunidades autónomas si perciben retribuciones periódicas por la realización de la función.",
+          "Cuando sean adscritos a los servicios del Tribunal de Cuentas por el procedimiento de libre designación."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-37",
+        "t": "T1.05",
+        "o": "A",
+        "q": "La funcionaria que acceda a la situación de excedencia por razón de violencia de género tendrá derecho a:",
+        "a": [
+          "La reserva del puesto de trabajo que desempeñara durante el período en que se encuentre en dicha situación.",
+          "Percibir las retribuciones íntegras y, en su caso, las prestaciones familiares por hijo a cargo durante los diecinueve primeros meses de duración de la excedencia.",
+          "A que se le computen los seis primeros meses de duración a efectos de antigüedad, carrera y derechos del régimen de Seguridad Social que sea de aplicación.",
+          "La reserva del puesto de trabajo que desempeñara durante los tres primeros meses de duración."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-38",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De conformidad con el TREBEP, la sanción de separación del servicio se puede imponer:",
+        "a": [
+          "Por la comisión de faltas leves, graves o muy graves.",
+          "Por la comisión de faltas graves o muy graves.",
+          "Por la comisión de faltas muy graves.",
+          "El TREBEP ha suprimido este tipo de sanción disciplinaria."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-39",
+        "t": "T1.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes sanciones está recogida en el TREBEP?",
+        "a": [
+          "Demérito.",
+          "Traslado forzoso sin cambio de localidad.",
+          "Separación del servicio.",
+          "Todas las respuestas son correctas."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-40",
+        "t": "T1.05",
+        "o": "A",
+        "q": "El TREBEP en su artículo 95 considera como falta muy grave:",
+        "a": [
+          "La desobediencia abierta a las órdenes o instrucciones de un superior salvo que constituyan infracción manifiesta del ordenamiento jurídico.",
+          "La falta de obediencia debida a los superiores.",
+          "El incumplimiento injustificado de la jornada de trabajo por un mínimo de 10 horas al mes.",
+          "El abuso de autoridad."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-41",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el TREBEP, el plazo de prescripción de las sanciones impuestas por la comisión de faltas graves es de:",
+        "a": [
+          "3 años.",
+          "2 años.",
+          "1 año.",
+          "Seis meses."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-42",
+        "t": "T1.05",
+        "o": "A",
+        "q": "La ausencia injustificada de un día es una falta:",
+        "a": [
+          "Leve.",
+          "Grave.",
+          "Muy grave.",
+          "No es falta disciplinaria, pero sí comporta la pérdida proporcional de retribuciones."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-43",
+        "t": "T1.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes es según el TREBEP una falta muy grave?",
+        "a": [
+          "La adopción de acuerdos manifiestamente ilegales que causen perjuicio grave a la Administración o a los ciudadanos.",
+          "El abuso de autoridad en el ejercicio del cargo.",
+          "Las conductas constitutivas de delito doloso relacionadas con el servicio o que causen daño a la Administración o a los administrados.",
+          "No guardar el debido sigilo respecto a los asuntos que se conozcan por razón del cargo, cuando causen perjuicio a la Administración o se utilice en provecho propio."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-44",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el artículo 97 del TREBEP, ¿en qué plazo prescribirán las sanciones impuestas y desde qué momento se comienzan a contar estos plazos?",
+        "a": [
+          "Las sanciones impuestas por faltas muy graves prescribirán a los dos años, comenzando a contarse los plazos desde que se hubieran cometido las faltas.",
+          "Las sanciones impuestas por faltas graves prescribirán al año, comenzando a contarse los plazos desde la ejecutividad de la resolución sancionadora.",
+          "Las sanciones impuestas por faltas leves prescribirán al año, comenzando a contarse los plazos desde la firmeza de la resolución sancionadora.",
+          "Las sanciones impuestas por faltas graves prescribirán a los dos años, comenzando a contar los plazos desde la resolución del procedimiento sancionador que pone fin a la vía administrativa."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-45",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Señale la respuesta correcta en relación con el régimen disciplinario regulado en el Título VII del TREBEP:",
+        "a": [
+          "Es de aplicación al personal funcionario, pero no al personal laboral.",
+          "La potestad disciplinaria se ejercerá de acuerdo con el principio de irretroactividad de las disposiciones sancionadoras favorables.",
+          "Es una falta disciplinaria grave el incumplimiento de las normas sobre incompatibilidades cuando ello dé lugar a una situación de incompatibilidad.",
+          "Es una falta disciplinaria muy grave el incumplimiento de la obligación de atender los servicios esenciales en caso de huelga."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-48",
+        "t": "T1.05",
+        "o": "A",
+        "q": "El TREBEP, se aplica directamente al personal de las Fuerzas y Cuerpos de Seguridad:",
+        "a": [
+          "En todos los aspectos de la ley regula.",
+          "Cuando así lo disponga su legislación específica.",
+          "No se les aplica ningún supuesto.",
+          "Se les aplica en todo menos en el régimen disciplinario."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-49",
+        "t": "T1.05",
+        "o": "A",
+        "q": "El personal de la Sociedad Estatal de Correos y Telégrafos se rige:",
+        "a": [
+          "El personal funcionario se regirá por sus normas específicas y, correlativamente, por lo dispuesto en el TREBEP.",
+          "El personal funcionario de la Sociedad Estatal Correos y Telégrafos por lo dispuesto en el TREBEP.",
+          "Su personal laboral se regirá por la legislación laboral y demás normas convencionalmente aplicables y, supletoriamente, por lo dispuesto en el TREBEP.",
+          "Su personal laboral se regirá por la legislación laboral y demás normas convencionalmente aplicables."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-50",
+        "t": "T1.05",
+        "o": "A",
+        "q": "La toma de posesión de un funcionario público debe tener lugar en el plazo de:",
+        "a": [
+          "15 días naturales a partir de la publicación del nombramiento.",
+          "15 días naturales a partir de la publicación del nombramiento, ampliable otros 15 días en el caso de cambio de localidad.",
+          "10 días naturales a partir de la publicación del nombramiento, ampliable otros 15 días en el caso de cambio de localidad.",
+          "Tres meses, tras la publicación del nombramiento."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "El plazo de toma de posesión se enuncia sin delimitar Administración y supuesto de residencia; el pasaje añade un mes para cambio de localidad y necesita precisar el caso.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AT1052-P1-50"
+      ]
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-51",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Conforme al TREBEP, los funcionarios de carrera se hallarán en alguna de las siguientes situaciones:",
+        "a": [
+          "Servicio activo, servicios especiales, excedencia voluntaria por servicios en el sector público, excedencia y suspensión de funciones.",
+          "Servicio activo, servicio en otras Administraciones Públicas, excedencia y suspensión de funciones.",
+          "Servicio activo, servicios especiales, servicio en otras Administraciones Públicas, excedencia, expectativa de destino y suspensión de funciones.",
+          "Servicio activo, servicios especiales, servicio en otras Administraciones Públicas, excedencia y suspensión de funciones."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-54",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según la normativa en materia de incompatibilidades del personal al servicio de las Administraciones Públicas, quedan exceptuadas del régimen de incompatibilidades las siguientes actividades (señale la respuesta INCORRECTA):",
+        "a": [
+          "Las derivadas de la administración del patrimonio personal o familiar",
+          "La preparación para el acceso a la función pública.",
+          "La participación en Tribunales calificadores de pruebas selectivas para ingreso en las Administraciones Públicas.",
+          "La dirección de seminarios o el dictado de cursos o conferencias en Centros oficiales destinados a la formación de funcionarios o profesorado, cuando no tenga carácter permanente o habitual ni supongan más de 70 horas al año."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-56",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el Real Decreto-ley 6/2023, de 19 de diciembre, por el que se aprueban medidas urgentes para la ejecución del Plan de Recuperación, Transformación y Resiliencia en materia de servicio público de justicia, función pública, régimen local y mecenazgo, ¿qué porcentaje de las plazas de acceso libre incluirá la oferta de empleo público para promoción interna?",
+        "a": [
+          "Inferior al 10%.",
+          "No inferior al 30%.",
+          "Inferior al 15%.",
+          "No inferior al 10%."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-57",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el TREBEP, ¿qué derechos individuales se ejercen de forma colectiva?",
+        "a": [
+          "Libertad sindical, negociación colectiva, ejercicio de huelga, planteamiento de conflictos colectivos y reunión.",
+          "Libertad sindical, libre asociación profesional y ejercicio de huelga.",
+          "Libertad sindical, libertad de expresión dentro de los límites del ordenamiento jurídico, negociación colectiva y ejercicio de huelga.",
+          "Negociación colectiva, ejercicio de huelga y libre asociación profesional."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-59",
+        "t": "T1.05",
+        "o": "A",
+        "q": "¿Qué porcentaje de plazas debe reservarse en las ofertas de empleo público para personas que acrediten discapacidad intelectual?",
+        "a": [
+          "Al menos el 2%.",
+          "Al menos el 3%.",
+          "Al menos el 5%.",
+          "Al menos el 7%."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT1052-P1-60",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Señale la respuesta correcta sobre la oferta de empleo público de acuerdo con lo establecido en el Real Decreto-ley 6/2023, de 19 de diciembre:",
+        "a": [
+          "La oferta de empleo público incluirá un porcentaje no inferior al cuarenta por ciento de las plazas de acceso libre para promoción interna.",
+          "En la oferta de empleo público se reservará un porcentaje del siete por ciento de las plazas para las personas con discapacidad.",
+          "Las plazas no cubiertas en la ejecución de una convocatoria podrán convocarse nuevamente siempre que no hayan transcurrido más de dos años de la publicación de la oferta.",
+          "Las convocatorias deberán ejecutarse en el plazo máximo de dos años desde su publicación."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-19",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Una de las siguientes afirmaciones NO es cierta. Los miembros del Gobierno:",
+        "a": [
+          "No podrán realizar actividad profesional alguna.",
+          "Podrán ejercer otras funciones representativas distintas a las propias de su mandato parlamentario, cuando las mismas no sean incompatibles con el normal desempeño de su función.",
+          "No podrán desempeñar actividad mercantil alguna.",
+          "Podrán ejercer las funciones públicas que deriven de su cargo."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-01",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Actualmente, el plazo para la toma de posesión tras la adquisición de la condición de funcionario de carrera es de:",
+        "a": [
+          "Un mes.",
+          "15 días hábiles o un mes.",
+          "15 días naturales o un mes.",
+          "Al día siguiente del nombramiento."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-02",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el artículo 54 del TREBEP, NO se considera un principio de conducta:",
+        "a": [
+          "Se rechazará cualquier regalo, favor o servicio en condiciones ventajosas que vaya más allá de los usos habituales, sociales y de cortesía, sin perjuicio de lo establecido en el Código Penal.",
+          "Mantendrán actualizada su formación y cualificación.",
+          "Obedecerán en todo caso las instrucciones y órdenes profesionales de los superiores.",
+          "Informarán a los ciudadanos sobre aquellas materias o asuntos que tengan derecho a conocer, y facilitarán el ejercicio de sus derechos y el cumplimiento de sus obligaciones."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-03",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el artículo 3 del texto refundido de la Ley del Estatuto Básico del Empleado Público, aprobado mediante Real Decreto Legislativo 5/2015, de 30 de octubre, el personal funcionario de las entidades locales se rige:",
+        "a": [
+          "Por este Estatuto y por la legislación de las comunidades autónomas.",
+          "Por la legislación estatal, de la que forma parte este Estatuto y subsidiariamente por la legislación autonómica.",
+          "Por la legislación de las comunidades autónomas.",
+          "Por la legislación estatal que resulte de aplicación, de la que forma parte este Estatuto y por la legislación de las comunidades autónomas, con respeto a la autonomía local."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-17",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el artículo 61 del texto refundido de la Ley del Estatuto Básico del Empleado Público, aprobado mediante Real Decreto Legislativo 5/2015, de 30 de octubre, ¿puede considerarse el concurso como un sistema válido de acceso al empleo público como funcionario de carrera?",
+        "a": [
+          "Sí, en todo caso.",
+          "No, en ningún caso.",
+          "Solo cuando lo contemple expresamente la relación de puestos de trabajo.",
+          "Sólo en virtud de ley podrá aplicarse, con carácter excepcional."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-20",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Establece el TREBEP que por accidente de una hermana en localidad distinta, los funcionarios públicos tendrán un permiso de:",
+        "a": [
+          "2 días hábiles.",
+          "3 días hábiles.",
+          "4 días hábiles.",
+          "5 días hábiles."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-R-01",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el artículo 87 del texto refundido de la Ley del Estatuto Básico del Empleado Público, aprobado mediante Real Decreto Legislativo 5/2015, de 30 de octubre, cuando un funcionario sea adscrito a los servicios del Tribunal Constitucional será declarado en situación de:",
+        "a": [
+          "Servicio activo.",
+          "Servicios especiales.",
+          "Excedencia.",
+          "Servicio en otras Administraciones Públicas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-02",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Los funcionarios públicos tendrán un permiso por asuntos particulares de:",
+        "a": [
+          "4 días.",
+          "6 días.",
+          "8 días.",
+          "10 días."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-03",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el TREBEP, ¿cuál de los siguientes derechos individuales NO es ejercido colectivamente?",
+        "a": [
+          "Conflictos colectivos.",
+          "Libertad sindical.",
+          "Formación continua.",
+          "Reunión."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-21",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el TREBEP, ¿qué personal NO se rige por su legislación específica propia?",
+        "a": [
+          "Personal militar de las Fuerzas Armadas.",
+          "Personal del Centro Nacional de Inteligencia.",
+          "Personal del Consejo Superior de Investigaciones Científicas.",
+          "Personal del Banco de España."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-23",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el TREBEP, en la situación de excedencia voluntaria por agrupación familiar, ¿será computable el tiempo que se permanezca en tal situación a efectos de trienios?",
+        "a": [
+          "Sí.",
+          "No.",
+          "Excepcionalmente.",
+          "Siempre que hubiera prestado servicios previos de, al menos, 5 años."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-17",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el artículo 85.1 del TREBEP, los funcionarios de carrera se hallarán en alguna de las siguientes situaciones (señale la INCORRECTA):",
+        "a": [
+          "Excedencia.",
+          "Suspensión de funciones.",
+          "Servicios especiales.",
+          "Expectativa de destino."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-19",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Sobre el teletrabajo, nueva modalidad de prestación de servicios incorporada en el TREBEP, señale la respuesta INCORRECTA:",
+        "a": [
+          "Habrá de ser expresamente autorizada.",
+          "Tendrá carácter reversible.",
+          "Será compatible con la modalidad presencial.",
+          "Tendrá carácter obligatorio."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-13",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Señale la afirmación INCORRECTA en relación con el personal eventual:",
+        "a": [
+          "Su cese y nombramiento serán libres.",
+          "Desarrolla funciones directivas definidas como tales en las normas específicas de cada Administración.",
+          "Le será aplicable, en lo que sea adecuado a la naturaleza de su condición, el régimen general de los funcionarios.",
+          "La experiencia obtenida como eventual no podrá constituir mérito para la promoción interna."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-08",
+        "t": "T1.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes causas de pérdida de la condición de funcionario impide la rehabilitación de la condición de funcionario, según el Real Decreto Legislativo 5/2015, por el que se aprueba el Texto Refundido de la Ley del Estatuto Básico del Empleado Público?",
+        "a": [
+          "La renuncia a la condición de funcionario.",
+          "La pena principal o accesoria de inhabilitación absoluta o especial para cargo público.",
+          "La jubilación por incapacidad permanente.",
+          "La pérdida de la nacionalidad."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-09",
+        "t": "T1.05",
+        "o": "A",
+        "q": "La designación del personal directivo profesional, regulado en el artículo 13.2 del TREBEP, atenderá a criterios de:",
+        "a": [
+          "Capacidad.",
+          "Mérito.",
+          "Eficacia.",
+          "Idoneidad."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-14",
+        "t": "T1.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes situaciones administrativas NO reviste carácter básico y obligatorio para todas las Administraciones Públicas de acuerdo con el TREBEP?",
+        "a": [
+          "Los servicios especiales.",
+          "La excedencia forzosa.",
+          "La excedencia voluntaria por interés particular.",
+          "La excedencia por razón de víctima del terrorismo."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-07",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el Real Decreto Legislativo 5/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley del Estatuto Básico del Empleado Público, los empleados públicos tienen los siguientes derechos individuales que se ejercen de forma colectiva (señale la respuesta INCORRECTA):",
+        "a": [
+          "A la libertad sindical.",
+          "Al ejercicio de la huelga, con la garantía del mantenimiento de los servicios esenciales de la comunidad.",
+          "A la libre asociación profesional.",
+          "A la negociación colectiva y a la participación en la determinación de las condiciones de trabajo."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-10",
+        "t": "T1.05",
+        "o": "A",
+        "q": "El Real Decreto Legislativo 5/2015, de 30 de octubre, por el que se aprueba el Texto Refundido de la Ley del Estatuto Básico del Empleado Público:",
+        "a": [
+          "Establece que los empleados públicos ajustarán su actuación a los principios de lealtad y buena fe con la Administración en la que presten sus servicios, y con sus superiores, compañeros, subordinados y con los ciudadanos.",
+          "Establece que los empleados públicos ajustarán su actuación únicamente con lealtad a sus superiores.",
+          "Establece que los empleados públicos deberán influir en la agilización o resolución de trámite o procedimiento administrativo con o sin justa causa.",
+          "No recoge ningún principio ético para los empleados públicos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-10",
+        "t": "T1.05",
+        "o": "A",
+        "q": "Según el Real Decreto Legislativo 5/2015, de 30 de octubre, por el que se aprueba el Texto Refundido de la Ley del Estatuto Básico del Empleado Público, el personal del Centro Nacional de Inteligencia:",
+        "a": [
+          "Las disposiciones de este Estatuto sólo se aplicarán directamente cuando así lo disponga su legislación específica.",
+          "Se rige por la legislación estatal que resulte de aplicación, de la que forma parte este Estatuto y por la legislación de las comunidades autónomas.",
+          "Se rige, además de por la legislación laboral y por las demás normas convencionalmente aplicables, por los preceptos de este Estatuto que así lo dispongan.",
+          "Se regirá por sus normas específicas y supletoriamente por lo dispuesto en este Estatuto."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-11",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el Real Decreto Legislativo 5/2015, de 30 de octubre, por el que se aprueba el Texto Refundido de la Ley del Estatuto Básico del Empleado Público, una de las circunstancias que debe darse para el nombramiento de un funcionario son el exceso o acumulación de tareas por plazo máximo de:",
+        "a": [
+          "3 meses, dentro de un periodo de 6 meses.",
+          "12 meses, dentro de un periodo de 18 meses.",
+          "9 meses, dentro de un periodo de 18 meses.",
+          "12 meses, dentro de un periodo de 24 meses."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-12",
+        "t": "T1.05",
+        "o": "A",
+        "q": "De acuerdo con el Real Decreto Legislativo 5/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley del Estatuto Básico del Empleado Público, cuando existiendo alguna plaza vacante no haya sido posible su cobertura por funcionarios de carrera y se haya cubierto por un interino:",
+        "a": [
+          "Dicha plaza deberá incluirse en la oferta de empleo correspondiente al ejercicio siguiente en que se produce su nombramiento.",
+          "Dicha plaza podrá ser amortizada.",
+          "Dicha plaza solo podrá incluirse en la oferta de empleo correspondiente al ejercicio en que se produce su nombramiento.",
+          "Dicha plaza no podrá incluirse en la oferta de empleo hasta que hayan transcurrido tres años."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-04",
+        "t": "T1.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes clases de empleados públicos NO aparece contemplada en el TREBEP?",
+        "a": [
+          "Personal laboral.",
+          "Personal eventual.",
+          "Personal directivo.",
+          "Personal independiente."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 397,
+    "alreadyHadCitation": 254,
+    "added": 21,
+    "pending": 122,
+    "withCitation": 275
+  }
+}
