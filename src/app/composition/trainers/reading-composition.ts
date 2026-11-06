@@ -1,3 +1,4 @@
+import { isEditorialContentBlocked } from '../../../core/domain/question-review-overrides.js';
 import { evaluateReadingWords, minimumReadingSeconds, asksForNegativeOption } from '../../../core/domain/reading-strategy.js';
 import type { QuestionRecord } from '../../../core/domain/question-record.js';
 import type { QuestionStats } from '../../../core/domain/entities.js';
@@ -30,6 +31,7 @@ const createProgress = (items: readonly ReadingPrompt[]): ReadingProgress => ({
 
 /** Account-scoped application flow for the three-step attentive-reading exercise. */
 export function createReadingComposition(dependencies: ReadingCompositionDependencies): ReadingServices {
+  let sourceQuestions = new Map<string, QuestionRecord>();
   let owner = dependencies.accountId();
   let batch: ReadingPrompt[] | null = null;
   let progress: ReadingProgress | null = null;
@@ -68,7 +70,8 @@ export function createReadingComposition(dependencies: ReadingCompositionDepende
       const ids = dependencies.mixQuestionIds([[fastIds, 3], [failedIds, 2]], rest, 40, recentIds, dependencies.shuffle);
       const loaded = await dependencies.loadQuestionsById(ids);
       if (requestOwner !== dependencies.accountId()) return null;
-      const available = new Map(loaded.filter(question => question.np !== 1 && !question.s && !question.cp).map(question => [question.i, question]));
+      const available = new Map(loaded.filter(question => !isEditorialContentBlocked(question) && !question.s && !question.cp).map(question => [question.i, question]));
+      sourceQuestions = available;
       batch = dependencies.shuffle(ids.map(id => available.get(id)).filter((question): question is QuestionRecord => !!question).slice(0, 8)).map(question => ({
         ...toFailureQuestionView(question, dependencies.sourceFallbacks),
         asksForNegative: asksForNegativeOption(question.q),
@@ -119,6 +122,8 @@ export function createReadingComposition(dependencies: ReadingCompositionDepende
     answerOption(index): boolean | null {
       const current = getProgress(), question = current?.items[current.index];
       if (!current || !question || current.step !== 2 || current.selectedAnswer !== null) return null;
+      const source = sourceQuestions.get(question.id);
+      if (!source || isEditorialContentBlocked(source)) return null;
       const elapsedMilliseconds = dependencies.currentTime() - current.startedAt;
       if (elapsedMilliseconds < question.minimumSeconds * 1000) return false;
       const correct = index === question.correctIndex;

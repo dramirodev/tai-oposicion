@@ -1,3 +1,4 @@
+import { verifyQuestionContent } from './question-content-verification.js';
 import { applyEditorialScoring } from '../../core/domain/question-review-overrides.js';
 import { diagnoseQuestionDtos } from './question-diagnostics.js';
 import type { StudyCatalogIndex as Index, StudyQuestionMetadata as Meta } from '../../core/domain/study-catalog.js';
@@ -61,7 +62,7 @@ export const getMetadataSnapshot = (): Meta | undefined => questionMetadata;
 export const getTopicForQuestion = (questionId: string): string | null => questionMetadata?.[questionId]?.[0] || supQuestions.get(questionId)?.t || null;
 export const getQuestionIdsForTopic = (topicId: string): string[] => [...(questionMetadata?._by[topicId] || []), ...[...supQuestions.values()].filter(question => question.t === topicId).map(question => question.i)];
 export const getAllQuestionIdsForTopic = (topicId: string): string[] => [...getQuestionIdsForTopic(topicId), ...Object.entries(questionMetadata || {}).filter(([, entry]) => entry?.[0] === topicId && entry[5]).map(([id]) => id)];
-export async function getTopicQuestions(topicId: string): Promise<Question[]> { const key = topicCacheKey(topicId); if (!cache.has(key)) cache.set(key, fetchJson<Question[]>(`data/${topicId}.json`).then(questionRows => { diagnoseQuestionDtos(questionRows); return questionRows.map(applyEditorialScoring); }).catch(error => { cache.delete(key); throw error; })); return cache.get(key)!; }
+export async function getTopicQuestions(topicId: string): Promise<Question[]> { const key = topicCacheKey(topicId); if (!cache.has(key)) cache.set(key, fetchJson<Question[]>(`data/${topicId}.json`).then(async questionRows => { diagnoseQuestionDtos(questionRows); return (await Promise.all(questionRows.map(verifyQuestionContent))).map(applyEditorialScoring); }).catch(error => { cache.delete(key); throw error; })); return cache.get(key)!; }
 export async function getScenarios(): Promise<Record<string, ScenarioEntry>> {
   if (scenarios) return scenarios;
   if (!scenariosLoading) scenariosLoading = fetchJson<Record<string, ScenarioEntry>>('data/supuestos.json').then(data => {

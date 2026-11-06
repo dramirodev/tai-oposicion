@@ -1,4 +1,5 @@
-import { isQuestionEditoriallyQuarantined } from '../../../core/domain/question-review-overrides.js';
+import { questionNotice } from '../../../shared/presentation/study-content.js';
+import { isEditorialQuarantineActive, questionReviewOverride } from '../../../core/domain/question-review-overrides.js';
 import type { QuestionRecord } from '../../../core/domain/question-record.js';
 import type { CardsServices, StudyCard } from '../../../shared/ui/study-services.js';
 import { createCardsController, type CardsControllerDependencies } from '../../../features/cards/cards-controller.js';
@@ -44,9 +45,10 @@ export function createCardsComposition(dependencies: CardsCompositionDependencie
     await dependencies.loadQuestionMetadata();
     const questionIds = dependencies.failedCardQuestionIds();
     const questions = await dependencies.loadQuestionsById([...questionIds]);
-    const failures = questions.filter(item => !isQuestionEditoriallyQuarantined(item.i)).map(question => ({
+    const failures = questions.filter(item => !isEditorialQuarantineActive(item)).map(question => ({
       ...cardFromFailedQuestion(question),
       np: question.np,
+      ...(questionReviewOverride(question.i) ? { editorialNotice: questionNotice(question) } : {}),
       source: question.source || dependencies.verifiedSources[question.i],
       supTexto: question.supTexto,
       cp: question.cp,

@@ -53,7 +53,7 @@ export function ReadingPage() {
 
 function QuestionSources({ question }: { question: ReadingPrompt }) {
   return <StudyQuestionSources
-    noticeHtml={questionNotice({ i: question.id, n: question.note, np: question.nonScoring })}
+    noticeHtml={(question.editorialNotice ?? questionNotice({ i: question.id, n: question.note, np: question.nonScoring }))}
     sourceHtml={sourceHtml({ i: question.id, source: question.source, u: question.citation })}
     languageContext={question.statement}
   />;

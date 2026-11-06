@@ -198,3 +198,10 @@ Run42181131603 cancelado tras >18min en instalación de dependencias: el log dem
 CI42184320823 concluyó failure:305 aprobadas/30 omitidas/1 fallo en el fixture de dos actividades, antes de «Continuar actividad». Ambos fixtures relacionados llamaban Date.now por separado para updatedAt y startedAt; un cambio de milisegundo viola el contrato temporal. El adaptador rechaza exactamente ese caso, reproducido con frontera1ms; no se modifica producto. Se reutiliza un timestamp en bridge y fixture sync. Evidencia en `evidence/integration-2026-11-06/ci-regression-failure.md`.
 
 Verificación: adaptador10/10;20/20 E2E (5 repeticiones por recorrido/motor); check1017/29omitidas, lint/tipos/arquitectura correctos. ATE-014 queda CORREGIDO SIN VERIFICAR remotamente, sin trace de aquella ejecución no se presupone causalidad exclusiva. Próximo paso: push a rama PR110 y verificar nueva ejecución Linux; ahora se conservarán artefactos de regresión integral incluso ante fallos. No merge/main ni deploy. UX-009 y ATE-005 continúan abiertos.
+
+
+### Segunda integración concurrente — 6/11
+
+Tras publicar00d4ee9, PR110 volvió a CONFLICTING porque main avanzó a6b68b0b (version1.1.16, PR109/111). Se integra en el mismo checkout aislado. Único conflicto: tests/design-flow.test.js; se conserva la solución posterior de main que monta start-app/HomePage dentro de act y desmonta al terminar. Mantiene la intención de ATE-013 sin startup desprendido. Correcciones editoriales y tests de sincronización de main se preservan íntegros; no se reescriben los89 archivos integrados.
+
+Check integrado:1046 aprobadas/29 omitidas,196 archivos/3 omitidos; arquitectura/lint/tipos correctos. E2E global en curso (session58416); no declarar su resultado antes de terminar. Se publica integración para desbloquear CI PR, sin merge a main ni deploy. El SHA baseline60a2263 se conserva hasta revisar cualquier diferencia visual demostrada. Próximo paso: terminar E2E local, consultar el nuevo run Linux y corregir hallazgos sin relajar expectativas.

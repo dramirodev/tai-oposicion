@@ -9,7 +9,7 @@ import {
   questionPriority,
   shuffleItems,
 } from '../domain/selection.js';
-import { isQuestionEditoriallyQuarantined } from '../domain/question-review-overrides.js';
+import { isQuestionEditoriallyQuarantined, isEditorialQuarantineActive } from '../domain/question-review-overrides.js';
 import { hasPendingFailure, questionReviewDueAt, selectSpacedReviews } from '../domain/spaced-repetition.js';
 import { calculateTrapRates, selectTrapQuestions } from '../domain/traps.js';
 import type { QuestionRecord } from '../domain/question-record.js';
@@ -33,7 +33,7 @@ export function createStudyQuestionSelection(
   const origins = (): Set<string> => new Set(progress.getPreferences().test?.o || ['O', 'A', 'G']);
   const questionAllowed = (question: Question, allowedOrigins: ReadonlySet<string>): boolean =>
     isQuestionAllowed(question.o, question.r, allowedOrigins)
-      && !isQuestionEditoriallyQuarantined(question.i);
+      && !isEditorialQuarantineActive(question);
 
   async function loadQuestionsInRequestedOrder(ids: readonly string[]): Promise<Question[]> {
     if (!ids.length) return [];
@@ -45,8 +45,16 @@ export function createStudyQuestionSelection(
     });
   }
 
+  async function verifyPendingEditorialStats(): Promise<void> {
+    const ids = Object.keys(progress.getAllQuestionStats()).filter(isQuestionEditoriallyQuarantined);
+    if (ids.length) {
+      try { await catalog.getQuestions(ids); } catch { /* Unavailable content stays quarantined. */ }
+    }
+  }
+
   async function dueQuestionIds(): Promise<string[]> {
     await catalog.getMetadata();
+    await verifyPendingEditorialStats();
     const timestamp = catalog.now();
     return Object.entries(progress.getAllQuestionStats())
       .map(([id, statistics]) => ({ id, dueAt: questionReviewDueAt(statistics) }))
@@ -58,9 +66,12 @@ export function createStudyQuestionSelection(
       .map(entry => entry.id);
   }
 
-  const falladasIds = (): string[] => Object.entries(progress.getAllQuestionStats())
-    .filter(([id, stats]) => catalog.getTopicForQuestion(id) && hasPendingFailure(stats) && !isQuestionEditoriallyQuarantined(id))
+  // Candidate IDs must reach the loader on cold entry; only loaded content can
+  // distinguish an old quarantined record from its approved correction.
+  const failedQuestionCandidateIds = (): string[] => Object.entries(progress.getAllQuestionStats())
+    .filter(([id, stats]) => catalog.getTopicForQuestion(id) && hasPendingFailure(stats))
     .map(([id]) => id);
+  const falladasIds = (): string[] => failedQuestionCandidateIds().filter(id => !isQuestionEditoriallyQuarantined(id));
 
   async function quickGuest(
     index: StudyCatalogIndex,
@@ -131,6 +142,7 @@ export function createStudyQuestionSelection(
 
   async function repasoItems(topicIds?: readonly string[]): Promise<StudyQuestionSelection> {
     await catalog.getMetadata();
+    await verifyPendingEditorialStats();
     const timestamp = catalog.now();
     const seenTopics = new Set(progress.getSeenTopics());
     const allowedTopics = topicIds
@@ -148,7 +160,7 @@ export function createStudyQuestionSelection(
       .map(review => review.item.id);
     const items = await loadQuestionsInRequestedOrder(ids);
     return {
-      items: items.filter(question => !isQuestionEditoriallyQuarantined(question.i)),
+      items: items.filter(question => !isEditorialQuarantineActive(question)),
       titulo: 'Repaso de fallos · más vencidas primero, temas mezclados',
     };
   }
@@ -242,5 +254,5 @@ export function createStudyQuestionSelection(
     return { items, targets };
   }
 
-  return { dueQuestionIds, falladasIds, quickItems, repasoItems, selectQuestionsForTopics, selectWeightedSimulationQuestions, trapTest };
+  return { dueQuestionIds, falladasIds, failedQuestionCandidateIds, quickItems, repasoItems, selectQuestionsForTopics, selectWeightedSimulationQuestions, trapTest };
 }

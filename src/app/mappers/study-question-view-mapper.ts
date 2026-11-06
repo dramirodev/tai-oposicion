@@ -1,3 +1,5 @@
+import { questionReviewOverride } from '../../core/domain/question-review-overrides.js';
+import { questionNotice } from '../../shared/presentation/study-content.js';
 import type { QuestionRecord } from '../../core/domain/question-record.js';
 import type { FailureQuestion } from '../../shared/ui/study-services.js';
 
@@ -9,6 +11,7 @@ export function toFailureQuestionView(
   sourceFallbacks: QuestionSourceFallbacks = {},
 ): FailureQuestion {
   return {
+    ...(questionReviewOverride(question.i) ? { editorialNotice: questionNotice(question) } : {}),
     id: question.i,
     topicId: question.t,
     statement: question.q,

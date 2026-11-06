@@ -7,6 +7,20 @@ import { CodeExplanationView } from '../src/shared/ui/CodeExplanationView.js';
 import { inferCodeLanguage, normalizeCodeLanguage } from '../src/shared/ui/study-code-language.js';
 import { richHtml } from '../src/shared/presentation/study-text.js';
 
+it('asigna claves a nodos transparentes y enlaces rechazados sin alterar su texto', () => {
+  const errors = vi.spyOn(console, 'error');
+  try {
+    const { container, rerender } = render(React.createElement(StudyMarkup, {
+      html: '<em>Uno</em><a>Dos</a><a href="javascript:alert(1)">Tres</a><a href="http://[">Cuatro</a>',
+    }));
+    expect(container.textContent).toBe('UnoDosTresCuatro');
+    expect(container.querySelector('a')).toBeNull();
+    rerender(React.createElement(StudyMarkup, { html: '<em>Cinco</em><a>Seis</a>' }));
+    expect(container.textContent).toBe('CincoSeis');
+    expect(errors.mock.calls.filter(args => args.some(value => String(value).includes('unique "key"')))).toEqual([]);
+  } finally { errors.mockRestore(); }
+});
+
 it('conserva la estructura y etiquetas accesibles de la explicación de código', async () => {
   const { container } = render(React.createElement(StudyMarkup, { html: '<section class="card code-explanation" aria-labelledby="explanation-title"><h3 id="explanation-title">Explicación</h3><pre class="code-sample" tabindex="0"><code>int valor = 1;</code></pre><ol><li><p>Paso uno</p></li></ol></section>' }));
   expect(container.querySelector('section.code-explanation[aria-labelledby="explanation-title"]')).toBeInTheDocument();

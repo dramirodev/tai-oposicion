@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { Fragment, type ReactNode } from 'react';
 import { StudyCode } from './StudyCode.js';
 
 function renderNode(node: Node, key: number, languageContext?: string): ReactNode {
@@ -31,14 +31,14 @@ function renderNode(node: Node, key: number, languageContext?: string): ReactNod
     case 'ul': return <ul key={key} className={className}>{children}</ul>;
     case 'a': {
       const href = node.getAttribute('href');
-      if (!href) return <>{children}</>;
+      if (!href) return <Fragment key={key}>{children}</Fragment>;
       try {
         const url = new URL(href, window.location.href);
-        if (!['https:', 'http:'].includes(url.protocol) || url.username || url.password) return <>{children}</>;
+        if (!['https:', 'http:'].includes(url.protocol) || url.username || url.password) return <Fragment key={key}>{children}</Fragment>;
         return <a key={key} className={className} href={url.href} target="_blank" rel="noopener noreferrer">{children}</a>;
-      } catch { return <>{children}</>; }
+      } catch { return <Fragment key={key}>{children}</Fragment>; }
     }
-    default: return <>{children}</>;
+    default: return <Fragment key={key}>{children}</Fragment>;
   }
 }
 

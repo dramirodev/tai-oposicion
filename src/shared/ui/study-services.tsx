@@ -97,6 +97,7 @@ export interface AcademyStudyProgressServices {
   removeLocalPdf(topicId: string, materialPath: string, sourceHash: string): Promise<void>;
 }
 export interface StudyCard {
+  editorialNotice?: string;
   id: string; t: string; q: string; a: string; nota?: string; ref?: string; tipo?: string; src?: string;
   np?: number; source?: { url: string; title?: string; page?: number; verified: boolean }; supTexto?: string; cp?: string; caduca?: boolean;
 }
@@ -154,7 +155,7 @@ export interface ErrorServices {
   setState(id: string, state: ErrorReportRecord['state']): void;
   exportData(): Promise<string>;
 }
-export interface FailureQuestion { id: string; topicId: string; statement: string; options: readonly string[]; correctIndex: number; citation?: string; note?: string; year?: string; context?: string; assumptionText?: string; traps?: readonly number[]; nonScoring?: number; source?: { url: string; title?: string; page?: number; verified: boolean }; progress?: { attempts: number; correct: number; lastSeenAt: number; failureStreak: number; syllabusReviewed: boolean } }
+export interface FailureQuestion { editorialNotice?: string; id: string; topicId: string; statement: string; options: readonly string[]; correctIndex: number; citation?: string; note?: string; year?: string; context?: string; assumptionText?: string; traps?: readonly number[]; nonScoring?: number; source?: { url: string; title?: string; page?: number; verified: boolean }; progress?: { attempts: number; correct: number; lastSeenAt: number; failureStreak: number; syllabusReviewed: boolean } }
 export interface FailureServices {
   loadQuestions(): Promise<FailureQuestion[]>;
   loadTopics(): Promise<readonly { id: string; name: string }[]>;

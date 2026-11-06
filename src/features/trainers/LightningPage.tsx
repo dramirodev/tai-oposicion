@@ -33,7 +33,7 @@ export function LightningPage() {
 
   const correct = answered === question.correctIndex;
   const ReasonIcon = { lucky: Clover, due: Clock3, failed: RotateCcw, new: Sparkles }[question.reasonKind];
-  const notice = questionNotice({ i: question.id, n: question.note, np: question.nonScoring });
+  const notice = (question.editorialNotice ?? questionNotice({ i: question.id, n: question.note, np: question.nonScoring }));
   const source = sourceHtml({ i: question.id, source: question.source, u: question.citation });
   return <>
     <h1><Zap className="inline-feature-icon" size="1em" strokeWidth={1.7} aria-hidden="true" /> Pregunta relámpago</h1>

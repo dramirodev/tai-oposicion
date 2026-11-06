@@ -1,5 +1,5 @@
 import type { StudyQuestionScenario } from './study-catalog.js';
-import { isQuestionEditoriallyQuarantined } from './question-review-overrides.js';
+import { isEditorialContentBlocked } from './question-review-overrides.js';
 import type { QuestionRecord } from './question-record.js';
 
 interface VerifiedScenarioPair {
@@ -26,12 +26,12 @@ function resolveScenario(catalog: Readonly<Record<string, StudyQuestionScenario>
   for (let number = 1; number <= 20; number++) {
     if (number === replacement?.ordinary) continue;
     const question = byId.get(`${id}-${String(number).padStart(2, '0')}`);
-    if (!question || question.r || question.np === 1 || question.p === 1 || question.o !== 'O' || isQuestionEditoriallyQuarantined(question.i)) return null;
+    if (!question || question.r || question.np === 1 || question.p === 1 || question.o !== 'O' || isEditorialContentBlocked(question)) return null;
     questions.push(question);
   }
   if (replacement) {
     const reserve = byId.get(`${id}-R-${String(replacement.reserve).padStart(2, '0')}`);
-    if (!reserve?.r || reserve.np === 1 || reserve.p === 1 || reserve.o !== 'O' || isQuestionEditoriallyQuarantined(reserve.i)) return null;
+    if (!reserve?.r || reserve.np === 1 || reserve.p === 1 || reserve.o !== 'O' || isEditorialContentBlocked(reserve)) return null;
     questions.push(reserve);
   }
   return { id, block: part === 1 ? 'III' : 'IV', text: scenario.text, questions } as const;
@@ -101,7 +101,7 @@ export function matchesOfficialExamKey(scenarioId: OfficialScenarioId, questions
   const ids = officialExamQuestionIds(scenarioId);
   const key = theoryKey + scenarioKeys[scenarioId];
   return questions.length === ids.length && questions.every((q, index) =>
-    q.i === ids[index] && q.o === 'O' && q.np !== 1 && !isQuestionEditoriallyQuarantined(q.i)
+    q.i === ids[index] && q.o === 'O' && q.np !== 1 && !isEditorialContentBlocked(q)
     && q.a.length === 4 && Number.isInteger(q.c) && 'ABCD'[q.c] === key[index]
     && (index < FREE_ENTRY_2025_EXAM.maxTheoryQuestions || (q.s === scenarioId && !!q.supTexto?.trim())));
 }

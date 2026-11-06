@@ -82,9 +82,11 @@ test('Planificación enlaza el intento al checkpoint y conserva la referencia al
     await page.locator('#next').click();
   }
   await expect(page.locator('#app h1')).toHaveText('Resultado');
-  const checkpoint = await page.evaluate(() => JSON.parse(localStorage.getItem(`tai.training-session.v1.${encodeURIComponent('guest')}`) || 'null'));
   expect(page.url()).toMatch(/#\/result\?.*trainingSessionId=training%3A.*trainingActivityId=training%3A.*%3Aactivity%3A1/);
-  expect(checkpoint).toMatchObject({ id:planned.sessionId, currentIndex:1, activities:[{ id:planned.activityId, attemptSessionIds:[expect.any(String)] }] });
+  // The heading is committed before ResultPage's effect completes the training activity.
+  // Assert the persisted checkpoint itself, including its attempt link, rather than that paint.
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem(`tai.training-session.v1.${encodeURIComponent('guest')}`) || 'null')))
+    .toMatchObject({ id:planned.sessionId, currentIndex:1, activities:[{ id:planned.activityId, attemptSessionIds:[expect.any(String)] }] });
   const tracked = await page.evaluate(() => new Promise<string[]>((resolve, reject) => {
     const request = indexedDB.open('tai-attempts', 2);
     request.onerror = () => reject(request.error);

@@ -47,9 +47,10 @@ describe('lightning composition', () => {
   it('records the answer and exposes the topic name through its dependency', async () => {
     const { dependencies, services } = setup();
 
-    services.record('q-1', 'T1.01', false, 12);
+    await services.loadQuestion();
+    services.record('due', 'T1.01', false, 12);
 
-    expect(dependencies.recordAnswer).toHaveBeenCalledWith('q-1', 'T1.01', false, 12);
+    expect(dependencies.recordAnswer).toHaveBeenCalledWith('due', 'T1.01', false, 12);
     expect(services.topicName('T1.01')).toBe('Tema T1.01');
   });
 });

@@ -7,6 +7,7 @@ import subprocess
 import sys
 from tempfile import TemporaryDirectory
 import unittest
+from historical_bank import copy_release_boundary
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -37,8 +38,7 @@ class Reviewed19Tests(unittest.TestCase):
             folder = Path(temp)
             names = list(LEDGER['files'])
             self.assertEqual(len(names), 5)
-            for name in names:
-                shutil.copyfile(DATA/name, folder/name)
+            copy_release_boundary(folder, 'reviewed-19')
 
             def run(mode):
                 return subprocess.run([sys.executable, str(EDITORIAL/'replay.py'), '--candidate-dir', temp,

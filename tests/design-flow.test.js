@@ -4,17 +4,23 @@ import {act} from '@testing-library/react';
 import {readFileSync} from 'node:fs';
 import path from 'node:path';
 vi.mock('../src/adapters/firebase/sync-facade.js',()=>({status:{user:null,state:'sin sesión',configured:false,authResolved:true},setAttemptRepository:()=>{},init:async()=>{},onStatus:()=>()=>{},login:async()=>{},logout:async()=>{},retry:()=>{}}));
-let store,engine,router,recovery;
+let store,engine,router,recovery,app;
 const waitText=async text=>vi.waitFor(()=>expect(document.querySelector('#app').textContent).toContain(text));
 const navigate=async (route,text)=>{await router.navigate('/'+route); if(route==='sim') await vi.waitFor(()=>expect(document.querySelector('[role="tablist"]')).not.toBeNull()); if(route==='quiz') await vi.waitFor(()=>expect(document.querySelector('.quiz-page')).not.toBeNull()); await waitText(text);};
 beforeAll(async()=>{
  document.documentElement.innerHTML=readFileSync('index.html','utf8');localStorage.clear();
  vi.stubGlobal('matchMedia',()=>({matches:true}));vi.stubGlobal('scrollTo',()=>{});Element.prototype.scrollIntoView=()=>{};
  vi.stubGlobal('fetch',async url=>{try{return {ok:true,json:async()=>JSON.parse(readFileSync(path.join('public',String(url)),'utf8'))};}catch{return {ok:false,json:async()=>null};}});
- await act(async()=>{ await import('../src/app/main'); });router=(await import('../src/app/router/route-runtime.js')).router;store=await import('../src/adapters/local/local-progress-store.js');engine=await import('../src/app/composition/study/study-engine-composition.js');recovery=await import('../src/app/composition/study/pending-run-composition.js');await waitText('Sesión rápida');
+ // Await the render owner and the initial lazy module, not main's detached startup task.
+ // Startup-update-gate behavior is covered separately; this fixture owns the mounted UI.
+ await act(async()=>{
+  app=await import('../src/app/start-app.js');
+  await import('../src/features/home/HomePage.js');
+ });
+ router=(await import('../src/app/router/route-runtime.js')).router;store=await import('../src/adapters/local/local-progress-store.js');engine=await import('../src/app/composition/study/study-engine-composition.js');recovery=await import('../src/app/composition/study/pending-run-composition.js');await waitText('Sesión rápida');
 });
 beforeEach(async()=>{store.resetAll();engine.clearActiveRun();engine.clearLastResult();await navigate('home','Sesión rápida');});
-afterAll(()=>{vi.unstubAllGlobals();});
+afterAll(async()=>{await act(async()=>{app?.unmountApp();});vi.unstubAllGlobals();});
 it('comunica la selección al cambiar la cantidad del test',async()=>{
  await navigate('test','Test por tema');
  const button=[...document.querySelectorAll('[aria-label="Número de preguntas"] button')].find(item=>item.textContent==='10');button.click();

@@ -1,3 +1,4 @@
+import { isEditorialQuarantineActive } from '../../../core/domain/question-review-overrides.js';
 import type { QuestionRecord } from '../../../core/domain/question-record.js';
 import type { QuestionStats } from '../../../core/domain/entities.js';
 import type { ProgressRepository } from '../../../core/ports/ProgressRepository.js';
@@ -37,7 +38,7 @@ export function createFailuresComposition(dependencies: FailuresCompositionDepen
         dependencies.loadQuestionsById(dependencies.failedQuestionIds()),
       ]);
       if (account !== dependencies.accountId()) return [];
-      cachedQuestions = questions.sort((first, second) => (statistics[second.i]?.lastSeenAt || 0) - (statistics[first.i]?.lastSeenAt || 0));
+      cachedQuestions = questions.filter(question => !isEditorialQuarantineActive(question)).sort((first, second) => (statistics[second.i]?.lastSeenAt || 0) - (statistics[first.i]?.lastSeenAt || 0));
       return cachedQuestions.map(question => {
         const progress: QuestionStats | undefined = statistics[question.i];
         return {
@@ -61,7 +62,7 @@ export function createFailuresComposition(dependencies: FailuresCompositionDepen
     topicName: dependencies.topicName,
     startPractice(ids, title, options) {
       const questionsById = new Map(cachedQuestions.map(question => [question.i, question]));
-      const items = dependencies.shuffle(ids.map(id => questionsById.get(id)).filter((question): question is QuestionRecord => !!question)).slice(0, 40);
+      const items = dependencies.shuffle(ids.map(id => questionsById.get(id)).filter((question): question is QuestionRecord => !!question && !isEditorialQuarantineActive(question))).slice(0, 40);
       if (!items.length) return dependencies.notify('No hay preguntas con ese filtro.');
       const created = options?.dailyTrainingActivity
         ? dependencies.createPractice(items, title, options.dailyTrainingActivity)
