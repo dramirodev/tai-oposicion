@@ -12,6 +12,22 @@ export interface QuestionReviewOverride {
 
 export const questionReviewOverrides: readonly QuestionReviewOverride[] = [
   {
+    id: 'GEN-T4.09-70',
+    status: 'quarantined',
+    reason:
+      'La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.',
+    source: 'T4.09 Seguridad en Redes - Temario.pdf',
+    page: 49,
+  },
+  {
+    id: 'GEN-T4.10-32.v2',
+    status: 'quarantined',
+    reason:
+      'La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.',
+    source: 'T4.10 Redes Locales - Temario.pdf',
+    page: 17,
+  },
+  {
     id: 'GEN-T3.10-144.v2',
     status: 'quarantined',
     reason:

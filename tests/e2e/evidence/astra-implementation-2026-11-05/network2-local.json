@@ -1,0 +1,53 @@
+{
+  "status": "LOCAL_VERIFIED_NOT_COMMITTED_NOT_AUTHORIZED_NOT_PUBLISHED",
+  "base": "f6aa79f424d68ab5b7899063d7d6842d227d13da",
+  "worktree": "/Users/dramiro/Documents/Codex/tai-editorial-wave8",
+  "branch": "fix/tai-editorial-wave8",
+  "records": 2,
+  "ids": [
+    "GEN-T4.09-70",
+    "GEN-T4.10-32.v2"
+  ],
+  "originalAstraFindings": 3519,
+  "semanticReviewed": 16078,
+  "semanticPending": 0,
+  "localPreparedRepairs": 415,
+  "localPendingFactual": 3104,
+  "localPendingP0": 30,
+  "publishedRepairs": 405,
+  "productionBankVersion": 16,
+  "metadataChanges": 0,
+  "sampleChanges": 0,
+  "answerKeysChanged": 0,
+  "optionsChanged": 0,
+  "newPeerModelSignature": false,
+  "primaryDocuments": "IEEE project and adopted baselines, RFC7296§2.12 and RFC4949",
+  "sourceVisualReview": true,
+  "discrepanciesRecorded": 2,
+  "ledgerSha256": "fe0c3761e25fa773bb034678d24a7cd4c3a1e476e746b061601a7297953a89e8",
+  "tests": {
+    "pythonPassed": 72,
+    "pythonSkipped": 1,
+    "unitPassed": 1087,
+    "unitSkipped": 29,
+    "renderPassed": 2,
+    "viewports": [
+      393,
+      1280
+    ],
+    "recordsPerViewport": 2,
+    "codeBlocksPerViewport": 1,
+    "architecture": "PASS",
+    "lint": "PASS",
+    "typecheck": "PASS",
+    "build": "1.1.22 PASS",
+    "cardsTopicsPassed": 36,
+    "preflightRollback": "PASS; initial before-row alias caught and corrected using immutable Git base, all old and new hashes now reproduced"
+  },
+  "productionWrites": 0,
+  "limits": [
+    "No Ethernet hardware or IKE live service tested",
+    "No specific authorization for these two, no production migration plan yet",
+    "Preserve existing exact8V2 source/main tree until its data publication; coordinate integration"
+  ]
+}
