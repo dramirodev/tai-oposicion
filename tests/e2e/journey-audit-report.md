@@ -618,3 +618,9 @@ Integración visual final: rutas/estadísticas103 aprobadas y5 fallos (zoom prem
 Antes de integración remota, los cambios de producto y sus regresiones locales están verificados; la matriz completa vuelve a ejecutarse en CI sobre el head final. La PR enlazada en el siguiente hito es el registro vivo del SHA integrado, checks, despliegue y verificación HTTP, para evitar atribuir a este corte resultados futuros. ATE-005/UX-009 históricos permanecen abiertos con sus límites.
 
 Referencia visual revisada: `1d7796eb6f9b84551baf9412a28b0eb897fb19f5`. Se actualizaron las68 capturas intencionales del rediseño y, tras integrar main, ocho de Lectura/Progreso; las cuatro de Progreso pasan esperando su consulta terminada. Se conservan las capturas históricas de auditorías previas, archivando únicamente regeneraciones de esta tarea fuera de Git. La referencia Linux se reconstruye desde este commit aprobado; las aserciones funcionales y umbrales no se reducen.
+
+### Hito remoto y seguimiento vivo
+
+PR de esta entrega: https://github.com/dramirodev/tai-oposicion/pull/123 . La descripción de esa PR es la continuación enlazada de este handoff para el cierre remoto: checks, revisiones, SHA de merge, despliegue y comprobación pública se registran allí cuando ocurran. Este archivo conserva el corte local verificable y no presenta CI o publicación futuras como completadas. CI reconstruye referencia1d7796e y ejecuta la matriz completa en Linux. Conector GitHub devolvió404; se usó la CLI autenticada, sin eludir revisiones ni protecciones.
+
+Estado al publicar la rama: producto local COMPLETADO Y VERIFICADO; matriz remota/integración/publicación EN PROGRESO en PR123. Worktree original continúa intacto y no se incluyeron sus cambios sin confirmar. Los siete hallazgos propios tienen evidencia local concreta; los abiertos de otras auditorías siguen abiertos.
