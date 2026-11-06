@@ -200,13 +200,16 @@ it.each([
 });
 
 
-it('exige prueba de contenido para las 198 nuevas correcciones factuales', () => {
+it('exige prueba de contenido para las 282 nuevas correcciones factuales', () => {
  const previous = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-19.json', 'utf8')).questions;
  const followup = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-followup.json', 'utf8')).questions.filter(q => q.priority === 'P0');
  const wave2 = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-wave2.json', 'utf8')).questions.filter(q => q.after.np !== 1);
  const admin = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-admin20.json', 'utf8')).questions;
- const entries = [...previous, ...followup, ...wave2, ...admin];
- expect(entries).toHaveLength(198);
+ const legal = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-legal19.json', 'utf8')).questions;
+ const programming = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-programming20.json', 'utf8')).questions;
+ const following = ['reviewed-web25','reviewed-architecture20'].flatMap(name=>JSON.parse(readFileSync('scripts/bank-editorial/'+name+'.json','utf8')).questions);
+ const entries = [...previous, ...followup, ...wave2, ...admin, ...legal, ...programming, ...following];
+ expect(entries).toHaveLength(282);
  for (const entry of entries) {
   for (const version of [entry.before, entry.after]) {
    expect(isQuestionEditoriallyQuarantined(version.i), version.i).toBe(true);
