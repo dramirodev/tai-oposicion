@@ -1,0 +1,38 @@
+{
+  "at": "2026-11-06T12:31:21.949Z",
+  "buildSource": "1.1.19+06b8dc6",
+  "sourceCommit": "4bafb543270da6a869b10d2bb85c062b0772ba4d",
+  "mode": "VERIFIED_LIVE_V16_SNAPSHOT",
+  "bankSnapshotVersion": 16,
+  "results": [
+    {
+      "browser": "chromium",
+      "loaded": 405,
+      "approved": 405,
+      "oldBlocked": 405,
+      "mutatedBlocked": 405,
+      "serializedBlocked": 405,
+      "nested": 3,
+      "phpBlocked": true,
+      "quarantinesBlocked": 8,
+      "crypto": true,
+      "pageErrors": []
+    },
+    {
+      "browser": "webkit",
+      "loaded": 405,
+      "approved": 405,
+      "oldBlocked": 405,
+      "mutatedBlocked": 405,
+      "serializedBlocked": 405,
+      "nested": 3,
+      "phpBlocked": true,
+      "quarantinesBlocked": 8,
+      "crypto": true,
+      "pageErrors": []
+    }
+  ],
+  "productionWrites": 0,
+  "productionAuthExercised": false,
+  "scope": "Real getQuestions facade with browser WebCrypto, all405IDs, three full scenario contexts, PHP and eight quarantines; local mode does not certify live bank activation."
+}

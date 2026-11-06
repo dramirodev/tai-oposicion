@@ -1,0 +1,28 @@
+{
+  "sourceCommit": "4bafb543270da6a869b10d2bb85c062b0772ba4d",
+  "mergeCommit": "06b8dc67ae1a6656685eb1b33da2305dc9db0364",
+  "build": "1.1.19+06b8dc6",
+  "receiptSha256": "716e3ad0f694c33530bf05a7b12d87ff7f2f065fc80bb539bbadd72155c5207c",
+  "planSha256": "1b04130824b861fc709b2fc9dfc1d2732b78610749a507073611b3f7bc8877df",
+  "backupSha256": "33e1896a28a1d9fbeb3fa97247c6d6a25e8df9e2dfc53c73ae6430894d87180a",
+  "version": 16,
+  "records": 105,
+  "repairs": 105,
+  "nestedRecords": [
+    "AS12B-S1-04",
+    "AS12B-S1-09",
+    "AS12B-S1-R-04"
+  ],
+  "unchangedStudyOnly": [
+    "GEN-T3.03-48"
+  ],
+  "metadata": 54,
+  "preserved": 300,
+  "unchangedQuarantines": 8,
+  "resourcesVerified": 77,
+  "writes": 27,
+  "commits": 1,
+  "deletions": 0,
+  "action": "published",
+  "verifiedAt": "2026-11-06T12:29:56.408Z"
+}

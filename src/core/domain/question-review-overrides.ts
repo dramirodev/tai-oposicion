@@ -12,6 +12,30 @@ export interface QuestionReviewOverride {
 
 export const questionReviewOverrides: readonly QuestionReviewOverride[] = [
   {
+    id: 'AS12B-S2-08',
+    status: 'quarantined',
+    reason:
+      'La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.',
+    source: 'T2.04 Sistemas Operativos - Temario.pdf',
+    page: 75,
+  },
+  {
+    id: 'L2019-S1-08',
+    status: 'quarantined',
+    reason:
+      'La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.',
+    source: 'T3.08 Aplicaciones Web - Temario - JavaScript.pdf',
+    page: 11,
+  },
+  {
+    id: 'L2025X-S1-04',
+    status: 'quarantined',
+    reason:
+      'La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.',
+    source: 'T3.08 Aplicaciones Web - Temario - JavaScript.pdf',
+    page: 5,
+  },
+  {
     id: 'AS09-P1-48',
     status: 'quarantined',
     reason: 'El enunciado necesita el diagrama de clases UML.',

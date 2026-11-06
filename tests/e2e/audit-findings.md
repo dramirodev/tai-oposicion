@@ -593,3 +593,16 @@ Supertest12/12 sobre demo-tai-auth, propietario sintético: Oficial2025(11), Por
 ### ATE-005 — Importación sin conexión y recuperación longitudinal
 
 6/11: Supertest14/14(2,1min), variante online/offline de300 sesiones. Dos importaciones con red cortada conservan los DTO; reconectar guarda300 documentos, y otro contexto autenticado recupera exactamente el mismo historial y delta+20. Evidencia en evidence/history-sync-2026-11-06. ATE-015/016 permanecen cerrados; ATE-005 global sigue EN CORRECCIÓN por cobertura residual.
+
+
+### ASTRA-M8-SYNTAX — tres erratas ejecutables y cierre de publicación105
+
+|ID|Hallazgo, causa y solución|Estado|Evidencia y límites|
+|---|---|---|---|
+|ASTRA-M8-SYNTAX-AS12B-S2-08|El espacio divide los argumentos de chmod; se elimina y se conserva clave A. Sólo q/n/u cambian.|CORREGIDO Y VERIFICADO|PDF original/temario/4opciones, chmod nativo en temporal721; ledger reviewed-syntax3 y test_syntax3.py. Verificado localmente; datos pendientes de autorización/publicación.|
+|ASTRA-M8-SYNTAX-L2019-S1-08|Function no declara una función JS; se normaliza a function, conservando B=9.|CORREGIDO Y VERIFICADO|PDF original, temario p11, Node real antes SyntaxError/después9; contexto completo, hashes y replay. Datos pendientes de autorización/publicación.|
+|ASTRA-M8-SYNTAX-L2025X-S1-04|Elipsis tipográfica inválida; tres puntos ASCII y ámbito de método, clave D intacta.|CORREGIDO Y VERIFICADO|PDF/temario y Node+TypeScript reales antes/después; cinco elementos con duplicado y arrays intactos. Datos pendientes de autorización/publicación.|
+
+No se atribuye una firma nueva de otro agente: las tres transformaciones mínimas se aceptan por fuentes y ejecución determinista, sobre dictámenes Astra existentes. Las propuestas semánticas no demostradas siguen retenidas. 1.083 unitarias/29 omitidas,67Python,build1.1.20,tarjetas y2renders Chromium/WebKit correctos. El fixture de parejas oficiales verifica el contenido contextual y rechaza la versión histórica inválida; no se rebajan comprobaciones. Los405SHA anteriores/PHP/8datos de cuarentena/417filas y contextos se conservan.
+
+La autorización105 está cumplida: PR114/CI42213356673/merge06b8dc6/deploy42216440061, publicación v16 de105reparaciones en27CAS y cero borrados. Lectura79GET/77SHA y cliente405 en ambos motores correctos, sin alumnos reales. Recibos en evidence/astra-implementation-2026-11-05/publication105-v16*.json. Hay405reparaciones publicadas y408locales;3.111hallazgos/37P0 sin reparación factual local (3.114/40en banco v16). La revisión semántica original cubre16.078/16.078, cero sin dictamen.
