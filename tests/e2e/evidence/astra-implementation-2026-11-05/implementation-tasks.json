@@ -1016,18 +1016,14 @@
     "originalJudgment": "255 es el máximo de octetos de la representación en el protocolo. Una representación textual ASCII ordinaria ocupa hasta 253 caracteres sin punto final o 254 con él. Ninguna opción expresa ese máximo cuando se incluyen los puntos.",
     "location": "public/data/T4.08.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T4.08-20.v1",
       "topic": "T4.08",
@@ -1040,6 +1036,15 @@
       "page": 14,
       "quote": "cada una con un máximo de 63 caracteres.",
       "sha256": "2a460897d6652d005ebb5160190b24a80d3bdfa9b16cd61bca16bba5b7688060"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -1163,18 +1168,14 @@
     "originalJudgment": "El fichero ordinario creado con 0666 y máscaras A/B/C/D resulta respectivamente en 026, 640, 644 y 064. Ninguna opción produce 741 en ese caso; B solo funciona con base 0777. El test omite ese requisito y pide permisos ejecutables por defecto.",
     "location": "public/data/T2.04.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT204-P1-41",
       "topic": "T2.04",
@@ -1187,6 +1188,15 @@
       "page": 76,
       "quote": "umask [mascara]",
       "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -1310,9 +1320,7 @@
     "originalJudgment": "El servidor DHCPv4 recibe en UDP/67 y el v6 en UDP/547; 68 y 546 son puertos del cliente. D enumera los cuatro como si fueran puertos de escucha de servidores. A/B fallan en numeración y C añade TCP. Ninguna opción contesta literalmente.",
     "location": "public/data/T4.08.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -1320,13 +1328,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT408-P1-44",
       "topic": "T4.08",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -1506,18 +1523,14 @@
     "originalJudgment": "Veintiuno es el mínimo constitucional; la pregunta pide la cifra efectiva como si fuera fija. Ninguna opción enuncia el mínimo o especifica una legislatura.",
     "location": "public/data/T1.02.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT102-P1-46",
       "topic": "T1.02",
@@ -1530,6 +1543,15 @@
       "page": 6,
       "quote": "una Diputación Permanente compuesta por un mínimo de 21",
       "sha256": "a826e75d13d409bfd8af8c56def14f629a1242c26c0ad09f5c67de7981fb1783"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -1709,18 +1731,14 @@
     "originalJudgment": "La CE exige elecciones entre 30 y 60 días. Ninguna alternativa expresa el intervalo completo. C omite el límite máximo y permite fechas contrarias a la Constitución.",
     "location": "public/data/T1.02.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT102-P1-64",
       "topic": "T1.02",
@@ -1733,6 +1751,15 @@
       "page": 10,
       "quote": "entre los 30 y los 60",
       "sha256": "a826e75d13d409bfd8af8c56def14f629a1242c26c0ad09f5c67de7981fb1783"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -1744,18 +1771,14 @@
     "originalJudgment": "Basta la mayoría absoluta de cualquiera de las Cámaras, no de cada una como dice la clave. Ninguna opción reproduce la legitimación individual del art. 73.2.",
     "location": "public/data/T1.02.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT102-P1-65",
       "topic": "T1.02",
@@ -1768,6 +1791,15 @@
       "page": 5,
       "quote": "De la mayoría absoluta de los miembros de cualquiera de las Cámaras.",
       "sha256": "a826e75d13d409bfd8af8c56def14f629a1242c26c0ad09f5c67de7981fb1783"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -2311,18 +2343,14 @@
     "originalJudgment": "B es correcta: el Rey separa a los vicepresidentes a propuesta del presidente del Gobierno, art. 100 CE. La clave A confunde propuesta y competencia formal.",
     "location": "public/data/T1.03.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT103-P1-41",
       "topic": "T1.03",
@@ -2335,6 +2363,15 @@
       "page": 14,
       "quote": "serán nombrados y separados por el Rey, a propuesta de",
       "sha256": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -5160,18 +5197,14 @@
     "originalJudgment": "El art. 11.2 protege de privación a españoles DE ORIGEN. La clave extiende la prohibición a cualquier español; falta la salvedad y no hay opción enteramente correcta.",
     "location": "public/data/T1.06.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT106-P1-31",
       "topic": "T1.06",
@@ -5184,6 +5217,15 @@
       "page": 10,
       "quote": "Ningún español de origen podrá ser privado de su nacionalidad.",
       "sha256": "a69d661e50cf8cce3f6f43dbaea156e5ee4bcef1162f9bad2f9a200278f57f5b"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -11089,18 +11131,14 @@
     "originalJudgment": "La comparecencia está prevista en el artículo 110.1 CE; el 109 invocado regula información y ayuda, por lo que la atribución normativa es falsa.",
     "location": "public/data/T1.03.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T1.03-52.v1",
       "topic": "T1.03",
@@ -11113,6 +11151,15 @@
       "page": 22,
       "quote": "las Cámaras y sus Comisiones pueden reclamar la presencia de los miembros del",
       "sha256": "ae5841c8133e8a39f9acd68a30bde1ec4172c485c1b94bade9e1334e894137da"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -19345,9 +19392,7 @@
     "originalJudgment": "standalone=no permite que declaraciones externas puedan influir en el documento; no obliga a que vaya acompañado de DTD. W3C XML 1.0 §2.9. Ninguna opción expresa la regla.",
     "location": "public/data/T3.08.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -19355,13 +19400,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.08-58",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-58",
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -19457,9 +19511,7 @@
     "originalJudgment": "Los comentarios no son elementos ni contenido de caracteres, pero el procesador puede ponerlos a disposición de la aplicación; no exige ignorarlos. W3C XML §2.5.",
     "location": "public/data/T3.08.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -19467,13 +19519,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.08-60.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-60",
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -22406,18 +22467,14 @@
     "originalJudgment": "Un procesador de dos núcleos integra dos núcleos de ejecución, que pueden compartir un chip. A afirma necesariamente dos chips físicos y ninguna otra opción define esta arquitectura.",
     "location": "public/data/T2.01.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT201-P1-13",
       "topic": "T2.01",
@@ -22430,6 +22487,15 @@
       "page": 41,
       "quote": "integrar cada vez más núcleos dentro de los procesadores",
       "sha256": "f569674274fbe378727b5cc4073872ef5273b2e93e94d51912dd322852e9b437"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -25171,18 +25237,14 @@
     "originalJudgment": "C coincide con el diagrama original visto en p. 8: el subárbol 3 produce 1,4,7,6,3; el 10 produce 13,14,10 y finalmente aparece 8. El registro textual de la app omite el árbol necesario.",
     "location": "public/data/T2.03.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "MATERIAL_RECUPERADO_CORREGIDO_LOCAL_CUARENTENA_HASTA_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "change": "src/core/domain/question-review-overrides.ts",
     "localVerification": "Exclusión de puntuación desde banco, sesión directa y reanudación; conserva consulta.",
     "pendingMaterial": "Restituir figura o código mediante edición documentada; hasta entonces, np=1 en lectura y evaluación.",
@@ -25198,6 +25260,15 @@
       "page": 18,
       "quote": "Postorden (IZQ-DCHA-R): primero se visita el subárbol izquierdo, luego el subárbol derecho y, por último, el nodo raíz.",
       "sha256": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -25265,18 +25336,14 @@
     "originalJudgment": "C respeta los niveles del grafo impreso revisado en p. 8: A / B,C / D,F / I,E,L / H,G,K / J. Las restantes adelantan nodos de nivel posterior. El registro textual omite la figura.",
     "location": "public/data/T2.03.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "MATERIAL_RECUPERADO_CORREGIDO_LOCAL_CUARENTENA_HASTA_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "change": "src/core/domain/question-review-overrides.ts",
     "localVerification": "Exclusión de puntuación desde banco, sesión directa y reanudación; conserva consulta.",
     "pendingMaterial": "Restituir figura o código mediante edición documentada; hasta entonces, np=1 en lectura y evaluación.",
@@ -25292,6 +25359,15 @@
       "page": 27,
       "quote": "Recorrido en ANCHURA (BFS o por niveles): primero visita los hermanos y después los hijos.",
       "sha256": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -25639,18 +25715,14 @@
     "originalJudgment": "B emparejaría correctamente ls/listar, pwd/ruta, cat/mostrar y more/paginar, pero el banco escribe Is con i mayúscula en vez de ls con ele. En UNIX son comandos distintos.",
     "location": "public/data/T2.04.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT204-P1-22",
       "topic": "T2.04",
@@ -25663,6 +25735,15 @@
       "page": 66,
       "quote": "pwd (Print Working Directory)",
       "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -25786,18 +25867,14 @@
     "originalJudgment": "El concepto es extents: intervalos contiguos de bloques físicos. La clave C reproduce «extends», denominación errónea. Pages, segments y filespaces tampoco nombran ese rasgo.",
     "location": "public/data/T2.04.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT204-P1-29",
       "topic": "T2.04",
@@ -25810,6 +25887,15 @@
       "page": 32,
       "quote": "conjunto de bloques físicos contiguos",
       "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -25989,18 +26075,14 @@
     "originalJudgment": "NFU acumula referencias periódicamente y escoge el contador menor; no selecciona por definición la página no referenciada en el ciclo anterior. NRU se aproxima mejor a la condición, pero también usa bit de modificación.",
     "location": "public/data/T2.04.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT204-P1-44",
       "topic": "T2.04",
@@ -26013,6 +26095,15 @@
       "page": 23,
       "quote": "La no usada frecuentemente (NFU)",
       "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -26080,18 +26171,14 @@
     "originalJudgment": "La instancia es un proceso. La clave B añade «o thread», pero el hilo es una unidad de ejecución del proceso. Ninguna alternativa expresa la definición sin introducir error o restricción.",
     "location": "public/data/T2.04.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT204-P1-55",
       "topic": "T2.04",
@@ -26104,6 +26191,15 @@
       "page": 11,
       "quote": "Un PROCESO es un programa en ejecución.",
       "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -31743,9 +31839,7 @@
     "originalJudgment": "En Java (++i)*salto no es expresión de actualización válida como statement expression. El código con System.out.println no compila; nueve solo resultaría en una sintaxis que admitiera descartar el producto.",
     "location": "public/data/T3.03.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -31753,13 +31847,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT303-P1-09",
       "topic": "T3.03",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -31771,9 +31874,7 @@
     "originalJudgment": "Se declara indice y se usa índice en la condición, por lo que falta ese identificador en Java. Corrigiéndolo a indice, se imprime 1 y luego (1+3)×3=12; la próxima actualización supera 20.",
     "location": "public/data/T3.03.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -31781,13 +31882,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT303-P1-13",
       "topic": "T3.03",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -31827,9 +31937,7 @@
     "originalJudgment": "El for contiene cuatro cláusulas separadas por tres puntos y coma y j no está declarada. No produce salida en Java. Con int i=10,j=1 como inicialización se obtiene 10,8,5,1, la intención de C.",
     "location": "public/data/T3.03.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -31837,13 +31945,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT303-P1-17",
       "topic": "T3.03",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -32023,9 +32140,7 @@
     "originalJudgment": "Java rechaza leer r no definitivamente asignada después del while. Inicializando r antes, al i=2 hay caída a case 3 y resultaría 5. JLS §16.2.10 https://docs.oracle.com/javase/specs/jls/se17/html/jls-16.html",
     "location": "public/data/T3.03.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -32033,13 +32148,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT303-P1-36",
       "topic": "T3.03",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -43307,18 +43431,14 @@
     "originalJudgment": "Clave D confirmada en el impreso: Icono::obtenerID() lleva {leaf}, lo que impide que se redefina. El banco omite el diagrama y no permite escoger D a partir del texto.",
     "location": "public/data/T3.05.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "MATERIAL_RECUPERADO_CORREGIDO_LOCAL_CUARENTENA_HASTA_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "change": "src/core/domain/question-review-overrides.ts",
     "localVerification": "Exclusión de puntuación desde banco, sesión directa y reanudación; conserva consulta.",
     "pendingMaterial": "Restituir figura o código mediante edición documentada; hasta entonces, np=1 en lectura y evaluación.",
@@ -43334,6 +43454,15 @@
       "page": 45,
       "quote": "El nombre de la clase aparece centrado y si la clase es abstracta se representa en cursiva.",
       "sha256": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -43373,18 +43502,14 @@
     "originalJudgment": "Clave C confirmada por acciones, decisión, barras de bifurcación y reunión y nodos inicial y final del diagrama de actividad. La app omite la imagen necesaria para reconocerlo.",
     "location": "public/data/T3.05.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "MATERIAL_RECUPERADO_CORREGIDO_LOCAL_CUARENTENA_HASTA_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "change": "src/core/domain/question-review-overrides.ts",
     "localVerification": "Exclusión de puntuación desde banco, sesión directa y reanudación; conserva consulta.",
     "pendingMaterial": "Restituir figura o código mediante edición documentada; hasta entonces, np=1 en lectura y evaluación.",
@@ -43400,6 +43525,15 @@
       "page": 54,
       "quote": "El Diagrama de Actividades es una variante de los Diagramas de Estados, organizado con respecto a las acciones. Muestra un flujo de actividades.",
       "sha256": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -50214,9 +50348,7 @@
     "originalJudgment": "Clave A. El mensaje tiene cinco secciones incluyendo Header. La opción marcada lo omite y escribe mal Additional.",
     "location": "public/data/T4.08.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -50224,13 +50356,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "AT408-P1-30",
       "topic": "T4.08",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -72373,18 +72514,14 @@
     "originalJudgment": "Clave A. La imagen del PDF inicializa i=3 y ejecuta println(i++). El postincremento imprime 3 y deja i=4. El banco omite el código y exige reponer el fragmento para contestar.",
     "location": "public/data/T3.06.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "MATERIAL_RECUPERADO_CORREGIDO_LOCAL_CUARENTENA_HASTA_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "change": "src/core/domain/question-review-overrides.ts",
     "localVerification": "Exclusión de puntuación desde banco, sesión directa y reanudación; conserva consulta.",
     "pendingMaterial": "Restituir figura o código mediante edición documentada; hasta entonces, np=1 en lectura y evaluación.",
@@ -72400,6 +72537,15 @@
       "page": 23,
       "quote": "variable++ Post-incremento",
       "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -79411,18 +79557,14 @@
     "originalJudgment": "Clave registrada B. B exige entero positivo y excluye el índice 0 que la familia usa. Además el índice puede ser una constante/expresión, no necesariamente una variable. Ninguna alternativa completa es correcta.",
     "location": "public/data/T2.03.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T2.03-07.v2",
       "topic": "T2.03",
@@ -79435,6 +79577,15 @@
       "page": 6,
       "quote": "Un índice comienza en 0",
       "sha256": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -79698,18 +79849,14 @@
     "originalJudgment": "Clave registrada D. D añade una exigencia de orden ausente en el TAD diccionario general: también se implementa con tabla hash. Ninguna opción describe el diccionario sin imponer condición ajena.",
     "location": "public/data/T2.03.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T2.03-25.v1",
       "topic": "T2.03",
@@ -79722,6 +79869,15 @@
       "page": 15,
       "quote": "Un mapa (array asociativo)",
       "sha256": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -80097,18 +80253,14 @@
     "originalJudgment": "Clave registrada B. B afirma que basta ponderar solo peor y mejor. El promedio pondera todos los costes o entradas posibles; si hay costes intermedios no basta la información de extremos.",
     "location": "public/data/T2.03.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T2.03-62.v2",
       "topic": "T2.03",
@@ -80121,6 +80273,15 @@
       "page": 30,
       "quote": "Al caso PROMEDIO: será una media ponderada",
       "sha256": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -80300,18 +80461,14 @@
     "originalJudgment": "Clave registrada C. C no es un sinónimo. La recursión puede usar un solo subproblema (p. ej. factorial) y divide y vencerás combina subproblemas. Ninguna opción nombra la recursividad.",
     "location": "public/data/T2.03.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T2.03-70",
       "topic": "T2.03",
@@ -80324,6 +80481,15 @@
       "page": 33,
       "quote": "más pequeños que son del mismo tipo",
       "sha256": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -80783,18 +80949,14 @@
     "originalJudgment": "Clave registrada A. A dice que PNG puede comprimir sin pérdida «al contrario que TIFF», pero TIFF con LZW o Deflate también lo permite. El propio 99.v2 da el contraejemplo.",
     "location": "public/data/T2.03.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T2.03-99.v1",
       "topic": "T2.03",
@@ -80807,6 +80969,15 @@
       "page": 50,
       "quote": "Formatos sin pérdida: GIF, PNG, BMP, TIFF, RAW.",
       "sha256": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -81378,18 +81549,14 @@
     "originalJudgment": "Clave registrada B. B describe no expropiación (liberación voluntaria), no espera ocupada. Se puede dormir hasta liberación sin consumir CPU. Falta la opción «consulta repetidamente sin bloquearse».",
     "location": "public/data/T2.04.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T2.04-30.v1",
       "topic": "T2.04",
@@ -81402,6 +81569,15 @@
       "page": 16,
       "quote": "Condición de espera ocupada",
       "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -81889,18 +82065,14 @@
     "originalJudgment": "Clave registrada B. Los bits de la ISA describen, entre otras cosas, registros y operaciones. El bus de direcciones puede tener otra anchura.",
     "location": "public/data/T2.04.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T2.04-75.v2",
       "topic": "T2.04",
@@ -81913,6 +82085,15 @@
       "page": 37,
       "quote": "ancho del bus de direcciones",
       "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -82666,18 +82847,14 @@
     "originalJudgment": "Clave registrada C. Z no implica error al terminar. Un proceso que sale correctamente también figura como zombi mientras nadie recoge su estado.",
     "location": "public/data/T2.04.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T2.04-117.v2",
       "topic": "T2.04",
@@ -82690,6 +82867,15 @@
       "page": 61,
       "quote": "Z zombie",
       "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -83513,18 +83699,14 @@
     "originalJudgment": "Clave registrada D. Los atributos ya pertenecen al modelo E/R básico de Chen; la jerarquía sí es una extensión. D mezcla ambas cosas y ninguna opción reúne exclusivamente extensiones correctas.",
     "location": "public/data/T3.01.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.01-05.v1",
       "topic": "T3.01",
@@ -83537,6 +83719,15 @@
       "page": 5,
       "quote": "Estas extensiones tienen como finalidad aportar al modelo una mayor capacidad expresiva.",
       "sha256": "8387ad4087fdfbfc2b78acbb97f0fd3b58bb034d732cfa06e5791e4b5ac7785a"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -83604,18 +83795,14 @@
     "originalJudgment": "Clave registrada B. La definición sin designación corresponde a clave candidata, ausente. B supone haberla elegido como primaria; A no exige la minimalidad. Añadir la opción precisa.",
     "location": "public/data/T3.01.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.01-10.v1",
       "topic": "T3.01",
@@ -83628,6 +83815,15 @@
       "page": 6,
       "quote": "Este atributo o atributos se denomina identificador principal o CLAVE PRIMARIA.",
       "sha256": "8387ad4087fdfbfc2b78acbb97f0fd3b58bb034d732cfa06e5791e4b5ac7785a"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -83695,18 +83891,14 @@
     "originalJudgment": "Clave registrada C. 1:1 impone como máximo una asociación por extremo. Puede ser opcional. C exige exactamente una y no se da participación obligatoria. Añadir «a lo sumo una» a las opciones.",
     "location": "public/data/T3.01.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.01-22.v1",
       "topic": "T3.01",
@@ -83719,6 +83911,15 @@
       "page": 10,
       "quote": "La cardinalidad máxima coincide con el tipo de correspondencia.",
       "sha256": "8387ad4087fdfbfc2b78acbb97f0fd3b58bb034d732cfa06e5791e4b5ac7785a"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -83898,18 +84099,14 @@
     "originalJudgment": "Clave registrada C. Una relación 1:1 puede representarse con una sola FK UNIQUE; propagar en ambas direcciones introduce redundancia y no es regla general. Ninguna opción acierta.",
     "location": "public/data/T3.02.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.02-20.v2",
       "topic": "T3.02",
@@ -83922,6 +84119,15 @@
       "page": 13,
       "quote": "se puede propagar la clave de cualquiera de ellas a la tabla resultante de la otra,",
       "sha256": "8e5f7ef02ccdae019b422c205c7a5b774efe690a03dc232069106bce975f3185"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -83961,18 +84167,14 @@
     "originalJudgment": "Clave registrada D. Para evitar nulos, la entidad de participación obligatoria almacena la FK que referencia a la de participación opcional. Bajo esta lectura la propagación es de opcional a obligatoria (C). Precisar de qué entidad se predica el mínimo.",
     "location": "public/data/T3.02.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.02-21.v1",
       "topic": "T3.02",
@@ -83985,6 +84187,15 @@
       "page": 13,
       "quote": "teniendo en cuenta, en este caso, los accesos más frecuentes y prioritarios a los datos de las tablas.",
       "sha256": "8e5f7ef02ccdae019b422c205c7a5b774efe690a03dc232069106bce975f3185"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -84164,18 +84375,14 @@
     "originalJudgment": "Clave registrada B. B restringe el join a igualdad en un campo común. Un theta-join admite otros predicados y nombres distintos; ni igualdad de grado, cardinalidad o claves es necesaria.",
     "location": "public/data/T3.02.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.02-55.v2",
       "topic": "T3.02",
@@ -84188,6 +84395,15 @@
       "page": 27,
       "quote": "al menos, un campo en común sobre el que establecer la condición de igualdad",
       "sha256": "8e5f7ef02ccdae019b422c205c7a5b774efe690a03dc232069106bce975f3185"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -84367,18 +84583,14 @@
     "originalJudgment": "Clave registrada B. B es cierto para una dependencia de reunión irreducible ternaria, pero la pregunta no impone esa condición. En general una descomposición binaria sin pérdida es posible (C).",
     "location": "public/data/T3.02.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.02-66.v2",
       "topic": "T3.02",
@@ -84391,6 +84603,15 @@
       "page": 35,
       "quote": "Si aplicamos una Reunión Natural a dos de esas tres relaciones, se producen tuplas falsas,",
       "sha256": "8e5f7ef02ccdae019b422c205c7a5b774efe690a03dc232069106bce975f3185"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -85102,9 +85323,7 @@
     "originalJudgment": "Clave registrada D. D llama palabras reservadas a true/false. En Java son literales booleanos, no keywords. Ninguna de las opciones dice «literales booleanos».",
     "location": "public/data/T3.03.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -85112,13 +85331,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.03-47.v1",
       "topic": "T3.03",
       "origin": "G",
       "family": "GEN-T3.03-47",
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -85340,9 +85568,7 @@
     "originalJudgment": "Clave registrada A. A presenta divide y vencerás como definición necesaria de recursividad. Factorial con una única subllamada es un contraejemplo. Ninguna técnica listada es obligatoria.",
     "location": "public/data/T3.03.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -85350,13 +85576,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.03-74.v2",
       "topic": "T3.03",
       "origin": "G",
       "family": "GEN-T3.03-74",
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -85704,9 +85939,7 @@
     "originalJudgment": "Clave registrada C. En SQL el separador decimal del literal es punto. En SET sueldo=sueldo*1,0125 la coma inicia otra asignación inválida. A (error) es correcta; sustituir por 1.0125 para obtener C.",
     "location": "public/data/T3.04.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -85714,13 +85947,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.04-32",
       "topic": "T3.04",
       "origin": "G",
       "family": "GEN-T3.04-32",
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -85886,9 +86128,7 @@
     "originalJudgment": "Clave registrada A. Una consulta ordinaria puede ordenar por una columna de origen que no proyecta: SELECT nombre FROM empleados ORDER BY sueldo. A no es obligatoria; distinguir SELECT DISTINCT o conjuntos.",
     "location": "public/data/T3.04.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -85896,13 +86136,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.04-46.v1",
       "topic": "T3.04",
       "origin": "G",
       "family": "GEN-T3.04-46",
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -85942,9 +86191,7 @@
     "originalJudgment": "Clave registrada A. A exige igualdad, aunque un JOIN permite ON a.x < b.x y otros predicados. No existe en las opciones una exigencia general correcta.",
     "location": "public/data/T3.04.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -85952,13 +86199,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.04-51.v1",
       "topic": "T3.04",
       "origin": "G",
       "family": "GEN-T3.04-51",
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -85970,9 +86226,7 @@
     "originalJudgment": "Clave registrada B. Si ninguna clave coincide en un inner equijoin el resultado es vacío. Producto cartesiano se obtiene omitiendo condición o con ON TRUE; B es falsa.",
     "location": "public/data/T3.04.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -85980,13 +86234,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.04-51.v2",
       "topic": "T3.04",
       "origin": "G",
       "family": "GEN-T3.04-51",
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -86614,18 +86877,14 @@
     "originalJudgment": "Clave registrada B. Una clase concreta sin instancias sigue siendo concreta. La imposibilidad de instanciarla directamente, no la ausencia accidental de instancias, distingue a la abstracta.",
     "location": "public/data/T3.05.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.05-21",
       "topic": "T3.05",
@@ -86639,6 +86898,15 @@
       "quote": "Las clases abstractas no son instanciables directamente sino en sus descendientes.",
       "sha256": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08",
       "external_primary": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html#jls-8.1.1.1"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -86678,18 +86946,14 @@
     "originalJudgment": "Clave registrada B. El método puede referirse al estado del receptor y además a argumentos, colaboradores, miembros de clase u otros datos accesibles.",
     "location": "public/data/T3.05.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.05-23.v1",
       "topic": "T3.05",
@@ -86702,6 +86966,15 @@
       "page": 10,
       "quote": "Atributos: elementos que mantienen el estado del objeto.",
       "sha256": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -86993,18 +87266,14 @@
     "originalJudgment": "Clave registrada C. Una fábrica concreta produce una familia compatible. La familia son los productos relacionados, no la propia fábrica.",
     "location": "public/data/T3.05.json",
     "solution": "scripts/bank-editorial/reviewed-followup.json",
-    "dependencies": [
-      "CI y render correctos",
-      "Autorización específica de publicación Firestore",
-      "Readback y habilitación posterior para las cinco recuperaciones"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
       "test_followup.py: evidencia, 15 oráculos y replay banco/muestra",
       "Render Chromium/WebKit móvil y escritorio pendiente"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.05-45.v2",
       "topic": "T3.05",
@@ -87017,6 +87286,15 @@
       "page": 20,
       "quote": "Provee de la instancia concreta de la familia que se encarga de crear.",
       "sha256": "3f8ff412801c6331558647e7b10cd57d5ed692c44b3121c24f2bbee6d9b28c08"
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -95758,9 +96036,7 @@
     "originalJudgment": "Clave registrada C. El alfabeto exigido es base64url, sin relleno en compact serialization. Base64 ordinario no es intercambiable.",
     "location": "public/data/T3.07.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -95768,13 +96044,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.07-170.v2",
       "topic": "T3.07",
       "origin": "G",
       "family": "GEN-T3.07-170",
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -99370,9 +99655,7 @@
     "originalJudgment": "Clave registrada C. Traducir a bytecode sí es compilación. No es requisito producir instrucciones nativas.",
     "location": "public/data/T3.08.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -99380,13 +99663,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.08-1101.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-1101",
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -99488,9 +99780,7 @@
     "originalJudgment": "Clave registrada A. Con ancho sin alineación, el texto se alinea a la izquierda y los números a la derecha. Además, n literal es un código numérico, no una anchura genérica.",
     "location": "public/data/T3.08.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -99498,13 +99788,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.08-1110.v2",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-1110",
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -99721,9 +100020,7 @@
     "originalJudgment": "Clave registrada C. El mecanismo es paso por asignación o compartición de objetos, no paso por referencia al vínculo del llamador.",
     "location": "public/data/T3.08.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -99731,13 +100028,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.08-1133",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-1133",
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
@@ -99889,9 +100195,7 @@
     "originalJudgment": "Clave registrada D. Desde cualquier método se puede asignar self.x fuera de __init__ y crear un atributo de instancia. La ubicación sola no establece que sea de clase.",
     "location": "public/data/T3.08.json",
     "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
-    "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
-    ],
+    "dependencies": [],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
     "tests": [
@@ -99899,13 +100203,22 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
+    "status": "PUBLICADO_VERIFICADO_V14",
     "dataAffected": {
       "id": "GEN-T3.08-1140.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-1140",
       "scenario": null
+    },
+    "publication": {
+      "version": 14,
+      "dataCommit": "1654f623de48ac51d5f51213e9caa5bc245fcbd9",
+      "codeCommit": "6b68b0befe65ea389130c2af760fc4a4c1652f78",
+      "verifiedAt": "2026-11-06T09:44:18.592Z",
+      "receipt": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json",
+      "verification": "tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json",
+      "writes": "17 CAS updates in one commit; zero deletions"
     }
   },
   {
