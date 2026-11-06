@@ -259,7 +259,8 @@ test.describe('Firebase Auth Emulator supertest', () => {
       await expect(page.getByRole('heading', { name: heading, exact: true })).toBeVisible({ timeout: 15_000 });
     }
   });
-  test('una sesión autenticada se recupera tras pagehide y recarga sin perder respuestas', async ({ page }) => {
+  for (const firestoreUnavailable of [false, true])
+  test(`una sesión autenticada se recupera tras pagehide y recarga sin perder respuestas · ${firestoreUnavailable ? 'Firestore inaccesible' : 'con conexión'}`, async ({ page }) => {
     test.setTimeout(120_000);
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.clock.install({ time: new Date('2026-10-29T12:00:00+01:00') });
@@ -298,6 +299,7 @@ test.describe('Firebase Auth Emulator supertest', () => {
     const evidenceDir = 'tests/e2e/evidence/accessibility-2026-11-05';
     mkdirSync(evidenceDir, { recursive: true });
     await page.screenshot({ path: `${evidenceDir}/authenticated-run-before-reload.png`, fullPage: true });
+    if (firestoreUnavailable) await page.route('http://127.0.0.1:8080/**', route => route.abort('failed'));
     await page.reload();
     const resumeDialog = page.getByRole('dialog');
     await expect(resumeDialog).toContainText('Tienes sin terminar');
@@ -312,6 +314,7 @@ test.describe('Firebase Auth Emulator supertest', () => {
     expect(resumed.ids).toEqual(checkpoint.ids);
     expect(resumed.idx).toBe(checkpoint.idx);
     expect(resumed.ans[0]).toBe(checkpoint.ans[0]);
+    if (firestoreUnavailable) await page.unroute('http://127.0.0.1:8080/**');
     await page.getByRole('button', { name: 'Salir', exact: true }).click();
     const confirmation = page.getByRole('dialog');
     await expect(confirmation).toContainText('Lo respondido se guardará como sesión interrumpida');

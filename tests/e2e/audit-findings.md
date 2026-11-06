@@ -641,3 +641,8 @@ Sólo demo-tai-auth,puertos9099/8080/app4191 ycuentas@example.test,con guardia d
 ### ATE-006 — Evidencia remota de los tres niveles, 6/11/2026
 
 Workflow registrado tras integrar PR110. Run42247874417 (perfil extreme, main f6aa79f) SUCCESS: QUICK16/16 en Emulator; INTENSIVE referencia76/76 y candidata312 aprobadas/38 omitidas; EXTREME2/2 con1.000 acciones por motor. Paso de artefactos SUCCESS. Sin Gemini ni datos de usuarios reales. CI de PR11042215300160 también SUCCESS:1074unit/29omitidas,14QUICK,2Auth,76referencia,312E2E/34omitidas. La ejecución programada cron está configurada, pero todavía no ha llegado su siguiente disparo; no se atribuye una ejecución cron a este despacho manual. Despacho QUICK independiente42252271997 SUCCESS; confirma selección rápida sin ejecutar INTENSIVE ni EXTREME.
+
+
+### ATE-005 — Recuperación con Firestore inaccesible
+
+Ampliación del recorrido autenticado: tras responder y avanzar a pregunta2, se abortan las peticiones HTTP al Emulator Firestore8080 durante la recarga. Se verifica diálogo2/3, continuar la misma pregunta y conservación exacta de IDs, índice y respuesta. Se retira la inyección y se finaliza como sesión interrumpida con checkpoint eliminado. Supertest18/18, código0; typecheck y diff-check correctos. Solo Emulator demo-tai-auth. Esto comprueba el estado local/UI; no certifica sincronización remota final ni caducidad de token. ATE-005 continúa EN CORRECCIÓN. Próximo paso: instrumentar conteo de peticiones abortadas y caducidad forzada con oráculo de reautenticación, sin modificar seguridad de producción.

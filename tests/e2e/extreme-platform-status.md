@@ -237,3 +237,8 @@ Verificación previa a publicar: Supertest14/14(2,1min), Auth6/6(42,5s; tres rep
 ## Continuación aislada mientras CI valida PR110
 
 Rama audit/followup-2026-11-06 en /tmp/tai-audit-followup. UX-023 pérdida de foco al cancelar revocación reproducida y corregida; nuevo recorrido permisos con dos contextos verifica aprobación/cancelación/revocación/solicitud/rechazo. Check1050/29 omitidas, componente3/3, Supertest15/15. Framework externo revalidado sin proveedor:141 casos,5 omitidos, sin fallos (136 ejecutados). Estos cambios no se añaden al SHA6207545 del PR110; se publicarán en PR posterior tras integración.
+
+
+### ATE-005 — Recuperación con Firestore inaccesible
+
+Ampliación del recorrido autenticado: tras responder y avanzar a pregunta2, se abortan las peticiones HTTP al Emulator Firestore8080 durante la recarga. Se verifica diálogo2/3, continuar la misma pregunta y conservación exacta de IDs, índice y respuesta. Se retira la inyección y se finaliza como sesión interrumpida con checkpoint eliminado. Supertest18/18, código0; typecheck y diff-check correctos. Solo Emulator demo-tai-auth. Esto comprueba el estado local/UI; no certifica sincronización remota final ni caducidad de token. ATE-005 continúa EN CORRECCIÓN. Próximo paso: instrumentar conteo de peticiones abortadas y caducidad forzada con oráculo de reautenticación, sin modificar seguridad de producción.
