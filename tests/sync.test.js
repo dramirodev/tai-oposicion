@@ -1,5 +1,5 @@
 import { beforeEach, afterEach, it, expect, vi } from 'vitest';
-const boundary = vi.hoisted(() => ({ auth: { currentUser: null }, authChanged: null, writes: [], snapshots: [], holdSessions: false, sessionWrites: [] }));
+const boundary = vi.hoisted(() => ({ auth: { currentUser: null }, authChanged: null, writes: [], snapshots: [], holdSessions: false, sessionWrites: [], batchFailure: null, storedSessions: new Map() }));
 vi.mock('firebase/app', () => ({ initializeApp: () => ({}) }));
 vi.mock('firebase/auth', () => ({
   initializeAuth: () => boundary.auth,
@@ -21,14 +21,28 @@ vi.mock('firebase/firestore', () => ({
     boundary.snapshots.push({ ref, cb, onError });
     return () => {};
   },
-  setDoc: async (ref, value) => { boundary.writes.push({ path: ref.path, value }); if (boundary.holdSessions && ref.path.includes('/sessions/')) await new Promise((resolve, reject) => boundary.sessionWrites.push({ resolve, reject })); },
+  setDoc: async (ref, value) => {
+    boundary.writes.push({ path: ref.path, value });
+    if (boundary.holdSessions && ref.path.includes('/sessions/')) await new Promise((resolve, reject) => boundary.sessionWrites.push({ resolve, reject }));
+    if (ref.path.includes('/sessions/')) boundary.storedSessions.set(ref.path,structuredClone(value));
+  },
+  writeBatch: () => {
+    const entries=[];
+    const batch={set:(ref,value)=>{entries.push({path:ref.path,value:structuredClone(value)});return batch;},commit:async()=>{
+      boundary.writes.push(...entries);
+      if (boundary.batchFailure) { const error=boundary.batchFailure;boundary.batchFailure=null;throw error; }
+      if (boundary.holdSessions) await new Promise((resolve,reject)=>boundary.sessionWrites.push({resolve,reject}));
+      for(const entry of entries)boundary.storedSessions.set(entry.path,entry.value);
+    }};
+    return batch;
+  },
   deleteDoc: async ref => { boundary.writes.push({ path: ref.path, deleted: true }); },
 }));
 let sync, store, trainingStore, paperTestStore;
 const user = (uid, email = 'dramiro@gmail.com') => { const u = { uid, email, displayName: 'Persona', emailVerified: true }; boundary.auth.currentUser = u; boundary.authChanged(u); };
 beforeEach(async () => {
   vi.resetModules(); vi.useFakeTimers(); localStorage.clear();
-  boundary.holdSessions = false; boundary.sessionWrites.length = 0; boundary.writes.length = 0; boundary.snapshots.length = 0; boundary.auth.currentUser = null;
+  boundary.holdSessions = false; boundary.sessionWrites.length = 0; boundary.writes.length = 0; boundary.snapshots.length = 0; boundary.auth.currentUser = null; boundary.batchFailure=null;boundary.storedSessions.clear();
   vi.stubGlobal('fetch', async () => ({ ok: true, json: async () => ({ apiKey: 'test', authDomain: 'localhost' }) }));
   store = await import('../src/adapters/local/local-progress-store.js'); sync = await import('../src/adapters/firebase/legacy-sync.js');
   await import('../src/app/composition/access-composition.js');
@@ -342,4 +356,35 @@ it('libera una sesión rechazada para permitir un reintento sin bloquear otras e
   sync.pushSession(session);
   expect(boundary.writes.filter(w => w.path.endsWith('/sessions/retry'))).toHaveLength(2);
   boundary.sessionWrites[1].resolve();
+});
+
+const importedSession = id => ({id,ts:1700000000000,kind:'sim',n:100,a:60,f:10,b:30,secs:1800,nota:56.67,fails:[],temas:{},tipos:{}});
+it('conserva las sesiones importadas cuando un lote falla y la ruta individual sí puede guardarlas', async()=>{
+  boundary.batchFailure={code:'permission-denied',message:'one rejected group'};
+  store.importAll(JSON.stringify({stats:{},sessions:[importedSession('fallback-a'),importedSession('fallback-b')]}));
+  await vi.advanceTimersByTimeAsync(0);
+  expect([...boundary.storedSessions.keys()].sort()).toEqual(['users/user1/sessions/fallback-a','users/user1/sessions/fallback-b']);
+  expect(boundary.storedSessions.get('users/user1/sessions/fallback-a').nota).toBe(56.67);
+});
+it('no reenvía a la nueva cuenta un lote rechazado de una identidad anterior',async()=>{
+  boundary.holdSessions=true;
+  store.importAll(JSON.stringify({stats:{},sessions:[importedSession('old-account')]}));
+  expect(boundary.sessionWrites).toHaveLength(1);
+  user('user2');
+  boundary.sessionWrites[0].reject({code:'permission-denied',message:'old identity'});
+  await vi.advanceTimersByTimeAsync(0);
+  expect(boundary.storedSessions.size).toBe(0);
+  expect(boundary.writes.filter(w=>w.path==='users/user2/sessions/old-account')).toEqual([]);
+});
+it('un rechazo de lote no restaura un payload antiguo sobre una sesión más reciente ya guardada',async()=>{
+  boundary.holdSessions=true;
+  store.importAll(JSON.stringify({stats:{},sessions:[importedSession('updated')]}));
+  sync.pushSession({...importedSession('updated'),nota:75});
+  expect(boundary.sessionWrites).toHaveLength(2);
+  boundary.sessionWrites[1].resolve();
+  await vi.advanceTimersByTimeAsync(0);
+  boundary.sessionWrites[0].reject({code:'permission-denied',message:'rejected old group'});
+  await vi.advanceTimersByTimeAsync(0);
+  expect(boundary.storedSessions.get('users/user1/sessions/updated').nota).toBe(75);
+  expect(boundary.writes.filter(w=>w.path==='users/user1/sessions/updated')).toHaveLength(2);
 });

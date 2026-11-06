@@ -20,7 +20,7 @@ beforeEach(()=>{
 });
 afterEach(()=>rmSync(root,{recursive:true,force:true}));
 function rejected(){const result=run();expect(result.status,result.stderr).not.toBe(0);expect(readFileSync(join(root,output),'utf8')).toBe('unchanged-output');}
-it('reproduces all 408 approved hashes from complete source records including empty context',()=>{
+it('reproduces all 413 approved hashes from complete source records including empty context',()=>{
  const result=run();expect(result.status,result.stderr).toBe(0);
  expect(readFileSync(join(root,output),'utf8')).toBe(readFileSync(output,'utf8'));
  const nested=read(ledger).questions.filter(q=>q.scenarioId);

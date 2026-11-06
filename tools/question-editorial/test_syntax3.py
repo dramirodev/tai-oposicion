@@ -13,7 +13,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from historical_bank import ROOT, EDITORIAL, copy_release_boundary
+from historical_bank import ROOT, EDITORIAL, ORDER, copy_release_boundary
 
 LEDGER = json.loads((EDITORIAL / 'reviewed-syntax3.json').read_text())
 ROWS = {q['id']: q for q in LEDGER['questions']}
@@ -159,7 +159,7 @@ process.stdout.write(JSON.stringify({invalid,value,...result}));
     def test_all_405_previous_repairs_and_php_unchanged(self):
         checked = 0
         for path in EDITORIAL.glob('reviewed-*.json'):
-            if path.stem == 'reviewed-syntax3':
+            if path.stem in ORDER[ORDER.index('reviewed-syntax3'):]:
                 continue
             ledger = json.loads(path.read_text())
             for q in ledger if isinstance(ledger, list) else ledger['questions']:

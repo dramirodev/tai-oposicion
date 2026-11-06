@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { initializeAuth, connectAuthEmulator, GoogleAuthProvider, signInWithRedirect, signInWithPopup, getRedirectResult, onAuthStateChanged, signOut, indexedDBLocalPersistence, browserLocalPersistence, browserSessionPersistence, browserPopupRedirectResolver } from 'firebase/auth';
 import {
   initializeFirestore, connectFirestoreEmulator, persistentLocalCache, persistentMultipleTabManager,
-  doc, setDoc, onSnapshot, collection, query, orderBy, limit
+  doc, setDoc, writeBatch, onSnapshot, collection, query, orderBy, limit
 } from 'firebase/firestore';
 import type { Auth, User } from 'firebase/auth';
 import type { Firestore, FirestoreError, Unsubscribe } from 'firebase/firestore';
@@ -217,7 +217,7 @@ function start(): void {
     const entry: unknown[] = []; snap.forEach(data => entry.push(data.data()));
     getProgressStore().mergeSessions(entry);
     const remoteIds = new Set(entry.map(state => (state as Session).id));
-    for (const session of getProgressStore().getSessions()) if (!remoteIds.has(session.id)) pushSession(session);
+    pushSessions(getProgressStore().getSessions().filter(session => !remoteIds.has(session.id)));
   }, error));
   unsubs.push(onSnapshot(doc(db, 'users', me, 'cfg', 'seen'), data => {
     if (!active()) return;
@@ -269,7 +269,7 @@ function pushAll(remote: StatMap): void {
 function pushImport(): void {
   if (!canSync()) return;
   pushAll({});
-  for (const session of getProgressStore().getSessions()) pushSession(session);
+  pushSessions(getProgressStore().getSessions());
   pushSeen(getProgressStore().getSeenDoc()); pushReports(getProgressStore().getReports()); pushCards(getProgressStore().getCardsDoc());
 }
 
@@ -292,6 +292,40 @@ function flush(): void {
 // Local snapshot notifications may arrive before earlier writes are acknowledged.
 // Keep the latest pending payload per account/document to avoid re-enqueuing it.
 const pendingSessions = new Map<string, { payload: string }>();
+/** Imports and recovered backlogs share one request per bounded group, including offline. */
+function pushSessions(sessions: readonly Session[]): void {
+  if (!canSync() || !uid) return;
+  const targetUid = uid;
+  const entries: { session: Session; key: string; pending: { payload: string } }[] = [];
+  for (const session of sessions) {
+    const key = `${targetUid}/${session.id}`, pending = { payload: JSON.stringify(session) };
+    if (pendingSessions.get(key)?.payload === pending.payload) continue;
+    pendingSessions.set(key, pending);
+    entries.push({ session, key, pending });
+  }
+  // Well below the SDK's500-write limit. A rejected group falls back to the
+  // original per-document path, so one legacy record cannot block valid peers.
+  for (let offset = 0; offset < entries.length; offset += 100) {
+    const group = entries.slice(offset, offset + 100);
+    void (async () => {
+      const batch = writeBatch(db);
+      for (const { session } of group) batch.set(doc(db, 'users', targetUid, 'sessions', session.id), session);
+      await batch.commit();
+    })().catch(error => {
+      if (uid !== targetUid || !canSync()) return;
+      writeErr(error);
+      for (const { session, key, pending } of group) {
+        if (pendingSessions.get(key) !== pending) continue; // A newer payload must win.
+        pendingSessions.delete(key);
+        try { pushSession(session); }
+        catch (fallbackError) { pendingSessions.delete(key); writeErr(fallbackError); }
+      }
+    }).finally(() => {
+      for (const { key, pending } of group) if (pendingSessions.get(key) === pending) pendingSessions.delete(key);
+    });
+  }
+}
+
 export function pushSession(session: Session): void {
   if (!canSync() || !uid) return;
   const targetUid = uid, key = `${targetUid}/${session.id}`;
