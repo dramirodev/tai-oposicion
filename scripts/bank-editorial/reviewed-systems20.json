@@ -1,0 +1,3489 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "b2c35bae028deb380c44fe6b04bcf2de2c82d936",
+  "previousBatch": "reviewed-development11",
+  "status": "LOCAL_PENDING_CI_AND_PUBLICATION",
+  "sourceCandidateSha256": "3b6b5c478db920f582007a4e0e1fc7a2ee504e659c9a5e46ae5e537ff97b971e",
+  "sourceCandidate": "work/next-p0-systems-remaining/revision-oficial/reviewed-proposals.json",
+  "fingerprintEncoding": "SHA256 UTF8 JSON.stringify insertion-order; context envelope is distinct from sorted runtime proof",
+  "questions": [
+    {
+      "id": "AS04-P1-71",
+      "topic": "T4.01",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "AS04-P1-71",
+        "t": "T4.01",
+        "o": "A",
+        "q": "En un ordenador con Linux, queremos borrar todos los archivos con extensión .mpg de los directorios home de los usuarios, incluyendo todos sus subdirectorios. ¿Cuál de los siguientes comandos se podría ejecutar para conseguirlo, suponiendo que se ejecuta como superusuario?",
+        "a": [
+          "rm -Rf /home/*.mpg",
+          "find /home -name “*.mpg” rm {} \\;",
+          "ls -ltR *.mpg -exec rm {} \\;",
+          "ls -lR /home | grep mpg | rm - &"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS04-P1-71",
+        "t": "T4.01",
+        "o": "A",
+        "q": "En Linux, ¿qué comando elimina recursivamente los archivos regulares cuyo nombre acaba en .mpg bajo /home, suponiendo permisos suficientes?",
+        "a": [
+          "rm -f /home/*.mpg",
+          "find /home -type f -name '*.mpg' -exec rm -- {} \\;",
+          "find /home -type d -name '*.mpg' -exec rmdir -- {} \\;",
+          "find /home -type f -name '.mpg' -exec rm -- {} \\;"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "n": "Errata de academia: faltaba -exec y las comillas deben ser de shell. -type f limita a archivos regulares; -name usa el comodín *.mpg.",
+        "u": "-exec CMD Ejecuta una acción CMD para cada fichero que satisfaga las condiciones. [p. 69]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf",
+        "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1",
+        "page": 69,
+        "quote": "-exec CMD Ejecuta una acción CMD para cada fichero que satisfaga las condiciones.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.gnu.org/software/findutils/manual/html_node/Single-File.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "El glob sólo alcanza entradas directamente bajo /home.",
+        "find recorre el árbol y ejecuta rm para cada archivo coincidente.",
+        "Busca directorios, no los archivos solicitados.",
+        "El patrón literal .mpg no encuentra pelicula.mpg."
+      ],
+      "sourceDiscrepancy": "La referencia original p37 de T4.01 describía find de Windows; se aporta el pasaje pertinente de Linux T2.04p69.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AS04-P1-71",
+        "finding": "AS04-P1-71",
+        "evidence": "Simulacro 04.pdf (plantilla p. 17); T4.01 Administración de SO - Temario (version alternativa).pdf p. 37 (pasaje localizado: find)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave B. Falta -exec delante de rm en la clave. La expresión find escrita no ejecuta el borrado propuesto.",
+        "location": "public/data/T4.01.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AS04-P1-71",
+          "topic": "T4.01",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "oracle-find-results.json: BSD find real sólo selección/-exec printf; ningún borrado.",
+      "sourceBeforeSha256": "e39872cda02c92e8332ed656d06b90e6c90da8b604822f7cd884d5be63fc8be5",
+      "beforeSha256": "e39872cda02c92e8332ed656d06b90e6c90da8b604822f7cd884d5be63fc8be5",
+      "afterSha256": "a3d18310e7cb92241e9f6c361ebb7196e83151918c657a53ad0a6ed24f581bd5",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf",
+        "page": 69,
+        "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1",
+        "quote": "-exec CMD Ejecuta una acción CMD para cada fichero que satisfaga las condiciones.",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "El glob sólo alcanza entradas directamente bajo /home.",
+        "find recorre el árbol y ejecuta rm para cada archivo coincidente.",
+        "Busca directorios, no los archivos solicitados.",
+        "El patrón literal .mpg no encuentra pelicula.mpg."
+      ],
+      "primary": [
+        {
+          "url": "https://www.gnu.org/software/findutils/manual/html_node/Single-File.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://www.gnu.org/software/findutils/manual/html_node/Single-File.html",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/d3d8cb6dc78476be.html",
+            "sha256": "2eb25ae42faa2f2521312d88b399bbc1a70ff71484e9fa097cf0250db313e50a",
+            "bytes": 7319,
+            "mime": "text/html",
+            "finalUrl": "https://www.gnu.org/software/findutils/manual/html_node/Single-File.html",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.01.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "a3d18310e7cb92241e9f6c361ebb7196e83151918c657a53ad0a6ed24f581bd5",
+      "qSha256": "a5d87c5b85fcdd3805101ca8933882b42968175977f5d4b9314752c4ce5b1a15",
+      "typeReview": {
+        "k": "K",
+        "rationale": "Interpretación de comando/opciones/sintaxis concreta."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 1,
+        "sourceLiteralVerified": true,
+        "adjustments": [],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "AS05G-P1-58",
+      "topic": "T4.01",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "AS05G-P1-58",
+        "t": "T4.01",
+        "o": "A",
+        "q": "Si necesitamos localizar los ficheros .log modificados hace más de 2 días y menos de 7 días en un sistema Linux, ¿qué sentencia utilizaremos?",
+        "a": [
+          "find / -mtime +2 -atime +7",
+          "find / -atime +2 -atime -7 -name “.log”",
+          "find / -mtime +2 -mtime -7 -name “.log”",
+          "find / -mtime -2 -mtime +7 -name “.log”"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS05G-P1-58",
+        "t": "T4.01",
+        "o": "A",
+        "q": "En GNU find, ¿qué expresión localiza archivos regulares *.log cuya antigüedad de modificación, truncada a periodos completos de 24 horas, es mayor que 2 y menor que 7?",
+        "a": [
+          "find / -type f -name '*.log' -mtime +2 -atime +7",
+          "find / -type f -name '*.log' -atime +2 -atime -7",
+          "find / -type f -name '*.log' -mtime +2 -mtime -7",
+          "find / -type f -name '*.log' -mtime -2 -mtime +7"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "n": "Errata de academia: *.log debe incluir el comodín. GNU find trunca a periodos completos: +2 y -7 seleccionan valores enteros 3, 4, 5 y 6; no equivalen a cualquier instante estrictamente posterior a48 horas.",
+        "u": "-mtime [+/-]n Busca ficheros modificados (n se mide en periodos de 24 horas). [p. 69]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf",
+        "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1",
+        "page": 69,
+        "quote": "-mtime [+/-]n Busca ficheros modificados (n se mide en periodos de 24 horas).",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Respaldo temático y factual"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.gnu.org/software/findutils/manual/html_node/Age-Ranges.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "Impone acceso mayor que7, en vez de cota superior de modificación.",
+        "Mide acceso y no modificación.",
+        "Ambas cotas se aplican a mtime y el patrón identifica la extensión.",
+        "Las dos cotas de mtime son incompatibles."
+      ],
+      "sourceDiscrepancy": "",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AS05G-P1-58",
+        "finding": "AS05G-P1-58",
+        "evidence": "Simulacro 05 - versión GLOBE.pdf (plantilla p. 17); T2.04 Sistemas Operativos - Temario.pdf p. 70 (pasaje localizado: mtime)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave C. El patrón .log selecciona únicamente el nombre literal .log, no los archivos de extensión .log. Falta el comodín *.log.",
+        "location": "public/data/T4.01.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AS05G-P1-58",
+          "topic": "T4.01",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "oracle-find-results.json: modelo matemático de truncado GNU; GNU find no instalado.",
+      "sourceBeforeSha256": "b1e6fb21d1c3c5c7ca6ddde193590ba800e31917cb21af2c654c829aed523c8d",
+      "beforeSha256": "b1e6fb21d1c3c5c7ca6ddde193590ba800e31917cb21af2c654c829aed523c8d",
+      "afterSha256": "2a928065ba627595edf846f8520fdda778cd05939a74b9ee6c9a95cd890ad96a",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf",
+        "page": 69,
+        "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1",
+        "quote": "-mtime [+/-]n Busca ficheros modificados (n se mide en periodos de 24 horas).",
+        "role": "Respaldo temático y factual"
+      },
+      "reviewedOptions": [
+        "Impone acceso mayor que7, en vez de cota superior de modificación.",
+        "Mide acceso y no modificación.",
+        "Ambas cotas se aplican a mtime y el patrón identifica la extensión.",
+        "Las dos cotas de mtime son incompatibles."
+      ],
+      "primary": [
+        {
+          "url": "https://www.gnu.org/software/findutils/manual/html_node/Age-Ranges.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://www.gnu.org/software/findutils/manual/html_node/Age-Ranges.html",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/46ecd5358e4b4210.html",
+            "sha256": "8f7be49acb50cf770463c09481c2ebc397bbfe61f0988701fdcce9de6edee966",
+            "bytes": 6745,
+            "mime": "text/html",
+            "finalUrl": "https://www.gnu.org/software/findutils/manual/html_node/Age-Ranges.html",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.01.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "2a928065ba627595edf846f8520fdda778cd05939a74b9ee6c9a95cd890ad96a",
+      "qSha256": "a97c9f0a52973079730ecdb1a5e93383312f45a01afc754063e32a497e9a07a4",
+      "typeReview": {
+        "k": "K",
+        "rationale": "Interpretación de comando/opciones/sintaxis concreta."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 2,
+        "sourceLiteralVerified": true,
+        "adjustments": [],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "AS09-P1-94",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "AS09-P1-94",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Señale la respuesta correcta:",
+        "a": [
+          "OCI (Open Container Initiative) define un estándar abierto sobre la comunicación de contenedores.",
+          "El componente kubelet no se ejecuta en el plano de control del cluster de Kubernetes.",
+          "Docker Swarm permite ejecutar aplicaciones multicontenedor.",
+          "Docker Compose combina para motores Docker en un único motor virtual."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS09-P1-94",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Señale la afirmación correcta sobre contenedores y orquestación:",
+        "a": [
+          "OCI define exclusivamente el protocolo de enrutamiento entre contenedores.",
+          "El kubelet nunca se ejecuta en nodos del plano de control de Kubernetes.",
+          "Docker Swarm permite desplegar aplicaciones compuestas por varios servicios.",
+          "Docker Compose convierte por sí solo varios motores Docker en un único clúster Swarm."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: C es correcta. kubeadm usa kubelet y static pods también en el plano de control. OCI normaliza imágenes/runtime/distribución; Compose no crea por sí solo un clúster.",
+        "u": "kubelet. Cada nodo de trabajo contiene un kubelet. Es un agente (aplicación pequeña) que se asegura que los contenedores estén corriendo en un pod. [p. 100]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "page": 100,
+        "quote": "kubelet. Cada nodo de trabajo contiene un kubelet. Es un agente (aplicación pequeña) que se asegura que los contenedores estén corriendo en un pod.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://kubernetes.io/docs/concepts/workloads/pods/static-pods/",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://docs.docker.com/engine/swarm/stack-deploy/",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://opencontainers.org/about/overview/",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "OCI no es exclusivamente una especificación de enrutamiento.",
+        "Static pods del plano de control son supervisados por kubelet.",
+        "Un stack de Swarm agrupa varios servicios.",
+        "Compose describe aplicaciones; crear un clúster Swarm es una operación distinta."
+      ],
+      "sourceDiscrepancy": "El temario describe kubelet en workers, sin demostrar la exclusión absoluta de nodos de control.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AS09-P1-94",
+        "finding": "AS09-P1-94",
+        "evidence": "Simulacro 09.pdf (plantilla p. 18); T4.02 Administración de BD y Virtualización - Temario.pdf p. 100 (pasaje localizado: kubelet)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave B. El kubelet puede correr en nodos de control, por ejemplo para static pods. Docker Swarm sí permite aplicaciones multicontenedor: la clave excluye una alternativa cierta.",
+        "location": "public/data/T4.02.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AS09-P1-94",
+          "topic": "T4.02",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "233617cad8bcb69914da0106476db31b291361b10e6a168eb512ca6f3d3548a9",
+      "beforeSha256": "233617cad8bcb69914da0106476db31b291361b10e6a168eb512ca6f3d3548a9",
+      "afterSha256": "d57977ae57735f6d64f9cf3d850e26ecc1c786898886e91a786a204f9ac4f87d",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 100,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "kubelet. Cada nodo de trabajo contiene un kubelet. Es un agente (aplicación pequeña) que se asegura que los contenedores estén corriendo en un pod.",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "OCI no es exclusivamente una especificación de enrutamiento.",
+        "Static pods del plano de control son supervisados por kubelet.",
+        "Un stack de Swarm agrupa varios servicios.",
+        "Compose describe aplicaciones; crear un clúster Swarm es una operación distinta."
+      ],
+      "primary": [
+        {
+          "url": "https://kubernetes.io/docs/concepts/workloads/pods/static-pods/",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://kubernetes.io/docs/concepts/workloads/pods/static-pods/",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/1381de98ba98e38f.html",
+            "sha256": "8ddd8ef1975c693cc6238879dc1a2948af067995b83480f7a5a0a685a7de6ec2",
+            "bytes": 504496,
+            "mime": "text/html; charset=UTF-8",
+            "finalUrl": "https://kubernetes.io/docs/concepts/workloads/pods/static-pods/",
+            "status": "saved"
+          }
+        },
+        {
+          "url": "https://docs.docker.com/engine/swarm/stack-deploy/",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://docs.docker.com/engine/swarm/stack-deploy/",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/8dbef5654d0e8d61.html",
+            "sha256": "bba4fa091122381b5ab8802ee8693811dfc52119ecfd093172de1dbc852a28e1",
+            "bytes": 591408,
+            "mime": "text/html",
+            "finalUrl": "https://docs.docker.com/engine/swarm/stack-deploy/",
+            "status": "saved"
+          }
+        },
+        {
+          "url": "https://opencontainers.org/about/overview/",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://opencontainers.org/about/overview/",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/f5aa8da994c01f49.html",
+            "sha256": "ac1f915cf12a25202190022c7e12036786a0f125c7a36fbfb73b9757be799b7d",
+            "bytes": 9868,
+            "mime": "text/html; charset=UTF-8",
+            "finalUrl": "https://opencontainers.org/about/overview/",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.02.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "d57977ae57735f6d64f9cf3d850e26ecc1c786898886e91a786a204f9ac4f87d",
+      "qSha256": "7badc1e26b2fbe1547056512e3fe90ca4ccc412d7e2d09df0ee4669ecb127e2e",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta conceptual directa."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 2,
+        "sourceLiteralVerified": true,
+        "adjustments": [],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "AS11-P1-83",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "AS11-P1-83",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En relación a Red Hat Openshift, señale la opción correcta:",
+        "a": [
+          "Los contenedores pueden agruparse en grupos denominados clústeres.",
+          "El plano de control ejecuta los contenedores.",
+          "Los nodos de trabajo mantienen el estado general del clúster.",
+          "Openshift es una distribución de Docker que, por tanto, no gestiona clústeres."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS11-P1-83",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En relación con Red Hat OpenShift Container Platform, señale la afirmación correcta:",
+        "a": [
+          "Uno o más contenedores pueden agruparse en una unidad denominada pod.",
+          "Sólo los nodos del plano de control pueden ejecutar pods; los nodos de trabajo nunca los ejecutan.",
+          "Los nodos de trabajo sustituyen al plano de control en el mantenimiento global del estado del clúster.",
+          "OpenShift es una distribución de Docker que no gestiona clústeres Kubernetes."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: la unidad que agrupa contenedores es el pod. Un clúster agrupa nodos; un nodo de control también puede ejecutar pods, por lo que no se afirma una prohibición absoluta.",
+        "u": "Pod: son las unidades de computación desplegables más pequeñas que se pueden crear y gestionar en Kubernetes. Es conjunto de uno o más contenedores implementados en un solo nodo. [p. 97]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "page": 97,
+        "quote": "Pod: son las unidades de computación desplegables más pequeñas que se pueden crear y gestionar en Kubernetes. Es conjunto de uno o más contenedores implementados en un solo nodo.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Respaldo temático y factual"
+      },
+      "primarySources": [
+        {
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-nodes",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://kubernetes.io/docs/concepts/workloads/pods/",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "El pod agrupa uno o más contenedores.",
+        "Los nodos de trabajo ejecutan pods.",
+        "El estado y control global corresponden al plano de control.",
+        "OpenShift se basa en Kubernetes y gestiona clústeres."
+      ],
+      "sourceDiscrepancy": "",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AS11-P1-83",
+        "finding": "AS11-P1-83",
+        "evidence": "Simulacro 11.pdf (plantilla p. 17); T4.02 Administración de BD y Virtualización - Temario.pdf p. 97 (pasaje localizado: pods)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave A. La unidad que agrupa contenedores es el pod, no el clúster. El clúster agrupa nodos. Los otros enunciados tampoco describen adecuadamente los roles.",
+        "location": "public/data/T4.02.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AS11-P1-83",
+          "topic": "T4.02",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "25df61f8682588fda80539451fc398387a1ad485c2414a83077546df97d5cdaa",
+      "beforeSha256": "25df61f8682588fda80539451fc398387a1ad485c2414a83077546df97d5cdaa",
+      "afterSha256": "69d0bdc2f677d50c61b91fc70bc69718cd78641d2fcc405211aabb0309b7db99",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 97,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "Pod: son las unidades de computación desplegables más pequeñas que se pueden crear y gestionar en Kubernetes. Es conjunto de uno o más contenedores implementados en un solo nodo.",
+        "role": "Respaldo temático y factual"
+      },
+      "reviewedOptions": [
+        "El pod agrupa uno o más contenedores.",
+        "Los nodos de trabajo ejecutan pods.",
+        "El estado y control global corresponden al plano de control.",
+        "OpenShift se basa en Kubernetes y gestiona clústeres."
+      ],
+      "primary": [
+        {
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-nodes",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-nodes",
+            "status": "download-failed",
+            "error": "HTTP Error 503: Service Unavailable",
+            "fallback": "See Context7 logs/web consulted sources; not invented local capture"
+          }
+        },
+        {
+          "url": "https://kubernetes.io/docs/concepts/workloads/pods/",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://kubernetes.io/docs/concepts/workloads/pods/",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/6ed556c1b6c30f14.html",
+            "sha256": "05d9a3a005d9f94859bd1dde5cf8d8c48807dc9b70b5cedc6a4e708d1c596608",
+            "bytes": 547014,
+            "mime": "text/html; charset=UTF-8",
+            "finalUrl": "https://kubernetes.io/docs/concepts/workloads/pods/",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.02.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "69d0bdc2f677d50c61b91fc70bc69718cd78641d2fcc405211aabb0309b7db99",
+      "qSha256": "d45dbd78e3c150c662f8331c87294355002b9dbccfac8afcb87d19b6212f1232",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta conceptual directa."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 0,
+        "sourceLiteralVerified": true,
+        "adjustments": [],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "AT404-P1-23",
+      "topic": "T4.04",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "AT404-P1-23",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Es necesario mover el directorio del usuario PRUEBAS de un sistema Linux a /objetivo. ¿Qué sentencia es cumple el cometido?",
+        "a": [
+          "usermod -d /objetivo PRUEBAS",
+          "moduser -m /objetivo PRUEBAS",
+          "moduser -d /objetivo PRUEBAS",
+          "usermod -d -m /objetivo PRUEBAS"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT404-P1-23",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En Linux con shadow-utils, ¿qué orden cambia el directorio personal de PRUEBAS a /objetivo y mueve allí el contenido del directorio anterior, con permisos y condiciones adecuadas?",
+        "a": [
+          "usermod -d /objetivo PRUEBAS",
+          "moduser -m /objetivo PRUEBAS",
+          "moduser -d /objetivo PRUEBAS",
+          "usermod -m -d /objetivo PRUEBAS"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: -d requiere el argumento /objetivo y -m solicita mover el contenido. No se modifica ninguna cuenta al comprobar esta pregunta.",
+        "u": "-m Mueve el directorio del usuario. Implica opción -d [p. 18]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+        "sha256": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+        "page": 18,
+        "quote": "-m Mueve el directorio del usuario. Implica opción -d",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Respaldo temático y factual"
+      },
+      "primarySources": [
+        {
+          "url": "https://man7.org/linux/man-pages/man8/usermod.8.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "Cambia el campo home sin solicitar el traslado del contenido.",
+        "moduser no es el comando shadow-utils documentado.",
+        "moduser no es el comando shadow-utils documentado.",
+        "-m mueve y -d /objetivo especifica el nuevo directorio."
+      ],
+      "sourceDiscrepancy": "",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AT404-P1-23",
+        "finding": "AT404-P1-23",
+        "evidence": "T4.04 Administración de LAN - Test.pdf (plantilla p. 11)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave D. La opción -d exige inmediatamente el nuevo directorio. En la clave aparece -m en esa posición; para mover el contenido usar -m -d /objetivo PRUEBAS. El pasaje elegido no se ha podido localizar en la teoría cotejada; la plantilla sí está identificada.",
+        "location": "public/data/T4.04.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT404-P1-23",
+          "topic": "T4.04",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "361a374e9c13906635b905bf97e9f1c3f9c1b14acd77721fd5c29ffaa0d5a409",
+      "beforeSha256": "361a374e9c13906635b905bf97e9f1c3f9c1b14acd77721fd5c29ffaa0d5a409",
+      "afterSha256": "4ffc448e9594020a113efb601e2aa6b964cfa54141ecbbd4c41d39b0c7bb5df9",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+        "page": 18,
+        "sha256": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+        "quote": "-m Mueve el directorio del usuario. Implica opción -d",
+        "role": "Respaldo temático y factual"
+      },
+      "reviewedOptions": [
+        "Cambia el campo home sin solicitar el traslado del contenido.",
+        "moduser no es el comando shadow-utils documentado.",
+        "moduser no es el comando shadow-utils documentado.",
+        "-m mueve y -d /objetivo especifica el nuevo directorio."
+      ],
+      "primary": [
+        {
+          "url": "https://man7.org/linux/man-pages/man8/usermod.8.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://man7.org/linux/man-pages/man8/usermod.8.html",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/9d629edc859adb3e.html",
+            "sha256": "dc210c78c0d1a1653beeb23726feff95410bec9452499cb9f19cd4d43565be1d",
+            "bytes": 23972,
+            "mime": "text/html",
+            "finalUrl": "https://man7.org/linux/man-pages/man8/usermod.8.html",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.04.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "4ffc448e9594020a113efb601e2aa6b964cfa54141ecbbd4c41d39b0c7bb5df9",
+      "qSha256": "de420cf65c75ee049e2390f5ffa616fb5a830563b603b0e1aee3dc7d71a3d567",
+      "typeReview": {
+        "k": "K",
+        "rationale": "Interpretación de comando/opciones/sintaxis concreta."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 3,
+        "sourceLiteralVerified": true,
+        "adjustments": [],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "AT405-P1-11",
+      "topic": "T4.05",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "AT405-P1-11",
+        "t": "T4.05",
+        "o": "A",
+        "q": "En MAGERIT, ¿cuál de los siguientes elementos NO pertenecen al análisis de riesgos?",
+        "a": [
+          "Activo.",
+          "Amenaza.",
+          "Riesgo.",
+          "Salvaguarda."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT405-P1-11",
+        "t": "T4.05",
+        "o": "A",
+        "q": "En MAGERIT, ¿cuál de los siguientes conceptos es una estimación obtenida al analizar activos, amenazas y salvaguardas?",
+        "a": [
+          "Activo.",
+          "Amenaza.",
+          "Riesgo.",
+          "Salvaguarda."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: el riesgo sí pertenece al análisis. Se distingue el resultado estimado de los elementos analizados; no se excluye el riesgo de MAGERIT.",
+        "u": "Con estos elementos se puede estimar: o El impacto: lo que podría pasar. o El riesgo: lo que probablemente pase. [p. 10]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+        "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+        "page": 10,
+        "quote": "Con estos elementos se puede estimar: o El impacto: lo que podría pasar. o El riesgo: lo que probablemente pase.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Respaldo temático y factual"
+      },
+      "primarySources": [
+        {
+          "url": "https://pilar.ccn-cert.cni.es/docman/documentos/1-magerit-v3-libro-i-metodo/file",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "El activo es un elemento que soporta la misión.",
+        "La amenaza es un evento que puede perjudicar al activo.",
+        "El riesgo se estima a partir del análisis.",
+        "La salvaguarda es una medida de protección."
+      ],
+      "sourceDiscrepancy": "",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AT405-P1-11",
+        "finding": "AT405-P1-11",
+        "evidence": "T4.05 Seguridad CPD y Criptografía - Test.pdf (plantilla p. 13); T4.05 Seguridad CPD y Criptografía - Temario.pdf p. 10 (pasaje localizado: análisis de riesgos)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave C. Riesgo sí pertenece al análisis, como resultado estimado a partir de activos, amenazas y salvaguardas. Habría que preguntar cuál no es elemento de entrada.",
+        "location": "public/data/T4.05.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT405-P1-11",
+          "topic": "T4.05",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "objectiveRepair": "Se conserva la distinción entre activo, amenaza, riesgo y salvaguarda; se repara la negación imposible preguntando por el resultado estimado.",
+      "sourceBeforeSha256": "018135a961ccc254de1e0d35b2b2b1188349299e19c5871e7a12f2756e615b9b",
+      "beforeSha256": "018135a961ccc254de1e0d35b2b2b1188349299e19c5871e7a12f2756e615b9b",
+      "afterSha256": "d4b32226e3e0af19d3c6b31486eea0c28b25a3d39660674e8dc2b33d26b87eb9",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+        "page": 10,
+        "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+        "quote": "Con estos elementos se puede estimar: o El impacto: lo que podría pasar. o El riesgo: lo que probablemente pase.",
+        "role": "Respaldo temático y factual"
+      },
+      "reviewedOptions": [
+        "El activo es un elemento que soporta la misión.",
+        "La amenaza es un evento que puede perjudicar al activo.",
+        "El riesgo se estima a partir del análisis.",
+        "La salvaguarda es una medida de protección."
+      ],
+      "primary": [
+        {
+          "url": "https://pilar.ccn-cert.cni.es/docman/documentos/1-magerit-v3-libro-i-metodo/file",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://pilar.ccn-cert.cni.es/docman/documentos/1-magerit-v3-libro-i-metodo/file",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/e476d6168c122268.pdf",
+            "sha256": "7090a331ca393987d7ab64290c3f28ed770315dcf54076cdf78cf2abd901c065",
+            "bytes": 1575109,
+            "mime": "application/pdf;charset=utf-8",
+            "finalUrl": "https://pilar.ccn-cert.cni.es/docman/documentos/1-magerit-v3-libro-i-metodo/file",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.05.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "d4b32226e3e0af19d3c6b31486eea0c28b25a3d39660674e8dc2b33d26b87eb9",
+      "qSha256": "defabf525dff109c1cc2b67eda7cc36398027798edbb3461461831b69cde9421",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta conceptual directa."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 2,
+        "sourceLiteralVerified": true,
+        "adjustments": [],
+        "objective": "Cambio de negación imposible a distinguir resultado estimado frente a elementos; mismo análisis de riesgos y cuatro conceptos, respaldado directamente por p10 y MAGERIT libroI."
+      }
+    },
+    {
+      "id": "AT405-P1-33",
+      "topic": "T4.05",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "AT405-P1-33",
+        "t": "T4.05",
+        "o": "A",
+        "q": "En una firma digital:",
+        "a": [
+          "Se cifra con la clave privada del origen y se descifra con la clave pública del origen.",
+          "Se cifra con la clave pública del destinatario y se descifra con la clave privada del destinatario.",
+          "Se cifra con la clave pública del destinatario y se descifra con la clave privada del origen.",
+          "Se cifra con la clave privada del origen y se descifra con la clave pública del destinatario."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT405-P1-33",
+        "t": "T4.05",
+        "o": "A",
+        "q": "En una firma digital asimétrica, ¿qué claves se emplean para generar y verificar la firma?",
+        "a": [
+          "Se firma con la clave privada del firmante y se verifica con su clave pública.",
+          "Se firma con la clave pública del destinatario y se verifica con su clave privada.",
+          "Se firma con la clave pública del destinatario y se verifica con la clave privada del firmante.",
+          "Se firma con la clave privada del firmante y se verifica con la clave pública del destinatario."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "Errata conceptual: firmar/verificar no equivale genéricamente a cifrar/descifrar. Esquemas como EdDSA generan y verifican una firma sin descifrar el mensaje.",
+        "u": "Firma digital (integridad, autenticidad y no repudio): el emisor cifra el mensaje con su clave privada. Cualquier receptor puede descifrarlo con la clave pública del emisor. [p. 54]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+        "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+        "page": 54,
+        "quote": "Firma digital (integridad, autenticidad y no repudio): el emisor cifra el mensaje con su clave privada. Cualquier receptor puede descifrarlo con la clave pública del emisor.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc8032",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "El par privado/público corresponde al firmante.",
+        "Ese reparto se relaciona con confidencialidad para destinatario, no firma.",
+        "No genera la firma con la clave privada del firmante.",
+        "La verificación exige la pública del firmante, no la del destinatario."
+      ],
+      "sourceDiscrepancy": "El temario describe la firma como cifrado privado/descifrado público, simplificación que no representa todos los esquemas.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AT405-P1-33",
+        "finding": "AT405-P1-33",
+        "evidence": "T4.05 Seguridad CPD y Criptografía - Test.pdf (plantilla p. 13); T4.05 Seguridad CPD y Criptografía - Temario.pdf p. 54 (pasaje localizado: firma digital)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave A. Firmar no es en general cifrar con clave privada y descifrar con pública. ECDSA verifica una ecuación y no descifra el mensaje. Falta una respuesta general correcta.",
+        "location": "public/data/T4.05.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT405-P1-33",
+          "topic": "T4.05",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "oracle-signature-results.json: Ed25519 Node real, claves efímeras y rechazos de claves/mensajes incorrectos.",
+      "sourceBeforeSha256": "dfe92fc3f92330d0cd93458885b757da42051d4a75d82b3be329c10f61c3b727",
+      "beforeSha256": "dfe92fc3f92330d0cd93458885b757da42051d4a75d82b3be329c10f61c3b727",
+      "afterSha256": "9444cc2a17cd8de13f1c421222d5e196068c432ad041f5a6e4607820d75dd856",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+        "page": 54,
+        "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+        "quote": "Firma digital (integridad, autenticidad y no repudio): el emisor cifra el mensaje con su clave privada. Cualquier receptor puede descifrarlo con la clave pública del emisor.",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "El par privado/público corresponde al firmante.",
+        "Ese reparto se relaciona con confidencialidad para destinatario, no firma.",
+        "No genera la firma con la clave privada del firmante.",
+        "La verificación exige la pública del firmante, no la del destinatario."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc8032",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://www.rfc-editor.org/rfc/rfc8032",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/491369f9ee61fae6.html",
+            "sha256": "95f55ba0635e9c6882bd6d85965373295a4bc56417d0d829e289c4f498ce9cd0",
+            "bytes": 482669,
+            "mime": "text/html;charset=utf-8",
+            "finalUrl": "https://www.rfc-editor.org/info/rfc8032/",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.05.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "9444cc2a17cd8de13f1c421222d5e196068c432ad041f5a6e4607820d75dd856",
+      "qSha256": "0ac4d5032f2d1f72506456977ffe5b8abede713e48430b2dba3d7c96f3fb0b41",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta conceptual directa."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 0,
+        "sourceLiteralVerified": true,
+        "adjustments": [],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "GEN-T4.02-15.v2",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.02-15.v2",
+        "t": "T4.02",
+        "o": "G",
+        "q": "Señale la afirmación INCORRECTA sobre los segmentos de Oracle:",
+        "a": [
+          "Los segmentos temporales se conservan tras finalizar la sentencia para reutilizarse en posteriores ordenaciones.",
+          "Los segmentos de índices usan árboles B para el acceso rápido a los datos.",
+          "Los segmentos de datos almacenan las tablas.",
+          "Los segmentos temporales se eliminan cuando la sentencia finaliza."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T4.02-15",
+        "u": "PDF p.8: De índices: permiten un acceso rápido a los datos dependiendo de la cantidad de los mismos (árboles B). / PDF p.8: Cada índice ocupa un segmento independiente del segmento de datos. / PDF p.8: Temporales: son creados por Oracle para un uso temporal cuando debe realizar una ordenación que no le cabe en memoria",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.02-15.v2",
+        "t": "T4.02",
+        "o": "G",
+        "q": "Sobre los segmentos de Oracle AI Database 26, señale la afirmación INCORRECTA:",
+        "a": [
+          "En un tablespace temporal, las extensiones de ordenación pueden quedar libres para reutilizarse al terminar la operación.",
+          "Un segmento de índice B-tree almacena la estructura de ese índice.",
+          "Las filas de una tabla heap no particionada, sin columnas LOB, se almacenan en un segmento de datos.",
+          "Cada ordenación obliga a desasignar todas las extensiones de su segmento al terminar."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T4.02-15",
+        "u": "Temporales: son creados por Oracle para un uso temporal cuando debe realizar una ordenación que no le cabe en memoria, y en las operaciones CREATE INDEX, ORDER BY, GROUP BY, DISTINCT, UNION, INTERSECT y MINUS. Son eliminados cuando la sentencia finaliza. [p. 8]",
+        "v": 0,
+        "w": 1,
+        "n": "La gestión del espacio temporal reutiliza extensiones. No debe confundirse liberar espacio para reutilización con destruir obligatoriamente el segmento tras cada sentencia."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "page": 8,
+        "quote": "Temporales: son creados por Oracle para un uso temporal cuando debe realizar una ordenación que no le cabe en memoria, y en las operaciones CREATE INDEX, ORDER BY, GROUP BY, DISTINCT, UNION, INTERSECT y MINUS. Son eliminados cuando la sentencia finaliza.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/admin/managing-tablespaces.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/cncpt/logical-storage-structures.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "Las extensiones se marcan libres y reutilizables.",
+        "El índice B-tree dispone de su estructura de almacenamiento en un segmento de índice.",
+        "Las filas de la tabla heap no particionada sin LOB pertenecen a su segmento de datos; se excluye la salvedad de almacenamiento LOB separado.",
+        "Oracle documenta que no se desasignan al terminar la ordenación."
+      ],
+      "sourceDiscrepancy": "El pasaje generaliza la eliminación al finalizar; no describe correctamente la reutilización del segmento de ordenación.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.02-15.v2",
+        "finding": "GEN-T4.02-15.v2",
+        "evidence": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf p. 8",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave A. En tablespaces temporales gestionados localmente se reutiliza el segmento de ordenación incluso tras la sentencia. A puede ser cierta y D es la incorrecta frente a la clave.",
+        "location": "public/data/T4.02.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.02-15.v2",
+          "topic": "T4.02",
+          "origin": "G",
+          "family": "GEN-T4.02-15",
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "188ea091e2439b39290343869ab694636f530eb7cf6301db97bc5fbb8a20eedc",
+      "beforeSha256": "188ea091e2439b39290343869ab694636f530eb7cf6301db97bc5fbb8a20eedc",
+      "afterSha256": "67a541b66a30a97f0efda9181215eca4008c4d7e434ab94813b736087fd65017",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 8,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "Temporales: son creados por Oracle para un uso temporal cuando debe realizar una ordenación que no le cabe en memoria, y en las operaciones CREATE INDEX, ORDER BY, GROUP BY, DISTINCT, UNION, INTERSECT y MINUS. Son eliminados cuando la sentencia finaliza.",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "Las extensiones se marcan libres y reutilizables.",
+        "El índice B-tree dispone de su estructura de almacenamiento en un segmento de índice.",
+        "Las filas de la tabla heap no particionada sin LOB pertenecen a su segmento de datos; se excluye la salvedad de almacenamiento LOB separado.",
+        "Oracle documenta que no se desasignan al terminar la ordenación."
+      ],
+      "primary": [
+        {
+          "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/admin/managing-tablespaces.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/admin/managing-tablespaces.html",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/f618be7f494ab017.html",
+            "sha256": "4e1daaeb6dce7577c03933c0ff32fd2ecbff35d6e9f27d883b0b110c96c11464",
+            "bytes": 309358,
+            "mime": "text/html",
+            "finalUrl": "https://docs.oracle.com/en/database/oracle/oracle-database/26/admin/managing-tablespaces.html",
+            "status": "saved"
+          }
+        },
+        {
+          "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/cncpt/logical-storage-structures.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/cncpt/logical-storage-structures.html",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/1d3282d1bce9118b.html",
+            "sha256": "8c44eb6dde5ce76318cb89fdf19420cf5c626f646017e025691fd248d1a507fa",
+            "bytes": 166334,
+            "mime": "text/html",
+            "finalUrl": "https://docs.oracle.com/en/database/oracle/oracle-database/26/cncpt/logical-storage-structures.html",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.02.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "dccfd411c49edd4f30f79410118341bb8830177d43d04ff4ed60e222fc49bd1d",
+      "qSha256": "72c2dc3c99d63eb1f74c7edcd40687e17f4aa1afae9cac03bb7ea91208ce7b7e",
+      "typeReview": {
+        "k": "I",
+        "rationale": "Seleccionar la afirmación incorrecta."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 3,
+        "sourceLiteralVerified": true,
+        "adjustments": [
+          "C se acota a filas heap sin LOB para no abarcar almacenamiento LOB fuera de línea. Sigue siendo verdadera; la única incorrecta sigueD."
+        ],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "GEN-T4.02-26.v2",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.02-26.v2",
+        "t": "T4.02",
+        "o": "G",
+        "q": "En Oracle, las operaciones realizadas con la sentencia AUDIT surten efecto:",
+        "a": [
+          "En la sesión actual y en todas las sesiones abiertas.",
+          "Únicamente en la sesión actual del administrador.",
+          "En las sesiones de usuario posteriores, no en la sesión actual.",
+          "Solo tras reiniciar la instancia de la base de datos."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          9
+        ],
+        "d": 2,
+        "f": "GEN-T4.02-26",
+        "u": "PDF p.16: ANALYZE: permite recopilar estadísticas de los objetos del esquema usados por el optimizador. / PDF p.17: EXPLAIN PLAN: determina el plan de ejecución que sigue Oracle Database para ejecutar una sentencia SQL específica. / PDF p.16: AUDIT: permite habilitar una política de auditoría unificada / PDF p.17: COMMENT: agrega al diccionario de datos un comentario sobre una tabla o columna de tabla",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.02-26.v2",
+        "t": "T4.02",
+        "o": "G",
+        "q": "En la auditoría unificada de Oracle AI Database 26, habilitar una política existente mediante AUDIT POLICY surte efecto:",
+        "a": [
+          "Inmediatamente en la sesión actual y en todas las sesiones activas.",
+          "Únicamente en la sesión actual del administrador.",
+          "En las sesiones de usuario posteriores, no en la sesión actual.",
+          "Solo tras reiniciar la instancia de la base de datos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          9
+        ],
+        "d": 2,
+        "f": "GEN-T4.02-26",
+        "u": "Las operaciones realizadas con esta declaración surten efecto en las sesiones de usuario posteriores, no en la sesión actual. [p. 16]",
+        "v": 0,
+        "w": 1,
+        "n": "AUDIT POLICY activa inmediatamente la política en la sesión actual y las sesiones activas. No se confunde con ALTER AUDIT POLICY ni con auditoría tradicional."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "page": 16,
+        "quote": "Las operaciones realizadas con esta declaración surten efecto en las sesiones de usuario posteriores, no en la sesión actual.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/AUDIT-Unified-Auditing.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "Oracle 26 especifica efecto inmediato en sesiones actuales y activas.",
+        "No se limita al administrador.",
+        "La espera a nuevas sesiones contradice la activación unificada documentada.",
+        "No exige reinicio."
+      ],
+      "sourceDiscrepancy": "La frase del temario retrasa el efecto, aunque la explicación anterior identifica auditoría unificada.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.02-26.v2",
+        "finding": "GEN-T4.02-26.v2",
+        "evidence": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf p. 16 · T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf p. 17",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave C. En auditoría unificada actual AUDIT POLICY se activa inmediatamente también en sesiones activas. Oracle 26 contradice C y respalda la alternativa A.",
+        "location": "public/data/T4.02.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.02-26.v2",
+          "topic": "T4.02",
+          "origin": "G",
+          "family": "GEN-T4.02-26",
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "c40e5d3439c502c0f5c62bc569990386a4a9b565fc1effc9ec026e6a78c1ecf0",
+      "beforeSha256": "c40e5d3439c502c0f5c62bc569990386a4a9b565fc1effc9ec026e6a78c1ecf0",
+      "afterSha256": "2c09a1ef01cbd003758bfa42720038963d892eeb3e2704d98e51d6d3eb1681a9",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 16,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "Las operaciones realizadas con esta declaración surten efecto en las sesiones de usuario posteriores, no en la sesión actual.",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "Oracle 26 especifica efecto inmediato en sesiones actuales y activas.",
+        "No se limita al administrador.",
+        "La espera a nuevas sesiones contradice la activación unificada documentada.",
+        "No exige reinicio."
+      ],
+      "primary": [
+        {
+          "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/AUDIT-Unified-Auditing.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/AUDIT-Unified-Auditing.html",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/fa8b92481f673052.html",
+            "sha256": "ac647ebeef4c3a646979f727d9302214e72aa5d705dd3bab2a735cef70f01b59",
+            "bytes": 24959,
+            "mime": "text/html",
+            "finalUrl": "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/AUDIT-Unified-Auditing.html",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.02.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "f9ce5a91c0a4cb263bb8953bf8caf50446869a23f7f280b54995aded2d502834",
+      "qSha256": "91c37e03ef840296b3a01bc25750d35e937362be50133cea5ca4f146a1202cb9",
+      "typeReview": {
+        "k": "C",
+        "rationale": "Completar el enunciado conceptual."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 0,
+        "sourceLiteralVerified": true,
+        "adjustments": [
+          "A precisa inmediatamente/activas conforme al literal Oracle26; mantiene claveA y ámbito auditoría unificada."
+        ],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "GEN-T4.02-79.v1",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.02-79.v1",
+        "t": "T4.02",
+        "o": "G",
+        "q": "En la comparativa NAS y SAN, la capacidad es, respectivamente, del orden de:",
+        "a": [
+          "Petabytes y terabytes.",
+          "Terabytes y exabytes.",
+          "Gigabytes y terabytes.",
+          "Terabytes y petabytes."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-79",
+        "u": "PDF p.48: Tipo de almacenamiento Archivos Bloques Protocolos IP FCP, iSCSI, FCoE / PDF p.48: Capacidad Del orden de TB Mínimo, del orden de PB / PDF p.48: Consumidor Clientes o servidores Servidores",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.02-79.v1",
+        "t": "T4.02",
+        "o": "G",
+        "q": "¿Qué afirmación sobre la capacidad de almacenamiento NAS y SAN es técnicamente correcta?",
+        "a": [
+          "Todo NAS debe alcanzar petabytes y toda SAN se limita a terabytes.",
+          "Todo NAS se limita a terabytes y toda SAN exige exabytes.",
+          "Todo NAS se limita a gigabytes y toda SAN se limita a terabytes.",
+          "La capacidad depende del diseño y de los dispositivos; NAS o SAN no impone por sí solo un umbral universal de TB o PB."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-79",
+        "u": "Capacidad Del orden de TB Mínimo, del orden de PB [p. 48]",
+        "v": 0,
+        "w": 1,
+        "n": "NAS y SAN describen arquitecturas de acceso al almacenamiento, no categorías con capacidades mínimas universales. El dimensionamiento depende de la implementación."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "page": 48,
+        "quote": "Capacidad Del orden de TB Mínimo, del orden de PB",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.ibm.com/think/topics/network-attached-storage",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.ibm.com/think/topics/san-vs-nas",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "No existen esas dos condiciones universales.",
+        "SAN no exige capacidad de exabytes.",
+        "NAS no está universalmente limitado a gigabytes.",
+        "La capacidad se dimensiona; no define la arquitectura."
+      ],
+      "sourceDiscrepancy": "La tabla enseña TB frente a mínimoPB como si fuera una propiedad necesaria.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.02-79.v1",
+        "finding": "GEN-T4.02-79.v1",
+        "evidence": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf p. 48",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave D. No hay capacidades necesarias de TB para NAS ni mínimo de PB para SAN. Ambas arquitecturas admiten rangos solapados y ninguna respuesta es universal.",
+        "location": "public/data/T4.02.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.02-79.v1",
+          "topic": "T4.02",
+          "origin": "G",
+          "family": "GEN-T4.02-79",
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "9af00e05709366a84cd6811cc0d1c50f9ae8d8a28f8058a260123232dfce580e",
+      "beforeSha256": "9af00e05709366a84cd6811cc0d1c50f9ae8d8a28f8058a260123232dfce580e",
+      "afterSha256": "341a8a2bee4bfbc5382869bdc661fc528eec7a5c5a48187b5a69ed3cd6731401",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 48,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "Capacidad Del orden de TB Mínimo, del orden de PB",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "No existen esas dos condiciones universales.",
+        "SAN no exige capacidad de exabytes.",
+        "NAS no está universalmente limitado a gigabytes.",
+        "La capacidad se dimensiona; no define la arquitectura."
+      ],
+      "primary": [
+        {
+          "url": "https://www.ibm.com/think/topics/network-attached-storage",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://www.ibm.com/think/topics/network-attached-storage",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/1d2d44274ca3a785.html",
+            "sha256": "6ce1d0cba4a4cd3add7cce3cb9f9f9d6c20df8c451aef50fc308b85908b3c261",
+            "bytes": 270229,
+            "mime": "text/html;charset=utf-8",
+            "finalUrl": "https://www.ibm.com/think/topics/network-attached-storage",
+            "status": "saved"
+          }
+        },
+        {
+          "url": "https://www.ibm.com/think/topics/san-vs-nas",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://www.ibm.com/think/topics/san-vs-nas",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/c9d315e5adb06b17.html",
+            "sha256": "dda05528f4fb82fc672fc26bf055201a16470bae70a5183d31d0ccaf12894419",
+            "bytes": 179516,
+            "mime": "text/html;charset=utf-8",
+            "finalUrl": "https://www.ibm.com/think/topics/san-vs-nas",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.02.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "341a8a2bee4bfbc5382869bdc661fc528eec7a5c5a48187b5a69ed3cd6731401",
+      "qSha256": "a2794d0d7b1bda3e89063b48997a45e7fe55ea7f1a08513542fedab1f79bea61",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta conceptual directa."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 3,
+        "sourceLiteralVerified": true,
+        "adjustments": [],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "GEN-T4.02-85.v2",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.02-85.v2",
+        "t": "T4.02",
+        "o": "G",
+        "q": "Una ventaja de LVM 2 sobre LVM es:",
+        "a": [
+          "La posibilidad de usar los volúmenes lógicos en sistemas Windows y macOS.",
+          "La posibilidad de añadir discos en caliente a un grupo de volúmenes sin pérdida de datos.",
+          "La posibilidad de agrupar varios grupos de volúmenes en un volumen físico.",
+          "La posibilidad de hacer snapshot: una instantánea es un LV que actúa como copia de otro LV."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          9
+        ],
+        "d": 2,
+        "f": "GEN-T4.02-85",
+        "u": "PDF p.50: LVM (Logical Volume Management) para Linux. / PDF p.51: LDM (Logical Disk Manager o Administrador de discos lógicos) para Windows. CoreStorage para macOS. / PDF p.52: Una ventaja de LVM 2 sobre LVM es la posibilidad de hacer snapshot. Una instantánea es un LV que actúa como una copia de otro LV.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.02-85.v2",
+        "t": "T4.02",
+        "o": "G",
+        "q": "¿Qué diferencia documentada existe entre las instantáneas clásicas de LVM1 y LVM2?",
+        "a": [
+          "LVM2 exige Windows o macOS para usar instantáneas.",
+          "LVM1 no podía crear ninguna instantánea.",
+          "LVM2 agrupa grupos de volúmenes dentro de un volumen físico.",
+          "LVM1 tenía instantáneas de sólo lectura; en LVM2 son de lectura y escritura por defecto."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7,
+          9
+        ],
+        "d": 2,
+        "f": "GEN-T4.02-85",
+        "u": "Una ventaja de LVM 2 sobre LVM es la posibilidad de hacer snapshot. Una instantánea es un LV que actúa como una copia de otro LV. Muestra el estado del LV original en el momento de creación de la instantánea. [p. 52]",
+        "v": 0,
+        "w": 1,
+        "n": "LVM1 ya ofrecía snapshots de sólo lectura. La diferencia contrastada es el soporte de lectura/escritura por defecto en LVM2, no la invención de snapshots."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "page": 52,
+        "quote": "Una ventaja de LVM 2 sobre LVM es la posibilidad de hacer snapshot. Una instantánea es un LV que actúa como una copia de otro LV. Muestra el estado del LV original en el momento de creación de la instantánea.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://tldp.org/HOWTO/LVM-HOWTO/snapshotintro.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://documentation.suse.com/en-us/sles/15-SP7/html/SLES-all/cha-lvm-snapshots.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "LVM es una tecnología Linux; no exige esos sistemas.",
+        "La documentación histórica describe snapshots LVM1.",
+        "Invierte la relación PV/VG/LV.",
+        "Es la diferencia explícita del LVM HOWTO."
+      ],
+      "sourceDiscrepancy": "El temario atribuye a LVM2 la mera posibilidad de snapshots, ya presente en LVM1.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.02-85.v2",
+        "finding": "GEN-T4.02-85.v2",
+        "evidence": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf p. 50 · T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf p. 52",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave D. LVM1 ya admite snapshots de solo lectura. La novedad de LVM2 no es la mera posibilidad de hacer una instantánea.",
+        "location": "public/data/T4.02.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.02-85.v2",
+          "topic": "T4.02",
+          "origin": "G",
+          "family": "GEN-T4.02-85",
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "0be8094a2f46195833bed7084c765f1e1f35b47e7fb63218be76ce603512b6e9",
+      "beforeSha256": "0be8094a2f46195833bed7084c765f1e1f35b47e7fb63218be76ce603512b6e9",
+      "afterSha256": "d76bdaf87f4ecf46994707e1a1f1e1b637265fadf7fa7a980fbe5c0b595e6a48",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 52,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "Una ventaja de LVM 2 sobre LVM es la posibilidad de hacer snapshot. Una instantánea es un LV que actúa como una copia de otro LV. Muestra el estado del LV original en el momento de creación de la instantánea.",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "LVM es una tecnología Linux; no exige esos sistemas.",
+        "La documentación histórica describe snapshots LVM1.",
+        "Invierte la relación PV/VG/LV.",
+        "Es la diferencia explícita del LVM HOWTO."
+      ],
+      "primary": [
+        {
+          "url": "https://tldp.org/HOWTO/LVM-HOWTO/snapshotintro.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://tldp.org/HOWTO/LVM-HOWTO/snapshotintro.html",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/78164a771b370c8c.html",
+            "sha256": "6da916e7992f6d615c417256ec9a5eab3dbbc9b41903afe00b0fb9135f99cd69",
+            "bytes": 6240,
+            "mime": "text/html; charset=utf-8",
+            "finalUrl": "https://tldp.org/HOWTO/LVM-HOWTO/snapshotintro.html",
+            "status": "saved"
+          }
+        },
+        {
+          "url": "https://documentation.suse.com/en-us/sles/15-SP7/html/SLES-all/cha-lvm-snapshots.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://documentation.suse.com/en-us/sles/15-SP7/html/SLES-all/cha-lvm-snapshots.html",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/e095e97e9a33898c.html",
+            "sha256": "32eec8d6a43ed7af31925817cbd52579b46ee7a3ec834f693636f5bc2d7f15fb",
+            "bytes": 43804,
+            "mime": "text/html",
+            "finalUrl": "https://documentation.suse.com/en-us/sles/15-SP7/html/SLES-all/cha-lvm-snapshots.html",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.02.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "d76bdaf87f4ecf46994707e1a1f1e1b637265fadf7fa7a980fbe5c0b595e6a48",
+      "qSha256": "a57eded2e1d38eb4425bf364c907eb58489fb95544db8e8db0cc37c8833d2b3b",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta conceptual directa."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 3,
+        "sourceLiteralVerified": true,
+        "adjustments": [],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "GEN-T4.02-173",
+      "topic": "T4.02",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.02-173",
+        "t": "T4.02",
+        "o": "G",
+        "q": "En la virtualización de servidores, los usuarios que no son administradores:",
+        "a": [
+          "Acceden a la máquina virtual a través de una aplicación remota instalada.",
+          "No se conectan nunca al escritorio de la máquina virtual, por lo que no son necesarios mecanismos de aceleración de vídeo.",
+          "Se conectan al escritorio de la máquina virtual mediante VDI persistente.",
+          "Se conectan al escritorio de la máquina virtual mediante clientes ligeros."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-173",
+        "u": "Revisión manual contra PDF T4.02, p.105: la virtualización de servidores es similar a la virtualización de escritorios, con la diferencia que se trata de sistemas operativos de servidor para ofrecer servicios a los usuarios que se conecten. los usuarios que no son administradores no se conectarán nunca al escritorio de la máquina virtual, por lo tanto, no será necesario implementar mecanismos de aceleración de video o presentación de escritorio. A diferencia de los sistemas tradicionales como NAS o SAN, el almacenamiento definido por software (SDS) permite unificar en un solo espacio o conjunto lógico, múltiples discos físicos instalados localmente en cada servidor del clúster de hiperconvergencia.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.02-173",
+        "t": "T4.02",
+        "o": "G",
+        "q": "En un servidor virtualizado, ¿qué afirmación es correcta sobre el acceso de usuarios no administradores al escritorio?",
+        "a": [
+          "Todos deben instalar obligatoriamente la misma aplicación remota, con independencia del servicio.",
+          "Pueden acceder si se les concede el permiso correspondiente y se ofrece un servicio de escritorio remoto; virtualizar no lo prohíbe.",
+          "Sólo pueden acceder mediante VDI persistente.",
+          "Sólo pueden acceder mediante clientes ligeros."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T4.02-173",
+        "u": "La principal diferencia está en que, en una virtualización de servidores, los usuarios que no son administradores no se conectarán nunca al escritorio de la máquina virtual, por lo tanto, no será necesario implementar mecanismos de aceleración de video o presentación de escritorio. [p. 105]",
+        "v": 0,
+        "w": 1,
+        "n": "La virtualización no impone una prohibición de acceso al escritorio. RDS admite usuarios no administrativos autorizados, incluso sobre máquinas virtuales."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "page": 105,
+        "quote": "La principal diferencia está en que, en una virtualización de servidores, los usuarios que no son administradores no se conectarán nunca al escritorio de la máquina virtual, por lo tanto, no será necesario implementar mecanismos de aceleración de video o presentación de escritorio.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/rds-roles",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "El cliente depende del servicio y puede ser incluso un navegador.",
+        "Los permisos y el servicio determinan el acceso.",
+        "RDS de sesiones no exige VDI persistente.",
+        "Existen clientes para múltiples plataformas y navegadores."
+      ],
+      "sourceDiscrepancy": "La afirmación nunca del temario se contradice con RDS y otros servicios de escritorio de servidores.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.02-173",
+        "finding": "GEN-T4.02-173",
+        "evidence": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf p. 105",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave B. La virtualización de un servidor no impide que un usuario autorizado acceda a su escritorio o use una GPU. «Nunca» y la conclusión sobre vídeo invalidan B.",
+        "location": "public/data/T4.02.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.02-173",
+          "topic": "T4.02",
+          "origin": "G",
+          "family": "GEN-T4.02-173",
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "c202ee6791e7dd889f0dab97f953307ca301d2065b69c9a6f946093408e79721",
+      "beforeSha256": "c202ee6791e7dd889f0dab97f953307ca301d2065b69c9a6f946093408e79721",
+      "afterSha256": "1417fbba50a7e20cd00cd46409fdaa8e50d549f38c68bb0f9866c1d88160e72c",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 105,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "La principal diferencia está en que, en una virtualización de servidores, los usuarios que no son administradores no se conectarán nunca al escritorio de la máquina virtual, por lo tanto, no será necesario implementar mecanismos de aceleración de video o presentación de escritorio.",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "El cliente depende del servicio y puede ser incluso un navegador.",
+        "Los permisos y el servicio determinan el acceso.",
+        "RDS de sesiones no exige VDI persistente.",
+        "Existen clientes para múltiples plataformas y navegadores."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/rds-roles",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/rds-roles",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/1d2e93983ca4aaf2.html",
+            "sha256": "da4a7888304b428390542afcdc3c2a6eee4f7e0268666061147654ecdc862254",
+            "bytes": 58724,
+            "mime": "text/html",
+            "finalUrl": "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/rds-roles",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.02.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "1417fbba50a7e20cd00cd46409fdaa8e50d549f38c68bb0f9866c1d88160e72c",
+      "qSha256": "f5ccc45730b070a0b3ab21b3e37ba15329e87a3da535f9da8b92233effd122ba",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta conceptual directa."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 1,
+        "sourceLiteralVerified": true,
+        "adjustments": [],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "GEN-T4.04-05.v1",
+      "topic": "T4.04",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.04-05.v1",
+        "t": "T4.04",
+        "o": "G",
+        "q": "En route add y route del, ¿qué opción hace que la ruta sea persistente (estática)?",
+        "a": [
+          "-p",
+          "-host",
+          "-n",
+          "-e"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7,
+          1
+        ],
+        "d": 1,
+        "f": "GEN-T4.04-05",
+        "u": "PDF p. 4: Opciones con add y del: -net Objetivo es una red -host Objetivo es un host -p Persistente (estática) gw Especifica puerta de enlace. | PDF p. 4: dev Interfaz donde se enviarán los paquetes reject Rechaza los paquetes | PDF p. 4: -n Muestra contenido tabla en formato numérico",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.04-05.v1",
+        "t": "T4.04",
+        "o": "G",
+        "q": "En route de net-tools para Linux, ¿cuál de estas opciones añade una ruta persistente por sí sola?",
+        "a": [
+          "Ninguna: este route no ofrece una opción de persistencia equivalente al /p de Windows.",
+          "-host",
+          "-n",
+          "-e"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          7,
+          1
+        ],
+        "d": 1,
+        "f": "GEN-T4.04-05",
+        "u": "-p Persistente (estática) [p. 4]",
+        "v": 0,
+        "w": 1,
+        "n": "El temario mezcla route de Linux con /p de Windows. En net-tools la persistencia se configura mediante los mecanismos de red de la distribución."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+        "sha256": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+        "page": 4,
+        "quote": "-p Persistente (estática)",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://man7.org/linux/man-pages/man8/route.8.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/route_ws2008",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "El manual de route Linux no define -p persistente.",
+        "Selecciona un destino host.",
+        "Solicita representación numérica.",
+        "Cambia el formato de visualización."
+      ],
+      "sourceDiscrepancy": "-p aparece en una tabla Linux aunque pertenece al comando Windows.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.04-05.v1",
+        "finding": "GEN-T4.04-05.v1",
+        "evidence": "T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf p. 4",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave A. El route de net-tools para Linux no ofrece -p para persistencia. La pregunta importa la opción del route de Windows; ninguna alternativa Linux corresponde.",
+        "location": "public/data/T4.04.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.04-05.v1",
+          "topic": "T4.04",
+          "origin": "G",
+          "family": "GEN-T4.04-05",
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "6239a830b615ebe7626ac17829202983d414d591e3f5fb7ca56ff9cde7819249",
+      "beforeSha256": "6239a830b615ebe7626ac17829202983d414d591e3f5fb7ca56ff9cde7819249",
+      "afterSha256": "6f3ba2d9eae1eed06bb524f42bb084db1e84fcf942ace94aac62a1bbcfdd3d2f",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+        "page": 4,
+        "sha256": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+        "quote": "-p Persistente (estática)",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "El manual de route Linux no define -p persistente.",
+        "Selecciona un destino host.",
+        "Solicita representación numérica.",
+        "Cambia el formato de visualización."
+      ],
+      "primary": [
+        {
+          "url": "https://man7.org/linux/man-pages/man8/route.8.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://man7.org/linux/man-pages/man8/route.8.html",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/400568b43c360f45.html",
+            "sha256": "aee9637d7ee9a5293dbf71456258ecd5c46cc83280159e710b68658548583451",
+            "bytes": 19204,
+            "mime": "text/html",
+            "finalUrl": "https://man7.org/linux/man-pages/man8/route.8.html",
+            "status": "saved"
+          }
+        },
+        {
+          "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/route_ws2008",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/route_ws2008",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/8aa7d763732afa87.html",
+            "sha256": "a3f2330fdf09ea5898d0aaf83d0b678ca0f600861415098c5411bb89cd2e1394",
+            "bytes": 56652,
+            "mime": "text/html",
+            "finalUrl": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/route_ws2008",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.04.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "2372cd3291259bc9dc705d9c6b121da54a4444eb2f912e504430657ca3e75206",
+      "qSha256": "1d79108ce08732b9703cc29923ff59a21d73abddbabf4fb15724ad9d71983a5b",
+      "typeReview": {
+        "k": "K",
+        "rationale": "Interpretación de comando/opciones/sintaxis concreta."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 0,
+        "sourceLiteralVerified": true,
+        "adjustments": [
+          "kK: interpretar opciones concretas del comando route, no sólo nombrar una categoría conceptual."
+        ],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "GEN-T4.04-20",
+      "topic": "T4.04",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.04-20",
+        "t": "T4.04",
+        "o": "G",
+        "q": "¿Qué comando de netsh abre el puerto TCP 443 en el cortafuegos de Windows?",
+        "a": [
+          "netsh advfirewall delete portopening tcp 443",
+          "netsh advfirewall reset portopening tcp 443",
+          "netsh advfirewall set portopening tcp 443 myhttps",
+          "netsh advfirewall add portopening tcp 443 myhttps"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          10,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T4.04-20",
+        "u": "PDF p. 14: netsh advfirewall add portopening tcp 443 myhttps #Abre el puerto 443 | PDF p. 14: netsh advfirewall set opmode disable #Desactiva el cortafuegos | PDF p. 14: netsh advfirewall reset #Restaurar valores predeterminados",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.04-20",
+        "t": "T4.04",
+        "o": "G",
+        "q": "¿Qué comando netsh crea una regla de entrada que permite TCP hacia el puerto local 443 en el cortafuegos de Windows?",
+        "a": [
+          "netsh advfirewall firewall delete rule name=\"myhttps\"",
+          "netsh advfirewall reset",
+          "netsh advfirewall firewall add rule name=\"myhttps\" dir=in action=block protocol=TCP localport=443",
+          "netsh advfirewall firewall add rule name=\"myhttps\" dir=in action=allow protocol=TCP localport=443"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          10,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T4.04-20",
+        "u": "netsh advfirewall add portopening tcp 443 myhttps #Abre el puerto 443 [p. 14]",
+        "v": 0,
+        "w": 1,
+        "n": "La sintaxis actual del contexto advfirewall es firewall add rule. La creación de una regla no garantiza conectividad si intervienen otras políticas o no hay servicio escuchando."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+        "sha256": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+        "page": 14,
+        "quote": "netsh advfirewall add portopening tcp 443 myhttps #Abre el puerto 443",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/netsh-advfirewall",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "Elimina una regla, no crea permiso.",
+        "Restaura configuración, no crea la regla indicada.",
+        "Crea una regla de bloqueo.",
+        "Crea la regla de entrada TCP 443 con action=allow."
+      ],
+      "sourceDiscrepancy": "add portopening pertenece al contexto firewall legado; la mezcla con advfirewall es inválida.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.04-20",
+        "finding": "GEN-T4.04-20",
+        "evidence": "T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf p. 14",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave D. La sintaxis advfirewall requiere firewall add rule ... protocol=TCP localport=443. add portopening pertenecía al contexto firewall antiguo. Las cuatro variantes ofrecidas fallan.",
+        "location": "public/data/T4.04.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.04-20",
+          "topic": "T4.04",
+          "origin": "G",
+          "family": "GEN-T4.04-20",
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "9503b804f14a82b869af164e6fe291a019e5075cdc7e09601218990065dfac00",
+      "beforeSha256": "9503b804f14a82b869af164e6fe291a019e5075cdc7e09601218990065dfac00",
+      "afterSha256": "49583d5321d242eb91dc88c44d4a0be800059149b26ff0f33c30b199205c358d",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+        "page": 14,
+        "sha256": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+        "quote": "netsh advfirewall add portopening tcp 443 myhttps #Abre el puerto 443",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "Elimina una regla, no crea permiso.",
+        "Restaura configuración, no crea la regla indicada.",
+        "Crea una regla de bloqueo.",
+        "Crea la regla de entrada TCP 443 con action=allow."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/netsh-advfirewall",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/netsh-advfirewall",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/a4326f39e8571fdc.html",
+            "sha256": "7eac028dee5054b7e1e9693529f00d9bcecfb0c1305ca5362005cf6bf75aa801",
+            "bytes": 91823,
+            "mime": "text/html",
+            "finalUrl": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/netsh-advfirewall",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.04.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "49583d5321d242eb91dc88c44d4a0be800059149b26ff0f33c30b199205c358d",
+      "qSha256": "a6df22b07f47f3e1e5428add48f7153efff3327c77987f0f8056b5e625698b40",
+      "typeReview": {
+        "k": "K",
+        "rationale": "Interpretación de comando/opciones/sintaxis concreta."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 3,
+        "sourceLiteralVerified": true,
+        "adjustments": [],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "GEN-T4.04-20.v1",
+      "topic": "T4.04",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.04-20.v1",
+        "t": "T4.04",
+        "o": "G",
+        "q": "¿Qué efecto tiene ejecutar \"netsh advfirewall set opmode disable\"?",
+        "a": [
+          "Cierra el puerto 443.",
+          "Activa el cortafuegos.",
+          "Desactiva el cortafuegos.",
+          "Restaura los valores predeterminados."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          10,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T4.04-20",
+        "u": "PDF p. 14: netsh advfirewall add portopening tcp 443 myhttps #Abre el puerto 443 | PDF p. 14: netsh advfirewall set opmode disable #Desactiva el cortafuegos | PDF p. 14: netsh advfirewall reset #Restaurar valores predeterminados",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.04-20.v1",
+        "t": "T4.04",
+        "o": "G",
+        "q": "¿Qué configura la orden netsh advfirewall set allprofiles state off, ejecutada con privilegios suficientes?",
+        "a": [
+          "Sólo bloquea el puerto 443.",
+          "Activa el cortafuegos en todos los perfiles.",
+          "Desactiva el cortafuegos para todos los perfiles.",
+          "Restaura los valores predeterminados del cortafuegos."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          10,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T4.04-20",
+        "u": "netsh advfirewall set opmode disable #Desactiva el cortafuegos [p. 14]",
+        "v": 0,
+        "w": 1,
+        "n": "Se corrige la mezcla de contextos: advfirewall usa set allprofiles state off. La pregunta interpreta la orden; no se ejecuta ni se recomienda desactivar el cortafuegos."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+        "sha256": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+        "page": 14,
+        "quote": "netsh advfirewall set opmode disable #Desactiva el cortafuegos",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/netsh-advfirewall",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "state off no selecciona un puerto concreto.",
+        "on activaría; off desactiva.",
+        "allprofiles abarca todos los perfiles.",
+        "El restablecimiento corresponde a reset."
+      ],
+      "sourceDiscrepancy": "set opmode disable no pertenece al contexto advfirewall.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.04-20.v1",
+        "finding": "GEN-T4.04-20.v1",
+        "evidence": "T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf p. 14",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave C. set opmode disable es del contexto firewall legado; advfirewall necesita set ...profile state off. El comando escrito no tiene el efecto de C.",
+        "location": "public/data/T4.04.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.04-20.v1",
+          "topic": "T4.04",
+          "origin": "G",
+          "family": "GEN-T4.04-20",
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "940faa7be74d026b8e9a19cd1d17a07b3a2da16acc45efbc1cc8fc215fbecc07",
+      "beforeSha256": "940faa7be74d026b8e9a19cd1d17a07b3a2da16acc45efbc1cc8fc215fbecc07",
+      "afterSha256": "38c7fb7b614642479e575431214496f3d0fa963a5e7802de3ba820ea4fbfb3e1",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": true,
+      "reference": {
+        "pdf": "01_Temario/T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+        "page": 14,
+        "sha256": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+        "quote": "netsh advfirewall set opmode disable #Desactiva el cortafuegos",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "state off no selecciona un puerto concreto.",
+        "on activaría; off desactiva.",
+        "allprofiles abarca todos los perfiles.",
+        "El restablecimiento corresponde a reset."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/netsh-advfirewall",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/netsh-advfirewall",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/a4326f39e8571fdc.html",
+            "sha256": "7eac028dee5054b7e1e9693529f00d9bcecfb0c1305ca5362005cf6bf75aa801",
+            "bytes": 91823,
+            "mime": "text/html",
+            "finalUrl": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/netsh-advfirewall",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.04.json",
+      "sampleFiles": [
+        "public/sample/T4.04.json"
+      ],
+      "sourceAfterSha256": "38c7fb7b614642479e575431214496f3d0fa963a5e7802de3ba820ea4fbfb3e1",
+      "qSha256": "5e2e445e0e460524241434340fcc9de3665f9aa00d55aaa8f541e2a6298456eb",
+      "typeReview": {
+        "k": "K",
+        "rationale": "Interpretación de comando/opciones/sintaxis concreta."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 2,
+        "sourceLiteralVerified": true,
+        "adjustments": [],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "GEN-T4.04-40.v1",
+      "topic": "T4.04",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.04-40.v1",
+        "t": "T4.04",
+        "o": "G",
+        "q": "En la gestión de red, el elemento a gestionar (routers, conmutadores, hosts) se denomina:",
+        "a": [
+          "NMS (Network Management Server)",
+          "NME (Network Management Entity)",
+          "MIB (Management Information Base)",
+          "NMA (Network Management Agent)"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7,
+          1
+        ],
+        "d": 2,
+        "f": "GEN-T4.04-40",
+        "u": "PDF p. 33: La gestión de red está formada básicamente por cuatro componentes | PDF p. 33: El elemento a gestionar. Este elemento se denomina NMA (Network Management Agent). | PDF p. 33: Este componente se denomina NMS (Network Management Server) y se usa para gestionar toda la red. | PDF p. 33: Este software se denomina NME (Network Management Entity). | PDF p. 33: El protocolo más común es SNMP.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.04-40.v1",
+        "t": "T4.04",
+        "o": "G",
+        "q": "En gestión de red, ¿cómo se denomina el router, conmutador o host que es objeto de supervisión?",
+        "a": [
+          "Sistema gestor de red (NMS).",
+          "Entidad software de gestión.",
+          "Base de información de gestión (MIB).",
+          "Dispositivo gestionado."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7,
+          1
+        ],
+        "d": 2,
+        "f": "GEN-T4.04-40",
+        "u": "El elemento a gestionar. Este elemento se denomina NMA (Network Management Agent). El NMA es un elemento de la red como pueden ser los encaminadores, conmutadores, hosts, etc. [p. 33]",
+        "v": 0,
+        "w": 1,
+        "n": "Se distingue el dispositivo gestionado del agente software que expone información de gestión. No se identifica un router físico con una aplicación agente."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+        "sha256": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+        "page": 33,
+        "quote": "El elemento a gestionar. Este elemento se denomina NMA (Network Management Agent). El NMA es un elemento de la red como pueden ser los encaminadores, conmutadores, hosts, etc.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc3411",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "Es el sistema que supervisa, no el dispositivo supervisado.",
+        "Describe una entidad de software, no necesariamente todo el dispositivo.",
+        "Contiene información/definiciones de objetos gestionados.",
+        "Es el elemento sobre el que se actúa o que se supervisa."
+      ],
+      "sourceDiscrepancy": "El temario identifica NMA con el dispositivo; la arquitectura distingue entidad/agente de la plataforma que la contiene.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.04-40.v1",
+        "finding": "GEN-T4.04-40.v1",
+        "evidence": "T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf p. 33",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave D. Un router o conmutador es el dispositivo gestionado. El agente es la entidad de software que lo representa y comunica con el gestor; NMA confunde ambos.",
+        "location": "public/data/T4.04.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.04-40.v1",
+          "topic": "T4.04",
+          "origin": "G",
+          "family": "GEN-T4.04-40",
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "ada4f3065250033e51ba72d03699ca2637ab95b8dd0a8a6085a2def10341bbde",
+      "beforeSha256": "ada4f3065250033e51ba72d03699ca2637ab95b8dd0a8a6085a2def10341bbde",
+      "afterSha256": "1f1c68c0d3e347582a579735a02d600fbe8bc31c91608b23c5b2b3fab511e726",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+        "page": 33,
+        "sha256": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+        "quote": "El elemento a gestionar. Este elemento se denomina NMA (Network Management Agent). El NMA es un elemento de la red como pueden ser los encaminadores, conmutadores, hosts, etc.",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "Es el sistema que supervisa, no el dispositivo supervisado.",
+        "Describe una entidad de software, no necesariamente todo el dispositivo.",
+        "Contiene información/definiciones de objetos gestionados.",
+        "Es el elemento sobre el que se actúa o que se supervisa."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc3411",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://www.rfc-editor.org/rfc/rfc3411",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/a2f918215e18f0e1.html",
+            "sha256": "f86169b4ec5e1336333901f41ff68a0f5f1a755059e2c653c2deefa6a365c0b7",
+            "bytes": 623433,
+            "mime": "text/html;charset=utf-8",
+            "finalUrl": "https://www.rfc-editor.org/info/rfc3411/",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.04.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "1f1c68c0d3e347582a579735a02d600fbe8bc31c91608b23c5b2b3fab511e726",
+      "qSha256": "7c33f20a377369658b74893377c5b62d5ebc7f5c0a9b699da4dea73bde80ec73",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta conceptual directa."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 3,
+        "sourceLiteralVerified": true,
+        "adjustments": [],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "GEN-T4.04-52.v2",
+      "topic": "T4.04",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.04-52.v2",
+        "t": "T4.04",
+        "o": "G",
+        "q": "Zabbix no es recomendable para grandes redes porque su rendimiento disminuye a partir de:",
+        "a": [
+          "1000 nodos.",
+          "100 nodos.",
+          "10.000 nodos.",
+          "100.000 nodos."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T4.04-52",
+        "u": "PDF p. 45: No recomendable para grandes redes ya que el rendimiento disminuye a partir de 1000 nodos. | PDF p. 45: altamente escalable llegando a 100.000 nodos",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.04-52.v2",
+        "t": "T4.04",
+        "o": "G",
+        "q": "Para dimensionar Zabbix 7.0, ¿qué afirmación sobre su rendimiento es correcta?",
+        "a": [
+          "Depende, entre otros factores, del número de ítems activos, su frecuencia de actualización y los recursos; no hay un umbral universal de 1000 nodos.",
+          "Cualquier instalación deja de ser adecuada al superar 100 nodos.",
+          "Cualquier instalación deja de ser adecuada al superar 10000 nodos.",
+          "El rendimiento es independiente de la frecuencia de recogida de datos."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T4.04-52",
+        "u": "No recomendable para grandes redes ya que el rendimiento disminuye a partir de 1000 nodos. [p. 45]",
+        "v": 0,
+        "w": 1,
+        "n": "La guía de requisitos proporciona ejemplos de dimensionamiento, no límites universales por nodos. Exige evaluar carga y recursos de cada instalación."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+        "sha256": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+        "page": 45,
+        "quote": "No recomendable para grandes redes ya que el rendimiento disminuye a partir de 1000 nodos.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.zabbix.com/documentation/7.0/en/manual/installation/requirements",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "La documentación vincula carga a ítems, frecuencia y hardware.",
+        "No existe ese límite universal documentado.",
+        "Un ejemplo de tamaño no fija ese techo universal.",
+        "La frecuencia modifica el volumen de nuevos valores por segundo."
+      ],
+      "sourceDiscrepancy": "La frase del temario presenta una limitación universal de1000 nodos sin condiciones de carga o hardware.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.04-52.v2",
+        "finding": "GEN-T4.04-52.v2",
+        "evidence": "T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf p. 45",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave A. No se deduce un límite fijo de 1.000 ni la conclusión de que Zabbix no sea adecuado para grandes redes; no hay opción técnicamente general.",
+        "location": "public/data/T4.04.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.04-52.v2",
+          "topic": "T4.04",
+          "origin": "G",
+          "family": "GEN-T4.04-52",
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "eac3dc818e2429391e5bd15d070cec7f1085a105266613f1866e5bcefc6f8a1b",
+      "beforeSha256": "eac3dc818e2429391e5bd15d070cec7f1085a105266613f1866e5bcefc6f8a1b",
+      "afterSha256": "bbae970f40555925544684250092aaf3b40eb8e298325ef2e3dfaedca1034d4f",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+        "page": 45,
+        "sha256": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+        "quote": "No recomendable para grandes redes ya que el rendimiento disminuye a partir de 1000 nodos.",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "La documentación vincula carga a ítems, frecuencia y hardware.",
+        "No existe ese límite universal documentado.",
+        "Un ejemplo de tamaño no fija ese techo universal.",
+        "La frecuencia modifica el volumen de nuevos valores por segundo."
+      ],
+      "primary": [
+        {
+          "url": "https://www.zabbix.com/documentation/7.0/en/manual/installation/requirements",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://www.zabbix.com/documentation/7.0/en/manual/installation/requirements",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/846c57329365c13f.html",
+            "sha256": "a94b60d6238cbef2fbbeed708c818cd8c9b2c166132010cc69366130ad1f2e56",
+            "bytes": 233153,
+            "mime": "text/html",
+            "finalUrl": "https://www.zabbix.com/documentation/7.0/en/manual/installation/requirements",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.04.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "c47f3d774c13f280e605ab3a1cab290e8f6a12ae4bc56c3743b0d1c6742995fb",
+      "qSha256": "a3736bcb067fafe4eb91eba883529a55c7dd0790dd4987e66344df2b4afdc665",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta conceptual directa."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 0,
+        "sourceLiteralVerified": true,
+        "adjustments": [
+          "Se recorta u al pasaje discrepante de rendimiento, evitando arrastrar una afirmación ajena sobre licencia. Sólo cambia cita y espacios, no clave/concepto."
+        ],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "GEN-T4.05-12",
+      "topic": "T4.05",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.05-12",
+        "t": "T4.05",
+        "o": "G",
+        "q": "¿Qué órgano elabora la Metodología de Análisis y Gestión de Riesgos MAGERIT versión 3?",
+        "a": [
+          "La Comisión de Estrategia TIC.",
+          "La Agencia Española de Protección de Datos.",
+          "El Centro Criptológico Nacional.",
+          "El Instituto Nacional de Ciberseguridad."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          1,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T4.05-12",
+        "u": "PDF p. 9: MAGERIT versión 3 es la Metodología de Análisis y Gestión de Riesgos de los Sistemas de Información elaborada por la Comisión de Estrategia TIC. | PDF p. 9: MAGERIT es, por tanto, un instrumento para facilitar la implantación y aplicación del ENS. | PDF p. 9: MAGERIT se alinea con la norma ISO 31000",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.05-12",
+        "t": "T4.05",
+        "o": "G",
+        "q": "¿Qué órgano elaboró MAGERIT versión 3?",
+        "a": [
+          "El Consejo Superior de Administración Electrónica.",
+          "La Agencia Española de Protección de Datos.",
+          "El Centro Criptológico Nacional.",
+          "El Instituto Nacional de Ciberseguridad."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          1,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T4.05-12",
+        "u": "MAGERIT versión 3 es la Metodología de Análisis y Gestión de Riesgos de los Sistemas de Información elaborada por la Comisión de Estrategia TIC. [p. 9]",
+        "v": 0,
+        "w": 1,
+        "n": "La autoría de MAGERIT 3 se atribuye al Consejo Superior de Administración Electrónica. No debe confundirse autoría con publicación, mantenimiento o colaboración del CCN."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+        "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+        "page": 9,
+        "quote": "MAGERIT versión 3 es la Metodología de Análisis y Gestión de Riesgos de los Sistemas de Información elaborada por la Comisión de Estrategia TIC.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.ccn-cert.cni.es/es/component/content/article/551-nueva-version-de-magerit.html?Itemid=11827&catid=23",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://administracionelectronica.gob.es/ctt/magerit",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "La ficha oficial CTT atribuye expresamente la elaboración al antiguo Consejo Superior de Administración Electrónica; no se infiere sólo de las fechas.",
+        "La AEPD no es autora de esta metodología.",
+        "El CCN publica/colabora; no sustituye la autoría indicada.",
+        "INCIBE no es el órgano autor de MAGERIT 3."
+      ],
+      "sourceDiscrepancy": "El temario atribuye erróneamente la elaboración a la Comisión de Estrategia TIC.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.05-12",
+        "finding": "GEN-T4.05-12",
+        "evidence": "T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf p. 9",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave A. El libro I de MAGERIT 3.0 atribuye la elaboración al Consejo Superior de Administración Electrónica. La Comisión de Estrategia TIC no es su autora y falta el órgano correcto.",
+        "location": "public/data/T4.05.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.05-12",
+          "topic": "T4.05",
+          "origin": "G",
+          "family": "GEN-T4.05-12",
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "36c2246207d3f1e1dafb8b443bb63e121508ffcfc3b46bd2d04c4fde4fb34da2",
+      "beforeSha256": "36c2246207d3f1e1dafb8b443bb63e121508ffcfc3b46bd2d04c4fde4fb34da2",
+      "afterSha256": "69abd58e4e4dff88cbe11d3de75c381ee817a1a58beae78dfc069222ecf56be8",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+        "page": 9,
+        "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+        "quote": "MAGERIT versión 3 es la Metodología de Análisis y Gestión de Riesgos de los Sistemas de Información elaborada por la Comisión de Estrategia TIC.",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "La ficha oficial CTT atribuye expresamente la elaboración al antiguo Consejo Superior de Administración Electrónica; no se infiere sólo de las fechas.",
+        "La AEPD no es autora de esta metodología.",
+        "El CCN publica/colabora; no sustituye la autoría indicada.",
+        "INCIBE no es el órgano autor de MAGERIT 3."
+      ],
+      "primary": [
+        {
+          "url": "https://www.ccn-cert.cni.es/es/component/content/article/551-nueva-version-de-magerit.html?Itemid=11827&catid=23",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://www.ccn-cert.cni.es/es/component/content/article/551-nueva-version-de-magerit.html?Itemid=11827&catid=23",
+            "status": "download-failed",
+            "error": "HTTP Error 403: Forbidden",
+            "fallback": "See Context7 logs/web consulted sources; not invented local capture"
+          }
+        },
+        {
+          "url": "https://administracionelectronica.gob.es/ctt/magerit",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://administracionelectronica.gob.es/ctt/magerit",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/1a11d1f06fc1d223.html",
+            "sha256": "c3903732aab1725f33b05428a36479111b87d3d5c349ef5e655b087c672c56c8",
+            "bytes": 358407,
+            "mime": "text/html;charset=utf-8",
+            "finalUrl": "https://administracionelectronica.gob.es/ctt/magerit",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.05.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "69abd58e4e4dff88cbe11d3de75c381ee817a1a58beae78dfc069222ecf56be8",
+      "qSha256": "23f735752b4156048c46ff2fd1ec882afc2d7d917c1e9c8cb949f3eef043add1",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta conceptual directa."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 0,
+        "sourceLiteralVerified": true,
+        "adjustments": [
+          "Se fundamenta racionalA en atribución literal CTT efectivamente abierta, sin depender del GET403 de CCN."
+        ],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "GEN-T4.05-23.v1",
+      "topic": "T4.05",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.05-23.v1",
+        "t": "T4.05",
+        "o": "G",
+        "q": "Para obtener el nivel EALN, el producto debe haber pasado previamente por:",
+        "a": [
+          "Un perfil de protección nacional.",
+          "La certificación LINCE.",
+          "Los niveles EAL anteriores.",
+          "La acreditación del CCN-CERT."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          12,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T4.05-23",
+        "u": "PDF p. 15: Para pasar a EALN implica haber pasado previamente por EAL anteriores. | PDF p. 15: EALN no significa que el producto sea más seguro que EALN-1, implica que se ha probado más en profundidad. | PDF p. 15: Los niveles anteriores se han desarrollado de manera que sean compatibles con los estándares previos a la norma ISO/IEC 15408, como el TCSEC e ITSEC.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.05-23.v1",
+        "t": "T4.05",
+        "o": "G",
+        "q": "Para obtener una evaluación Common Criteria en un nivel EAL determinado, ¿qué se exige respecto de sus requisitos de garantía?",
+        "a": [
+          "Haber obtenido siempre un perfil de protección nacional con anterioridad.",
+          "Haber obtenido previamente una certificación LINCE.",
+          "Satisfacer el paquete de requisitos de garantía del nivel elegido; no se exige una secuencia previa de certificados EAL inferiores.",
+          "Haber obtenido previamente una acreditación CCN-CERT."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          12,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T4.05-23",
+        "u": "Para pasar a EALN implica haber pasado previamente por EAL anteriores. [p. 15]",
+        "v": 0,
+        "w": 1,
+        "n": "Los EAL son paquetes de requisitos de garantía. La jerarquía de componentes no impone obtener sucesivamente certificados EAL1, EAL2, etc. antes de evaluar un nivel superior."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+        "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+        "page": 15,
+        "quote": "Para pasar a EALN implica haber pasado previamente por EAL anteriores.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.commoncriteriaportal.org/files/ccfiles/CC2022PART5R1.pdf",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "No es una condición universal del paquete EAL.",
+        "LINCE no es un prerrequisito universal Common Criteria.",
+        "Se evalúa el cumplimiento del paquete elegido.",
+        "No es un requisito universal establecido para obtener un EAL."
+      ],
+      "sourceDiscrepancy": "El temario confunde jerarquía de garantías con certificaciones previas obligatorias.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.05-23.v1",
+        "finding": "GEN-T4.05-23.v1",
+        "evidence": "T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf p. 15",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave C. Los paquetes de garantía se ordenan jerárquicamente. No se exige haber obtenido certificados EAL1, 2, etc. antes de solicitar un nivel superior.",
+        "location": "public/data/T4.05.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.05-23.v1",
+          "topic": "T4.05",
+          "origin": "G",
+          "family": "GEN-T4.05-23",
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "d55de1b39ed6d38e4186b48d8ea4864a491d3cd3d5e400b0bf1a53ebb2dcad3e",
+      "beforeSha256": "d55de1b39ed6d38e4186b48d8ea4864a491d3cd3d5e400b0bf1a53ebb2dcad3e",
+      "afterSha256": "a7b23e76d550505f1c727e3858280004a452f27fd70f282b5fd177e19b380fa3",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+        "page": 15,
+        "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+        "quote": "Para pasar a EALN implica haber pasado previamente por EAL anteriores.",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "No es una condición universal del paquete EAL.",
+        "LINCE no es un prerrequisito universal Common Criteria.",
+        "Se evalúa el cumplimiento del paquete elegido.",
+        "No es un requisito universal establecido para obtener un EAL."
+      ],
+      "primary": [
+        {
+          "url": "https://www.commoncriteriaportal.org/files/ccfiles/CC2022PART5R1.pdf",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://www.commoncriteriaportal.org/files/ccfiles/CC2022PART5R1.pdf",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/506ecd46cc90144f.pdf",
+            "sha256": "c64f45dd82cfc6f8e4c289d4faad79f75e759f14e17c27b4c8cb2b69ff96daf6",
+            "bytes": 585900,
+            "mime": "application/pdf",
+            "finalUrl": "https://www.commoncriteriaportal.org/files/ccfiles/CC2022PART5R1.pdf",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.05.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "a7b23e76d550505f1c727e3858280004a452f27fd70f282b5fd177e19b380fa3",
+      "qSha256": "cd072590825bb5d3e8766a2fa21d32629a9f1b16f71402a08d26296bc54caf69",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta conceptual directa."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 2,
+        "sourceLiteralVerified": true,
+        "adjustments": [],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    },
+    {
+      "id": "AT409-P1-07",
+      "topic": "T4.09",
+      "priority": "P0",
+      "status": "REVISADA_PROPUESTA_LOCAL_NO_APLICADA",
+      "before": {
+        "i": "AT409-P1-07",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Contra qué protege un cortafuegos?",
+        "a": [
+          "Contra accesos no autorizados desde el exterior de una institución, empresa u organización.",
+          "Contra ataques desde el interior de una institución, empresa u organización.",
+          "Contra virus y troyanos.",
+          "Todas las respuestas son ciertas."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT409-P1-07",
+        "t": "T4.09",
+        "o": "A",
+        "q": "¿Qué protección proporciona por sí mismo un cortafuegos de filtrado básico de paquetes, correctamente configurado?",
+        "a": [
+          "Filtra el tráfico que lo atraviesa según reglas, por ejemplo para impedir accesos externos no autorizados.",
+          "Detecta todos los ataques internos, aunque su tráfico no lo atraviese.",
+          "Detecta y elimina cualquier virus o troyano por inspección de su contenido.",
+          "Garantiza simultáneamente todas las protecciones anteriores."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: un filtro básico no equivale a un antivirus ni puede controlar tráfico que no atraviesa sus reglas. Las prestaciones ampliadas de NGFW/UTM no son inherentes a todo cortafuegos.",
+        "u": "De la misma manera que el filtrado básico de paquetes, no inspecciona el contenido de los paquetes ni, por tanto, evita ataques de protocolo o de nivel de aplicación. [p. 10]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.09 Seguridad en Redes/T4.09 Seguridad en Redes - Temario.pdf",
+        "sha256": "38ebb19d13455c4a1570159b22f6b3a550d7920fd21bbb519f76c7b1d9fb52c1",
+        "page": 10,
+        "quote": "De la misma manera que el filtrado básico de paquetes, no inspecciona el contenido de los paquetes ni, por tanto, evita ataques de protocolo o de nivel de aplicación.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Respaldo temático y factual"
+      },
+      "primarySources": [
+        {
+          "url": "https://csrc.nist.gov/pubs/sp/800/41/r1/final",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        "El filtrado aplica reglas al tráfico observado.",
+        "No ve el tráfico que no pasa por él.",
+        "Filtrado de cabeceras no implica análisis antivirus del contenido.",
+        "B y C exceden las capacidades del filtro básico."
+      ],
+      "sourceDiscrepancy": "",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AT409-P1-07",
+        "finding": "AT409-P1-07",
+        "evidence": "T4.09 Seguridad en Redes - Test.pdf (plantilla p. 12); T4.09 Seguridad en Redes - Temario.pdf p. 12 (pasaje localizado: cortafuegos)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave D. Un cortafuegos convencional no reconoce necesariamente virus o troyanos ni ve tráfico interno que no lo atraviese. La opción global excede sus capacidades.",
+        "location": "public/data/T4.09.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT409-P1-07",
+          "topic": "T4.09",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "4363e27f8f5f57ce38fd9feb189266e7e3e368b1bd40cc8956271c17cb91188f",
+      "beforeSha256": "4363e27f8f5f57ce38fd9feb189266e7e3e368b1bd40cc8956271c17cb91188f",
+      "afterSha256": "89fb68367c2dc446dcf3c3e27e0935184cac41241dc619ea292d3cdeb5e059fd",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.09 Seguridad en Redes/T4.09 Seguridad en Redes - Temario.pdf",
+        "page": 10,
+        "sha256": "38ebb19d13455c4a1570159b22f6b3a550d7920fd21bbb519f76c7b1d9fb52c1",
+        "quote": "De la misma manera que el filtrado básico de paquetes, no inspecciona el contenido de los paquetes ni, por tanto, evita ataques de protocolo o de nivel de aplicación.",
+        "role": "Respaldo temático y factual"
+      },
+      "reviewedOptions": [
+        "El filtrado aplica reglas al tráfico observado.",
+        "No ve el tráfico que no pasa por él.",
+        "Filtrado de cabeceras no implica análisis antivirus del contenido.",
+        "B y C exceden las capacidades del filtro básico."
+      ],
+      "primary": [
+        {
+          "url": "https://csrc.nist.gov/pubs/sp/800/41/r1/final",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio",
+          "capture": {
+            "url": "https://csrc.nist.gov/pubs/sp/800/41/r1/final",
+            "file": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/next-p0-systems-remaining/primary/3c90f39f8050a463.html",
+            "sha256": "56472ae692a05d718df757f373c5ac8f0f771f1e75cc4a479e2a6074fafd911f",
+            "bytes": 43333,
+            "mime": "text/html; charset=utf-8",
+            "finalUrl": "https://csrc.nist.gov/pubs/sp/800/41/r1/final",
+            "status": "saved"
+          }
+        }
+      ],
+      "storageFile": "public/data/T4.09.json",
+      "sampleFiles": [],
+      "sourceAfterSha256": "89fb68367c2dc446dcf3c3e27e0935184cac41241dc619ea292d3cdeb5e059fd",
+      "qSha256": "c24b461dbe40946bea40e6df445a29d4d07fcc50b78e4056ef00cb3dfc26ab3e",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta conceptual directa."
+      },
+      "independentReview": {
+        "verdict": "apta",
+        "fourAlternatives": true,
+        "uniqueCorrectIndex": 0,
+        "sourceLiteralVerified": true,
+        "adjustments": [],
+        "objective": "Mismo objetivo: corrige precisión, sintaxis o universalidad; conserva identificador, familia y contexto."
+      }
+    }
+  ],
+  "files": {
+    "T4.01.json": {
+      "beforeSha256": "f089050f62aaf3286372961b542c4e0d561117ac3365c33df7586b5a8db2f7d8",
+      "afterSha256": "f50ec31c0efe0084c480227f880acda3887abfe37a5a73550766e36783cb8c7d"
+    },
+    "meta.json": {
+      "beforeSha256": "47260f87c4d5605543b735eb19e381ba000081c666a2638b4f1c01f09b3ea9b0",
+      "afterSha256": "84c22618280c889621fdfe3626cdff282b8bfd19a6051b437c9ea57fec867fa8"
+    },
+    "T4.02.json": {
+      "beforeSha256": "c314c2aade8efee5d48f3c50b698c7a3c56f1a0899e37a2bb1d1a5d5dd8e7542",
+      "afterSha256": "fff603a0585089ce8340188a8e376869e1b30c6d05b61e723b8b5800852be7fa"
+    },
+    "T4.04.json": {
+      "beforeSha256": "4b7653ed61f5637a7f4e00bf1d24207293667802571753321a7f72fec36c7fce",
+      "afterSha256": "05b9236b2ce61bd3ce2221d8de8efeaf6b46b2e9635a97c68f2d254854bbb279"
+    },
+    "T4.05.json": {
+      "beforeSha256": "e38c6214bf5f467439d1d8488337e897d066ff54bd717ac1e76dbd442e03a3d2",
+      "afterSha256": "09864123079955f5490e8b73da6d6fc6dd6d9e83a7f38b6bddb6f5886cdff766"
+    },
+    "T4.09.json": {
+      "beforeSha256": "c939fbde6135834f3ac5a488cba96c7725e96ba7cdb74e3e2d97b208b2b373b5",
+      "afterSha256": "2f6ff5e5d05307afff79136717fb4123db00298b543628fb98b725e0bff956b9"
+    }
+  },
+  "metadataEdits": [
+    {
+      "id": "AS04-P1-71",
+      "topic": "T4.01",
+      "index": 2,
+      "before": [
+        "T4.01",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "after": [
+        "T4.01",
+        "A",
+        "K",
+        [],
+        0
+      ],
+      "beforeSha256": "3956acb5ab436762b6fad0a1e817c9efc4ebbdc874a6f46425944efcfaded483",
+      "afterSha256": "9416e1d91099eadc9310ff902ca843cbad529b25a4c0a19b0a4e1cc956139e40"
+    },
+    {
+      "id": "AS05G-P1-58",
+      "topic": "T4.01",
+      "index": 2,
+      "before": [
+        "T4.01",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "after": [
+        "T4.01",
+        "A",
+        "K",
+        [],
+        0
+      ],
+      "beforeSha256": "3956acb5ab436762b6fad0a1e817c9efc4ebbdc874a6f46425944efcfaded483",
+      "afterSha256": "9416e1d91099eadc9310ff902ca843cbad529b25a4c0a19b0a4e1cc956139e40"
+    },
+    {
+      "id": "AS09-P1-94",
+      "topic": "T4.02",
+      "index": 2,
+      "before": [
+        "T4.02",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T4.02",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "341ec5bdfa2eba3d953c23fbea937327db21f449b665b2906ce9a608fee11f6b",
+      "afterSha256": "b6a86c52b4f2e47a660eed22102e88cb343fe68b1ec67542feb3951162c7127a"
+    },
+    {
+      "id": "AS11-P1-83",
+      "topic": "T4.02",
+      "index": 2,
+      "before": [
+        "T4.02",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T4.02",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "341ec5bdfa2eba3d953c23fbea937327db21f449b665b2906ce9a608fee11f6b",
+      "afterSha256": "b6a86c52b4f2e47a660eed22102e88cb343fe68b1ec67542feb3951162c7127a"
+    },
+    {
+      "id": "AT404-P1-23",
+      "topic": "T4.04",
+      "index": 2,
+      "before": [
+        "T4.04",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "after": [
+        "T4.04",
+        "A",
+        "K",
+        [],
+        0
+      ],
+      "beforeSha256": "6a751f62a17bd3ed029d90d8a1040ba95407cfa705f11f4efbe9ecf80f331140",
+      "afterSha256": "08d9d7a7d3092f0e8315073ed720d467e0dcc1ad50cf920fb4f1dfefbb893345"
+    },
+    {
+      "id": "AT405-P1-11",
+      "topic": "T4.05",
+      "index": 2,
+      "before": [
+        "T4.05",
+        "A",
+        "I",
+        [],
+        0
+      ],
+      "after": [
+        "T4.05",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "a7d5375c8d0319538cea7e6357d4df0418ccfca37b7bb2394455ba0c32e6b065",
+      "afterSha256": "b1ba77c0758d46b1f2b7842d484b2f9f3a0058de747b4922fc4cbd2f8b1849d1"
+    },
+    {
+      "id": "AT405-P1-33",
+      "topic": "T4.05",
+      "index": 2,
+      "before": [
+        "T4.05",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T4.05",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "660c792f37f25c71264508c5e13abd721a113c8cd429ccc62be9490b9e1c4a9c",
+      "afterSha256": "b1ba77c0758d46b1f2b7842d484b2f9f3a0058de747b4922fc4cbd2f8b1849d1"
+    },
+    {
+      "id": "GEN-T4.02-79.v1",
+      "topic": "T4.02",
+      "index": 2,
+      "before": [
+        "T4.02",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T4.02",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "fb466ff1bfe13cfd86c047e610a7d9c9ed25041549e5c69c44b6db882c538f3f",
+      "afterSha256": "a48f1eff3f61b438e2d0cd531615008a67a6e69468d7f1ff96aed2612b5d3882"
+    },
+    {
+      "id": "GEN-T4.02-85.v2",
+      "topic": "T4.02",
+      "index": 2,
+      "before": [
+        "T4.02",
+        "G",
+        "C",
+        [
+          7,
+          9
+        ],
+        2
+      ],
+      "after": [
+        "T4.02",
+        "G",
+        "D",
+        [
+          7,
+          9
+        ],
+        2
+      ],
+      "beforeSha256": "1ecf8620450366574dd38029b006a85aedb29e61afa0fd67524963816d033e90",
+      "afterSha256": "a2d930c171723fedf1db18135148d00ceb4e0d20e8c4e7e199081adc0b3340ef"
+    },
+    {
+      "id": "GEN-T4.02-173",
+      "topic": "T4.02",
+      "index": 2,
+      "before": [
+        "T4.02",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T4.02",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "fb466ff1bfe13cfd86c047e610a7d9c9ed25041549e5c69c44b6db882c538f3f",
+      "afterSha256": "a48f1eff3f61b438e2d0cd531615008a67a6e69468d7f1ff96aed2612b5d3882"
+    },
+    {
+      "id": "GEN-T4.04-05.v1",
+      "topic": "T4.04",
+      "index": 2,
+      "before": [
+        "T4.04",
+        "G",
+        "D",
+        [
+          7,
+          1
+        ],
+        1
+      ],
+      "after": [
+        "T4.04",
+        "G",
+        "K",
+        [
+          7,
+          1
+        ],
+        1
+      ],
+      "beforeSha256": "03a786f4490da4a434e6ebbe0d4a071b29f8bb395470ebb0d855c99bd2a7f9de",
+      "afterSha256": "aaae7c9e2c4aafbc10fcfb25c267b338984db221750118cd28e31cac8522344c"
+    }
+  ],
+  "sampleFiles": {
+    "T4.04.json": {
+      "beforeSha256": "efdf45837fe33fa35cfb3301f0cb7a7f9e14ab624a6c0d15e9c871e69388a505",
+      "afterSha256": "a96ead0ca65250ab1ef24cd4a25f2678d9fea41e800c179d8878346a8bab2001"
+    }
+  },
+  "held": [],
+  "implementation": {
+    "sourceAfterPreserved": true,
+    "scope": "Only signed rows, type metadata and explicit sample; no production",
+    "limits": [
+      "17 casos documentales; no instalar/ejecutar Oracle,Windows,Kubernetes,OpenShift,Zabbix ni modificar usuarios/firewalls.",
+      "Modelo GNUmtime no es ejecución GNU; selección segura de find ejecutada en BSD; Ed25519 real Node con claves efímeras.",
+      "25capturas primarias hashverificadas; RedHat503 y CCN403 declarados, respaldo alternativo existente; CTT atribuye autoría MAGERIT explícitamente."
+    ]
+  }
+}

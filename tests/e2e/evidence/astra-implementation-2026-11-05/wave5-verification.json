@@ -1,0 +1,76 @@
+{
+  "baseCommit": "b2c35bae028deb380c44fe6b04bcf2de2c82d936",
+  "targetVersion": "1.1.19",
+  "semanticJudgments": 16078,
+  "unauditedIds": 0,
+  "originalFindings": 3519,
+  "localRepairs": 405,
+  "newRepairs": 65,
+  "withoutDefinitiveFactualRepair": 3114,
+  "criticalWithoutDefinitiveFactualRepair": 40,
+  "runtimeQuarantinesAdded": 8,
+  "quarantinesAreNotRepairs": true,
+  "persistedBankWrites": 0,
+  "statusCounts": {
+    "PENDIENTE": 3113,
+    "PUBLICADO_VERIFICADO_V15": 232,
+    "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION": 105,
+    "PUBLICADO_VERIFICADO_V14": 55,
+    "PUBLICADO_VERIFICADO_V13": 13,
+    "MEJORADO_LOCAL_NO_PUNTUABLE_REVISION_PENDIENTE": 1
+  },
+  "metadataTypeOnlyChanges": 23,
+  "sampleChanges": 1,
+  "prior340HashesPreserved": true,
+  "unit": {
+    "passed": 1066,
+    "skipped": 29
+  },
+  "editorialPython": 61,
+  "architectureLintTypes": "PASS",
+  "build": "PASS",
+  "render": {
+    "passed": 2,
+    "browsers": [
+      "chromium",
+      "webkit"
+    ],
+    "widths": [
+      393,
+      1280
+    ],
+    "questionsPerViewport": 65,
+    "codeBlocksPerViewport": 100
+  },
+  "privacy": {
+    "productionBankPathsChecked404": 75,
+    "compiledReviewedRowsChecked": 406,
+    "privateFullQuestionOrOptionSetMatches": 0,
+    "source": "Verificacion-exclusiones-Hosting-0f974e3.json"
+  },
+  "ledgers": {
+    "reviewed-development11": "367a25dce5220d10771c292e80957edb760abd95791df38620528e7018128d81",
+    "reviewed-systems20": "99ee97426f5878a2a6db03658b367fd0e58a03ba53a62c97204174996f98a7ce",
+    "reviewed-foundations18": "1b4e6dcb30b17b99b3047b0f30dee289fdd0700c00d0a2128f20c85cb34d2744",
+    "reviewed-systems16": "daa3a42abd2f69750f5c71ed41b0025449e7c163a732bb7d60834ef216c5d98a"
+  },
+  "quarantineLedgerSha256": "b76b46b5cd3eccc8119ea65a7100ee61c01c06412d0d2f820b0074fcd191ce27",
+  "verifiedProduction": {
+    "build": "1.1.18+0f974e3",
+    "commit": "0f974e33ce999014e6bb1d94e4b9b99c0e9405bb",
+    "workflow": 42205124709,
+    "bankVersion": 15,
+    "publishedRepairs": 300,
+    "additionalStudyOnlyRecord": "GEN-T3.03-48",
+    "postdeployGuestChecks": 7,
+    "bankReadOnlyRequests": 79,
+    "bankResourcesShaVerified": 77
+  },
+  "publication105": "NOT_AUTHORIZED_OR_PUBLISHED",
+  "knownFailureResolved": "Historical consultation fixture now loads actual pre-correction AT309 record and expects current quarantine notice; no assertions about disabled choices, notes, stats or history were removed.",
+  "limitations": [
+    "Production OAuth, VoiceOver and physical devices were not certified.",
+    "Portable models were not represented as Oracle/SQLServer/.NET/Windows/GNUfind or protocol runtimes.",
+    "claude-mem work_state transport closed; current handoff is persisted in README and external state report."
+  ]
+}

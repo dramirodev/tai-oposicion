@@ -1,0 +1,1268 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "b2c35bae028deb380c44fe6b04bcf2de2c82d936",
+  "previousBatch": "reviewed-web23",
+  "status": "LOCAL_PENDING_CI_AND_PUBLICATION",
+  "sourceCandidateSha256": "e8eeae460f3dfa0a908a6addf4af0b1d9380dddcea0844fd79a821ebb42c0188",
+  "sourceCandidate": "work/next-p0-development-remaining/revision-banco/reviewed-proposals.json",
+  "fingerprintEncoding": "SHA256 UTF8 JSON.stringify insertion-order; context envelope is distinct from sorted runtime proof",
+  "questions": [
+    {
+      "id": "AT303-P1-52",
+      "status": "APTA_SEGUNDA_FIRMA_NO_APLICADA",
+      "topic": "T3.03",
+      "storageFile": "public/data/T3.03.json",
+      "before": {
+        "i": "AT303-P1-52",
+        "t": "T3.03",
+        "o": "A",
+        "q": "En relación con las funciones, indique la repuesta correcta:",
+        "a": [
+          "Un parámetro formal y un parámetro actual hacen referencia al mismo concepto.",
+          "Un variable local es aquella que se define fuera de cualquier función.",
+          "La ejecución de una función acaba siempre tras ejecutarse la sentencia return.",
+          "El paso de parámetros puede ser por referencia o por asignación."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "w": 1
+      },
+      "after": {
+        "i": "AT303-P1-52",
+        "t": "T3.03",
+        "o": "A",
+        "q": "En relación con las funciones y sus parámetros, indique la respuesta correcta:",
+        "a": [
+          "Un parámetro formal y un argumento actual son siempre el mismo concepto.",
+          "Una variable local se caracteriza por estar definida fuera de cualquier función.",
+          "La sentencia return se utiliza para regresar explícitamente al código que llamó a la función.",
+          "El paso de parámetros por referencia impide que la función modifique la variable referenciada."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "Return permite el regreso explícito al llamador. No se afirma que toda terminación de una función deba ejecutar return. Se distingue parámetro formal, argumento real y paso por referencia.",
+        "u": "La declaración return se usa para regresar explícitamente de un método. [p. 33]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb",
+        "page": 33,
+        "quote": "La declaración return se usa para regresar explícitamente de un método."
+      },
+      "rationales": [
+        "El formal pertenece a la definición y el argumento a la llamada; no son siempre el mismo concepto.",
+        "La definición propuesta corresponde al ámbito global del modelo explicado, no al local.",
+        "Recoge el regreso explícito indicado en el temario.",
+        "Una referencia permite modificar la variable referenciada; no lo impide."
+      ],
+      "primary": [],
+      "objectiveChange": "Precisión del mismo objetivo; no sustitución por otro concepto.",
+      "typeRationale": "Pregunta conceptual directa.",
+      "proposedFlagRemoval": {
+        "w": 1
+      },
+      "limits": "No aplicada; no ejecución de Oracle/SQL Server ni certificación de runtime mediante SQLite.",
+      "beforeSha256": "975063a1e6e03a8f7df50bacbf5c5506742f3c13ba4f87679a6657e2307ef443",
+      "afterSha256": "1020fa6e7e382696513137a16398df1121f0e11dc7f2aab3c2e3096392d814ab",
+      "qSha256": "4fefacbd2a70e4e0cba1f1b0409649179c9f83f0c07569a802d80feee899c015",
+      "sampleFiles": [],
+      "inSample": false,
+      "reviewedOptions": [
+        "El formal pertenece a la definición y el argumento a la llamada; no son siempre el mismo concepto.",
+        "La definición propuesta corresponde al ámbito global del modelo explicado, no al local.",
+        "Recoge el regreso explícito indicado en el temario.",
+        "Una referencia permite modificar la variable referenciada; no lo impide."
+      ],
+      "priority": "P0"
+    },
+    {
+      "id": "AT304-P1-35",
+      "status": "APTA_SEGUNDA_FIRMA_NO_APLICADA",
+      "topic": "T3.04",
+      "storageFile": "public/data/T3.04.json",
+      "before": {
+        "i": "AT304-P1-35",
+        "t": "T3.04",
+        "o": "A",
+        "q": "¿Cuál de las siguientes consultas SQL contesta a la pregunta “Obtener los J# de los proyectos donde se utilice al menos una de las piezas suministrada por los proveedores S#='S1' o S#='S2'?",
+        "a": [
+          "SELECT DISTINCT SPJ.J# FROM SPJ WHERE EXISTS (SELECT * FROM SPJ WHERE SPJ.P#=P# AND S#='S1' OR S#='S2');",
+          "SELECT DISTINCT SPJX.J# FROM SPJ WHERE S#='S1' OR s#='S2';",
+          "SELECT DISTINCT J# FROM SPJ WHERE EXISTS (SELECT * FROM SPJ WHERE PJ.P#='S1' OR s#='S2');",
+          "SELECT DISTINCT SPJX.J# FROM SPJ SPJX WHERE EXISTS (SELECT * FROM SPJ WHERE SPJ.P#=SPJX.P# AND SPJ.S#='S1' OR SPJ.S#='S2');"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT304-P1-35",
+        "t": "T3.04",
+        "o": "A",
+        "q": "Sea SPJ(S,P,J), con identificadores no nulos de proveedor, pieza y proyecto. ¿Qué consulta obtiene los identificadores de los proyectos que utilizan al menos una pieza que también suministra el proveedor S1 o el proveedor S2, aunque el suministro de esa pieza al proyecto lo haga otro proveedor?",
+        "a": [
+          "SELECT DISTINCT X.J FROM SPJ X WHERE EXISTS (SELECT 1 FROM SPJ Y WHERE Y.P=X.P AND Y.S='S1' OR Y.S='S2');",
+          "SELECT DISTINCT X.J FROM SPJ X WHERE X.S IN ('S1','S2');",
+          "SELECT DISTINCT X.J FROM SPJ X WHERE EXISTS (SELECT 1 FROM SPJ Y WHERE Y.P=X.P AND Y.S='S1' AND Y.S='S2');",
+          "SELECT DISTINCT X.J FROM SPJ X WHERE EXISTS (SELECT 1 FROM SPJ Y WHERE Y.P=X.P AND Y.S IN ('S1','S2'));"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "La correlación por pieza debe afectar a ambos proveedores. En A, AND tiene precedencia sobre OR y cualquier fila S2 satisface EXISTS; B sólo selecciona suministros directos; C exige dos identificadores distintos al mismo proveedor. Se normalizan nombres S#/P#/J# a S/P/J para evitar identificadores dependientes del dialecto.",
+        "u": "Se utiliza para comprobar si la consulta interna devuelve algún resultado o no. [p. 17]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.04 SQL/T3.04 SQL - Temario.pdf",
+        "sha256": "b99989c34d1326722c0dacc4aa425a947c6b8be180a834f2939525a9ccac4b25",
+        "page": 17,
+        "quote": "Se utiliza para comprobar si la consulta interna devuelve algún resultado o no."
+      },
+      "rationales": [
+        "La fila de S2 satisface el OR sin exigir la misma pieza.",
+        "Omite proyectos que reciben de otro proveedor una pieza también suministrada por S1/S2.",
+        "Una misma fila no puede tener S igual a S1 y S2 simultáneamente.",
+        "Correlaciona la pieza y acepta cualquiera de los dos proveedores."
+      ],
+      "primary": [],
+      "objectiveChange": "Precisión del mismo objetivo; no sustitución por otro concepto.",
+      "typeRationale": "Interpretar código o sintaxis SQL.",
+      "proposedFlagRemoval": {},
+      "limits": "No aplicada; no ejecución de Oracle/SQL Server ni certificación de runtime mediante SQLite.",
+      "beforeSha256": "35e049e177a0620e2e2935fc938ff8dff2b6b1ce08871aeea30fe172a243e165",
+      "afterSha256": "da9967b1e95413ccfd0f69a5ab486c27bf961a804f2d7771cf54f768e165d81d",
+      "qSha256": "8a09ba66ceab6eea03c35a33b7a3f9099254a67303a29eb96aadf35884c572f1",
+      "sampleFiles": [],
+      "inSample": false,
+      "reviewedOptions": [
+        "La fila de S2 satisface el OR sin exigir la misma pieza.",
+        "Omite proyectos que reciben de otro proveedor una pieza también suministrada por S1/S2.",
+        "Una misma fila no puede tener S igual a S1 y S2 simultáneamente.",
+        "Correlaciona la pieza y acepta cualquiera de los dos proveedores."
+      ],
+      "priority": "P0"
+    },
+    {
+      "id": "AS02-P1-76",
+      "status": "APTA_SEGUNDA_FIRMA_NO_APLICADA",
+      "topic": "T3.04",
+      "storageFile": "public/data/T3.04.json",
+      "before": {
+        "i": "AS02-P1-76",
+        "t": "T3.04",
+        "o": "A",
+        "q": "Dadas las tablas CITA_MEDICA y PACIENTE: CREATE TABLE CITA_MEDICA( ID_CITA NUMBER, --Identificador numérico de la cita ID_DOCTOR VARCHAR2(20), --Identificador del doctor (DNI o similar) ID_PACIENTE VARCHAR2(20) REFERENCES PACIENTE(ID_PACIENTE), --Identificador del paciente FECHA_CITA DATE, --Fecha de la cita con horas minutos y segundos DIAGNÓSTICO VARCHAR2(100), --Diagnóstico en texto libre ANOTACIONES VARCHAR2(2000), --Anotaciones del doctor en texto libre ID_CENTRO NUMBER --Identificador del centro sanitario en el sistema ); CREATE TABLE PACIENTE ( ID_PACIENTE VARCHAR2(20), --Identificador del paciente (DNI o similar) NOMBRE VARCHAR2(100), --Diagnóstico en texto libre APELLIDOS VARCHAR2(100), --Anotaciones del doctor en texto libre RIESGO VARCHAR2(10); -- Catalogación del paciente según la gravedad de patologías previas ); ¿Cuál es el significado de la siguiente sentencia SQL? SELECT nombre, apellidos FROM PACIENTE p WHERE NOT EXISTS (SELECT * FROM CITA_MEDICA cm WHERE p.id_paciente=cm.id_paciente AND fecha_cita BETWEEN '16/02/2021' AND '28/02/2021' AND id_centro=2) AND riesgo='ALTO';",
+        "a": [
+          "La sentencia devuelve un error al ser sintácticamente incorrecta.",
+          "Devuelve el nombre y apellidos de los pacientes de riesgo no alto que tienen citas asignadas en la segunda quincena de febrero de 2021 en el centro 2.",
+          "Devuelve el nombre y apellidos de los pacientes de riesgo alto que no tienen citas asignadas en la segunda quincena de febrero de 2021 en el centro 2.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS02-P1-76",
+        "t": "T3.04",
+        "o": "A",
+        "q": "En Oracle existen PACIENTE(ID_PACIENTE clave primaria, NOMBRE, APELLIDOS, RIESGO) y CITA_MEDICA(ID_CITA clave primaria, ID_PACIENTE clave ajena, FECHA_CITA de tipo DATE, ID_CENTRO). ¿Qué devuelve esta consulta?\nSELECT p.nombre, p.apellidos FROM PACIENTE p\nWHERE p.riesgo='ALTO' AND NOT EXISTS (\n SELECT 1 FROM CITA_MEDICA cm WHERE cm.id_paciente=p.id_paciente\n AND cm.fecha_cita >= DATE '2021-02-16' AND cm.fecha_cita < DATE '2021-03-01'\n AND cm.id_centro=2);",
+        "a": [
+          "La sentencia devuelve un error al ser sintácticamente incorrecta.",
+          "Devuelve el nombre y apellidos de los pacientes de riesgo no alto que tienen citas asignadas en la segunda quincena de febrero de 2021 en el centro 2.",
+          "Devuelve el nombre y apellidos de los pacientes de riesgo alto que no tienen citas asignadas en la segunda quincena de febrero de 2021 en el centro 2.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "Devuelve pacientes de riesgo ALTO sin citas en el centro 2 desde el 16 de febrero de 2021 inclusive hasta el 1 de marzo exclusive. Incluye todas las horas del día 28. Los literales DATE eliminan dependencia de NLS_DATE_FORMAT; se sustituye el DDL defectuoso por el esquema válido supuesto.",
+        "u": "Se permite utilizar NOT EXISTS. [p. 17]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.04 SQL/T3.04 SQL - Temario.pdf",
+        "sha256": "b99989c34d1326722c0dacc4aa425a947c6b8be180a834f2939525a9ccac4b25",
+        "page": 17,
+        "quote": "Se permite utilizar NOT EXISTS."
+      },
+      "rationales": [
+        "La consulta revisada es válida en el dialecto Oracle indicado.",
+        "Filtra ALTO, no riesgo distinto de ALTO, y utiliza NOT EXISTS.",
+        "Describe exactamente el intervalo completo y ausencia de citas en el centro indicado.",
+        "C sí es correcta."
+      ],
+      "primary": [
+        {
+          "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/Literals.html",
+          "checked": "2026-11-06"
+        }
+      ],
+      "objectiveChange": "Precisión del mismo objetivo; no sustitución por otro concepto.",
+      "typeRationale": "Interpretar código o sintaxis SQL.",
+      "proposedFlagRemoval": {},
+      "limits": "No aplicada; no ejecución de Oracle/SQL Server ni certificación de runtime mediante SQLite.",
+      "beforeSha256": "ee75a28aa3d002573778859ba2cc581c32071485f6ee414676d54b8954c04b07",
+      "afterSha256": "8140e4f157f740898c9b6365737ff7dda0acb2e8c9bec5b631a0b0160a5cc6ef",
+      "qSha256": "da8a8e03c81e7ad16b4699ad778607870027ac6d7aa9e86c4ecf0cabcd0dc98d",
+      "sampleFiles": [],
+      "inSample": false,
+      "reviewedOptions": [
+        "La consulta revisada es válida en el dialecto Oracle indicado.",
+        "Filtra ALTO, no riesgo distinto de ALTO, y utiliza NOT EXISTS.",
+        "Describe exactamente el intervalo completo y ausencia de citas en el centro indicado.",
+        "C sí es correcta."
+      ],
+      "priority": "P0"
+    },
+    {
+      "id": "AS05G-P1-91",
+      "status": "APTA_SEGUNDA_FIRMA_NO_APLICADA",
+      "topic": "T3.04",
+      "storageFile": "public/data/T3.04.json",
+      "before": {
+        "i": "AS05G-P1-91",
+        "t": "T3.04",
+        "o": "A",
+        "q": "Dada las tablas Empleados(DNI, nombre, apellidos, sueldo) e Incidencias(id, fecha, descripción, DNI, decisión), ¿qué sentencia en SQL permite obtener para cada empleado el número de incidencias resueltos en el año 2019?",
+        "a": [
+          "SELECT nombre, COUNT(id) FROM Empleados FULL OUTER JOIN Incidencias ON Empleados.DNI = Incidencias.DNI WHERE fecha BETWEEN “01/01/2019” AND “31/12/2019”;",
+          "SELECT nombre, COUNT(id) FROM Empleados RIGHT OUTER JOIN Incidencias ON Empleados.DNI = Incidencias.DNI WHERE fecha BETWEEN “01/01/2019” AND “31/12/2019” GROUP BY nombre;",
+          "SELECT nombre, COUNT(id) FROM Empleados INNER JOIN Incidencias ON Empleados.DNI = Incidencias.DNI WHERE fecha BETWEEN “01/01/2019” AND “31/12/2019” GROUP BY nombre;",
+          "SELECT nombre, COUNT(id) FROM Empleados LEFT OUTER JOIN Incidencias ON Empleados.DNI = Incidencias.DNI WHERE fecha BETWEEN “01/01/2019” AND “31/12/2019” GROUP BY nombre;"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS05G-P1-91",
+        "t": "T3.04",
+        "o": "A",
+        "q": "En SQLite existen Empleados(DNI TEXT PRIMARY KEY NOT NULL, nombre) e Incidencias(id INTEGER PRIMARY KEY, fecha, DNI, decision). fecha contiene fechas válidas en texto ISO YYYY-MM-DD y decision='RESUELTA' identifica las resueltas. ¿Qué consulta cuenta las incidencias resueltas en 2019 para cada empleado, incluyendo cero y distinguiendo empleados homónimos?",
+        "a": [
+          "SELECT e.DNI, e.nombre, COUNT(i.id) AS total FROM Empleados e LEFT JOIN Incidencias i ON e.DNI=i.DNI WHERE i.fecha >= '2019-01-01' AND i.fecha < '2020-01-01' AND i.decision='RESUELTA' GROUP BY e.DNI,e.nombre;",
+          "SELECT e.DNI, e.nombre, COUNT(i.id) AS total FROM Empleados e INNER JOIN Incidencias i ON e.DNI=i.DNI AND i.fecha >= '2019-01-01' AND i.fecha < '2020-01-01' AND i.decision='RESUELTA'  GROUP BY e.DNI,e.nombre;",
+          "SELECT e.DNI, e.nombre, COUNT(*) AS total FROM Empleados e LEFT JOIN Incidencias i ON e.DNI=i.DNI AND i.fecha >= '2019-01-01' AND i.fecha < '2020-01-01' AND i.decision='RESUELTA'  GROUP BY e.DNI,e.nombre;",
+          "SELECT e.DNI, e.nombre, COUNT(i.id) AS total FROM Empleados e LEFT JOIN Incidencias i ON e.DNI=i.DNI AND i.fecha >= '2019-01-01' AND i.fecha < '2020-01-01' AND i.decision='RESUELTA'  GROUP BY e.DNI,e.nombre;"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "Los filtros de incidencias van en ON para conservar empleados sin coincidencias. COUNT(i.id) ignora el NULL de la fila extendida y devuelve cero; COUNT(*) la contaría como uno. Agrupar por DNI distingue homónimos. El dialecto SQLite y el formato de fecha se declaran para que la consulta sea ejecutable sin conversiones implícitas. Se declara id INTEGER PRIMARY KEY y DNI no nulo: una PRIMARY KEY ordinaria de SQLite sin NOT NULL puede admitir NULL y romper COUNT(id).",
+        "u": "Combinación externa (OUTER JOIN): permite obtener todos los valores de la tabla puesta a derecha o a la izquierda o ambas [p. 22]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.04 SQL/T3.04 SQL - Temario.pdf",
+        "sha256": "b99989c34d1326722c0dacc4aa425a947c6b8be180a834f2939525a9ccac4b25",
+        "page": 22,
+        "quote": "Combinación externa (OUTER JOIN): permite obtener todos los valores de la tabla puesta a derecha o a la izquierda o ambas"
+      },
+      "rationales": [
+        "WHERE descarta empleados sin coincidencia al evaluar condiciones sobre NULL.",
+        "INNER JOIN elimina empleados sin incidencias resueltas en el intervalo.",
+        "COUNT(*) cuenta como uno la fila extendida con NULL de un empleado sin coincidencias.",
+        "LEFT JOIN conserva empleados, ON filtra incidencias y COUNT(i.id) cuenta sólo las reales."
+      ],
+      "primary": [
+        {
+          "url": "https://www.sqlite.org/lang_select.html",
+          "checked": "2026-11-06"
+        },
+        {
+          "url": "https://www.sqlite.org/lang_aggfunc.html",
+          "checked": "2026-11-06"
+        }
+      ],
+      "objectiveChange": "Mismo objetivo JOIN/agregación; se explicitan estado resuelto, clave de empleado y representación de fecha, antes omitidos.",
+      "typeRationale": "Interpretar código o sintaxis SQL.",
+      "proposedFlagRemoval": {},
+      "limits": "No aplicada; no ejecución de Oracle/SQL Server ni certificación de runtime mediante SQLite.",
+      "beforeSha256": "098598aaa1907f3f1e52de2c19ba81499952fa922bbc88198cae036e768b13bb",
+      "afterSha256": "67e6a16a6a23dcb0ecad71e510e81c8383a4a07fc20b0b9ccc75b1cc2211e801",
+      "qSha256": "272e59b9f9b7b1a2ef05c89c261c71026c7f859564bb8399856aafb16ba51f76",
+      "sampleFiles": [],
+      "inSample": false,
+      "independentAdjustment": "Precisión aceptada por autora: el oráculo ya usaba INTEGER PRIMARY KEY pero el enunciado no lo declaraba; contraejemplo real registrado.",
+      "reviewedOptions": [
+        "WHERE descarta empleados sin coincidencia al evaluar condiciones sobre NULL.",
+        "INNER JOIN elimina empleados sin incidencias resueltas en el intervalo.",
+        "COUNT(*) cuenta como uno la fila extendida con NULL de un empleado sin coincidencias.",
+        "LEFT JOIN conserva empleados, ON filtra incidencias y COUNT(i.id) cuenta sólo las reales."
+      ],
+      "priority": "P0"
+    },
+    {
+      "id": "AS11-P1-46",
+      "status": "APTA_SEGUNDA_FIRMA_NO_APLICADA",
+      "topic": "T3.04",
+      "storageFile": "public/data/T3.04.json",
+      "before": {
+        "i": "AS11-P1-46",
+        "t": "T3.04",
+        "o": "A",
+        "q": "En una base de datos existe la tabla PACIENTE_ESPECIALIZADA y se quiere añadir el campo sexo. Indique la sentencia SQL que debe utilizarse:",
+        "a": [
+          "MODIFY TABLE PACIENTE_ESPECIALIZADA ADD COLUMN (sexo VARCHAR2(10))",
+          "ALTER TABLE PACIENTE_ESPECIALIZADA ADD COLUMN (sexo VARCHAR2(10))",
+          "ALTER TABLE PACIENTE_ESPECIALIZADA ADD FIELD (sexo VARCHAR2(10))",
+          "MODIFY TABLE PACIENTE_ESPECIALIZADA ADD (sexo VARCHAR2(10))"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS11-P1-46",
+        "t": "T3.04",
+        "o": "A",
+        "q": "En Oracle Database existe la tabla PACIENTE_ESPECIALIZADA y se quiere añadir la columna sexo. ¿Qué sentencia es correcta?",
+        "a": [
+          "MODIFY TABLE PACIENTE_ESPECIALIZADA ADD COLUMN (sexo VARCHAR2(10))",
+          "ALTER TABLE PACIENTE_ESPECIALIZADA ADD (sexo VARCHAR2(10));",
+          "ALTER TABLE PACIENTE_ESPECIALIZADA ADD FIELD (sexo VARCHAR2(10))",
+          "MODIFY TABLE PACIENTE_ESPECIALIZADA ADD (sexo VARCHAR2(10))"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "Oracle utiliza ALTER TABLE ... ADD (columna tipo). Se corrige ADD COLUMN (...) y se declara el dialecto; TALBLE en la cita del temario es una errata, no la sintaxis propuesta.",
+        "u": "Para modificar una tabla utilizaremos la sentencia ALTER TALBLE. [p. 8]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.04 SQL/T3.04 SQL - Temario.pdf",
+        "sha256": "b99989c34d1326722c0dacc4aa425a947c6b8be180a834f2939525a9ccac4b25",
+        "page": 8,
+        "quote": "Para modificar una tabla utilizaremos la sentencia ALTER TALBLE."
+      },
+      "rationales": [
+        "MODIFY TABLE no es la sentencia Oracle para añadir una columna.",
+        "Es la forma ALTER TABLE ADD con definición de columna entre paréntesis.",
+        "ADD FIELD no es la cláusula Oracle correspondiente.",
+        "MODIFY TABLE no es la sentencia requerida."
+      ],
+      "primary": [
+        {
+          "url": "https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/ALTER-TABLE.html",
+          "checked": "2026-11-06"
+        }
+      ],
+      "objectiveChange": "Precisión del mismo objetivo; no sustitución por otro concepto.",
+      "typeRationale": "Interpretar código o sintaxis SQL.",
+      "proposedFlagRemoval": {},
+      "limits": "No aplicada; no ejecución de Oracle/SQL Server ni certificación de runtime mediante SQLite.",
+      "beforeSha256": "0397aeafacb05b922a24134f1ef02c40c1398fcae4a276f49e07300d6ff7e55a",
+      "afterSha256": "c78a389544a2a3638891f96bcb82500c843978c8933017f01349602568c86759",
+      "qSha256": "5bba582c0a428ccec5b00d8ca9c946de4b08ae93ccb03ebd7b85d54a3a998b21",
+      "sampleFiles": [],
+      "inSample": false,
+      "reviewedOptions": [
+        "MODIFY TABLE no es la sentencia Oracle para añadir una columna.",
+        "Es la forma ALTER TABLE ADD con definición de columna entre paréntesis.",
+        "ADD FIELD no es la cláusula Oracle correspondiente.",
+        "MODIFY TABLE no es la sentencia requerida."
+      ],
+      "priority": "P0"
+    },
+    {
+      "id": "AT309-P1-12",
+      "status": "APTA_SEGUNDA_FIRMA_NO_APLICADA",
+      "topic": "T3.09",
+      "storageFile": "public/data/T3.09.json",
+      "before": {
+        "i": "AT309-P1-12",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En WCAG 2.2, en relación al Nivel AAA señale la respuesta INCORRECTA:",
+        "a": [
+          "Son los criterios de menor importancia.",
+          "Si se cumplen confieren a la página web un buen nivel de accesibilidad.",
+          "Se deben satisfacer los criterios de Nivel A, Nivel AA y Nivel AAA.",
+          "Eliminan importantes barreras de acceso."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "n": "ADVERTENCIA: original ambiguo sobre WCAG AAA. Varias opciones describen de forma imprecisa los niveles y no permiten justificar una única respuesta incorrecta. Se conserva la clave original como referencia histórica, sin puntuar.",
+        "np": 1
+      },
+      "after": {
+        "i": "AT309-P1-12",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Sobre la conformidad con WCAG 2.2, señale la afirmación INCORRECTA:",
+        "a": [
+          "Para alcanzar el nivel AAA basta satisfacer sólo los criterios de nivel AAA, sin atender a los de A y AA.",
+          "La conformidad de nivel AAA incluye los criterios de niveles A, AA y AAA.",
+          "Una página puede satisfacer el requisito de nivel AAA proporcionando una versión alternativa conforme de ese nivel.",
+          "AAA es el nivel de conformidad más alto de los tres niveles A, AA y AAA."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "n": "AAA incluye A y AA. La conformidad completa también exige los demás requisitos de WCAG, no sólo seleccionar un nivel. Se elimina la clasificación subjetiva por menor importancia y se formula una única afirmación incorrecta.",
+        "u": "Para lograr conformidad con el Nivel AAA, la página web satisface todos los Criterios de Conformidad de los Niveles A, AA y AAA, o proporciona una versión alternativa conforme al Nivel AAA. [p. 18]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Temario.pdf",
+        "sha256": "0539d2f33ba827890a48a438cbb574e3beddf60dbff135d65bdf023737471146",
+        "page": 18,
+        "quote": "Para lograr conformidad con el Nivel AAA, la página web satisface todos los Criterios de Conformidad de los Niveles A, AA y AAA, o proporciona una versión alternativa conforme al Nivel AAA."
+      },
+      "rationales": [
+        "Falsa: no permite omitir A ni AA.",
+        "Verdadera: la inclusión de niveles es acumulativa.",
+        "Verdadera: el requisito de nivel admite una versión alternativa conforme.",
+        "Verdadera: AAA es el máximo de esos tres niveles."
+      ],
+      "primary": [
+        {
+          "url": "https://www.w3.org/TR/WCAG22/#conformance-reqs",
+          "checked": "2026-11-06"
+        }
+      ],
+      "objectiveChange": "Precisión del mismo objetivo; no sustitución por otro concepto.",
+      "typeRationale": "Identificar la alternativa incorrecta.",
+      "proposedFlagRemoval": {
+        "np": 1
+      },
+      "limits": "No aplicada; no ejecución de Oracle/SQL Server ni certificación de runtime mediante SQLite.",
+      "beforeSha256": "5ff721d2409f1706a62a19cb5e403387ab42df6e9ed46ec33c353e67e01aabc4",
+      "afterSha256": "9533efc4a54e4afcee188903dc309fbd479bacffc52705d889f094494a541d29",
+      "qSha256": "d80cdb6751f92c911eda0d65e5cd19f842b4fb107e4f31c7d2425471d707b657",
+      "sampleFiles": [],
+      "inSample": false,
+      "reviewedOptions": [
+        "Falsa: no permite omitir A ni AA.",
+        "Verdadera: la inclusión de niveles es acumulativa.",
+        "Verdadera: el requisito de nivel admite una versión alternativa conforme.",
+        "Verdadera: AAA es el máximo de esos tres niveles."
+      ],
+      "priority": "P0"
+    },
+    {
+      "id": "AT309-P1-15",
+      "status": "APTA_SEGUNDA_FIRMA_NO_APLICADA",
+      "topic": "T3.09",
+      "storageFile": "public/data/T3.09.json",
+      "before": {
+        "i": "AT309-P1-15",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una herramienta de evaluación de la accesibilidad?",
+        "a": [
+          "TAW.",
+          "HERA.",
+          "eXaminator.",
+          "Wave."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT309-P1-15",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Cuál de estas herramientas está orientada a comprobar la validez del marcado HTML, en lugar de evaluar específicamente la accesibilidad web?",
+        "a": [
+          "TAW.",
+          "W3C Markup Validation Service.",
+          "Axe DevTools.",
+          "WAVE."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "El servicio de validación de marcado comprueba la sintaxis del documento; no sustituye una evaluación de accesibilidad. TAW, Axe y WAVE sí tienen ese objetivo. Se sustituye HERA porque también era una herramienta de accesibilidad y no podía ser la excepción.",
+        "u": "W3C HTML Validation Service: valida HTML. [p. 20]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Temario.pdf",
+        "sha256": "0539d2f33ba827890a48a438cbb574e3beddf60dbff135d65bdf023737471146",
+        "page": 20,
+        "quote": "W3C HTML Validation Service: valida HTML."
+      },
+      "rationales": [
+        "TAW evalúa accesibilidad web.",
+        "La función específica del servicio es validar marcado.",
+        "Axe DevTools detecta problemas de accesibilidad.",
+        "WAVE es una herramienta de evaluación de accesibilidad."
+      ],
+      "primary": [
+        {
+          "url": "https://validator.w3.org/about.html",
+          "checked": "2026-11-06"
+        },
+        {
+          "url": "https://www.tawdis.net/?lang=es",
+          "checked": "2026-11-06"
+        },
+        {
+          "url": "https://wave.webaim.org/",
+          "checked": "2026-11-06"
+        },
+        {
+          "url": "https://www.deque.com/axe/devtools/",
+          "checked": "2026-11-06"
+        }
+      ],
+      "objectiveChange": "Mismo objetivo distinguir herramientas de accesibilidad; se sustituye la falsa excepción por un validador de marcado incluido en el mismo temario.",
+      "typeRationale": "Pregunta conceptual directa.",
+      "proposedFlagRemoval": {},
+      "limits": "No aplicada; no ejecución de Oracle/SQL Server ni certificación de runtime mediante SQLite.",
+      "beforeSha256": "e8281c0a2000535f3c666e0cf21931d14f5dc6a56764f964b96ed83181a5890f",
+      "afterSha256": "f75972c7e1ae21c8018b1ad9d9ad33cdf52adcf5d2b4832c9ebe463bf228df05",
+      "qSha256": "2d31ab9b5c3bedfbb0ea34aaed34470bea8df52fcdd8e24585d27ce938ccb7fd",
+      "sampleFiles": [],
+      "inSample": false,
+      "reviewedOptions": [
+        "TAW evalúa accesibilidad web.",
+        "La función específica del servicio es validar marcado.",
+        "Axe DevTools detecta problemas de accesibilidad.",
+        "WAVE es una herramienta de evaluación de accesibilidad."
+      ],
+      "priority": "P0"
+    },
+    {
+      "id": "AT309-P1-57",
+      "status": "APTA_SEGUNDA_FIRMA_NO_APLICADA",
+      "topic": "T3.09",
+      "storageFile": "public/data/T3.09.json",
+      "before": {
+        "i": "AT309-P1-57",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Cuál de los siguientes rasgos biométricos NO cumple con la característica de la distintividad?",
+        "a": [
+          "La geometría de la mano.",
+          "La firma.",
+          "El rostro.",
+          "La huella dactilar."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT309-P1-57",
+        "t": "T3.09",
+        "o": "A",
+        "q": "¿Qué rasgo biométrico describe el temario como poco distintivo y obtenido situando la palma de la mano sobre un escáner?",
+        "a": [
+          "La geometría de la mano.",
+          "La firma.",
+          "El rostro.",
+          "La huella dactilar."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "La geometría de la mano tiene capacidad de diferenciación limitada; no carece absolutamente de distintividad. La pregunta se ciñe a la caracterización del rasgo, sin establecer que sea el único poco distintivo ni un ranking universal.",
+        "u": "Geometría de la mano: se trata de un rasgo poco distintivo. Es necesario que el usuario sitúe la palma de la mano sobre un escáner. [p. 62]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Temario.pdf",
+        "sha256": "0539d2f33ba827890a48a438cbb574e3beddf60dbff135d65bdf023737471146",
+        "page": 62,
+        "quote": "Geometría de la mano: se trata de un rasgo poco distintivo. Es necesario que el usuario sitúe la palma de la mano sobre un escáner."
+      },
+      "rationales": [
+        "Coincide con el rasgo y la adquisición descritos.",
+        "La firma se basa en el gesto de firmar, no en esa geometría de la palma.",
+        "El rostro no se adquiere situando la palma en un escáner.",
+        "La huella dactilar usa el patrón de crestas del dedo, no la geometría de la mano."
+      ],
+      "primary": [],
+      "objectiveChange": "Mismo rasgo y limitación biométrica; se reemplaza la ausencia absoluta de distintividad por la limitación relativa del temario.",
+      "typeRationale": "Pregunta conceptual directa.",
+      "proposedFlagRemoval": {},
+      "limits": "No aplicada; no ejecución de Oracle/SQL Server ni certificación de runtime mediante SQLite.",
+      "beforeSha256": "83eac34cd4f12191e37752203e584c408f82db16986e50993ca8ada1c3044f97",
+      "afterSha256": "adbb55df1422bafaf2a3029775403e60e7cad6734eb05d66a27493eb28c302a0",
+      "qSha256": "a7fc18625caa9dd2ac25241ea27501b43b06aec86ce4671393ee1afaedc744e4",
+      "sampleFiles": [],
+      "inSample": false,
+      "reviewedOptions": [
+        "Coincide con el rasgo y la adquisición descritos.",
+        "La firma se basa en el gesto de firmar, no en esa geometría de la palma.",
+        "El rostro no se adquiere situando la palma en un escáner.",
+        "La huella dactilar usa el patrón de crestas del dedo, no la geometría de la mano."
+      ],
+      "priority": "P0"
+    },
+    {
+      "id": "AS12B-S1-R-04",
+      "status": "APTA_SEGUNDA_FIRMA_NO_APLICADA",
+      "topic": "T3.09",
+      "storageFile": "public/data/supuestos.json",
+      "before": {
+        "i": "AS12B-S1-R-04",
+        "t": "T3.09",
+        "o": "A",
+        "q": "En relación con el caso de las preguntas anteriores, para dar cumplimiento a la normativa vigente de ámbito nacional sobre requisitos de accesibilidad, el desarrollo debe cumplir con:",
+        "a": [
+          "La norma UNE 139003:2012.",
+          "Real Decreto 1122/2017, de 7 de septiembre, sobre accesibilidad de los sitios web y aplicaciones para dispositivos móviles del sector público.",
+          "Los Criterios de Conformidad de nivel A de la WCAG 2.2.",
+          "Los Criterios de Conformidad de niveles A y AA de la WCAG 2.2."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          6,
+          9
+        ],
+        "d": 2,
+        "n": "Normativa de accesibilidad con números cambiados.",
+        "s": "AS12B-S1"
+      },
+      "after": {
+        "i": "AS12B-S1-R-04",
+        "t": "T3.09",
+        "o": "A",
+        "q": "Para evaluar la accesibilidad de la aplicación móvil del supuesto, destinada a un organismo del sector público y comprendida en el Real Decreto 1112/2018, ¿qué norma técnica española recoge la versión EN 301 549 V3.2.1 usada como referencia armonizada?",
+        "a": [
+          "UNE 139003:2012.",
+          "Real Decreto 1122/2017.",
+          "Únicamente los criterios de nivel A de WCAG 2.2.",
+          "UNE-EN 301549:2022."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          6,
+          9
+        ],
+        "d": 2,
+        "n": "UNE-EN 301549:2022 corresponde a EN 301 549 V3.2.1. No se identifica el mínimo legal únicamente con WCAG 2.2 A/AA: la norma incluye requisitos aplicables adicionales. Se explicita el ámbito público; el RD correcto es 1112/2018, de 7 de septiembre.",
+        "s": "AS12B-S1",
+        "u": "La evaluación consiste en examinar las propiedades del software según los criterios de conformidad de UNE-EN 301549:2022. [p. 24]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.09 Accesibilidad y Seguridad/T3.09 Accesibilidad y Seguridad - Temario.pdf",
+        "sha256": "0539d2f33ba827890a48a438cbb574e3beddf60dbff135d65bdf023737471146",
+        "page": 24,
+        "quote": "La evaluación consiste en examinar las propiedades del software según los criterios de conformidad de UNE-EN 301549:2022."
+      },
+      "rationales": [
+        "No es la adopción indicada de EN 301 549 V3.2.1.",
+        "No es la norma técnica ni el número del RD de accesibilidad aplicable.",
+        "Un conjunto de criterios WCAG A no equivale a la norma armonizada.",
+        "Es la referencia nacional indicada por el temario y PAe."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2018-12699",
+          "checked": "2026-11-06"
+        },
+        {
+          "url": "https://www.boe.es/doue/2021/289/L00053-00055.pdf",
+          "checked": "2026-11-06"
+        },
+        {
+          "url": "https://administracionelectronica.gob.es/comunidades/accesibilidad",
+          "checked": "2026-11-06",
+          "accessLimit": "Resultado de búsqueda oficial consultado; apertura directa rechazada por el servidor PAe. BOE y decisión UE sí abiertos."
+        },
+        {
+          "url": "https://revista.une.org/68/ctn-une-170-comite-une-de-accesibilidad-universal-y-diseno-p.html",
+          "checked": "2026-11-06",
+          "supports": "UNE, revista68 abril2024, Normas más relevantes: correspondencia UNE-EN301549:2022 con EN301549 V3.2.1 verificada en página abierta directamente."
+        }
+      ],
+      "objectiveChange": "Mismo requisito de accesibilidad; se explicita ámbito público y norma/version para evitar equiparar WCAG 2.2 al conjunto de obligaciones.",
+      "typeRationale": "Pregunta conceptual directa.",
+      "proposedFlagRemoval": {},
+      "limits": "No aplicada; no ejecución de Oracle/SQL Server ni certificación de runtime mediante SQLite.",
+      "beforeSha256": "d6296c72684b3d76adfd6be9958ec668bbc6dc3971b9ba8e38b217bcd034af27",
+      "afterSha256": "0df7935dac4439a385f82f2266b7ddd36d1a63122038604c1014f68593cd0809",
+      "qSha256": "1f5cbbc0b2b0763f6b4fc4b75347d3dac617effe462936f1f8e6d57aa5526c38",
+      "sampleFiles": [],
+      "inSample": false,
+      "scenarioId": "AS12B-S1",
+      "supTexto": "",
+      "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "runtimeBeforeSha256": "2e7c3073ee133865332a6e7f2a575044fb6d6884d9d6eeced930e72688bd3db5",
+      "runtimeAfterSha256": "21319709a585c2f8df8bdc1db1afb4d3da8e87d0c2ecdccc33baad142558351f",
+      "contextEvidence": {
+        "pdf": "RECURSOS/SIMULACROS/Simulacro 12 (bis).pdf",
+        "sha256": "05f942757c317f295ba81d922a95e924891a5956a67731e2b92c6ceb39a3da5b",
+        "pages": [
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          22
+        ],
+        "note": "Se leyó supuesto completo pp13–18 y plantilla p22. texto runtime vacío. Reserva04 p18 no tiene preámbulo autónomo; se explicita app móvil de organismo público sin modificar el contexto almacenado."
+      },
+      "contextHashConvention": "contextSha256=SHA256 UTF8 texto; runtimeBefore/AfterSha256 son JSON.stringify({...q,supTexto}) en orden de inserción, no equivalen al proof runtime de claves ordenadas.",
+      "reviewedOptions": [
+        "No es la adopción indicada de EN 301 549 V3.2.1.",
+        "No es la norma técnica ni el número del RD de accesibilidad aplicable.",
+        "Un conjunto de criterios WCAG A no equivale a la norma armonizada.",
+        "Es la referencia nacional indicada por el temario y PAe."
+      ],
+      "priority": "P0",
+      "context": {
+        "scenarioId": "AS12B-S1",
+        "storageFile": "public/data/supuestos.json",
+        "supTexto": "",
+        "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "hashContract": "Raw UTF8 supTexto; envelope JSON.stringify({scenarioId,supTexto,question}); not sorted runtime proof",
+        "beforeContextualSha256": "b0c860f04b7dc7e27d8fa9b90b9697c252f8851c625ea5a05d45a45a22fd5f6e",
+        "afterContextualSha256": "ce21e51b8ebca0b6c45ca73acae5892c450a0c50bcf9db6427bd4d33c4323ae5",
+        "sourcePDF": "RECURSOS/SIMULACROS/Simulacro 12 (bis).pdf",
+        "sourcePdfSha256": "05f942757c317f295ba81d922a95e924891a5956a67731e2b92c6ceb39a3da5b",
+        "questionPage": 18,
+        "keyPage": 22,
+        "contextPagesRead": [
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          22
+        ],
+        "assessment": "Se leyó supuesto completo pp13–18 y plantilla p22. texto runtime vacío. Reserva04 p18 no tiene preámbulo autónomo; se explicita app móvil de organismo público sin modificar el contexto almacenado."
+      }
+    },
+    {
+      "id": "GEN-T3.03-28.v2",
+      "status": "APTA_SEGUNDA_FIRMA_NO_APLICADA",
+      "topic": "T3.03",
+      "storageFile": "public/data/T3.03.json",
+      "before": {
+        "i": "GEN-T3.03-28.v2",
+        "t": "T3.03",
+        "o": "G",
+        "q": "Los lenguajes funcionales carecen de:",
+        "a": [
+          "Recursividad.",
+          "Argumentos.",
+          "Funciones.",
+          "Asignaciones de variables y construcciones como la secuencia o la iteración."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.03-28",
+        "u": "Un tipo especial de funciones son las funciones de orden superior, que pueden tomar otras funciones como argumentos o devolverlos como resultados.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.03-28.v2",
+        "t": "T3.03",
+        "o": "G",
+        "q": "La evaluación de una función pura, en el modelo funcional sin estado mutable, carece de:",
+        "a": [
+          "Recursividad.",
+          "Argumentos.",
+          "Composición de funciones.",
+          "Efectos laterales que modifiquen un estado mutable externo."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.03-28",
+        "u": "la carencia total de efectos colaterales. Se denominan funciones puras. [p. 10]",
+        "v": 0,
+        "n": "La pureza excluye esos efectos laterales. No se afirma que todos los lenguajes con programación funcional carezcan de asignaciones, bucles o mecanismos de efectos; se acota a la evaluación pura descrita."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb",
+        "page": 10,
+        "quote": "la carencia total de efectos colaterales. Se denominan funciones puras."
+      },
+      "rationales": [
+        "La recursión es compatible con funciones puras.",
+        "Las funciones puras pueden recibir argumentos.",
+        "La composición es compatible con pureza.",
+        "Modificar estado mutable externo es un efecto lateral incompatible con esa pureza."
+      ],
+      "primary": [
+        {
+          "url": "https://www.haskell.org/",
+          "checked": "2026-11-06"
+        }
+      ],
+      "objectiveChange": "Se acota la afirmación original al modelo puro y se elimina la prohibición universal de sintaxis de todos los lenguajes funcionales.",
+      "typeRationale": "Completar enunciado.",
+      "proposedFlagRemoval": {
+        "w": 1
+      },
+      "limits": "No aplicada; no ejecución de Oracle/SQL Server ni certificación de runtime mediante SQLite.",
+      "beforeSha256": "3013d889011f75c15cb890636181586f125c5499c809a4316ad10553b294f146",
+      "afterSha256": "c05320e81a53f29ee7394738bc0f2ef6e8d26ec87971a41510d82733d1e1b55c",
+      "qSha256": "1187dfb3a17046442f631accb3e8e1fa75e4e2ab6f93a7c753303e2306953385",
+      "sampleFiles": [],
+      "inSample": false,
+      "reviewedOptions": [
+        "La recursión es compatible con funciones puras.",
+        "Las funciones puras pueden recibir argumentos.",
+        "La composición es compatible con pureza.",
+        "Modificar estado mutable externo es un efecto lateral incompatible con esa pureza."
+      ],
+      "priority": "P0"
+    },
+    {
+      "id": "GEN-T3.04-71.v2",
+      "status": "APTA_SEGUNDA_FIRMA_NO_APLICADA",
+      "topic": "T3.04",
+      "storageFile": "public/data/T3.04.json",
+      "before": {
+        "i": "GEN-T3.04-71.v2",
+        "t": "T3.04",
+        "o": "G",
+        "q": "En SQL Server, entre el parámetro de salida y la variable deben coincidir:",
+        "a": [
+          "El nombre y la posición.",
+          "Solo el nombre.",
+          "El tipo de datos y la posición.",
+          "El nombre y el tipo de datos."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-71",
+        "u": "Para especificar un parámetro de salida, se debe indicar la palabra clave OUTPUT (preferible a OUT). … El programa de llamada también debe usar la palabra clave OUTPUT al ejecutar el procedimiento, a fin de guardar el valor del parámetro en una variable que se pueda usar en el programa de llamada.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.04-71.v2",
+        "t": "T3.04",
+        "o": "G",
+        "q": "En SQL Server se invoca un procedimiento asociando explícitamente todos los argumentos por nombre (@parametro = @variable). Para un parámetro OUTPUT y la variable que recibe su resultado:",
+        "a": [
+          "Los nombres deben ser iguales y los argumentos deben mantener el orden de declaración.",
+          "Los nombres deben ser iguales, aunque el orden puede variar.",
+          "El orden debe mantenerse aunque los nombres sean distintos.",
+          "Los nombres pueden ser distintos y el orden puede variar; los tipos deben ser compatibles y la llamada debe indicar OUTPUT para guardar el resultado."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-71",
+        "u": "El nombre del parámetro y de la variable no tienen por qué coincidir. [p. 29]",
+        "v": 0,
+        "n": "La asociación nominal elimina la dependencia del orden de los argumentos. La variable del llamador puede tener otro nombre; se requiere compatibilidad de tipos y OUTPUT en la llamada para recibir el valor. La igualdad estricta de nombre/posición/tipo del enunciado original no es universal."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.04 SQL/T3.04 SQL - Temario.pdf",
+        "sha256": "b99989c34d1326722c0dacc4aa425a947c6b8be180a834f2939525a9ccac4b25",
+        "page": 29,
+        "quote": "El nombre del parámetro y de la variable no tienen por qué coincidir."
+      },
+      "rationales": [
+        "Ni identidad de nombres ni posición son exigencias con asociación nominal.",
+        "La variable del llamador puede llamarse de otra forma.",
+        "Asociar todos los argumentos por nombre permite cambiar el orden.",
+        "Recoge asociación nominal, compatibilidad y recepción explícita de salida."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/language-elements/execute-transact-sql?view=sql-server-ver17",
+          "checked": "2026-11-06"
+        }
+      ],
+      "objectiveChange": "Precisión del mismo objetivo; no sustitución por otro concepto.",
+      "typeRationale": "Completar enunciado.",
+      "proposedFlagRemoval": {},
+      "limits": "No aplicada; no ejecución de Oracle/SQL Server ni certificación de runtime mediante SQLite.",
+      "beforeSha256": "a3960dfc54341e83c1bb4a8ce8ebaec6d978d6bbb54bba5f355641994a5371ec",
+      "afterSha256": "ec86db1bf69a056b28ea6b0767ad76bfb4b62ff9a75ff725badabba09f838885",
+      "qSha256": "afc7f4458d963889c94945819b7a1e881467ac1082cd9894fb6462a3861ae58e",
+      "sampleFiles": [],
+      "inSample": false,
+      "reviewedOptions": [
+        "Ni identidad de nombres ni posición son exigencias con asociación nominal.",
+        "La variable del llamador puede llamarse de otra forma.",
+        "Asociar todos los argumentos por nombre permite cambiar el orden.",
+        "Recoge asociación nominal, compatibilidad y recepción explícita de salida."
+      ],
+      "priority": "P0"
+    }
+  ],
+  "files": {
+    "T3.03.json": {
+      "beforeSha256": "219dec021d103364d5734218af6aeb5be82f2c92ee95cfc3ade751342ee4f330",
+      "afterSha256": "3759278d2d6f524abfc8615556b557684e0ed9699b3887099da1eac42d6f8a00"
+    },
+    "meta.json": {
+      "beforeSha256": "e5c25be4225120225e770d3d1968504edffc3bec41879ce5af47e5fb91683e24",
+      "afterSha256": "47260f87c4d5605543b735eb19e381ba000081c666a2638b4f1c01f09b3ea9b0"
+    },
+    "T3.04.json": {
+      "beforeSha256": "b60edd63253389325358b09d6214a88ec25867a7d3ad96b593ec4ea4d870051e",
+      "afterSha256": "4cd001f5b6fb268f47430106d8b591cc58721fec4de25f4f02330c2ddc812eb9"
+    },
+    "T3.09.json": {
+      "beforeSha256": "7b13e40655855ab1a217d8858a9564c8698bb453d0586c5d6fc63ed45c8de153",
+      "afterSha256": "5509df1e1156cfe32f8b9452f134a794f277205c145b91eb4eacc976d97765cf"
+    },
+    "supuestos.json": {
+      "beforeSha256": "9b85f51bff5cb4f87f7a7827575bd3c363e6bc8eaaa8109ff63edd4a03fa0c7d",
+      "afterSha256": "f7d2eeb2db294243e32cd6b71c9abf268a847717ec79be6c67401c23818b3952"
+    }
+  },
+  "metadataEdits": [
+    {
+      "id": "AT303-P1-52",
+      "topic": "T3.03",
+      "index": 2,
+      "before": [
+        "T3.03",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T3.03",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "86f3d2f4a6272aa46a441c5b7e33f2703448e11e42b86fbdc3c43a974c7d14b6",
+      "afterSha256": "b9fc7dd7823d0411ef14e2f3356c6f9e0df0843cb0b513e17bed7a732149e2bd"
+    },
+    {
+      "id": "AS11-P1-46",
+      "topic": "T3.04",
+      "index": 2,
+      "before": [
+        "T3.04",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T3.04",
+        "A",
+        "K",
+        [],
+        0
+      ],
+      "beforeSha256": "fffc22b1ea9ad61237cf61cb11e35acfa3e0c25bdcda7dbb8f5600fc21d536fa",
+      "afterSha256": "d704e282955cc5e0c44dc329cd3e4b4b2e8ed0f32a6b22f796b7e155d68764bb"
+    },
+    {
+      "id": "AT309-P1-15",
+      "topic": "T3.09",
+      "index": 2,
+      "before": [
+        "T3.09",
+        "A",
+        "I",
+        [],
+        0
+      ],
+      "after": [
+        "T3.09",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "b0c9708b50cb0e8fbc3636af4b77be56105e8a5c17aef5f55c55f2bcd6c9a7a6",
+      "afterSha256": "1946260e4984aafbd055a6082aa55738658effc53a913b3327a84e264fcd5dd9"
+    },
+    {
+      "id": "AT309-P1-57",
+      "topic": "T3.09",
+      "index": 2,
+      "before": [
+        "T3.09",
+        "A",
+        "I",
+        [],
+        0
+      ],
+      "after": [
+        "T3.09",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "b0c9708b50cb0e8fbc3636af4b77be56105e8a5c17aef5f55c55f2bcd6c9a7a6",
+      "afterSha256": "1946260e4984aafbd055a6082aa55738658effc53a913b3327a84e264fcd5dd9"
+    }
+  ],
+  "sampleFiles": {},
+  "held": [
+    {
+      "id": "AT302-P1-28",
+      "status": "held",
+      "before": {
+        "i": "AT302-P1-28",
+        "t": "T3.02",
+        "o": "A",
+        "q": "Tal y como se muestra en el diagrama de Entidad/Relación, ¿cuál de las siguientes afirmaciones sobre la realidad que representa el diagrama NO es cierta?",
+        "a": [
+          "Un Departamento está compuesto por una o varias Unidades y toda Unidad pertenece a un y sólo un Departamento.",
+          "Un Departamento puede ser dirigido por un Titular y todo Titular debe dirigir a un Departamento.",
+          "Cada Unidad puede ser dirigida por un Titular y un Titular dirige siempre una Unidad.",
+          "Un Departamento puede participar en varias Comisiones interministeriales."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Retención anterior expresamente excluida: figura necesaria y clave falsa no sustentada; no se reabre ni se sustituye objetivo."
+    },
+    {
+      "id": "AT303-P1-03",
+      "status": "held",
+      "before": {
+        "i": "AT303-P1-03",
+        "t": "T3.03",
+        "o": "A",
+        "q": "De los lenguajes de programación siguientes, ¿cuál NO se considera de tipo funcional?",
+        "a": [
+          "Vala.",
+          "Hope.",
+          "Lisp.",
+          "Scheme."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Retención previa: temario p19 clasifica Vala también funcional. Cambiar Hope por Vala no garantiza unicidad taxonómica; sin evidencia nueva para levantarla.",
+      "reference": {
+        "pdf": "01_Temario/T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb",
+        "page": 19,
+        "role": "Localización de discrepancia; no certificación del pasaje como verdadero."
+      }
+    },
+    {
+      "id": "L2025X-S1-09",
+      "status": "held",
+      "before": {
+        "i": "L2025X-S1-09",
+        "t": "T3.04",
+        "o": "O",
+        "q": "Se necesita crear una vista en la base de datos SQL Server para saber cuántos expedientes ha tramitado cada usuario. ¿Cuál sería la forma correcta de crearla?",
+        "a": [
+          "CREATE VIEW ExpTramitados AS SELECT IdUsuarioTramitador, COUNT(IdExpediente) AS TotalExpedientes FROM Expedientes;",
+          "CREATE VIEW ExpTramitados AS SELECT IdUsuarioTramitador, IdExpediente FROM Expedientes GROUP BY IdUsuarioTramitador;",
+          "CREATE VIEW ExpTramitados AS SELECT IdUsuarioTramitador, COUNT(IdExpediente) FROM Expedientes GROUP BY IdUsuarioTramitador;",
+          "CREATE VIEW ExpTramitados AS SELECT IdUsuarioTramitador, SUM(IdExpediente) FROM Expedientes GROUP BY IdUsuarioTramitador;"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 2,
+        "n": "Vista con COUNT y GROUP BY (alias necesario en SQL Server).",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1,
+        "s": "L2025X-S1"
+      },
+      "reason": "Oficial: SQL Server exige alias de columna calculada en una vista. La corrección técnica no autoriza reescribir el cuaderno o clave definitiva. Mantener procedencia y escalar mitigación separada; sin after en este lote.",
+      "reference": {
+        "pdf": "01_Temario/T3.04 SQL/T3.04 SQL - Temario.pdf",
+        "sha256": "b99989c34d1326722c0dacc4aa425a947c6b8be180a834f2939525a9ccac4b25",
+        "page": 9,
+        "role": "Localización de discrepancia; no certificación del pasaje como verdadero."
+      }
+    },
+    {
+      "id": "GEN-T3.03-29.v1",
+      "status": "held",
+      "before": {
+        "i": "GEN-T3.03-29.v1",
+        "t": "T3.03",
+        "o": "G",
+        "q": "En programación funcional, la lógica combinatoria mantiene:",
+        "a": [
+          "Efectos secundarios.",
+          "Un sistema estricto de tipos, transparencia referencial y evaluación perezosa.",
+          "Basada en s-expresiones.",
+          "Tipado débil y metaprogramación."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.03-29",
+        "u": "Cálculo lambda: sus características son que están basado en s-expresiones, son de tipado débil y admite la metaprogramación. Lenguajes: familia Lisp, Scheme.",
+        "v": 0,
+        "w": 1
+      },
+      "reason": "La atribución de tipado estricto y evaluación perezosa a lógica combinatoria no es general. Sustituir el formalismo por Haskell cambiaría el objetivo; el pasaje p11 no fundamenta una reparación fiel.",
+      "reference": {
+        "pdf": "01_Temario/T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb",
+        "page": 11,
+        "role": "Localización de discrepancia; no certificación del pasaje como verdadero."
+      }
+    },
+    {
+      "id": "GEN-T3.03-41",
+      "status": "held",
+      "before": {
+        "i": "GEN-T3.03-41",
+        "t": "T3.03",
+        "o": "G",
+        "q": "En un lenguaje débilmente tipado, los posibles errores de tipos se detectarán:",
+        "a": [
+          "En el análisis léxico.",
+          "En el enlazado.",
+          "Más tarde, en tiempo de ejecución.",
+          "En tiempo de compilación."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          2
+        ],
+        "d": 3,
+        "f": "GEN-T3.03-41",
+        "u": "la consecuencia lógica es que los posibles errores se detectarán más tarde, en tiempo de ejecución.",
+        "v": 0,
+        "w": 1
+      },
+      "reason": "El temario p16 confunde tipado débil con momento dinámico. Cambiar a tipado dinámico no sería la misma afirmación; no se fuerza reparación sin un pasaje correcto que fundamente el objetivo temporal.",
+      "reference": {
+        "pdf": "01_Temario/T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb",
+        "page": 16,
+        "role": "Localización de discrepancia; no certificación del pasaje como verdadero."
+      }
+    },
+    {
+      "id": "AS11B-P1-58",
+      "status": "RETENER_SEGUNDA_FIRMA",
+      "reason": "La fuente histórica es Second Informal Review Draft, July30 1992, no edición final SQL-92. PostgreSQL actual corrobora la sintaxis estándar moderna pero no certifica esa edición histórica. Se preserva la propuesta para recuperar si se aporta fuente final identificada; no aprobada.",
+      "unapprovedProposal": {
+        "id": "AS11B-P1-58",
+        "status": "propuesta_pendiente_segunda_revision",
+        "topic": "T3.04",
+        "storageFile": "public/data/T3.04.json",
+        "before": {
+          "i": "AS11B-P1-58",
+          "t": "T3.04",
+          "o": "A",
+          "q": "Según el estándar ANSI SQL 92, cuál es el tamaño por defecto de un tipo de datos VARCHAR:",
+          "a": [
+            "255 caracteres.",
+            "255 bits.",
+            "1 carácter.",
+            "VARCHAR siempre debe especificar un tamaño entre paréntesis."
+          ],
+          "c": 2,
+          "k": "C",
+          "x": [],
+          "d": null,
+          "z": 1
+        },
+        "after": {
+          "i": "AS11B-P1-58",
+          "t": "T3.04",
+          "o": "A",
+          "q": "En la declaración estándar SQL-92 de una columna VARCHAR, ¿qué ocurre con la especificación de longitud?",
+          "a": [
+            "Si se omite, siempre se suponen 255 caracteres.",
+            "Si se omite, siempre se suponen 255 bits.",
+            "Si se omite, se supone un carácter, igual que en CHAR.",
+            "Debe indicarse una longitud entre paréntesis."
+          ],
+          "c": 3,
+          "k": "D",
+          "x": [],
+          "d": null,
+          "z": 1,
+          "n": "La producción de SQL-92 para VARCHAR requiere longitud; la longitud opcional y el valor uno corresponden a CHAR. No se generaliza a extensiones de motores: PostgreSQL permite VARCHAR sin longitud. La transcripción pública consultada es un borrador de julio de 1992, no una copia certificada de la edición ISO final.",
+          "u": "VARCHAR(longitud) [p. 5]"
+        },
+        "reference": {
+          "pdf": "01_Temario/T3.04 SQL/T3.04 SQL - Temario.pdf",
+          "sha256": "b99989c34d1326722c0dacc4aa425a947c6b8be180a834f2939525a9ccac4b25",
+          "page": 5,
+          "quote": "VARCHAR(longitud)"
+        },
+        "rationales": [
+          "No existe ese valor por defecto en la producción estándar citada.",
+          "VARCHAR expresa longitud de caracteres, no ese valor de bits por defecto.",
+          "Confunde el caso CHAR con VARCHAR.",
+          "La gramática de VARCHAR exige el argumento de longitud."
+        ],
+        "primary": [
+          {
+            "url": "https://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt",
+            "checked": "2026-11-06"
+          },
+          {
+            "url": "https://www.postgresql.org/docs/current/datatype-character.html",
+            "checked": "2026-11-06"
+          }
+        ],
+        "objectiveChange": "Precisión del mismo objetivo; no sustitución por otro concepto.",
+        "typeRationale": "Pregunta conceptual directa.",
+        "proposedFlagRemoval": {},
+        "limits": "No aplicada; no ejecución de Oracle/SQL Server ni certificación de runtime mediante SQLite. Fuente SQL92: transcripción pública de borrador ISO de julio1992, no edición ISO final certificada. Segunda firma debe evaluar suficiencia; si exige edición final, retener, no ampliar a todos los dialectos.",
+        "beforeSha256": "0d85c25dfbdded6634217a8b1b470eafe39a8fbc150b869c4237a4bd7eb57616",
+        "afterSha256": "95b1f8a83cb5828691131cba02a8d198046d617fcc08f2cde33a27192d63182b",
+        "qSha256": "65061029be5770a5bfff78f0890fede88a2656a3d1ba03606b257755152920a1",
+        "sampleFiles": [],
+        "inSample": false
+      }
+    }
+  ],
+  "implementation": {
+    "sourceAfterPreserved": true,
+    "scope": "Only signed rows, type metadata and explicit sample; no production",
+    "limits": "12 before/PDF SHA/citas verificados;8SQL literales+1modelo relacional reejecutados;contraejemplo SQLite NULL;sin ejecución Oracle/SQLServer."
+  }
+}

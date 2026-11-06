@@ -1,0 +1,28 @@
+{
+  "at": "2026-11-06T10:35:26.635Z",
+  "buildSource": "1.1.17+aeb4225",
+  "bankSnapshotVersion": 15,
+  "results": [
+    {
+      "browser": "chromium",
+      "loaded": 300,
+      "approved": 300,
+      "oldBlocked": 300,
+      "mutatedBlocked": 300,
+      "crypto": true,
+      "pageErrors": []
+    },
+    {
+      "browser": "webkit",
+      "loaded": 300,
+      "approved": 300,
+      "oldBlocked": 300,
+      "mutatedBlocked": 300,
+      "crypto": true,
+      "pageErrors": []
+    }
+  ],
+  "productionWrites": 0,
+  "productionAuthExercised": false,
+  "scope": "Real M5 catalog and browser WebCrypto using the verified live v15 snapshot on a loopback-only temporary server"
+}
