@@ -1,0 +1,58 @@
+{
+  "project": "tai-oposicion",
+  "version": 18,
+  "updateTime": "2026-11-06T21:48:08.265378Z",
+  "topics": [
+    "T3.03",
+    "T4.01",
+    "T4.03"
+  ],
+  "added": 15,
+  "already": 0,
+  "skipped": [],
+  "edits": [
+    {
+      "topic": "T3.03",
+      "ids": [
+        "TAI2024B-P1-34",
+        "TAI2024B-P1-35",
+        "TAI2024B-P1-36",
+        "TAIL2022-P1-38",
+        "L2019-P1-38",
+        "L2019-P1-46"
+      ],
+      "before": "3759278d2d6f524abfc8615556b557684e0ed9699b3887099da1eac42d6f8a00",
+      "after": "af492ba1a87cd175026294ddbe63c85ba75554503f5e63fd8ca9dc24ad9883a7"
+    },
+    {
+      "topic": "T4.01",
+      "ids": [
+        "TAIL2022-P1-62",
+        "L2019-P1-58",
+        "L2019-P1-76",
+        "L2025A-P1-60"
+      ],
+      "before": "c7ee3cd0c506cf151588d161960143d9257760003b60448974548b607a3772e7",
+      "after": "df40bb95af86c5b89c75e3d86eb11b9dffd086bfbd1ba4ffa41f579f5e280e81"
+    },
+    {
+      "topic": "T4.03",
+      "ids": [
+        "TAI2024B-P1-64",
+        "TAIL2022-P1-66",
+        "L2019-P1-62",
+        "P2019-P1-38",
+        "L2018-P1-78"
+      ],
+      "before": "f6762c48b6a655a7c8967e2fe4cf8dd14569eabb6bd97801b636e554ec21ad88",
+      "after": "efaf16e770f2c54be6cec1d1d338a818337b3943ff0fa74d2b1881a0ced1f20f"
+    }
+  ],
+  "allFiles": 77,
+  "backup": "/tmp/tai-citations-live-backup-18",
+  "afterVersion": 19,
+  "afterUpdateTime": "2026-11-06T22:09:00.849574Z",
+  "verifiedAt": "2026-11-06T22:09:01.879Z",
+  "inventoryVerifiedAt": "2026-11-06T22:10:51.569Z",
+  "verification": "All changed resource SHA-256 values and all inventory hashes verified by remote GET; no deletions."
+}

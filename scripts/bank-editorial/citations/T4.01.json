@@ -6,11 +6,11 @@
   "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
   "file": {
     "beforeSha256": "c7ee3cd0c506cf151588d161960143d9257760003b60448974548b607a3772e7",
-    "afterSha256": "df40bb95af86c5b89c75e3d86eb11b9dffd086bfbd1ba4ffa41f579f5e280e81"
+    "afterSha256": "78d57b8dbf20ba902ed03c549e489f6db7af69acec13b1967b0e23eb09431c44"
   },
   "sample": {
     "beforeSha256": "305ed3b9aac71a1d9c72766bf7109794241311a1f640f3dce6f983fc100d76e8",
-    "afterSha256": "305ed3b9aac71a1d9c72766bf7109794241311a1f640f3dce6f983fc100d76e8"
+    "afterSha256": "590545b41052610f5fc5569729a07dbfe5650224c14f7e9a54194d62433a2226"
   },
   "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
   "sources": {
@@ -61,6 +61,62 @@
       "printedPage": 18,
       "excerpt": "tail file1: contenido de las últimas 10 líneas (por defecto) de file1. tail -n NUM file1 #contenido de las NUM últimas líneas de file1 tail -f file1 #contenido de las nuevas líneas en tiempo real file1",
       "label": "Lectura de ficheros — tail -f"
+    },
+    "so-cron": {
+      "path": "T4.01 Administración de SO/T4.01 Administración de SO - Temario (version alternativa).pdf",
+      "sourceHash": "f7c99562cca2c5d2b7923505c7faced04877e46def902faa38faa149ea2c575e",
+      "physicalPage": 17,
+      "printedPage": 17,
+      "label": "Programación de tareas — ejemplo crontab",
+      "excerpt": "0 5 8 11 * comando #comando se ejecuta a las 05:00 del día 8 de noviembre"
+    },
+    "so-lsb": {
+      "path": "T4.01 Administración de SO/T4.01 Administración de SO - Temario (version alternativa).pdf",
+      "sourceHash": "f7c99562cca2c5d2b7923505c7faced04877e46def902faa38faa149ea2c575e",
+      "physicalPage": 13,
+      "printedPage": 13,
+      "label": "Información del sistema — lsb_release",
+      "excerpt": "lsb_release -d: muestra la descripción de la distribución Linux. lsb_release -r: muestra la versión de la distribución Linux. lsb_release -i: muestra el nombre de la distribución Linux. lsb_release -c: muestra el nombre en código de la distribución Linux. lsb_release -a: muestra la descripción, versión y el nombre de la distribución Linux."
+    },
+    "so-rpm": {
+      "path": "T4.01 Administración de SO/T4.01 Administración de SO - Temario (version alternativa).pdf",
+      "sourceHash": "f7c99562cca2c5d2b7923505c7faced04877e46def902faa38faa149ea2c575e",
+      "physicalPage": 26,
+      "printedPage": 26,
+      "label": "RPM — consulta de ficheros e información",
+      "excerpt": "rpm -ivh paquete # instala el paquete rpm -ql paquete # lista los ficheros del paquete rpm -qi paquete # muestra información del paquete rpm -e paquete # elimina el paquete"
+    },
+    "so-intune": {
+      "path": "T4.01 Administración de SO/T4.01 Administración de SO - Temario (version alternativa).pdf",
+      "sourceHash": "f7c99562cca2c5d2b7923505c7faced04877e46def902faa38faa149ea2c575e",
+      "physicalPage": 47,
+      "printedPage": 47,
+      "label": "Gestión de dispositivos — Microsoft Intune",
+      "excerpt": "Windows Intune Microsoft Intune es un servicio basado en la nube que se centra en la administración de dispositivos móviles (MDM) y en la administración de aplicaciones móviles (MAM)."
+    },
+    "so-swap": {
+      "path": "T4.01 Administración de SO/T4.01 Administración de SO - Temario (version alternativa).pdf",
+      "sourceHash": "f7c99562cca2c5d2b7923505c7faced04877e46def902faa38faa149ea2c575e",
+      "physicalPage": 13,
+      "printedPage": 13,
+      "label": "Información del sistema — ficheros swap",
+      "excerpt": "cat /proc/swaps: muestra ficheros swap."
+    },
+    "so-insider": {
+      "path": "T4.01 Administración de SO/T4.01 Administración de SO - Temario (version alternativa).pdf",
+      "sourceHash": "f7c99562cca2c5d2b7923505c7faced04877e46def902faa38faa149ea2c575e",
+      "physicalPage": 47,
+      "printedPage": 47,
+      "label": "Windows Insider — pruebas de compilaciones previas",
+      "excerpt": "Windows Insider Para muchos profesionales de TI, la obtención de visibilidad de las actualizaciones de características de manera anticipada (antes de que estén disponibles para el Canal de disponibilidad anual) puede ser interesante y valiosa para comunicaciones futuras del usuario final, además de ofrecer los medios para probar cualquier problema en la próxima versión de disponibilidad general. Los participantes de Windows Insider pueden consumir e implementar código de preproducción en sus equipos de prueba y obtener visibilidad anticipada de la siguiente compilación. Las pruebas en las primeras compilaciones de Windows ayudan a Microsoft y a sus clientes, ya que tienen la oportunidad de detectar posibles problemas incluso antes de que la actualización esté disponible públicamente y se lo pueden notificar a Microsoft."
+    },
+    "so-honolulu-pending": {
+      "path": "T4.01 Administración de SO/T4.01 Administración de SO - Temario (version alternativa).pdf",
+      "sourceHash": "f7c99562cca2c5d2b7923505c7faced04877e46def902faa38faa149ea2c575e",
+      "physicalPage": 33,
+      "printedPage": 33,
+      "label": "Honolulu — novedad y versiones administrables; pendiente",
+      "excerpt": "Windows Server 2019 Ofrece las versiones Essentials, Standard y Datacenter, siendo esta última la que ofrece mayores prestaciones. Se lanza comercialmente el 2 de octubre de 2018, y entre las novedades que se incluyen destacan las siguientes: - Más integración con Azure. Debido a la cada vez mayor integración de las empresas en sistemas híbridos, se apuesta por una mayor facilidad para administrar estos sistemas. Para ello, Microsoft ha lanzado el llamado Proyecto Honolulu, que consiste en una nueva consola de Administración donde poder gestionar de forma eficiente todos nuestros recursos (Windows 2012 R2, Windows 2016 o Windows Server 2019) y también aquellos servicios existentes en Azure. "
     }
   },
   "questions": [
@@ -269,6 +325,320 @@
         "tail"
       ],
       "rationale": "La opción -f muestra las nuevas líneas a medida que se añaden al fichero. Se añade la cita sin modificar el indicador provisional ni las condiciones de puntuación."
+    },
+    {
+      "id": "L2025A-P1-61",
+      "before": {
+        "i": "L2025A-P1-61",
+        "t": "T4.01",
+        "o": "O",
+        "q": "Una tarea en el Crontab de Linux con la especificación de tiempo 0 5 8 11 * se ejecutará:",
+        "a": [
+          "A las 00:05 del día 11 de agosto.",
+          "A las 05:00 del día 8 de noviembre.",
+          "A las 05:00 del día 11 de agosto.",
+          "A las 00:05 del día 8 de noviembre."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "Crontab: orden de campos invertido.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "after": {
+        "i": "L2025A-P1-61",
+        "t": "T4.01",
+        "o": "O",
+        "q": "Una tarea en el Crontab de Linux con la especificación de tiempo 0 5 8 11 * se ejecutará:",
+        "a": [
+          "A las 00:05 del día 11 de agosto.",
+          "A las 05:00 del día 8 de noviembre.",
+          "A las 05:00 del día 11 de agosto.",
+          "A las 00:05 del día 8 de noviembre."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "Crontab: orden de campos invertido.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1,
+        "u": "T4.01 Administración de SO - Temario (version alternativa).pdf — Programación de tareas — ejemplo crontab\n\nTemario, p. 17 (PDF p. 17)\n\n0 5 8 11 * comando #comando se ejecuta a las 05:00 del día 8 de noviembre\n\nPara interpretar la respuesta: Los cinco campos son minuto, hora, día del mes, mes y día de la semana. El propio material resuelve 0 5 8 11 * como las 05:00 del 8 de noviembre; se conserva el indicador provisional."
+      },
+      "beforeSha256": "b42e283ecab51c5d7ea1a3e4853ab333d17722de882e0886368bb8e44d158eab",
+      "afterSha256": "caaadc83d287b900245f2567fec094b090e762a4145933b4301966177d9057f9",
+      "evidenceKeys": [
+        "so-cron"
+      ],
+      "rationale": "Los cinco campos son minuto, hora, día del mes, mes y día de la semana. El propio material resuelve 0 5 8 11 * como las 05:00 del 8 de noviembre; se conserva el indicador provisional."
+    },
+    {
+      "id": "L2018-P1-71",
+      "before": {
+        "i": "L2018-P1-71",
+        "t": "T4.01",
+        "o": "O",
+        "q": "Debian GNU/Linux, ¿cómo se puede obtener la versión de Linux instalada?",
+        "a": [
+          "lsb_release -a",
+          "lsb_release -x",
+          "lsb_release -l",
+          "lsb_release -m"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 1,
+        "n": "lsb_release -a.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "after": {
+        "i": "L2018-P1-71",
+        "t": "T4.01",
+        "o": "O",
+        "q": "Debian GNU/Linux, ¿cómo se puede obtener la versión de Linux instalada?",
+        "a": [
+          "lsb_release -a",
+          "lsb_release -x",
+          "lsb_release -l",
+          "lsb_release -m"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 1,
+        "n": "lsb_release -a.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)",
+        "u": "T4.01 Administración de SO - Temario (version alternativa).pdf — Información del sistema — lsb_release\n\nTemario, p. 13 (PDF p. 13)\n\nlsb_release -d: muestra la descripción de la distribución Linux. lsb_release -r: muestra la versión de la distribución Linux. lsb_release -i: muestra el nombre de la distribución Linux. lsb_release -c: muestra el nombre en código de la distribución Linux. lsb_release -a: muestra la descripción, versión y el nombre de la distribución Linux.\n\nPara interpretar la respuesta: lsb_release -a muestra la información completa de la distribución, incluida su versión. No se interpreta como la versión del núcleo, que se consulta con uname -r."
+      },
+      "beforeSha256": "91d58b55bcad9b450828f44b630208a0b7897d9aa6967ac4258f284261bdb56a",
+      "afterSha256": "36870d605f523747ad52187ff475d2d497fabb30647780371eb7d86cf8085f8a",
+      "evidenceKeys": [
+        "so-lsb"
+      ],
+      "rationale": "lsb_release -a muestra la información completa de la distribución, incluida su versión. No se interpreta como la versión del núcleo, que se consulta con uname -r."
+    },
+    {
+      "id": "AT401-P1-07",
+      "before": {
+        "i": "AT401-P1-07",
+        "t": "T4.01",
+        "o": "A",
+        "q": "¿Qué comando en Linux muestra solo la versión de la distribución Linux?",
+        "a": [
+          "lsb_release -r.",
+          "lsb_release -d.",
+          "lsb_release -i.",
+          "lsb_release -a."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT401-P1-07",
+        "t": "T4.01",
+        "o": "A",
+        "q": "¿Qué comando en Linux muestra solo la versión de la distribución Linux?",
+        "a": [
+          "lsb_release -r.",
+          "lsb_release -d.",
+          "lsb_release -i.",
+          "lsb_release -a."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T4.01 Administración de SO - Temario (version alternativa).pdf — Información del sistema — lsb_release\n\nTemario, p. 13 (PDF p. 13)\n\nlsb_release -d: muestra la descripción de la distribución Linux. lsb_release -r: muestra la versión de la distribución Linux. lsb_release -i: muestra el nombre de la distribución Linux. lsb_release -c: muestra el nombre en código de la distribución Linux. lsb_release -a: muestra la descripción, versión y el nombre de la distribución Linux.\n\nPara interpretar la respuesta: La opción -r muestra la versión de la distribución; -d muestra la descripción, -i la identificación y -a el conjunto de datos. No se promete una salida sin etiqueta de campo."
+      },
+      "beforeSha256": "6b6770d62bb221769a750bb814fabcc6afcf740140dd9360568268bf6b4bb0f1",
+      "afterSha256": "0b2778cc115f0592d6b8831b0dc96f59b7852dd132286b4787f5eeeb16faf01c",
+      "evidenceKeys": [
+        "so-lsb"
+      ],
+      "rationale": "La opción -r muestra la versión de la distribución; -d muestra la descripción, -i la identificación y -a el conjunto de datos. No se promete una salida sin etiqueta de campo."
+    },
+    {
+      "id": "AT401-P1-20",
+      "before": {
+        "i": "AT401-P1-20",
+        "t": "T4.01",
+        "o": "A",
+        "q": "Indique qué comando del gestor de paquetes RPM utilizamos para obtener la lista de ficheros de un paquete:",
+        "a": [
+          "rpm -ql paquete.",
+          "rpm -qi paquete.",
+          "rpm -qa paquete.",
+          "rpm -qf paquete."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT401-P1-20",
+        "t": "T4.01",
+        "o": "A",
+        "q": "Indique qué comando del gestor de paquetes RPM utilizamos para obtener la lista de ficheros de un paquete:",
+        "a": [
+          "rpm -ql paquete.",
+          "rpm -qi paquete.",
+          "rpm -qa paquete.",
+          "rpm -qf paquete."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T4.01 Administración de SO - Temario (version alternativa).pdf — RPM — consulta de ficheros e información\n\nTemario, p. 26 (PDF p. 26)\n\nrpm -ivh paquete # instala el paquete rpm -ql paquete # lista los ficheros del paquete rpm -qi paquete # muestra información del paquete rpm -e paquete # elimina el paquete\n\nPara interpretar la respuesta: La opción -ql lista los ficheros del paquete; -qi muestra información del paquete. El pasaje diferencia ambas consultas."
+      },
+      "beforeSha256": "f4e5538d6ef42903c1ef8a0e19d728b5523288da97b3f664f9c8648bd319395c",
+      "afterSha256": "d1a1ad3d8517a83e2c28070afa5de3b8e7d9bc6efda241edf6c3903b6fd4f48d",
+      "evidenceKeys": [
+        "so-rpm"
+      ],
+      "rationale": "La opción -ql lista los ficheros del paquete; -qi muestra información del paquete. El pasaje diferencia ambas consultas."
+    },
+    {
+      "id": "AT401-P1-35",
+      "before": {
+        "i": "AT401-P1-35",
+        "t": "T4.01",
+        "o": "A",
+        "q": "¿Qué servicio de Windows permite la gestión de dispositivos móviles?",
+        "a": [
+          "Windows Insider.",
+          "Windows Intune.",
+          "Windows MDM.",
+          "Windows Passport."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT401-P1-35",
+        "t": "T4.01",
+        "o": "A",
+        "q": "¿Qué servicio de Windows permite la gestión de dispositivos móviles?",
+        "a": [
+          "Windows Insider.",
+          "Windows Intune.",
+          "Windows MDM.",
+          "Windows Passport."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T4.01 Administración de SO - Temario (version alternativa).pdf — Gestión de dispositivos — Microsoft Intune\n\nTemario, p. 47 (PDF p. 47)\n\nWindows Intune Microsoft Intune es un servicio basado en la nube que se centra en la administración de dispositivos móviles (MDM) y en la administración de aplicaciones móviles (MAM).\n\nPara interpretar la respuesta: El epígrafe del material utiliza Windows Intune y describe Microsoft Intune como servicio de administración de dispositivos y aplicaciones móviles basado en la nube."
+      },
+      "beforeSha256": "ac194dd279b3a4476abd2bafbc08f2e4bbc0b4245da80b65b08ca8b3d5034d4e",
+      "afterSha256": "806641d9a77445538b567251ff2813f37b230882fecbc44b18fa2f189f010c5f",
+      "evidenceKeys": [
+        "so-intune"
+      ],
+      "rationale": "El epígrafe del material utiliza Windows Intune y describe Microsoft Intune como servicio de administración de dispositivos y aplicaciones móviles basado en la nube."
+    },
+    {
+      "id": "AT401-P1-44",
+      "before": {
+        "i": "AT401-P1-44",
+        "t": "T4.01",
+        "o": "A",
+        "q": "Para visualizar los ficheros swaps en un sistema Linux debe ejecutar:",
+        "a": [
+          "cat /proc/mem/swap.",
+          "cat /proc/mem/swaps.",
+          "cat /proc/swap.",
+          "cat /proc/swaps."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT401-P1-44",
+        "t": "T4.01",
+        "o": "A",
+        "q": "Para visualizar los ficheros swaps en un sistema Linux debe ejecutar:",
+        "a": [
+          "cat /proc/mem/swap.",
+          "cat /proc/mem/swaps.",
+          "cat /proc/swap.",
+          "cat /proc/swaps."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T4.01 Administración de SO - Temario (version alternativa).pdf — Información del sistema — ficheros swap\n\nTemario, p. 13 (PDF p. 13)\n\ncat /proc/swaps: muestra ficheros swap.\n\nPara interpretar la respuesta: El fichero consultado es /proc/swaps, en plural y directamente bajo /proc. El comando cat muestra su contenido."
+      },
+      "beforeSha256": "4c52c8363b2e56b759d830969623593781dcd38129705c461bf1994663f08119",
+      "afterSha256": "3574e985cca1c49ef9b73b5ef4b488eb82e5fa5973e627cef929163fe3b67a9d",
+      "evidenceKeys": [
+        "so-swap"
+      ],
+      "rationale": "El fichero consultado es /proc/swaps, en plural y directamente bajo /proc. El comando cat muestra su contenido."
+    },
+    {
+      "id": "AS08-P1-44",
+      "before": {
+        "i": "AS08-P1-44",
+        "t": "T4.01",
+        "o": "A",
+        "q": "¿Qué programa permite instalar y probar las nuevas funcionalidades de Windows?",
+        "a": [
+          "Windows Beta.",
+          "Windows Tester.",
+          "Windows Insider.",
+          "Windows Alfa Developer."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS08-P1-44",
+        "t": "T4.01",
+        "o": "A",
+        "q": "¿Qué programa permite instalar y probar las nuevas funcionalidades de Windows?",
+        "a": [
+          "Windows Beta.",
+          "Windows Tester.",
+          "Windows Insider.",
+          "Windows Alfa Developer."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "u": "T4.01 Administración de SO - Temario (version alternativa).pdf — Windows Insider — pruebas de compilaciones previas\n\nTemario, p. 47 (PDF p. 47)\n\nWindows Insider Para muchos profesionales de TI, la obtención de visibilidad de las actualizaciones de características de manera anticipada (antes de que estén disponibles para el Canal de disponibilidad anual) puede ser interesante y valiosa para comunicaciones futuras del usuario final, además de ofrecer los medios para probar cualquier problema en la próxima versión de disponibilidad general. Los participantes de Windows Insider pueden consumir e implementar código de preproducción en sus equipos de prueba y obtener visibilidad anticipada de la siguiente compilación. Las pruebas en las primeras compilaciones de Windows ayudan a Microsoft y a sus clientes, ya que tienen la oportunidad de detectar posibles problemas incluso antes de que la actualización esté disponible públicamente y se lo pueden notificar a Microsoft.\n\nPara interpretar la respuesta: Windows Insider permite consumir y probar compilaciones de preproducción antes de su disponibilidad general; se mantiene la distinción entre un programa de pruebas y una edición del sistema operativo."
+      },
+      "beforeSha256": "89b5addd1d5ae03023b393e8d12f399fa1d17a5926bcdffbef19b2c0e187b5cd",
+      "afterSha256": "9d83c77009eb6c01bb785c7cd1229aadd01a2797857a398fe0c6e9435dfd59d9",
+      "evidenceKeys": [
+        "so-insider"
+      ],
+      "rationale": "Windows Insider permite consumir y probar compilaciones de preproducción antes de su disponibilidad general; se mantiene la distinción entre un programa de pruebas y una edición del sistema operativo."
     }
   ],
   "pending": [
@@ -345,32 +715,6 @@
       },
       "reason": "Pregunta leída y alternativas cotejadas; todavía no se ha localizado en los pasajes consultados la definición del comando y sus opciones. Pendiente de ampliar la búsqueda en el material, sin inferir evidencia por conocimiento general.",
       "reviewStatus": "reviewed-pending",
-      "evidenceKeys": []
-    },
-    {
-      "question": {
-        "i": "L2025A-P1-61",
-        "t": "T4.01",
-        "o": "O",
-        "q": "Una tarea en el Crontab de Linux con la especificación de tiempo 0 5 8 11 * se ejecutará:",
-        "a": [
-          "A las 00:05 del día 11 de agosto.",
-          "A las 05:00 del día 8 de noviembre.",
-          "A las 05:00 del día 11 de agosto.",
-          "A las 00:05 del día 8 de noviembre."
-        ],
-        "c": 1,
-        "k": "K",
-        "x": [
-          8
-        ],
-        "d": 2,
-        "n": "Crontab: orden de campos invertido.",
-        "y": "Ingreso libre convocatoria 2025",
-        "p": 1
-      },
-      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
-      "reviewStatus": "unreviewed",
       "evidenceKeys": []
     },
     {
@@ -548,31 +892,6 @@
         "d": 1,
         "n": "ifconfig frente a comandos de otra función.",
         "y": "Promoción interna OEP 2021-2024 (2024)"
-      },
-      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
-      "reviewStatus": "unreviewed",
-      "evidenceKeys": []
-    },
-    {
-      "question": {
-        "i": "L2018-P1-71",
-        "t": "T4.01",
-        "o": "O",
-        "q": "Debian GNU/Linux, ¿cómo se puede obtener la versión de Linux instalada?",
-        "a": [
-          "lsb_release -a",
-          "lsb_release -x",
-          "lsb_release -l",
-          "lsb_release -m"
-        ],
-        "c": 0,
-        "k": "K",
-        "x": [
-          10
-        ],
-        "d": 1,
-        "n": "lsb_release -a.",
-        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
       },
       "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
       "reviewStatus": "unreviewed",
@@ -858,27 +1177,6 @@
     },
     {
       "question": {
-        "i": "AT401-P1-07",
-        "t": "T4.01",
-        "o": "A",
-        "q": "¿Qué comando en Linux muestra solo la versión de la distribución Linux?",
-        "a": [
-          "lsb_release -r.",
-          "lsb_release -d.",
-          "lsb_release -i.",
-          "lsb_release -a."
-        ],
-        "c": 0,
-        "k": "D",
-        "x": [],
-        "d": null
-      },
-      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
-      "reviewStatus": "unreviewed",
-      "evidenceKeys": []
-    },
-    {
-      "question": {
         "i": "AT401-P1-08",
         "t": "T4.01",
         "o": "A",
@@ -1071,27 +1369,6 @@
     },
     {
       "question": {
-        "i": "AT401-P1-20",
-        "t": "T4.01",
-        "o": "A",
-        "q": "Indique qué comando del gestor de paquetes RPM utilizamos para obtener la lista de ficheros de un paquete:",
-        "a": [
-          "rpm -ql paquete.",
-          "rpm -qi paquete.",
-          "rpm -qa paquete.",
-          "rpm -qf paquete."
-        ],
-        "c": 0,
-        "k": "C",
-        "x": [],
-        "d": null
-      },
-      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
-      "reviewStatus": "unreviewed",
-      "evidenceKeys": []
-    },
-    {
-      "question": {
         "i": "AT401-P1-21",
         "t": "T4.01",
         "o": "A",
@@ -1128,9 +1405,11 @@
         "x": [],
         "d": null
       },
-      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
-      "reviewStatus": "unreviewed",
-      "evidenceKeys": []
+      "reason": "El material presenta Honolulu como novedad de Windows Server 2019, pero indica que también gestiona Windows 2012 R2 y2016. El enunciado pregunta genéricamente con qué versión está relacionado; pendiente de delimitar novedad y compatibilidad para asegurar unicidad.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "so-honolulu-pending"
+      ]
     },
     {
       "question": {
@@ -1374,27 +1653,6 @@
     },
     {
       "question": {
-        "i": "AT401-P1-35",
-        "t": "T4.01",
-        "o": "A",
-        "q": "¿Qué servicio de Windows permite la gestión de dispositivos móviles?",
-        "a": [
-          "Windows Insider.",
-          "Windows Intune.",
-          "Windows MDM.",
-          "Windows Passport."
-        ],
-        "c": 1,
-        "k": "D",
-        "x": [],
-        "d": null
-      },
-      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
-      "reviewStatus": "unreviewed",
-      "evidenceKeys": []
-    },
-    {
-      "question": {
         "i": "AT401-P1-36",
         "t": "T4.01",
         "o": "A",
@@ -1533,27 +1791,6 @@
           "enable httpd."
         ],
         "c": 0,
-        "k": "C",
-        "x": [],
-        "d": null
-      },
-      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
-      "reviewStatus": "unreviewed",
-      "evidenceKeys": []
-    },
-    {
-      "question": {
-        "i": "AT401-P1-44",
-        "t": "T4.01",
-        "o": "A",
-        "q": "Para visualizar los ficheros swaps en un sistema Linux debe ejecutar:",
-        "a": [
-          "cat /proc/mem/swap.",
-          "cat /proc/mem/swaps.",
-          "cat /proc/swap.",
-          "cat /proc/swaps."
-        ],
-        "c": 3,
         "k": "C",
         "x": [],
         "d": null
@@ -1988,28 +2225,6 @@
           "|"
         ],
         "c": 0,
-        "k": "D",
-        "x": [],
-        "d": null,
-        "z": 1
-      },
-      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
-      "reviewStatus": "unreviewed",
-      "evidenceKeys": []
-    },
-    {
-      "question": {
-        "i": "AS08-P1-44",
-        "t": "T4.01",
-        "o": "A",
-        "q": "¿Qué programa permite instalar y probar las nuevas funcionalidades de Windows?",
-        "a": [
-          "Windows Beta.",
-          "Windows Tester.",
-          "Windows Insider.",
-          "Windows Alfa Developer."
-        ],
-        "c": 2,
         "k": "D",
         "x": [],
         "d": null,
@@ -2733,8 +2948,8 @@
   "counts": {
     "total": 145,
     "alreadyHadCitation": 30,
-    "added": 4,
-    "pending": 111,
-    "withCitation": 34
+    "added": 11,
+    "pending": 104,
+    "withCitation": 41
   }
 }
