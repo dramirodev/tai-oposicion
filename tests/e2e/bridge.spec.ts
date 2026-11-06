@@ -679,6 +679,27 @@ test.describe('explicaciones offline con el service worker real', () => {
       await scenarios.arrayBuffer();
     });
     await expect.poll(() => page.evaluate(async () => !!(await caches.match('data/supuestos.json')))).toBe(true);
+    const worker = readFileSync(join(process.cwd(), 'dist/sw.js'), 'utf8');
+    const shellManifest = worker.match(/^const SHELL = (\[.*\]);$/m);
+    if (!shellManifest) throw new Error('Falta el manifiesto de recursos del worker compilado');
+    const shellFiles = JSON.parse(shellManifest[1]) as string[];
+    const builtModules = shellFiles.filter(path => path.endsWith('.js') && path.startsWith('assets/'))
+      .map(path => new URL(path, page.url()).pathname).sort();
+    for (const module of ['java', 'github-light', 'github-dark']) {
+      expect(builtModules.some(path => path.startsWith('/assets/' + module + '-')), module).toBe(true);
+    }
+    const cachedModules = () => page.evaluate(async () => {
+      const shell = (await caches.keys()).find(name => name.startsWith('tai-v'));
+      if (!shell) return [];
+      const requests = await (await caches.open(shell)).keys();
+      return requests.map(request => new URL(request.url).pathname).filter(path => path.startsWith('/assets/') && path.endsWith('.js')).sort();
+    });
+    expect(await cachedModules()).toEqual(builtModules);
+    const expectHighlightedSnippet = async () => {
+      const code = page.locator('.code-explanation .code-sample code[data-shiki-language="java"]');
+      await expect(code).toHaveJSProperty('textContent', explanation.snippet);
+      await expect(code.locator('.shiki-token').first()).toBeVisible();
+    };
     await context.setOffline(true);
 
     await page.locator('#blank').click();
@@ -686,10 +707,14 @@ test.describe('explicaciones offline con el service worker real', () => {
     await page.locator('#reveal-solution').click();
     await expect(page.locator('.code-explanation')).toBeVisible();
     await expect(page.locator('.code-explanation .tag')).toHaveText('Borrador');
+    // The card renders before the lazy grammar. Reloading earlier cancels an in-flight module import.
+    await expectHighlightedSnippet();
     await page.reload();
     await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
     await page.locator('.overlay [data-v="1"]').click();
     await expect(page.locator('.code-explanation')).toBeVisible();
+    await expectHighlightedSnippet();
+    expect(await cachedModules()).toEqual(builtModules);
     const cached = await page.evaluate(async () => {
       const response = await fetch('explanations/index.json');
       return { ok: response.ok, index: await response.json() as { i: string }[] };
