@@ -4,6 +4,10 @@
 
 Esta sección prevalece sobre los hitos históricos que se conservan debajo.
 
+Hito de cierre PR110: integrado como c38058d909bad19e08e7ef11ec6a7f2f17614081, CI42215300160 SUCCESS y despliegue42220705417 SUCCESS. Main avanzó después a f6aa79f (PR116); se conserva la mejora concurrente de sincronización por lotes y las reparaciones editoriales. La continuación audit/followup-2026-11-06 integra ese main; único conflicto documental resuelto conservando ambos historiales. UX-023 verificado antes de integrar: check1050/29skip, Supertest15/15 y Firefox39/39. Revalidación conjunta pendiente. Perfil EXTREME remoto42247874417 iniciado en main, incluye QUICK/INTENSIVE y estrés determinista; todavía sin resultado. ATE-017 cerrado por CI real. UX-009 y ATE-005 globales siguen parciales. Próximo paso: check y Supertest conjuntos, publicar PR de continuación y observar perfiles remotos.
+
+Lo que sigue en esta sección describe hitos históricos anteriores al cierre; la autorización vigente permite integrar PR110 y su despliegue automático existente.
+
 Hito10:37: ATE-015/016 corregidos y verificados. Importación repetida300 sesiones deduplicada; recuperación exacta en contexto limpio. Supertest13/13(1,7min), sync26/26, check1049/29 omitidas. Helper REST pagina y segundo login reutiliza proveedor.
 
 - Checkout activo: `/tmp/tai-audit-integration`, PR110, integración de main6b68b0b publicada como2e85f9e. Checkout original con cambios concurrentes intacto.

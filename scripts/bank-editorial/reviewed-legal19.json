@@ -1,0 +1,1683 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "ba4868d",
+  "status": "LOCAL_PENDING_CI_AND_PUBLICATION",
+  "sourceCandidateSha256": "b5c4523e0facc66aeca77e0f7f218a4309283d6010d72d5c1b615c4ad4868292",
+  "sourceCandidates": [
+    {
+      "file": "reviewed-candidate.json",
+      "sha256": "6bbe1458a55bda99a1c6a7067d8dd5354707e963a02bdb78744f02c7b4af0df6"
+    },
+    {
+      "file": "reviewed-loreg.json",
+      "sha256": "dd3170f3cc8b5a67f1940efb69ac84838e822dbb33b8fc6673ee64e364c0f7b7"
+    }
+  ],
+  "fingerprintEncoding": "SHA256 UTF8 JSON.stringify Node insertion-order, no sorted keys",
+  "questions": [
+    {
+      "id": "AT107-P1-59",
+      "topic": "T1.07",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "AT107-P1-59",
+        "t": "T1.07",
+        "o": "A",
+        "q": "La prioridad en el acceso a los servicios vendrá determinada por el grado y nivel de dependencia y, a igual grado y nivel:",
+        "a": [
+          "Se atenderá a la capacidad económica del solicitante.",
+          "Tendrá preferencia la persona de mayor edad.",
+          "Tendrá preferencia la persona de menor edad.",
+          "Será determinante la fecha de la solicitud."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT107-P1-59",
+        "t": "T1.07",
+        "o": "A",
+        "q": "Según el artículo 14.4 de la Ley 39/2006 vigente desde el 23 de octubre de 2026, la prioridad de acceso se determina por el grado de dependencia. A igual grado, ¿qué criterio se aplica primero?",
+        "a": [
+          "La capacidad económica de la persona solicitante.",
+          "La mayor edad de la persona solicitante.",
+          "La menor edad de la persona solicitante.",
+          "El tiempo de espera transcurrido desde la fecha de solicitud para acceder al servicio elegido."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "El temario p149 conserva la prioridad económica anterior. La reforma vigente aplica primero el tiempo desde la solicitud, y la capacidad económica sólo a igual grado y tiempo. A: Es el desempate posterior, no el primero. B: La edad mayor no sustituye al tiempo de espera. C: La edad menor no sustituye al tiempo de espera. D: Es el primer criterio a igual grado.",
+        "u": "La prioridad en el acceso a los servicios vendrá determinada por el grado de dependencia [p. 149]"
+      },
+      "beforeSha256": "cc155096f301744bda398c32fa101a20bb7d1708f1f04e48b1b024d41becf59c",
+      "afterSha256": "9ec001d8f1ab51afc6e5d8a08ac5ca38043dc47026872e7853252fd6ffefd173",
+      "reference": {
+        "pdf": "01_Temario/T1.07 Políticas de Igualdad/T1.07 Políticas de Igualdad - Temario.pdf",
+        "page": 149,
+        "sha256": "87083522e2f662659e2f016cc5fbd2a68f0bad091543d640ab88bdcac34dfa9a",
+        "quote": "La prioridad en el acceso a los servicios vendrá determinada por el grado de dependencia"
+      },
+      "reviewedOptions": [
+        "Es el desempate posterior, no el primero.",
+        "La edad mayor no sustituye al tiempo de espera.",
+        "La edad menor no sustituye al tiempo de espera.",
+        "Es el primer criterio a igual grado."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-21990",
+          "article": "art.14.4, Ley4/2026",
+          "checkedAt": "2026-11-06",
+          "assessment": "El temario p149 conserva la prioridad económica anterior. La reforma vigente aplica primero el tiempo desde la solicitud, y la capacidad económica sólo a igual grado y tiempo.",
+          "localSnapshot": "BOE-A-2006-21990.html",
+          "snapshotSha256": "99d977aa46b8a9f98f7fc669cdaa75da75e20a489f57e53a530ea13d3da5847b"
+        }
+      ],
+      "objectiveChange": "Se conserva el concepto evaluado; se precisa la redacción legal aplicable.",
+      "sourceDiscrepancy": "El temario p149 conserva la prioridad económica anterior. La reforma vigente aplica primero el tiempo desde la solicitud, y la capacidad económica sólo a igual grado y tiempo.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": true,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "AT107-P1-61",
+      "topic": "T1.07",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "AT107-P1-61",
+        "t": "T1.07",
+        "o": "A",
+        "q": "En relación al Servicio de Teleasistencia, señale la afirmación correcta:",
+        "a": [
+          "Este servicio no existe en la actualidad.",
+          "Se recoge en el catálogo de servicios y, además, es compatible con el servicio de ayuda a domicilio, pero no con el de atención residencial.",
+          "Se recoge en el catálogo de servicios y, además, es compatible con el servicio de atención residencial, pero no con el de ayuda a domicilio.",
+          "Se recoge en el catálogo de servicios siendo compatible con el servicio de atención residencial, así como con el de ayuda a domicilio."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT107-P1-61",
+        "t": "T1.07",
+        "o": "A",
+        "q": "Según el artículo 22.4 de la Ley 39/2006 vigente desde el 23 de octubre de 2026, señale la afirmación correcta sobre la teleasistencia:",
+        "a": [
+          "Este servicio no existe en la actualidad.",
+          "Se recoge en el catálogo de servicios y, además, es compatible con el servicio de ayuda a domicilio, pero no con el de atención residencial.",
+          "Se recoge en el catálogo de servicios y, además, es compatible con el servicio de atención residencial, pero no con el de ayuda a domicilio.",
+          "Se recoge en el catálogo de servicios siendo compatible con el servicio de atención residencial, así como con el de ayuda a domicilio."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "La cita del temario recoge la exclusión residencial antigua. El vigente22.4 reconoce teleasistencia con independencia del resto de prestaciones o servicios y como complementaria en el PIA. A: El servicio existe. B: La exclusión residencial ya no reproduce la regla vigente. C: No se excluye la ayuda a domicilio. D: Ambas compatibilidades son coherentes con la regla vigente.",
+        "u": "Este servicio se prestará a las personas que no reciban servicios de atención residencial [p. 152]"
+      },
+      "beforeSha256": "89a0366dc89b9c5cbdfef8ec2cbe22acfc0fb30dd53aa716cb2dc2efcb211571",
+      "afterSha256": "1e6ff2be9b9be9604483332c418c5a69a3f0705c663a5cde5cf17ea8a3baf6ef",
+      "reference": {
+        "pdf": "01_Temario/T1.07 Políticas de Igualdad/T1.07 Políticas de Igualdad - Temario.pdf",
+        "page": 152,
+        "sha256": "87083522e2f662659e2f016cc5fbd2a68f0bad091543d640ab88bdcac34dfa9a",
+        "quote": "Este servicio se prestará a las personas que no reciban servicios de atención residencial"
+      },
+      "reviewedOptions": [
+        "El servicio existe.",
+        "La exclusión residencial ya no reproduce la regla vigente.",
+        "No se excluye la ayuda a domicilio.",
+        "Ambas compatibilidades son coherentes con la regla vigente."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-21990",
+          "article": "art.22.4, Ley4/2026",
+          "checkedAt": "2026-11-06",
+          "assessment": "La cita del temario recoge la exclusión residencial antigua. El vigente22.4 reconoce teleasistencia con independencia del resto de prestaciones o servicios y como complementaria en el PIA.",
+          "localSnapshot": "BOE-A-2006-21990.html",
+          "snapshotSha256": "99d977aa46b8a9f98f7fc669cdaa75da75e20a489f57e53a530ea13d3da5847b"
+        }
+      ],
+      "objectiveChange": "Se conserva el concepto evaluado; se precisa la redacción legal aplicable.",
+      "sourceDiscrepancy": "La cita del temario recoge la exclusión residencial antigua. El vigente22.4 reconoce teleasistencia con independencia del resto de prestaciones o servicios y como complementaria en el PIA.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "AT107-P1-62",
+      "topic": "T1.07",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "AT107-P1-62",
+        "t": "T1.07",
+        "o": "A",
+        "q": "En relación con el servicio de atención residencial es FALSO que:",
+        "a": [
+          "El servicio de atención residencial será prestado por las Administraciones Públicas tanto en centro propios como concertados.",
+          "La prestación de este servicio puede tener carácter permanente o temporal.",
+          "La prestación de este servicio tendrá carácter temporal durante vacaciones, fines de semana y enfermedades o periodos de descanso de los cuidadores no profesionales.",
+          "Las tres respuestas anteriores son correctas."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT107-P1-62",
+        "t": "T1.07",
+        "o": "A",
+        "q": "Según el artículo 25 de la Ley 39/2006 vigente desde el 23 de octubre de 2026, ¿qué afirmación sobre la atención residencial es FALSA?",
+        "a": [
+          "Debe ofrecer un lugar para vivir en un entorno de confianza y bienestar, hogareño, inclusivo y accesible.",
+          "Puede tener carácter permanente o temporal.",
+          "Puede atender estancias temporales de convalecencia o de descanso de personas cuidadoras no profesionales.",
+          "Sólo puede prestarse con carácter permanente; la ley no contempla estancias temporales."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "n": "La pregunta original no contenía una afirmación falsa inequívoca. Se conserva el servicio y la selección inversa, actualizando A al art25.1 y sustituyendo D por la negación falsa del25.2. A: Describe la finalidad del25.1. B: El25.2 permite ambas modalidades. C: El25.2 contempla esos supuestos temporales. D: Niega indebidamente las estancias temporales.",
+        "u": "La prestación de este servicio puede tener carácter permanente [p. 153]"
+      },
+      "beforeSha256": "41c02200901f833e7302f3b24cce460e989355b40f5053aaa9dc6506a48ee487",
+      "afterSha256": "1a6cafc7d5b935a4d185ac92b7f559b49724fcd569fcf4f3b58ba30aff1f8d9b",
+      "reference": {
+        "pdf": "01_Temario/T1.07 Políticas de Igualdad/T1.07 Políticas de Igualdad - Temario.pdf",
+        "page": 153,
+        "sha256": "87083522e2f662659e2f016cc5fbd2a68f0bad091543d640ab88bdcac34dfa9a",
+        "quote": "La prestación de este servicio puede tener carácter permanente"
+      },
+      "reviewedOptions": [
+        "Describe la finalidad del25.1.",
+        "El25.2 permite ambas modalidades.",
+        "El25.2 contempla esos supuestos temporales.",
+        "Niega indebidamente las estancias temporales."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-21990",
+          "article": "art.25.1 y25.2, Ley4/2026",
+          "checkedAt": "2026-11-06",
+          "assessment": "La pregunta original no contenía una afirmación falsa inequívoca. Se conserva el servicio y la selección inversa, actualizando A al art25.1 y sustituyendo D por la negación falsa del25.2.",
+          "localSnapshot": "BOE-A-2006-21990.html",
+          "snapshotSha256": "99d977aa46b8a9f98f7fc669cdaa75da75e20a489f57e53a530ea13d3da5847b"
+        }
+      ],
+      "objectiveChange": "Se conserva el concepto evaluado; se precisa la redacción legal aplicable.",
+      "sourceDiscrepancy": "La pregunta original no contenía una afirmación falsa inequívoca. Se conserva el servicio y la selección inversa, actualizando A al art25.1 y sustituyendo D por la negación falsa del25.2.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "AT109ALT-P1-11",
+      "topic": "T1.09",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "AT109ALT-P1-11",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según el RGPD, respecto al tratamiento de datos personales relativos a condenas e infracciones penales. Señale la correcta:",
+        "a": [
+          "El tratamiento de datos personales relativos a condenas e infracciones penales o medidas de seguridad conexas podrá llevarse a cabo bajo la supervisión de las autoridades públicas y privadas debidamente autorizadas.",
+          "El tratamiento de datos personales relativos a condenas e infracciones penales o medidas de seguridad conexas sólo podrá llevarse a cabo bajo la supervisión de las autoridades públicas.",
+          "El tratamiento de datos personales relativos a condenas e infracciones penales o medidas de seguridad conexas sólo podrá llevarse a cabo bajo la supervisión de las autoridades públicas y privadas aun sin autorizar.",
+          "El tratamiento de datos personales relativos a condenas e infracciones penales o medidas de seguridad conexas no está permitido."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT109ALT-P1-11",
+        "t": "T1.09",
+        "o": "A",
+        "q": "Según el artículo 10 RGPD, ¿qué alternativa recoge íntegramente la condición específica para tratar datos relativos a condenas e infracciones penales sobre la base de su artículo 6.1?",
+        "a": [
+          "Basta que una autoridad privada supervise el tratamiento, sin habilitación normativa adicional.",
+          "Debe existir supervisión de autoridades públicas o autorización del Derecho de la Unión o de los Estados miembros que establezca garantías adecuadas para los derechos y libertades.",
+          "Puede hacerse bajo supervisión pública o privada aunque no exista autorización ni garantías.",
+          "Este tratamiento está prohibido en todo caso."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "B anterior omitía la vía de habilitación normativa con garantías. Se completa la condición sin confundirla con el registro completo de condenas penales. A: La mera supervisión privada no basta. B: Recoge las dos vías del art10. C: Omite condiciones legales necesarias. D: El artículo permite el tratamiento condicionado.",
+        "u": "o cuando lo autorice el Derecho de la Unión o de los Estados miembros que establezca garantías adecuadas para los derechos y libertades de los interesados. [p. 13]"
+      },
+      "beforeSha256": "8ff36acd3f2c3ce1d900c6e0b9fed50cedd158e132281767da3564894462425f",
+      "afterSha256": "bd4c53ffe8f00a506fc0b4d6b65bf6d1b098649971fc12383b49cd754b095bb5",
+      "reference": {
+        "pdf": "01_Temario/T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+        "page": 13,
+        "sha256": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+        "quote": "o cuando lo autorice el Derecho de la Unión o de los Estados miembros que establezca garantías adecuadas para los derechos y libertades de los interesados."
+      },
+      "reviewedOptions": [
+        "La mera supervisión privada no basta.",
+        "Recoge las dos vías del art10.",
+        "Omite condiciones legales necesarias.",
+        "El artículo permite el tratamiento condicionado."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807",
+          "article": "art.10",
+          "checkedAt": "2026-11-06",
+          "assessment": "B anterior omitía la vía de habilitación normativa con garantías. Se completa la condición sin confundirla con el registro completo de condenas penales.",
+          "localSnapshot": "DOUE-L-2016-80807.html",
+          "snapshotSha256": "29bed1b7ecc0ee04f21fa2a0ebfb12b332b41f25a0fdd8b94fa31c00cda7d4cc"
+        }
+      ],
+      "objectiveChange": "Se conserva el concepto evaluado; se precisa la redacción legal aplicable.",
+      "sourceDiscrepancy": "B anterior omitía la vía de habilitación normativa con garantías. Se completa la condición sin confundirla con el registro completo de condenas penales.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "AT110-P1-70",
+      "topic": "T1.10",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "AT110-P1-70",
+        "t": "T1.10",
+        "o": "A",
+        "q": "El artículo 9 del Real Decreto 4/2010, por el que se regula el Esquema Nacional de Interoperabilidad en el ámbito de la Administración electrónica, se refiere al inventario de información administrativa, y establece que las Administraciones Públicas deberán mantener en él:",
+        "a": [
+          "Los procedimientos administrativos y servicios que prestan de forma clasificada y estructurados en familias, con indicación del nivel de informatización de los mismos.",
+          "La relación actualizada de los órganos de dirección de los organismos y entidades de la administración pública.",
+          "La relación de los documentos o datos que puede facilitar a otras administraciones a través de un nodo de interoperabilidad, indicando las condiciones de acceso y uso del mismo.",
+          "La relación de sedes electrónicas que complementan la red de oficinas de registro y atención al ciudadano."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT110-P1-70",
+        "t": "T1.10",
+        "o": "A",
+        "q": "Según el artículo 9.1.a del RD 4/2010 vigente, ¿qué información debe mantenerse actualizada y conectarse electrónicamente con el Sistema de Información Administrativa?",
+        "a": [
+          "La relación de procedimientos administrativos y servicios prestados, de forma clasificada y estructurada.",
+          "Exclusivamente los nombres de los titulares de órganos directivos.",
+          "Exclusivamente los documentos que se pueden ceder a otras Administraciones.",
+          "Exclusivamente las direcciones de las sedes electrónicas."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "La redacción de2021 no exige aquí estructuración en familias ni indicar el nivel de informatización. Se pregunta específicamente por9.1.a para no confundir el inventario de órganos de9.1.b. A: Es el contenido de9.1.a. B: No es el inventario de procedimientos y servicios. C: No es el contenido de9.1.a. D: No es el contenido de9.1.a.",
+        "u": "La relación de los procedimientos administrativos y servicios prestados de forma clasificada y estructurada. [p. 115]"
+      },
+      "beforeSha256": "e14cbca8fb71de6f21f953e096bb78c6f289cbfbf38de482b36995675ab72f0f",
+      "afterSha256": "5dde7fb36cd3093cb5eaf3f95010ce98419b8bde135009b43291a2511e253a40",
+      "reference": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte1.pdf",
+        "page": 115,
+        "sha256": "65544a91022ee92fcf4b81dbdfe5bd23ad28da9e0ef048a8d2094f6fd2bb7598",
+        "quote": "La relación de los procedimientos administrativos y servicios prestados de forma clasificada y estructurada."
+      },
+      "reviewedOptions": [
+        "Es el contenido de9.1.a.",
+        "No es el inventario de procedimientos y servicios.",
+        "No es el contenido de9.1.a.",
+        "No es el contenido de9.1.a."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2010-1331",
+          "article": "art.9.1.a",
+          "checkedAt": "2026-11-06",
+          "assessment": "La redacción de2021 no exige aquí estructuración en familias ni indicar el nivel de informatización. Se pregunta específicamente por9.1.a para no confundir el inventario de órganos de9.1.b.",
+          "localSnapshot": "BOE-A-2010-1331.html",
+          "snapshotSha256": "712d95b6ff89376e077d5f2ba4192447a3c3ac13c541ccb50e95ee44928d6a4e"
+        }
+      ],
+      "objectiveChange": "Se conserva el concepto evaluado; se precisa la redacción legal aplicable.",
+      "sourceDiscrepancy": "La redacción de2021 no exige aquí estructuración en familias ni indicar el nivel de informatización. Se pregunta específicamente por9.1.a para no confundir el inventario de órganos de9.1.b.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "AT110-P1-85",
+      "topic": "T1.10",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "AT110-P1-85",
+        "t": "T1.10",
+        "o": "A",
+        "q": "De acuerdo con el artículo 17 del ENI sobre directorios de aplicaciones reutilizables, indique la opción INCORRECTA:",
+        "a": [
+          "La Administración General del Estado mantendrá el Directorio de aplicaciones para su libre reutilización que podrá ser accedido a través del Centro de Transferencia de Tecnología.",
+          "Las Administraciones públicas deberán tener en cuenta las soluciones disponibles para la libre reutilización que puedan satisfacer total o parcialmente las necesidades de los nuevos sistemas y servicios o la mejora y actualización de los ya implantados.",
+          "En el caso de existir una solución disponible para su reutilización total o parcial, las Administraciones Públicas estarán obligadas a su uso, salvo que la decisión de no reutilizarla se justifique en términos de eficiencia conforme al artículo 7 de la Ley Orgánica 2/2012, de 27 de abril, de Estabilidad Presupuestaria y Sostenibilidad Financiera.",
+          "Las Administraciones públicas procurarán la publicación del código de las aplicaciones, en desarrollo o finalizadas, en los directorios de aplicaciones para su libre reutilización con el fin de favorecer las actuaciones de compartir, reutilizar y colaborar, en beneficio de una mejor eficiencia."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT110-P1-85",
+        "t": "T1.10",
+        "o": "A",
+        "q": "Según el artículo 17 vigente del ENI, señale la opción INCORRECTA sobre los directorios de aplicaciones reutilizables:",
+        "a": [
+          "La AGE mantendrá el Directorio general para libre reutilización a través del Centro de Transferencia de Tecnología.",
+          "Si una Administración dispone de directorio propio, sus aplicaciones deberán poder consultarse también a través del CTT.",
+          "Las Administraciones Públicas conectarán los directorios de aplicaciones entre sí y con instrumentos equivalentes de la Unión Europea.",
+          "Publicar las aplicaciones reutilizables y su documentación en esos directorios es siempre una mera recomendación, sin obligación."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "n": "El original mezclaba art17 con la obligación de reutilizar de la Ley40/2015 y marcaba una regla verdadera. Se circunscriben las cuatro opciones al artículo que cita el enunciado. A: El17.1 lo establece. B: También lo exige17.1. C: Lo exige17.2. D: El17.3 dispone publicarán, no una recomendación facultativa.",
+        "u": "Las AAPP publicarán las aplicaciones reutilizables, en modo producto o en modo [p. 123]"
+      },
+      "beforeSha256": "881073d14714d1eaadc3bb1d6c6f0cefdb026cd50bea56cc4dc3f0dabb64d2ec",
+      "afterSha256": "8e9b0279c7dd6b579e72ee3bde7f3810d7da763ab11f7809eac9119d4cbd5f77",
+      "reference": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte1.pdf",
+        "page": 123,
+        "sha256": "65544a91022ee92fcf4b81dbdfe5bd23ad28da9e0ef048a8d2094f6fd2bb7598",
+        "quote": "Las AAPP publicarán las aplicaciones reutilizables, en modo producto o en modo"
+      },
+      "reviewedOptions": [
+        "El17.1 lo establece.",
+        "También lo exige17.1.",
+        "Lo exige17.2.",
+        "El17.3 dispone publicarán, no una recomendación facultativa."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2010-1331",
+          "article": "art.17.1–3",
+          "checkedAt": "2026-11-06",
+          "assessment": "El original mezclaba art17 con la obligación de reutilizar de la Ley40/2015 y marcaba una regla verdadera. Se circunscriben las cuatro opciones al artículo que cita el enunciado.",
+          "localSnapshot": "BOE-A-2010-1331.html",
+          "snapshotSha256": "712d95b6ff89376e077d5f2ba4192447a3c3ac13c541ccb50e95ee44928d6a4e"
+        }
+      ],
+      "objectiveChange": "Se conserva el objetivo de detectar una regla incorrecta en art17, sustituyendo las opciones ajenas/obsoletas por reglas de ese mismo artículo.",
+      "sourceDiscrepancy": "El original mezclaba art17 con la obligación de reutilizar de la Ley40/2015 y marcaba una regla verdadera. Se circunscriben las cuatro opciones al artículo que cita el enunciado.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "AT1102-P1-24",
+      "topic": "T1.10",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "AT1102-P1-24",
+        "t": "T1.10",
+        "o": "A",
+        "q": "Según la Ley 39/2015, de 1 de octubre, de Procedimiento Administrativo Común de las Administraciones Públicas, ¿cuál de los siguientes sistemas de firma no es válido para relacionarse con las Administraciones Públicas por medios electrónicos?",
+        "a": [
+          "Sistemas de sello electrónico cualificado y de sello electrónico avanzado basados en certificados electrónicos cualificados de sello electrónico.",
+          "Sistemas de firma electrónica cualificada y avanzada basados en certificados electrónicos cualificados de firma electrónica.",
+          "Cualquier otro sistema que las Administraciones Públicas consideren válido en los términos condiciones que se establezca.",
+          "Sistemas de clave concertada."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1102-P1-24",
+        "t": "T1.10",
+        "o": "A",
+        "q": "Conforme a los apartados 1, 2 y 4 del artículo 10 de la Ley 39/2015, señale la afirmación INCORRECTA sobre los sistemas de firma admitidos:",
+        "a": [
+          "Se admiten sistemas de firma electrónica cualificada y avanzada basados en certificados cualificados de firma de prestadores incluidos en la lista de confianza.",
+          "Se admiten sistemas de sello electrónico cualificado y avanzado basados en certificados cualificados de sello de prestadores incluidos en la lista de confianza.",
+          "Pueden admitirse otros sistemas en los términos y condiciones legales; los de identificación pueden usarse como firma cuando lo disponga expresamente la normativa y acrediten voluntad y consentimiento.",
+          "Cualquier contraseña o clave concertada es válida automáticamente como firma, sin cumplir condiciones ni acreditar voluntad y consentimiento."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "n": "No existe una exclusión general de toda clave concertada; tampoco toda contraseña es automáticamente válida. Se conserva la identificación de una afirmación no admisible sin declarar falsos sistemas admitidos. A: Es la clase del10.2.a. B: Es la clase del10.2.b. C: Recoge la admisión condicionada de10.2.c y10.4. D: Elimina las condiciones exigidas; por eso es incorrecta.",
+        "u": "Los interesados podrán firmar a través de cualquier medio que permita acreditar la autenticidad de la expresión de su voluntad y consentimiento [p. 22]"
+      },
+      "beforeSha256": "7747c2de831f3934ba9d606f7dc924f647192dffe86a1b1c5f95e8c8f72ea832",
+      "afterSha256": "5a9235817095d6ff736424939095baf97b02cd6f240119a61c95fd972da70633",
+      "reference": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte1.pdf",
+        "page": 22,
+        "sha256": "65544a91022ee92fcf4b81dbdfe5bd23ad28da9e0ef048a8d2094f6fd2bb7598",
+        "quote": "Los interesados podrán firmar a través de cualquier medio que permita acreditar la autenticidad de la expresión de su voluntad y consentimiento"
+      },
+      "reviewedOptions": [
+        "Es la clase del10.2.a.",
+        "Es la clase del10.2.b.",
+        "Recoge la admisión condicionada de10.2.c y10.4.",
+        "Elimina las condiciones exigidas; por eso es incorrecta."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-10565",
+          "article": "art.10.1,10.2,10.4",
+          "checkedAt": "2026-11-06",
+          "assessment": "No existe una exclusión general de toda clave concertada; tampoco toda contraseña es automáticamente válida. Se conserva la identificación de una afirmación no admisible sin declarar falsos sistemas admitidos.",
+          "localSnapshot": "BOE-A-2015-10565.html",
+          "snapshotSha256": "c68068c7cf69722de1be59d06a5fa3a6453ad64b3d73e76cc0e31f6d68f72206"
+        }
+      ],
+      "objectiveChange": "Reformulación de las cuatro opciones sobre el mismo régimen de firma para eliminar el falso rechazo categórico; se distingue de la pregunta29 sobre autenticidad e integridad.",
+      "sourceDiscrepancy": "No existe una exclusión general de toda clave concertada; tampoco toda contraseña es automáticamente válida. Se conserva la identificación de una afirmación no admisible sin declarar falsos sistemas admitidos.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "AT1102-P1-29",
+      "topic": "T1.10",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "AT1102-P1-29",
+        "t": "T1.10",
+        "o": "A",
+        "q": "¿Qué sistemas de firma electrónica, para el interesado, NO está admitidos por las Administraciones Públicas?",
+        "a": [
+          "Cualquier medio de firma que permita acreditar la autenticidad de la expresión de su voluntad y consentimiento, así como la integridad e inalterabilidad del documento.",
+          "Sistemas de firma electrónica cualificada y avanzada basados en certificados electrónicos reconocidos o cualificados de firma electrónica expedidos por prestadores incluidos en la «Lista de confianza de prestadores de servicios de certificación».",
+          "Sistemas de sello electrónico cualificado y de sello electrónico avanzado basados en certificados electrónicos reconocidos o cualificados de sello electrónico incluidos en la «Lista de confianza de prestadores de servicios de certificación».",
+          "Cualquier otro sistema que las Administraciones Públicas consideren válido, en los términos y condiciones que se establezcan."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1102-P1-29",
+        "t": "T1.10",
+        "o": "A",
+        "q": "Según el artículo 10 de la Ley 39/2015, señale la afirmación INCORRECTA sobre la firma de las personas interesadas:",
+        "a": [
+          "Se permite cualquier medio de firma aunque no acredite la autenticidad de la voluntad ni la integridad e inalterabilidad del documento.",
+          "Son válidos los sistemas de firma electrónica cualificada y avanzada basados en certificados cualificados de firma de prestadores incluidos en la lista de confianza.",
+          "Son válidos los sistemas de sello electrónico cualificado y avanzado basados en certificados cualificados de sello de prestadores incluidos en la lista de confianza.",
+          "Se admiten otros sistemas que las Administraciones consideren válidos, cumpliendo los términos y condiciones legales del artículo10.2.c."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "n": "La alternativa A anterior era cierta al reproducir10.1. Se conserva la clave A pero se cambia esa opción a la negación inequívoca de los requisitos de autenticidad e integridad; se actualiza certificados reconocidos a cualificados. A: Falsa: elimina los requisitos expresos del10.1. B: Es la clase admitida por10.2.a. C: Es la clase admitida por10.2.b. D: Es la admisión condicionada de10.2.c.",
+        "u": "Los interesados podrán firmar a través de cualquier medio que permita acreditar la autenticidad de la expresión de su voluntad y consentimiento [p. 22]"
+      },
+      "beforeSha256": "2443a395854330c5215e90882afc72b8d0b21b33f3340cbfa81f4c975f78c570",
+      "afterSha256": "26566885fe93c5cec1c8f9dc07d193c58a5b8ff69b520272c2dc89750f86b8bb",
+      "reference": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte1.pdf",
+        "page": 22,
+        "sha256": "65544a91022ee92fcf4b81dbdfe5bd23ad28da9e0ef048a8d2094f6fd2bb7598",
+        "quote": "Los interesados podrán firmar a través de cualquier medio que permita acreditar la autenticidad de la expresión de su voluntad y consentimiento"
+      },
+      "reviewedOptions": [
+        "Falsa: elimina los requisitos expresos del10.1.",
+        "Es la clase admitida por10.2.a.",
+        "Es la clase admitida por10.2.b.",
+        "Es la admisión condicionada de10.2.c."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-10565",
+          "article": "art.10.1 y10.2",
+          "checkedAt": "2026-11-06",
+          "assessment": "La alternativa A anterior era cierta al reproducir10.1. Se conserva la clave A pero se cambia esa opción a la negación inequívoca de los requisitos de autenticidad e integridad; se actualiza certificados reconocidos a cualificados.",
+          "localSnapshot": "BOE-A-2015-10565.html",
+          "snapshotSha256": "c68068c7cf69722de1be59d06a5fa3a6453ad64b3d73e76cc0e31f6d68f72206"
+        }
+      ],
+      "objectiveChange": "Se conserva el mismo régimen y la selección inversa; A deja de reproducir una regla verdadera para negar las garantías exigidas, evitando duplicar la propuesta24 sobre claves concertadas.",
+      "sourceDiscrepancy": "La alternativa A anterior era cierta al reproducir10.1. Se conserva la clave A pero se cambia esa opción a la negación inequívoca de los requisitos de autenticidad e integridad; se actualiza certificados reconocidos a cualificados.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "AT1102-P1-27",
+      "topic": "T1.10",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "AT1102-P1-27",
+        "t": "T1.10",
+        "o": "A",
+        "q": "Señale la respuesta correcta:",
+        "a": [
+          "Las Administraciones Públicas deberán garantizar que la utilización de los sistemas de firma electrónica sea posible para todo procedimiento, aun cuando se admita para ese mismo procedimiento los sistemas de sello electrónico o clave concertada.",
+          "Las Administraciones Públicas deberán garantizar que la utilización de los sistemas de sello electrónico sea posible para todo procedimiento, aun cuando se admita para ese mismo procedimiento los sistemas de firma electrónica o clave concertada.",
+          "Las Administraciones Públicas deberán garantizar que la utilización de los sistemas de firma electrónica y sello electrónico sean posible para todo procedimiento, aun cuando se admita para ese mismo procedimiento los sistemas de clave concertada o cualquier otro sistema que la Administración considere válido en los términos y condiciones que se establezca.",
+          "Las Administraciones Públicas deberán garantizar que la utilización de los sistemas de firma electrónica y sello electrónico sean posible para todo procedimiento, aun cuando se admita para ese mismo procedimiento los sistemas de clave concertada."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT1102-P1-27",
+        "t": "T1.10",
+        "o": "A",
+        "q": "Según el último párrafo del artículo 10.2 de la Ley 39/2015, ¿qué deben garantizar las Administraciones para todos los procedimientos y todos sus trámites, aunque admitan adicionalmente sistemas de la letra c)?",
+        "a": [
+          "Que siempre sea posible usar exclusivamente firma electrónica, nunca sello.",
+          "Que siempre sea posible usar exclusivamente sello electrónico, nunca firma.",
+          "Que sea posible utilizar uno de los sistemas previstos en las letras a) y b).",
+          "Que todos los interesados deban usar conjuntamente firma y sello en cada trámite."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "La garantía legal se refiere a uno de los sistemas de a y b; no impone su uso conjunto ni permite sustituirlos exclusivamente por c. A: Excluye sello sin base en la garantía. B: Excluye firma sin base en la garantía. C: Es la formulación legal. D: La garantía no impone acumulación de ambos sistemas.",
+        "u": "Las AAPP deberán garantizar que la utilización de uno de los sistemas previstos en las letras a) y b) [p. 23]"
+      },
+      "beforeSha256": "8ca43a7806e50c021062e094ab4ecbfc75ecfa5c6af3157699145000863fdb0e",
+      "afterSha256": "c38f3567a11976caaaea8ebca425e7d6a55db14698e656e0d27f549fee7aa0b2",
+      "reference": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte1.pdf",
+        "page": 23,
+        "sha256": "65544a91022ee92fcf4b81dbdfe5bd23ad28da9e0ef048a8d2094f6fd2bb7598",
+        "quote": "Las AAPP deberán garantizar que la utilización de uno de los sistemas previstos en las letras a) y b)"
+      },
+      "reviewedOptions": [
+        "Excluye sello sin base en la garantía.",
+        "Excluye firma sin base en la garantía.",
+        "Es la formulación legal.",
+        "La garantía no impone acumulación de ambos sistemas."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2015-10565",
+          "article": "art.10.2 último párrafo",
+          "checkedAt": "2026-11-06",
+          "assessment": "La garantía legal se refiere a uno de los sistemas de a y b; no impone su uso conjunto ni permite sustituirlos exclusivamente por c.",
+          "localSnapshot": "BOE-A-2015-10565.html",
+          "snapshotSha256": "c68068c7cf69722de1be59d06a5fa3a6453ad64b3d73e76cc0e31f6d68f72206"
+        }
+      ],
+      "objectiveChange": "Se conserva el concepto evaluado; se precisa la redacción legal aplicable.",
+      "sourceDiscrepancy": "La garantía legal se refiere a uno de los sistemas de a y b; no impone su uso conjunto ni permite sustituirlos exclusivamente por c.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "GEN-T1.04-15.v1",
+      "topic": "T1.04",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "GEN-T1.04-15.v1",
+        "t": "T1.04",
+        "o": "G",
+        "q": "Dentro del Foro de Gobierno Abierto, el órgano que actúa como órgano ejecutivo del Foro e impulsa sus funciones es:",
+        "a": [
+          "La Comisión Sectorial.",
+          "La Comisión Permanente.",
+          "El Pleno.",
+          "Los Grupos de trabajo."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7,
+          1
+        ],
+        "d": 1,
+        "f": "GEN-T1.04-15",
+        "u": "El Foro actúa en PLENO, COMISIÓN PERMANENTE y GRUPOS DE TRABAJO, con el mismo número de representantes de las AAPP y de la sociedad civil",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T1.04-15.v1",
+        "t": "T1.04",
+        "o": "G",
+        "q": "Según el artículo 14 del RD 371/2026, ¿qué órgano del Foro de Gobierno Abierto sirve de enlace entre el Pleno y los grupos de trabajo y de continuidad hasta renovar las vocalías, sin funciones decisorias?",
+        "a": [
+          "La Comisión Sectorial.",
+          "La Comisión Permanente.",
+          "El Pleno.",
+          "Los Grupos de trabajo."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7,
+          1
+        ],
+        "d": 1,
+        "f": "GEN-T1.04-15",
+        "u": "Comisión Permanente: actúa como órgano ejecutivo del foro e impulsa sus funciones. [p. 11]",
+        "v": 0,
+        "w": 1,
+        "n": "El PDF describe el régimen anterior como ejecutivo. En2026 la Comisión Permanente es enlace y continuidad sin funciones decisorias. A: No corresponde a la Comisión Sectorial. B: Es el órgano definido en14.1 y14.3. C: El Pleno es uno de los órganos entre los que enlaza. D: Los grupos no son la Comisión Permanente."
+      },
+      "beforeSha256": "a31f334b4b3d492cd74af723b1746f31a149735f6bfb5d783a044aeabbf07c33",
+      "afterSha256": "26a729a381d6d367495d629ab3c3a099655c90717396c27404cb233cb3097f48",
+      "reference": {
+        "pdf": "01_Temario/T1.04 Transparencia/T1.04 Transparencia - Temario.pdf",
+        "page": 11,
+        "sha256": "792e290d60098ee9bf36896087c55d2a7de7bd94edfc05fef440798556525444",
+        "quote": "Comisión Permanente: actúa como órgano ejecutivo del foro e impulsa sus funciones."
+      },
+      "reviewedOptions": [
+        "No corresponde a la Comisión Sectorial.",
+        "Es el órgano definido en14.1 y14.3.",
+        "El Pleno es uno de los órganos entre los que enlaza.",
+        "Los grupos no son la Comisión Permanente."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2026-9880",
+          "article": "art.14.1 y14.3",
+          "checkedAt": "2026-11-06",
+          "assessment": "El PDF describe el régimen anterior como ejecutivo. En2026 la Comisión Permanente es enlace y continuidad sin funciones decisorias.",
+          "localSnapshot": "BOE-A-2026-9880.html",
+          "snapshotSha256": "b16d0872b4e438c89a01dc274447372f65016d5f69ae20b18bac1eb3f85709cb"
+        }
+      ],
+      "objectiveChange": "Se conserva el concepto evaluado; se precisa la redacción legal aplicable.",
+      "sourceDiscrepancy": "El PDF describe el régimen anterior como ejecutivo. En2026 la Comisión Permanente es enlace y continuidad sin funciones decisorias.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "GEN-T1.04-16",
+      "topic": "T1.04",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "GEN-T1.04-16",
+        "t": "T1.04",
+        "o": "G",
+        "q": "El Pleno del Foro de Gobierno Abierto es el órgano formal en el que están representadas todas las AAPP y la sociedad civil implicada. ¿Con qué frecuencia se reúne?",
+        "a": [
+          "Una vez al mes.",
+          "1 o 2 veces al año.",
+          "Una vez al trimestre.",
+          "2 o 3 veces al año."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T1.04-16",
+        "u": "Se reúne 1 o 2 veces al año y en él están representadas las distintas AAPP y la sociedad civil",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T1.04-16",
+        "t": "T1.04",
+        "o": "G",
+        "q": "Según el artículo 12.1 del RD 371/2026, ¿cuál es la frecuencia mínima de reuniones ordinarias del Pleno del Foro de Gobierno Abierto?",
+        "a": [
+          "Al menos una vez al mes.",
+          "Al menos dos veces al año.",
+          "Exactamente una vez al año.",
+          "Sólo se reúne con carácter extraordinario."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T1.04-16",
+        "u": "Se reúne 1 o 2 veces al año [p. 11]",
+        "v": 0,
+        "w": 1,
+        "n": "El mínimo legal vigente es dos reuniones ordinarias anuales, sin máximo de dos; el rango1–2 del PDF ha quedado desactualizado. A: El mínimo no es mensual. B: Es el mínimo exigido. C: Una sola no alcanza el mínimo. D: También hay reuniones ordinarias."
+      },
+      "beforeSha256": "d47aa8bdd7ef9369f808c681f43cd0ce7e302c70b2c8013661823077dc1fa8f8",
+      "afterSha256": "3b7ca879f976e506fba152ecb131fc68b0ad1f47e7d861dba3cbf53e60ea369b",
+      "reference": {
+        "pdf": "01_Temario/T1.04 Transparencia/T1.04 Transparencia - Temario.pdf",
+        "page": 11,
+        "sha256": "792e290d60098ee9bf36896087c55d2a7de7bd94edfc05fef440798556525444",
+        "quote": "Se reúne 1 o 2 veces al año"
+      },
+      "reviewedOptions": [
+        "El mínimo no es mensual.",
+        "Es el mínimo exigido.",
+        "Una sola no alcanza el mínimo.",
+        "También hay reuniones ordinarias."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2026-9880",
+          "article": "art.12.1",
+          "checkedAt": "2026-11-06",
+          "assessment": "El mínimo legal vigente es dos reuniones ordinarias anuales, sin máximo de dos; el rango1–2 del PDF ha quedado desactualizado.",
+          "localSnapshot": "BOE-A-2026-9880.html",
+          "snapshotSha256": "b16d0872b4e438c89a01dc274447372f65016d5f69ae20b18bac1eb3f85709cb"
+        }
+      ],
+      "objectiveChange": "Se conserva el concepto evaluado; se precisa la redacción legal aplicable.",
+      "sourceDiscrepancy": "El mínimo legal vigente es dos reuniones ordinarias anuales, sin máximo de dos; el rango1–2 del PDF ha quedado desactualizado.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "GEN-T1.04-17.v1",
+      "topic": "T1.04",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "GEN-T1.04-17.v1",
+        "t": "T1.04",
+        "o": "G",
+        "q": "En la Comisión Permanente del Foro de Gobierno Abierto, ¿cuántos vocales representan a las AAPP y cuántos a la sociedad civil?",
+        "a": [
+          "6 vocales de las AAPP y 6 vocales de la sociedad civil.",
+          "8 vocales de las AAPP y 8 vocales de la sociedad civil.",
+          "6 vocales de las AAPP y 4 vocales de la sociedad civil.",
+          "4 vocales de las AAPP y 4 vocales de la sociedad civil."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2,
+          3
+        ],
+        "d": 3,
+        "f": "GEN-T1.04-17",
+        "u": "Vicepresidentes Primero y Segundo, 6 vocales representantes de las AAPP y 6 vocales representantes de la sociedad civil",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T1.04-17.v1",
+        "t": "T1.04",
+        "o": "G",
+        "q": "Según el artículo 14.2.c del RD 371/2026, ¿cómo se determina el número de vocalías procedentes de los grupos de trabajo en la Comisión Permanente del Foro?",
+        "a": [
+          "Una vocalía por cada grupo de trabajo constituido.",
+          "Siempre seis vocalías de las AAPP y seis de la sociedad civil.",
+          "Siempre seis vocalías de las AAPP y cuatro de la sociedad civil.",
+          "Siempre cuatro vocalías de las AAPP y cuatro de la sociedad civil."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2,
+          3
+        ],
+        "d": 3,
+        "f": "GEN-T1.04-17",
+        "u": "6 vocales representantes de las AAPP y 6 vocales representantes de la sociedad civil. [p. 11]",
+        "v": 0,
+        "w": 1,
+        "n": "La norma vigente fija una vocalía por grupo, no el cupo6+6 del PDF. No se confunde ese número con el resto de integrantes de la Comisión ni con los criterios de paridad. A: Es el criterio del14.2.c. B: Reproduce el cupo anterior, no el régimen actual. C: No es el criterio vigente. D: No es el criterio vigente."
+      },
+      "beforeSha256": "892ac719bcf724c5de33f7972b7a5b57623748382ccd2d9452aa6434d0f68c76",
+      "afterSha256": "911feb1f0c94c962d6713f88aaa1676c490cf4a4f6be2508e7e286511b76cc2b",
+      "reference": {
+        "pdf": "01_Temario/T1.04 Transparencia/T1.04 Transparencia - Temario.pdf",
+        "page": 11,
+        "sha256": "792e290d60098ee9bf36896087c55d2a7de7bd94edfc05fef440798556525444",
+        "quote": "6 vocales representantes de las AAPP y 6 vocales representantes de la sociedad civil."
+      },
+      "reviewedOptions": [
+        "Es el criterio del14.2.c.",
+        "Reproduce el cupo anterior, no el régimen actual.",
+        "No es el criterio vigente.",
+        "No es el criterio vigente."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2026-9880",
+          "article": "art.14.2.c y15",
+          "checkedAt": "2026-11-06",
+          "assessment": "La norma vigente fija una vocalía por grupo, no el cupo6+6 del PDF. No se confunde ese número con el resto de integrantes de la Comisión ni con los criterios de paridad.",
+          "localSnapshot": "BOE-A-2026-9880.html",
+          "snapshotSha256": "b16d0872b4e438c89a01dc274447372f65016d5f69ae20b18bac1eb3f85709cb"
+        }
+      ],
+      "objectiveChange": "Se conserva la composición de la Comisión; el conteo fijo se convierte en la regla vigente de determinación, porque no existe un número fijo sin conocer los grupos.",
+      "sourceDiscrepancy": "La norma vigente fija una vocalía por grupo, no el cupo6+6 del PDF. No se confunde ese número con el resto de integrantes de la Comisión ni con los criterios de paridad.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "GEN-T1.04-19",
+      "topic": "T1.04",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "GEN-T1.04-19",
+        "t": "T1.04",
+        "o": "G",
+        "q": "Según el temario, la Ley 19/2013, de 9 de diciembre, de transparencia, acceso a la información pública y buen gobierno (LTAIBG) cuenta con un número de artículos estructurados en un título preliminar y 3 títulos más. ¿Cuántos artículos son?",
+        "a": [
+          "35 artículos.",
+          "50 artículos.",
+          "40 artículos.",
+          "30 artículos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          2,
+          6
+        ],
+        "d": 1,
+        "f": "GEN-T1.04-19",
+        "u": "cuenta con 40 artículos estructurados en un título preliminar y 3 títulos más",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T1.04-19",
+        "t": "T1.04",
+        "o": "G",
+        "q": "En el texto consolidado de la Ley 19/2013, contando como artículo separado el artículo 6 bis y sin contar disposiciones adicionales, transitorias o finales, ¿cuántos artículos aparecen numerados en el índice?",
+        "a": [
+          "35 artículos.",
+          "50 artículos.",
+          "41 artículos.",
+          "30 artículos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          2,
+          6
+        ],
+        "d": 1,
+        "f": "GEN-T1.04-19",
+        "u": "cuenta con 40 artículos estructurados en un título preliminar y 3 títulos más [p. 12]",
+        "v": 0,
+        "w": 1,
+        "n": "El temario cuenta40 según la estructura original; el texto consolidado contiene1–40 y6bis añadido en2018:41 entradas. No se deduce el total del último ordinal. A: No coincide con el índice. B: No coincide con el índice. C: 40 ordinales más6bis son41. D: No coincide con el índice."
+      },
+      "beforeSha256": "c8a65e52dc7a3930f2ac482665ff8dbe83a19bee287ef0d5060a4089a3d2fbab",
+      "afterSha256": "ac4db1a88400b6c86f1090dc99ab9a914d7ca20b2d76b0a34a34861fce0ac809",
+      "reference": {
+        "pdf": "01_Temario/T1.04 Transparencia/T1.04 Transparencia - Temario.pdf",
+        "page": 12,
+        "sha256": "792e290d60098ee9bf36896087c55d2a7de7bd94edfc05fef440798556525444",
+        "quote": "cuenta con 40 artículos estructurados en un título preliminar y 3 títulos más"
+      },
+      "reviewedOptions": [
+        "No coincide con el índice.",
+        "No coincide con el índice.",
+        "40 ordinales más6bis son41.",
+        "No coincide con el índice."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2013-12887",
+          "article": "índice artículos1–40 y6 bis",
+          "checkedAt": "2026-11-06",
+          "assessment": "El temario cuenta40 según la estructura original; el texto consolidado contiene1–40 y6bis añadido en2018:41 entradas. No se deduce el total del último ordinal.",
+          "localSnapshot": "BOE-A-2013-12887.html",
+          "snapshotSha256": "0857122a9968aeb81bb36f9c1eac456d9673fd7c716c964c6739f5c7b43b0da9"
+        }
+      ],
+      "objectiveChange": "Se conserva contar artículos; se explicita la edición consolidada y la convención de contar6bis para no convertir el último ordinal en el total.",
+      "sourceDiscrepancy": "El temario cuenta40 según la estructura original; el texto consolidado contiene1–40 y6bis añadido en2018:41 entradas. No se deduce el total del último ordinal.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "GEN-T1.06-02.v2",
+      "topic": "T1.06",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "GEN-T1.06-02.v2",
+        "t": "T1.06",
+        "o": "G",
+        "q": "Respecto al artículo 1.4 del Código Civil, señale la afirmación INCORRECTA sobre los principios generales del Derecho:",
+        "a": [
+          "Se aplican en defecto de ley o costumbre.",
+          "Su aplicación no impide su carácter informador.",
+          "Tienen carácter informador del ordenamiento jurídico.",
+          "Se aplican con preferencia a la costumbre no probada."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          7,
+          1
+        ],
+        "d": 1,
+        "f": "GEN-T1.06-02",
+        "u": "Los PRINCIPIOS GENERALES DEL DERECHO (pgD) se aplicarán en defecto de ley o costumbre, sin perjuicio de su carácter informador del ordenamiento jurídico (art. 1.4 CC).",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T1.06-02.v2",
+        "t": "T1.06",
+        "o": "G",
+        "q": "Respecto al artículo 1.4 del Código Civil, señale la afirmación INCORRECTA sobre los principios generales del Derecho:",
+        "a": [
+          "Se aplican en defecto de ley o costumbre.",
+          "Su aplicación no impide su carácter informador.",
+          "Tienen carácter informador del ordenamiento jurídico.",
+          "Se aplican con preferencia a una ley válida y aplicable al caso."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          7,
+          1
+        ],
+        "d": 1,
+        "f": "GEN-T1.06-02",
+        "u": "se aplicarán en defecto de ley o costumbre, sin perjuicio de su carácter informador del ordenamiento jurídico [p. 3]",
+        "v": 0,
+        "w": 1,
+        "n": "La costumbre no probada no rige; por eso D anterior no era falsa inequívoca. Se sustituye por la preferencia indebida sobre una ley válida y aplicable. A: Es la regla supletoria del1.4. B: Su aplicación no elimina su función informadora. C: La función informadora es expresa. D: Contradice su aplicación en defecto de ley o costumbre."
+      },
+      "beforeSha256": "b3fef5101a2c6970e883e528fef3d18a3cdb58f59bd5938358c3213bf63bd78b",
+      "afterSha256": "5743e4ab902e23838db144395dc4ba83058c4f12c183278d503dc3ec5109026a",
+      "reference": {
+        "pdf": "01_Temario/T1.06 Fuentes del Derecho/T1.06 Fuentes del Derecho - Temario OPO.pdf",
+        "page": 3,
+        "sha256": "4a2f6932755a6d48a2bd0d8d179707b9cacab6dcd466e7bfd2654a5d27170c1d",
+        "quote": "se aplicarán en defecto de ley o costumbre, sin perjuicio de su carácter informador del ordenamiento jurídico"
+      },
+      "reviewedOptions": [
+        "Es la regla supletoria del1.4.",
+        "Su aplicación no elimina su función informadora.",
+        "La función informadora es expresa.",
+        "Contradice su aplicación en defecto de ley o costumbre."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1889-4763",
+          "article": "art.1.3 y1.4",
+          "checkedAt": "2026-11-06",
+          "assessment": "La costumbre no probada no rige; por eso D anterior no era falsa inequívoca. Se sustituye por la preferencia indebida sobre una ley válida y aplicable.",
+          "localSnapshot": "BOE-A-1889-4763.html",
+          "snapshotSha256": "5a49eb2fda0dd4f57ef0e4d08eb905121d9ab73b1d3954c17e8a7ffc0502d028"
+        }
+      ],
+      "objectiveChange": "Se conserva el concepto evaluado; se precisa la redacción legal aplicable.",
+      "sourceDiscrepancy": "La costumbre no probada no rige; por eso D anterior no era falsa inequívoca. Se sustituye por la preferencia indebida sobre una ley válida y aplicable.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "GEN-T1.08-36",
+      "topic": "T1.08",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "GEN-T1.08-36",
+        "t": "T1.08",
+        "o": "G",
+        "q": "Según el artículo 6.1 del Reglamento eIDAS, el MeID expedido en otro Estado miembro se reconocerá a efectos de autenticación transfronteriza si ha sido expedido en virtud de un SeID incluido en la lista publicada por:",
+        "a": [
+          "La Comisión Europea y sus agencias.",
+          "El Estado miembro de destino.",
+          "El Parlamento Europeo.",
+          "La Agencia de la UE para la Ciberseguridad."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T1.08-36",
+        "u": "T1.08 temario, p. 31. «Este MeID haya sido expedido en virtud de un SeID incluido en la lista publicada por la Comisión.»",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T1.08-36",
+        "t": "T1.08",
+        "o": "G",
+        "q": "Según el artículo 6.1.a del Reglamento eIDAS, una de las condiciones del reconocimiento transfronterizo es que el medio de identificación electrónica se expida en virtud de un sistema incluido en una lista. ¿Qué institución publica esa lista?",
+        "a": [
+          "La Comisión Europea.",
+          "El Estado miembro de destino.",
+          "El Parlamento Europeo.",
+          "La Agencia de la UE para la Ciberseguridad."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T1.08-36",
+        "u": "incluido en la lista publicada por la Comisión. [p. 31]",
+        "v": 0,
+        "w": 1,
+        "n": "La atribución corresponde a la Comisión; se elimina la adición sin respaldo y sus agencias. A: Es el órgano que publica la lista citada. B: El Estado de destino reconoce el medio en las condiciones legales; no publica esa lista. C: No se atribuye esa publicación al Parlamento. D: No se atribuye a ENISA. La inclusión en la lista es una condición; no se afirma que sea la única exigencia del reconocimiento."
+      },
+      "beforeSha256": "83230eee01de7d54b6b38e651a56255f0ed88d600d5f1f67c0cfb1d200ce1b7a",
+      "afterSha256": "b96f95095abf6d5a7e33be45df647e05e664e371d79a7a9f93b47ad388871b8e",
+      "reference": {
+        "pdf": "01_Temario/T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf",
+        "page": 31,
+        "sha256": "5f258b7cc3f23f39e1f8f4dbdf0679f85d8ff3c499df62a43cf011dcf27e391f",
+        "quote": "incluido en la lista publicada por la Comisión."
+      },
+      "reviewedOptions": [
+        "Es el órgano que publica la lista citada.",
+        "El Estado de destino reconoce el medio en las condiciones legales; no publica esa lista.",
+        "No se atribuye esa publicación al Parlamento.",
+        "No se atribuye a ENISA."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2014-81822",
+          "article": "art.6.1.a",
+          "checkedAt": "2026-11-06",
+          "assessment": "La atribución corresponde a la Comisión; se elimina la adición sin respaldo y sus agencias.",
+          "localSnapshot": "DOUE-L-2014-81822.html",
+          "snapshotSha256": "a5a383383b514776c5d2983283112ac66a4fcbf4acdfba622be400b4d2c622d0"
+        },
+        {
+          "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2024-80608",
+          "checkedAt": "2026-11-06",
+          "assessment": "Revisión de reforma2024 y corrección2025: no se cambia la atribución del art6.1.a; el nuevo9.2 mantiene publicación por Comisión.",
+          "localSnapshot": "DOUE-L-2024-80608.html",
+          "snapshotSha256": "507876e5b4513cad8f0af765efe682ef880f0e13236e89ac017c9dbc58d7a0ec"
+        },
+        {
+          "url": "https://www.boe.es/buscar/doc.php?id=DOUE-L-2025-80570",
+          "checkedAt": "2026-11-06",
+          "assessment": "Revisión de reforma2024 y corrección2025: no se cambia la atribución del art6.1.a; el nuevo9.2 mantiene publicación por Comisión.",
+          "localSnapshot": "DOUE-L-2025-80570.html",
+          "snapshotSha256": "ce7ff630604547b8244cd3924b3035a90706ad689fe5db037fbeb8a8f9255bfd"
+        }
+      ],
+      "objectiveChange": "Se conserva el concepto evaluado; se precisa la redacción legal aplicable.",
+      "sourceDiscrepancy": "La atribución corresponde a la Comisión; se elimina la adición sin respaldo y sus agencias.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "GEN-T1.10-97",
+      "topic": "T1.10",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "GEN-T1.10-97",
+        "t": "T1.10",
+        "o": "G",
+        "q": "Según la disposición adicional primera del Real Decreto 4/2010, de 8 de enero, por el que se regula el Esquema Nacional de Interoperabilidad en el ámbito de la Administración Electrónica, las Normas Técnicas de Interoperabilidad serán aprobadas por:",
+        "a": [
+          "El Consejo de Ministros, a propuesta del Ministerio de Asuntos Económicos y Transformación Digital.",
+          "El Ministerio de Política Territorial y Función Pública, a propuesta de la Comisión Sectorial de Administración Electrónica.",
+          "El Ministerio de Asuntos Económicos y Transformación Digital, a propuesta del Centro Criptológico Nacional.",
+          "El Ministerio de Asuntos Económicos y Transformación Digital, a propuesta de la Comisión Sectorial de Administración Electrónica."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          1,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T1.10-97",
+        "u": "T1.10 Acceso Electrónico - Temario - parte2.pdf, p. 5: El Ministerio de Asuntos Económicos y Transformación Digital, a propuesta de la Comisión Sectorial de Administración Electrónica prevista en la DA 9ª de la LRJSP aprobará las NTIs y las publicará mediante Resolución de la Secretaria de Estado de Digitalización e Inteligencia Artificial",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T1.10-97",
+        "t": "T1.10",
+        "o": "G",
+        "q": "Según la disposición adicional primera del Real Decreto 4/2010, de 8 de enero, por el que se regula el Esquema Nacional de Interoperabilidad en el ámbito de la Administración Electrónica, las Normas Técnicas de Interoperabilidad serán aprobadas por:",
+        "a": [
+          "El Consejo de Ministros, a propuesta del Ministerio de Asuntos Económicos y Transformación Digital.",
+          "El Ministerio de Política Territorial y Función Pública, a propuesta de la Comisión Sectorial de Administración Electrónica.",
+          "El Ministerio de Asuntos Económicos y Transformación Digital, a propuesta del Centro Criptológico Nacional.",
+          "El Ministerio para la Transformación Digital y de la Función Pública, a propuesta de la Comisión Sectorial de Administración Electrónica."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          1,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T1.10-97",
+        "u": "El Ministerio de Asuntos Económicos y Transformación Digital, a propuesta de la Comisión Sectorial de Administración Electrónica [p. 5]",
+        "v": 0,
+        "w": 1,
+        "n": "La DA1.2 vigente designa al Ministerio para la Transformación Digital y de la Función Pública. El PDF conserva la denominación y organización anteriores. A: No aprueba el Consejo de Ministros a esa propuesta. B: Ministerio distinto del designado. C: Ministerio y proponente distintos; CCN no es el proponente de esta regla. D: Ministerio y proponente coinciden con la DA1.2 vigente."
+      },
+      "beforeSha256": "dbeb88b3f021f9ff09e70911cb44cad5e01c4dbab4d22baf076f2dc4cadb1df2",
+      "afterSha256": "2ccbd352d59090acbba79f89bc65a46f82975f7b2151ba1ac92cd30e39d018ad",
+      "reference": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte2.pdf",
+        "page": 5,
+        "sha256": "6ee41d275d37973d7eb3e8cfef14c01ccdebc34b82d9a3281aaaf9ced288685a",
+        "quote": "El Ministerio de Asuntos Económicos y Transformación Digital, a propuesta de la Comisión Sectorial de Administración Electrónica"
+      },
+      "reviewedOptions": [
+        "No aprueba el Consejo de Ministros a esa propuesta.",
+        "Ministerio distinto del designado.",
+        "Ministerio y proponente distintos; CCN no es el proponente de esta regla.",
+        "Ministerio y proponente coinciden con la DA1.2 vigente."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2010-1331",
+          "article": "DA1.2, RD1125/2024",
+          "checkedAt": "2026-11-06",
+          "assessment": "La DA1.2 vigente designa al Ministerio para la Transformación Digital y de la Función Pública. El PDF conserva la denominación y organización anteriores.",
+          "localSnapshot": "BOE-A-2010-1331.html",
+          "snapshotSha256": "712d95b6ff89376e077d5f2ba4192447a3c3ac13c541ccb50e95ee44928d6a4e"
+        }
+      ],
+      "objectiveChange": "Se conserva el concepto evaluado; se precisa la redacción legal aplicable.",
+      "sourceDiscrepancy": "La DA1.2 vigente designa al Ministerio para la Transformación Digital y de la Función Pública. El PDF conserva la denominación y organización anteriores.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "GEN-T1.10-97.v1",
+      "topic": "T1.10",
+      "priority": "P0",
+      "status": "propuesta_pendiente_segunda_firma",
+      "before": {
+        "i": "GEN-T1.10-97.v1",
+        "t": "T1.10",
+        "o": "G",
+        "q": "Conforme a la disposición adicional primera del Real Decreto 4/2010, de 8 de enero, por el que se regula el Esquema Nacional de Interoperabilidad en el ámbito de la Administración Electrónica, las Normas Técnicas de Interoperabilidad se publican mediante:",
+        "a": [
+          "Resolución de la Secretaría General de Administración Digital.",
+          "Orden ministerial del Ministerio de Asuntos Económicos y Transformación Digital.",
+          "Resolución de la Secretaría de Estado de Digitalización e Inteligencia Artificial.",
+          "Real decreto acordado en Consejo de Ministros."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          1,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T1.10-97",
+        "u": "T1.10 Acceso Electrónico - Temario - parte2.pdf, p. 5: El Ministerio de Asuntos Económicos y Transformación Digital, a propuesta de la Comisión Sectorial de Administración Electrónica prevista en la DA 9ª de la LRJSP aprobará las NTIs y las publicará mediante Resolución de la Secretaria de Estado de Digitalización e Inteligencia Artificial",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T1.10-97.v1",
+        "t": "T1.10",
+        "o": "G",
+        "q": "Conforme a la disposición adicional primera del Real Decreto 4/2010, de 8 de enero, por el que se regula el Esquema Nacional de Interoperabilidad en el ámbito de la Administración Electrónica, las Normas Técnicas de Interoperabilidad se publican mediante:",
+        "a": [
+          "Resolución de la Secretaría General de Administración Digital.",
+          "Orden ministerial del Ministerio de Asuntos Económicos y Transformación Digital.",
+          "Resolución de la persona titular de la Secretaría de Estado de Función Pública.",
+          "Real decreto acordado en Consejo de Ministros."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          1,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T1.10-97",
+        "u": "las publicará mediante Resolución de la Secretaria de Estado de Digitalización e Inteligencia Artificial [p. 5]",
+        "v": 0,
+        "w": 1,
+        "n": "La publicación vigente se realiza mediante resolución de la persona titular de la Secretaría de Estado de Función Pública; no SEDIA como dice el PDF. A: No es la autoridad de publicación prevista actualmente. B: No se prevé una orden de ese Ministerio. C: Es el instrumento y autoridad de la DA1.2 vigente. D: No se publican mediante real decreto por esta disposición."
+      },
+      "beforeSha256": "c2f70da735a2e416ace2b6fd8e4979ebba34f3014f39a9f4a92ca8c3ced61a46",
+      "afterSha256": "82466cd1fd87be8a3065b11b4efb8f21c25b070a8c91e0930c1701eaa17ebe49",
+      "reference": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte2.pdf",
+        "page": 5,
+        "sha256": "6ee41d275d37973d7eb3e8cfef14c01ccdebc34b82d9a3281aaaf9ced288685a",
+        "quote": "las publicará mediante Resolución de la Secretaria de Estado de Digitalización e Inteligencia Artificial"
+      },
+      "reviewedOptions": [
+        "No es la autoridad de publicación prevista actualmente.",
+        "No se prevé una orden de ese Ministerio.",
+        "Es el instrumento y autoridad de la DA1.2 vigente.",
+        "No se publican mediante real decreto por esta disposición."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2010-1331",
+          "article": "DA1.2, RD1125/2024",
+          "checkedAt": "2026-11-06",
+          "assessment": "La publicación vigente se realiza mediante resolución de la persona titular de la Secretaría de Estado de Función Pública; no SEDIA como dice el PDF.",
+          "localSnapshot": "BOE-A-2010-1331.html",
+          "snapshotSha256": "712d95b6ff89376e077d5f2ba4192447a3c3ac13c541ccb50e95ee44928d6a4e"
+        }
+      ],
+      "objectiveChange": "Se conserva el concepto evaluado; se precisa la redacción legal aplicable.",
+      "sourceDiscrepancy": "La publicación vigente se realiza mediante resolución de la persona titular de la Secretaría de Estado de Función Pública; no SEDIA como dice el PDF.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "reviewStatus": "independently-reviewed-local-not-applied"
+    },
+    {
+      "id": "AT107-P1-08",
+      "topic": "T1.07",
+      "priority": "P0",
+      "status": "accepted_current_rule_independent_review_not_applied",
+      "before": {
+        "i": "AT107-P1-08",
+        "t": "T1.07",
+        "o": "A",
+        "q": "De acuerdo con la Disposición Adicional Segunda de la Ley 3/2007, de 22 de marzo, para la Igualdad efectiva de mujeres y hombres, las candidaturas que se presenten para las elecciones de diputados al Congreso deberán tener una composición equilibrada de mujeres y hombres, de forma que en el conjunto de la lista los candidatos de cada uno de los sexos supongan como mínimo:",
+        "a": [
+          "El veinte por ciento.",
+          "El treinta por ciento.",
+          "El cuarenta por ciento.",
+          "El cincuenta por ciento."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Composición equilibrada electoral: 40%."
+      },
+      "after": {
+        "i": "AT107-P1-08",
+        "t": "T1.07",
+        "o": "A",
+        "q": "Según el artículo 44 bis.1 LOREG vigente, ¿qué regla de composición deben cumplir las candidaturas al Congreso de los Diputados?",
+        "a": [
+          "Basta un mínimo del veinte por ciento de cada sexo.",
+          "Basta un mínimo del treinta por ciento de cada sexo.",
+          "Composición paritaria de mujeres y hombres, con personas de uno y otro sexo ordenadas de forma alternativa.",
+          "Basta un mínimo del cuarenta por ciento de cada sexo, sin regla de alternancia."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Actualización de la misma regla electoral tras la LO 2/2024: el pasaje del temario describe el régimen anterior. No se plantea una pregunta histórica ni se presenta el 40% como regla vigente. A: El 20% no reproduce la composición paritaria exigida. B: El 30% no reproduce la composición paritaria exigida. C: Recoge conjuntamente composición y ordenación del artículo 44 bis.1 vigente. D: El umbral histórico del 40% sin alternancia no cumple la regla actual.",
+        "u": "los candidatos de cada uno de los sexos supongan como mínimo el 40%. [p. 32]"
+      },
+      "beforeSha256": "d2aeef807abbd681b5f7f40b7f252bbfd720003148f072afbd5905fd7ec630fa",
+      "afterSha256": "04a35bffbb606d8851b57db31d1b5be572ffc4a7be84b231f6a8b6c58c337a1f",
+      "reference": {
+        "pdf": "01_Temario/T1.07 Políticas de Igualdad/T1.07 Políticas de Igualdad - Temario.pdf",
+        "page": 32,
+        "sha256": "87083522e2f662659e2f016cc5fbd2a68f0bad091543d640ab88bdcac34dfa9a",
+        "quote": "los candidatos de cada uno de los sexos supongan como mínimo el 40%."
+      },
+      "reviewedOptions": [
+        "El 20% no reproduce la composición paritaria exigida.",
+        "El 30% no reproduce la composición paritaria exigida.",
+        "Recoge conjuntamente composición y ordenación del artículo 44 bis.1 vigente.",
+        "El umbral histórico del 40% sin alternancia no cumple la regla actual."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/doc.php?id=BOE-A-2007-6115",
+          "article": "DA segunda, redacción original; contrastada con art.44 bis vigente BOE-A-1985-11672",
+          "checkedAt": "2026-11-06",
+          "assessment": "El texto de2007 explica la cita obsoleta del temario; no respalda la regla vigente propuesta.",
+          "localSnapshot": "BOE-A-2007-6115.html",
+          "snapshotSha256": "74a35052403fd6400a6aa1d9a4b4095ada87e2dd83f66656713c610278a0e69b",
+          "role": "contexto_historico_del_error_no_fuente_de_la_clave_actual"
+        },
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-11672#acuarentaycuatrobis",
+          "article": "44 bis.1 y 2",
+          "checkedAt": "2026-11-06",
+          "assessment": "Regla vigente de paridad y alternancia. Se sustituye conocimiento obsoleto del mismo precepto, no se cambia de módulo."
+        }
+      ],
+      "objectiveChange": "Actualización normativa del mismo objetivo: composición electoral equilibrada. No conservar clave histórica por conveniencia.",
+      "sourceDiscrepancy": "El temario p32 reproduce40% y tramos5 anteriores a LO2/2024. La propuesta evalúa el artículo44bis vigente, aplicable al Congreso, y lo advierte en n.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_current_rule",
+        "reviewedAt": "2026-11-06",
+        "afterSha256": "04a35bffbb606d8851b57db31d1b5be572ffc4a7be84b231f6a8b6c58c337a1f",
+        "source": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-11672#acuarentaycuatrobis",
+        "scope": "Congreso de los Diputados; art44bis.1 y2. Excepciones municipales187.2 y cabildos201.3 no alteran este ámbito.",
+        "rationale": "C es la única que incluye la ordenación alterna exigida; A/B/D no constituyen la regla vigente. Se conserva el objetivo electoral actualizado, no una clave histórica."
+      }
+    },
+    {
+      "id": "GEN-T1.07-41.v1",
+      "topic": "T1.07",
+      "priority": "P0",
+      "status": "accepted_current_rule_independent_review_not_applied",
+      "before": {
+        "i": "GEN-T1.07-41.v1",
+        "t": "T1.07",
+        "o": "G",
+        "q": "Según el artículo 44 bis de la Ley Orgánica del Régimen Electoral General, introducido por la Ley Orgánica 3/2007, la proporción mínima del cuarenta por ciento se mantendrá también en cada tramo de:",
+        "a": [
+          "Diez puestos.",
+          "Cuatro puestos.",
+          "Cinco puestos.",
+          "Tres puestos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          2,
+          6
+        ],
+        "d": 3,
+        "f": "GEN-T1.07-41",
+        "u": "Ley Orgánica 5/1985, de 19 de junio, del Régimen Electoral General",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T1.07-41.v1",
+        "t": "T1.07",
+        "o": "G",
+        "q": "Según el artículo 44 bis.1 LOREG vigente, ¿cómo deben ordenarse las personas de uno y otro sexo en las candidaturas al Congreso de los Diputados?",
+        "a": [
+          "En bloques separados de diez puestos.",
+          "Sin regla de ordenación, si se alcanza el cuarenta por ciento en el conjunto.",
+          "De forma alternativa.",
+          "En tramos de cinco puestos con un mínimo del cuarenta por ciento, sin alternancia."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          2,
+          6
+        ],
+        "d": 3,
+        "f": "GEN-T1.07-41",
+        "u": "También se mantendrá la proporción mínima del cuarenta por ciento en cada tramo de cinco puestos. [p. 32]",
+        "v": 0,
+        "w": 1,
+        "n": "Actualización de la misma regla electoral tras la LO 2/2024: el pasaje del temario describe el régimen anterior. No se plantea una pregunta histórica ni se presenta el 40% como regla vigente. A: No se establece ordenación por bloques de diez. B: La norma exige ordenación, no sólo un porcentaje global. C: Es el criterio de ordenación vigente del artículo 44 bis.1. D: La antigua regla de tramos de cinco fue sustituida; no basta como regla vigente."
+      },
+      "beforeSha256": "b2f9eeae3c53297cc22b557eb456b5330058f260dbc5a468dc9a825cf87653ea",
+      "afterSha256": "05ae06919be1f6116f2b76d17c62b5062d680552e9c9f396de6aa32480b81e34",
+      "reference": {
+        "pdf": "01_Temario/T1.07 Políticas de Igualdad/T1.07 Políticas de Igualdad - Temario.pdf",
+        "page": 32,
+        "sha256": "87083522e2f662659e2f016cc5fbd2a68f0bad091543d640ab88bdcac34dfa9a",
+        "quote": "También se mantendrá la proporción mínima del cuarenta por ciento en cada tramo de cinco puestos."
+      },
+      "reviewedOptions": [
+        "No se establece ordenación por bloques de diez.",
+        "La norma exige ordenación, no sólo un porcentaje global.",
+        "Es el criterio de ordenación vigente del artículo 44 bis.1.",
+        "La antigua regla de tramos de cinco fue sustituida; no basta como regla vigente."
+      ],
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/doc.php?id=BOE-A-2007-6115",
+          "article": "DA segunda,44bis.2 original; contraste LOREG vigente",
+          "checkedAt": "2026-11-06",
+          "assessment": "El texto de2007 explica la cita obsoleta del temario; no respalda la regla vigente propuesta.",
+          "localSnapshot": "BOE-A-2007-6115.html",
+          "snapshotSha256": "74a35052403fd6400a6aa1d9a4b4095ada87e2dd83f66656713c610278a0e69b",
+          "role": "contexto_historico_del_error_no_fuente_de_la_clave_actual"
+        },
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-11672#acuarentaycuatrobis",
+          "article": "44 bis.1 y 2",
+          "checkedAt": "2026-11-06",
+          "assessment": "Regla vigente de paridad y alternancia. Se sustituye conocimiento obsoleto del mismo precepto, no se cambia de módulo."
+        }
+      ],
+      "objectiveChange": "Actualización normativa del mismo objetivo: ordenación intralista para garantizar equilibrio. No conservar clave histórica por conveniencia.",
+      "sourceDiscrepancy": "El temario p32 reproduce40% y tramos5 anteriores a LO2/2024. La propuesta evalúa el artículo44bis vigente, aplicable al Congreso, y lo advierte en n.",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "inSample": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_current_rule",
+        "reviewedAt": "2026-11-06",
+        "afterSha256": "05ae06919be1f6116f2b76d17c62b5062d680552e9c9f396de6aa32480b81e34",
+        "source": "https://www.boe.es/buscar/act.php?id=BOE-A-1985-11672#acuarentaycuatrobis",
+        "scope": "Congreso de los Diputados; art44bis.1 y2. Excepciones municipales187.2 y cabildos201.3 no alteran este ámbito.",
+        "rationale": "C es la única que incluye la ordenación alterna exigida; A/B/D no constituyen la regla vigente. Se conserva el objetivo electoral actualizado, no una clave histórica."
+      }
+    }
+  ],
+  "files": {
+    "T1.07.json": {
+      "beforeSha256": "2b785b4b4b76be3151882f3c2e6b29cd34a3bc1874feedc79b5507b87c67914b",
+      "afterSha256": "ea3ea0c74888ac73cd701e40c451e15f8c5b778f9d750c0a42725991a8f55ef5"
+    },
+    "T1.09.json": {
+      "beforeSha256": "e3c774c571a7be5195a380c4c19049f506ef0fe2326d586338d1f9a210639d42",
+      "afterSha256": "14ba16408c26cd1e02c6056b0395d265e1e6658d3a3bcb878586e59e403cbe80"
+    },
+    "T1.10.json": {
+      "beforeSha256": "d5f13d82b83ee63476181fca30433d6812336a174d97e0860af629ae2f96d893",
+      "afterSha256": "e5e97955d8019f452d9264959cd90c7840863ff457113102d719500d6932fa4b"
+    },
+    "T1.04.json": {
+      "beforeSha256": "730729de5c97e4080b9e6dc9977a5304b182b062205b2816b730852eab6d1d54",
+      "afterSha256": "d982049b14e42a51adfb84a0ca540765e7bea336b43c66d9ce096713458c3b21"
+    },
+    "T1.06.json": {
+      "beforeSha256": "1c2639ba83ff46b86bb36b11ab15508e1e053365f4cf23140bddbe4290abc76e",
+      "afterSha256": "14f4109176ccbe40c4261d53545602448d7943d60f0ccbc24991d0fea771d160"
+    },
+    "T1.08.json": {
+      "beforeSha256": "6d09d6de4861797cc666b361c8119dcfb3dc51cdfbe37738b66ed9230098e555",
+      "afterSha256": "c16accc407f3084b993058872db9a5fa4971e2fefeb9667f98cc32d1bfe95624"
+    },
+    "meta.json": {
+      "beforeSha256": "95b53bc221d15e6c54a5693459a92c3a24b454139e1af6c08288ab7bfb1daa12",
+      "afterSha256": "f97cf2615ccf66e4641b05e8ac5e9c80fb2af621f96e9fcd7a8dd00a29a9ae96"
+    }
+  },
+  "metadataEdits": [
+    {
+      "id": "AT107-P1-59",
+      "topic": "T1.07",
+      "index": 2,
+      "before": [
+        "T1.07",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T1.07",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "2b83b55f9dfb3f510a8f8957ef24fde22ab3ae204a8954ff8894ff42bc64346e",
+      "afterSha256": "59af2f0876ad4c2b40188a654d7314ca8acfb01fe5ea7dccb091778c421e38c6"
+    },
+    {
+      "id": "AT107-P1-61",
+      "topic": "T1.07",
+      "index": 2,
+      "before": [
+        "T1.07",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T1.07",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "2b83b55f9dfb3f510a8f8957ef24fde22ab3ae204a8954ff8894ff42bc64346e",
+      "afterSha256": "59af2f0876ad4c2b40188a654d7314ca8acfb01fe5ea7dccb091778c421e38c6"
+    },
+    {
+      "id": "AT109ALT-P1-11",
+      "topic": "T1.09",
+      "index": 2,
+      "before": [
+        "T1.09",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T1.09",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "f23ac67a383b9b8bed51e70e6e3bed8cc149090eeccdce55287c831acf88119c",
+      "afterSha256": "b6a755f96e609956fb219b00a46e83df4fcebcfd5c43d1634f217697ddf938e8"
+    },
+    {
+      "id": "AT110-P1-70",
+      "topic": "T1.10",
+      "index": 2,
+      "before": [
+        "T1.10",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T1.10",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "8115c190113f0560077ea1133b5da5d03841d54da955c11ff5d44d62a1bcbe68",
+      "afterSha256": "c5c7def0886296154aa1a6eb2e72cf227a222e44644f8df9f8dc23b608c5d569"
+    },
+    {
+      "id": "AT1102-P1-24",
+      "topic": "T1.10",
+      "index": 2,
+      "before": [
+        "T1.10",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "after": [
+        "T1.10",
+        "A",
+        "I",
+        [],
+        0
+      ],
+      "beforeSha256": "c5c7def0886296154aa1a6eb2e72cf227a222e44644f8df9f8dc23b608c5d569",
+      "afterSha256": "12b35d7df6dae28966eb5c50440fadd04d57dea30bcdf52850d678544183e909"
+    },
+    {
+      "id": "AT1102-P1-27",
+      "topic": "T1.10",
+      "index": 2,
+      "before": [
+        "T1.10",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T1.10",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "8115c190113f0560077ea1133b5da5d03841d54da955c11ff5d44d62a1bcbe68",
+      "afterSha256": "c5c7def0886296154aa1a6eb2e72cf227a222e44644f8df9f8dc23b608c5d569"
+    }
+  ],
+  "sampleFiles": {
+    "T1.07.json": {
+      "beforeSha256": "02d7ba9ac38bd461cc6597bc1b3a75e01f7866c6141b7078e427d800ea8631a8",
+      "afterSha256": "dc75f7298ca34420f95f81bafa941194574f5bf9fbb0174aed24e21be8c46908"
+    }
+  },
+  "implementation": {
+    "scope": "19 legales locales; sin producción",
+    "prior216Unchanged": true
+  }
+}

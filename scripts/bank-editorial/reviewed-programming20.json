@@ -1,0 +1,2147 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "668b0e0cac427fe42741e26a9094f04815160d26",
+  "status": "LOCAL_PENDING_CI_AND_PUBLICATION",
+  "sourceCandidateSha256": "7c8c702f8ead7d18f676b6a2dbe680cf8c8d6a3445cdd24adf4a82c797c4c76e",
+  "sourceOriginalSha256": "0937fcad926300e02b95ad3e3ad34be0d705d4d2cbc7381f84df0eccc9e19ce8",
+  "fingerprintEncoding": "SHA256 UTF8 JSON.stringify Node insertion-order, no sorted keys",
+  "questions": [
+    {
+      "id": "AT306-P1-53",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "AT306-P1-53",
+        "t": "T3.06",
+        "o": "A",
+        "q": "Respecto a C++ indique la respuesta correcta:",
+        "a": [
+          "Se pueden definir valores por defecto para los parámetros de una función que sean necesarios sin restricción alguna.",
+          "El tipo de dato booleano no está soportado, aunque true y false son palabras reservadas del lenguaje.",
+          "La palabra reservada inline avisa al compilador que una función particular deberá ser generada en línea, en vez de requerir de una llamada de función.",
+          "La palabra reservada friend es utilizada exclusivamente para definir clases amigo."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          12
+        ],
+        "d": 3,
+        "n": "C++: afirmaciones con \"exclusivamente\"."
+      },
+      "after": {
+        "i": "AT306-P1-53",
+        "t": "T3.06",
+        "o": "A",
+        "q": "Respecto a C++ estándar, indique la respuesta correcta:",
+        "a": [
+          "Se pueden definir argumentos por defecto sin restricción alguna.",
+          "El tipo bool no está soportado, aunque true y false son palabras reservadas.",
+          "inline no obliga al compilador a sustituir una llamada por el cuerpo de la función.",
+          "friend se utiliza exclusivamente para declarar clases amigas."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 3,
+        "n": "Errata de academia/resumen: inline no impone expansión de llamadas. A: Los argumentos por defecto tienen restricciones de posición y redeclaración. B: bool es un tipo de C++. C: La sustitución en línea no es obligatoria. D: friend también puede declarar funciones amigas. Fuente primaria: https://eel.is/c++draft/dcl.inline ; https://eel.is/c++draft/dcl.fct.default ; https://eel.is/c++draft/class.friend",
+        "u": "Avisa al compilador que una función particular deberá ser generada en línea, en vez inline de requerir de una llamada de función. [p. 3]"
+      },
+      "beforeSha256": "c198ffcd653d5c2e9affc5221f49cf50a6b737d1e50932a6fa07542e8af4de91",
+      "afterSha256": "192fcd8202aa6d29de71c3ca4f7d81285c2dbee7dcc67d6ee437180170a0b114",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C plus.pdf",
+        "page": 3,
+        "sha256": "9243bafe5bb5be43ae4e14d28154cbad8fe5c110587560fbd782438e41abf0ff",
+        "quote": "Avisa al compilador que una función particular deberá ser generada en línea, en vez inline de requerir de una llamada de función.",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "Los argumentos por defecto tienen restricciones de posición y redeclaración.",
+        "bool es un tipo de C++.",
+        "La sustitución en línea no es obligatoria.",
+        "friend también puede declarar funciones amigas."
+      ],
+      "primary": [
+        {
+          "url": "https://eel.is/c++draft/dcl.inline",
+          "checked": "2026-11-06",
+          "sections": "dcl.inline;dcl.fct.default;class.friend"
+        },
+        {
+          "url": "https://eel.is/c++draft/dcl.fct.default",
+          "checked": "2026-11-06",
+          "sections": "dcl.inline;dcl.fct.default;class.friend"
+        },
+        {
+          "url": "https://eel.is/c++draft/class.friend",
+          "checked": "2026-11-06",
+          "sections": "dcl.inline;dcl.fct.default;class.friend"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "Errata de academia/resumen: inline no impone expansión de llamadas.",
+      "sourceAfterSha256": "cab6011e77a72471c1efdb635b6162725b3963f014df4277654fff4b98666bb6",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "cab6011e77a72471c1efdb635b6162725b3963f014df4277654fff4b98666bb6",
+        "checks": {
+          "id": "AT306-P1-53",
+          "decision": "accepted",
+          "afterNodeSha256": "cab6011e77a72471c1efdb635b6162725b3963f014df4277654fff4b98666bb6",
+          "key": 2,
+          "type": "D",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "primary_plus_local_compilation_controls"
+        }
+      },
+      "inSample": false,
+      "oracle": "cpp-inline"
+    },
+    {
+      "id": "GEN-T3.06-01.v1",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-01.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "Los creadores del lenguaje C son:",
+        "a": [
+          "Bjarne Stroustrup y James Gosling.",
+          "Ken Thompson y Linus Torvalds.",
+          "Niklaus Wirth y Dennis Ritchie.",
+          "Brian Kernighan y Dennis Ritchie."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          2,
+          12
+        ],
+        "d": 1,
+        "f": "GEN-T3.06-01",
+        "u": "El lenguaje de programación C fue creado por Brian Kernighan y Dennis Ritchie a mediados de los años 70.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-01.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "El creador principal del lenguaje C fue:",
+        "a": [
+          "Bjarne Stroustrup.",
+          "James Gosling.",
+          "Niklaus Wirth.",
+          "Dennis Ritchie."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          2,
+          12
+        ],
+        "d": 1,
+        "f": "GEN-T3.06-01",
+        "u": "El lenguaje de programación C fue creado por Brian Kernighan y Dennis Ritchie a mediados de los años 70. [p. 3]",
+        "v": 0,
+        "w": 1,
+        "n": "Dennis Ritchie desarrolló C; Brian Kernighan fue coautor del libro The C Programming Language. A: Stroustrup creó C++. B: Gosling está asociado a Java. C: Wirth creó Pascal, no C. D: Ritchie documenta la creación de C en Bell Labs. Fuente primaria: https://www.nokia.com/bell-labs/about/dennis-m-ritchie/chist.html"
+      },
+      "beforeSha256": "ea66d705561d7d9f3b16bec37158b6d4d018e23e21014dce4bff2f110c233ed0",
+      "afterSha256": "61462e95b4cf33df9e15d788865a8311a3b1354aeac30b1f89d5950d688d49e4",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 3,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "El lenguaje de programación C fue creado por Brian Kernighan y Dennis Ritchie a mediados de los años 70.",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "Stroustrup creó C++.",
+        "Gosling está asociado a Java.",
+        "Wirth creó Pascal, no C.",
+        "Ritchie documenta la creación de C en Bell Labs."
+      ],
+      "primary": [
+        {
+          "url": "https://www.nokia.com/bell-labs/about/dennis-m-ritchie/chist.html",
+          "checked": "2026-11-06",
+          "sections": "Introducción y evolución histórica"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "Dennis Ritchie desarrolló C; Brian Kernighan fue coautor del libro The C Programming Language.",
+      "sourceAfterSha256": "74eda984e0206d2fd1eb047a7c9a8eb5b45a3f015746d6a68a5775d4185c1d94",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "74eda984e0206d2fd1eb047a7c9a8eb5b45a3f015746d6a68a5775d4185c1d94",
+        "checks": {
+          "id": "GEN-T3.06-01.v1",
+          "decision": "accepted",
+          "afterNodeSha256": "74eda984e0206d2fd1eb047a7c9a8eb5b45a3f015746d6a68a5775d4185c1d94",
+          "key": 3,
+          "type": "C",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "documentary_primary"
+        }
+      },
+      "inSample": false,
+      "oracle": "documental"
+    },
+    {
+      "id": "GEN-T3.06-03.v1",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-03.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C, las palabras reservadas se escriben:",
+        "a": [
+          "Siempre en mayúsculas.",
+          "Indistintamente.",
+          "Con inicial mayúscula.",
+          "Siempre en minúsculas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          12,
+          7
+        ],
+        "d": 1,
+        "f": "GEN-T3.06-03",
+        "u": "Las palabras reservadas se escriben siempre minúsculas.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-03.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C23, las palabras clave:",
+        "a": [
+          "Se escriben siempre en mayúsculas.",
+          "Se pueden escribir indistintamente en mayúsculas o minúsculas.",
+          "Se escriben siempre con inicial mayúscula.",
+          "Tienen una grafía exacta sensible a mayúsculas; existen palabras clave como _Atomic."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          12,
+          7
+        ],
+        "d": 1,
+        "f": "GEN-T3.06-03",
+        "u": "Las palabras reservadas se escriben siempre minúsculas. [p. 3]",
+        "v": 0,
+        "w": 1,
+        "n": "La regla universal de minúsculas es falsa en C moderno; _Atomic es una palabra clave. A: int contradice la mayúscula universal. B: int e INT no son intercambiables. C: int no empieza en mayúscula. D: La grafía de la palabra clave debe respetarse. Fuente primaria: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf"
+      },
+      "beforeSha256": "433703920b7c00b65f23cb1ac759bbfc05ee77e4951874026170d40b8651d7c0",
+      "afterSha256": "85d8eb52ee8296142d888aeebeccd0cae628bd9ec296241b8bdf9f4a36d867eb",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 3,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "Las palabras reservadas se escriben siempre minúsculas.",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "int contradice la mayúscula universal.",
+        "int e INT no son intercambiables.",
+        "int no empieza en mayúscula.",
+        "La grafía de la palabra clave debe respetarse."
+      ],
+      "primary": [
+        {
+          "url": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf",
+          "checked": "2026-11-06",
+          "sections": "6.4.1 Keywords"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "La regla universal de minúsculas es falsa en C moderno; _Atomic es una palabra clave.",
+      "sourceAfterSha256": "035fdaccc93c5c9e30b1cfbe887ee43a85ff1497212ace0e9c70741850cedc89",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "035fdaccc93c5c9e30b1cfbe887ee43a85ff1497212ace0e9c70741850cedc89",
+        "checks": {
+          "id": "GEN-T3.06-03.v1",
+          "decision": "accepted",
+          "afterNodeSha256": "035fdaccc93c5c9e30b1cfbe887ee43a85ff1497212ace0e9c70741850cedc89",
+          "key": 3,
+          "type": "C",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "primary_plus_local_compilation_controls"
+        }
+      },
+      "inSample": false,
+      "oracle": "c-keywords"
+    },
+    {
+      "id": "GEN-T3.06-10.v1",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-10.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "Las variables declaradas fuera de todas las funciones se llaman:",
+        "a": [
+          "Globales, accesibles desde cualquier parte del programa.",
+          "Constantes.",
+          "Locales, accesibles solo por una función.",
+          "Estáticas, accesibles solo por un fichero."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T3.06-10",
+        "u": "En C, las variables pueden ser declaradas en cuatro lugares del módulo del programa:",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-10.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C, las variables declaradas fuera de todas las funciones tienen:",
+        "a": [
+          "Ámbito de archivo; su enlace puede ser interno o externo según la declaración.",
+          "Siempre un valor constante.",
+          "Ámbito local limitado al cuerpo de una función.",
+          "Siempre enlace interno, aunque no se use static ni exista declaración previa."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T3.06-10",
+        "u": "Fuera de todas las funciones del programa, son las llamadas variables globales, accesibles desde cualquier parte del programa. [p. 4]",
+        "v": 0,
+        "w": 1,
+        "n": "Ámbito de archivo no implica acceso universal; static puede establecer enlace interno. A: Distingue ámbito y enlace. B: La posición no las hace const. C: No están declaradas dentro de un bloque de función. D: La declaración ordinaria de un objeto a nivel de archivo puede tener enlace externo. Fuente primaria: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf"
+      },
+      "beforeSha256": "c77cc31072e5abe694ac27024011431d05f38cb2b253e4a745763c109a7ce56d",
+      "afterSha256": "6f5be62ff3fbb4a340d3e653375e7490ab482b4b6e64d400aa7e1a5bbfd94d8a",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 4,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "Fuera de todas las funciones del programa, son las llamadas variables globales, accesibles desde cualquier parte del programa.",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "Distingue ámbito y enlace.",
+        "La posición no las hace const.",
+        "No están declaradas dentro de un bloque de función.",
+        "La declaración ordinaria de un objeto a nivel de archivo puede tener enlace externo."
+      ],
+      "primary": [
+        {
+          "url": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf",
+          "checked": "2026-11-06",
+          "sections": "6.2.1 Scopes;6.2.2 Linkages"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "Ámbito de archivo no implica acceso universal; static puede establecer enlace interno.",
+      "sourceAfterSha256": "8cc42be35934854771f376e603d66d5074a616ca9041e51d16eebf4463c927a4",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "8cc42be35934854771f376e603d66d5074a616ca9041e51d16eebf4463c927a4",
+        "checks": {
+          "id": "GEN-T3.06-10.v1",
+          "decision": "accepted",
+          "afterNodeSha256": "8cc42be35934854771f376e603d66d5074a616ca9041e51d16eebf4463c927a4",
+          "key": 0,
+          "type": "C",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "primary_plus_local_compilation_controls"
+        }
+      },
+      "inSample": false,
+      "oracle": "c-file-scope"
+    },
+    {
+      "id": "GEN-T3.06-13.v1",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-13.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En la conversión automática de tipos en C, los operandos float se convierten a:",
+        "a": [
+          "double.",
+          "int.",
+          "long.",
+          "long double."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          2,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-13",
+        "u": "Todos los char y short int se convierten a int. Todos los float a double.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-13.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C, al sumar dos operandos de tipo float, sin otros operandos ni conversiones explícitas, el tipo del resultado de la expresión es:",
+        "a": [
+          "float.",
+          "int.",
+          "long.",
+          "long double."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          2,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-13",
+        "u": "Todos los char y short int se convierten a int. Todos los float a double. [p. 6]",
+        "v": 0,
+        "w": 1,
+        "n": "La suma float+float tiene tipo float. La promoción a double se aplica, por ejemplo, a argumentos variádicos; la precisión de evaluación no altera el tipo de la expresión. A: Las conversiones aritméticas usuales conservan float si ambos operandos son float. B: No se convierten automáticamente a entero. C: No se convierten automáticamente a long. D: No se exige long double como tipo de la suma. Fuente primaria: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf"
+      },
+      "beforeSha256": "8915c072fce3c8b52bab391863ffd6ba1fb8e7e6cae3b066c852caf72234ee1a",
+      "afterSha256": "255aad40e03b0e37ef5c3f954d8a7b0880703831dfeae536a8ae65c4f8d567cb",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 6,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "Todos los char y short int se convierten a int. Todos los float a double.",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "Las conversiones aritméticas usuales conservan float si ambos operandos son float.",
+        "No se convierten automáticamente a entero.",
+        "No se convierten automáticamente a long.",
+        "No se exige long double como tipo de la suma."
+      ],
+      "primary": [
+        {
+          "url": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf",
+          "checked": "2026-11-06",
+          "sections": "6.3.1.8 Usual arithmetic conversions"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "La suma float+float tiene tipo float. La promoción a double se aplica, por ejemplo, a argumentos variádicos; la precisión de evaluación no altera el tipo de la expresión.",
+      "sourceAfterSha256": "dd2f59e83004f3641db28377cd46eab26a704f92c3f7e32b84e39a4257bdcc08",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "dd2f59e83004f3641db28377cd46eab26a704f92c3f7e32b84e39a4257bdcc08",
+        "checks": {
+          "id": "GEN-T3.06-13.v1",
+          "decision": "accepted",
+          "afterNodeSha256": "dd2f59e83004f3641db28377cd46eab26a704f92c3f7e32b84e39a4257bdcc08",
+          "key": 0,
+          "type": "K",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "primary_plus_local_compilation_controls"
+        }
+      },
+      "inSample": false,
+      "oracle": "c-conversions"
+    },
+    {
+      "id": "GEN-T3.06-13.v2",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-13.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En la conversión automática, si uno de los operandos es double, el otro se convierte a:",
+        "a": [
+          "float.",
+          "int.",
+          "long double.",
+          "double."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          2,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-13",
+        "u": "Todos los char y short int se convierten a int. Todos los float a double.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-13.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C, al sumar un operando double y otro long double, el operando double se convierte a:",
+        "a": [
+          "float.",
+          "int.",
+          "long double.",
+          "Permanece double y el long double se reduce a double."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          2,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-13",
+        "u": "Si uno de los operandos es un long double, el otro se convierte en long double. [p. 6]",
+        "v": 0,
+        "w": 1,
+        "n": "Long double prevalece sobre double en estas conversiones aritméticas usuales. A: No se reduce a float. B: La operación no obliga a convertir a entero. C: Double se convierte a long double. D: Invierte la dirección normativa de la conversión. Fuente primaria: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf"
+      },
+      "beforeSha256": "78fdd9d19c876b82ef54bcbb2dc32cddd41b24215ab53aa953e3dac1dac8c2e1",
+      "afterSha256": "ddd35ba0e1b83a7d6683eddcdbf71fde2224f5a8683dadf38578ecd0d904c48c",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 6,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "Si uno de los operandos es un long double, el otro se convierte en long double.",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "No se reduce a float.",
+        "La operación no obliga a convertir a entero.",
+        "Double se convierte a long double.",
+        "Invierte la dirección normativa de la conversión."
+      ],
+      "primary": [
+        {
+          "url": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf",
+          "checked": "2026-11-06",
+          "sections": "6.3.1.8 Usual arithmetic conversions"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "Long double prevalece sobre double en estas conversiones aritméticas usuales.",
+      "sourceAfterSha256": "72372d211c0c1b3e1f62d10eef328eb4751b879b0f36e290d9c5b071635b57aa",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "72372d211c0c1b3e1f62d10eef328eb4751b879b0f36e290d9c5b071635b57aa",
+        "checks": {
+          "id": "GEN-T3.06-13.v2",
+          "decision": "accepted",
+          "afterNodeSha256": "72372d211c0c1b3e1f62d10eef328eb4751b879b0f36e290d9c5b071635b57aa",
+          "key": 2,
+          "type": "K",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "primary_plus_local_compilation_controls"
+        }
+      },
+      "inSample": false,
+      "oracle": "c-conversions"
+    },
+    {
+      "id": "GEN-T3.06-23.v2",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-23.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En un switch de C, la comparación con las constantes se realiza:",
+        "a": [
+          "De arriba hacia abajo.",
+          "De abajo hacia arriba.",
+          "En paralelo.",
+          "En orden alfabético."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          9,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-23",
+        "u": "En caso de que se encuentre una constante cuyo valor coincida con el valor de la variable, se empieza a ejecutar las sentencias hasta encontrar una sentencia break.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-23.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "¿Qué orden de comparación de las etiquetas case exige C para implementar un switch?",
+        "a": [
+          "No exige un orden de comparación; si existe una etiqueta case cuyo valor coincide, selecciona esa etiqueta.",
+          "Siempre de abajo hacia arriba.",
+          "Siempre en paralelo.",
+          "Siempre en orden alfabético."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-23",
+        "u": "realizando la comparación desde arriba hacia abajo. [p. 13]",
+        "v": 0,
+        "w": 1,
+        "n": "El estándar define la selección y ejecución, no una búsqueda secuencial obligatoria. A: El mecanismo de implementación puede variar. B: No existe esa obligación de orden inverso. C: No se exige comparación paralela. D: Las etiquetas son constantes de valor, no una búsqueda alfabética. Fuente primaria: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf"
+      },
+      "beforeSha256": "df10988a590b5c8917210abe88789d7187d6fb9625195bcaacc975bf38a41513",
+      "afterSha256": "13751f62ca8cc805bfdf666bb13eaa822e9b791805beabecafacc0e04300d663",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 13,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "realizando la comparación desde arriba hacia abajo.",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "El mecanismo de implementación puede variar.",
+        "No existe esa obligación de orden inverso.",
+        "No se exige comparación paralela.",
+        "Las etiquetas son constantes de valor, no una búsqueda alfabética."
+      ],
+      "primary": [
+        {
+          "url": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf",
+          "checked": "2026-11-06",
+          "sections": "6.8.4.2 The switch statement"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "El estándar define la selección y ejecución, no una búsqueda secuencial obligatoria.",
+      "sourceAfterSha256": "92c6b93bf07200a4a80b04a2cdbc852887d379ded6836f118e0c0026fbdd62ae",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "92c6b93bf07200a4a80b04a2cdbc852887d379ded6836f118e0c0026fbdd62ae",
+        "checks": {
+          "id": "GEN-T3.06-23.v2",
+          "decision": "accepted",
+          "afterNodeSha256": "92c6b93bf07200a4a80b04a2cdbc852887d379ded6836f118e0c0026fbdd62ae",
+          "key": 0,
+          "type": "D",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "primary_plus_local_compilation_controls"
+        }
+      },
+      "inSample": false,
+      "oracle": "c-switch"
+    },
+    {
+      "id": "GEN-T3.06-40.v2",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-40.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "La función puts() de C:",
+        "a": [
+          "Escribe un string en la salida estándar añadiendo un retorno de carro al final.",
+          "Lee un string de la entrada estándar.",
+          "Escribe un carácter.",
+          "Escribe un string sin retorno de carro."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.06-40",
+        "u": "int getchar(void); Lee un carácter desde la entrada estándar.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-40.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "La función puts() de C:",
+        "a": [
+          "Escribe una cadena en stdout y añade un carácter de nueva línea.",
+          "Lee una cadena de stdin.",
+          "Escribe únicamente un carácter de la cadena.",
+          "Escribe la cadena sin añadir un carácter de nueva línea."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.06-40",
+        "u": "int puts(const char *s); Escribe un string en la salida estándar. El string es el almacenado en s y añade al final un retorno de carro. [p. 22]",
+        "v": 0,
+        "w": 1,
+        "n": "puts añade nueva línea, que es distinta del carácter de retorno de carro. A: Es la operación especificada de puts. B: puts es salida, no entrada. C: Escribe la cadena, no sólo un carácter. D: Omite la nueva línea añadida por puts. Fuente primaria: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf ; https://sourceware.org/glibc/manual/latest/html_node/Simple-Output.html"
+      },
+      "beforeSha256": "15439415dc6b7227df63b5d06aa0a7169d117933bffb0bd61e68ac72c54d6756",
+      "afterSha256": "f6cb1cd73d30c46a56f30eaff60a364c2321ba4d2fcdb4ea8703df3a67cd7571",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 22,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "int puts(const char *s); Escribe un string en la salida estándar. El string es el almacenado en s y añade al final un retorno de carro.",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "Es la operación especificada de puts.",
+        "puts es salida, no entrada.",
+        "Escribe la cadena, no sólo un carácter.",
+        "Omite la nueva línea añadida por puts."
+      ],
+      "primary": [
+        {
+          "url": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf",
+          "checked": "2026-11-06",
+          "sections": "7.23.7.9 puts"
+        },
+        {
+          "url": "https://sourceware.org/glibc/manual/latest/html_node/Simple-Output.html",
+          "checked": "2026-11-06",
+          "sections": "7.23.7.9 puts"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "puts añade nueva línea, que es distinta del carácter de retorno de carro.",
+      "sourceAfterSha256": "363633d71fc67f9ce759019435ac496b8df546269218e993a2644afea2f5d232",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "363633d71fc67f9ce759019435ac496b8df546269218e993a2644afea2f5d232",
+        "checks": {
+          "id": "GEN-T3.06-40.v2",
+          "decision": "accepted",
+          "afterNodeSha256": "363633d71fc67f9ce759019435ac496b8df546269218e993a2644afea2f5d232",
+          "key": 0,
+          "type": "C",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "primary_plus_local_compilation_controls"
+        }
+      },
+      "inSample": false,
+      "oracle": "c-puts"
+    },
+    {
+      "id": "GEN-T3.06-47",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-47",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En #include <fichero.h> (paréntesis de ángulo), el archivo se busca:",
+        "a": [
+          "Solo en el directorio de trabajo.",
+          "Solo en el directorio raíz.",
+          "En los directorios de la línea de órdenes y estándar de C, pero nunca en el directorio de trabajo.",
+          "Primero en el directorio de trabajo."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-47",
+        "u": "en el primer caso, se busca el archivo en los directorios de la línea de ordenes de compilación, y, después en los directorios estándar de C, pero nunca en el directorio de trabajo; y en el segundo caso, el primer sitio donde se busca el archivo a incluir es en el directorio actual de trabajo",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-47",
+        "t": "T3.06",
+        "o": "G",
+        "q": "Según el estándar C, en #include <fichero.h> la búsqueda se realiza:",
+        "a": [
+          "Sólo en el directorio de trabajo.",
+          "Sólo en el directorio raíz.",
+          "En una secuencia de lugares definida por la implementación.",
+          "Siempre primero en el directorio de trabajo."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-47",
+        "u": "en el primer caso, se busca el archivo en los directorios de la línea de ordenes de compilación, y, después en los directorios estándar de C, pero nunca en el directorio de trabajo; [p. 25]",
+        "v": 0,
+        "w": 1,
+        "n": "La norma deja la búsqueda a la implementación. Un directorio de trabajo añadido a las rutas de inclusión refuta el nunca del resumen. A: No se limita a ese directorio. B: No se limita a la raíz. C: Describe el contrato normativo. D: C no prescribe esa prioridad. Fuente primaria: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf"
+      },
+      "beforeSha256": "22d2d8d886beb7510d631e9642ccb4f71992edae733818092f578108ca2900f5",
+      "afterSha256": "727a8a504427e8787d781e4ea97d53eca48dca2ccef94c7e15d224d1f3a13611",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 25,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "en el primer caso, se busca el archivo en los directorios de la línea de ordenes de compilación, y, después en los directorios estándar de C, pero nunca en el directorio de trabajo;",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "No se limita a ese directorio.",
+        "No se limita a la raíz.",
+        "Describe el contrato normativo.",
+        "C no prescribe esa prioridad."
+      ],
+      "primary": [
+        {
+          "url": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf",
+          "checked": "2026-11-06",
+          "sections": "6.10.2 Source file inclusion"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "La norma deja la búsqueda a la implementación. Un directorio de trabajo añadido a las rutas de inclusión refuta el nunca del resumen.",
+      "sourceAfterSha256": "1620f7e7fb5356d88eb553abd598b836d5f4bc4dba6d15aa15cbdab0e9f1eea3",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "1620f7e7fb5356d88eb553abd598b836d5f4bc4dba6d15aa15cbdab0e9f1eea3",
+        "checks": {
+          "id": "GEN-T3.06-47",
+          "decision": "accepted",
+          "afterNodeSha256": "1620f7e7fb5356d88eb553abd598b836d5f4bc4dba6d15aa15cbdab0e9f1eea3",
+          "key": 2,
+          "type": "C",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "primary_plus_local_compilation_controls"
+        }
+      },
+      "inSample": false,
+      "oracle": "c-includes"
+    },
+    {
+      "id": "GEN-T3.06-47.v1",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-47.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En #include \"fichero.h\" (comillas dobles), el primer sitio donde se busca el archivo es:",
+        "a": [
+          "El directorio actual de trabajo.",
+          "El directorio raíz.",
+          "Los directorios de la línea de órdenes.",
+          "Los directorios estándar de C."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-47",
+        "u": "en el primer caso, se busca el archivo en los directorios de la línea de ordenes de compilación, y, después en los directorios estándar de C, pero nunca en el directorio de trabajo; y en el segundo caso, el primer sitio donde se busca el archivo a incluir es en el directorio actual de trabajo",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-47.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "Según el estándar C, la primera búsqueda de #include \"fichero.h\" se realiza:",
+        "a": [
+          "De manera definida por la implementación; no existe un primer directorio universal.",
+          "Siempre en el directorio raíz.",
+          "Siempre primero en los directorios de la línea de órdenes.",
+          "Siempre primero en los directorios estándar."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-47",
+        "u": "en el segundo caso, el primer sitio donde se busca el archivo a incluir es en el directorio actual de trabajo, [p. 25]",
+        "v": 0,
+        "w": 1,
+        "n": "No debe confundirse el directorio del archivo fuente con el directorio de trabajo del compilador; C no impone una primera ruta universal. A: El orden depende de la implementación. B: La raíz no tiene esa prioridad normativa. C: No es una prioridad universal impuesta por C. D: Tampoco se exige buscar primero allí. Fuente primaria: https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf"
+      },
+      "beforeSha256": "cb930902fa97b86a730be6cd05f74877d75607f7b20eab6d92733c83dc621704",
+      "afterSha256": "7e420f989ae4953337e607bfc41f1493a5c70d1dc53af03af5bc3e8a8322a599",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 25,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "en el segundo caso, el primer sitio donde se busca el archivo a incluir es en el directorio actual de trabajo,",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "El orden depende de la implementación.",
+        "La raíz no tiene esa prioridad normativa.",
+        "No es una prioridad universal impuesta por C.",
+        "Tampoco se exige buscar primero allí."
+      ],
+      "primary": [
+        {
+          "url": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf",
+          "checked": "2026-11-06",
+          "sections": "6.10.2 Source file inclusion"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "No debe confundirse el directorio del archivo fuente con el directorio de trabajo del compilador; C no impone una primera ruta universal.",
+      "sourceAfterSha256": "8cd2f2720887644e26a2505cc097f41ea2b517b3226ce05095428a5c8ac53d0c",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "8cd2f2720887644e26a2505cc097f41ea2b517b3226ce05095428a5c8ac53d0c",
+        "checks": {
+          "id": "GEN-T3.06-47.v1",
+          "decision": "accepted",
+          "afterNodeSha256": "8cd2f2720887644e26a2505cc097f41ea2b517b3226ce05095428a5c8ac53d0c",
+          "key": 0,
+          "type": "C",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "primary_plus_local_compilation_controls"
+        }
+      },
+      "inSample": false,
+      "oracle": "c-includes"
+    },
+    {
+      "id": "GEN-T3.06-49.v1",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-49.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "El desarrollo del lenguaje C++ se comenzó en:",
+        "a": [
+          "1990.",
+          "1970.",
+          "1995.",
+          "1980."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          2,
+          7
+        ],
+        "d": 1,
+        "f": "GEN-T3.06-49",
+        "u": "El lenguaje C++ se comenzó a desarrollar en 1980. Su autor fue B. Stroustrup.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-49.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "Stroustrup comenzó el desarrollo de C with Classes, antecedente directo de C++, en:",
+        "a": [
+          "1990.",
+          "1970.",
+          "1995.",
+          "1979."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          2,
+          7
+        ],
+        "d": 1,
+        "f": "GEN-T3.06-49",
+        "u": "El lenguaje C++ se comenzó a desarrollar en 1980. [p. 3]",
+        "v": 0,
+        "w": 1,
+        "n": "Stroustrup fecha el inicio en 1979; el nombre C++ llegó en 1983. A: 1990 es posterior al inicio. B: 1970 es anterior al desarrollo descrito. C: 1995 es posterior incluso a la difusión comercial. D: Es la fecha declarada por el autor. Fuente primaria: https://www.stroustrup.com/bs_faq.html#invention"
+      },
+      "beforeSha256": "bebb8473e7243da26c3ecac71cffc8b941ef74c3dfbf709a7b5c201abe164311",
+      "afterSha256": "d869983af161429b35b506d927446f061daf3d43dd695f3be7a7ec2150bfcbd2",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C plus.pdf",
+        "page": 3,
+        "sha256": "9243bafe5bb5be43ae4e14d28154cbad8fe5c110587560fbd782438e41abf0ff",
+        "quote": "El lenguaje C++ se comenzó a desarrollar en 1980.",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "1990 es posterior al inicio.",
+        "1970 es anterior al desarrollo descrito.",
+        "1995 es posterior incluso a la difusión comercial.",
+        "Es la fecha declarada por el autor."
+      ],
+      "primary": [
+        {
+          "url": "https://www.stroustrup.com/bs_faq.html#invention",
+          "checked": "2026-11-06",
+          "sections": "When was C++ invented?"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "Stroustrup fecha el inicio en 1979; el nombre C++ llegó en 1983.",
+      "sourceAfterSha256": "94ebeea19530dea924589aa25f7735b3ccdbae520c7d8549e62c484215efd3ab",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "94ebeea19530dea924589aa25f7735b3ccdbae520c7d8549e62c484215efd3ab",
+        "checks": {
+          "id": "GEN-T3.06-49.v1",
+          "decision": "accepted",
+          "afterNodeSha256": "94ebeea19530dea924589aa25f7735b3ccdbae520c7d8549e62c484215efd3ab",
+          "key": 3,
+          "type": "C",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "documentary_primary"
+        }
+      },
+      "inSample": false,
+      "oracle": "documental"
+    },
+    {
+      "id": "GEN-T3.06-57.v2",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-57.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "Para utilizar entradas/salidas de flujo en C++ se debe incluir el archivo de cabecera:",
+        "a": [
+          "stdio.h",
+          "stream.h",
+          "iostream.h",
+          "io.h"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.06-57",
+        "u": "en lugar de printf usamos el flujo estándar de salida cout y el operador << (",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-57.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "¿Qué cabecera estándar de C++ declara std::cin y std::cout?",
+        "a": [
+          "<stdio.h>",
+          "<stream.h>",
+          "<iostream>",
+          "<io.h>"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.06-57",
+        "u": "Para utilizar entradas/salidas de flujo, se debe incluir el archivo de cabecera iostream.h. [p. 6]",
+        "v": 0,
+        "w": 1,
+        "n": "La cabecera estándar es <iostream>, sin .h; no se conserva una variante preestándar para salvar la clave. A: stdio.h corresponde a E/S de C, no declara estos objetos C++. B: No es la cabecera estándar requerida. C: Declara los objetos de flujo estándar. D: No es la cabecera estándar requerida. Fuente primaria: https://eel.is/c++draft/iostream.syn"
+      },
+      "beforeSha256": "28863bab95d7e34c79fdf3ee385aa27d22227a68ab182bc9c450174ceef3db51",
+      "afterSha256": "62e455396d7f44ad388ce77e96805d9276366a5ed0e9604f393422ea04dc2930",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C plus.pdf",
+        "page": 6,
+        "sha256": "9243bafe5bb5be43ae4e14d28154cbad8fe5c110587560fbd782438e41abf0ff",
+        "quote": "Para utilizar entradas/salidas de flujo, se debe incluir el archivo de cabecera iostream.h.",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "stdio.h corresponde a E/S de C, no declara estos objetos C++.",
+        "No es la cabecera estándar requerida.",
+        "Declara los objetos de flujo estándar.",
+        "No es la cabecera estándar requerida."
+      ],
+      "primary": [
+        {
+          "url": "https://eel.is/c++draft/iostream.syn",
+          "checked": "2026-11-06",
+          "sections": "iostream.syn"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "La cabecera estándar es <iostream>, sin .h; no se conserva una variante preestándar para salvar la clave.",
+      "sourceAfterSha256": "1057866eb24bcd83c84a201e7249b671662d682db19a59f278a1f9b696845a7e",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "1057866eb24bcd83c84a201e7249b671662d682db19a59f278a1f9b696845a7e",
+        "checks": {
+          "id": "GEN-T3.06-57.v2",
+          "decision": "accepted",
+          "afterNodeSha256": "1057866eb24bcd83c84a201e7249b671662d682db19a59f278a1f9b696845a7e",
+          "key": 2,
+          "type": "D",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "primary_plus_local_compilation_controls"
+        }
+      },
+      "inSample": false,
+      "oracle": "cpp-iostream"
+    },
+    {
+      "id": "GEN-T3.06-59.v1",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-59.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C++, a diferencia de C, al declarar una enumeración:",
+        "a": [
+          "No se puede usar como tipo.",
+          "Se convierte en un tipo nuevo.",
+          "Se requiere la palabra enum para declarar variables.",
+          "Debe ir precedida de typedef."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T3.06-59",
+        "u": "A diferencia de C, en C++ existe el tipo de datos booleano bool, que admite como valores las palabras reservadas true y false.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-59.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C++, tras declarar enum Color { rojo, azul };, y a diferencia de C sin typedef, para declarar una variable de ese tipo:",
+        "a": [
+          "No puede usarse Color como tipo.",
+          "Puede escribirse Color c = rojo; sin anteponer enum.",
+          "Es obligatorio escribir enum Color c en todos los casos.",
+          "Debe declararse antes un typedef."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T3.06-59",
+        "u": "Para declarar la variable del nuevo tipo, la palabra reservada enum no es requerida. [p. 7]",
+        "v": 0,
+        "w": 1,
+        "n": "C también tiene tipos enumerados; la diferencia pertinente es poder usar directamente el nombre del tipo en C++. A: La declaración sí introduce ese nombre de tipo. B: Es sintaxis válida de C++. C: enum puede usarse, pero no es obligatorio. D: No se necesita un typedef adicional. Fuente primaria: https://eel.is/c++draft/dcl.enum ; https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf"
+      },
+      "beforeSha256": "228a031df3fd112cb9c115ce5a419ee38a04a2e81c482943f4256d7d0b6ac05a",
+      "afterSha256": "b04320f174c34af9d2744bc34a32771264722c5200767938ee51859b0b20aa4a",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C plus.pdf",
+        "page": 7,
+        "sha256": "9243bafe5bb5be43ae4e14d28154cbad8fe5c110587560fbd782438e41abf0ff",
+        "quote": "Para declarar la variable del nuevo tipo, la palabra reservada enum no es requerida.",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "La declaración sí introduce ese nombre de tipo.",
+        "Es sintaxis válida de C++.",
+        "enum puede usarse, pero no es obligatorio.",
+        "No se necesita un typedef adicional."
+      ],
+      "primary": [
+        {
+          "url": "https://eel.is/c++draft/dcl.enum",
+          "checked": "2026-11-06",
+          "sections": "dcl.enum;C6.7.2.2 Enumeration specifiers"
+        },
+        {
+          "url": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf",
+          "checked": "2026-11-06",
+          "sections": "dcl.enum;C6.7.2.2 Enumeration specifiers"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "C también tiene tipos enumerados; la diferencia pertinente es poder usar directamente el nombre del tipo en C++.",
+      "sourceAfterSha256": "76fdbf4190e22a9634579b9b3e37218220e69334fc81fe93025c3fd1dc1cf723",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "76fdbf4190e22a9634579b9b3e37218220e69334fc81fe93025c3fd1dc1cf723",
+        "checks": {
+          "id": "GEN-T3.06-59.v1",
+          "decision": "accepted",
+          "afterNodeSha256": "76fdbf4190e22a9634579b9b3e37218220e69334fc81fe93025c3fd1dc1cf723",
+          "key": 1,
+          "type": "K",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "primary_plus_local_compilation_controls"
+        }
+      },
+      "inSample": false,
+      "oracle": "cpp-enum"
+    },
+    {
+      "id": "GEN-T3.06-65.v1",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-65.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C++, si new no puede asignar memoria:",
+        "a": [
+          "Devuelve un puntero nulo.",
+          "Termina el programa.",
+          "Lanza siempre una excepción de enteros.",
+          "Devuelve el último puntero válido."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-65",
+        "u": "Una variable creada con el operador new dentro de cualquier bloque, perdura hasta que es explícitamente borrada con el operador delete.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-65.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C++, si la función de asignación estándar utilizada por new ordinario no logra asignar memoria y no hay new_handler instalado:",
+        "a": [
+          "Lanza std::bad_alloc.",
+          "Devuelve siempre nullptr.",
+          "Lanza siempre una excepción de tipo int.",
+          "Devuelve el último puntero válido."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-65",
+        "u": "Si mediante new no se puede asignar memoria, devuelve un puntero nulo. [p. 10]",
+        "v": 0,
+        "w": 1,
+        "n": "El new ordinario señala este fallo con std::bad_alloc; la variante std::nothrow permite recibir nullptr. Se excluyen constructores que lancen otras excepciones. A: Es la excepción estándar para este fallo. B: Confunde new ordinario con la variante nothrow. C: No es la excepción de asignación estándar. D: No retorna un puntero anterior para fingir éxito. Fuente primaria: https://eel.is/c++draft/new.delete.single"
+      },
+      "beforeSha256": "da6b89c5abc9e1861b38bb2953a2bdf310f5ab3482bc140397e1237eedfc0669",
+      "afterSha256": "e60bff454b371c3ff2c0d264098341753161e1fa0402a28e36066938a0c64e35",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C plus.pdf",
+        "page": 10,
+        "sha256": "9243bafe5bb5be43ae4e14d28154cbad8fe5c110587560fbd782438e41abf0ff",
+        "quote": "Si mediante new no se puede asignar memoria, devuelve un puntero nulo.",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "Es la excepción estándar para este fallo.",
+        "Confunde new ordinario con la variante nothrow.",
+        "No es la excepción de asignación estándar.",
+        "No retorna un puntero anterior para fingir éxito."
+      ],
+      "primary": [
+        {
+          "url": "https://eel.is/c++draft/new.delete.single",
+          "checked": "2026-11-06",
+          "sections": "new.delete.single"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "El new ordinario señala este fallo con std::bad_alloc; la variante std::nothrow permite recibir nullptr. Se excluyen constructores que lancen otras excepciones.",
+      "sourceAfterSha256": "4ffb259840cc30de13c8717effb00828896d8bfb49daf8048f8518dac5c6e741",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "4ffb259840cc30de13c8717effb00828896d8bfb49daf8048f8518dac5c6e741",
+        "checks": {
+          "id": "GEN-T3.06-65.v1",
+          "decision": "accepted",
+          "afterNodeSha256": "4ffb259840cc30de13c8717effb00828896d8bfb49daf8048f8518dac5c6e741",
+          "key": 0,
+          "type": "C",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "primary_plus_local_compilation_controls"
+        }
+      },
+      "inSample": false,
+      "oracle": "cpp-new"
+    },
+    {
+      "id": "GEN-T3.06-68.v1",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-68.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C++, los atributos de una clase deben inicializarse:",
+        "a": [
+          "En el preprocesador.",
+          "Donde se declaran en el cuerpo de la clase.",
+          "Por el constructor o mediante funciones set.",
+          "En el destructor."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-68",
+        "u": "Por defecto, los elementos de las clases son privados (private:).",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-68.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C++23, un miembro de datos no estático puede inicializarse:",
+        "a": [
+          "En el preprocesador, que construye el objeto.",
+          "Mediante un inicializador en su declaración dentro de la clase o un inicializador de miembro del constructor.",
+          "Únicamente asignándole un valor desde un setter después de construir el objeto.",
+          "En el destructor, como mecanismo de inicialización."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-68",
+        "u": "Los atributos de una clase no pueden ser inicializados donde son declarados en el cuerpo de la clase. Deberán ser inicializados por el constructor de la clase, o las funciones ''set'' les podrán asignar valores. [p. 11]",
+        "v": 0,
+        "w": 1,
+        "n": "C++ admite inicializadores de miembros en la declaración; una asignación posterior desde un setter no es inicialización. A: El preprocesador no construye los objetos. B: Ambas formas están previstas en C++ moderno. C: Confunde asignación posterior e inicialización. D: El destructor interviene al destruir el objeto. Fuente primaria: https://eel.is/c++draft/class.base.init"
+      },
+      "beforeSha256": "0262de583ecb9db4c6a0d22c7574c09e8af44d716b8d5d93bc866af062b9945c",
+      "afterSha256": "c8101613e66b3395f065112de6734a6cde886b94e0e09b69fe3794840927db09",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C plus.pdf",
+        "page": 11,
+        "sha256": "9243bafe5bb5be43ae4e14d28154cbad8fe5c110587560fbd782438e41abf0ff",
+        "quote": "Los atributos de una clase no pueden ser inicializados donde son declarados en el cuerpo de la clase. Deberán ser inicializados por el constructor de la clase, o las funciones ''set'' les podrán asignar valores.",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "El preprocesador no construye los objetos.",
+        "Ambas formas están previstas en C++ moderno.",
+        "Confunde asignación posterior e inicialización.",
+        "El destructor interviene al destruir el objeto."
+      ],
+      "primary": [
+        {
+          "url": "https://eel.is/c++draft/class.base.init",
+          "checked": "2026-11-06",
+          "sections": "class.base.init"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "C++ admite inicializadores de miembros en la declaración; una asignación posterior desde un setter no es inicialización.",
+      "sourceAfterSha256": "fe3e2e40db26b3d957daab0e5d723f11c7e85f2c0dcaf289fa91dd9cd46fea75",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "fe3e2e40db26b3d957daab0e5d723f11c7e85f2c0dcaf289fa91dd9cd46fea75",
+        "checks": {
+          "id": "GEN-T3.06-68.v1",
+          "decision": "accepted",
+          "afterNodeSha256": "fe3e2e40db26b3d957daab0e5d723f11c7e85f2c0dcaf289fa91dd9cd46fea75",
+          "key": 1,
+          "type": "C",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "primary_plus_local_compilation_controls"
+        }
+      },
+      "inSample": false,
+      "oracle": "cpp-members"
+    },
+    {
+      "id": "GEN-T3.06-274",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-274",
+        "t": "T3.06",
+        "o": "G",
+        "q": "Al sobrescribir init() en un servlet, primero hay que llamar a:",
+        "a": [
+          "service().",
+          "super.init(conf).",
+          "destroy().",
+          "doGet()."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-274",
+        "u": "Después debemos sobrescribir, si lo necesitamos, el método init() heredado de la superclase, encargado de inicializar el servlet. En él debemos incluir todo lo que queramos que se ejecute sólo cuando se cree el servlet en memoria. Para ello, primero llamamos al init() de la superclase.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-274",
+        "t": "T3.06",
+        "o": "G",
+        "q": "Al sobrescribir específicamente GenericServlet.init() sin parámetros en Jakarta Servlet 6.1:",
+        "a": [
+          "Debe invocarse service() antes de inicializar.",
+          "Debe llamarse super.init(conf), aunque esta sobrecarga no recibe conf.",
+          "Debe invocarse destroy() antes de inicializar.",
+          "No es necesario llamar a super.init(config); la sobrecarga sin parámetros está prevista para esta inicialización."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-274",
+        "u": "Después debemos sobrescribir, si lo necesitamos, el método init() heredado de la superclase, encargado de inicializar el servlet. En él debemos incluir todo lo que queramos que se ejecute sólo cuando se cree el servlet en memoria. Para ello, primero llamamos al init() de la superclase. Después podemos incluir las inicializaciones necesarias. [p. 14]",
+        "v": 0,
+        "w": 1,
+        "n": "La obligación de conservar super.init(config) corresponde a sobrescribir init(ServletConfig), no al método de conveniencia init(). A: service atiende peticiones, no inicia la superclase. B: Mezcla las dos sobrecargas y un parámetro no recibido. C: destroy corresponde a fin de servicio. D: Es el contrato de la sobrecarga sin parámetros. Fuente primaria: https://tomcat.apache.org/tomcat-11.0-doc/servletapi/jakarta/servlet/GenericServlet.html"
+      },
+      "beforeSha256": "5bd71a93a4a3531d34b066d8bca91419f177c667ae398cb3a9454bb788e07c54",
+      "afterSha256": "375e36ee5662ead1c87e010f29af4b58e17777bd55a5e4391069b59bb228fba7",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 14,
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "quote": "Después debemos sobrescribir, si lo necesitamos, el método init() heredado de la superclase, encargado de inicializar el servlet. En él debemos incluir todo lo que queramos que se ejecute sólo cuando se cree el servlet en memoria. Para ello, primero llamamos al init() de la superclase. Después podemos incluir las inicializaciones necesarias.",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "service atiende peticiones, no inicia la superclase.",
+        "Mezcla las dos sobrecargas y un parámetro no recibido.",
+        "destroy corresponde a fin de servicio.",
+        "Es el contrato de la sobrecarga sin parámetros."
+      ],
+      "primary": [
+        {
+          "url": "https://tomcat.apache.org/tomcat-11.0-doc/servletapi/jakarta/servlet/GenericServlet.html",
+          "checked": "2026-11-06",
+          "sections": "Servlet6.1 GenericServlet.init()"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "La obligación de conservar super.init(config) corresponde a sobrescribir init(ServletConfig), no al método de conveniencia init().",
+      "sourceAfterSha256": "ba58af72ff0c635ff897be27748b2d7049df83742d53466281099ac6a669e8a5",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "ba58af72ff0c635ff897be27748b2d7049df83742d53466281099ac6a669e8a5",
+        "checks": {
+          "id": "GEN-T3.06-274",
+          "decision": "accepted",
+          "afterNodeSha256": "ba58af72ff0c635ff897be27748b2d7049df83742d53466281099ac6a669e8a5",
+          "key": 3,
+          "type": "C",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "documentary_primary"
+        }
+      },
+      "inSample": false,
+      "oracle": "documental"
+    },
+    {
+      "id": "GEN-T3.06-329",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-329",
+        "t": "T3.06",
+        "o": "G",
+        "q": "Para persistir una clase con JPA, la clase debe:",
+        "a": [
+          "Tener solo atributos públicos.",
+          "Heredar de Object explícitamente.",
+          "Tener un constructor público sin argumentos, get/set para cada atributo e implementar Serializable.",
+          "Ser abstracta."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-329",
+        "u": "Un POJO (Plain Old Java Object) es una clase simple que tiene atributos privados, constructores y métodos getters y setters",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-329",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En Jakarta Persistence 3.2, una clase entidad debe:",
+        "a": [
+          "Tener sólo campos públicos.",
+          "Escribir explícitamente extends Object.",
+          "Tener un constructor sin parámetros público o protegido, además de cumplir los restantes requisitos de entidad.",
+          "Ser siempre abstracta."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-329",
+        "u": "Para persistir una clase ésta debe cumplir una serie de requisitos: - Debe tener un constructor público sin argumentos. - Cada uno de los atributos a persistir debe tener un método get y otro set asociado. - Debe implementar la interfaz Serializable (paquete java.io). [p. 36]",
+        "v": 0,
+        "w": 1,
+        "n": "El constructor puede ser protected. Con acceso por campo no se exigen getters/setters para todos los atributos; Serializable no es requisito general de entidad. A: La norma no exige campos públicos. B: Object se hereda implícitamente cuando corresponde. C: Expresa un requisito necesario sin fingir que es el único. D: Las entidades pueden ser concretas. Fuente primaria: https://jakarta.ee/specifications/persistence/3.2/jakarta-persistence-spec-3.2.html"
+      },
+      "beforeSha256": "e75f5df7d65634af2224e15be57996374cd1a425a95bd98d3fbb914299bfc52b",
+      "afterSha256": "b27fd30198827f2aab1021ba011feaaed77bc6643aa00bdcf726908e2c68f0ae",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 36,
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "quote": "Para persistir una clase ésta debe cumplir una serie de requisitos: - Debe tener un constructor público sin argumentos. - Cada uno de los atributos a persistir debe tener un método get y otro set asociado. - Debe implementar la interfaz Serializable (paquete java.io).",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "La norma no exige campos públicos.",
+        "Object se hereda implícitamente cuando corresponde.",
+        "Expresa un requisito necesario sin fingir que es el único.",
+        "Las entidades pueden ser concretas."
+      ],
+      "primary": [
+        {
+          "url": "https://jakarta.ee/specifications/persistence/3.2/jakarta-persistence-spec-3.2.html",
+          "checked": "2026-11-06",
+          "sections": "2.1 Entity Class;2.2 Persistent Fields and Properties"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "El constructor puede ser protected. Con acceso por campo no se exigen getters/setters para todos los atributos; Serializable no es requisito general de entidad.",
+      "sourceAfterSha256": "f0ffbea57f9635ab5fe19622e0d5f988d3eba1e2b08f7bbf71126a945c9bc7cc",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "f0ffbea57f9635ab5fe19622e0d5f988d3eba1e2b08f7bbf71126a945c9bc7cc",
+        "checks": {
+          "id": "GEN-T3.06-329",
+          "decision": "accepted",
+          "afterNodeSha256": "f0ffbea57f9635ab5fe19622e0d5f988d3eba1e2b08f7bbf71126a945c9bc7cc",
+          "key": 2,
+          "type": "C",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "documentary_primary"
+        }
+      },
+      "inSample": false,
+      "oracle": "documental"
+    },
+    {
+      "id": "GEN-T3.06-332.v2",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-332.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En JPA, con documento XML se genera:",
+        "a": [
+          "Un fichero por aplicación.",
+          "Un fichero por base de datos.",
+          "Ningún fichero.",
+          "Un fichero por clase entidad indicando su tabla y la correlación de sus atributos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-332",
+        "u": "Documento XML: se genera un fichero para clase entidad indicando la tabla con la que se corresponde la clase",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-332.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En Jakarta Persistence 3.2, un archivo de mapeo XML puede:",
+        "a": [
+          "Existir sólo como un único archivo obligatorio por aplicación.",
+          "Existir obligatoriamente uno por cada base de datos.",
+          "No contener ningún mapeo de entidad en ningún caso.",
+          "Describir varias clases entidad en el mismo documento."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-332",
+        "u": "Documento XML: se genera un fichero para clase entidad indicando la tabla [p. 37]",
+        "v": 0,
+        "w": 1,
+        "n": "No se exige un documento por entidad; el esquema admite múltiples elementos entity. A: No existe esa obligación de archivo único. B: No se fija un archivo obligatorio por base de datos. C: El mapeo de entidades es una función central del documento. D: El elemento entity admite multiplicidad en entity-mappings. Fuente primaria: https://jakarta.ee/specifications/persistence/3.2/jakarta-persistence-spec-3.2.html"
+      },
+      "beforeSha256": "d787adba5d59ab2c64a509d257a3b0312575baf7f6af54c10846d759b4dc225b",
+      "afterSha256": "43d414dbe8346a592e78b47619599c58c5132afd4b0c562079406de18e810589",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 37,
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "quote": "Documento XML: se genera un fichero para clase entidad indicando la tabla",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "No existe esa obligación de archivo único.",
+        "No se fija un archivo obligatorio por base de datos.",
+        "El mapeo de entidades es una función central del documento.",
+        "El elemento entity admite multiplicidad en entity-mappings."
+      ],
+      "primary": [
+        {
+          "url": "https://jakarta.ee/specifications/persistence/3.2/jakarta-persistence-spec-3.2.html",
+          "checked": "2026-11-06",
+          "sections": "12 Object/Relational Mapping XML Descriptor"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "No se exige un documento por entidad; el esquema admite múltiples elementos entity.",
+      "sourceAfterSha256": "668071eb6762266ef762d7916bd1e7d435486fddf86f92a7e27e4908eb01985c",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "668071eb6762266ef762d7916bd1e7d435486fddf86f92a7e27e4908eb01985c",
+        "checks": {
+          "id": "GEN-T3.06-332.v2",
+          "decision": "accepted",
+          "afterNodeSha256": "668071eb6762266ef762d7916bd1e7d435486fddf86f92a7e27e4908eb01985c",
+          "key": 3,
+          "type": "C",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "documentary_primary"
+        }
+      },
+      "inSample": false,
+      "oracle": "documental"
+    },
+    {
+      "id": "GEN-T3.06-337.v2",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-337.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En @JoinTable, el atributo inverseJoinColumns contiene:",
+        "a": [
+          "El tipo de cascada.",
+          "Las columnas que forman la clave primaria de la clase con la que se tiene la relación.",
+          "Las columnas de la propia clave primaria.",
+          "El nombre de la tabla."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-337",
+        "u": "@ManyToMany: para establecer una relación de muchos a muchos entre clases. Se acompaña con la anotación @JoinTable que especifica datos sobre la tabla de unión en la relación muchos a muchos, con los siguientes atributos: § name: nombre de la tabla. § joinColumns: columnas que forman parte de la clave primaria que estamos definiendo.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-337.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En @JoinTable de Jakarta Persistence 3.2, inverseJoinColumns describe:",
+        "a": [
+          "El tipo de cascada.",
+          "Las columnas de clave foránea de la tabla de unión que referencian la tabla primaria del lado inverso.",
+          "Las columnas de la clave primaria de la tabla propietaria, situadas necesariamente en esa tabla.",
+          "El nombre de la tabla de unión."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-337",
+        "u": "inverseJoinColumns: contiene cada una de las columnas que forman la clave primaria de la clase con la que se tiene la relación. [p. 39]",
+        "v": 0,
+        "w": 1,
+        "n": "Las columnas descritas están en la tabla de unión; no son las columnas físicas de la clave primaria de la entidad relacionada. A: Cascada es otra configuración de la relación. B: Es la ubicación y destino definidos por la anotación. C: Confunde lado y ubicación física. D: El nombre corresponde al atributo name. Fuente primaria: https://jakarta.ee/specifications/persistence/3.2/jakarta-persistence-spec-3.2.html"
+      },
+      "beforeSha256": "cdba26e5b294021f6adfa5e5bdd4612d891669f8820357fe3df87174ec4ee9aa",
+      "afterSha256": "7401fd04e26c992900e49734d270d8aca4810eb3ce4f0feb472067b36602fd1a",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 39,
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "quote": "inverseJoinColumns: contiene cada una de las columnas que forman la clave primaria de la clase con la que se tiene la relación.",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "Cascada es otra configuración de la relación.",
+        "Es la ubicación y destino definidos por la anotación.",
+        "Confunde lado y ubicación física.",
+        "El nombre corresponde al atributo name."
+      ],
+      "primary": [
+        {
+          "url": "https://jakarta.ee/specifications/persistence/3.2/jakarta-persistence-spec-3.2.html",
+          "checked": "2026-11-06",
+          "sections": "11.1.28 JoinTable"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "Las columnas descritas están en la tabla de unión; no son las columnas físicas de la clave primaria de la entidad relacionada.",
+      "sourceAfterSha256": "1728665b2dce2b7b9d03399bfc305e66b506564c7e30aa23c54418cf5cba9dd7",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "1728665b2dce2b7b9d03399bfc305e66b506564c7e30aa23c54418cf5cba9dd7",
+        "checks": {
+          "id": "GEN-T3.06-337.v2",
+          "decision": "accepted",
+          "afterNodeSha256": "1728665b2dce2b7b9d03399bfc305e66b506564c7e30aa23c54418cf5cba9dd7",
+          "key": 1,
+          "type": "C",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "documentary_primary"
+        }
+      },
+      "inSample": false,
+      "oracle": "documental"
+    },
+    {
+      "id": "GEN-T3.06-362.v2",
+      "topic": "T3.06",
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-362.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "El empaquetado de un .war, respecto al de un .jar, es:",
+        "a": [
+          "Solo de clases.",
+          "Completamente distinto.",
+          "Sin estructura de directorios.",
+          "Igual, más el deployment descriptor."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-362",
+        "u": "Web Archive (.war): este tipo de empaquetamiento permite la posibilidad de agrupar toda la estructura de directorios vista en .jar más el deployment descriptor (fichero de configuración web.xml) en un único fichero de extensión .war.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-362.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En Jakarta Servlet 6.1, un archivo WAR:",
+        "a": [
+          "Sólo puede contener archivos de clases Java.",
+          "Tiene un formato contenedor completamente distinto de ZIP/JAR.",
+          "No admite estructura de directorios.",
+          "Usa formato JAR/ZIP con estructura de aplicación web, como WEB-INF; web.xml no es obligatorio en todos los casos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-362",
+        "u": "Web Archive (.war): este tipo de empaquetamiento permite la posibilidad de agrupar toda la estructura de directorios vista en .jar más el deployment descriptor (fichero de configuración web.xml) en un único fichero de extensión .war. El empaquetado de un .war es igual a un fichero .jar. [p. 50]",
+        "v": 0,
+        "w": 1,
+        "n": "WAR tiene estructura web específica. Una aplicación sólo estática, entre otros supuestos normativos, no requiere web.xml. A: Puede contener recursos web y otros archivos. B: Utiliza formato de archivo JAR, basado en ZIP. C: La estructura de directorios forma parte del empaquetado. D: Distingue el contenedor de archivo y la estructura normativa web. Fuente primaria: https://jakarta.ee/specifications/servlet/6.1/jakarta-servlet-spec-6.1.html"
+      },
+      "beforeSha256": "03954390057e85ec027108d83e73fac32fb240de2c096c4e6133a945bd905465",
+      "afterSha256": "b39b6ab732bdcc4f21ef9311bf233d669a65192b008efacfba50abd30dd541f9",
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 50,
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "quote": "Web Archive (.war): este tipo de empaquetamiento permite la posibilidad de agrupar toda la estructura de directorios vista en .jar más el deployment descriptor (fichero de configuración web.xml) en un único fichero de extensión .war. El empaquetado de un .war es igual a un fichero .jar.",
+        "role": "Resumen, no temario completo"
+      },
+      "reviewedOptions": [
+        "Puede contener recursos web y otros archivos.",
+        "Utiliza formato de archivo JAR, basado en ZIP.",
+        "La estructura de directorios forma parte del empaquetado.",
+        "Distingue el contenedor de archivo y la estructura normativa web."
+      ],
+      "primary": [
+        {
+          "url": "https://jakarta.ee/specifications/servlet/6.1/jakarta-servlet-spec-6.1.html",
+          "checked": "2026-11-06",
+          "sections": "10.5 Directory Structure;10.6 Web Application Archive File;10.13 Inclusion of web.xml"
+        }
+      ],
+      "objectivePreserved": "Mismo concepto; corregida la afirmación errónea, no limitada a una edición histórica para conservar la clave.",
+      "sourceDiscrepancy": "WAR tiene estructura web específica. Una aplicación sólo estática, entre otros supuestos normativos, no requiere web.xml.",
+      "sourceAfterSha256": "787d311ee807d19322e237c51e6824327bfe1d4fa8575d1c0e36dfd59f210a37",
+      "independentReview": {
+        "reviewer": "banco",
+        "date": "2026-11-06",
+        "decision": "accepted_not_applied",
+        "afterNodeSha256": "787d311ee807d19322e237c51e6824327bfe1d4fa8575d1c0e36dfd59f210a37",
+        "checks": {
+          "id": "GEN-T3.06-362.v2",
+          "decision": "accepted",
+          "afterNodeSha256": "787d311ee807d19322e237c51e6824327bfe1d4fa8575d1c0e36dfd59f210a37",
+          "key": 3,
+          "type": "C",
+          "pdfHashAndLiteral": true,
+          "beforeCurrent": true,
+          "optionRationales": 4,
+          "method": "documentary_primary"
+        }
+      },
+      "inSample": false,
+      "oracle": "documental"
+    }
+  ],
+  "metadataEdits": [
+    {
+      "id": "AT306-P1-53",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "A",
+        "C",
+        [
+          12
+        ],
+        3
+      ],
+      "after": [
+        "T3.06",
+        "A",
+        "D",
+        [
+          12
+        ],
+        3
+      ],
+      "beforeSha256": "3f20b9bec288239456d6004e1efbb2b7ebb4f06a413fcd16892380f13f299040",
+      "afterSha256": "9d273d35a4381736ccdd62411919531658a97e49020cc91e3538e407e83716d3"
+    },
+    {
+      "id": "GEN-T3.06-13.v1",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "G",
+        "C",
+        [
+          2,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.06",
+        "G",
+        "K",
+        [
+          2,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "b9a26a5faf67b0ba094de21760fc5eeafdf639196a7d251b8e8d9472fccdf59b",
+      "afterSha256": "abb5d76e8e584ab3a7cd3135637a1c23c767bad8baa31cc97606e4fc27a349ab"
+    },
+    {
+      "id": "GEN-T3.06-13.v2",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "G",
+        "C",
+        [
+          2,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.06",
+        "G",
+        "K",
+        [
+          2,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "b9a26a5faf67b0ba094de21760fc5eeafdf639196a7d251b8e8d9472fccdf59b",
+      "afterSha256": "abb5d76e8e584ab3a7cd3135637a1c23c767bad8baa31cc97606e4fc27a349ab"
+    },
+    {
+      "id": "GEN-T3.06-23.v2",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "G",
+        "C",
+        [
+          9,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.06",
+        "G",
+        "D",
+        [
+          9,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "fa6088375208c5496011d660676ebfcc57d38ceb81fa22b062e8b4c8ef097a82",
+      "afterSha256": "dfb70c2f48541a1f00c3e0bc0f1d3cc7a3c495f473ff102cecf78de3fed45f3c"
+    },
+    {
+      "id": "GEN-T3.06-47",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "G",
+        "K",
+        [
+          8,
+          7
+        ],
+        3
+      ],
+      "after": [
+        "T3.06",
+        "G",
+        "C",
+        [
+          8,
+          7
+        ],
+        3
+      ],
+      "beforeSha256": "2d19813911bb43fd5fe08fe1300111a5eb813c7b33c259696e23ddd612344f15",
+      "afterSha256": "0ed89a0e4f8ab819eaf724fce68f466903c584936c28675443001a9228cb8eb4"
+    },
+    {
+      "id": "GEN-T3.06-57.v2",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        2
+      ],
+      "after": [
+        "T3.06",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        2
+      ],
+      "beforeSha256": "df3ba3d5ed028e453e4afd69eeb78fe68fb1de88525310d7b2a7675721f0efab",
+      "afterSha256": "26970b637b218018629819ae17c752000a2ffc082883de7c9f71842bb7443216"
+    },
+    {
+      "id": "GEN-T3.06-59.v1",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "G",
+        "C",
+        [
+          2,
+          7
+        ],
+        2
+      ],
+      "after": [
+        "T3.06",
+        "G",
+        "K",
+        [
+          2,
+          7
+        ],
+        2
+      ],
+      "beforeSha256": "21bed3b24d3af401ec7064cae51b2982fe2fef47612d39420cb546e6177e1b4b",
+      "afterSha256": "12621e3ff90e662db1d135ab183b165043f6b664eaa1a7cd1c55cccaff3b5ed1"
+    }
+  ],
+  "sampleFiles": {},
+  "files": {
+    "T3.06.json": {
+      "beforeSha256": "72cb69f11ead21ac547cc15159d41ec87b822db2987fda9cb9707c0e585ed658",
+      "afterSha256": "cd8ead125529d2bdcf6a5e84d6c730df4c13c599046fce704ca2c8a86e4fd6cc"
+    },
+    "meta.json": {
+      "beforeSha256": "f97cf2615ccf66e4641b05e8ac5e9c80fb2af621f96e9fcd7a8dd00a29a9ae96",
+      "afterSha256": "3f6b6d9fd70efe5a84fc01fc0a10c19f530cfa8be75fd81f88844e0675d1496a"
+    }
+  },
+  "limits": [
+    "Seven documentary cases: five Jakarta and two history; no JPA provider or Servlet container executed.",
+    "C/C++ compiler controls are examples, not proof of universal implementation strategy."
+  ],
+  "normalization": "Literal PDF quote plus [p. N] in u; explanation, primary URLs and all four rationales in n; approved switch qualification."
+}

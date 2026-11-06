@@ -1,10 +1,17 @@
-import { expect, it } from 'vitest';
+import { expect, it, beforeAll, afterAll, vi } from 'vitest';
+import { webcrypto } from 'node:crypto';
 import historical from '../../public/data/supuestos.json';
 import { selectHistoricalScenarioPair } from '../../src/core/domain/simulation-scenarios.js';
+import { verifyQuestionContent } from '../../src/adapters/http/question-content-verification.js';
 
-const catalog = Object.fromEntries(Object.entries(historical).map(([id, raw]) => [
-  id, { text: raw.texto, questions: raw.q },
-]));
+let catalog;
+beforeAll(async () => {
+  vi.stubGlobal('crypto', webcrypto);
+  catalog = Object.fromEntries(await Promise.all(Object.entries(historical).map(async ([id, raw]) => [
+    id, { text: raw.texto, questions: await Promise.all(raw.q.map(q => verifyQuestionContent({ ...q, supTexto: raw.texto }))) },
+  ])));
+});
+afterAll(() => vi.unstubAllGlobals());
 
 it.each([
   [0, 'L2019', []],
@@ -23,6 +30,17 @@ it('never substitutes arbitrarily for missing or quarantined questions', () => {
   const onePair = { [id]: { ...catalog[id], questions: catalog[id].questions.map((q, i) => i ? q : { ...q, np: 1 }) }, 'L2019-S2': catalog['L2019-S2'] };
   expect(selectHistoricalScenarioPair(onePair, () => 0)).toEqual([]);
   expect(selectHistoricalScenarioPair({ 'L2019-S2': catalog['L2019-S2'] }, () => 0)).toEqual([]);
+});
+
+it('rejects the actual historical syntax error even when its corrected sameID is verified', async () => {
+  const ledger = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-syntax3.json', 'utf8'));
+  const entry = ledger.questions.find(q => q.id === 'L2019-S1-08');
+  const old = await verifyQuestionContent({ ...entry.before, supTexto: catalog['L2019-S1'].text });
+  const onePair = {
+    'L2019-S1': { ...catalog['L2019-S1'], questions: catalog['L2019-S1'].questions.map(q => q.i === old.i ? old : q) },
+    'L2019-S2': catalog['L2019-S2'],
+  };
+  expect(selectHistoricalScenarioPair(onePair, () => 0)).toEqual([]);
 });
 
 import { officialExamQuestionIds, matchesOfficialExamKey, scoreOfficialExam } from '../../src/core/domain/simulation-scenarios.js';
@@ -44,6 +62,16 @@ it.each(['L2025A-S1', 'L2025A-S2'])('pins all 100 scored answers for model A and
   expect(matchesOfficialExamKey(id, items)).toBe(true);
   expect(matchesOfficialExamKey(id, items.slice(1))).toBe(false);
   expect(matchesOfficialExamKey(id, items.map((q, i) => i ? q : { ...q, c: (q.c + 1) % 4 }))).toBe(false);
+});
+it('requires the repaired Docker content before enabling the official second case', async () => {
+  const id = 'L2025A-S2';
+  const items = loadModelA(id);
+  const ledger = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-admin5.json', 'utf8'));
+  const entry = ledger.questions.find(q => q.id === 'L2025A-S2-09');
+  const historical = await verifyQuestionContent({ ...entry.before, supTexto: catalog[id].text });
+  expect(matchesOfficialExamKey(id, items)).toBe(true);
+  expect(matchesOfficialExamKey(id, items.map(q => q.i === entry.id ? historical : q))).toBe(false);
+  expect(items.map(q => q.i)).toHaveLength(100);
 });
 it('transforms both parts independently, enforces the first cutoff and distinguishes the two quotas', () => {
   const items = loadModelA('L2025A-S1');

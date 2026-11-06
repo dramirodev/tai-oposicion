@@ -1,0 +1,469 @@
+{
+  "schemaVersion": 1,
+  "sourceCandidateSha256": "91288d5d7e899ad57669ff23b4f656339cb494f4c74bb8c94612175b4ca24712",
+  "status": "CONFIRMED_RUNTIME_EXCLUSION_ONLY",
+  "factualRepairs": 0,
+  "persistedQuestionChanges": 0,
+  "approvedHashesAdded": 0,
+  "records": [
+    {
+      "id": "AT306-P1-43",
+      "source": "work/next-p0-languages-final/revision-oficial/reviewed-proposals.json",
+      "before": {
+        "i": "AT306-P1-43",
+        "t": "T3.06",
+        "o": "A",
+        "q": "¿Cuándo NO es conveniente usar EJB?",
+        "a": [
+          "Existe un número de clientes numeroso.",
+          "Para aplicaciones que deben ser escalables.",
+          "Se requiere el uso de transacciones.",
+          "Para aplicaciones que usan datos de bases de datos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          14
+        ],
+        "d": 2,
+        "n": "Cuándo no usar EJB."
+      },
+      "storageFile": "public/data/T3.06.json",
+      "originalType": "I",
+      "after": null,
+      "factualRepairs": 0,
+      "category": "A",
+      "reason": "No existe una alternativa que desaconseje EJB: usar bases de datos es compatible con su función.",
+      "reviewedOptions": [
+        "Los clientes numerosos son un supuesto favorable.",
+        "La escalabilidad es una recomendación expresa.",
+        "Las transacciones son una recomendación expresa.",
+        "Acceder a bases de datos es compatible, no un motivo de inconveniencia."
+      ],
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 20,
+        "quote": "Debemos considerar el uso de EJB si la aplicación tiene alguno de los siguientes requisitos:",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "provenance_not_independent_validation",
+        "literalVerified": true
+      },
+      "primary": [
+        {
+          "url": "https://docs.oracle.com/javaee/7/tutorial/ejb-intro001.htm",
+          "role": "decisive_primary",
+          "checkedAt": "2026-11-06"
+        }
+      ],
+      "proposedAction": "curated_code_quarantine_np1_without_approval_hash",
+      "beforeSha256": "568936f1639df244f03bc71f97fd8167efe9433dd0464bf7dc2d7d6f9e1bdbe4",
+      "independentReview": {
+        "verdict": "CUARENTENA_PUNTUACION_CONFIRMADA",
+        "factualRepair": false,
+        "changesToRecord": false
+      }
+    },
+    {
+      "id": "GEN-T3.08-503.v1",
+      "source": "work/next-p0-web-final/revision-banco/reviewed-proposals.json",
+      "before": {
+        "i": "GEN-T3.08-503.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "CSS3 empezó a desarrollarse en:",
+        "a": [
+          "1998.",
+          "2005.",
+          "1996.",
+          "2011."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-503",
+        "u": "La tercera revisión, CSS3, empezó en 2005 y, actualmente, sigue publicando actualizaciones. … Hay más de 50 módulos, cada uno con un estatus diferente",
+        "v": 0
+      },
+      "storageFile": "public/data/T3.08.json",
+      "originalType": "C",
+      "after": null,
+      "factualRepairs": 0,
+      "category": "A",
+      "reason": "La clave 2005 contradice un borrador CSS3 de W3C ya publicado en 1999; no se adjudica otra fecha de inicio.",
+      "reviewedOptions": [
+        "No se acredita que 1998 sea el inicio.",
+        "2005 es posterior al borrador CSS3 de 1999.",
+        "No se acredita 1996 como inicio de CSS3.",
+        "2011 es posterior al borrador CSS3 de 1999."
+      ],
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - CSS.pdf",
+        "page": 4,
+        "quote": "La tercera revisión, CSS3, empezó en 2005 y, actualmente, sigue publicando actualizaciones.",
+        "sha256": "f871d3d81529d09b5ee8260e6c78a044df152e0b3a48155f5b54dea41fcf7fee",
+        "role": "provenance_not_independent_validation",
+        "literalVerified": true
+      },
+      "primary": [
+        {
+          "url": "https://www.w3.org/1999/06/WD-css3-page-19990623",
+          "role": "decisive_primary",
+          "checkedAt": "2026-11-06"
+        }
+      ],
+      "proposedAction": "curated_code_quarantine_np1_without_approval_hash",
+      "beforeSha256": "dffb94fdabb4b984b821a42ca754350d1d96661f478a0157c27e2d40b3bc565f",
+      "independentReview": {
+        "verdict": "CUARENTENA_PUNTUACION_CONFIRMADA",
+        "factualRepair": false,
+        "changesToRecord": false
+      }
+    },
+    {
+      "id": "P2019-P1-25",
+      "source": "work/next-p0-web-final/revision-banco/reviewed-proposals.json",
+      "before": {
+        "i": "P2019-P1-25",
+        "t": "T3.08",
+        "o": "O",
+        "q": "Indique cuáles de las siguientes etiquetas NO fueron introducidas como novedad en HTML5.",
+        "a": [
+          "<footer> y <details>",
+          "<header> y <nav>",
+          "<details> y <mark>",
+          "<caption> y <nav>"
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Etiquetas que no son nuevas en HTML5 (pares).",
+        "y": "Promoción interna OEP 2019"
+      },
+      "storageFile": "public/data/T3.08.json",
+      "originalType": "I",
+      "after": null,
+      "factualRepairs": 0,
+      "category": "A",
+      "reason": "La versión del banco no contiene una pareja de etiquetas anteriores a HTML5; se conserva la procedencia oficial sin alterar su clave.",
+      "reviewedOptions": [
+        "footer y details se incorporaron en HTML5.",
+        "header y nav se incorporaron en HTML5.",
+        "details y mark se incorporaron en HTML5; C no satisface NO.",
+        "caption era anterior, pero nav es nueva; la pareja no satisface ambas anteriores."
+      ],
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 3,
+        "quote": "En ella se incorporan nuevas etiquetas y atributos",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba",
+        "role": "provenance_not_independent_validation",
+        "literalVerified": true
+      },
+      "primary": [
+        {
+          "url": "https://www.w3.org/TR/html5-diff/",
+          "role": "decisive_primary",
+          "checkedAt": "2026-11-06"
+        }
+      ],
+      "proposedAction": "curated_code_quarantine_np1_without_approval_hash",
+      "beforeSha256": "6d7281c991e97b2c3cc672a535efb39eab5bb161f8148830a8178e1c043cbd68",
+      "independentReview": {
+        "verdict": "CUARENTENA_PUNTUACION_CONFIRMADA",
+        "factualRepair": false,
+        "changesToRecord": false
+      }
+    },
+    {
+      "id": "AT303-P1-03",
+      "source": "work/next-p0-development-remaining/revision-banco/reviewed-proposals.json",
+      "before": {
+        "i": "AT303-P1-03",
+        "t": "T3.03",
+        "o": "A",
+        "q": "De los lenguajes de programación siguientes, ¿cuál NO se considera de tipo funcional?",
+        "a": [
+          "Vala.",
+          "Hope.",
+          "Lisp.",
+          "Scheme."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "storageFile": "public/data/T3.03.json",
+      "originalType": "I",
+      "after": null,
+      "factualRepairs": 0,
+      "category": "A",
+      "reason": "Hope es un lenguaje funcional/aplicativo; la clave que lo clasifica como no funcional es incorrecta. No se cambia a Vala por la taxonomía múltiple del temario.",
+      "reviewedOptions": [
+        "El temario también atribuye paradigma funcional a Vala; no se propone nueva clave.",
+        "Los autores describen Hope como aplicativo; B no responde a NO funcional.",
+        "Lisp pertenece a la tradición funcional; no salva la clave B.",
+        "Scheme figura como funcional en el temario."
+      ],
+      "reference": {
+        "pdf": "01_Temario/T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "page": 19,
+        "quote": "Scheme          Compilado       Funcional                                 IA",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb",
+        "role": "provenance_not_independent_validation",
+        "literalVerified": true
+      },
+      "primary": [
+        {
+          "url": "https://www.research.ed.ac.uk/en/publications/hope-an-experimental-applicative-language/",
+          "role": "decisive_primary",
+          "checkedAt": "2026-11-06"
+        }
+      ],
+      "proposedAction": "curated_code_quarantine_np1_without_approval_hash",
+      "beforeSha256": "165f7adbda63de7ea4826891209c6b7d193c0e128955b4f163f9ed1abad38327",
+      "independentReview": {
+        "verdict": "CUARENTENA_PUNTUACION_CONFIRMADA",
+        "factualRepair": false,
+        "changesToRecord": false
+      }
+    },
+    {
+      "id": "L2025X-S1-09",
+      "source": "work/next-p0-development-remaining/revision-banco/reviewed-proposals.json",
+      "before": {
+        "i": "L2025X-S1-09",
+        "t": "T3.04",
+        "o": "O",
+        "q": "Se necesita crear una vista en la base de datos SQL Server para saber cuántos expedientes ha tramitado cada usuario. ¿Cuál sería la forma correcta de crearla?",
+        "a": [
+          "CREATE VIEW ExpTramitados AS SELECT IdUsuarioTramitador, COUNT(IdExpediente) AS TotalExpedientes FROM Expedientes;",
+          "CREATE VIEW ExpTramitados AS SELECT IdUsuarioTramitador, IdExpediente FROM Expedientes GROUP BY IdUsuarioTramitador;",
+          "CREATE VIEW ExpTramitados AS SELECT IdUsuarioTramitador, COUNT(IdExpediente) FROM Expedientes GROUP BY IdUsuarioTramitador;",
+          "CREATE VIEW ExpTramitados AS SELECT IdUsuarioTramitador, SUM(IdExpediente) FROM Expedientes GROUP BY IdUsuarioTramitador;"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 2,
+        "n": "Vista con COUNT y GROUP BY (alias necesario en SQL Server).",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1,
+        "s": "L2025X-S1"
+      },
+      "storageFile": "public/data/supuestos.json",
+      "originalType": "K",
+      "after": null,
+      "factualRepairs": 0,
+      "category": "A",
+      "reason": "En SQL Server ninguna opción crea la vista solicitada: a COUNT le falta nombre de columna en C. No se reescribe la pregunta oficial.",
+      "reviewedOptions": [
+        "Mezcla usuario y COUNT sin GROUP BY.",
+        "Selecciona expediente sin agregarlo ni agrupar por él.",
+        "COUNT carece de nombre de columna exigido para CREATE VIEW.",
+        "SUM no cuenta expedientes y tampoco nombra la columna derivada."
+      ],
+      "reference": {
+        "pdf": "01_Temario/T3.04 SQL/T3.04 SQL - Temario.pdf",
+        "page": 9,
+        "quote": "CREATE VIEW <nombre_vista> [lista_columnas] AS (consulta)",
+        "sha256": "b99989c34d1326722c0dacc4aa425a947c6b8be180a834f2939525a9ccac4b25",
+        "role": "provenance_not_independent_validation",
+        "literalVerified": true
+      },
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-view-transact-sql",
+          "role": "decisive_primary",
+          "checkedAt": "2026-11-06"
+        }
+      ],
+      "proposedAction": "curated_code_quarantine_np1_without_approval_hash",
+      "beforeSha256": "40792e3d3a3165e4babefd12b9b604b91a9ba83342fcdba9db3242ac99980ce2",
+      "scenarioId": "L2025X-S1",
+      "scenarioText": "Usted forma parte de un grupo de funcionarios de nuevo ingreso que se acaban de incorporar a una Subdirección General de Tecnologías de la Información y Comunicaciones de un ministerio y una de las primeras tareas que se les encomienda es continuar el desarrollo de una aplicación que empezó un funcionario que ya no está en la subdirección. La aplicación se compone de un frontend desarrollado con Angular 21 que se comunica con dos APIs: •    API de persistencia: Desarrollada en ASP.NET 10 con C# 14, expone servicios REST para realizar operaciones de consulta, escritura y borrado en una base de datos SQL Server 2025. Además, utiliza Nunit 3.0 para pruebas. •    API de integración con servicios de la Agencia Estatal de Administración Digital (AEAD): Desarrollada en Java SE Development Kit (JDK) 8, expone servicios SOAP que están integrados con los servicios de GEISER. Se utiliza Git 2.43 como herramienta de control de versiones y las dos APIs están documentadas haciendo uso del estándar OpenAPI/Swagger 3.1.0. Usted forma parte del equipo técnico responsable del diseño, desarrollo, implantación y soporte de este proyecto y deberá responder a las cuestiones que se le plantean a continuación. Para responder a estas, suponga que tiene todos los permisos necesarios en las diferentes tecnologías empleadas y que, salvo que se especifique lo contrario, se utilizan las librerías nativas que ya han sido declaradas de cada lenguaje de programació n utilizado.",
+      "contextSha256": "98305f602c1b55f0c275d09187ad878232f02bb324614f731cf8e88b41622ac7",
+      "independentReview": {
+        "verdict": "CUARENTENA_PUNTUACION_CONFIRMADA",
+        "factualRepair": false,
+        "changesToRecord": false
+      }
+    },
+    {
+      "id": "L2025A-P1-20",
+      "source": "work/next-p0-foundations-remaining/propuestas.json",
+      "before": {
+        "i": "L2025A-P1-20",
+        "t": "T1.10",
+        "o": "O",
+        "q": "De conformidad con el artículo 18 del Real Decreto 209/2003, de 21 de febrero, por el que se regulan los registros y las notificaciones telemáticas, así como la utilización de medios telemáticos para la sustitución de la aportación de certificados por los ciudadanos, indique la sentencia INCORRECTA:",
+        "a": [
+          "En los registros telemáticos serán considerados días inhábiles los así declarados para todo el territorio nacional en el calendario anual de días inhábiles.",
+          "La entrada de las solicitudes, escritos y comunicaciones recibidas en un día inhábil para el registro telemático se entenderá efectuada en la primera hora del primer día hábil siguiente.",
+          "Los registros telemáticos realizarán y anotarán entradas y salidas de escritos y comunicaciones en días inhábiles, aunque no compute a efectos de los plazos.",
+          "En lo que respecta a registros telemáticos referentes a trámites cuya instrucción y resolución corresponda a órganos cuya competencia esté territorialmente delimitada a una comunidad autónoma, provincia o municipio, serán días inhábiles los así declarados en el ámbito territorial correspondiente."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "RD 209/2003 registros telemáticos: reglas de cómputo cruzadas.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "storageFile": "public/data/T1.10.json",
+      "originalType": "D",
+      "after": null,
+      "factualRepairs": 0,
+      "category": "A",
+      "reason": "Pregunta 20 anulada en la plantilla definitiva A; no puntuar en modalidades generales. No se modifica ni se interpreta la clave histórica.",
+      "reviewedOptions": [
+        "La anulación excluye la pregunta completa; no se adjudica verdad a A.",
+        "La anulación excluye la pregunta completa; no se adjudica verdad a B.",
+        "La C almacenada no es una clave vigente puntuable tras la anulación.",
+        "La anulación excluye la pregunta completa; no se adjudica verdad a D."
+      ],
+      "reference": {
+        "pdf": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/work/reinicio-oficial/A.pdf",
+        "page": 1,
+        "quote": "20 ANULADA",
+        "sha256": "2535da974513214a63f18aeea58055a1e28139df0e6716981237546fe7afac9d",
+        "role": "official_definitive_key",
+        "method": "Visual inspection of work/reinicio-oficial/keyA.png; scanned PDF; not text extraction"
+      },
+      "primary": [
+        {
+          "url": "https://sede.inap.gob.es/sites/sede/files/public/2026-10/PlantillarespuestasDefTAI-L-A_G4WN8WY1M8_154AB89SD658.pdf",
+          "role": "decisive_primary",
+          "checkedAt": "2026-11-06"
+        }
+      ],
+      "proposedAction": "curated_code_quarantine_np1_without_approval_hash",
+      "beforeSha256": "e3e0de6f9dfdd63280ffe3025b19fa8f23a399accbadfb36a2b482aaf2adf8fa",
+      "independentReview": {
+        "verdict": "CUARENTENA_PUNTUACION_CONFIRMADA",
+        "factualRepair": false,
+        "changesToRecord": false
+      }
+    },
+    {
+      "id": "AT107-P1-29",
+      "source": "work/next-p0-foundations-remaining/propuestas.json",
+      "before": {
+        "i": "AT107-P1-29",
+        "t": "T1.07",
+        "o": "A",
+        "q": "El Fiscal contra la Violencia sobre la Mujer:",
+        "a": [
+          "Es nombrado por el Fiscal General del Estado.",
+          "Intervendrá en procesos penales de especial trascendencia referentes a delitos de violencia de género y en los procesos civiles relacionados.",
+          "Presentará semestralmente un informe al Fiscal General del Estado sobre los procedimientos seguidos y las actuaciones practicadas por el Ministerio Fiscal en materia de violencia de género.",
+          "Todas las respuestas son correctas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "storageFile": "public/data/T1.07.json",
+      "originalType": "C",
+      "after": null,
+      "factualRepairs": 0,
+      "category": "A",
+      "reason": "La clave todas las respuestas es falsa: el nombramiento no corresponde al Fiscal General y la intervención civil requiere delegación.",
+      "reviewedOptions": [
+        "Nombramiento por real decreto: art.38; el Fiscal General propone.",
+        "Art.20 exige delegación del Fiscal General para la intervención civil descrita.",
+        "El informe semestral sí está previsto en art.20.",
+        "Incluye A falsa y B incompleta, por lo que D no puede puntuarse como correcta."
+      ],
+      "reference": {
+        "pdf": "01_Temario/T1.07 Políticas de Igualdad/T1.07 Políticas de Igualdad - Temario.pdf",
+        "page": 54,
+        "quote": "Fiscal contra la Violencia sobre la Mujer.",
+        "sha256": "87083522e2f662659e2f016cc5fbd2a68f0bad091543d640ab88bdcac34dfa9a",
+        "role": "provenance_not_independent_validation",
+        "literalVerified": true
+      },
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1982-837",
+          "role": "decisive_primary",
+          "checkedAt": "2026-11-06"
+        }
+      ],
+      "proposedAction": "curated_code_quarantine_np1_without_approval_hash",
+      "beforeSha256": "12ffd8e96153b8581650f4259f1cff623b2073c169e1aca568cab9e162085eab",
+      "independentReview": {
+        "verdict": "CUARENTENA_PUNTUACION_CONFIRMADA",
+        "factualRepair": false,
+        "changesToRecord": false
+      }
+    },
+    {
+      "id": "AS11-P1-26",
+      "source": "work/next-p0-foundations-remaining/propuestas.json",
+      "before": {
+        "i": "AS11-P1-26",
+        "t": "T1.10",
+        "o": "A",
+        "q": "Para un sistema de categoría media según el ENS, en relación con la medida de seguridad “op.acc.5 Mecanismo de autenticación”, se exigirá el uso de al menos dos factores de autenticación, y las credenciales utilizadas deberán haber sido obtenidas tras un registro previo:",
+        "a": [
+          "Presencial.",
+          "Telemático usando certificado electrónico cualificado.",
+          "Telemático mediante una autenticación con una credencial electrónica obtenida tras un registro previo presencial o telemático usando certificado electrónico cualificado en dispositivo cualificado de creación de firma.",
+          "Todas las respuestas son correctas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "storageFile": "public/data/T1.10.json",
+      "originalType": "C",
+      "after": null,
+      "factualRepairs": 0,
+      "category": "A",
+      "reason": "La clave todas no reproduce op.acc.5: R3/R4 contemplan A o B, no la cadena C. Además categoría media admite R2, R3 o R4 más R5.",
+      "reviewedOptions": [
+        "Registro presencial previsto en R3/R4.",
+        "Registro telemático con certificado cualificado previsto en R3/R4.",
+        "La cadena de credenciales de C no es una vía adicional de esos refuerzos.",
+        "No es cierta porque incluye C; el enunciado además generaliza el refuerzo."
+      ],
+      "reference": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte1.pdf",
+        "page": 106,
+        "quote": "Autenticación multifactor: exigencia de dos o más factores de autenticación para ratificar una autenticación como válida.",
+        "sha256": "65544a91022ee92fcf4b81dbdfe5bd23ad28da9e0ef048a8d2094f6fd2bb7598",
+        "role": "provenance_not_independent_validation",
+        "literalVerified": true
+      },
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2022-7191",
+          "role": "decisive_primary",
+          "checkedAt": "2026-11-06"
+        }
+      ],
+      "proposedAction": "curated_code_quarantine_np1_without_approval_hash",
+      "beforeSha256": "ef1a0f58d676ccbd69ca6c9fd61db2fd20efece6a1c1bc1e25f77875921e8bd9",
+      "independentReview": {
+        "verdict": "CUARENTENA_PUNTUACION_CONFIRMADA",
+        "factualRepair": false,
+        "changesToRecord": false
+      }
+    }
+  ]
+}

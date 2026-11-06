@@ -20,6 +20,18 @@ REVIEWED_BATCHES = {
     'reviewed-followup': 'reviewed-followup.json',
     'reviewed-wave2': 'reviewed-wave2.json',
     'reviewed-admin20': 'reviewed-admin20.json',
+    'reviewed-legal19': 'reviewed-legal19.json',
+    'reviewed-programming20': 'reviewed-programming20.json',
+    'reviewed-web25': 'reviewed-web25.json',
+    'reviewed-architecture20': 'reviewed-architecture20.json',
+    'reviewed-languages17': 'reviewed-languages17.json',
+    'reviewed-web23': 'reviewed-web23.json',
+    'reviewed-development11': 'reviewed-development11.json',
+    'reviewed-systems20': 'reviewed-systems20.json',
+    'reviewed-foundations18': 'reviewed-foundations18.json',
+    'reviewed-systems16': 'reviewed-systems16.json',
+    'reviewed-syntax3': 'reviewed-syntax3.json',
+    'reviewed-admin5': 'reviewed-admin5.json',
 }
 
 
@@ -29,6 +41,54 @@ def encode(value):
 
 def sha256(row):
     return hashlib.sha256(encode(row)).hexdigest()
+
+
+def storage_name(edit):
+    """Ledger paths are provenance, never arbitrary candidate filesystem paths."""
+    storage = edit.get('storageFile', 'public/data/' + edit['topic'] + '.json')
+    allowed = ('public/data/' + edit['topic'] + '.json', 'public/data/supuestos.json')
+    if storage not in allowed:
+        raise ValueError(f"Almacenamiento inesperado: {edit['id']}.")
+    return storage.removeprefix('public/data/')
+
+
+def nested_index(scenarios):
+    if not isinstance(scenarios, dict):
+        raise ValueError('El catálogo de supuestos debe ser un objeto.')
+    index = {}
+    for scenario_id, scenario in scenarios.items():
+        if not isinstance(scenario, dict) or not isinstance(scenario.get('texto'), str) or not isinstance(scenario.get('q'), list):
+            raise ValueError(f'Supuesto mal formado: {scenario_id}.')
+        for position, row in enumerate(scenario['q']):
+            if not isinstance(row, dict) or not isinstance(row.get('i'), str) or row.get('s') != scenario_id:
+                raise ValueError(f'Pregunta mal ubicada en supuesto: {scenario_id}.')
+            if row['i'] in index:
+                raise ValueError('El catálogo de supuestos contiene IDs duplicados.')
+            index[row['i']] = (scenario_id, position)
+    return index
+
+
+def validate_context(edit, scenario_id, scenario):
+    context = edit['context']
+    if (edit.get('storageFile') != 'public/data/supuestos.json'
+            or edit.get('scenarioId') != scenario_id
+            or context.get('scenarioId') != scenario_id
+            or context.get('storageFile') != edit['storageFile']
+            or context.get('supTexto') != scenario['texto']):
+        raise ValueError(f"Contexto o ubicación inesperados: {edit['id']}.")
+    if hashlib.sha256(scenario['texto'].encode('utf-8')).hexdigest() != context.get('contextSha256'):
+        raise ValueError(f"Huella de contexto inesperada: {edit['id']}.")
+    for side in ('before', 'after'):
+        row = edit[side]
+        if (row.get('i') != edit['id'] or row.get('t') != edit['topic']
+                or row.get('s') != scenario_id or 'supTexto' in row
+                or sha256(row) != edit[side + 'Sha256']):
+            raise ValueError(f"Registro raw inesperado: {edit['id']}.")
+        # Transport envelope hashes preserve insertion order. They are NOT the app's
+        # sorted canonical runtime proof of {...raw, supTexto}, even for empty text.
+        envelope = {'scenarioId': scenario_id, 'supTexto': scenario['texto'], 'question': row}
+        if sha256(envelope) != context.get(side + 'ContextualSha256'):
+            raise ValueError(f"Huella contextual inesperada: {edit['id']}.")
 
 
 def prepare(topic, edits, directory, reverse, fingerprints=None):
@@ -42,15 +102,21 @@ def prepare(topic, edits, directory, reverse, fingerprints=None):
         raise ValueError(f'Deriva externa en {topic}.')
     rows = json.loads(original)
     metadata = topic == 'meta.json' and isinstance(rows, dict)
-    by_id = {key: key for key in rows} if metadata else {row['i']: index for index, row in enumerate(rows)}
-    if len(by_id) != len(rows):
+    nested = topic == 'supuestos.json'
+    by_id = nested_index(rows) if nested else {key: key for key in rows} if metadata else {row['i']: index for index, row in enumerate(rows)}
+    if not nested and len(by_id) != len(rows):
         raise ValueError('El tema contiene IDs duplicados.')
     changed = 0
     for edit in edits:
         index = by_id.get(edit['id'])
         if index is None:
             raise ValueError(f"Falta la pregunta {edit['id']}.")
-        row = rows[index]
+        container = rows
+        if nested:
+            scenario_id, index = index
+            validate_context(edit, scenario_id, rows[scenario_id])
+            container = rows[scenario_id]['q']
+        row = container[index]
         current = sha256(row)
         if current == edit[destination + 'Sha256']:
             continue
@@ -62,9 +128,9 @@ def prepare(topic, edits, directory, reverse, fingerprints=None):
             if metadata:
                 if not isinstance(row, list) or len(row) < 5 or row[0] != edit['topic']:
                     raise ValueError(f"Metadatos inesperados: {edit['id']}.")
-            elif row['i'] != edit['id'] or row['t'] + '.json' != topic:
+            elif row['i'] != edit['id'] or (not nested and row['t'] + '.json' != topic):
                 raise ValueError(f"ID o tema inesperado: {edit['id']}.")
-            rows[index] = row
+            container[index] = row
         else:
             for field, value in edit[destination].items():
                 if value is None:
@@ -90,8 +156,13 @@ def replay(directory, reverse, batch, include_sample=False):
         fcntl.flock(lock, fcntl.LOCK_EX)
         if batch in REVIEWED_BATCHES:
             ledger = json.loads((HERE / REVIEWED_BATCHES[batch]).read_text(encoding='utf-8'))
+            ids = [q['id'] for q in ledger['questions']]
+            if len(set(ids)) != len(ids):
+                raise ValueError('El lote contiene IDs duplicados.')
+            if any(storage_name(q) not in ledger['files'] for q in ledger['questions']):
+                raise ValueError('Falta la huella de un archivo del lote.')
             prepared = [prepare(topic, ledger['metadataEdits'] if topic == 'meta.json' else
-                                [q for q in ledger['questions'] if q['topic'] + '.json' == topic],
+                                [q for q in ledger['questions'] if storage_name(q) == topic],
                                 directory, reverse, fingerprints)
                         for topic, fingerprints in ledger['files'].items()]
             if include_sample:

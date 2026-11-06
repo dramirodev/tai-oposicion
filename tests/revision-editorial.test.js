@@ -1,14 +1,21 @@
-import { it, expect, beforeEach } from 'vitest';
+import { it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { applyEditorialScoring, isQuestionEditoriallyQuarantined } from '../src/core/domain/question-review-overrides.js';
+import { webcrypto } from 'node:crypto';
+import { verifyQuestionContent } from '../src/adapters/http/question-content-verification.js';
+import { hasApprovedQuestionContent } from '../src/core/domain/question-content-proof.js';
+afterEach(()=>vi.unstubAllGlobals());
+import { applyEditorialScoring, isQuestionEditoriallyQuarantined, questionReviewOverride } from '../src/core/domain/question-review-overrides.js';
 import { questionNotice } from '../src/shared/presentation/study-content.js';
 import { filterScoringQuestions } from '../src/core/domain/selection.js';
 const load = f => JSON.parse(readFileSync(`public/data/${f}`, 'utf8'));
 const by = (f, id) => load(f).find(q => q.i === id);
-it('conserva originales sin una reparación documentada y mantiene la cuarentena PHP', () => {
+it('conserva el original y la reparación documentada de AT309 y mantiene la cuarentena PHP', () => {
   const q = by('T3.09.json', 'AT309-P1-12');
-  expect(q.c).toBe(3);
-  expect(q.q).toContain('INCORRECTA');
+  const reviewed=JSON.parse(readFileSync('scripts/bank-editorial/reviewed-development11.json','utf8')).questions.find(row=>row.id===q.i);
+  expect(reviewed.before.c).toBe(3);
+  expect(reviewed.before.q).toContain('INCORRECTA');
+  expect(reviewed.before.np).toBe(1);
+  expect(q).toEqual(reviewed.after);
   const php = by('T3.03.json', 'GEN-T3.03-48');
   const review = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-wave2.json', 'utf8')).questions.find(q => q.id === php.i);
   expect(php).toEqual(review.after);
@@ -30,9 +37,17 @@ it('marcar el temario como repasado no cambia el día de actividad de la pregunt
   expect(r[12]).toBeGreaterThan(t0);
 });
 
-it('las cuatro preguntas ambiguas advierten del problema y no puntúan', () => {
+it('PHP y las versiones anteriores ambiguas no puntúan; sólo las dos reparaciones exactas se activan', async () => {
  for(const [f,id] of [['T3.09.json','AT309-P1-12'],['T3.03.json','GEN-T3.03-48'],['T3.03.json','GEN-T3.03-48.v1'],['T3.08.json','GEN-T3.08-418.v1']]) {
-  const q=by(f,id); expect(q.n?.length,id).toBeGreaterThan(40); expect(q.np,id).toBe(1);
+  const q=by(f,id); expect(q.n?.length,id).toBeGreaterThan(40);
+ if(['GEN-T3.08-418.v1','AT309-P1-12'].includes(id)){
+  const ledger=id==='GEN-T3.08-418.v1'?'reviewed-web23':'reviewed-development11';
+  const entry=JSON.parse(readFileSync(`scripts/bank-editorial/${ledger}.json`,'utf8')).questions.find(q=>q.id===id);
+  expect(q).toEqual(entry.after); expect(entry.before.np).toBe(1);
+  vi.stubGlobal('crypto',webcrypto);
+  expect(applyEditorialScoring(await verifyQuestionContent(entry.before)).np).toBe(1);
+  const approved=await verifyQuestionContent(q);expect(hasApprovedQuestionContent(approved)).toBe(true);expect(applyEditorialScoring(approved).np).not.toBe(1);
+ }else expect(q.np,id).toBe(1);
  }
 });
 
@@ -200,16 +215,19 @@ it.each([
 });
 
 
-it('exige prueba de contenido para las 198 nuevas correcciones factuales', () => {
+it('exige prueba de contenido para las 395 nuevas correcciones factuales', () => {
  const previous = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-19.json', 'utf8')).questions;
  const followup = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-followup.json', 'utf8')).questions.filter(q => q.priority === 'P0');
  const wave2 = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-wave2.json', 'utf8')).questions.filter(q => q.after.np !== 1);
  const admin = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-admin20.json', 'utf8')).questions;
- const entries = [...previous, ...followup, ...wave2, ...admin];
- expect(entries).toHaveLength(198);
+ const legal = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-legal19.json', 'utf8')).questions;
+ const programming = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-programming20.json', 'utf8')).questions;
+ const following = ['reviewed-web25','reviewed-architecture20','reviewed-languages17','reviewed-web23','reviewed-development11','reviewed-systems20','reviewed-foundations18','reviewed-systems16', 'reviewed-syntax3', 'reviewed-admin5'].flatMap(name=>JSON.parse(readFileSync('scripts/bank-editorial/'+name+'.json','utf8')).questions);
+ const entries = [...previous, ...followup, ...wave2, ...admin, ...legal, ...programming, ...following];
+ expect(entries).toHaveLength(395);
  for (const entry of entries) {
   for (const version of [entry.before, entry.after]) {
-   expect(isQuestionEditoriallyQuarantined(version.i), version.i).toBe(true);
+   expect(questionReviewOverride(version.i), version.i).toBeDefined();
    const safe = applyEditorialScoring(version);
    expect(safe.np).toBe(1);
    expect(filterScoringQuestions([safe], false, q => q.np)).toEqual([]);

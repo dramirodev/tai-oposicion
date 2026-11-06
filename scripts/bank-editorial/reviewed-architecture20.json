@@ -1,0 +1,2882 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "5c9ae8b",
+  "previousBatch": "reviewed-web25",
+  "status": "LOCAL_PENDING_CI_AND_PUBLICATION",
+  "sourceCandidateSha256": "a06c267a40b62e6816250612242bab433799646382ef3cb7eca562ba02859b26",
+  "fingerprintEncoding": "SHA256 UTF8 JSON.stringify Node insertion-order, no sorted keys",
+  "questions": [
+    {
+      "id": "AT307-P1-06",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "AT307-P1-06",
+        "t": "T3.07",
+        "o": "A",
+        "q": "Los servicios web son aplicaciones que puede ser (señale la respuesta INCORRECTA):",
+        "a": [
+          "Descritos.",
+          "Publicados.",
+          "Descubiertos.",
+          "Definidos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT307-P1-06",
+        "t": "T3.07",
+        "o": "A",
+        "q": "Sobre los servicios web interoperables, señale la afirmación INCORRECTA:",
+        "a": [
+          "Pueden describirse mediante un lenguaje de descripción de servicios.",
+          "Pueden publicarse para que otros sistemas los utilicen.",
+          "Pueden descubrirse mediante mecanismos de registro o descripción.",
+          "Obligan a implementar cliente y servicio en un único lenguaje de programación común."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: definir un servicio no es imposible; se sustituye ese distractor por una restricción de lenguaje incompatible con la interoperabilidad. A: Una descripción formal es posible. B: La publicación permite ofrecer el servicio. C: Existen mecanismos de descubrimiento. D: La interfaz permite interoperar sin imponer igual lenguaje. Fuente primaria: https://www.w3.org/TR/ws-arch/",
+        "u": "siendo este mecanismo de invocación totalmente independiente de la plataforma que utilicemos y del lenguaje de programación en el que se haya implementado internamente el servicio. [p. 21]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 21,
+        "quote": "siendo este mecanismo de invocación totalmente independiente de la plataforma que utilicemos y del lenguaje de programación en el que se haya implementado internamente el servicio.",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.w3.org/TR/ws-arch/",
+          "checked": "2026-11-06",
+          "sections": "2.1;Service description"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "Una descripción formal es posible."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "La publicación permite ofrecer el servicio."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "Existen mecanismos de descubrimiento."
+        },
+        {
+          "option": "D",
+          "correct": true,
+          "reason": "La interfaz permite interoperar sin imponer igual lenguaje."
+        }
+      ],
+      "oracle": "Documental",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-AT307-P1-06",
+        "pregunta": "AT307-P1-06",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave D. Un servicio también puede definirse. No hay incompatibilidad entre definir, describir, publicar y descubrir.",
+        "fuente": "T3.07 Arquitectura de Sistemas - Test.pdf (plantilla p. 13); T3.07 Arquitectura de Sistemas - Temario.pdf p. 14 (pasaje localizado: servicios web)",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "3895d4cf60eeb2435ef2ba2aaff2d5277437d927632208e61b602249a1d9f842",
+      "afterNodeSha256": "cf35d17b28c9d0a8f075e61702d6a3efe240f1e8d26dbc1bac46d6a8a8a18ab6",
+      "sourceAfterNodeSha256": "471ea61aabca8bbd4589d6b535811f121e6f3dfc2a1032087c8c630ac362f549",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 21,
+        "quote": "siendo este mecanismo de invocación totalmente independiente de la plataforma que utilicemos y del lenguaje de programación en el que se haya implementado internamente el servicio.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "Una descripción formal es posible.",
+        "La publicación permite ofrecer el servicio.",
+        "Existen mecanismos de descubrimiento.",
+        "La interfaz permite interoperar sin imponer igual lenguaje."
+      ],
+      "primary": [
+        {
+          "url": "https://www.w3.org/TR/ws-arch/",
+          "checked": "2026-11-06",
+          "sections": "2.1;Service description"
+        }
+      ],
+      "beforeSha256": "3895d4cf60eeb2435ef2ba2aaff2d5277437d927632208e61b602249a1d9f842",
+      "afterSha256": "cf35d17b28c9d0a8f075e61702d6a3efe240f1e8d26dbc1bac46d6a8a8a18ab6",
+      "inSample": false
+    },
+    {
+      "id": "AT307-P1-51",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "AT307-P1-51",
+        "t": "T3.07",
+        "o": "A",
+        "q": "NO es una herramienta para especificar APIs HTTP:",
+        "a": [
+          "WADL.",
+          "WSDL.",
+          "API Blueprint.",
+          "Swagger UI."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT307-P1-51",
+        "t": "T3.07",
+        "o": "A",
+        "q": "¿Cuál NO es un lenguaje o formato de descripción de APIs o servicios HTTP, sino un visualizador interactivo de una especificación existente?",
+        "a": [
+          "WADL.",
+          "WSDL.",
+          "API Blueprint.",
+          "Swagger UI."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: Swagger UI visualiza OpenAPI. WSDL dispone de binding HTTP; no debe marcarse como ajeno a describir servicios HTTP. A: WADL describe aplicaciones HTTP. B: WSDL2.0 incluye binding HTTP. C: API Blueprint es un lenguaje de descripción de APIs. D: Swagger UI es la interfaz de visualización e interacción. Fuente primaria: https://swagger.io/open-source/swagger-ui/ ; https://www.w3.org/TR/wsdl20-adjuncts/ ; https://www.w3.org/submissions/wadl/ ; https://apiblueprint.org/documentation/specification.html",
+        "u": "Swagger UI genera automáticamente a partir de la especificación OpenAPI (en YAML o JSON) la documentación visual de la API. [p. 52]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 52,
+        "quote": "Swagger UI genera automáticamente a partir de la especificación OpenAPI (en YAML o JSON) la documentación visual de la API.",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://swagger.io/open-source/swagger-ui/",
+          "checked": "2026-11-06",
+          "sections": "SwaggerUI;WSDL2.0HTTPBinding;WADLSubmission;APIBlueprint1A9"
+        },
+        {
+          "url": "https://www.w3.org/TR/wsdl20-adjuncts/",
+          "checked": "2026-11-06",
+          "sections": "SwaggerUI;WSDL2.0HTTPBinding;WADLSubmission;APIBlueprint1A9"
+        },
+        {
+          "url": "https://www.w3.org/submissions/wadl/",
+          "checked": "2026-11-06",
+          "sections": "SwaggerUI;WSDL2.0HTTPBinding;WADLSubmission;APIBlueprint1A9"
+        },
+        {
+          "url": "https://apiblueprint.org/documentation/specification.html",
+          "checked": "2026-11-06",
+          "sections": "SwaggerUI;WSDL2.0HTTPBinding;WADLSubmission;APIBlueprint1A9"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "WADL describe aplicaciones HTTP."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "WSDL2.0 incluye binding HTTP."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "API Blueprint es un lenguaje de descripción de APIs."
+        },
+        {
+          "option": "D",
+          "correct": true,
+          "reason": "Swagger UI es la interfaz de visualización e interacción."
+        }
+      ],
+      "oracle": "Documental",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-AT307-P1-51",
+        "pregunta": "AT307-P1-51",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave B. WSDL tiene enlaces HTTP. Swagger UI visualiza e interactúa con una especificación existente, y no es el lenguaje para especificarla.",
+        "fuente": "T3.07 Arquitectura de Sistemas - Test.pdf (plantilla p. 13); T3.07 Arquitectura de Sistemas - Temario.pdf p. 54 (pasaje localizado: WSDL)",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "6b266114be09b289999c0c5a6d0bb9c01a83713604adafbd98ce67be37123864",
+      "afterNodeSha256": "afdca39803554466e1a5268fb242716558592e61752549959b427f84aa128ad9",
+      "sourceAfterNodeSha256": "9d74ec156fe3e1029aa5c0e964f81527463f9ff8f77f1369b52a9cabfedb5b97",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 52,
+        "quote": "Swagger UI genera automáticamente a partir de la especificación OpenAPI (en YAML o JSON) la documentación visual de la API.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "WADL describe aplicaciones HTTP.",
+        "WSDL2.0 incluye binding HTTP.",
+        "API Blueprint es un lenguaje de descripción de APIs.",
+        "Swagger UI es la interfaz de visualización e interacción."
+      ],
+      "primary": [
+        {
+          "url": "https://swagger.io/open-source/swagger-ui/",
+          "checked": "2026-11-06",
+          "sections": "SwaggerUI;WSDL2.0HTTPBinding;WADLSubmission;APIBlueprint1A9"
+        },
+        {
+          "url": "https://www.w3.org/TR/wsdl20-adjuncts/",
+          "checked": "2026-11-06",
+          "sections": "SwaggerUI;WSDL2.0HTTPBinding;WADLSubmission;APIBlueprint1A9"
+        },
+        {
+          "url": "https://www.w3.org/submissions/wadl/",
+          "checked": "2026-11-06",
+          "sections": "SwaggerUI;WSDL2.0HTTPBinding;WADLSubmission;APIBlueprint1A9"
+        },
+        {
+          "url": "https://apiblueprint.org/documentation/specification.html",
+          "checked": "2026-11-06",
+          "sections": "SwaggerUI;WSDL2.0HTTPBinding;WADLSubmission;APIBlueprint1A9"
+        }
+      ],
+      "beforeSha256": "6b266114be09b289999c0c5a6d0bb9c01a83713604adafbd98ce67be37123864",
+      "afterSha256": "afdca39803554466e1a5268fb242716558592e61752549959b427f84aa128ad9",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.07-07.v1",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-07.v1",
+        "t": "T3.07",
+        "o": "G",
+        "q": "En cliente/servidor, escalar horizontalmente significa:",
+        "a": [
+          "Reducir las capas.",
+          "Añadir o eliminar clientes.",
+          "Cambiar de SGBD.",
+          "Migrar a máquinas más potentes."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T3.07-07",
+        "u": "Horizontalmente significa añadir o eliminar clientes. Verticalmente significa migrar a máquinas servidoras más potentes o multiservidores.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-07.v1",
+        "t": "T3.07",
+        "o": "G",
+        "q": "En una arquitectura cliente/servidor, escalar horizontalmente la capacidad del servicio significa:",
+        "a": [
+          "Reducir el número de capas de software.",
+          "Añadir o retirar instancias o nodos servidores.",
+          "Cambiar necesariamente de SGBD.",
+          "Sustituir una máquina por otra más potente."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T3.07-07",
+        "u": "Horizontalmente significa añadir o eliminar clientes. [p. 4]",
+        "v": 0,
+        "n": "Cambiar el número de clientes modifica demanda; escalar horizontalmente modifica instancias del servicio. A: Número de capas no equivale a capacidad horizontal. B: Añade o reduce réplicas o nodos. C: No exige cambiar la tecnología de base de datos. D: Describe escalado vertical. Fuente primaria: https://learn.microsoft.com/en-us/azure/architecture/best-practices/auto-scaling"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 4,
+        "quote": "Horizontalmente significa añadir o eliminar clientes.",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://learn.microsoft.com/en-us/azure/architecture/best-practices/auto-scaling",
+          "checked": "2026-11-06",
+          "sections": "Horizontal versus vertical scaling"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "Número de capas no equivale a capacidad horizontal."
+        },
+        {
+          "option": "B",
+          "correct": true,
+          "reason": "Añade o reduce réplicas o nodos."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "No exige cambiar la tecnología de base de datos."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "Describe escalado vertical."
+        }
+      ],
+      "oracle": "Documental",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.07-07.v1",
+        "pregunta": "GEN-T3.07-07.v1",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada B. Añadir/quitar clientes cambia la demanda, no la capacidad del servicio. Ninguna opción expresa añadir réplicas o nodos servidores.",
+        "fuente": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf p. 4",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "580461ae9164e5da8d6d5e0b09023ad0f14b4f8c5a0ed38f3b21ec0352b2609d",
+      "afterNodeSha256": "61ea68d7acb160b9c64c9a41defeb1ab175bf9ad63fa2d3148565a5f77c74bf4",
+      "sourceAfterNodeSha256": "2b16e01ecd6cf4e565a68decb78935ba2353d7678f00ab143c1e894576ef9ddf",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 4,
+        "quote": "Horizontalmente significa añadir o eliminar clientes.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "Número de capas no equivale a capacidad horizontal.",
+        "Añade o reduce réplicas o nodos.",
+        "No exige cambiar la tecnología de base de datos.",
+        "Describe escalado vertical."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/azure/architecture/best-practices/auto-scaling",
+          "checked": "2026-11-06",
+          "sections": "Horizontal versus vertical scaling"
+        }
+      ],
+      "beforeSha256": "580461ae9164e5da8d6d5e0b09023ad0f14b4f8c5a0ed38f3b21ec0352b2609d",
+      "afterSha256": "61ea68d7acb160b9c64c9a41defeb1ab175bf9ad63fa2d3148565a5f77c74bf4",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.07-54",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-54",
+        "t": "T3.07",
+        "o": "G",
+        "q": "En la comunicación asíncrona de un solo receptor, los mensajes son procesados:",
+        "a": [
+          "Sin eliminarse de la cola.",
+          "Solo por el emisor.",
+          "Varias veces por distintos receptores.",
+          "Una única vez y eliminados de la cola una vez tratados."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-54",
+        "u": "Un solo receptor (one-to-one): basado en mensajes y colas. … Desde el punto de vista funcional, los mensajes son procesados por el servicio receptor una única vez y eliminados de la cola una vez tratados. Se sigue el patrón ProductorConsumidor.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-54",
+        "t": "T3.07",
+        "o": "G",
+        "q": "En una cola asíncrona con un receptor por entrega, ¿qué puede afirmarse sobre el procesamiento exactamente una vez?",
+        "a": [
+          "Está garantizado porque todo mensaje permanece siempre en la cola.",
+          "Está garantizado porque sólo procesa los mensajes el emisor.",
+          "Es imposible que un mensaje vuelva a entregarse.",
+          "No queda garantizado sólo por ese patrón; un fallo antes del acuse puede causar reentrega."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-54",
+        "u": "Desde el punto de vista funcional, los mensajes son procesados por el servicio receptor una única vez y eliminados de la cola una vez tratados. [p. 16]",
+        "v": 0,
+        "n": "Un receptor por entrega no excluye redelivery; debe distinguirse entrega de efecto procesado. A: Permanecer en cola no garantiza unicidad. B: El consumidor, no sólo el emisor, procesa. C: La pérdida del acuse permite reentrega. D: Es el contraejemplo documentado por sistemas de colas. Fuente primaria: https://www.rabbitmq.com/docs/reliability"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 16,
+        "quote": "Desde el punto de vista funcional, los mensajes son procesados por el servicio receptor una única vez y eliminados de la cola una vez tratados.",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.rabbitmq.com/docs/reliability",
+          "checked": "2026-11-06",
+          "sections": "Data Safety on the Consumer Side, RabbitMQ4.4"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "Permanecer en cola no garantiza unicidad."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "El consumidor, no sólo el emisor, procesa."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "La pérdida del acuse permite reentrega."
+        },
+        {
+          "option": "D",
+          "correct": true,
+          "reason": "Es el contraejemplo documentado por sistemas de colas."
+        }
+      ],
+      "oracle": "Modelo local de entrega/acuse, no broker real",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.07-54",
+        "pregunta": "GEN-T3.07-54",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada D. Un receptor por entrega no implica procesamiento exactamente una vez. Una caída antes del acuse puede causar reentrega.",
+        "fuente": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf p. 16",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "96ba782eacdf7877117802bd46049b7a4cc9e1dfb972f6e3ec0a9d0dc5501c27",
+      "afterNodeSha256": "5f458cf3b1d26e3194a33cc389e0d8ff2af402c4fc36924c397ecc0532cd8606",
+      "sourceAfterNodeSha256": "0f5cab34245052ba92347d1033d6d9e929889f9d6cd7ad687f2559e9f12c35c7",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 16,
+        "quote": "Desde el punto de vista funcional, los mensajes son procesados por el servicio receptor una única vez y eliminados de la cola una vez tratados.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "Permanecer en cola no garantiza unicidad.",
+        "El consumidor, no sólo el emisor, procesa.",
+        "La pérdida del acuse permite reentrega.",
+        "Es el contraejemplo documentado por sistemas de colas."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rabbitmq.com/docs/reliability",
+          "checked": "2026-11-06",
+          "sections": "Data Safety on the Consumer Side, RabbitMQ4.4"
+        }
+      ],
+      "beforeSha256": "96ba782eacdf7877117802bd46049b7a4cc9e1dfb972f6e3ec0a9d0dc5501c27",
+      "afterSha256": "5f458cf3b1d26e3194a33cc389e0d8ff2af402c4fc36924c397ecc0532cd8606",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.07-59.v1",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-59.v1",
+        "t": "T3.07",
+        "o": "G",
+        "q": "En el patrón BFF, cada API Gateway ofrece servicios a:",
+        "a": [
+          "La base de datos.",
+          "Un grupo determinado de microservicios.",
+          "Un único microservicio.",
+          "Todos los microservicios."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-59",
+        "u": "Puede ocurrir que se diseñe una solución con varios API Gateways, conocido como patrón Backend For Frontend (BFF), donde cada API GW ofrece servicios a grupo determinado de microservicios.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-59.v1",
+        "t": "T3.07",
+        "o": "G",
+        "q": "En el patrón Backend for Frontend (BFF), cada backend se adapta principalmente a:",
+        "a": [
+          "Una única tecnología de base de datos.",
+          "Las necesidades de un frontend o tipo de cliente específico.",
+          "Un único microservicio obligatorio.",
+          "Todos los microservicios, con una interfaz idéntica para cualquier cliente."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-59",
+        "u": "conocido como patrón Backend For Frontend (BFF), donde cada API GW ofrece servicios a grupo determinado de microservicios. [p. 17]",
+        "v": 0,
+        "n": "La partición del BFF se guía por frontend/cliente; los microservicios son dependencias que puede consumir. A: La base de datos no define el frontend servido. B: Expresa el propósito del patrón. C: Puede agregar varios servicios. D: Precisamente se adapta a necesidades diferentes de clientes. Fuente primaria: https://learn.microsoft.com/en-us/azure/architecture/patterns/backends-for-frontends"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 17,
+        "quote": "conocido como patrón Backend For Frontend (BFF), donde cada API GW ofrece servicios a grupo determinado de microservicios.",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/backends-for-frontends",
+          "checked": "2026-11-06",
+          "sections": "Solution"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "La base de datos no define el frontend servido."
+        },
+        {
+          "option": "B",
+          "correct": true,
+          "reason": "Expresa el propósito del patrón."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "Puede agregar varios servicios."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "Precisamente se adapta a necesidades diferentes de clientes."
+        }
+      ],
+      "oracle": "Documental",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.07-59.v1",
+        "pregunta": "GEN-T3.07-59.v1",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada B. El grupo servido en un BFF se distingue por frontend/cliente; los microservicios subyacentes son los que el BFF consume, no sus destinatarios.",
+        "fuente": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf p. 17",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "a6785ecab8cf2d439102bdc0b98adb39b3aee013c590a1f0135392a563867cd4",
+      "afterNodeSha256": "a7fd1c5666c239b877face5404480941006b59c4748444530776802f3e07084e",
+      "sourceAfterNodeSha256": "56e22c876f10bd497e3d2eae86da096656a59671bf9b9d1f789df64bae820685",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 17,
+        "quote": "conocido como patrón Backend For Frontend (BFF), donde cada API GW ofrece servicios a grupo determinado de microservicios.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "La base de datos no define el frontend servido.",
+        "Expresa el propósito del patrón.",
+        "Puede agregar varios servicios.",
+        "Precisamente se adapta a necesidades diferentes de clientes."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/backends-for-frontends",
+          "checked": "2026-11-06",
+          "sections": "Solution"
+        }
+      ],
+      "beforeSha256": "a6785ecab8cf2d439102bdc0b98adb39b3aee013c590a1f0135392a563867cd4",
+      "afterSha256": "a7fd1c5666c239b877face5404480941006b59c4748444530776802f3e07084e",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.07-71.v2",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-71.v2",
+        "t": "T3.07",
+        "o": "G",
+        "q": "Los WS se alejan de las arquitecturas tradicionales cliente-servidor hacia arquitecturas:",
+        "a": [
+          "Monolíticas.",
+          "Centralizadas.",
+          "Distribuidas tipo igual-a-igual (peer-to-peer).",
+          "Mononivel."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.07-71",
+        "u": "Usualmente nos referimos con WS a una colección de métodos a los que podemos llamar desde cualquier lugar de Internet o de nuestra intranet, siendo este mecanismo de invocación totalmente independiente de la plataforma que utilicemos y del lenguaje de programación",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-71.v2",
+        "t": "T3.07",
+        "o": "G",
+        "q": "Respecto a la relación entre servicios web y arquitectura cliente/servidor:",
+        "a": [
+          "Los servicios web exigen una aplicación monolítica.",
+          "Los servicios web sólo funcionan en una única máquina central.",
+          "Pueden utilizar interacción cliente/servidor; no exigen una topología peer-to-peer.",
+          "Los servicios web deben ser siempre mononivel."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.07-71",
+        "u": "representan una revolución al alejarse de las arquitecturas tradicionales tipo cliente-servidor a nuevas arquitecturas distribuidas tipo igual-a-igual (peer-to-peer). [p. 21]",
+        "v": 0,
+        "n": "Distribución no implica abandonar cliente/servidor. El propio temario describe clientes que invocan servicios. A: No se exige monolito. B: Pueden distribuirse en red. C: Una petición de cliente a proveedor es compatible con servicio web. D: No impone número único de niveles. Fuente primaria: https://www.w3.org/TR/ws-arch/"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 21,
+        "quote": "representan una revolución al alejarse de las arquitecturas tradicionales tipo cliente-servidor a nuevas arquitecturas distribuidas tipo igual-a-igual (peer-to-peer).",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.w3.org/TR/ws-arch/",
+          "checked": "2026-11-06",
+          "sections": "Requester/provider interaction"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "No se exige monolito."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "Pueden distribuirse en red."
+        },
+        {
+          "option": "C",
+          "correct": true,
+          "reason": "Una petición de cliente a proveedor es compatible con servicio web."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "No impone número único de niveles."
+        }
+      ],
+      "oracle": "Documental",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.07-71.v2",
+        "pregunta": "GEN-T3.07-71.v2",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada C. Un servicio web ordinario opera perfectamente como cliente/servidor. Su distribución no implica que evolucione a topología peer-to-peer.",
+        "fuente": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf p. 21",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "79e22cb9fcc09c979abce61a32eb7fce2d9e6265ca759ccf8c7e5824bacae49f",
+      "afterNodeSha256": "82a03e2b9c45271ca5b73898ad406feb8ff2c25acc76a3d9a506d831eed6b4cb",
+      "sourceAfterNodeSha256": "66c9039c0eab1420225b99734efc7df3236486ba6e403ffd2546820a7afe69a3",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 21,
+        "quote": "representan una revolución al alejarse de las arquitecturas tradicionales tipo cliente-servidor a nuevas arquitecturas distribuidas tipo igual-a-igual (peer-to-peer).",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "No se exige monolito.",
+        "Pueden distribuirse en red.",
+        "Una petición de cliente a proveedor es compatible con servicio web.",
+        "No impone número único de niveles."
+      ],
+      "primary": [
+        {
+          "url": "https://www.w3.org/TR/ws-arch/",
+          "checked": "2026-11-06",
+          "sections": "Requester/provider interaction"
+        }
+      ],
+      "beforeSha256": "79e22cb9fcc09c979abce61a32eb7fce2d9e6265ca759ccf8c7e5824bacae49f",
+      "afterSha256": "82a03e2b9c45271ca5b73898ad406feb8ff2c25acc76a3d9a506d831eed6b4cb",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.07-82.v1",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-82.v1",
+        "t": "T3.07",
+        "o": "G",
+        "q": "Todas las tecnologías de servicios web se basan en:",
+        "a": [
+          "JSON.",
+          "SQL.",
+          "HTML.",
+          "XML."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-82",
+        "u": "El diseño de XML se deriva de 2 fuentes principales: SGML (Standard Generalized Markup Language) y de HTML (HyperText Markup Language). … Todas las tecnologías de WS se basan en XML.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-82.v1",
+        "t": "T3.07",
+        "o": "G",
+        "q": "Considerando servicios web SOAP y RESTful, ¿qué afirmación sobre el formato de los mensajes es correcta?",
+        "a": [
+          "Todos deben usar exclusivamente JSON.",
+          "Todos deben representar sus mensajes en SQL.",
+          "Todos deben usar exclusivamente HTML.",
+          "No existe un único formato universal: SOAP usa XML y RESTful puede usar otras representaciones."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-82",
+        "u": "Todas las tecnologías de WS se basan en XML. [p. 24]",
+        "v": 0,
+        "n": "El temario incluye RESTful entre servicios web en p.21; por ello su universalidad XML en p.24 es incorrecta. A: SOAP no usa JSON como formato de sobre. B: SQL no es formato universal de mensajes. C: HTML no es obligatorio. D: Distingue SOAP de la flexibilidad de representaciones REST. Fuente primaria: https://www.w3.org/TR/soap12-part1/ ; https://spec.openapis.org/oas/v3.2.1.html"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 24,
+        "quote": "Todas las tecnologías de WS se basan en XML.",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.w3.org/TR/soap12-part1/",
+          "checked": "2026-11-06",
+          "sections": "SOAP1.2MessageConstruct;OpenAPI3.2.1MediaTypeObject"
+        },
+        {
+          "url": "https://spec.openapis.org/oas/v3.2.1.html",
+          "checked": "2026-11-06",
+          "sections": "SOAP1.2MessageConstruct;OpenAPI3.2.1MediaTypeObject"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "SOAP no usa JSON como formato de sobre."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "SQL no es formato universal de mensajes."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "HTML no es obligatorio."
+        },
+        {
+          "option": "D",
+          "correct": true,
+          "reason": "Distingue SOAP de la flexibilidad de representaciones REST."
+        }
+      ],
+      "oracle": "Parseo JSON y XML locales, no servicios",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.07-82.v1",
+        "pregunta": "GEN-T3.07-82.v1",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada D. No todas las tecnologías web usan XML. REST puede usar JSON, binarios u otras representaciones.",
+        "fuente": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf p. 24",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "9f315e93591bc36d7b5347d53b300264b8c79ec0de25d843459669c374b93feb",
+      "afterNodeSha256": "638bb5ed703e2e8a3a67d71ceef225f21e6a43eba2c35e416f56b811159e353c",
+      "sourceAfterNodeSha256": "203149b9a5f88389a8b466a10a822320ab07070c77f15b0617a73c333920814e",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 24,
+        "quote": "Todas las tecnologías de WS se basan en XML.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "SOAP no usa JSON como formato de sobre.",
+        "SQL no es formato universal de mensajes.",
+        "HTML no es obligatorio.",
+        "Distingue SOAP de la flexibilidad de representaciones REST."
+      ],
+      "primary": [
+        {
+          "url": "https://www.w3.org/TR/soap12-part1/",
+          "checked": "2026-11-06",
+          "sections": "SOAP1.2MessageConstruct;OpenAPI3.2.1MediaTypeObject"
+        },
+        {
+          "url": "https://spec.openapis.org/oas/v3.2.1.html",
+          "checked": "2026-11-06",
+          "sections": "SOAP1.2MessageConstruct;OpenAPI3.2.1MediaTypeObject"
+        }
+      ],
+      "beforeSha256": "9f315e93591bc36d7b5347d53b300264b8c79ec0de25d843459669c374b93feb",
+      "afterSha256": "638bb5ed703e2e8a3a67d71ceef225f21e6a43eba2c35e416f56b811159e353c",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.07-91.v1",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-91.v1",
+        "t": "T3.07",
+        "o": "G",
+        "q": "El token UsernameToken contiene el subelemento:",
+        "a": [
+          "Ticket con el atributo Type.",
+          "Certificate con el atributo Id.",
+          "Password con el atributo Hash.",
+          "Username con el atributo Id."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-91",
+        "u": "T3.07 PDF, p. 25: «User Name Token: el token UsernameToken contiene el subelemento Username con el atributo Id, pudiendo ampliarse los atributos».",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-91.v1",
+        "t": "T3.07",
+        "o": "G",
+        "q": "En WS-Security UsernameToken Profile1.1.1, el elemento que expresa el nombre del usuario dentro de UsernameToken es:",
+        "a": [
+          "Ticket con un atributo Type obligatorio.",
+          "Certificate con un atributo Id obligatorio.",
+          "Password con un atributo Hash obligatorio.",
+          "Username; no necesita un atributo Id para expresar ese nombre."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-91",
+        "u": "User Name Token: el token UsernameToken contiene el subelemento Username con el atributo Id, pudiendo ampliarse los atributos. [p. 26]",
+        "v": 0,
+        "n": "El identificador wsu:Id del token no debe atribuirse como requisito al subelemento Username. A: Ticket no es el elemento de nombre de usuario. B: Certificate corresponde a otro concepto de token. C: Password contiene información de contraseña, no el nombre. D: Username es el subelemento pertinente. Fuente primaria: https://docs.oasis-open.org/wss-m/wss/v1.1.1/os/wss-UsernameTokenProfile-v1.1.1-os.html"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 26,
+        "quote": "User Name Token: el token UsernameToken contiene el subelemento Username con el atributo Id, pudiendo ampliarse los atributos.",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://docs.oasis-open.org/wss-m/wss/v1.1.1/os/wss-UsernameTokenProfile-v1.1.1-os.html",
+          "checked": "2026-11-06",
+          "sections": "3 UsernameToken extensions"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "Ticket no es el elemento de nombre de usuario."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "Certificate corresponde a otro concepto de token."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "Password contiene información de contraseña, no el nombre."
+        },
+        {
+          "option": "D",
+          "correct": true,
+          "reason": "Username es el subelemento pertinente."
+        }
+      ],
+      "oracle": "Parseo XML ejemplo conforme al perfil; no autenticación",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.07-91.v1",
+        "pregunta": "GEN-T3.07-91.v1",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada D. El atributo wsu:Id se asocia opcionalmente al UsernameToken. No es un atributo obligatorio del subelemento Username como afirma D.",
+        "fuente": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf p. 26",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "6d80fae28e72aefc6c0a04d9dd8eae44ebbc116a52c852ca9c88f8a6dace27a2",
+      "afterNodeSha256": "85cea115667d99daeab5c19ec9af0a5b999464a7a7582e9910be7d739500fe34",
+      "sourceAfterNodeSha256": "e2137865b01060d069c3a2ce95efbc7bd128d9c6d7f62c10b560aa5ada8bb8a4",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 26,
+        "quote": "User Name Token: el token UsernameToken contiene el subelemento Username con el atributo Id, pudiendo ampliarse los atributos.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "Ticket no es el elemento de nombre de usuario.",
+        "Certificate corresponde a otro concepto de token.",
+        "Password contiene información de contraseña, no el nombre.",
+        "Username es el subelemento pertinente."
+      ],
+      "primary": [
+        {
+          "url": "https://docs.oasis-open.org/wss-m/wss/v1.1.1/os/wss-UsernameTokenProfile-v1.1.1-os.html",
+          "checked": "2026-11-06",
+          "sections": "3 UsernameToken extensions"
+        }
+      ],
+      "beforeSha256": "6d80fae28e72aefc6c0a04d9dd8eae44ebbc116a52c852ca9c88f8a6dace27a2",
+      "afterSha256": "85cea115667d99daeab5c19ec9af0a5b999464a7a7582e9910be7d739500fe34",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.07-100.v2",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-100.v2",
+        "t": "T3.07",
+        "o": "G",
+        "q": "XML Key Management permite manejar los procesos de:",
+        "a": [
+          "Firma y cifrado.",
+          "Registro y revocación del servicio.",
+          "Direccionamiento.",
+          "Descubrimiento."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-100",
+        "u": "XML Key Management: protocolo desarrollado por el W3C que está orientado a la obtención de información acerca de claves y certificados. … Está compuesto de 2 elementos fundamentales: la información (X-KISS) y el registro (X-RKSS) de la clave pública.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-100.v2",
+        "t": "T3.07",
+        "o": "G",
+        "q": "XKMS2.0, mediante X-KRSS, permite manejar procesos de:",
+        "a": [
+          "Firma y cifrado del contenido como finalidad directa de X-KRSS.",
+          "Registro y revocación de vinculaciones de información a claves públicas.",
+          "Direccionamiento de peticiones HTTP.",
+          "Descubrimiento de cualquier servicio web."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-100",
+        "u": "Permite manejar los procesos de registro y revocación del servicio. [p. 27]",
+        "v": 0,
+        "n": "Se registran o revocan key bindings, no el servicio de gestión que ofrece la operación. A: X-KRSS gestiona vinculaciones de claves. B: Identifica el objeto de Register/Revoke. C: No es la función de X-KRSS. D: No es un registro general de servicios. Fuente primaria: https://www.w3.org/TR/xkms2/"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 27,
+        "quote": "Permite manejar los procesos de registro y revocación del servicio.",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.w3.org/TR/xkms2/",
+          "checked": "2026-11-06",
+          "sections": "6 Key Registration Service"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "X-KRSS gestiona vinculaciones de claves."
+        },
+        {
+          "option": "B",
+          "correct": true,
+          "reason": "Identifica el objeto de Register/Revoke."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "No es la función de X-KRSS."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "No es un registro general de servicios."
+        }
+      ],
+      "oracle": "Documental",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.07-100.v2",
+        "pregunta": "GEN-T3.07-100.v2",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada B. El registro y revocación son de las claves/credenciales, no del servicio que suministra la funcionalidad.",
+        "fuente": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf p. 27",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "7147a8cf3070dd37e8277047a3aa0cc19f6a7ae3628513b86c3d48b47f5c4c83",
+      "afterNodeSha256": "90b7ae7d1aba4fb18f38c17c893f2fd7cbddb97e50b43efefd6fe677f4bc446e",
+      "sourceAfterNodeSha256": "1ae9d0dd042ccc8f4a3931f882ccf1abe59283c912ab98aa2414b34077180e31",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 27,
+        "quote": "Permite manejar los procesos de registro y revocación del servicio.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "X-KRSS gestiona vinculaciones de claves.",
+        "Identifica el objeto de Register/Revoke.",
+        "No es la función de X-KRSS.",
+        "No es un registro general de servicios."
+      ],
+      "primary": [
+        {
+          "url": "https://www.w3.org/TR/xkms2/",
+          "checked": "2026-11-06",
+          "sections": "6 Key Registration Service"
+        }
+      ],
+      "beforeSha256": "7147a8cf3070dd37e8277047a3aa0cc19f6a7ae3628513b86c3d48b47f5c4c83",
+      "afterSha256": "90b7ae7d1aba4fb18f38c17c893f2fd7cbddb97e50b43efefd6fe677f4bc446e",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.07-111.v1",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-111.v1",
+        "t": "T3.07",
+        "o": "G",
+        "q": "El atributo relay de SOAP tiene relación con que:",
+        "a": [
+          "Se codifica el mensaje.",
+          "Un nodo intermediario elimina el bloque de cabecera tras procesarlo.",
+          "El nodo final lo ignora.",
+          "Un nodo procesa el bloque y lo mantiene siempre."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-111",
+        "u": "Este atributo se utiliza para asegurar que los nodos SOAP no ignoran los bloques de cabecera que son importantes para la finalidad global de la aplicación. … Cuando un nodo intermediario SOAP procesa un bloque de cabecera, el nodo intermediario SOAP elimina el bloque de cabecera del mensaje SOAP.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-111.v1",
+        "t": "T3.07",
+        "o": "G",
+        "q": "En SOAP1.2, el atributo relay de un bloque de cabecera indica:",
+        "a": [
+          "El algoritmo de cifrado del mensaje.",
+          "Si un intermediario al que se dirige el bloque debe retransmitirlo cuando no lo procesa.",
+          "Que el destinatario final debe ignorar siempre el bloque.",
+          "Que todo bloque procesado debe conservarse siempre."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-111",
+        "u": "Cuando un nodo intermediario SOAP procesa un bloque de cabecera, el nodo relay intermediario SOAP elimina el bloque de cabecera del mensaje SOAP. [p. 29]",
+        "v": 0,
+        "n": "relay regula retransmisión de bloques dirigidos al intermediario y no procesados; no equivale a la eliminación después de procesar. A: No selecciona cifrado. B: Es el significado normativo de relay. C: No impone ese comportamiento al receptor final. D: No manda conservar todos los bloques procesados. Fuente primaria: https://www.w3.org/TR/soap12-part1/"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 29,
+        "quote": "Cuando un nodo intermediario SOAP procesa un bloque de cabecera, el nodo relay intermediario SOAP elimina el bloque de cabecera del mensaje SOAP.",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.w3.org/TR/soap12-part1/",
+          "checked": "2026-11-06",
+          "sections": "5.2.4 relay;2.7 Relaying"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "No selecciona cifrado."
+        },
+        {
+          "option": "B",
+          "correct": true,
+          "reason": "Es el significado normativo de relay."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "No impone ese comportamiento al receptor final."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "No manda conservar todos los bloques procesados."
+        }
+      ],
+      "oracle": "Parseo XML de relay; semántica contrastada con norma",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.07-111.v1",
+        "pregunta": "GEN-T3.07-111.v1",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada B. relay indica si un intermediario retransmite un bloque dirigido a él que no ha procesado. La clave describe eliminación tras procesamiento y no define relay.",
+        "fuente": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf p. 29",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "cebda5dfee8332dde56b24646c40025f4a4fbc0794b992439346e3ad96817df3",
+      "afterNodeSha256": "15fa2d098ad93f9677ac44d389545bb8a84e82bc5ecd62b6c7e74da0886a858f",
+      "sourceAfterNodeSha256": "363d231694118d92aab5e9114ac153e2567749f2165b91530d12392310e791d6",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 29,
+        "quote": "Cuando un nodo intermediario SOAP procesa un bloque de cabecera, el nodo relay intermediario SOAP elimina el bloque de cabecera del mensaje SOAP.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "No selecciona cifrado.",
+        "Es el significado normativo de relay.",
+        "No impone ese comportamiento al receptor final.",
+        "No manda conservar todos los bloques procesados."
+      ],
+      "primary": [
+        {
+          "url": "https://www.w3.org/TR/soap12-part1/",
+          "checked": "2026-11-06",
+          "sections": "5.2.4 relay;2.7 Relaying"
+        }
+      ],
+      "beforeSha256": "cebda5dfee8332dde56b24646c40025f4a4fbc0794b992439346e3ad96817df3",
+      "afterSha256": "15fa2d098ad93f9677ac44d389545bb8a84e82bc5ecd62b6c7e74da0886a858f",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.07-164.v1",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-164.v1",
+        "t": "T3.07",
+        "o": "G",
+        "q": "El resultado final del flujo de OAuth 2.0 es que el cliente recibe:",
+        "a": [
+          "Un certificado.",
+          "Un código de autorización o un token de acceso.",
+          "El client secret.",
+          "Las credenciales del usuario."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-164",
+        "u": "El servidor de autorización redirige de vuelta al cliente un código de autorización o un TOKEN DE ACCESO, según el tipo de concesión.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-164.v1",
+        "t": "T3.07",
+        "o": "G",
+        "q": "En el flujo de código de autorización OAuth2.0, tras canjear correctamente el código en el endpoint de token, el cliente obtiene:",
+        "a": [
+          "Un certificado de usuario como resultado obligatorio.",
+          "Un token de acceso.",
+          "El client secret emitido como resultado de ese canje.",
+          "La contraseña del propietario del recurso."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-164",
+        "u": "redirige de vuelta al cliente un código de autorización o un TOKEN DE ACCESO, según el tipo de concesión. [p. 50]",
+        "v": 0,
+        "n": "El código es un resultado intermedio; se canjea por el token de acceso. No se avalan flujos implícitos desaconsejados ni el ejemplo genérico de credenciales del temario. A: No se exige un certificado como resultado. B: Es el resultado de la respuesta exitosa del token endpoint. C: El secreto del cliente no es el token emitido. D: No se entrega la contraseña del usuario. Fuente primaria: https://www.rfc-editor.org/rfc/rfc6749 ; https://www.rfc-editor.org/rfc/rfc9700"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 50,
+        "quote": "redirige de vuelta al cliente un código de autorización o un TOKEN DE ACCESO, según el tipo de concesión.",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc6749",
+          "checked": "2026-11-06",
+          "sections": "RFC6749 4.1.3/4.1.4;RFC9700 authorizationcode"
+        },
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc9700",
+          "checked": "2026-11-06",
+          "sections": "RFC6749 4.1.3/4.1.4;RFC9700 authorizationcode"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "No se exige un certificado como resultado."
+        },
+        {
+          "option": "B",
+          "correct": true,
+          "reason": "Es el resultado de la respuesta exitosa del token endpoint."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "El secreto del cliente no es el token emitido."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "No se entrega la contraseña del usuario."
+        }
+      ],
+      "oracle": "Modelo JSON de etapas; no OAuth real",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.07-164.v1",
+        "pregunta": "GEN-T3.07-164.v1",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada B. El código es un resultado intermedio que se canjea, no el resultado final del flujo de código. El acceso se obtiene con el access token.",
+        "fuente": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf p. 50",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "90375c709e0a8a998d5bde52a0d7c661b63e49dca7e3a78ad8f0293fe32327ec",
+      "afterNodeSha256": "4bb1a22e7fde46c5106ad493a74773a061a434ca9b0dbe448ebf156d339e5984",
+      "sourceAfterNodeSha256": "afebf606191b42643d4787b2bd4277b0ba44c146440223e32347f4223d1fce69",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 50,
+        "quote": "redirige de vuelta al cliente un código de autorización o un TOKEN DE ACCESO, según el tipo de concesión.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "No se exige un certificado como resultado.",
+        "Es el resultado de la respuesta exitosa del token endpoint.",
+        "El secreto del cliente no es el token emitido.",
+        "No se entrega la contraseña del usuario."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc6749",
+          "checked": "2026-11-06",
+          "sections": "RFC6749 4.1.3/4.1.4;RFC9700 authorizationcode"
+        },
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc9700",
+          "checked": "2026-11-06",
+          "sections": "RFC6749 4.1.3/4.1.4;RFC9700 authorizationcode"
+        }
+      ],
+      "beforeSha256": "90375c709e0a8a998d5bde52a0d7c661b63e49dca7e3a78ad8f0293fe32327ec",
+      "afterSha256": "4bb1a22e7fde46c5106ad493a74773a061a434ca9b0dbe448ebf156d339e5984",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.07-166",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-166",
+        "t": "T3.07",
+        "o": "G",
+        "q": "JWT es autónomo porque:",
+        "a": [
+          "Es compacto.",
+          "Está cifrado.",
+          "La carga útil tiene toda la información del usuario, sin necesidad de consultar una BD.",
+          "Se transmite por URL."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-166",
+        "u": "define una forma compacta (la información se transmite a través de una URL o dentro de una cabecera HTTP) y autónoma (la carga útil tiene toda la información del usuario, no siendo necesario consultar una BD)",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-166",
+        "t": "T3.07",
+        "o": "G",
+        "q": "¿Qué afirmación describe correctamente la carga útil de un JWT?",
+        "a": [
+          "Por ser compacto, contiene necesariamente todos los datos del usuario.",
+          "Está siempre cifrada.",
+          "Contiene los claims incluidos por el emisor; no garantiza contener toda la información ni evitar consultas externas.",
+          "Debe transmitirse siempre dentro de la URL."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-166",
+        "u": "autónoma (la carga útil tiene toda la información del usuario, no siendo necesario consultar una BD) [p. 50]",
+        "v": 0,
+        "n": "Un JWT representa claims; su contenido no impone una base de datos completa ni elimina por sí solo validaciones externas. A: Compacidad no garantiza totalidad. B: Un JWS puede estar firmado sin cifrar. C: Respeta el alcance real de los claims. D: La representación no obliga al transporte por URL. Fuente primaria: https://www.rfc-editor.org/rfc/rfc7519"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 50,
+        "quote": "autónoma (la carga útil tiene toda la información del usuario, no siendo necesario consultar una BD)",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc7519",
+          "checked": "2026-11-06",
+          "sections": "3;4 JWT Claims"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "Compacidad no garantiza totalidad."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "Un JWS puede estar firmado sin cifrar."
+        },
+        {
+          "option": "C",
+          "correct": true,
+          "reason": "Respeta el alcance real de los claims."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "La representación no obliga al transporte por URL."
+        }
+      ],
+      "oracle": "JWS local HMAC con payload mínimo; positivo y alteración negativa",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.07-166",
+        "pregunta": "GEN-T3.07-166",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada C. El payload solo contiene los claims que se hayan incluido, puede incluso no incluir datos del usuario y no elimina la necesidad de comprobar validez o consultar datos externos.",
+        "fuente": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf p. 50",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "187001006c5eeccca66398b5fb8415ed20658f6728745a4868dfe27408bdd35f",
+      "afterNodeSha256": "3ae78c7199af64299b1fc272f5b4aa4be6702c881f501542abb4224c7a611473",
+      "sourceAfterNodeSha256": "816a0df28d81f493e0517ea6c4744b152083be035160c81dd75552136534ff5f",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 50,
+        "quote": "autónoma (la carga útil tiene toda la información del usuario, no siendo necesario consultar una BD)",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "Compacidad no garantiza totalidad.",
+        "Un JWS puede estar firmado sin cifrar.",
+        "Respeta el alcance real de los claims.",
+        "La representación no obliga al transporte por URL."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc7519",
+          "checked": "2026-11-06",
+          "sections": "3;4 JWT Claims"
+        }
+      ],
+      "beforeSha256": "187001006c5eeccca66398b5fb8415ed20658f6728745a4868dfe27408bdd35f",
+      "afterSha256": "3ae78c7199af64299b1fc272f5b4aa4be6702c881f501542abb4224c7a611473",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.07-168",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-168",
+        "t": "T3.07",
+        "o": "G",
+        "q": "JWT es un mecanismo de autenticación:",
+        "a": [
+          "Con estado en el servidor.",
+          "Basado en sesión.",
+          "Solo de autorización.",
+          "Sin estado, ya que el estado del usuario se guarda en el cliente."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          8,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-168",
+        "u": "JWT es un mecanismo de AUTENTICACIÓN sin estado ya que el estado del usuario nunca se almacena en el servidor, sino que se guarda en el cliente",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-168",
+        "t": "T3.07",
+        "o": "G",
+        "q": "JWT es:",
+        "a": [
+          "Un mecanismo que exige almacenar toda sesión en el servidor.",
+          "Un protocolo completo de inicio de sesión basado obligatoriamente en cookie.",
+          "Un mecanismo exclusivo de autorización que no puede transportar otros claims.",
+          "Un formato para representar claims; por sí solo no define un protocolo de autenticación ni una política de estado."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          8,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-168",
+        "u": "JWT es un mecanismo de AUTENTICACIÓN sin estado ya que el estado del usuario nunca se almacena en el servidor, sino que se guarda en el cliente [p. 50]",
+        "v": 0,
+        "n": "Formato de token y arquitectura de autenticación son conceptos distintos. A: No prescribe ese almacenamiento. B: No define todo el protocolo de login. C: El uso de los claims depende de la aplicación. D: Es la distinción esencial del RFC. Fuente primaria: https://www.rfc-editor.org/rfc/rfc7519"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 50,
+        "quote": "JWT es un mecanismo de AUTENTICACIÓN sin estado ya que el estado del usuario nunca se almacena en el servidor, sino que se guarda en el cliente",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc7519",
+          "checked": "2026-11-06",
+          "sections": "Abstract;3 JWT Overview"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "No prescribe ese almacenamiento."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "No define todo el protocolo de login."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "El uso de los claims depende de la aplicación."
+        },
+        {
+          "option": "D",
+          "correct": true,
+          "reason": "Es la distinción esencial del RFC."
+        }
+      ],
+      "oracle": "JWS local; sin autenticación remota",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.07-168",
+        "pregunta": "GEN-T3.07-168",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada D. JWT no es un mecanismo o protocolo de autenticación y no impone guardar estado en el cliente.",
+        "fuente": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf p. 50",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "7fb9756eb45d25ec0a3e71ef9b7341ac59d0ae1bad8c159ad8ce2a6a94935b52",
+      "afterNodeSha256": "50eadd06a87ef690eb93421ba23de8419392745e1ba738f14ea2a497a7cae477",
+      "sourceAfterNodeSha256": "c0c87809260983ce7d2c803702fea1fd8e7c3fc704d9cf9d22c4d03d30df215c",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 50,
+        "quote": "JWT es un mecanismo de AUTENTICACIÓN sin estado ya que el estado del usuario nunca se almacena en el servidor, sino que se guarda en el cliente",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "No prescribe ese almacenamiento.",
+        "No define todo el protocolo de login.",
+        "El uso de los claims depende de la aplicación.",
+        "Es la distinción esencial del RFC."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc7519",
+          "checked": "2026-11-06",
+          "sections": "Abstract;3 JWT Overview"
+        }
+      ],
+      "beforeSha256": "7fb9756eb45d25ec0a3e71ef9b7341ac59d0ae1bad8c159ad8ce2a6a94935b52",
+      "afterSha256": "50eadd06a87ef690eb93421ba23de8419392745e1ba738f14ea2a497a7cae477",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.07-168.v1",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-168.v1",
+        "t": "T3.07",
+        "o": "G",
+        "q": "El mecanismo JWT es opuesto a la autenticación:",
+        "a": [
+          "A través de sesión, en el que sí se almacenan los datos en el servidor.",
+          "Por certificado.",
+          "Con token.",
+          "Sin estado."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          8,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-168",
+        "u": "JWT es un mecanismo de AUTENTICACIÓN sin estado ya que el estado del usuario nunca se almacena en el servidor, sino que se guarda en el cliente",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-168.v1",
+        "t": "T3.07",
+        "o": "G",
+        "q": "¿Qué relación existe entre usar JWT y mantener una sesión en el servidor?",
+        "a": [
+          "Son compatibles: usar JWT no prohíbe mantener estado de sesión en el servidor.",
+          "Son incompatibles porque JWT exige autenticación por certificado.",
+          "Son incompatibles porque un JWT no puede actuar como token.",
+          "JWT obliga a eliminar cualquier estado de sesión del servidor."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-168",
+        "u": "JWT es un mecanismo de AUTENTICACIÓN sin estado ya que el estado del usuario nunca se almacena en el servidor, sino que se guarda en el cliente [p. 50]",
+        "v": 0,
+        "n": "Un formato de claims no prohíbe que la aplicación mantenga una sesión asociada. A: Un claim puede identificar estado externo. B: JWT no obliga a usar certificados para login. C: JWT es precisamente una representación de token. D: No hay esa prohibición en RFC7519. Fuente primaria: https://www.rfc-editor.org/rfc/rfc7519"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 50,
+        "quote": "JWT es un mecanismo de AUTENTICACIÓN sin estado ya que el estado del usuario nunca se almacena en el servidor, sino que se guarda en el cliente",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc7519",
+          "checked": "2026-11-06",
+          "sections": "3;4.3 Private Claim Names"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": true,
+          "reason": "Un claim puede identificar estado externo."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "JWT no obliga a usar certificados para login."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "JWT es precisamente una representación de token."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "No hay esa prohibición en RFC7519."
+        }
+      ],
+      "oracle": "JWS con sid y mapa de sesión local, sin servidor",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.07-168.v1",
+        "pregunta": "GEN-T3.07-168.v1",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada A. Un JWT puede actuar como identificador de una sesión de servidor u otro dato; no son diseños mutuamente excluyentes.",
+        "fuente": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf p. 50",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "e0663c6b3dbc3f02ebb33cf42bccbf1406a3f6f54e42eb259e7b75e75f8a16e8",
+      "afterNodeSha256": "f524b3139e302d99933497e5dfa6841ad403860b67f13be299902d45fbab3019",
+      "sourceAfterNodeSha256": "2dd49bf87341673c7184b2e9ff86f0b63080473796afe8a6651119d32cf7944a",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 50,
+        "quote": "JWT es un mecanismo de AUTENTICACIÓN sin estado ya que el estado del usuario nunca se almacena en el servidor, sino que se guarda en el cliente",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "Un claim puede identificar estado externo.",
+        "JWT no obliga a usar certificados para login.",
+        "JWT es precisamente una representación de token.",
+        "No hay esa prohibición en RFC7519."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc7519",
+          "checked": "2026-11-06",
+          "sections": "3;4.3 Private Claim Names"
+        }
+      ],
+      "beforeSha256": "e0663c6b3dbc3f02ebb33cf42bccbf1406a3f6f54e42eb259e7b75e75f8a16e8",
+      "afterSha256": "f524b3139e302d99933497e5dfa6841ad403860b67f13be299902d45fbab3019",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.07-168.v2",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-168.v2",
+        "t": "T3.07",
+        "o": "G",
+        "q": "En JWT, el estado del usuario se almacena:",
+        "a": [
+          "En la base de datos.",
+          "En el servidor.",
+          "En el API Gateway.",
+          "En el cliente."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          8,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-168",
+        "u": "JWT es un mecanismo de AUTENTICACIÓN sin estado ya que el estado del usuario nunca se almacena en el servidor, sino que se guarda en el cliente",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-168.v2",
+        "t": "T3.07",
+        "o": "G",
+        "q": "¿Dónde exige RFC7519 almacenar el estado de usuario cuando se usa JWT?",
+        "a": [
+          "Obligatoriamente en una base de datos.",
+          "Obligatoriamente en el servidor.",
+          "Obligatoriamente en un API Gateway.",
+          "No prescribe una ubicación obligatoria; depende del diseño de la aplicación."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          8,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-168",
+        "u": "JWT es un mecanismo de AUTENTICACIÓN sin estado ya que el estado del usuario nunca se almacena en el servidor, sino que se guarda en el cliente [p. 50]",
+        "v": 0,
+        "n": "RFC7519 define representación de claims, no dónde persistir token o estado de usuario. A: No impone una base de datos. B: No impone servidor. C: No exige API Gateway. D: La ubicación queda fuera de esa especificación. Fuente primaria: https://www.rfc-editor.org/rfc/rfc7519"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 50,
+        "quote": "JWT es un mecanismo de AUTENTICACIÓN sin estado ya que el estado del usuario nunca se almacena en el servidor, sino que se guarda en el cliente",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc7519",
+          "checked": "2026-11-06",
+          "sections": "Scope;3 JWT Overview"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "No impone una base de datos."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "No impone servidor."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "No exige API Gateway."
+        },
+        {
+          "option": "D",
+          "correct": true,
+          "reason": "La ubicación queda fuera de esa especificación."
+        }
+      ],
+      "oracle": "JWS con mapa local; no recomendación de almacenamiento",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.07-168.v2",
+        "pregunta": "GEN-T3.07-168.v2",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada D. La especificación no determina dónde almacenar el estado del usuario ni dónde conservar el token.",
+        "fuente": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf p. 50",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "10db41cae27f5818009d60b9a5bd506c1608a5eed1a9be71ab10145dc0516df4",
+      "afterNodeSha256": "1961cc2ec4980e44e8cfefad9bb541f226068c34b452ae5d4616e1b399b23552",
+      "sourceAfterNodeSha256": "1f90e30582132043d540e04a26aaf56b7149062d8b1591e8a7f1d721e5528fe7",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 50,
+        "quote": "JWT es un mecanismo de AUTENTICACIÓN sin estado ya que el estado del usuario nunca se almacena en el servidor, sino que se guarda en el cliente",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "No impone una base de datos.",
+        "No impone servidor.",
+        "No exige API Gateway.",
+        "La ubicación queda fuera de esa especificación."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc7519",
+          "checked": "2026-11-06",
+          "sections": "Scope;3 JWT Overview"
+        }
+      ],
+      "beforeSha256": "10db41cae27f5818009d60b9a5bd506c1608a5eed1a9be71ab10145dc0516df4",
+      "afterSha256": "1961cc2ec4980e44e8cfefad9bb541f226068c34b452ae5d4616e1b399b23552",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.07-185.v1",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-185.v1",
+        "t": "T3.07",
+        "o": "G",
+        "q": "Postman es una herramienta para probar servicios web:",
+        "a": [
+          "RESTful.",
+          "SOAP.",
+          "WSDL.",
+          "SOAP y RESTful."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          13
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-185",
+        "u": "SoapUI: herramienta para probar servicios web SOAP y RESTful. Postman: herramienta para probar servicios web RESTful.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.07-185.v1",
+        "t": "T3.07",
+        "o": "G",
+        "q": "Postman puede utilizarse para enviar peticiones y probar servicios:",
+        "a": [
+          "Sólo RESTful, nunca SOAP.",
+          "Sólo SOAP, nunca RESTful.",
+          "WSDL, entendido como protocolo de transporte de mensajes.",
+          "Tanto SOAP sobre HTTP como APIs RESTful."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          13
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-185",
+        "u": "Postman: herramienta para probar servicios web RESTful. [p. 55]",
+        "v": 0,
+        "w": 1,
+        "n": "La documentación de Postman explica peticiones SOAP; el listado del temario es incompleto. A: Excluye indebidamente SOAP. B: Excluye indebidamente REST. C: WSDL es descripción, no protocolo de transporte. D: Ambas capacidades están documentadas. Fuente primaria: https://learning.postman.com/docs/use/send-requests/protocols/soap/making-soap-requests"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 55,
+        "quote": "Postman: herramienta para probar servicios web RESTful.",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://learning.postman.com/docs/use/send-requests/protocols/soap/making-soap-requests",
+          "checked": "2026-11-06",
+          "sections": "SOAP requests"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "Excluye indebidamente SOAP."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "Excluye indebidamente REST."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "WSDL es descripción, no protocolo de transporte."
+        },
+        {
+          "option": "D",
+          "correct": true,
+          "reason": "Ambas capacidades están documentadas."
+        }
+      ],
+      "oracle": "Documental",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.07-185.v1",
+        "pregunta": "GEN-T3.07-185.v1",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada A. Postman puede enviar XML SOAP sobre HTTP además de probar REST. La alternativa D es más completa que la clave A.",
+        "fuente": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf p. 55",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "cf63aac861c1ebabc08be7560f861c2fcecc2a284d85f684a7ce229d511e0e2a",
+      "afterNodeSha256": "6b72bd5183710675eea5e09d8aaf810e08fd012f059a70fccc382980b476cd14",
+      "sourceAfterNodeSha256": "647f696cee94b49e0997786725c1e6e012f866faf02de2ebd8db1dafd1cb67f3",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 55,
+        "quote": "Postman: herramienta para probar servicios web RESTful.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "Excluye indebidamente SOAP.",
+        "Excluye indebidamente REST.",
+        "WSDL es descripción, no protocolo de transporte.",
+        "Ambas capacidades están documentadas."
+      ],
+      "primary": [
+        {
+          "url": "https://learning.postman.com/docs/use/send-requests/protocols/soap/making-soap-requests",
+          "checked": "2026-11-06",
+          "sections": "SOAP requests"
+        }
+      ],
+      "beforeSha256": "cf63aac861c1ebabc08be7560f861c2fcecc2a284d85f684a7ce229d511e0e2a",
+      "afterSha256": "6b72bd5183710675eea5e09d8aaf810e08fd012f059a70fccc382980b476cd14",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.07-188.v2",
+      "priority": "P0",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-188.v2",
+        "t": "T3.07",
+        "o": "G",
+        "q": "Un adaptador en arquitectura hexagonal se denomina también:",
+        "a": [
+          "Puerto.",
+          "Repositorio.",
+          "Dominio.",
+          "Controlador."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-188",
+        "u": "Puerto: definición de una interfaz pública (como una interface en Java). Adaptador: especialización de un puerto para un contexto concreto, también denominado controlador (como una clase que implementa una interface).",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-188.v2",
+        "t": "T3.07",
+        "o": "G",
+        "q": "En arquitectura hexagonal, un adaptador:",
+        "a": [
+          "Es siempre el propio puerto, sin implementación diferenciada.",
+          "Debe ser siempre un repositorio de base de datos.",
+          "Es necesariamente el dominio de negocio.",
+          "Conecta un puerto con una tecnología concreta; un controlador es un posible adaptador, no un sinónimo universal."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-188",
+        "u": "Adaptador: especialización de un puerto para un contexto concreto, también denominado controlador (como una clase que implementa una interface). [p. 56]",
+        "v": 0,
+        "n": "El patrón original incluye adaptadores de interfaz, persistencia y pruebas; no todos son controladores. A: El puerto es contrato y el adaptador realiza la conexión. B: Existen adaptadores que no son de persistencia. C: No equivale al núcleo de negocio. D: Conserva la distinción entre rol general y ejemplo concreto. Fuente primaria: https://alistair.cockburn.us/hexagonal-architecture"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0",
+        "text": "work/next-p0-arquitectura/T3.07 Arquitectura de Sistemas - Temario.txt",
+        "type": "Temario",
+        "page": 56,
+        "quote": "Adaptador: especialización de un puerto para un contexto concreto, también denominado controlador (como una clase que implementa una interface).",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://alistair.cockburn.us/hexagonal-architecture",
+          "checked": "2026-11-06",
+          "sections": "Original paper:ports/adapters and SQL/mock adapters"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "El puerto es contrato y el adaptador realiza la conexión."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "Existen adaptadores que no son de persistencia."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "No equivale al núcleo de negocio."
+        },
+        {
+          "option": "D",
+          "correct": true,
+          "reason": "Conserva la distinción entre rol general y ejemplo concreto."
+        }
+      ],
+      "oracle": "Documental",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.07-188.v2",
+        "pregunta": "GEN-T3.07-188.v2",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada D. Un adaptador de persistencia o un cliente HTTP también son adaptadores y no reciben necesariamente el nombre de controlador.",
+        "fuente": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf p. 56",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "6f4733bb5644008a101ee260717b5cb35af17c8681d0f1246a258205c8ac18d3",
+      "afterNodeSha256": "726991a8eb67dc61d3c5fed85c9f13a5eed49bc58cf65721aa0e21f1cf32c0b8",
+      "sourceAfterNodeSha256": "a6f8faefb2819998e9cfaedd0bcd07bbfe2a7865748f53cbb25d900efc5dd6f4",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 56,
+        "quote": "Adaptador: especialización de un puerto para un contexto concreto, también denominado controlador (como una clase que implementa una interface).",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "reviewedOptions": [
+        "El puerto es contrato y el adaptador realiza la conexión.",
+        "Existen adaptadores que no son de persistencia.",
+        "No equivale al núcleo de negocio.",
+        "Conserva la distinción entre rol general y ejemplo concreto."
+      ],
+      "primary": [
+        {
+          "url": "https://alistair.cockburn.us/hexagonal-architecture",
+          "checked": "2026-11-06",
+          "sections": "Original paper:ports/adapters and SQL/mock adapters"
+        }
+      ],
+      "beforeSha256": "6f4733bb5644008a101ee260717b5cb35af17c8681d0f1246a258205c8ac18d3",
+      "afterSha256": "726991a8eb67dc61d3c5fed85c9f13a5eed49bc58cf65721aa0e21f1cf32c0b8",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.10-122",
+      "priority": "P0",
+      "topic": "T3.10",
+      "before": {
+        "i": "GEN-T3.10-122",
+        "t": "T3.10",
+        "o": "G",
+        "q": "Durante un sprint, el backlog de la iteración:",
+        "a": [
+          "Puede cambiarlo el Scrum Master.",
+          "Puede cambiarlo el Product Owner.",
+          "No puede ser cambiado por nadie.",
+          "Cambia cada día."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.10-122",
+        "u": "Durante una iteración, nadie puede cambiar el backlog de la iteración, lo que significa que los requisitos están congelados para esa iteración. … Scrum adopta un enfoque empírico",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.10-122",
+        "t": "T3.10",
+        "o": "G",
+        "q": "Según Scrum Guide2020, durante un Sprint el Sprint Backlog:",
+        "a": [
+          "Sólo puede modificarlo el Scrum Master.",
+          "Sólo puede modificarlo el Product Owner.",
+          "Lo actualizan los Developers conforme aprenden, manteniendo el Sprint Goal.",
+          "Debe cambiar obligatoriamente todos los días, aunque no haya información nueva."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.10-122",
+        "u": "Durante una iteración, nadie puede cambiar el backlog de la iteración, lo que significa que los requisitos están congelados para esa iteración. [p. 23]",
+        "v": 0,
+        "n": "El plan de los Developers se actualiza durante el Sprint; proteger el objetivo no congela todo el trabajo. A: El Scrum Master no es dueño exclusivo del plan. B: El Product Owner colabora sobre alcance, pero no es dueño exclusivo del plan. C: Refleja el plan adaptable y el objetivo protegido. D: No se exige un cambio artificial diario. Fuente primaria: https://scrumguides.org/scrum-guide.html"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+        "sha256": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+        "text": "work/next-p0-arquitectura/T3.10 Metodologías de Pruebas y Colaboración - Temario.txt",
+        "type": "Temario",
+        "page": 23,
+        "quote": "Durante una iteración, nadie puede cambiar el backlog de la iteración, lo que significa que los requisitos están congelados para esa iteración.",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://scrumguides.org/scrum-guide.html",
+          "checked": "2026-11-06",
+          "sections": "Sprint Backlog;Sprint Goal"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "El Scrum Master no es dueño exclusivo del plan."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "El Product Owner colabora sobre alcance, pero no es dueño exclusivo del plan."
+        },
+        {
+          "option": "C",
+          "correct": true,
+          "reason": "Refleja el plan adaptable y el objetivo protegido."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "No se exige un cambio artificial diario."
+        }
+      ],
+      "oracle": "Documental",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.10-122",
+        "pregunta": "GEN-T3.10-122",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada C. El Sprint Backlog lo actualizan los Developers durante el Sprint. Lo que se protege es el Sprint Goal.",
+        "fuente": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf p. 23",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "f0b2f58b3ca0201f86f6144775206acdba67d84b19fcc9edc19376a7e16927aa",
+      "afterNodeSha256": "e04a052291fca5f67907e4c43611503035eabfb508b9859cb5e5eb5b3888e13f",
+      "sourceAfterNodeSha256": "d078826f1217bf2c992d5e89094a2af44b3d96be3896685e70d6c0e77419c5fb",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+        "page": 23,
+        "quote": "Durante una iteración, nadie puede cambiar el backlog de la iteración, lo que significa que los requisitos están congelados para esa iteración.",
+        "sha256": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581"
+      },
+      "reviewedOptions": [
+        "El Scrum Master no es dueño exclusivo del plan.",
+        "El Product Owner colabora sobre alcance, pero no es dueño exclusivo del plan.",
+        "Refleja el plan adaptable y el objetivo protegido.",
+        "No se exige un cambio artificial diario."
+      ],
+      "primary": [
+        {
+          "url": "https://scrumguides.org/scrum-guide.html",
+          "checked": "2026-11-06",
+          "sections": "Sprint Backlog;Sprint Goal"
+        }
+      ],
+      "beforeSha256": "f0b2f58b3ca0201f86f6144775206acdba67d84b19fcc9edc19376a7e16927aa",
+      "afterSha256": "e04a052291fca5f67907e4c43611503035eabfb508b9859cb5e5eb5b3888e13f",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.10-124.v2",
+      "priority": "P0",
+      "topic": "T3.10",
+      "before": {
+        "i": "GEN-T3.10-124.v2",
+        "t": "T3.10",
+        "o": "G",
+        "q": "La Sprint Review verifica si el incremento de producto satisface las expectativas del:",
+        "a": [
+          "Equipo de desarrollo.",
+          "Scrum Master.",
+          "Product Owner.",
+          "Cliente final únicamente."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.10-124",
+        "u": "SPRINT PLANNING MEETING (reunión de planificación del sprint): se lleva a cabo al comienzo del sprint. El objetivo es decidir los ítems del Product Backlog que formarán parte del Sprint Backlog. … SPRINT REVIEW (reunión de revisión del sprint): al final del sprint se inspecciona el resultado del mismo",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.10-124.v2",
+        "t": "T3.10",
+        "o": "G",
+        "q": "Según Scrum Guide2020, el propósito de la Sprint Review es:",
+        "a": [
+          "Aceptar únicamente lo que espera el equipo de desarrollo.",
+          "Permitir que sólo el Scrum Master apruebe el incremento.",
+          "Inspeccionar el resultado del Sprint con los interesados clave y determinar adaptaciones futuras.",
+          "Comprobar exclusivamente la satisfacción del cliente final, sin otros interesados."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.10-124",
+        "u": "SPRINT REVIEW (reunión de revisión del sprint): al final del sprint se inspecciona el resultado del mismo y se verifica si el incremento de producto satisface las expectativas del Product Owner e identificar si hay que hacer ajustes. [p. 23]",
+        "v": 0,
+        "n": "La Review es inspección y adaptación colaborativa, no una puerta de aceptación exclusiva del Product Owner. A: No se limita a expectativas internas. B: No es una aprobación individual del Scrum Master. C: Expresa inspección y adaptación con stakeholders. D: El cliente final no es el único participante posible. Fuente primaria: https://scrumguides.org/scrum-guide.html"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+        "sha256": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+        "text": "work/next-p0-arquitectura/T3.10 Metodologías de Pruebas y Colaboración - Temario.txt",
+        "type": "Temario",
+        "page": 23,
+        "quote": "SPRINT REVIEW (reunión de revisión del sprint): al final del sprint se inspecciona el resultado del mismo y se verifica si el incremento de producto satisface las expectativas del Product Owner e identificar si hay que hacer ajustes.",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://scrumguides.org/scrum-guide.html",
+          "checked": "2026-11-06",
+          "sections": "Sprint Review"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "No se limita a expectativas internas."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "No es una aprobación individual del Scrum Master."
+        },
+        {
+          "option": "C",
+          "correct": true,
+          "reason": "Expresa inspección y adaptación con stakeholders."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "El cliente final no es el único participante posible."
+        }
+      ],
+      "oracle": "Documental",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.10-124.v2",
+        "pregunta": "GEN-T3.10-124.v2",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada C. Sprint Review es una sesión de trabajo con stakeholders para inspeccionar resultados y decidir adaptaciones, no un control de aceptación de expectativas del Product Owner.",
+        "fuente": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf p. 23",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "363fd69710d64e7306a72557e6b33d81ba82f7b0b82ea36554daeb78c9c64f30",
+      "afterNodeSha256": "dd0066fd3bb71bb89bc5f03433bffcbae0accf5763dac069579d6b48f8889c0d",
+      "sourceAfterNodeSha256": "a604bc05aef1bbd84d6024763573ad594f5f2fb09f2a22e424260b917d74e595",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+        "page": 23,
+        "quote": "SPRINT REVIEW (reunión de revisión del sprint): al final del sprint se inspecciona el resultado del mismo y se verifica si el incremento de producto satisface las expectativas del Product Owner e identificar si hay que hacer ajustes.",
+        "sha256": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581"
+      },
+      "reviewedOptions": [
+        "No se limita a expectativas internas.",
+        "No es una aprobación individual del Scrum Master.",
+        "Expresa inspección y adaptación con stakeholders.",
+        "El cliente final no es el único participante posible."
+      ],
+      "primary": [
+        {
+          "url": "https://scrumguides.org/scrum-guide.html",
+          "checked": "2026-11-06",
+          "sections": "Sprint Review"
+        }
+      ],
+      "beforeSha256": "363fd69710d64e7306a72557e6b33d81ba82f7b0b82ea36554daeb78c9c64f30",
+      "afterSha256": "dd0066fd3bb71bb89bc5f03433bffcbae0accf5763dac069579d6b48f8889c0d",
+      "inSample": false
+    },
+    {
+      "id": "GEN-T3.10-322.v2",
+      "priority": "P0",
+      "topic": "T3.10",
+      "before": {
+        "i": "GEN-T3.10-322.v2",
+        "t": "T3.10",
+        "o": "G",
+        "q": "Para descartar cambios locales de un fichero se usa:",
+        "a": [
+          "git push",
+          "git checkout --<fichero>",
+          "git branch -d",
+          "git reset --hard"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.10-322",
+        "u": "git checkout --<fichero> actualiza el fichero a la versión anterior, es decir, descarta los cambios. En concreto, reemplaza los cambios en el directorio de trabajo con el último contenido de HEAD.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.10-322.v2",
+        "t": "T3.10",
+        "o": "G",
+        "q": "En Git, ¿qué comando restaura sólo el fichero rastreado fichero.txt desde el índice al directorio de trabajo, sin modificar el índice ni los demás ficheros?",
+        "a": [
+          "git push",
+          "git checkout -- fichero.txt",
+          "git branch -d",
+          "git reset --hard"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.10-322",
+        "u": "git checkout --<fichero> actualiza el fichero a la versión anterior, es decir, descarta los cambios. En concreto, reemplaza los cambios en el directorio de trabajo con el último contenido de HEAD. Sin embargo, los cambios agregados al Index, así como los nuevos archivos se mantendrán sin cambio. [p. 53]",
+        "v": 0,
+        "n": "Es necesario separar -- de la ruta. Sin tree-ish, checkout restaura desde el índice; reset --hard tiene alcance global y no satisface el requisito. A: push no restaura el fichero local. B: La ruta limita la operación; -- separa opciones y rutas. C: branch -d elimina una rama, no restaura contenido. D: Afecta índice y árbol de trabajo globalmente. Fuente primaria: https://git-scm.com/docs/git-checkout"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+        "sha256": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+        "text": "work/next-p0-arquitectura/T3.10 Metodologías de Pruebas y Colaboración - Temario.txt",
+        "type": "Temario",
+        "page": 53,
+        "quote": "git checkout --<fichero> actualiza el fichero a la versión anterior, es decir, descarta los cambios. En concreto, reemplaza los cambios en el directorio de trabajo con el último contenido de HEAD. Sin embargo, los cambios agregados al Index, así como los nuevos archivos se mantendrán sin cambio.",
+        "quoteNormalization": "Sólo espacios y saltos de línea"
+      },
+      "primarySources": [
+        {
+          "url": "https://git-scm.com/docs/git-checkout",
+          "checked": "2026-11-06",
+          "sections": "git-checkout:checkout paths"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "push no restaura el fichero local."
+        },
+        {
+          "option": "B",
+          "correct": true,
+          "reason": "La ruta limita la operación; -- separa opciones y rutas."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "branch -d elimina una rama, no restaura contenido."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "Afecta índice y árbol de trabajo globalmente."
+        }
+      ],
+      "oracle": "Repositorio temporal aislado:índice distintoHEAD,2archivos,claveviejanegativa",
+      "status": "Pendiente segunda firma; no aplicada",
+      "objectivePreserved": "Mismo concepto, corregida universalidad/sujeto/clave; sin acotación histórica para salvar la clave.",
+      "audit": {
+        "id": "ITEM-GEN-T3.10-322.v2",
+        "pregunta": "GEN-T3.10-322.v2",
+        "estado": "ANALIZADO",
+        "prioridad": "P0",
+        "clasificacion": "Incorrecta",
+        "dictamen": "Clave registrada B. La clave escribe --<fichero> como opción y no separa -- de la ruta. Reset --hard también descarta cambios, con alcance global.",
+        "fuente": "T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf p. 53",
+        "referencia": "",
+        "cierre": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad."
+      },
+      "sampleIncluded": false,
+      "beforeNodeSha256": "6f42f5d4d98fb9fbbf82705eaf803e1e12de4bcccbd658fb92bad5083d92b5f3",
+      "afterNodeSha256": "f4442bde8e63c1ba6179edff676cf4a237dd419187927881c0512ad60dd033fe",
+      "sourceAfterNodeSha256": "2eb8f3d5c81ab68200c845f3e08caf1f191252e2d6a85a314804b97fab2d2cb7",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única, cuatro alternativas y racionales, tipo, before actual, SHA y literal PDF; normas/primarias contrastadas y oráculos limitados reejecutados."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+        "page": 53,
+        "quote": "git checkout --<fichero> actualiza el fichero a la versión anterior, es decir, descarta los cambios. En concreto, reemplaza los cambios en el directorio de trabajo con el último contenido de HEAD. Sin embargo, los cambios agregados al Index, así como los nuevos archivos se mantendrán sin cambio.",
+        "sha256": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581"
+      },
+      "reviewedOptions": [
+        "push no restaura el fichero local.",
+        "La ruta limita la operación; -- separa opciones y rutas.",
+        "branch -d elimina una rama, no restaura contenido.",
+        "Afecta índice y árbol de trabajo globalmente."
+      ],
+      "primary": [
+        {
+          "url": "https://git-scm.com/docs/git-checkout",
+          "checked": "2026-11-06",
+          "sections": "git-checkout:checkout paths"
+        }
+      ],
+      "beforeSha256": "6f42f5d4d98fb9fbbf82705eaf803e1e12de4bcccbd658fb92bad5083d92b5f3",
+      "afterSha256": "f4442bde8e63c1ba6179edff676cf4a237dd419187927881c0512ad60dd033fe",
+      "inSample": false
+    }
+  ],
+  "files": {
+    "T3.07.json": {
+      "beforeSha256": "253abe32885641c97212d5bcf05cafb7cb82d2084566c1bcb996abeb271c8ef5",
+      "afterSha256": "21aa9f92499960f2e836b500fef37ae9ef0de25a91381e768f3c769a6f5d8c6a"
+    },
+    "T3.10.json": {
+      "beforeSha256": "09a907c6979748b7cfae7342f883b2bb2ea24c90d8b862bd1ad756aefd241348",
+      "afterSha256": "9979c71f14830b44f6b161662698c6b7a9c8e7a95d39a56008f835e35f6dbef3"
+    },
+    "meta.json": {
+      "beforeSha256": "0c92a484e364f115a3ee98eb79218739feb3a3802d0a5e476363938ca88bf2a6",
+      "afterSha256": "a45df16461321b2eea669013fb44507fa7a48f2c1ebaa613d074ba9cc516003a"
+    }
+  },
+  "metadataEdits": [
+    {
+      "id": "GEN-T3.07-54",
+      "topic": "T3.07",
+      "index": 2,
+      "before": [
+        "T3.07",
+        "G",
+        "C",
+        [
+          8,
+          7
+        ],
+        3
+      ],
+      "after": [
+        "T3.07",
+        "G",
+        "D",
+        [
+          8,
+          7
+        ],
+        3
+      ],
+      "beforeSha256": "a4c15ac432d1aba726d8bec65f4075fcd292f3485e8c3f2a787c3259d79e321a",
+      "afterSha256": "cb827b403fb153da8cab0cace46d32175499cba4eb4520b4031e93e2cd65a199"
+    },
+    {
+      "id": "GEN-T3.07-82.v1",
+      "topic": "T3.07",
+      "index": 2,
+      "before": [
+        "T3.07",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.07",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "fd5e73343836c8397ceabc2cb52f91db16491edf4c5ffde54b1c7292a802476a",
+      "afterSha256": "97678ee91d773d2fd0258030587bae9479c822b081c210f5cd20e9b178c891f7"
+    },
+    {
+      "id": "GEN-T3.07-166",
+      "topic": "T3.07",
+      "index": 2,
+      "before": [
+        "T3.07",
+        "G",
+        "C",
+        [
+          8,
+          7
+        ],
+        3
+      ],
+      "after": [
+        "T3.07",
+        "G",
+        "D",
+        [
+          8,
+          7
+        ],
+        3
+      ],
+      "beforeSha256": "a4c15ac432d1aba726d8bec65f4075fcd292f3485e8c3f2a787c3259d79e321a",
+      "afterSha256": "cb827b403fb153da8cab0cace46d32175499cba4eb4520b4031e93e2cd65a199"
+    },
+    {
+      "id": "GEN-T3.07-168.v1",
+      "topic": "T3.07",
+      "index": 2,
+      "before": [
+        "T3.07",
+        "G",
+        "C",
+        [
+          8,
+          12
+        ],
+        3
+      ],
+      "after": [
+        "T3.07",
+        "G",
+        "D",
+        [
+          8,
+          12
+        ],
+        3
+      ],
+      "beforeSha256": "be9c09b7cddf87704e5981882ed76db75f6ba50d1ef10b343d89036ac5b850e9",
+      "afterSha256": "ab845269e75c30e9d519ad0da3f8ff9145af8d24ebc4be5d8ddfa3bcda1fe932"
+    },
+    {
+      "id": "GEN-T3.07-168.v2",
+      "topic": "T3.07",
+      "index": 2,
+      "before": [
+        "T3.07",
+        "G",
+        "C",
+        [
+          8,
+          12
+        ],
+        3
+      ],
+      "after": [
+        "T3.07",
+        "G",
+        "D",
+        [
+          8,
+          12
+        ],
+        3
+      ],
+      "beforeSha256": "be9c09b7cddf87704e5981882ed76db75f6ba50d1ef10b343d89036ac5b850e9",
+      "afterSha256": "ab845269e75c30e9d519ad0da3f8ff9145af8d24ebc4be5d8ddfa3bcda1fe932"
+    }
+  ],
+  "sampleFiles": {},
+  "implementation": {
+    "prior255Unchanged": true,
+    "firestoreWrites": 0
+  }
+}

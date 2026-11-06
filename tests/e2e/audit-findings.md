@@ -587,8 +587,8 @@ Supertest12/12 sobre demo-tai-auth, propietario sintético: Oficial2025(11), Por
 - **Causa probable:** IndexedDB aún conserva la identidad anterior; se prepara access para UID incorrecto.
 - **Corrección:** Esperar identidad persistida cuyo email coincida con el solicitado antes de preparar access; mantener aserciones UI y plazo15s.
 - **Archivos:** tests/e2e/auth-emulator.spec.ts.
-- **Estado:** CORREGIDO SIN VERIFICAR.
-- **Pruebas/resultado:** Auth local6/6 (dos recorridos ×tres repeticiones),42,5s. Typecheck y YAML correctos. Pendiente CI nueva para cierre remoto. No se modifica producto ni reglas.
+- **Estado:** CORREGIDO Y VERIFICADO.
+- **Pruebas/resultado:** Auth local6/6 (dos recorridos ×tres repeticiones),42,5s. Typecheck y YAML correctos. CI42215300160 del SHA6207545 terminó SUCCESS; paso Auth y regresión global aprobados el 6/11/2026. No se modifica producto ni reglas.
 
 ### ATE-005 — Importación sin conexión y recuperación longitudinal
 
@@ -602,3 +602,37 @@ Supertest12/12 sobre demo-tai-auth, propietario sintético: Oficial2025(11), Por
 - **Actual/propuesto/consecuencias:** Mantener exclusión de acciones por usuario desde el primer clic con un lock interno; publicar pending visual únicamente al confirmar y comenzar escritura. Cancelar puede devolver foco a un activador habilitado. Mantener protección por identidad/lifetime y deduplicación; no cambia permisos ni reglas.
 - **Archivos:** src/features/access/access-controller.ts; tests/access-page.test.js; tests/e2e/supertest-emulator.spec.ts.
 - **Estado:** CORREGIDO Y VERIFICADO. **Verificación:** componente3/3; check1050/29 omitidas; Supertest15/15,2min. **Resultado:** Escape devuelve foco sin permitir doble operación; cambios de permisos efectivos en otro usuario y persistentes tras reload. Evidencia en evidence/access-lifecycle-2026-11-06. Rama posterior independiente del PR110.
+
+### ASTRA-M8-SYNTAX — tres erratas ejecutables y cierre de publicación105
+
+|ID|Hallazgo, causa y solución|Estado|Evidencia y límites|
+|---|---|---|---|
+|ASTRA-M8-SYNTAX-AS12B-S2-08|El espacio divide los argumentos de chmod; se elimina y se conserva clave A. Sólo q/n/u cambian.|CORREGIDO Y VERIFICADO|PDF original/temario/4opciones, chmod nativo en temporal721; ledger reviewed-syntax3 y test_syntax3.py. Verificado localmente; datos pendientes de autorización/publicación.|
+|ASTRA-M8-SYNTAX-L2019-S1-08|Function no declara una función JS; se normaliza a function, conservando B=9.|CORREGIDO Y VERIFICADO|PDF original, temario p11, Node real antes SyntaxError/después9; contexto completo, hashes y replay. Datos pendientes de autorización/publicación.|
+|ASTRA-M8-SYNTAX-L2025X-S1-04|Elipsis tipográfica inválida; tres puntos ASCII y ámbito de método, clave D intacta.|CORREGIDO Y VERIFICADO|PDF/temario y Node+TypeScript reales antes/después; cinco elementos con duplicado y arrays intactos. Datos pendientes de autorización/publicación.|
+
+No se atribuye una firma nueva de otro agente: las tres transformaciones mínimas se aceptan por fuentes y ejecución determinista, sobre dictámenes Astra existentes. Las propuestas semánticas no demostradas siguen retenidas. 1.083 unitarias/29 omitidas,67Python,build1.1.20,tarjetas y2renders Chromium/WebKit correctos. El fixture de parejas oficiales verifica el contenido contextual y rechaza la versión histórica inválida; no se rebajan comprobaciones. Los405SHA anteriores/PHP/8datos de cuarentena/417filas y contextos se conservan.
+
+La autorización105 está cumplida: PR114/CI42213356673/merge06b8dc6/deploy42216440061, publicación v16 de105reparaciones en27CAS y cero borrados. Lectura79GET/77SHA y cliente405 en ambos motores correctos, sin alumnos reales. Recibos en evidence/astra-implementation-2026-11-05/publication105-v16*.json. Hay405reparaciones publicadas y408locales;3.111hallazgos/37P0 sin reparación factual local (3.114/40en banco v16). La revisión semántica original cubre16.078/16.078, cero sin dictamen.
+
+
+### ASTRA-M9-ADMIN5 — cinco reparaciones de contenido
+
+Estado: **CORREGIDO SIN VERIFICAR** en CI; validación local correcta, sin publicación de datos. Hallazgos: GEN-T3.10-144.v2 (criterio estructural y discrepancia temario/ISTQB), L2018S-S2-13 (versión instalada frente a disponible), L2025A-S2-09 (nombre Docker), TAI2024B-S2-R-01 (rol HELO local y parámetro correcto), P2022-S2-08 (clasificación de proxy sin atribuir HTTP/2 nativo). Son dictámenes Astra existentes, no cinco auditorías nuevas.
+
+Antes/después, fuentes por página/SHA, cuatro racionales, contextos y adjudicaciones de alcance en scripts/bank-editorial/reviewed-admin5.json. Sólo T3.10.json y supuestos.json cambian; claves, flags, IDs, familias y órdenes conservados,0meta0sample0borrados.408huellas previas/PHP/8datos de exclusión intactos. No hay firma adicional de otro modelo; revisión primaria por coordinador documentada, sin cambiar el pipeline del generador.
+
+Arquitectura/lint/tipos,1084unit29skip,70PythonPASS1Linuxskip,build1.1.21,tarjetas y2renders correctos. La prueba Linux pendiente consulta un status temporal privado, sin instalar paquetes. La pérdida de salto final detectada por rollback se corrigió conservando las huellas anteriores. El caso oficial con Docker antiguo se rechaza hasta cargar contenido correcto y verificado; los100IDs/claves se mantienen. No afirmar activación productiva o publicación de las cinco. Las autorizaciones13/55/233/105están cumplidas y no cubren este lote; la pregunta de tres es separada. M8 integrado en PR115/d87a603; verificar su recibo de despliegue y smoke antes de publicar datos.
+
+M8cierre verificado: CI42221962739SUCCESS (67Python,1083unit29skip,14QUICK,2AuthUI,76refs,312E2E/34omitidas), merged87a603/deploy42225606188SUCCESS/tag exacto. Smoke7/7con10preguntas y0errores/writes;79GET/78docs/77SHA v16 preservado405/PHP/8. Recibos release115*.json. La autorización de datos3 sigue pendiente; no se amplía105cumplida.
+
+
+### SYNC-IMPORT-300 — importación de historial bajo latencia
+
+PrioridadP1; estado **CORREGIDO SIN VERIFICAR** en nueva CI, comprobación local correcta. CI11642227333212 falló en los dos casos de300sesiones:258online/244offline a30s; las300seguían en local. El resto fue correcto:71Python (incluido dpkgLinux),1084unit29skip y12QUICK. No se integró ese fallo. No es un hallazgo semántico nuevo de Astra ni altera los3519dictámenes editoriales.
+
+La traza contiene209POST de Write durante unos28s. La importación y recuperación de pendientes enviaban setDoc por sesión. Local sin latencia pasa;150ms pasa;500ms reproduce dos fallos260/256con las mismas300sesiones y30s. La regresión permanente falló251/300antes del cambio y pasa300/300después, en14.8s de recorrido completo. No se aumentan plazos, reducen datos, omiten aserciones ni cambian las reglas.
+
+legacy-sync usa writeBatch del SDK existente para grupos acotados de100en importación y recuperación. Conserva IDs/campos, ruta individual ordinaria, deduplicación pendiente porcuenta/payload y persistencia offline. Si un lote se rechaza, vuelve a la ruta individual sólo para esa misma cuenta activa y sin sobrescribir un payload posterior. No elimina registros ni cambia contratos.29pruebas sync comprueban también rechazo, cambio de cuenta y conservación de la versión reciente; global1087unit29skip,arquitectura/lint/tipos y QUICK16/16correctos (cuatro casos300online/offline/500ms). Evidencia history-import-sync-local.json.
+
+Sólo demo-tai-auth,puertos9099/8080/app4191 ycuentas@example.test,con guardia de tráfico yconfiguración. Cero escrituras o acceso a datos reales de estudiantes en producción. La nueva CI oficial, merge y despliegue siguen pendientes; no atribuir el resultado local a producción. Fuentes de banco y405publicadas/PHP/8exclusiones se mantienen intactas.

@@ -1,0 +1,27 @@
+{
+  "origin": "https://tai-oposicion.web.app",
+  "canonicalOrigin": "https://tai-oposicion.firebaseapp.com",
+  "version": {
+    "version": "1.1.20+d87a603",
+    "build": "1.1.20+d87a603",
+    "date": "2026-11-06T13:32:49.507Z"
+  },
+  "checks": [
+    "home",
+    "login-entry",
+    "anonymous-protected-route",
+    "guest-question",
+    "guest-correction-and-result",
+    "reload",
+    "guest-local-persistence"
+  ],
+  "answered": 10,
+  "pageErrors": [],
+  "blockedWrites": [],
+  "remoteWrites": 0,
+  "limits": [
+    "Guest account only",
+    "OAuth and private student data not exercised",
+    "Fresh browser context, no injected authorization or Firebase config; service worker blocked for reproducible smoke"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "sourceCommit": "398718893b74508a528669d30bd127474659ad56",
+  "mergeCommit": "aeb4225974812e848b84f5b988220d45d9bd066e",
+  "build": "1.1.17+aeb4225",
+  "receiptSha256": "25598d5bcdca7f834320cd6ec3f95371690ad63b3bc93264cad432b7c44eaaae",
+  "planSha256": "2b8eec6fc2565414ed4499f9c76d548ab2f6eb760a373d8ebb74c6bf61ee202b",
+  "backupSha256": "f01c72b83a1f644a4280aeb14fc7fd050eb9a82c1dc31accce5db51c5e8d2edf",
+  "version": 15,
+  "records": 233,
+  "repairs": 232,
+  "studyOnly": [
+    "GEN-T3.03-48"
+  ],
+  "metadata": 105,
+  "preserved": 68,
+  "resourcesVerified": 77,
+  "writes": 34,
+  "commits": 1,
+  "deletions": 0,
+  "action": "published",
+  "verifiedAt": "2026-11-06T10:34:11.265Z"
+}

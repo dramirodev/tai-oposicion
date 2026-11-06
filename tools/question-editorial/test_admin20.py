@@ -53,9 +53,11 @@ class Admin20Tests(unittest.TestCase):
             self.assertEqual(edit['before'][:2]+edit['before'][3:], edit['after'][:2]+edit['after'][3:])
             for side in ('before', 'after'):
                 self.assertEqual(sha(encode(edit[side])), edit[side+'Sha256'])
-        for folder, files in [('data', LEDGER['files']), ('sample', LEDGER['sampleFiles'])]:
-            for name, hashes in files.items():
-                self.assertEqual(sha((ROOT/'public'/folder/name).read_bytes()), hashes['afterSha256'])
+        with tempfile.TemporaryDirectory() as temporary:
+            boundary = copy_release_boundary(Path(temporary), 'reviewed-admin20')
+            for subdir, files in [('', LEDGER['files']), ('sample', LEDGER['sampleFiles'])]:
+                for name, hashes in files.items():
+                    self.assertEqual(sha((boundary/subdir/name).read_bytes()), hashes['afterSha256'])
 
     def test_replay_atomic_drift_symlink_idempotence_and_boundaries(self):
         with tempfile.TemporaryDirectory() as temporary:

@@ -1,0 +1,558 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "c2f8aeeae552f94928ec36de473dde9584e15ee9",
+  "previousBatch": "reviewed-syntax3",
+  "status": "LOCAL_PENDING_VALIDATION_AND_SPECIFIC_DATA_AUTHORIZATION",
+  "files": {
+    "T3.10.json": {
+      "beforeSha256": "9979c71f14830b44f6b161662698c6b7a9c8e7a95d39a56008f835e35f6dbef3",
+      "afterSha256": "07c1050aafa79545a05851f37d7da9a2a20e0dce19bfa81494db780784a3129f"
+    },
+    "supuestos.json": {
+      "beforeSha256": "ab5eb20d7c0a13d48b5fb5e9cc6ce1ac33a4dc82e37699a63d1c5355d4593f47",
+      "afterSha256": "4b30172976c6eecf4f3c251a347346203b4efc64682b7b9aee038ea33c60c226"
+    }
+  },
+  "metadataEdits": [],
+  "sampleFiles": {},
+  "questions": [
+    {
+      "id": "GEN-T3.10-144.v2",
+      "topic": "T3.10",
+      "storageFile": "public/data/T3.10.json",
+      "before": {
+        "i": "GEN-T3.10-144.v2",
+        "t": "T3.10",
+        "o": "G",
+        "q": "En las pruebas de caja blanca:",
+        "a": [
+          "No se comprueba la corrección de los resultados.",
+          "Se ignora el código.",
+          "Solo se prueba la interfaz.",
+          "Se comprueba siempre la corrección de resultados."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.10-144",
+        "u": "Enfoque estructural o de CAJA BLANCA (logic driven). Se verifica la estructura interna del componente con independencia de la funcionalidad establecida para el mismo.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.10-144.v2",
+        "t": "T3.10",
+        "o": "G",
+        "q": "¿Qué criterio caracteriza el diseño de casos de prueba de caja blanca?",
+        "a": [
+          "Se analiza la estructura interna para seleccionar los casos de prueba.",
+          "Se ignora el código.",
+          "Solo se prueba la interfaz.",
+          "Se comprueba siempre la corrección de resultados."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.10-144",
+        "u": "Enfoque estructural o de CAJA BLANCA (logic driven). [p. 30]",
+        "v": 0,
+        "n": "El criterio de caja blanca es la estructura interna: instrucciones, decisiones o caminos. También pueden compararse resultados con valores esperados; una cobertura completa no garantiza ausencia de errores. A: Describe el criterio estructural. B: No se ignora el código. C: No se limita a la interfaz externa. D: Comprobar siempre los resultados no define el criterio estructural; también existen técnicas estáticas."
+      },
+      "beforeSha256": "fbbae3a3703014668c0e6d5a8f9a6efd6e17d451e9de8f8c02729a5eba7a4ab3",
+      "afterSha256": "ca922c54f2ee999c27233cf166544db47e246543013978256aefd10bbea8ae6b",
+      "reference": {
+        "pdf": "01_Temario/T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+        "page": 30,
+        "quote": "Enfoque estructural o de CAJA BLANCA (logic driven).",
+        "sha256": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+        "visualCheck": true
+      },
+      "reviewedOptions": [
+        "A expresa el criterio de diseño estructural acreditado por temario y fuente primaria.",
+        "B niega la base estructural.",
+        "C limita indebidamente el enfoque a la interfaz externa.",
+        "D introduce un siempre y no describe el criterio de selección; la fuente oficial incluye técnicas estáticas."
+      ],
+      "priority": "P0",
+      "inSample": false,
+      "status": "SOURCE_REVIEWED_LOCAL_PENDING_VALIDATION_NOT_PUBLISHED",
+      "publication": "NOT_AUTHORIZED",
+      "reviewMethod": "Existing Astra finding plus coordinator originalPDF visual/temario/primary-document review; no new peer-model signature is claimed. Runtime evidence distinguished from documentary conclusions.",
+      "originalAstraFinding": "GEN-T3.10-144.v2",
+      "primary": {
+        "url": "https://istqb.org/wp-content/uploads/2024/11/ISTQB_CTFL_Syllabus_v4.0.1.pdf",
+        "localFile": "work/next-p0-after408/ISTQB_CTFL_Syllabus_v4.0.1.pdf",
+        "sha256": "3b072f81db5c7671aadacc42553e726faa93913a969cc7a89e9dc28c2318d1f1",
+        "pages": [
+          42,
+          43
+        ],
+        "sections": [
+          "4.3.1",
+          "4.3.2",
+          "4.3.3"
+        ]
+      },
+      "limits": [],
+      "discrepancy": "El temario añade que no se comprueba la corrección de resultados; no es una prohibición definitoria de caja blanca. La fuente oficial contempla detección de defectos y técnicas estáticas. Se limita la cita al criterio estructural y se registra la divergencia, sin avalar el absoluto erróneo."
+    },
+    {
+      "id": "L2018S-S2-13",
+      "topic": "T4.01",
+      "storageFile": "public/data/supuestos.json",
+      "before": {
+        "i": "L2018S-S2-13",
+        "t": "T4.01",
+        "o": "O",
+        "q": "Ha detectado que uno de los servidores no tiene instalado salt-minion, desde el propio servidor debe comprobar de forma manual cuál es la versión del paquete nginx instalado. ¿Cuál sería la orden a ejecutar para obtener dicha versión?",
+        "a": [
+          "dpkg --show nginx",
+          "apt-cache show nginx | grep Version",
+          "dpkg --get-selections | grep nginx",
+          "apt show nginx -v"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 2,
+        "n": "apt-cache show | grep Version.",
+        "y": "Ingreso libre OEP 2018 (2º ejercicio práctico)",
+        "s": "L2018S-S2"
+      },
+      "after": {
+        "i": "L2018S-S2-13",
+        "t": "T4.01",
+        "o": "O",
+        "q": "Ha detectado que uno de los servidores no tiene instalado salt-minion, desde el propio servidor debe comprobar de forma manual cuál es la versión del paquete nginx instalado. ¿Cuál sería la orden a ejecutar para obtener dicha versión?",
+        "a": [
+          "dpkg --show nginx",
+          "dpkg -s nginx | grep '^Version:'",
+          "dpkg --get-selections | grep nginx",
+          "apt show nginx -v"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 2,
+        "n": "Se consulta la entrada de nginx en la base local de paquetes y se selecciona su campo Version. A: --show corresponde a dpkg-query, no a dpkg. B: Consulta la versión del paquete instalado. C: Muestra selecciones, sin la versión. D: La opción -v muestra la versión de la herramienta apt. El original usaba apt-cache, que consulta metadatos disponibles y no garantiza la versión instalada.",
+        "y": "Ingreso libre OEP 2018 (2º ejercicio práctico)",
+        "s": "L2018S-S2",
+        "u": "dpkg -s paquete # comprueba si el paquete está instalado [p. 25]"
+      },
+      "beforeSha256": "e8869f521d730ece6d7676882629a669f83771f5f26e2402c257935522949be4",
+      "afterSha256": "f270a3516325334ff6fcaec4ab4d9fca965ed36abbdb0eddd6b80ced0f011b14",
+      "reference": {
+        "pdf": "01_Temario/T4.01 Administración de SO/T4.01 Administración de SO - Temario (version alternativa).pdf",
+        "page": 25,
+        "quote": "dpkg -s paquete # comprueba si el paquete está instalado",
+        "sha256": "f7c99562cca2c5d2b7923505c7faced04877e46def902faa38faa149ea2c575e",
+        "visualCheck": true
+      },
+      "reviewedOptions": [
+        "--show no figura entre las acciones delegadas de dpkg de Buster; sí está en dpkg-query.",
+        "--status consulta la entrada de la base local; grep selecciona su campo Version. El enunciado asume nginx instalado.",
+        "--get-selections no devuelve versión.",
+        "El manual apt remite a apt-get para opciones comunes; -v/--version informa de la versión de la herramienta, no del paquete nginx."
+      ],
+      "priority": "P0",
+      "inSample": false,
+      "status": "SOURCE_REVIEWED_LOCAL_PENDING_VALIDATION_NOT_PUBLISHED",
+      "publication": "NOT_AUTHORIZED",
+      "reviewMethod": "Existing Astra finding plus coordinator originalPDF visual/temario/primary-document review; no new peer-model signature is claimed. Runtime evidence distinguished from documentary conclusions.",
+      "originalAstraFinding": "L2018S-S2-13",
+      "primary": [
+        {
+          "url": "https://manpages.debian.org/buster/dpkg/dpkg.1.en.html",
+          "file": "dpkg-buster.html",
+          "sha256": "97d5e05d3f77135259e928feb34573605cf4b054dd05cf59a20b7b48d6ad07ec"
+        },
+        {
+          "url": "https://manpages.debian.org/buster/dpkg/dpkg-query.1.en.html",
+          "file": "dpkg-query-buster.html",
+          "sha256": "5feb0be225e9b1333848f377d9b3270a0068bb94c44b851e2bef6851230d1a90"
+        },
+        {
+          "url": "https://manpages.debian.org/buster/apt/apt.8.en.html",
+          "file": "apt-buster.html",
+          "sha256": "ef4314ad165cd3fe111410237ef47dd2eeff55cfeceda7555f7a404d2da37bce"
+        },
+        {
+          "url": "https://manpages.debian.org/buster/apt/apt-get.8.en.html",
+          "file": "apt-get-buster.html",
+          "sha256": "4f6acbb1c13d27a05e33d9701dbc9f12e834556d973d0bbbbe377e06156ae5ed"
+        },
+        {
+          "url": "https://manpages.debian.org/buster/apt/apt-cache.8.en.html",
+          "file": "apt-cache-buster.html",
+          "sha256": "23b763f862fc197573acd2f591b19bf3b8118719dc5787baf84b6969f7ebc8c7"
+        }
+      ],
+      "limits": [
+        "Sin runtime Debian/dpkg/apt en macOS; manuales Buster de dpkg,dpkg-query,apt,apt-get yapt-cache consultados.",
+        "Revisión documental de cuatro opciones completa; planear runtime aislado Linux antes de integrar, sin producción ni instalaciones de paquetes."
+      ],
+      "scenarioId": "L2018S-S2",
+      "context": {
+        "scenarioId": "L2018S-S2",
+        "storageFile": "public/data/supuestos.json",
+        "supTexto": "Dirección General en la que usted presta servicios tiene adscritas cuatro Direcciones Territoriales, de las cuales, dispone de un CPD en el que año tras año se han ido realizando tareas de modernización, de cara a dar un servicio mejor al ciudadano. Se le pide que defina y ejecute una serie de tareas que deberá acometer para seguir mejorando el CPD de la Dirección Territorial mencionada anteriormente. En lo que respecta a la red de servidores, está completamente virtualizada. Se ha asignado la red 172.30.23.0/20 (con el nombre interno “RED001”) para las máquinas virtuales que forman parte del sistema de virtualización. Lamentablemente, no existe documentación alguna acerca de la configuración de red, por lo que se deberá recabar toda la información posible tanto de los sistemas como del conocimiento teórico en redes del que dispone. Los servidores virtuales Linux, “server”, “s1”, “s2”, a los que hace referencia el supuesto, cuentan con una distribución Debian GNU/Linux, versión 10, y kernel Linux: “4.19.0-5-amd64”, Dirección General le pide configurar y administrar los mismos usando para ello Salt (Saltstack), APT y Docker. Los funcionarios de la Dirección Territorial, para el trabajo que realizan fuera de las oficinas, disponen de un portátil con Windows 10 Home, versión 1803 y un portátil con sistema macOS Mojave, versión 10.14.6. Salvo que el enunciado de la propia pregunta diga lo contrario, se debe suponer que las preguntas referidas a entorno Linux serán referente a uno de los servidores Debian GNU/Linux del CPD descrito, que además dispone de los permisos adecuados, tanto a nivel de sistema operativo como de conexión de red. En el caso de los portátiles con Windows y macOS, también se debe suponer que dispone de los permisos correspondientes.",
+        "contextSha256": "8a88e5811d8e56fd04cf10719005efa3ea68536016f881ce626c5645271391c8",
+        "beforeContextualSha256": "2991af679155e17ab2276e049e9fea94d4ec4a18efbb290c240f15439d23d1c2",
+        "afterContextualSha256": "6308afa713a7e31c2ea764f20b64b0b80f70eed6394ecd28f0b52d5ba486fd90"
+      },
+      "sourceOriginalPDF": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/ingreso-libre-OEP2018__CUESTIONARIO__SEGUNDO_EJERCICIO_TAILI_ OEP_2018_154AB89SD658.pdf",
+        "page": 8,
+        "sha256": "1ae6e873e0261e8ea0839b7de91681d6b56aaa6261c0ad228f3c50efd00949be",
+        "visualCheck": true
+      }
+    },
+    {
+      "id": "L2025A-S2-09",
+      "topic": "T4.02",
+      "storageFile": "public/data/supuestos.json",
+      "before": {
+        "i": "L2025A-S2-09",
+        "t": "T4.02",
+        "o": "O",
+        "q": "Se necesita descargar una imagen desde Docker Hub, ¿qué comando utilizaría para descargar la imagen “ImagenA” al equipo local?",
+        "a": [
+          "docker download ImagenA",
+          "docker get ImagenA",
+          "docker images ImagenA",
+          "docker pull ImagenA"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          10,
+          9
+        ],
+        "d": 1,
+        "n": "docker pull.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1,
+        "s": "L2025A-S2"
+      },
+      "after": {
+        "i": "L2025A-S2-09",
+        "t": "T4.02",
+        "o": "O",
+        "q": "Suponga que la imagen pública imagen-de-ejemplo:latest existe en Docker Hub y el equipo dispone de acceso al registro. ¿Qué comando descarga esa imagen al almacén local?",
+        "a": [
+          "docker download imagen-de-ejemplo:latest",
+          "docker get imagen-de-ejemplo:latest",
+          "docker images imagen-de-ejemplo:latest",
+          "docker pull imagen-de-ejemplo:latest"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          10,
+          9
+        ],
+        "d": 1,
+        "n": "Se usa un nombre de repositorio en minúsculas y se explicita la etiqueta disponible. A: download no es el subcomando de descarga de imágenes. B: get tampoco. C: images enumera imágenes del almacén local. D: pull descarga la referencia indicada; no crea ni ejecuta un contenedor. La versión impresa usaba ImagenA, que contiene mayúsculas no admitidas en el nombre del repositorio.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1,
+        "s": "L2025A-S2",
+        "u": "Con docker pull es posible descargar una imagen concreta del repositorio a local. [p. 82]"
+      },
+      "beforeSha256": "e253df9812a091909b9c327bc409d359c9959c199bb8a3062d8cc58886897322",
+      "afterSha256": "9cc2b7af2933111a9a92ad90d043e8cb58c0ecd7cd1f4f3f525c6743c92d2bb0",
+      "reference": {
+        "pdf": "01_Temario/T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 82,
+        "quote": "Con docker pull es posible descargar una imagen concreta del repositorio a local.",
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "visualCheck": true
+      },
+      "reviewedOptions": [
+        "download no pertenece a las acciones de descarga documentadas.",
+        "get tampoco es el subcomando documentado.",
+        "images sólo enumera el almacén local.",
+        "pull es el subcomando de descarga; la referencia propuesta usa repositorio en minúsculas y etiqueta explícita cuya existencia se asume."
+      ],
+      "priority": "P0",
+      "inSample": false,
+      "status": "SOURCE_REVIEWED_LOCAL_PENDING_VALIDATION_NOT_PUBLISHED",
+      "publication": "NOT_AUTHORIZED",
+      "reviewMethod": "Existing Astra finding plus coordinator originalPDF visual/temario/primary-document review; no new peer-model signature is claimed. Runtime evidence distinguished from documentary conclusions.",
+      "originalAstraFinding": "L2025A-S2-09",
+      "primary": [
+        {
+          "url": "https://github.com/docker/cli/blob/master/docs/reference/commandline/image_pull.md",
+          "file": "docker-image-pull.md",
+          "sha256": "bd2d954485f74cb7065b729f75aff2176a328021cef92d6dfc7e3cdaa95e9608"
+        },
+        {
+          "url": "https://github.com/docker/cli/blob/master/vendor/github.com/distribution/reference/normalize.go",
+          "file": "docker-reference-normalize.go",
+          "sha256": "7bad23a44f1bca325c5de6185092b9992c55b7db211fa4f5444b2d80853e7599"
+        }
+      ],
+      "limits": [
+        "Documentación/código primario consultados; sin runtime Docker, imagen real o acceso de red al registro.",
+        "No se afirma existencia real de imagen-de-ejemplo; es premisa expresa de la propuesta."
+      ],
+      "scenarioId": "L2025A-S2",
+      "context": {
+        "scenarioId": "L2025A-S2",
+        "storageFile": "public/data/supuestos.json",
+        "supTexto": "La Subdirección General de Tecnologías de la Información y Comunicaciones (en adelante SGTIC) del Ministerio al que usted se acaba de incorporar, mantiene un CPD principal que cuenta con la siguiente infraestructura física y lógica: -      Servidores Windows Server 2019 para los servicios de Directorio Activo (AD), DNS y DHCP. -      Servidores Linux Red Hat Enterprise Linux (RHEL) 8.8, basado en Systemd, para los servicios web, base de datos y correo electrónico. A nivel de comunicaciones la SGTIC cuenta con switches y routers Cisco IOS 15.x y firewalls de distintos fabricantes para realizar la segmentación de red. Se dispone de dos líneas redundadas para la conexión a Internet y otras dos líneas para la conexión a Red SARA. Los puestos de trabajo son Windows 11 Enterprise en versión 25H2. La SGTIC cuenta con dos grandes rangos de direccionamiento: -      La red interna 10.30.16.0/20, que da servicio a usuarios y servidores internos. -      La DMZ 172.19.50.0/27, que aloja, entre otros servicios, los servidores web01 (Nginx) y mail01 (Postfix). Entre otras, la SGTIC cuenta con una VLAN denominada VLAN 10 para usuarios y otra denominada VLAN 20 para servidores. El router de distribución integra DHCP relay hacia el servidor DHCP de la VLAN 20. Entre sus tareas como integrante del Servicio de Sistemas, Comunicaciones y Seguridad Informática de la SGTIC se encuentran el mantenimiento y operación de los distintos elementos que conforman la infraestructura tecnológica de la SGTIC, así como el diagnóstico y resolución de las incidencias que afecten a dichos elementos. Salvo indicación expresa, usted dispone de los permisos necesarios para realizar todas las operaciones requeridas y las siguientes preguntas están referidas a la infraestructura anteriormente especificada.",
+        "contextSha256": "bf07d7a2aee18af96f8f36c9030a34d503967385e782764dacc33f40c59ec285",
+        "beforeContextualSha256": "44a26a69d55e838ee6d1fa8367e45d2821825f4b711da9b93d054a93868a4147",
+        "afterContextualSha256": "e28887c2b1fcc280f254c69fefa4e013700b7d09569ba9d9b743ca080b12d861"
+      },
+      "sourceOriginalPDF": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/ingreso-libre-conv2025__Cuestionario TAI-L-ModeloA.pdf",
+        "page": 13,
+        "sha256": "68b7942718e9c3f3bd9c39a1d6414afec09f79306efff4b0a70a1c1f4a038f7a",
+        "visualCheck": true
+      }
+    },
+    {
+      "id": "TAI2024B-S2-R-01",
+      "topic": "T4.03",
+      "storageFile": "public/data/supuestos.json",
+      "before": {
+        "i": "TAI2024B-S2-R-01",
+        "t": "T4.03",
+        "o": "O",
+        "q": "Como administrador de correo, quiere cambiar el mensaje HELO que aparece cuando se establecen conexiones al servidor SMTP. Actualmente aparece el nombre del servidor, pero quiere que muestre \"CORREOBIBLIOTECA\" y además, que el cambio se aplique en todos los servidores SMTP que existan, no solo en aquel en el que está trabajando. ¿Cómo lo haría?",
+        "a": [
+          "Editando el parámetro $client en el fichero /etc/postfix/main.cf y reiniciando posteriormente el servidor Postfix.",
+          "Accediendo al servidor SMTP y ejecutando EHLO -name CORREOBIBLIOTECA en la consola.",
+          "Editando el parámetro smtp_helo en el fichero /etc/postfix/master.cf y reiniciando posteriormente el servidor Postfix.",
+          "Editando el parámetro $helo_name en /etc/postfix/main.cf y reiniciando posteriormente el servidor Postfix."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 3,
+        "n": "main.cf frente a master.cf (fichero casi idéntico).",
+        "y": "Ingreso libre OEP 2023-2024 (2024)",
+        "r": 1,
+        "w": 1,
+        "s": "TAI2024B-S2"
+      },
+      "after": {
+        "i": "TAI2024B-S2-R-01",
+        "t": "T4.03",
+        "o": "O",
+        "q": "En un servidor Postfix se desea fijar correobiblioteca.example como nombre anunciado por sus clientes SMTP al enviar HELO o EHLO. No hay excepciones de este parámetro por servicio. ¿Qué cambio de configuración establece ese nombre para los clientes SMTP de esta instancia?",
+        "a": [
+          "Editando el parámetro $client en el fichero /etc/postfix/main.cf y reiniciando posteriormente el servidor Postfix.",
+          "Accediendo al servidor SMTP y ejecutando EHLO -name correobiblioteca.example en la consola.",
+          "Editando el parámetro smtp_helo en el fichero /etc/postfix/master.cf y reiniciando posteriormente el servidor Postfix.",
+          "Estableciendo smtp_helo_name = correobiblioteca.example en /etc/postfix/main.cf y recargando la configuración de Postfix."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 3,
+        "n": "Se precisa el rol de cliente SMTP y el alcance de la instancia local. A: $client no es el parámetro que fija ese nombre. B: Una orden de una sesión no configura los clientes de Postfix. C: smtp_helo no es el nombre del parámetro. D: smtp_helo_name fija el nombre enviado en HELO/EHLO; main.cf aporta el valor común cuando no hay excepciones por servicio. El banner entrante 220 se configura con smtpd_banner y no es el saludo del cliente. Cambiar esta instancia no reconfigura otros servidores.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)",
+        "r": 1,
+        "w": 1,
+        "s": "TAI2024B-S2",
+        "u": "C EHLO relay.client.com [p. 17]"
+      },
+      "beforeSha256": "ccea3d55c7545e511bce6bf67414ce99e3167b6b5349f8942f16da38501e33ce",
+      "afterSha256": "00dbf4fb9093dcf945e48246396efd50936ec0c506ed1079128b35450181223a",
+      "reference": {
+        "pdf": "01_Temario/T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+        "page": 17,
+        "quote": "C EHLO relay.client.com",
+        "sha256": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+        "visualCheck": true
+      },
+      "reviewedOptions": [
+        "$client no es smtp_helo_name.",
+        "EHLO en una sesión no establece configuración persistente del cliente local.",
+        "El parámetro smtp_helo no es smtp_helo_name; una excepción por servicio sería -o smtp_helo_name en master.cf, excluida por el enunciado.",
+        "El manual oficial define smtp_helo_name para HELO/EHLO y valor común en main.cf; el temario distingue el cliente del banner220 del servidor."
+      ],
+      "priority": "P0",
+      "inSample": false,
+      "status": "SOURCE_REVIEWED_LOCAL_PENDING_VALIDATION_NOT_PUBLISHED",
+      "publication": "NOT_AUTHORIZED",
+      "reviewMethod": "Existing Astra finding plus coordinator originalPDF visual/temario/primary-document review; no new peer-model signature is claimed. Runtime evidence distinguished from documentary conclusions.",
+      "originalAstraFinding": "TAI2024B-S2-R-01",
+      "primary": [
+        {
+          "url": "https://www.postfix.org/postconf.5.html#smtp_helo_name",
+          "file": "postfix-postconf5.html",
+          "sha256": "96f56f30f95ca769c9aa9377f3df8657078b2f3bd70d368afac13fb22de20362"
+        },
+        {
+          "url": "https://www.postfix.org/postconf.5.html#smtpd_banner",
+          "file": "postfix-postconf5.html",
+          "sha256": "96f56f30f95ca769c9aa9377f3df8657078b2f3bd70d368afac13fb22de20362"
+        }
+      ],
+      "limits": [
+        "No runtime ni configuración real Postfix.",
+        "Se elimina la ambigüedad entre cliente/saludo220 y el imposible alcance de modificar todos los servidores; no se presenta la redacción original como válida."
+      ],
+      "scenarioId": "TAI2024B-S2",
+      "context": {
+        "scenarioId": "TAI2024B-S2",
+        "storageFile": "public/data/supuestos.json",
+        "supTexto": "El Ministerio de Educación, Formación Profesional y Deportes tiene una red asignada en el Plan de Direccionamiento de la AGE 10.9.0.0/16 y ha creado un organismo para la enseñanza online de formadores, OEOF (en adelante nos referiremos en este supuesto sólo como “organismo”), al que le ha correspondido la última de las subredes de las 16 en las que se ha dividido la red ministerial. El sistema de enseñanza online de formadores se fundamenta en un servidor de formación accesible también desde Internet en la URL https://www.profesores.es. Los servidores de este sistema (web, http, DNS, DHCP, LDAP), se van a instalar con sistema operativo Linux Ubuntu. El portal web está montado usando Apache Tomcat. El certificado del portal (SSL) estará asociado al dominio profesores.es. Para poder gestionar el correo de los profesores, se ha instalado un servidor de correo con tecnología Postfix. Los DNS se han instalado usando el software BIND así como la asignación dinámica de direcciones IP mediante DHCP. Hay un servidor llamado BIBLIOTECA que contiene un compendio de documentos e información de utilidad para los profesores. El acceso está permitido por RDP. En los elementos de configuración está permitido el acceso remoto para todos los usuarios que en el Directorio Activo estén en el Grupo de Profesores. El resto no podrán conectarse. No hay elementos de red que impidan la conexión libre por el puerto RDP 389 a dicho servidor, desde su misma VLAN. La base de datos de la biblioteca es MySQL. Además, sobre servidores Ubuntu, se han instalado herramientas de detección de vulnerabilidades (Tenable Nessus y Nmap) y de monitorización de sistemas y de aplicaciones web (Nagios). Los usuarios de la red (profesores) usan escritorios virtuales. Los switches para configurar las VLANs son CISCO (usan sistema operativo Cisco IOS). El CPD principal del organismo tiene un respaldo en un CPD secundario, pero no está configurado como activo-activo y los cambios de los servicios tienen que pasarse manualmente. Tiene redundancia de componentes y de suministro eléctrico y de red. El CPD es TIER III. Salvo que se indique lo contrario en el enunciado, se supone que usted posee permisos de administrador.",
+        "contextSha256": "9d8077d0e1267d117a47f47fb0f4f51d590c25bb3ca0f49e054717418b5598c2",
+        "beforeContextualSha256": "f75ebf46c80ad2bdf1331815fadb8e9261568383bbe67c64289261cb853f529d",
+        "afterContextualSha256": "70d6a597511eae141664d81e93c5199ea2da44660f7dc8527371e31de8477f28"
+      },
+      "sourceOriginalPDF": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/ingreso-libre-OEP2023-y-2024__Cuestionario_TAI_LI_2024_B_DNFGFEK45R_154AB89SD658.pdf",
+        "page": 13,
+        "sha256": "c3a27ec748060702639a29d6dd800f4eb7f853a0efd7a2b771716b108af30b6a",
+        "visualCheck": true
+      },
+      "adjudicatedScope": "HELO/EHLO name sent by SMTP clients of the local instance, not220inboundbanner or reconfiguration of all remote servers. Disambiguates original HELO task and fixes parameter."
+    },
+    {
+      "id": "P2022-S2-08",
+      "topic": "T4.08",
+      "storageFile": "public/data/supuestos.json",
+      "before": {
+        "i": "P2022-S2-08",
+        "t": "T4.08",
+        "o": "O",
+        "q": "Se pretende optimizar el acceso a Internet, para ello se opta por instalar un servidor proxy-caché que soporte los protocolos HTTP, HTTP/2, HTTPS. ¿Cuál de las siguientes soluciones puede realizar dicha función?",
+        "a": [
+          "INFLUXDB",
+          "GRAFANA",
+          "CHECK_MK",
+          "SQUID"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "= 2022 L S2-8.",
+        "y": "Promoción interna OEP 2022 (2023)",
+        "s": "P2022-S2"
+      },
+      "after": {
+        "i": "P2022-S2-08",
+        "t": "T4.08",
+        "o": "O",
+        "q": "Para intermediar las peticiones web de los usuarios al acceder a Internet, ¿cuál de estas soluciones es un servidor proxy HTTP de propósito general?",
+        "a": [
+          "INFLUXDB",
+          "GRAFANA",
+          "CHECK_MK",
+          "SQUID"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Se pregunta por la categoría de producto, sin atribuir soporte nativo HTTP/2 al proxy. A: InfluxDB es una base de datos de series temporales. B: Grafana presenta y explora datos mediante paneles. C: Checkmk se orienta a monitorización. D: Squid es un servidor proxy web con caché. El túnel CONNECT para HTTPS no equivale a analizar y almacenar en caché el contenido HTTP/2 cifrado. Se retira la exigencia de protocolos de la redacción original que no acreditaba esa capacidad.",
+        "y": "Promoción interna OEP 2022 (2023)",
+        "s": "P2022-S2",
+        "u": "server squid [p. 62]"
+      },
+      "beforeSha256": "d64b7e275eafe0218bde3cdcea0cd84372f310dd960d9a2a33c7588074aae84e",
+      "afterSha256": "7fd233c0406b02b4bdb42370c40deba6f713ff2160a11cd5acaafa956d645c69",
+      "reference": {
+        "pdf": "01_Temario/T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf",
+        "page": 62,
+        "quote": "server squid",
+        "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1",
+        "visualCheck": true
+      },
+      "reviewedOptions": [
+        "La documentación oficial lo clasifica como base de datos de series temporales.",
+        "Grafana se orienta a visualización y paneles, no al proxy web general pedido.",
+        "Checkmk es una plataforma de monitorización, no el proxy web general pedido.",
+        "El temario identifica squid como proxy server y el proyecto se describe como caching proxy; no se exige HTTP/2 nativo."
+      ],
+      "priority": "P0",
+      "inSample": false,
+      "status": "SOURCE_REVIEWED_LOCAL_PENDING_VALIDATION_NOT_PUBLISHED",
+      "publication": "NOT_AUTHORIZED",
+      "reviewMethod": "Existing Astra finding plus coordinator originalPDF visual/temario/primary-document review; no new peer-model signature is claimed. Runtime evidence distinguished from documentary conclusions.",
+      "originalAstraFinding": "P2022-S2-08",
+      "primary": [
+        {
+          "url": "https://www.squid-cache.org/",
+          "file": "squid-home.html",
+          "sha256": "93049368bbe5526fc86e4f28660467f35e84edf4d42c7e5edeaacb7468a4a1cd"
+        },
+        {
+          "url": "https://wiki.squid-cache.org/Features/HTTP2",
+          "file": "squid-http2.html",
+          "sha256": "2c56ffe63d1a22a7c1559d72b1d22c5212e113d3dfa4d4188d994fa3ee1a0e44"
+        },
+        {
+          "url": "https://docs.influxdata.com/influxdb/v2/",
+          "file": "influxdb-intro.html",
+          "sha256": "f97fceec2ae86c86c220270a03062783b7183fa458543fd6db2194aba2adf6a3"
+        },
+        {
+          "url": "https://grafana.com/docs/grafana/latest/introduction/",
+          "file": "grafana-intro.html",
+          "sha256": "4c5ca6eca2ace2af0cc2b242c29c0d102c0cb8e6bad794eb76b02756520623fe"
+        },
+        {
+          "url": "https://docs.checkmk.com/latest/en/intro_setup.html",
+          "file": "checkmk-intro.html",
+          "sha256": "4c00996a468356457a4dee5f2c7f33df5ea141c11c2277bdc3807eb8e7f5291e"
+        }
+      ],
+      "limits": [
+        "Documental, no runtime Squid/HTTP2/CONNECT.",
+        "Alcance corregido a clasificación de producto proxy; se registra retirada de una capacidad no acreditada, no se atribuye la afirmación anterior al original como correcta."
+      ],
+      "scenarioId": "P2022-S2",
+      "context": {
+        "scenarioId": "P2022-S2",
+        "storageFile": "public/data/supuestos.json",
+        "supTexto": "La Subdirección General de Informática del Organismo en el que recientemente Vd. ha tomado posesión y a través de su departamento de Sistemas, Comunicaciones y Seguridad, ha decidido acometer un cambio de diseño en la infraestructura de la red informática del departamento y Vd. debe colaborar en su implantación. Se parte de la situación inicial donde hay una única red con el siguiente direccionamiento IP 10.20.30.0/24 donde residen: •        Los equipos informáticos de los usuarios •        Las aplicaciones informáticas •        Las Bases de Datos Oracle y MySql •        La conexión a Internet del departamento Todo reside en la misma red según el modelo que llamaremos Modelo A: Después de varios estudios se concluye que se debe realizar una segmentación de la red actual en cuatro subredes: ●        Primera Subred para los PCs de usuario ●        Segunda Subred para las Bases de Datos ●        Tercera Subred para las Aplicaciones ●        Cuarta Subred para utilizarla como DMZ Se instalará una pareja de Firewalls o Cortafuegos formando un clúster donde se implementarán las reglas necesarias para las conectividades y encaminamientos entre Subredes. El modelo al que llamaremos Modelo B pasa a ser el siguiente: Nota aclaratoria: los PCs de Usuario tienen sistema operativo Windows 10 y tanto los servidores para Aplicaciones, Base de Datos y DMZ tienen sistema operativo Linux RedHat RHEL7.4",
+        "contextSha256": "581b007de01edd90a63f93ec0cfad3b35749ac0d747da77e8b8d940a6094da3b",
+        "beforeContextualSha256": "336f6a279dc25148c033182de27edc64d3304fb5157d0e9a88239a3b04059928",
+        "afterContextualSha256": "7b685e28e989a90d126249d5ecfbeed7512cef06e969efefdef9569c88cadb17"
+      },
+      "sourceOriginalPDF": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/RECURSOS/EXAMENES_OPO/promocion-interna-OEP2020-2021-y-2022__Cuestionario+TAI-PI_2023.pdf",
+        "page": 10,
+        "sha256": "f43ab65607d02a095b3e6dc72f6cc3057401ecb4ba4b580d6a4ee206dccf36c7",
+        "visualCheck": true
+      },
+      "adjudicatedScope": "Preserves software-category discrimination and options/key, asking for general HTTPproxy; removes unsupported nativeHTTP2 requirement rather than teaching it as valid."
+    }
+  ],
+  "validation": {
+    "questions": 5,
+    "fourOptionsPerQuestion": true,
+    "originalAnswerLettersPreserved": true,
+    "newPeerModelSignature": false,
+    "actualRuntime": "whitebox counterexample in Node only; no Docker/dpkg/Postfix/Squid runtime claimed",
+    "linuxOraclePlanned": "isolated installed-package status database, no package modifications or network",
+    "prior408RecordsChanged": 0
+  }
+}

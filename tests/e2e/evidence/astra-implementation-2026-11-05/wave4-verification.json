@@ -1,0 +1,63 @@
+{
+  "sourceBase": "398718893b74508a528669d30bd127474659ad56",
+  "localVersion": "1.1.18",
+  "addedRepairs": 40,
+  "totalRepairs": 340,
+  "semanticJudgments": 16078,
+  "unauditedIds": 0,
+  "originalFindings": 3519,
+  "withoutDefinitiveRepair": 3179,
+  "criticalWithoutDefinitiveRepair": 105,
+  "statusCounts": {
+    "PENDIENTE": 3178,
+    "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION": 272,
+    "PUBLICADO_VERIFICADO_V14": 55,
+    "PUBLICADO_VERIFICADO_V13": 13,
+    "MEJORADO_LOCAL_NO_PUNTUABLE_REVISION_PENDIENTE": 1
+  },
+  "metadataTypeChanges": 31,
+  "sampleChanges": 0,
+  "supuestoRecordsChanged": [
+    "AS12B-S1-04",
+    "AS12B-S1-09"
+  ],
+  "prior300HashesPreserved": true,
+  "unit": {
+    "passed": 1058,
+    "skipped": 29
+  },
+  "editorialPython": 45,
+  "architectureLintTypes": "PASS",
+  "productionBuild": "PASS",
+  "render": {
+    "testsPassed": 2,
+    "recordsPerViewport": 40,
+    "codeBlocksPerViewport": 30,
+    "browsers": [
+      "chromium",
+      "webkit"
+    ],
+    "widths": [
+      393,
+      1280
+    ]
+  },
+  "sourceCandidateSha256": {
+    "languages17": "e31e365f506a94be57f42b0792f22a32a9f204a50162b57ee81ee05809988b3f",
+    "web23": "c1d4a9f139c9fd4c4f51723031af4691672810b31f92d48df0de5f06ff0302c5"
+  },
+  "ledgers": {
+    "reviewed-languages17": "ce6c9f1c514ee065ffa6103266b41a5797df3c7e6ef941ad4b9349bea5411d65",
+    "reviewed-web23": "05105e7af6eff8f5c83aa6e81fd9afeee065a5c77774784054b665acae7713fd"
+  },
+  "firestoreWrites": 0,
+  "publication40": "NOT_AUTHORIZED",
+  "publication233": "AUTHORIZED_BUT_PENDING_CI_MERGE_DEPLOY_FROM_FROZEN_M5",
+  "verifiedProductionBuild": "1.1.16+6b68b0b",
+  "verifiedProductionBankVersion": 14,
+  "verifiedPublishedRepairs": 68,
+  "limitations": [
+    "No production OAuth, physical devices or assistive-technology certification.",
+    "No .NET/NuGet or PHP/Jakarta/PostgreSQL runtime execution claimed."
+  ]
+}

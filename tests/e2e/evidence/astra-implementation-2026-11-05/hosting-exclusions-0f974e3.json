@@ -1,0 +1,313 @@
+{
+  "at": "2026-11-06T11:48:27.062Z",
+  "productionBuild": "1.1.18+0f974e3",
+  "productionGetRequests": 76,
+  "productionWrites": 0,
+  "privateBankPathsExcluded": 75,
+  "checks": [
+    {
+      "path": "cards/index.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T1.01.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T1.02.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T1.03.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T1.04.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T1.05.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T1.06.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T1.07.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T1.08.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T1.09.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T1.10.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T1.11.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T2.01.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T2.02.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T2.03.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T2.04.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T2.05.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T3.01.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T3.02.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T3.03.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T3.04.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T3.05.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T3.06.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T3.07.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T3.08.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T3.09.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T3.10.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T4.01.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T4.02.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T4.03.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T4.04.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T4.05.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T4.06.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T4.07.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T4.08.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T4.09.json",
+      "status": 404
+    },
+    {
+      "path": "cards/T4.10.json",
+      "status": 404
+    },
+    {
+      "path": "data/supuestos.json",
+      "status": 404
+    },
+    {
+      "path": "data/T1.01.json",
+      "status": 404
+    },
+    {
+      "path": "data/T1.02.json",
+      "status": 404
+    },
+    {
+      "path": "data/T1.03.json",
+      "status": 404
+    },
+    {
+      "path": "data/T1.04.json",
+      "status": 404
+    },
+    {
+      "path": "data/T1.05.json",
+      "status": 404
+    },
+    {
+      "path": "data/T1.06.json",
+      "status": 404
+    },
+    {
+      "path": "data/T1.07.json",
+      "status": 404
+    },
+    {
+      "path": "data/T1.08.json",
+      "status": 404
+    },
+    {
+      "path": "data/T1.09.json",
+      "status": 404
+    },
+    {
+      "path": "data/T1.10.json",
+      "status": 404
+    },
+    {
+      "path": "data/T1.11.json",
+      "status": 404
+    },
+    {
+      "path": "data/T2.01.json",
+      "status": 404
+    },
+    {
+      "path": "data/T2.02.json",
+      "status": 404
+    },
+    {
+      "path": "data/T2.03.json",
+      "status": 404
+    },
+    {
+      "path": "data/T2.04.json",
+      "status": 404
+    },
+    {
+      "path": "data/T2.05.json",
+      "status": 404
+    },
+    {
+      "path": "data/T3.01.json",
+      "status": 404
+    },
+    {
+      "path": "data/T3.02.json",
+      "status": 404
+    },
+    {
+      "path": "data/T3.03.json",
+      "status": 404
+    },
+    {
+      "path": "data/T3.04.json",
+      "status": 404
+    },
+    {
+      "path": "data/T3.05.json",
+      "status": 404
+    },
+    {
+      "path": "data/T3.06.json",
+      "status": 404
+    },
+    {
+      "path": "data/T3.07.json",
+      "status": 404
+    },
+    {
+      "path": "data/T3.08.json",
+      "status": 404
+    },
+    {
+      "path": "data/T3.09.json",
+      "status": 404
+    },
+    {
+      "path": "data/T3.10.json",
+      "status": 404
+    },
+    {
+      "path": "data/T4.01.json",
+      "status": 404
+    },
+    {
+      "path": "data/T4.02.json",
+      "status": 404
+    },
+    {
+      "path": "data/T4.03.json",
+      "status": 404
+    },
+    {
+      "path": "data/T4.04.json",
+      "status": 404
+    },
+    {
+      "path": "data/T4.05.json",
+      "status": 404
+    },
+    {
+      "path": "data/T4.06.json",
+      "status": 404
+    },
+    {
+      "path": "data/T4.07.json",
+      "status": 404
+    },
+    {
+      "path": "data/T4.08.json",
+      "status": 404
+    },
+    {
+      "path": "data/T4.09.json",
+      "status": 404
+    },
+    {
+      "path": "data/T4.10.json",
+      "status": 404
+    },
+    {
+      "path": "explanations/index.json",
+      "status": 404
+    }
+  ],
+  "compiledReviewedRowsChecked": 406,
+  "compiledFullQuestionOrOptionMatches": [],
+  "configuration": "hosting.ignore excludes75 bank resources; index/meta are public catalog metadata. Local dist contents are not the deployed file list.",
+  "compiledStatementAndOptionSetsChecked": 406
+}

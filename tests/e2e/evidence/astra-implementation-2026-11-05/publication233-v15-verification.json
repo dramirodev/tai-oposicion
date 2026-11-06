@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-06T10:35:24.152Z",
+  "build": "1.1.17+aeb4225",
+  "mergeCommit": "aeb4225974812e848b84f5b988220d45d9bd066e",
+  "version": 15,
+  "firestoreReads": 79,
+  "firestoreWrites": 0,
+  "resourcesVerified": 77,
+  "resourceSha256Verified": 77,
+  "priorCorrectionsPreserved": 68,
+  "newCorrectionsVerified": 232,
+  "totalPublishedCorrections": 300,
+  "additionalStudyOnlyRecord": "GEN-T3.03-48",
+  "studentCollectionsAccessed": false,
+  "backup": "Copia-recuperable-banco-v15.json",
+  "future40NotPublished": true
+}

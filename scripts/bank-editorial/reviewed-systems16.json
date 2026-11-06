@@ -1,0 +1,2744 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "b2c35bae028deb380c44fe6b04bcf2de2c82d936",
+  "previousBatch": "reviewed-foundations18",
+  "status": "LOCAL_PENDING_CI_AND_PUBLICATION",
+  "sourceCandidateSha256": "5875210bf3c1a6780051a96df456636c4ee43f3eedd592605531db9e33feb000",
+  "sourceCandidate": "work/next-p0-systems-remaining2/revision-oficial/reviewed-proposals.json",
+  "fingerprintEncoding": "SHA256 UTF8 JSON.stringify insertion-order; context envelope is distinct from sorted runtime proof",
+  "questions": [
+    {
+      "id": "AS12-P1-100",
+      "topic": "T4.01",
+      "priority": "P0",
+      "status": "APTA_PROPUESTA_NO_APLICADA",
+      "before": {
+        "i": "AS12-P1-100",
+        "t": "T4.01",
+        "o": "A",
+        "q": "¿Cuál de las siguientes reglas permite conectarse a un servidor SSH interno?",
+        "a": [
+          "iptables -A INPUT -P ip -sport 22 -j ACCEPT",
+          "iptables -A INPUT -P ip -dport 23 -j ACCEPT",
+          "iptables -A INPUT -P ip -dport 22 -j ACCEPT",
+          "iptables -A INPUT -P ip -sport 23 -j ACCEPT"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS12-P1-100",
+        "t": "T4.01",
+        "o": "A",
+        "q": "En el propio servidor SSH, ¿qué regla de iptables añade a INPUT la aceptación de paquetes TCP destinados al puerto local 22?",
+        "a": [
+          "iptables -A INPUT -p tcp --sport 22 -j ACCEPT",
+          "iptables -A INPUT -p tcp --dport 23 -j ACCEPT",
+          "iptables -A INPUT -p tcp --dport 22 -j ACCEPT",
+          "iptables -A INPUT -p tcp --sport 23 -j ACCEPT"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "n": "Errata de academia: -p selecciona protocolo y --dport puerto de destino. INPUT corresponde al servidor local; una regla anterior puede impedir alcanzarla. No se ejecuta la orden.",
+        "u": "iptables es un programa de línea de comandos que forma parte del proyecto NetFilter y se utiliza para configurar el conjunto de reglas de filtrado de paquetes de Linux para un cortafuegos. [p. 9]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.09 Seguridad en Redes/T4.09 Seguridad en Redes - Temario.pdf",
+        "sha256": "38ebb19d13455c4a1570159b22f6b3a550d7920fd21bbb519f76c7b1d9fb52c1",
+        "page": 9,
+        "quote": "iptables es un programa de línea de comandos que forma parte del proyecto NetFilter y se utiliza para configurar el conjunto de reglas de filtrado de paquetes de Linux para un cortafuegos.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://ipset.netfilter.org/iptables-extensions.man.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://netfilter.org/documentation/HOWTO/packet-filtering-HOWTO-7.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "Selecciona puerto de origen, no destino."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "Selecciona destino 23."
+        },
+        {
+          "option": "C",
+          "correct": true,
+          "reason": "TCP y destino 22 coinciden con lo solicitado."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "Selecciona origen 23."
+        }
+      ],
+      "sourceDiscrepancy": "El pasaje del temario identifica la herramienta, no acredita la sintaxis; ésta procede del manual de Netfilter.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AS12-P1-100",
+        "finding": "AS12-P1-100",
+        "evidence": "Simulacro 12.pdf (plantilla p. 17); T4.09 Seguridad en Redes - Temario.pdf p. 9 (pasaje localizado: iptables)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave C. Ninguna regla tiene la sintaxis apropiada. Se necesita protocolo TCP y --dport, no -P ip ni -dport.",
+        "location": "public/data/T4.01.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AS12-P1-100",
+          "topic": "T4.01",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "72e7ce7659c3c38b96530cf896937ba639cd9e085c4136d56e25324909db567f",
+      "beforeSha256": "72e7ce7659c3c38b96530cf896937ba639cd9e085c4136d56e25324909db567f",
+      "afterSha256": "4aad58c820539b16ce2206d60f2fd03b60da4dc9406cd474e4f27ae4a35095f5",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.09 Seguridad en Redes/T4.09 Seguridad en Redes - Temario.pdf",
+        "page": 9,
+        "quote": "iptables es un programa de línea de comandos que forma parte del proyecto NetFilter y se utiliza para configurar el conjunto de reglas de filtrado de paquetes de Linux para un cortafuegos.",
+        "sha256": "38ebb19d13455c4a1570159b22f6b3a550d7920fd21bbb519f76c7b1d9fb52c1",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "Selecciona puerto de origen, no destino.",
+        "Selecciona destino 23.",
+        "TCP y destino 22 coinciden con lo solicitado.",
+        "Selecciona origen 23."
+      ],
+      "primary": [
+        {
+          "url": "https://ipset.netfilter.org/iptables-extensions.man.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://netfilter.org/documentation/HOWTO/packet-filtering-HOWTO-7.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "storageFile": "public/data/T4.01.json",
+      "sampleFiles": [],
+      "objectiveReview": "Se mantiene el concepto evaluado; la reparación precisa sintaxis, condición o versión sin sustituir el objetivo.",
+      "typeReview": {
+        "k": "K",
+        "rationale": "Interpretación de órdenes, direcciones o cálculo explícito."
+      },
+      "sourceValidation": {
+        "beforeCurrent": true,
+        "pdfHash": true,
+        "literalQuote": true,
+        "samples": 0,
+        "limits": "Revisión documental; los modelos matemáticos no son ejecución de protocolos."
+      },
+      "authorAfterSha256": "4aad58c820539b16ce2206d60f2fd03b60da4dc9406cd474e4f27ae4a35095f5"
+    },
+    {
+      "id": "AT403-P1-39",
+      "topic": "T4.03",
+      "priority": "P0",
+      "status": "APTA_PROPUESTA_NO_APLICADA",
+      "before": {
+        "i": "AT403-P1-39",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Si tenemos un registro SPF con el siguiente contenido, indique quién NO está autorizado para enviar mensajes según declara la política: Type: TXT Host/Name: midominio.es Value: v=spf1 mx:mx.jgpa.es ip4:192.168.20.0/21 include: ~all",
+        "a": [
+          "mx.midominio.es",
+          "192.168.22.0",
+          "midominio.es",
+          "192.168.20.254"
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT403-P1-39",
+        "t": "T4.03",
+        "o": "A",
+        "q": "Un dominio publica v=spf1 ip4:192.168.16.0/21 -all. Considerando sólo esa política SPF, ¿qué dirección IPv4 NO queda autorizada por el mecanismo ip4?",
+        "a": [
+          "192.168.22.1",
+          "192.168.20.254",
+          "192.168.24.1",
+          "192.168.16.1"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: se repara el include: vacío y se proporcionan direcciones, sin depender de DNS desconocido. El prefijo /21 abarca 192.168.16.0–192.168.23.255; -all produce Fail para el resto.",
+        "u": "ip4:192.168.0.1: los correos electrónicos enviados desde la dirección IP 192.168.0.1 están autorizados. [p. 24]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+        "sha256": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+        "page": 24,
+        "quote": "ip4:192.168.0.1: los correos electrónicos enviados desde la dirección IP 192.168.0.1 están autorizados.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Respaldo temático y factual"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc7208",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "22 está entre16 y23."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "20 está entre16 y23."
+        },
+        {
+          "option": "C",
+          "correct": true,
+          "reason": "24 queda fuera del prefijo."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "16 pertenece al prefijo."
+        }
+      ],
+      "sourceDiscrepancy": "",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AT403-P1-39",
+        "finding": "AT403-P1-39",
+        "evidence": "T4.03 Administración del Correo - Test.pdf (plantilla p. 8); T4.03 Administración del Correo - Temario.pdf p. 27 (pasaje localizado: SPF)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave C. El mecanismo include: sin dominio deja el registro mal formado. Además ~all es softfail y los hosts MX autorizados no se pueden inferir sin consultar DNS. La clave no se deduce.",
+        "location": "public/data/T4.03.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT403-P1-39",
+          "topic": "T4.03",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "oracle-results.json: Cálculo entero real del prefijo/21; no consultas DNS ni evaluación de servidor SPF.",
+      "sourceBeforeSha256": "022b29968d31353d42c7f266f6f7a45d1f85941a1dff61c7fd513e7fbd5a8513",
+      "beforeSha256": "022b29968d31353d42c7f266f6f7a45d1f85941a1dff61c7fd513e7fbd5a8513",
+      "afterSha256": "c30e8f68e3a3f9918be6bd73472000a5b932571cf6fc7f13d53fdc1ac614b05c",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+        "page": 24,
+        "quote": "ip4:192.168.0.1: los correos electrónicos enviados desde la dirección IP 192.168.0.1 están autorizados.",
+        "sha256": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+        "role": "Respaldo temático y factual"
+      },
+      "reviewedOptions": [
+        "22 está entre16 y23.",
+        "20 está entre16 y23.",
+        "24 queda fuera del prefijo.",
+        "16 pertenece al prefijo."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc7208",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "storageFile": "public/data/T4.03.json",
+      "sampleFiles": [],
+      "objectiveReview": "Conserva interpretación de autorización SPF. Se sustituye el registro inválido y dependiente de DNS desconocido por el mecanismo ip4 ya incluido en el original. El cálculo CIDR sigue ligado a la política SPF.",
+      "typeReview": {
+        "k": "K",
+        "rationale": "Interpretación de órdenes, direcciones o cálculo explícito."
+      },
+      "sourceValidation": {
+        "beforeCurrent": true,
+        "pdfHash": true,
+        "literalQuote": true,
+        "samples": 0,
+        "limits": "Revisión documental; los modelos matemáticos no son ejecución de protocolos."
+      },
+      "authorAfterSha256": "c30e8f68e3a3f9918be6bd73472000a5b932571cf6fc7f13d53fdc1ac614b05c"
+    },
+    {
+      "id": "AT405-P1-65",
+      "topic": "T4.05",
+      "priority": "P0",
+      "status": "APTA_PROPUESTA_NO_APLICADA",
+      "before": {
+        "i": "AT405-P1-65",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Qué solución del CCN se utiliza para la monitorización continua de eventos de seguridad?",
+        "a": [
+          "LUCIA.",
+          "REYES.",
+          "PILAR.",
+          "EMMA."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT405-P1-65",
+        "t": "T4.05",
+        "o": "A",
+        "q": "¿Qué herramienta del CCN-CERT, basada en sistemas SIEM, gestiona incidentes y amenazas mediante correlación compleja de eventos?",
+        "a": [
+          "LUCIA.",
+          "GLORIA.",
+          "PILAR.",
+          "EMMA."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: se sustituye REYES por GLORIA. REYES comparte información de ciberamenazas; GLORIA correlaciona eventos. No se afirma vigencia de una certificación concreta.",
+        "u": "GLORIA (Gestor de Logs para Respuesta ante Incidentes y Amenazas) es una plataforma para la gestión de incidentes y amenazas de ciberseguridad a través de técnicas de correlación compleja de eventos. Basado en los sistemas SIEM (Security Information and Event Management), va un paso más allá de las capacidades de monitorización, almacenamiento e interpretación de los datos relevantes. [p. 33]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+        "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+        "page": 33,
+        "quote": "GLORIA (Gestor de Logs para Respuesta ante Incidentes y Amenazas) es una plataforma para la gestión de incidentes y amenazas de ciberseguridad a través de técnicas de correlación compleja de eventos. Basado en los sistemas SIEM (Security Information and Event Management), va un paso más allá de las capacidades de monitorización, almacenamiento e interpretación de los datos relevantes.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Respaldo temático y factual"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.ccn-cert.cni.es/en/tools/gloria.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "Gestiona notificaciones y seguimiento de incidentes, no es la plataforma SIEM descrita."
+        },
+        {
+          "option": "B",
+          "correct": true,
+          "reason": "Es la plataforma SIEM identificada en el temario y por CCN."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "Se orienta al análisis y gestión de riesgos."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "Se orienta a visibilidad/control de acceso de red; no es GLORIA."
+        }
+      ],
+      "sourceDiscrepancy": "",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AT405-P1-65",
+        "finding": "AT405-P1-65",
+        "evidence": "T4.05 Seguridad CPD y Criptografía - Test.pdf (plantilla p. 13)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave B. REYES sirve a investigación y análisis de ciberamenazas. La monitorización y correlación SIEM corresponde a otras soluciones como GLORIA, no incluida.",
+        "location": "public/data/T4.05.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT405-P1-65",
+          "topic": "T4.05",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "263b6682640ed451ea0be35af17c547cc6ead751607a40b9bec0eced66160875",
+      "beforeSha256": "263b6682640ed451ea0be35af17c547cc6ead751607a40b9bec0eced66160875",
+      "afterSha256": "95e317b0a9ba8c4f971e9f9bf16a1c13cb77393772c673cfee685ce167e53979",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+        "page": 33,
+        "quote": "GLORIA (Gestor de Logs para Respuesta ante Incidentes y Amenazas) es una plataforma para la gestión de incidentes y amenazas de ciberseguridad a través de técnicas de correlación compleja de eventos. Basado en los sistemas SIEM (Security Information and Event Management), va un paso más allá de las capacidades de monitorización, almacenamiento e interpretación de los datos relevantes.",
+        "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+        "role": "Respaldo temático y factual"
+      },
+      "reviewedOptions": [
+        "Gestiona notificaciones y seguimiento de incidentes, no es la plataforma SIEM descrita.",
+        "Es la plataforma SIEM identificada en el temario y por CCN.",
+        "Se orienta al análisis y gestión de riesgos.",
+        "Se orienta a visibilidad/control de acceso de red; no es GLORIA."
+      ],
+      "primary": [
+        {
+          "url": "https://www.ccn-cert.cni.es/en/tools/gloria.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "storageFile": "public/data/T4.05.json",
+      "sampleFiles": [],
+      "objectiveReview": "Se mantiene el concepto evaluado; la reparación precisa sintaxis, condición o versión sin sustituir el objetivo.",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Identificación directa del concepto o propiedad."
+      },
+      "sourceValidation": {
+        "beforeCurrent": true,
+        "pdfHash": true,
+        "literalQuote": true,
+        "samples": 0,
+        "limits": "Revisión documental; los modelos matemáticos no son ejecución de protocolos."
+      },
+      "authorAfterSha256": "95e317b0a9ba8c4f971e9f9bf16a1c13cb77393772c673cfee685ce167e53979"
+    },
+    {
+      "id": "AT406-P1-34",
+      "topic": "T4.06",
+      "priority": "P0",
+      "status": "APTA_PROPUESTA_NO_APLICADA",
+      "before": {
+        "i": "AT406-P1-34",
+        "t": "T4.06",
+        "o": "A",
+        "q": "El rango de frecuencias para la transmisión de microondas satélite es:",
+        "a": [
+          "De 3 GHz a 15 GHz.",
+          "De 1 GHz a 10 GHz.",
+          "De 5 GHz a 8 GHz.",
+          "De 12 GHz a 15 GHz."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT406-P1-34",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué afirmación sobre las frecuencias empleadas en comunicaciones por satélite es correcta?",
+        "a": [
+          "Todas se limitan al intervalo 3–15 GHz.",
+          "No existe un único intervalo universal 1–10 GHz: las bandas Ku y Ka incluyen frecuencias superiores a 10 GHz.",
+          "Todas se limitan al intervalo 5–8 GHz.",
+          "Todas se limitan al intervalo 12–15 GHz."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "Errata del temario: su intervalo orientativo no es un límite universal. ESA describe Ku y Ka por encima de10GHz; no se asigna una banda única a todo servicio de satélite.",
+        "u": "El rango de frecuencias óptimo para la transmisión de microondas satélite estaría en torno a 1-10 GHz. [p. 25]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.06 Comunicaciones y Redes/T4.06 Comunicaciones y Redes - Temario.pdf",
+        "sha256": "cc73bc044bdfdb53d6c6776f87a79f0fe690f1c5c1a2ee9c4749bb98f9bcf3eb",
+        "page": 25,
+        "quote": "El rango de frecuencias óptimo para la transmisión de microondas satélite estaría en torno a 1-10 GHz.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.esa.int/Applications/Connectivity_and_Secure_Communications/Satellite_frequency_bands",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "Excluye frecuencias de Ka."
+        },
+        {
+          "option": "B",
+          "correct": true,
+          "reason": "Ku y Ka refutan el límite universal10GHz."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "Excluye Ku y Ka."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "Excluye otras bandas y parte de Ku/Ka."
+        }
+      ],
+      "sourceDiscrepancy": "Se reemplaza la falsa generalización de un rango óptimo universal conservando el objetivo de bandas de satélite.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AT406-P1-34",
+        "finding": "AT406-P1-34",
+        "evidence": "T4.06 Comunicaciones y Redes - Test.pdf (plantilla p. 11); T4.06 Comunicaciones y Redes - Temario.pdf p. 25 (pasaje localizado: microondas)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave B. Los enlaces satelitales usan múltiples bandas, incluidas Ku y Ka por encima de 10 GHz. No existe como límite general el rango marcado.",
+        "location": "public/data/T4.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT406-P1-34",
+          "topic": "T4.06",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "5be8e75b09ca26083830bff4823c54c4f77dd29dd0fcfffb4a143e145858030b",
+      "beforeSha256": "5be8e75b09ca26083830bff4823c54c4f77dd29dd0fcfffb4a143e145858030b",
+      "afterSha256": "74c071769639ece198bbc7c98ea50cee339390faf69f4664b691de3d47307e67",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.06 Comunicaciones y Redes/T4.06 Comunicaciones y Redes - Temario.pdf",
+        "page": 25,
+        "quote": "El rango de frecuencias óptimo para la transmisión de microondas satélite estaría en torno a 1-10 GHz.",
+        "sha256": "cc73bc044bdfdb53d6c6776f87a79f0fe690f1c5c1a2ee9c4749bb98f9bcf3eb",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "Excluye frecuencias de Ka.",
+        "Ku y Ka refutan el límite universal10GHz.",
+        "Excluye Ku y Ka.",
+        "Excluye otras bandas y parte de Ku/Ka."
+      ],
+      "primary": [
+        {
+          "url": "https://www.esa.int/Applications/Connectivity_and_Secure_Communications/Satellite_frequency_bands",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "storageFile": "public/data/T4.06.json",
+      "sampleFiles": [],
+      "objectiveReview": "Conserva el objetivo de bandas de frecuencia satelitales: corrige la universalidad falsa de 1–10 GHz mediante contraejemplos de Ku/Ka. No convierte el objetivo en aplicaciones de satélite. El pasaje óptimo del temario se conserva como discrepancia, no como norma universal.",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Identificación directa del concepto o propiedad."
+      },
+      "sourceValidation": {
+        "beforeCurrent": true,
+        "pdfHash": true,
+        "literalQuote": true,
+        "samples": 0,
+        "limits": "Revisión documental; los modelos matemáticos no son ejecución de protocolos."
+      },
+      "authorAfterSha256": "74c071769639ece198bbc7c98ea50cee339390faf69f4664b691de3d47307e67"
+    },
+    {
+      "id": "AT406-P1-45",
+      "topic": "T4.06",
+      "priority": "P0",
+      "status": "APTA_PROPUESTA_NO_APLICADA",
+      "before": {
+        "i": "AT406-P1-45",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué categoría de cableado estructurado permite transmitir hasta 40 Gbps en segmentos de 100 metros?",
+        "a": [
+          "Categoría 6.",
+          "Categoría 7.",
+          "Categoría 8.",
+          "Categoría 5e."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT406-P1-45",
+        "t": "T4.06",
+        "o": "A",
+        "q": "¿Qué categoría de cableado se utiliza para un canal 40GBASE-T de hasta 30 metros?",
+        "a": [
+          "Categoría 6.",
+          "Categoría 7.",
+          "Categoría 8.",
+          "Categoría 5e."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia/temario: Cat8 admite40GBASE-T en canales de hasta30m, no100m. La indicación de8pares del temario también es errónea: se emplean4pares.",
+        "u": "Categoría 8: frecuencias de hasta 2000 MHz, transmitiendo a 40 Gbps. Utiliza cableado SSTP de 8 pares. [p. 14]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.06 Comunicaciones y Redes/T4.06 Comunicaciones y Redes - Temario.pdf",
+        "sha256": "cc73bc044bdfdb53d6c6776f87a79f0fe690f1c5c1a2ee9c4749bb98f9bcf3eb",
+        "page": 14,
+        "quote": "Categoría 8: frecuencias de hasta 2000 MHz, transmitiendo a 40 Gbps. Utiliza cableado SSTP de 8 pares.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.flukenetworks.com/edocs/category-8-cable-will-play-a-major-role-in-25g-amp-40g-data-center-ethernet",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.ieee802.org/3/bq/public/channeldata/index.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "Cat6 no corresponde a40GBASE-T."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "Cat7 no es la categoría40GBASE-T solicitada."
+        },
+        {
+          "option": "C",
+          "correct": true,
+          "reason": "Cat8 corresponde a25/40GBASE-T hasta30m."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "Cat5e no corresponde a40GBASE-T."
+        }
+      ],
+      "sourceDiscrepancy": "El cuadro del temario generaliza100m y8pares; Fluke es documentación técnica del fabricante y la página IEEE contiene datos del grupo de trabajo, no se presenta como texto normativo final.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AT406-P1-45",
+        "finding": "AT406-P1-45",
+        "evidence": "T4.06 Comunicaciones y Redes - Test.pdf (plantilla p. 11); T4.06 Comunicaciones y Redes - Temario.pdf p. 14 (pasaje localizado: categoría 8)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave C. Cat 8 soporta 40GBASE-T en canal de hasta 30 m, no 100 m. Ninguna opción satisface ese alcance a dicha velocidad.",
+        "location": "public/data/T4.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT406-P1-45",
+          "topic": "T4.06",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "e34e696b2ba965d049ec6a96a88144dc5eac1a22da95a4eeecb627e85490fb1c",
+      "beforeSha256": "e34e696b2ba965d049ec6a96a88144dc5eac1a22da95a4eeecb627e85490fb1c",
+      "afterSha256": "1a15a06c32e8480e0825fc743bf4e0b368172daa89be94b0c1cee17cb55da9fd",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.06 Comunicaciones y Redes/T4.06 Comunicaciones y Redes - Temario.pdf",
+        "page": 14,
+        "quote": "Categoría 8: frecuencias de hasta 2000 MHz, transmitiendo a 40 Gbps. Utiliza cableado SSTP de 8 pares.",
+        "sha256": "cc73bc044bdfdb53d6c6776f87a79f0fe690f1c5c1a2ee9c4749bb98f9bcf3eb",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "Cat6 no corresponde a40GBASE-T.",
+        "Cat7 no es la categoría40GBASE-T solicitada.",
+        "Cat8 corresponde a25/40GBASE-T hasta30m.",
+        "Cat5e no corresponde a40GBASE-T."
+      ],
+      "primary": [
+        {
+          "url": "https://www.flukenetworks.com/edocs/category-8-cable-will-play-a-major-role-in-25g-amp-40g-data-center-ethernet",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.ieee802.org/3/bq/public/channeldata/index.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "storageFile": "public/data/T4.06.json",
+      "sampleFiles": [],
+      "objectiveReview": "Se mantiene el concepto evaluado; la reparación precisa sintaxis, condición o versión sin sustituir el objetivo.",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Identificación directa del concepto o propiedad."
+      },
+      "sourceValidation": {
+        "beforeCurrent": true,
+        "pdfHash": true,
+        "literalQuote": true,
+        "samples": 0,
+        "limits": "Revisión documental; los modelos matemáticos no son ejecución de protocolos."
+      },
+      "authorAfterSha256": "1a15a06c32e8480e0825fc743bf4e0b368172daa89be94b0c1cee17cb55da9fd"
+    },
+    {
+      "id": "AT407-P1-47",
+      "topic": "T4.07",
+      "priority": "P0",
+      "status": "APTA_PROPUESTA_NO_APLICADA",
+      "before": {
+        "i": "AT407-P1-47",
+        "t": "T4.07",
+        "o": "A",
+        "q": "A fin de que el procedimiento de la cabecera del datagrama IP sea más rápido, se ha dividido la cabecera del protocolo IPv6 en:",
+        "a": [
+          "Una cabecera básica y una o más cabecera de extensión.",
+          "Una cabecera básica y solo una cabecera de extensión.",
+          "Una cabecera básica y una o más cabecera de enrutamiento.",
+          "Una cabecera básica, una cabecera de enrutamiento y una o varias cabeceras de fragmentación."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT407-P1-47",
+        "t": "T4.07",
+        "o": "A",
+        "q": "Un paquete IPv6 puede contener:",
+        "a": [
+          "Una cabecera básica y cero o más cabeceras de extensión opcionales.",
+          "Una cabecera básica y exactamente una cabecera de extensión obligatoria.",
+          "Una cabecera básica y una o más cabeceras de enrutamiento obligatorias.",
+          "Una cabecera básica y obligatoriamente cabeceras de enrutamiento y fragmentación."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: las extensiones son opcionales; un paquete puede no incluir ninguna. RFC8200§4 establece zero, one, or more extension headers. No se interpreta ilimitado como ausencia de restricciones de tamaño o cadena.",
+        "u": "El formato del datagrama IPv6 es: - cabecera fija (40 bytes) + - cabeceras de extensión (opcionales y en número ilimitado) + - PDU del protocolo superior. [p. 42]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Temario.pdf",
+        "sha256": "8c96987feee2c1ddade9129a46a22faf3166f37a58524261b7ec3818e5f1fb58",
+        "page": 42,
+        "quote": "El formato del datagrama IPv6 es: - cabecera fija (40 bytes) + - cabeceras de extensión (opcionales y en número ilimitado) + - PDU del protocolo superior.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Respaldo temático y factual"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc8200",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": true,
+          "reason": "Permite cero extensiones, conforme aRFC8200."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "Exige una extensión inexistente en paquetes válidos sin extensiones."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "Routing no es obligatoria."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "Routing y Fragment no son obligatorias."
+        }
+      ],
+      "sourceDiscrepancy": "",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AT407-P1-47",
+        "finding": "AT407-P1-47",
+        "evidence": "T4.07 Modelo TCP y OSI - Test.pdf (plantilla p. 13)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave A. Un paquete puede tener cero cabeceras de extensión. La clave exige al menos una.",
+        "location": "public/data/T4.07.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT407-P1-47",
+          "topic": "T4.07",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "61f805c45735344d9e60e95ce7b2ea9db0b87362f9163c0c6ed3f6103924e230",
+      "beforeSha256": "61f805c45735344d9e60e95ce7b2ea9db0b87362f9163c0c6ed3f6103924e230",
+      "afterSha256": "4327be93d6b31ce0d1f1152345176c2059b9caa3eb63d0a463be3d0f8f4025a5",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Temario.pdf",
+        "page": 42,
+        "quote": "El formato del datagrama IPv6 es: - cabecera fija (40 bytes) + - cabeceras de extensión (opcionales y en número ilimitado) + - PDU del protocolo superior.",
+        "sha256": "8c96987feee2c1ddade9129a46a22faf3166f37a58524261b7ec3818e5f1fb58",
+        "role": "Respaldo temático y factual"
+      },
+      "reviewedOptions": [
+        "Permite cero extensiones, conforme aRFC8200.",
+        "Exige una extensión inexistente en paquetes válidos sin extensiones.",
+        "Routing no es obligatoria.",
+        "Routing y Fragment no son obligatorias."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc8200",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "storageFile": "public/data/T4.07.json",
+      "sampleFiles": [],
+      "objectiveReview": "Se mantiene el concepto evaluado; la reparación precisa sintaxis, condición o versión sin sustituir el objetivo.",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Identificación directa del concepto o propiedad."
+      },
+      "sourceValidation": {
+        "beforeCurrent": true,
+        "pdfHash": true,
+        "literalQuote": true,
+        "samples": 0,
+        "limits": "Revisión documental; los modelos matemáticos no son ejecución de protocolos."
+      },
+      "authorAfterSha256": "4327be93d6b31ce0d1f1152345176c2059b9caa3eb63d0a463be3d0f8f4025a5"
+    },
+    {
+      "id": "AT407-P1-57",
+      "topic": "T4.07",
+      "priority": "P0",
+      "status": "APTA_PROPUESTA_NO_APLICADA",
+      "before": {
+        "i": "AT407-P1-57",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuál de las siguientes direcciones IP se conoce como APIPA?",
+        "a": [
+          "192.168.0.1",
+          "199.15.0.0",
+          "150.214.0.1",
+          "169.254.0.1"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT407-P1-57",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuál de estas direcciones puede seleccionarse automáticamente como IPv4 link-local conforme al intervalo de selección de RFC3927?",
+        "a": [
+          "192.168.0.1",
+          "199.15.0.0",
+          "150.214.0.1",
+          "169.254.1.1"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: 169.254.0.1 cae en el primer /24 reservado y no es seleccionable por el procedimiento. Se elige entre169.254.1.0 y169.254.254.255; el bloque global sigue siendo169.254/16.",
+        "u": "169.254.0.0/16: para direccionamiento de enlace local. Se asigna una IP automáticamente cuando no existe otro modo de asignación disponible. Es lo que se conoce como auto-IP o APIPA (Automatic Private IP Addressing). [p. 28]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Temario.pdf",
+        "sha256": "8c96987feee2c1ddade9129a46a22faf3166f37a58524261b7ec3818e5f1fb58",
+        "page": 28,
+        "quote": "169.254.0.0/16: para direccionamiento de enlace local. Se asigna una IP automáticamente cuando no existe otro modo de asignación disponible. Es lo que se conoce como auto-IP o APIPA (Automatic Private IP Addressing).",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc3927",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "Es privada RFC1918, no link-local169.254/16."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "Está fuera del bloque."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "Está fuera del bloque."
+        },
+        {
+          "option": "D",
+          "correct": true,
+          "reason": "Está dentro del intervalo elegible."
+        }
+      ],
+      "sourceDiscrepancy": "El temario cita el bloque completo, sin explicar la exclusión de sus primeros y últimos256valores para autoselección.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AT407-P1-57",
+        "finding": "AT407-P1-57",
+        "evidence": "T4.07 Modelo TCP y OSI - Test.pdf (plantilla p. 13)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave D. 169.254.0.1 pertenece al primer /24 reservado. El algoritmo de selección dinámica excluye ese extremo del bloque link-local.",
+        "location": "public/data/T4.07.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT407-P1-57",
+          "topic": "T4.07",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "oracle-results.json: Cálculo entero real de pertenencia al intervalo RFC3927; no autoconfiguración de interfaces.",
+      "sourceBeforeSha256": "0f30c8dde3ba1cc71238a7f906c8765124fb9727c1e78664f5acdeda3fd126ea",
+      "beforeSha256": "0f30c8dde3ba1cc71238a7f906c8765124fb9727c1e78664f5acdeda3fd126ea",
+      "afterSha256": "907c29ee96a73ff39bc5d54f1d71ad0f485fd04f5fd9feb988401a87cb41fdce",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Temario.pdf",
+        "page": 28,
+        "quote": "169.254.0.0/16: para direccionamiento de enlace local. Se asigna una IP automáticamente cuando no existe otro modo de asignación disponible. Es lo que se conoce como auto-IP o APIPA (Automatic Private IP Addressing).",
+        "sha256": "8c96987feee2c1ddade9129a46a22faf3166f37a58524261b7ec3818e5f1fb58",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "Es privada RFC1918, no link-local169.254/16.",
+        "Está fuera del bloque.",
+        "Está fuera del bloque.",
+        "Está dentro del intervalo elegible."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc3927",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "storageFile": "public/data/T4.07.json",
+      "sampleFiles": [],
+      "objectiveReview": "Se mantiene el concepto evaluado; la reparación precisa sintaxis, condición o versión sin sustituir el objetivo.",
+      "typeReview": {
+        "k": "K",
+        "rationale": "Interpretación de órdenes, direcciones o cálculo explícito."
+      },
+      "sourceValidation": {
+        "beforeCurrent": true,
+        "pdfHash": true,
+        "literalQuote": true,
+        "samples": 0,
+        "limits": "Revisión documental; los modelos matemáticos no son ejecución de protocolos."
+      },
+      "authorAfterSha256": "907c29ee96a73ff39bc5d54f1d71ad0f485fd04f5fd9feb988401a87cb41fdce"
+    },
+    {
+      "id": "AS11-P1-86",
+      "topic": "T4.07",
+      "priority": "P0",
+      "status": "APTA_PROPUESTA_NO_APLICADA",
+      "before": {
+        "i": "AS11-P1-86",
+        "t": "T4.07",
+        "o": "A",
+        "q": "El campo “version” de la cabecera del protocolo IPv4 puede contener:",
+        "a": [
+          "Desde 0000 hasta 1111.",
+          "0100 ó 0110.",
+          "4 y 6 en complemento a 1.",
+          "Siempre 1111."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS11-P1-86",
+        "t": "T4.07",
+        "o": "A",
+        "q": "En una cabecera IPv4 válida, el campo Versión de cuatro bits contiene:",
+        "a": [
+          "Desde 0000 hasta 1111, indistintamente.",
+          "Siempre 0100.",
+          "4 y 6 en complemento a 1.",
+          "Siempre 1111."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: IPv4 exige el valor4(0100). 0110 corresponde aIPv6, no a otra versión válida dentro de una cabeceraIPv4.",
+        "u": "Versión (VER): 4 bits. Versión del protocolo, en este caso 4. [p. 21]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Temario.pdf",
+        "sha256": "8c96987feee2c1ddade9129a46a22faf3166f37a58524261b7ec3818e5f1fb58",
+        "page": 21,
+        "quote": "Versión (VER): 4 bits. Versión del protocolo, en este caso 4.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Respaldo temático y factual"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc791",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "Cuatro bits permiten16valores, peroIPv4 exige4."
+        },
+        {
+          "option": "B",
+          "correct": true,
+          "reason": "0100 es4binario."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "IPv4 no alterna4/6 ni usa complemento a1 para identificar versión."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "1111 es15."
+        }
+      ],
+      "sourceDiscrepancy": "",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AS11-P1-86",
+        "finding": "AS11-P1-86",
+        "evidence": "Simulacro 11.pdf (plantilla p. 17)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave B. Una cabecera IPv4 lleva 0100. 0110 identifica una cabecera IPv6 y hace falsa la disyunción ofrecida.",
+        "location": "public/data/T4.07.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AS11-P1-86",
+          "topic": "T4.07",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "oracle-results.json: Representación binaria real de4; las alternativas multivalor no satisfacen campoIPv4 constante.",
+      "sourceBeforeSha256": "1d23a207dbeb5f67bd5e105d098087ff7b8dafef310aaa3f790d98ad1e2fa86f",
+      "beforeSha256": "1d23a207dbeb5f67bd5e105d098087ff7b8dafef310aaa3f790d98ad1e2fa86f",
+      "afterSha256": "2d0247677502b182cb8c80453808f6e55a29f9f0628628e8b575b0525b273e2f",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.07 Modelo TCP y OSI/T4.07 Modelo TCP y OSI - Temario.pdf",
+        "page": 21,
+        "quote": "Versión (VER): 4 bits. Versión del protocolo, en este caso 4.",
+        "sha256": "8c96987feee2c1ddade9129a46a22faf3166f37a58524261b7ec3818e5f1fb58",
+        "role": "Respaldo temático y factual"
+      },
+      "reviewedOptions": [
+        "Cuatro bits permiten16valores, peroIPv4 exige4.",
+        "0100 es4binario.",
+        "IPv4 no alterna4/6 ni usa complemento a1 para identificar versión.",
+        "1111 es15."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc791",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "storageFile": "public/data/T4.07.json",
+      "sampleFiles": [],
+      "objectiveReview": "Se mantiene el concepto evaluado; la reparación precisa sintaxis, condición o versión sin sustituir el objetivo.",
+      "typeReview": {
+        "k": "C",
+        "rationale": "Completar el enunciado con un dato, sin ejecución de código."
+      },
+      "sourceValidation": {
+        "beforeCurrent": true,
+        "pdfHash": true,
+        "literalQuote": true,
+        "samples": 0,
+        "limits": "Revisión documental; los modelos matemáticos no son ejecución de protocolos."
+      },
+      "authorAfterSha256": "2d0247677502b182cb8c80453808f6e55a29f9f0628628e8b575b0525b273e2f"
+    },
+    {
+      "id": "AT408-P1-40",
+      "topic": "T4.08",
+      "priority": "P0",
+      "status": "APTA_PROPUESTA_NO_APLICADA",
+      "before": {
+        "i": "AT408-P1-40",
+        "t": "T4.08",
+        "o": "A",
+        "q": "El tamaño máximo de un fichero a transmitir con TFTP es de:",
+        "a": [
+          "1 GB.",
+          "2 GB.",
+          "4 GB.",
+          "8 GB."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT408-P1-40",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En un modelo TFTP básico con bloques de 512 octetos, números de bloque 1 a 65535, sin rollover y DATA final de menos de 512 octetos, ¿cuál es el máximo tamaño transferible?",
+        "a": [
+          "33554432 octetos.",
+          "33553920 octetos.",
+          "33553919 octetos.",
+          "4294967296 octetos."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "Errata de temario: no hay un máximo universal4GB establecido porRFC2347. Bajo las condiciones expresas,65534bloques completos y511octetos finales suman33553919. Un último bloque lleno requeriría otro DATA de cierre. No se generaliza a extensiones o rollover.",
+        "u": "TFTP (Trivial File Transfer Protocol) es como una versión reducida y básica de FTP, dirigido a la transferencia de archivos de pequeño tamaño entre hosts. Según el RFC 2347, el tamaño máximo de un fichero a transferir es de 4 GB. [p. 32]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.08 Internet/T4.08 Internet - Temario.pdf",
+        "sha256": "2a460897d6652d005ebb5160190b24a80d3bdfa9b16cd61bca16bba5b7688060",
+        "page": 32,
+        "quote": "TFTP (Trivial File Transfer Protocol) es como una versión reducida y básica de FTP, dirigido a la transferencia de archivos de pequeño tamaño entre hosts. Según el RFC 2347, el tamaño máximo de un fichero a transferir es de 4 GB.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc1350",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc2347",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "Equivale a65536bloques completos y excede numeración."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "Equivale a65535bloques completos; falta un DATA final corto."
+        },
+        {
+          "option": "C",
+          "correct": true,
+          "reason": "65534×512+511 cumple numeración y terminación."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "4GiB excede las condiciones declaradas."
+        }
+      ],
+      "sourceDiscrepancy": "La referencia aRFC2347/4GB es incorrecta. Se formula el límite con condiciones explícitas, no se presenta como límite de todas las implementaciones.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AT408-P1-40",
+        "finding": "AT408-P1-40",
+        "evidence": "T4.08 Internet - Test.pdf (plantilla p. 11)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave C. TFTP básico usa bloques de 512 octetos y número de bloque de 16 bits. 4 GB requiere supuestos sobre extensiones o implementación.",
+        "location": "public/data/T4.08.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT408-P1-40",
+          "topic": "T4.08",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "oracle-results.json: Modelo aritmético real sin rollover:floor(N/512)+1bloquesDATA; no transferenciaTFTP ni certificación de implementación.",
+      "sourceBeforeSha256": "ef5c0990718e7e31edc39d4efbad858dcb8171e475e1fb6efb2ad1d8d81746f6",
+      "beforeSha256": "ef5c0990718e7e31edc39d4efbad858dcb8171e475e1fb6efb2ad1d8d81746f6",
+      "afterSha256": "79ff7a49deb477c5c0ee8a35d6a576385daac86f70233f8684283508931fe4ad",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.08 Internet/T4.08 Internet - Temario.pdf",
+        "page": 32,
+        "quote": "TFTP (Trivial File Transfer Protocol) es como una versión reducida y básica de FTP, dirigido a la transferencia de archivos de pequeño tamaño entre hosts. Según el RFC 2347, el tamaño máximo de un fichero a transferir es de 4 GB.",
+        "sha256": "2a460897d6652d005ebb5160190b24a80d3bdfa9b16cd61bca16bba5b7688060",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "Equivale a65536bloques completos y excede numeración.",
+        "Equivale a65535bloques completos; falta un DATA final corto.",
+        "65534×512+511 cumple numeración y terminación.",
+        "4GiB excede las condiciones declaradas."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc1350",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc2347",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "storageFile": "public/data/T4.08.json",
+      "sampleFiles": [],
+      "objectiveReview": "Acotación sustancial pero conserva el máximo transferible de TFTP: se elimina el falso máximo universal y se explicitan tamaño de bloque, espacio de numeración y ausencia de rollover. No es una pregunta de otro protocolo. Se acepta exclusivamente como cálculo de ese modelo, no como límite de implementaciones reales.",
+      "typeReview": {
+        "k": "K",
+        "rationale": "Interpretación de órdenes, direcciones o cálculo explícito."
+      },
+      "sourceValidation": {
+        "beforeCurrent": true,
+        "pdfHash": true,
+        "literalQuote": true,
+        "samples": 0,
+        "limits": "Revisión documental; los modelos matemáticos no son ejecución de protocolos."
+      },
+      "authorAfterSha256": "12e8f2ce73d865bee5951d7e9ebf025b22408a1a47b423c096dac4fb8434b981"
+    },
+    {
+      "id": "AT410-P1-38",
+      "topic": "T4.10",
+      "priority": "P0",
+      "status": "APTA_PROPUESTA_NO_APLICADA",
+      "before": {
+        "i": "AT410-P1-38",
+        "t": "T4.10",
+        "o": "A",
+        "q": "En relación a los conmutadores, ¿cuál de las siguientes NO es una técnica de conmutación?",
+        "a": [
+          "Almacenamiento y envío.",
+          "Corte.",
+          "Híbrido.",
+          "Corte libre de fragmentos."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT410-P1-38",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Cuál NO es una técnica de reenvío de tramas de un conmutador Ethernet?",
+        "a": [
+          "Resolución de nombres DNS.",
+          "Corte (cut-through).",
+          "Híbrido (adaptive cut-through).",
+          "Corte libre de fragmentos."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "n": "Errata de academia: almacenamiento y reenvío sí es una técnica, por lo que el original carecía de exclusión válida. Se sustituye únicamente esa alternativa por resolución DNS.",
+        "u": "Store and forward (almacenamiento y reenvío): el switch espera a recibir toda la trama antes de reenviarla al destino. Además, una vez recibe la trama completa y antes de reenviarla, calcula el CRC para comprobar si hay algún error. Esta técnica supone un aumento de la latencia. [p. 32]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.10 Redes Locales/T4.10 Redes Locales - Temario.pdf",
+        "sha256": "7a360f7f2f0279b47691155a5cdda67a5394114a70718a162878ac4414c8a710",
+        "page": 32,
+        "quote": "Store and forward (almacenamiento y reenvío): el switch espera a recibir toda la trama antes de reenviarla al destino. Además, una vez recibe la trama completa y antes de reenviarla, calcula el CRC para comprobar si hay algún error. Esta técnica supone un aumento de la latencia.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Respaldo temático y factual"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc1034",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": true,
+          "reason": "DNS resuelve nombres; no es una técnica de reenvío de tramas."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "Reenvía antes de recibir toda la trama."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "Alterna modos según condiciones."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "Es la variante que espera los primeros64octetos."
+        }
+      ],
+      "sourceDiscrepancy": "",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AT410-P1-38",
+        "finding": "AT410-P1-38",
+        "evidence": "T4.10 Redes Locales - Test.pdf (plantilla p. 10); T4.10 Redes Locales - Temario.pdf p. 32 (pasaje localizado: conmutación)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave A. Almacenamiento y envío es la traducción de store-and-forward, una técnica convencional de conmutación.",
+        "location": "public/data/T4.10.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT410-P1-38",
+          "topic": "T4.10",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "51fa7aea573d774bcbe6971d0f827aa32b004a331b06c235c994a310237abea2",
+      "beforeSha256": "51fa7aea573d774bcbe6971d0f827aa32b004a331b06c235c994a310237abea2",
+      "afterSha256": "4eb6670af19be03b372cdfdb83f7fb60de9850367da3336bd12dd06c0f84eadd",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.10 Redes Locales/T4.10 Redes Locales - Temario.pdf",
+        "page": 32,
+        "quote": "Store and forward (almacenamiento y reenvío): el switch espera a recibir toda la trama antes de reenviarla al destino. Además, una vez recibe la trama completa y antes de reenviarla, calcula el CRC para comprobar si hay algún error. Esta técnica supone un aumento de la latencia.",
+        "sha256": "7a360f7f2f0279b47691155a5cdda67a5394114a70718a162878ac4414c8a710",
+        "role": "Respaldo temático y factual"
+      },
+      "reviewedOptions": [
+        "DNS resuelve nombres; no es una técnica de reenvío de tramas.",
+        "Reenvía antes de recibir toda la trama.",
+        "Alterna modos según condiciones.",
+        "Es la variante que espera los primeros64octetos."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc1034",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "storageFile": "public/data/T4.10.json",
+      "sampleFiles": [],
+      "objectiveReview": "Se mantiene el concepto evaluado; la reparación precisa sintaxis, condición o versión sin sustituir el objetivo.",
+      "typeReview": {
+        "k": "I",
+        "rationale": "Elegir la afirmación incorrecta."
+      },
+      "sourceValidation": {
+        "beforeCurrent": true,
+        "pdfHash": true,
+        "literalQuote": true,
+        "samples": 0,
+        "limits": "Revisión documental; los modelos matemáticos no son ejecución de protocolos."
+      },
+      "authorAfterSha256": "4eb6670af19be03b372cdfdb83f7fb60de9850367da3336bd12dd06c0f84eadd"
+    },
+    {
+      "id": "AS12-P1-81",
+      "topic": "T4.10",
+      "priority": "P0",
+      "status": "APTA_PROPUESTA_NO_APLICADA",
+      "before": {
+        "i": "AS12-P1-81",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Qué tipo de cableado es suficiente para transmitir a 100 Mbps pero no a 1000 Mbps?",
+        "a": [
+          "UTP cat 3.",
+          "UTP cat 5.",
+          "UTP cat 4.",
+          "UTP cat 7."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS12-P1-81",
+        "t": "T4.10",
+        "o": "A",
+        "q": "Entre las siguientes, ¿cuál es la categoría mínima de UTP admitida por 100BASE-T4 con cuatro pares, que no cumple los requisitos de 1000BASE-T?",
+        "a": [
+          "UTP cat 3.",
+          "UTP cat 5.",
+          "UTP cat 4.",
+          "UTP cat 7."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "n": "Errata de academia: Cat5 no excluye1000BASE-T. 100BASE-T4 admiteCat3/4/5; al preguntar por la mínima de las ofrecidas, la única respuesta esCat3. No se recomienda instalar cableado legado.",
+        "u": "100Base-T4 802.3u 100 Mbps UTP cat3 (4 pares) 100 [p. 16]"
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.10 Redes Locales/T4.10 Redes Locales - Temario.pdf",
+        "sha256": "7a360f7f2f0279b47691155a5cdda67a5394114a70718a162878ac4414c8a710",
+        "page": 16,
+        "quote": "100Base-T4 802.3u 100 Mbps UTP cat3 (4 pares) 100",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Respaldo temático y factual"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.cisco.com/c/en/us/td/docs/routers/12000/gsr_linecards/enet_lc/installation/guide/enet_lc.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst2960/hardware/installation/guide/2960_hg/higcable.pdf",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": true,
+          "reason": "Cat3 es la mínima de las ofrecidas para100BASE-T4."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "Cat5 admite1000BASE-T y no es mínima."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "Cat4 admiteT4, pero no es mínima porqueCat3 también."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "Cat7 no es mínima y no excluyeGigabit."
+        }
+      ],
+      "sourceDiscrepancy": "",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-AS12-P1-81",
+        "finding": "AS12-P1-81",
+        "evidence": "Simulacro 12.pdf (plantilla p. 17); T4.10 Redes Locales - Temario.pdf p. 16 (pasaje localizado: 1000BASE-T)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave B. 1000BASE-T se especificó para cuatro pares de categoría 5 que cumplen los requisitos. La categoría sola no justifica excluir Gigabit.",
+        "location": "public/data/T4.10.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AS12-P1-81",
+          "topic": "T4.10",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "4d689390ff363e704a22c5970d47514b549b595cbccd49af1d4237211cf5f644",
+      "beforeSha256": "4d689390ff363e704a22c5970d47514b549b595cbccd49af1d4237211cf5f644",
+      "afterSha256": "20e65467c981b26b12bcbd131cf1eefcc81578232289535c39d823970e5715ad",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.10 Redes Locales/T4.10 Redes Locales - Temario.pdf",
+        "page": 16,
+        "quote": "100Base-T4 802.3u 100 Mbps UTP cat3 (4 pares) 100",
+        "sha256": "7a360f7f2f0279b47691155a5cdda67a5394114a70718a162878ac4414c8a710",
+        "role": "Respaldo temático y factual"
+      },
+      "reviewedOptions": [
+        "Cat3 es la mínima de las ofrecidas para100BASE-T4.",
+        "Cat5 admite1000BASE-T y no es mínima.",
+        "Cat4 admiteT4, pero no es mínima porqueCat3 también.",
+        "Cat7 no es mínima y no excluyeGigabit."
+      ],
+      "primary": [
+        {
+          "url": "https://www.cisco.com/c/en/us/td/docs/routers/12000/gsr_linecards/enet_lc/installation/guide/enet_lc.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst2960/hardware/installation/guide/2960_hg/higcable.pdf",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "storageFile": "public/data/T4.10.json",
+      "sampleFiles": [],
+      "objectiveReview": "Conserva la distinción de categorías de cable capaces de 100 Mbps pero insuficientes para 1000BASE-T. Acotar 100BASE-T4 y mínima evita las dos respuestas Cat3/Cat4; no introduce otra tecnología ajena al cuadro principal.",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Identificación directa del concepto o propiedad."
+      },
+      "sourceValidation": {
+        "beforeCurrent": true,
+        "pdfHash": true,
+        "literalQuote": true,
+        "samples": 0,
+        "limits": "Revisión documental; los modelos matemáticos no son ejecución de protocolos."
+      },
+      "reviewAdjustment": "Cita reducida a la fila relevante literal; elimina fragmentos ajenos del cuadro sin cambiar q/a/c/k.",
+      "authorAfterSha256": "b809d9b2964166206229c80fa54f647648dccafaadb40284613fb44c2f1ac534"
+    },
+    {
+      "id": "GEN-T4.05-18",
+      "topic": "T4.05",
+      "priority": "P0",
+      "status": "APTA_PROPUESTA_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.05-18",
+        "t": "T4.05",
+        "o": "G",
+        "q": "¿De cuántas partes consta la ISO/IEC 27033, dedicada a la seguridad en redes?",
+        "a": [
+          "Cuatro.",
+          "Siete.",
+          "Seis.",
+          "Tres."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T4.05-18",
+        "u": "PDF p. 13: dedicada a la seguridad en redes, consta de 6 partes | PDF p. 13: seguridad en aplicaciones informáticas, consta de 7 partes | PDF p. 13: Consta de 3 partes: (1) Principios en la gestión de incidentes",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.05-18",
+        "t": "T4.05",
+        "o": "G",
+        "q": "Según el catálogo ISO consultado el 6 de noviembre de 2026, ¿cuántas partes numeradas publicadas componen la serie ISO/IEC27033 de seguridad en redes?",
+        "a": [
+          "Cuatro.",
+          "Siete.",
+          "Seis.",
+          "Tres."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T4.05-18",
+        "u": "ISO/IEC 27033: dedicada a la seguridad en redes, consta de 6 partes: (1) Conceptos generales, (2) Directrices de diseño e implementación de seguridad en redes, (3) Escenarios de referencia de redes, (4) Aseguramiento de las comunicaciones entre redes mediante gateways de seguridad, (5) Aseguramiento de comunicaciones mediante VPNs y (6) Securización de redes IP Wireless. [p. 13]",
+        "v": 0,
+        "w": 1,
+        "n": "El temario quedó desactualizado: ISO/IEC27033-7:2023 amplió la serie a siete partes. No se cuentan ediciones retiradas como partes adicionales."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+        "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+        "page": 13,
+        "quote": "ISO/IEC 27033: dedicada a la seguridad en redes, consta de 6 partes: (1) Conceptos generales, (2) Directrices de diseño e implementación de seguridad en redes, (3) Escenarios de referencia de redes, (4) Aseguramiento de las comunicaciones entre redes mediante gateways de seguridad, (5) Aseguramiento de comunicaciones mediante VPNs y (6) Securización de redes IP Wireless.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.iso.org/committee/45306/x/catalogue/",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.iso.org/standard/80972.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "Omite tres partes."
+        },
+        {
+          "option": "B",
+          "correct": true,
+          "reason": "El catálogo contiene partes1a7."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "Es la cifra anterior a la parte7."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "Omite cuatro partes."
+        }
+      ],
+      "sourceDiscrepancy": "El temario afirma seis; la parte7publicada en2023 es posterior.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.05-18",
+        "finding": "GEN-T4.05-18",
+        "evidence": "T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf p. 13",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave C. La serie 27033 tiene publicada la parte 7, sobre seguridad de virtualización de red, desde 2023. «Seis» ya era insuficiente.",
+        "location": "public/data/T4.05.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.05-18",
+          "topic": "T4.05",
+          "origin": "G",
+          "family": "GEN-T4.05-18",
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "a75316dd7ee93774c780509e28ffd3cab1d1875fa2a43ee7d0f4fd57436ecabc",
+      "beforeSha256": "a75316dd7ee93774c780509e28ffd3cab1d1875fa2a43ee7d0f4fd57436ecabc",
+      "afterSha256": "3049b4d0e5bf2023ae098390093b24714021bf9d675db956182a368d4e1976b7",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+        "page": 13,
+        "quote": "ISO/IEC 27033: dedicada a la seguridad en redes, consta de 6 partes: (1) Conceptos generales, (2) Directrices de diseño e implementación de seguridad en redes, (3) Escenarios de referencia de redes, (4) Aseguramiento de las comunicaciones entre redes mediante gateways de seguridad, (5) Aseguramiento de comunicaciones mediante VPNs y (6) Securización de redes IP Wireless.",
+        "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "Omite tres partes.",
+        "El catálogo contiene partes1a7.",
+        "Es la cifra anterior a la parte7.",
+        "Omite cuatro partes."
+      ],
+      "primary": [
+        {
+          "url": "https://www.iso.org/committee/45306/x/catalogue/",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.iso.org/standard/80972.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "storageFile": "public/data/T4.05.json",
+      "sampleFiles": [],
+      "objectiveReview": "Se mantiene el concepto evaluado; la reparación precisa sintaxis, condición o versión sin sustituir el objetivo.",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Identificación directa del concepto o propiedad."
+      },
+      "sourceValidation": {
+        "beforeCurrent": true,
+        "pdfHash": true,
+        "literalQuote": true,
+        "samples": 0,
+        "limits": "Revisión documental; los modelos matemáticos no son ejecución de protocolos."
+      },
+      "authorAfterSha256": "3049b4d0e5bf2023ae098390093b24714021bf9d675db956182a368d4e1976b7"
+    },
+    {
+      "id": "GEN-T4.05-18.v1",
+      "topic": "T4.05",
+      "priority": "P0",
+      "status": "APTA_PROPUESTA_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.05-18.v1",
+        "t": "T4.05",
+        "o": "G",
+        "q": "La ISO/IEC 27035, sobre gestión de incidentes de seguridad en la información, consta de _____ partes.",
+        "a": [
+          "seis",
+          "tres",
+          "cuatro",
+          "dos"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T4.05-18",
+        "u": "PDF p. 13: dedicada a la seguridad en redes, consta de 6 partes | PDF p. 13: seguridad en aplicaciones informáticas, consta de 7 partes | PDF p. 13: Consta de 3 partes: (1) Principios en la gestión de incidentes",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.05-18.v1",
+        "t": "T4.05",
+        "o": "G",
+        "q": "Según el catálogo ISO consultado el 6 de noviembre de 2026, la serie ISO/IEC27035 de gestión de incidentes consta de ___ partes numeradas publicadas.",
+        "a": [
+          "seis",
+          "tres",
+          "cuatro",
+          "dos"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T4.05-18",
+        "u": "ISO/IEC 27035: gestión de incidentes de seguridad en la información. Consta de 3 partes: (1) Principios en la gestión de incidentes, (2) Guías para la elaboración de un plan de respuesta a incidentes y (3) Guía de operaciones en la respuesta a incidentes. [p. 13]",
+        "v": 0,
+        "w": 1,
+        "n": "ISO/IEC27035-4:2024 añade coordinación. La enumeración de tres del temario quedó desactualizada; se cuentan partes, no ediciones."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+        "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+        "page": 13,
+        "quote": "ISO/IEC 27035: gestión de incidentes de seguridad en la información. Consta de 3 partes: (1) Principios en la gestión de incidentes, (2) Guías para la elaboración de un plan de respuesta a incidentes y (3) Guía de operaciones en la respuesta a incidentes.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.iso.org/committee/45306/x/catalogue/",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.iso.org/standard/80973.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "No hay seis partes publicadas en el catálogo consultado."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "Omite la parte4publicada en2024."
+        },
+        {
+          "option": "C",
+          "correct": true,
+          "reason": "Se publicaron partes1a4."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "Omite partes3y4."
+        }
+      ],
+      "sourceDiscrepancy": "La publicación de parte4en2024 contradice el total tres del temario.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.05-18.v1",
+        "finding": "GEN-T4.05-18.v1",
+        "evidence": "T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf p. 13",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave B. La parte 4 de 27035 cubre coordinación. La clave «tres» omite una parte publicada y aparece «cuatro» como alternativa.",
+        "location": "public/data/T4.05.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.05-18.v1",
+          "topic": "T4.05",
+          "origin": "G",
+          "family": "GEN-T4.05-18",
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "bae0cb6be9c7393125eb1788e1a8f464b23e7294c2272ca1db609c9cb3ac5c16",
+      "beforeSha256": "bae0cb6be9c7393125eb1788e1a8f464b23e7294c2272ca1db609c9cb3ac5c16",
+      "afterSha256": "9e28f406e58f27ffbbec9c6419182a8d9202ef2f20b04c37681e5c49ea1fe40c",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+        "page": 13,
+        "quote": "ISO/IEC 27035: gestión de incidentes de seguridad en la información. Consta de 3 partes: (1) Principios en la gestión de incidentes, (2) Guías para la elaboración de un plan de respuesta a incidentes y (3) Guía de operaciones en la respuesta a incidentes.",
+        "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "No hay seis partes publicadas en el catálogo consultado.",
+        "Omite la parte4publicada en2024.",
+        "Se publicaron partes1a4.",
+        "Omite partes3y4."
+      ],
+      "primary": [
+        {
+          "url": "https://www.iso.org/committee/45306/x/catalogue/",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.iso.org/standard/80973.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "storageFile": "public/data/T4.05.json",
+      "sampleFiles": [],
+      "objectiveReview": "Se mantiene el concepto evaluado; la reparación precisa sintaxis, condición o versión sin sustituir el objetivo.",
+      "typeReview": {
+        "k": "C",
+        "rationale": "Completar el enunciado con un dato, sin ejecución de código."
+      },
+      "sourceValidation": {
+        "beforeCurrent": true,
+        "pdfHash": true,
+        "literalQuote": true,
+        "samples": 0,
+        "limits": "Revisión documental; los modelos matemáticos no son ejecución de protocolos."
+      },
+      "authorAfterSha256": "9e28f406e58f27ffbbec9c6419182a8d9202ef2f20b04c37681e5c49ea1fe40c"
+    },
+    {
+      "id": "GEN-T4.05-18.v2",
+      "topic": "T4.05",
+      "priority": "P0",
+      "status": "APTA_PROPUESTA_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.05-18.v2",
+        "t": "T4.05",
+        "o": "G",
+        "q": "Sobre el número de partes de las normas ISO/IEC, señale la afirmación INCORRECTA:",
+        "a": [
+          "La ISO/IEC 27033 incluye una parte sobre aseguramiento mediante VPNs.",
+          "La ISO/IEC 27035, de gestión de incidentes, consta de 3 partes.",
+          "La ISO/IEC 27034, de seguridad en aplicaciones, consta de 7 partes.",
+          "La ISO/IEC 27033, de seguridad en redes, consta de 7 partes."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T4.05-18",
+        "u": "PDF p. 13: dedicada a la seguridad en redes, consta de 6 partes | PDF p. 13: seguridad en aplicaciones informáticas, consta de 7 partes | PDF p. 13: Consta de 3 partes: (1) Principios en la gestión de incidentes",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.05-18.v2",
+        "t": "T4.05",
+        "o": "G",
+        "q": "Según el catálogo ISO consultado el 6 de noviembre de 2026, señale la afirmación INCORRECTA:",
+        "a": [
+          "ISO/IEC27033-5 trata la seguridad de comunicaciones mediante VPN.",
+          "La serie ISO/IEC27035 consta de tres partes numeradas publicadas.",
+          "ISO/IEC27034-7:2018 pertenece a la serie de seguridad de aplicaciones.",
+          "La serie ISO/IEC27033 consta de siete partes numeradas publicadas."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T4.05-18",
+        "u": "ISO/IEC 27035: gestión de incidentes de seguridad en la información. Consta de 3 partes: (1) Principios en la gestión de incidentes, (2) Guías para la elaboración de un plan de respuesta a incidentes y (3) Guía de operaciones en la respuesta a incidentes. [p. 13]",
+        "v": 0,
+        "w": 1,
+        "n": "La incorrecta esB:27035tiene cuatro partes publicadas. Se evita afirmar un total ambiguo de27034, que incluye una especificación5-1 y no equivale sin matices a siete números consecutivos publicados."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+        "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+        "page": 13,
+        "quote": "ISO/IEC 27035: gestión de incidentes de seguridad en la información. Consta de 3 partes: (1) Principios en la gestión de incidentes, (2) Guías para la elaboración de un plan de respuesta a incidentes y (3) Guía de operaciones en la respuesta a incidentes.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.iso.org/committee/45306/x/catalogue/",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.iso.org/standard/51584.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.iso.org/standard/80973.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.iso.org/standard/66229.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": false,
+          "reason": "La parte5es VPN."
+        },
+        {
+          "option": "B",
+          "correct": true,
+          "reason": "Es falso: existe27035-4:2024."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "La parte7:2018 es deApplication security."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "El catálogo incluye27033-7:2023."
+        }
+      ],
+      "sourceDiscrepancy": "Se actualizan27033/27035 y se sustituye el conteo ambiguo de27034 por una parte concreta comprobable.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.05-18.v2",
+        "finding": "GEN-T4.05-18.v2",
+        "evidence": "T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf p. 13",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave D. D no puede descartarse usando el antiguo recuento de seis, y B es falsa tras la publicación de 27035-4. La clave ha dejado de resolver correctamente la negación.",
+        "location": "public/data/T4.05.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.05-18.v2",
+          "topic": "T4.05",
+          "origin": "G",
+          "family": "GEN-T4.05-18",
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "baabafddb82838cff1eb220b98fdb259f575cbba18a7393514446b761e6b713e",
+      "beforeSha256": "baabafddb82838cff1eb220b98fdb259f575cbba18a7393514446b761e6b713e",
+      "afterSha256": "ff883aff762cf25bb2b01ff5ef75235217144be190156699cc2c671ba574d22d",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.05 Seguridad CPD y Criptografía/T4.05 Seguridad CPD y Criptografía - Temario.pdf",
+        "page": 13,
+        "quote": "ISO/IEC 27035: gestión de incidentes de seguridad en la información. Consta de 3 partes: (1) Principios en la gestión de incidentes, (2) Guías para la elaboración de un plan de respuesta a incidentes y (3) Guía de operaciones en la respuesta a incidentes.",
+        "sha256": "651e698d631c33ee56df99873bbcfd57e39f7657b98de298b10b989d42a023db",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "La parte5es VPN.",
+        "Es falso: existe27035-4:2024.",
+        "La parte7:2018 es deApplication security.",
+        "El catálogo incluye27033-7:2023."
+      ],
+      "primary": [
+        {
+          "url": "https://www.iso.org/committee/45306/x/catalogue/",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.iso.org/standard/51584.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.iso.org/standard/80973.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.iso.org/standard/66229.html",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "storageFile": "public/data/T4.05.json",
+      "sampleFiles": [],
+      "objectiveReview": "Se mantiene el concepto evaluado; la reparación precisa sintaxis, condición o versión sin sustituir el objetivo.",
+      "typeReview": {
+        "k": "I",
+        "rationale": "Elegir la afirmación incorrecta."
+      },
+      "sourceValidation": {
+        "beforeCurrent": true,
+        "pdfHash": true,
+        "literalQuote": true,
+        "samples": 0,
+        "limits": "Revisión documental; los modelos matemáticos no son ejecución de protocolos."
+      },
+      "authorAfterSha256": "ff883aff762cf25bb2b01ff5ef75235217144be190156699cc2c671ba574d22d"
+    },
+    {
+      "id": "GEN-T4.06-57.v1",
+      "topic": "T4.06",
+      "priority": "P0",
+      "status": "APTA_PROPUESTA_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.06-57.v1",
+        "t": "T4.06",
+        "o": "G",
+        "q": "¿Qué velocidad de datos máxima permite GPRS (2,5G)?",
+        "a": [
+          "114 kbps",
+          "384 kbps",
+          "9,6 kbps",
+          "57,6 kbps"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T4.06-57",
+        "u": "B4T6 COMUNICACIONES Y REDES TAI código y se transmite. En el receptor se utilizará ese mismo código para extraer la señal que le corresponde. Otros conceptos básicos y relacionados con las comunicaciones móviles son: - Roaming: permite que se mantenga una conexión cuando se cambia de la zona de servicio de una central de conmutación a la de otra. Los tipos de roaming son: o Nacional: implica cambio de central de conmutación, aunque no de red. o Internacional: capacidad de un terminal de operar en una red diferente a su red origen, mediante la conexión a otra red disponible. Generaciones de tecnologías de telefonía móvil 1G Sistemas ANALÓGICOS Servicios de voz y mensajería unidireccional. El estándar europeo se denominaba TACS (Total Access Communications System) y funcionaba en la banda de 900 MHz. 2G (GSM y DCS): Sistemas DIGITALES Servicios de voz y datos a BAJA velocidad. Las comunicaciones GSM (Global System for Mobile) funcionaban en las bandas de 900 MHz y 1.800 MHz, con una separación entre canales de 200 KHz, se trataba ya de un sistema digital. Utiliza modulación TDMA. Los canales de tráfico (TCH) se podían usar para voz o para datos (WAP) hasta 9,6 Kbps, pero no permitía ambos simultáneamente. DCS (Digital Cellular Service) es una evolución de GSM, que usa la banda de 1.800 MHz, empezándose a usar microceldas para dar cobertura a zonas de alta densidad de población. La evolución de GSM que agrupaba hasta 4 canales GSM para poder transmitir datos a 57,6 kbps se denominaba HSCSD (Higsh Speed Circuit Switch Data). 2,5G (GPRS): Sistemas digitales con comunicaciones en modo paquete Servicios de datos de velocidad MEDIA en modo paquete. GPRS (General Packet Radio Service) utiliza las mismas frecuencias que GSM y permite por primera vez hacer uso de voz y datos simultáneamente, permitiendo una velocidad de datos de hasta 114 kbps utilizando también modulación TDMA. Encaminamiento tráfico de Internet: SGSN y GGSN. PABLO ARELLANO www.theglobeformacion.com Página 38",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.06-57.v1",
+        "t": "T4.06",
+        "o": "G",
+        "q": "En GPRS, suponiendo ocho intervalos temporales asignados y 21,4 kbit/s por intervalo con CS-4 (incluidas cabeceras RLC/MAC, excluido USF), ¿qué tasa agregada teórica resulta?",
+        "a": [
+          "171,2 kbit/s",
+          "384 kbit/s",
+          "9,6 kbit/s",
+          "57,6 kbit/s"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T4.06-57",
+        "u": "permitiendo una velocidad de datos de hasta 114 kbps utilizando también modulación TDMA. [p. 38]",
+        "v": 0,
+        "w": 1,
+        "n": "Ocho por21,4da171,2kbit/s. No es caudal útil IP: la tabla3 deETSI TS143064 diferencia21,4con cabeceras y20,0para informaciónRLC. La disponibilidad real de slots/terminal/red reduce la tasa."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.06 Comunicaciones y Redes/T4.06 Comunicaciones y Redes - Temario.pdf",
+        "sha256": "cc73bc044bdfdb53d6c6776f87a79f0fe690f1c5c1a2ee9c4749bb98f9bcf3eb",
+        "page": 38,
+        "quote": "permitiendo una velocidad de datos de hasta 114 kbps utilizando también modulación TDMA.",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.etsi.org/deliver/etsi_TS/143000_143099/143064/17.00.00_60/ts_143064v170000p.pdf",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": true,
+          "reason": "8×21,4=171,2."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "384 no resulta del producto y no es este máximoGPRS."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "Es una tasa de circuito GSM, no el agregado solicitado."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "No resulta de ocho slotsCS4."
+        }
+      ],
+      "sourceDiscrepancy": "El temario presenta114como máximo general; se explicitan ocho slotsCS4 y la capa medida.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.06-57.v1",
+        "finding": "GEN-T4.06-57.v1",
+        "evidence": "T4.06 Comunicaciones y Redes/T4.06 Comunicaciones y Redes - Temario.pdf p. 38",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave A («114 kbps»). 900/1.800 MHz describe el despliegue europeo; GPRS comparte recursos de datos y la simultaneidad depende de la clase de terminal. 114 kbit/s es una estimación práctica, no el máximo teórico de ocho ranuras con CS-4.",
+        "location": "public/data/T4.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.06-57.v1",
+          "topic": "T4.06",
+          "origin": "G",
+          "family": "GEN-T4.06-57",
+          "scenario": null
+        }
+      },
+      "oracle": "oracle-results.json: Cálculo entero en décimas:8×214/10=171,2kbit/s; modelo de agregación, no medida de radio.",
+      "sourceBeforeSha256": "f2bd26f344947c310eb92e31a18793e2870b4d1e8d77876b3d547a953ddd16f6",
+      "beforeSha256": "f2bd26f344947c310eb92e31a18793e2870b4d1e8d77876b3d547a953ddd16f6",
+      "afterSha256": "71175c5ce2fb885c91bed21dfce5f3a5f51a03d52f98cde9675f7ea9df9c300f",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.06 Comunicaciones y Redes/T4.06 Comunicaciones y Redes - Temario.pdf",
+        "page": 38,
+        "quote": "permitiendo una velocidad de datos de hasta 114 kbps utilizando también modulación TDMA.",
+        "sha256": "cc73bc044bdfdb53d6c6776f87a79f0fe690f1c5c1a2ee9c4749bb98f9bcf3eb",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "8×21,4=171,2.",
+        "384 no resulta del producto y no es este máximoGPRS.",
+        "Es una tasa de circuito GSM, no el agregado solicitado.",
+        "No resulta de ocho slotsCS4."
+      ],
+      "primary": [
+        {
+          "url": "https://www.etsi.org/deliver/etsi_TS/143000_143099/143064/17.00.00_60/ts_143064v170000p.pdf",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "storageFile": "public/data/T4.06.json",
+      "sampleFiles": [],
+      "objectiveReview": "Conserva tasa máxima GPRS. Se precisa capa y condiciones CS-4; el cálculo agregado no se presenta como tasa útil IP ni como medición.",
+      "typeReview": {
+        "k": "K",
+        "rationale": "Interpretación de órdenes, direcciones o cálculo explícito."
+      },
+      "sourceValidation": {
+        "beforeCurrent": true,
+        "pdfHash": true,
+        "literalQuote": true,
+        "samples": 0,
+        "limits": "Revisión documental; los modelos matemáticos no son ejecución de protocolos."
+      },
+      "authorAfterSha256": "52db7c46e5da84aacac3958f7a9dde58d98f3baf82e47eea6be90bc199302a98"
+    },
+    {
+      "id": "GEN-T4.06-60",
+      "topic": "T4.06",
+      "priority": "P0",
+      "status": "APTA_PROPUESTA_NO_APLICADA",
+      "before": {
+        "i": "GEN-T4.06-60",
+        "t": "T4.06",
+        "o": "G",
+        "q": "¿Qué modulación utiliza 5G, según el temario?",
+        "a": [
+          "OFDMA",
+          "GFDM",
+          "TDMA",
+          "WCDMA"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T4.06-60",
+        "u": "B4T6 COMUNICACIONES Y REDES TAI Finalmente y antes de la aparición del 5G, la última evolución de LTE, denominada LTE- Advanced Pro, es capaz de ofrecer velocidades superiores a 3 Gbps con latencias de menos de 2 ms. 5G (en proceso de implantación): Sistema de muy alta velocidad y baja latencia Se considera un sistema de telefonía móvil como 5G cuando emplea el tramo de radio 5G NR (5G New Radio). Utiliza modulación GFDM (Generalized Frequency Division Multiplexing) y Massive MIMO (mMIMO), esto es, disponer de más antenas que usuarios (en la práctica se considera mMIMO por encima de 32 antenas). 5G es la denominación de la nueva generación de tecnología móvil, que mejora sensiblemente las prestaciones (ancho de banda, latencia, capacidad de dispositivos conectados) de acceso a Internet en movilidad respecto a las generaciones anteriores. Sus especiales características hacen de ella una pieza clave para acelerar la transformación digital de la sociedad y la economía. Las redes y servicios 5G no son sólo una nueva generación de la tecnología móvil, sino que van a permitir el desarrollo de nuevos servicios que beneficiarán a la economía y a la sociedad en su conjunto. La capacidad de gestionar millones de dispositivos en tiempo real de las redes 5G es un elemento esencial para el desarrollo de servicios que hasta ahora no estaban a nuestro alcance como es la fabricación inteligente en entornos de fabricación distribuidos, el control remoto de dispositivos en tiempo real que va a facilitar el coche conectado y posteriormente el coche autónomo, así como la gestión inteligente del transporte y de los recursos energéticos. Asimismo, 5G va a permitir ampliar la cobertura de banda ancha a velocidades altas en zonas rurales y aisladas del territorio español, contribuyendo a la reducción de la brecha digital y a la disponibilidad de servicios públicos digitales en toda nuestra geografía. El impacto transversal de la tecnología 5G está reflejado en diversos estudios publicados en los últimos años. En nuestro entorno más inmediato, los análisis de la Comisión Europea prevén que los beneficios estimados al introducir el 5G en 4 sectores productivos (automoción, salud, transporte y \"utilities\") aumentarían progresivamente hasta alcanzar los 62.500M € de impacto directo anual dentro de la Unión Europea en 2025, que se elevaría a 113.000M € sumando los impactos indirectos. El mismo estudio estima que en nuestro país se obtendrían unos beneficios indirectos en los 4 sectores analizados de 14.600M € y una importante creación de empleos. Las redes 5G facilitarán: o Banda ancha móvil de muy alta velocidad y capacidad, con velocidades de hasta 10 Gbps. o Comunicaciones ultra fiables y de baja latencia, en torno a 1 ms frente a 20-30 ms propios de las redes 4G. Esta condición podría hacerlas apropiadas para aplicaciones PABLO ARELLANO www.theglobeformacion.com Página 40",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.06-60",
+        "t": "T4.06",
+        "o": "G",
+        "q": "¿Qué formas de onda se emplean en 5G NR?",
+        "a": [
+          "CP-OFDM y también DFT-s-OFDM en PUSCH cuando se habilita transform precoding.",
+          "Exclusivamente GFDM.",
+          "Exclusivamente TDMA.",
+          "Exclusivamente WCDMA."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T4.06-60",
+        "u": "Utiliza modulación GFDM (Generalized Frequency Division Multiplexing) [p. 40]",
+        "v": 0,
+        "w": 1,
+        "n": "La afirmación GFDM del temario es errónea paraNR. CP-OFDM yDFT-s-OFDM son formas de onda; no deben confundirse con constelaciones QPSK/QAM ni con técnicas de acceso. DFT-s-OFDM corresponde al enlace ascendente configurado para ello."
+      },
+      "temario": {
+        "path": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T4.06 Comunicaciones y Redes/T4.06 Comunicaciones y Redes - Temario.pdf",
+        "sha256": "cc73bc044bdfdb53d6c6776f87a79f0fe690f1c5c1a2ee9c4749bb98f9bcf3eb",
+        "page": 40,
+        "quote": "Utiliza modulación GFDM (Generalized Frequency Division Multiplexing)",
+        "documentType": "Temario",
+        "normalization": "Sólo espacios y saltos de línea; pdftotext -layout",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "primarySources": [
+        {
+          "url": "https://www.etsi.org/deliver/etsi_ts/138100_138199/13810101/16.25.00_60/ts_13810101v162500p.pdf",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.etsi.org/deliver/etsi_ts/138200_138299/138211/19.02.00_60/ts_138211v190200p.pdf",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "rationales": [
+        {
+          "option": "A",
+          "correct": true,
+          "reason": "Son las formas de ondaNR documentadas."
+        },
+        {
+          "option": "B",
+          "correct": false,
+          "reason": "GFDM no es la forma de onda exclusiva normalizada deNR."
+        },
+        {
+          "option": "C",
+          "correct": false,
+          "reason": "TDMA no identifica las formas de ondaNR."
+        },
+        {
+          "option": "D",
+          "correct": false,
+          "reason": "WCDMA corresponde a otra tecnología."
+        }
+      ],
+      "sourceDiscrepancy": "Se corrige GFDM y se precisa forma de onda, evitando mezclarla con modulación de símbolos.",
+      "objectivePreserved": true,
+      "audit": {
+        "id": "ITEM-GEN-T4.06-60",
+        "finding": "GEN-T4.06-60",
+        "evidence": "T4.06 Comunicaciones y Redes/T4.06 Comunicaciones y Redes - Temario.pdf p. 40",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave B («GFDM»). La página enseña GFDM como modulación de 5G; NR normaliza CP-OFDM y DFT-s-OFDM para determinados canales de subida. La literalidad del temario propaga un error técnico.",
+        "location": "public/data/T4.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T4.06-60",
+          "topic": "T4.06",
+          "origin": "G",
+          "family": "GEN-T4.06-60",
+          "scenario": null
+        }
+      },
+      "oracle": "Documental; no servicio instalado/ejecutado",
+      "sourceBeforeSha256": "333ef92c1f374c626d99d984e7bddf223cb6f86e4228a489b2abb624e78e47aa",
+      "beforeSha256": "333ef92c1f374c626d99d984e7bddf223cb6f86e4228a489b2abb624e78e47aa",
+      "afterSha256": "802f580e04dca43a10288905258e070a537221ffda59f003281bb5dd5c8c88e9",
+      "fingerprintEncoding": "SHA256 UTF8 JSON.stringify preserving insertion order",
+      "inSample": false,
+      "reference": {
+        "pdf": "01_Temario/T4.06 Comunicaciones y Redes/T4.06 Comunicaciones y Redes - Temario.pdf",
+        "page": 40,
+        "quote": "Utiliza modulación GFDM (Generalized Frequency Division Multiplexing)",
+        "sha256": "cc73bc044bdfdb53d6c6776f87a79f0fe690f1c5c1a2ee9c4749bb98f9bcf3eb",
+        "role": "Pasaje discrepante/cobertura parcial"
+      },
+      "reviewedOptions": [
+        "Son las formas de ondaNR documentadas.",
+        "GFDM no es la forma de onda exclusiva normalizada deNR.",
+        "TDMA no identifica las formas de ondaNR.",
+        "WCDMA corresponde a otra tecnología."
+      ],
+      "primary": [
+        {
+          "url": "https://www.etsi.org/deliver/etsi_ts/138100_138199/13810101/16.25.00_60/ts_13810101v162500p.pdf",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        },
+        {
+          "url": "https://www.etsi.org/deliver/etsi_ts/138200_138299/138211/19.02.00_60/ts_138211v190200p.pdf",
+          "checked": "2026-11-06",
+          "method": "Documentación primaria; no ejecutar servicio"
+        }
+      ],
+      "storageFile": "public/data/T4.06.json",
+      "sampleFiles": [],
+      "objectiveReview": "Se mantiene el concepto evaluado; la reparación precisa sintaxis, condición o versión sin sustituir el objetivo.",
+      "typeReview": {
+        "k": "D",
+        "rationale": "Identificación directa del concepto o propiedad."
+      },
+      "sourceValidation": {
+        "beforeCurrent": true,
+        "pdfHash": true,
+        "literalQuote": true,
+        "samples": 0,
+        "limits": "Revisión documental; los modelos matemáticos no son ejecución de protocolos."
+      },
+      "authorAfterSha256": "7618e4dc9c9fbdd1f6e12ead3291ff0e9e56c19c6cdd824d3dbbb53a48a0c504"
+    }
+  ],
+  "files": {
+    "T4.01.json": {
+      "beforeSha256": "f50ec31c0efe0084c480227f880acda3887abfe37a5a73550766e36783cb8c7d",
+      "afterSha256": "c7ee3cd0c506cf151588d161960143d9257760003b60448974548b607a3772e7"
+    },
+    "meta.json": {
+      "beforeSha256": "56f5683e8e55240f1e9cf5c63177d29b14fc516e2bfefda9bed89c973041a570",
+      "afterSha256": "86bc87c8386f3595f0373fba02f9942cf84b0abf98a8c99f622429fcd81a335e"
+    },
+    "T4.03.json": {
+      "beforeSha256": "d88e245a7b507a5e261beaa83d0a9b7ec478c61921c04431a5a3a8d6146c6a55",
+      "afterSha256": "f6762c48b6a655a7c8967e2fe4cf8dd14569eabb6bd97801b636e554ec21ad88"
+    },
+    "T4.05.json": {
+      "beforeSha256": "09864123079955f5490e8b73da6d6fc6dd6d9e83a7f38b6bddb6f5886cdff766",
+      "afterSha256": "00c6b52eebd03883d67e6698e91432c022556f3bc1e2a0ea7b1e056281762f09"
+    },
+    "T4.06.json": {
+      "beforeSha256": "fe2de426c6b8397a56f9efb1cb42e25fdd99d4e17cad2308fdbf802b9dfec554",
+      "afterSha256": "ca34d218833357c658c29bd8d0d4e3b64699f63cf09b88b50647da5ac26639db"
+    },
+    "T4.07.json": {
+      "beforeSha256": "e130b0bdd7511bca30bbc8a0fd30428168a830ae7955ef3cca9c7cc2f9539086",
+      "afterSha256": "1ae2cf58ebbf7e70182302b55c0dadb1baf815ab28304a8da5f5e5b3fbed1731"
+    },
+    "T4.08.json": {
+      "beforeSha256": "8c394b1844577160b71dd31d9ef8d6904792f6f8e29ade430c73c996598fb856",
+      "afterSha256": "3c3b5ed2dd9335688caa86677dd3286eda9fd8d2c4be1d02366321214e709946"
+    },
+    "T4.10.json": {
+      "beforeSha256": "fbcc3ddc4e1b5a0b7059521074fb07ba7eae46b03cae73c71dacaa7ade7f9c4e",
+      "afterSha256": "b03d2f5578edf4b5abc68610876c172e5f93424492404378834f61aadc0f27cf"
+    }
+  },
+  "metadataEdits": [
+    {
+      "id": "AS12-P1-100",
+      "topic": "T4.01",
+      "index": 2,
+      "before": [
+        "T4.01",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "after": [
+        "T4.01",
+        "A",
+        "K",
+        [],
+        0
+      ],
+      "beforeSha256": "3956acb5ab436762b6fad0a1e817c9efc4ebbdc874a6f46425944efcfaded483",
+      "afterSha256": "9416e1d91099eadc9310ff902ca843cbad529b25a4c0a19b0a4e1cc956139e40"
+    },
+    {
+      "id": "AT403-P1-39",
+      "topic": "T4.03",
+      "index": 2,
+      "before": [
+        "T4.03",
+        "A",
+        "I",
+        [],
+        0
+      ],
+      "after": [
+        "T4.03",
+        "A",
+        "K",
+        [],
+        0
+      ],
+      "beforeSha256": "11072d4fa701b379cfa78b18481ad583d8585088de731ed2e52c2f2ab2a3a5dd",
+      "afterSha256": "845f8b39dab7f524534138d2c14fb8bd952adc4e33ad1a6771bdd613a75151aa"
+    },
+    {
+      "id": "AT406-P1-34",
+      "topic": "T4.06",
+      "index": 2,
+      "before": [
+        "T4.06",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T4.06",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "b7c03ddca6dad60740340d54b04efe526ab27a3c556b352f773d80e8b531286c",
+      "afterSha256": "81765c62b64c3c2b45df6e04d03a7d3d11e24807552f9c7bfa49ff555756a835"
+    },
+    {
+      "id": "AT407-P1-47",
+      "topic": "T4.07",
+      "index": 2,
+      "before": [
+        "T4.07",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T4.07",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "02b39cac72b8f4f031243969eed4bb44f7e8f32f9c3a6a019fca459323dc0b95",
+      "afterSha256": "5a8a8e116f0b31febea6e56e66af7a3ad29f2b3a6433a4399fca0693723344cc"
+    },
+    {
+      "id": "AT408-P1-40",
+      "topic": "T4.08",
+      "index": 2,
+      "before": [
+        "T4.08",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T4.08",
+        "A",
+        "K",
+        [],
+        0
+      ],
+      "beforeSha256": "31df97d627ca06460be21f5f473fe2375a5a76f16763cc318165709fcc9de585",
+      "afterSha256": "4cbc825a8f219af5bd7582ceb649e525a0f6b38defe75f5eb360a20644ceb366"
+    },
+    {
+      "id": "GEN-T4.06-57.v1",
+      "topic": "T4.06",
+      "index": 2,
+      "before": [
+        "T4.06",
+        "G",
+        "D",
+        [
+          2,
+          7
+        ],
+        2
+      ],
+      "after": [
+        "T4.06",
+        "G",
+        "K",
+        [
+          2,
+          7
+        ],
+        2
+      ],
+      "beforeSha256": "a6bbe5c85ed239dd694e2053f371e239b1c5f789cb1edeaaa1b808dbb942271a",
+      "afterSha256": "b24d3beda96794c17d5db2255873168bee653cb02aef1f5f43b51f616149f913"
+    }
+  ],
+  "sampleFiles": {},
+  "held": [
+    "TAIL2022-P1-76",
+    "GEN-T4.09-70",
+    "GEN-T4.10-32.v2",
+    "GEN-T4.10-59.v2"
+  ],
+  "implementation": {
+    "sourceAfterPreserved": true,
+    "scope": "Only signed rows, type metadata and explicit sample; no production"
+  }
+}

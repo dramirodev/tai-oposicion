@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "reviewedBy": "Codex root; actual GitHub API workflow/head/merge/tree/deployment and postdeploy smoke verified",
+  "sourceCommit": "4bafb543270da6a869b10d2bb85c062b0772ba4d",
+  "mergeCommit": "06b8dc67ae1a6656685eb1b33da2305dc9db0364",
+  "pr": {
+    "number": 114,
+    "headSha": "4bafb543270da6a869b10d2bb85c062b0772ba4d",
+    "mergeCommit": "06b8dc67ae1a6656685eb1b33da2305dc9db0364",
+    "merged": true,
+    "base": "main"
+  },
+  "verifiedAt": "2026-11-06T12:27:36.025288Z",
+  "ci": {
+    "runId": 42213356673,
+    "repository": "dramirodev/tai-oposicion",
+    "path": ".github/workflows/ci.yml",
+    "headSha": "4bafb543270da6a869b10d2bb85c062b0772ba4d",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "deploy": {
+    "runId": 42216440061,
+    "repository": "dramirodev/tai-oposicion",
+    "path": ".github/workflows/deploy.yml",
+    "headSha": "06b8dc67ae1a6656685eb1b33da2305dc9db0364",
+    "status": "completed",
+    "conclusion": "success",
+    "branch": "main"
+  }
+}

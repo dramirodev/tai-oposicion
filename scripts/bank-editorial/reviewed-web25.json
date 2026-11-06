@@ -1,0 +1,2630 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "5c9ae8b",
+  "previousBatch": "reviewed-programming20",
+  "status": "LOCAL_PENDING_CI_AND_PUBLICATION",
+  "sourceCandidateSha256": "1d872733c9713cf0d4588ca823a20ade5c6209d68aa63ab9f2dda8ab66450037",
+  "fingerprintEncoding": "SHA256 UTF8 JSON.stringify Node insertion-order, no sorted keys",
+  "questions": [
+    {
+      "id": "AT308-P1-48",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "AT308-P1-48",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, dado el array $colores=array(\"negro\", \"verde\", \"azul\"), ¿qué sentencia permite añadir un elemento al principio del array?",
+        "a": [
+          "$array_unshift($colores, \"amarillo\");",
+          "$array_push($colores, \"amarillo\");",
+          "$array_shift($colores, \"amarillo\");",
+          "$array_pop($colores, \"amarillo\");"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT308-P1-48",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, dado $colores = array(\"negro\", \"verde\", \"azul\"), ¿qué sentencia añade \"amarillo\" al principio del array?",
+        "a": [
+          "array_unshift($colores, \"amarillo\");",
+          "array_push($colores, \"amarillo\");",
+          "array_shift($colores);",
+          "array_pop($colores);"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          7
+        ],
+        "d": null,
+        "n": "Se corrige el dólar espurio del nombre de función del PDF y se usan firmas válidas en las cuatro alternativas. A: Añade al principio. B: Añade al final. C: Extrae y elimina el primero. D: Extrae y elimina el último.",
+        "u": "Añadir un elemento al principio del array: [p. 16]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 16,
+        "quote": "Añadir un elemento al principio del array:",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "reviewedOptions": [
+        "Añade al principio.",
+        "Añade al final.",
+        "Extrae y elimina el primero.",
+        "Extrae y elimina el último."
+      ],
+      "primary": [
+        {
+          "url": "https://www.php.net/manual/en/function.array-unshift.php",
+          "checkedAt": "2026-11-06",
+          "assessment": "Se corrige el dólar espurio del nombre de función del PDF y se usan firmas válidas en las cuatro alternativas."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "Se corrige el dólar espurio del nombre de función del PDF y se usan firmas válidas en las cuatro alternativas.",
+      "inSample": false,
+      "typeReview": {
+        "k": "K",
+        "rationale": "Se interpreta sintaxis o resultado de código.",
+        "x": [
+          7
+        ],
+        "xRationale": "Contraste de conceptos próximos."
+      },
+      "beforeSha256": "770ceceb7de68c024fff2f93e1d6d52789342594fceb06efcfe39b27ada51277",
+      "afterSha256": "6c521eefd229c7c97e6db19e26c8c617c60f04af3ae28d2c56b2356ab4d40451",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "AT308-P1-49",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "AT308-P1-49",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, dado el array $colores=array(\"negro\", \"verde\", \"azul\"), ¿qué sentencia permite eliminar un elemento del principio del array?",
+        "a": [
+          "$array_unshift($colores, \"amarillo\");",
+          "$array_push($colores, \"amarillo\");",
+          "$array_shift($colores, \"amarillo\");",
+          "$array_pop($colores, \"amarillo\");"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT308-P1-49",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, dado $colores = array(\"negro\", \"verde\", \"azul\"), ¿qué sentencia permite eliminar el primer elemento del array?",
+        "a": [
+          "array_unshift($colores, \"amarillo\");",
+          "array_push($colores, \"amarillo\");",
+          "array_shift($colores);",
+          "array_pop($colores);"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          7
+        ],
+        "d": null,
+        "n": "Se corrige el dólar espurio del nombre de función del PDF y se usan firmas válidas en las cuatro alternativas. A: Añade al principio. B: Añade al final. C: Extrae y elimina el primero. D: Extrae y elimina el último.",
+        "u": "Eliminar un elemento del principio del array: [p. 17]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 17,
+        "quote": "Eliminar un elemento del principio del array:",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "reviewedOptions": [
+        "Añade al principio.",
+        "Añade al final.",
+        "Extrae y elimina el primero.",
+        "Extrae y elimina el último."
+      ],
+      "primary": [
+        {
+          "url": "https://www.php.net/manual/en/function.array-shift.php",
+          "checkedAt": "2026-11-06",
+          "assessment": "Se corrige el dólar espurio del nombre de función del PDF y se usan firmas válidas en las cuatro alternativas."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "Se corrige el dólar espurio del nombre de función del PDF y se usan firmas válidas en las cuatro alternativas.",
+      "inSample": false,
+      "typeReview": {
+        "k": "K",
+        "rationale": "Se interpreta sintaxis o resultado de código.",
+        "x": [
+          7
+        ],
+        "xRationale": "Contraste de conceptos próximos."
+      },
+      "beforeSha256": "b128fd8d3c5e5a9e0c2bde128909411b09f334eca9fc8ac4e2601a5c254d7662",
+      "afterSha256": "ac6b36f1be30939e46bad83926490a69f98d9006f4dbc9c5c40ff0d5e1dc62c7",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "AT308-P1-50",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "AT308-P1-50",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, dado el array $colores=array(\"negro\", \"verde\", \"azul\"), ¿qué sentencia permite eliminar un elemento al final del array?",
+        "a": [
+          "$array_unshift($colores, \"amarillo\");",
+          "$array_push($colores, \"amarillo\");",
+          "$array_shift($colores, \"amarillo\");",
+          "$array_pop($colores, \"amarillo\");"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT308-P1-50",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, dado $colores = array(\"negro\", \"verde\", \"azul\"), ¿qué sentencia permite eliminar el último elemento del array?",
+        "a": [
+          "array_unshift($colores, \"amarillo\");",
+          "array_push($colores, \"amarillo\");",
+          "array_shift($colores);",
+          "array_pop($colores);"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          7
+        ],
+        "d": null,
+        "n": "Se corrige el dólar espurio del nombre de función del PDF y se usan firmas válidas en las cuatro alternativas. A: Añade al principio. B: Añade al final. C: Extrae y elimina el primero. D: Extrae y elimina el último.",
+        "u": "Eliminar un elemento del final del array: [p. 17]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 17,
+        "quote": "Eliminar un elemento del final del array:",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "reviewedOptions": [
+        "Añade al principio.",
+        "Añade al final.",
+        "Extrae y elimina el primero.",
+        "Extrae y elimina el último."
+      ],
+      "primary": [
+        {
+          "url": "https://www.php.net/manual/en/function.array-pop.php",
+          "checkedAt": "2026-11-06",
+          "assessment": "Se corrige el dólar espurio del nombre de función del PDF y se usan firmas válidas en las cuatro alternativas."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "Se corrige el dólar espurio del nombre de función del PDF y se usan firmas válidas en las cuatro alternativas.",
+      "inSample": false,
+      "typeReview": {
+        "k": "K",
+        "rationale": "Se interpreta sintaxis o resultado de código.",
+        "x": [
+          7
+        ],
+        "xRationale": "Contraste de conceptos próximos."
+      },
+      "beforeSha256": "cf76c03b5ba6fec995be943c4a1569a4506a5c6e1521218c3baa37c798fa184d",
+      "afterSha256": "bd8cab4e4ddaddcbf38e4180862db1288a0d0418f34bf63eed00587a17be7690",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "AS08-P1-81",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "AS08-P1-81",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, si disponemos de un array $colores, ¿qué sentencia añade un elemento al final del array?",
+        "a": [
+          "$array_pop($colores, \"azul\");",
+          "$array_push($colores, \"azul\");",
+          "$array_unshift($colores, \"azul\");",
+          "$array_shift($colores, \"azul\");"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS08-P1-81",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, dado un array $colores, ¿qué sentencia añade \"azul\" al final?",
+        "a": [
+          "array_pop($colores);",
+          "array_push($colores, \"azul\");",
+          "array_unshift($colores, \"azul\");",
+          "array_shift($colores);"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          7
+        ],
+        "d": null,
+        "n": "Se elimina el dólar incorrecto ante las funciones y los argumentos extra de las funciones de extracción. A: Quita el último. B: Añade el valor al final. C: Añade al principio. D: Quita el primero.",
+        "u": "Añadir uno o varios elementos al final del array: [p. 16]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 16,
+        "quote": "Añadir uno o varios elementos al final del array:",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "reviewedOptions": [
+        "Quita el último.",
+        "Añade el valor al final.",
+        "Añade al principio.",
+        "Quita el primero."
+      ],
+      "primary": [
+        {
+          "url": "https://www.php.net/manual/en/function.array-push.php",
+          "checkedAt": "2026-11-06",
+          "assessment": "Se elimina el dólar incorrecto ante las funciones y los argumentos extra de las funciones de extracción."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "Se elimina el dólar incorrecto ante las funciones y los argumentos extra de las funciones de extracción.",
+      "inSample": false,
+      "typeReview": {
+        "k": "K",
+        "rationale": "Se interpreta sintaxis o resultado de código.",
+        "x": [
+          7
+        ],
+        "xRationale": "Contraste de conceptos próximos."
+      },
+      "beforeSha256": "f9c1e82c472481929977aad0fb1baf2aa2c2d2ed7f3b497b248168503a1714e9",
+      "afterSha256": "6f79aa625a8fc0655147cefb08d8aa81a54423a995924b149b6437b840c18c8e",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "AS11B-P1-71",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "AS11B-P1-71",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En el lenguaje de programación PHP, indique cuál es la respuesta correcta si queremos recuperar información de un formulario enviado con el método GET:",
+        "a": [
+          "Request.form();",
+          "$_GET[];",
+          "$_GET();",
+          "Request.QueryString();"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS11B-P1-71",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En PHP, recibido por GET un campo de formulario llamado nombre, cuya clave existe, ¿qué expresión lee su valor?",
+        "a": [
+          "Request.form();",
+          "$_GET['nombre'];",
+          "$_GET();",
+          "Request.QueryString();"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          7
+        ],
+        "d": null,
+        "z": 1,
+        "n": "Se completa el índice ausente; $_GET es un array asociativo, no una función. A: No es sintaxis de acceso PHP a ese array. B: Lee la clave nombre. C: Intenta una llamada, no el acceso a una clave. D: No es el mecanismo PHP indicado.",
+        "u": "$_GET Variables HTTP GET [p. 9]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 9,
+        "quote": "$_GET Variables HTTP GET",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "reviewedOptions": [
+        "No es sintaxis de acceso PHP a ese array.",
+        "Lee la clave nombre.",
+        "Intenta una llamada, no el acceso a una clave.",
+        "No es el mecanismo PHP indicado."
+      ],
+      "primary": [
+        {
+          "url": "https://www.php.net/manual/en/reserved.variables.get.php",
+          "checkedAt": "2026-11-06",
+          "assessment": "Se completa el índice ausente; $_GET es un array asociativo, no una función."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "Se completa el índice ausente; $_GET es un array asociativo, no una función.",
+      "inSample": false,
+      "typeReview": {
+        "k": "K",
+        "rationale": "Se interpreta sintaxis o resultado de código.",
+        "x": [
+          7
+        ],
+        "xRationale": "Contraste de conceptos próximos."
+      },
+      "beforeSha256": "ae84637e6f51bf275029553f87c79dbb60e663f6ffc30ed851f61b5b6058630a",
+      "afterSha256": "6976b82360e482d01906f68e07840bdd302eaff07faecbeb73f1a7c72572a9d9",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "AT308-P1-68",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "AT308-P1-68",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En Python, ¿qué salida produce el siguiente código? a = list(\"confidencial\") print(a[:-9])",
+        "a": [
+          "con",
+          "fid",
+          "den",
+          "ial"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT308-P1-68",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En Python 3, ¿qué salida produce este código?\n```python\na = list(\"confidencial\")\nprint(a[:-9])\n```",
+        "a": [
+          "['c', 'o', 'n']",
+          "['f', 'i', 'd']",
+          "['d', 'e', 'n']",
+          "['i', 'a', 'l']"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          7
+        ],
+        "d": null,
+        "n": "La lista tiene 12 elementos: el límite -9 equivale a 3 y se excluye. El PDF p9 contiene el ejemplo de corte, no p20. A: Son los índices 0,1,2. B: Corresponde a posiciones posteriores. C: No es el prefijo seleccionado. D: Es el sufijo, no el prefijo.",
+        "u": "a[:-3] [p. 9]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - Python.pdf",
+        "page": 9,
+        "quote": "a[:-3]",
+        "sha256": "3c2812e69c47029198d5e8371123b6cd0c0984b4ca73c41e93a229534521969b"
+      },
+      "reviewedOptions": [
+        "Son los índices 0,1,2.",
+        "Corresponde a posiciones posteriores.",
+        "No es el prefijo seleccionado.",
+        "Es el sufijo, no el prefijo."
+      ],
+      "primary": [
+        {
+          "url": "https://docs.python.org/3/library/stdtypes.html#common-sequence-operations",
+          "checkedAt": "2026-11-06",
+          "assessment": "La lista tiene 12 elementos: el límite -9 equivale a 3 y se excluye. El PDF p9 contiene el ejemplo de corte, no p20."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "La lista tiene 12 elementos: el límite -9 equivale a 3 y se excluye. El PDF p9 contiene el ejemplo de corte, no p20.",
+      "inSample": false,
+      "typeReview": {
+        "k": "K",
+        "rationale": "Se interpreta sintaxis o resultado de código.",
+        "x": [
+          7
+        ],
+        "xRationale": "Contraste de conceptos próximos."
+      },
+      "beforeSha256": "17022886cd83bd9bbf66c227206a023c15af420b0ee95358341203dc7b84fc93",
+      "afterSha256": "4ba027273b5dc9e996d20de27839e86e16235c318c989451b4031a866cdff3dd",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "AT308-P1-76",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "AT308-P1-76",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué respuesta NO es correcta respecto a JavaScript?",
+        "a": [
+          "var declara una variable global.",
+          "let permite declarar una variable local o global.",
+          "const declara una constante.",
+          "Los nombres de las variables solo pueden estar formados por números, letras, $ y _"
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT308-P1-76",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En JavaScript, señale la afirmación INCORRECTA sobre las declaraciones de variables.",
+        "a": [
+          "var declarada dentro de una función ordinaria tiene ámbito de esa función.",
+          "let declarada dentro de un bloque siempre es accesible desde fuera de ese bloque.",
+          "const impide reasignar el vínculo declarado, pero no vuelve inmutable automáticamente un objeto referenciado.",
+          "Un identificador no puede comenzar por un dígito."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          4,
+          12
+        ],
+        "d": null,
+        "n": "Se elimina la generalización de var global y se distingue const de inmutabilidad del objeto. A: Su ámbito es la función. B: El ámbito de bloque no permite esa accesibilidad general. C: La restricción es sobre la reasignación del vínculo. D: Los dígitos pueden aparecer después, no al inicio.",
+        "u": "let: declara una variable local de ámbito de bloque, opcionalmente inicializándola a un [p. 7]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - JavaScript.pdf",
+        "page": 7,
+        "quote": "let: declara una variable local de ámbito de bloque, opcionalmente inicializándola a un",
+        "sha256": "1c05b0864e61ae0c2424e1f4d955a400e9260ddce455fba99a0337d56988f8cc"
+      },
+      "reviewedOptions": [
+        "Su ámbito es la función.",
+        "El ámbito de bloque no permite esa accesibilidad general.",
+        "La restricción es sobre la reasignación del vínculo.",
+        "Los dígitos pueden aparecer después, no al inicio."
+      ],
+      "primary": [
+        {
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let",
+          "checkedAt": "2026-11-06",
+          "assessment": "Se elimina la generalización de var global y se distingue const de inmutabilidad del objeto."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "Se elimina la generalización de var global y se distingue const de inmutabilidad del objeto.",
+      "inSample": false,
+      "typeReview": {
+        "k": "I",
+        "rationale": "Se solicita la afirmación incorrecta o el elemento no conforme.",
+        "x": [
+          4,
+          12
+        ],
+        "xRationale": "Pregunta inversa con alcance absoluto."
+      },
+      "beforeSha256": "1518ee7aa79681a984c53b5a920cf23db6821abbb9f8bde61f657ffd240c1397",
+      "afterSha256": "df771c037a4774a77473cde1f50dbad3862a54ccdc1af54203ac76ca0f8c371d",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "AT308-P1-81",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "AT308-P1-81",
+        "t": "T3.08",
+        "o": "A",
+        "q": "El atributo readyState (relacionado con AJAX) puede tomar valores, ¿qué significa que dicho atributo tenga el valor 2?",
+        "a": [
+          "No se ha iniciado la operación",
+          "Se ha enviado la petición, pero el servidor aún no ha contestado.",
+          "Se han comenzado a recibir datos.",
+          "Respuesta del servidor recibida completamente."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT308-P1-81",
+        "t": "T3.08",
+        "o": "A",
+        "q": "En XMLHttpRequest, ¿qué indica readyState === 2 (HEADERS_RECEIVED)?",
+        "a": [
+          "Aún no se ha llamado a open().",
+          "Se ha llamado a send() y se han recibido las cabeceras y el estado de la respuesta.",
+          "Se está recibiendo el cuerpo de la respuesta (LOADING).",
+          "La operación ha finalizado (DONE)."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": null,
+        "n": "El PDF niega incorrectamente toda respuesta en el estado2; ya están disponibles estado y cabeceras. A: Describe UNSENT, estado0. B: Describe HEADERS_RECEIVED, estado2. C: Describe LOADING, estado3. D: Describe DONE, estado4.",
+        "u": "2: se ha enviado la petición pero el servidor aún no ha contestado. [p. 27]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - JavaScript.pdf",
+        "page": 27,
+        "quote": "2: se ha enviado la petición pero el servidor aún no ha contestado.",
+        "sha256": "1c05b0864e61ae0c2424e1f4d955a400e9260ddce455fba99a0337d56988f8cc"
+      },
+      "reviewedOptions": [
+        "Describe UNSENT, estado0.",
+        "Describe HEADERS_RECEIVED, estado2.",
+        "Describe LOADING, estado3.",
+        "Describe DONE, estado4."
+      ],
+      "primary": [
+        {
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState",
+          "checkedAt": "2026-11-06",
+          "assessment": "El PDF niega incorrectamente toda respuesta en el estado2; ya están disponibles estado y cabeceras."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "El PDF niega incorrectamente toda respuesta en el estado2; ya están disponibles estado y cabeceras.",
+      "inSample": false,
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado o comportamiento, sin ejecutar código.",
+        "x": [
+          7
+        ],
+        "xRationale": "Contraste de conceptos próximos."
+      },
+      "beforeSha256": "4e507ac0474c5523a833eef583e1c582494b7ae23842b471379b9d5132ca06fb",
+      "afterSha256": "53bf482ec537dc219c27c43d7ba2c1d0fde2bf780bb390cdb0abd7e037215407",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "AS08B-P1-R-03",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "AS08B-P1-R-03",
+        "t": "T3.08",
+        "o": "A",
+        "q": "Indique qué alternativa es la correcta para representar en formato JSON un array con las cadenas de texto que contengan los estados de un expediente:",
+        "a": [
+          "estado: [\"presentado\", \"en tramitación\", \"resuelto favorable\", \" resuelto desfavorable\", \"otros\"]",
+          "estado: {presentado; en tramitación; resuelto favorable; resuelto desfavorable; otros;}",
+          "estado: {\"presentado\", \" en tramitación\", \"resuelto favorable\", \"resuelto desfavorable\", \"otros\"}",
+          "estado: [\"presentado\"; \"en tramitación\"; \"resuelto favorable\"; \"resuelto desfavorable\"; \"otros\";]"
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS08B-P1-R-03",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué alternativa es un texto JSON completo válido que representa un array de cadenas con los estados de un expediente?",
+        "a": [
+          "[\"presentado\", \"en tramitación\", \"resuelto favorable\", \"resuelto desfavorable\", \"otros\"]",
+          "{presentado; en tramitación; resuelto favorable; resuelto desfavorable; otros;}",
+          "{\"presentado\", \"en tramitación\", \"resuelto favorable\", \"resuelto desfavorable\", \"otros\"}",
+          "[\"presentado\"; \"en tramitación\"; \"resuelto favorable\"; \"resuelto desfavorable\"; \"otros\";]"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          7
+        ],
+        "d": null,
+        "z": 1,
+        "n": "Se elimina el prefijo estado: sin objeto que hacía inválida la alternativa A; se exige texto completo y array. A: Array válido con cadenas y comas. B: Ni objeto ni array JSON válido: claves sin comillas y punto y coma. C: Un objeto requiere pares nombre:valor, no cadenas separadas. D: JSON usa comas entre elementos, no punto y coma.",
+        "u": "manifiesto es un archivo (manifest.json) en formato JavaScript JSON. [p. 11]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 11,
+        "quote": "manifiesto es un archivo (manifest.json) en formato JavaScript JSON.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "Array válido con cadenas y comas.",
+        "Ni objeto ni array JSON válido: claves sin comillas y punto y coma.",
+        "Un objeto requiere pares nombre:valor, no cadenas separadas.",
+        "JSON usa comas entre elementos, no punto y coma."
+      ],
+      "primary": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc8259",
+          "checkedAt": "2026-11-06",
+          "assessment": "Se elimina el prefijo estado: sin objeto que hacía inválida la alternativa A; se exige texto completo y array."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "Se elimina el prefijo estado: sin objeto que hacía inválida la alternativa A; se exige texto completo y array.",
+      "inSample": false,
+      "typeReview": {
+        "k": "K",
+        "rationale": "Se interpreta sintaxis o resultado de código.",
+        "x": [
+          7
+        ],
+        "xRationale": "Contraste de conceptos próximos."
+      },
+      "beforeSha256": "3b2cda95ebad3d1c5597dac0ffdc07a66389fe64d7dce431dba2f4a72f543c8c",
+      "afterSha256": "4fdbb03d4e61b5f1f28eb2dd3aab71aa1f9535c2eead03a3947fede15bf175be",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "GEN-T3.08-912",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-912",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En un string PHP entrecomillado simple:",
+        "a": [
+          "Se expanden las secuencias de escape.",
+          "Se expanden ambas.",
+          "No se expanden secuencias de escape ni variables.",
+          "Se expanden las variables."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-912",
+        "u": "Cadena de caracteres. Cada carácter ocupa un byte. Admite 256 caracteres, sin soporte para Unicode. … Entrecomillado simple: NO expande secuencias de escape ni variables. Entrecomillado doble: SÍ expande secuencias de escape y variables",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-912",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En una cadena PHP delimitada por comillas simples, ¿qué afirmación es correcta?",
+        "a": [
+          "Se interpretan todas las secuencias de escape habituales y las variables.",
+          "Se interpolan las variables, pero no se reconoce ningún escape.",
+          "No se interpolan variables; sí se reconocen los escapes de apóstrofo y barra invertida.",
+          "Se interpola toda variable aunque comience por dólar escapado."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-912",
+        "u": "Entrecomillado simple: NO expande secuencias [p. 7]",
+        "v": 0,
+        "n": "La prohibición absoluta del PDF omite los escapes especiales de comilla simple y barra invertida. A: No hay expansión general ni interpolación. B: No hay interpolación y sí existen esos escapes. C: Describe las dos excepciones y la ausencia de interpolación. D: Las variables no se interpolan."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 7,
+        "quote": "Entrecomillado simple: NO expande secuencias",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "reviewedOptions": [
+        "No hay expansión general ni interpolación.",
+        "No hay interpolación y sí existen esos escapes.",
+        "Describe las dos excepciones y la ausencia de interpolación.",
+        "Las variables no se interpolan."
+      ],
+      "primary": [
+        {
+          "url": "https://www.php.net/manual/en/language.types.string.php",
+          "checkedAt": "2026-11-06",
+          "assessment": "La prohibición absoluta del PDF omite los escapes especiales de comilla simple y barra invertida."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "La prohibición absoluta del PDF omite los escapes especiales de comilla simple y barra invertida.",
+      "inSample": false,
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado o comportamiento, sin ejecutar código.",
+        "x": [
+          7
+        ],
+        "xRationale": "Contraste de conceptos próximos."
+      },
+      "beforeSha256": "3fb3ee0564ffe0924ab0db2e3dbc27b0d2fe05d5de9b9c975721fdfb9310f584",
+      "afterSha256": "062b6dc3a0bd52a4156dcf59de9ae00aabc43bae73e0e51a9e8c221a5318aa5b",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "GEN-T3.08-975.v2",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-975.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Cuando termina la sesión, PHP:",
+        "a": [
+          "Lo envía al cliente.",
+          "Elimina automáticamente el archivo de sesión temporal.",
+          "Conserva el archivo para siempre.",
+          "Lo comprime."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-975",
+        "u": "PHP asigna un identificador de sesión único a cada sesión de visitante del sitio y lo almacena como una cookie de sesión en el navegador del cliente. PHP luego almacena cualquier dato asociado con la sesión en un archivo temporal ubicado en el servidor PHP.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-975.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Con el manejador de sesiones PHP basado en archivos, ¿el cierre del navegador garantiza la eliminación inmediata del archivo de datos del servidor?",
+        "a": [
+          "Sí, el navegador borra directamente ese archivo remoto.",
+          "No; la limpieza depende de la destrucción explícita o de los mecanismos de recogida de basura configurados.",
+          "No se puede eliminar nunca ningún archivo de sesión.",
+          "Sí, se comprime obligatoriamente y se borra al cerrar la ventana."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-975",
+        "u": "Cuando termina la sesión, PHP elimina automáticamente el archivo de sesión [p. 31]",
+        "v": 0,
+        "n": "Se distingue fin de cookie en navegador de limpieza del almacenamiento del servidor. A: El navegador no borra directamente el archivo del servidor. B: No hay garantía de inmediatez ligada al cierre del navegador. C: PHP dispone de mecanismos de destrucción y limpieza. D: No existe esa compresión y eliminación obligatoria."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 31,
+        "quote": "Cuando termina la sesión, PHP elimina automáticamente el archivo de sesión",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "reviewedOptions": [
+        "El navegador no borra directamente el archivo del servidor.",
+        "No hay garantía de inmediatez ligada al cierre del navegador.",
+        "PHP dispone de mecanismos de destrucción y limpieza.",
+        "No existe esa compresión y eliminación obligatoria."
+      ],
+      "primary": [
+        {
+          "url": "https://www.php.net/manual/en/session.configuration.php",
+          "checkedAt": "2026-11-06",
+          "assessment": "Se distingue fin de cookie en navegador de limpieza del almacenamiento del servidor."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "Se distingue fin de cookie en navegador de limpieza del almacenamiento del servidor.",
+      "inSample": false,
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado o comportamiento, sin ejecutar código.",
+        "x": [
+          7,
+          12
+        ],
+        "xRationale": "Concepto próximo y generalización excesiva."
+      },
+      "beforeSha256": "fd4a7421db5741aaddc0bb9055fd673db59733a2388e30a7f8c5638a53354f08",
+      "afterSha256": "6b151ed966f607fee63ae1a743f39ae12dcf16278a2b7f5f6eb873c171822ba6",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "GEN-T3.08-978",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-978",
+        "t": "T3.08",
+        "o": "G",
+        "q": "session_destroy() elimina:",
+        "a": [
+          "Todos los pares nombre/valor de sesión y el ID de sesión de la cookie.",
+          "Solo la cookie.",
+          "Solo los valores, no el ID.",
+          "Solo un par nombre/valor."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-978",
+        "u": "Puede terminar una sesión completa utilizando la función session_destroy() en cualquier lugar de la aplicación PHP. … la función session_start() establecerá una nueva cookie de sesión de ID de sesión",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-978",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿Qué hace session_destroy() en PHP cuando tiene éxito?",
+        "a": [
+          "Destruye los datos asociados a la sesión actual, sin eliminar por sí sola la cookie de sesión ni vaciar las variables globales asociadas.",
+          "Elimina únicamente la cookie del navegador.",
+          "Vacía únicamente $_SESSION, manteniendo intactos los datos persistidos de la sesión.",
+          "Elimina únicamente un par nombre/valor indicado como argumento."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-978",
+        "u": "Puede terminar una sesión completa utilizando la función session_destroy() en cualquier lugar [p. 33]",
+        "v": 0,
+        "n": "El PDF atribuye indebidamente la eliminación de la cookie a session_destroy. No se confunde destrucción persistida con session_unset. A: Coincide con el alcance documentado. B: No elimina por sí sola la cookie. C: Confunde la operación con vaciar variables. D: No acepta ese argumento ni elimina sólo un par."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 33,
+        "quote": "Puede terminar una sesión completa utilizando la función session_destroy() en cualquier lugar",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "reviewedOptions": [
+        "Coincide con el alcance documentado.",
+        "No elimina por sí sola la cookie.",
+        "Confunde la operación con vaciar variables.",
+        "No acepta ese argumento ni elimina sólo un par."
+      ],
+      "primary": [
+        {
+          "url": "https://www.php.net/manual/en/function.session-destroy.php",
+          "checkedAt": "2026-11-06",
+          "assessment": "El PDF atribuye indebidamente la eliminación de la cookie a session_destroy. No se confunde destrucción persistida con session_unset."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "El PDF atribuye indebidamente la eliminación de la cookie a session_destroy. No se confunde destrucción persistida con session_unset.",
+      "inSample": false,
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado o comportamiento, sin ejecutar código.",
+        "x": [
+          7
+        ],
+        "xRationale": "Contraste de conceptos próximos."
+      },
+      "beforeSha256": "30b80f2aba83d779f2a17b87ea3096846b66516ea394dd287340337ffcb68c9b",
+      "afterSha256": "4875f72c439e55a5f12e76c1535bbb877df1b9aeed131a5b6ecf1ba059fe3c67",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "GEN-T3.08-978.v1",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-978.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Tras session_destroy(), si el visitante continúa en otra página que llama a session_start():",
+        "a": [
+          "Se produce un error fatal.",
+          "Se reutiliza el ID anterior.",
+          "Se recuperan los datos.",
+          "Se establecerá una nueva cookie de sesión con nuevo ID y archivo temporal."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-978",
+        "u": "Puede terminar una sesión completa utilizando la función session_destroy() en cualquier lugar de la aplicación PHP. … la función session_start() establecerá una nueva cookie de sesión de ID de sesión",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-978.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Tras ejecutar session_destroy(), ¿qué puede afirmarse de otra petición que llama a session_start() sin haber eliminado explícitamente la cookie anterior?",
+        "a": [
+          "Siempre se produce un error fatal.",
+          "Siempre se recuperan los datos destruidos.",
+          "El identificador resultante depende del identificador recibido y de la configuración; no se garantiza uno nuevo por ese solo hecho.",
+          "Siempre se crea un identificador nuevo distinto del anterior."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-978",
+        "u": "establecerá una nueva cookie de sesión de ID de sesión, junto con un nuevo archivo de [p. 33]",
+        "v": 0,
+        "n": "No se garantiza renovación del ID. El modo estricto afecta a aceptar un ID sin datos asociados; la cookie no desaparece por session_destroy. A: No hay error fatal obligatorio. B: Los datos destruidos no reaparecen obligatoriamente. C: Evita garantizar reutilización o renovación sin configuración. D: No es una consecuencia incondicional."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 33,
+        "quote": "establecerá una nueva cookie de sesión de ID de sesión, junto con un nuevo archivo de",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "reviewedOptions": [
+        "No hay error fatal obligatorio.",
+        "Los datos destruidos no reaparecen obligatoriamente.",
+        "Evita garantizar reutilización o renovación sin configuración.",
+        "No es una consecuencia incondicional."
+      ],
+      "primary": [
+        {
+          "url": "https://www.php.net/manual/en/function.session-destroy.php",
+          "checkedAt": "2026-11-06",
+          "assessment": "No se garantiza renovación del ID. El modo estricto afecta a aceptar un ID sin datos asociados; la cookie no desaparece por session_destroy."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "No se garantiza renovación del ID. El modo estricto afecta a aceptar un ID sin datos asociados; la cookie no desaparece por session_destroy.",
+      "inSample": false,
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado o comportamiento, sin ejecutar código.",
+        "x": [
+          7,
+          12
+        ],
+        "xRationale": "Concepto próximo y generalización excesiva."
+      },
+      "beforeSha256": "0c2d10fd243fba02736b2e8fb542fdaa24bee148cec9f65b311365eef8a3f882",
+      "afterSha256": "dc2393e2fd75d9d4cecc9e231158a21ac961bf760e8bfdfe36cf4b789bd9cd4a",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "GEN-T3.08-317",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-317",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En HTML5, los elementos <html>, <head> y <body> son:",
+        "a": [
+          "Solo obligatorio <html>.",
+          "Prohibidos.",
+          "Obligatorios.",
+          "Facultativos; el navegador añade los que faltan."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          8,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-317",
+        "u": "Elementos <html>, <head> y <body>: son elementos facultativos siendo considerados, aún en ausencia de estos elementos, documentos totalmente válidos. Es el propio navegador el que añade los elementos que faltan.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-317",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En la sintaxis HTML (no XHTML), ¿qué afirmación distingue correctamente las etiquetas html/head/body de los elementos del documento?",
+        "a": [
+          "Sólo existe el elemento html; head y body no forman parte del árbol.",
+          "Esas etiquetas están prohibidas.",
+          "Siempre deben escribirse todas sus etiquetas de apertura y cierre.",
+          "Algunas de esas etiquetas pueden omitirse bajo condiciones; los elementos siguen formando parte del árbol del documento."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-317",
+        "u": "Es el propio navegador el que añade los elementos que faltan. [p. 8]",
+        "v": 0,
+        "n": "El PDF llama facultativos a los elementos; la omisión condicional afecta a etiquetas, no a la estructura resultante. A: El árbol incluye head y body. B: Se admiten etiquetas explícitas. C: Existen omisiones permitidas bajo condiciones. D: Distingue sintaxis y estructura."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 8,
+        "quote": "Es el propio navegador el que añade los elementos que faltan.",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "reviewedOptions": [
+        "El árbol incluye head y body.",
+        "Se admiten etiquetas explícitas.",
+        "Existen omisiones permitidas bajo condiciones.",
+        "Distingue sintaxis y estructura."
+      ],
+      "primary": [
+        {
+          "url": "https://html.spec.whatwg.org/multipage/syntax.html#optional-tags",
+          "checkedAt": "2026-11-06",
+          "assessment": "El PDF llama facultativos a los elementos; la omisión condicional afecta a etiquetas, no a la estructura resultante."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "El PDF llama facultativos a los elementos; la omisión condicional afecta a etiquetas, no a la estructura resultante.",
+      "inSample": false,
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado o comportamiento, sin ejecutar código.",
+        "x": [
+          7,
+          12
+        ],
+        "xRationale": "Concepto próximo y generalización excesiva."
+      },
+      "beforeSha256": "04c8397d885d14e67281a1aaa157a6c53a37b69a26094bd583caedd4459b013c",
+      "afterSha256": "020b767ccdbf1763b91144c4314081135a22492f843783d92e50f8c6d6338263",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "GEN-T3.08-319.v2",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-319.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Entre los elementos internos de la cabecera:",
+        "a": [
+          "El <title> va primero obligatoriamente.",
+          "No existe orden.",
+          "El <meta> va último.",
+          "Existe orden alfabético."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-319",
+        "u": "La cabecera (<head> ... </head>) contiene el título del documento, la metainformación del documento y la definición de scripts y estilos. No existe orden entre los elementos internos de la cabecera. … El cuerpo (<body> ... </body>), contiene el contenido de la página (texto, imágenes, videos…) que se visualizará en el navegador.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-319.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Sobre el orden de los elementos de head en HTML, ¿qué afirmación es correcta?",
+        "a": [
+          "title debe ser siempre el primer elemento, sin excepción.",
+          "No existe un orden alfabético general, pero hay restricciones específicas de posición, por ejemplo para la declaración de codificación.",
+          "meta debe ser siempre el último elemento.",
+          "Todos los elementos deben ordenarse alfabéticamente."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7,
+          12
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-319",
+        "u": "No existe orden entre los elementos [p. 9]",
+        "v": 0,
+        "n": "El PDF generaliza la libertad de orden. Una declaración de codificación meta debe estar serializada completamente en los primeros1024bytes. A: No hay esa regla universal de primer elemento. B: Admite las restricciones específicas del estándar. C: No existe esa obligación; contradice la posición temprana de charset. D: No hay orden alfabético obligatorio."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 9,
+        "quote": "No existe orden entre los elementos",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "reviewedOptions": [
+        "No hay esa regla universal de primer elemento.",
+        "Admite las restricciones específicas del estándar.",
+        "No existe esa obligación; contradice la posición temprana de charset.",
+        "No hay orden alfabético obligatorio."
+      ],
+      "primary": [
+        {
+          "url": "https://html.spec.whatwg.org/multipage/semantics.html#charset",
+          "checkedAt": "2026-11-06",
+          "assessment": "El PDF generaliza la libertad de orden. Una declaración de codificación meta debe estar serializada completamente en los primeros1024bytes."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "El PDF generaliza la libertad de orden. Una declaración de codificación meta debe estar serializada completamente en los primeros1024bytes.",
+      "inSample": false,
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado o comportamiento, sin ejecutar código.",
+        "x": [
+          7,
+          12
+        ],
+        "xRationale": "Concepto próximo y generalización excesiva."
+      },
+      "beforeSha256": "39e175254d03802f2af7f178d49aa4ea5ef42bd4a8b6356c85f7e6d1ca8d9cc8",
+      "afterSha256": "2d4a738523e565eca3c819d4c6806763b3f695b2eb8d281b66297a27b8e3297b",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "GEN-T3.08-323.v1",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-323.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El elemento que incluye todo lo que no es contenido visible es:",
+        "a": [
+          "<html>.",
+          "<footer>.",
+          "<head>.",
+          "<body>."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-323",
+        "u": "<head> Cabecera del documento. Incluye todo aquello que no es contenido visible. … <body> Cuerpo del documento. Encierra el contenido visible de la página.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-323.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿Qué elemento HTML representa la cabecera de metadatos del documento, donde se incluye su título?",
+        "a": [
+          "html.",
+          "footer.",
+          "head.",
+          "body."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-323",
+        "u": "La cabecera (<head> ... </head>) contiene el título del documento, la metainformación [p. 9]",
+        "v": 0,
+        "n": "Se conserva el objetivo de identificar la cabecera eliminando la falsa definición como contenedor de todo lo invisible. A: Es el elemento raíz. B: Representa un pie, no la cabecera de metadatos. C: Agrupa metadatos del documento. D: Es el cuerpo; también puede contener contenido no visible."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 9,
+        "quote": "La cabecera (<head> ... </head>) contiene el título del documento, la metainformación",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "reviewedOptions": [
+        "Es el elemento raíz.",
+        "Representa un pie, no la cabecera de metadatos.",
+        "Agrupa metadatos del documento.",
+        "Es el cuerpo; también puede contener contenido no visible."
+      ],
+      "primary": [
+        {
+          "url": "https://html.spec.whatwg.org/multipage/semantics.html#the-head-element",
+          "checkedAt": "2026-11-06",
+          "assessment": "Se conserva el objetivo de identificar la cabecera eliminando la falsa definición como contenedor de todo lo invisible."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "Se conserva el objetivo de identificar la cabecera eliminando la falsa definición como contenedor de todo lo invisible.",
+      "inSample": false,
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado o comportamiento, sin ejecutar código.",
+        "x": [
+          7
+        ],
+        "xRationale": "Contraste de conceptos próximos."
+      },
+      "beforeSha256": "affe6da4983133258b1ea578e5edede8634e6407de4f63b56f8554c71fdd3d2b",
+      "afterSha256": "6c5e2437e797e3bf2670bb0ab47e957d55a7f8d0d6763d4a5189646c07530e45",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "GEN-T3.08-335",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-335",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El elemento <main> en un documento:",
+        "a": [
+          "Puede existir varios.",
+          "Debe haber dos.",
+          "No puede contener <article>.",
+          "Solo puede existir uno."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          8,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-335",
+        "u": "<main> Especifica el contenido principal de un documento. Solo puede existir un elemento en el documento.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-335",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Según HTML Living Standard, ¿cuántos elementos main SIN el atributo hidden puede contener como máximo un documento conforme?",
+        "a": [
+          "Varios, sin límite.",
+          "Dos.",
+          "Tres.",
+          "Uno."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-335",
+        "u": "Solo puede existir un elemento en el documento. [p. 21]",
+        "v": 0,
+        "n": "Se precisa la excepción hidden que omite el PDF: puede haber varios main si como máximo uno carece de ese atributo. A: Excede el máximo. B: Excede el máximo. C: Excede el máximo. D: Es el máximo aplicable al alcance preguntado."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 21,
+        "quote": "Solo puede existir un elemento en el documento.",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "reviewedOptions": [
+        "Excede el máximo.",
+        "Excede el máximo.",
+        "Excede el máximo.",
+        "Es el máximo aplicable al alcance preguntado."
+      ],
+      "primary": [
+        {
+          "url": "https://html.spec.whatwg.org/multipage/grouping-content.html#the-main-element",
+          "checkedAt": "2026-11-06",
+          "assessment": "Se precisa la excepción hidden que omite el PDF: puede haber varios main si como máximo uno carece de ese atributo."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "Se precisa la excepción hidden que omite el PDF: puede haber varios main si como máximo uno carece de ese atributo.",
+      "inSample": false,
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado o comportamiento, sin ejecutar código.",
+        "x": [
+          7,
+          12
+        ],
+        "xRationale": "Concepto próximo y generalización excesiva."
+      },
+      "beforeSha256": "b886fd7e114cf7845dbb822fd1d3c027284ecb0322fb939d3ce6be4e940ef401",
+      "afterSha256": "a06eb7513df7d1eac2aa9ae74e97b39f7dbd0622b5975f44ff78132a8da6a4d6",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "GEN-T3.08-357.v2",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-357.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El atributo label de <optgroup> es:",
+        "a": [
+          "El valor de la agrupación.",
+          "El texto de ayuda.",
+          "El nombre del campo.",
+          "El id del elemento."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-357",
+        "u": "<optgroup> Define una agrupación lógica para … <datalist> Define un conjunto de valores para otros elementos",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-357.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En HTML, ¿qué representa el atributo label de optgroup cuando no hay un elemento legend hijo que lo sustituya?",
+        "a": [
+          "La etiqueta del grupo de opciones.",
+          "El valor de la opción seleccionada enviado por el campo.",
+          "El atributo name del campo select.",
+          "El identificador id del elemento."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-357",
+        "u": "label: valor de la agrupación. [p. 60]",
+        "v": 0,
+        "n": "Valor de agrupación es impreciso: label proporciona la etiqueta del grupo, no un valor enviado. Se delimita la posibilidad de legend del estándar actual. A: Nombra el grupo. B: El valor seleccionado procede de la opción correspondiente. C: No define el name del select. D: No define el id."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 60,
+        "quote": "label: valor de la agrupación.",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "reviewedOptions": [
+        "Nombra el grupo.",
+        "El valor seleccionado procede de la opción correspondiente.",
+        "No define el name del select.",
+        "No define el id."
+      ],
+      "primary": [
+        {
+          "url": "https://html.spec.whatwg.org/multipage/form-elements.html#the-optgroup-element",
+          "checkedAt": "2026-11-06",
+          "assessment": "Valor de agrupación es impreciso: label proporciona la etiqueta del grupo, no un valor enviado. Se delimita la posibilidad de legend del estándar actual."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "Valor de agrupación es impreciso: label proporciona la etiqueta del grupo, no un valor enviado. Se delimita la posibilidad de legend del estándar actual.",
+      "inSample": false,
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado o comportamiento, sin ejecutar código.",
+        "x": [
+          7
+        ],
+        "xRationale": "Contraste de conceptos próximos."
+      },
+      "beforeSha256": "e6c24f51e5401b7c9596d134f0be4fda183c8b8c1893ac256c154eef669d55e4",
+      "afterSha256": "560ceffe1f5bcc8883f4c50c58e89ac5bfe7f60eb1e2fa89ccf4a25369193b4e",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "GEN-T3.08-407.v1",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-407.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El elemento <cite> marca:",
+        "a": [
+          "Una definición.",
+          "Una referencia a una fuente o autor de un texto citado.",
+          "Una cita corta.",
+          "Un código."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-407",
+        "u": "<cite> Marca una referencia a una fuente o el autor de un texto citado. Se visualiza en cursiva … <q> Define una cita corta. Los navegadores normalmente insertan comillas alrededor de la cita. - cite: url de la cita.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-407.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Según HTML Living Standard, ¿qué representa el elemento cite?",
+        "a": [
+          "Una definición de un término.",
+          "El título de una obra, como un libro.",
+          "Una cita textual breve por el solo hecho de ser cita.",
+          "Un fragmento de código."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-407",
+        "u": "Marca una referencia a una fuente o el autor de un texto citado. [p. 29]",
+        "v": 0,
+        "n": "El nombre de una persona por ser autora no es el título de una obra. El ejemplo El Quijote del PDF sí es un uso adecuado. A: Corresponde al propósito de dfn. B: Es el significado de cite. C: q es el elemento para una cita breve; cite identifica la obra. D: code representa código."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 29,
+        "quote": "Marca una referencia a una fuente o el autor de un texto citado.",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "reviewedOptions": [
+        "Corresponde al propósito de dfn.",
+        "Es el significado de cite.",
+        "q es el elemento para una cita breve; cite identifica la obra.",
+        "code representa código."
+      ],
+      "primary": [
+        {
+          "url": "https://html.spec.whatwg.org/multipage/text-level-semantics.html#the-cite-element",
+          "checkedAt": "2026-11-06",
+          "assessment": "El nombre de una persona por ser autora no es el título de una obra. El ejemplo El Quijote del PDF sí es un uso adecuado."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "El nombre de una persona por ser autora no es el título de una obra. El ejemplo El Quijote del PDF sí es un uso adecuado.",
+      "inSample": false,
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado o comportamiento, sin ejecutar código.",
+        "x": [
+          7
+        ],
+        "xRationale": "Contraste de conceptos próximos."
+      },
+      "beforeSha256": "75c38beaeae6b23d77d82fb92cb00c79845b8271de28d148a54f83077671c8b4",
+      "afterSha256": "e6540d4e7bdae7b3f913949f26d494cc3d6894f937d59454806c3a58e487e680",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "AT308-P1-06",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "AT308-P1-06",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué elemento NO está soportado en HTML5?",
+        "a": [
+          "<b>",
+          "<i>",
+          "<q>",
+          "<u>"
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT308-P1-06",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué elemento es obsoleto y no conforme para los autores en HTML actual?",
+        "a": [
+          "<b>",
+          "<i>",
+          "<q>",
+          "<font>"
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          4,
+          12
+        ],
+        "d": null,
+        "n": "El PDF marca incorrectamente u como no soportado; se sustituye por font, que también aparece como no soportado en esa página. Se pregunta conformidad, no si un navegador lo dibuja. A: b sigue definido. B: i sigue definido. C: q sigue definido. D: font es obsoleto y no conforme para autores.",
+        "u": "<font> Fuente del texto No soportado en HTML5 [p. 36]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 36,
+        "quote": "<font> Fuente del texto No soportado en HTML5",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "reviewedOptions": [
+        "b sigue definido.",
+        "i sigue definido.",
+        "q sigue definido.",
+        "font es obsoleto y no conforme para autores."
+      ],
+      "primary": [
+        {
+          "url": "https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features",
+          "checkedAt": "2026-11-06",
+          "assessment": "El PDF marca incorrectamente u como no soportado; se sustituye por font, que también aparece como no soportado en esa página. Se pregunta conformidad, no si un navegador lo dibuja."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "El PDF marca incorrectamente u como no soportado; se sustituye por font, que también aparece como no soportado en esa página. Se pregunta conformidad, no si un navegador lo dibuja.",
+      "inSample": false,
+      "typeReview": {
+        "k": "I",
+        "rationale": "Se solicita la afirmación incorrecta o el elemento no conforme.",
+        "x": [
+          4,
+          12
+        ],
+        "xRationale": "Pregunta inversa con alcance absoluto."
+      },
+      "beforeSha256": "a487f9b23a2283a7f4402e826168123176bdbf6456c1f1c98111f0bd564b9cf1",
+      "afterSha256": "a58d366948ba88bad2bb85b902111a20bc0a82ebdeac7abe391b961c15e693e2",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "AT308-P1-11",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "AT308-P1-11",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Cuál de las siguientes sentencias de HTML5 NO es correcta?",
+        "a": [
+          "<a href=\"#seccion5\" lang=\"es\" id=\"enlace7\" class=\"link\">Ir a 5</a>",
+          "<a href=\"3.html\"><img src=\"2.gif\" alt=\"HTML\"></a>",
+          "<a href=\"#\" target=\"blank\">Nuevo</a>",
+          "<a href=\"mailto:pablo@academiatheglobe.com\">Enviar mail</a>"
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT308-P1-11",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué enlace HTML solicita un nuevo contexto de navegación mediante la palabra clave reservada de target?",
+        "a": [
+          "<a href=\"3.html\" target=\"_self\">Nuevo</a>",
+          "<a href=\"3.html\" target=\"_parent\">Nuevo</a>",
+          "<a href=\"3.html\" target=\"_blank\">Nuevo</a>",
+          "<a href=\"3.html\" target=\"blank\">Nuevo</a>"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          7
+        ],
+        "d": null,
+        "n": "blank es un nombre válido de contexto, no un error HTML. _blank es la palabra reservada que solicita un contexto nuevo; no se promete ventana en vez de pestaña. A: Selecciona el contexto actual. B: Selecciona el padre. C: Es la palabra reservada para uno nuevo. D: Es un nombre; puede reutilizar un contexto nombrado existente.",
+        "u": "_blank: nueva pestaña/ventana [p. 28]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 28,
+        "quote": "_blank: nueva pestaña/ventana",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "reviewedOptions": [
+        "Selecciona el contexto actual.",
+        "Selecciona el padre.",
+        "Es la palabra reservada para uno nuevo.",
+        "Es un nombre; puede reutilizar un contexto nombrado existente."
+      ],
+      "primary": [
+        {
+          "url": "https://html.spec.whatwg.org/multipage/document-sequences.html#valid-navigable-target-name-or-keyword",
+          "checkedAt": "2026-11-06",
+          "assessment": "blank es un nombre válido de contexto, no un error HTML. _blank es la palabra reservada que solicita un contexto nuevo; no se promete ventana en vez de pestaña."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "blank es un nombre válido de contexto, no un error HTML. _blank es la palabra reservada que solicita un contexto nuevo; no se promete ventana en vez de pestaña.",
+      "inSample": false,
+      "typeReview": {
+        "k": "K",
+        "rationale": "Se interpreta sintaxis o resultado de código.",
+        "x": [
+          7
+        ],
+        "xRationale": "Contraste de conceptos próximos."
+      },
+      "beforeSha256": "f9b6c58320ffaaf93472aef1a60d609072915c00cd8529a9d3ec6a6068490513",
+      "afterSha256": "ef32acd69a674401982e9c86e8ca8571bf2f71c2320832001b7c580079ec5e86",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "GEN-T3.08-34",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-34",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El Service Worker es un fichero JavaScript que se ejecuta:",
+        "a": [
+          "En segundo plano y separado del navegador.",
+          "En el servidor.",
+          "En el WebView.",
+          "Dentro de la página principal."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-34",
+        "u": "Service Worker: es un fichero JavaScript que se ejecuta en 2º plano y separado del navegador en el dispositivo del usuario. Se encarga de almacenar una copia de los datos en caché mientras se tiene conexión a Internet para poder usar la PWA de forma offline",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-34",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿En qué contexto se ejecuta un service worker de una aplicación web?",
+        "a": [
+          "En un contexto de worker gestionado por el navegador, separado del contexto de la página.",
+          "Necesariamente en el servidor HTTP.",
+          "Dentro del DOM como si fuera un elemento HTML.",
+          "En el mismo contexto global window de la página principal."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-34",
+        "u": "Service Worker: es un fichero JavaScript que se ejecuta en 2º plano y separado del [p. 11]",
+        "v": 0,
+        "n": "Separado del navegador es incorrecto: es un worker del navegador separado de la página y sin acceso directo al DOM. A: Es el aislamiento adecuado. B: El worker se ejecuta en el cliente. C: No es un elemento del DOM. D: No usa window como global de página."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 11,
+        "quote": "Service Worker: es un fichero JavaScript que se ejecuta en 2º plano y separado del",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "Es el aislamiento adecuado.",
+        "El worker se ejecuta en el cliente.",
+        "No es un elemento del DOM.",
+        "No usa window como global de página."
+      ],
+      "primary": [
+        {
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers",
+          "checkedAt": "2026-11-06",
+          "assessment": "Separado del navegador es incorrecto: es un worker del navegador separado de la página y sin acceso directo al DOM."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "Separado del navegador es incorrecto: es un worker del navegador separado de la página y sin acceso directo al DOM.",
+      "inSample": false,
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado o comportamiento, sin ejecutar código.",
+        "x": [
+          7
+        ],
+        "xRationale": "Contraste de conceptos próximos."
+      },
+      "beforeSha256": "d6dfc6b875b0e0816510744a73c094900696d6596463f0f59afa1ae6a544b3bd",
+      "afterSha256": "636736080ded675b92c567b7b48dd8d741e4f522ae853bce22ecb0d4802ea775",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "GEN-T3.08-35",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-35",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Ante una solicitud repetida, el Service Worker:",
+        "a": [
+          "La rechaza.",
+          "La solicita siempre al servidor.",
+          "Devuelve la respuesta directamente de la caché sin acceder al servidor.",
+          "Borra la caché."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-35",
+        "u": "Service worker escucha solicitud, la solicita al servidor y almacena la copia en la caché Posteriormente, ante la misma solicitud, el Service worker devuelve la petición directamente de la caché sin acceder al servidor",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-35",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En el ejemplo de caché del temario, con una estrategia cache-first y una respuesta coincidente ya almacenada, ¿de dónde se obtiene la respuesta sin revalidación?",
+        "a": [
+          "Se rechaza obligatoriamente la solicitud.",
+          "Siempre del servidor.",
+          "De la caché, sin solicitarla al servidor.",
+          "Se borra la caché antes de responder."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-35",
+        "u": "directamente de la caché sin acceder al [p. 11]",
+        "v": 0,
+        "n": "Se acota a la estrategia ilustrada y a un hit; no se atribuye esa política a todos los service workers. A: Un hit permite responder. B: Cache-first con hit no requiere la red. C: Es el comportamiento acotado. D: No es un requisito de la estrategia."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 11,
+        "quote": "directamente de la caché sin acceder al",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "Un hit permite responder.",
+        "Cache-first con hit no requiere la red.",
+        "Es el comportamiento acotado.",
+        "No es un requisito de la estrategia."
+      ],
+      "primary": [
+        {
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers",
+          "checkedAt": "2026-11-06",
+          "assessment": "Se acota a la estrategia ilustrada y a un hit; no se atribuye esa política a todos los service workers."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "Se acota a la estrategia ilustrada y a un hit; no se atribuye esa política a todos los service workers.",
+      "inSample": false,
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado o comportamiento, sin ejecutar código.",
+        "x": [
+          7,
+          12
+        ],
+        "xRationale": "Concepto próximo y generalización excesiva."
+      },
+      "beforeSha256": "7e966a677f476235c12735bdb5293513a8c5811212659223ce880db1a36637c5",
+      "afterSha256": "e430341cb4bec3833d4a45a9b1e8962fe807532c97977f62e19c7345e9d2fd14",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "GEN-T3.08-35.v1",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "GEN-T3.08-35.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "La primera vez que el Service Worker escucha una solicitud:",
+        "a": [
+          "La ignora.",
+          "La descarta.",
+          "La responde desde la caché.",
+          "La solicita al servidor y almacena la copia en la caché."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-35",
+        "u": "Service worker escucha solicitud, la solicita al servidor y almacena la copia en la caché Posteriormente, ante la misma solicitud, el Service worker devuelve la petición directamente de la caché sin acceder al servidor",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-35.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En la estrategia del ejemplo del temario, no hay respuesta coincidente en caché y la solicitud al servidor tiene éxito. Si el manejador está programado para guardar esa respuesta, ¿qué hace?",
+        "a": [
+          "Ignora la solicitud.",
+          "Descarta la respuesta sin guardarla.",
+          "Obtiene una respuesta que ya estaba en la caché vacía.",
+          "Obtiene la respuesta del servidor y almacena una copia en caché."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7,
+          12
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-35",
+        "u": "al servidor y almacena la copia en la caché [p. 11]",
+        "v": 0,
+        "n": "La descarga y almacenamiento se condicionan al manejador del ejemplo; no son una obligación de toda primera solicitud. A: No corresponde a la política indicada. B: Contradice el almacenamiento programado. C: Contradice la ausencia de respuesta coincidente. D: Describe el miss exitoso de la estrategia acotada."
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 11,
+        "quote": "al servidor y almacena la copia en la caché",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "No corresponde a la política indicada.",
+        "Contradice el almacenamiento programado.",
+        "Contradice la ausencia de respuesta coincidente.",
+        "Describe el miss exitoso de la estrategia acotada."
+      ],
+      "primary": [
+        {
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers",
+          "checkedAt": "2026-11-06",
+          "assessment": "La descarga y almacenamiento se condicionan al manejador del ejemplo; no son una obligación de toda primera solicitud."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "La descarga y almacenamiento se condicionan al manejador del ejemplo; no son una obligación de toda primera solicitud.",
+      "inSample": false,
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado o comportamiento, sin ejecutar código.",
+        "x": [
+          7,
+          12
+        ],
+        "xRationale": "Concepto próximo y generalización excesiva."
+      },
+      "beforeSha256": "50304360e077884d6118beb0d7292df3fe8109096346f5c08448f8cf0256a7df",
+      "afterSha256": "caa5311ac57712a94e32aa0e9a88a88e9a3a1df9645f83a3c0ce6c7ef7300a4c",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    },
+    {
+      "id": "AT308-P1-87",
+      "topic": "T3.08",
+      "priority": "P0",
+      "status": "proposal-not-applied",
+      "before": {
+        "i": "AT308-P1-87",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué extensión corresponde con un archivo de un paquete del sistema operativo Android?",
+        "a": [
+          "Lib.",
+          "Apk.",
+          "Arm.",
+          "App."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT308-P1-87",
+        "t": "T3.08",
+        "o": "A",
+        "q": "¿Qué extensión identifica un paquete instalable de aplicaciones Android?",
+        "a": [
+          ".lib.",
+          ".apk.",
+          ".arm.",
+          ".app."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": null,
+        "n": "Se corrige la clave que apuntaba a Arm y se distingue paquete instalable APK de formato de publicación App Bundle. A: No es la extensión APK. B: Es la extensión del paquete APK. C: ARM designa una arquitectura, no esta extensión. D: No es APK.",
+        "u": "El formato de empaquetado de la app es .app (Apple Store) y .apk (Google Play). [p. 7]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 7,
+        "quote": "El formato de empaquetado de la app es .app (Apple Store) y .apk (Google Play).",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "reviewedOptions": [
+        "No es la extensión APK.",
+        "Es la extensión del paquete APK.",
+        "ARM designa una arquitectura, no esta extensión.",
+        "No es APK."
+      ],
+      "primary": [
+        {
+          "url": "https://developer.android.com/guide/app-bundle",
+          "checkedAt": "2026-11-06",
+          "assessment": "Se corrige la clave que apuntaba a Arm y se distingue paquete instalable APK de formato de publicación App Bundle."
+        }
+      ],
+      "objectiveChange": "Mismo concepto y operación; precisión de sintaxis o alcance.",
+      "sourceDiscrepancy": "Se corrige la clave que apuntaba a Arm y se distingue paquete instalable APK de formato de publicación App Bundle.",
+      "inSample": false,
+      "typeReview": {
+        "k": "D",
+        "rationale": "Pregunta directa de significado o comportamiento, sin ejecutar código.",
+        "x": [
+          7
+        ],
+        "xRationale": "Contraste de conceptos próximos."
+      },
+      "beforeSha256": "f6d80d0f00262e54e17915caa2eaa0c8d42aadfd32b95eb9bac246caec7ad73f",
+      "afterSha256": "54c5d73e8c433b42fe6bdce372dc9e848506f9027ddcdc7e3cf17b262d94cc73",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "independentAdjustment": "Se elimina APK del enunciado para no revelar la extensión; mismo objetivo, alternativas y clave.",
+      "independentReview": {
+        "reviewer": "banco",
+        "decision": "accepted_not_applied",
+        "date": "2026-11-06",
+        "scope": "Clave única y cuatro alternativas/racionales; before actual, SHA PDF y pasaje físico; documental salvo oráculos de tres IDs."
+      }
+    }
+  ],
+  "files": {
+    "T3.08.json": {
+      "beforeSha256": "3f1527027441e8a079dfbca74ab2968c0123ab15adde321a673faaff0a29f799",
+      "afterSha256": "308f6f6495843bc06aa3f163aeac62215ce02993d12442d6da093bc074d3b331"
+    },
+    "meta.json": {
+      "beforeSha256": "3f6b6d9fd70efe5a84fc01fc0a10c19f530cfa8be75fd81f88844e0675d1496a",
+      "afterSha256": "0c92a484e364f115a3ee98eb79218739feb3a3802d0a5e476363938ca88bf2a6"
+    }
+  },
+  "metadataEdits": [
+    {
+      "id": "AS11B-P1-71",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T3.08",
+        "A",
+        "K",
+        [],
+        0
+      ],
+      "beforeSha256": "2f50a21475ea1d772ae73f442db4f572566d58120d2133497c22b60f13983465",
+      "afterSha256": "7edd56a829b617ba30e6518629c660aac41f8efaa91eb7c5d42b4de3439a28a1"
+    },
+    {
+      "id": "AS08B-P1-R-03",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T3.08",
+        "A",
+        "K",
+        [],
+        0
+      ],
+      "beforeSha256": "2f50a21475ea1d772ae73f442db4f572566d58120d2133497c22b60f13983465",
+      "afterSha256": "7edd56a829b617ba30e6518629c660aac41f8efaa91eb7c5d42b4de3439a28a1"
+    },
+    {
+      "id": "GEN-T3.08-912",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8,
+          9
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8,
+          9
+        ],
+        3
+      ],
+      "beforeSha256": "3442c1ae7a799e2fdbb007f6b9787ac9d2be3cd35a0f6a7d02a7593db2235ba1",
+      "afterSha256": "53bd60377d23b68dffb200071845c0fe0c11f1dd96ad3a9fa6aa0e49c71b1607"
+    },
+    {
+      "id": "GEN-T3.08-975.v2",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8,
+          9
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8,
+          9
+        ],
+        3
+      ],
+      "beforeSha256": "3442c1ae7a799e2fdbb007f6b9787ac9d2be3cd35a0f6a7d02a7593db2235ba1",
+      "afterSha256": "53bd60377d23b68dffb200071845c0fe0c11f1dd96ad3a9fa6aa0e49c71b1607"
+    },
+    {
+      "id": "GEN-T3.08-978",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8,
+          9
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8,
+          9
+        ],
+        3
+      ],
+      "beforeSha256": "3442c1ae7a799e2fdbb007f6b9787ac9d2be3cd35a0f6a7d02a7593db2235ba1",
+      "afterSha256": "53bd60377d23b68dffb200071845c0fe0c11f1dd96ad3a9fa6aa0e49c71b1607"
+    },
+    {
+      "id": "GEN-T3.08-978.v1",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8,
+          9
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8,
+          9
+        ],
+        3
+      ],
+      "beforeSha256": "3442c1ae7a799e2fdbb007f6b9787ac9d2be3cd35a0f6a7d02a7593db2235ba1",
+      "afterSha256": "53bd60377d23b68dffb200071845c0fe0c11f1dd96ad3a9fa6aa0e49c71b1607"
+    },
+    {
+      "id": "GEN-T3.08-317",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "K",
+        [
+          8,
+          12
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          8,
+          12
+        ],
+        3
+      ],
+      "beforeSha256": "92c6cf0e3175640828da60ec80360e41247f4f49b673b12a8f0a6333c209d0d5",
+      "afterSha256": "fd413d2ebf0ece38e36d6fc3a8745b550b17c957a204a7417f584b206b17cdf4"
+    },
+    {
+      "id": "GEN-T3.08-319.v2",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        2
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        2
+      ],
+      "beforeSha256": "e7cad5654e78cb253f78449f58f6af5772ccc4a4166d87cc9d7109ce92cb1424",
+      "afterSha256": "f28873777dda1d49e065d071397c0b0bed05c008864b83a35f66c72a1a1abdc7"
+    },
+    {
+      "id": "GEN-T3.08-323.v1",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "K",
+        [
+          7,
+          8
+        ],
+        2
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        2
+      ],
+      "beforeSha256": "a000985be64e5c65e32fbff856e44b6c2ab0f45e767be8fcac95fac6229f8e08",
+      "afterSha256": "f28873777dda1d49e065d071397c0b0bed05c008864b83a35f66c72a1a1abdc7"
+    },
+    {
+      "id": "GEN-T3.08-335",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "K",
+        [
+          8,
+          12
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          8,
+          12
+        ],
+        3
+      ],
+      "beforeSha256": "92c6cf0e3175640828da60ec80360e41247f4f49b673b12a8f0a6333c209d0d5",
+      "afterSha256": "fd413d2ebf0ece38e36d6fc3a8745b550b17c957a204a7417f584b206b17cdf4"
+    },
+    {
+      "id": "GEN-T3.08-357.v2",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "K",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "97687e5f252816edcd627d6855e62286e400f88896e30c7a5169cece096afcf9",
+      "afterSha256": "35ee53432c15604d854c510a9dc948cfd8a5bc7e2a95cde9e46922c729174eaa"
+    },
+    {
+      "id": "GEN-T3.08-407.v1",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "K",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "97687e5f252816edcd627d6855e62286e400f88896e30c7a5169cece096afcf9",
+      "afterSha256": "35ee53432c15604d854c510a9dc948cfd8a5bc7e2a95cde9e46922c729174eaa"
+    },
+    {
+      "id": "AT308-P1-11",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "A",
+        "I",
+        [],
+        0
+      ],
+      "after": [
+        "T3.08",
+        "A",
+        "K",
+        [],
+        0
+      ],
+      "beforeSha256": "b68d2f2ebda47ada606ad4e23ed60cebe1693a9df70b976e96f05f68aa2ef53f",
+      "afterSha256": "7edd56a829b617ba30e6518629c660aac41f8efaa91eb7c5d42b4de3439a28a1"
+    },
+    {
+      "id": "GEN-T3.08-34",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "a899db862df8ce50d63ce2923d87f5c2d76b16ae725fbf9e7bdde7e64f7416b9",
+      "afterSha256": "35ee53432c15604d854c510a9dc948cfd8a5bc7e2a95cde9e46922c729174eaa"
+    },
+    {
+      "id": "GEN-T3.08-35",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "a899db862df8ce50d63ce2923d87f5c2d76b16ae725fbf9e7bdde7e64f7416b9",
+      "afterSha256": "35ee53432c15604d854c510a9dc948cfd8a5bc7e2a95cde9e46922c729174eaa"
+    },
+    {
+      "id": "GEN-T3.08-35.v1",
+      "topic": "T3.08",
+      "index": 2,
+      "before": [
+        "T3.08",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.08",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "a899db862df8ce50d63ce2923d87f5c2d76b16ae725fbf9e7bdde7e64f7416b9",
+      "afterSha256": "35ee53432c15604d854c510a9dc948cfd8a5bc7e2a95cde9e46922c729174eaa"
+    }
+  ],
+  "sampleFiles": {},
+  "implementation": {
+    "prior255Unchanged": true,
+    "firestoreWrites": 0
+  }
+}

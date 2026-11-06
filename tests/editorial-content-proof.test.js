@@ -7,7 +7,8 @@ import { approvedQuestionHashes } from '../src/core/domain/approved-question-has
 import { applyEditorialScoring, isEditorialContentBlocked } from '../src/core/domain/question-review-overrides.js';
 import { questionNotice } from '../src/shared/presentation/study-content.js';
 const read = file => JSON.parse(readFileSync(file, 'utf8'));
-const recent = ['reviewed-19','reviewed-followup','reviewed-wave2','reviewed-admin20'].flatMap(f => read(`scripts/bank-editorial/${f}.json`).questions.filter(q=>q.after.np!==1));
+import { readReviewedRecord } from '../scripts/bank-editorial/reviewed-record.mjs';
+const recent = ['reviewed-19','reviewed-followup','reviewed-wave2','reviewed-admin20','reviewed-legal19','reviewed-programming20','reviewed-web25','reviewed-architecture20','reviewed-languages17','reviewed-web23','reviewed-development11','reviewed-systems20','reviewed-foundations18','reviewed-systems16', 'reviewed-syntax3', 'reviewed-admin5'].flatMap(f => read(`scripts/bank-editorial/${f}.json`).questions.filter(q=>q.after.np!==1));
 const published = ['reviewed-web','reviewed-T3.08','reviewed-T4.07'].flatMap(f => read(`scripts/bank-editorial/${f}.json`).map(entry => {
  const topic=f==='reviewed-T4.07'?'T4.07':'T3.08';
  const after=read(`public/data/${topic}.json`).find(q=>q.i===entry.id);
@@ -15,13 +16,14 @@ const published = ['reviewed-web','reviewed-T3.08','reviewed-T4.07'].flatMap(f =
  for(const [key,value] of Object.entries(entry.before)) { if(value===null) delete before[key]; else before[key]=value; }
  return {...entry,topic,before,after};
 }));
-const proposals=[...recent,...published];
+const proposals=[...recent,...published].map(q=>q.scenarioId ? {...q,transport:q,before:{...q.before,supTexto:q.context.supTexto},after:{...q.after,supTexto:q.context.supTexto}} : q);
 afterEach(() => vi.unstubAllGlobals());
 const crypto = () => vi.stubGlobal('crypto', webcrypto);
-it('binds exactly216 reviewed records and rejects216 actual prior records, including after a newer sameID', async () => {
- crypto(); expect(Object.keys(approvedQuestionHashes)).toHaveLength(216);
- for(const {id,before,after,topic} of proposals) {
-   expect(read(`public/data/${topic}.json`).find(q=>q.i===id),id).toEqual(after);
+it('binds exactly413 reviewed records and rejects413 actual prior records, including after a newer sameID', async () => {
+ crypto(); expect(Object.keys(approvedQuestionHashes)).toHaveLength(413);
+ for(const entry of proposals) {
+   const {id,before,after}=entry;
+   expect(readReviewedRecord(entry.transport||entry),id).toEqual(after);
    const fresh=await verifyQuestionContent(after);
    expect(hasApprovedQuestionContent(fresh),id).toBe(true);
    expect(applyEditorialScoring(fresh).np,id).not.toBe(1);
@@ -57,8 +59,8 @@ it('does not clear explicitnp1, and rejects absent or failing WebCrypto even on 
   expect(applyEditorialScoring(await verifyQuestionContent(q)).np).toBe(1);
  }
 });
-it('the four approved sample records use exactly the same content verification', async () => {
- crypto();const samples=proposals.filter(q=>q.inSample); expect(samples).toHaveLength(4);
+it('the six approved sample records use exactly the same content verification', async () => {
+ crypto();const samples=proposals.filter(q=>q.inSample); expect(samples).toHaveLength(6);
  for(const {id,topic} of samples) {
   const q=read(`public/sample/${topic}.json`).find(q=>q.i===id);
   expect(hasApprovedQuestionContent(await verifyQuestionContent(q)),id).toBe(true);

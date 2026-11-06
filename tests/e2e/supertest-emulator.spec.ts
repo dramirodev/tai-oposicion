@@ -45,13 +45,18 @@ test.describe('Firebase Auth Emulator supertest', () => {
     });
     await guardSyntheticBrowser(context);
   });
-  for (const offline of [false, true])
-    test(`historial extenso importado se recupera en un navegador nuevo sin duplicados · ${offline ? 'offline' : 'online'}`, async ({
+  for (const writeLatencyMs of [0,500])
+   for (const offline of [false, true])
+    test(`historial extenso importado se recupera en un navegador nuevo sin duplicados · ${offline ? 'offline' : 'online'}${writeLatencyMs ? ' · latencia500ms' : ''}`, async ({
       page,
       browser,
       context,
     }) => {
       test.setTimeout(120_000);
+      if (writeLatencyMs) await context.route('**/google.firestore.v1.Firestore/Write/channel**', async route => {
+        if (route.request().method() === 'POST') await new Promise(resolve => setTimeout(resolve,writeLatencyMs));
+        await route.fallback();
+      });
       const fixture = studyProfileFixture('extensive');
       await signInSynthetic(page, identities.owner.email);
       await expect(page.getByText('Propietario · acceso completo.', { exact: false })).toBeVisible();
